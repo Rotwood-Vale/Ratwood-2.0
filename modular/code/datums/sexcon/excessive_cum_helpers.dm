@@ -205,11 +205,12 @@
 		if(prob(20) && length(splatter_candidates))
 			var/mob/living/carbon/human/splatter_target = pick(splatter_candidates)
 			if(splatter_target)
+				var/spurt_intensity = max(spurt_count, 1)
 				var/datum/status_effect/facial/external/external = splatter_target.has_status_effect(/datum/status_effect/facial/external)
 				if(!external)
-					splatter_target.apply_status_effect(/datum/status_effect/facial/external)
+					splatter_target.apply_status_effect(/datum/status_effect/facial/external, spurt_intensity)
 				else
-					external.refresh_cum()
+					external.refresh_cum(spurt_intensity)
 				modular_announce_knot_release_splatter(btm, splatter_target, splatter_observers)
 				splatter_diverted = TRUE
 		if(!splatter_diverted)

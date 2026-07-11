@@ -27,6 +27,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
 	if(user == target)
 		return
@@ -64,4 +65,3 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
-

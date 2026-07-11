@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SPURT_ADDITIONAL_MAX 5
 #define SPURT_EXCESSIVE_MULTIPLIER 2
 #define SEMEN_VOLUME_EXCESSIVE_MULTIPLIER 2
+#define CREAMPIE_LEAK_LONG_SPURT_THRESHOLD 3
 
 // Excessive cum summary contexts (shared across core and modular sexcon code).
 #define EXCESSIVE_CUM_CONTEXT_SOLO 1

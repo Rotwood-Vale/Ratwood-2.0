@@ -366,6 +366,7 @@
 	if(try_resist_orgasm())
 		return
 	modular_announce_spurt_message()
+	var/spurt_count = get_load_bursts()
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came onto the target")
 	if(effective_target)
@@ -375,19 +376,19 @@
 		if(cum_on_face)
 			var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
 			if(!facial)
-				splashed_user.apply_status_effect(/datum/status_effect/facial)
+				splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
 				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their face!"), span_love("I take a load on my face!"))
 			else
-				facial.refresh_cum()
+				facial.refresh_cum(spurt_count)
 		else
 			var/datum/status_effect/facial/external/external = splashed_user.has_status_effect(/datum/status_effect/facial/external)
 			if(!external)
-				splashed_user.apply_status_effect(/datum/status_effect/facial/external)
+				splashed_user.apply_status_effect(/datum/status_effect/facial/external, spurt_count)
 				if(splashed_user != user) // don't announce self-ejaculation (e.g. chastity overflow)
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
-				external.refresh_cum()
+				external.refresh_cum(spurt_count)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
@@ -400,6 +401,7 @@
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
 	modular_announce_spurt_message()
+	var/spurt_count = get_load_bursts()
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came inside the target")
 	werewolf_sex_infect_attempt(user, effective_target)
@@ -416,13 +418,13 @@
 		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
 		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
 		if(!splashed_type)
-			splashed_user.apply_status_effect(status_type)
+			splashed_user.apply_status_effect(status_type, spurt_count)
 			if(oral)
 				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
 			else
 				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
 		else
-			splashed_type.refresh_cum()
+			splashed_type.refresh_cum(spurt_count)
 		if(oral && splashed_user.reagents) // Cum fills hunger if taking it orally
 			if(user.getorganslot(ORGAN_SLOT_PENIS))
 				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
@@ -434,9 +436,8 @@
 			splashed_user.has_gnoll_scent_this_round = TRUE
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
-			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 			if(!is_receiver_actively_knotted_to_user)
-				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+				apply_creampie_drip(splashed_user, orifice, spurt_count = spurt_count)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
@@ -450,17 +451,19 @@
 	after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
-/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
+/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1)
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
+	spurt_count = max(spurt_count, 1)
 	if(existing)
 		existing.orifice |= orifice
+		existing.cum_spurt_intensity = max(existing.cum_spurt_intensity, spurt_count)
 		to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
 		existing.duration = world.time + initial(existing.duration) // refresh timer
 		return
-	if(use_long)
-		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice)
+	if(use_long || spurt_count >= CREAMPIE_LEAK_LONG_SPURT_THRESHOLD)
+		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice, spurt_count)
 	else
-		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice)
+		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice, spurt_count)
 
 /datum/sex_controller/proc/apply_cum_consumed_buff(mob/living/carbon/human/consumer)
 	if(!consumer)
@@ -509,6 +512,11 @@
 	alert_type = null // don't show an alert on screen
 	tick_interval = 12 MINUTES // use this time as our dry count down
 	var/has_dried_up = FALSE // used as our dry status
+	var/cum_spurt_intensity = 1
+
+/datum/status_effect/facial/on_creation(mob/living/new_owner, spurt_count = 1)
+	cum_spurt_intensity = max(spurt_count, 1)
+	return ..()
 
 /datum/status_effect/facial/internal
 	id = "creampie"
@@ -527,9 +535,11 @@
 	duration = 60 SECONDS
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
 	var/orifice = SEX_PART_NULL
+	var/cum_spurt_intensity = 1
 
-/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL)
+/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL, spurt_count = 1)
 	orifice = orifice_in
+	cum_spurt_intensity = max(spurt_count, 1)
 	return ..(new_owner)
 
 /datum/status_effect/creampie_leak/long
@@ -550,8 +560,9 @@
 /datum/status_effect/facial/tick()
 	has_dried_up = TRUE
 
-/datum/status_effect/facial/proc/refresh_cum()
+/datum/status_effect/facial/proc/refresh_cum(spurt_count = 1)
 	has_dried_up = FALSE
+	cum_spurt_intensity = max(cum_spurt_intensity, spurt_count)
 	tick_interval = world.time + initial(tick_interval)
 
 ///Callback to remove pearl necklace
@@ -1081,10 +1092,11 @@
 					ejaculate()
 					if(splashed_user)
 						var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+						var/spurt_count = get_load_bursts()
 						if(!facial)
-							splashed_user.apply_status_effect(/datum/status_effect/facial)
+							splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
 						else
-							facial.refresh_cum()
+							facial.refresh_cum(spurt_count)
 						modular_record_collar_receive_event(splashed_user, user)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
@@ -1095,10 +1107,11 @@
 	ejaculate()
 	if(splashed_user)
 		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+		var/spurt_count = get_load_bursts()
 		if(!facial)
-			splashed_user.apply_status_effect(/datum/status_effect/facial)
+			splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
 		else
-			facial.refresh_cum()
+			facial.refresh_cum(spurt_count)
 		modular_record_collar_receive_event(splashed_user, user)
 
 /datum/sex_controller/proc/handle_container_ejaculation()

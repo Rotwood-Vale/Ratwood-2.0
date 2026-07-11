@@ -1,7 +1,6 @@
 /datum/sex_action/titsmother
 	name = "Smother them with boobs"
 	subtle_supported = TRUE
-	
 
 /datum/sex_action/titsmother/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -9,7 +8,7 @@
 	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
-		return
+		return FALSE
 	return TRUE
 
 /datum/sex_action/titsmother/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -24,6 +23,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/titsmother/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("My chest needs to be accessible."))
@@ -47,14 +47,14 @@
 
 	// Fat titty smash (only possible with massive/heaping/obscene size breasts)
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
-		if(breasts.breast_size > 6)	
+		if(breasts.breast_size > 6)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				user.sexcon.try_jaw_crush(target)
-	
+
 	// User pleasure
 	user.sexcon.perform_sex_action(user, 1, 0, TRUE)
 	user.sexcon.handle_passive_ejaculation(user)
-	
+
 	// Target pleasure
 	user.sexcon.perform_sex_action(target, 1, 0.2, FALSE)
 	target.sexcon.handle_passive_ejaculation(target)
@@ -72,4 +72,3 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
-
