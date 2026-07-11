@@ -33,7 +33,7 @@
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
 
-/datum/sex_action/proc/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/proc/base_on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(require_grab && user && target)
 		var/grabstate = user.get_highest_grab_state_on(target)
 		if(grabstate == null || grabstate < required_grab_state)
@@ -61,6 +61,9 @@
 		to_chat(user, span_notice("I can't use my cock right now."))
 		return TRUE
 	return FALSE
+
+/datum/sex_action/proc/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return base_on_failed_start(user, target)
 
 /datum/sex_action/proc/user_has_both_accessible_feet(mob/living/carbon/human/user)
 	if(!user)
