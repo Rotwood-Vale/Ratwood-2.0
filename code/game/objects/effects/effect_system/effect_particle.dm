@@ -77,6 +77,7 @@
 	appearance_flags = PIXEL_SCALE
 	var/particle_type = null
 	var/atom/movable/host
+	var/tmp/initial_owner_type // used for harddel tracking
 
 
 /obj/particle_emitter/Initialize(mapload, time, _color, _host)
@@ -88,12 +89,21 @@
 		QDEL_IN(src, time)
 	color = _color
 	host = _host
+	if(host)
+		initial_owner_type = host.type
 
 /obj/particle_emitter/Destroy(force)
 	. = ..()
 	if(host)
 		host.particle_emitters -= src
 		host = null
+
+/obj/particle_emitter/dump_harddel_info()
+	. = ..()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Owner's type: [initial_owner_type]"
 
 /obj/particle_emitter/smoke
 	layer = FIRE_LAYER
