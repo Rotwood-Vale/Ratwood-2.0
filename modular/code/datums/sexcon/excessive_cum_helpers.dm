@@ -1,11 +1,4 @@
 //Modular helper for adding excessive cum fetish options, primarily additional messages shown to participants
-#define EXCESSIVE_CUM_CONTEXT_SOLO 1
-#define EXCESSIVE_CUM_CONTEXT_ORAL 2
-#define EXCESSIVE_CUM_CONTEXT_FACE 3
-#define EXCESSIVE_CUM_CONTEXT_BODY 4
-#define EXCESSIVE_CUM_CONTEXT_VAGINAL 5
-#define EXCESSIVE_CUM_CONTEXT_ANAL 6
-#define EXCESSIVE_CUM_CONTEXT_CONTAINER 7
 
 /proc/modular_excessive_knot_spurt_store()
 	var/static/list/store = list()

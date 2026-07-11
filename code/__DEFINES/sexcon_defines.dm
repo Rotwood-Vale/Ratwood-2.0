@@ -79,6 +79,15 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SPURT_EXCESSIVE_MULTIPLIER 2
 #define SEMEN_VOLUME_EXCESSIVE_MULTIPLIER 2
 
+// Excessive cum summary contexts (shared across core and modular sexcon code).
+#define EXCESSIVE_CUM_CONTEXT_SOLO 1
+#define EXCESSIVE_CUM_CONTEXT_ORAL 2
+#define EXCESSIVE_CUM_CONTEXT_FACE 3
+#define EXCESSIVE_CUM_CONTEXT_BODY 4
+#define EXCESSIVE_CUM_CONTEXT_VAGINAL 5
+#define EXCESSIVE_CUM_CONTEXT_ANAL 6
+#define EXCESSIVE_CUM_CONTEXT_CONTAINER 7
+
 #define SEX_CATEGORY_NULL 0
 #define SEX_CATEGORY_MISC (1<<0)
 #define SEX_CATEGORY_HANDS (1<<1)

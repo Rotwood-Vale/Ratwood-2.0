@@ -618,7 +618,7 @@
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
-	var/cum_summary_context = EXCESSIVE_CUM_CONTEXT_SOLO
+	var/cum_summary_context = 1
 	var/obj/item/reagent_containers/glass/cum_chalice = null
 	add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
 	modular_emit_excessive_solo_spurts()
@@ -636,7 +636,7 @@
 		else
 			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
 		modular_emit_excessive_solo_spurts(cum_chalice)
-		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
+		cum_summary_context = 7
 		modular_announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
 		modular_announce_spurt_message()
 		after_ejaculation()
@@ -657,7 +657,7 @@
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
-		modular_announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
+		modular_announce_excessive_cum_summary(7, cum_chalice = C)
 	modular_announce_spurt_message()
 	after_ejaculation()
 
