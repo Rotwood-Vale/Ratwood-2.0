@@ -1,0 +1,4 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "The sex menu will now open using ctrl+shift+click in addition to MMB drag."
