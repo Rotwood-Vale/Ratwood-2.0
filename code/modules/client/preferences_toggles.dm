@@ -102,7 +102,7 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
-		list("id" = "no_redflash", "label" = "Disable Red Flashes", "enabled" = !!owner.prefs.shake, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
+		list("id" = "no_redflash", "label" = "Disable Red Flashes", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
