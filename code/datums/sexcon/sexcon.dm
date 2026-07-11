@@ -393,7 +393,7 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(show_excessive_cum_message)
-		announce_excessive_cum_summary(get_excessive_cum_summary_context(splashed_user, FALSE, cum_on_face), splashed_user)
+		modular_announce_excessive_cum_summary(modular_excessive_cum_context(splashed_user, FALSE, cum_on_face), splashed_user)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
@@ -442,7 +442,7 @@
 	if(try_impreg && !oral && effective_target && effective_target != user)
 		user.try_impregnate(effective_target)
 	if(show_excessive_cum_message)
-		announce_excessive_cum_summary(get_excessive_cum_summary_context(splashed_user, oral, FALSE, orifice), splashed_user)
+		modular_announce_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
 	after_ejaculation(consume_charge)
 	after_intimate_climax(oral, splashed_user)
 
@@ -618,11 +618,11 @@
 	var/cum_summary_context = EXCESSIVE_CUM_CONTEXT_SOLO
 	var/obj/item/reagent_containers/glass/cum_chalice = null
 	add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
-	emit_excessive_solo_spurts()
+	modular_emit_excessive_solo_spurts()
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
-		announce_excessive_cum_summary(cum_summary_context)
+		modular_announce_excessive_cum_summary(cum_summary_context)
 		after_ejaculation()
 		return
 	cum_chalice = locate() in cur_loc
@@ -631,12 +631,12 @@
 			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
 		else
 			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
-		emit_excessive_solo_spurts(cum_chalice)
+		modular_emit_excessive_solo_spurts(cum_chalice)
 		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
-		announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
+		modular_announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
 		after_ejaculation()
 		return
-	announce_excessive_cum_summary(cum_summary_context)
+	modular_announce_excessive_cum_summary(cum_summary_context)
 	after_ejaculation()
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
@@ -650,8 +650,8 @@
 			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
-		emit_excessive_solo_spurts(C, add_floor = FALSE)
-		announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
+		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
+		modular_announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
 	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
@@ -661,7 +661,7 @@
 	// Volume now derives from the same STACON-centered load scaling used for bursts/charge.
 	var/volume = 1 + floor((get_load_scaling_value() + 1) / LOAD_BURST_STEP)
 	volume += get_knot_volume_bonus()
-	if(participants_allow_excessive_cum())
+	if(modular_excessive_cum_enabled())
 		volume *= SEMEN_VOLUME_EXCESSIVE_MULTIPLIER
 		return max(volume, SEMEN_VOLUME_MIN)
 	return clamp(volume, SEMEN_VOLUME_MIN, SEMEN_VOLUME_MAX)
@@ -676,89 +676,10 @@
 	additional_spurts += get_spurt_trait_bonus()
 	additional_spurts += get_spurt_species_bonus()
 	additional_spurts += get_spurt_ball_size_bonus()
-	if(participants_allow_excessive_cum())
+	if(modular_excessive_cum_enabled())
 		additional_spurts *= SPURT_EXCESSIVE_MULTIPLIER
 		return max(additional_spurts, SPURT_ADDITIONAL_MIN)
 	return clamp(additional_spurts, SPURT_ADDITIONAL_MIN, SPURT_ADDITIONAL_MAX)
-
-/datum/sex_controller/proc/participants_allow_excessive_cum()
-	if(!user?.client?.prefs?.excessive_cum)
-		return FALSE
-	if(!target || target == user)
-		return TRUE
-	return !!target.client?.prefs?.excessive_cum
-
-
-/datum/sex_controller/proc/get_excessive_cum_summary_context(mob/living/carbon/human/splashed_user = null, oral = FALSE, cum_on_face = TRUE, orifice = SEX_PART_NULL, obj/item/reagent_containers/glass/cum_chalice = null)
-	if(!splashed_user || splashed_user == user)
-		return cum_chalice ? EXCESSIVE_CUM_CONTEXT_CONTAINER : EXCESSIVE_CUM_CONTEXT_SOLO
-	if(oral)
-		return EXCESSIVE_CUM_CONTEXT_ORAL
-	if(orifice & SEX_PART_CUNT && !(orifice & SEX_PART_ANUS))
-		return EXCESSIVE_CUM_CONTEXT_VAGINAL
-	if(orifice & SEX_PART_ANUS && !(orifice & SEX_PART_CUNT))
-		return EXCESSIVE_CUM_CONTEXT_ANAL
-	if(cum_on_face)
-		return EXCESSIVE_CUM_CONTEXT_FACE
-	return EXCESSIVE_CUM_CONTEXT_BODY
-
-/datum/sex_controller/proc/get_excessive_cum_summary_messages(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null)
-	var/list/messages = list(
-		"user" = null,
-		"receiver" = null,
-	)
-	if(!participants_allow_excessive_cum())
-		return messages
-	switch(context)
-		if(EXCESSIVE_CUM_CONTEXT_CONTAINER)
-			messages["user"] = "I've dumped a huge load into [cum_chalice]..."
-		if(EXCESSIVE_CUM_CONTEXT_SOLO)
-			messages["user"] = "I've wasted a huge load..."
-		if(EXCESSIVE_CUM_CONTEXT_ORAL)
-			messages["receiver"] = "My belly is filled with hot spunk..."
-			messages["user"] = "I've pumped their belly full of hot spunk..."
-		if(EXCESSIVE_CUM_CONTEXT_VAGINAL)
-			messages["receiver"] = "My womb is completely full of their seed..."
-			messages["user"] = "I've pumped their womb full of my seed..."
-		if(EXCESSIVE_CUM_CONTEXT_ANAL)
-			messages["receiver"] = "My ass is completely full of their seed..."
-			messages["user"] = "I've pumped their ass full of my seed..."
-		if(EXCESSIVE_CUM_CONTEXT_FACE)
-			messages["receiver"] = "My body has been completely painted in cum..."
-			messages["user"] = "I've painted them in cum..."
-		if(EXCESSIVE_CUM_CONTEXT_BODY)
-			messages["receiver"] = "I feel a huge hot load splatter over me..."
-			messages["user"] = "I've painted them with a fat load..."
-	return messages
-
-/datum/sex_controller/proc/announce_excessive_cum_summary(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null)
-	var/list/messages = get_excessive_cum_summary_messages(context, splashed_user, cum_chalice)
-	if(!messages || (!messages["user"] && !messages["receiver"]))
-		return
-	if(messages["receiver"] && splashed_user && splashed_user != user)
-		to_chat(splashed_user, span_love(messages["receiver"]))
-	if(messages["user"])
-		to_chat(user, span_love(messages["user"]))
-
-/datum/sex_controller/proc/announce_spurt_message()
-	if(participants_allow_excessive_cum())
-		user.visible_message(span_love("[user] spurts!"), span_love("<i>Spurt!</i>"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-		return
-	to_chat(user, span_love("<i>Spurt!</i>"))
-
-/datum/sex_controller/proc/emit_excessive_solo_spurts(obj/item/reagent_containers/glass/cum_chalice = null, add_floor = TRUE)
-	if(!participants_allow_excessive_cum())
-		return
-	for(var/i = 1; i <= get_additional_spurts(); i++)
-		announce_spurt_message()
-		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-		if(add_floor)
-			add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
-		if(cum_chalice?.spillable)
-			if(user.getorganslot(ORGAN_SLOT_VAGINA))
-				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 1)
-			else
-				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
 
 /datum/sex_controller/proc/get_spurt_stacon_bonus()
 	// Additional spurts from CON only:
@@ -846,7 +767,7 @@
 
 /datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
 	set_arousal(40)
-	announce_spurt_message()
+		modular_announce_spurt_message()
 	if(consume_charge)
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
