@@ -106,3 +106,9 @@
 	name = "复原药剂瓶"
 	desc = "一瓶预装的复原药剂，泼于器物之上可将其崩解、复归为最初的原料。"
 	list_reagents = list(/datum/reagent/restorative_potion = 50)                  // 50 >= 10 的单件分解阈值，取即可用。
+
+// 荧光药水：饮下后自体持续发光，光强随体内残留药量强弱。预装 50 单位（与该药水的精炼产量一致，满量=最亮）。
+/obj/item/reagent_containers/glass/bottle/rogue/luminescent_potion
+	name = "荧光药水瓶"
+	desc = "一瓶预装的荧光药水，饮下可在一段时间内自体发光，且光芒随体内药量多寡而强弱变化。"
+	list_reagents = list(/datum/reagent/luminescent_potion = 50)                  // 预装 50 单位（与其它药水瓶一致）。

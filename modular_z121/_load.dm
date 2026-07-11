@@ -98,6 +98,13 @@
 // (/datum/crafting_recipe reqs) AND the anvil forging system (/datum/anvil_recipe req_bar/blade + additional_items),
 // spawns those materials on the floor, then deletes the item. Items with no recipe are left untouched.
 #include "alchemy/refining_potions/restorative_potion.dm"	// 复原药剂 (splash: item -> raw materials)
+// 荧光药水：气味"威仪"(5级,未占用,=抗火药剂fire_potion之smells_like，由太阳尘+地狱尘各3点凑成6点) +
+// 水70/魔力药水30；炼金2级(学徒)；产出50单位。饮后自体持续发光，光强(半径+强度)与体内残留药量正相关，
+// 每30秒消化1单位；发光经 mob_light(duration=0 永久光源) 实现，每代谢拍按 volume 用 set_light_range_power_color 动态刷新。
+// Luminescent potion: "majesty" scent (lvl5, unused, = fire_potion's smells_like; solardust 3 + infernaldust 3 = 6pts)
+// + 70 water/30 mana potion; alchemy lvl2 (Apprentice); 50u output; emits a continuous glow whose range+power scale
+// with the remaining volume in-body; 30s per unit; glow via mob_light(duration=0) live-updated each metabolize tick.
+#include "alchemy/refining_potions/luminescent_potion.dm"	// 荧光药水 (self-glow scaling with remaining volume)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
