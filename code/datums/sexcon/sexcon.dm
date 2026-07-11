@@ -369,8 +369,7 @@
 	log_combat(user, effective_target, "Came onto the target")
 	if(effective_target)
 		playsound(effective_target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	add_cum_floor(get_turf(effective_target || user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	add_cum_floor(get_turf(effective_target || user), do_big_puddle = should_make_big_cum_puddle())
 	if(splashed_user)
 		if(cum_on_face)
 			var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
@@ -612,8 +611,7 @@
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
-	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
-	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
+	add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
 	after_ejaculation()
 
 	var/cur_loc = get_turf(user)
@@ -644,38 +642,66 @@
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(!testes)
 		return 0
-	var/volume
-	switch(testes.ball_size)
-		if(MIN_TESTICLES_SIZE)
-			volume = 2
-		if(MAX_TESTICLES_SIZE)
-			volume = 4
-		else
-			volume = 3
-
-	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
-	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
-		volume += 1
-
-	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		volume *= 1.5
-	if(HAS_TRAIT(user, TRAIT_BIGGUY))
-		volume *= 1.5
-	if(is_species(user, /datum/species/gnoll))
-		volume *= 1.5
-	return floor(volume)
+	// Volume now derives from the same STACON-centered load scaling used for bursts/charge.
+	var/volume = 1 + floor((get_load_scaling_value() + 1) / LOAD_BURST_STEP)
+	volume += get_knot_volume_bonus()
+	return clamp(volume, SEMEN_VOLUME_MIN, SEMEN_VOLUME_MAX)
 
 /datum/sex_controller/proc/get_load_bursts()
-	switch(get_semen_volume())
-		if(4)
-			return 2
-		if(5 to INFINITY)
-			return 3
-		else
-			return 1
+	// Always keep one base ejaculation; additional spurts are layered on top.
+	return 1 + get_additional_spurts()
 
-/datum/sex_controller/proc/get_max_loads()
-	var/con = user.STACON
+/datum/sex_controller/proc/get_additional_spurts()
+	var/additional_spurts = 0
+	additional_spurts += get_spurt_stacon_bonus()
+	additional_spurts += get_spurt_trait_bonus()
+	additional_spurts += get_spurt_species_bonus()
+	additional_spurts += get_spurt_ball_size_bonus()
+	return clamp(additional_spurts, SPURT_ADDITIONAL_MIN, SPURT_ADDITIONAL_MAX)
+
+/datum/sex_controller/proc/get_spurt_stacon_bonus()
+	// Additional spurts from CON only:
+	// 10-11 => +0 additional (1 total), 12-13 => +1 additional (2 total), etc.
+	return floor(clamp(user.STACON - SPURT_STACON_BASELINE, 0, 99) / SPURT_STACON_STEP)
+
+/datum/sex_controller/proc/get_spurt_trait_bonus()
+	var/bonus = 0
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		bonus += SPURT_TRAIT_BONUS
+	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		bonus += SPURT_TRAIT_BONUS
+	return bonus
+
+/datum/sex_controller/proc/has_load_species_bonus()
+	if(is_species(user, /datum/species/gnoll))
+		return TRUE
+	if(istype(user, /mob/living/carbon/human/species/werewolf))
+		return TRUE
+	if(user?.mind?.has_antag_datum(/datum/antagonist/werewolf))
+		return TRUE
+	return FALSE
+
+/datum/sex_controller/proc/get_spurt_species_bonus()
+	if(has_load_species_bonus())
+		return SPURT_SPECIES_BONUS
+	return 0
+
+/datum/sex_controller/proc/get_spurt_ball_size_bonus()
+	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testes)
+		return 0
+	switch(testes.ball_size)
+		if(MIN_TESTICLES_SIZE)
+			return -SPURT_BALLSIZE_SMALL_PENALTY
+		if(MAX_TESTICLES_SIZE)
+			return SPURT_BALLSIZE_LARGE_BONUS
+	return 0
+
+/datum/sex_controller/proc/should_make_big_cum_puddle()
+	// Big puddles start once the user scales beyond baseline output.
+	return get_additional_spurts() >= LOAD_BIG_PUDDLE_ADDITIONAL_THRESHOLD
+
+/datum/sex_controller/proc/get_base_loads_from_anatomy()
 	var/minimum_loads = 3
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(testes)
@@ -684,14 +710,34 @@
 				minimum_loads = 2
 			if(MAX_TESTICLES_SIZE)
 				minimum_loads = 4
-	var/loads = minimum_loads + floor(clamp((con - 10) * 2, 0, 99) / 2)
+	return minimum_loads
+
+/datum/sex_controller/proc/get_stacon_load_bonus()
+	return floor(clamp((user.STACON - LOAD_STACON_BASELINE) * LOAD_STACON_STEP_MULTIPLIER, 0, LOAD_STACON_BONUS_CAP) / LOAD_STACON_STEP_MULTIPLIER)
+
+/datum/sex_controller/proc/get_load_trait_multiplier()
+	var/multiplier = 1
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		loads *= 1.5
+		multiplier *= LOAD_TRAIT_MULTIPLIER
 	if(HAS_TRAIT(user, TRAIT_BIGGUY))
-		loads *= 1.5
-	if(is_species(user, /datum/species/gnoll))
-		loads *= 1.5
+		multiplier *= LOAD_TRAIT_MULTIPLIER
+	if(has_load_species_bonus())
+		multiplier *= LOAD_TRAIT_MULTIPLIER
+	return multiplier
+
+/datum/sex_controller/proc/get_knot_volume_bonus()
+	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(shaft?.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		return 1
+	return 0
+
+/datum/sex_controller/proc/get_load_scaling_value()
+	var/loads = get_base_loads_from_anatomy() + get_stacon_load_bonus()
+	loads *= get_load_trait_multiplier()
 	return floor(loads)
+
+/datum/sex_controller/proc/get_max_loads()
+	return get_load_scaling_value()
 
 /// Returns the max charge based on dynamic load count
 /datum/sex_controller/proc/get_max_charge()

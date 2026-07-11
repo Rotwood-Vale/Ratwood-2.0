@@ -56,6 +56,27 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define IMPREG_PROB_INCREMENT 10
 #define IMPREG_PROB_MAX 95
 
+// Unified load/semen scaling tuning knobs.
+#define LOAD_STACON_BASELINE 10
+#define LOAD_STACON_STEP_MULTIPLIER 2
+#define LOAD_STACON_BONUS_CAP 99
+#define LOAD_TRAIT_MULTIPLIER 1.5
+#define LOAD_BURST_STEP 2
+#define LOAD_BURST_ADDITIONAL_MAX 10
+#define LOAD_BIG_PUDDLE_ADDITIONAL_THRESHOLD 2
+#define SEMEN_VOLUME_MIN 2
+#define SEMEN_VOLUME_MAX 13
+
+// Spurts are now tuned independently from max loads/charge for easier balancing.
+#define SPURT_STACON_BASELINE 10
+#define SPURT_STACON_STEP 5
+#define SPURT_TRAIT_BONUS 1
+#define SPURT_SPECIES_BONUS 1
+#define SPURT_BALLSIZE_SMALL_PENALTY 1
+#define SPURT_BALLSIZE_LARGE_BONUS 1
+#define SPURT_ADDITIONAL_MIN 0
+#define SPURT_ADDITIONAL_MAX 5
+
 #define SEX_CATEGORY_NULL 0
 #define SEX_CATEGORY_MISC (1<<0)
 #define SEX_CATEGORY_HANDS (1<<1)
