@@ -1176,12 +1176,12 @@
 		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
 			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
 			return
-		src.compliance = 0
+		compliance = FALSE
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will struggle against grabs as usual."))
 	else
-		src.compliance = 1
+		compliance = TRUE
 		apply_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will allow all grabs and resistance attempts by others."))

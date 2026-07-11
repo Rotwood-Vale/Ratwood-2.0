@@ -136,6 +136,8 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),\
+		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
 	)
 
 	data["categories"] = list(
@@ -229,6 +231,10 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("facial_branding")
+				owner.toggle_facial_brands()
+			if("sensitive_branding")
+				owner.toggle_sensitive_brands()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -438,6 +444,30 @@
 			if(hascall(src, "modular_handle_extreme_erp_toggle_disable"))
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
+
+/client/verb/toggle_facial_brands()
+	set category = "Options"
+	set name = "Toggle Facial Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.facial_brands = !prefs.facial_brands
+		prefs.save_preferences()
+		if(prefs.facial_brands)
+			to_chat(src, "Your head area can now be branded by others.")
+		else
+			to_chat(src, "Your head area can no longer be branded by others.")
+
+/client/verb/toggle_sensitive_brands()
+	set category = "Options"
+	set name = "Toggle Sensitive Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.sensitive_brands = !prefs.sensitive_brands
+		prefs.save_preferences()
+		if(prefs.sensitive_brands)
+			to_chat(src, "Your genital and breast organs can now be branded by others.")
+		else
+			to_chat(src, "Your genital and breast organs can no longer be branded by others.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"

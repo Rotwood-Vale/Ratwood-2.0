@@ -755,8 +755,8 @@
 	offset_f = OFFSET_ARMOR_F
 	dismemberable = FALSE
 
-	/// Branded writing unique for chest so it can be applied to buttocks
 	var/branded_writing_on_buttocks = ""
+	var/branded_writing_on_stomach = ""
 
 	grid_width = 64
 	grid_height = 96
