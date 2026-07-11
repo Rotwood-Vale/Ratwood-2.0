@@ -116,6 +116,14 @@
 // 万能修复/变性/媚药）补一个"预装 50 单位该药水的玻璃瓶物品"，使其能作为即用消耗品在商店兑换。
 // Pre-filled bottles for the module's custom potions, so they can be sold as ready-to-use consumables.
 #include "items/custom_potion_bottles.dm"
+// 自定义物品：贤者之石（Philosopher's Stone）——炼金终极造物，一件手持道具驱动三种奇迹：
+// ①点石成金（点击石头→金矿石，无冷却）；②净水嬗变（点击含水容器→任选一种主线炼金药水，冷却3分钟）；
+// ③凭空造物（对自身使用→按名称搜索并创造价值>1的物品，冷却时间与其价值正相关）。仅调用主线现成
+// 类型/接口（rogueore/gold、/datum/reagents、/datum/alch_cauldron_recipe、sellprice），不改动模块外文件。
+// Custom item: Philosopher's Stone — three alchemical miracles from one held tool:
+// (1) stone->gold ore (no cooldown), (2) water-in-container -> any vanilla alchemy potion (3-min cooldown),
+// (3) create an item from nothing, searched by name, value>1 only, cooldown scaling with the item's value.
+#include "items/philosophers_stone.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"
