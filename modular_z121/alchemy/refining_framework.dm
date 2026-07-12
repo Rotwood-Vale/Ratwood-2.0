@@ -131,6 +131,15 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 /obj/machinery/light/rogue/cauldron/refining
 	name = "精炼炼药锅"										// Distinct in-game name.
 	desc = "一口内壁镶着导流纹的精铁药锅。除清水外，还能以油、酒等单一或复合液体为底料，循炼金材料的气味精炼出药剂。"	// Flavour + mechanic hint.
+	// 中文：★起沸所需液量下限★——从父类的 90 下调为 60。
+	//   WHY：熬制循环 process() 靠 `reagents.total_volume >= waterneed` 判断"液体是否够多可以升温起沸"。
+	//        部分精炼配方(如【愚人药水】)的底料本就只有 60 单位(题面指定"板油 60")；若沿用 90 则永远无法起沸、
+	//        根本炼不出来。下调为 60 后这类低量底料的配方即可正常熬制。
+	//   为何无害：waterneed 是"起沸所需的【下限】"而非上限——既有那些底料≥90 的配方(总量 100/110…)依旧远超
+	//        60，照常起沸、照常在第 20 拍按其完整底料结算；下调只会"允许更少液量也能起沸"，绝不会破坏它们。
+	//        且本改动仅作用于本【精炼炼药锅子类型】，不触及原版炼药锅(它仍是 90)。折叠锅的下限本就是 60，本
+	//        进阶装置与之持平也合乎直觉。
+	waterneed = 60											// Lower the boil threshold to 60 so low-volume bases (e.g. the 60u Idiot Potion) can brew; harmless floor, not a ceiling.
 
 // 中文：覆盖熬制循环。节奏沿用原版(点火→投料→沸腾计时 0..20→第 20 拍结算)，但把"只认水的产物"
 //       改为"按材料气味选出配方家族 + 按液体底料决定产物"。

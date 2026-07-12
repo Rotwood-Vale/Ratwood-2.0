@@ -98,6 +98,21 @@
 // (/datum/crafting_recipe reqs) AND the anvil forging system (/datum/anvil_recipe req_bar/blade + additional_items),
 // spawns those materials on the floor, then deletes the item. Items with no recipe are left untouched.
 #include "alchemy/refining_potions/restorative_potion.dm"	// 复原药剂 (splash: item -> raw materials)
+// 荧光药水：气味"威仪"(5级,未占用,=抗火药剂fire_potion之smells_like，由太阳尘+地狱尘各3点凑成6点) +
+// 水70/魔力药水30；炼金2级(学徒)；产出50单位。饮后自体持续发光，光强(半径+强度)与体内残留药量正相关，
+// 每30秒消化1单位；发光经 mob_light(duration=0 永久光源) 实现，每代谢拍按 volume 用 set_light_range_power_color 动态刷新。
+// Luminescent potion: "majesty" scent (lvl5, unused, = fire_potion's smells_like; solardust 3 + infernaldust 3 = 6pts)
+// + 70 water/30 mana potion; alchemy lvl2 (Apprentice); 50u output; emits a continuous glow whose range+power scale
+// with the remaining volume in-body; 30s per unit; glow via mob_light(duration=0) live-updated each metabolize tick.
+#include "alchemy/refining_potions/luminescent_potion.dm"	// 荧光药水 (self-glow scaling with remaining volume)
+// 愚人药水：气味"水"(5级,未占用,=锐思药剂int_potion之smells_like，由水之精质+原初精质各3点凑成6点) +
+// 板油(leaf lard)60；炼金3级(熟练)；产出30单位。饮后一段时间内智力-8、神志混沌(所有言语变成失语症般无人能懂
+// 的蠢笨呓语+简语)、并因混乱(confused随机乱走)与中度醉意(drunkenness=45，踉跄眩晕却<51不中毒)而步履失控。
+// 效果由减益状态 /datum/status_effect/debuff/idiot_potion 承载，随药剂代谢生命周期施加/刷新/解除；30秒消化1单位。
+// Idiot potion: "water" scent (lvl5, unused, = int_potion's smells_like; waterdust 3 + runedust 3 = 6pts)
+// + 60 leaf lard (tallow); alchemy lvl3 (Journeyman); 30u output; for a while: INT -8, garbled idiotic speech
+// (aphasia + simplespeech) and an uncontrolled staggering walk (confused + non-lethal drunkenness); 30s per unit.
+#include "alchemy/refining_potions/idiot_potion.dm"		// 愚人药水 (INT -8 + garbled speech + uncontrolled drunken walk)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
@@ -109,6 +124,14 @@
 // 万能修复/变性/媚药）补一个"预装 50 单位该药水的玻璃瓶物品"，使其能作为即用消耗品在商店兑换。
 // Pre-filled bottles for the module's custom potions, so they can be sold as ready-to-use consumables.
 #include "items/custom_potion_bottles.dm"
+// 自定义物品：贤者之石（Philosopher's Stone）——炼金终极造物，一件手持道具驱动三种奇迹：
+// ①点石成金（点击石头→金矿石，无冷却）；②净水嬗变（点击含水容器→任选一种主线炼金药水，冷却3分钟）；
+// ③凭空造物（对自身使用→按名称搜索并创造价值>1的物品，冷却时间与其价值正相关）。仅调用主线现成
+// 类型/接口（rogueore/gold、/datum/reagents、/datum/alch_cauldron_recipe、sellprice），不改动模块外文件。
+// Custom item: Philosopher's Stone — three alchemical miracles from one held tool:
+// (1) stone->gold ore (no cooldown), (2) water-in-container -> any vanilla alchemy potion (3-min cooldown),
+// (3) create an item from nothing, searched by name, value>1 only, cooldown scaling with the item's value.
+#include "items/philosophers_stone.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"
