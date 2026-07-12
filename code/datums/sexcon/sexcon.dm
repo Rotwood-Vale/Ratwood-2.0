@@ -537,7 +537,7 @@
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
 	var/orifice = SEX_PART_NULL
 	var/cum_spurt_intensity = 1
- 	var/suppress_start_message = FALSE
+	var/suppress_start_message = FALSE
 
 /datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL, spurt_count = 1, suppress_start_message_in = FALSE)
 	orifice = orifice_in
@@ -621,7 +621,10 @@
 		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
 		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
 		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE, try_impreg = !is_oral_knot)
+		var/bursts = get_load_bursts()
+		for(var/i = 1; i <= bursts; i++)
+			cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE, consume_charge = i == 1 ? TRUE : FALSE, try_impreg = !is_oral_knot, show_excessive_cum_message = i == bursts)
+			sleep(10)
 		return
 	var/climax_msg = "[user] makes a mess!"
 	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)

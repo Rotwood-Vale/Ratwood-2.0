@@ -70,10 +70,17 @@
 
 /// Emits the public/private spurt chat line for a single burst.
 /datum/sex_controller/proc/modular_announce_spurt_message()
+	var/has_penis = !!user.getorganslot(ORGAN_SLOT_PENIS)
+	var/has_vagina = !!user.getorganslot(ORGAN_SLOT_VAGINA)
+	var/public_verb = "spurts"
+	var/private_text = "Spurt!"
+	if(has_vagina && !has_penis)
+		public_verb = "squirts"
+		private_text = "Squirt!"
 	if(modular_excessive_cum_enabled())
-		user.visible_message(span_love("[user] spurts!"), span_love("<i>Spurt!</i>"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(span_love("[user] [public_verb]!"), span_love("<i>[private_text]</i>"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 		return
-	to_chat(user, span_love("<i>Spurt!</i>"))
+	to_chat(user, span_love("<i>[private_text]</i>"))
 
 /// Emits additional solo/container spurts for the excessive-cum feature.
 /datum/sex_controller/proc/modular_emit_excessive_solo_spurts(obj/item/reagent_containers/glass/cum_chalice = null, add_floor = TRUE)
