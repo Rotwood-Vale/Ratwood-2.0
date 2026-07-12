@@ -1,0 +1,4 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Added a \"freeuse\" sexcon toggle that makes it so that sex actions targeting you will bypass any positioning or clothing checks."

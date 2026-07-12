@@ -148,6 +148,31 @@
 	cost = 40
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver/elvish)
 
+/datum/supply_pack/rogue/Knave/rapier
+	name = "Rapier"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/rapier)
+
+/datum/supply_pack/rogue/Knave/sabre
+	name = "Sabre"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/sabre)
+
+/datum/supply_pack/rogue/Knave/messer
+	name = "Messer"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/short/messer)
+
+/datum/supply_pack/rogue/Knave/falchion
+	name = "Falchion"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/short/falchion)
+
+/datum/supply_pack/rogue/Knave/estoc
+	name = "Estoc"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/estoc)
+
 //////////////////////
 // WEAPONS - RANGED //
 //////////////////////
