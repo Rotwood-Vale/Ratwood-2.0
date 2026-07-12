@@ -59,13 +59,18 @@
 	if(!user_sexcon || !btm_sexcon)
 		return
 
-	if(!user_sexcon.do_knot_action && !(knot_swap_roles && btm_sexcon.do_knot_action_as_bottom))
+	if(knot_swap_roles)
+		// In inverted-role actions (e.g. riding/blowjob), only the receptive actor's
+		// explicit "force knot" toggle should initiate a knot.
+		if(!btm_sexcon.do_knot_action_as_bottom)
+			return
+	else if(!user_sexcon.do_knot_action)
 		return
 	if(!user.sexcon.knot_penis_type()) // don't have that dog in 'em
 		return
 	if(!btm.client?.prefs?.sexable)
 		return
-	var/btm_forced = knot_swap_roles && btm_sexcon.do_knot_action_as_bottom && !user_sexcon.do_knot_action
+	var/btm_forced = knot_swap_roles && btm_sexcon.do_knot_action_as_bottom
 	if(user_sexcon.considered_limp())
 		if(!user.sexcon.knotted_status)
 			to_chat(user, span_notice("My [user.sexcon.get_knot_synonym()] was too soft to tie."))
