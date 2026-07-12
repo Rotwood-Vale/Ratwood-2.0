@@ -25,6 +25,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/frotting/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
 		return
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))

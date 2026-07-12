@@ -20,6 +20,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/tailpegging_anal/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
 		to_chat(user, span_notice("Their groin needs to be accessible."))
 
@@ -38,8 +39,9 @@
 /datum/sex_action/tailpegging_anal/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls their tail out of [target]'s ass."))
 
-/datum/sex_action/tailpegging_anal/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(target.sexcon.finished_check())
+/datum/sex_action/tailpegging_vaginal/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("Their groin needs to be accessible."))
 		return TRUE
 	return FALSE
 

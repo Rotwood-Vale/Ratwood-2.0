@@ -18,6 +18,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/rimming/on_failed_start(mob/living/user, mob/living/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
 		to_chat(user, span_notice("Their groin needs to be accessible."))
 		return

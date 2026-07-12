@@ -16,6 +16,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/armpit_nuzzle/on_failed_start(mob/living/user, mob/living/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
 		to_chat(user, span_notice("Their chest needs to be accessible."))
 		return

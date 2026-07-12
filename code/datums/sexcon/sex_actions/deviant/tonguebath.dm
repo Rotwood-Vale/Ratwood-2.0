@@ -24,6 +24,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/tonguebath/on_failed_start(mob/living/user, mob/living/target)
 	if(!can_reach_selected_zone(user, target))
 		switch(user.zone_selected)
 			if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_EARS, BODY_ZONE_PRECISE_NECK)

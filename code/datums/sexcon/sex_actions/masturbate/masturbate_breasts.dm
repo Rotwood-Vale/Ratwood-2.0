@@ -19,6 +19,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/masturbate_breasts/on_failed_start(mob/living/user, mob/living/target)
 	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))
 		to_chat(user, span_notice("My chest needs to be accessible."))
 		return TRUE

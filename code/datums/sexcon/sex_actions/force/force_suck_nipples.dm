@@ -32,6 +32,7 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/force_suck_nipples/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(..())
 		return TRUE
 	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))

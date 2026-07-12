@@ -712,9 +712,11 @@
 		if(cum_chalice?.spillable)
 			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
 			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = semen_amount)
+		if(i == 1)
+			// Apply climax lockout immediately so passive processing cannot re-enter orgasm during inter-burst sleeps.
+			after_ejaculation()
 		if(i < bursts)
 			sleep(10)
-	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
