@@ -365,13 +365,9 @@
 /datum/sex_controller/proc/cum_onto(mob/living/carbon/human/splashed_user = null, cum_on_face = TRUE, show_excessive_cum_message = TRUE)
 	if(try_resist_orgasm())
 		return
-	modular_announce_spurt_message()
 	var/spurt_count = get_load_bursts()
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came onto the target")
-	if(effective_target)
-		playsound(effective_target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-	add_cum_floor(get_turf(effective_target || user), do_big_puddle = should_make_big_cum_puddle())
 	if(splashed_user)
 		if(cum_on_face)
 			var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
@@ -394,9 +390,9 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	run_spurt_sequence(sound_target = effective_target, add_floor = TRUE)
 	if(show_excessive_cum_message)
 		modular_schedule_excessive_cum_summary(modular_excessive_cum_context(splashed_user, FALSE, cum_on_face), splashed_user)
-	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
@@ -662,25 +658,25 @@
 		if(has_chastity_cage() || has_chastity_anal())
 			climax_msg = "[user] climaxes and makes a mess in their chastity device!"
 	user.visible_message(span_love(climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-	playsound(user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 	var/semen_vol = get_semen_volume()
 	var/cum_summary_context = EXCESSIVE_CUM_CONTEXT_SOLO
 	var/obj/item/reagent_containers/glass/cum_chalice = null
-	add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
-	modular_emit_excessive_solo_spurts()
+	var/add_floor = TRUE
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
-		finalize_post_spurt_ejaculation(cum_summary_context)
+		add_floor = FALSE
+		run_spurt_sequence(sound_target = user, add_floor = add_floor, semen_amount = semen_vol)
+		modular_schedule_excessive_cum_summary(cum_summary_context)
 		return
 	cum_chalice = locate() in cur_loc
 	if(cum_chalice?.spillable) // leak contents underneath the first found open container
-		add_ejaculate_to_container(cum_chalice, femcum_amount = 1, semen_amount = semen_vol)
-		modular_emit_excessive_solo_spurts(cum_chalice)
+		run_spurt_sequence(sound_target = user, cum_chalice = cum_chalice, add_floor = add_floor, semen_amount = semen_vol)
 		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
-		finalize_post_spurt_ejaculation(cum_summary_context, cum_chalice)
+		modular_schedule_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
 		return
-	finalize_post_spurt_ejaculation(cum_summary_context)
+	run_spurt_sequence(sound_target = user, add_floor = add_floor, semen_amount = semen_vol)
+	modular_schedule_excessive_cum_summary(cum_summary_context)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -688,12 +684,11 @@
 	if(C && istype(C))
 		log_combat(user, user, "Ejaculated into a container")
 		user.visible_message(span_love("[user] spills into [C]!"))
-		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-		add_ejaculate_to_container(C, femcum_amount = 2)
-		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
-		finalize_post_spurt_ejaculation(EXCESSIVE_CUM_CONTEXT_CONTAINER, C)
+		run_spurt_sequence(sound_target = user, cum_chalice = C, add_floor = FALSE, first_femcum_amount = 2, subsequent_femcum_amount = 1)
+		modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
 		return
-	finalize_post_spurt_ejaculation(EXCESSIVE_CUM_CONTEXT_SOLO)
+	run_spurt_sequence(sound_target = user, add_floor = FALSE)
+	modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_SOLO)
 
 /datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null)
 	if(!C?.reagents)
@@ -704,10 +699,19 @@
 	var/effective_semen_amount = isnull(semen_amount) ? get_semen_volume() : semen_amount
 	C.reagents.add_reagent(/datum/reagent/erpjuice/cum, effective_semen_amount)
 
-/datum/sex_controller/proc/finalize_post_spurt_ejaculation(context = EXCESSIVE_CUM_CONTEXT_SOLO, obj/item/reagent_containers/glass/cum_chalice = null, consume_charge = TRUE)
-	modular_schedule_excessive_cum_summary(context, cum_chalice = cum_chalice)
-	modular_announce_spurt_message()
-	after_ejaculation(consume_charge)
+/datum/sex_controller/proc/run_spurt_sequence(mob/living/carbon/human/sound_target = null, obj/item/reagent_containers/glass/cum_chalice = null, add_floor = TRUE, first_femcum_amount = 1, subsequent_femcum_amount = 1, semen_amount = null)
+	var/bursts = get_load_bursts()
+	for(var/i = 1; i <= bursts; i++)
+		modular_announce_spurt_message()
+		playsound(sound_target || user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
+		if(add_floor)
+			add_cum_floor(get_turf(sound_target || user), do_big_puddle = should_make_big_cum_puddle())
+		if(cum_chalice?.spillable)
+			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
+			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = semen_amount)
+		after_ejaculation(consume_charge = i == 1)
+		if(i < bursts)
+			sleep(10)
 
 /datum/sex_controller/proc/get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
