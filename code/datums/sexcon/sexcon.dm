@@ -750,11 +750,14 @@
 	// 10-11 => +0 additional (1 total), 12-13 => +1 additional (2 total), etc.
 	return floor(clamp(user.STACON - SPURT_STACON_BASELINE, 0, 99) / SPURT_STACON_STEP)
 
+// Traits for additional spurts
 /datum/sex_controller/proc/get_spurt_trait_bonus()
 	var/bonus = 0
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		bonus += SPURT_TRAIT_BONUS
 	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		bonus += SPURT_TRAIT_BONUS
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		bonus += SPURT_TRAIT_BONUS
 	return bonus
 
@@ -801,11 +804,14 @@
 /datum/sex_controller/proc/get_stacon_load_bonus()
 	return floor(clamp((user.STACON - LOAD_STACON_BASELINE) * LOAD_STACON_STEP_MULTIPLIER, 0, LOAD_STACON_BONUS_CAP) / LOAD_STACON_STEP_MULTIPLIER)
 
+// Traits for increasing load
 /datum/sex_controller/proc/get_load_trait_multiplier()
 	var/multiplier = 1
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		multiplier *= LOAD_TRAIT_MULTIPLIER
 	if(HAS_TRAIT(user, TRAIT_BIGGUY))
+		multiplier *= LOAD_TRAIT_MULTIPLIER
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))
 		multiplier *= LOAD_TRAIT_MULTIPLIER
 	if(has_load_species_bonus())
 		multiplier *= LOAD_TRAIT_MULTIPLIER
