@@ -18,8 +18,8 @@
 		return FALSE
 	return TRUE
 
-	if(user == target)
-		return
+
+/datum/sex_action/force_thighjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
 		to_chat(user, span_notice("They need a cock for that."))
 		return

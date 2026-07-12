@@ -25,9 +25,9 @@
 		return FALSE
 	return TRUE
 
+
+/datum/sex_action/force_titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(..())
-		return
-	if(user == target)
 		return
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
 		to_chat(user, span_notice("They need a cock for that."))
