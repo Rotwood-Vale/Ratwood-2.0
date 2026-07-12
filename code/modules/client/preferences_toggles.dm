@@ -135,7 +135,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
-		list("id" = "excessive_cum", "label" = "Enable Excessive Cum", "enabled" = !!owner.prefs.excessive_cum, "desc" = "Allow higher spurt counts and volume when all participants opt in, as well as other fetish messages"),
+		list("id" = "excessive_cum", "label" = "Enable Excessive Cum Content", "enabled" = !!owner.prefs.excessive_cum, "desc" = "Allow higher spurt counts and volume when all participants opt in, as well as extra cum related messages in various ERP scenarios"),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 	)
 
