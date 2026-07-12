@@ -41,7 +41,7 @@
 			if(!ispath(private_patron, /datum/patron/old_god))
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
 					var/pass = FALSE
-					if(H.patron?.type == private_patron || H.client?.prefs?.polytheist_patron?.type == private_patron || private_patron == /datum/patron/divine/xylix)	//Xylixians will always flash the observer's religion to them.
+					if(H.patron?.type == private_patron || (H.client?.prefs?.polytheist_patron != "NONE" && H.client?.prefs?.polytheist_patron?.type == private_patron) || private_patron == /datum/patron/divine/xylix)	//Xylixians will always flash the observer's religion to them.
 						vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[private_patron::name]", offset_list, y_offset, icon_plane)
 						pass = TRUE
 					else if(HAS_TRAIT(H, TRAIT_HERETIC_SEER) && ispath(private_patron, /datum/patron/inhumen))	//Seers should see all inhumen symbols.
@@ -52,7 +52,7 @@
 						H.playsound_local(T, soundin, 100, FALSE)
 			else
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
-					if(H.patron?.type == private_patron || H.client?.prefs?.polytheist_patron?.type == private_patron)
+					if(H.patron?.type == private_patron ||(H.client?.prefs?.polytheist_patron != "NONE" && H.client?.prefs?.polytheist_patron?.type == private_patron))
 						if(HAS_TRAIT(H, TRAIT_INQUISITION) && HAS_TRAIT(src, TRAIT_INQUISITION))	//Inquisition members will show a fancier symbol to one another.
 							vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[private_patron::name]inq", offset_list, y_offset, icon_plane)
 						else
