@@ -7,6 +7,10 @@
 /proc/modular_excessive_knot_spurt_key(mob/living/carbon/human/top, mob/living/carbon/human/btm, orifice)
 	return "[REF(top)]|[REF(btm)]|[orifice]"
 
+/proc/modular_get_knot_release_phonetic_list()
+	var/static/list/phonetics = list("Spurt...,", "Splurt...", "Squelch...", "Splosh...", "Glop...", "Squirk...")
+	return phonetics
+
 /// Returns TRUE if the excessive cum feature is enabled for the current action.
 /// Requires the user to opt in, and if there is a separate target, requires the target to opt in as well.
 /datum/sex_controller/proc/modular_excessive_cum_enabled()
@@ -47,7 +51,7 @@
 		EXCESSIVE_CUM_CONTEXT_ANAL = list("receiver" = "My ass is completely full of their seed...", "user" = "I've pumped their ass full of my seed..."),
 	)
 	if(context == EXCESSIVE_CUM_CONTEXT_CONTAINER)
-		messages["user"] = "I've dumped a huge load into [cum_chalice]..."
+		messages["user"] = cum_chalice ? "I've dumped a huge load into [cum_chalice]..." : "I've dumped a huge load..."
 		return messages
 	var/list/selected_messages = summary_messages[context]
 	if(!selected_messages)
@@ -132,19 +136,19 @@
 		"nearby" = null,
 	)
 	if(orifice & SEX_PART_JAWS)
-		messages["giver"] = "As my knot slips free, a wet stream of cum spills from their lips..."
-		messages["receiver"] = "As the knot slips free, hot cum spills from my lips..."
-		messages["nearby"] = "As [top] slips free of [btm], a wet stream spills from [btm.p_their()] lips."
+		messages["giver"] = "As my knot slips free, seed spurts from their lips..."
+		messages["receiver"] = "As the knot slips free, seed spurts from my lips..."
+		messages["nearby"] = "As [top] slips free of [btm], seed spurts from [btm.p_their()] lips."
 		return messages
 	if(orifice & SEX_PART_CUNT)
-		messages["giver"] = "As my knot slips free, a warm flood spills from their cunt..."
-		messages["receiver"] = "As the knot slips free, hot cum leaks from my cunt..."
-		messages["nearby"] = "As [top] slips free of [btm], a warm wet flood spills from [btm.p_their()] cunt."
+		messages["giver"] = "As my knot slips free, spunk spurts from their cunt..."
+		messages["receiver"] = "As the knot slips free, spunk spurts from my cunt..."
+		messages["nearby"] = "As [top] slips free of [btm], spunk spurts from [btm.p_their()] cunt."
 		return messages
 	if(orifice & SEX_PART_ANUS)
-		messages["giver"] = "As my knot slips free, a hot flood spills from their ass..."
-		messages["receiver"] = "As the knot slips free, hot cum leaks from my ass..."
-		messages["nearby"] = "As [top] slips free of [btm], a hot wet spill leaks from [btm.p_their()] ass."
+		messages["giver"] = "As my knot slips free, cum spurts from their asshole..."
+		messages["receiver"] = "As the knot slips free, cum spurts from my asshole..."
+		messages["nearby"] = "As [top] slips free of [btm], cum spurts from [btm.p_their()] asshole."
 		return messages
 	return messages
 
@@ -181,6 +185,27 @@
 		if(H == victim)
 			continue
 		to_chat(H, span_love("[victim] is spattered with some of the seed spilling from [leaker]"))
+
+
+/datum/sex_controller/proc/modular_announce_knot_release_spurt_message(mob/living/carbon/human/top, mob/living/carbon/human/btm, turf/release_turf)
+	if(!ishuman(top) || !ishuman(btm) || !release_turf)
+		return
+	if(!top.client?.prefs?.excessive_cum || !btm.client?.prefs?.excessive_cum)
+		return
+	var/list/recipients = list(top, btm)
+	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+		if(H == top || H == btm)
+			continue
+		recipients += H
+	var/list/phonetics = modular_get_knot_release_phonetic_list()
+	if(!islist(phonetics) || !length(phonetics))
+		return
+	var/phonetic = pick(phonetics)
+	var/message = span_love("[phonetic]")
+	for(var/mob/living/carbon/human/H in recipients)
+		if(!H.client?.prefs?.excessive_cum)
+			continue
+		to_chat(H, message)
 
 /datum/sex_controller/proc/modular_release_knot_spurt_pool(mob/living/carbon/human/top, mob/living/carbon/human/btm, knot_orifice = SEX_PART_NULL)
 	if(!ishuman(top) || !ishuman(btm))
@@ -230,6 +255,7 @@
 				splatter_diverted = TRUE
 		if(!splatter_diverted)
 			add_cum_floor(release_turf)
+		modular_announce_knot_release_spurt_message(top, btm, release_turf)
 		playsound(release_turf, pick('sound/misc/mat/endout.ogg'), 12, TRUE, -2, ignore_walls = FALSE)
 		if(i < spurt_count)
 			sleep(10)

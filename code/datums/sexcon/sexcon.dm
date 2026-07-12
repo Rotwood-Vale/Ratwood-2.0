@@ -462,7 +462,7 @@
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/modular_get_creampie_leak_verb()
-	return pick(list("Mmn~!", "Ahhn~!", "Fuck...~!", "Mnngg~!", "Mmphh~!", "Nnnnhhh~!")) //changed due to us having a lot of different messages now which kind of do the same thing. Instead of a leak message this is now just some subby shit when you get cummed in
+	return pick(list("Mmn~!", "Ahhn~!", "Fuck...~!", "Mnngg~!", "Mmphh~!", "Nnnnhhh~!", "Ah~!")) //changed due to us having a lot of different messages now which kind of do the same thing. Instead of a leak message this is now just some subby shit when you get cummed in
 
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1, suppress_start_message = FALSE)
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
@@ -471,7 +471,7 @@
 		existing.orifice |= orifice
 		existing.cum_spurt_intensity = max(existing.cum_spurt_intensity, spurt_count)
 		if(!suppress_start_message)
-			to_chat(target, span_love("I feel another [modular_get_creampie_leak_verb()] leaking out of me."))
+			to_chat(target, span_love("[modular_get_creampie_leak_verb()]"))
 		existing.duration = world.time + initial(existing.duration) // refresh timer
 		return
 	if(use_long || spurt_count >= CREAMPIE_LEAK_LONG_SPURT_THRESHOLD)
