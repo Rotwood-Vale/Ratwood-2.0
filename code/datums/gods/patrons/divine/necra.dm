@@ -1,7 +1,7 @@
 /datum/patron/divine/necra
 	name = "Necra"
 	domain = "Death, The Afterlife, Rebirth"
-	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
+	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Necra's followers are known for choosing to isolate themselves to their graveyards."
 	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
 	virtues = "Respecting the Dead, Sloth, Fatalism"
 	sins = "Undeath & Humor. Enabling an untimely death."
