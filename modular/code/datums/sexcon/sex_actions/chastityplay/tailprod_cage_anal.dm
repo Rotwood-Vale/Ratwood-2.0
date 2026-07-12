@@ -23,10 +23,6 @@
         return FALSE
     return TRUE
 
-    if(..())
-        return TRUE
-    return FALSE
-
 /datum/sex_action/chastityplay/tailprod_cage_anal/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] works [user.p_their()] tail tip under the lower edge of [target]'s rear shield, finding the gap between plate and skin."))
 
