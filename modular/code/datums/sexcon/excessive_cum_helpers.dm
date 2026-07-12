@@ -43,17 +43,17 @@
 	if(!modular_excessive_cum_enabled())
 		return messages
 	var/static/list/summary_messages = list(
-		EXCESSIVE_CUM_CONTEXT_SOLO = list("user" = "I've wasted a huge load..."),
-		EXCESSIVE_CUM_CONTEXT_ORAL = list("receiver" = "My belly is filled with hot spunk...", "user" = "I've pumped their belly full of hot spunk..."),
-		EXCESSIVE_CUM_CONTEXT_FACE = list("receiver" = "My face has been completely painted in cum...", "user" = "I've painted their face in cum..."),
-		EXCESSIVE_CUM_CONTEXT_BODY = list("receiver" = "I feel a huge hot load splatter over me...", "user" = "I've painted them with a fat load..."),
-		EXCESSIVE_CUM_CONTEXT_VAGINAL = list("receiver" = "My womb is completely full of their seed...", "user" = "I've pumped their womb full of my seed..."),
-		EXCESSIVE_CUM_CONTEXT_ANAL = list("receiver" = "My ass is completely full of their seed...", "user" = "I've pumped their ass full of my seed..."),
+		"[EXCESSIVE_CUM_CONTEXT_SOLO]" = list("user" = "I've wasted a huge load..."),
+		"[EXCESSIVE_CUM_CONTEXT_ORAL]" = list("receiver" = "My belly is filled with hot spunk...", "user" = "I've pumped their belly full of hot spunk..."),
+		"[EXCESSIVE_CUM_CONTEXT_FACE]" = list("receiver" = "My face has been completely painted in cum...", "user" = "I've painted their face in cum..."),
+		"[EXCESSIVE_CUM_CONTEXT_BODY]" = list("receiver" = "I feel a huge hot load splatter over me...", "user" = "I've painted them with a fat load..."),
+		"[EXCESSIVE_CUM_CONTEXT_VAGINAL]" = list("receiver" = "My womb is completely full of their seed...", "user" = "I've pumped their womb full of my seed..."),
+		"[EXCESSIVE_CUM_CONTEXT_ANAL]" = list("receiver" = "My ass is completely full of their seed...", "user" = "I've pumped their ass full of my seed..."),
 	)
 	if(context == EXCESSIVE_CUM_CONTEXT_CONTAINER)
 		messages["user"] = cum_chalice ? "I've dumped a huge load into [cum_chalice]..." : "I've dumped a huge load..."
 		return messages
-	var/list/selected_messages = summary_messages[context]
+	var/list/selected_messages = summary_messages["[context]"]
 	if(!selected_messages)
 		return messages
 	if(selected_messages["receiver"])

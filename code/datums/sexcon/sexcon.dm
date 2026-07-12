@@ -104,7 +104,7 @@
 	collar_bell_user = FALSE
 	collar_bell_target = FALSE
 	if(knotted_status)
-		knot_exit()
+		knot_exit_cleanup_only()
 	//receiving = list()
 	. = ..()
 

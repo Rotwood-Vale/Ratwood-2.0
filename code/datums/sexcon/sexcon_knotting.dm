@@ -460,8 +460,47 @@
 		btm.sexcon.knotted_forced_by_bottom = FALSE
 		log_combat(btm, btm, "Stopped knot tugging")
 	if(!keep_top_status && !keep_btm_status)
-		modular_release_knot_spurt_pool(top, btm, knot_orifice)
+		// This helper can sleep while emitting delayed spurts, so dispatch it asynchronously.
+		// knot_exit() is reachable from Destroy(), which must never block.
+		INVOKE_ASYNC(src, PROC_REF(modular_release_knot_spurt_pool), top, btm, knot_orifice)
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
+		if(src.user)
+			src.user.remove_status_effect(/datum/status_effect/knot_tied)
+			src.user.remove_status_effect(/datum/status_effect/knotted)
+			UnregisterSignal(src.user, COMSIG_MOVABLE_MOVED)
+		knotted_owner = null
+		knotted_recipient = null
+		knotted_status = KNOTTED_NULL
+		knotted_part = SEX_PART_NULL
+		knotted_part_partner = SEX_PART_NULL
+		knotted_forced_by_bottom = FALSE
+
+// Destroy() is SHOULD_NOT_SLEEP, so teardown must never call spurt-release helpers.
+/datum/sex_controller/proc/knot_exit_cleanup_only()
+	var/mob/living/carbon/human/top = knotted_owner
+	var/mob/living/carbon/human/btm = knotted_recipient
+	if(istype(top) && top?.sexcon?.knotted_status)
+		top.remove_status_effect(/datum/status_effect/knotted)
+		UnregisterSignal(top.sexcon.user, COMSIG_MOVABLE_MOVED)
+		top.sexcon.knotted_owner = null
+		top.sexcon.knotted_recipient = null
+		top.sexcon.knotted_status = KNOTTED_NULL
+		top.sexcon.knotted_part = SEX_PART_NULL
+		top.sexcon.knotted_part_partner = SEX_PART_NULL
+		top.sexcon.knotted_forced_by_bottom = FALSE
+		log_combat(top, top, "Stopped knot tugging")
+	if(istype(btm) && btm?.sexcon?.knotted_status)
+		btm.remove_status_effect(/datum/status_effect/knot_tied)
+		btm.reset_pull_offsets(btm, GRAB_AGGRESSIVE)
+		UnregisterSignal(btm.sexcon.user, COMSIG_MOVABLE_MOVED)
+		btm.sexcon.knotted_owner = null
+		btm.sexcon.knotted_recipient = null
+		btm.sexcon.knotted_status = KNOTTED_NULL
+		btm.sexcon.knotted_part = SEX_PART_NULL
+		btm.sexcon.knotted_part_partner = SEX_PART_NULL
+		btm.sexcon.knotted_forced_by_bottom = FALSE
+		log_combat(btm, btm, "Stopped knot tugging")
+	if(knotted_status)
 		if(src.user)
 			src.user.remove_status_effect(/datum/status_effect/knot_tied)
 			src.user.remove_status_effect(/datum/status_effect/knotted)
