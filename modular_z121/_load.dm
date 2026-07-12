@@ -105,6 +105,14 @@
 // + 70 water/30 mana potion; alchemy lvl2 (Apprentice); 50u output; emits a continuous glow whose range+power scale
 // with the remaining volume in-body; 30s per unit; glow via mob_light(duration=0) live-updated each metabolize tick.
 #include "alchemy/refining_potions/luminescent_potion.dm"	// 荧光药水 (self-glow scaling with remaining volume)
+// 愚人药水：气味"水"(5级,未占用,=锐思药剂int_potion之smells_like，由水之精质+原初精质各3点凑成6点) +
+// 板油(leaf lard)60；炼金3级(熟练)；产出30单位。饮后一段时间内智力-8、神志混沌(所有言语变成失语症般无人能懂
+// 的蠢笨呓语+简语)、并因混乱(confused随机乱走)与中度醉意(drunkenness=45，踉跄眩晕却<51不中毒)而步履失控。
+// 效果由减益状态 /datum/status_effect/debuff/idiot_potion 承载，随药剂代谢生命周期施加/刷新/解除；30秒消化1单位。
+// Idiot potion: "water" scent (lvl5, unused, = int_potion's smells_like; waterdust 3 + runedust 3 = 6pts)
+// + 60 leaf lard (tallow); alchemy lvl3 (Journeyman); 30u output; for a while: INT -8, garbled idiotic speech
+// (aphasia + simplespeech) and an uncontrolled staggering walk (confused + non-lethal drunkenness); 30s per unit.
+#include "alchemy/refining_potions/idiot_potion.dm"		// 愚人药水 (INT -8 + garbled speech + uncontrolled drunken walk)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"

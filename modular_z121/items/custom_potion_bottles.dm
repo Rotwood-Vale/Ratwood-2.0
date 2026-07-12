@@ -112,3 +112,9 @@
 	name = "荧光药水瓶"
 	desc = "一瓶预装的荧光药水，饮下可在一段时间内自体发光，且光芒随体内药量多寡而强弱变化。"
 	list_reagents = list(/datum/reagent/luminescent_potion = 50)                  // 预装 50 单位（与其它药水瓶一致）。
+
+// 愚人药水：饮下后一段时间内智力大减、胡言乱语、步履蹒跚。预装 30 单位（与该药水的精炼产量一致，约 15 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/idiot_potion
+	name = "愚人药水瓶"
+	desc = "一瓶预装的愚人药水，饮下会在一段时间内变得神志迟钝、言语混乱、步履不稳。"
+	list_reagents = list(/datum/reagent/idiot_potion = 30)                        // 预装 30 单位（与其精炼产量一致）。
