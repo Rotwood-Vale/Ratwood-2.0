@@ -1425,6 +1425,7 @@
 		return
 	var/base_speed = -1
 	var/base_force = -1
+	var/base_knot_mode = FALSE
 	var/subtle_message_tick_counter = 0
 	var/was_subtle_mode = action.subtle_supported
 	show_progress = 1
@@ -1452,7 +1453,15 @@
 			break
 
 		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
+		var/current_knot_mode = FALSE
+		if(action.knot_on_finish)
+			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
+				current_knot_mode = do_knot_action
+			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
+				current_knot_mode = do_knot_action_as_bottom
 		var/show_action_message = (speed != base_speed || force != base_force)
+		if(current_knot_mode != base_knot_mode)
+			show_action_message = TRUE
 		if(!is_subtle_mode && was_subtle_mode)
 			show_action_message = TRUE
 		if(!show_action_message && is_subtle_mode)
@@ -1465,6 +1474,7 @@
 		was_subtle_mode = is_subtle_mode
 		base_speed = speed
 		base_force = force
+		base_knot_mode = current_knot_mode
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
