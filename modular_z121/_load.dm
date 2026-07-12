@@ -106,13 +106,35 @@
 // with the remaining volume in-body; 30s per unit; glow via mob_light(duration=0) live-updated each metabolize tick.
 #include "alchemy/refining_potions/luminescent_potion.dm"	// 荧光药水 (self-glow scaling with remaining volume)
 // 愚人药水：气味"水"(5级,未占用,=锐思药剂int_potion之smells_like，由水之精质+原初精质各3点凑成6点) +
-// 板油(leaf lard)60；炼金3级(熟练)；产出30单位。饮后一段时间内智力-8、神志混沌(所有言语变成失语症般无人能懂
-// 的蠢笨呓语+简语)、并因混乱(confused随机乱走)与中度醉意(drunkenness=45，踉跄眩晕却<51不中毒)而步履失控。
+// 板油(leaf lard)60；炼金3级(熟练)；产出30单位。饮后一段时间内智力-8、胡言乱语(★仍能说话★：不移除任何语言，
+// 只【追加】失语症aphasia并把默认发声语言切到它——话语被旁人听成随机音节的胡言，与中文/英文输入无关)、并因
+// 【非酒精】的混乱(confused随机乱走)+间歇眩晕Dizzy/抽搐Jitter而步履失控(★不使用drunkenness，因本药非酒★)。
 // 效果由减益状态 /datum/status_effect/debuff/idiot_potion 承载，随药剂代谢生命周期施加/刷新/解除；30秒消化1单位。
 // Idiot potion: "water" scent (lvl5, unused, = int_potion's smells_like; waterdust 3 + runedust 3 = 6pts)
-// + 60 leaf lard (tallow); alchemy lvl3 (Journeyman); 30u output; for a while: INT -8, garbled idiotic speech
-// (aphasia + simplespeech) and an uncontrolled staggering walk (confused + non-lethal drunkenness); 30s per unit.
-#include "alchemy/refining_potions/idiot_potion.dm"		// 愚人药水 (INT -8 + garbled speech + uncontrolled drunken walk)
+// + 60 leaf lard (tallow); alchemy lvl3 (Journeyman); 30u output; for a while: INT -8; garbled speech WITHOUT muting
+// (keep all languages, ADD aphasia + force it as spoken language → listeners hear gibberish, works for CJK input);
+// uncontrolled staggering via NON-ALCOHOL confused + periodic Dizzy/Jitter (no drunkenness — this is not alcohol); 30s per unit.
+#include "alchemy/refining_potions/idiot_potion.dm"		// 愚人药水 (INT -8 + non-muting garbled speech + non-alcohol staggering)
+// 虚弱药水：气味"缓慢的微风"(5级,未占用,=耐力毒药stam_poison之smells_like，由蒲公英3点+聚合草2点凑成5点) +
+// 板油(leaf lard)60；炼金3级(熟练)；产出30单位。饮后一段时间内力量-8(四肢发软、气力尽失)；30秒消化1单位。
+// 效果由减益状态 /datum/status_effect/debuff/weakness_potion 承载，随药剂代谢生命周期施加/刷新/解除。
+// Potion of Weakness: "slow breeze" scent (lvl5, unused, = stam_poison's smells_like; taraxacum 3 + symphitum 2 = 5)
+// + 60 leaf lard (tallow); alchemy lvl3 (Journeyman); 30u output; for a while: STR -8 (sapped strength); 30s per unit.
+#include "alchemy/refining_potions/weakness_potion.dm"		// 虚弱药水 (STR -8 for the duration)
+// 气化之躯药水：气味"停滞的空气"(5级,未占用,=强效耐力毒药big_stam_poison之smells_like，由重楼3点+地狱尘2点凑成5点) +
+// 水70/强效魔力药水30；炼金4级(专家)；产出30单位；12秒消化1单位(≈6分钟)。饮后化作雾气之躯：
+// 【只能移动/飞行、不能做任何其它动作】——监听COMSIG_MOB_CLICKON并取消一切点击(攻击/拾取/使用/点选施法)、
+// TRAIT_MUTE禁言、TRAIT_EMOTEMUTE禁动作、TRAIT_SPELLCOCKBLOCK禁施法；飞行复用magic_flight(飞行术)状态。
+// 借 UNSTOPPABLE 移动位穿门过窗、借 GODMODE 令怪物不选你为敌且免疫一切常规伤害；唯独被龙卷风(GLOB.active_tornadoes)
+// 吸入其风眼半径内时，每秒流失最大生命的10%(施伤时临时摘除GODMODE以让carbon.updatehealth真正重算生命)。
+// Gasification Body potion: "stagnant air" scent (lvl5, unused, = big_stam_poison's smells_like; paris 3 + infernaldust 2 = 5)
+// + 70 water/30 great-mana-potion (strongmana); alchemy lvl4 (Expert); 30u output; 12s per unit (~6 min). Turns the drinker into
+// mist that can ONLY move/fly and do NOTHING else: cancels all clicks via COMSIG_MOB_CLICKON (no attacking/pickup/item-use/click-cast),
+// TRAIT_MUTE (no speech) + TRAIT_EMOTEMUTE (no emotes) + TRAIT_SPELLCOCKBLOCK (no spellcasting), and grants flight by reusing the
+// magic_flight status effect. Phases through doors/windows via the UNSTOPPABLE movement bit; GODMODE makes monsters ignore you & blocks
+// all normal damage; the ONLY threat is being inhaled by a tornado (GLOB.active_tornadoes) -> lose 10% max health/second (godmode
+// briefly lifted so carbon.updatehealth registers the loss).
+#include "alchemy/refining_potions/gasification_body.dm"	// 气化之躯药水 (mist form: phase doors/windows, untargetable, damage-immune, weak to tornadoes)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"

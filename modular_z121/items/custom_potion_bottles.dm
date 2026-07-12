@@ -118,3 +118,15 @@
 	name = "愚人药水瓶"
 	desc = "一瓶预装的愚人药水，饮下会在一段时间内变得神志迟钝、言语混乱、步履不稳。"
 	list_reagents = list(/datum/reagent/idiot_potion = 30)                        // 预装 30 单位（与其精炼产量一致）。
+
+// 虚弱药水：饮下后一段时间内力量大减（-8），四肢发软、气力尽失。预装 30 单位（与该药水的精炼产量一致，约 15 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/weakness_potion
+	name = "虚弱药水瓶"
+	desc = "一瓶预装的虚弱药水，饮下会在一段时间内力量大减、四肢发软、举手投足都变得沉重吃力。"
+	list_reagents = list(/datum/reagent/weakness_potion = 30)                     // 预装 30 单位（与其精炼产量一致）。
+
+// 气化之躯药水：饮下化作雾气之躯，可穿门过窗、怪物不视为敌、免疫常规伤害；唯惧龙卷风。预装 30 单位（与该药水的精炼产量一致，约 6 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/gasification_body
+	name = "气化之躯药水瓶"
+	desc = "一瓶预装的气化之躯药水，饮下会化作流动的雾气：只能随风飘移或凌空飞行、不能出手开口取物，随意穿门过窗、怪物不再视你为敌、寻常伤害皆无从加害——唯独惧怕被龙卷风吸入撕散。"
+	list_reagents = list(/datum/reagent/gasification_body_potion = 30)            // 预装 30 单位（与其精炼产量一致）。

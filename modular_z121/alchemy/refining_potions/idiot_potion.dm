@@ -5,12 +5,26 @@
 //   配方：5 级"水"气味 + 底料【板油(leaf lard) 60】 → 30 单位愚人药水；技能：熟练(炼金 3 级)。
 //   效果：饮下后一段时间内——
 //         ① 【智力 -8】(短暂变蠢，clamp 到下限 1，不会低于 1)；
-//         ② 【神志混沌】：所有说出的话都变成【无法理解的、蠢笨的呓语】(替换全部语言为"失语症/aphasia"，
-//            并叠加"简语 TRAIT_SIMPLESPEECH"，让言语既含糊又幼稚)；
-//         ③ 【步履不稳、无法自控身体】：叠加"神志混乱 confused"(随机乱走) + 中度"醉意 drunkenness"
-//            (踉跄、眩晕、口齿不清)，仿佛醉汉般控制不住自己的身体。
+//         ② 【神志混沌、胡言乱语】：所有说出的话都变成【旁人无法理解的、蠢笨的呓语】——★仍然能开口说话★，
+//            只是话音落到别人耳中尽是语无伦次的胡言(见下方"为什么这样做"的机制说明)；
+//         ③ 【步履不稳、无法自控身体】：★不使用任何酒精机制★，而是靠"神志混乱 confused"(令移动方向随机化，
+//            踉踉跄跄) + 间歇的眩晕(Dizzy)/抽搐(Jitter)，表现为仿佛控制不住自己的身体。
 //   消化速度：每 1 单位 30 秒(见 metabolization_rate 注释)；故 30 单位 ≈ 900 秒 ≈ 15 分钟的持续药效。
 //   产量：30 单位。
+//
+//   ★两处关键修正(应需求方要求)★：
+//     修正一：本药【不是酒】，故其"步履不稳"绝不能照搬"醉酒(drunkenness)"——drunkenness 会牵连一整套酒精
+//       语义(挂"醉酒 buff"、加"醉酒"心情压力、满足酗酒成瘾、达到 51 起还会中毒/呕吐)，与一味"油脂+草药"
+//       精炼的非酒药剂完全不符。因此这里改用【纯非酒精】的失控机制：confused(mob_movement.dm 会据其令移动
+//       随机偏转)——这本就是"走路不稳、控制不住身体"的直接实现，且不含任何酒精含义。辅以 Dizzy/Jitter 增强
+//       "天旋地转、身子发抖"的观感。
+//     修正二：若把人"变哑/无法说话"，那"言语变得混乱"就无从谈起。原先"清空全部语言只留失语症"的做法会让
+//       角色在本分支里说不出话(等于哑巴)，本末倒置。且本服为【中文】环境，而 treat_message 里那些文本乱码器
+//       (derpspeech/unintelligize/slur/stutter)几乎只对【英文】单词/辅音生效，对中文输入基本无效。因此这里改为
+//       ★保留角色全部原有语言(照常能说、能听懂别人)★，只是【额外追加】一门"失语症(aphasia)"并把其"默认发声
+//       语言"临时切到失语症：如此角色一开口，其话语会被【听者】按"听不懂的语言"重新拼读成随机音节的胡言
+//       (aphasia 语言自带 syllables，与输入是中文还是英文【无关】，故中文环境同样奏效)，完美实现"话语变成
+//       无人能懂的蠢笨呓语"，而角色本身从未被剥夺说话能力。
 //
 //   ★为什么选"水"气味★：
 //     "水"是原版【锐思药剂(int_potion，提升智力)】配方的 smells_like，且【尚未】被任何自定义精炼配方占用
@@ -26,11 +40,8 @@
 //       ("智力")作为键做 switch 分发；原版 mishap_feeblemind 误用英文字面量 "intelligence" 作为键，在本
 //       分支里【匹配不到、静默失效】。故这里必须用 STATKEY_INT，才能真正把智力降下来(且基类会自动 clamp
 //       到 [1,20]、并在移除时精确还原)。
-//     · 蠢笨呓语：复刻 mishap_feeblemind 的做法——保存旧语言、清空全部语言、只授予"失语症(aphasia)"，
-//       使其开口即是旁人无法听懂的胡言乱语；移除时精确还原原有语言。再叠加 TRAIT_SIMPLESPEECH(迟钝简语)。
-//     · 醉步/失控：复刻 mishap_arcane_drunkenness / mishap_arcane_high——抬高 drunkenness 与 slurring，
-//       并置入 confused(令移动随机化)。drunkenness 特意维持在 45(≥41 触发踉跄/眩晕/口齿不清，却 <51，
-//       从而【不会】造成中毒伤害/呕吐——见 carbon/life.dm 的 handle_alcohol 阈值)，效果强烈但不致命。
+//     · 胡言乱语：见"修正二"——追加 aphasia 并切换默认发声语言；结束时精确还原(仅撤下我们追加的那份)。
+//     · 醉步/失控(非酒)：见"修正一"——抬高 confused 并间歇施加 Dizzy/Jitter；结束时精确扣回我们叠加的混乱。
 //
 //   框架与精炼锅见 refining_framework.dm。本药【非酒基】(底料为板油这类油脂、无任何乙醇)，故成品为普通
 //   /datum/reagent，不携带 boozepwr。全部代码位于 modular_z121 根目录之下，符合项目硬性约束。
@@ -45,21 +56,19 @@
 // 中文：★智力惩罚常量★——题面要求"智力 -8"。抽为宏，逻辑与文案共用一个真值来源，避免改动时不一致。
 #define IDIOT_POTION_INT_PENALTY 8					// Intelligence reduced by 8 while the potion lasts.
 
-// 中文：★神志混乱下限★——confused 会令移动方向随机化(living_defines: "Makes the mob move in random
-//   directions")，从而表现为"步履不稳、控制不住身体"。confused 会随时间自然衰减，故每拍把它顶回此下限。
-//   取 15：明显踉跄乱走，但并非每步都乱，仍留一点可控性，避免 15 分钟完全无法移动过于严苛。
-#define IDIOT_POTION_CONFUSED_FLOOR 15				// Keep confusion (random-walk) topped up to this while active.
+// 中文：★神志混乱量★——confused 会令移动方向随机化(mob_movement.dm：confused≤40 时按 confused 的高低概率
+//   偏转 ±45°/±90°；>40 则每步纯随机)。取 30：几乎每步都在踉跄乱走，强烈的"控制不住身体"感，却仍非 100%
+//   锁死(<40)，避免长达 15 分钟完全无法移动过于严苛。confused 会随时间自然衰减(life.dm)，故每拍顶回此值。
+#define IDIOT_POTION_CONFUSED_AMOUNT 30				// Random-walk staggering (non-alcohol); re-asserted each tick.
 
-// 中文：★醉意下限★——drunkenness 的踉跄/眩晕/口齿不清效果。特意取 45：≥41 触发 confused/Dizzy(眩晕)，
-//   却 <51(那才开始中毒伤害与呕吐)，故效果强烈但绝不致命(阈值见 carbon/life.dm handle_alcohol)。
-#define IDIOT_POTION_DRUNK_FLOOR 45					// Keep drunkenness topped up here: staggering/dizzy but below the 51 toxin threshold.
-
-// 中文：★含糊口齿下限★——slurring 令说话含糊。取 20，配合失语症，把"蠢笨呓语"表现得更足。
-#define IDIOT_POTION_SLUR_FLOOR 20					// Keep slurred speech topped up to this while active.
+// 中文：★眩晕/抽搐量★——纯非酒精的失控观感：Dizzy 令画面摇晃(天旋地转)、Jitter 令身体抖动(手脚不听使唤)。
+//   每拍以一定概率施加一小份，二者都会自然衰减，不会永久累积。
+#define IDIOT_POTION_DIZZY_AMOUNT 8					// Woozy screen-sway pulse (non-alcohol).
+#define IDIOT_POTION_JITTER_AMOUNT 8				// Twitchy body-jitter pulse (non-alcohol).
 
 
 // ============================================================================
-// 1) 减益状态：愚人药水的效果本体(智力 -8 + 蠢笨呓语 + 醉步失控)。
+// 1) 减益状态：愚人药水的效果本体(智力 -8 + 胡言乱语 + 非酒醉步失控)。
 // 中文：继承 /datum/status_effect/debuff(其 status_type 已是 STATUS_EFFECT_REFRESH——重复施加只会刷新
 //   计时、不会重复跑 on_apply，故可安全地每代谢拍施加一次以维持药效)。
 // ============================================================================
@@ -81,72 +90,65 @@
 	//   自动施加/还原，并把结果 clamp 在 [1,20](即最多降到 1，不会到 0 或负)。
 	effectedstats = list(STATKEY_INT = -IDIOT_POTION_INT_PENALTY)	// -8 Intelligence (auto-clamped, auto-restored by base).
 	alert_type = /atom/movable/screen/alert/status_effect/idiot_potion	// The on-screen indicator above.
-	// 中文：保存施加前的语言持有者与其副本，用于结束时精确还原可听懂的言语。
+	// 中文：★保留式语言处理★——记录施加前的"默认发声语言"以便还原；记录是否由本效果追加了失语症(仅撤回自己加的)。
 	var/datum/language_holder/owner_language_holder = null	// The owner's live language holder.
-	var/datum/language_holder/old_languages = null			// A saved copy of the pre-debuff languages.
-	// 中文：记录"我们实际叠加了多少醉意"，以便解除时精确扣回、不误伤玩家原本已有的醉意。
-	var/applied_drunk = 0								// How much drunkenness THIS effect actually added.
+	var/datum/language/saved_default_language = null		// The owner's spoken-language choice before we overrode it.
+	var/applied_aphasia = FALSE							// TRUE only if THIS effect granted aphasia (so we only remove what we added).
+	// 中文：记录"我们实际叠加了多少神志混乱"，以便解除时精确扣回、不误伤玩家原本已有的混乱。
+	var/applied_confused = 0							// How much confusion THIS effect actually added.
 
-// 中文：状态施加(每次"新建"实例时仅触发一次)——在基类施加智力惩罚后，附加"蠢笨呓语 + 醉步失控"。
+// 中文：状态施加(每次"新建"实例时仅触发一次)——在基类施加智力惩罚后，附加"胡言乱语 + 非酒醉步失控"。
 /datum/status_effect/debuff/idiot_potion/on_apply()
 	. = ..()											// Base applies effectedstats (INT -8) & builds the alert; returns TRUE/FALSE.
-	// 中文：错误处理——基类拒绝(返回 FALSE)或宿主非 /mob/living(无法承载言语/醉意)时，不再叠加后续效果。
-	if(!. || !isliving(owner))							// Base rejected, or owner can't carry speech/drunk effects.
+	// 中文：错误处理——基类拒绝(返回 FALSE)或宿主非 /mob/living(无法承载言语/移动)时，不再叠加后续效果。
+	if(!. || !isliving(owner))							// Base rejected, or owner can't carry speech/movement effects.
 		return .
-	// ---- ② 蠢笨呓语：保存并清空全部语言，只留"失语症"，使其开口即是无人能懂的胡言乱语 ----
+	// ---- ② 胡言乱语(★不致哑★)：保留全部原有语言，仅【追加】失语症并把"默认发声语言"临时切到失语症。
+	//   如此角色照常能说话、也听得懂别人，只是其话语会被旁人(不懂失语症者)重新拼读成随机音节的胡言。
+	//   ★为何中文环境也奏效★：aphasia 语言自带 syllables，听者端的拼读与"输入是中文还是英文"无关。 ----
 	owner_language_holder = owner.get_language_holder()	// Grab the live language holder.
 	if(owner_language_holder)							// Guard: only if a holder exists.
-		old_languages = owner_language_holder.copy()	// Snapshot the current languages for later restore.
-		owner_language_holder.remove_all_languages()	// Strip every language...
-		owner_language_holder.grant_language(/datum/language/aphasia)	// ...leaving only garbled aphasia.
-	// 中文：叠加"简语"特质——即便被听懂的零星词也变得迟钝幼稚，进一步坐实"蠢话"。
-	ADD_TRAIT(owner, TRAIT_SIMPLESPEECH, id)			// Dumbed-down, simplified speech on top of the garble.
-	// ---- ③ 步履不稳、无法自控：混乱(随机乱走) + 含糊口齿 ----
-	owner.confused = max(owner.confused, IDIOT_POTION_CONFUSED_FLOOR)	// Random-direction stumbling.
-	owner.slurring = max(owner.slurring, IDIOT_POTION_SLUR_FLOOR)		// Slurred, mush-mouthed speech.
-	// 中文：醉意仅对 /mob/living/carbon 有意义(drunkenness 定义在 carbon)。用"顶到下限"而非无脑 +=，
-	//   避免把本就醉着的人推过 51 而误触中毒；记录实际叠加量以便结束时精确扣回。
-	if(iscarbon(owner))									// Drunkenness only exists on carbon mobs.
-		var/mob/living/carbon/C = owner					// Typed access.
-		applied_drunk = max(IDIOT_POTION_DRUNK_FLOOR - C.drunkenness, 0)	// Only top-up the gap (never overshoot into toxic range).
-		C.drunkenness += applied_drunk					// Raise drunkenness to the (non-lethal) floor.
+		if(!owner_language_holder.has_language(/datum/language/aphasia))	// Don't double-grant if already present...
+			owner_language_holder.grant_language(/datum/language/aphasia)	// ...otherwise ADD aphasia (keep every real language).
+			applied_aphasia = TRUE					// Remember we added it, so on_remove only removes our own.
+		saved_default_language = owner_language_holder.selected_default_language	// Snapshot the prior spoken-language choice.
+		owner_language_holder.selected_default_language = /datum/language/aphasia	// Force spoken output to garbled aphasia.
+	// ---- ③ 步履不稳、无法自控(★非酒精★)：叠加神志混乱(令移动随机偏转) ----
+	applied_confused = IDIOT_POTION_CONFUSED_AMOUNT		// Track exactly how much we add, for a clean subtraction later.
+	owner.confused += applied_confused					// Staggering random-walk (no alcohol involved).
 	// 中文：施加成功的文字反馈(纯提示，不影响机制)。
-	owner.visible_message(span_warning("[owner]的眼神骤然涣散，嘴角开始不受控制地流下口水。"), \
-						span_userdanger("我的脑袋里像塞满了浆糊，思绪全乱了，身体也不听使唤了……"))	// Onset feedback.
+	owner.visible_message(span_warning("[owner]的眼神骤然涣散，嘴角开始不受控制地流下口水，脚步也踉跄起来。"), \
+						span_userdanger("我的脑袋里像塞满了浆糊，思绪全乱了，话到嘴边尽成胡言，身体也不听使唤了……"))	// Onset feedback.
 	return .
 
-// 中文：每一状态拍——把会自然衰减的 confused / slurring / drunkenness 顶回下限，保证整个药效期间持续"变蠢"；
-//   并偶尔来点发呆/流口水/傻笑的小动作强化观感。
+// 中文：每一状态拍——把会自然衰减的 confused 顶回设定值(保证整个药效期间持续踉跄)，并间歇施加眩晕/抽搐、
+//   偶尔来点发呆/流口水/傻笑的小动作以强化观感。
 /datum/status_effect/debuff/idiot_potion/tick()
 	..()												// Let the base do its per-tick bookkeeping.
 	// 中文：错误处理——宿主已失效则直接返回，避免对无效对象操作而运行时报错。
 	if(QDELETED(owner) || !isliving(owner))				// Guard against a missing/invalid owner.
 		return
-	owner.confused = max(owner.confused, IDIOT_POTION_CONFUSED_FLOOR)	// Re-assert random-walk (it decays on its own).
-	owner.slurring = max(owner.slurring, IDIOT_POTION_SLUR_FLOOR)		// Re-assert slurred speech.
-	if(iscarbon(owner))									// Re-assert drunkenness floor (drunkenness decays each life tick).
-		var/mob/living/carbon/C = owner
-		C.drunkenness = max(C.drunkenness, IDIOT_POTION_DRUNK_FLOOR)		// Keep staggering, stay below the toxic 51 line.
+	owner.confused = max(owner.confused, applied_confused)	// Re-assert random-walk (confused decays on its own each life tick).
+	// 中文：低概率施加眩晕/抽搐——纯非酒精的"天旋地转/手脚发抖"，坐实"控制不住身体"。二者都会自然衰减。
+	if(prob(35))										// Occasional woozy screen-sway.
+		owner.Dizzy(IDIOT_POTION_DIZZY_AMOUNT)
+	if(prob(35))										// Occasional body-jitter.
+		owner.Jitter(IDIOT_POTION_JITTER_AMOUNT)
 	// 中文：低概率的傻气小动作，纯表演性质。
 	if(prob(8))											// Occasional idiot flavour.
 		owner.emote(pick("drools", "stares blankly", "giggle"))
 
-// 中文：状态解除(到期或被主动移除时仅触发一次)——精确还原智力、语言、特质与我们叠加的那部分醉意。
+// 中文：状态解除(到期或被主动移除时仅触发一次)——精确还原智力、发声语言/失语症、以及我们叠加的那部分混乱。
 /datum/status_effect/debuff/idiot_potion/on_remove()
 	..()												// Base reverses effectedstats (restores INT) & clears the alert first.
-	// ---- 还原语言：去掉失语症、拷回旧语言，让言语重新可被听懂 ----
-	if(owner_language_holder)							// Only if we swapped languages on apply.
-		owner_language_holder.remove_language(/datum/language/aphasia)	// Drop the garble.
-		if(old_languages)								// Restore the snapshot taken at apply time.
-			owner_language_holder.copy_known_languages_from(old_languages)
-	// ---- 去掉"简语"特质(用 id 作为来源，精确移除本效果加的那一份) ----
-	REMOVE_TRAIT(owner, TRAIT_SIMPLESPEECH, id)			// Remove our simplified-speech source.
-	// ---- 醒酒：只扣回"我们叠加的那部分"醉意，避免误伤玩家原有醉意；若清零则一并撤下醉酒 buff ----
-	if(applied_drunk && iscarbon(owner))				// Did we add any drunkenness?
-		var/mob/living/carbon/C = owner
-		C.drunkenness = max(C.drunkenness - applied_drunk, 0)	// Subtract exactly what we added.
-		if(C.drunkenness <= 0)							// Fully sober now?
-			C.remove_status_effect(/datum/status_effect/buff/drunk)	// Clear the lingering drunk buff too.
+	// ---- 还原言语：把"默认发声语言"切回原选择，并仅撤下【我们追加】的失语症(不误删玩家本就会的失语症) ----
+	if(owner_language_holder)							// Only if we touched languages on apply.
+		owner_language_holder.selected_default_language = saved_default_language	// Restore the prior spoken-language choice.
+		if(applied_aphasia)								// Only remove aphasia if WE were the ones who granted it.
+			owner_language_holder.remove_language(/datum/language/aphasia)
+	// ---- 收回混乱：只扣回"我们叠加的那部分"，避免误伤玩家原有的混乱来源 ----
+	if(applied_confused && owner)						// Did we add any confusion?
+		owner.confused = max(owner.confused - applied_confused, 0)	// Subtract exactly what we added (clamped at 0).
 
 
 // ============================================================================
@@ -156,7 +158,7 @@
 /datum/reagent/idiot_potion
 	name = "愚人药水"										// In-game name (Idiot Potion).
 	// 中文：检视/说明文本——点明"以板油循'水'之气(锐思药剂的气味)反其道精炼、饮后短时变蠢、胡言乱语、步履蹒跚"。
-	description = "一瓶循'水'之气(本是锐思药剂的气息)、却以板油反其道精炼而成的浑浊灰绿药液，气味呆滞而油腻。饮下后思绪会像被泥浆糊住一般迟钝下来，智力大减、口中尽是无人能懂的蠢笨呓语，四肢也踉踉跄跄、仿佛再难听从自己的意志。"	// Flavour + hint.
+	description = "一瓶循'水'之气(本是锐思药剂的气息)、却以板油反其道精炼而成的浑浊灰绿药液，气味呆滞而油腻。饮下后思绪会像被泥浆糊住一般迟钝下来，智力大减、话到嘴边尽成旁人无法听懂的蠢笨呓语，四肢也踉踉跄跄、仿佛再难听从自己的意志。"	// Flavour + hint.
 	reagent_state = LIQUID								// Drinkable liquid potion.
 	color = "#8a9a5b"									// Murky bog-green (echoes int_potion's "bog water" motif).
 	taste_description = "一口下去满是沼泽泥水般的滞涩腥浊"	// Taste flavour text (bog-water dullness).
@@ -175,7 +177,7 @@
 	if(!isliving(M))									// Effect only applies to living mobs.
 		to_chat(M, span_warning("愚人药水在体内空流转，却找不到可供搅乱的神志。"))	// Honest non-living notice.
 		return
-	// 中文：施加"愚人"减益(智力 -8 + 蠢笨呓语 + 醉步失控)。文字反馈由状态的 on_apply 负责。
+	// 中文：施加"愚人"减益(智力 -8 + 胡言乱语 + 非酒醉步失控)。文字反馈由状态的 on_apply 负责。
 	M.apply_status_effect(/datum/status_effect/debuff/idiot_potion)	// Apply the debuff (fresh instance).
 	// 中文：错误处理——极少数情况下状态可能未成功建立；据此给出诚实反馈而非假装成功。
 	if(!M.has_status_effect(/datum/status_effect/debuff/idiot_potion))	// Debuff somehow failed to attach?
@@ -194,10 +196,10 @@
 
 // 中文：代谢结束(药剂耗尽/被清除)时——解除"愚人"减益，让神志随药力散尽而恢复，并给出"清醒过来"的提示。
 /datum/reagent/idiot_potion/on_mob_end_metabolize(mob/living/M)
-	// 中文：仅对有效目标解除并反馈(减益的 on_remove 会精确还原智力/语言/特质/醉意)。
+	// 中文：仅对有效目标解除并反馈(减益的 on_remove 会精确还原智力/语言/混乱)。
 	if(M && !QDELETED(M))								// Valid target?
 		M.remove_status_effect(/datum/status_effect/debuff/idiot_potion)	// Lift the debuff (restores everything).
-		to_chat(M, span_notice("脑中的浆糊渐渐化开，思绪与身体重新回到了自己的掌控之中。"))	// Recovery feedback.
+		to_chat(M, span_notice("脑中的浆糊渐渐化开，言语与身体重新回到了自己的掌控之中。"))	// Recovery feedback.
 	return ..()											// Let the base finish up (final volume cleanup, etc.).
 
 
@@ -207,7 +209,7 @@
 // 中文：
 //   · "水"是【锐思药剂(int_potion，提升智力)】配方的气味，且未被其它精炼配方占用(题目要求"未使用的 5 级气味")。
 //     带此气味、指向 int_potion 的现成材料有：水之精质(waterdust, major=3)、原初精质(runedust, major=3)、
-//     太阳尘(solardust, med=2)、艾草粉之类(minor=1)…… 取【水之精质 + 原初精质】即 3+3=6 ≥ 5，稳定满足"5 级水"。
+//     太阳尘(solardust, med=2)…… 取【水之精质 + 原初精质】即 3+3=6 ≥ 5，稳定满足"5 级水"。
 //   · 底料用【现成试剂】：板油(leaf lard) /datum/reagent/consumable/oil/tallow 60。板油是油脂、非乙醇，
 //     故成品【非酒基】，output 直接注入普通试剂、不携带 boozepwr。
 //   · ★注意★ has_reagent 判定为【精确类型】，故底料须写成具体产出类型 /datum/reagent/consumable/oil/tallow。
@@ -233,6 +235,6 @@
 // 中文：清理本文件作用域内的局部宏，避免它们泄漏到全局编译环境、与他处同名定义冲突。
 #undef IDIOT_POTION_SECONDS_PER_UNIT
 #undef IDIOT_POTION_INT_PENALTY
-#undef IDIOT_POTION_CONFUSED_FLOOR
-#undef IDIOT_POTION_DRUNK_FLOOR
-#undef IDIOT_POTION_SLUR_FLOOR
+#undef IDIOT_POTION_CONFUSED_AMOUNT
+#undef IDIOT_POTION_DIZZY_AMOUNT
+#undef IDIOT_POTION_JITTER_AMOUNT
