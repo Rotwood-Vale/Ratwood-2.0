@@ -451,19 +451,20 @@
 	after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
-/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1)
+/proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1, suppress_start_message = FALSE)
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
 	spurt_count = max(spurt_count, 1)
 	if(existing)
 		existing.orifice |= orifice
 		existing.cum_spurt_intensity = max(existing.cum_spurt_intensity, spurt_count)
-		to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
+		if(!suppress_start_message)
+			to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
 		existing.duration = world.time + initial(existing.duration) // refresh timer
 		return
 	if(use_long || spurt_count >= CREAMPIE_LEAK_LONG_SPURT_THRESHOLD)
-		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice, spurt_count)
+		target.apply_status_effect(/datum/status_effect/creampie_leak/long, orifice, spurt_count, suppress_start_message)
 	else
-		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice, spurt_count)
+		target.apply_status_effect(/datum/status_effect/creampie_leak, orifice, spurt_count, suppress_start_message)
 
 /datum/sex_controller/proc/apply_cum_consumed_buff(mob/living/carbon/human/consumer)
 	if(!consumer)
@@ -536,10 +537,12 @@
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
 	var/orifice = SEX_PART_NULL
 	var/cum_spurt_intensity = 1
+ 	var/suppress_start_message = FALSE
 
-/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL, spurt_count = 1)
+/datum/status_effect/creampie_leak/on_creation(mob/living/new_owner, orifice_in = SEX_PART_NULL, spurt_count = 1, suppress_start_message_in = FALSE)
 	orifice = orifice_in
 	cum_spurt_intensity = max(spurt_count, 1)
+	suppress_start_message = suppress_start_message_in
 	return ..(new_owner)
 
 /datum/status_effect/creampie_leak/long
@@ -575,7 +578,8 @@
 
 /datum/status_effect/creampie_leak/on_apply()
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_up))
-	to_chat(owner, span_love("I feel a warmth beginning to leak out of me."))
+	if(!suppress_start_message)
+		to_chat(owner, span_love("I feel a warmth beginning to leak out of me."))
 	return ..()
 
 /datum/status_effect/creampie_leak/on_remove()
