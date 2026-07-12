@@ -202,17 +202,19 @@
 		return
 	if(!top.client?.prefs?.excessive_cum || !btm.client?.prefs?.excessive_cum)
 		return
-	var/turf/release_turf = get_turf(btm)
-	if(!release_turf)
+	var/turf/origin_turf = get_turf(btm)
+	if(!origin_turf)
 		return
+	var/turf/release_turf = origin_turf
 	var/list/adjacent_turfs = list()
-	for(var/turf/T in RANGE_TURFS(1, release_turf))
-		if(T != release_turf)
+	for(var/turf/T in RANGE_TURFS(1, origin_turf))
+		if(T != origin_turf)
 			adjacent_turfs += T
 	if(length(adjacent_turfs))
 		release_turf = pick(adjacent_turfs)
-	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, release_turf)
-	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, release_turf)
+	// Check "nearby" from the victim's tile, but keep floor splatter on an adjacent tile.
+	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, origin_turf)
+	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, origin_turf)
 	for(var/i = 1; i <= spurt_count; i++)
 		var/splatter_diverted = FALSE
 		if(prob(20) && length(splatter_candidates))
