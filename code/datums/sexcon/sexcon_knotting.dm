@@ -36,12 +36,33 @@
 	if(action.target_sex_part & target_sexcon.knotted_part)
 		target_sexcon.knot_remove()
 
+/datum/sex_controller/proc/resolve_knot_action(datum/sex_action/knot_action = null)
+	if(knot_action)
+		return knot_action
+	if(!user?.sexcon?.current_action)
+		return null
+	return SEX_ACTION(user.sexcon.current_action)
+
+/datum/sex_controller/proc/resolve_knot_bottom(mob/living/carbon/human/knot_btm = null)
+	return knot_btm ? knot_btm : target
+
+/datum/sex_controller/proc/can_initiate_knot_try(datum/sex_controller/user_sexcon, datum/sex_controller/btm_sexcon, knot_swap_roles)
+	if(knot_swap_roles)
+		// In inverted-role actions (e.g. riding/blowjob), only the receptive actor's
+		// explicit "force knot" toggle should initiate a knot.
+		return !!btm_sexcon?.do_knot_action_as_bottom
+	return !!user_sexcon?.do_knot_action
+
+/datum/sex_controller/proc/is_bottom_forcing_knot(knot_swap_roles, datum/sex_controller/btm_sexcon)
+	return knot_swap_roles && !!btm_sexcon?.do_knot_action_as_bottom
+
+/datum/sex_controller/proc/can_bottom_self_release_knot()
+	return knotted_status == KNOTTED_AS_BTM && knotted_forced_by_bottom
+
 /datum/sex_controller/proc/knot_try(datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null)
-	var/datum/sex_action/action = knot_action
+	var/datum/sex_action/action = resolve_knot_action(knot_action)
 	if(!action)
-		if(!user.sexcon.current_action)
-			return
-		action = SEX_ACTION(user.sexcon.current_action)
+		return
 	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
 		return
 
@@ -51,7 +72,7 @@
 		return
 
 	// btm is the receptive participant; explicitly passed for inverted-role actions (riding, blowjob) where self.target may not point at the rider/sucker
-	var/mob/living/carbon/human/btm = knot_btm ? knot_btm : target
+	var/mob/living/carbon/human/btm = resolve_knot_bottom(knot_btm)
 	if(!btm)
 		return
 	var/datum/sex_controller/user_sexcon = user?.sexcon
@@ -59,18 +80,13 @@
 	if(!user_sexcon || !btm_sexcon)
 		return
 
-	if(knot_swap_roles)
-		// In inverted-role actions (e.g. riding/blowjob), only the receptive actor's
-		// explicit "force knot" toggle should initiate a knot.
-		if(!btm_sexcon.do_knot_action_as_bottom)
-			return
-	else if(!user_sexcon.do_knot_action)
+	if(!can_initiate_knot_try(user_sexcon, btm_sexcon, knot_swap_roles))
 		return
 	if(!user.sexcon.knot_penis_type()) // don't have that dog in 'em
 		return
 	if(!btm.client?.prefs?.sexable)
 		return
-	var/btm_forced = knot_swap_roles && btm_sexcon.do_knot_action_as_bottom
+	var/btm_forced = is_bottom_forcing_knot(knot_swap_roles, btm_sexcon)
 	if(user_sexcon.considered_limp())
 		if(!user.sexcon.knotted_status)
 			to_chat(user, span_notice("My [user.sexcon.get_knot_synonym()] was too soft to tie."))
@@ -550,7 +566,7 @@
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
 		return FALSE
-	if(L.sexcon.knotted_status == KNOTTED_AS_BTM && L.sexcon.knotted_forced_by_bottom)
+	if(L.sexcon.can_bottom_self_release_knot())
 		var/mob/living/carbon/human/top = L.sexcon.knotted_owner
 		if(istype(top) && top.sexcon)
 			var/do_forceful_removal = L.cmode || L.sexcon.arousal > MAX_AROUSAL / 4 || L.sexcon.manual_arousal > SEX_MANUAL_AROUSAL_PARTIAL // bottom forced the knot, so bottom can wrench free

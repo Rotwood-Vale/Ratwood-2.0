@@ -410,34 +410,9 @@
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
 		playsound(user, 'sound/misc/mat/endin.ogg', 100, TRUE, ignore_walls = FALSE)
-	if(!skip_knot_try && consume_charge && (knot_btm || (user != effective_target && !isnull(effective_target) && istype(effective_target))))
+	if(should_try_knot_during_cum_into(skip_knot_try, consume_charge, knot_btm, effective_target))
 		knot_try(knot_action = knot_action, knot_swap_roles = knot_swap_roles, knot_btm = knot_btm)
-	var/datum/sex_controller/receiver_sexcon = splashed_user?.sexcon
-	var/is_receiver_actively_knotted_to_user = receiver_sexcon?.knotted_status == KNOTTED_AS_BTM && receiver_sexcon?.knotted_owner == user
-	if(receiver_sexcon && (oral || !receiver_sexcon.knotted_status || is_receiver_actively_knotted_to_user))
-		var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
-		var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
-		if(!splashed_type)
-			splashed_user.apply_status_effect(status_type, spurt_count)
-			if(oral)
-				splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
-			else
-				splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
-		else
-			splashed_type.refresh_cum(spurt_count)
-		if(oral && splashed_user.reagents) // Cum fills hunger if taking it orally
-			if(user.getorganslot(ORGAN_SLOT_PENIS))
-				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
-			else
-				splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
-			apply_cum_consumed_buff(splashed_user)
-		// Marks reciever as a gnoll breeder for the round
-		if(!oral && user?.dna?.species?.id == "gnoll")
-			splashed_user.has_gnoll_scent_this_round = TRUE
-		modular_record_collar_receive_event(splashed_user, user)
-		if(!oral)
-			if(!is_receiver_actively_knotted_to_user)
-				apply_creampie_drip(splashed_user, orifice, spurt_count = spurt_count)
+	apply_cum_into_receiver_effects(oral, splashed_user, orifice, spurt_count)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
@@ -449,6 +424,45 @@
 		modular_schedule_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
 	after_ejaculation(consume_charge)
 	after_intimate_climax(oral, splashed_user)
+
+/datum/sex_controller/proc/should_try_knot_during_cum_into(skip_knot_try, consume_charge, mob/living/carbon/human/knot_btm, mob/living/carbon/human/effective_target)
+	if(skip_knot_try || !consume_charge)
+		return FALSE
+	if(knot_btm)
+		return TRUE
+	if(user != effective_target && !isnull(effective_target) && istype(effective_target))
+		return TRUE
+	return FALSE
+
+/datum/sex_controller/proc/apply_cum_into_receiver_effects(oral, mob/living/carbon/human/splashed_user, orifice, spurt_count)
+	var/datum/sex_controller/receiver_sexcon = splashed_user?.sexcon
+	var/is_receiver_actively_knotted_to_user = receiver_sexcon?.knotted_status == KNOTTED_AS_BTM && receiver_sexcon?.knotted_owner == user
+	if(!receiver_sexcon)
+		return
+	if(!oral && receiver_sexcon.knotted_status && !is_receiver_actively_knotted_to_user)
+		return
+	var/status_type = !oral ? /datum/status_effect/facial/internal : /datum/status_effect/facial
+	var/datum/status_effect/facial/splashed_type = splashed_user.has_status_effect(status_type)
+	if(!splashed_type)
+		splashed_user.apply_status_effect(status_type, spurt_count)
+		if(oral)
+			splashed_user.visible_message(span_love("[splashed_user] takes a load down their throat!"), span_love("I take a load down my throat!"))
+		else
+			splashed_user.visible_message(span_love("[splashed_user] takes a load inside them!"), span_love("I take a load inside me!"))
+	else
+		splashed_type.refresh_cum(spurt_count)
+	if(oral && splashed_user.reagents) // Cum fills hunger if taking it orally
+		if(user.getorganslot(ORGAN_SLOT_PENIS))
+			splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
+		else
+			splashed_user.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
+		apply_cum_consumed_buff(splashed_user)
+	// Marks reciever as a gnoll breeder for the round
+	if(!oral && user?.dna?.species?.id == "gnoll")
+		splashed_user.has_gnoll_scent_this_round = TRUE
+	modular_record_collar_receive_event(splashed_user, user)
+	if(!oral && !is_receiver_actively_knotted_to_user)
+		apply_creampie_drip(splashed_user, orifice, spurt_count = spurt_count)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1, suppress_start_message = FALSE)
@@ -616,16 +630,30 @@
 		user.visible_message(span_love(self_mess_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
 		cum_onto(user)
 		return
-	if(user.getorganslot(ORGAN_SLOT_PENIS) && knotted_status == KNOTTED_AS_TOP && knotted_owner == user && ishuman(knotted_recipient) && !QDELETED(knotted_recipient) && knotted_recipient?.sexcon)
-		var/orifice = knotted_part_partner
-		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
-		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
-		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
-		var/bursts = get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE, consume_charge = i == 1 ? TRUE : FALSE, try_impreg = !is_oral_knot, show_excessive_cum_message = i == bursts)
-			sleep(10)
+	if(try_knotted_ejaculation())
 		return
+	perform_standard_ejaculation()
+
+/datum/sex_controller/proc/action_supports_knotted_climax_context()
+	var/datum/sex_action/active_action = current_action ? SEX_ACTION(current_action) : null
+	return !!active_action && (active_action.knot_on_finish || istype(active_action, /datum/sex_action/knot_grinding))
+
+/datum/sex_controller/proc/try_knotted_ejaculation()
+	if(!action_supports_knotted_climax_context())
+		return FALSE
+	if(!user.getorganslot(ORGAN_SLOT_PENIS) || knotted_status != KNOTTED_AS_TOP || knotted_owner != user || !ishuman(knotted_recipient) || QDELETED(knotted_recipient) || !knotted_recipient?.sexcon)
+		return FALSE
+	var/orifice = knotted_part_partner
+	var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
+	var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
+	user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+	var/bursts = get_load_bursts()
+	for(var/i = 1; i <= bursts; i++)
+		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE, consume_charge = i == 1 ? TRUE : FALSE, try_impreg = !is_oral_knot, show_excessive_cum_message = i == bursts)
+		sleep(10)
+	return TRUE
+
+/datum/sex_controller/proc/perform_standard_ejaculation()
 	var/climax_msg = "[user] makes a mess!"
 	var/modular_climax_msg = modular_get_chastity_climax_message(climax_msg)
 	if(istext(modular_climax_msg))
@@ -643,25 +671,16 @@
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
-		modular_schedule_excessive_cum_summary(cum_summary_context)
-		modular_announce_spurt_message()
-		after_ejaculation()
+		finalize_post_spurt_ejaculation(cum_summary_context)
 		return
 	cum_chalice = locate() in cur_loc
 	if(cum_chalice?.spillable) // leak contents underneath the first found open container
-		if(user.getorganslot(ORGAN_SLOT_VAGINA))
-			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum,1)
-		else
-			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
+		add_ejaculate_to_container(cum_chalice, femcum_amount = 1, semen_amount = semen_vol)
 		modular_emit_excessive_solo_spurts(cum_chalice)
 		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
-		modular_schedule_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
-		modular_announce_spurt_message()
-		after_ejaculation()
+		finalize_post_spurt_ejaculation(cum_summary_context, cum_chalice)
 		return
-	modular_schedule_excessive_cum_summary(cum_summary_context)
-	modular_announce_spurt_message()
-	after_ejaculation()
+	finalize_post_spurt_ejaculation(cum_summary_context)
 
 /datum/sex_controller/proc/ejaculate_container(obj/item/reagent_containers/glass/C)
 	if(try_resist_orgasm())
@@ -670,14 +689,25 @@
 		log_combat(user, user, "Ejaculated into a container")
 		user.visible_message(span_love("[user] spills into [C]!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
-		if(user.getorganslot(ORGAN_SLOT_PENIS))
-			C.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
-		else
-			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
+		add_ejaculate_to_container(C, femcum_amount = 2)
 		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
-		modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
+		finalize_post_spurt_ejaculation(EXCESSIVE_CUM_CONTEXT_CONTAINER, C)
+		return
+	finalize_post_spurt_ejaculation(EXCESSIVE_CUM_CONTEXT_SOLO)
+
+/datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null)
+	if(!C?.reagents)
+		return
+	if(user.getorganslot(ORGAN_SLOT_VAGINA))
+		C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, femcum_amount)
+		return
+	var/effective_semen_amount = isnull(semen_amount) ? get_semen_volume() : semen_amount
+	C.reagents.add_reagent(/datum/reagent/erpjuice/cum, effective_semen_amount)
+
+/datum/sex_controller/proc/finalize_post_spurt_ejaculation(context = EXCESSIVE_CUM_CONTEXT_SOLO, obj/item/reagent_containers/glass/cum_chalice = null, consume_charge = TRUE)
+	modular_schedule_excessive_cum_summary(context, cum_chalice = cum_chalice)
 	modular_announce_spurt_message()
-	after_ejaculation()
+	after_ejaculation(consume_charge)
 
 /datum/sex_controller/proc/get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -1075,36 +1105,45 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_controller/proc/handle_passive_ejaculation(mob/living/carbon/human/splashed_user = null)
+/datum/sex_controller/proc/apply_passive_splash_effects(mob/living/carbon/human/splashed_user)
+	if(!splashed_user)
+		return
+	var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
+	var/spurt_count = get_load_bursts()
+	if(!facial)
+		splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
+	else
+		facial.refresh_cum(spurt_count)
+	modular_record_collar_receive_event(splashed_user, user)
+
+/datum/sex_controller/proc/handle_aphrodisiac_passive_effects(mob/living/carbon/human/splashed_user)
 	var/mob/living/carbon/human/M = user
-	if(aphrodisiac > 1.5)
-		if(M.check_handholding())
-			if(prob(5)) //Yeah.
-				try_do_moan(3, 0, 1, 0)
-			if(arousal < 70)
-				adjust_arousal(0.2)
-		if(M.handcuffed)
-			if(prob(8))
-				var/chaffepain = pick(10,10,10,10,20,20,30)
-				try_do_moan(3, chaffepain, 1, 0)
-				damage_from_pain(chaffepain)
-				try_do_pain_effect(chaffepain)
-				last_moan = 0
-				M.visible_message(("<span class='love_mid'>[M] squirms uncomfortably in [M.p_their()] restraints.</span>"), \
-					("<span class='love_extreme'>I feel [M.handcuffed] rub uncomfortably against my skin.</span>"))
-			if(arousal < ACTIVE_EJAC_THRESHOLD)
-				adjust_arousal(0.25)
-			else
-				if(prob(3))
-					ejaculate()
-					if(splashed_user)
-						var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
-						var/spurt_count = get_load_bursts()
-						if(!facial)
-							splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
-						else
-							facial.refresh_cum(spurt_count)
-						modular_record_collar_receive_event(splashed_user, user)
+	if(aphrodisiac <= 1.5)
+		return
+	if(M.check_handholding())
+		if(prob(5)) //Yeah.
+			try_do_moan(3, 0, 1, 0)
+		if(arousal < 70)
+			adjust_arousal(0.2)
+	if(!M.handcuffed)
+		return
+	if(prob(8))
+		var/chaffepain = pick(10,10,10,10,20,20,30)
+		try_do_moan(3, chaffepain, 1, 0)
+		damage_from_pain(chaffepain)
+		try_do_pain_effect(chaffepain)
+		last_moan = 0
+		M.visible_message(("<span class='love_mid'>[M] squirms uncomfortably in [M.p_their()] restraints.</span>"), \
+			("<span class='love_extreme'>I feel [M.handcuffed] rub uncomfortably against my skin.</span>"))
+	if(arousal < ACTIVE_EJAC_THRESHOLD)
+		adjust_arousal(0.25)
+		return
+	if(prob(3))
+		ejaculate()
+		apply_passive_splash_effects(splashed_user)
+
+/datum/sex_controller/proc/handle_passive_ejaculation(mob/living/carbon/human/splashed_user = null)
+	handle_aphrodisiac_passive_effects(splashed_user)
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(is_spent())
@@ -1112,14 +1151,7 @@
 	if(!can_ejaculate())
 		return FALSE
 	ejaculate()
-	if(splashed_user)
-		var/datum/status_effect/facial/facial = splashed_user.has_status_effect(/datum/status_effect/facial)
-		var/spurt_count = get_load_bursts()
-		if(!facial)
-			splashed_user.apply_status_effect(/datum/status_effect/facial, spurt_count)
-		else
-			facial.refresh_cum(spurt_count)
-		modular_record_collar_receive_event(splashed_user, user)
+	apply_passive_splash_effects(splashed_user)
 
 /datum/sex_controller/proc/handle_container_ejaculation()
 	if(arousal < PASSIVE_EJAC_THRESHOLD)
