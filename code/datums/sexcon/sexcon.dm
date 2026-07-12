@@ -585,14 +585,14 @@
 /datum/status_effect/facial/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
 		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
-			to_chat(owner, span_notice("I feel much [modular_get_creampie_leak_verb()] now!"))
+			to_chat(owner, span_notice("I feel much cleaner now!"))
 			owner.add_stress(/datum/stressevent/bathcleaned)
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/on_apply()
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_up))
 	if(!suppress_start_message)
-		to_chat(owner, span_love("I feel [modular_get_creampie_leak_verb()] leaking out of me."))
+		to_chat(owner, span_love("[modular_get_creampie_leak_verb()]"))
 	return ..()
 
 /datum/status_effect/creampie_leak/on_remove()
@@ -601,7 +601,7 @@
 
 /datum/status_effect/creampie_leak/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
-		to_chat(owner, span_notice("I feel much [modular_get_creampie_leak_verb()] now."))
+		to_chat(owner, span_notice("I feel much cleaner now."))
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/tick()
@@ -712,9 +712,9 @@
 		if(cum_chalice?.spillable)
 			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
 			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = semen_amount)
-		after_ejaculation(consume_charge = i == 1, play_sound = (i == 1))
 		if(i < bursts)
 			sleep(10)
+	after_ejaculation()
 
 /datum/sex_controller/proc/get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
