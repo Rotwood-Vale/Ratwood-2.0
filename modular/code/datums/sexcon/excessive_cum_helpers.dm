@@ -60,6 +60,8 @@
 
 /// Sends the summary messages for the current excessive-cum context.
 /datum/sex_controller/proc/modular_announce_excessive_cum_summary(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null)
+	if(get_load_bursts() < 3)
+		return
 	var/list/messages = modular_get_excessive_cum_summary_messages(context, splashed_user, cum_chalice)
 	if(!messages || (!messages["user"] && !messages["receiver"]))
 		return
@@ -67,6 +69,10 @@
 		to_chat(splashed_user, span_love(messages["receiver"]))
 	if(messages["user"])
 		to_chat(user, span_love(messages["user"]))
+
+/// Delays summary delivery slightly so burst lines are consistently seen first.
+/datum/sex_controller/proc/modular_schedule_excessive_cum_summary(context = EXCESSIVE_CUM_CONTEXT_SOLO, mob/living/carbon/human/splashed_user = null, obj/item/reagent_containers/glass/cum_chalice = null, delay = 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(modular_announce_excessive_cum_summary), context, splashed_user, cum_chalice), delay)
 
 /// Emits the public/private spurt chat line for a single burst.
 /datum/sex_controller/proc/modular_announce_spurt_message()

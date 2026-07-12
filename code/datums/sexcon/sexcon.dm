@@ -395,7 +395,7 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(show_excessive_cum_message)
-		modular_announce_excessive_cum_summary(modular_excessive_cum_context(splashed_user, FALSE, cum_on_face), splashed_user)
+		modular_schedule_excessive_cum_summary(modular_excessive_cum_context(splashed_user, FALSE, cum_on_face), splashed_user)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, try_impreg = FALSE, show_excessive_cum_message = TRUE)
@@ -446,7 +446,7 @@
 		user.try_impregnate(effective_target)
 	modular_track_knot_spurt(splashed_user = splashed_user, oral = oral, orifice = orifice)
 	if(show_excessive_cum_message)
-		modular_announce_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
+		modular_schedule_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
 	after_ejaculation(consume_charge)
 	after_intimate_climax(oral, splashed_user)
 
@@ -643,7 +643,7 @@
 
 	var/cur_loc = get_turf(user)
 	if(!cur_loc || !isturf(cur_loc))
-		modular_announce_excessive_cum_summary(cum_summary_context)
+		modular_schedule_excessive_cum_summary(cum_summary_context)
 		modular_announce_spurt_message()
 		after_ejaculation()
 		return
@@ -655,11 +655,11 @@
 			cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_vol)
 		modular_emit_excessive_solo_spurts(cum_chalice)
 		cum_summary_context = EXCESSIVE_CUM_CONTEXT_CONTAINER
-		modular_announce_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
+		modular_schedule_excessive_cum_summary(cum_summary_context, cum_chalice = cum_chalice)
 		modular_announce_spurt_message()
 		after_ejaculation()
 		return
-	modular_announce_excessive_cum_summary(cum_summary_context)
+	modular_schedule_excessive_cum_summary(cum_summary_context)
 	modular_announce_spurt_message()
 	after_ejaculation()
 
@@ -675,7 +675,7 @@
 		else
 			C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 2)
 		modular_emit_excessive_solo_spurts(C, add_floor = FALSE)
-		modular_announce_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
+		modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
 	modular_announce_spurt_message()
 	after_ejaculation()
 
