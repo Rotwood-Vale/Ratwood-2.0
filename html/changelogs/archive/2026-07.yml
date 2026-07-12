@@ -136,3 +136,8 @@
   - rscadd: Big Man towner thugs can now choose to spawn with a mace
   Skyglazer:
   - rscdel: Removed Barbarian and Amazon from the list of possible Licker subclasses.
+2026-07-12:
+  Arturlang:
+  - rscadd: MC now can account for maptick lag
+  EvenInDeathIStillServe:
+  - rscadd: The sex menu will now open using ctrl+shift+click in addition to MMB drag.
