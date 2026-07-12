@@ -45,10 +45,11 @@
 		"arousal_mult" = 2,
 		"pain" = 0
 	)
+	//Psydonites will get NOTHING and LYKE it
 	var/static/list/orison_none_data = list(
-		"message" = "with a calm stoicism...",
-		"arousal_mult" = 3,
-		"pain" = 6
+		"message" = "but nothing happens...",
+		"arousal_mult" = 0,
+		"pain" = 0
 	)
 	var/static/list/orison_painful_glow_data = list(
 		"message" = "the glow looks painful...",
