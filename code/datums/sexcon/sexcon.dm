@@ -418,7 +418,7 @@
 	modular_track_knot_spurt(splashed_user = splashed_user, oral = oral, orifice = orifice)
 	if(show_excessive_cum_message)
 		modular_schedule_excessive_cum_summary(modular_excessive_cum_context(splashed_user, oral, FALSE, orifice), splashed_user)
-	after_ejaculation(consume_charge)
+	after_ejaculation(consume_charge, play_sound = consume_charge)
 	after_intimate_climax(oral, splashed_user)
 
 /datum/sex_controller/proc/should_try_knot_during_cum_into(skip_knot_try, consume_charge, mob/living/carbon/human/knot_btm, mob/living/carbon/human/effective_target)
@@ -461,6 +461,9 @@
 		apply_creampie_drip(splashed_user, orifice, spurt_count = spurt_count)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
+/proc/modular_get_creampie_leak_verb()
+	return pick(list("Mmn~!", "Ahhn~!", "Fuck...~!", "Mnngg~!", "Mmphh~!", "Nnnnhhh~!")) //changed due to us having a lot of different messages now which kind of do the same thing. Instead of a leak message this is now just some subby shit when you get cummed in
+
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE, spurt_count = 1, suppress_start_message = FALSE)
 	var/datum/status_effect/creampie_leak/existing = target.has_status_effect(/datum/status_effect/creampie_leak/long) || target.has_status_effect(/datum/status_effect/creampie_leak)
 	spurt_count = max(spurt_count, 1)
@@ -468,7 +471,7 @@
 		existing.orifice |= orifice
 		existing.cum_spurt_intensity = max(existing.cum_spurt_intensity, spurt_count)
 		if(!suppress_start_message)
-			to_chat(target, span_love("I feel another warmth beginning to leak out of me."))
+			to_chat(target, span_love("I feel another [modular_get_creampie_leak_verb()] leaking out of me."))
 		existing.duration = world.time + initial(existing.duration) // refresh timer
 		return
 	if(use_long || spurt_count >= CREAMPIE_LEAK_LONG_SPURT_THRESHOLD)
@@ -582,14 +585,14 @@
 /datum/status_effect/facial/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
 		if(!owner.has_stress_event(/datum/stressevent/bathcleaned))
-			to_chat(owner, span_notice("I feel much cleaner now!"))
+			to_chat(owner, span_notice("I feel much [modular_get_creampie_leak_verb()] now!"))
 			owner.add_stress(/datum/stressevent/bathcleaned)
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/on_apply()
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_up))
 	if(!suppress_start_message)
-		to_chat(owner, span_love("I feel a warmth beginning to leak out of me."))
+		to_chat(owner, span_love("I feel [modular_get_creampie_leak_verb()] leaking out of me."))
 	return ..()
 
 /datum/status_effect/creampie_leak/on_remove()
@@ -598,7 +601,7 @@
 
 /datum/status_effect/creampie_leak/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK && !QDELETED(owner))
-		to_chat(owner, span_notice("I feel much cleaner now."))
+		to_chat(owner, span_notice("I feel much [modular_get_creampie_leak_verb()] now."))
 		owner.remove_status_effect(src)
 
 /datum/status_effect/creampie_leak/tick()
@@ -709,7 +712,7 @@
 		if(cum_chalice?.spillable)
 			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
 			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = semen_amount)
-		after_ejaculation(consume_charge = i == 1)
+		after_ejaculation(consume_charge = i == 1, play_sound = (i == 1))
 		if(i < bursts)
 			sleep(10)
 
@@ -824,7 +827,7 @@
 /datum/sex_controller/proc/get_max_charge()
 	return get_max_loads() * CHARGE_FOR_CLIMAX
 
-/datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE)
+/datum/sex_controller/proc/after_ejaculation(consume_charge = TRUE, play_sound = TRUE)
 	set_arousal(40)
 	if(consume_charge)
 		adjust_charge(-CHARGE_FOR_CLIMAX)
@@ -834,7 +837,8 @@
 		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
-	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
+	if(play_sound)
+		user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)

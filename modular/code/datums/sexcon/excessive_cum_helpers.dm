@@ -230,7 +230,9 @@
 				splatter_diverted = TRUE
 		if(!splatter_diverted)
 			add_cum_floor(release_turf)
-	playsound(release_turf, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 35, TRUE, -2, ignore_walls = FALSE)
+		playsound(release_turf, pick('sound/misc/mat/endout.ogg'), 12, TRUE, -2, ignore_walls = FALSE)
+		if(i < spurt_count)
+			sleep(10)
 	var/list/messages = modular_get_knot_release_messages(tracked_orifice, top, btm)
 	if(messages["giver"])
 		to_chat(top, span_love(messages["giver"]))
