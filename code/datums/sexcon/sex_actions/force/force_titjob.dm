@@ -46,7 +46,7 @@
 /datum/sex_action/force_titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts && breasts.breast_size < 2)
-		user.visible_message(span_warning("[user] presses [target]'s cock against [user.p_their()] tits and starts rubbing it over them!"))
+		user.visible_message(span_warning("[user] presses [target]'s cock against [user.p_their()] chest and starts rubbing it over it!"))
 		return
 	user.visible_message(span_warning("[user] grabs [target]'s cock and shoves it between [user.p_their()] tits!"))
 
