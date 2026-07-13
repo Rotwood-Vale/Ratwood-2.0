@@ -539,6 +539,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/rogue/grass,
 						/turf/open/floor/rogue/dunes,
+						/turf/open/floor/rogue/dune,
 						/turf/open/floor/rogue/grassred,
 						/turf/open/floor/rogue/grassyel,
 						/turf/open/floor/rogue/grasscold,
@@ -1816,3 +1817,48 @@
 		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 	turf_destruction("blunt")
 	return
+
+/turf/open/floor/rogue/dune
+	name = "dune"
+	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "dune"
+	density = FALSE
+	opacity = TRUE
+	floor_tile = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_SAND
+
+/obj/effect/decal/dune
+	name = "dune"
+	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "dune"
+
+	anchored = TRUE
+	density = FALSE
+	opacity = TRUE
+	mouse_opacity = 0
+
+
+/obj/effect/decal/dune/Crossed(atom/movable/O)
+	. = ..()
+
+	if(!isliving(O))
+		return
+	opacity = FALSE
+	alpha = 0
+
+/obj/effect/decal/dune/Uncrossed(atom/movable/O)
+	. = ..()
+	if(!isliving(O))
+		return
+
+	var/turf/dune_turf = get_turf(src)
+	for(var/mob/living/L in dune_turf)
+		if(L != O)
+			return
+	alpha = 255
+	opacity = TRUE
