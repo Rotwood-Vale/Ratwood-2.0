@@ -37,6 +37,9 @@
 #define PHILO_CREATE_CD_MAX          (30 MINUTES)                   // 造物冷却上限
 #define PHILO_CREATE_SEARCH_CAP      50                             // 造物搜索菜单最多展示的候选数量（防止列表爆炸）
 
+// —— 合成配方（在精炼炼药锅中炼成贤者之石）相关常量 ——
+#define PHILO_SYNTH_POTION_AMOUNT    10                             // 合成所需：每一种药水各需的最小单位数（原版+精炼药水皆为 10u）
+
 // ===========================================================================
 // 物品本体定义
 // ---------------------------------------------------------------------------
@@ -509,6 +512,155 @@ GLOBAL_LIST_EMPTY(philo_creatable_item_types)
 		GLOB.philo_creatable_item_types[item_type] = lowertext(iname)
 	return GLOB.philo_creatable_item_types
 
+// ###########################################################################
+// 合成配方：在【精炼炼药锅】中炼成贤者之石
+// ---------------------------------------------------------------------------
+// 需求（全部投入精炼炼药锅 /obj/machinery/light/rogue/cauldron/refining）：
+//   · 液体：原版炼药锅可炼的【每一种药水】各 10 单位 + 精炼炼药锅可炼的【每一种药水】各 10 单位；
+//   · 固体：每一种【宝石】各一颗 + 一颗【虚空石】(作为合成触发标志)；
+//   · 门槛：炼制者的炼金技能须达到【传奇(6 级)】，方能成功。
+//
+// 实现要点（本模块内、不改动模块外文件）：
+//   1) 精炼锅本只接受 /obj/item/alch 气味材料作固体投料(且上限 4 格)——这里【覆盖其 attackby】，
+//      额外允许把【宝石】与【虚空石】放进去(不占用常规 4 格上限，因本配方需十余种宝石)。
+//   2) 精炼锅 process() 已在框架里挂好钩子(见 refining_framework.dm)：每次沸腾结算先调用本文件的
+//      try_philosophers_stone_synthesis()。只有锅里【有虚空石】时它才接管结算；校验齐全 → 炼成贤者之石。
+//   3) “每种药水”不写死：运行时从 subtypesof(/datum/alch_cauldron_recipe) 与 get_alch_refining_formulas()
+//      动态汇总它们的产出试剂，未来新增任何药水都会自动纳入配方需求。
+// ###########################################################################
+
+// ===========================================================================
+// attackby 覆盖：让精炼炼药锅额外接受【宝石】与【虚空石】作为合成材料。
+// 其余物品（含原版 /obj/item/alch 气味材料、倒入液体的容器等）一律交回父类原逻辑处理。
+// ===========================================================================
+/obj/machinery/light/rogue/cauldron/refining/attackby(obj/item/I, mob/user, params)
+	// 只特殊处理“宝石 / 虚空石”这两类合成专用固体材料。
+	if(istype(I, /obj/item/roguegem) || istype(I, /obj/item/magic/voidstone))
+		// 禁止同类型重复投入：对应“每种宝石各一颗”，也避免重复占位。
+		if(!isnull(locate(I.type) in ingredients))
+			to_chat(user, span_warning("[src]里已经有一份[I]了！"))
+			return FALSE
+		// 把材料从玩家手上转移进锅内（失败通常是被别的东西粘住/无法移动）。
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, span_warning("[I]粘在我手上了！"))
+			return FALSE
+		// 成功放入：登记进 ingredients（★刻意不检查 maxingredients★，因本配方需要十余种宝石，远超常规 4 格）。
+		to_chat(user, span_info("我把[I]作为合成材料放入了[src]。"))
+		ingredients += I                                          // 记录该固体材料
+		brewing = 0                                              // 投料会重置沸腾进度（与原版投料行为一致）
+		lastuser = user                                         // 记录最后操作者（结算时用于技能判定/给经验）
+		playsound(src, "bubbles", 100, TRUE)                    // 投料音效
+		return TRUE
+	// 非合成材料：走精炼锅继承来的原版投料/倒液逻辑。
+	return ..()
+
+// ===========================================================================
+// try_philosophers_stone_synthesis：贤者之石的“终极合成”结算。
+// 由精炼锅 process() 在每次沸腾结算时调用（见 refining_framework.dm 的钩子）。
+// 返回值约定：
+//   · 返回 TRUE  → 本锅是一次“贤者之石合成”，已由本 proc 独占结算（成功或给出失败原因），process() 应就此结束；
+//   · 返回 FALSE → 锅内没有虚空石，不是本配方，process() 继续走常规精炼/回退逻辑。
+// ===========================================================================
+/obj/machinery/light/rogue/cauldron/refining/proc/try_philosophers_stone_synthesis(mob/living/user, amt2raise)
+	// —— 触发判定：以【虚空石】为签名材料。没有虚空石 → 不是本配方，立即放行。——
+	var/obj/item/magic/voidstone/void_core = locate(/obj/item/magic/voidstone) in ingredients
+	if(!void_core)
+		return FALSE                                            // 非贤者之石合成，交回常规逻辑
+
+	// —— 自此本 proc 独占结算（无论成败都返回 TRUE，避免 process() 再输出“材料无法融合”之类的误导信息）——
+
+	// 技能门槛：必须达到【传奇(6 级)】炼金。
+	if(!user || user.get_skill_level(/datum/skill/craft/alchemy) < SKILL_LEVEL_LEGENDARY)
+		brewing = 0                                             // 结算失败，复位沸腾进度（材料/液体不消耗，可再尝试）
+		visible_message(span_warning("锅中的伟力剧烈翻涌，却因炼金造诣不足而无法凝聚成形——唯有传奇级(6 级)的炼金宗师方能点化贤者之石。"))
+		return TRUE
+
+	// 固体校验：每一种要求的宝石都必须在锅内各有一颗。
+	for(var/gem_type in get_philo_required_gems())
+		if(isnull(locate(gem_type) in ingredients))            // 缺哪种宝石就明确提示哪种
+			var/obj/item/gem_sample = gem_type                 // 仅用类型读取名称
+			brewing = 0
+			visible_message(span_warning("合成贤者之石还缺少一颗[initial(gem_sample.name)]。"))
+			return TRUE
+
+	// 液体校验：每一种要求的药水都必须在锅内达到至少 PHILO_SYNTH_POTION_AMOUNT 单位。
+	for(var/reagent_path in get_philo_required_potions())
+		if(!reagents.has_reagent(reagent_path, PHILO_SYNTH_POTION_AMOUNT))
+			var/datum/reagent/reagent_sample = reagent_path    // 仅用类型读取名称
+			brewing = 0
+			visible_message(span_warning("合成贤者之石还缺少至少 [PHILO_SYNTH_POTION_AMOUNT] 单位的[initial(reagent_sample.name)]。"))
+			return TRUE
+
+	// —— 校验全部通过：消耗材料并炼成贤者之石 ——
+	// 逐一扣除每种药水各 PHILO_SYNTH_POTION_AMOUNT 单位（多出的部分留在锅里，不强行清空）。
+	for(var/reagent_path in get_philo_required_potions())
+		reagents.remove_reagent(reagent_path, PHILO_SYNTH_POTION_AMOUNT)
+	// 销毁全部固体材料（宝石 + 虚空石都熔入成品）。
+	for(var/obj/item/ing in ingredients)
+		qdel(ing)
+	ingredients = list()                                        // 清空固体材料列表
+	// 在锅子所在地块生成成品——贤者之石。
+	new /obj/item/philosophers_stone(get_turf(src))
+
+	// —— 反馈 / 统计 / 经验 / 音效 / 收尾 ——
+	visible_message(span_notice("锅中万药归一，宝石尽数熔于虚空之力，一颗散发着赤红光华的贤者之石缓缓成形！"))
+	record_featured_stat(FEATURED_STATS_ALCHEMISTS, user)      // 记入“炼金术士”特色统计
+	record_round_statistic(STATS_POTIONS_BREWED)               // 记入本局炼药统计
+	user?.adjust_experience(/datum/skill/craft/alchemy, amt2raise, FALSE)  // 给予炼金经验
+	playsound(src, 'sound/misc/smelter_fin.ogg', 60, FALSE)    // 完成音效
+	brewing = 21                                                // 标记为已完成（与框架其它成功路径一致）
+	return TRUE
+
+// ===========================================================================
+// get_philo_required_potions：动态汇总“合成所需的全部药水试剂路径”。
+// 来源①原版炼药锅配方 /datum/alch_cauldron_recipe 的全部产出试剂；
+// 来源②精炼炼药锅配方 /datum/alch_refining_formula 的全部产出试剂。
+// 用 static 缓存，整局只汇总一次；未来新增任何药水都会自动纳入需求（无需改本配方）。
+// ===========================================================================
+/obj/machinery/light/rogue/cauldron/refining/proc/get_philo_required_potions()
+	var/static/list/required_potions = null
+	if(required_potions)                                         // 已汇总则直接复用缓存
+		return required_potions
+
+	required_potions = list()
+	// —— 来源①：原版炼药锅可炼的每一种药水 —— //
+	for(var/recipe_type in subtypesof(/datum/alch_cauldron_recipe))
+		var/datum/alch_cauldron_recipe/vanilla = new recipe_type()
+		for(var/reagent_path in vanilla.output_reagents)
+			if(ispath(reagent_path, /datum/reagent))            // 只收试剂产物（跳过物品产物）
+				required_potions |= reagent_path                // |= 保证去重
+	// —— 来源②：精炼炼药锅可炼的每一种药水 —— //
+	for(var/datum/alch_refining_formula/refined in get_alch_refining_formulas())
+		for(var/reagent_path in refined.output_reagents)
+			if(ispath(reagent_path, /datum/reagent))
+				required_potions |= reagent_path
+	return required_potions
+
+// ===========================================================================
+// get_philo_required_gems：合成所需的“每一种宝石各一颗”清单。
+// 采用显式清单（而非 subtypesof），以【排除】调试基类 /obj/item/roguegem 本体、随机宝石生成器
+// /random，以及血钻/纳莱迪等稀有特殊宝石——只要求常见的成套彩宝，既贴合“每种宝石”又不至于强求 boss 掉落物。
+// ===========================================================================
+/obj/machinery/light/rogue/cauldron/refining/proc/get_philo_required_gems()
+	var/static/list/required_gems = list(
+		/obj/item/roguegem/green,		// 祖母绿
+		/obj/item/roguegem/blue,		// 蓝宝石
+		/obj/item/roguegem/yellow,		// 黄宝石
+		/obj/item/roguegem/violet,		// 紫晶
+		/obj/item/roguegem/ruby,		// 红宝石
+		/obj/item/roguegem/diamond,		// 钻石
+		/obj/item/roguegem/onyxa,		// 缟玛瑙
+		/obj/item/roguegem/jade,		// 翡翠
+		/obj/item/roguegem/oyster,		// 珍珠
+		/obj/item/roguegem/coral,		// 珊瑚
+		/obj/item/roguegem/turq,		// 绿松石
+		/obj/item/roguegem/amber,		// 琥珀
+		/obj/item/roguegem/opal,		// 蛋白石
+		/obj/item/roguegem/chitin,		// 甲壳石
+		/obj/item/roguegem/amethyst,	// 紫水晶
+	)
+	return required_gems
+
 // ===== 清理顶部宏定义，避免泄漏到全局命名空间、与其它文件冲突 =====
 #undef PHILO_STONE_ICON
 #undef PHILO_STONE_STATE
@@ -521,3 +673,4 @@ GLOBAL_LIST_EMPTY(philo_creatable_item_types)
 #undef PHILO_CREATE_CD_MIN
 #undef PHILO_CREATE_CD_MAX
 #undef PHILO_CREATE_SEARCH_CAP
+#undef PHILO_SYNTH_POTION_AMOUNT

@@ -135,6 +135,34 @@
 // all normal damage; the ONLY threat is being inhaled by a tornado (GLOB.active_tornadoes) -> lose 10% max health/second (godmode
 // briefly lifted so carbon.updatehealth registers the loss).
 #include "alchemy/refining_potions/gasification_body.dm"	// 气化之躯药水 (mist form: phase doors/windows, untargetable, damage-immune, weak to tornadoes)
+// 麻痹毒药：气味"恐惧"(5级,未占用,=强效魔力灵药big_mana_potion之smells_like，由纯净精质3点+金粉3点凑成6点) +
+// 水50/板油20/毒药30；炼金4级(专家)；产出30单位；6秒消化1单位(≈3分钟)。饮后依【体质】分档麻痹：
+// 体质18-20仅舌麻失语(TRAIT_MUTE)；14-17加手臂发麻、无法拾取/使用物品(监听COMSIG_MOB_CLICKON取消一切点击)；
+// ≤13周身发麻当场瘫倒、不能移动/说话/做任何事(Paralyze瘫痪 + TRAIT_MUTE/TRAIT_EMOTEMUTE/TRAIT_SPELLCOCKBLOCK)。
+// Paralytic Poison: "fear" scent (lvl5, unused, = big_mana_potion's smells_like; magicdust 3 + golddust 3 = 6) +
+// 50 water/20 tallow/30 berrypoison; alchemy lvl4 (Expert); 30u output; 6s per unit (~3 min). Numbs the drinker by
+// CONSTITUTION tier: CON 18-20 = tongue only (TRAIT_MUTE, can't speak); 14-17 = arms also numb (cancels all clicks via
+// COMSIG_MOB_CLICKON, can't pick up/use items); <=13 = whole-body collapse (Paralyze + MUTE/EMOTEMUTE/SPELLCOCKBLOCK: can't move/speak/act).
+#include "alchemy/refining_potions/paralytic_poison.dm"	// 麻痹毒药 (constitution-tiered paralysis: mute / can't use hands / full collapse)
+// 怠惰药水：气味"清新的空气"(5级,未占用,=疾行药水spd_potion之smells_like，由风之精质3点+小米草3点凑成6点) +
+// 水50/板油20/毒药30；炼金5级(大师)；产出30单位；9秒消化1单位(≈4.5分钟)。饮后其间：(A)每次主动动作(攻击/拾取/
+// 使用/点选施法等一切鼠标点击)有40%几率被"懒掉"——动作整单取消(监听COMSIG_MOB_CLICKON掷骰后返回取消标记)，并嘟囔
+// 一句懒话；(B)移动变慢(add_movespeed_modifier常驻);(C)一切读条动作变慢(physiology.do_after_speed*=1.5,人类);
+// (D)若一段时间什么都不做(不移动/不点击)则缓慢回复伤势并补充饥渴(heal_overall_damage+adjust_nutrition/hydration,
+// 一动即打断)。键盘移动不被拦截(只是变慢)。
+// Potion of Sloth: "fresh air" scent (lvl5, unused, = spd_potion's smells_like; airdust 3 + euphrasia 3 = 6) +
+// 50 water/20 tallow/30 berrypoison; alchemy lvl5 (Master); 30u output; 9s per unit (~4.5 min). While digesting:
+// (A) every active click-action has a 40% chance to be skipped (cancel via COMSIG_MOB_CLICKON roll) + a lazy mutter;
+// (B) movement slowed (movespeed modifier); (C) all progress-bar/do_after actions slowed (physiology.do_after_speed);
+// (D) staying idle (no move/click) for a while slowly heals injuries & refills food/water (broken by any activity).
+#include "alchemy/refining_potions/sloth_potion.dm"		// 怠惰药水 (skip actions + slow move/do_after; idle-rest regen)
+// 回忆药剂：唯一未被占用的等级5气味"洁净的风"(=强效耐力灵药 big_stamina_potion 的 smells_like，
+// 种子粉/炼金奥兹姆/圣蓟 major=3 任取两味=6) + 清水70/强效魔力药水30；炼金5级(大师)；产出30单位。
+// 效果：消化满5单位后，被传送回饮者【上一次睡觉的地点】(由自包含轮询子系统 SSmemory_sleep 持续记录)。
+// Memory Potion: "clean wind" scent (lvl5, the ONLY unused one = big_stamina_potion's smells_like) +
+// 70 water/30 strong mana potion; alchemy lvl5 (Master); 30u output; after digesting >=5u, teleports the
+// drinker back to where they last slept (a self-contained polling subsystem, SSmemory_sleep, records it).
+#include "alchemy/refining_potions/memory_potion.dm"		// 回忆药剂 (teleport to last sleep spot after 5u)
 // 把精炼配方接入原版炼金指南"炼金秘要"——新增"精炼药剂"分类并渲染各配方详情(覆盖其 New/分类/详情 过程)。
 // Surfaces the refining formulas inside the vanilla alchemy guide under a "精炼药剂" (Refined Potions) category.
 #include "alchemy/refining_guide.dm"
