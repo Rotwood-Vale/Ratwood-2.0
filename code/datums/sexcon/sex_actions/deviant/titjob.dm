@@ -42,7 +42,7 @@
 /datum/sex_action/titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts && breasts.breast_size < 2)
-		user.visible_message(span_warning("[user] presses [user.p_their()] cock against [target]'s chest and starts rubbing it off!"))
+		user.visible_message(span_warning("[user] presses [user.p_their()] cock against [target]'s tits and starts grinding it!"))
 		return
 	user.visible_message(span_warning("[user] grabs [target]'s tits and shoves [user.p_their()] cock inbetween!"))
 
@@ -50,7 +50,7 @@
 	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
 	var/is_small_chest = breasts && breasts.breast_size < 2
 	if(is_small_chest)
-		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [user.p_their()] cock against [target]'s chest."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [user.p_their()] cock against [target]'s chest"))
 	else
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s tits."))
 	user.sexcon.outercourse_noise(user)
