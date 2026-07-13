@@ -187,19 +187,20 @@
 		to_chat(H, span_love("[victim] is spattered with some of the seed spilling from [leaker]"))
 
 
-/datum/sex_controller/proc/modular_announce_knot_release_spurt_message(mob/living/carbon/human/top, mob/living/carbon/human/btm, turf/release_turf)
+/datum/sex_controller/proc/modular_announce_knot_release_spurt_message(mob/living/carbon/human/top, mob/living/carbon/human/btm, turf/release_turf, list/recipients = null)
 	if(!ishuman(top) || !ishuman(btm) || !release_turf)
 		return
 	if(!top.client?.prefs?.excessive_cum || !btm.client?.prefs?.excessive_cum)
 		return
-	var/list/recipients = list(top, btm)
-	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
-		if(H == top || H == btm)
-			continue
-		recipients += H
 	var/list/phonetics = modular_get_knot_release_phonetic_list()
 	if(!islist(phonetics) || !length(phonetics))
 		return
+	if(!islist(recipients) || !length(recipients))
+		recipients = list(top, btm)
+		for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+			if(H == top || H == btm)
+				continue
+			recipients += H
 	var/phonetic = pick(phonetics)
 	var/message = span_love("[phonetic]")
 	for(var/mob/living/carbon/human/H in recipients)
@@ -237,6 +238,13 @@
 			adjacent_turfs += T
 	if(length(adjacent_turfs))
 		release_turf = pick(adjacent_turfs)
+	var/list/nearby_recipients = list(top, btm)
+	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+		if(H == top || H == btm)
+			continue
+		if(!H.client?.prefs?.excessive_cum)
+			continue
+		nearby_recipients += H
 	// Check "nearby" from the victim's tile, but keep floor splatter on an adjacent tile.
 	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, origin_turf)
 	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, origin_turf)
@@ -255,8 +263,8 @@
 				splatter_diverted = TRUE
 		if(!splatter_diverted)
 			add_cum_floor(release_turf)
-		modular_announce_knot_release_spurt_message(top, btm, release_turf)
-		playsound(release_turf, pick('sound/misc/mat/endout.ogg'), 12, TRUE, -2, ignore_walls = FALSE)
+		modular_announce_knot_release_spurt_message(top, btm, release_turf, nearby_recipients)
+		playsound(release_turf, 'sound/misc/mat/endout.ogg', 12, TRUE, -2, ignore_walls = FALSE)
 		if(i < spurt_count)
 			sleep(10)
 	var/list/messages = modular_get_knot_release_messages(tracked_orifice, top, btm)
@@ -265,9 +273,7 @@
 	if(messages["receiver"])
 		to_chat(btm, span_love(messages["receiver"]))
 	if(messages["nearby"])
-		for(var/mob/living/carbon/human/H in viewers(5, release_turf))
+		for(var/mob/living/carbon/human/H in nearby_recipients)
 			if(H == top || H == btm)
-				continue
-			if(!H.client?.prefs?.excessive_cum)
 				continue
 			to_chat(H, span_love(messages["nearby"]))
