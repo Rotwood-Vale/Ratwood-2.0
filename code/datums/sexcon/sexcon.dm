@@ -705,31 +705,67 @@
 	if(C && istype(C))
 		log_combat(user, user, "Ejaculated into a container")
 		user.visible_message(span_love("[user] spills into [C]!"))
-		run_spurt_sequence(sound_target = user, cum_chalice = C, add_floor = FALSE, first_femcum_amount = 2, subsequent_femcum_amount = 1)
+		run_spurt_sequence(sound_target = user, cum_chalice = C, add_floor = FALSE, first_femcum_amount = 2, subsequent_femcum_amount = 1, semen_amount = get_semen_volume())
 		modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_CONTAINER, cum_chalice = C)
 		return
 	run_spurt_sequence(sound_target = user, add_floor = FALSE)
 	modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_SOLO)
 
-/datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null)
+/datum/sex_controller/proc/announce_container_spill(obj/item/reagent_containers/glass/C, turf/spill_turf = null, notify_nearby = FALSE)
+	if(!C)
+		return
+	to_chat(user, span_warning("The [C] is full and spills!"))
+	if(!notify_nearby || !spill_turf)
+		return
+	for(var/mob/living/carbon/human/H in viewers(DEFAULT_MESSAGE_RANGE, spill_turf))
+		if(H == user)
+			continue
+		if(!H.client?.prefs?.excessive_cum)
+			continue
+		to_chat(H, span_warning("The [C] is full and spills!"))
+
+/datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null, turf/spill_turf = null, notify_nearby_spill = FALSE)
 	if(!C?.reagents)
-		return
+		return FALSE
+	var/requested_amount = 0
+	var/reagent_path = /datum/reagent/erpjuice/cum
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
-		C.reagents.add_reagent(/datum/reagent/erpjuice/femcum, femcum_amount)
-		return
-	var/effective_semen_amount = isnull(semen_amount) ? get_semen_volume() : semen_amount
-	C.reagents.add_reagent(/datum/reagent/erpjuice/cum, effective_semen_amount)
+		requested_amount = femcum_amount
+		reagent_path = /datum/reagent/erpjuice/femcum
+	else
+		requested_amount = isnull(semen_amount) ? get_semen_volume() : semen_amount
+	if(requested_amount <= 0)
+		return FALSE
+	var/free_space = max(C.reagents.maximum_volume - C.reagents.total_volume, 0)
+	if(free_space <= 0)
+		if(spill_turf)
+			add_cum_floor(spill_turf, do_big_puddle = should_make_big_cum_puddle())
+		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill)
+		return TRUE
+	var/transfer_amount = min(requested_amount, free_space)
+	C.reagents.add_reagent(reagent_path, transfer_amount)
+	if(requested_amount > transfer_amount)
+		if(spill_turf)
+			add_cum_floor(spill_turf, do_big_puddle = should_make_big_cum_puddle())
+		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill)
+		return TRUE
+	return FALSE
 
 /datum/sex_controller/proc/run_spurt_sequence(mob/living/carbon/human/sound_target = null, obj/item/reagent_containers/glass/cum_chalice = null, add_floor = TRUE, first_femcum_amount = 1, subsequent_femcum_amount = 1, semen_amount = null)
 	var/bursts = get_load_bursts()
+	var/per_spurt_semen_amount = semen_amount
+	if(cum_chalice?.spillable && !isnull(semen_amount) && !user.getorganslot(ORGAN_SLOT_VAGINA))
+		per_spurt_semen_amount = max(semen_amount / max(bursts, 1), 0.1)
+	var/turf/output_turf = get_turf(sound_target || user)
+	var/notify_nearby_spill = modular_excessive_cum_enabled()
 	for(var/i = 1; i <= bursts; i++)
 		modular_announce_spurt_message()
 		playsound(sound_target || user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
 		if(add_floor)
-			add_cum_floor(get_turf(sound_target || user), do_big_puddle = should_make_big_cum_puddle())
+			add_cum_floor(output_turf, do_big_puddle = should_make_big_cum_puddle())
 		if(cum_chalice?.spillable)
 			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
-			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = semen_amount)
+			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = per_spurt_semen_amount, spill_turf = output_turf, notify_nearby_spill = notify_nearby_spill)
 		if(i == 1)
 			// Apply climax lockout immediately so passive processing cannot re-enter orgasm during inter-burst sleeps.
 			after_ejaculation()
