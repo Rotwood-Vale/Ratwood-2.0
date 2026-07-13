@@ -77,6 +77,8 @@
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
+	/// Bypasses positioning and exposure checks entirely
+	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
 	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
@@ -238,11 +240,27 @@
 
 /datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
+	if(!bodypart)
+		return FALSE
 
 	var/self_target = FALSE
 	var/datum/sex_controller/user_controller = user.sexcon
 	if(user_controller.target == user)
 		self_target = TRUE
+
+	// Freeuse: target has opted to skip positioning/exposure checks entirely.
+	// Adjacency is still enforced so people can't reach across the map.
+	if(target.sexcon.freeuse)
+		if(!user.sexcon.Adjacent_Or_Closet(target))
+			return FALSE
+
+		if(!isnull(user_controller.current_action) && user_controller.current_action == src.type)
+			target.sexcon.update_current_accessible_body_zones(location, grabs)
+
+		if(user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
+			user_controller.using_zones += location
+
+		return TRUE
 
 	var/signalargs = list(src, bodypart, self_target)
 	signalargs += args
@@ -1132,6 +1150,7 @@
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
 	else
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
+	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -1230,6 +1249,9 @@
 			else
 				bottom_exposed = !bottom_exposed
 				update_exposure()
+		if("toggle_freeuse")
+			freeuse = !freeuse
+			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
