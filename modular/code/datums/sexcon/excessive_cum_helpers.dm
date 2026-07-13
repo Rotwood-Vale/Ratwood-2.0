@@ -88,7 +88,18 @@
 		public_verb = "squirts"
 		private_text = "Squirt!"
 	if(modular_excessive_cum_enabled())
-		user.visible_message(span_love("[user] [public_verb]!"), span_love("<i>[private_text]</i>"), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		var/vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE)
+		var/public_message = span_love("[user] [public_verb]!")
+		to_chat(user, span_love("<i>[private_text]</i>"))
+		var/turf/source_turf = get_turf(user)
+		if(!source_turf)
+			return
+		for(var/mob/living/carbon/human/H in viewers(vision_distance, source_turf))
+			if(H == user)
+				continue
+			if(!H.client?.prefs?.excessive_cum)
+				continue
+			to_chat(H, public_message)
 		return
 	to_chat(user, span_love("<i>[private_text]</i>"))
 
