@@ -225,9 +225,9 @@
 					else if(external_intensity >= 5)
 						. += span_aiprivradio("[capitalize(m2)] body is completely painted white with cum!")
 					else if(external_intensity >= 3)
-						. += span_aiprivradio("[capitalize(m2)] body is glazed with cum!")
+						. += span_aiprivradio("[capitalize(m2)] body is totally glazed with cum!")
 					else
-						. += span_aiprivradio("[capitalize(m2)] body is splashed with cum!")
+						. += span_aiprivradio("[capitalize(m2)] body is dripping with cum!")
 				if(facial)
 					var/facial_intensity = max(facial.cum_spurt_intensity, 1)
 					if(facial.has_dried_up)
@@ -235,9 +235,9 @@
 					else if(facial_intensity >= 5)
 						. += span_aiprivradio("[capitalize(m2)] face is completely painted white with cum!")
 					else if(facial_intensity >= 3)
-						. += span_aiprivradio("[capitalize(m2)] face is glazed with cum!")
+						. += span_aiprivradio("[capitalize(m2)] face is totally glazed with cum!")
 					else
-						. += span_aiprivradio("[capitalize(m2)] face is splashed with cum!")
+						. += span_aiprivradio("[capitalize(m2)] face is dripping with cum!")
 				if(creampie && !drip)
 					var/creampie_intensity = max(creampie.cum_spurt_intensity, 1)
 					if(creampie.has_dried_up)
@@ -245,9 +245,9 @@
 					else if(creampie_intensity >= 5)
 						. += span_aiprivradio("[capitalize(m2)] crotch is overflowing with cum!")
 					else if(creampie_intensity >= 3)
-						. += span_aiprivradio("[capitalize(m2)] crotch is a cummy mess!")
+						. += span_aiprivradio("[capitalize(m2)] crotch is totally glazed with cum!")
 					else
-						. += span_aiprivradio("[capitalize(m2)] crotch is slick with cum!")
+						. += span_aiprivradio("[capitalize(m2)] crotch is dripping with cum!")
 				if(drip)
 					var/drip_intensity = max(drip.cum_spurt_intensity, 1)
 					var/is_heavy = drip_intensity >= 3
