@@ -118,3 +118,37 @@
 	name = "愚人药水瓶"
 	desc = "一瓶预装的愚人药水，饮下会在一段时间内变得神志迟钝、言语混乱、步履不稳。"
 	list_reagents = list(/datum/reagent/idiot_potion = 30)                        // 预装 30 单位（与其精炼产量一致）。
+
+// 虚弱药水：饮下后一段时间内力量大减（-8），四肢发软、气力尽失。预装 30 单位（与该药水的精炼产量一致，约 15 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/weakness_potion
+	name = "虚弱药水瓶"
+	desc = "一瓶预装的虚弱药水，饮下会在一段时间内力量大减、四肢发软、举手投足都变得沉重吃力。"
+	list_reagents = list(/datum/reagent/weakness_potion = 30)                     // 预装 30 单位（与其精炼产量一致）。
+
+// 气化之躯药水：饮下化作雾气之躯，可穿门过窗、怪物不视为敌、免疫常规伤害；唯惧龙卷风。预装 30 单位（与该药水的精炼产量一致，约 6 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/gasification_body
+	name = "气化之躯药水瓶"
+	desc = "一瓶预装的气化之躯药水，饮下会化作流动的雾气：只能随风飘移或凌空飞行、不能出手开口取物，随意穿门过窗、怪物不再视你为敌、寻常伤害皆无从加害——唯独惧怕被龙卷风吸入撕散。"
+	list_reagents = list(/datum/reagent/gasification_body_potion = 30)            // 预装 30 单位（与其精炼产量一致）。
+
+// 麻痹毒药：饮下后依体质分档麻痹——体质18-20仅舌麻失语；14-17连手臂发麻、拿不起用不了物品；≤13周身发麻当场瘫倒、动弹不得。
+//   预装 30 单位（与该药水的精炼产量一致，约 3 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/paralytic_poison
+	name = "麻痹毒药瓶"
+	desc = "一瓶预装的麻痹毒药，饮下会依体质强弱而生轻重不一的麻痹：体质强者仅舌头发麻、难以言语；中平者连手臂也一并发麻、拿不起也用不了东西；孱弱者更会周身失觉、当场瘫软倒地、动弹不得。"
+	list_reagents = list(/datum/reagent/paralytic_poison = 30)                    // 预装 30 单位（与其精炼产量一致）。
+
+// 怠惰药水：饮下后一段时间内，(A)每次主动动作（攻击/拾取/使用/施法等一切点击）都有几率被"懒掉"、动作不执行、
+//   并嘟囔一句懒话；(B)移动变慢；(C)一切读条动作变慢；(D)若一段时间什么都不做则缓慢回复伤势并补充饥渴（一动即打断）。
+//   预装 30 单位（与该药水的精炼产量一致，约 4.5 分钟药效）。
+/obj/item/reagent_containers/glass/bottle/rogue/sloth_potion
+	name = "怠惰药水瓶"
+	desc = "一瓶预装的怠惰药水，饮下会在一段时间内四体发懒、意兴阑珊：动作时常直接作罢、只余一句有气无力的'太累了'，脚步拖沓、做起需耐心的活计也格外磨蹭；可若索性歇着什么都不做，伤势与饥渴反倒会在慵懒的休憩中慢慢缓解。"
+	list_reagents = list(/datum/reagent/sloth_potion = 30)                        // 预装 30 单位（与其精炼产量一致）。
+
+// 回忆药剂：饮下并消化满 5 单位后，被传送回上一次睡觉的地点。预装 30 单位（与该药水的精炼产量一致，
+//   30 >= 5 的触发阈值，取即可用；一份足够触发一次传送）。
+/obj/item/reagent_containers/glass/bottle/rogue/memory_potion
+	name = "回忆药剂瓶"
+	desc = "一瓶预装的回忆药剂，饮下足量并待其消化后，会被沉睡的记忆牵引、送回上一次安睡之处。"
+	list_reagents = list(/datum/reagent/memory_potion = 30)                       // 预装 30 单位（与其精炼产量一致，30 >= 5 触发阈值）。

@@ -204,6 +204,14 @@ GLOBAL_LIST_EMPTY(alch_refining_formulas)					// Lazily-filled list of all formu
 
 	var/amt2raise = lastuser?.STAINT * 2					// XP on a brew attempt.
 
+	// ---- 第 20 拍(★特例分支：贤者之石·终极合成)：先于一切常规配方判定 ----
+	// 中文：贤者之石不是"药水"，它以【虚空石】为触发标志，需集齐全部原版/精炼药水(各10单位)+每种宝石各一颗，
+	//   且炼金达到传奇(6级)方可炼成。该合成逻辑全部定义在 items/philosophers_stone.dm(本模块内)，此处仅挂一个钩子：
+	//   若本锅当前是一次"贤者之石合成"(锅内有虚空石)，则由该 proc 独占结算并返回 TRUE，process() 就此结束，
+	//   不再走下方的普通精炼/回退逻辑；若不是(锅内无虚空石)，proc 立即返回 FALSE，一切照常。
+	if(try_philosophers_stone_synthesis(lastuser, amt2raise))	// Grand synthesis (defined in items/philosophers_stone.dm).
+		return
+
 	// ---- 第 20 拍(分支 A)：尝试匹配一条"精炼配方"(气味要求 + 液体底料都满足) ----
 	var/datum/alch_refining_formula/formula = find_refining_formula(scent_points, top_recipe)	// Match by scent/recipe + base.
 	if(formula)												// A refined recipe applies.
