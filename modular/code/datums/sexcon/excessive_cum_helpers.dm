@@ -219,6 +219,35 @@
 			continue
 		to_chat(H, message)
 
+/datum/sex_controller/proc/modular_get_knot_release_turf(mob/living/carbon/human/btm, turf/origin_turf)
+	if(!ishuman(btm) || !origin_turf)
+		return null
+	var/turf/preferred_turf = null
+	if(btm.mobility_flags & MOBILITY_STAND)
+		preferred_turf = get_step(origin_turf, SOUTH)
+	else
+		// Lying sprites visually "spill" to a horizontal side based on facing.
+		var/preferred_dir = WEST
+		switch(btm.dir)
+			if(EAST)
+				preferred_dir = EAST
+			if(WEST)
+				preferred_dir = WEST
+			if(NORTH)
+				preferred_dir = EAST
+			if(SOUTH)
+				preferred_dir = WEST
+		preferred_turf = get_step(origin_turf, preferred_dir)
+	if(preferred_turf && isturf(preferred_turf))
+		return preferred_turf
+	var/list/adjacent_turfs = list()
+	for(var/turf/T in RANGE_TURFS(1, origin_turf))
+		if(T != origin_turf)
+			adjacent_turfs += T
+	if(length(adjacent_turfs))
+		return pick(adjacent_turfs)
+	return origin_turf
+
 /datum/sex_controller/proc/modular_release_knot_spurt_pool(mob/living/carbon/human/top, mob/living/carbon/human/btm, knot_orifice = SEX_PART_NULL)
 	if(!ishuman(top) || !ishuman(btm))
 		return
@@ -242,13 +271,7 @@
 	var/turf/origin_turf = get_turf(btm)
 	if(!origin_turf)
 		return
-	var/turf/release_turf = origin_turf
-	var/list/adjacent_turfs = list()
-	for(var/turf/T in RANGE_TURFS(1, origin_turf))
-		if(T != origin_turf)
-			adjacent_turfs += T
-	if(length(adjacent_turfs))
-		release_turf = pick(adjacent_turfs)
+	var/turf/release_turf = modular_get_knot_release_turf(btm, origin_turf)
 	var/list/nearby_recipients = list(top, btm)
 	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
 		if(H == top || H == btm)

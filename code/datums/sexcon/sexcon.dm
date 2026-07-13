@@ -475,7 +475,7 @@
 	if(!oral && user?.dna?.species?.id == "gnoll")
 		splashed_user.has_gnoll_scent_this_round = TRUE
 	modular_record_collar_receive_event(splashed_user, user)
-	if(!oral && !is_receiver_actively_knotted_to_user)
+	if(!oral)
 		apply_creampie_drip(splashed_user, orifice, spurt_count = spurt_count)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.

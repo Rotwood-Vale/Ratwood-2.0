@@ -413,8 +413,7 @@
 				btm.has_gnoll_scent_this_round = TRUE
 			modular_record_collar_receive_event(btm, top)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)
-			var/suppress_leak_start_message = top.client?.prefs?.excessive_cum && btm.client?.prefs?.excessive_cum
-			apply_creampie_drip(btm, knot_orifice, spurt_count = spurt_count, suppress_start_message = suppress_leak_start_message)
+			apply_creampie_drip(btm, knot_orifice, spurt_count = spurt_count)
 		if(top.sexcon.knotted_part_partner&SEX_PART_JAWS)
 			var/spurt_count = top.sexcon.get_load_bursts()
 			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
