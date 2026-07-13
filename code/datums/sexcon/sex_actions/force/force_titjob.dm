@@ -44,17 +44,33 @@
 	return FALSE
 
 /datum/sex_action/force_titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
+	if(breasts && breasts.breast_size < 2)
+		user.visible_message(span_warning("[user] presses [target]'s cock against [user.p_their()] chest and starts stroking it off!"))
+		return
 	user.visible_message(span_warning("[user] grabs [target]'s cock and shoves it between [user.p_their()] tits!"))
 
 /datum/sex_action/force_titjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] shoves [target]'s cock between [user.p_their()] tits."))
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
+	var/is_small_chest = breasts && breasts.breast_size < 2
+	if(is_small_chest)
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [target]'s cock against [user.p_their()] chest."))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] shoves [target]'s cock between [user.p_their()] tits."))
 	user.sexcon.outercourse_noise(user)
 
-	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
+	if(is_small_chest)
+		user.sexcon.perform_sex_action(target, 1, 2, TRUE)
+	else
+		user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 
 	target.sexcon.handle_passive_ejaculation(user)
 
 /datum/sex_action/force_titjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
+	if(breasts && breasts.breast_size < 2)
+		user.visible_message(span_warning("[user] eases [target]'s cock away from [user.p_their()] chest."))
+		return
 	user.visible_message(span_warning("[user] pulls [target.p_their()] cock out from between [user.p_their()]'s tits."))
 
 /datum/sex_action/force_titjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
