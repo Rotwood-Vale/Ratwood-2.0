@@ -8,7 +8,7 @@
 	return "[REF(top)]|[REF(btm)]|[orifice]"
 
 /proc/modular_get_knot_release_phonetic_list()
-	var/static/list/phonetics = list("Spurt...,", "Splurt...", "Squelch...", "Splosh...", "Glop...", "Squirk...")
+	var/static/list/phonetics = list("Spurt...", "Splurt...", "Squelch...", "Splosh...", "Glop...", "Squirk...")
 	return phonetics
 
 /// Returns TRUE if the excessive cum feature is enabled for the current action.
