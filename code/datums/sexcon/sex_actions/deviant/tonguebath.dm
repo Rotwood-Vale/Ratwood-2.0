@@ -45,7 +45,15 @@
 	user.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(target, 0.5, 0, TRUE)
-	target.sexcon.handle_passive_ejaculation()
+	if(target.sexcon.check_active_ejaculation())
+		user.sexcon_action_message(span_love("[target] ejaculates into [user]'s mouth!"))
+		var/bursts = target.sexcon.get_load_bursts()
+		for(var/i = 1; i <= bursts; i++)
+			target.sexcon.cum_into(oral = TRUE, splashed_user = user, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+			if(i < bursts)
+				sleep(10)
+	else
+		target.sexcon.handle_passive_ejaculation(user)
 
 	var/datum/status_effect/facial/facial = target.has_status_effect(/datum/status_effect/facial)
 	var/datum/status_effect/facial/creampie = target.has_status_effect(/datum/status_effect/facial/internal)
