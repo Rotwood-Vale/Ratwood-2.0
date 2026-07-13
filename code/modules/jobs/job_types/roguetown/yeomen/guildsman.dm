@@ -116,7 +116,7 @@
 		STATKEY_LCK = 2,
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_PER = 1 
+		STATKEY_PER = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // woodcutting, don't want a wild venard attacking you
