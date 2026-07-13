@@ -282,6 +282,16 @@
 		if(!H.client?.prefs?.excessive_cum)
 			continue
 		nearby_recipients += H
+	var/list/messages = modular_get_knot_release_messages(tracked_orifice, top, btm)
+	if(messages["giver"])
+		to_chat(top, span_love(messages["giver"]))
+	if(messages["receiver"])
+		to_chat(btm, span_love(messages["receiver"]))
+	if(messages["nearby"])
+		for(var/mob/living/carbon/human/H in nearby_recipients)
+			if(H == top || H == btm)
+				continue
+			to_chat(H, span_love(messages["nearby"]))
 	// Collect splatter candidates from the actual release tile.
 	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, release_turf)
 	var/turf/top_turf = get_turf(top)
@@ -307,13 +317,3 @@
 		playsound(release_turf, 'sound/misc/mat/endout.ogg', 12, TRUE, -2, ignore_walls = FALSE)
 		if(i < spurt_count)
 			sleep(10)
-	var/list/messages = modular_get_knot_release_messages(tracked_orifice, top, btm)
-	if(messages["giver"])
-		to_chat(top, span_love(messages["giver"]))
-	if(messages["receiver"])
-		to_chat(btm, span_love(messages["receiver"]))
-	if(messages["nearby"])
-		for(var/mob/living/carbon/human/H in nearby_recipients)
-			if(H == top || H == btm)
-				continue
-			to_chat(H, span_love(messages["nearby"]))
