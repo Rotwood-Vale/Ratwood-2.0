@@ -281,6 +281,9 @@
 		nearby_recipients += H
 	// Check "nearby" from the victim's tile, but keep floor splatter on an adjacent tile.
 	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, origin_turf)
+	var/turf/top_turf = get_turf(top)
+	if(top_turf && (top_turf == origin_turf || top_turf == release_turf) && !(top in splatter_candidates))
+		splatter_candidates += top
 	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, origin_turf)
 	for(var/i = 1; i <= spurt_count; i++)
 		var/splatter_diverted = FALSE
