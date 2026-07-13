@@ -296,7 +296,7 @@
 	if(isnull(top.client) || !top.client?.prefs.sexable || isnull(btm.client) || !btm.client?.prefs.sexable) // we respect safewords here, let the players untie themselves
 		knot_remove()
 		return
-	if(top.stat >= SOFT_CRIT) // only removed if the knot owner is injured/asleep/dead
+	if(top.stat >= SOFT_CRIT && !top.IsSleeping()) // keep tied while sleeping; still remove if injured/unconscious/dead
 		knot_remove()
 		return
 	if(btm.pulling == top || top.pulling == btm)
