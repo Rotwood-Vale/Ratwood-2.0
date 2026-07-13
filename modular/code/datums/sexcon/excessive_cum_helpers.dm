@@ -190,12 +190,12 @@
 /datum/sex_controller/proc/modular_announce_knot_release_splatter(mob/living/carbon/human/leaker, mob/living/carbon/human/victim, list/observers = null)
 	if(!ishuman(leaker) || !ishuman(victim))
 		return
-	to_chat(victim, span_love("I'm spattered with some of the seed spilling from [leaker]"))
-	to_chat(leaker, span_love("[victim] is spattered with some of the seed spilling out of me"))
+	to_chat(victim, span_love("I'm spattered with some of the seed spilling from [leaker]!"))
+	to_chat(leaker, span_love("[victim] is spattered with some of the seed spilling out of me!"))
 	for(var/mob/living/carbon/human/H in (observers || list()))
 		if(H == victim)
 			continue
-		to_chat(H, span_love("[victim] is spattered with some of the seed spilling from [leaker]"))
+		to_chat(H, span_love("[victim] is spattered with some of the seed spilling from [leaker]!"))
 
 
 /datum/sex_controller/proc/modular_announce_knot_release_spurt_message(mob/living/carbon/human/top, mob/living/carbon/human/btm, turf/release_turf, list/recipients = null)
@@ -274,7 +274,7 @@
 	var/turf/origin_turf = get_turf(btm)
 	if(!origin_turf)
 		return
-	var/turf/release_turf = modular_get_knot_release_turf(btm, origin_turf)
+	var/turf/release_turf = (tracked_orifice & SEX_PART_JAWS) ? origin_turf : modular_get_knot_release_turf(btm, origin_turf)
 	var/list/nearby_recipients = list(top, btm)
 	for(var/mob/living/carbon/human/H in viewers(5, release_turf))
 		if(H == top || H == btm)
