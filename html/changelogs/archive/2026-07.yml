@@ -141,3 +141,14 @@
   - rscadd: MC now can account for maptick lag
   EvenInDeathIStillServe:
   - rscadd: The sex menu will now open using ctrl+shift+click in addition to MMB drag.
+2026-07-13:
+  EvenInDeathIStillServe:
+  - rscadd: Knaves get rapiers, sabres, messers, falchions and estocs in their shop
+      tab.
+  - rscadd: Added a "freeuse" sexcon toggle that makes it so that sex actions targeting
+      you will bypass any positioning or clothing checks.
+  IronDragoon:
+  - qol: Adds IC menu verb to toggle Keen Ears trait in round
+  PPooch:
+  - bugfix: Prevented buckling oneself to an object, and throwing the object and self
+      around or up to a different Z level.
