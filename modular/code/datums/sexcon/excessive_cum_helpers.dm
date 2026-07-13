@@ -226,17 +226,20 @@
 	if(btm.mobility_flags & MOBILITY_STAND)
 		preferred_turf = get_step(origin_turf, SOUTH)
 	else
-		// Lying sprites visually "spill" to a horizontal side based on facing.
-		var/preferred_dir = WEST
-		switch(btm.dir)
-			if(EAST)
+		// Lying orientation is transform-driven; 90/270 tracks the horizontal side reliably.
+		var/preferred_dir = null
+		if(btm.lying == 90)
+			preferred_dir = WEST
+		else if(btm.lying == 270)
+			preferred_dir = EAST
+		else
+			var/facing_dir = REVERSE_DIR(btm.dir)
+			if(facing_dir & EAST)
 				preferred_dir = EAST
-			if(WEST)
+			else if(facing_dir & WEST)
 				preferred_dir = WEST
-			if(NORTH)
+			else
 				preferred_dir = EAST
-			if(SOUTH)
-				preferred_dir = WEST
 		preferred_turf = get_step(origin_turf, preferred_dir)
 	if(preferred_turf && isturf(preferred_turf))
 		return preferred_turf
