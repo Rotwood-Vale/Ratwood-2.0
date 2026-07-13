@@ -167,7 +167,7 @@
 	if(!ishuman(leaker) || !release_turf)
 		return list()
 	var/list/candidates = list()
-	for(var/mob/living/carbon/human/H in RANGE_TURFS(1, release_turf))
+	for(var/mob/living/carbon/human/H in viewers(1, release_turf))
 		if(H == leaker)
 			continue
 		if(!H.client?.prefs?.excessive_cum)
@@ -282,12 +282,12 @@
 		if(!H.client?.prefs?.excessive_cum)
 			continue
 		nearby_recipients += H
-	// Check "nearby" from the victim's tile, but keep floor splatter on an adjacent tile.
-	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, origin_turf)
+	// Collect splatter candidates from the actual release tile.
+	var/list/splatter_candidates = modular_get_knot_release_splatter_candidates(btm, release_turf)
 	var/turf/top_turf = get_turf(top)
 	if(top_turf && (top_turf == origin_turf || top_turf == release_turf) && !(top in splatter_candidates))
 		splatter_candidates += top
-	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, origin_turf)
+	var/list/splatter_observers = modular_get_knot_release_observers(btm, null, release_turf)
 	for(var/i = 1; i <= spurt_count; i++)
 		var/splatter_diverted = FALSE
 		if(prob(20) && length(splatter_candidates))
