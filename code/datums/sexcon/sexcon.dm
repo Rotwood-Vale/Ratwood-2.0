@@ -745,7 +745,7 @@
 	volume += get_knot_volume_bonus()
 	if(modular_excessive_cum_enabled())
 		volume *= SEMEN_VOLUME_EXCESSIVE_MULTIPLIER
-		return max(volume, SEMEN_VOLUME_MIN)
+		return max(volume, SEMEN_VOLUME_EXCESSIVE_MIN_TOTAL)
 	return clamp(volume, SEMEN_VOLUME_MIN, SEMEN_VOLUME_MAX)
 
 /datum/sex_controller/proc/get_load_bursts()
@@ -754,13 +754,18 @@
 
 /datum/sex_controller/proc/get_additional_spurts()
 	var/additional_spurts = 0
-	additional_spurts += get_spurt_stacon_bonus()
-	additional_spurts += get_spurt_trait_bonus()
-	additional_spurts += get_spurt_species_bonus()
-	additional_spurts += get_spurt_ball_size_bonus()
+	var/non_stacon_spurts = 0
+	non_stacon_spurts += get_spurt_trait_bonus()
+	non_stacon_spurts += get_spurt_species_bonus()
+	non_stacon_spurts += get_spurt_penis_bonus()
+	non_stacon_spurts += get_spurt_ball_size_bonus()
 	if(modular_excessive_cum_enabled())
-		additional_spurts *= SPURT_EXCESSIVE_MULTIPLIER
-		return max(additional_spurts, SPURT_ADDITIONAL_MIN)
+		var/excessive_stacon_spurts = floor(max(user.STACON - SPURT_STACON_BASELINE, 0) / SPURT_EXCESSIVE_STACON_STEP)
+		additional_spurts = excessive_stacon_spurts + non_stacon_spurts + SPURT_EXCESSIVE_BASE_BONUS
+		var/min_additional_spurts = max(SPURT_EXCESSIVE_MIN_TOTAL - 1, SPURT_ADDITIONAL_MIN)
+		return max(additional_spurts, min_additional_spurts)
+	additional_spurts += get_spurt_stacon_bonus()
+	additional_spurts += non_stacon_spurts
 	return clamp(additional_spurts, SPURT_ADDITIONAL_MIN, SPURT_ADDITIONAL_MAX)
 
 /datum/sex_controller/proc/get_spurt_stacon_bonus()
@@ -792,6 +797,17 @@
 	if(has_load_species_bonus())
 		return SPURT_SPECIES_BONUS
 	return 0
+
+/datum/sex_controller/proc/get_spurt_penis_bonus()
+	var/obj/item/organ/penis/shaft = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(!shaft)
+		return 0
+	var/bonus = 0
+	if(shaft.penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_EQUINE_KNOTTED, PENIS_TYPE_TAPERED_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		bonus += SPURT_KNOTTED_BONUS
+	if(shaft.penis_type in list(PENIS_TYPE_TAPERED_DOUBLE, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED))
+		bonus += SPURT_HEMIPENIS_BONUS
+	return bonus
 
 /datum/sex_controller/proc/get_spurt_ball_size_bonus()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -844,6 +860,8 @@
 /datum/sex_controller/proc/get_load_scaling_value()
 	var/loads = get_base_loads_from_anatomy() + get_stacon_load_bonus()
 	loads *= get_load_trait_multiplier()
+	if(modular_excessive_cum_enabled())
+		loads *= LOAD_EXCESSIVE_MULTIPLIER
 	return floor(loads)
 
 /datum/sex_controller/proc/get_max_loads()
