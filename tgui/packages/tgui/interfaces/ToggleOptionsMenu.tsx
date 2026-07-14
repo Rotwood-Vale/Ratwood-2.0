@@ -73,6 +73,19 @@ const ToggleCategorySection = ({ category }: { category: ToggleCategory }) => {
 const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
   const { act } = useBackend<Data>();
   const indent = Math.max(Number(entry.indent || 0), 0);
+  const isDisabled = !!entry.disabled;
+  const checkboxStyle: React.CSSProperties = {
+    marginLeft: `${indent * 1.25}rem`,
+    ...(isDisabled
+      ? {
+          opacity: 0.55,
+          filter: 'grayscale(0.85)',
+          backgroundColor: 'rgba(100, 100, 100, 0.18)',
+          borderColor: 'rgba(170, 170, 170, 0.35)',
+          color: 'rgba(225, 225, 225, 0.75)',
+        }
+      : null),
+  };
 
   return (
     <Table.Row className="candystripe">
@@ -81,10 +94,10 @@ const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
           <Button.Checkbox
             checked={entry.enabled}
             fluid
-            disabled={!!entry.disabled}
-            style={{ marginLeft: `${indent * 1.25}rem` }}
+            disabled={isDisabled}
+            style={checkboxStyle}
             onClick={() => {
-              if (!entry.disabled) {
+              if (!isDisabled) {
                 act('toggle', { id: entry.id });
               }
             }}
