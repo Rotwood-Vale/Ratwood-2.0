@@ -383,6 +383,9 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 		var/mob/living/M = new mob_type(target)
 		if(QDELETED(M))
 			continue
+		// Kick the newly-spawned mob into an active, target-seeking AI state so it
+		// charges the players immediately instead of standing idle until attacked.
+		terror_clock_awaken_mob(M)
 		spawned++
 	// Announce the outcome and play a final flourish if anything appeared. The
 	// flourish toll also triggers another Horror Bell cleanse via ring_bell().
@@ -437,6 +440,33 @@ GLOBAL_LIST_INIT(terror_clock_roster, list(
 			if(I.anchored)
 				continue
 			qdel(I)
+
+// 让刚生成的敌对生物立即进入战斗，而不是站桩等待被玩家先手攻击。
+// 根因：/mob/living/simple_animal/hostile 生成时，其 AI 常处于 AI_IDLE —— consider_wakeup()
+// 在“附近暂未探测到客户端”时会把 AI 置为 IDLE，此状态下不会主动索敌，直到被打中触发
+// Retaliate()→toggle_ai(AI_ON) 才苏醒。这正是“站着不动，被打才反击”的现象。
+// 解决办法：生成后立刻强制索敌一次；FindTarget() 命中目标后会经 GiveTarget() 自动把
+// AI 切到 AI_ON 并开始追击，从而消除延迟。人形 NPC 走另一套 AI，只需保证其 mode 不是 OFF。
+/proc/terror_clock_awaken_mob(mob/living/M)
+	// 空值/已删除保护：极端情况下 Initialize 可能已把怪物删除。
+	if(QDELETED(M))
+		return
+	// —— 简单敌对动物（狼 / 骷髅 / 巨魔 / 兽人 / 地狱犬 / 巨熊 / 拉弥亚……）——
+	if(istype(M, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/H = M
+		// 先确保 AI 主循环处于开启状态（防止它一直处于 IDLE 不处理）。
+		H.toggle_ai(AI_ON)
+		// 立刻扫描一次目标：命中后 GiveTarget() 会再次确保 AI_ON 并即刻开始追击。
+		H.FindTarget()
+		return
+	// —— 人形 NPC（哥布林 / 强盗 / 癫狂骑士 / 卓尔劫掠者 / 蜥蜴人狱卒……）——
+	// 它们用 carbon/human 的 NPC AI：只要 mode≠OFF 且 aggressive=1，handle_combat() 每拍都会
+	// 在视野内主动索敌。这些类型默认已是 aggressive=1、mode=NPC_AI_IDLE，这里仅做兜底：
+	// 若个别实例卡在 NPC_AI_OFF，则纠正为 IDLE，使其恢复索敌。
+	if(ishuman(M))
+		var/mob/living/carbon/human/HN = M
+		if(HN.mode == NPC_AI_OFF)
+			HN.mode = NPC_AI_IDLE
 
 // --- Clean up the file-local defines so they don't leak globally -------------
 #undef TERROR_CLOCK_CLEAR_RANGE
