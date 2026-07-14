@@ -889,7 +889,6 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "huge_runeblued"
 	runesize = 3
-	req_invokers = 3
 	tier = 4
 	pixel_x = -96 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -96
