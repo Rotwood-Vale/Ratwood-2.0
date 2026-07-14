@@ -1,4 +1,0 @@
-author: "WolfOrion"
-delete-after: True
-changes:
-  - bugfix: "I forgot that scissoring was a thing, now bedbreaker applies to it."

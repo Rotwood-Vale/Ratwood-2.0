@@ -18,6 +18,8 @@
 	var/category
 
 /atom/movable/screen/Destroy()
+	if(hud)
+		UnregisterSignal(hud, COMSIG_QDELETING)
 	master = null
 	hud = null
 	return ..()
@@ -45,6 +47,12 @@
 		icon = prefs.get_roguehud_icon()
 	else if(is_rogueheat_palette_icon(icon))
 		icon = prefs.get_rogueheat_icon()
+	// Preallocated vis_contents layers carry their own palette icon, so refresh them alongside our own.
+	for(var/atom/movable/screen/hud_component/layer/component in vis_contents)
+		if(is_roguehud_palette_icon(component.icon))
+			component.icon = prefs.get_roguehud_icon()
+		else if(is_rogueheat_palette_icon(component.icon))
+			component.icon = prefs.get_rogueheat_icon()
 
 /atom/movable/screen/Click(location, control, params)
 	if(!usr || !usr.client)
@@ -70,6 +78,54 @@
 
 /atom/movable/screen/proc/component_click(atom/movable/screen/component_button/component, params)
 	return
+
+/atom/movable/screen/proc/set_new_hud(datum/hud/new_hud)
+	if(hud)
+		UnregisterSignal(hud, COMSIG_QDELETING)
+	hud = new_hud
+	if(hud)
+		RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(clear_hud))
+
+/atom/movable/screen/proc/clear_hud(datum/source)
+	SIGNAL_HANDLER
+	set_new_hud(null)
+
+/atom/movable/screen/proc/get_human_owner()
+	return hud?.get_human_owner()
+
+/atom/movable/screen/proc/create_hud_component_layer(icon_file = null, icon_state = null, layer_offset = 0, plane_offset = 0)
+	var/atom/movable/screen/hud_component/layer/layer_object = new(src)
+	if(icon_file)
+		layer_object.icon = icon_file
+	if(!isnull(icon_state))
+		layer_object.icon_state = icon_state
+	layer_object.layer = layer + layer_offset
+	layer_object.plane = plane + plane_offset
+	vis_contents += layer_object
+	return layer_object
+
+/atom/movable/screen/proc/create_hud_component_layer_pool(count, icon_file = null, layer_offset = 0, plane_offset = 0)
+	. = list()
+	for(var/i in 1 to count)
+		. += create_hud_component_layer(icon_file, null, layer_offset, plane_offset)
+
+/atom/movable/screen/proc/reset_hud_component_layer(atom/movable/screen/hud_component/layer/layer_object)
+	if(!layer_object)
+		return
+	animate(layer_object, flags = ANIMATION_END_NOW)
+	layer_object.alpha = 0
+	layer_object.color = null
+	layer_object.maptext = null
+	layer_object.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer_object.transform = null
+
+/atom/movable/screen/hud_component
+	appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
+
+/atom/movable/screen/hud_component/layer
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE
+	appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
 
 /atom/movable/screen/text
 	icon = null
@@ -210,10 +266,37 @@
 	var/icon_empty
 	/// Icon when contains an item. For now used only by humans.
 	var/icon_full = "genslot"
-	/// The overlay when hovering over with an item in your hand
+	/// Preview layer shown when hovering over the slot with an item in hand.
+	var/atom/movable/screen/hud_component/layer/hover_preview_layer
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 	nomouseover = FALSE
+
+/atom/movable/screen/inventory/New()
+	. = ..()
+	hover_preview_layer = create_hud_component_layer(null, null, 0.01)
+	clear_hover_overlay()
+
+/atom/movable/screen/inventory/Destroy()
+	if(hud?.overlay_curloc == src)
+		hud.overlay_curloc = null
+	QDEL_NULL(hover_preview_layer)
+	return ..()
+
+/atom/movable/screen/inventory/proc/clear_hover_overlay()
+	if(hover_preview_layer)
+		reset_hud_component_layer(hover_preview_layer)
+
+/atom/movable/screen/inventory/proc/update_hover_overlay(obj/item/holding, can_equip)
+	if(!hover_preview_layer || !holding)
+		return
+	hover_preview_layer.appearance = holding.appearance
+	hover_preview_layer.appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
+	hover_preview_layer.layer = layer + 0.01
+	hover_preview_layer.plane = plane
+	hover_preview_layer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	hover_preview_layer.alpha = 92
+	hover_preview_layer.color = can_equip ? "#c5c5c5" : "#fd0279"
 
 
 /atom/movable/screen/inventory/Click(location, control, params)
@@ -264,64 +347,95 @@
 /atom/movable/screen/inventory/proc/add_overlays()
 	var/mob/user = hud?.mymob
 
-	cut_overlays()
+	if(hud?.overlay_curloc && hud.overlay_curloc != src)
+		var/atom/movable/screen/inventory/previous_slot = hud.overlay_curloc
+		previous_slot?.clear_hover_overlay()
 
 	if(!user || !slot_id)
+		if(hud?.overlay_curloc == src)
+			clear_hover_overlay()
+			hud.overlay_curloc = null
 		return
 
 	var/obj/item/holding = user.get_active_held_item()
 
 	if(!holding || user.get_item_by_slot(slot_id))
+		if(hud?.overlay_curloc == src)
+			clear_hover_overlay()
+			hud.overlay_curloc = null
 		return
 
-	var/image/item_overlay = image(holding)
-	item_overlay.alpha = 92
-
-	if(!user.can_equip(holding, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-		item_overlay.color = "#fd0279"
-	else
-		item_overlay.color = "#c5c5c5"
-
 	if(hud)
-		if(hud.object_overlay)
-			if(hud.overlay_curloc != src)
-				hud.overlay_curloc.cut_overlay(hud.object_overlay)
 		hud.overlay_curloc = src
-		cut_overlay(hud.object_overlay)
-		hud.object_overlay = item_overlay
-		add_overlay(hud.object_overlay)
+	update_hover_overlay(holding, user.can_equip(holding, slot_id, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 
 
 /atom/movable/screen/inventory/hand
 	nomouseover =  TRUE
-	var/mutable_appearance/handcuff_overlay
-	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
-	var/static/mutable_appearance/grabbed_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "grabbed")
+	appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
+	var/atom/movable/screen/hud_component/layer/handcuff_layer
+	var/atom/movable/screen/hud_component/layer/blocked_layer
+	var/atom/movable/screen/hud_component/layer/grabbed_layer
+	var/atom/movable/screen/hud_component/layer/active_layer
 	var/held_index = 0
+
+/atom/movable/screen/inventory/hand/New()
+	. = ..()
+	handcuff_layer = create_hud_component_layer('icons/mob/screen_gen.dmi', null, 0.01)
+	blocked_layer = create_hud_component_layer('icons/mob/screen_gen.dmi', "blocked", 0.02)
+	grabbed_layer = create_hud_component_layer('icons/mob/screen_gen.dmi', "grabbed", 0.03)
+	active_layer = create_hud_component_layer(icon, "hand_active", 0.04)
+	reset_hud_component_layer(handcuff_layer)
+	reset_hud_component_layer(blocked_layer)
+	reset_hud_component_layer(grabbed_layer)
+	reset_hud_component_layer(active_layer)
+
+/atom/movable/screen/inventory/hand/Destroy()
+	QDEL_NULL(handcuff_layer)
+	QDEL_NULL(blocked_layer)
+	QDEL_NULL(grabbed_layer)
+	QDEL_NULL(active_layer)
+	return ..()
 
 /atom/movable/screen/inventory/hand/update_overlays()
 	. = ..()
+	update_hand_vis()
 
-	if(!handcuff_overlay)
-		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
-
-	if(!hud?.mymob)
+/atom/movable/screen/inventory/hand/proc/update_hand_vis()
+	if(!handcuff_layer || !blocked_layer || !grabbed_layer || !active_layer)
 		return
 
-	if(iscarbon(hud.mymob))
-		var/mob/living/carbon/C = hud.mymob
-		if(C.handcuffed)
-			. += handcuff_overlay
+	var/mark_state = (!(held_index % 2)) ? "markus" : "gabrielle"
+	if(handcuff_layer.icon_state != mark_state)
+		handcuff_layer.icon_state = mark_state
 
+	var/mob/owner = hud?.mymob
+	if(!owner)
+		reset_hud_component_layer(handcuff_layer)
+		reset_hud_component_layer(blocked_layer)
+		reset_hud_component_layer(grabbed_layer)
+		reset_hud_component_layer(active_layer)
+		return
+
+	if(active_layer.icon != icon)
+		active_layer.icon = icon
+	if(active_layer.icon_state != "hand_active")
+		active_layer.icon_state = "hand_active"
+	active_layer.alpha = held_index == owner.active_hand_index ? 255 : 0
+
+	var/show_handcuff = FALSE
+	var/show_blocked = FALSE
+	var/show_grabbed = FALSE
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		show_handcuff = !!C.handcuffed
 		if(held_index)
-			if(C.check_arm_grabbed(held_index))
-				. += grabbed_overlay
-			if(!C.has_hand_for_held_index(held_index))
-				. += blocked_overlay
+			show_grabbed = !!C.check_arm_grabbed(held_index)
+			show_blocked = !C.has_hand_for_held_index(held_index)
 
-	if(held_index == hud.mymob.active_hand_index)
-		. += "hand_active"
+	handcuff_layer.alpha = show_handcuff ? 255 : 0
+	blocked_layer.alpha = show_blocked ? 255 : 0
+	grabbed_layer.alpha = show_grabbed ? 255 : 0
 
 /atom/movable/screen/inventory/hand/add_overlays()
 	return
@@ -409,48 +523,80 @@
 	icon = 'icons/mob/rogueintentbase.dmi'
 	icon_state = "intentbase"
 	screen_loc = rogueui_intents
-	var/intent1
-	var/intent2
-	var/intent3
-	var/intent4
-	var/border1
-	var/border2
+	var/list/atom/movable/screen/hud_component/layer/intent_slots
+	var/list/atom/movable/screen/hud_component/layer/border_slots
+
+/atom/movable/screen/act_intent/rogintent/New()
+	. = ..()
+	intent_slots = create_hud_component_layer_pool(4, 'icons/mob/roguehud.dmi', 0.02)
+	border_slots = create_hud_component_layer_pool(2, 'icons/mob/roguehud.dmi', 0.01)
+	for(var/atom/movable/screen/hud_component/layer/slot as anything in intent_slots)
+		reset_hud_component_layer(slot)
+	for(var/atom/movable/screen/hud_component/layer/slot as anything in border_slots)
+		reset_hud_component_layer(slot)
+
+/atom/movable/screen/act_intent/rogintent/Destroy()
+	QDEL_LIST(intent_slots)
+	QDEL_LIST(border_slots)
+	intent_slots = null
+	border_slots = null
+	return ..()
+
+/atom/movable/screen/act_intent/rogintent/proc/reset_rogintent_layers()
+	if(intent_slots)
+		for(var/atom/movable/screen/hud_component/layer/slot as anything in intent_slots)
+			reset_hud_component_layer(slot)
+	if(border_slots)
+		for(var/atom/movable/screen/hud_component/layer/slot as anything in border_slots)
+			reset_hud_component_layer(slot)
+
+/atom/movable/screen/act_intent/rogintent/proc/set_rogintent_slot(atom/movable/screen/hud_component/layer/slot, new_state, slot_index, layer_offset, icon_file = 'icons/mob/roguehud.dmi')
+	if(!slot || !new_state || slot_index < 1 || slot_index > 4)
+		return
+	if(slot.icon != icon_file)
+		slot.icon = icon_file
+	if(slot.icon_state != new_state)
+		slot.icon_state = new_state
+	slot.alpha = 255
+	switch(slot_index)
+		if(1)
+			slot.pixel_x = 64
+			slot.pixel_y = 16
+		if(2)
+			slot.pixel_x = 96
+			slot.pixel_y = 16
+		if(3)
+			slot.pixel_x = 64
+			slot.pixel_y = 0
+		if(4)
+			slot.pixel_x = 96
+			slot.pixel_y = 0
+	slot.layer = layer + layer_offset
 
 /atom/movable/screen/act_intent/rogintent/update_icon(list/intentsl,list/intentsr, oactive = FALSE)
 	..()
-	cut_overlays(TRUE)
+	reset_rogintent_layers()
 	if(!intentsl || !intentsr)
 		return
 	else
 		var/lol = 0
-//		intent1 = image(icon='icons/mob/rogueintentbase.dmi',icon_state="intentbase")
-//		add_overlay(intent1, TRUE)
 		var/list/used = intentsr
 		var/roguehud_icon = get_roguehud_icon()
 		if(hud.mymob.active_hand_index == 1)
 			used = intentsl
 		for(var/datum/intent/intenty in used)
 			lol++
-			switch(lol)
-				if(1)
-					intent1 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 64, pixel_y = 16, layer = layer+0.02)
-					add_overlay(intent1, TRUE)
-				if(2)
-					intent2 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 96, pixel_y = 16, layer = layer+0.02)
-					add_overlay(intent2, TRUE)
-				if(3)
-					intent3 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 64, layer = layer+0.02)
-					add_overlay(intent3, TRUE)
-				if(4)
-					intent4 = image(icon=roguehud_icon,icon_state=intenty.icon_state, pixel_x = 96, layer = layer+0.02)
-					add_overlay(intent4, TRUE)
-		if(ismob(usr))
-			var/mob/M = usr
-			switch_intent(M.r_index, M.l_index, oactive)
+			if(lol > length(intent_slots))
+				break
+			set_rogintent_slot(intent_slots[lol], intenty.icon_state, lol, 0.02, roguehud_icon)
+		var/mob/living/owner = hud?.mymob
+		if(owner)
+			switch_intent(owner.r_index, owner.l_index, oactive)
 
 /atom/movable/screen/act_intent/rogintent/switch_intent(r_index, l_index, oactive = FALSE)
-	cut_overlay(border1, TRUE)
-	cut_overlay(border2, TRUE)
+	if(border_slots)
+		for(var/atom/movable/screen/hud_component/layer/slot as anything in border_slots)
+			reset_hud_component_layer(slot)
 	var/used = "offintent"
 	if(oactive)
 		used = "offintentselected"
@@ -463,26 +609,9 @@
 		if(hud.mymob.active_hand_index == 1)
 			used_index = l_index
 			other = r_index
-		switch(used_index)
-			if(1)
-				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 64, pixel_y = 16, layer = layer+0.01)
-			if(2)
-				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 96, pixel_y = 16, layer = layer+0.01)
-			if(3)
-				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 64, layer = layer+0.01)
-			if(4)
-				border1 = image(icon=roguehud_icon,icon_state="intentselected", pixel_x = 96, layer = layer+0.01)
-		switch(other)
-			if(1)
-				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 64, pixel_y = 16, layer = layer+0.01)
-			if(2)
-				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 96, pixel_y = 16, layer = layer+0.01)
-			if(3)
-				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 64, layer = layer+0.01)
-			if(4)
-				border2 = image(icon=roguehud_icon,icon_state=used, pixel_x = 96, layer = layer+0.01)
-		add_overlay(border2, TRUE)
-		add_overlay(border1, TRUE)
+		if(length(border_slots) >= 2)
+			set_rogintent_slot(border_slots[1], "intentselected", used_index, 0.01, roguehud_icon)
+			set_rogintent_slot(border_slots[2], used, other, 0.01, roguehud_icon)
 
 /atom/movable/screen/act_intent/rogintent/Click(location, control, params)
 
@@ -996,19 +1125,46 @@
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"
+	icon = 'icons/mob/roguehud64.dmi' // The m-/f-zone_sel base doll states only exist here, not in the regular HUD style.
 	icon_state = "m-zone_sel"
 	screen_loc = rogueui_targetdoll
+	appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
 	var/overlay_icon = 'icons/mob/roguehud64.dmi'
-	var/static/list/hover_overlays_cache = list()
-	var/hovering
-	var/obj/effect/overlay/flash_layer
-	var/arrowheight = 0
+	var/list/atom/movable/screen/hud_component/layer/zone_overlay_slots
+	var/list/atom/movable/screen/hud_component/layer/highlight_slots
+	var/atom/movable/screen/hud_component/layer/hover_preview_layer
+	var/list/highlight_tokens
+	var/zone_overlay_count = 0
+	var/zone_overlay_cursor = 1
+	var/next_highlight_slot = 1
+	var/hovering_zone
+
+#define ZONE_SELECTOR_SLOT_COUNT 48
+#define ZONE_SELECTOR_HIGHLIGHT_SLOTS 4
 
 /atom/movable/screen/zone_sel/New()
-	..()
-	flash_layer = new
-	flash_layer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	vis_contents += flash_layer
+	. = ..()
+	zone_overlay_slots = create_hud_component_layer_pool(ZONE_SELECTOR_SLOT_COUNT, overlay_icon, 0.05)
+	highlight_slots = create_hud_component_layer_pool(ZONE_SELECTOR_HIGHLIGHT_SLOTS, overlay_icon, 0.9, 1)
+	hover_preview_layer = create_hud_component_layer(overlay_icon, null, 0.85)
+	highlight_tokens = list()
+	for(var/atom/movable/screen/hud_component/layer/slot as anything in zone_overlay_slots)
+		reset_hud_component_layer(slot)
+	for(var/atom/movable/screen/hud_component/layer/highlight as anything in highlight_slots)
+		reset_hud_component_layer(highlight)
+	reset_hud_component_layer(hover_preview_layer)
+	for(var/i in 1 to length(highlight_slots))
+		highlight_tokens += 0
+
+/atom/movable/screen/zone_sel/Destroy()
+	QDEL_LIST(zone_overlay_slots)
+	QDEL_LIST(highlight_slots)
+	QDEL_NULL(hover_preview_layer)
+	zone_overlay_slots = null
+	highlight_slots = null
+	hover_preview_layer = null
+	highlight_tokens = null
+	return ..()
 
 /atom/movable/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -1017,11 +1173,7 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/choice = get_zone_at(icon_x, icon_y)
-	if(ismob(hud.mymob))
-		var/mob/M = hud.mymob
-		if(M.gender == FEMALE)
-			choice = get_zone_at(icon_x, icon_y, FEMALE)
+	var/choice = resolve_zone_choice(icon_x, icon_y)
 	if (!choice)
 		return 1
 
@@ -1031,8 +1183,8 @@
 	else
 		return set_selected_zone(choice, usr)
 
-/*
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
+	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/zone_sel/MouseMove(location, control, params)
@@ -1042,41 +1194,36 @@
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/choice = get_zone_at(icon_x, icon_y)
-	choice = "m_[choice]"
-	if(ismob(hud.mymob))
-		var/mob/M = hud.mymob
-		if(M.gender == FEMALE)
-			choice = get_zone_at(icon_x, icon_y, FEMALE)
-			choice = "f_[choice]"
-
-	if(hovering == choice)
-		return
-	vis_contents -= hover_overlays_cache[hovering]
-	hovering = choice
-
-
-	var/obj/effect/overlay/zone_sel/overlay_object = hover_overlays_cache[choice]
-	if(!overlay_object)
-		overlay_object = new
-//		overlay_object.icon_state = "[basedholder]-[choice]"
-		overlay_object.icon_state = "[choice]"
-		hover_overlays_cache[choice] = overlay_object
-	vis_contents += overlay_object
-
-/obj/effect/overlay/zone_sel
-	icon = 'icons/mob/roguehud64.dmi'
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 128
-	anchored = TRUE
-	layer = ABOVE_HUD_LAYER+0.2
-	plane = ABOVE_HUD_PLANE
+	update_hover_preview(resolve_zone_choice(icon_x, icon_y))
 
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
-	if(!isobserver(usr) && hovering)
-		vis_contents -= hover_overlays_cache[hovering]
-		hovering = null
-*/
+	..()
+	update_hover_preview(null)
+
+/atom/movable/screen/zone_sel/proc/update_hover_preview(choice)
+	if(hovering_zone == choice)
+		return
+
+	hovering_zone = choice
+	if(!hover_preview_layer || !choice || !hud?.mymob)
+		reset_hud_component_layer(hover_preview_layer)
+		return
+
+	var/gender_prefix = hud.mymob.gender == FEMALE ? "f" : "m"
+	if(hover_preview_layer.icon != overlay_icon)
+		hover_preview_layer.icon = overlay_icon
+	hover_preview_layer.icon_state = "[gender_prefix]_[choice]"
+	hover_preview_layer.color = null
+	hover_preview_layer.alpha = 128
+	hover_preview_layer.layer = layer + 0.85
+
+/atom/movable/screen/zone_sel/proc/resolve_zone_choice(icon_x, icon_y)
+	var/gender = MALE
+	if(ismob(hud?.mymob))
+		var/mob/M = hud.mymob
+		if(M.gender == FEMALE)
+			gender = FEMALE
+	return get_zone_at(icon_x, icon_y, gender)
 
 /atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y, gender = MALE)
 	if(gender == MALE)
@@ -1330,96 +1477,119 @@
 
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.select_zone(choice)
-		update_icon()
+		update_zone_layers()
 
 	return TRUE
 
 /atom/movable/screen/zone_sel/update_overlays()
 	. = ..()
+	update_zone_layers()
+
+/atom/movable/screen/zone_sel/proc/update_zone_layers()
+	zone_overlay_cursor = 1
+
 	if(!hud?.mymob)
+		finalize_zone_overlay_update()
 		return
 
-	icon_state = "[hud.mymob.gender == "male" ? "m" : "f"]-zone_sel"
+	var/gender_prefix = hud.mymob.gender == FEMALE ? "f" : "m"
+	var/base_state = "[gender_prefix]-zone_sel"
+	if(icon_state != base_state)
+		icon_state = base_state
 
-	if(hud.mymob.stat != DEAD && ishuman(hud.mymob))
-		var/mob/living/carbon/human/H = hud.mymob
+	var/mob/living/carbon/human/H = get_human_owner()
+	if(hud.mymob.stat != DEAD && H)
 		var/list/missing_bodyparts_zones = H.get_missing_limbs()
-		// if we have a taur bodypart, treat it as covering both legs
 		if(H.get_bodypart(BODY_ZONE_TAUR))
 			missing_bodyparts_zones -= BODY_ZONE_L_LEG
 			missing_bodyparts_zones -= BODY_ZONE_R_LEG
+		var/nopain = HAS_TRAIT(H, TRAIT_NOPAIN)
 		for(var/X in H.bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(BP.body_zone in missing_bodyparts_zones)
 				continue
-			if(HAS_TRAIT(H, TRAIT_NOPAIN))
-				// for taur, show the nopain overlay over both legs as well
-				if(BP.body_zone == BODY_ZONE_TAUR)
-					var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					for(var/_z in _legs)
-						var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]")
-						limby.color = "#78a8ba"
-						. += limby
-				else
-					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]")
-					limby.color = "#78a8ba"
-					. += limby
-				continue
-			var/damage = BP.burn_dam + BP.brute_dam
-			if(damage > BP.max_damage)
-				damage = BP.max_damage
-			var/comparison = (damage/BP.max_damage)
-			// if taur bodypart, render the healthy/wounded/bleed overlays for both legs
+			var/damage = min(BP.burn_dam + BP.brute_dam, BP.max_damage)
+			var/comparison = BP.max_damage ? (damage / BP.max_damage) : 0
+			var/wound_alpha = clamp(round((comparison * 255) * 2), 0, 255)
+			var/has_bleed = BP.get_hud_bleed_rate() > 0
+			// NO_PAIN: blue tint only when there is actual damage or visible bleed,
+			// otherwise an undamaged limb would falsely show as injured.
+			var/nopain_color = (nopain && (damage || has_bleed)) ? "#78a8ba" : null
 			if(BP.body_zone == BODY_ZONE_TAUR)
-				var/list/_legs = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-				for(var/_z in _legs)
-					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]") //healthy limb
-					var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[_z]") //wounded overlay
-					limby.alpha = (comparison*255)*2
-					. += limby
-					if(BP.get_bleed_rate())
-						. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[_z]-bleed") //bleed overlay
+				for(var/_z in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+					push_zone_overlay("[gender_prefix]-[_z]", nopain_color)
+					if(!nopain && wound_alpha)
+						push_zone_overlay("[gender_prefix]w-[_z]", null, wound_alpha)
+					if(has_bleed)
+						push_zone_overlay("[gender_prefix]-[_z]-bleed")
 			else
-				. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]") //apply healthy limb
-				var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]w-[BP.body_zone]") //apply wounded overlay
-				limby.alpha = (comparison*255)*2
-				. += limby
-				if(BP.get_bleed_rate())
-					. += mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[BP.body_zone]-bleed") //apply bleed overlay
+				push_zone_overlay("[gender_prefix]-[BP.body_zone]", nopain_color)
+				if(!nopain && wound_alpha)
+					push_zone_overlay("[gender_prefix]w-[BP.body_zone]", null, wound_alpha)
+				if(has_bleed)
+					push_zone_overlay("[gender_prefix]-[BP.body_zone]-bleed")
 		for(var/X in missing_bodyparts_zones)
-			var/mutable_appearance/limby = mutable_appearance('icons/mob/roguehud64.dmi', "[H.gender == "male" ? "m" : "f"]-[X]") //missing limb
-			limby.color = "#2f002f"
-			. += limby
+			push_zone_overlay("[gender_prefix]-[X]", "#2f002f")
 
-	. += mutable_appearance(overlay_icon, "[hud.mymob.gender == "male" ? "m" : "f"]_[hud.mymob.zone_selected]")
-//	. += mutable_appearance(overlay_icon, "height_arrow[hud.mymob.aimheight]")
+	push_zone_overlay("[gender_prefix]_[hud.mymob.zone_selected]")
+	finalize_zone_overlay_update()
+
+/atom/movable/screen/zone_sel/proc/push_zone_overlay(new_icon_state, new_color = null, new_alpha = 255)
+	if(zone_overlay_cursor > length(zone_overlay_slots))
+		return
+	var/atom/movable/screen/hud_component/layer/slot = zone_overlay_slots[zone_overlay_cursor]
+	var/new_layer = layer + 0.05 + (zone_overlay_cursor * 0.001)
+	if(slot.icon != overlay_icon)
+		slot.icon = overlay_icon
+	if(slot.icon_state != new_icon_state)
+		slot.icon_state = new_icon_state
+	if(slot.alpha != new_alpha)
+		slot.alpha = new_alpha
+	if(slot.color != new_color)
+		slot.color = new_color
+	if(slot.layer != new_layer)
+		slot.layer = new_layer
+	zone_overlay_cursor++
+
+/atom/movable/screen/zone_sel/proc/finalize_zone_overlay_update()
+	if(zone_overlay_cursor <= zone_overlay_count)
+		for(var/i in zone_overlay_cursor to zone_overlay_count)
+			var/atom/movable/screen/hud_component/layer/slot = zone_overlay_slots[i]
+			if(slot.alpha)
+				slot.alpha = 0
+			if(slot.color)
+				slot.color = null
+			if(slot.icon_state)
+				slot.icon_state = null
+	zone_overlay_count = zone_overlay_cursor - 1
 
 /atom/movable/screen/zone_sel/proc/flash_limb(zone, limb_color="#FF0000") //Flashes when an attack hits a limb
-	if(!zone || !hud?.mymob)
+	if(!zone || !hud?.mymob || !length(highlight_slots))
 		return
 
-	var/gender_prefix = (hud.mymob.gender == FEMALE) ? "f" : "m"
-
-	var/obj/effect/overlay/highlight = new
-	highlight.icon = 'icons/mob/roguehud64.dmi'
+	var/gender_prefix = hud.mymob.gender == FEMALE ? "f" : "m"
+	var/slot_index = next_highlight_slot
+	next_highlight_slot = slot_index % length(highlight_slots) + 1
+	highlight_tokens[slot_index] += 1
+	var/current_token = highlight_tokens[slot_index]
+	var/atom/movable/screen/hud_component/layer/highlight = highlight_slots[slot_index]
+	animate(highlight, flags = ANIMATION_END_NOW)
+	highlight.icon = overlay_icon
 	highlight.icon_state = "[gender_prefix]-[zone]"
 	highlight.color = limb_color
 	highlight.alpha = 180
-	highlight.layer = ABOVE_HUD_LAYER
-	highlight.plane = ABOVE_HUD_PLANE-0.1
-	highlight.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-	flash_layer.vis_contents += highlight
-
+	highlight.layer = ABOVE_HUD_LAYER + 0.9 + (slot_index * 0.001)
+	highlight.plane = ABOVE_HUD_PLANE
 	animate(highlight, alpha = 0, time = 20, easing = EASE_IN)
-
 	spawn(20)
-		if(highlight in flash_layer.vis_contents)
-			flash_layer.vis_contents -= highlight
-		qdel(highlight)
+		if(highlight_tokens[slot_index] == current_token)
+			highlight.color = null
 
 /atom/movable/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
+
+#undef ZONE_SELECTOR_SLOT_COUNT
+#undef ZONE_SELECTOR_HIGHLIGHT_SLOTS
 
 /atom/movable/screen/flash
 	name = "flash"
@@ -1469,6 +1639,48 @@
 	icon_state = "blood100"
 	screen_loc = rogueui_blood
 	icon = 'icons/mob/rogueheat.dmi'
+	appearance_flags = APPEARANCE_UI | KEEP_TOGETHER
+	var/atom/movable/screen/hud_component/layer/tox_layer
+	var/atom/movable/screen/hud_component/layer/oxy_layer
+	var/atom/movable/screen/hud_component/layer/pain_layer
+
+/atom/movable/screen/healths/blood/New()
+	. = ..()
+	tox_layer = create_hud_component_layer(icon, null, 0.01)
+	oxy_layer = create_hud_component_layer(icon, null, 0.02)
+	pain_layer = create_hud_component_layer(icon, null, 0.03)
+	reset_hud_component_layer(tox_layer)
+	reset_hud_component_layer(oxy_layer)
+	reset_hud_component_layer(pain_layer)
+
+/atom/movable/screen/healths/blood/Destroy()
+	QDEL_NULL(tox_layer)
+	QDEL_NULL(oxy_layer)
+	QDEL_NULL(pain_layer)
+	return ..()
+
+/atom/movable/screen/healths/blood/proc/update_indicator_states(tox_state, oxy_state, pain_state)
+	update_indicator_layer(tox_layer, tox_state)
+	update_indicator_layer(oxy_layer, oxy_state)
+	update_indicator_layer(pain_layer, pain_state)
+
+/atom/movable/screen/healths/blood/proc/update_indicator_layer(atom/movable/screen/hud_component/layer/indicator, new_state)
+	if(!indicator)
+		return
+	if(!new_state)
+		if(indicator.alpha)
+			indicator.alpha = 0
+		if(indicator.color)
+			indicator.color = null
+		return
+	if(indicator.icon != icon)
+		indicator.icon = icon
+	if(indicator.icon_state != new_state)
+		indicator.icon_state = new_state
+	if(indicator.alpha != 255)
+		indicator.alpha = 255
+	if(indicator.color)
+		indicator.color = null
 
 /atom/movable/screen/healths/blood/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -1643,12 +1855,21 @@
 	name = "sanity"
 	icon = 'icons/mob/roguehud.dmi'
 	icon_state = "stressback"
+	var/atom/movable/screen/hud_component/layer/stress_state_layer
+
+/atom/movable/screen/stress/New()
+	. = ..()
+	stress_state_layer = create_hud_component_layer(icon, null, 0.01)
+	reset_hud_component_layer(stress_state_layer)
+
+/atom/movable/screen/stress/Destroy()
+	QDEL_NULL(stress_state_layer)
+	return ..()
 
 /atom/movable/screen/stress/update_icon()
-	cut_overlays()
 	var/state2use = "stress1"
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+	var/mob/living/carbon/human/H = get_human_owner()
+	if(H)
 		if(!HAS_TRAIT(H, TRAIT_NOMOOD))
 			var/stress_amt = H.get_stress_amount()
 			if(stress_amt > 0)
@@ -1670,7 +1891,15 @@
 				state2use = "stress4"
 		if(H.stat == DEAD)
 			state2use = "mood_dead"
-	add_overlay(state2use)
+	if(stress_state_layer)
+		if(stress_state_layer.icon != icon)
+			stress_state_layer.icon = icon
+		if(stress_state_layer.icon_state != state2use)
+			stress_state_layer.icon_state = state2use
+		if(stress_state_layer.alpha != 255)
+			stress_state_layer.alpha = 255
+		if(stress_state_layer.color)
+			stress_state_layer.color = null
 
 
 /atom/movable/screen/stress/Click(location,control,params)
@@ -1745,15 +1974,31 @@
 	icon_state = "rmbintent"
 	var/list/shown_intents = list()
 	var/showing = FALSE
+	var/atom/movable/screen/hud_component/layer/current_intent_layer
+
+/atom/movable/screen/rmbintent/New()
+	. = ..()
+	current_intent_layer = create_hud_component_layer(icon, null, 0.01)
+	reset_hud_component_layer(current_intent_layer)
+
+/atom/movable/screen/rmbintent/Destroy()
+	QDEL_NULL(current_intent_layer)
+	QDEL_LIST(shown_intents)
+	return ..()
 
 /atom/movable/screen/rmbintent/update_icon()
-	testing("overlayscut")
-	cut_overlays()
+	if(current_intent_layer)
+		reset_hud_component_layer(current_intent_layer)
+	name = initial(name)
+	desc = initial(desc)
 	if(isliving(hud?.mymob))
 		var/mob/living/L = hud.mymob
 		if(L.rmb_intent)
-//			var/image/I = image(icon='icons/mob/roguehud.dmi',icon_state="[L.rmb_intent.icon_state]_x", layer = layer+0.01)
-			add_overlay("[L.rmb_intent.icon_state]_x")
+			if(current_intent_layer)
+				if(current_intent_layer.icon != icon)
+					current_intent_layer.icon = icon
+				current_intent_layer.icon_state = "[L.rmb_intent.icon_state]_x"
+				current_intent_layer.alpha = 255
 			name = L.rmb_intent.name
 			desc = L.rmb_intent.desc
 
@@ -1806,10 +2051,6 @@
 		cnt++
 	if(!cnt)
 		showing = FALSE
-
-/atom/movable/screen/rmbintent/Destroy()
-	QDEL_LIST(shown_intents)
-	. = ..()
 
 /atom/movable/screen/rintent_selection
 	name = "rmb intent"
@@ -1878,9 +2119,24 @@
 	name = "Sir Sun"
 	icon = 'icons/time.dmi'
 	icon_state = "day"
+	var/atom/movable/screen/hud_component/layer/cloud_layer
+	var/atom/movable/screen/hud_component/layer/rain_layer
+
+/atom/movable/screen/time/New()
+	. = ..()
+	cloud_layer = create_hud_component_layer(icon, "clouds", 0.01)
+	rain_layer = create_hud_component_layer(icon, "rainlay", 0.02)
+	reset_hud_component_layer(cloud_layer)
+	reset_hud_component_layer(rain_layer)
+
+/atom/movable/screen/time/Destroy()
+	QDEL_NULL(cloud_layer)
+	QDEL_NULL(rain_layer)
+	return ..()
 
 /atom/movable/screen/time/update_icon()
-	cut_overlays()
+	var/show_clouds = FALSE
+	var/show_rain = FALSE
 	switch(GLOB.tod)
 		if("day")
 			icon_state = "day"
@@ -1896,9 +2152,21 @@
 			name = "Sir Sun - Dawn"
 	for(var/datum/weather/rain/R in SSweather.curweathers)
 		if(R.stage < 2)
-			add_overlay("clouds")
+			show_clouds = TRUE
 		if(R.stage == 2)
-			add_overlay("rainlay")
+			show_rain = TRUE
+	if(cloud_layer)
+		if(cloud_layer.icon != icon)
+			cloud_layer.icon = icon
+		if(cloud_layer.icon_state != "clouds")
+			cloud_layer.icon_state = "clouds"
+		cloud_layer.alpha = show_clouds ? 255 : 0
+	if(rain_layer)
+		if(rain_layer.icon != icon)
+			rain_layer.icon = icon
+		if(rain_layer.icon_state != "rainlay")
+			rain_layer.icon_state = "rainlay"
+		rain_layer.alpha = show_rain ? 255 : 0
 
 /atom/movable/screen/stamina
 	name = "stamina"

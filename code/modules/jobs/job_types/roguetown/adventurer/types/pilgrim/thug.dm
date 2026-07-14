@@ -139,7 +139,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-			var/options = list("Hands-On", "Big Axe")
+			var/options = list("Hands-On", "Big Axe", "Big Stick")
 			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
 
 			switch(option_choice)

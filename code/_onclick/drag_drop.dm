@@ -192,8 +192,10 @@
 	var/datum/intent/curplaying
 
 /client/MouseUp(object, location, control, params)
+	var/was_charging
 	if(charging && isliving(mob))
 		update_to_mob(mob, 0)
+		was_charging = TRUE
 
 	charging = 0
 
@@ -236,7 +238,7 @@
 
 	if(tcompare)
 		var/atom/target_atom = object
-		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || (mob.atkswinging && object != tcompare)))
+		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || mob.used_intent?.tranged || (mob.atkswinging && object != tcompare)))
 			target_atom.Click(location, control, params)
 		tcompare = null
 
@@ -244,8 +246,8 @@
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
 
-	if(!isliving(mob))
-		return
+	if(was_charging)
+		mob.stop_attack()
 
 /client/proc/updateprogbar(atom/clicked_object)
 	if(!mob)

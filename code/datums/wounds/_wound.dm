@@ -183,6 +183,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		affected.bandage_expire() //new bleeding wounds always expire bandages, fuck you
 	if(disabling)
 		affected.update_disabled()
+	affected.owner?.mark_zone_selector_hud_dirty()
 
 /// Removes this wound from a given bodypart
 /datum/wound/proc/remove_from_bodypart()
@@ -202,6 +203,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_bodypart_loss(obj/item/bodypart/affected)
 	if(disabling)
 		affected.update_disabled()
+	affected.owner?.mark_zone_selector_hud_dirty()
 
 /// Returns whether or not this wound can be applied to a given mob
 /datum/wound/proc/can_apply_to_mob(mob/living/affected)
@@ -249,8 +251,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(shatter_wound && HAS_TRAIT(affected, TRAIT_SHATTER_WEAKNESS))
 		affected.emote("scream", forced = TRUE)
 		affected.death()
-	if(affected.hud_used?.zone_select)
-		affected.hud_used.zone_select.update_icon()
+	affected.mark_zone_selector_hud_dirty()
 
 /// Removes this wound from a given, simpler than adding to a bodypart - No extra effects
 /datum/wound/proc/remove_from_mob()
@@ -266,8 +267,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_mob_loss(mob/living/affected)
 	if(mob_overlay)
 		affected.update_damage_overlays()
-	if(affected.hud_used?.zone_select)
-		affected.hud_used.zone_select.update_icon()
+	affected.mark_zone_selector_hud_dirty()
 
 /// Called on handle_wounds(), on the life() proc
 /datum/wound/proc/on_life()
@@ -288,6 +288,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/set_bleed_rate(amount)
 	if(!owner)
 		return
+	var/old_bleed_visible = FALSE
+	if(bodypart_owner)
+		old_bleed_visible = !!bodypart_owner.get_hud_bleed_rate()
 
 	// do simple bleeding
 	if(owner.simple_wounds?.len)
@@ -298,6 +301,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		bodypart_owner.bleeding -= bleed_rate
 		bleed_rate = amount
 		bodypart_owner.bleeding += bleed_rate
+		if(old_bleed_visible != !!bodypart_owner.get_hud_bleed_rate())
+			bodypart_owner.owner?.mark_zone_selector_hud_dirty()
 
 /// Heals this wound by the given amount, and deletes it if it's healed completely
 /datum/wound/proc/heal_wound(heal_amount)
@@ -336,8 +341,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(mob_overlay != old_overlay)
 		owner?.update_damage_overlays()
 	record_round_statistic(STATS_WOUNDS_SEWED)
-	if(owner.hud_used?.zone_select)
-		owner.hud_used.zone_select.update_icon()
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Checks if this wound has a special infection (zombie or werewolf)
@@ -434,6 +438,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		clotting_rate = max(0.01, (clotting_rate + CLOT_RATE_INCREASE_PER_HIT))
 		clotting_threshold += CLOT_THRESHOLD_INCREASE_PER_HIT
 	..()
+
+/datum/wound/proc/handle_ooze_wound(obj/item/bodypart/affected)
+	if(bodypart_owner || owner || QDELETED(affected) || QDELETED(affected.owner))
+		return FALSE
+	return TRUE
 
 #undef CLOT_THRESHOLD_INCREASE_PER_HIT
 #undef CLOT_RATE_INCREASE_PER_HIT

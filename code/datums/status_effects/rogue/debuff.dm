@@ -1182,7 +1182,7 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
-	message_admins("debuff applied")
+
 /datum/status_effect/debuff/overheat/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner

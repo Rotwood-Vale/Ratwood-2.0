@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/blindness
 	name = "Blindness"
 	desc = "Direct a mote of living darkness to temporarily blind another."
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "blindness"
 	clothes_req = FALSE
 	releasedrain = 30
@@ -38,6 +40,8 @@
 
 /obj/effect/proc_holder/spell/invoked/invisibility
 	name = "Invisibility"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "invisibility"
 	desc = "Make another (or yourself) invisible for some time. Duration scales with the arcyne skill. Casting, attacking or being attacked will cancel the duration."
 	releasedrain = 30
@@ -84,6 +88,9 @@
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle
 	name = "Arcyne Affinity"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
+	overlay_state = "arcyne_affinity"
 	desc = "Allows you to learn a spell or two of a certain type once every cycle."
 	miracle = TRUE
 	devotion_cost = 250
@@ -193,6 +200,8 @@
 //15 PER peer-ahead.
 /obj/effect/proc_holder/spell/invoked/noc_sight
 	name = "Noc's Gaze"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "noc_sight"
 	desc = "Peer ahead."
 	chargetime = 0

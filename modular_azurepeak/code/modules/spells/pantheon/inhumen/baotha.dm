@@ -3,7 +3,9 @@
 /obj/effect/proc_holder/spell/invoked/baothablessings
 	name = "Baotha's Blessings"
 	desc = "Gets the target drunk and stops them from overdosing for a time."
-	overlay_state = "lesserheal"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "blessing"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -37,7 +39,10 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/blowingdust
 	name = "Enrapturing Powder"
-	desc = "Blows dust of a potent painkilling drug at the target."
+	desc = "Blows dust of a potent painkilling drug at the target, potentially causing overdoses with repeated use."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "powder"
 	clothes_req = FALSE
 	range = 3	//It's literally blowing coke in their face, basically.
 	associated_skill = /datum/skill/magic/holy
@@ -71,8 +76,10 @@
 //Numbing Pleasure - T3, removes all pain from self for a period of time. (Similar to Ravox's without any blood-clotting and better pain suppression + good mood buff.)
 /obj/effect/proc_holder/spell/invoked/painkiller
 	name = "Numbing Pleasure"
-	desc = "Numbs the targets pain and improves their mood."
-	overlay_state = "astrata"
+	desc = "Numbs the target's pain and improves their mood."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "pleasure"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -104,7 +111,9 @@
 /obj/effect/proc_holder/spell/invoked/baothavice
 	name = "Tell Vices"
 	desc = "Attempts to discern the target's vices. Depending on the target and your Miracles skill, some vices could be incorrect."
-	overlay_state = "baotha_vice"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "vice"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -272,7 +281,9 @@
 	name = "Lover's Ruin"
 	desc = "A toast to passion that ends in ash.\n \
 		Beseech Baotha to pour wine onto a container. Poisons the unfaithful, rewards Her blessed with healing."
-	overlay_state = "aerosolize"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "ruin"
 	chargedrain = 0
 	chargetime = 0
 	releasedrain = 5
@@ -368,9 +379,11 @@
 /obj/effect/proc_holder/spell/invoked/griefflower
 	name = "False Serenity Bloom"
 	desc = "A gift for those whom you have chosen as worthy of Her grace, to be able to imbibe in Her gifts as you do."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "bloom"
 	clothes_req = FALSE
 	range = 7
-	overlay_state = "love"
 	sound = list('sound/magic/magnet.ogg')
 	releasedrain = 40
 	chargetime = 10
@@ -416,7 +429,9 @@
 /obj/effect/proc_holder/spell/invoked/joyride
 	name = "Joyride"
 	desc = "A frenzy for two to partake in."
-	overlay_state = "bliss"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "joyride"
 	range = 2
 	chargetime = 0.5 SECONDS
 	invocations = list("By Baotha's mercy, an ecstasy trance for two!")
@@ -457,7 +472,9 @@
 /obj/effect/proc_holder/spell/invoked/lasthigh
 	name = "Last High"
 	desc = "Pleasure's perfume, just before the fall."
-	overlay_state = "astrata"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "last_high"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0

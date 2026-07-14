@@ -117,7 +117,7 @@
 		switch(weapon_choice)//feel it'd be nice to have a sword version for a real Jeor Mormont?
 			if("Greataxe")			
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				l_hand = /obj/item/rogueweapon/greataxe/steel
+				l_hand = /obj/item/rogueweapon/stoneaxe/oath
 			if("Javelins & Shield")
 				beltr = /obj/item/quiver/javelin/steel
 				backl = /obj/item/rogueweapon/shield/tower/

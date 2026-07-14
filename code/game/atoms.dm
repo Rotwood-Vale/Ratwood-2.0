@@ -171,7 +171,7 @@
 
 	if (opacity && isturf(loc))
 		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+		T.opaque_atom_count++
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
@@ -225,6 +225,15 @@
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
+
+#ifndef DISABLE_DREAMLUAU
+	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
+	if(!(datum_flags & DF_STATIC_OBJECT))
+		DREAMLUAU_CLEAR_REF_USERDATA(contents)
+		DREAMLUAU_CLEAR_REF_USERDATA(filters)
+		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
+		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
+#endif
 
 	return ..()
 

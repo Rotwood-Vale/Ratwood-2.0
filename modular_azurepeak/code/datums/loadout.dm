@@ -721,6 +721,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Skirt"
 	path = /obj/item/clothing/under/roguetown/skirt
 
+/datum/loadout_item/sirwal
+	name = "Sirwal"
+	path = /obj/item/clothing/under/roguetown/sirwal
+
 //ACCESSORIES
 /datum/loadout_item/wrappings
 	name = "Handwraps"
@@ -2282,6 +2286,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/shortsatchel
 	name = "Short Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel/short
+	triumph_cost = 4
+
+/datum/loadout_item/saddle
+	name = "Saddle"
+	path = /obj/item/natural/saddle
 	triumph_cost = 4
 
 /datum/loadout_item/pouches

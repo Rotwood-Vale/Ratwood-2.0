@@ -185,6 +185,16 @@
 	pixel_y = 32
 	cookonme = TRUE
 
+/obj/machinery/light/rogue/campfire/fireplace/crafted/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
+/obj/machinery/light/rogue/campfire/fireplace/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
 /obj/machinery/light/rogue/candle
 	name = "candles"
 	desc = "Tiny flames flicker to the slightest breeze and offer enough light to see."
@@ -531,10 +541,9 @@
 /obj/machinery/light/rogue/hearth/attack_right(mob/user)
 	var/datum/skill/craft/cooking/cs = user?.get_skill_level(/datum/skill/craft/cooking)
 	var/cooktime_divisor = get_cooktime_divisor(cs)
-	if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+	while(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
 		try_cook(cooktime_divisor)
-		attack_right(user)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
 	lastuser = user // For processing food

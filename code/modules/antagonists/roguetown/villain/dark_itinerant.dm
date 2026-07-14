@@ -36,7 +36,8 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-	backr = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	backr = /obj/item/storage/backpack/rogue/backpack
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	r_hand = /obj/item/rogueweapon/spear
 	backpack_contents = list(
@@ -45,6 +46,8 @@
 		/obj/item/rogueweapon/hammer/iron = 1, 
 		/obj/item/rogueweapon/tongs = 1, 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
+		/obj/item/polishing_cream = 1, 
+		/obj/item/armor_brush = 1, 
 	)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
@@ -111,6 +114,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
 	beltr = /obj/item/rogueweapon/scabbard/sword
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
 

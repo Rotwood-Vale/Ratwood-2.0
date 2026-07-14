@@ -15,7 +15,9 @@
 	return TRUE
 
 /datum/intent/spell/on_mmb(atom/target, mob/living/user, params)
-	if(user.ranged_ability?.InterceptClickOn(user, params, target))
-		user.changeNext_move(clickcd)
-		if(releasedrain)
-			user.stamina_add(releasedrain)
+	if(!user.ranged_ability?.InterceptClickOn(user, params, target)) // Returns true on success, returns FALSE on fail to cast
+		user.stop_attack()
+		return
+	user.changeNext_move(clickcd)
+	if(releasedrain)
+		user.stamina_add(releasedrain)
