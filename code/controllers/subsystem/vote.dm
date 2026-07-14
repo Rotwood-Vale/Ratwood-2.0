@@ -248,6 +248,8 @@ SUBSYSTEM_DEF(vote)
 				var/datum/map_config/VM = config.maplist[map]
 				if(!VM.votable)
 					continue
+				if(VM.map_name == SSmapping.config.map_name)
+					continue
 				var/player_count = GLOB.clients.len
 				if(VM.config_max_users > 0 && player_count >= VM.config_max_users)
 					continue
