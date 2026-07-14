@@ -447,7 +447,7 @@
 
 /client/verb/toggle_excessive_cum()
 	set category = "Options"
-	set name = "Toggle Excessive Cum"
+	set name = "Toggle Excessive Cum Content"
 	set hidden = 1
 	if(prefs)
 		prefs.excessive_cum = !prefs.excessive_cum
@@ -461,7 +461,7 @@
 
 /client/verb/toggle_knot_removal_spurts()
 	set category = "Options"
-	set name = "Toggle Cum Spurts on Knot Removal"
+	set name = "Toggle Cum Spurts on Knot Removal (Needs Excessive Cum Enabled)"
 	set hidden = 1
 	if(!prefs)
 		return
