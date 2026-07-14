@@ -3,14 +3,14 @@
 // 自定义美德（Custom Virtue）：天才 / Genius
 // ----------------------------------------------------------------------------
 // 设计目标（为什么要做这个文件）：
-//   实现一个全新的、仅限"年轻"角色（最年轻的年龄档 AGE_ADULT）可选的美德"天才"。
+//   实现一个全新的、任何角色都可选的美德"天才"。
 //   它消耗 11 点凯旋点数（triumph_cost = 11），授予被动特性【天才】：
 //     - 角色天资卓绝，任何技能"一学就会"——所有技能经验的获取量统一放大到 300%
 //       （即经验倍率 ×3）。
 //   需求拆解：
 //     · 名称：Genius / 天才
 //     · 消耗：11 点凯旋点数
-//     · 限制：必须为"年轻"年龄（本游戏最年轻的可选年龄档 = AGE_ADULT "Adult"）
+//     · 限制：无（已按需求移除原先的"必须年轻"年龄限制，任何年龄都可选取）
 //     · 获得特性：天才（Genius）
 //     · 特性效果：技能获取经验倍率 ×300%
 //     · 该特性必须能被玩家在游戏内看到（登记进 GLOB.roguetraits 自检面板）
@@ -27,9 +27,6 @@
 //   - /datum/virtue                              美德基类（modular_azurepeak/_virtue.dm）
 //   - /mob/proc/adjust_experience(skill, amt, …) 全部"技能经验获取"的唯一汇聚入口
 //                                                （code/datums/skill_holder.dm:14）
-//   - /mob/proc/adjust_triumphs(n, FALSE)        调整凯旋点数（年龄不符时退款）
-//   - AGE_ADULT                                  最年轻的可选年龄档常量
-//                                                （code/__DEFINES/preferences.dm:120）
 //   - GLOB.roguetraits                           玩家"特性自检面板"读取的全局特性说明表
 //   - ADD_TRAIT / HAS_TRAIT / TRAIT_VIRTUE       特性增删与美德来源标签
 //
@@ -66,47 +63,31 @@
 	name = "天才"
 	// 角色内描述（in-character）：呼应"声名远扬的天才，一学就会"的设定。
 	desc = "我是声名远扬的天才，任何学问只要接触一次便能融会贯通、一学就会。"
-	// custom_text 用机制语言把硬性规则讲清楚，避免玩家误解触发条件。
-	// 为什么单列：desc 偏角色口吻，这里写明"仅限年轻、获得天才特性、技能经验 ×300%"。
-	custom_text = "获得【天才】特性（仅限年轻的角色）：\n\
+	// custom_text 用机制语言把硬性规则讲清楚，避免玩家误解效果。
+	// 为什么单列：desc 偏角色口吻，这里写明"获得天才特性、技能经验 ×300%"。
+	custom_text = "获得【天才】特性：\n\
 	你天资卓绝、过目不忘——所获得的一切技能经验都会被放大到 300%（经验倍率 ×3），\n\
 	任何技能都学得远比常人迅速。"
 	// 消耗 11 点凯旋点数。基类 New() 会自动把"Costs 11 TRIUMPH"追加到 desc。
 	// check_triumphs() 会在 apply_virtue 流程开头校验并扣除，点数不足则不授予。
 	triumph_cost = 11
-	// 为什么"不"用 added_traits 授予 TRAIT_GENIUS：
-	//   apply_virtue 的调用顺序是 apply_to_human() 先于 handle_traits()。若走 added_traits，
-	//   即便我们在 apply_to_human 里因"年龄不符"判定而想撤销标签，紧随其后的 handle_traits()
-	//   仍会把它无条件加回，导致非年轻角色出现"有标签却本不该获得"的越权情形。
-	//   因此改为在 apply_to_human 通过年龄校验后，手动 ADD_TRAIT，使"标签 = 资格通过"严格一致。
+	// 为什么"不"用 added_traits 授予 TRAIT_GENIUS，而在此手动 ADD_TRAIT：
+	//   apply_virtue 的调用顺序是 apply_to_human() 先于 handle_traits()。把授予集中放在
+	//   apply_to_human 内、并做好收件人有效性校验，能让"打标签"与"防御性检查"处于同一处，
+	//   逻辑更内聚，也与本目录其它美德（life_potential 等）的写法保持一致。
 
-// apply_to_human：美德被赋予人物时调用。这里负责两件事：
-//   1) 校验"仅限年轻"——非年轻角色（年龄档非 AGE_ADULT）退还点数、不授予能力。
-//   2) 为合格的人物授予【天才】特性（其经验加成由下方 adjust_experience 重写统一驱动）。
+// apply_to_human：美德被赋予人物时调用。
+//   已按需求移除原先的"仅限年轻"年龄限制——任何年龄的角色都可获得【天才】。
+//   本过程只需：校验收件人有效，然后授予【天才】特性（其经验加成由下方
+//   adjust_experience 重写统一驱动）。
 /datum/virtue/utility/genius/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
 	// 防御性检查：没有有效人物（极端时序下可能为 null）就直接返回，避免空引用。
 	if(!istype(recipient))
 		return
 
-	// 为什么校验年龄："必须为年轻角色"是本美德的硬性设定。
-	//   本游戏的可选年龄档为 ALL_AGES_LIST = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)，
-	//   其中 AGE_ADULT（"Adult"）是最年轻的一档（也是默认值），即需求所指的"年轻"。
-	//   非年轻角色（中年/老年）不应获得"天才"。这里做优雅降级：退还已扣除的点数、
-	//   明确告知玩家原因，而不是直接抛错或白扣点数。
-	if(recipient.age != AGE_ADULT)
-		// 退款：apply_virtue 的调用顺序是 check_triumphs()（已扣 11 点）→ apply_to_human()，
-		//   走到这里点数已被扣除，此处全额退还，避免玩家因误选而损失。
-		//   adjust_triumphs 第二参 FALSE = 不弹提示音/特效（与 hellblood_descendant.dm 退款一致）。
-		if(triumph_cost)
-			recipient.adjust_triumphs(triumph_cost, FALSE)
-		to_chat(recipient, span_warning("天才的锋芒只在年轻的头脑中闪耀——你已不再年轻，\
-										无法觉醒这份天资。"))
-		// 直接返回、既不打标签也不施加任何效果：非年轻角色彻底不获得本能力，状态自洽。
-		return
-
-	// 通过年龄校验：手动授予"身份标签"，来源标记 TRAIT_VIRTUE（与引擎美德特性约定一致，
-	//   便于未来统一清理）。这样标签只在资格真正通过时存在，杜绝"有标签却越权"。
+	// 授予"身份标签"，来源标记 TRAIT_VIRTUE（与引擎美德特性约定一致，便于未来统一清理）。
+	//   下方 adjust_experience 重写会据此判定是否放大经验。
 	ADD_TRAIT(recipient, TRAIT_GENIUS, TRAIT_VIRTUE)
 
 	// 给出醒目反馈，让玩家清楚"天才已觉醒"，否则纯被动倍率对玩家不直观。

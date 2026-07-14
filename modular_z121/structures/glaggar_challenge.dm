@@ -331,6 +331,9 @@
 				continue
 			// 统一阵营：避免不同种类怪物互相攻击，并便于把它们与玩家区分开。
 			M.faction = list(GLAGGAR_FACTION)
+			// 设定阵营后立刻唤醒其 AI 并强制索敌，使其马上冲向挑战者，而非站桩挨打才反击。
+			// 注意顺序：必须在改完 faction 之后调用，索敌的敌我判定才会用到正确阵营。
+			terror_clock_awaken_mob(M)
 			current_wave_mobs += M
 	// 向全场宣告本波开始。
 	if(center)

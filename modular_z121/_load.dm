@@ -50,6 +50,10 @@
 #include "crafting/moonlight_greatsword_recipes.dm"
 #include "crafting/terror_clock_recipe.dm"
 #include "crafting/blood_tonic_recipe.dm"
+// 自定义合成配方：涂毒工具袋（Poisoned Tool Pouch）——【通用制造】分类、需通用制造 2 级；
+// 材料：鞣制皮革x1 + 纤维x1 + 空玻璃瓶x1（均消耗）；工具：缝衣针（不消耗）。产物见 items/poisoned_tool_pouch.dm。
+// Custom recipe: Poisoned Tool Pouch — General Manufacturing tab, lvl-2; tanned leather + fiber + glass bottle, needle tool.
+#include "crafting/poisoned_tool_pouch_recipe.dm"
 // 自定义炼金配方：催乳剂（骨头x2+玻璃瓶x1+水50+牛奶10 → 装满50单位催乳剂的玻璃瓶，需炼金2级）
 #include "crafting/lactation_enhancer_recipe.dm"
 // 把催乳剂成品瓶加入浴场商贩机 BRASSFACE 的售货清单（Drugs 分类）
@@ -182,6 +186,13 @@
 // (1) stone->gold ore (no cooldown), (2) water-in-container -> any vanilla alchemy potion (3-min cooldown),
 // (3) create an item from nothing, searched by name, value>1 only, cooldown scaling with the item's value.
 #include "items/philosophers_stone.dm"
+// 自定义物品：涂毒工具袋（Poisoned Tool Pouch）——可倒入液体的皮袋，手持点击武器/箭矢即可涂抹；
+// 被涂抹物命中活体时把液体注入目标（伤害由试剂自身代谢产生）。武器：10u/生效10次；箭矢：1u/生效1次。
+// 贴图固定为 item.dmi 的 "Poisoned Tool Pouch"，仅名字随内含主液体变化（如“涂毒工具袋（毒药）”）。
+// 弓射箭矢复用主线 projectile.poisontype 投递；近战/投掷复用 COMSIG_ITEM_ATTACK_EFFECT_SELF。
+// Custom item: Poisoned Tool Pouch — pour a liquid in, click a weapon/arrow to coat it; the coated item
+// delivers that liquid into any living target it strikes. Weapon: 10u over 10 hits; arrow: 1u once.
+#include "items/poisoned_tool_pouch.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"
@@ -248,9 +259,9 @@
 // trait: immune to all fire/burn/heat damage (cannot be ignited) and learns the flame series of spells
 // (Fireball / Greater Fireball / Spitfire / Create Campfire)
 #include "virtues/hellblood_descendant.dm"
-// 自定义美德：天才（仅限年轻角色、消耗 11 凯旋点）；授予【天才】特性：
+// 自定义美德：天才（任何年龄可选、消耗 11 凯旋点）；授予【天才】特性：
 // 所获得的一切技能经验放大到 300%（经验倍率 ×3），任何技能都"一学就会"，学得远比常人迅速。
-// Custom virtue: Genius (young-age-only, costs 11 TRIUMPH); grants the "Genius" trait:
+// Custom virtue: Genius (any age, costs 11 TRIUMPH); grants the "Genius" trait:
 // all gained skill experience is multiplied to 300% (×3), learning any skill far faster than normal.
 #include "virtues/genius.dm"
 // 自定义美德：畸变变种（仅限血肉之躯、消耗 6 凯旋点）；授予【畸变变种】特性：

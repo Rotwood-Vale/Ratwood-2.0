@@ -21,11 +21,7 @@
 // ===== 数值旋钮（集中定义，文件末尾统一 #undef，避免污染全局命名空间）=====
 // 之所以集中放这些魔法数字，是为了让后续平衡性调整一目了然。
 #define PHILO_STONE_ICON             'modular_z121/icon/item.dmi'   // 物品贴图文件（本模块内）
-#define PHILO_STONE_STATE            "Philosopher's Stone"          // 贴图内唯一图标态名
-// 贴图本身是 64x64（普通物品是 32x32，故看起来偏大 1 倍）。在不修改原始 dmi 文件的前提下，
-// 用一个 0.5 的缩放矩阵把“显示尺寸”压到与普通石头相当（64×0.5=32）。0.5 = 目标显示缩放比例。
-#define PHILO_STONE_DISPLAY_SCALE    0.5                            // 运行时显示缩放（不改贴图文件）
-#define PHILO_STONE_ICON_DIM         64                             // 原始贴图边长（像素）——用于计算“大图标”的居中修正
+#define PHILO_STONE_STATE            "Philosopher's Stone"          // 贴图内唯一图标态名（32x32 标准尺寸，无需缩放修正）
 
 #define PHILO_TRANSMUTE_CHANNEL      (1 SECONDS)                    // 点石成金 / 嬗变水时的引导时长（纯表现，非冷却）
 #define PHILO_POTION_COOLDOWN        (3 MINUTES)                    // 效果 2（水→药水）的冷却时间：3 分钟
@@ -67,31 +63,6 @@
 // 为避免每次造物都重新扫描上千种物品类型，用一个全局静态列表缓存一次扫描结果：
 // 元素为“价值 initial(sellprice) 严格大于 PHILO_CREATE_MIN_VALUE 的物品类型路径”。
 GLOBAL_LIST_EMPTY(philo_creatable_item_types)
-
-// ===========================================================================
-// Initialize：物品创建时立即施加一次显示缩放，确保它一出生（无论在地上还是容器里）
-// 就以正常石头大小显示，而不必等到被拾取/丢弃触发 update_transform。
-// ===========================================================================
-/obj/item/philosophers_stone/Initialize(mapload)
-	. = ..()                                                     // 先跑父类初始化（创建 reagents 之类无关，但保持规范）
-	update_transform()                                           // 立刻应用 0.5 缩放（见下方覆盖）
-
-// ===========================================================================
-// update_transform：覆盖基类的“变换刷新”逻辑。基类只在“落地(turf)”时按 dropshrink 缩放，
-// 拿在手里/放进容器时并不缩放——这会让 64x64 的贴图在手持/物品栏里依旧显得过大。
-// 这里改为：先跑一遍基类逻辑（保留其抓握贴图切换等行为），再无条件叠加一个 0.5 缩放矩阵，
-// 使贴图在【任何显示场景】下都稳定地呈现为普通石头大小。全程不改动原始 dmi 文件。
-// ===========================================================================
-/obj/item/philosophers_stone/update_transform()
-	. = ..()                                                     // 先执行基类逻辑（它会把 transform 复位，并处理握持贴图）
-	var/matrix/M = matrix()                                      // 新建一个单位矩阵作为缩放基准
-	M.Scale(PHILO_STONE_DISPLAY_SCALE, PHILO_STONE_DISPLAY_SCALE) // 在 X/Y 方向各缩放到 50%
-	// 居中修正：64x64 的“大图标”默认以左下角对齐地块原点，向右上方延伸；缩放是绕图标自身中心
-	// 进行的，故缩放后其中心仍停在 (32,32) 处，导致成品相对地块中心向右上偏移 16 像素（正是截图现象）。
-	// 平移 (world.icon_size - 64)/2（= (32-64)/2 = -16）像素，把缩放后的中心拉回地块中心 (16,16)。
-	var/recenter = (world.icon_size - PHILO_STONE_ICON_DIM) / 2   // 需要施加的像素平移量（X/Y 相同）
-	M.Translate(recenter, recenter)                              // 施加平移，消除右上角偏移
-	transform = M                                                // 用该“缩放+居中”矩阵覆盖显示变换（本物品无握持贴图，直接赋值即可）
 
 // ===========================================================================
 // examine：查看物品时附带显示两个冷却的当前状态，方便玩家掌握节奏。
@@ -664,8 +635,6 @@ GLOBAL_LIST_EMPTY(philo_creatable_item_types)
 // ===== 清理顶部宏定义，避免泄漏到全局命名空间、与其它文件冲突 =====
 #undef PHILO_STONE_ICON
 #undef PHILO_STONE_STATE
-#undef PHILO_STONE_DISPLAY_SCALE
-#undef PHILO_STONE_ICON_DIM
 #undef PHILO_TRANSMUTE_CHANNEL
 #undef PHILO_POTION_COOLDOWN
 #undef PHILO_CREATE_MIN_VALUE
