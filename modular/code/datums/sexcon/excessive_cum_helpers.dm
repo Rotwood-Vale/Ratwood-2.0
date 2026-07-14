@@ -107,16 +107,19 @@
 /datum/sex_controller/proc/modular_emit_excessive_solo_spurts(obj/item/reagent_containers/glass/cum_chalice = null, add_floor = TRUE)
 	if(!modular_excessive_cum_enabled())
 		return
+	var/turf/source_turf = get_turf(user)
+	var/has_vagina = !!user.getorganslot(ORGAN_SLOT_VAGINA)
+	var/semen_volume = has_vagina ? 0 : get_semen_volume()
 	for(var/i = 1; i <= get_additional_spurts(); i++)
 		modular_announce_spurt_message()
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		if(add_floor)
-			add_cum_floor(get_turf(user), do_big_puddle = should_make_big_cum_puddle())
+			add_cum_floor(source_turf, do_big_puddle = should_make_big_cum_puddle())
 		if(cum_chalice?.spillable)
-			if(user.getorganslot(ORGAN_SLOT_VAGINA))
+			if(has_vagina)
 				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/femcum, 1)
 			else
-				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, get_semen_volume())
+				cum_chalice.reagents.add_reagent(/datum/reagent/erpjuice/cum, semen_volume)
 
 /datum/sex_controller/proc/modular_track_knot_spurt(mob/living/carbon/human/splashed_user = null, oral = FALSE, orifice = SEX_PART_NULL)
 	if(!modular_excessive_cum_enabled())
@@ -270,6 +273,8 @@
 	if(spurt_count <= 0)
 		return
 	if(!top.client?.prefs?.excessive_cum || !btm.client?.prefs?.excessive_cum)
+		return
+	if(!top.client?.prefs?.excessive_cum_knot_removal_spurts || !btm.client?.prefs?.excessive_cum_knot_removal_spurts)
 		return
 	var/turf/origin_turf = get_turf(btm)
 	if(!origin_turf)

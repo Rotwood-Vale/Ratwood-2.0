@@ -711,20 +711,26 @@
 	run_spurt_sequence(sound_target = user, add_floor = FALSE)
 	modular_schedule_excessive_cum_summary(EXCESSIVE_CUM_CONTEXT_SOLO)
 
-/datum/sex_controller/proc/announce_container_spill(obj/item/reagent_containers/glass/C, turf/spill_turf = null, notify_nearby = FALSE)
+/datum/sex_controller/proc/announce_container_spill(obj/item/reagent_containers/glass/C, turf/spill_turf = null, notify_nearby = FALSE, list/nearby_recipients = null)
 	if(!C)
 		return
 	to_chat(user, span_warning("The [C] is full and spills!"))
 	if(!notify_nearby || !spill_turf)
 		return
-	for(var/mob/living/carbon/human/H in viewers(DEFAULT_MESSAGE_RANGE, spill_turf))
+	if(!islist(nearby_recipients))
+		nearby_recipients = list()
+		for(var/mob/living/carbon/human/H in viewers(DEFAULT_MESSAGE_RANGE, spill_turf))
+			if(H == user)
+				continue
+			if(!H.client?.prefs?.excessive_cum)
+				continue
+			nearby_recipients += H
+	for(var/mob/living/carbon/human/H in nearby_recipients)
 		if(H == user)
-			continue
-		if(!H.client?.prefs?.excessive_cum)
 			continue
 		to_chat(H, span_warning("The [C] is full and spills!"))
 
-/datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null, turf/spill_turf = null, notify_nearby_spill = FALSE)
+/datum/sex_controller/proc/add_ejaculate_to_container(obj/item/reagent_containers/glass/C, femcum_amount = 1, semen_amount = null, turf/spill_turf = null, notify_nearby_spill = FALSE, list/nearby_spill_recipients = null)
 	if(!C?.reagents)
 		return FALSE
 	var/requested_amount = 0
@@ -740,14 +746,14 @@
 	if(free_space <= 0)
 		if(spill_turf)
 			add_cum_floor(spill_turf, do_big_puddle = should_make_big_cum_puddle())
-		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill)
+		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill, nearby_recipients = nearby_spill_recipients)
 		return TRUE
 	var/transfer_amount = min(requested_amount, free_space)
 	C.reagents.add_reagent(reagent_path, transfer_amount)
 	if(requested_amount > transfer_amount)
 		if(spill_turf)
 			add_cum_floor(spill_turf, do_big_puddle = should_make_big_cum_puddle())
-		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill)
+		announce_container_spill(C, spill_turf, notify_nearby = notify_nearby_spill, nearby_recipients = nearby_spill_recipients)
 		return TRUE
 	return FALSE
 
@@ -758,6 +764,15 @@
 		per_spurt_semen_amount = max(semen_amount / max(bursts, 1), 0.1)
 	var/turf/output_turf = get_turf(sound_target || user)
 	var/notify_nearby_spill = modular_excessive_cum_enabled()
+	var/list/nearby_spill_recipients = null
+	if(notify_nearby_spill && output_turf)
+		nearby_spill_recipients = list()
+		for(var/mob/living/carbon/human/H in viewers(DEFAULT_MESSAGE_RANGE, output_turf))
+			if(H == user)
+				continue
+			if(!H.client?.prefs?.excessive_cum)
+				continue
+			nearby_spill_recipients += H
 	for(var/i = 1; i <= bursts; i++)
 		modular_announce_spurt_message()
 		playsound(sound_target || user, 'sound/misc/mat/endout.ogg', suppress_moan ? 12 : 50, TRUE, ignore_walls = FALSE)
@@ -765,7 +780,7 @@
 			add_cum_floor(output_turf, do_big_puddle = should_make_big_cum_puddle())
 		if(cum_chalice?.spillable)
 			var/femcum_amount = i == 1 ? first_femcum_amount : subsequent_femcum_amount
-			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = per_spurt_semen_amount, spill_turf = output_turf, notify_nearby_spill = notify_nearby_spill)
+			add_ejaculate_to_container(cum_chalice, femcum_amount = femcum_amount, semen_amount = per_spurt_semen_amount, spill_turf = output_turf, notify_nearby_spill = notify_nearby_spill, nearby_spill_recipients = nearby_spill_recipients)
 		if(i == 1)
 			// Apply climax lockout immediately so passive processing cannot re-enter orgasm during inter-burst sleeps.
 			after_ejaculation()

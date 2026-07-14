@@ -1,5 +1,5 @@
 import { Button, Section, Stack, Table, Tooltip } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -9,6 +9,8 @@ type ToggleEntry = {
   label: string;
   enabled: BooleanLike;
   desc: string;
+  disabled?: BooleanLike;
+  indent?: number;
 };
 
 type SelectOption = {
@@ -70,6 +72,7 @@ const ToggleCategorySection = ({ category }: { category: ToggleCategory }) => {
 
 const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
   const { act } = useBackend<Data>();
+  const indent = Math.max(Number(entry.indent || 0), 0);
 
   return (
     <Table.Row className="candystripe">
@@ -78,7 +81,13 @@ const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
           <Button.Checkbox
             checked={entry.enabled}
             fluid
-            onClick={() => act('toggle', { id: entry.id })}
+            disabled={!!entry.disabled}
+            style={{ marginLeft: `${indent * 1.25}rem` }}
+            onClick={() => {
+              if (!entry.disabled) {
+                act('toggle', { id: entry.id });
+              }
+            }}
           >
             {entry.label}
           </Button.Checkbox>

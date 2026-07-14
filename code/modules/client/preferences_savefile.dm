@@ -263,6 +263,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
 	S["excessive_cum"]		>> excessive_cum
+	S["excessive_cum_knot_removal_spurts"] >> excessive_cum_knot_removal_spurts
 	S["edging"]				>> edging
 	S["shake"]				>> shake
 	S["mastervol"]			>> mastervol
@@ -354,6 +355,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
+	excessive_cum_knot_removal_spurts = sanitize_integer(excessive_cum_knot_removal_spurts, 0, 1, initial(excessive_cum_knot_removal_spurts))
+	if(!excessive_cum)
+		excessive_cum_knot_removal_spurts = FALSE
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -430,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["excessive_cum"], excessive_cum)
+	WRITE_FILE(S["excessive_cum_knot_removal_spurts"], excessive_cum_knot_removal_spurts)
 	WRITE_FILE(S["edging"], edging)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["lastclass"], lastclass)

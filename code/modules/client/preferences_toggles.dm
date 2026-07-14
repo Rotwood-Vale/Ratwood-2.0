@@ -136,6 +136,7 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "excessive_cum", "label" = "Enable Excessive Cum Content", "enabled" = !!owner.prefs.excessive_cum, "desc" = "Allow higher spurt counts and volume when all participants opt in, as well as extra cum related messages in various ERP scenarios"),
+		list("id" = "knot_removal_spurts", "label" = "Cum Spurts on Knot Removal", "enabled" = !!owner.prefs.excessive_cum_knot_removal_spurts, "desc" = "Allow post-unknot spurt effects when all direct participants opt in. This is a little silly so be warned!", "indent" = 1, "disabled" = !owner.prefs.excessive_cum),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 	)
 
@@ -230,6 +231,8 @@
 				owner.toggle_extreme_ERP()
 			if("excessive_cum")
 				owner.toggle_excessive_cum()
+			if("knot_removal_spurts")
+				owner.toggle_knot_removal_spurts()
 			if("edging")
 				owner.toggle_edging()
 		SStgui.update_uis(src)
@@ -448,11 +451,31 @@
 	set hidden = 1
 	if(prefs)
 		prefs.excessive_cum = !prefs.excessive_cum
+		if(!prefs.excessive_cum)
+			prefs.excessive_cum_knot_removal_spurts = FALSE
 		prefs.save_preferences()
 		if(prefs.excessive_cum)
 			to_chat(src, "Excessive cum output enabled when all participants opt in.")
 		else
 			to_chat(src, "Excessive cum output disabled.")
+
+/client/verb/toggle_knot_removal_spurts()
+	set category = "Options"
+	set name = "Toggle Cum Spurts on Knot Removal"
+	set hidden = 1
+	if(!prefs)
+		return
+	if(!prefs.excessive_cum)
+		prefs.excessive_cum_knot_removal_spurts = FALSE
+		prefs.save_preferences()
+		to_chat(src, "Enable Excessive Cum Content first.")
+		return
+	prefs.excessive_cum_knot_removal_spurts = !prefs.excessive_cum_knot_removal_spurts
+	prefs.save_preferences()
+	if(prefs.excessive_cum_knot_removal_spurts)
+		to_chat(src, "Knot-removal spurt effects enabled when all direct participants opt in.")
+	else
+		to_chat(src, "Knot-removal spurt effects disabled.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
