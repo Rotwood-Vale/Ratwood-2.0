@@ -335,19 +335,22 @@
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
-		drink_act(user, L)
+		for(var/drink in 1 to 40)
+			if(drink_act(user, L))
+				return
+		to_chat(user, span_warning("I've had enough."))
 		return
 	..()
 
 /turf/open/water/proc/drink_act(mob/user, mob/living/L)
 	if(L.stat != CONSCIOUS)
-		return
+		return TRUE
 	if(do_after(L, 2.5 SECONDS, target = src))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(ispath(water_reagent, /datum/reagent/blood) && (H.dna?.species?.id == "gnoll"))
 				if(!H.gnoll_bloodpool_feed())
-					return
+					return FALSE
 				playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 				if(!mapped)
 					water_volume = max(water_volume - 2, 0)
@@ -359,8 +362,8 @@
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
 		playsound(user,pick('sound/items/drink_gen (1).ogg','sound/items/drink_gen (2).ogg','sound/items/drink_gen (3).ogg'), 100, TRUE)
-		drink_act(user, L)
-	return
+		return FALSE
+	return TRUE
 
 /turf/open/water/Destroy()
 	. = ..()

@@ -153,6 +153,11 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/sword/rapier)
 
+/datum/supply_pack/rogue/Knave/cuprapier
+	name = "Etruscan Rapier"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/rapier/vaquero)
+
 /datum/supply_pack/rogue/Knave/sabre
 	name = "Sabre"
 	cost = 20

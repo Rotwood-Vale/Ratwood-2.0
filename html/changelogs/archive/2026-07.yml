@@ -152,3 +152,9 @@
   PPooch:
   - bugfix: Prevented buckling oneself to an object, and throwing the object and self
       around or up to a different Z level.
+2026-07-14:
+  PPooch:
+  - bugfix: fixed edge case of a corpse being too suffocated to be resurrected by
+      lux surgery
+  Xander3359:
+  - bugfix: Fixed an exploit that allowed you to phase through windows.

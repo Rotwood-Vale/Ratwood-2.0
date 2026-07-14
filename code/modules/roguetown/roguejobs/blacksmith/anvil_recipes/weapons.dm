@@ -494,6 +494,12 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long
 
+/datum/anvil_recipe/weapons/steel/shalal
+	name = "Shalal Saber, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/marlin
+
 /datum/anvil_recipe/weapons/steel/shotel
 	name = "Shotel, Steel (+1 Steel)"
 	req_blade = /obj/item/blade/steel_sword

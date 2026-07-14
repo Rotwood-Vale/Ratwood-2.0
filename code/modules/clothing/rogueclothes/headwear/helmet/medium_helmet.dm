@@ -296,6 +296,7 @@
 	dynamic_hair_suffix = ""
 	edelay_type = 1
 	adjustable = CAN_CADJUST
+	resistance_flags = FIRE_PROOF
 	toggle_icon_state = TRUE
 	max_integrity = 200
 
