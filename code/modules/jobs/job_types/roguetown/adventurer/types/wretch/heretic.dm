@@ -7,7 +7,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
-	maximum_possible_slots = 2 //Ppl dont like heavy armor antags.
+	maximum_possible_slots = 2
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -227,7 +227,7 @@
 	tutorial = "Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."
 	outfit = /datum/outfit/job/roguetown/wretch/hereticspy
 	class_select_category = CLASS_CAT_ROGUE
-	maximum_possible_slots = 2 //Ppl dont like rogue antags.
+	maximum_possible_slots = 2
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
 	//Slower than outlaw, but a bit more PER and INT
 	subclass_stats = list(
@@ -304,7 +304,7 @@
 				beltr = /obj/item/quiver/bolts
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_4)	//Minor regen, can level up to T4.
+		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Minor regen, starts maxed out.
 		wretch_select_bounty(H)
 
 	if (istype (H.patron, /datum/patron/inhumen/zizo))
@@ -415,17 +415,17 @@
 
 /datum/advclass/wretch/heretic/monk
 	name = "Heretic Monk"
-	tutorial = "Strong in body and spirit, you spread the truth through violence and word in equal measures. You eschew burdening armor in favour of physical prowess."
+	tutorial = "Strong in body and spirit, you spread the truth through violence and word in equal measures. You eschew burdening armor in favor of physical prowess."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_RITUALIST)
-	maximum_possible_slots = 2
-	//+7 weighted stat total, plus +2 from your discipline for the total of +9.
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
+	maximum_possible_slots = 1
+	//+9 weighted stat total. Atgervi Shaman's stats 1:1.
 	subclass_stats = list(
-		STATKEY_STR = 1,
+		STATKEY_STR = 3,
 		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
@@ -474,20 +474,8 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/disciplines = list("Violence (Critical Resistance, Enduring, +2 STR)", "Zeal (Expert Dodger, +2 SPD)")
-		var/discipline_choice = input(H, "Choose your monastic discipline.", "WHAT HIDES BEHIND YOUR FAITH?") as anything in disciplines
-		switch(discipline_choice)
-			if("Violence (Critical Resistance, Enduring, +2 STR)") //You become knockoff Atgervi Shaman.
-				to_chat(H, span_warning("The mask of sanity is fragile. Once it shatters, your true nature is revealed: a rabid attack dog of your divine master."))
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
-				H.change_stat(STATKEY_STR, 2)
-			if("Zeal (Expert Dodger, +2 SPD)") //Underoptimised speedster.
-				to_chat(H, span_warning("Faith and madness go hand-in-hand. You have crossed the line between two more than once."))
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				H.change_stat(STATKEY_SPD, 2)
 		var/monkstyles = list("Itinerant Monk")
-		if(H.dna.species.type in NON_DWARVEN_RACE_TYPES) //No clothing sprites for short-height races.
+		if(H.dna.species.type in NON_DWARVEN_RACE_TYPES) //No sprites for diminutive people.
 			monkstyles += list("Eastern Custodian")
 		if(istype(H.patron, /datum/patron/inhumen))
 			monkstyles += list("Atgervi Shaman")
@@ -514,7 +502,7 @@
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-			if("Atgervi Shaman") //Pick this, Violence Discipline and Unarmed. Now you are a true Atgervi Shaman.
+			if("Atgervi Shaman") //Pick this and Unarmed. Now you are a true Atgervi Shaman.
 				to_chat(H, span_warning("Unlike your more opportunistic fellows who bend their knees and betray their beast-gods for a coin, you haven't strayed from your path. Why grovel, when you can take what you want with unrestrained brutality?"))
 				head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 				gloves = /obj/item/clothing/gloves/roguetown/angle/gronnfur
