@@ -63,7 +63,7 @@
 /datum/crafting_recipe/roguetown/engineering/distiller
 	name = "copper distiller"
 	result = /obj/structure/fermentation_keg/distiller
-	reqs = list(/obj/item/ingot/copper = 3, /obj/item/reagent_containers/glass/bucket/pot/stone = 1) // why did this use ore instead of ingots?
+	reqs = list(/obj/item/ingot/copper = 2, /obj/item/reagent_containers/glass/bucket/pot/stone = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
