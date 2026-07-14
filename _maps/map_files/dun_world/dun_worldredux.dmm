@@ -1168,7 +1168,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/structure/roguemachine/scomm/r,
@@ -20601,7 +20601,7 @@
 	pixel_x = -11;
 	pixel_y = 14
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -22043,7 +22043,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/town/physician)
 "eSu" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -34436,7 +34436,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/scarymaze)
 "hKH" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -43085,7 +43085,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cavewet/bogcaves/west)
 "jGm" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -49209,13 +49209,12 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/mountains)
 "kYG" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker4";
-	name = "locker IV"
+	name = "locker 4";
+	redstone_id = "bathlocker4"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "kYJ" = (
@@ -52461,7 +52460,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/tavern)
 "lJN" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -53070,13 +53069,12 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town)
 "lQu" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker2";
-	name = "locker II"
+	name = "locker I";
+	redstone_id = "bathlocker2"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "lQG" = (
@@ -57499,13 +57497,12 @@
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/rtfield)
 "mOr" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker3";
-	name = "locker III"
+	name = "locker 3";
+	redstone_id = "bathlocker3"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "mOv" = (
@@ -58070,13 +58067,12 @@
 /turf/closed/mineral/random/rogue/med,
 /area/rogue/indoors/cave/west)
 "mVr" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker1";
-	name = "locker I"
+	name = "locker 2";
+	redstone_id = "bathlocker1"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "mVw" = (
@@ -63544,27 +63540,11 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "ofz" = (
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker1";
-	name = "locker I key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker2";
-	name = "locker II key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker3";
-	name = "locker III key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker4";
-	name = "locker IV key"
-	},
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/roguekey/locker1,
+/obj/item/roguekey/locker2,
+/obj/item/roguekey/locker3,
+/obj/item/roguekey/locker4,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "ofA" = (
@@ -65972,7 +65952,7 @@
 /obj/effect/decal/cleanable/sigil/N,
 /obj/structure/fluff/statue/femalestatue/zizo{
 	pixel_y = 21;
-	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Progress guide us forth, out of this ever rotting world.' ";
+	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Ambition guide us forth, out of this ever rotting world.' ";
 	name = "Statue of Zizo"
 	},
 /turf/open/floor/rogue/hexstone,
@@ -96935,7 +96915,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/outskirts)
 "vvV" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile,
@@ -330712,7 +330692,7 @@ pbm
 sDv
 eWt
 dmQ
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331014,7 +330994,7 @@ wkH
 sDv
 kcM
 biN
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331316,7 +331296,7 @@ ljJ
 sDv
 gnk
 biN
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331618,7 +331598,7 @@ eKr
 sDv
 gnk
 biN
-hPO
+fZA
 fZA
 fZA
 fZA

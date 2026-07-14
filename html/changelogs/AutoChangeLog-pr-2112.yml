@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "fixed edge case of a corpse being too suffocated to be resurrected by lux surgery"

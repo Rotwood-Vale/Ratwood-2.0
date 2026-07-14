@@ -30,6 +30,10 @@
 		/datum/advclass/captain/infantry
 	)
 
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding,
+	)
+
 /datum/outfit/job/roguetown/captain
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
@@ -102,9 +106,6 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
 
-	virtue_restrictions = list(
-		/datum/virtue/utility/riding
-	)
 	extra_context = "This class gains Master skill in their weapon of choice."
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)

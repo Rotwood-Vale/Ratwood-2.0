@@ -267,7 +267,7 @@
 
 /obj/item/ingot/decrepit
 	name = "decrepit ingot"
-	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'progress commands sacrifice'."
+	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'ambition commands sacrifice'."
 	icon_state = "ingotancient"
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"

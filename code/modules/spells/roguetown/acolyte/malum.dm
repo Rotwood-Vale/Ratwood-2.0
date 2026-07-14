@@ -1,7 +1,9 @@
 /obj/effect/proc_holder/spell/invoked/vigorousexchange
 	name = "Vigorous Exchange"
 	desc = "Restores the targets Energy, Twice as effective on someone else."
-	overlay_state = "vigorousexchange"
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "vigorous_exchange"
 	releasedrain = 0
 	chargedrain = 0
 	chargetime = 0
@@ -24,7 +26,9 @@
 /obj/effect/proc_holder/spell/invoked/heatmetal
 	name = "Heat Metal"
 	desc= "Damages Armor, Forces target to drop a metallic weapon, heats up an ingot in tongs or smelts a single item."
-	overlay_state = "heatmetal"
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "heat_metal"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -48,7 +52,9 @@
 /obj/effect/proc_holder/spell/invoked/hammerfall
 	name = "Hammerfall"
 	desc = "Damages structures in an area while possibly knocking down mobs in the area."
-	overlay_state = "Hammerfall"
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "hammerfall"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -103,8 +109,10 @@
 		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 
 /obj/effect/proc_holder/spell/invoked/craftercovenant
-	name = "The Crafter’s Covenant"
+	name = "The Crafter's Covenant"
 	desc = "Melt a pile of valuables and convert them into a single item. Sacrifice is accepted even if its not valuable enough to make anything."
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
 	overlay_state = "craftercovenant"
 	releasedrain = 30
 	chargedrain = 0
@@ -387,7 +395,9 @@ GLOBAL_LIST_EMPTY(anvil_recipe_prices)
 /obj/effect/proc_holder/spell/invoked/malum_flame_rogue
 	name = "Malum's Fire"
 	desc = "Ignites target."
-	overlay_state = "sacredflame"
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "malum_fire"
 	releasedrain = 15
 	chargedrain = 0
 	chargetime = 0

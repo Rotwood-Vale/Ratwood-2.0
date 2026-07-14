@@ -4,57 +4,25 @@
 
 	var/tmp/lighting_corners_initialised = FALSE
 
-	var/tmp/list/datum/light_source/affecting_lights       // List of light sources affecting this turf.
 	var/tmp/atom/movable/lighting_object/lighting_object // Our lighting object.
 	var/tmp/list/datum/lighting_corner/corners
 	var/tmp/opaque_atom_count = 0 // Not to be confused with opacity, this is the number of opaque atoms on the tile.
 
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	var/datum/light_source/L
-	var/thing
-	for (thing in affecting_lights)
-		L = thing
-		L.vis_update()
+	for(var/datum/lighting_corner/corner as anything in get_corners())
+		corner.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, TRUE)
-
-	var/datum/lighting_corner/C
-	var/thing
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		C.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if(lighting_object)
 		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
-		return
-
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-
 	new/atom/movable/lighting_object(src)
-
-	var/thing
-	var/datum/lighting_corner/C
-	var/datum/light_source/S
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		if (!C.active) // We would activate the corner, calculate the lighting for it.
-			for (thing in C.affecting)
-				S = thing
-				S.recalc_corner(C)
-			C.active = TRUE
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)

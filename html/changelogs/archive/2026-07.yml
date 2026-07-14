@@ -1,0 +1,154 @@
+2026-07-01:
+  Wadelicious:
+  - rscadd: Sirwal to the lobby loadout menu
+  Xander3359:
+  - bugfix: Fix resisting out of man eaters being bugged.
+  annikaRU:
+  - rscadd: refined ducal blacksteel staff and the recipe for it
+2026-07-02:
+  IronDragoon:
+  - bugfix: Removed rontz ring from the contraband spawner
+  Yuckuza:
+  - rscdel: Removed raise fortified skeleton scroll from necromancer corpse loot pool.
+2026-07-03:
+  BlindPoet:
+  - rscadd: Added back the Janissary's mace
+  - rscadd: Added a shield to the class to match its' description
+2026-07-04:
+  Xander3359:
+  - bugfix: Fix attacks, spells and miracles fizzling sometimes if you hold a channel
+      and move your mouse.
+  - bugfix: Fix T3 eyes giving you +1 in a bugged stat
+  wikimody:
+  - bugfix: Surgical tool that stepped out of line has been brought by in line by
+      force (cautery intends got shufled)
+  zeroisthebiggay:
+  - bugfix: rookies properly get willpower
+2026-07-05:
+  JustMeTheIInd:
+  - qol: made roleplay ad notifications turned on by default
+  Xander3359:
+  - bugfix: Fixed spells giving you a permanent glow when they fizzled out.
+  - rscadd: Mending now gives you an arcyne glow when casting
+  Yuckuza:
+  - qol: Drider mounts like those used by drow mercs can be healed via apples like
+      saiga and beetles can.
+  petwir1:
+  - balance: heavy knight's claymore weapon choice split into two steel options
+  - balance: heavy knight's lucerne weapon choice changed to eagle's beak
+  - balance: foot knight's warhammer weapon choice upgraded to steel to match all
+      other options
+  - balance: 'city guard''s polehammer weapon choice downgraded to lucerne instead
+      of the current eagle''s beak
+
+      :cl:'
+2026-07-06:
+  EvenInDeathIStillServe:
+  - rscadd: Adds an Observer ban option to the admin ban panel.
+  SneakySlinky:
+  - bugfix: Grand Mace and Punch Dagger loadout choices for Berserker now work.
+  Teragenic:
+  - qol: Adds Right and Left Indicator from AP
+  - bugfix: Czwarteki Icons returned
+  Xander3359:
+  - rscadd: Belts can now be untied into the leather that is used to make them via
+      a craft.
+  - rscadd: Sandals, boots and pouches can be chopped up with scissors.
+  Yuckuza:
+  - balance: Gave whips the wbalance var, with light whips getting swift and most
+      of the heavier whips getting heavy balance.
+  - balance: replaced the warden master's steel greataxe loadout option with the unique
+      oath axe.
+  kimesik:
+  - bugfix: Wretch-Heretic Spy gets maximum Devotion on spawn.
+  ophaq:
+  - rscadd: Adds craftable ritechalk.
+  zeroisthebiggay:
+  - image: updated god miracle icons
+2026-07-07:
+  Teragenic:
+  - qol: Adds Dominant Hand Indicator
+  Xander3359:
+  - code_imp: Nukes unused undivided code
+  - admin: adds lua scripting
+2026-07-08:
+  Art-gif-dotcom:
+  - rscadd: Heretic spy now can pick whips and gets a roundstart whip
+  PPooch:
+  - bugfix: Desert town palace slaves now get servant-quality traits.
+  Rasengetsu:
+  - rscadd: Added greatweapon straps to Zizo Knight and Squire duo
+  - rscadd: Traded satchel for backpack on Zizo Squire, gave polishing tools to Squire
+  Rhiannahn:
+  - bugfix: janissary standardbearer being unable to use their standard
+  Yuckuza:
+  - rscadd: Shotels are now craftable in iron and steel via an anvil and the smithing
+      skill.
+  - rscadd: Hook swords are now craftable via an anvil and the smithing skill.
+  ophaq:
+  - rscadd: Saddle in the loadout options.
+  zoktiik:
+  - bugfix: Blood Transfer Miracle will no longer cast and then immediately cancel
+      if the caster is in a do_after. The spell will not be put on cooldown, and you
+      will not be charged 50 devotion.
+2026-07-09:
+  HalfAwake691:
+  - balance: Spitfire 20 > 15 damage
+  - balance: Arced spitfire 15 > 12 damage
+  - balance: Fireball 60 > 50 damage
+  - balance: Artillery fireball 50 > 40
+  - balance: Arced Artillery fireball 65 > 55
+  - balance: Blink 10 > 13 CD
+  - balance: Repulse 25 > 30 CD
+  - balance: Wither debuff 30 > 90 seconds debuff
+  - balance: Arcane bolt 4 > 3 Recharge
+  - balance: Acid splash 10 > 15 direct damage
+  - balance: Lbolt 2 > 3 Click CD (Unnerf's it a tiny bit as a treat, If you don't
+      count the recent nerf it would be 6 > 3 click cd)
+  IronDragoon:
+  - rscadd: Added new orbit menu for ghosts
+  Kroto-Ker:
+  - rscdel: Unsettling Beauty trait.
+  SneakySlinky:
+  - bugfix: Properly implemented a way to restrict advclasses based on virtue selection
+  - code_imp: Adjusted the layout of existing virtue_restrictions on advclasses that
+      had it
+  - code_imp: Implemented some context descriptions for existing class previews that
+      have virtue restrictions on subclasses
+  - balance: Removed access to Natural Armor virtue on Lunacy Embracers
+  - balance: Removed +2 FOR from Lunacy Embracers stat block
+  - balance: Added TRAIT_RITUALIST to Dendor, Abyssor, Xylix Lunacy Embracers
+  Xander3359:
+  - bugfix: Fix lights from spells lingering even after they are fully casted
+  zoktiik:
+  - rscadd: At water fountains, you can now fill any liquid container (mugs, bottles,
+      etc.), not just buckets.
+  - sound: You will no longer repeatedly hear the washing sound when someone is drinking
+      from bodies of water, or from fountains.
+  - bugfix: You can now autodrink from mana fountains, just like regular fountains.
+  - qol: Removed the click cooldown for filling liquid containers from a body of water.
+      This cuts down on unnecessary delay, & brings the filling speed on par with
+      wells.
+2026-07-11:
+  Arturlang:
+  - bugfix: janissary now gets the dodge expert trait as intended
+  GarrusVakarian:
+  - rscadd: Big Man towner thugs can now choose to spawn with a mace
+  Skyglazer:
+  - rscdel: Removed Barbarian and Amazon from the list of possible Licker subclasses.
+2026-07-12:
+  Arturlang:
+  - rscadd: MC now can account for maptick lag
+  EvenInDeathIStillServe:
+  - rscadd: The sex menu will now open using ctrl+shift+click in addition to MMB drag.
+2026-07-13:
+  EvenInDeathIStillServe:
+  - rscadd: Knaves get rapiers, sabres, messers, falchions and estocs in their shop
+      tab.
+  - rscadd: Added a "freeuse" sexcon toggle that makes it so that sex actions targeting
+      you will bypass any positioning or clothing checks.
+  IronDragoon:
+  - qol: Adds IC menu verb to toggle Keen Ears trait in round
+  PPooch:
+  - bugfix: Prevented buckling oneself to an object, and throwing the object and self
+      around or up to a different Z level.

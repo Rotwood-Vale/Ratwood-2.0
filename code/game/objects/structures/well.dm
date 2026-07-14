@@ -26,6 +26,8 @@
 			to_chat(user, "<span class='notice'>I fill [W] from [src].</span>")
 			playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 80, FALSE)
 			return
+	else if(istype(I, /obj/item/reagent_containers/glass))
+		to_chat(user, span_warning("I need a bucket."))
 	else ..()
 
 /obj/structure/well/poisoned
@@ -48,12 +50,14 @@
 		if(W.reagents.holder_full())
 			to_chat(user, span_warning("[W] is full."))
 			return
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			var/list/waterl = list(/datum/reagent/water = 50, /datum/reagent/organpoison = 50)
 			W.reagents.add_reagent_list(waterl)
 			to_chat(user, "<span class='notice'>I fill [W] from [src]. The water looks vile, am I really going to drink this?</span>")
 			playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 80, FALSE)
 			return
+	else if(istype(I, /obj/item/reagent_containers/glass))
+		to_chat(user, span_warning("I need a bucket."))
 	else ..()
 
 /obj/structure/well/fountain
@@ -65,6 +69,20 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
+/obj/structure/well/fountain/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/glass))
+		var/obj/item/reagent_containers/glass/W = I
+		if(W.reagents.holder_full())
+			to_chat(user, span_warning("[W] is full."))
+			return
+		playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
+		if(do_after(user, 1 SECONDS, target = src))
+			var/list/waterl = list(/datum/reagent/water = 250)
+			W.reagents.add_reagent_list(waterl)
+			to_chat(user, "<span class='notice'>I fill [W] from [src].</span>")			
+			return
+	else ..()
+
 /obj/structure/well/fountain/onbite(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
@@ -75,15 +93,15 @@
 			if(C.is_mouth_covered())
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
+		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		drink_act(user, L)
 		return
 	..()
 
 /obj/structure/well/fountain/proc/drink_act(mob/user, mob/living/L)
-	playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 	if(L.stat != CONSCIOUS)
 		return
-	if(do_after(L, 25, target = src))
+	if(do_after(L, 2.5 SECONDS, target = src))
 		var/list/waterl = list(/datum/reagent/water = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
@@ -103,6 +121,20 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
+/obj/structure/well/fountainswamp/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/glass))
+		var/obj/item/reagent_containers/glass/W = I
+		if(W.reagents.holder_full())
+			to_chat(user, span_warning("[W] is full."))
+			return
+		playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
+		if(do_after(user, 1 SECONDS, target = src))
+			var/list/waterl = list(/datum/reagent/water/gross = 250)
+			W.reagents.add_reagent_list(waterl)
+			to_chat(user, "<span class='notice'>I fill [W] from [src].</span>")			
+			return
+	else ..()
+
 /obj/structure/well/fountainswamp/onbite(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
@@ -113,15 +145,15 @@
 			if(C.is_mouth_covered())
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
+		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		drink_act(user, L)
 		return
 	..()
 
 /obj/structure/well/fountainswamp/proc/drink_act(mob/user, mob/living/L)
-	playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 	if(L.stat != CONSCIOUS)
 		return
-	if(do_after(L, 25, target = src))
+	if(do_after(L, 2.5 SECONDS, target = src))
 		var/list/waterl = list(/datum/reagent/water/gross = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)

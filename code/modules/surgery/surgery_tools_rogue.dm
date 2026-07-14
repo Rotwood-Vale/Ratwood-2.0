@@ -112,7 +112,7 @@
 	name = "cautery iron"
 	desc = "A tool used to cauterize wounds. Heat it up before use."
 	icon_state = "cauteryiron"
-	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/use)
+	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike, /datum/intent/mace/smash)
 	slot_flags = ITEM_SLOT_HIP
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED

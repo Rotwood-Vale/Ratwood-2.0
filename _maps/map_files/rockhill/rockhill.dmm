@@ -12674,7 +12674,7 @@
 /area/rogue/outdoors/town/roofs)
 "cPD" = (
 /obj/structure/flora/roguegrass,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "cPE" = (
@@ -41979,7 +41979,8 @@
 /area/rogue/indoors/town/warden)
 "jzW" = (
 /obj/structure/roguemachine/vendor/bathhouse/locker{
-	density = 0
+	density = 0;
+	will_hawk = 0
 	},
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue,
 /area/rogue/indoors/town/bath)
@@ -49511,7 +49512,6 @@
 "lkg" = (
 /obj/structure/fluff/statue/aasimar{
 	color = "aaa0a0";
-	desc = "This statue is an ode to the purity and superiority of the beloved Aasimar race";
 	pixel_y = 2
 	},
 /turf/open/floor/rogue/concrete,
@@ -50194,7 +50194,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
 "ltI" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/grass,
@@ -52376,7 +52376,8 @@
 "lUT" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 4"
+	name = "locker 4";
+	redstone_id = "bathlocker4"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -62057,13 +62058,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/basement)
 "odS" = (
-/obj/structure/fluff/statue/femalestatue{
-	desc = "Wow, she is beautiful.";
-	icon_state = "5";
-	name = "Lady of the Lake";
-	pixel_x = -15;
-	pixel_y = 6
-	},
+/obj/structure/fluff/statue/femalestatue2,
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -64503,7 +64498,7 @@
 /area/rogue/outdoors/bograt/sunken)
 "oIH" = (
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "oII" = (
@@ -68707,13 +68702,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/church)
 "pGs" = (
-/obj/structure/fluff/statue/femalestatue{
-	desc = "Wow, she is beautiful.";
-	icon_state = "5";
-	name = "Lady of the Lake";
-	pixel_x = -28;
-	pixel_y = -28
-	},
+/obj/structure/fluff/statue/femalestatue2,
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
@@ -75011,7 +75000,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/under/town/sewer)
 "rhE" = (
-/obj/structure/flora/roguegrass/herb,
+/obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/above)
 "rhG" = (
@@ -76945,7 +76934,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
 "rFi" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/wall/mineral/rogue/decowood,
 /area/rogue/indoors)
 "rFm" = (
@@ -77901,7 +77890,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/underdark/rockhill/west)
 "rRa" = (
-/obj/structure/fluff/statue/zizo{
+/obj/structure/fluff/statue/valmora{
 	pixel_y = 11
 	},
 /turf/open/floor/rogue/grasscold,
@@ -77964,7 +77953,8 @@
 "rRO" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 5"
+	name = "locker 5";
+	redstone_id = "bathlocker5"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82240,7 +82230,8 @@
 "sTO" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker I"
+	name = "locker I";
+	redstone_id = "bathlocker2"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82289,7 +82280,8 @@
 "sUG" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 2"
+	name = "locker 2";
+	redstone_id = "bathlocker1"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -82840,7 +82832,8 @@
 "taK" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 6"
+	name = "locker 6";
+	pixel_y = "bathlocker6"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"
@@ -100909,7 +100902,8 @@
 "xjv" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	name = "locker 3"
+	name = "locker 3";
+	redstone_id = "bathlocker3"
 	},
 /obj/structure/curtain/magenta{
 	color = "#a1254a"

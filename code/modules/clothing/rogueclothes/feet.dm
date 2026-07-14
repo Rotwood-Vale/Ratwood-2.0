@@ -25,6 +25,7 @@
 	item_state = "blackboots"
 	max_integrity = 80
 	salvage_amount = 1
+	salvage_result = /obj/item/natural/hide/cured
 	armor = ARMOR_CLOTHING
 	cold_protection = FOOT_LEFT | FOOT_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX

@@ -99,6 +99,7 @@ export const DmTarget = new Juke.Target({
     "modular/**",
     "modular_azurepeak/**",
     "modular_causticcove/**",
+    "modular_deserttown/**",
     "modular_hearthstone/**",
     "modular_helmsguard/**",
     "modular_rmh/**",

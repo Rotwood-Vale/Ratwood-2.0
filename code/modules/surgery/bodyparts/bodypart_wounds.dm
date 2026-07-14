@@ -136,6 +136,26 @@
 		return min(bleed_rate, 0.5)
 	return bleed_rate
 
+/// Returns the bleed amount that matters for HUD visuals without mutating bandages.
+/obj/item/bodypart/proc/get_hud_bleed_rate()
+	var/hud_bleed_rate = bleeding
+	if(bandage && !HAS_BLOOD_DNA(bandage))
+		var/obj/item/natural/cloth/cloth = bandage
+		if(istype(cloth))
+			hud_bleed_rate *= cloth.bandage_effectiveness
+			if(hud_bleed_rate <= 1)
+				return 0
+			return hud_bleed_rate
+	for(var/obj/item/embedded as anything in embedded_objects)
+		if(!embedded.embedding.embedded_bloodloss)
+			continue
+		hud_bleed_rate += embedded.embedding.embedded_bloodloss
+
+	grabbedby = SANITIZE_LIST(grabbedby)
+	for(var/obj/item/grabbing/grab in grabbedby)
+		hud_bleed_rate *= grab.bleed_suppressing
+	return max(round(hud_bleed_rate, 0.1), 0)
+
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied
 /obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon)
 	RETURN_TYPE(/datum/wound)
@@ -557,6 +577,7 @@
 			var/datum/component/silverbless/psyblessed = embedder.GetComponent(/datum/component/silverbless)
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
+		owner.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Removes an embedded object from this bodypart
@@ -578,6 +599,7 @@
 		if(!owner.has_embedded_objects())
 			owner.clear_alert("embeddedobject")
 		update_disabled()
+		owner.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /obj/item/bodypart/proc/try_bandage(obj/item/new_bandage)
@@ -585,6 +607,7 @@
 		return FALSE
 	bandage = new_bandage
 	new_bandage.forceMove(src)
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /obj/item/bodypart/proc/process_bandage(bleed_rate)
@@ -622,6 +645,7 @@
 		return FALSE
 	if(owner.stat != DEAD)
 		owner.visible_message(span_warning("Blood soaks through the bandage on [owner]'s [name]."), span_warning("Blood soaks through the bandage on my [name]."), vision_distance = 3)
+	owner.mark_zone_selector_hud_dirty()
 	return bandage.add_mob_blood(owner)
 
 /obj/item/bodypart/proc/remove_bandage()
@@ -634,6 +658,7 @@
 		qdel(bandage)
 	bandage = null
 	owner?.update_damage_overlays()
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Applies a temporary paralysis effect to this bodypart
