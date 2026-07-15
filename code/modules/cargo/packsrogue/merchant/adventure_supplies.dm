@@ -159,3 +159,8 @@
 	name = "Yurt Kit"
 	cost = 200
 	contains = list(/obj/item/tent_kit/yurt)
+
+/datum/supply_pack/rogue/adventure_supplies/boar_map
+	name = "Boars Map"
+	cost = 90
+	contains = list(/obj/item/hunting_map/boars)
