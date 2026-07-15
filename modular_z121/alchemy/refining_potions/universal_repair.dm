@@ -28,30 +28,45 @@
 	// 中文：用量过少视作"只是沾湿"，不足以完成修复——要求至少 5 单位，避免一滴就修好。
 	if(reac_volume < 5)										// Needs a meaningful splash.
 		return
-	// 中文：记录是否确实修复了什么，用于决定是否给出反馈。
+	// 中文：记录是否确实修复了什么，以及"是否曾处于损坏态"(损坏态才有那层破损贴图，需要额外清除)。
 	var/repaired = FALSE									// Did we actually restore anything?
+	var/was_broken = FALSE									// Was the object in its "broken" state (which shows a damaged sprite)?
 
 	// ---- 修复①：耐久 + 耐久上限(所有 /obj 通用) ----
-	// 中文：把耐久上限还原到出厂值(以防被某些磨损机制调低)，再把当前耐久顶满；并清除"损坏/被毁"状态。
+	// 中文：先把耐久上限还原到出厂值(以防被某些磨损机制调低)；再据"是否损坏"走对应修复路径。
 	if(O.max_integrity)										// Has a durability system?
 		O.max_integrity = initial(O.max_integrity)			// Restore MAX durability.
-		O.obj_integrity = O.max_integrity					// Full current durability.
-		O.obj_broken = initial(O.obj_broken)				// Un-break (usually FALSE).
+		was_broken = O.obj_broken							// Remember (broken items carry the damaged overlay).
+		if(was_broken)										// ★损坏态★——走原版正规修复接口。
+			// 中文：obj_fix() 会清除 obj_broken、把耐久顶满，并发出 COMSIG_ITEM_OBJFIX，
+			//   让监听该信号的组件(附魔武器/合身衣物/psy 圣佑等)一并"复原"。
+			O.obj_fix(full_repair = TRUE)					// Un-break + top integrity + fire the fix signal.
+		else
+			O.obj_integrity = O.max_integrity				// Not broken: just top up current durability.
 		O.obj_destroyed = initial(O.obj_destroyed)			// Clear destroyed flag (usually FALSE).
 		repaired = TRUE
 
 	// ---- 修复②：锋利度 + 锋利上限(仅限带刃的 /obj/item) ----
-	// 中文：对有刃物品调用原版 restore_bintegrity()，它会把 max_blade_int 与 blade_int 一并复位到 initial，
-	//       即"锋利度与锋利上限"双双满血——与磨刀石恢复刀刃品质同源。
+	// 中文：对有刃物品调用原版 restore_bintegrity()，把 max_blade_int 与 blade_int 一并复位到 initial。
 	if(isitem(O))											// Only items can have a blade.
 		var/obj/item/I = O									// Typed access.
 		if(I.max_blade_int)									// Actually has a sharpenable blade?
 			I.restore_bintegrity()							// Restore sharpness AND its max.
 			repaired = TRUE
 
-	// ---- 收尾：刷新外观并给出反馈 ----
+	// ---- 收尾：清除"损坏外观"并刷新贴图，再给出反馈 ----
 	if(repaired)											// Only react if something was restored.
-		O.update_icon()										// Refresh sprite (drop broken overlays, etc.).
+		// 中文：★关键★——原版的"破损外观"是 update_damaged_state() 依 obj_broken 叠加的一层 overlay；
+		//   仅把 obj_broken 置假【不会】自动移除它。故对【曾损坏的物品】再调用一次 update_damaged_state()：
+		//   此时 obj_broken 已为假 → 它会先 cut_overlays() 清掉那层破损贴图再直接返回，外观即恢复如新。
+		if(was_broken && isitem(O))							// Item that was carrying the damaged overlay.
+			var/obj/item/I2 = O
+			I2.update_damaged_state()						// obj_broken now FALSE -> clears the damage overlay.
+		O.update_icon()										// General sprite refresh (structures/machines/icon_state).
+		// 中文：若物品正被某人持握/穿戴，一并重建其身上的贴图，避免手中/身上仍显示破损。
+		if(ismob(O.loc))									// Held or worn directly by a mob?
+			var/mob/holder = O.loc
+			holder.regenerate_icons()						// Rebuild the mob's held/worn overlays.
 		O.visible_message(span_green("[O]在溶剂的浸润下崩损尽复、锋芒重现，宛如刚刚锻造问世！"))	// Visible feedback.
 
 // 中文：示例配方——★按气味等级★：要求【5 级"大地"气味】+ 复合底料(水50 + 魔力药水30 + 板油20) → 万能修复溶剂。

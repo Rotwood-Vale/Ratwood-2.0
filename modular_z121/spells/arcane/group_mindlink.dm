@@ -149,41 +149,12 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	popup.open()
 	return TRUE
 
-// 仅刷新【已经打开】的窗口：窗口对象存在才更新内容，不存在（被关闭/从未打开）则什么都不做。
-// 这样在有人发言时，不会把别人【已经关掉】的对话框强行重新弹出来——他们仍可在普通聊天框看到
-// 镜像消息，需要时再用 IC 标签的【Group Mindlink】动词手动打开。这是与 open_window_for 的关键区别：
-// open_window_for 会"按需新建并强制弹出"（用于施法/手动重开），refresh_window_for 只"就地刷新已开窗口"。
-// Only refresh an ALREADY-OPEN window: update it if a browser object exists, otherwise do nothing.
-// This stops speech from force-popping a window someone deliberately closed — they still see the mirrored
-// line in normal chat and can reopen via the [Group Mindlink] IC verb. Key difference vs open_window_for,
-// which creates-and-force-opens (for casting / manual reopen); this one just refreshes in place.
-/datum/group_mindlink_custom/proc/refresh_window_for(mob/living/member)
-	// 失效/无客户端 -> 不处理。
-	// Dead link / no client -> skip.
-	if(!active || QDELETED(member) || !member.client)
-		return
-	// 没有窗口对象 -> 绝不强制弹出，直接返回。
-	// No window object -> never force one open; just return.
-	var/datum/browser/popup = windows[member]
-	if(!popup)
-		return
-	// 【关键】用 winexists 查询客户端【实际的窗口状态】，而不是依赖我们自己的记录或 onclose 回调
-	// （onclose 在 BYOND 里并不总能可靠触发，这正是"关掉后仍被发言强行弹回来"的根因）。
-	// 若该窗口此刻在客户端【并不存在】（玩家已手动关闭），则【绝不】再 browse 把它弹回来：
-	// 清理掉我们这边残留的窗口记录后直接返回。winexists 是窗口是否打开的权威依据。
-	// [KEY] Query the client's ACTUAL window state via winexists, instead of trusting our own bookkeeping or
-	// the onclose callback (onclose is not reliably fired in BYOND — that's the real root cause of "a closed
-	// window gets force-popped by others' speech"). If the window does NOT currently exist on the client
-	// (the player closed it), NEVER browse it back open: drop our stale record and return. winexists is the
-	// authoritative source of truth for whether the window is open.
-	if(!winexists(member, GROUP_MINDLINK_WINDOW_ID))
-		windows -= member
-		qdel(popup)
-		return
-	// 窗口确实仍开着：才就地刷新内容（此时 browse 只是更新已开窗口，不会造成弹窗）。
-	// The window really is still open: only now refresh in place (browse just updates the open window, no pop).
-	popup.set_content(build_window_html(member))
-	popup.open()
+// 注：新消息不再触发"整窗刷新"。开着的窗口由 broadcast_entry 用 JS 增量追加(gmlAppend)就地更新，
+// 既不重建页面（保住输入草稿），也不会把关闭的窗口弹开（output 对已关窗口是无操作）。
+// 因此旧的 refresh_window_for（整窗 browse 重建）已被移除。
+// Note: new messages no longer trigger a whole-window refresh. Open windows are updated in place by
+// broadcast_entry's JS incremental append (gmlAppend) — no page rebuild (drafts survive), and no force-pop
+// of a closed window (output() is a no-op there). The old refresh_window_for (full browse rebuild) is gone.
 
 // 关闭并丢弃某成员的窗口对象（成员退出 / 房间销毁时调用）。
 // Close and drop a member's browser window (on member leave / room destroy).
@@ -224,21 +195,17 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// Header bar + roster line.
 	var/header = "<div class='hdr'>心灵聊天室 · 在场 [length(participants)] 人<span class='ros'>[roster_text]</span></div>"
 
-	// 主体：逐条渲染对话历史。系统消息居中斜体；普通发言渲染成气泡，并区分"自己(me)/他人"。
-	// Body: render history. System lines centered/italic; normal lines as bubbles split into self(me)/others.
+	// 主体：逐条渲染对话历史，复用 render_entry_html —— 让【首次全量渲染】与【后续 JS 增量追加】
+	// 使用完全相同的一条消息标记，保证两条路径视觉一致。
+	// Body: render each entry via render_entry_html so the full render and the later incremental JS-append
+	// produce identical per-message markup.
 	var/list/lines = list()
 	for(var/list/entry as anything in message_log)
-		if(entry["system"])
-			lines += "<div class='sys'>\[[entry["time"]]\] [entry["text"]]</div>"
-		else
-			// 与本窗口观看者引用一致 => 这是"我"发的，靠右显示。
-			// Matches this viewer's ref => it's the viewer's own line, render right-aligned.
-			var/cls = (entry["speaker_ref"] == REF(viewer)) ? "msg me" : "msg"
-			lines += "<div class='[cls]'><div class='meta'><span class='nm' style='color:[entry["color"]]'>[entry["name"]]</span> · [entry["time"]]</div><div class='bub'>[entry["text"]]</div></div>"
+		lines += render_entry_html(entry, viewer)
 
-	// 历史为空时给出占位提示，并点明"打字 + 回车"的用法。
-	// Empty-state placeholder that also states the "type + Enter" usage.
-	var/body = length(lines) ? lines.Join() : "<div class='empty'>还没有人说话，输入文字并按回车即可开始交流。</div>"
+	// 历史为空时给出占位提示（带 id=gmlempty，便于第一条消息到达时由 JS 移除）。
+	// Empty-state placeholder (id=gmlempty so JS can remove it when the first message arrives).
+	var/body = length(lines) ? lines.Join() : "<div id='gmlempty' class='empty'>还没有人说话，输入文字并按回车即可开始交流。</div>"
 
 	// 底部输入区：一个 HTML 表单。文本框 name=msg；按【回车】或点【发送】都会提交到本 datum 的 Topic()，
 	// 因此无需先点按钮即可实时发送。hidden 字段 src=本 datum 用于路由，action=send 标记这是发送请求。
@@ -246,36 +213,76 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// sent in real time without first clicking a button. Hidden src routes to us; action=send marks a send.
 	var/form = "<form><input type='hidden' name='src' value='[REF(src)]'><input type='hidden' name='action' value='send'><table class='barwrap' width='100%' cellspacing='0' cellpadding='6'><tr><td><input id='inp' class='inp' type='text' name='msg' autocomplete='off' maxlength='1024'></td><td width='58'><input class='btn' type='submit' value='发送'></td></tr></table></form>"
 
-	// 渲染后脚本：把消息区滚到底部并自动聚焦输入框，实现"打开即可打字、回车即发、发完仍聚焦"的实时体验。
-	// Post-render script: scroll the log to bottom and auto-focus the input — type-immediately, Enter-to-send,
-	// and keep focus after sending, for a real-time feel.
-	var/js = "<script type='text/javascript'>(function(){var l=document.getElementById('log');if(l){l.scrollTop=l.scrollHeight;}var i=document.getElementById('inp');if(i){i.focus();}})();</script>"
+	// 文档内 JS（首次 browse 时定义，之后由服务器用 output() 反复调用）：
+	//  gmlScroll     —— 把消息区滚到底部；
+	//  gmlAppend(enc)—— 【本次修复的核心】把服务器 output 推来的【一条】消息(经 url_encode)解码后仅追加到 #log，
+	//                   【绝不触碰输入框】。因此别人发言时，你输入框里尚未发送的草稿不会被清空/重建。
+	//  gmlFocus      —— 聚焦输入框（打开窗口时调用一次，便于直接打字）。
+	// In-document JS (defined on the initial browse, then invoked repeatedly by the server via output()):
+	//  gmlScroll  — scroll the log to bottom.
+	//  gmlAppend(enc) — [core of this fix] decode+append ONE server-pushed message into #log ONLY, NEVER touching
+	//                   the input, so others' messages can't wipe/rebuild your unsent draft.
+	//  gmlFocus — focus the input (called once on open so you can type immediately).
+	var/js = "<script type='text/javascript'>function gmlScroll(){var l=document.getElementById('log');if(l){l.scrollTop=l.scrollHeight;}}function gmlAppend(enc){var l=document.getElementById('log');if(!l){return;}var e=document.getElementById('gmlempty');if(e&&e.parentNode){e.parentNode.removeChild(e);}var t;try{t=decodeURIComponent(enc);}catch(err){t=enc;}var d=document.createElement('div');d.innerHTML=t;while(d.firstChild){l.appendChild(d.firstChild);}gmlScroll();}function gmlFocus(){var i=document.getElementById('inp');if(i){i.focus();}}gmlScroll();gmlFocus();</script>"
 
 	// 组装：样式 + 标题栏 + 滚动消息区(id=log) + 输入表单 + 脚本。
 	// Assemble: style + header + scrollable log (id=log) + input form + script.
 	return "[css][header]<div id='log' class='log'>[body]</div>[form][js]"
 
-// 把当前聊天内容刷新到所有【已经打开窗口】的成员（每次有新消息后调用）。
-// 关键：此处用 refresh_window_for 而非 open_window_for——只刷新已开的窗口，绝不强制弹出已被关闭的，
-// 从而修复"有人一说话就把对话框强行弹出来"的烦扰。关窗的成员仍能在普通聊天框看到镜像消息。
-// Refresh content into every member whose window is ALREADY OPEN (called after each new message).
-// Key: uses refresh_window_for (not open_window_for) — refresh open windows only, never force-pop a closed one,
-// fixing the "any speech force-pops the dialog" annoyance. Closed-window members still see the chat mirror.
-/datum/group_mindlink_custom/proc/render_all()
+// 渲染【单条】聊天记录为 HTML —— 供全量渲染(build_window_html)与增量追加(broadcast_entry)共用。
+// viewer 用于判定"这条是不是我发的"：是则加 me 类靠右显示。
+// Render ONE log entry to HTML — shared by full render (build_window_html) and incremental append
+// (broadcast_entry). viewer decides "is this mine" (adds the me class -> right-aligned).
+/datum/group_mindlink_custom/proc/render_entry_html(list/entry, mob/living/viewer)
+	if(entry["system"])
+		return "<div class='sys'>\[[entry["time"]]\] [entry["text"]]</div>"
+	var/cls = (entry["speaker_ref"] == REF(viewer)) ? "msg me" : "msg"
+	return "<div class='[cls]'><div class='meta'><span class='nm' style='color:[entry["color"]]'>[entry["name"]]</span> · [entry["time"]]</div><div class='bub'>[entry["text"]]</div></div>"
+
+// 把【一条】新消息以 JS 增量追加的方式推送给所有【窗口已打开】的成员，替代过去"整窗 browse 重建"。
+//   member << output(url_encode(单条HTML), "窗口.browser:gmlAppend")
+// 关键收益：
+//  ① 只在 #log 末尾追加这一条，【不重建页面】，因此每个人输入框里未发送的草稿都被完整保留
+//     （这正是本次修复的 bug：别人发言不该清空我正在输入的内容）；
+//  ② output 对【已关闭/不存在】的窗口是无操作，绝不会把窗口弹开——天然满足"不强制弹窗"。
+// Push ONE new message to every member whose window is open via a JS incremental append, replacing the old
+// "rebuild the whole window with browse".  member << output(url_encode(one-line HTML), "window.browser:gmlAppend")
+// Benefits: (1) only appends that single line without rebuilding the page, so everyone's UNSENT DRAFT survives
+// (the exact bug being fixed); (2) output() is a no-op for a closed/absent window and never force-opens it.
+// skip_member：可选，跳过某成员不做增量追加。用于"该成员是通过窗口输入框发送的，将改为对其整窗重渲染"
+// （因为 BYOND 表单提交往往会打乱提交者本人的页面，对其增量追加不可靠——见 Topic 的 send 分支）。
+// skip_member: optional; skip one member's incremental append. Used when that member sent via the window's
+// input box and will instead get a full re-render (BYOND form submission tends to disrupt the submitter's own
+// page, so an incremental append to them is unreliable — see Topic's send branch).
+/datum/group_mindlink_custom/proc/broadcast_entry(list/entry, mob/skip_member = null)
 	if(!active)
 		return
 	for(var/mob/living/member as anything in participants)
-		// 跳过已删除的成员；其余成员仅在其窗口已开时就地刷新。
-		// Skip deleted members; for the rest, refresh only if their window is already open.
-		if(QDELETED(member))
+		if(QDELETED(member) || !member.client)
 			continue
-		refresh_window_for(member)
+		// 跳过发送者本人（其窗口将被整窗重渲染，不需要也不适合增量追加）。
+		// Skip the sender (their window gets a full re-render; an append to them is unneeded/unreliable).
+		if(member == skip_member)
+			continue
+		// 仅推给"我方记录为已开窗口"的成员，避免无谓发送；即便判断有误，output 也不会弹窗，故绝对安全。
+		// Only push to members tracked as having an open window (avoid pointless sends); even if the flag is
+		// stale, output() won't pop a window, so this is always safe.
+		if(!windows[member])
+			continue
+		// url_encode 服务器侧 + JS 里 decodeURIComponent 解码：确保引号/分号/中文等都能安全穿过 output 传输。
+		// url_encode on the server + decodeURIComponent in JS: makes quotes/semicolons/CJK survive the transport.
+		member << output(url_encode(render_entry_html(entry, member)), "[GROUP_MINDLINK_WINDOW_ID].browser:gmlAppend")
 
 // -------------------------------------------------------------------------------------
 // 消息写入：把一条发言（或系统提示）追加进历史并广播刷新。
 // Message ingestion: append one line (speech or system notice) to the log and broadcast a refresh.
 // -------------------------------------------------------------------------------------
-/datum/group_mindlink_custom/proc/add_message(mob/living/speaker, raw_text)
+// skip_window_member：可选，转发给 broadcast_entry —— 跳过对该成员的增量追加（其窗口将被整窗重渲染）。
+// 窗口输入框发送时传入发送者本人；,m 快捷发言则传 null（发送者若开着窗口，也用增量追加保留其草稿）。
+// skip_window_member: optional, forwarded to broadcast_entry to skip that member's incremental append (their
+// window gets a full re-render). The window input-box send passes the sender; the ",m" shortcut passes null
+// (so if that sender has a window open, their draft is preserved via the append too).
+/datum/group_mindlink_custom/proc/add_message(mob/living/speaker, raw_text, mob/skip_window_member = null)
 	// 防御：链接失效或空文本直接忽略，避免往历史里塞无意义的空行。
 	// Guard: ignore when the link is dead or the text is empty.
 	if(!active)
@@ -290,16 +297,17 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// Prepare speaker info: name + assigned color, reused by both the log entry and the normal chat mirror.
 	var/speaker_name = speaker?.real_name || "未知"
 	var/speaker_color = member_colors?[speaker] || "#ffffff"
-	// 组装一条结构化历史记录：发言者名、颜色、引用、转义文本、站点时间戳。
-	// Build one structured log entry: name, color, ref, escaped text, station timestamp.
-	message_log += list(list(
+	// 组装一条结构化历史记录：发言者名、颜色、引用、转义文本、站点时间戳。用局部变量以便同时入历史与增量广播。
+	// Build one structured log entry; keep it in a local so we can both store it and incrementally broadcast it.
+	var/list/entry = list(
 		"system" = FALSE,
 		"name" = speaker_name,
 		"color" = speaker_color,
 		"speaker_ref" = speaker ? REF(speaker) : null,
 		"text" = clean,
 		"time" = station_time_timestamp(),
-	))
+	)
+	message_log += list(entry)
 	// 同步镜像到每位成员的【普通聊天框】：即使有人没打开对话窗口，也能在主聊天里看到这条心灵讯息，
 	// 不会因没开窗而漏掉对话。用心灵紫着色 + "[心灵聊天室]" 前缀标明来源，名字沿用其专属颜色。
 	// Mirror into every member's NORMAL chat box too: even someone who never opened the dialogue window
@@ -316,9 +324,11 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 			// 其他成员看到的：带颜色的发言者姓名 + 内容。
 			// Other members see: the colored speaker name + the message body.
 			to_chat(member, span_purple("\[心灵聊天室\] <span style='color:[speaker_color]'>[speaker_name]</span>：[clean]"))
-	// 广播刷新，让所有成员立即在各自窗口看到这条新消息。
-	// Broadcast a refresh so all members see the new line immediately.
-	render_all()
+	// 【增量广播】只把这一条 append 到各成员已开的窗口，不重建页面 —— 于是所有人未发送的输入草稿都不受影响。
+	// skip_window_member（若有）会被跳过，改由调用方对其整窗重渲染（窗口输入框发送即属此列）。
+	// [Incremental broadcast] append this one line to each open window without rebuilding — nobody's draft is lost.
+	// skip_window_member (if any) is skipped and full-re-rendered by the caller instead (the input-box send case).
+	broadcast_entry(entry, skip_window_member)
 	return TRUE
 
 // 追加一条"系统提示"到历史（加入/退出/即将消散等），同样会广播刷新。
@@ -326,12 +336,17 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 /datum/group_mindlink_custom/proc/add_system_message(text)
 	if(!active)
 		return
-	message_log += list(list(
+	// 同样用局部变量承载该系统提示条目，既入历史又增量广播到已开窗口。
+	// Hold the system entry in a local so we can both store it and incrementally broadcast it.
+	var/list/entry = list(
 		"system" = TRUE,
 		"text" = html_encode(text),
 		"time" = station_time_timestamp(),
-	))
-	render_all()
+	)
+	message_log += list(entry)
+	// 增量追加（不重建页面，保留输入草稿）。
+	// Incremental append (no page rebuild, drafts preserved).
+	broadcast_entry(entry)
 
 // -------------------------------------------------------------------------------------
 // Topic：处理聊天室窗口里 href 的点击（发送 / 刷新 / 关闭）。usr 即点击该 href 的成员。
@@ -343,16 +358,17 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 	// Resolve the actor (both the onclose callback and form submits set usr to the member).
 	var/mob/living/clicker = usr
 
-	// 【关键修复·关窗后仍被强行弹开】窗口关闭事件由 BYOND 的 onclose 以 "close=1"（即 href_list["close"]）
-	// 送达，而【不是】action=close。必须在此【优先】处理：销毁并移除该成员的窗口对象，使其【保持关闭】。
-	// 之前把关闭逻辑误放进 switch(href_list["action"]) 的 "close" 分支，导致它永远不会被触发——窗口记录
-	// 一直残留，于是他人发言时 refresh_window_for 又把窗口 browse 回来。这才是"关掉后还被强行弹开"的真正根因。
-	// 即便链接正在拆除(active=FALSE)时也要清理，故放在 active 判断之前。
-	// [KEY FIX for "closed window gets force-popped"] The close event arrives from BYOND's onclose as
-	// "close=1" (href_list["close"]), NOT action=close. Handle it FIRST: destroy + drop this member's window
-	// object so it STAYS closed. The old code put close handling inside switch(href_list["action"]) under a
-	// "close" case that therefore NEVER fired — the record lingered and others' speech re-browsed it open.
-	// That was the true root cause. Clean up even mid-teardown (active=FALSE), so this precedes the active check.
+	// 窗口关闭事件由 BYOND 的 onclose 以 "close=1"（即 href_list["close"]）送达，而【不是】action=close，
+	// 故必须在此【优先】处理：销毁并移除该成员的窗口对象。这样我们对"谁的窗口开着"的记录(windows)保持准确，
+	// broadcast_entry 便不会再往已关窗口做无谓的 output 推送；即便链接正在拆除(active=FALSE)也要清理，
+	// 因此放在 active 判断之前。（历史注记：曾把关闭逻辑误放进 switch(href_list["action"]) 的 "close" 分支，
+	// 导致它永不触发、窗口记录残留，是早期"关掉后仍被发言强行弹开"的根因；现已改到此处优先处理。）
+	// The close event arrives from BYOND's onclose as "close=1" (href_list["close"]), NOT action=close — so
+	// handle it FIRST: destroy + drop this member's window object. That keeps our open-window bookkeeping
+	// (windows) accurate so broadcast_entry won't push pointless output to a closed window. Clean up even
+	// mid-teardown (active=FALSE), so this precedes the active check. (History: the close logic used to sit in
+	// switch(href_list["action"]) under a "close" case that never fired — the true cause of the earlier
+	// "closed window gets force-popped" bug; now handled here up front.)
 	if(href_list["close"])
 		if(istype(clicker))
 			var/datum/browser/popup = windows[clicker]
@@ -379,12 +395,17 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 			// Abort if the send window is no longer valid (link expired / member left).
 			if(!active || !(clicker in participants))
 				return
-			// 写入并广播该条发言；add_message 会裁剪并忽略空白。
-			// 若为空白（只敲了回车），add_message 返回 FALSE，此时单独刷新该成员窗口以重新聚焦输入框。
-			// Ingest + broadcast; add_message trims and ignores blanks. On a blank (bare Enter) it returns FALSE,
-			// so we just refresh this member's window to re-focus the input box.
-			if(!add_message(clicker, msg))
-				open_window_for(clicker)
+			// 写入并广播：skip_window_member=clicker —— 对【其他】成员做增量追加(保住他们的草稿)，
+			// 但【跳过】发送者本人，因为 BYOND 表单提交往往会打乱提交者自己的页面，对其增量追加不可靠。
+			// 随后无论发送成功与否，都对发送者【整窗重渲染】：既修复被表单提交打乱/清空的页面，又把其输入框
+			// 复位为空（消息已发出，本就无草稿可留）。这只影响发送者自己，绝不会波及其他人的输入草稿。
+			// Ingest + broadcast with skip_window_member=clicker: OTHER members get the incremental append (their
+			// drafts preserved), but the SENDER is skipped because BYOND form submission tends to disrupt the
+			// submitter's own page (an append to them would be unreliable). Then, regardless of success, fully
+			// re-render the SENDER's window: this repairs the form-submit-disrupted page and resets the sender's
+			// input to empty (the message is out, so there's no draft to keep). Affects only the sender.
+			add_message(clicker, msg, skip_window_member = clicker)
+			open_window_for(clicker)
 		if("refresh")
 			// 手动刷新：仅重渲染点击者自己的窗口即可。
 			// Manual refresh: just re-render the clicker's own window.
@@ -414,14 +435,16 @@ GLOBAL_LIST_INIT(group_mindlink_name_colors, list("#d18cff", "#7fd1ff", "#9fe07f
 		speech_args[SPEECH_MESSAGE] = null
 		if(!message)
 			return
-		// 投入聊天室历史并广播——快捷通道与窗口"发送消息"走完全相同的入口。
-		// 注意：本过程是 SIGNAL_HANDLER（不允许睡眠），而 add_message → render_all → 浏览器 open()
-		// 存在会睡眠的子类重载（/datum/browser/modal/open）；故用 INVOKE_ASYNC 把它派发到允许睡眠的
-		// 独立上下文执行，既消除"信号处理器中睡眠"的告警，又不改变功能。
-		// Push into the room log + broadcast — same entry point as the window's send.
-		// NOTE: this is a SIGNAL_HANDLER (must not sleep), but add_message -> render_all -> browser open()
-		// has a sleeping override (/datum/browser/modal/open). Dispatch it via INVOKE_ASYNC so it runs in a
-		// sleep-allowed context, clearing the "sleep in signal handler" lint without changing behavior.
+		// 投入聊天室历史并广播——,m 快捷通道与窗口"发送消息"走同一入口。这里不传 skip_window_member(默认 null)，
+		// 因为消息是从"说话栏"发出的：发送者若开着对话窗口，也应用增量追加，从而保留其窗口输入框里的草稿。
+		// 本过程是 SIGNAL_HANDLER（不允许睡眠）。虽然现在 add_message 走 output() 增量广播、不再触及会睡眠的
+		// 浏览器 open()，但仍用 INVOKE_ASYNC 派发以保持信号处理器绝不阻塞，并对其调用链的睡眠告警防患于未然。
+		// Push into the room log + broadcast — the ",m" shortcut and the window's send share one entry point.
+		// We pass no skip_window_member (defaults null): the line came from the say bar, so if the sender has a
+		// window open it should get the incremental append too, preserving that sender's in-window draft.
+		// This is a SIGNAL_HANDLER (must not sleep). add_message now broadcasts via output() and no longer hits
+		// the sleeping browser open(), but we still INVOKE_ASYNC to keep the handler non-blocking and pre-empt
+		// any sleep-in-signal-handler lint from its call chain.
 		INVOKE_ASYNC(src, PROC_REF(add_message), speaker, message)
 
 // 通知房间即将/已经消散：写入一条系统提示，告知所有人链接结束。
