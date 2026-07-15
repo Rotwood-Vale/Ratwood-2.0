@@ -1,7 +1,9 @@
 /obj/effect/proc_holder/spell/invoked/conjure_tool
 	name = "Conjure Tool"
 	desc = "Conjure a tool of your choice in your hand or on the ground"
-	overlay_state = "null"
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "conjure_tool"
 	sound = list('sound/magic/whiteflame.ogg')
 
 	releasedrain = 60

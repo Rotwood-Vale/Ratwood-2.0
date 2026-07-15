@@ -120,7 +120,11 @@
 			if(mmb_intent.get_chargetime())
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
+					stop_attack()
 					return
+	if(modifiers["shift"] && modifiers["ctrl"] && modifiers["left"])
+		A.MiddleMouseDrop_T(src, src)
+		return
 	if(modifiers["left"] && atkswinging == "left")
 		if(active_hand_index == 1)
 			used_hand = 1

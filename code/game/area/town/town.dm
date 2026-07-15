@@ -423,3 +423,8 @@
 // 	droning_sound = 'sound/music/area/dwarf.ogg'
 // 	droning_sound_dusk = null
 // 	droning_sound_night = null
+
+/area/rogue/outdoors/town/outskirts
+	name = "city outskirts"
+	warden_area = TRUE
+	deathsight_message = "civilisation, clinging to one side of a wall like moss"

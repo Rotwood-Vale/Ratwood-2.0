@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Catchpole maul option gets +1 strength at the cost of -1 int and speed in line with cityguard's maul option."

@@ -18463,9 +18463,8 @@
 	lockid = "guestroom1";
 	name = "Manor Guestroom I Key"
 	},
-/obj/structure/mirror,
-/obj/item/roguekey/manor,
 /obj/machinery/light/rogue/candle/l,
+/obj/item/storage/keyring/manor/guestroom/i,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor)
 "dSr" = (
@@ -26549,11 +26548,6 @@
 	},
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
-	},
-/obj/item/roguekey/manor{
-	desc = "This key will open a Manor guest room.";
-	lockid = "counsil1";
-	name = "Counsillor's Room I Key"
 	},
 /obj/structure/rogue/trophy/deer,
 /turf/open/floor/rogue/tile/masonic/single,
@@ -45624,7 +45618,7 @@
 /obj/item/roguebin/water{
 	pixel_y = 7
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -48469,10 +48463,11 @@
 /turf/open/floor/rogue/tile/masonic,
 /area/rogue/indoors/town/manor)
 "kez" = (
-/obj/structure/mineral_door/wood/fancywood{
+/obj/structure/mineral_door/wood/donjon{
 	locked = 1;
-	lockid = "bath3";
-	name = "room III"
+	lockid = "lux3";
+	name = "Luxury Suite III";
+	dir = 8
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
@@ -60409,7 +60404,7 @@
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
 "mAF" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -60517,6 +60512,7 @@
 	lockid = "counsil2";
 	pixel_y = 8
 	},
+/obj/item/storage/keyring/manor/counsilroom/i,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors/town/manor)
 "mBD" = (
@@ -60937,7 +60933,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /obj/structure/fluff/railing/border{
@@ -63845,7 +63841,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/shelter)
 "nmL" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -74201,7 +74197,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/underdark/north)
 "pty" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -75039,13 +75035,8 @@
 /obj/structure/closet/crate/drawer{
 	pixel_y = 16
 	},
-/obj/item/roguekey/manor{
-	desc = "This key will open a Manor guest room.";
-	lockid = "guestroom2";
-	name = "Manor Guestroom II Key"
-	},
 /obj/structure/mirror,
-/obj/item/roguekey/manor,
+/obj/item/storage/keyring/manor/guestroom/ii,
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/town/manor)
 "pCu" = (
@@ -82583,10 +82574,11 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/underdark/north)
 "rdP" = (
-/obj/structure/mineral_door/wood/fancywood{
+/obj/structure/mineral_door/wood/donjon{
 	locked = 1;
-	lockid = "bath1";
-	name = "room I"
+	lockid = "lux1";
+	name = "Luxury Suite I";
+	dir = 8
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
@@ -87373,7 +87365,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/structure/roguemachine/scomm/r,
@@ -87608,15 +87600,9 @@
 	},
 /obj/item/mini_flagpole/bathhouse,
 /obj/item/mini_flagpole/bathhouse,
-/obj/item/roguekey/nightmaiden/rooms/i,
-/obj/item/roguekey/nightmaiden/rooms/i,
-/obj/item/roguekey/nightmaiden/rooms/i,
-/obj/item/roguekey/nightmaiden/rooms/ii,
-/obj/item/roguekey/nightmaiden/rooms/ii,
-/obj/item/roguekey/nightmaiden/rooms/ii,
-/obj/item/roguekey/nightmaiden/rooms/iii,
-/obj/item/roguekey/nightmaiden/rooms/iii,
-/obj/item/roguekey/nightmaiden/rooms/iii,
+/obj/item/storage/keyring/bathsi,
+/obj/item/storage/keyring/bathsii,
+/obj/item/storage/keyring/bathsiii,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "sjC" = (
@@ -88279,7 +88265,7 @@
 	pixel_x = -11;
 	pixel_y = 14
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -93371,10 +93357,11 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "tsP" = (
-/obj/structure/mineral_door/wood/fancywood{
+/obj/structure/mineral_door/wood/donjon{
+	dir = 4;
 	locked = 1;
-	lockid = "bath2";
-	name = "room II"
+	lockid = "lux2";
+	name = "Luxury Suite II"
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
@@ -102945,7 +102932,7 @@
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/mountains)
 "vpI" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile,
@@ -105925,7 +105912,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/scarymaze)
 "vVV" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -106540,6 +106527,13 @@
 "wcu" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/outdoors/bog/north)
+"wcw" = (
+/obj/structure/fluff/pillow/magenta{
+	dir = 8
+	},
+/obj/item/storage/keyring/bathsi,
+/turf/open/floor/rogue/tile/brownbrick,
+/area/rogue/indoors/town/bath)
 "wcx" = (
 /obj/effect/spawner/lootdrop/medium_armor_spawner,
 /obj/structure/closet/crate/chest/lootbox,
@@ -106733,17 +106727,13 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/office)
 "wey" = (
-/obj/item/roguekey/manor{
-	desc = "This key will open a Manor guest room.";
-	lockid = "counsil2";
-	name = "Counsillor's Room II Key"
-	},
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
 	},
 /obj/machinery/light/rogue/candle/r{
 	pixel_x = -32
 	},
+/obj/item/storage/keyring/manor/counsilroom/ii,
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors/town/manor)
 "weA" = (
@@ -109142,7 +109132,7 @@
 	dir = 3;
 	pixel_x = 10
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/blocks/stonered,
@@ -110422,7 +110412,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/shelter/mountains/decap)
 "wQO" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -181591,7 +181581,7 @@ ldV
 weF
 cTb
 uEe
-thH
+wcw
 brW
 brW
 iwu

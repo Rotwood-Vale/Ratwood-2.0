@@ -3031,7 +3031,7 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/vampire_manor)
 "YF" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/woods/vampire_lair)
 "YP" = (

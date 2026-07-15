@@ -109,7 +109,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	beltr = /obj/item/storage/keyring/mage
 	beltl = /obj/item/storage/magebag/associate
-	id = /obj/item/clothing/ring/gold
+	id = /obj/item/scomstone/garrison
 	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
 	backl = /obj/item/storage/backpack/rogue/satchel
 	if(SSmapping.config.map_name == "Desert Town")

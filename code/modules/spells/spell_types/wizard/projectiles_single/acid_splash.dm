@@ -38,7 +38,7 @@
 /obj/projectile/magic/acidsplash //port. todo: the sounds these came with aren't good and drink_blood sounds like ur slurpin pintle
 	name = "acid bubble"
 	icon_state = "green_laser"
-	damage = 10
+	damage = 15
 	damage_type = BURN
 	flag = "magic"
 	range = 15

@@ -111,10 +111,39 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
 	update_tongue_noise_verbs()
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/on_keen_ears_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/update_keen_ears_verb()
+	var/verb_path = /mob/living/carbon/human/verb/toggle_keen_ears_ic
+	verbs -= verb_path
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		verbs += verb_path
+
+/mob/living/carbon/human/proc/toggle_keen_ears()
+	if(!HAS_TRAIT(src, TRAIT_KEENEARS))
+		to_chat(src, span_warning("I do not possess keen ears."))
+		return FALSE
+	keen_ears_disabled = !keen_ears_disabled
+	if(keen_ears_disabled)
+		to_chat(src, span_notice("Your keen ears are now dulled."))
+	else
+		to_chat(src, span_notice("Your keen ears are now sharp again."))
+	return !keen_ears_disabled
+
+/mob/living/carbon/human/verb/toggle_keen_ears_ic()
+	set name = "Toggle Keen Ears"
+	set category = "IC"
+	toggle_keen_ears()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
@@ -498,7 +527,7 @@
 		hud_used.clock.update_icon()
 
 /mob/living/carbon/human/update_health_hud()
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(dna.species.update_health_hud())
 		return
@@ -515,11 +544,12 @@
 			if(bloodloss > 0)
 				usedloss = bloodloss
 
-			hud_used.bloods.cut_overlays()
+			var/toxoverlay = null
+			var/oxyoverlay = null
+			var/painoverlay = null
 			if(usedloss <= 0)
 				hud_used.bloods.icon_state = "dam0"
 				if(toxloss > 0)
-					var/toxoverlay
 					switch(toxloss)
 						if(1 to 20)
 							toxoverlay = "toxloss20"
@@ -531,10 +561,8 @@
 							toxoverlay = "toxloss80"
 						if(100 to 999)
 							toxoverlay = "toxloss100"
-					hud_used.bloods.add_overlay(toxoverlay)
 
 				if(oxyloss > 0)
-					var/oxyoverlay
 					switch(oxyloss)
 						if(1 to 20)
 							oxyoverlay = "oxyloss20"
@@ -546,7 +574,6 @@
 							oxyoverlay = "oxyloss80"
 						if(100 to 999)
 							oxyoverlay = "oxyloss100"
-					hud_used.bloods.add_overlay(oxyoverlay)
 			else
 				var/used = round(usedloss, 10)
 				if(used <= 80)
@@ -554,7 +581,6 @@
 				else
 					hud_used.bloods.icon_state = "damelse"
 			if(painpercent > 0)
-				var/painoverlay
 				switch(painpercent)
 					if(1 to 29)
 						painoverlay = "painloss20"
@@ -566,7 +592,9 @@
 						painoverlay = "painloss80"
 					if(100 to 999)
 						painoverlay = "painloss100"
-				hud_used.bloods.add_overlay(painoverlay)
+			var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
+			if(istype(blood_hud))
+				blood_hud.update_indicator_states(toxoverlay, oxyoverlay, painoverlay)
 
 /*		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -670,7 +698,8 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	return ..()
+	. = ..()
+	mark_zone_selector_hud_dirty()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()

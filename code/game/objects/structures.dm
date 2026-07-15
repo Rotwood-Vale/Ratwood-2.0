@@ -134,7 +134,7 @@
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
-		
+
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	if(QDELETED(src))
 		return
@@ -297,3 +297,13 @@
 				return  "It appears heavily damaged."
 			if(1 to 25)
 				return  span_warning("It's falling apart!")
+
+/obj/structure/proc/set_climbable(new_climbable)
+	if(new_climbable == climbable)
+		return
+	var/turf/our_turf = get_turf(src)
+	climbable = new_climbable
+	if(climbable)
+		our_turf.climbable_atom_count++
+	else
+		our_turf.climbable_atom_count--

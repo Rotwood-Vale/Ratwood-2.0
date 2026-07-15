@@ -50,6 +50,9 @@
 			if("Maul - 14STR Minimum")
 				r_hand = /obj/item/rogueweapon/mace/maul
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.change_stat(STATKEY_STR, 1) /// so even without a strength-specific statpack, you can at least use the weapon. With one, it allows great maul just like on city guard.
+				H.change_stat(STATKEY_SPD, -1)
+				H.change_stat(STATKEY_INT, -1)
 
 	backpack_contents = list(//Iron dagger and ale instead of red.
 		/obj/item/rogueweapon/huntingknife/idagger = 1,

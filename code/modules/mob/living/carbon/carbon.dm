@@ -79,11 +79,10 @@
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 		H = hud_used.hand_slots["[held_index]"]
 		if(H)
-			H.update_icon()
-		H = hud_used.action_intent
+			H.update_hand_vis()
 	oactive = FALSE
 	update_a_intents()
 
@@ -252,6 +251,9 @@
 
 
 	if(thrown_thing)
+		if(src in thrown_thing.buckled_mobs) //Buckling to a chair and then grab-throwing the chair
+			to_chat(src, span_notice("I am not tricky enough to throw [thrown_thing] while I am buckled to it."))
+			return
 		// Admin alert for coin throws
 		if(istype(thrown_thing, /obj/item/roguecoin))
 			var/obj/item/roguecoin/coin = thrown_thing
@@ -672,7 +674,7 @@
 					var/mob/living/carbon/C = src
 					C.add_stress(/datum/stressevent/vomit)
 	else
-		if(NOBLOOD in dna?.species?.species_traits)
+		if(NOBLOOD in dna?.species?.species_traits || (INVISBLOOD in dna.species.species_traits)) //OV EDIT
 			return TRUE
 		if(message)
 			visible_message("<span class='danger'>[vomit_source] coughs up blood!</span>", "<span class='danger'>I cough up blood!</span>")
@@ -766,11 +768,12 @@
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 	)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts) //hardcoded to streamline things a bit
-		if(!(bodypart.body_zone in lethal_zones))
+	for(var/lethal_zone in lethal_zones)
+		var/obj/item/bodypart/lethal_part = get_bodypart(lethal_zone)
+		if(!lethal_part)
 			continue
 		var/hardcrit_divisor = !mind ? FIRE_HARDCRIT_DIVISOR_MINDLESS : FIRE_HARDCRIT_DIVISOR
-		var/my_burn = abs((bodypart.burn_dam / bodypart.max_damage) * hardcrit_divisor)
+		var/my_burn = abs((lethal_part.burn_dam / lethal_part.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
 		used_damage = max(used_damage, my_burn)
 	if(used_damage < total_tox)
@@ -1053,7 +1056,7 @@
 		clear_fullscreen("painflash")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(hud_used.healths)
 		if(stat != DEAD)
@@ -1213,6 +1216,7 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
+		bodyparts_by_zone[O.body_zone] = O
 		if(O.body_part == ARM_LEFT)
 			l_arm_index_next += 2
 			O.held_index = l_arm_index_next //1, 3, 5, 7...
@@ -1382,4 +1386,3 @@
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))
 		return 0
 	. = ..()
-

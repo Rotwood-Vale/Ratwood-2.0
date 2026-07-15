@@ -284,6 +284,7 @@
 	pixel_x = 20
 	color = "#3FBAFD"
 	light_color = "#3FBAFD"
+	light_system = MOVABLE_LIGHT
 //baseline wisp is in rogue_fires
 
 // Harmless water bolt fired by prestidigitation's punch intent
