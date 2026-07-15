@@ -1,22 +1,32 @@
 /datum/component/riding
-	var/last_vehicle_move = 0 //used for move delays
+	///used for move delays
+	var/last_vehicle_move = 0 
 	var/last_move_diagonal = FALSE
-	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
+	///tick delay between movements, lower = faster, higher = slower
+	var/vehicle_move_delay = 2 
 	var/keytype
-	var/riding_xp_move_counter = 0 //counter to reduce XP spam - award XP every 5 moves
+	///counter to reduce XP spam - award XP every 5 moves
+	var/riding_xp_move_counter = 0 
 
-	var/mob/living/driver = null //the first rider — only they can steer
+	///the first rider — only they can steer
+	var/mob/living/driver
 
 	var/slowed = FALSE
 	var/slowvalue = 1
 
-	var/list/riding_offsets = list()	//position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
-	var/list/directional_vehicle_layers = list()	//["[DIRECTION]"] = layer. Don't set it for a direction for default, set a direction to null for no change.
-	var/list/directional_vehicle_offsets = list()	//same as above but instead of layer you have a list(px, py)
+	///position_of_user = list(dir = list(px, py)), or RIDING_OFFSET_ALL for a generic one.
+	var/list/riding_offsets = list()
+	///["[DIRECTION]"] = layer. Don't set it for a direction for default, set a direction to null for no change.
+	var/list/directional_vehicle_layers = list()
+	///same as above but instead of layer you have a list(px, py)
+	var/list/directional_vehicle_offsets = list()
 	var/list/allowed_turf_typecache
-	var/list/forbid_turf_typecache					//allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
-	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
-	var/drive_verb = "paddle"//This is currently only used for the Dinghy
+	///allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
+	var/list/forbid_turf_typecache
+	///allow moving one tile away from a valid turf but not more.
+	var/allow_one_away_from_valid_turf = TRUE
+	///This is currently only used for the Dinghy
+	var/drive_verb = "paddle"
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
@@ -29,6 +39,16 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(vehicle_mob_buckle))
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(vehicle_mob_unbuckle))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(vehicle_moved))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(vehicle_mob_bump))
+
+/// Ensures that the rider bumps into things that the mount bumps in to
+/datum/component/riding/proc/vehicle_mob_bump(datum/source, atom/bumped_into)
+	SIGNAL_HANDLER
+	if(driver.m_intent != MOVE_INTENT_RUN || !(driver.mobility_flags & MOBILITY_STAND))
+		return
+	bumped_into.Bumped(driver)
+	if(driver.IsImmobilized())
+		force_dismount(driver)
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	var/atom/movable/AM = parent

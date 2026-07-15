@@ -145,16 +145,17 @@
 
 /turf/closed/Bumped(atom/movable/AM)
 	..()
-	if(density)
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.dir == get_dir(H,src) && H.m_intent == MOVE_INTENT_RUN && (H.mobility_flags & MOBILITY_STAND))
-				H.Immobilize(10)
-				H.apply_damage(15, BRUTE, "head", H.run_armor_check("head", "blunt", damage = 15))
-				H.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
-				playsound(src, "genblunt", 100, TRUE)
-				H.visible_message(span_warning("[H] runs into [src]!"), span_warning("I run into [src]!"))
-				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
+	if(!density || !ishuman(AM))
+		return
+	var/mob/living/carbon/human/human_bumper = AM
+	if(human_bumper.dir != get_dir(human_bumper, src) || human_bumper.m_intent != MOVE_INTENT_RUN || !(human_bumper.mobility_flags & MOBILITY_STAND))
+		return
+	human_bumper.Immobilize(10)
+	human_bumper.apply_damage(15, BRUTE, "head", human_bumper.run_armor_check("head", "blunt", damage = 15))
+	human_bumper.toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
+	playsound(src, "genblunt", 100, TRUE)
+	human_bumper.visible_message(span_warning("[human_bumper] runs into [src]!"), span_warning("I run into [src]!"))
+	addtimer(CALLBACK(human_bumper, TYPE_PROC_REF(/mob/living/carbon/human, Knockdown), 10), 10)
 
 /turf/closed/Initialize(mapload)
 	. = ..()
