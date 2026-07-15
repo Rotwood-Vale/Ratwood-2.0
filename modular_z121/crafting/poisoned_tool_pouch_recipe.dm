@@ -37,7 +37,7 @@
 	// 中文：产物——一个空的涂毒工具袋（液体由玩家后续自行倒入）。
 	// WHY 单一路径即可：同族的 survival 配方（如缝衣针 tneedle）就是用单一 result 路径，
 	// 制作引擎对“单一类型路径”与“list(路径=数量)”两种写法都支持。
-	result = /obj/item/reagent_containers/z121_poison_pouch      // The empty pouch item.
+	result = /obj/item/reagent_containers/glass/z121_poison_pouch      // The empty pouch item.
 
 	// 中文：材料需求（全部消耗）：
 	//   · 鞣制皮革 x1 —— /obj/item/natural/hide/cured（游戏内名“鞣制皮革”），袋体主料；
