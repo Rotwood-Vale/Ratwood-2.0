@@ -288,9 +288,6 @@ SUBSYSTEM_DEF(garbage)
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
-#ifndef DISABLE_DREAMLUAU
-		DREAMLUAU_CLEAR_REF_USERDATA(D)
-#endif
 		del(D)
 		return
 

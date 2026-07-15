@@ -1,0 +1,6 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "squires get novice armorsmithing"
+  - balance: "squires get novice weaponsmithing"
+  - balance: "squires get apprentice sewing"

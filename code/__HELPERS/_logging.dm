@@ -196,10 +196,6 @@
 	WRITE_LOG(GLOB.config_error_log, "\[[logtime]] [text]")
 	SEND_TEXT(world.log, text)
 
-/// Logging for lua scripting
-/proc/log_lua(text, list/data)
-	WRITE_LOG(GLOB.debug_lua, "\[[logtime]] [text] [data]")
-
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, "\[[logtime]] [text]")
 

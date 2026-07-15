@@ -129,3 +129,37 @@
   - qol: Removed the click cooldown for filling liquid containers from a body of water.
       This cuts down on unnecessary delay, & brings the filling speed on par with
       wells.
+2026-07-11:
+  Arturlang:
+  - bugfix: janissary now gets the dodge expert trait as intended
+  GarrusVakarian:
+  - rscadd: Big Man towner thugs can now choose to spawn with a mace
+  Skyglazer:
+  - rscdel: Removed Barbarian and Amazon from the list of possible Licker subclasses.
+2026-07-12:
+  Arturlang:
+  - rscadd: MC now can account for maptick lag
+  EvenInDeathIStillServe:
+  - rscadd: The sex menu will now open using ctrl+shift+click in addition to MMB drag.
+2026-07-13:
+  EvenInDeathIStillServe:
+  - rscadd: Knaves get rapiers, sabres, messers, falchions and estocs in their shop
+      tab.
+  - rscadd: Added a "freeuse" sexcon toggle that makes it so that sex actions targeting
+      you will bypass any positioning or clothing checks.
+  IronDragoon:
+  - qol: Adds IC menu verb to toggle Keen Ears trait in round
+  PPooch:
+  - bugfix: Prevented buckling oneself to an object, and throwing the object and self
+      around or up to a different Z level.
+2026-07-14:
+  PPooch:
+  - bugfix: fixed edge case of a corpse being too suffocated to be resurrected by
+      lux surgery
+  Xander3359:
+  - bugfix: Fixed an exploit that allowed you to phase through windows.
+2026-07-15:
+  BlindPoet:
+  - rscadd: ability to purchase cup-hilt rapier for knaves
+  Yuckuza:
+  - rscadd: Shalal saber is now craftable with steel on an anvil

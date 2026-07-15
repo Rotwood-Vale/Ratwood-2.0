@@ -181,6 +181,7 @@
 /obj/item/bodypart/Destroy()
 	if(owner)
 		owner.bodyparts -= src
+		owner.bodyparts_by_zone -= body_zone
 		owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
