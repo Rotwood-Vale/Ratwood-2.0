@@ -264,7 +264,16 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
+			if(H.mind)
+				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
+				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
+				switch(helmet_choice)
+					if("Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
+					if("Visored Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+					if("Buckethelm")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
 			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/noc)
 			cloak = /obj/item/clothing/cloak/templar/noc

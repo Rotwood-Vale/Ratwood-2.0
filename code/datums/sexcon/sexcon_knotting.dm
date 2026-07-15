@@ -389,6 +389,10 @@
 				creampie.refresh_cum()
 			if(top?.dna?.species?.id == "gnoll")
 				btm.has_gnoll_scent_this_round = TRUE
+			if(top.has_flaw(/datum/charflaw/malodorous) && !btm.has_flaw(/datum/charflaw/malodorous))
+				btm.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+			else if (btm.has_flaw(/datum/charflaw/malodorous) && !top.has_flaw(/datum/charflaw/malodorous))
+				top.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 			modular_record_collar_receive_event(btm, top)
 			var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)

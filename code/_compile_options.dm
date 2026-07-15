@@ -40,9 +40,6 @@
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETERF
 
-/// If uncommented, Dreamluau will be fully disabled.
-// #define DISABLE_DREAMLUAU
-
 #ifndef PRELOAD_RSC					//set to:
 #define PRELOAD_RSC		0			//	0 to allow using external resources or on-demand behaviour;
 #endif								//	1 to use the default behaviour;

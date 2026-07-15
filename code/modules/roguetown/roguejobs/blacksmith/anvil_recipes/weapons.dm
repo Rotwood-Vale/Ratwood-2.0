@@ -412,6 +412,16 @@
 	created_item = /obj/item/rogueweapon/mace/maul
 	craftdiff = 4
 
+/datum/anvil_recipe/weapons/iron/peasantwarflail
+	name = "War Flail, Iron (+1 Iron, +2 Small Log)"
+	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/flail/peasantwarflail
+
+/datum/anvil_recipe/weapons/iron/maciejowski
+	name = "Maciejowski, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/falchion/militia
+
 /// STEEL WEAPONS
 /datum/anvil_recipe/weapons/steel/dagger
 	name = "Dagger, Steel"
@@ -477,6 +487,11 @@
 	name = "Sabre, Steel"
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/sabre
+
+/datum/anvil_recipe/weapons/steel/shamshir
+	name = "Shamshir, Steel"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/shamshir
 
 /datum/anvil_recipe/weapons/steel/hook
 	name = "Hook Sword, Steel"

@@ -1203,3 +1203,33 @@
 	name = "The Kiss"
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
+
+/datum/status_effect/debuff/malodorous_stink
+	id = "malodorous_stink"
+	duration = 999 MINUTES
+	alert_type = null
+
+	mob_effect_icon = 'icons/effects/effects.dmi'
+	mob_effect_icon_state = "mob_smell"
+	mob_effect_layer = ABOVE_MOB_LAYER
+
+/datum/status_effect/debuff/stinky_contact
+	id = "stinky_contact"
+	duration = 15 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
+
+/datum/status_effect/debuff/stinky_contact/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("I reek of someone else's stench now."))
+	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
+		owner.add_stress(/datum/stressevent/stinky_contact)
+
+/datum/status_effect/debuff/stinky_contact/on_remove()
+	to_chat(owner, span_notice("The stink finally fades off me."))
+	owner.remove_stress(/datum/stressevent/stinky_contact)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	name = "Musked"
+	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	icon_state = "debuff"

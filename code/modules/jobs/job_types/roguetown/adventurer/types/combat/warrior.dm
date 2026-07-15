@@ -576,6 +576,7 @@
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 	//Old people get the option to become glass cannons. Expert Knives + Expert in their chosen weapon, but a permenant -I STR, -I PER, -2 SPD and -2 CON debuff.
 /datum/advclass/sfighter/amazon
 	name = "Amazon"
