@@ -1,7 +1,9 @@
 // modular_z121 自定义奥术法术：呼风唤雨 / 掌控天时（Weather Control）
 // ---------------------------------------------------------------------------
 // 设计目标：一个 T3 法术。施法者吟唱咒文 -> do_after 引导 6 秒 ->
-//           弹出 3 选 1 菜单（晴天 / 雨天 / 雪天）-> 立即把全服天气切换为所选。
+//           弹出天气菜单（放晴，以及雨/雪/雹/沙/雾/风/热浪/雷暴等一大批天象）->
+//           立即把全服天气切换为所选。菜单由下方“天气总表”数据驱动，
+//           想扩充可选天气只需往那张表里加一行即可，无需改动任何分发逻辑。
 //
 // 为什么这样设计：天气在本游戏里是“全服级”的环境效果（由 SSParticleWeather 子系统
 //           统一驱动），并不绑定到某个具体生物身上，因此本法术更像 wish_spell 那样
@@ -33,17 +35,11 @@
 #define WEATHER_COOLDOWN      (300 SECONDS) // 成功施放后的冷却（5 分钟，避免天气被反复刷屏）
 #define WEATHER_FATIGUE_DRAIN 40            // 每次施放消耗的疲劳 / 耐力（releasedrain）
 
-// 三个天气选项的菜单显示文本。用常量而非散落的字面量，
-// 是为了保证“菜单选项”与下方 switch 分支严格一一对应，杜绝因笔误而对不上。
-#define WEATHER_OPT_SUNNY     "晴天（Clear / Sunny）"
-#define WEATHER_OPT_RAINY     "雨天（Rain）"
-#define WEATHER_OPT_SNOWY     "雪天（Snow）"
-
-// 把“晴/雨/雪”分别要调用的主线天气类型集中成常量，便于日后整局替换天气强度
-// （例如把小雨 rain_gentle 换成暴雨 rain_storm），改一处即可。
-// 晴天没有对应的“天气类型”，因为放晴的本质是“结束当前天气”，故无需常量。
-#define WEATHER_TYPE_RAIN     /datum/particle_weather/rain_gentle  // 主线“小雨”
-#define WEATHER_TYPE_SNOW     /datum/particle_weather/snow_gentle  // 主线“小雪”
+// “晴天 / 放晴”这一项的菜单显示文本 + 其在天气总表里对应的“哨兵值”。
+// 放晴与其它天气不同：它没有对应的 /datum/particle_weather 类型，本质是“结束当前天气”，
+// 因此在天气总表里用一个特殊的字符串哨兵 WEATHER_SENTINEL_CLEAR 标记，dispatch 时特判。
+#define WEATHER_OPT_SUNNY       "晴天 · 放晴（Clear / Sunny）"
+#define WEATHER_SENTINEL_CLEAR  "__clear__"
 
 // ===========================================================================
 // 法术本体
@@ -54,7 +50,7 @@
 // ===========================================================================
 /obj/effect/proc_holder/spell/self/weather_control
 	name = "掌控天时"
-	desc = "一道沟通天穹的强力法术。施法者凝聚魔力向苍穹立下意志，便能令一方天地转晴、落雨或飞雪。"
+	desc = "一道沟通天穹的强力法术。施法者凝聚魔力向苍穹立下意志，便能随心驱使天时——放晴、落雨、飞雪、降雹、扬沙、起雾、掀风、燃起热浪或唤来雷暴，无所不能。"
 	school = "transmutation"               // 归类为变形 / 转化系
 	spell_tier = 3                         // T3 法术（按任务要求）
 	cost = WEATHER_MANA_COST               // “法力 / 法术点”消耗 = 5
@@ -143,15 +139,37 @@
 		revert_cast()
 		return FALSE
 
-	// 3 个天气选项。用 static 列表避免每次施放都重建。
-	var/static/list/weather_options = list(
-		WEATHER_OPT_SUNNY,
-		WEATHER_OPT_RAINY,
-		WEATHER_OPT_SNOWY,
+	// ---- 天气总表（数据驱动菜单）----------------------------------------
+	// 关联列表：菜单显示文本(键) -> 要施放的主线天气类型路径(值)。
+	// 用 static 只构建一次，避免每次施放都重建这张较长的表。
+	// 之所以采用“表驱动 + 统一分发”而非一连串 switch 分支：新增 / 删减可选天气时，
+	// 只需增删这里的一行，dispatch 逻辑完全不用改，扩展性最好也最不易出错。
+	// 第一项是“放晴”，其值用哨兵 WEATHER_SENTINEL_CLEAR 表示（放晴没有天气类型）。
+	// 其余每一项的值都是主线 /datum/particle_weather 的具体子类型（仅调用、不修改）。
+	var/static/list/weather_menu = list(
+		WEATHER_OPT_SUNNY    = WEATHER_SENTINEL_CLEAR,              // 放晴 = 结束当前天气
+		"小雨（Rain）"        = /datum/particle_weather/rain_gentle, // 温和小雨
+		"暴雨（Rainstorm）"   = /datum/particle_weather/rain_storm,  // 电闪雷鸣的暴雨
+		"飓风（Hurricane）"   = /datum/particle_weather/hurricane,   // 狂暴飓风
+		"降雪（Snowfall）"    = /datum/particle_weather/snow_gentle, // 静谧小雪
+		"暴雪（Snowstorm）"   = /datum/particle_weather/snow_storm,  // 凛冽暴雪
+		"冰雹（Hail）"        = /datum/particle_weather/hail,        // 砸落的冰雹
+		"干燥阵风（Dry Gale）" = /datum/particle_weather/sand_gentle, // 干燥的阵风
+		"沙暴（Sandstorm）"   = /datum/particle_weather/sand_storm,  // 遮天蔽日的沙暴
+		"浓雾（Fog）"         = /datum/particle_weather/fog,         // 弥漫的浓雾
+		"落叶劲风（Falling Leaves）" = /datum/particle_weather/leaves_gentle, // 卷起落叶的劲风
+		"樱吹雪（Sakura Breeze）"    = /datum/particle_weather/sakura_gentle, // 和煦的樱花风
+		"热浪（Heat Wave）"   = /datum/particle_weather/heat_wave,   // 灼人的热浪
+		"干雷暴（Dry Thunderstorm）" = /datum/particle_weather/dry_thunderstorm, // 无雨的干雷暴
+		"灰烬风暴（Ashstorm）" = /datum/particle_weather/ashstorm,   // 焚灼的灰烬风暴
+		"萤火之夜（Fireflies）" = /datum/particle_weather/fireflies, // 萤火漫舞（无害氛围）
+		"诡异血雨（Blood Rain）" = /datum/particle_weather/blood_rain_gentle, // 不祥的血雨
 	)
 
-	// 弹出 tgui 列表菜单让施法者选择想要的天气。timeout 留 0 表示不自动超时。
-	var/choice = tgui_input_list(user, "你要为这片天地唤来怎样的天时？", "掌控天时", weather_options)
+	// 弹出 tgui 列表菜单让施法者选择想要的天气。传入关联列表时，
+	// tgui_input_list 会展示其“键”（即上面的中文显示文本），并返回被选中的键。
+	// timeout 留 0 表示不自动超时。
+	var/choice = tgui_input_list(user, "你要为这片天地唤来怎样的天时？", "掌控天时", weather_menu)
 
 	// 优雅处理“取消 / 关闭菜单”：没有选择就退还冷却，不浪费这次施法。
 	if(isnull(choice))
@@ -159,19 +177,22 @@
 		revert_cast()
 		return FALSE
 
-	// 把选择分发给各自的天气处理过程。每个过程自行返回 TRUE/FALSE，
-	// 并在自身失败路径里负责调用 revert_cast()，保证冷却只在“真的改变了天气”时才扣。
-	switch(choice)
-		if(WEATHER_OPT_SUNNY)
-			return weather_make_sunny(user)
-		if(WEATHER_OPT_RAINY)
-			return weather_make_rainy(user)
-		if(WEATHER_OPT_SNOWY)
-			return weather_make_snowy(user)
+	// 用选中的显示文本回查天气总表，得到对应的天气类型（或放晴哨兵）。
+	var/chosen = weather_menu[choice]
 
-	// 理论上不会走到这里（choice 一定是上面 3 项之一），但仍做兜底以防万一。
-	revert_cast()
-	return FALSE
+	// 特判“放晴”：哨兵值走专门的收尾逻辑（结束当前 / 排队天气）。
+	if(chosen == WEATHER_SENTINEL_CLEAR)
+		return weather_make_sunny(user)
+
+	// 防御性兜底：正常情况下 chosen 必是合法天气类型；若因异常输入取到空值，
+	// 则视为失败并退还冷却，绝不把非法值传进子系统。
+	if(!ispath(chosen, /datum/particle_weather))
+		to_chat(user, span_warning("我一时无法辨明想要的天象，法术悄然消散。"))
+		revert_cast()
+		return FALSE
+
+	// 其余所有天气都走统一的“强制切换天气”封装。
+	return force_weather(user, chosen)
 
 // ===========================================================================
 // 效果 1：晴天 / 放晴
@@ -213,45 +234,30 @@
 	)
 	return TRUE
 
-// ===========================================================================
-// 效果 2：雨天
-// 直接强制让全服降下小雨。通过 run_weather(类型, force = TRUE) 立刻生效——
-// force = TRUE 会先结束任何正在运行的天气，再立即 start() 新天气（不走随机排队）。
-// ===========================================================================
-/obj/effect/proc_holder/spell/self/weather_control/proc/weather_make_rainy(mob/living/user)
-	// 调用统一的“强制切换天气”封装，传入主线“小雨”类型。
-	// 之所以抽出一个公共封装，是因为雨 / 雪两条分支除天气类型与文案外逻辑完全一致，
-	// 避免复制粘贴带来的不一致。
-	return force_weather(user, WEATHER_TYPE_RAIN,
-		span_notice("[user] 双手一沉，铅灰色的云团迅速在头顶聚拢，淅淅沥沥的雨丝随即落下。"),
-		span_green("我应天而召，让这片天地落下了雨。"))
-
-// ===========================================================================
-// 效果 3：雪天
-// 直接强制让全服飘起小雪。机制与“雨天”完全相同，仅天气类型与文案不同。
-// ===========================================================================
-/obj/effect/proc_holder/spell/self/weather_control/proc/weather_make_snowy(mob/living/user)
-	// 复用 force_weather 封装，传入主线“小雪”类型。
-	return force_weather(user, WEATHER_TYPE_SNOW,
-		span_notice("[user] 缓缓摊开手掌，寒气自指间弥散开来，纷纷扬扬的雪花自灰白的天幕飘落。"),
-		span_green("我应天而召，让这片天地飘起了雪。"))
-
 // ---------------------------------------------------------------------------
-// force_weather：雨 / 雪两种“降下某种天气”分支共用的核心封装。
+// force_weather：除“放晴”外所有天气分支共用的核心封装。
 // 参数：
 //   user          —— 施法者（用于音效定位与消息反馈）
-//   weather_type  —— 要强制施放的主线天气类型路径（rain_gentle / snow_gentle）
-//   public_msg    —— 周围可见的环境描述（visible_message 的第一参数）
-//   self_msg      —— 施法者本人看到的描述（visible_message 的第二参数）
+//   weather_type  —— 要强制施放的主线天气类型路径（天气总表里的值）
 // 返回 TRUE 表示天气成功切换（cast 据此进入冷却）；FALSE 表示失败并已退还冷却。
+// 之所以把全部天气收敛到这一个封装：它们除“天气类型”外流程完全一致（校验 -> 强制切换
+//   -> 结果核对 -> 表现层反馈），共用一个封装可彻底避免逐个天气复制粘贴带来的不一致。
+//   命中文案不再逐类手写，而是从天气自身的 name（initial 读取）自动拼装，天然适配任意天气。
 // ---------------------------------------------------------------------------
-/obj/effect/proc_holder/spell/self/weather_control/proc/force_weather(mob/living/user, weather_type, public_msg, self_msg)
+// 注意：weather_type 形参声明为 /datum/particle_weather 类型（尽管它承载的是“类型路径”而非实例）。
+// 这样声明是为了让编译器知道该变量具备 name 等成员，使下方 initial(weather_type.name) 能通过编译；
+// initial() 会按该变量当前所持的类型路径读取其编译期初始 name，正是我们想要的天气显示名。
+/obj/effect/proc_holder/spell/self/weather_control/proc/force_weather(mob/living/user, datum/particle_weather/weather_type)
 	// 防御性校验：传入的类型必须是合法的天气类型路径，否则拒绝执行并退还冷却。
-	// 这能挡住因常量笔误 / 主线类型被移除等导致的非法调用，避免子系统 CRASH。
+	// 这能挡住因表项笔误 / 主线类型被移除等导致的非法调用，避免子系统 CRASH。
 	if(!ispath(weather_type, /datum/particle_weather))
 		to_chat(user, span_warning("我试图召唤的那种天象并不存在于天地法则之中。"))
 		revert_cast()
 		return FALSE
+
+	// 读取该天气类型的显示名（用 initial 从类型定义直接取，无需实例化），
+	// 用于下面自动生成的命中文案，使一套文案适配所有天气。
+	var/weather_name = initial(weather_type.name)
 
 	// 调用主线子系统强制切换天气：
 	//   · force = TRUE -> 若已有天气在运行，会先 end() 掉它再立即 start() 新天气；
@@ -267,9 +273,12 @@
 		revert_cast()
 		return FALSE
 
-	// 表现层反馈：成功召来天气。
+	// 表现层反馈：成功召来天气。文案根据天气名自动拼装，适配总表里的任意一项。
 	playsound(get_turf(user), 'sound/magic/whiteflame.ogg', 60, TRUE)
-	user.visible_message(public_msg, self_msg)
+	user.visible_message(
+		span_notice("[user] 向苍穹一挥手，天色骤然变幻——[weather_name]随之笼罩了这片天地。"),
+		span_green("我应天而召，唤来了[weather_name]。")
+	)
 	return TRUE
 
 // ===== 清理顶部定义的宏，避免泄漏到全局命名空间、与其它文件冲突 =====
@@ -278,7 +287,4 @@
 #undef WEATHER_COOLDOWN
 #undef WEATHER_FATIGUE_DRAIN
 #undef WEATHER_OPT_SUNNY
-#undef WEATHER_OPT_RAINY
-#undef WEATHER_OPT_SNOWY
-#undef WEATHER_TYPE_RAIN
-#undef WEATHER_TYPE_SNOW
+#undef WEATHER_SENTINEL_CLEAR

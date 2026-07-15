@@ -46,16 +46,25 @@
 // ===========================================================================
 // 物品本体：涂毒工具袋
 // ---------------------------------------------------------------------------
-// 继承 /obj/item/reagent_containers：直接复用主线“试剂容器”的液体持有/倒入能力。
-// reagent_flags 设为 OPENCONTAINER(=REFILLABLE|DRAINABLE|TRANSPARENT)，这样：
-//   · REFILLABLE  → 别的容器（酒瓶/水桶等，倒液意图 INTENT_POUR）可以把液体倒进本袋；
-//   · DRAINABLE   → 需要时也能把液体从袋里舀出；
-//   · TRANSPARENT → 可以查看袋内液体。
+// 继承 /obj/item/reagent_containers/glass：★关键★——液体的“倒入/舀取/装填”交互
+//   逻辑（含意图按钮）全部定义在 glass 层，而非 reagent_containers 基类。选用 glass 后，
+//   本袋天然获得：
+//     · possible_item_intents = 倒(POUR)/装填(FILL)/泼(SPLASH)/通用(GENERIC) 四种意图按钮，
+//       玩家据此才能对本袋执行液体转移（这正是先前“无法倒入液体”的根因——基类没有这些意图）；
+//     · glass/afterattack 的完整转移逻辑：
+//         ① 手持“水源/瓶子”以【倒】意图点击本袋 → 倒进来（本袋 is_refillable() 为真）；
+//         ② 手持本袋以【装填】意图点击水源(井/桶等可抽取容器) → 从水源灌满本袋。
+//   reagent_flags 设为 OPENCONTAINER(=REFILLABLE|DRAINABLE|TRANSPARENT)：可倒入/可舀出/可查看。
+//   ★spillable 必须为 TRUE★：glass/afterattack 的转移分支前有 `if(!spillable) return`，
+//     若为 FALSE，则“手持本袋去水源装填”这一路径会被提前拦掉，导致无法灌液。
+//   注：贴图不会随液量变化——glass 基类未设置 fill_icon_thresholds（只有 bucket 子类才画液面），
+//     故本袋 icon_state 恒为 "Poisoned Tool Pouch"，满足“贴图不随内容变化”的需求。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch
+/obj/item/reagent_containers/glass/z121_poison_pouch
 	name = "涂毒工具袋"                                          // 基础名（会被 update_pouch_name 按内容物动态改写）
 	desc = "一只带细颈的皮制小袋，内衬蜡封以盛放液体。\n\
-	把液体倒进袋中，再用它涂抹武器或箭矢，即可让兵刃“带毒”出击——\n\
+	把液体倒进袋中（手持液体容器以“倒”意图点击本袋，或手持本袋以“装填”意图点击水源），\n\
+	再用它涂抹武器或箭矢，即可让兵刃“带毒”出击——\n\
 	武器可反复涂抹（每次涂抹 10 单位、生效 10 次），箭矢一次涂抹 1 单位、仅生效一次。"  // 描述（\ 续行）
 	icon = POUCH_ICON                                           // 使用本模块贴图文件
 	icon_state = POUCH_STATE                                    // 固定图标态（贴图不随内容变化）
@@ -64,7 +73,7 @@
 	reagent_flags = OPENCONTAINER                               // 允许倒入/舀出/查看液体（见类注释）
 	amount_per_transfer_from_this = 10                          // 默认单次转移量（与武器涂抹成本对齐，纯手感）
 	possible_transfer_amounts = list(1, 5, 10, 25, 50)         // 可选转移量档位（含 1u，方便精确取用给箭矢）
-	spillable = FALSE                                           // 不做“投掷即泼洒”，避免珍贵毒液被随手摔没
+	spillable = TRUE                                            // ★必须为真★：否则 glass 转移逻辑会提前 return，无法倒入/装填（见类注释）
 	sellprice = 30                                              // 一个有实用价值的工具，给一个中等售价
 
 	// —— 记录“基础名”，供 update_pouch_name 在内容物变化时拼接出动态名字 ——
@@ -74,7 +83,7 @@
 // ===========================================================================
 // Initialize：出生即按当前内容物刷新一次名字（空袋则显示基础名）。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch/Initialize(mapload, vol)
+/obj/item/reagent_containers/glass/z121_poison_pouch/Initialize(mapload, vol)
 	. = ..()                                                    // 先让父类建好 reagents 持有者
 	update_pouch_name()                                         // 依据（可能预置的）内容物刷新名字
 
@@ -82,7 +91,7 @@
 // on_reagent_change：只要袋内液体发生任何增减，就同步刷新“名字 + 贴图”。
 // 父类的 on_reagent_change 负责刷新填充贴图；我们在其后追加“按内容物改名”。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch/on_reagent_change(changetype)
+/obj/item/reagent_containers/glass/z121_poison_pouch/on_reagent_change(changetype)
 	. = ..()                                                    // 保留父类的贴图刷新逻辑
 	update_pouch_name()                                         // 追加：按内容物刷新名字
 
@@ -91,7 +100,7 @@
 // 需求：贴图不变，仅用名字体现差异，形如“Poisoned Tool Pouch for poison”。
 // 这里用主线现成的 get_master_reagent_name()（袋内体积占比最大的那种试剂名）。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch/proc/update_pouch_name()
+/obj/item/reagent_containers/glass/z121_poison_pouch/proc/update_pouch_name()
 	// 空袋：直接回退到基础名，避免出现“（）”这种空括号尾巴。
 	if(!reagents || !reagents.total_volume)
 		name = pouch_base_name
@@ -106,7 +115,7 @@
 // ===========================================================================
 // examine：查看袋子时给出内容物与用法提示，降低上手门槛。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch/examine(mob/user)
+/obj/item/reagent_containers/glass/z121_poison_pouch/examine(mob/user)
 	. = ..()                                                    // 先取父类标准描述
 	// 展示当前液体余量（用主线颜色混合，直观体现“装的是什么色的液体”）。
 	if(reagents?.total_volume)
@@ -124,7 +133,7 @@
 // 若目标是可涂抹的武器/箭矢 → 走涂抹流程并返回 TRUE（消费本次点击，阻止把袋子当钝器抡）；
 // 其余目标（含被倒液体等交互）一律 return ..() 放行，保留原有行为。
 // ---------------------------------------------------------------------------
-/obj/item/reagent_containers/z121_poison_pouch/pre_attack(atom/A, mob/living/user, params)
+/obj/item/reagent_containers/glass/z121_poison_pouch/pre_attack(atom/A, mob/living/user, params)
 	// 错误处理：缺目标 / 缺使用者时，交回父类默认逻辑，避免空指针。
 	if(!A || !user)
 		return ..()
@@ -137,7 +146,7 @@
 // ===========================================================================
 // try_smear：把袋中液体涂抹到目标武器/箭矢上的核心流程（含完整错误处理）。
 // ===========================================================================
-/obj/item/reagent_containers/z121_poison_pouch/proc/try_smear(obj/item/target, mob/living/user)
+/obj/item/reagent_containers/glass/z121_poison_pouch/proc/try_smear(obj/item/target, mob/living/user)
 	// —— 前置错误处理 —— //
 	// 1) 目标已失效（可能在派发途中被删除）。
 	if(QDELETED(target))
