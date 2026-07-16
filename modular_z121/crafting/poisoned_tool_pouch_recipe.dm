@@ -47,7 +47,7 @@
 	reqs = list(
 		/obj/item/natural/hide/cured = 1,                       // 鞣制皮革 x1 / tanned leather.
 		/obj/item/natural/fibers = 1,                           // 纤维 x1 / fiber.
-		/obj/item/reagent_containers/glass/bottle = 1,          // 空玻璃瓶 x1 / empty glass bottle.
+		/obj/item/reagent_containers/glass/bottle/rogue = 1,          // 空玻璃瓶 x1 / empty glass bottle.
 	)
 
 	// 中文：工具需求——缝衣针（仅需在手边，不被消耗）。
