@@ -56,6 +56,11 @@
 #include "crafting/poisoned_tool_pouch_recipe.dm"
 // 自定义炼金配方：催乳剂（骨头x2+玻璃瓶x1+水50+牛奶10 → 装满50单位催乳剂的玻璃瓶，需炼金2级）
 #include "crafting/lactation_enhancer_recipe.dm"
+// 自定义炼金配方：猎魔人剑油 x7（《巫师3》移植）——“台面”分类、统一需炼金 1 级；
+// 每种剑油 = 板油 + 各自的特色材料（毒药/蛛腺/银粉/圣水等）+ 玻璃瓶；产物见 items/sword_oils.dm。
+// Custom alchemy recipes: 7 Witcher-style sword oils — bench tab, Alchemy lvl-1;
+// each = tallow + its signature ingredients (poison/gland/silver/holy water...) + glass bottle.
+#include "crafting/sword_oil_recipes.dm"
 // 把催乳剂成品瓶加入浴场商贩机 BRASSFACE 的售货清单（Drugs 分类）
 #include "crafting/lactation_enhancer_merchant.dm"
 #include "alchemy/blood_tonic_reagent.dm"
@@ -193,6 +198,14 @@
 // Custom item: Poisoned Tool Pouch — pour a liquid in, click a weapon/arrow to coat it; the coated item
 // delivers that liquid into any living target it strikes. Weapon: 10u over 10 hits; arrow: 1u once.
 #include "items/poisoned_tool_pouch.dm"
+// 自定义物品：猎魔人剑油 x7（《巫师3》移植）——手持油瓶点击近战武器即可涂抹（一瓶 3 次，用尽退空瓶）；
+// 涂层持续 4 分钟，武器命中【对应克制类别】的敌人时追加【本次挥击伤害 50%】的百分比加成
+//（经 get_complex_damage 重算基准，随武器力度/力量/锋利度动态缩放；对其它目标毫无效果）。
+// 七种：绞刑者（人形）/兽类（野兽）/蛛形怪（蜘蛛毒虫）/恶魔（炼狱）/诅咒（狼人惧银者）/吸血鬼（血裔）/食尸生物（不死者）。
+// 命中钩子复用 COMSIG_ITEM_ATTACK_EFFECT_SELF；目标判定用 mob_biotypes / 种族 / 反派数据 / 类型路径多路兜底。
+// Custom items: 7 Witcher-style sword oils — apply to a melee weapon (3 uses/bottle, empty bottle returned);
+// 4-min coating adds +50% of the swing's damage vs its matching enemy family only (humanoid/beast/arachnid/demon/cursed/vampire/necrophage).
+#include "items/sword_oils.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"
