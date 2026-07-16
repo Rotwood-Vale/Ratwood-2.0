@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(learnable_spells, (list(/obj/effect/proc_holder/spell/invoked/p
 		/obj/effect/proc_holder/spell/invoked/create_campfire,
 		/obj/effect/proc_holder/spell/invoked/mending,
 		/obj/effect/proc_holder/spell/self/light,
+		/obj/effect/proc_holder/spell/self/magos_book_bind,
 		/obj/effect/proc_holder/spell/invoked/conjure_weapon,
 		/obj/effect/proc_holder/spell/self/conjure_armor,
 		/obj/effect/proc_holder/spell/self/conjure_armor/dragonhide,
