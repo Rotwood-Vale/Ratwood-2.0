@@ -503,6 +503,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  */
 /area/proc/update_areasize()
+	set background = 1
 	if(outdoors)
 		return FALSE
 	areasize = 0
