@@ -129,9 +129,6 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	var/datum/mind/user_mind = user.mind
 	if(!user_mind) return // How??
 	var/unbind_limit = (HAS_TRAIT(user, TRAIT_ARCYNE_T3) || HAS_TRAIT(user, TRAIT_ARCYNE_T4)) ? 3 : 2
-	if(user_mind.has_changed_spell && user_mind.free_spell_unbinds < unbind_limit)
-		to_chat(user, span_warning("I have already unbinded my spells today!"))
-		return
 	var/list/resettable_spells = list()
 	var/list/spell_list = user_mind.spell_list
 	for(var/i = 1, i <= spell_list.len, i++)
@@ -142,16 +139,18 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	if(!resettable_spells.len && user_mind.strained_spell_unbinds < 2)
 		to_chat(user, span_warning("I have no spells to unbind!"))
 		return
-	if(!user_mind.has_changed_spell)
+	if(user_mind.free_spell_unbinds < unbind_limit)
 		user_mind.has_changed_spell = TRUE //To pre-empt a halting duplication in the for loop here
-		for(var/i = 1, i <= unbind_limit, i++)
-			var/choice = input(user, "Choose up to [unbind_limit] spells to unbind. Cancel all to not use up your daily unbinding.") as null|anything in resettable_spells
+		for(var/i = user_mind.free_spell_unbinds + 1, i <= unbind_limit, i++)
+			var/remaining_unbinds = unbind_limit - user_mind.free_spell_unbinds
+			var/choice = input(user, "Choose a spell to unbind. I have [remaining_unbinds] unbind[remaining_unbinds == 1 ? "" : "s"] remaining today.") as null|anything in resettable_spells
 			var/obj/effect/proc_holder/spell/item = resettable_spells[choice]
 			if(!item)
 				break
+			var/spell_cost = item.cost
 			if(user_mind.RemoveSpell(item))
-				user_mind.used_spell_points -= item.cost
 				user_mind.free_spell_unbinds++
+				user_mind.used_spell_points -= spell_cost
 				resettable_spells.Remove(choice)
 				user_mind.check_learnspell()
 			if(!resettable_spells.len)
@@ -161,13 +160,19 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 			return
 	if(user_mind.free_spell_unbinds < unbind_limit || (!resettable_spells.len && user_mind.strained_spell_unbinds < 2))
 		return
-	var/obj/item/held_lux = user.get_inactive_held_item()
+	var/obj/item/active_item = user.get_active_held_item()
+	var/obj/item/inactive_item = user.get_inactive_held_item()
+	var/obj/item/held_lux
+	if(active_item != src && (istype(active_item, /obj/item/reagent_containers/lux) || istype(active_item, /obj/item/reagent_containers/lux_impure)))
+		held_lux = active_item
+	else if(inactive_item != src && (istype(inactive_item, /obj/item/reagent_containers/lux) || istype(inactive_item, /obj/item/reagent_containers/lux_impure)))
+		held_lux = inactive_item
 	if(!user_mind.has_fed_spellbook_lux && (istype(held_lux, /obj/item/reagent_containers/lux) || istype(held_lux, /obj/item/reagent_containers/lux_impure)))
 		var/lux_prompt = "THE SYMBOLS ON THE PAGE GLOW AND VIBRATE, AS IF THEY'RE LEECHED TOWARDS YOUR OTHER HAND..\n\nFEED THE BOOK WITH LUX?"
 		if(alert(user, lux_prompt, "THE TOME HUNGERS", "FEED THE BOOK", "NAY") == "FEED THE BOOK")
 			if(!do_after(user, 5 SECONDS, target = src))
 				return
-			if(user.get_inactive_held_item() != held_lux)
+			if(user.get_active_held_item() != held_lux && user.get_inactive_held_item() != held_lux)
 				to_chat(user, span_warning("The tome's symbols dim as the lux leaves my hand."))
 				return
 			playsound(user, 'sound/magic/charged.ogg', 75, TRUE)
@@ -177,12 +182,13 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 			var/obj/effect/proc_holder/spell/lux_item = resettable_spells[lux_choice]
 			if(!lux_item)
 				return
+			var/lux_spell_cost = lux_item.cost
 			if(user_mind.RemoveSpell(lux_item))
-				user_mind.used_spell_points -= lux_item.cost
+				user_mind.used_spell_points -= lux_spell_cost
 				resettable_spells.Remove(lux_choice)
 				user_mind.check_learnspell()
 			return
-	if(user_mind.strained_spell_unbinds >= 3)
+	if(user_mind.strained_spell_unbinds >= 3) // shouldn't actually happen because of the previous limit check, but just to be safe.
 		to_chat(user, span_warning("The tome's symbols lie still. I can force nothing more from them today."))
 		return
 	var/strain = user_mind.strained_spell_unbinds + 1
@@ -228,8 +234,9 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	var/obj/effect/proc_holder/spell/item = resettable_spells[choice]
 	if(!item)
 		return
+	var/spell_cost = item.cost
 	if(user_mind.RemoveSpell(item))
-		user_mind.used_spell_points -= item.cost
+		user_mind.used_spell_points -= spell_cost
 		resettable_spells.Remove(choice)
 		user_mind.check_learnspell()
 
