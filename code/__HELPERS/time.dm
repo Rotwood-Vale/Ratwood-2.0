@@ -116,6 +116,9 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff
 			if(mind.has_changed_spell)
 				mind.has_changed_spell = FALSE
+				mind.free_spell_unbinds = 0
+				mind.strained_spell_unbinds = 0
+				mind.has_fed_spellbook_lux = FALSE
 				to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
 			if(mind.has_rituos)
 				mind.has_rituos = FALSE

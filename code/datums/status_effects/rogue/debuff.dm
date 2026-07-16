@@ -403,6 +403,28 @@
 	desc = "You felt lyfe itself course through you, restoring your lux and your essance. You.. live - but your body aches. It still needs time to recover.."
 	icon_state = "revived"
 
+/datum/status_effect/debuff/mana_burden
+	id = "mana_burden"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/mana_burden
+	effectedstats = list(STATKEY_STR = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)
+	duration = 15 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/mana_burden
+	name = "Mana Burden"
+	desc = "My thoughts are clouded, my body feels sluggish and heavy. I need some time to recover."
+	icon_state = "revived"
+
+/datum/status_effect/debuff/mana_toxicity
+	id = "mana_toxicity"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/mana_toxicity
+	effectedstats = list(STATKEY_STR = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)
+	duration = 15 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/mana_toxicity
+	name = "Mana Toxicity"
+	desc = "My body is rejecting excess knowledge. What have I done?"
+	icon_state = "revived"
+
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
 /datum/status_effect/debuff/rotted
 	id = "rotted_body"

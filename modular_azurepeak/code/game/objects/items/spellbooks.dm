@@ -2,7 +2,7 @@
 #define GEM_CHARGE_REDUCTION 0.25
 
 /* Spellbook
-Intended to be a reward or a goal for pure mage, allowing them to reset and swap out 2 spells per day, and
+Intended to be a reward or a goal for pure mage, allowing them to reset and swap out 2 spells per day (3 with T3+ arcyne), and
 decreases charge time if held opened in hand, for pure mage build + aesthetics.
 */
 
@@ -23,6 +23,26 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	desc = "A crackling, glowing book, filled with runes and symbols that hurt the mind to stare at. Can be used to unbind spells, or to assist the caster in arcing some of their projectiles."
 	var/picked // if the book has had it's style picked or not
 	var/born_of_rock = FALSE // was a magical stone used to make it instead of a gem
+
+/obj/item/book/spellbook/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete)
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	storage.max_items = 1
+	storage.max_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/book/spellbook/MiddleClick(mob/living/user, params)
+	if(!user.mind)
+		return ..()
+	if(!user.Adjacent(src) && loc != user)
+		to_chat(user, span_warning("I need to be closer to bind this tome."))
+		return TRUE
+	for(var/obj/effect/proc_holder/spell/self/magos_book_bind/bind_spell in user.mind.spell_list)
+		bind_spell.bound_spellbook = src
+		to_chat(user, span_notice("I bind [src] to my arcyne grasp. I can now recall it with Magos' Book Bind."))
+		playsound(src, 'sound/magic/charged.ogg', 50, TRUE)
+		return TRUE
+	return ..()
 
 /obj/item/book/spellbook/getonmobprop(tag)
 	. = ..()
@@ -82,7 +102,8 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 
 /obj/item/book/spellbook/examine(mob/user)
 	. = ..()
-	. += span_notice("Reading it once per day allows you to unbind two spells and refund its spell point.")
+	var/unbind_limit = (HAS_TRAIT(user, TRAIT_ARCYNE_T3) || HAS_TRAIT(user, TRAIT_ARCYNE_T4)) ? 3 : 2
+	. += span_notice("Reading it once per day allows you to unbind up to [unbind_limit] spells and refund their spell points.")
 	if(born_of_rock)
 		. += span_notice("This tome was made from a magical stone instead of a proper gem. Holding it in your hand with it open reduces spell charge time by [ROCK_CHARGE_REDUCTION * 100]%")
 	else
@@ -104,10 +125,11 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 	change_spells()
 	return FALSE
 
-/obj/item/book/spellbook/proc/change_spells(mob/user = usr)
+/obj/item/book/spellbook/proc/change_spells(mob/living/user = usr)
 	var/datum/mind/user_mind = user.mind
 	if(!user_mind) return // How??
-	if(user_mind.has_changed_spell)
+	var/unbind_limit = (HAS_TRAIT(user, TRAIT_ARCYNE_T3) || HAS_TRAIT(user, TRAIT_ARCYNE_T4)) ? 3 : 2
+	if(user_mind.has_changed_spell && user_mind.free_spell_unbinds < unbind_limit)
 		to_chat(user, span_warning("I have already unbinded my spells today!"))
 		return
 	var/list/resettable_spells = list()
@@ -117,25 +139,99 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 		if(spell.refundable == TRUE)
 			if(spell.cost > 0)
 				resettable_spells["[spell.name]: [spell.cost]"] = spell_list[i]
-	if(!resettable_spells.len)
+	if(!resettable_spells.len && user_mind.strained_spell_unbinds < 2)
 		to_chat(user, span_warning("I have no spells to unbind!"))
 		return
-	user_mind.has_changed_spell = TRUE //To pre-empt a halting duplication in the for loop here
-	var/unlearn_success = FALSE
-	for(var/i = 1, i <= 2, i++)
-		var/choice = input(user, "Choose up to two spells to unbind. Cancel both to not use up your daily unbinding.") as null|anything in resettable_spells
-		var/obj/effect/proc_holder/spell/item = resettable_spells[choice]
-		if(!item)
-			break
-		if(!resettable_spells.len)
+	if(!user_mind.has_changed_spell)
+		user_mind.has_changed_spell = TRUE //To pre-empt a halting duplication in the for loop here
+		for(var/i = 1, i <= unbind_limit, i++)
+			var/choice = input(user, "Choose up to [unbind_limit] spells to unbind. Cancel all to not use up your daily unbinding.") as null|anything in resettable_spells
+			var/obj/effect/proc_holder/spell/item = resettable_spells[choice]
+			if(!item)
+				break
+			if(user_mind.RemoveSpell(item))
+				user_mind.used_spell_points -= item.cost
+				user_mind.free_spell_unbinds++
+				resettable_spells.Remove(choice)
+				user_mind.check_learnspell()
+			if(!resettable_spells.len)
+				break
+		if(!user_mind.free_spell_unbinds)
+			user_mind.has_changed_spell = FALSE
 			return
-		if(user_mind.RemoveSpell(item))
-			user_mind.used_spell_points -= item.cost
-			unlearn_success = TRUE
+	if(user_mind.free_spell_unbinds < unbind_limit || (!resettable_spells.len && user_mind.strained_spell_unbinds < 2))
+		return
+	var/obj/item/held_lux = user.get_inactive_held_item()
+	if(!user_mind.has_fed_spellbook_lux && (istype(held_lux, /obj/item/reagent_containers/lux) || istype(held_lux, /obj/item/reagent_containers/lux_impure)))
+		var/lux_prompt = "THE SYMBOLS ON THE PAGE GLOW AND VIBRATE, AS IF THEY'RE LEECHED TOWARDS YOUR OTHER HAND..\n\nFEED THE BOOK WITH LUX?"
+		if(alert(user, lux_prompt, "THE TOME HUNGERS", "FEED THE BOOK", "NAY") == "FEED THE BOOK")
+			if(!do_after(user, 5 SECONDS, target = src))
+				return
+			if(user.get_inactive_held_item() != held_lux)
+				to_chat(user, span_warning("The tome's symbols dim as the lux leaves my hand."))
+				return
+			playsound(user, 'sound/magic/charged.ogg', 75, TRUE)
+			user_mind.has_fed_spellbook_lux = TRUE
+			qdel(held_lux)
+			var/lux_choice = input(user, "Choose a spell to unbind.") as null|anything in resettable_spells
+			var/obj/effect/proc_holder/spell/lux_item = resettable_spells[lux_choice]
+			if(!lux_item)
+				return
+			if(user_mind.RemoveSpell(lux_item))
+				user_mind.used_spell_points -= lux_item.cost
+				resettable_spells.Remove(lux_choice)
+				user_mind.check_learnspell()
+			return
+	if(user_mind.strained_spell_unbinds >= 3)
+		to_chat(user, span_warning("The tome's symbols lie still. I can force nothing more from them today."))
+		return
+	var/strain = user_mind.strained_spell_unbinds + 1
+	var/prompt
+	switch(strain)
+		if(1)
+			prompt = "THE SYMBOLS ON THE PAGE PULSATE INQUISITIVELY. YOU MAY BE ABLE TO UNBIND ANOTHER SPELL, BUT IT WILL LEAVE A COST ON YOUR MIND."
+		if(2)
+			prompt = "THE SYMBOLS ON THE PAGE PULSATE HUNGRILY. YOU MAY BE ABLE TO UNBIND ANOTHER SPELL, BUT IT WILL LEAVE A WITHERING, EXSANGUINATED COST ON YOUR SPIRIT. \n\n (WARNING: THIS WILL LYFE END YOU WITHOUT PREPARATION!!)"
+		if(3)
+			prompt = "THE SYMBOLS ON THE PAGE PULSATE GREEDILY. YOU MAY BE ABLE TO UNBIND ANOTHER SPELL, BUT IT WILL LEAVE A DIRE, FATAL COST ON YOUR BODY.\n\n(WARNING: THIS WILL LYFE END YOU!!)"
+	if(alert(user, prompt, "THE TOME BECKONS", "PUSH FORWARD", "NAY") != "PUSH FORWARD")
+		return
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	user_mind.strained_spell_unbinds++
+	if(strain == 3)
+		var/turf/death_turf = get_turf(user)
+		user.emote("scream", forced = TRUE)
+		to_chat(user, span_bigbold(span_userdanger("MY BODY TWISTS AND CONTORTS.. THIS WAS A MISTAKE!!")))
+		playsound(user, 'sound/magic/fleshtostone.ogg', 100, TRUE)
+		if(ishuman(user))
+			var/mob/living/carbon/human/twisted_user = user
+			for(var/obj/item/bodypart/bodypart in twisted_user.bodyparts)
+				bodypart.add_wound(/datum/wound/fracture)
+		user.adjustBruteLoss(5000)
+		if(user.stat != DEAD)
+			user.death()
+		new /obj/item/reagent_containers/lux_impure(death_turf)
+		if(istype(death_turf, /turf/open/floor/rogue/dirt))
+			new /obj/structure/flora/roguegrass/herb/manabloom(death_turf) // remember us.. remember that we once lived..
+		return
+	playsound(user, 'sound/magic/charged.ogg', 75, TRUE)
+	switch(strain)
+		if(1)
+			user.apply_status_effect(/datum/status_effect/debuff/mana_burden)
+		if(2)
+			user.apply_status_effect(/datum/status_effect/debuff/mana_toxicity)
+			if(iscarbon(user))
+				var/mob/living/carbon/bloodless_user = user
+				bloodless_user.blood_volume = 0 // everything has a price.
+	var/choice = input(user, "Choose a spell to unbind.") as null|anything in resettable_spells
+	var/obj/effect/proc_holder/spell/item = resettable_spells[choice]
+	if(!item)
+		return
+	if(user_mind.RemoveSpell(item))
+		user_mind.used_spell_points -= item.cost
 		resettable_spells.Remove(choice)
 		user_mind.check_learnspell()
-	if(!unlearn_success)
-		user_mind.has_changed_spell = FALSE //If we didn't unlearn anything, reset
 
 /obj/item/book/spellbook/proc/get_cdr()
 	if(born_of_rock)

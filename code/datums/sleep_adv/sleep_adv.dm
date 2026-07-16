@@ -405,6 +405,9 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		return
 	if(mind.has_changed_spell)
 		mind.has_changed_spell = FALSE
+		mind.free_spell_unbinds = 0
+		mind.strained_spell_unbinds = 0
+		mind.has_fed_spellbook_lux = FALSE
 		to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
 	if(mind.has_rituos)
 		mind.has_rituos = FALSE
