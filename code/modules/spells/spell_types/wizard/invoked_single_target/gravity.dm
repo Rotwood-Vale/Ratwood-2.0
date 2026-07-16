@@ -50,7 +50,7 @@
 				playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 				return TRUE
 
-			if(L.STASTR <= 15)
+			if(L.STASTR <= 14)
 				L.adjustBruteLoss(60)
 				L.Knockdown(5)
 				to_chat(L, "<span class='userdanger'>You're magically weighed down, losing your footing!</span>")
