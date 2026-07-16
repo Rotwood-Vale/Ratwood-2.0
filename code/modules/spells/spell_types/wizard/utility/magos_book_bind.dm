@@ -1,7 +1,6 @@
 /obj/effect/proc_holder/spell/self/magos_book_bind
 	name = "Magos' Book Bind"
 	desc = "Bind a spellbook by middle-clicking it, allowing the tome to be recalled to your hand."
-	chargetime = 2 SECONDS
 	recharge_time = 30 SECONDS
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
