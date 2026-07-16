@@ -10,7 +10,7 @@
 	invocation_type = "whisper"
 	action_icon_state = "summons"
 
-	var/obj/item/book/spellbook/bound_spellbook
+	var/obj/item/bound_spellbook
 
 /obj/effect/proc_holder/spell/self/magos_book_bind/cast(list/targets, mob/living/user = usr)
 	if(!bound_spellbook)
