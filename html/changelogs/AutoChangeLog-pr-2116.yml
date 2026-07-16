@@ -1,0 +1,4 @@
+author: "DorfGuy1"
+delete-after: True
+changes:
+  - qol: "Pottery no longer has a chance to explode in oven"

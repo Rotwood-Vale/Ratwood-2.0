@@ -1,7 +1,0 @@
-author: "2whatever2"
-delete-after: True
-changes:
-  - balance: "Teleport rune now only needs one invoker rather than 2. Go kidnap people or teleport valuables."
-  - bugfix: "Briar's Thorns now hurts yourself and now raises wielded damage instead of only onehanded damage."
-  - bugfix: "Rewind Enchantment now triggers its cooldown when the rewind is applied rather than after the rewind is done."
-  - bugfix: "Chaos Enchantment now actually functions."

@@ -1,0 +1,5 @@
+author: "SneakySlinky"
+delete-after: True
+changes:
+  - balance: "buff to ww and gnoll armor (it was broken)"
+  - code_imp: "added additional set of brackets to line of code in species.dm, Line 2036"

@@ -163,3 +163,76 @@
   - rscadd: ability to purchase cup-hilt rapier for knaves
   Yuckuza:
   - rscadd: Shalal saber is now craftable with steel on an anvil
+2026-07-16:
+  2whatever2:
+  - balance: Teleport rune now only needs one invoker rather than 2. Go kidnap people
+      or teleport valuables.
+  - bugfix: Briar's Thorns now hurts yourself and now raises wielded damage instead
+      of only onehanded damage.
+  - bugfix: Rewind Enchantment now triggers its cooldown when the rewind is applied
+      rather than after the rewind is done.
+  - bugfix: Chaos Enchantment now actually functions.
+  AllCorruptingWyrm:
+  - rscadd: Rustland lore tips.
+  EvenInDeathIStillServe:
+  - rscadd: Malodorous vice's visual effect is now less obtrusive and is tied to the
+      character instead of being a cloud that lingers.
+  - rscadd: Sex with a malodorous person will make you reek, too. It can be washed
+      off with a bath and soap.
+  Gug1234:
+  - bugfix: Changes the fluted half-plate recipe to actually use a fluted cuirass.
+  KeberosNihilus:
+  - balance: Gave the Court Magician a Crownstone instead of a generic gold ring.
+  PPooch:
+  - bugfix: Commoner Towner stat pack Bookworm now works
+  Randumb-Phantomb:
+  - image: Adds 2 new hairstyles. 'Reckless' which is perfect for getting the hair
+      out of your way as you work, and 'Loyal' which is perfect for showing your loyalty
+      to hair product companies, since it's a big voluminous style.
+  SadStarfish7:
+  - qol: Changes "Guard helm" to "Savoyard helm" to represent what it actually is.
+  Skyglazer:
+  - rscadd: 'Astratan Paladins can now choose which style of helmet they prefer.
+
+      /:cl'
+  Teragenic:
+  - rscadd: Adds Cursed Collar to Hordemaster
+  The-Sun-In-Splendour:
+  - rscadd: drake-kin, dragon-kin to wild-kin race titles
+  - rscadd: drakevolk, dragonvolk to wild-kin race titles
+  Xander3359:
+  - bugfix: Fixed being unable to climb into an open window from a wall cling
+  - rscadd: Added a toggle in prefs to enable/disable cursed collars
+  Yuckuza:
+  - balance: Exorcist warrior class gets +1 to knife skill when playing as an old-aged
+      character.
+  - balance: Rebalanced Matthios Gilded Flail to perform better than its non-antag
+      peasant war flail counterpart.
+  - balance: Capped direct attacks on dropped rougeweapons and rogueclothes at 5 x
+      demolition mod. Layman's terms, you can't instantly drop a concheck-dropped
+      silver weapon to 0 integrity.
+  - balance: Weapons and clothing/armor can NOT be deleted/destroyed by direct attacks
+      when in a broken state (i.e. 0 integrity). Lava, fire, acid, and always_delete
+      still work to break things.
+  - balance: Catchpole maul option gets +1 strength at the cost of -1 int and speed
+      in line with cityguard's maul option.
+  - rscadd: Adds crafting recipes for the Maciejowski and Peasant War Flail to the
+      anvil iron recipe pool.
+  - rscadd: Shamshir craftable at an anvil with steel.
+  annikaRU:
+  - rscadd: Executed the local venard who claimed their dorpels were top quality to
+      put put on the heirs blacksteel staff, local garrison has discovered they were
+      not "top quality".
+  kimesik:
+  - balance: Higher integrity for vicious leggings
+  - balance: Better resistances for vicious helmet, plate, leggings and gauntlets.
+  lalaria1:
+  - rscadd: gave hunter three athletics
+  zeroisthebiggay:
+  - balance: squires get novice armorsmithing
+  - balance: squires get novice weaponsmithing
+  - balance: squires get apprentice sewing
+  zoktiik:
+  - balance: Improved the navaja thug's knife skill. Miscreant thug now has apprentice
+      knives, and a few of their other skills have been improved too.
+  - spellcheck: Removed the duplicate examine text from Inquisition-specific papers.
