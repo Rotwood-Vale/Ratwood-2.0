@@ -252,6 +252,22 @@
 	name = "Bronze"
 	prefix = "is very"
 
+/datum/mob_descriptor/trait/scarlet
+	name = "scarlet"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/red
+	name = "red"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/blue
+	name = "blue"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/green
+	name = "green"
+	prefix = "is very"
+
 /datum/mob_descriptor/trait/rotted
 	name = "rotted"
 	prefix = "is very"
