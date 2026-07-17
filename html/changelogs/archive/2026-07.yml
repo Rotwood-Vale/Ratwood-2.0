@@ -236,3 +236,16 @@
   - balance: Improved the navaja thug's knife skill. Miscreant thug now has apprentice
       knives, and a few of their other skills have been improved too.
   - spellcheck: Removed the duplicate examine text from Inquisition-specific papers.
+2026-07-17:
+  DorfGuy1:
+  - qol: Pottery no longer has a chance to explode in oven
+  EvenInDeathIStillServe:
+  - balance: Pickpocketing storaget items will now pick a random item from within
+      it to steal.
+  - balance: Belts are now pickpocketing targets, by targeting groin. Hip slots are
+      leg targets.
+  - balance: Pickpocketing delay increased from 0.5 seconds to 1 second.
+  SneakySlinky:
+  - balance: buff to ww and gnoll armor (it was broken)
+  - code_imp: added additional set of brackets to line of code in species.dm, Line
+      2036
