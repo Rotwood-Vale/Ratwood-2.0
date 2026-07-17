@@ -21,7 +21,7 @@
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,		// May be silly but - hey, they can pose as a doctor-type.
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,		// For grappling
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,		// For grappling
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_MASTER,		// Zoo-wee mama; annoying stabber. Still shit at parrying I guess though.
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,		// Gets some bow skill just for anything pioson I guess. (Still gotta get it themselves)

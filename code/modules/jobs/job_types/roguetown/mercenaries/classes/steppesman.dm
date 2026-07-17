@@ -171,7 +171,7 @@
 				H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)//One less shield skill.
 				H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 2, TRUE)		//To avoid virtue cheese
 				H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)		//Ditto
@@ -229,7 +229,7 @@
 				H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+				H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
 				H.change_stat(STATKEY_PER, 3)
@@ -251,7 +251,7 @@
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				neck = /obj/item/clothing/neck/roguetown/chaincoif	//Better neckpiece for slightly less skill variety. Based it off a cool piece of art...				H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-				H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)		//Bit high but he doesn't get huge strength boons so makes up for it. Same as a guard.
+				H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)		//Bit high but he doesn't get huge strength boons so makes up for it. Same as a guard.
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

@@ -18,7 +18,7 @@
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, // Potters are fairly active, having to source their own clay.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, // They mostly work with their bare hands...?
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, // Something about wrestling clay into shape?
+		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,

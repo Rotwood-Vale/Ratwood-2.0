@@ -25,7 +25,7 @@
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT, // Whips/Flails so we can use the Gilded Flail if we want.
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, // Poles or maces if we're a wimp and don't want to engage with unarmed. Not ideal.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,  // Unarmed if we want to kick ass for the lord(you do, this is what you SHOULD DO!!)
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,  // Unarmed if we want to kick ass for the lord(you do, this is what you SHOULD DO!!)
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,

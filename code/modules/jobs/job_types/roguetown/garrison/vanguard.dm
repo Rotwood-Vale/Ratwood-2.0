@@ -116,7 +116,7 @@
 		/datum/skill/combat/swords = 3,
 		/datum/skill/combat/maces = 3,
 		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 4,
+		/datum/skill/combat/wrestling = 3,
 		/datum/skill/combat/unarmed = 3,
 		/datum/skill/combat/shields = 3,
 		/datum/skill/combat/slings = 2,

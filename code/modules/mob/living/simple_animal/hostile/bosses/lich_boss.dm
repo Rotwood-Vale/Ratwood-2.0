@@ -369,7 +369,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/maces, 3, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/axes, 3, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 2, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)

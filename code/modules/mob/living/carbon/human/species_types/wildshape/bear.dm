@@ -15,7 +15,7 @@
 /mob/living/carbon/human/species/wildshape/bear/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 		src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 4, TRUE) //Bears are good swimmers
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)

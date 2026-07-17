@@ -32,7 +32,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
@@ -85,7 +85,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
@@ -117,7 +117,7 @@
 /obj/item/rogueweapon/eaglebeak/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadrûnzhar. \
+		. += "<small>An oathmarked's polehammer. Designed in an earlier era, under the direction of Hadrï¿½nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A hammer to break the rabble. A pick to slay the traitors. A head to pierce both.</small>"
 
@@ -143,7 +143,7 @@
 /obj/item/rogueweapon/greatsword/grenz/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadrûnzhar. \
+		. += "<small>An oathmarked's flamberge. Designed in an earlier era, under the direction of Hadrï¿½nzhar. \
 		A lord lost to centuries. The original keeper of the oath. The purpose was simple: <br>\
 		A blade fit for a king, to bear the oath's violence in place of the lordling's hand.</small>"
 
@@ -206,7 +206,7 @@
 /obj/item/clothing/neck/roguetown/psicross/silver/astrata/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadrûnzhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
+		. += "<small>Hadrï¿½nzhar, the best of his house. A drakian that stood above the squabbles of inter-drakian conflict. \
 		He'd given his Oathmarked a singular purpose: <br>\
 		To destroy all that would harm Astrata's noble order. To eradicate the taint of left-handed magyks from the world.</small>"
 
@@ -221,7 +221,7 @@
 /obj/item/clothing/cloak/cape/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Hadrûnzhar was known for his showboating and sudden violent outbursts. \
+		. += "<small>Hadrï¿½nzhar was known for his showboating and sudden violent outbursts. \
 		Once meant to be a symbol of mockery, for resentful Oathmarked, this cape now represents something greater. \
 		Hope. Hope that one dae he may return. \
 		For just as he'd vanished into Eressioth's demesne, all drakian, knowing or otherwise, pray for his return.</small>"
@@ -237,6 +237,6 @@
 /obj/item/book/rogue/secret/oathmarked/examine(mob/user)
 	. = ..()
 	if(isdracon(user))
-		. += "<small>Ancient, written by Hadrûnzhar's closest after he'd vanished. \
+		. += "<small>Ancient, written by Hadrï¿½nzhar's closest after he'd vanished. \
 		It sets out the guidelines that all Oathmarked are doomed to follow. \
-		Just as Hadrûnzhar had in another era, before he'd slipped out of the knowing world.</small>"
+		Just as Hadrï¿½nzhar had in another era, before he'd slipped out of the knowing world.</small>"

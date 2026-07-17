@@ -19,7 +19,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,			// Main weapon is going to be their garrote but maces are a good backup. (Cudgel prob)
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,		// GRAB HEEEE!!!
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,		// GRAB HEEEE!!!
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,		// Viable to punch shit or use brass-knuckles as a backup.
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,	// Niche but I guess incase they get a ranged weapon on-hand.

@@ -13,7 +13,7 @@
 /mob/living/carbon/human/species/wildshape/mirecrawler/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 		src.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
