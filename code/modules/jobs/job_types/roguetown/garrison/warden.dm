@@ -32,7 +32,6 @@
 	)
 
 /datum/outfit/job/roguetown/warden
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	cloak = /obj/item/clothing/cloak/wardencloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
@@ -76,6 +75,7 @@
 
 /datum/outfit/job/roguetown/warden/ranger/pre_equip(mob/living/carbon/human/H)
 	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	neck = /obj/item/clothing/neck/roguetown/coif
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
@@ -179,12 +179,13 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			if("Sword & Shield")
 				backl = /obj/item/rogueweapon/shield/iron
-				beltl = /obj/item/rogueweapon/scabbard/sheath
+				beltl = /obj/item/rogueweapon/scabbard/sword
 				r_hand = /obj/item/rogueweapon/sword/short/messer
 				backpack_contents = list(
 					/obj/item/storage/keyring/guard = 1,
 					/obj/item/flashlight/flare/torch/lantern = 1,
-					/obj/item/rogueweapon/scabbard/sheath/aavnik = 1,
+					/obj/item/rogueweapon/scabbard/sheath = 1,
+					/obj/item/rogueweapon/huntingknife/idagger/warden_machete = 1,
 					/obj/item/signal_horn = 1
 					)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
