@@ -84,18 +84,24 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/healable_by_miracles = TRUE
 	/// Whether we're storing the on_gain effects on the owner mob and should cleanup them if we're deleted
 	var/should_persist_effects = FALSE
+	var/datum/weakref/persisted_on
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
 		remove_from_bodypart(force = should_persist_effects)
 	else if(owner)
 		remove_from_mob()
+	else if(persisted_on)
+		var/mob/living/persisted_mob = persisted_on.resolve()
+		if(persisted_mob)
+			on_mob_loss(persisted_mob)
 
 	if(werewolf_infection_timer)
 		deltimer(werewolf_infection_timer)
 		werewolf_infection_timer = null
 	bodypart_owner = null
 	owner = null
+	persisted_on = null
 	. = ..()
 	return QDEL_HINT_IWILLGC
 
@@ -171,6 +177,13 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	// ensure we do not re-apply effects if we're holding onto them between attachments
 	if(!should_persist_effects)
 		INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
+	else if(persisted_on)
+		var/mob/living/persisted_mob = persisted_on.resolve()
+		if(persisted_mob != affected.owner)
+			if(persisted_mob)
+				on_mob_loss(persisted_mob)
+			INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner)
+	persisted_on = null
 	if(HAS_TRAIT(affected, TRAIT_PERSIST_WOUNDS))
 		should_persist_effects = TRUE
 	if(crit_message)
@@ -205,6 +218,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	on_bodypart_loss(was_bodypart)
 	if(!should_persist_effects || force)
 		on_mob_loss(was_owner)
+	else
+		persisted_on = WEAKREF(was_owner)
 	return TRUE
 
 /// Effects when a wound is lost on a bodypart
@@ -234,7 +249,12 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	sortList(affected.simple_wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
 	owner = affected
 	owner.simple_bleeding += bleed_rate // immediately apply our base bleed to the host mob
-	on_mob_gain(affected)
+	var/mob/living/persisted_mob = persisted_on?.resolve()
+	if(persisted_mob && persisted_mob != affected)
+		on_mob_loss(persisted_mob)
+	if(persisted_mob != affected)
+		on_mob_gain(affected)
+	persisted_on = null
 	if(crit_message)
 		var/message = get_crit_message(affected)
 		if(message)
@@ -324,7 +344,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(whp <= 0)
 		if(!should_persist())
 			if(bodypart_owner)
-				remove_from_bodypart()
+				remove_from_bodypart(force = TRUE)
 			else if(owner)
 				remove_from_mob()
 			else

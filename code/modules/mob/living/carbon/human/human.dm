@@ -1195,7 +1195,7 @@
 
 		for(var/datum/wound/W in BP.wounds)
 			if(istype(W, /datum/wound/heatstroke))
-				W.remove_from_bodypart()
+				BP.remove_wound(W)
 				found = TRUE
 
 	if(found)
