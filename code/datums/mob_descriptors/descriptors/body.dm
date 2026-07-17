@@ -84,6 +84,9 @@
 /datum/mob_descriptor/body/skeletal
 	name = "Skeletal"
 
+/datum/mob_descriptor/body/abominable
+	name = "Abominable"
+
 /datum/mob_descriptor/body/broadshoulder
 	name = "Broad-shouldered"
 

@@ -45,6 +45,23 @@
 /datum/mob_descriptor/skin/ashen
 	name = "Ashen Skin"
 
+/datum/mob_descriptor/skin/flayed
+	name = "Flayed Skin"
+
+/datum/mob_descriptor/skin/scarred
+	name = "Scarred Skin"
+
+
+/// New editions here!
+
+/datum/mob_descriptor/skin/partially_scaled
+	name = "Partially Scaled"
+
+/datum/mob_descriptor/skin/partially_furred
+	name = "Partially Furred Skin"
+
+// full scales below
+
 /datum/mob_descriptor/scales
 	abstract_type = /datum/mob_descriptor/scales
 	slot = MOB_DESCRIPTOR_SLOT_SKIN

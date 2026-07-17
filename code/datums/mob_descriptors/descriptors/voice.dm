@@ -90,6 +90,9 @@
 /datum/mob_descriptor/voice/snide
 	name = "Snide"
 
+/datum/mob_descriptor/voice/authoritarian
+	name = "authoritarian"
+
 /datum/mob_descriptor/voice/smoker
 	name = "Smoker's"
 	voice_string = "Smoker"

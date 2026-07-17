@@ -243,3 +243,23 @@
 /datum/mob_descriptor/trait/amber
 	name = "Amber"
 	prefix = "is very"
+
+/datum/mob_descriptor/trait/gold
+	name = "Golden"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/bronze
+	name = "Bronze"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/rotted
+	name = "rotted"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/diseased
+	name = "diseased"
+	prefix = "is very"
+
+/datum/mob_descriptor/trait/chimeric
+	name = "chimeric"
+	prefix = "is very"

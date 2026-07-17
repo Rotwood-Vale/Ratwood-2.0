@@ -131,6 +131,16 @@
 	verbage = "%HAVE%"
 	prefix = "a"
 
+/datum/mob_descriptor/prominent/proboscis
+	name = "Proboscis"
+	verbage = "%HAVE%"
+	prefix = "a"
+
+/datum/mob_descriptor/prominent/ovipositor // yeah I know what you are
+	name = "Ovipositor"
+	verbage = "%HAVE%"
+	prefix = "a"
+
 /datum/mob_descriptor/prominent/physically_deformed
 	name = "Physically Deformed"
 	verbage = "%ARE%"
@@ -377,4 +387,8 @@
 
 /datum/mob_descriptor/prominent/prominent_ears
 	name = "Prominent Ears"
+	verbage = "%HAVE%"
+
+/datum/mob_descriptor/prominent/chimeric_features
+	name = "Chimeric Features"
 	verbage = "%HAVE%"

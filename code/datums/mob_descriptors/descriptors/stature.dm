@@ -332,6 +332,26 @@
 		else
 			return "host"
 
+/datum/mob_descriptor/stature/sorcerer
+	name = "Sorcerer/Sorceress"
+
+/datum/mob_descriptor/stature/sorcerer/get_description(mob/living/described)
+	switch(described.pronouns)
+		if(SHE_HER)
+			return "Sorceress"
+		if(SHE_HER_M)
+			return "Sorceress"
+		if(HE_HIM)
+			return "Sorcerer"
+		if(HE_HIM_F)
+			return "Sorcerer"
+		if(THEY_THEM)
+			return "Sorcerer"
+		if(THEY_THEM_F)
+			return "Sorcerer"
+		else
+			return "Sorcerer"
+
 /datum/mob_descriptor/stature/widower
 	name = "Widower/Widow"
 
@@ -404,6 +424,9 @@
 
 /datum/mob_descriptor/stature/wanderer
 	name = "Wanderer"
+
+/datum/mob_descriptor/stature/trickster
+	name = "Trickster"
 
 /datum/mob_descriptor/stature/hustler
 	name = "Hustler"
