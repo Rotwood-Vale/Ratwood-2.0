@@ -1,0 +1,4 @@
+author: "awwliedacoder"
+delete-after: True
+changes:
+  - bugfix: "message on forced drug sniffing"
