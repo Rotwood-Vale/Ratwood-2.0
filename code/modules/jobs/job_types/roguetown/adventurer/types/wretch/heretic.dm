@@ -487,7 +487,7 @@
 				to_chat(H, span_warning("Leaving wealth and titles behind, you travel endlessly, bringing the truth to the most ignorant corners of the world."))
 				head = /obj/item/clothing/head/roguetown/headband/monk //Can somebody explain why Adventurer-Monk gets this?
 				neck = /obj/item/clothing/neck/roguetown/leather
-				gloves = /obj/item/clothing/gloves/roguetown/angle
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				pants =  /obj/item/clothing/under/roguetown/heavy_leather_pants
