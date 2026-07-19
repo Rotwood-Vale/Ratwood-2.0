@@ -145,7 +145,7 @@
 	fueluse = 0
 	no_refuel = TRUE
 	crossfire = FALSE
-	heat_level = 5
+	heat_level = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
