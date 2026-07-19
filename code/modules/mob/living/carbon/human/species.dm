@@ -2219,6 +2219,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 		if(env_adjust)
 			H.adjust_bodytemperature(env_adjust)
+
+		if(isfloorturf(cur_turf) && H.bodytemperature < BODYTEMP_NORMAL_MAX)
+			var/turf/open/floor/F = cur_turf
+			if(F.heat)
+				var/warmth = F.heat * 4
+				if(H.bodytemperature + warmth > BODYTEMP_NORMAL_MAX)
+					warmth = BODYTEMP_NORMAL_MAX - H.bodytemperature
+				H.adjust_bodytemperature(warmth)
 	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
 		var/burn_damage = 0
 
