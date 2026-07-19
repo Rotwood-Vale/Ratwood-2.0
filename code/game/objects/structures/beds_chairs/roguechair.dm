@@ -288,6 +288,7 @@
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = "woodimpact"
+	can_buckle = TRUE
 
 /obj/item/chair/stool/bar/rogue
 	name = "stool"
@@ -307,6 +308,7 @@
 	obj_flags = CAN_BE_HIT
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = "woodimpact"
+	can_buckle = TRUE
 
 /obj/item/chair/stool/bar/rogue/getonmobprop(tag)
 	. = ..()
