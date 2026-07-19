@@ -538,7 +538,7 @@
 	return ..()
 
 /obj/item/rogueweapon/mace/warhammer/steel/ancient
-	name = "ancient alloy warhammer"
+	name = "ancient warhammer"
 	desc = "A macehead of polished gilbranze, spiked and perched atop a reinforced shaft. An elegant weapon from a more civilized age; when Man lived in harmony with one-another, and when 'the undying' was nothing more than a nitemare's thought."
 	icon_state = "awarhammer"
 	smeltresult = /obj/item/ingot/aaslag

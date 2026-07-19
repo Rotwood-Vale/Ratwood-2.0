@@ -78289,7 +78289,7 @@
 	},
 /area/rogue/outdoors/desert)
 "wGx" = (
-/obj/structure/fluff/statue/zizo{
+/obj/structure/fluff/statue/valmora{
 	pixel_x = -14;
 	pixel_y = 11
 	},

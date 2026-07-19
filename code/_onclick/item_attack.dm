@@ -442,7 +442,10 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = (get_complex_damage(I, user, blade_dulling) * I.demolition_mod)
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
+		newforce = min(newforce, 5)
+	newforce *= I.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0

@@ -535,6 +535,8 @@
 		/datum/sprite_accessory/hair/head/nest,
 		/datum/sprite_accessory/hair/head/strand,
 		/datum/sprite_accessory/hair/head/sodden,
+		/datum/sprite_accessory/hair/head/indigozap,
+		/datum/sprite_accessory/hair/head/rainbowdash,
 		/datum/sprite_accessory/hair/head/renard,
 		/datum/sprite_accessory/hair/head/willowtree,
 		/datum/sprite_accessory/hair/head/nimue,

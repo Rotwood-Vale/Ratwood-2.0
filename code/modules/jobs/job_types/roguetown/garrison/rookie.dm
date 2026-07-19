@@ -53,7 +53,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/shields = 2,
@@ -125,7 +125,7 @@
 	subclass_stats = list(
 		STATKEY_SPD = 1,
 		STATKEY_PER = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/bows = 3,

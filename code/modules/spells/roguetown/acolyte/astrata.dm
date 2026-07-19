@@ -1,58 +1,9 @@
-/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue
-	name = "Fire Lance"
-	desc = "Deals damage and ignites target, Deals extra damage to undead."
-	overlay_state = "sacredflame"
-	sound = 'sound/magic/bless.ogg'
-	invocations = list("By fire, be cleansed!")//Not so sacred.
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 15 SECONDS
-	miracle = TRUE
-	devotion_cost = 75
-	projectile_type = /obj/projectile/magic/astratablast
-
-
-/obj/projectile/magic/astratablast
-	damage = 25
-	name = "lance of holy fire"
-	nodamage = FALSE
-	damage_type = BURN
-	speed = 0.3
-	muzzle_type = null
-	impact_type = null
-	hitscan = TRUE
-	flag = "magic"
-	light_color = "#a98107"
-	light_outer_range = 7
-	tracer_type = /obj/effect/projectile/tracer/solar_beam
-	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
-	var/biotype_we_look_for = MOB_UNDEAD
-
-/obj/projectile/magic/astratablast/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
-			qdel(src)
-			return BULLET_ACT_BLOCK
-		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
-			damage *= fuck_that_guy_multiplier
-			M.adjust_fire_stacks(10)
-			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
-			M.ignite_mob()
-		else
-			M.adjust_fire_stacks(4)
-			visible_message(span_warning("[src] ignites [target]!"))
-			M.ignite_mob()
-	return FALSE
-
 /obj/effect/proc_holder/spell/invoked/ignition
 	name = "Ignition"
 	desc = "Ignite a flammable object at range."
-	overlay_state = "sacredflame"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "ignite"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -84,7 +35,9 @@
 /obj/effect/proc_holder/spell/invoked/revive
 	name = "Anastasis"
 	desc = "Focus Astratas energy though a stationary psycross, reviving the target from death."
-	overlay_state = "revive"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "resurrect"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50
@@ -182,7 +135,9 @@
 /obj/effect/proc_holder/spell/self/astrata_gaze
 	name = "Astratan Gaze"
 	desc = "Removes the limit on your vision, letting you see behind you for a time, lasts longer during the dae and gives a perception bonus to those skilled and holy arts."
-	overlay_state = "astrata_gaze"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "gaze"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -409,6 +364,8 @@
 /obj/effect/proc_holder/spell/invoked/immolation
 	name = "Immolation"
 	desc = "Ignite a target in holy flames, burning those that surround them. Fire burns brighter within devout Astratans."
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "immolation"
 	range = 2
 	chargetime = 0.5 SECONDS
@@ -508,7 +465,9 @@
 //Choosing between Lance/Spear
 /obj/effect/proc_holder/spell/self/astratan_path
 	name = "Path of Order"
-	overlay_state = "order"//Temp.
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "order"
 	desc = "Astrata blesses your mind, allowing you to choose <b>Her</b> method of bringing order."
 	miracle = TRUE
 	devotion_cost = 100
@@ -542,7 +501,9 @@
 //Summoning the spear.
 /obj/effect/proc_holder/spell/self/astratan_spear
 	name = "Summon Spear"
-	overlay_state = "astra_spear"//Temp.
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "spear"
 	desc = "An ancient miracle, honed by those who'd served as Astrata's martial arm in the second era. \
 	With such, you may beseech Astrata for a mote of Her power."
 	clothes_req = FALSE
@@ -630,3 +591,55 @@
 		L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
 	sleep(10)
 	qdel(src)
+
+/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue
+	name = "Fire Lance"
+	desc = "Deals damage and ignites target, Deals extra damage to undead."
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "sacredflame"
+	sound = 'sound/magic/bless.ogg'
+	invocations = list("By fire, be cleansed!")//Not so sacred.
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	recharge_time = 15 SECONDS
+	miracle = TRUE
+	devotion_cost = 75
+	projectile_type = /obj/projectile/magic/astratablast
+
+/obj/projectile/magic/astratablast
+	damage = 25
+	name = "lance of holy fire"
+	nodamage = FALSE
+	damage_type = BURN
+	speed = 0.3
+	muzzle_type = null
+	impact_type = null
+	hitscan = TRUE
+	flag = "magic"
+	light_color = "#a98107"
+	light_outer_range = 7
+	tracer_type = /obj/effect/projectile/tracer/solar_beam
+	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
+	var/biotype_we_look_for = MOB_UNDEAD
+
+/obj/projectile/magic/astratablast/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
+			damage *= fuck_that_guy_multiplier
+			M.adjust_fire_stacks(10)
+			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
+			M.ignite_mob()
+		else
+			M.adjust_fire_stacks(4)
+			visible_message(span_warning("[src] ignites [target]!"))
+			M.ignite_mob()
+	return FALSE

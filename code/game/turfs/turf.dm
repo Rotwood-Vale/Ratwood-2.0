@@ -280,6 +280,10 @@
 		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
 			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
+			if(istype(movable_content, /obj/structure) || istype(movable_content, /obj/machinery))
+				var/obj/structure/blocker = movable_content
+				if(blocker.climbable)
+					continue
 			return TRUE
 	return FALSE
 

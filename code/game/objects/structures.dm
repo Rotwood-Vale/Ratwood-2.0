@@ -134,7 +134,7 @@
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
-		
+
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	if(QDELETED(src))
 		return
