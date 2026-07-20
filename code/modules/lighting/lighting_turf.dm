@@ -13,9 +13,18 @@
 	for(var/datum/lighting_corner/corner as anything in get_corners())
 		corner.vis_update()
 
+/turf/proc/has_dynamic_lighting()
+	if(lighting_object)
+		return TRUE
+	var/area/A = loc
+	return IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A)
+
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
 		qdel(lighting_object, TRUE)
+	else
+		underlays -= GLOB.lighting_underlay_dark
+		luminosity = 1
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
@@ -26,7 +35,7 @@
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
-	if (!lighting_object)
+	if (!has_dynamic_lighting())
 		return 1
 
 	var/totallums = 0
@@ -57,7 +66,7 @@
 // itself as too dark to allow sight and see_in_dark becomes useful.
 // So basically if this returns true the tile is unlit black.
 /turf/proc/is_softly_lit()
-	if (!lighting_object)
+	if (!has_dynamic_lighting())
 		return FALSE
 
 	return !luminosity

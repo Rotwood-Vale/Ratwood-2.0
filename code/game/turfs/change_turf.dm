@@ -152,6 +152,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 		if(lighting_object && !lighting_object.needs_update)
 			lighting_object.update()
+		else if(!lighting_object && has_dynamic_lighting())
+			underlays += GLOB.lighting_underlay_dark
+			luminosity = 0
 
 		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
