@@ -51,7 +51,7 @@
 
 	// Species swaps do not always clear extra body zones from prior forms.
 	// Purge lamia/taur leftovers so gnolls only use gnoll body setup.
-	clear_non_gnoll_bodyparts()
+	ensure_not_taur()
 
 	reset_gnoll_sprite_scale()
 
@@ -153,16 +153,6 @@
 	add_mob_descriptor(prefs.descriptor_muzzle || /datum/mob_descriptor/face/gnoll/long_muzzle)
 	add_mob_descriptor(prefs.descriptor_expression || /datum/mob_descriptor/face_exp/gnoll/alert)
 	return TRUE
-
-/mob/living/carbon/human/proc/clear_non_gnoll_bodyparts()
-	for(var/obj/item/bodypart/part as anything in bodyparts.Copy())
-		if(part.body_zone != BODY_ZONE_TAUR)
-			continue
-		part.drop_limb(1)
-		qdel(part)
-
-	// Taur bodies replace both legs, so restore a standard biped layout.
-	ensure_not_taur()
 
 /mob/living/carbon/human/proc/reset_gnoll_sprite_scale()
 	if(!dna?.features)

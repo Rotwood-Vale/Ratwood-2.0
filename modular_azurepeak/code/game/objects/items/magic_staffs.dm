@@ -23,6 +23,7 @@
 		/datum/crafting_recipe/gemstaff/diamond_staff,
 		/datum/crafting_recipe/gemstaff/riddle_of_steel_staff,
 		/datum/crafting_recipe/gemstaff/blacksteelstaffupgrade,
+		/datum/crafting_recipe/gemstaff/ducalblacksteelstaffupgrade,
 		)
 
 	AddElement(

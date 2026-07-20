@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
-	datum_flags = DF_STATIC_OBJECT
+
 	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
 	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
 	var/mob/oranges_ear/assigned_oranges_ear
@@ -280,6 +280,10 @@
 		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
 			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
 				continue
+			if(istype(movable_content, /obj/structure) || istype(movable_content, /obj/machinery))
+				var/obj/structure/blocker = movable_content
+				if(blocker.climbable)
+					continue
 			return TRUE
 	return FALSE
 

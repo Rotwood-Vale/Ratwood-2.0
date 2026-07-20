@@ -338,6 +338,7 @@
 	if(organ_slowdown)
 		was_owner.remove_movespeed_modifier("[src.type]_slow", update = TRUE)
 	was_owner.bodyparts -= src
+	was_owner.bodyparts_by_zone -= body_zone
 	owner = null
 
 	if(ishuman(was_owner))
@@ -350,7 +351,8 @@
 	was_owner.update_health_hud() //update the healthdoll
 	was_owner.mark_zone_selector_hud_dirty()
 	was_owner.queue_icon_update(PENDING_UPDATE_BODY)
-	was_owner.update_mobility()
+	if(!special)
+		was_owner.update_mobility()
 
 	// drop_location = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 	if(!drop_location)
@@ -547,6 +549,9 @@
 	moveToNullspace()
 	owner = C
 	C.bodyparts += src
+	if(C.bodyparts_by_zone[body_zone])
+		CRASH("Mob [C] already has a bodypart [C.bodyparts_by_zone[body_zone]] for zone [body_zone], can't add [src]!")
+	C.bodyparts_by_zone[body_zone] = src
 	if(src.body_zone == BODY_ZONE_TAUR)
 		ADD_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 	if(held_index)
@@ -598,8 +603,9 @@
 		C.add_movespeed_modifier("[src.type]_slow", update=TRUE, priority=100, flags=NONE, override=FALSE, multiplicative_slowdown=organ_slowdown, movetypes=GROUND, blacklisted_movetypes=NONE, conflict=FALSE)
 	C.updatehealth()
 	C.mark_zone_selector_hud_dirty()
-	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)	
-	C.update_mobility()
+	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)
+	if(!special)
+		C.update_mobility()
 	return TRUE
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
