@@ -689,6 +689,15 @@
 					hud_used.temperature.icon_state = "temphot"
 				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
 					hud_used.temperature.icon_state = "tempveryhot"
+				var/atom/movable/screen/temperature/tempicon = hud_used.temperature
+				var/turf/open/floor/F = loc
+				if(isfloorturf(F) && F.heat)
+					if(!tempicon.heated_tile)
+						tempicon.heated_tile = TRUE
+						tempicon.add_overlay("tempheated")
+				else if(tempicon.heated_tile)
+					tempicon.heated_tile = FALSE
+					tempicon.cut_overlay("tempheated")
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)

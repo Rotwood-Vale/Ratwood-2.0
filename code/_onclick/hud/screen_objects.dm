@@ -2202,6 +2202,7 @@
 	icon = 'icons/mob/rogueheat.dmi'
 	screen_loc = rogueui_temperature
 	layer = HUD_LAYER+0.1
+	var/heated_tile = FALSE
 
 /atom/movable/screen/temperature/Click(location, control, params)
 	if(ishuman(usr))
