@@ -8,6 +8,7 @@
 	. = ..()
 	update_a_intents()
 	swap_rmb_intent(num=1)
+	AddComponent(/datum/component/wallpress_doubletap)
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -962,19 +963,16 @@
 		reset_offsets("wall_press")
 		return FALSE
 	if(buckled || lying)
-		wallpressed = FALSE
+		set_wallpressed(FALSE)
 		reset_offsets("wall_press")
 		return FALSE
 	var/turf/newwall = get_step(newloc, wallpressed)
 	if(!T.Adjacent(newwall))
 		return reset_offsets("wall_press")
-	if(isclosedturf(newwall) && fixedeye)
-		var/turf/closed/C = newwall
-		if(C.wallpress)
-			return TRUE
-	wallpressed = FALSE
+	if(fixedeye && newwall?.get_wallpress_atom())
+		return TRUE
+	set_wallpressed(FALSE)
 	reset_offsets("wall_press")
-	update_wallpress_slowdown()
 
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 
@@ -1954,6 +1952,10 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if (NAMEOF(src, wallpressed))
+			set_wallpressed(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE

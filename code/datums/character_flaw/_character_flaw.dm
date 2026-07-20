@@ -202,38 +202,36 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/last_aura_tick = 0
 	var/aura_tick_delay = 5 SECONDS
 	var/suppressed_until = 0
-	var/next_gas_puff = 0
 
 /datum/charflaw/malodorous/proc/is_reeking()
 	return world.time >= suppressed_until
 
-/datum/charflaw/malodorous/on_bath(mob/user)
+/datum/charflaw/malodorous/on_bath(mob/living/user)
 	if(!ishuman(user))
 		return
 	suppressed_until = world.time + 30 MINUTES
+	user.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
 	to_chat(user, span_notice("I scrub the stink away. I should stay fresh for a while."))
 
 /datum/charflaw/malodorous/flaw_on_life(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(!is_reeking())
-		return
-	if(!H.can_smell())
-		return
-	if(user.mind?.antag_datums)
+	var/should_reek = is_reeking() && H.can_smell()
+
+	if(should_reek && user.mind?.antag_datums)
 		for(var/datum/antagonist/D in user.mind?.antag_datums)
 			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
-				return
-	if(world.time >= next_gas_puff)
-		var/obj/effect/temp_visual/small_smoke/puff = new /obj/effect/temp_visual/small_smoke(null)
-		puff.duration = rand(100, 150)
-		puff.layer = ABOVE_MOB_LAYER
-		puff.color = "#3a6600"
-		puff.alpha = 150
+				should_reek = FALSE
+				break
 
-		H.vis_contents += puff
-		next_gas_puff = world.time + rand(12 SECONDS, 26 SECONDS)
+	if(should_reek)
+		H.apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
+	else
+		H.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+
+	if(!should_reek)
+		return
 	if(world.time < last_aura_tick + aura_tick_delay)
 		return
 	last_aura_tick = world.time
@@ -246,6 +244,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		if(nearby.stat)
 			continue
 		if(!nearby.can_smell())
+			continue
+		if(!HAS_TRAIT(nearby, TRAIT_NOSTINK))
 			continue
 		if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
 			to_chat(nearby, span_warning("Something nearby reeks."))
