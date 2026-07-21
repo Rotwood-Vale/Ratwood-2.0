@@ -1,3 +1,11 @@
+/datum/round_modifier/medium_bandits
+	name = "Medium Bandits"
+	desc = "The free men have come."
+	cost = 3
+	weight = 20
+	min_chaos = 2
+	bandit_slots = 6
+
 /datum/round_modifier/low_gnolls
 	name = "Low Gnolls"
 	desc = "The dregs of a bloodbeast pack."
@@ -31,10 +39,11 @@
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
 	desc = "The free men have come in force."
-	cost = 4
-	weight = 8
+	cost = 5
+	weight = 12
 	min_chaos = 3
-	bandit_slots = 5
+	incompatible = list(/datum/round_modifier/medium_bandits)
+	bandit_slots = 10
 
 /datum/round_modifier/werewolf
 	name = "Verevolf"
@@ -54,7 +63,7 @@
 	name = "Vampyre Lord"
 	desc = "Hail! Hail! Kneel before the bastard tyrant!"
 	cost = 6
-	weight = 8
+	weight = 5
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/vampires)
 
