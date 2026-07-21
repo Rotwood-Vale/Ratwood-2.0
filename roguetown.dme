@@ -789,6 +789,8 @@
 #include "code\datums\migrants\migrant_waves\grenzel_noble_wave.dm"
 #include "code\datums\migrants\migrant_waves\gronn_roles.dm"
 #include "code\datums\migrants\migrant_waves\gronn_wave.dm"
+#include "code\datums\migrants\migrant_waves\hammerhold_roles.dm"
+#include "code\datums\migrants\migrant_waves\hammerhold_wave.dm"
 #include "code\datums\migrants\migrant_waves\heartfelt roles.dm"
 #include "code\datums\migrants\migrant_waves\heartfelt wave.dm"
 #include "code\datums\migrants\migrant_waves\knightly_journey_roles.dm"

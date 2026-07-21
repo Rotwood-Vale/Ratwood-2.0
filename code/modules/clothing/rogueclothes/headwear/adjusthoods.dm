@@ -141,6 +141,9 @@
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 
+/obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/blue
+	color = CLOTHING_BLUE
+
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
 	name = "shadowed hood"
 	desc = "It sits just so, obscuring the face just enough to spoil recognition."
