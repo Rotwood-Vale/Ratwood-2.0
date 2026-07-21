@@ -1835,30 +1835,49 @@
 	name = "dune"
 	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
 	icon = 'icons/turf/roguefloor.dmi'
-	icon_state = "dune"
+	icon_state = "dune_1"
 
 	anchored = TRUE
 	density = FALSE
 	opacity = TRUE
 	mouse_opacity = 0
 
-
 /obj/effect/decal/dune/Crossed(atom/movable/O)
 	. = ..()
 
 	if(!isliving(O))
 		return
+
 	opacity = FALSE
-	alpha = 0
 
 /obj/effect/decal/dune/Uncrossed(atom/movable/O)
 	. = ..()
+
 	if(!isliving(O))
 		return
 
-	var/turf/dune_turf = get_turf(src)
-	for(var/mob/living/L in dune_turf)
+	var/turf/T = get_turf(src)
+	for(var/mob/living/L in T)
 		if(L != O)
 			return
-	alpha = 255
+
 	opacity = TRUE
+
+
+/obj/effect/decal/dune/one
+	icon_state = "dune_1"
+
+/obj/effect/decal/dune/two
+	icon_state = "dune_2"
+
+/obj/effect/decal/dune/three
+	icon_state = "dune_3"
+
+/obj/effect/decal/dune/four
+	icon_state = "dune_4"
+
+/obj/effect/decal/dune/five
+	icon_state = "dune_5"
+
+/obj/effect/decal/dune/six
+	icon_state = "dune_6"
