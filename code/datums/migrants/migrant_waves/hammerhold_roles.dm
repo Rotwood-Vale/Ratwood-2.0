@@ -1,7 +1,7 @@
 //Jarl. Heavy armour guy with a greataxe and a sidearm mace.
 /datum/migrant_role/hammerhold/jarl
 	name = "Hammerholdian Jarl"
-	greet_text = "You are a jarl from Hammerhold and the leader of your warband. Guide them to glory and wealth or try to survive."
+	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband. Guide them to glory and wealth or try to survive."
 	outfit = /datum/outfit/job/roguetown/hammerhold/jarl
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi) //Same racelocks as Gronn Chieftain, subject to change
@@ -54,6 +54,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()
 
+	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
@@ -138,7 +139,7 @@
 //Volfskin. CritResist+Enduring guy with two axes.
 /datum/migrant_role/hammerhold/volfskin
 	name = "Hammerholdian Volfskin"
-	greet_text = "You are a wolfskin, one of the legendary Hammerholdian warriors who are said to be possessed by raging volf spirits in battles. Distrusted due to your less than savoury religious practices, but well-respected for your combat prowess."
+	greet_text = "You are a volfskin, one of the legendary Hammerholdian warriors who are said to be possessed by raging volf spirits in battles. Distrusted due to your less than savoury religious practices, but well-respected for your combat prowess."
 	outfit = /datum/outfit/job/roguetown/hammerhold/volfskin
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
