@@ -106,8 +106,10 @@
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
 			if(!C.can_smell())
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
+			
 			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("[user] attempts to force me to inhale [src]!"))
+								span_danger("I attempt to force [C] to inhale [src]!"))
+		
 			if(C.cmode)
 				if(!CH.grabbedby)
 					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))

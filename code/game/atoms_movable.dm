@@ -455,12 +455,6 @@
 
 	unbuckle_all_mobs(force=1)
 
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
-#endif
-
 	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
