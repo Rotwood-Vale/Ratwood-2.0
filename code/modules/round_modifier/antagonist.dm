@@ -1,20 +1,3 @@
-/datum/round_modifier/low_wretches
-	name = "Low Wretches"
-	desc = "Burgeoning seed of the inhumen."
-	cost = 2
-	weight = 15
-	max_chaos = 2
-	wretch_slots = 2
-
-/datum/round_modifier/medium_wretches
-	name = "Medium Wretches"
-	desc = "Men pledged to the inhumen have come in force."
-	cost = 3
-	weight = 12
-	min_chaos = 2
-	incompatible = list(/datum/round_modifier/low_wretches)
-	wretch_slots = 6
-
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"
 	desc = "Middling amount of banditry in the VALE."
@@ -49,10 +32,9 @@
 /datum/round_modifier/high_wretches
 	name = "High Wretches"
 	desc = "Heresy spreads like a plague in the hearts of men!"
-	cost = 5
+	cost = 4
 	min_chaos = 3
-	incompatible = list(/datum/round_modifier/medium_wretches, /datum/round_modifier/low_wretches)
-	wretch_slots = 10
+	wretch_slots = 5
 
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
@@ -80,7 +62,7 @@
 /datum/round_modifier/vampirelord
 	name = "Vampyre Lord"
 	desc = "Hail! Hail! Kneel before the bastard tyrant!"
-	cost = 8
+	cost = 6
 	weight = 8
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/vampires)
