@@ -178,14 +178,3 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	if(!isliving(user))
-		return
-	var/mob/living/living_user = user
-	if(!living_user.has_status_effect(/datum/status_effect/debuff/climbing_lfwb))
-		return
-	if(is_blocked_turf())
-		to_chat(living_user, span_notice("can't move here!"))
-		return
-	if(!do_after(living_user, 1 SECONDS, target = src))
-		return
-	living_user.forceMove(src)
