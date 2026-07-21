@@ -202,6 +202,7 @@
 			qdel(F)
 	if(isliving(AM) && !AM.throwing)
 		var/mob/living/L = AM
+		var/in_dinghy = istype(L.buckled, /obj/vehicle/ridden/dinghy)
 		if(HAS_TRAIT(L, TRAIT_CURSE_ABYSSOR))
 			L.freak_out()
 			L.visible_message(span_warning("[L] spasms violently upon touching the water!"), span_danger("The water... it burns me!"))
@@ -210,7 +211,7 @@
 		if (istype(src,/turf/open/water/bloody))
 			L.add_mob_blood(L)
 
-		if(!(L.movement_type & FLYING))
+		if(!(L.movement_type & FLYING) && !in_dinghy))
 			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
 				L.SoakMob(FULL_BODY)
 			else
@@ -632,7 +633,7 @@
 		. += DOWNSTREAM_BONUS // faster!
 	else if(travel_dir == GLOB.reverse_dir[dir]) // upriver
 		. += UPSTREAM_PENALTY // slower
-	else 
+	else
 		. += SIDESTREAM_PENALTY // sidestream walking isn't free, bro
 
 /turf/open/water/river/proc/process_river()
