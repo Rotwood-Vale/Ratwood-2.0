@@ -4,9 +4,6 @@
 	var/list/active_modifiers = list()
 	var/modifiers_rolled = FALSE
 
-/datum/controller/subsystem/gamemode/proc/chaos_vote_choices()
-	return list("Low Chaos" = 0, "Medium Chaos" = 0, "High Chaos" = 0)
-
 /datum/controller/subsystem/gamemode/proc/chaos_vote_result(winner)
 	switch(winner)
 		if("Low Chaos")
@@ -23,11 +20,8 @@
 		return
 	modifiers_rolled = TRUE
 
-	if(SSvote.mode == "chaos") //round start
-		SSvote.result()
-		for(var/client/C in SSvote.voting)
-			C << browse(null, "window=vote")
-		SSvote.reset()
+	if(istype(SSvote.current_vote, /datum/vote/chaos))
+		SSvote.end_vote()
 
 	switch(level)
 		if(1)

@@ -3,7 +3,7 @@
 	desc = "The VALE is mostly clean of heresy."
 	weight = 15
 	max_chaos = 1
-	wretch_slots = 2
+	wretch_slots = 3
 
 /datum/round_modifier/medium_wretches
 	name = "Medium Wretches"
@@ -11,7 +11,7 @@
 	cost = 3
 	weight = 12
 	min_chaos = 2
-	wretch_slots = 4
+	wretch_slots = 5
 
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"
@@ -19,7 +19,7 @@
 	cost = 3
 	weight = 12
 	min_chaos = 2
-	bandit_slots = 4
+	bandit_slots = 5
 
 /datum/round_modifier/low_gnolls
 	name = "Low Gnolls"
@@ -42,7 +42,7 @@
 	cost = 5
 	weight = 10
 	min_chaos = 3
-	wretch_slots = 8
+	wretch_slots = 10
 
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
@@ -51,7 +51,7 @@
 	weight = 8
 	min_chaos = 3
 	incompatible = list(/datum/round_modifier/medium_bandits)
-	bandit_slots = 8
+	bandit_slots = 10
 
 /datum/round_modifier/vampire
 	name = "Night Beest"
