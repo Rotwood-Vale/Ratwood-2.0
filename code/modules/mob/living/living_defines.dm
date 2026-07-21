@@ -3,9 +3,9 @@
 	sight = 0
 	see_in_dark = 8
 	hud_possible = list(ANTAG_HUD)
-	
+
 	typing_indicator_enabled = TRUE
-	
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -27,7 +27,8 @@
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
 	var/resting = FALSE
-	var/wallpressed = FALSE
+	/// Cardinal dir of the wall we're pressed against, or FALSE. Use set_wallpressed()/is_wallpressed().
+	VAR_PROTECTED/wallpressed = FALSE
 	var/climbing = FALSE
 
 	var/pixelshift_layer = 0
@@ -63,7 +64,7 @@
 
 	var/tod = null // Time of death
 
-	/// The boolean "Are we on fire?" var. 
+	/// The boolean "Are we on fire?" var.
 	var/on_fire = FALSE
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/fire_stacks = 0
