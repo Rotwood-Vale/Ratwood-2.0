@@ -1,11 +1,3 @@
-/datum/round_modifier/medium_bandits
-	name = "Medium Bandits"
-	desc = "Middling amount of banditry in the VALE."
-	cost = 3
-	weight = 12
-	min_chaos = 2
-	bandit_slots = 6
-
 /datum/round_modifier/low_gnolls
 	name = "Low Gnolls"
 	desc = "The dregs of a bloodbeast pack."
@@ -39,11 +31,10 @@
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
 	desc = "The free men have come in force."
-	cost = 5
+	cost = 4
 	weight = 8
 	min_chaos = 3
-	incompatible = list(/datum/round_modifier/medium_bandits)
-	bandit_slots = 10
+	bandit_slots = 5
 
 /datum/round_modifier/werewolf
 	name = "Verevolf"
