@@ -24,6 +24,7 @@
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/mace/steel
 	beltr = /obj/item/flashlight/flare/torch/lantern
+	id = /obj/item/clothing/neck/roguetown/psicross/abyssor
 	r_hand = /obj/item/rogueweapon/greataxe/steel
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1, //Some money as a treat. Hire an Atgervi.
@@ -54,7 +55,6 @@
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 	if(!H.has_language(/datum/language/dwarvish))
@@ -126,7 +126,7 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/create_campfire)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
-	
+
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)	//T3. We are NOT giving you Abyssal Infusion.
@@ -160,6 +160,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
+	id = /obj/item/clothing/neck/roguetown/psicross/abyssor
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -177,7 +178,7 @@
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
-	
+
 	H.change_stat(STATKEY_CON, 3)
 	H.change_stat(STATKEY_WIL, 3)
 	H.change_stat(STATKEY_STR, 2)
@@ -221,6 +222,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/atgervi
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi
+	id = /obj/item/clothing/neck/roguetown/psicross/abyssor
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -296,7 +298,7 @@
 	if(H.mind)
 		var/classes = list("Captured Worker", "Captured Artisan", "Captured Noble", "Captured Bard")
 		var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
-		
+
 		switch(classchoice)
 			if("Captured Worker")
 				shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/blue
@@ -357,8 +359,8 @@
 				H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/sewing, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
-				H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)		
-					
+				H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
+
 				ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
 
 			if("Captured Bard")
