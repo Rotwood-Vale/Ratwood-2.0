@@ -96,6 +96,9 @@
 		return FALSE
 #endif
 		if(world.time > mob.mob_timers["lastdied"] + 60 SECONDS)
+			if(is_banned_from(mob.ckey, "Observer"))
+				to_chat(src, span_danger("You are banned from observing."))
+				return FALSE
 			mob.ghostize()
 		else
 			if(!world.time%5)

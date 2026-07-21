@@ -246,6 +246,7 @@
 
 /obj/item/rogueweapon/whip/spiderwhip/baotha
 	desc = "This one hums faintly to you. A song from your childhood?"
+	minstr = 8
 
 /obj/item/rogueweapon/whip/spiderwhip/baotha/Initialize(mapload)
 	. = ..()

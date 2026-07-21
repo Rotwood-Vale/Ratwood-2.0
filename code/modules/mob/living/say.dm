@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			keenears = HAS_TRAIT(H, TRAIT_KEENEARS)
+			keenears = H.has_keen_ears()
 			var/name_to_highlight = H.nickname
 			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")	//We don't need to highlight an unset or blank one.
 				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[H.highlight_color]>[name_to_highlight]</font></b>")
@@ -472,8 +472,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			if(get_dist(potential_listener, src) > message_range) //they're out of range of normal hearing
 				continue // don't check ghostwhisper prefs here, those are for admins
-			if(do_ghost_protection && isobserver(potential_listener) && !ghost_bypasses_ghost_protection(potential_listener))
-				continue
+			if(do_ghost_protection && isobserver(potential_listener))
+				var/mob/dead/observer/potential_observer = potential_listener
+				if(!potential_observer.bypasses_ghost_protection(potential_listener))
+					continue
 			if(!is_in_zweb(src.z,potential_listener.z))
 				continue
 			listening |= potential_listener
@@ -493,7 +495,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		admin_listeners[observer] = TRUE
 	if(do_ghost_protection) // don't loop over the whole listening list unless we really have to
 		for(var/mob/dead/observer/ghost in listening) // a necessary evil so ghosts don't show up in the seen log
-			if(ghost_bypasses_ghost_protection(ghost))
+			if(ghost.bypasses_ghost_protection())
 				continue
 			listening -= ghost
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)

@@ -51,6 +51,16 @@
 	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
 
+/datum/crafting_recipe/roguetown/engineering/bars/cemetery
+	name = "cemetery bars"
+	result = /obj/structure/bars/cemetery
+	reqs = list(/obj/item/ingot/iron = 1)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	ignoredensity = TRUE
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/engineering/shopbars
 	name = "shop bars"
 	result = /obj/structure/bars/shop

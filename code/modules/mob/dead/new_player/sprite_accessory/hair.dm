@@ -1718,6 +1718,30 @@
 	name = "Sodden"
 	icon_state = "sodden"
 
+/datum/sprite_accessory/hair/head/indigozap
+	name = "Reckless"
+	icon_state = "indigo_zap"
+
+/datum/sprite_accessory/hair/head/rainbowdash
+	name = "Loyal"
+	icon_state = "rainbow_dash"
+	
+/datum/sprite_accessory/hair/head/renard
+	name = "Renard"
+	icon_state = "renard"
+
+/datum/sprite_accessory/hair/head/willowtree
+	name = "Willowtree"
+	icon_state = "willowtree"
+
+/datum/sprite_accessory/hair/head/nimue
+	name = "Nimue"
+	icon_state = "nimue"
+
+/datum/sprite_accessory/hair/head/willow
+	name = "Willow"
+	icon_state = "willow"
+
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian
 	icon = 'icons/mob/sprite_accessory/hair/vulpkian_hair.dmi'

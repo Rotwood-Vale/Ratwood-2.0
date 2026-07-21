@@ -1232,6 +1232,7 @@
 	)
 	bigboy = TRUE
 	gripsprite = TRUE
+	special = /datum/special_intent/piercing_lunge
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
@@ -1699,6 +1700,7 @@
 	force = 35
 	force_wielded = 55
 	minstr = 15
+	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 	wdefense = 15
 	max_integrity = 555
 	max_blade_int = 555

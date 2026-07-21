@@ -20,20 +20,6 @@
 			user.add_stress(/datum/stressevent/unseemly)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
-	if(HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY) && user != src)
-		// 70% chance to give debuff, 30% chance to give buff
-		if(prob(70) && !user.has_stress_event(/datum/stressevent/uncanny))
-			user.add_stress(/datum/stressevent/uncanny)
-		else
-			if(!user.has_stress_event(/datum/stressevent/beautiful))
-				user.add_stress(/datum/stressevent/beautiful)
-	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY) && user != src)
-		// Original 50/50 eerie beauty
-		if(prob(50) && !user.has_stress_event(/datum/stressevent/uncanny))
-			user.add_stress(/datum/stressevent/beautiful)
-		else
-			if(!user.has_stress_event(/datum/stressevent/beautiful))
-				user.add_stress(/datum/stressevent/uncanny)
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
@@ -258,6 +244,9 @@
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_RACISMISBAD) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
 
+		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
+			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")
+
 		if(HAS_TRAIT(src, TRAIT_DISGRACED_NOBLE))
 			if(HAS_TRAIT(user, TRAIT_NOBLE))
 				. += span_phobia("A disgraced member of the nobility...")
@@ -400,42 +389,6 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 
-		if (HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY))
-			switch (pronouns)
-				if (HE_HIM, SHE_HER_M)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_masc("[m1] unsettlingly handsome... something is deeply wrong.")
-					else
-						. += span_beautiful_masc("[m1] hauntingly handsome.")
-				if (SHE_HER, HE_HIM_F)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_fem("[m1] unsettlingly beautiful... something is deeply wrong.")
-					else
-						. += span_beautiful_fem("[m1] hauntingly beautiful.")
-				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_nb("[m1] unsettlingly attractive... something is deeply wrong.")
-					else
-						. += span_beautiful_nb("[m1] hauntingly attractive.")
-
-		if (HAS_TRAIT(src, TRAIT_BEAUTIFUL_UNCANNY))
-			switch (pronouns)
-				if (HE_HIM, SHE_HER_M)
-					if(user.has_stress_event(/datum/stressevent/beautiful))
-						. += span_beautiful_masc("[m1] possess[p_es()] an otherworldly handsomeness.")
-					else
-						. += span_beautiful_masc("There's something eerily wrong about [m2] appearance.")
-				if (SHE_HER, HE_HIM_F)
-					if(user.has_stress_event(/datum/stressevent/beautiful))
-						. += span_beautiful_fem("[m1] possess[p_es()] an otherworldly beauty.")
-					else
-						. += span_beautiful_fem("There's something eerily wrong about [m2] appearance.")
-				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					if(user.has_stress_event(/datum/stressevent/beautiful))
-						. += span_beautiful_nb("[m1] possess[p_es()] an otherworldly allure.")
-					else
-						. += span_beautiful_nb("There's something eerily wrong about [m2] appearance.")
-
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
@@ -462,11 +415,11 @@
 
 	if(user != src && get_dist(user, src) <= 3)
 		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
-		if(malodorous_flaw && malodorous_flaw.is_reeking())
+		if((malodorous_flaw && malodorous_flaw.is_reeking()) || has_status_effect(/datum/status_effect/debuff/stinky_contact))
 			var/can_see_stink = !isliving(user) // adminghost always sees it
 			if(isliving(user))
 				var/mob/living/living_user = user
-				can_see_stink = living_user.can_smell()
+				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
 				. += span_greentext("They reek.")
 
@@ -709,8 +662,8 @@
 	if(ears && !(SLOT_HEAD in obscured))
 		. += "[m3] [get_examine_item_name_with_hover(user, ears)] on [m2] ears."
 
-	//ID
-	if(wear_ring && !(SLOT_RING in obscured))
+	//ring
+	if(wear_ring && !(SLOT_RING in obscured) && !HAS_TRAIT(wear_ring, TRAIT_EXAMINE_SKIP))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_ring)] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring

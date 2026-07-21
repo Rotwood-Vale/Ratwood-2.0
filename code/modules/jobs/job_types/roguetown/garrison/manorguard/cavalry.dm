@@ -32,6 +32,8 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,	//Best tracker. Might as well give it something to stick-out utility wise.
 	)
 
+	extra_context = "This class is restricted from using the Equestrian virtue."
+
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)

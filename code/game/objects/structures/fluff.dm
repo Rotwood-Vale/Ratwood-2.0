@@ -427,6 +427,10 @@
 		icon_state = "passage0"
 		density = TRUE
 
+/obj/structure/bars/passage/preopen
+	density = FALSE
+	icon_state = "passage1"
+
 /obj/structure/bars/passage/shutter
 	icon_state = "shutter0"
 	density = TRUE
@@ -519,7 +523,8 @@
 	if(togg)
 		testing("togge1")
 		icon_state = "floorgrilleopen"
-		obj_flags = CAN_BE_HIT
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/mob/living/M in loc)
@@ -527,7 +532,8 @@
 	else
 		testing("togge2")
 		icon_state = "floorgrille"
-		obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/bars/grille/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -802,6 +808,58 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
 
+// icon signs
+
+/obj/structure/fluff/iconsign
+	icon_state = "sign"
+	name = "icon sign"
+	desc = "you shouldn't be seeing this."
+	icon = 'icons/roguetown/misc/signs.dmi'
+	max_integrity = 200
+	blade_dulling = DULLING_BASHCHOP
+
+/obj/structure/fluff/iconsign/zizosign
+	icon_state = "signdeath"
+	name = "inverted psycross sign"
+	desc = "A sign with a inverted psycross."
+
+/obj/structure/fluff/iconsign/psycrosssign
+	icon_state = "signlife"
+	name = "psycross sign"
+	desc = "A sign with a psycross."
+
+/obj/structure/fluff/iconsign/eaglesign
+	icon_state = "signeagle"
+	name = "eagle sign"
+	desc = "A sign with a heraldic eagle on it."
+
+/obj/structure/fluff/iconsign/spidersign
+	icon_state ="signspider"
+	name = "spider sign"
+	desc = "A sign with a spider on it."
+
+/obj/structure/fluff/iconsign/smithsign
+	icon_state = "signdwarf"
+	name = "hammer sign"
+	desc = "A sign with a hammer on it."
+
+/obj/structure/fluff/iconsign/innsign
+	icon_state = "signmug"
+	name = "mug sign"
+	desc = "A sign with a cup on it."
+
+/obj/structure/fluff/iconsign/elksign
+	icon_state = "signelk"
+	name = "elk sign"
+	desc = "A sign with an elk on it."
+
+/obj/structure/fluff/iconsign/skullsign
+	icon_state = "signskull"
+	name = "skull sign"
+	desc = "A sign with a skull on it."
+
+// it should be noted that icon signs may be able to be written on but hopefully this'll prevent that
+
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -897,8 +955,8 @@
 		return ..()
 
 /obj/structure/fluff/statue
-	name = "statue"
-	desc = ""
+	name = "angel statue"
+	desc = "The angels of death are known to visit those whose time draws near, to offer them a less painful way to their final destination."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bstatue"
 	density = FALSE
@@ -939,82 +997,110 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/statue/gargoyle
+	name = "gargoyle statue"
+	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
 	icon_state = "gargoyle"
 
 /obj/structure/fluff/statue/aasimar
+	name = "crumbling statue"
+	desc = "Carvings of heroes from before your time in this world, the faces and names have become lost, they will likely be naught but dust soon enough."
 	icon_state = "aasimar"
 
 /obj/structure/fluff/statue/gargoyle/candles
 	icon_state = "gargoyle_candles"
 
 /obj/structure/fluff/statue/gargoyle/moss
+	name = "gargoyle statue"
+	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
 	icon_state = "mgargoyle"
 
 /obj/structure/fluff/statue/gargoyle/moss/candles
 	icon_state = "mgargoyle_candles"
 
 /obj/structure/fluff/statue/knight
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "knightstatue_l"
 
 /obj/structure/fluff/statue/astrata
 	name = "astrata statue"
-	desc = "A stone statue of the sun Goddess Astrata. Bless."
+	desc = "Astrata saw humanity as undisciplined for letting the world become so cruel and terrible, and became a radiant shepherd over the flock of mankind. The Church of the Sun believes that all mortals require guidance and protection from the terrors of the world."
 	icon_state = "astrata"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
 
 /obj/structure/fluff/statue/astrata/gold
-	name = "ornamental astrata statue"
-	desc = "An ornamental stone statue of the sun Goddess Astrata, decorated with golden jewelry. Bless."
+	name = "decorated astrata statue"
+	desc = "In the wild eyes of the carving you can see the fire that commands fear and respect, the light of daybreak that gives hope in an endless night, the scorching fury of templars that burns heretics and undead alike."
 	icon_state = "astrata_bling"
 
 //Why are all of these in one giant file.
 /obj/structure/fluff/statue/abyssor
 	name = "abyssor statue"
-	desc = "A slate statue of the ancient god abyssor. One of many depictions drawn from a dream no doubt. This particular one is horrifying to look at."
+	desc = "An ephemeral cerulean dream, carved by those who seek to understand unspoken truths."
 	icon_state = "abyssor"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
 	pixel_x = -16
 
 /obj/structure/fluff/statue/abyssor/dolomite
 	name = "abyssor statue"
-	desc = "A rare dolomite statue of the ancient god abyssor. Hewn from bleached rock as if the shimmer makes his faceless gaze any less terrifying."
+	desc = "An ephemeral cerulean dream, carved by those who seek to understand unspoken truths."
 	icon_state = "abyssor_dolomite"
 
 /obj/structure/fluff/statue/knight/r
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "knightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "oknightstatue_l"
 
 /obj/structure/fluff/statue/knight/interior/r
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "oknightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior/r/bronze
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	color = "#ff9c1a"
 
 /obj/structure/fluff/statue/knightalt
+	name = "knight statue"
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
 	icon_state = "knightstatue2_l"
 
 /obj/structure/fluff/statue/knightalt/r
+	name = "knight statue"
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
 	icon_state = "knightstatue2_r"
 
 
 /obj/structure/fluff/statue/myth
+	name = "warrior statue"
+	desc = "The name has long since faded from this statue, but one can still see the incredible detail in their steady stance and barely restrained muscular strength."
 	icon_state = "myth"
 	density = TRUE
 
 /obj/structure/fluff/statue/psy
+	name = "psydon statue"
+	desc = "The All-Father watched over Psydonia, once a paradise for his flourishing creations, without intervening upon the land. This would change one fateful day as the Arch-Enemy's ascension threatened mankind, narrowly stopped by Psydon. He wept for three daes and three nights after, and vanished from the realm."
 	icon_state = "psy"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 /obj/structure/fluff/statue/psybloody
+	name = "psydon statue"
+	desc = "And thus he wept, not for you, not for I; but for it all."
 	icon_state = "psy_bloody"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 
 /obj/structure/fluff/statue/small
+	name = "elven statue"
+	desc =  "Elves have long been seen as symbols of beauty and long life, and some believe statues of them will bring some luck, or at least make a place more bearable to look at."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "elfs"
 
@@ -1023,24 +1109,32 @@
 	icon_state = "pillar"
 
 /obj/structure/fluff/statue/femalestatue
+	name = "temptress statue"
+	desc = "Artistic depiction of the mortal form, or an exploitation of mortal desire? One thing is known for sure, these statues are not often put up in charity houses or temples."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "1"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue1
+	name = "queen alexia statue"	
+	desc = "A modest depiction of the Queen Alexia the Righteous, lacking her usual armors or finery, many were constructed as a show of her humility and piety by prisoners of the crown."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "2"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue2
+	name = "forest spirit statue"
+	desc = "Dendor's Wild is protected by many a forest spirit more than glad to drown or throttle travelers who cut one too many trees, depictions of them are often made by his followers in his places as warnings of this for those who might forget the natural balance of things."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "5"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue/zizo
+	name = "zizo statue"
+	desc = "With her mortal form destroyed and now chained in the underworld, she still whispers to her disciples, guiding them to act in her name and rebuild her powers."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
@@ -1048,10 +1142,12 @@
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
+	desc = "Guardian of the harvest, and a harpy's worst nightmare."
 	icon_state = "td"
 
 /obj/structure/fluff/statue/tdummy
 	name = "practice dummy"
+	desc = "A squire's best friend; take care it doesn't knock you on your arse."
 	icon_state = "p_dummy"
 	icon = 'icons/roguetown/misc/structure.dmi'
 
@@ -1095,7 +1191,8 @@
 	..()
 
 /obj/structure/fluff/statue/spider
-	name = "mother"
+	name = "idol of baotha"
+	desc = "The temptress has been depicted in many forms, but a common shape is that of the spider, ensnaring the victims who call themselves her followers ever tighter in her web."
 	icon_state = "spidercore"
 
 /obj/structure/fluff/statue/spider/attackby(obj/item/W, mob/user, params)
@@ -1113,7 +1210,7 @@
 	..()
 
 /obj/structure/fluff/statue/evil
-	name = "idol"
+	name = "idol of matthios"
 	desc = "An idol, built to the many-faced Matthios. Though none can argue his hatred of the Tyrant's Order and nobility, \
 	they certainly can't imagine what he actually looks like. \
 	This is but one of many depictions to the many-faced god, and yet it appears ready to receive tribute all the same."
@@ -1280,6 +1377,11 @@
 	icon_state = "psycrosscrafted"
 	max_integrity = 80
 	chance2hear = 10
+
+/obj/structure/fluff/psycross/crafted/necra
+	name = "necran pantheon cross"
+	icon_state = "cross_necra"
+	max_integrity = 120
 
 /obj/structure/fluff/psycross/psycrucifix
 	name = "wooden psydonic crucifix"
@@ -1593,25 +1695,26 @@
 
 /obj/structure/fluff/statue/noc
 	name = "noc statue"
-	desc = "Wisdom and calm."
+	desc = "This statue is a depiction of Noc the Wise who guides those who seek a greater understanding of the arcane sciences."
 	icon_state = "noc"
 	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
 	pixel_x = -16
 
 /obj/structure/fluff/statue/noc/guard
-	name = "active noc statue"
+	name = "lit noc statue"
+	desc = "In the cold light of the statue's staff you can see a brief glimpse into the truth of this world, the mad and uncontrolled change of the last thousand years, of how little hope remains. And as you look away, you forget."
 	icon_state = "noc_guard"
 
 /obj/structure/fluff/statue/eora
 	name = "eora statue"
-	desc = "Beauty and Charm"
+	desc = "Despite the numerous misconceptions of drunken warriors; the Hearth Mother is not solely concerned with carnal love. To practice charity with the less fortunate and protect the vulnerable is love as well."
 	icon_state = "eora"
 	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
 	pixel_x = -16
 
-/obj/structure/fluff/statue/zizo
-	name = "dubious statue"
-	desc = "Blasphemy... unless...?"
+/obj/structure/fluff/statue/valmora
+	name = "saint valmora statue"
+	desc = "A statue of Valmora the Sword-Saint, who led the dark elves in the city-state of Llurth Dreir to slaughter the cruel lords and priests of the Arch-Enemy and begin an exodus to the surface. The dark elves of Otava praise her as a redeemer and savior."
 	icon_state = "zaelorian_crynsaris"
 	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
 	pixel_x = -16

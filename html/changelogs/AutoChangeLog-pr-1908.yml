@@ -1,4 +1,0 @@
-author: "Jamdrawers"
-delete-after: True
-changes:
-  - bugfix: "fixes wretches showing as Heretics when they should be Outlaws"

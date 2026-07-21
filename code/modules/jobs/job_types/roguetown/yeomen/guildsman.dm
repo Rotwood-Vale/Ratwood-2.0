@@ -96,7 +96,7 @@
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 		beltr = /obj/item/roguekey/crafterguild
 		cloak = /obj/item/clothing/cloak/apron/blacksmith
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -177,7 +177,7 @@
 								/obj/item/rogueweapon/huntingknife = 1,
 								/obj/item/flint = 1,
 						)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
 	if(H.mind)

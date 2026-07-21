@@ -944,7 +944,7 @@
 
 /obj/item/rogueweapon/sword/short/gladius/ancient/decrepit
 	name = "decrepit gladius"
-	desc = "A hefty shortsword, wrought from frayed bronze. Once, the sidearm of a proud legionnaire; now, a consequence of progress and sacrifice."
+	desc = "A hefty shortsword, wrought from frayed bronze. Once, the sidearm of a proud legionnaire; now, a consequence of ambition and sacrifice."
 	force = 18
 	max_integrity = 150
 	blade_dulling = DULLING_SHAFT_CONJURED

@@ -150,6 +150,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/tame = FALSE
 	///What the mob eats, typically used for taming or animal husbandry.
 	var/list/food_type
+	///A typecache used for faster lookups of food_type.
+	var/list/food_typecache
 	///Starting success chance for taming.
 	var/tame_chance
 	///Added success chance after every failed tame attempt.
@@ -201,6 +203,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	update_simplemob_varspeed()
 	our_cells = new(interesting_dist, interesting_dist, 1)
 	set_new_cells()
+	if(length(food_type))
+		food_typecache = typecacheof(food_type)
 //	if(dextrous)
 //		AddComponent(/datum/component/personal_crafting)
 	for(var/spell in inherent_spells)
@@ -227,7 +231,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	our_cells = null
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
-	if(!is_type_in_list(O, food_type))
+	if(!food_typecache?[O.type])
 		..()
 		return
 	else
@@ -701,7 +705,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		to_chat(src, span_warning("I can't do that right now!"))
 		return FALSE
 	if(be_close && !in_range(M, src))
-		to_chat(src, span_warning("I are too far away!"))
+		to_chat(src, span_warning("I am too far away!"))
 		return FALSE
 	if(!(no_dexterity || dextrous))
 		to_chat(src, span_warning("I don't have the dexterity to do this!"))
@@ -812,10 +816,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[hand_index]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 	return TRUE
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
@@ -1011,7 +1015,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/proc/eat_plants()
 
 	var/obj/item/reagent_containers/food/I = locate(/obj/item/reagent_containers/food) in loc
-	if(is_type_in_list(I, food_type))
+	if(food_typecache?[I.type])
 		qdel(I)
 		food = max(food + 30, 100)
 

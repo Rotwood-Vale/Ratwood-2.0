@@ -61,6 +61,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dwarf/gnome,\
 	/datum/species/harpy,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 
 #define RACES_RESPECTED \
@@ -88,12 +89,14 @@ Balloon Alert / Floating Text defines
 	/datum/species/anthromorphsmall,\
 	/datum/species/kobold,\
 	/datum/species/tieberian,\
+	/datum/species/ooze\
 
 #define RACES_SHUNNED \
 	/datum/species/dullahan,\
 	/datum/species/halforc,\
 	/datum/species/goblinp,\
 	/datum/species/harpy,\
+	/datum/species/ooze\
 
 #define RACES_DESPISED \
 	/datum/species/dullahan,\
@@ -102,9 +105,12 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\
 
-#define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)	//Truely no restrictions
+#define RACES_OOZE \
+	/datum/species/ooze,\
 
-#define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)	//Allows all races except dallahun
+#define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Truely no restrictions
+
+#define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Allows all races except dallahun
 
 #define RACES_NO_CONSTRUCT list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED)
 
@@ -165,6 +171,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 // Non-dwarf non-kobold non-goblin mostly
 #define NON_DWARVEN_RACE_TYPES list(\
@@ -190,6 +197,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 // Non-elf non-dwarf non-kobold non-goblin mostly
 #define HUMANLIKE_RACE_TYPES list(\
@@ -211,6 +219,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 #define ALL_CLERIC_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/malum, /datum/patron/divine/eora) // Currently unused.
 

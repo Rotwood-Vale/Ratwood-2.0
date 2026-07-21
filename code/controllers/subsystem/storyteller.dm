@@ -604,8 +604,8 @@ SUBSYSTEM_DEF(gamemode)
 //							H.allmig_reward = 0
 				return TRUE
 		else
-			if(!SSvote.mode)
-				SSvote.initiate_vote("endround", pick("Zlod", "Sun King", "Gaia", "Moon Queen", "Aeon", "Gemini", "Aries"))
+			if(!SSvote.current_vote)
+				SSvote.initiate_vote("endround", pick("Zlod", "Sun King", "Gaia", "Moon Queen", "Aeon", "Gemini", "Aries"), null, forced = TRUE)
 
 	if(SSmapping.retainer.head_rebel_decree)
 		if(reb_end_time == 0)
@@ -702,22 +702,39 @@ SUBSYSTEM_DEF(gamemode)
 		return
 	pick_most_influential(TRUE)
 
+
+
+/datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
+	var/list/final_choices = list()
+	for(var/datum/storyteller/S in get_valid_storytellers())
+		// key = visible name in vote
+		// value = vote count
+		final_choices[S.name] = 0
+
+	return final_choices
+/*	///optional randomized pick of 4 patrons for storytellers. Leaving it here for possible future use
 /datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
 	var/list/final_choices = list()
 	var/list/pick_from = list()
-	for(var/datum/storyteller/storyboy in get_valid_storytellers())
-		if(storyboy.always_votable)
-			final_choices["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = 0
-		else
-			pick_from["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = storyboy.weight //might be able to refactor this to be slightly better due to get_valid_storytellers returning a weighted list
+	for(var/datum/storyteller/S in get_valid_storytellers())
+		// weight uses type internally
+		pick_from[S] = S.weight
 
-	var/added_storytellers = 0
-	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
-		added_storytellers++
-		var/picked_storyteller = pickweight(pick_from)
-		final_choices[picked_storyteller] = 0
-		pick_from -= picked_storyteller
+	var/added = 0
+	while(added < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
+		added++
+
+		var/datum/storyteller/picked = pickweight(pick_from)
+
+		// IMPORTANT:
+		// key = storyteller NAME (what players see)
+		// value = 0 votes
+		final_choices[picked.name] = 0
+
+		pick_from -= picked
+
 	return final_choices
+	*/
 
 /datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
 	for(var/storyteller_type in storytellers)
@@ -727,17 +744,17 @@ SUBSYSTEM_DEF(gamemode)
 		return storyboy.desc
 
 
-/datum/controller/subsystem/gamemode/proc/storyteller_vote_result(html_contaminated)
+/datum/controller/subsystem/gamemode/proc/storyteller_vote_result(selected_name)
 	for(var/storyteller_type in storytellers)
-		var/datum/storyteller/storyboy = storytellers[storyteller_type]
-		if(findtext(html_contaminated, storyboy.name))
-			selected_storyteller = storyboy.type
-			break
+		var/datum/storyteller/S = storytellers[storyteller_type]
 
-	var/datum/storyteller/storytypecasted = selected_storyteller
-	to_chat(world, span_notice("<b>Storyteller is [initial(storytypecasted.name)]!</b>"))
-	to_chat(world, span_notice("[initial(storytypecasted.vote_desc)]"))
-	storyteller_name = initial(storytypecasted.name)
+		if(S.name == selected_name)
+			selected_storyteller = S.type
+			storyteller_name = S.name
+
+			to_chat(world, span_notice("<b>Storyteller is [S.name]!</b>"))
+			to_chat(world, span_notice("[S.vote_desc]"))
+			return
 
 ///return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
 /datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)

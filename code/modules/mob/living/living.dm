@@ -1,11 +1,14 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	var/zone_selector_hud_dirty = FALSE
+	var/zone_selector_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
 	update_a_intents()
 	swap_rmb_intent(num=1)
+	AddComponent(/datum/component/wallpress_doubletap)
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -82,6 +85,26 @@
 
 /mob/living/proc/OpenCraftingMenu()
 	return
+
+/mob/living/proc/update_zone_selector_hud()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.update_zone_layers()
+
+/mob/living/proc/mark_zone_selector_hud_dirty()
+	if(!hud_used?.zone_select)
+		return
+	zone_selector_hud_dirty = TRUE
+	if(zone_selector_hud_update_queued)
+		return
+	zone_selector_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_zone_selector_hud)), 0)
+
+/mob/living/proc/flush_zone_selector_hud()
+	zone_selector_hud_update_queued = FALSE
+	if(!zone_selector_hud_dirty)
+		return
+	zone_selector_hud_dirty = FALSE
+	update_zone_selector_hud()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -432,6 +455,9 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			if(BP)
+				C.update_hud_hand_slot(BP.held_index)
+				C.mark_zone_selector_hud_dirty()
 			put_in_hands(O)
 			O.update_hands(src)
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
@@ -937,19 +963,16 @@
 		reset_offsets("wall_press")
 		return FALSE
 	if(buckled || lying)
-		wallpressed = FALSE
+		set_wallpressed(FALSE)
 		reset_offsets("wall_press")
 		return FALSE
 	var/turf/newwall = get_step(newloc, wallpressed)
 	if(!T.Adjacent(newwall))
 		return reset_offsets("wall_press")
-	if(isclosedturf(newwall) && fixedeye)
-		var/turf/closed/C = newwall
-		if(C.wallpress)
-			return TRUE
-	wallpressed = FALSE
+	if(fixedeye && newwall?.get_wallpress_atom())
+		return TRUE
+	set_wallpressed(FALSE)
 	reset_offsets("wall_press")
-	update_wallpress_slowdown()
 
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 
@@ -1041,7 +1064,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || (INVISBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress) //OV EDIT
 		return
 	..()
 
@@ -1356,6 +1379,8 @@
 			if(what.nudist_approved && L.IsSleeping())
 				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
+		else if(HAS_TRAIT(L, TRAIT_LOOSE_STRAPS))
+			surrender_mod = 0.5
 	if(!who.Adjacent(src))
 		return
 
@@ -1927,6 +1952,10 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if (NAMEOF(src, wallpressed))
+			set_wallpressed(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE

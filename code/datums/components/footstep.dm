@@ -135,5 +135,3 @@
 		volume * used_volume,
 		do_vary,
 		used_extra_range + e_range)
-	if(ismovableatom(parent))
-		show_sensory_effect(parent, 5, "footstep", human_parent.dir, ignore_self = TRUE)
