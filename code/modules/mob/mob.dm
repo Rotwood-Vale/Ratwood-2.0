@@ -802,8 +802,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(client)
 		if(statpanel("RoundInfo"))
-			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
-			var/datum/map_config/cached = SSmapping.next_map_config
+			stat(null, "MAP: [SSmapping.current_map?.map_name || "Loading..."]")
+			var/datum/map_config/cached = SSmap_vote.next_map_config
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")

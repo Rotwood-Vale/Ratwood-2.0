@@ -252,3 +252,16 @@
 2026-07-18:
   awwliedacoder:
   - bugfix: message on forced drug sniffing
+2026-07-21:
+  Arturlang:
+  - rscadd: if you hold ctrl and your back is facing a wall, you can double input
+      a movement key to that wall to lean into it
+  - rscadd: you can now wall-lean on windows now
+  - bugfix: fix issues where wall leaning could persist slowdown on the mob
+  - code_imp: refactored how wall leaning works and turned it into a setter/getter
+      syntax
+  - bugfix: improve how stamina and fatigue updates were handled for optimization
+      purpose
+  - rscadd: stamina and fatigue bars now use a alpha mask and animate between states,
+      and no longer use icon variants for each type, with a alpha mask cutting the
+      icon dynamically.

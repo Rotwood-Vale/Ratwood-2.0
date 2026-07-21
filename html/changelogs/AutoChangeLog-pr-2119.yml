@@ -1,7 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - rscadd: "if you hold ctrl and your back is facing a wall, you can double input a movement key to that wall to lean into it"
-  - rscadd: "you can now wall-lean on windows now"
-  - bugfix: "fix issues where wall leaning could persist slowdown on the mob"
-  - code_imp: "refactored how wall leaning works and turned it into a setter/getter syntax"

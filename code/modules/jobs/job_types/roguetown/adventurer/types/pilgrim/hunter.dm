@@ -58,7 +58,7 @@
 				/obj/item/rogueweapon/scabbard/sheath = 1
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
@@ -137,7 +137,7 @@
 				/obj/item/rogueweapon/stoneaxe/handaxe
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
