@@ -525,9 +525,6 @@ SUBSYSTEM_DEF(gamemode)
 		current_pop_scale_multipliers[track] = calculated_multiplier
 
 /datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event, forced = FALSE)
-	if(!forced && istype(event, /datum/round_event_control/antagonist) && villain_signup_ends && world.time < villain_signup_ends)
-		rolled_villain_events += event
-		return EVENT_READY
 	. = event.preRunEvent(forced)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0

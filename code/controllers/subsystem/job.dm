@@ -418,6 +418,28 @@ SUBSYSTEM_DEF(job)
 	//Shuffle players and jobs
 	unassigned = shuffle(unassigned)
 
+	for(var/level in level_order)
+		for(var/mob/dead/new_player/player in unassigned)
+			var/hi_tier = FALSE
+			for(var/pref_title in player.client.prefs.job_preferences)
+				if(player.client.prefs.job_preferences[pref_title] > level)
+					hi_tier = TRUE
+					break
+			if(hi_tier)
+				continue
+			for(var/job_title in GLOB.villain_positions)
+				var/datum/job/villain_job = GetJob(job_title)
+				if(!villain_job || villain_job.current_positions + SSgamemode.count_queued_villains(job_title) >= villain_job.spawn_positions)
+					continue
+				if(player.client.prefs.job_preferences[job_title] != level)
+					continue
+				if(is_banned_from(player.ckey, job_title))
+					continue
+				SSgamemode.queued_villains[player.ckey] = job_title
+				unassigned -= player
+				player.ready = PLAYER_NOT_READY
+				break
+
 	HandleFeedbackGathering()
 
 	//People who wants to be the overflow role, sure, go on.
@@ -464,6 +486,9 @@ SUBSYSTEM_DEF(job)
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
 				if(!job)
+					continue
+
+				if(job.title in GLOB.villain_positions) //handled above
 					continue
 
 				if(is_banned_from(player.ckey, job.title))

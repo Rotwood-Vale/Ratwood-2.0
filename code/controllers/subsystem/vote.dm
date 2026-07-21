@@ -166,6 +166,8 @@ SUBSYSTEM_DEF(vote)
 					world.TgsAnnounceVoteEndRound()
 			if("chaos")
 				SSgamemode.chaos_vote_result(.)
+	else if(mode == "chaos")
+		SSgamemode.chaos_vote_result("Medium Chaos")
 
 	if(restart)
 		var/active_admins = 0

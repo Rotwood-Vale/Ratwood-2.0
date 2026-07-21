@@ -49,18 +49,6 @@
 	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
 													restricted_roles = restricted_roles, required_roles = exclusive_roles)
 	candidates = trim_candidates(candidates)
-	if(length(SSgamemode.villain_signups))
-		for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-			if(player.client && !player.spawning && SSgamemode.villain_signups[player.ckey] == src)
-				candidates |= player
-		var/list/signed = list()
-		for(var/mob/M in candidates)
-			if(M.ckey && SSgamemode.villain_signups[M.ckey] == src)
-				signed += M
-		if(length(signed) >= get_antag_amount())
-			return signed
-		if(length(signed))
-			candidates = signed + (candidates - signed)
 	return candidates
 
 
@@ -137,8 +125,6 @@
 		if(QDELETED(picked_client))
 			continue
 		var/mob/picked_mob = picked_client.mob
-		if(isnewplayer(picked_mob))
-			picked_mob = make_body(picked_mob)
 		picked_mob?.mind?.picking = TRUE
 		log_storyteller("Picked antag event mob: [picked_mob], special role: [picked_mob.mind?.special_role ? picked_mob.mind.special_role : "none"]")
 		candidates |= picked_mob

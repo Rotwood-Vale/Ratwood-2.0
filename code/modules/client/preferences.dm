@@ -998,6 +998,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(PLAYER_READY_TO_PLAY)
 					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
 					log_game("([user || "NO KEY"]) readied as ([real_name])")
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 		else
 			if(!is_active_migrant())
 				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"

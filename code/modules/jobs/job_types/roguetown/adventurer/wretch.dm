@@ -98,22 +98,3 @@
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
 	H.playsound_local(get_turf(H), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)
-
-/proc/update_wretch_slots()
-	var/datum/job/wretch_job = SSjob.GetJob("Wretch")
-	if(!wretch_job)
-		return
-
-	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
-
-	//Add 1 slot for every 10 players over 30. Less than 40 players, 5 slots. 40 or more players, 6 slots. 50 or more players, 7 slots - etc.
-	if(player_count > 40)
-		var/extra = floor((player_count - 40) / 10)
-		slots += extra
-
-	//5 slots minimum, 10 maximum.
-	slots = min(slots, 10)
-
-	wretch_job.total_positions = slots
-	wretch_job.spawn_positions = slots

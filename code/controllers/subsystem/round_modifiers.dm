@@ -16,6 +16,7 @@
 		if("High Chaos")
 			level = 3
 	to_chat(world, span_notice("<b>[winner]!</b>"))
+	roll_round_modifiers()
 
 /datum/controller/subsystem/gamemode/proc/roll_round_modifiers()
 	if(modifiers_rolled)
@@ -81,10 +82,6 @@
 			continue
 		J.total_positions = slots[job_title]
 		J.spawn_positions = slots[job_title]
-
-	if(current_storyteller)
-		current_storyteller.guarantees_roundstart_roleset = FALSE
-		current_storyteller.roundstart_prob = 0
 
 	if(!length(active_modifiers))
 		to_chat(world, span_notice("<b>Nothing.</b>"))
