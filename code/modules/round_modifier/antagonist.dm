@@ -79,7 +79,7 @@
 
 /datum/round_modifier/vampirelord
 	name = "Vampyre Lord"
-	desc = "Hail! Hail! All hail the nightmare king!"
+	desc = "Hail! Hail! Kneel before the bastard tyrant!"
 	cost = 8
 	weight = 8
 	min_chaos = 2
