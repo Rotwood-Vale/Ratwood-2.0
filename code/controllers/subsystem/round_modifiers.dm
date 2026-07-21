@@ -1,0 +1,95 @@
+/datum/controller/subsystem/gamemode
+	var/level = 2
+	var/budget = 0
+	var/list/active_modifiers = list()
+	var/modifiers_rolled = FALSE
+
+/datum/controller/subsystem/gamemode/proc/chaos_vote_choices()
+	return list("Low Chaos" = 0, "Medium Chaos" = 0, "High Chaos" = 0)
+
+/datum/controller/subsystem/gamemode/proc/chaos_vote_result(winner)
+	switch(winner)
+		if("Low Chaos")
+			level = 1
+		if("Medium Chaos")
+			level = 2
+		if("High Chaos")
+			level = 3
+	to_chat(world, span_notice("<b>[winner]!</b>"))
+
+/datum/controller/subsystem/gamemode/proc/roll_round_modifiers()
+	if(modifiers_rolled)
+		return
+	modifiers_rolled = TRUE
+
+	if(SSvote.mode == "chaos") //round start
+		SSvote.result()
+		for(var/client/C in SSvote.voting)
+			C << browse(null, "window=vote")
+		SSvote.reset()
+
+	switch(level)
+		if(1)
+			budget = rand(1, 3)
+		if(2)
+			budget = rand(3, 6)
+		if(3)
+			budget = rand(8, 12)
+
+	var/list/pool = list()
+	for(var/T in subtypesof(/datum/round_modifier))
+		var/datum/round_modifier/M = new T
+		if(level < M.min_chaos || level > M.max_chaos)
+			continue
+		pool[M] = M.weight
+
+	while(budget > 0 && length(pool))
+		var/datum/round_modifier/M = pickweight(pool)
+		pool -= M
+		if(M.cost > budget)
+			continue
+		var/blocked = FALSE
+		for(var/datum/round_modifier/other in active_modifiers)
+			if((other.type in M.incompatible) || (M.type in other.incompatible))
+				blocked = TRUE
+				break
+		if(blocked)
+			continue
+		budget -= M.cost
+		active_modifiers += M
+
+	var/list/slots = list("Wretch" = 0, "Bandit" = 0, "Gnoll" = 0)
+	var/datum/forecast/forecast = SSParticleWeather?.selected_forecast
+
+	for(var/datum/round_modifier/M in active_modifiers)
+		slots["Wretch"] += M.wretch_slots
+		slots["Bandit"] += M.bandit_slots
+		slots["Gnoll"] += M.gnoll_slots
+		for(var/event_type in M.villain_events)
+			var/datum/round_event_control/event = locate(event_type) in control
+			if(event)
+				rolled_villain_events |= event
+		if(forecast && length(M.weather_weights))
+			for(var/list/weather_list in list(forecast.day_weather, forecast.dawn_weather, forecast.dusk_weather, forecast.night_weather))
+				for(var/weather_type in M.weather_weights)
+					if(weather_type in weather_list)
+						weather_list[weather_type] = round(weather_list[weather_type] * M.weather_weights[weather_type])
+
+	for(var/job_title in slots)
+		var/datum/job/J = SSjob.GetJob(job_title)
+		if(!J)
+			continue
+		J.total_positions = slots[job_title]
+		J.spawn_positions = slots[job_title]
+
+	if(current_storyteller)
+		current_storyteller.guarantees_roundstart_roleset = FALSE
+		current_storyteller.roundstart_prob = 0
+
+	if(!length(active_modifiers))
+		to_chat(world, span_notice("<b>Nothing.</b>"))
+		return
+	to_chat(world, span_boldnotice("Modifiers:"))
+	for(var/datum/round_modifier/M in active_modifiers)
+		if(!M.hidden)
+			to_chat(world, span_notice("<b>[M.name]</b> - [M.desc]"))

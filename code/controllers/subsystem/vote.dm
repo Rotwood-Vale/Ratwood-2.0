@@ -164,8 +164,8 @@ SUBSYSTEM_DEF(vote)
 					SSgamemode.roundvoteend = TRUE
 					SSgamemode.round_ends_at = world.time + ROUND_END_TIME
 					world.TgsAnnounceVoteEndRound()
-			if("storyteller")
-				SSgamemode.storyteller_vote_result(.)
+			if("chaos")
+				SSgamemode.chaos_vote_result(.)
 
 	if(restart)
 		var/active_admins = 0
@@ -267,9 +267,8 @@ SUBSYSTEM_DEF(vote)
 			initiator_key = pick("Psydon", "Zizo")
 			choices.Add("Continue Playing","End Round")
 			vote_alert.file = 'sound/roundend/roundend-vote-sound.ogg'
-		if("storyteller")
-			choices.Add(SSgamemode.storyteller_vote_choices())
-			vote_height = 800 // Give more room for storyteller
+		if("chaos")
+			choices.Add(SSgamemode.chaos_vote_choices())
 		else
 			return FALSE
 
@@ -277,8 +276,8 @@ SUBSYSTEM_DEF(vote)
 	initiator = initiator_key
 	started_time = world.time
 	var/text = "[capitalize(mode)] vote started by [initiator]."
-	if(mode == "storyteller")
-		text = initiator
+	if(mode == "chaos")
+		text = "How much chaos shall this round hold? Vote now!"
 	if(mode == "custom")
 		text += "\n[question]"
 	log_vote(text)

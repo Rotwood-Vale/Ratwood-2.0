@@ -257,12 +257,49 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				return
 		LateChoices()
 
+	if(href_list["villains"])
+		if(!SSticker?.IsRoundInProgress())
+			to_chat(usr, span_boldwarning("The game is starting. You cannot join yet."))
+			return
+		VillainChoices()
+		return
+
+	if(href_list["villain_ready"])
+		if(!SSgamemode.villain_signup_ends || world.time >= SSgamemode.villain_signup_ends)
+			to_chat(usr, span_warning("Villains chosen."))
+			return
+		var/datum/round_event_control/event = locate(href_list["villain_ready"]) in SSgamemode.rolled_villain_events
+		if(!event)
+			return
+		SSgamemode.villain_signups[ckey] = event
+		VillainChoices()
+		return
+
+	if(href_list["villain_ready_job"])
+		if(!SSgamemode.villain_signup_ends || world.time >= SSgamemode.villain_signup_ends)
+			to_chat(usr, span_warning("Villains chosen."))
+			return
+		var/job_title = href_list["villain_ready_job"]
+		if(!(job_title in GLOB.villain_positions))
+			return
+		SSgamemode.villain_signups[ckey] = job_title
+		VillainChoices()
+		return
+
+	if(href_list["villain_withdraw"])
+		SSgamemode.villain_signups -= ckey
+		VillainChoices()
+		return
+
 	if(href_list["manifest"])
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
 		if(!SSticker?.IsRoundInProgress())
 			to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
+			return
+
+		if((href_list["SelectedJob"] in GLOB.villain_positions) && SSgamemode.villain_signup_ends && world.time < SSgamemode.villain_signup_ends)
 			return
 
 		if(!GLOB.enter_allowed)

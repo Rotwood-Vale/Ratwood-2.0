@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(ticker)
 					++totalPlayersReady
 
 			if(!gamemode_voted)
-				SSvote.initiate_vote("storyteller", "Psydon", timeLeft/2)
+				SSvote.initiate_vote("chaos", "PSYDON", timeLeft/2)
 				gamemode_voted = TRUE
 
 			if(start_immediately)
@@ -416,6 +416,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
 
+	SSgamemode.roll_round_modifiers()
+	SSgamemode.open_villain_signups()
 	SSgamemode.current_storyteller?.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	SSgamemode.current_storyteller?.round_started = TRUE
 

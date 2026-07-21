@@ -1,14 +1,6 @@
 #define INIT_ORDER_GAMEMODE 70
-///how many storytellers can be voted for along with always_votable ones
-#define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
-///amount of players we can have before no longer running votes for storyteller
-#define MAX_POP_FOR_STORYTELLER_VOTE 25
 ///the duration into the round for which roundstart events are still valid to run
 #define ROUNDSTART_VALID_TIMEFRAME 3 MINUTES
-/// Width of a popup window that opens when user presses (?) and contains storyteller description
-#define DESC_POPUP_WIDTH 400
-/// Height of a popup window that opens when user presses (?) and contains storyteller description
-#define DESC_POPUP_HEIGHT 250
 /// A town combatant role counts as 1 + this value towards effective population
 #define TOWN_COMBATANT_ADDITIONAL_WEIGHT 2
 
@@ -533,6 +525,9 @@ SUBSYSTEM_DEF(gamemode)
 		current_pop_scale_multipliers[track] = calculated_multiplier
 
 /datum/controller/subsystem/gamemode/proc/TriggerEvent(datum/round_event_control/event, forced = FALSE)
+	if(!forced && istype(event, /datum/round_event_control/antagonist) && villain_signup_ends && world.time < villain_signup_ends)
+		rolled_villain_events += event
+		return EVENT_READY
 	. = event.preRunEvent(forced)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
@@ -696,48 +691,7 @@ SUBSYSTEM_DEF(gamemode)
 	point_thresholds[EVENT_TRACK_RAIDS] = CONFIG_GET(number/objectives_point_threshold) * 2
 
 /datum/controller/subsystem/gamemode/proc/handle_picking_storyteller()
-	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
-		secret_storyteller = TRUE
-		selected_storyteller = pickweight(get_valid_storytellers(TRUE))
-		return
 	pick_most_influential(TRUE)
-
-/datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
-	var/list/final_choices = list()
-	var/list/pick_from = list()
-	for(var/datum/storyteller/storyboy in get_valid_storytellers())
-		if(storyboy.always_votable)
-			final_choices["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = 0
-		else
-			pick_from["<b>[storyboy.name]</b><a href='?src=[REF(src)];storyboy_details=[storyboy.type]'>(?)</a>"] = storyboy.weight //might be able to refactor this to be slightly better due to get_valid_storytellers returning a weighted list
-
-	var/added_storytellers = 0
-	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
-		added_storytellers++
-		var/picked_storyteller = pickweight(pick_from)
-		final_choices[picked_storyteller] = 0
-		pick_from -= picked_storyteller
-	return final_choices
-
-/datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
-	for(var/storyteller_type in storytellers)
-		var/datum/storyteller/storyboy = storytellers[storyteller_type]
-		if(storyboy.name != storyteller_name)
-			continue
-		return storyboy.desc
-
-
-/datum/controller/subsystem/gamemode/proc/storyteller_vote_result(html_contaminated)
-	for(var/storyteller_type in storytellers)
-		var/datum/storyteller/storyboy = storytellers[storyteller_type]
-		if(findtext(html_contaminated, storyboy.name))
-			selected_storyteller = storyboy.type
-			break
-
-	var/datum/storyteller/storytypecasted = selected_storyteller
-	to_chat(world, span_notice("<b>Storyteller is [initial(storytypecasted.name)]!</b>"))
-	to_chat(world, span_notice("[initial(storytypecasted.vote_desc)]"))
-	storyteller_name = initial(storytypecasted.name)
 
 ///return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
 /datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)
@@ -763,9 +717,6 @@ SUBSYSTEM_DEF(gamemode)
 	chosen_storyteller.times_chosen++
 	GLOB.featured_stats[FEATURED_STATS_STORYTELLERS]["entries"][initial(chosen_storyteller.name)] = chosen_storyteller.times_chosen
 	current_storyteller = chosen_storyteller
-	if(SSgnoll_scaling)
-		SSgnoll_scaling.apply_storyteller_mode(current_storyteller.preferred_gnoll_mode, current_storyteller.name)
-		SSgnoll_scaling.unlock_gnoll_scaling()
 	if(!secret_storyteller)
 		send_to_playing_players(span_notice("<b>Storyteller is [current_storyteller.name]!</b>"))
 		send_to_playing_players(span_notice("[current_storyteller.welcome_text]"))
@@ -784,6 +735,17 @@ SUBSYSTEM_DEF(gamemode)
 	dat += "<BR>Active Players: [active_players]   (Royalty: [royalty], Garrison: [garrison], Town Workers: [constructor], Holy Warriors: [holy_warrior])"
 	dat += "<BR>Effective Population: [effective_pop] (Total: [active_players] + Garrison Bonus: [garrison * 2] + Holy Warrior Bonus: [holy_warrior * 2])"
 	dat += "<BR>Antagonist Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
+	var/chaos_name = "Medium"
+	switch(level)
+		if(1)
+			chaos_name = "Low"
+		if(3)
+			chaos_name = "High"
+	dat += "<BR>Chaos Level: [chaos_name]"
+	var/list/modifier_names = list()
+	for(var/datum/round_modifier/M in active_modifiers)
+		modifier_names += "[M.name][M.hidden ? " (hidden)" : ""]"
+	dat += "<BR>Round Modifiers: [length(modifier_names) ? modifier_names.Join(", ") : "None"]"
 	dat += "<HR>"
 	dat += "<a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_MAIN]' [panel_page == GAMEMODE_PANEL_MAIN ? "class='linkOn'" : ""]>Main</a>"
 	dat += " <a href='byond://?src=[REF(src)];panel=main;action=tab;tab=[GAMEMODE_PANEL_VARIABLES]' [panel_page == GAMEMODE_PANEL_VARIABLES ? "class='linkOn'" : ""]>Variables</a>"
@@ -985,18 +947,6 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/Topic(href, href_list)
 	. = ..()
 	var/mob/user = usr
-	if(href_list["storyboy_details"])
-		var/datum/storyteller/storyboy = storytellers[text2path(href_list["storyboy_details"])]
-		if(!istype(storyboy))
-			return
-
-		var/datum/browser/popup = new(user, "storyboy_details", "[storyboy.name] - Storyteller Details")
-		popup.width = DESC_POPUP_WIDTH
-		popup.height = DESC_POPUP_HEIGHT
-		popup.set_content(storyboy.vote_desc)
-		popup.open()
-		return
-
 	if(!check_rights(R_ADMIN))
 		return
 	switch(href_list["panel"])
@@ -1480,9 +1430,5 @@ SUBSYSTEM_DEF(gamemode)
 			return SSgamemode.calculate_storyteller_influence(S.type)
 	return 0
 
-#undef DEFAULT_STORYTELLER_VOTE_OPTIONS
-#undef MAX_POP_FOR_STORYTELLER_VOTE
 #undef ROUNDSTART_VALID_TIMEFRAME
-#undef DESC_POPUP_WIDTH
-#undef DESC_POPUP_HEIGHT
 #undef TOWN_COMBATANT_ADDITIONAL_WEIGHT

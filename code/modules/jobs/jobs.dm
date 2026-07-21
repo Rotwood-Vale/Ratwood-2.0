@@ -175,6 +175,9 @@ GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Assassin",
 	"Court Agent",
 	"Enslaved Adventurer",
+))
+
+GLOBAL_LIST_INIT(villain_positions, list(
 	"Bandit",
 	"Wretch",
 	"Gnoll",
