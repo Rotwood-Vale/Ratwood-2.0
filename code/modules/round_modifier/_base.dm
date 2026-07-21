@@ -17,5 +17,4 @@
 /datum/round_modifier/lightsout
 	name = "Lights Out"
 	desc = "Hope you have flint!"
-	weight = 15
 	trigger_events = list(/datum/round_event_control/lightsout/forced)
