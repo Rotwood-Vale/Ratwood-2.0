@@ -64,7 +64,7 @@
 //Tideweaver. T3 miraclist and some minor magics.
 /datum/migrant_role/hammerhold/tideweaver
 	name = "Hammerholdian Tideweaver"
-	greet_text = "You are a cleric of the Father of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
+	greet_text = "You are a cleric of the Lord of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
 	outfit = /datum/outfit/job/roguetown/hammerhold/tideweaver
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
