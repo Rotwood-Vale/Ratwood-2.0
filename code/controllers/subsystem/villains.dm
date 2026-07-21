@@ -24,6 +24,7 @@
 		var/job_title = queued_villains[player.ckey]
 		if(!job_title || !player.client || player.spawning)
 			continue
+		to_chat(player, span_boldwarning("You have been chosen for villainy as a [job_title]!"))
 		player.AttemptLateSpawn(job_title)
 	queued_villains = list()
 
