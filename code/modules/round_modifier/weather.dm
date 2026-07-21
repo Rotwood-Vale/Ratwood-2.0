@@ -19,7 +19,6 @@
 /datum/round_modifier/stormy
 	name = "Stormy"
 	desc = "It's gonna storm."
-	cost = 2
 	weight = 8
 	min_chaos = 2
 	weather_weights = list(

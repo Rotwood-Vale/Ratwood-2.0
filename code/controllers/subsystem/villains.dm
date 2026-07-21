@@ -15,6 +15,11 @@
 	for(var/datum/round_event_control/event as anything in rolled_villain_events)
 		TriggerEvent(event, TRUE)
 	rolled_villain_events = list()
+	for(var/datum/round_modifier/M in active_modifiers)
+		for(var/event_type in M.trigger_events)
+			var/datum/round_event_control/event = locate(event_type) in control
+			if(event)
+				TriggerEvent(event, TRUE)
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		var/job_title = queued_villains[player.ckey]
 		if(!job_title || !player.client || player.spawning)

@@ -53,7 +53,7 @@
 		budget -= M.cost
 		active_modifiers += M
 
-	var/list/slots = list("Wretch" = 0, "Bandit" = 0, "Gnoll" = 0)
+	var/list/slots = list("Wretch" = 4, "Bandit" = 0, "Gnoll" = 0)
 	var/datum/forecast/forecast = SSParticleWeather?.selected_forecast
 
 	for(var/datum/round_modifier/M in active_modifiers)
