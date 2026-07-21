@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/appraise
 	name = "Appraise"
 	desc = "Tells you how many mammons someone has on them and in the nervelock."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "appraise"
 	releasedrain = 10
 	chargedrain = 0
@@ -21,6 +23,8 @@
 
 /obj/effect/proc_holder/spell/invoked/appraise/secular
 	name = "Secular Appraise"
+	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "appraise"
 	range = 2
 	associated_skill = /datum/skill/misc/reading // idk reading is like Accounting right
@@ -46,6 +50,8 @@
 /obj/effect/proc_holder/spell/invoked/transact
 	name = "Transact"
 	desc = "Sacrifice an item in your hand, applying a heal over time to yourself with strength depending on its value."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "transact"
 	releasedrain = 30
 	chargedrain = 0
@@ -103,9 +109,10 @@
 /obj/effect/proc_holder/spell/invoked/equalize
 	name = "Equalize"
 	desc = "Create equality, with a thumb on the scales, with your target. Siphon strength, speed, and constitution from them."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "equalize"
 	clothes_req = FALSE
-	overlay_state = "equalize"
 	associated_skill = /datum/skill/magic/holy
 	chargedloop = /datum/looping_sound/invokeascendant
 	sound = 'sound/magic/swap.ogg'
@@ -180,8 +187,10 @@
 /obj/effect/proc_holder/spell/invoked/churnwealthy
 	name = "Churn Wealthy"
 	desc = "Attacks the target by weight of their greed, dealing increased damage and effects depending on how wealthy they are."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "churn_wealthy"
 	clothes_req = FALSE
-	overlay_state = "churnwealthy"
 	associated_skill = /datum/skill/magic/holy
 	chargedloop = /datum/looping_sound/invokeascendant
 	chargedrain = 0

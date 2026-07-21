@@ -2,8 +2,8 @@
 /obj/effect/proc_holder/spell/invoked/diagnose
 	name = "Diagnose"
 	desc = "Examine another's vitals."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "diagnose"
 	releasedrain = 10
 	chargedrain = 0
@@ -50,16 +50,19 @@
 
 /obj/effect/proc_holder/spell/invoked/diagnose/secular
 	name = "Secular Diagnosis"
+	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "diagnose"
 	range = 1
 	associated_skill = /datum/skill/misc/medicine
 	miracle = FALSE
 	devotion_cost = 0 //Doctors are not clerics
+
 /obj/effect/proc_holder/spell/invoked/attach_bodypart
 	name = "Bodypart Miracle"
 	desc = "Attach all limbs and organs you or your target is holding, and near your target."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "flextape"
 	releasedrain = 30
 	chargedrain = 0
@@ -204,8 +207,8 @@
 /obj/effect/proc_holder/spell/invoked/infestation
 	name = "Infestation"
 	desc = "Causes a swarm of bugs to surround your target, bites them and causes sickness. Infecting targets gives you charges to use other spells."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "infestation0"
 	releasedrain = 50
 	chargetime = 10
@@ -367,8 +370,8 @@
 /obj/effect/proc_holder/spell/invoked/cure_rot
 	name = "Cure Rot"
 	desc = "Invoke Pestras will though a Psycross to cast out rot from people or regrow their flesh."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "rot"
 	releasedrain = 90
 	chargedrain = 0
@@ -456,8 +459,8 @@
 /obj/effect/proc_holder/spell/invoked/pestra_leech
 	name = "Leeching Purge"
 	desc = "Manifest leeches inside of target, causing them to puke them out while restoring some blood and curing minor poisoning."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "leech"
 	releasedrain = 30
 	chargedrain = 0
@@ -496,8 +499,8 @@
 /obj/effect/proc_holder/spell/invoked/pestra_heal
 	name = "Rebirth"
 	desc = "A greater heal, more effective on targets affected by some form of greater rot. Requires infestation charges to cast."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "heal"
 	releasedrain = 30
 	chargedrain = 0
@@ -575,8 +578,8 @@
 /obj/effect/proc_holder/spell/invoked/divine_rebirth
 	name = "Divine Rebirth"
 	desc = "A miraculous heal that can restore even the most grievous wounds, including missing limbs. But it requires being at maximum infestation capacity. No force can resist this miracle."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "heal_ascended"
 	releasedrain = 50
 	chargedrain = 0
@@ -612,8 +615,8 @@
 /obj/effect/proc_holder/spell/invoked/pestilent_blade
 	name = "Pestilent Blade"
 	desc = "Enchant your blade with Pestra's power, consuming one infestation charge to make your next strike against an infested target more potent. Negligible effect if the target isn't infested..."
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "blade"
 	releasedrain = 20
 	chargedrain = 0

@@ -14,8 +14,6 @@
 		/datum/charflaw/disfigured,\
 		/datum/charflaw/limbloss/arm_l,\
 		/datum/charflaw/limbloss/arm_r,\
-		/datum/charflaw/eerie_beauty,\
-		/datum/charflaw/unsettling_beauty,\
 		/datum/charflaw/nudist,\
 		/datum/charflaw/missing_nose\
 	)

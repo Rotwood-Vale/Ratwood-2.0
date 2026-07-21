@@ -2288,6 +2288,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/storage/backpack/rogue/satchel/short
 	triumph_cost = 4
 
+/datum/loadout_item/saddle
+	name = "Saddle"
+	path = /obj/item/natural/saddle
+	triumph_cost = 4
+
 /datum/loadout_item/pouches
 	name = "Pouche"
 	path = /obj/item/storage/belt/rogue/pouch

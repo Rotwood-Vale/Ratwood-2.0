@@ -109,10 +109,10 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	beltr = /obj/item/storage/keyring/mage
 	beltl = /obj/item/storage/magebag/associate
-	id = /obj/item/clothing/ring/gold
+	id = /obj/item/scomstone/garrison
 	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
 	backl = /obj/item/storage/backpack/rogue/satchel
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = null
 		head = /obj/item/clothing/head/roguetown/jafar
 		armor = /obj/item/clothing/suit/roguetown/shirt/jafar
@@ -120,7 +120,7 @@
 		pants = /obj/item/clothing/under/roguetown/sirwal
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/serpent
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
 		cloak = null
 	backpack_contents = list(

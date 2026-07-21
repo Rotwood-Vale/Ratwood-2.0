@@ -1,4 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - rscdel: "Removed raise fortified skeleton scroll from necromancer corpse loot pool."

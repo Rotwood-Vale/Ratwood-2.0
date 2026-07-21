@@ -136,6 +136,7 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 	)
 
 	data["categories"] = list(
@@ -229,6 +230,8 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("cursed_collars")
+				owner.toggle_cursed_collars()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -450,6 +453,26 @@
 			to_chat(src, "You ENDVRE through orgasms.")
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
+
+/client/verb/toggle_cursed_collars() // Toggles cursed collars. Will drop existing collars if toggled off while wearing one
+	set category = "Options"
+	set name = "Toggle Cursed Collars"
+	set hidden = 1
+	if(!prefs)
+		return
+	prefs.cursed_collarable = !prefs.cursed_collarable
+	prefs.save_preferences()
+	if(prefs.cursed_collarable)
+		to_chat(src, "You can now be collared.")
+		return
+	to_chat(src, "You are no longer able to be collared")
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/human_user = usr
+	var/obj/item/clothing/neck/roguetown/cursed_collar/collar = human_user.wear_neck
+	if(!istype(collar))
+		return
+	collar.dropped(human_user)
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"
