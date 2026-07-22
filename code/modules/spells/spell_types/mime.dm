@@ -47,9 +47,9 @@
 	panel = "Mime"
 	summon_type = list(/obj/structure/chair/mime)
 	invocation_type = "emote"
-	invocation_emote_self = "<span class='notice'>I conjure an invisible chair and sit down.</span>"
-	summon_lifespan = 250
-	recharge_time = 300
+	invocation_emote_self = "<span class='notice'>I conjure an invisible chair.</span>"
+	summon_lifespan = 30 SECONDS
+	recharge_time = 20 SECONDS
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	range = 0
@@ -64,7 +64,7 @@
 		if(!HAS_TRAIT(usr, TRAIT_PERMAMUTE))
 			to_chat(usr, span_warning("I am not a mute!"))
 			return
-		invocations = list("pulls out an invisible chair and sits down.")
+		invocations = list("pulls out an invisible chair.")
 	else
 		invocation_type ="none"
 	invocation(usr)
@@ -76,7 +76,17 @@
 	for (var/obj/structure/chair/A in T)
 		if (is_type_in_list(A, summon_type))
 			A.setDir(user.dir)
-			A.buckle_mob(user)
+
+
+/obj/item/chair/mime
+	name = "invisible chair"
+	desc = ""
+	icon = null
+	icon_state = null
+	item_state = null
+	lefthand_file = null
+	righthand_file = null
+	origin_type = /obj/structure/chair/mime
 
 
 /obj/effect/proc_holder/spell/targeted/mime/speak

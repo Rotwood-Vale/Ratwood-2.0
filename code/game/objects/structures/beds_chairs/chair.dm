@@ -339,14 +339,15 @@
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"
 	origin_type = /obj/structure/chair/wood/wings
+
 /obj/structure/chair/mime
 	name = "invisible chair"
 	desc = ""
 	anchored = FALSE
 	icon_state = null
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	buildstacktype = null
-	item_chair = null
-	flags_1 = NODECONSTRUCT_1
+	item_chair = /obj/item/chair/mime
 	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
