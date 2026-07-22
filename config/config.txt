@@ -113,8 +113,12 @@ LOG_EMOTE
 ## log attack messages
 LOG_ATTACK
 
-## disable periodic memory usage logging and the statpanel memory readouts, will open a cmd panel every 30 seconds on windows
-DISABLE_MEMORY_STATS
+## disable periodic memory usage logging and the statpanel memory readouts (absent = enabled)
+#DISABLE_MEMORY_STATS
+
+## sort mapload atom init by type for exact per-type memory attribution in memory_stats.log
+## changes atom init order - profiling runs only, leave off for live (absent = off)
+MEMORY_STATS_SORTED_INIT
 
 ## log pda messages
 LOG_PDA

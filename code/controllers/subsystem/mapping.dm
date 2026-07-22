@@ -141,6 +141,8 @@ SUBSYSTEM_DEF(mapping)
 	if (!islist(files))  // handle single-level maps
 		files = list(files)
 
+	var/track_memory = !CONFIG_GET(flag/disable_memory_stats)
+
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
 	var/list/parsed_maps = list()
@@ -148,7 +150,11 @@ SUBSYSTEM_DEF(mapping)
 		var/full_path = "[map_folder]/[path]/[file]"
 		if(path == "custom")
 			full_path = "data/custom_maps/[file]"
+		var/parse_start = REALTIMEOFDAY
+		var/parse_rss = track_memory ? get_process_rss_bytes() : null
 		var/datum/parsed_map/pm = new(file(full_path))
+		if(track_memory)
+			log_map_memory("parse", full_path, parse_rss, parse_start)
 		var/bounds = pm?.bounds
 		if (!bounds)
 			errorList |= full_path
@@ -176,8 +182,12 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
+		var/load_start = REALTIMEOFDAY
+		var/load_rss = track_memory ? get_process_rss_bytes() : null
 		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
 			errorList |= pm.original_path
+		if(track_memory)
+			log_map_memory("load", pm.original_path, load_rss, load_start)
 
 	log_game("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 
