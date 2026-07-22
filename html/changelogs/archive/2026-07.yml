@@ -265,3 +265,8 @@
   - rscadd: stamina and fatigue bars now use a alpha mask and animate between states,
       and no longer use icon variants for each type, with a alpha mask cutting the
       icon dynamically.
+2026-07-22:
+  RadiantFlash7:
+  - rscadd: Map Tally system
+  - rscadd: default Map preference in option
+  - code_imp: Ported TG's vote subsystem
