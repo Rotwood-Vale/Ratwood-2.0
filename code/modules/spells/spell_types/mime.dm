@@ -6,7 +6,7 @@
 	summon_type = list(/obj/effect/forcefield/mime)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>I form a wall in front of myself.</span>"
-	summon_lifespan = 300
+	summon_lifespan = 5 SECONDS
 	recharge_time = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
@@ -27,6 +27,18 @@
 		invocation_type ="none"
 	invocation(usr) // force invocation because invocation() only gets called on a specific spell (not aoe_turf)
 	..()
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/cast(list/targets, mob/user = usr)
+	var/turf/center_turf = get_step(user, user.dir)
+	var/list/spawn_turfs = list(get_step(center_turf, turn(user.dir, 90)), center_turf, get_step(center_turf, turn(user.dir, -90)))
+	for(var/turf/spawn_turf as anything in spawn_turfs)
+		if(!istype(spawn_turf))
+			continue
+		if(!isclosedturf(spawn_turf) && !locate(/obj/effect/forcefield/mime) in spawn_turf)
+			var/obj/effect/forcefield/mime/W = new /obj/effect/forcefield/mime(spawn_turf)
+			if(summon_lifespan)
+				QDEL_IN(W, summon_lifespan)
+	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair
 	name = "Invisible Chair"
