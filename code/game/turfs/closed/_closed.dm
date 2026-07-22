@@ -20,6 +20,26 @@
 	//This is used to optimize the map loader
 	return
 
+/// World grid filler (world.turf) - the cheapest possible turf: shared path baseturfs,
+/// no dynamic lighting, no sunlight/weather processing
+/turf/closed/void
+	baseturfs = /turf/closed/void
+	dynamic_lighting = FALSE
+
+/turf/closed/void/New()//Do not convert to Initialize
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+/turf/closed/void/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
+	flags_1 |= INITIALIZED_1
+	turf_integrity = max_integrity
+	opaque_atom_count = 1
+	return INITIALIZE_HINT_NORMAL
+
+/turf/closed/void/get_sky_and_weather_states()
+	return
+
 /turf/closed/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(!wallpress)

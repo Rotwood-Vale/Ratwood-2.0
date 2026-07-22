@@ -1445,7 +1445,7 @@
 /turf/open/floor/rogue/sand,
 /area/rogue/under/wretch/graggarena)
 "rQ" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue)
 "rT" = (
 /obj/structure/pillory/reinforced{
@@ -1541,7 +1541,7 @@
 /turf/open/floor/rogue/underworld/space/sparkle_quiet,
 /area/rogue/indoors/ravoxarena)
 "tN" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under)
 "tV" = (
 /obj/item/natural/rock,
@@ -1646,7 +1646,7 @@
 /obj/effect/landmark/start/new_player,
 /area/start)
 "wO" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors)
 "wX" = (
 /obj/item/fishingrod/decrepit,
@@ -1720,7 +1720,7 @@
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/indoors/ravoxarena)
 "yK" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors)
 "yQ" = (
 /obj/machinery/light/rogue/torchholder,
