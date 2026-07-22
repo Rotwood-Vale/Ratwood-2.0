@@ -1,7 +1,7 @@
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"
 	desc = "The free men have come."
-	cost = 3
+	cost = 2
 	weight = 30
 	min_chaos = 2
 	bandit_slots = 6
