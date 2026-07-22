@@ -81,8 +81,10 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 	"Jester",
 	"Seneschal",
 	"Servant",
+	"Court Chaplain",
 	//Desert
 	"Head Slave",
+	"Palace Chaplain",
 ))
 
 GLOBAL_LIST_INIT(garrison_positions, list(
@@ -170,6 +172,7 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Mercenary",
 	"Adventurer",
+	"Assassin",
 	"Court Agent",
 	"Enslaved Adventurer",
 	"Bandit",

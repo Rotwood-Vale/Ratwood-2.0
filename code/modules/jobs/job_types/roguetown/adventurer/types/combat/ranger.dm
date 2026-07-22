@@ -67,7 +67,7 @@
 
 /datum/advclass/ranger/wayfarer
 	name = "Wayfarer"
-	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And The Vale is a prime paycheck.."
+	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And these lands are a prime paycheck.."
 	outfit = /datum/outfit/job/roguetown/adventurer/assassin
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander.ogg'
 	subclass_languages = list(/datum/language/thievescant)

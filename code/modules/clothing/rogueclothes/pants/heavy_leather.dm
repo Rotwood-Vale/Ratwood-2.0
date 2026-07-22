@@ -122,6 +122,7 @@
 	armor = ARMOR_LEATHER
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = 50
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun //no, not 'eastpants3', silly!
 	name = "gambeson trousers"
@@ -152,3 +153,4 @@
 	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	dropshrink = null

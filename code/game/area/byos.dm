@@ -1,7 +1,6 @@
 /area/rogue/outdoors/jungle
 	name = "The Jungle of Dread"
 	icon_state = "bog"
-	warden_area = TRUE
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
 	spookysounds = SPOOKY_FROG
@@ -61,7 +60,6 @@
 	droning_sound_night = 'sound/music/area/byos/outskirts_night.ogg'
 	converted_type = /area/rogue/indoors/shelter/rtfield
 	deathsight_message = "the outskirts of the colony of New Kingsfield and all its bustling souls"
-	warden_area = TRUE
 	threat_region = THREAT_REGION_ISLAND
 	detail_text = THREAT_REGION_ISLAND
 
@@ -106,15 +104,7 @@
 /area/rogue/under/cavewet/byos
 	name = "The Undergrove"
 	icon_state = "cavewet"
-	warden_area = TRUE
 	// first_time_text = "The Undergrove"
-	ambientsounds = AMB_CAVEWATER
-	ambientnight = AMB_CAVEWATER
-	spookysounds = SPOOKY_CAVE
-	spookynight = SPOOKY_CAVE
-	droning_sound = 'sound/music/area/caves.ogg'
-	droning_sound_dusk = null
-	droning_sound_night = null
 	ambush_times = list("night","dawn","dusk","day")
 	ambush_mobs = list(
 				/mob/living/carbon/human/species/skeleton/npc/easy = 10,

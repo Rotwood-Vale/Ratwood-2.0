@@ -122,7 +122,8 @@
 			break //Only count the first bedsheet
 		if(health_ratio > 0.8)
 			owner.adjustToxLoss(healing * 0.5, FALSE, TRUE)
-		owner.adjustStaminaLoss(healing)
+		if(owner.getStaminaLoss()) //How often do we even get staminaloss in this codebase?
+			owner.adjustStaminaLoss(healing, FALSE, TRUE)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))

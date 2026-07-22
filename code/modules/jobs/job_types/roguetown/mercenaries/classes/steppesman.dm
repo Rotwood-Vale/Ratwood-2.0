@@ -24,6 +24,8 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 	)
 
+	extra_context = "This class is restricted from using the Equestrian virtue."
+
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)

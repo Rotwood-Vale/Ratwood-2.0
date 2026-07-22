@@ -112,6 +112,7 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
+#define INVISBLOOD		8
 /// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9

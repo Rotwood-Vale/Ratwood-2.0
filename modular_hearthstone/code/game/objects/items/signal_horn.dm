@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 32
 	grid_width = 64
+	dropshrink = 0.9
 
 /obj/item/signal_horn/examine()
 	. = ..()

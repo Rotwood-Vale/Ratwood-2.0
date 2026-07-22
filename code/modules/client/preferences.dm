@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 										//autocorrected this round, not that you'd need to check that.
 
 	var/UI_style = null
+	var/hud_colorblind_palette = HUD_COLORBLIND_NONE
 	var/buttons_locked = TRUE
 	var/hotkeys = TRUE
 
@@ -49,6 +50,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
+	/// Whether closing keybind setup should return to character preferences.
+	var/keybinds_return_to_prefs = TRUE
 
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
@@ -115,6 +118,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	/// If a cursed collar can be equipped to them at all
+	var/cursed_collarable = FALSE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
 	var/restricted_species_pref = null
@@ -196,6 +201,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/widescreenpref = TRUE
 
 	var/musicvol = 50
+	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
 	var/ambiencevol = 50
 	var/mastervol = 50
@@ -210,6 +216,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/no_autopunctuate = FALSE
 	var/no_language_fonts = FALSE
 	var/no_language_icon = FALSE
+	var/hide_unavailable_emotes = FALSE
+	var/hide_tongue_noise_warnings = FALSE
 	var/ghost_protection = FALSE
 	var/lastclass
 
@@ -235,7 +243,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
-
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -403,6 +410,18 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	menuoptions = list()
 	return
+
+/datum/preferences/proc/get_roguehud_icon()
+	return roguehud_icon_for_palette(hud_colorblind_palette)
+
+/datum/preferences/proc/get_rogueheat_icon()
+	return rogueheat_icon_for_palette(hud_colorblind_palette)
+
+/datum/preferences/proc/set_hud_colorblind_palette(new_palette)
+	if(!is_hud_colorblind_palette(new_palette))
+		return FALSE
+	hud_colorblind_palette = new_palette
+	return TRUE
 
 /datum/preferences/proc/set_new_race(datum/species/new_race, user)
 	pref_species = new_race
@@ -625,7 +644,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 			dat += "<b>Unrevivable:</b> <a href='?_src_=prefs;preference=dnr;task=input'>[dnr_pref ? "Yes" : "No"]</a><BR>"
 
-			dat += "<b>Be a Familiar:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a>"
+			dat += "<b>Be a Familiar:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a><br>"
+
+			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "No Preference"]</a><br>"
 
 			dat += "<br><b>Gnoll Customization:</b><a href='?_src_=prefs;preference=gnoll_prefs;task=input'>Gnoll Preferences</a>"
 
@@ -828,7 +849,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 //			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
 
-
+			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "Default"]</a><br>"
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>Special Role Settings</h2>"
@@ -1374,7 +1395,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			user.client.prefs.lastclass = null
 			user.client.prefs.save_preferences()
 
-/datum/preferences/proc/SetKeybinds(mob/user)
+/datum/preferences/proc/SetKeybinds(mob/user, return_to_prefs = null)
+	if(!isnull(return_to_prefs))
+		keybinds_return_to_prefs = !!return_to_prefs
+	var/return_flag = keybinds_return_to_prefs ? 1 : 0
 	var/list/dat = list()
 	// Create an inverted list of keybindings -> key
 	var/list/user_binds = list()
@@ -1390,7 +1414,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
 
-	dat += "<center><a href='?_src_=prefs;preference=keybinds;task=close'>Done</a></center><br>"
+	dat += "<center><a href='?_src_=prefs;preference=keybinds;task=close;return_to_prefs=[return_flag]'>Done</a></center><br>"
 	for (var/category in kb_categories)
 		for (var/i in kb_categories[category])
 			var/datum/keybinding/kb = i
@@ -1589,7 +1613,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		switch(href_list["task"])
 			if("close")
 				user << browse(null, "window=keybind_setup")
-				ShowChoices(user)
+				if(text2num(href_list["return_to_prefs"]) || keybinds_return_to_prefs)
+					ShowChoices(user)
+			if("menu")
+				SetKeybinds(user, TRUE)
 			if("update")
 				SetKeybinds(user)
 			if("keybindings_capture")
@@ -1652,7 +1679,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			if("keybindings_reset")
 				var/choice = tgalert(user, "Do you really want to reset your keybindings?", "Setup keybindings", "Do It", "Cancel")
 				if(choice == "Cancel")
-					ShowChoices(user,3)
+					SetKeybinds(user)
 					return
 				hotkeys = (choice == "Do It")
 				key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
@@ -1807,6 +1834,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						family = FAMILY_NONE
 						to_chat(user, "<font color='red'>Classes reset.</font>")
 
+				if("map_preference")
+					var/list/available_maps = list("Default")
+
+					for(var/map_name in config.maplist)
+						available_maps += map_name
+
+					var/new_map = tgui_input_list(user, "Choose your preferred map.", "MAP PREFERENCE", available_maps)
+
+					if(new_map)
+						if(new_map == "Default")
+							preferred_map = null
+						else
+							preferred_map = new_map
+
+						to_chat(user, span_notice("Preferred map set to: [new_map]"))
+
+					return
 				// LETHALSTONE EDIT: add pronouns
 				if ("pronouns")
 					var pronouns_input = tgui_input_list(user, "Choose your character's pronouns", "PRONOUNS", GLOB.pronouns_list)
@@ -1905,10 +1949,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						which is influenced by your job class, villain status, or certain events.\n\
 						You can change this later through \"Combat Mode Music\" in the Options tab.\"</span>")
 						combat_music_helptext_shown = TRUE
-					var/track_select = tgui_input_list(user, "To you, the Signal sounds like:", "COMBAT MUSIC", GLOB.cmode_tracks_by_name, combat_music?.name)
-					if(track_select)
-						combat_music = GLOB.cmode_tracks_by_name[track_select]
-						to_chat(user, span_notice("Selected track: <b>[track_select]</b>."))
+					var/client/C = user?.client
+					if(!C)
+						return
+					var/datum/combat_music/selected_track = C.pick_combat_music_with_listen(
+						"To you, the Signal sounds like:",
+						"COMBAT MUSIC",
+						combat_music?.name,
+					)
+					if(selected_track)
+						combat_music = selected_track
+						to_chat(user, span_notice("Selected track: <b>[selected_track.name]</b>."))
 						if(combat_music.desc)
 							to_chat(user, "<i>[combat_music.desc]</i>")
 						if(combat_music.credits)
@@ -2608,18 +2659,18 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if ("preferred_map")
 					var/maplist = list()
-					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.map_name])"
-					for (var/M in config.maplist)
+					var/no_preference = "No Preference"
+					for(var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
+
 						if(!VM.votable)
 							continue
+
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
-					maplist[default] = null
+					maplist[no_preference] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in sortList(maplist)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
@@ -2634,7 +2685,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(pickedui)
 						UI_style = "Rogue"
 						if (parent && parent.mob && parent.mob.hud_used)
-							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
+							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style, src))
 				if("pda_style")
 					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
@@ -2859,7 +2910,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-				if("ghost_ears")
+/* 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS
 
 				if("ghost_sight")
@@ -2872,7 +2923,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					chat_toggles ^= CHAT_GHOSTRADIO
 
 				if("ghost_pda")
-					chat_toggles ^= CHAT_GHOSTPDA
+					chat_toggles ^= CHAT_GHOSTPDA */
 
 				if("income_pings")
 					chat_toggles ^= CHAT_BANKCARD
@@ -2930,6 +2981,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					return
 
 				if("observe")
+					if(is_banned_from(user.ckey, "Observer"))
+						to_chat(user, span_danger("You are banned from observing."))
+						return
 					var/mob/dead/new_player/P = user
 					P.make_me_an_observer()
 					return
@@ -3059,6 +3113,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
 	if(skip_normal_prefs)
+		_load_statpack() /// This should load statpack preferences, I'm at my limit here.
+		character.statpack = statpack
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
 		character.set_species(/datum/species/gnoll, icon_update = FALSE)
@@ -3083,11 +3139,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(charflaw)
 		var/obj/item/bodypart/O = character.get_bodypart(BODY_ZONE_R_ARM)
 		if(O)
-			O.drop_limb()
+			O.drop_limb(TRUE)
 			qdel(O)
 		O = character.get_bodypart(BODY_ZONE_L_ARM)
 		if(O)
-			O.drop_limb()
+			O.drop_limb(TRUE)
 			qdel(O)
 		character.regenerate_limb(BODY_ZONE_R_ARM)
 		character.regenerate_limb(BODY_ZONE_L_ARM)
@@ -3254,7 +3310,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.update_hair()
 		character.update_body_parts(redraw = TRUE)
 
-	character.char_accent = char_accent
+	if (character.char_accent in GLOB.character_accents)
+		character.char_accent = char_accent
+	else
+		char_accent = "No accent"
+		character.char_accent = char_accent
 
 	if(culinary_preferences)
 		apply_culinary_preferences(character)

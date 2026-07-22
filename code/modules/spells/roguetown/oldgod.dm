@@ -1,5 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/psydonlux_tamper
 	name = "WEEP"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "WEEP"
 	releasedrain = 20
 	chargedrain = 0
@@ -91,6 +93,8 @@
 /obj/effect/proc_holder/spell/self/psydonrespite
 	name = "RESPITE"
 	desc = "At the cost of some lyfe sustaining blood, I can stand still to focus on mending my injuries."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "RESPITE"
 	releasedrain = 20
 	chargedrain = 0
@@ -121,11 +125,11 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
-				if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
@@ -133,7 +137,7 @@
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7
-				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 					zcross_trigger = TRUE
 	if(brute > 100)
 		sit_bonus1 = -2
@@ -195,6 +199,8 @@
 /obj/effect/proc_holder/spell/self/psydonpersist
 	name = "PERSIST"
 	desc = "Stand still to focus on mending your injuries. You shall PERSIST."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "PERSIST"
 	releasedrain = 20
 	chargedrain = 0
@@ -225,11 +231,11 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
-				if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
@@ -237,7 +243,7 @@
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7
-				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 					zcross_trigger = TRUE
 	if(brute > 100)
 		sit_bonus1 = -2
@@ -297,6 +303,8 @@
 
 /obj/effect/proc_holder/spell/invoked/psydonabsolve
 	name = "ABSOLVE"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ABSOLVE"
 	desc = "Absolve the target, taking their damage as your own, potentially even shouldering their death at the cost of your Lyfe."
 	releasedrain = 20
@@ -406,6 +414,8 @@
 // Weaker absolve for the Stigmata adventurer
 /obj/effect/proc_holder/spell/invoked/psydonamend	
 	name = "AMEND"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ABSOLVE"
 	desc = "A lesser form of the mighty art of ABSOLUTION, bereft of its means to revive. Transfers the wounds from your target to you. Use carefully."
 	releasedrain = 20

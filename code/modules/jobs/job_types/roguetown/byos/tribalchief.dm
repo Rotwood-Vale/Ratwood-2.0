@@ -79,15 +79,15 @@
 		switch(weapon_choice)
 			if("Ancient Bardiche")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+				r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 			if("Ancient Greatmace") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/mace/goden/steel/paalloy
+				r_hand = /obj/item/rogueweapon/mace/goden/steel/ancient
 			if("Ancient Spear & Shield") 
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/spear/paalloy
+				r_hand = /obj/item/rogueweapon/spear/ancient
 			if("Ancient Javelins & Shield")
-				beltr = /obj/item/quiver/javelin/paalloy
+				beltr = /obj/item/quiver/javelin/ancient
 				backr = /obj/item/rogueweapon/shield/tower // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 				
 		var/weapons2 = list("Club","Mace","Axe")
@@ -96,9 +96,9 @@
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel/shellrungu
 			if("Axe")
-				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/paaxe
+				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
 			if("Mace")
-				beltl = /obj/item/rogueweapon/mace/steel/palloy
+				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalchieftain/warrior
 	name = "Valiant Warrior"

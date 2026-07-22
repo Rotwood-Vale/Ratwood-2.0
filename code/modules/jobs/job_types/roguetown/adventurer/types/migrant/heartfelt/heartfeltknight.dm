@@ -45,7 +45,7 @@
 /datum/advclass/heartfelt/knight
 	name = "Knight of Heartfelt"
 	tutorial = "You are a Knight of Heartfelt, once part of a brotherhood in service to your Lord. \
-	Now, alone and committed to safeguarding what remains of your court, you ride to the Vale, resolved to ensure their safe arrival."
+	Now, alone and committed to safeguarding what remains of your court, you ride to these lands, resolved to ensure their safe arrival."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/heartfelt/knight
@@ -116,7 +116,7 @@
 	// IT WORKS :TM: still gives them a helm and grandmace, just not the choice
 	
 	H.adjust_blindness(-3)
-	var/weapons = list("Dec Sword + Shield","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Eagle's Beak", "Partizan", "Glaive")
+	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Eagle's Beak", "Partizan", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -125,7 +125,9 @@
 			backl = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		if("Zweihander")
-			r_hand = /obj/item/rogueweapon/greatsword/zwei
+			r_hand = /obj/item/rogueweapon/greatsword/grenz
+		if("Greatsword")
+			r_hand = /obj/item/rogueweapon/greatsword
 		if("Great Mace")
 			r_hand = /obj/item/rogueweapon/mace/goden/steel
 		if("Battle Axe")

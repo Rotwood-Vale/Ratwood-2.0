@@ -5,7 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/minstrel
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	category_tags = list(CTAG_TOWNER)
+	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_EMPATH, TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
@@ -50,7 +50,7 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		pants = /obj/item/clothing/under/roguetown/sirwal/fancy/random
 		shoes = /obj/item/clothing/shoes/roguetown/shalal

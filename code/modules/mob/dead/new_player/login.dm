@@ -51,6 +51,7 @@
 			if(5)
 				shown_patreon_level = "Lord"
 		to_chat(src, span_info("Donator Level: [shown_patreon_level]"))
+	client.changelog()
 
 	var/primary_server = "byond://ratwood.rip:22096"
 	var/secondary_server = "byond://ratwood.rip:22099"
@@ -82,7 +83,7 @@
 			postfix = "soon"
 		to_chat(src, "The game will start [postfix].")
 
-		SSvote.send_vote(client)
+		SSvote.on_client_login(client)
 		var/usedkey = ckey(key)
 		var/list/thinz = list("takes a seat.", "settles in.", "joins the session", "joins the table.", "becomes a player.")
 		SEND_TEXT(world, span_notice("[usedkey] [pick(thinz)]"))

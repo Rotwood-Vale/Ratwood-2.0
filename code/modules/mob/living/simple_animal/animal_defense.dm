@@ -170,20 +170,6 @@
 		next_attack_msg.Cut()
 		return TRUE
 
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
-	if(..()) //successful monkey bite.
-		if(stat != DEAD)
-			var/damage = rand(1, 3)
-			attack_threshold_check(damage)
-			return 1
-	if (M.used_intent.type == INTENT_HELP)
-		if (health > 0)
-			visible_message(span_notice("[M.name] [response_help_continuous] [src]."), \
-							span_notice("[M.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_notice("I [response_help_simple] [src]."))
-			playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-
-
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)

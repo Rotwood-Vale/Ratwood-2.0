@@ -176,8 +176,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 //	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/toggle_random_events,
-	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
 	// /datum/admins/proc/BC_WhitelistKeyVerb,
@@ -198,6 +198,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
@@ -289,6 +290,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
 	/proc/release,
@@ -775,23 +777,23 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "-Special Verbs-"
 	set name = "Force Speech"
 	set desc = ""
-	
+
 	if(!L)
 		to_chat(usr, span_warning("No mob selected."))
 		return
-	
+
 	if(!isliving(L))
 		to_chat(usr, span_warning("Target must be a living mob."))
 		return
-	
+
 	if(!L.loc)
 		to_chat(usr, span_warning("Target mob has no location."))
 		return
-	
+
 	var/message = input(usr, "What do you want them to say?", "Force Say") as text | null
 	if(!message)
 		return
-	
+
 	L.say(message)
 	log_admin("[key_name(usr)] forced [key_name(L)] at [AREACOORD(L)] to say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(L)] at [AREACOORD(L)] to say \"[message]\""))
@@ -954,7 +956,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			scom_announce("An unknown force has erased the bounty on [target_name]. The gods are displeased.")
 			message_admins("[ADMIN_LOOKUPFLW(src)] has removed the bounty on [ADMIN_LOOKUPFLW(target_name)]")
 			return
-	to_chat(src, "Error. Bounty no longer active.") 
+	to_chat(src, "Error. Bounty no longer active.")
 
 /client/proc/enable_browser_debug()
 	set category = "Debug"

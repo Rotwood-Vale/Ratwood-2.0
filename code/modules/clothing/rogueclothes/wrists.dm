@@ -42,6 +42,19 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/clothing/wrists/roguetown/bracers/ancient
+	name = "ancient bracers"
+	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
+	icon_state = "ancientbracers"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+	name = "decrepit bracers"
+	desc = "Frayed bronze cuffings, bound across the wrists. Don't bother counting the tallies left behind by their former legionnaires; none of them ever returned from the battlefields."
+	max_integrity = ARMOR_INT_SIDE_DECREPIT
+	color = "#bb9696"
+	anvilrepair = null
+
 /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	name = "psydonic thorns"
 	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be wrapped around the wrists."
@@ -74,21 +87,6 @@
 		user.visible_message(span_warning("[user] stops reshaping [src]."))
 		return
 
-/obj/item/clothing/wrists/roguetown/bracers/aalloy
-	name = "decrepit bracers"
-	desc = "Frayed bronze cuffings, bound across the wrists. Don't bother counting the tallies left behind by their former legionnaires; none of them ever returned from the battlefields."
-	max_integrity = ARMOR_INT_SIDE_DECREPIT
-	icon_state = "ancientbracers"
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/clothing/wrists/roguetown/bracers/paalloy
-	name = "ancient bracers"
-	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
-	icon_state = "ancientbracers"
-	smeltresult = /obj/item/ingot/aaslag
-
 /obj/item/clothing/wrists/roguetown/bracers/leather
 	name = "leather bracers"
 	desc = "Standard leather bracers that offer some meager protection for the arms."
@@ -98,12 +96,14 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
+	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	anvilrepair = null
 	smeltresult = null
 	sewrepair = TRUE
 	smeltresult = null
+	dropshrink = null
 	salvage_amount = 0 // sry
 	salvage_result = /obj/item/natural/hide/cured
 	color = "#684338"
@@ -123,6 +123,7 @@
 	color = "#4d4d4d"
 	cold_protection =  ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = 50
+	dropshrink = 0.8
 
 /obj/item/clothing/wrists/roguetown/bracers/copper
 	name = "copper bracers"

@@ -689,7 +689,7 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 		to_chat(U, span_warning("You are already marked by a previous quest."))
 		return
 
-	if(istype(I, /obj/item/roguecoin/aalloy)) return
+	if(istype(I, /obj/item/roguecoin/gilbranze)) return
 	if(istype(I, /obj/item/roguecoin/inqcoin)) return
 
 	if(istype(I, /obj/item/roguecoin))
@@ -1079,7 +1079,6 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	var/list/skill_cands = list()
 	var/list/blocked_skills = list(
-		/datum/skill/combat/staves,
 		/datum/skill/magic/blood
 	)
 

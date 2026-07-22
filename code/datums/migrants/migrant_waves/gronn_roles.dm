@@ -147,7 +147,7 @@
 		if(21 to 40)
 			r_hand = /obj/item/rogueweapon/greataxe
 		if(41 to 60)
-			r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy  // Literally just a cooler bardiche.
+			r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient  // Literally just a cooler bardiche.
 		if(61 to 80)
 			r_hand = /obj/item/rogueweapon/greataxe  //50/50 between greataxe or a bardiche.
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)

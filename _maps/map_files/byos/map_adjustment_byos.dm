@@ -70,6 +70,7 @@
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
+		/datum/job/roguetown/dtchaplain,
 		
 		// /datum/job/roguetown/adventurer//Adventurers
 		// /datum/job/roguetown/wretch,

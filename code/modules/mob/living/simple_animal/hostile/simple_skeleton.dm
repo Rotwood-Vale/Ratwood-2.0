@@ -57,7 +57,7 @@
 	icon_state = "skeleton_axe"
 	icon_living = "skeleton_axe"
 	icon_dead = ""
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/stoneaxe/woodcut, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/spear
 	name = "Skeleton"
@@ -68,7 +68,7 @@
 	icon_living = "skeleton_spear"
 	icon_dead = ""
 	attack_sound = 'sound/foley/pierce.ogg'
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/spear, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 	ai_controller = /datum/ai_controller/skeleton_spear
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard
@@ -79,7 +79,7 @@
 	icon_state = "skeleton_guard"
 	icon_living = "skeleton_guard"
 	icon_dead = ""
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/sword/iron, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 	maxHealth = 200
 	health = 200
 
@@ -102,10 +102,9 @@
 			/obj/item/natural/bone,
 			/obj/item/natural/bone,
 			/obj/item/skull,
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
 			)
 	ai_controller = /datum/ai_controller/skeleton_ranged
 

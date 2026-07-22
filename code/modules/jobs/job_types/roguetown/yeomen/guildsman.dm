@@ -11,7 +11,7 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "You are a member of the Rotwood Vale Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township of Rotwood Vale.\
+	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
 	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 
@@ -97,7 +97,7 @@
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 		beltr = /obj/item/roguekey/crafterguild
 		cloak = /obj/item/clothing/cloak/apron/blacksmith
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -164,7 +164,7 @@
 						/obj/item/contraption/linker = 1,
 						/obj/item/mini_flagpole/artificer = 1
 						)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
 	if(H.mind)
@@ -236,7 +236,7 @@
 						/obj/item/mini_flagpole/blacksmith = 1,
 						/obj/item/mini_flagpole/artificer = 1,
 						)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals

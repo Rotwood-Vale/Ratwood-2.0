@@ -1,13 +1,11 @@
-
-
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 8
 	hud_possible = list(ANTAG_HUD)
-	
+
 	typing_indicator_enabled = TRUE
-	
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -29,7 +27,8 @@
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
 	var/resting = FALSE
-	var/wallpressed = FALSE
+	/// Cardinal dir of the wall we're pressed against, or FALSE. Use set_wallpressed()/is_wallpressed().
+	VAR_PROTECTED/wallpressed = FALSE
 	var/climbing = FALSE
 
 	var/pixelshift_layer = 0
@@ -65,7 +64,7 @@
 
 	var/tod = null // Time of death
 
-	/// The boolean "Are we on fire?" var. 
+	/// The boolean "Are we on fire?" var.
 	var/on_fire = FALSE
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/fire_stacks = 0
@@ -170,6 +169,9 @@
 
 	var/datum/component/personal_crafting/craftingthing
 
+	/// Cooldown when you break out of a grab before you can be grabbed again
+	COOLDOWN_DECLARE(broke_free)
+
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
 
@@ -210,3 +212,9 @@
 	/// If TRUE, denotes that the character (a human) has received their class equipment via equip() proc.
 	/// Usually, this also means that they've made all their choices after spawning.
 	var/class_equip_finished = FALSE
+
+	var/tempatarget = null
+	/// Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
+	var/pegleg = 0
+	var/construct = 0
+	var/burialrited = FALSE
