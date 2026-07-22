@@ -46,7 +46,17 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
+	beltr = /obj/item/flaregun/loaded
 	id = /obj/item/scomstone/garrison
+
+/datum/outfit/job/roguetown/wardenmaster/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare) in H.belt)
+			return
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
 
 //Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
 /datum/advclass/wardenmaster/wardenmaster
