@@ -103,7 +103,7 @@
 
 /datum/advclass/guildsman/artificer
 	name = "Architech"
-	tutorial = "You are an Architech, oft known by the longer name of Architech-Tinkerer. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
+	tutorial = "You are an Architech. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
 	But your true calling is the creation of arcyne machines, alongside feats of engineering, constructing, and creating mechanical and magical wonders whose art of creation has been passed down\
 	from a certain elven Artificer..."
 	outfit = /datum/outfit/job/roguetown/guildsman/artificer
