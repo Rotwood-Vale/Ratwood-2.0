@@ -15,6 +15,7 @@
 	name = "Fog"
 	desc = "It's gonna fog."
 	weather_weights = list(/datum/particle_weather/fog = 4)
+	incompatible = list(/datum/round_modifier/stormy)
 
 /datum/round_modifier/stormy
 	name = "Stormy"

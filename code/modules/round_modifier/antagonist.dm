@@ -2,7 +2,7 @@
 	name = "Medium Bandits"
 	desc = "The free men have come."
 	cost = 3
-	weight = 20
+	weight = 30
 	min_chaos = 2
 	bandit_slots = 6
 
@@ -39,8 +39,8 @@
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
 	desc = "The free men have come in force."
-	cost = 5
-	weight = 12
+	cost = 4
+	weight = 15
 	min_chaos = 3
 	incompatible = list(/datum/round_modifier/medium_bandits)
 	bandit_slots = 10
@@ -48,14 +48,14 @@
 /datum/round_modifier/werewolf
 	name = "Verevolf"
 	desc = "Men don the skin of wolves in darkling night."
-	cost = 6
+	cost = 4
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/werewolf)
 
 /datum/round_modifier/vampire
 	name = "Vampyres"
 	desc = "Astrata's cursed spawn blights the land!"
-	cost = 6
+	cost = 4
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/masquerade)
 
