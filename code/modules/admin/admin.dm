@@ -1443,7 +1443,7 @@ GLOBAL_VAR_INIT(extend_round_timestamp, 0)
 		if(current_round_timer > world.time)
 			current_round_timer -= SSticker.round_start_time
 		GLOB.round_timer = current_round_timer + extension_time
-		if(extension_time < 0 && STATION_TIME_PASSED() >= GLOB.round_timer && !SSvote.mode)
+		if(extension_time < 0 && STATION_TIME_PASSED() >= GLOB.round_timer && !SSvote.current_vote)
 			SSvote.initiate_vote("endround")
 	log_admin("[key_name(usr)] [action] the round by [abs(extension_minutes)] minutes.")
 	message_admins("[key_name(usr)] [action] the round by [abs(extension_minutes)] minutes.")
