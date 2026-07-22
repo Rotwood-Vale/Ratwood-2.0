@@ -56,8 +56,8 @@
 	to_chat(M, "<span class='danger'>I start tripping hard!</span>")
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
 
 /datum/reagent/drug/nicotine
@@ -349,6 +349,15 @@
 		M.adjustToxLoss(2, 0)
 	..()
 
+/datum/reagent/drug/food_reagent
+    var/datum/stressevent/stress_type
+
+
+/datum/reagent/drug/food_reagent/on_mob_metabolize(mob/living/living_mob)
+    var/mob/living/carbon/carbon_mob = living_mob
+    carbon_mob.add_stress(stress_type)
+    . = ..()
+
 /datum/reagent/drug/mentha // distinct from SS13 menthol, for the mentha zigs
 	name = "Mentha"
 	description = "Extract from the mentha herb. Produces a cooling sensation."
@@ -363,10 +372,8 @@
 /datum/reagent/drug/mentha/on_mob_end_metabolize(mob/living/M)
 	..()
 
-/datum/reagent/drug/mentha/on_mob_metabolize(mob/living/M)
-	var/mob/living/carbon/V = M
-	V.add_stress(/datum/stressevent/menthasmoke)
-	..()
+/datum/reagent/drug/food_reagent/mentha
+    stress_type = /datum/stressevent/menthasmoke
 
 /datum/reagent/drug/mentha/on_mob_life(mob/living/carbon/M)
 	..()
@@ -392,10 +399,8 @@
 /datum/reagent/drug/blackberry/on_mob_end_metabolize(mob/living/M)
 	..()
 
-/datum/reagent/drug/blackberry/on_mob_metabolize(mob/living/M)
-	var/mob/living/carbon/V = M
-	V.add_stress(/datum/stressevent/blackberrysmoke)
-	..()
+/datum/reagent/drug/food_reagent/blackberry
+    stress_type = /datum/stressevent/blackberrysmoke
 
 /datum/reagent/drug/blackberry/on_mob_life(mob/living/carbon/M)
 	..()
@@ -418,13 +423,9 @@
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/apple/on_mob_end_metabolize(mob/living/M)
-	..()
 
-/datum/reagent/drug/apple/on_mob_metabolize(mob/living/M)
-	var/mob/living/carbon/V = M
-	V.add_stress(/datum/stressevent/applesmoke)
-	..()
+/datum/reagent/drug/food_reagent/apple
+    stress_type = /datum/stressevent/applesmoke
 
 /datum/reagent/drug/apple/on_mob_life(mob/living/carbon/M)
 	..()
@@ -446,9 +447,6 @@
 	trippy = FALSE
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/chocolate/on_mob_end_metabolize(mob/living/M)
-	..()
 
 /datum/reagent/drug/chocolate/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M
@@ -476,9 +474,6 @@
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/strawberry/on_mob_end_metabolize(mob/living/M)
-	..()
-
 /datum/reagent/drug/strawberry/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M
 	V.add_stress(/datum/stressevent/strawberrysmoke)
@@ -504,9 +499,6 @@
 	trippy = FALSE
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/carrot/on_mob_end_metabolize(mob/living/M)
-	..()
 
 /datum/reagent/drug/carrot/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M
@@ -534,8 +526,6 @@
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/lime/on_mob_end_metabolize(mob/living/M)
-	..()
 
 /datum/reagent/drug/lime/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M
@@ -563,9 +553,6 @@
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/salvia/on_mob_end_metabolize(mob/living/M)
-	..()
-
 /datum/reagent/drug/salvia/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M
 	V.add_stress(/datum/stressevent/salviasmoke)
@@ -591,9 +578,6 @@
 	trippy = FALSE
 	overdose_threshold = 999
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-
-/datum/reagent/drug/valeriana/on_mob_end_metabolize(mob/living/M)
-	..()
 
 /datum/reagent/drug/valeriana/on_mob_metabolize(mob/living/M)
 	var/mob/living/carbon/V = M

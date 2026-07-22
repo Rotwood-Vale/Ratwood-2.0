@@ -289,7 +289,6 @@
 	var/found_table = locate(/obj/structure/table) in (loc)
 	var/obj/item/reagent_containers/R = I
 	// if false, this is a special case like orison
-	var/is_container = istype(R)
 	update_cooktime(user)
 	if(water_added)
 		return FALSE
@@ -455,7 +454,7 @@
 		if(istype(I, /obj/item/natural/cloth))
 			user.visible_message(span_info("[user] sifts the minerals..."))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/peppermill.ogg', 90, TRUE, -1)
-			if(do_after(user,3 SECONDS, target = src))
+			if(do_after(user, 3 SECONDS, target = src))
 				new /obj/item/reagent_containers/powder/coarse_salt(loc)
 				qdel(src)
 	else ..()

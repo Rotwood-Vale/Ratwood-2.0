@@ -492,7 +492,7 @@
 	var/datum/advclass/gnoll_impure/G = new()
 	G.equipme(H)
 
-	src.visible_message(span_warning("The [src.name] bloats and tears open as a gnoll claw bursts through!"))
+	visible_message(span_warning("The [src.name] bloats and tears open as a gnoll claw bursts through!"))
 	playsound(H.loc, 'sound/magic/slimesquish.ogg', 100, TRUE)
 	qdel(C)
 	qdel(src)

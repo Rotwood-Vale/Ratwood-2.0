@@ -926,8 +926,7 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/bakedthickchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
+	M.energy_add(1)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = min(M.blood_volume+3, BLOOD_VOLUME_MAXIMUM)
 	var/list/wCount = M.get_wounds()
@@ -942,8 +941,7 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/veggiethickchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
+	M.energy_add(1)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = min(M.blood_volume+3, BLOOD_VOLUME_MAXIMUM)
 	var/list/wCount = M.get_wounds()
@@ -958,8 +956,7 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/pepperchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
+	M.energy_add(1)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = min(M.blood_volume+4, BLOOD_VOLUME_MAXIMUM)
 	var/list/wCount = M.get_wounds()
@@ -974,8 +971,7 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/lavishchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
+	M.energy_add(1)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_MAXIMUM)
 	var/list/wCount = M.get_wounds()

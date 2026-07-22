@@ -371,24 +371,17 @@
 	foodtype = GRAIN | DAIRY | FRUIT
 
 /obj/item/reagent_containers/food/snacks/rogue/cookier/update_icon()
-	if(slices_num)
-		icon_state = "cookiedoughr[slices_num]"
-	else
-		icon_state = "cookiedoughr_slice"
+	icon_state = slices_num ? "cookiedoughr[slices_num]" : "cookiedoughr_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/cookier/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/cookieslicer
 	name = "raelseini"
@@ -848,25 +841,17 @@
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/bookbread/update_icon()
-	if(slices_num)
-		icon_state = "bookbread[slices_num]"
-	else
-		icon_state = "bookbread_slice"
+	icon_state = slices_num ? "bookbread[slices_num]" : "bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/bookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
-
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 /obj/item/reagent_containers/food/snacks/rogue/bookbread_slice
 	name = "sliced bookbread"
 	desc = "About the same size and taste as an encyclopedia."
@@ -912,8 +897,6 @@
 	eat_effect = /datum/status_effect/buff/greatsnackbuff
 	foodtype = GRAIN | DAIRY | FRUIT
 
-//
-
 /obj/item/reagent_containers/food/snacks/rogue/pearbookbread
 	name = "pear bookbread"
 	desc = "Children on Nocsmas are traditionally granted both book and pastry without expectation of exchange, this variety is prefered by most little ones."
@@ -933,24 +916,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/pearbookbread/update_icon()
-	if(slices_num)
-		icon_state = "pear_bookbread[slices_num]"
-	else
-		icon_state = "pear_bookbread_slice"
+	icon_state = slices_num ? "pear_bookbread[slices_num]" : "pear_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/pearbookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/pearbookbread_slice
 	name = "sliced pear bookbread"
@@ -988,24 +964,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/plumbookbread/update_icon()
-	if(slices_num)
-		icon_state = "plum_bookbread[slices_num]"
-	else
-		icon_state = "plum_bookbread_slice"
+	icon_state = slices_num ? "plum_bookbread[slices_num]" : "plum_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/plumbookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/plumbookbread_slice
 	name = "sliced plum bookbread"
@@ -1043,24 +1012,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/lemonbookbread/update_icon()
-	if(slices_num)
-		icon_state = "lemon_bookbread[slices_num]"
-	else
-		icon_state = "lemon_bookbread_slice"
+	icon_state = slices_num ? "lemon_bookbread[slices_num]" : "lemon_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/lemonbookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/lemonbookbread_slice
 	name = "sliced lemon bookbread"
@@ -1098,24 +1060,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/tangerinebookbread/update_icon()
-	if(slices_num)
-		icon_state = "tangerine_bookbread[slices_num]"
-	else
-		icon_state = "tangerine_bookbread_slice"
+	icon_state = slices_num ? "tangerine_bookbread[slices_num]" : "tangerine_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/tangerinebookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/tangerinebookbread_slice
 	name = "sliced tangerine bookbread"
@@ -1131,8 +1086,6 @@
 	dropshrink = 0.8
 	eat_effect = /datum/status_effect/buff/snackbuff
 	foodtype = GRAIN | FRUIT | DAIRY
-
-//
 
 /obj/item/reagent_containers/food/snacks/rogue/blackberrybookbread
 	name = "blackberry bookbread"
@@ -1153,24 +1106,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/blackberrybookbread/update_icon()
-	if(slices_num)
-		icon_state = "blackberry_bookbread[slices_num]"
-	else
-		icon_state = "blackberry_bookbread_slice"
+	icon_state = slices_num ? "blackberry_bookbread[slices_num]" : "blackberry_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/blackberrybookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/blackberrybookbread_slice
 	name = "sliced blackberry bookbread"
@@ -1186,8 +1132,6 @@
 	dropshrink = 0.8
 	eat_effect = /datum/status_effect/buff/snackbuff
 	foodtype = GRAIN | FRUIT | DAIRY
-
-//
 
 /obj/item/reagent_containers/food/snacks/rogue/raspberrybookbread
 	name = "raspberry bookbread"
@@ -1208,24 +1152,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/raspberrybookbread/update_icon()
-	if(slices_num)
-		icon_state = "raspberry_bookbread[slices_num]"
-	else
-		icon_state = "raspberry_bookbread_slice"
+	icon_state = slices_num ? "raspberry_bookbread[slices_num]" : "raspberry_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/raspberrybookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/raspberrybookbread_slice
 	name = "sliced raspberry bookbread"
@@ -1263,24 +1200,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/jackberrybookbread/update_icon()
-	if(slices_num)
-		icon_state = "jacksberry_bookbread[slices_num]"
-	else
-		icon_state = "jacksberry_bookbread_slice"
+	icon_state = slices_num ? "jacksberry_bookbread[slices_num]" : "jacksberry_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/jackberrybookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/jackberrybookbread_slice
 	name = "sliced jacksberried bookbread"
@@ -1318,24 +1248,17 @@
 	foodtype = GRAIN | FRUIT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/poisonberrybookbread/update_icon()
-	if(slices_num)
-		icon_state = "jacksberry_bookbread[slices_num]"
-	else
-		icon_state = "jacksberry_bookbread_slice"
+	icon_state = slices_num ? "jacksberry_bookbread[slices_num]" : "jacksberry_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/poisonberrybookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/poisonberrybookbread_slice
 	name = "sliced jacksberried bookbread"
@@ -1373,24 +1296,17 @@
 	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/rogue/chocolatebookbread/update_icon()
-	if(slices_num)
-		icon_state = "chocolate_bookbread[slices_num]"
-	else
-		icon_state = "chocolate_bookbread_slice"
+	icon_state = slices_num ? "chocolate_bookbread[slices_num]" : "chocolate_bookbread_slice"
 
 /obj/item/reagent_containers/food/snacks/rogue/chocolatebookbread/On_Consume(mob/living/eater)
-	..()
-	if(slices_num)
-		if(bitecount == 3)
-			slices_num = 5
-		if(bitecount == 4)
-			slices_num = 4
-		if(bitecount == 5)
-			slices_num = 3
-		if(bitecount == 6)
-			slices_num = 2
-		if(bitecount == 7)
-			changefood(slice_path, eater)
+    ..()
+    if(!slices_num)
+        return
+    if(bitecount >= 7)
+        changefood(slice_path, eater)
+        return
+    if(bitecount > 3)
+        slices_num = (8 - bitecount)
 
 /obj/item/reagent_containers/food/snacks/rogue/chocolatebookbread_slice
 	name = "sliced chocolate bookbread"
@@ -1406,3 +1322,4 @@
 	dropshrink = 0.8
 	eat_effect = /datum/status_effect/buff/greatsnackbuff
 	foodtype = GRAIN | DAIRY
+	
