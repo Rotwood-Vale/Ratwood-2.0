@@ -220,18 +220,21 @@
 		to_chat(thief, span_warning("What am I going to steal from there?"))
 		return
 
-	// The contested detection check: thieving + speed vs perception + speed, scaled by the mark's awareness.
-	var/thief_score = roll("[thiefskill + 1]d6") + round((thief.STASPD - 10) / 3)
+	// No lifting from the front - it has to be from behind, or off someone who can't see at all.
 	var/victim_unaware = victim.IsUnconscious() || victim.eyesclosed || victim.eye_blind || victim.eye_blurry || !(victim.mobility_flags & MOBILITY_STAND)
 	var/list/mobsbehind = cone(victim, list(turn(victim.dir, 180)), list(thief))
-	var/thief_behind = mobsbehind.Find(thief)
+	if(!victim_unaware && !mobsbehind.Find(thief))
+		to_chat(thief, span_warning("They can see me!"))
+		thief.changeNext_move(clickcd)
+		return
+
+	// The contested detection check: thieving + speed vs perception + speed, scaled by the mark's awareness.
+	var/thief_score = roll("[thiefskill + 1]d6") + round((thief.STASPD - 10) / 3)
 	var/victim_score
 	if(victim_unaware)
 		victim_score = round(effective_targetperception * 0.35)
-	else if(thief_behind)
-		victim_score = effective_targetperception + round((victim.STASPD - 10) / 3)
 	else
-		victim_score = round(effective_targetperception * 1.75) + round((victim.STASPD - 10) / 3) // watching you the whole time
+		victim_score = effective_targetperception + round((victim.STASPD - 10) / 3)
 	var/margin = thief_score - victim_score
 
 	if(margin < 0)
