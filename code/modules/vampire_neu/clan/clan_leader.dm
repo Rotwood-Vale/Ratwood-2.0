@@ -12,7 +12,6 @@
 /datum/clan_leader/lord
 	lord_spells = list(
 		/obj/effect/proc_holder/spell/targeted/shapeshift/vampire/bat,
-		/obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform,
 	)
 
 // doesn't get any of the benefits, currently functionally unused
