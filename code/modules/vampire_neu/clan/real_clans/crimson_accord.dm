@@ -9,19 +9,4 @@
 		/datum/coven/obfuscate,
 		/datum/coven/quietus
 	)
-	clane_traits = list(
-		TRAIT_STRONGBITE,
-		TRAIT_VAMPBITE,
-		TRAIT_NOHUNGER,
-		TRAIT_NOBREATH,
-		TRAIT_NOPAIN,
-		TRAIT_TOXIMMUNE,
-		TRAIT_STEELHEARTED,
-		TRAIT_NOSLEEP,
-		TRAIT_VAMPMANSION,
-		TRAIT_VAMP_DREAMS,
-		TRAIT_DARKVISION,
-		TRAIT_LIMBATTACHMENT,
-		TRAIT_SILVER_WEAK,
-	)
 	covens_to_select = 0

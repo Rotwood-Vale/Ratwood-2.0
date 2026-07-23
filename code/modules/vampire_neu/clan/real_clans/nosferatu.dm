@@ -6,12 +6,7 @@
 	lord_spells = list(
 		/obj/effect/proc_holder/spell/targeted/shapeshift/rat
 	)
-	lord_verbs = list(
-		/mob/living/carbon/human/proc/punish_spawn
-	)
 	lord_title = "Nosferatu"
-	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_INFINITE_ENERGY, TRAIT_STRENGTH_UNCAPPED)
-	vitae_bonus = 500
 
 /datum/clan/nosferatu
 	name = "Nosferatu"
@@ -25,21 +20,8 @@
 		/datum/coven/bloodheal
 	)
 	blood_preference = BLOOD_PREFERENCE_RATS | BLOOD_PREFERENCE_DEAD | BLOOD_PREFERENCE_KIN
-	clane_traits = list(
-		TRAIT_STRONGBITE,
-		TRAIT_VAMPBITE,
-		TRAIT_NOHUNGER,
-		TRAIT_NOBREATH,
-		TRAIT_NOPAIN,
-		TRAIT_TOXIMMUNE,
-		TRAIT_STEELHEARTED,
-		TRAIT_NOSLEEP,
-		TRAIT_VAMPMANSION,
-		TRAIT_VAMP_DREAMS,
-		TRAIT_DARKVISION,
-		TRAIT_LIMBATTACHMENT,
+	extra_clan_traits = list(
 		TRAIT_KEENEARS,
-		TRAIT_SILVER_WEAK,
 	)
 	covens_to_select = 0
 
@@ -55,7 +37,15 @@
 	if(is_vampire)
 		var/obj/item/organ/eyes/night_vision/vampire/NV = new()
 		NV.Insert(H, TRUE, FALSE)
-		H.ventcrawler = VENTCRAWLER_ALWAYS //I don't think this does anything because we have no vents
+		H.ventcrawler = VENTCRAWLER_ALWAYS //someone might add vents
+
+/datum/clan/nosferatu/on_lose(mob/living/carbon/human/vampire)
+	. = ..()
+	vampire.ventcrawler = initial(vampire.ventcrawler)
+
+	var/datum/component/hideous_face/face_comp = vampire.GetComponent(/datum/component/hideous_face)
+	if(face_comp)
+		qdel(face_comp)
 
 /datum/clan/nosferatu/apply_clan_components(mob/living/carbon/human/H)
 	pass()
