@@ -1,0 +1,5 @@
+author: "awwliedacoder"
+delete-after: True
+changes:
+  - bugfix: "null-ref hangup on update_temperature_hud."
+  - rscadd: "added a forced pop-up of the voting ui whenever a vote is called."

@@ -1,0 +1,4 @@
+author: "ariaworld"
+delete-after: True
+changes:
+  - bugfix: "Strong intent now correctly gives a bonus to unarmed fists as well."

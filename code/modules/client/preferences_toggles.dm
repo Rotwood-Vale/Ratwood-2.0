@@ -122,6 +122,8 @@
 		list("id" = "deadchat", "label" = "Show Deadchat", "enabled" = !!(owner.prefs.chat_toggles & CHAT_DSAY), "desc" = "Receive deadchat messages."),
 		list("id" = "legacy_craft", "label" = "Enable Legacy Craft", "enabled" = !!owner.legacycraft, "desc" = "Use legacy crafting UI/behavior."),
 		list("id" = "roleplay_ads", "label" = "Receive Roleplay Ads", "enabled" = !!(owner.prefs.toggles & ROLEPLAY_ADS), "desc" = "Receive notifications for new roleplay ads."),
+		list("id" = "voting_popup", "label" = "Enable Voting UI Popup", "enabled" = !!owner.prefs.voting_popup, "desc" = "Allow a popup of the voting-ui."),
+	
 	)
 
 	var/list/audio_entries = list(
@@ -232,6 +234,8 @@
 				owner.toggle_edging()
 			if("cursed_collars")
 				owner.toggle_cursed_collars()
+			if("voting_popup")
+				owner.toggle_voting_popup()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -454,6 +458,21 @@
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
 
+/client/verb/toggle_voting_popup()
+	set category = "Options"
+	set name = "Toggle Voting Popup"
+	set hidden = 1
+	if(!prefs)
+		return
+
+	prefs.voting_popup = !prefs.voting_popup
+	prefs.save_preferences()
+	if(prefs.voting_popup)
+		to_chat(src, "You will see a popup of the voting ui as a vote is called.")
+	else
+		to_chat(src, "You will no longer see a popup of the voting ui as a vote is called.")
+
+	
 /client/verb/toggle_cursed_collars() // Toggles cursed collars. Will drop existing collars if toggled off while wearing one
 	set category = "Options"
 	set name = "Toggle Cursed Collars"

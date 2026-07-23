@@ -25,6 +25,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar,

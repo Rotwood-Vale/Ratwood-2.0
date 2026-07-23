@@ -162,6 +162,15 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
 	slot_flags = ITEM_SLOT_BELT
 
+/obj/item/storage/belt/rogue/leather/suspenders/butler/colored
+	name = "suspenders"
+	desc = "A pair of suspenders which go over the shoulders. Used for keeping one's pants in place in an admittably fashionable style."
+	icon = 'icons/roguetown/clothing/belts.dmi'
+	icon_state = "butlersuspenderscolorable"
+	item_state = "butlersuspenderscolorable"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	slot_flags = ITEM_SLOT_BELT
+
 /obj/item/storage/backpack/rogue/satchel
 	sewrepair = TRUE
 

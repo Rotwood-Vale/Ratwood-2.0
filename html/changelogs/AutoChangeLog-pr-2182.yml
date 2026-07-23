@@ -1,0 +1,7 @@
+author: "RadiantFlash7"
+delete-after: True
+changes:
+  - rscadd: "Old age buff to parrying"
+  - rscadd: "Retainer Subclass to men at arms for old age MAA."
+  - rscadd: "MAA & Town Guards are once more able to be old"
+  - balance: "old age once more grants 3 int instead of 2."

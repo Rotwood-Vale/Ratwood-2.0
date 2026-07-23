@@ -32,18 +32,10 @@
 		lines += ext_lines
 	return lines
 
-/mob/living/carbon/human/proc/get_examine_item_name_with_custom_link(mob/user, obj/item/I)
-	if(!I)
-		return ""
-	var/display_name = I.get_examine_string(user)
-	if(!I.has_customized_identity() && !I.always_show_examine_link)
-		return display_name
-	return "<a href='?src=[REF(src)];task=show_custom_item_info;item_ref=[REF(I)]'>[display_name]</a>"
-
 /mob/living/carbon/human/proc/get_examine_item_name_with_hover(mob/user, obj/item/I)
 	if(!I)
 		return ""
-	var/display_name = get_examine_item_name_with_custom_link(user, I)
+	var/display_name = I.get_examine_string(user)
 	if(!I.show_examine_hover_tooltip())
 		return display_name
 	var/self_examine = (src == user)
@@ -51,7 +43,7 @@
 	if(!tooltip_html)
 		return display_name
 	var/label = display_name
-	if(!I.has_customized_identity() && !I.always_show_examine_link)
+	if(!I.always_show_examine_link)
 		label = "<u><font color='#add8e6'>[display_name]</font></u>"
 	return "<span data-component=\"TooltipHTML\" data-position=\"bottom-start\" data-html=\"[html_encode(tooltip_html)]\">[label]</span>"
 

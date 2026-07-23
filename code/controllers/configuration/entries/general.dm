@@ -68,6 +68,18 @@
 
 /datum/config_entry/flag/log_attack	// log attack messages
 
+/datum/config_entry/flag/disable_memory_stats	// disables periodic memory usage logging (SSmemory_stats) and the statpanel memory readouts. Absent = enabled.
+
+/datum/config_entry/flag/disable_memory_stats/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		SSmemory_stats?.can_fire = !config_entry_value
+
+/datum/config_entry/flag/disable_memory_stats/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && var_name == NAMEOF(src, config_entry_value))
+		SSmemory_stats?.can_fire = !config_entry_value
+
 /datum/config_entry/flag/log_emote	// log emotes
 
 /datum/config_entry/flag/log_adminchat	// log admin chat messages

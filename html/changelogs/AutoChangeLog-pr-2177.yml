@@ -1,0 +1,4 @@
+author: "kimesik"
+delete-after: True
+changes:
+  - bugfix: "some \"Gronnic\" stuff is now actually called nation-agnostic."

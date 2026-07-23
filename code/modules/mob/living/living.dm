@@ -1083,6 +1083,9 @@
 	set hidden = 1
 	if(!can_resist() || surrendering)
 		return
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		to_chat(src, span_info("I can't resist right now."))
+		return
 
 	changeNext_move(CLICK_CD_RESIST)
 

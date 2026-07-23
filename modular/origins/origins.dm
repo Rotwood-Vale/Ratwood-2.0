@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	once made up the see of seasons. Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
 	petty kingdoms, or Jarldoms, all loosely agreeing to the will of the Ringbearer, Lord of the Witan."
 	origin_title = "Hammerhold"
-	origin_language = /datum/language/dwarvish
+	origin_language = /datum/language/hammerholdian
 	map_x = 90
 	map_y = 132
 

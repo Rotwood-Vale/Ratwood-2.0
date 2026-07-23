@@ -1,0 +1,4 @@
+author: "Heheniy"
+delete-after: True
+changes:
+  - bugfix: "wrong stockings offset on males"

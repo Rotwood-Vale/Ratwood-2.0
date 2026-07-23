@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - balance: "canceling the pin do_after removes all pin stun"

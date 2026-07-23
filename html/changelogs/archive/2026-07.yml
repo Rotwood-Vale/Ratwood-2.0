@@ -270,3 +270,57 @@
   - rscadd: Map Tally system
   - rscadd: default Map preference in option
   - code_imp: Ported TG's vote subsystem
+2026-07-23:
+  Broill:
+  - rscadd: Changed the robe and hood of the necromancer into the necromancer hood
+      and necromancer robe.
+  DorfGuy1:
+  - qol: craft recipe for kneaded clay
+  Heheniy:
+  - qol: flat chastity no longer gives mood debuff to people with sheaths
+  SneakySlinky:
+  - balance: Gnolls and WWs now take 30% reduced damage from hits, rather than +30
+      damage from all hits.
+  UntoldTactics:
+  - balance: Psydonic plate armor has been buffed to the same armor integrity as regular
+      plate but loses its ability to give people heavy armor wear trait on equip.
+  - balance: Leather bracers nerfed in both armor value and integrity to match other
+      leather items.
+  - balance: Brigandine rerebracers buffed to offer a relevant alternative to proper
+      steel bracers with accompanying tradeoff in total integrity.
+  - balance: Heavy leather boots, fur boots and Psydonic leather boots have been buffed
+      from 100 -> 250 (~87 -> ~220 in game) integrity to match properly with the rest
+      of their hardened leather counterparts. The integrity of regular boots now match
+      the integrity of other leather items.
+  - balance: Knight-captain's unique armor has recieved a total value overhaul. Their
+      helmet, brigandine and chausses now have C blunt and piercing protection alongside
+      the typical S and A slash and stab values of plate armor. Their brigandine and
+      chausses have been given the integrity values of proper plate armor pieces.
+      In the case of the brigandine this equalizes their coverage and integrity total
+      to the same as the hedge knight bandit's roundstart darkened steel plate.
+  - balance: The Marshal sub-class 'Knight Commander' has had their unique coat buffed
+      by 50 integrity points, making it on-par with other brigandine+ armors (e.g
+      city watch armor)
+  - balance: The coif, padded coif and heavy padded coif now have properly assigned
+      integrity values. The padded coif and heavy padded coif are equivilent to a
+      gambeson and padded gambeson respectively. Chop crit protection added to heavy
+      padded coif.
+  WolfOrion:
+  - bugfix: you no longer need facial reconstruction surgery if killed as a werewolf
+      and then revived
+  Yuckuza:
+  - balance: Leather and hide corslets are now wearable in the shirt (aka gambeson)
+      slot.
+  - rscadd: All Amazon loadout options get a chainmail corslet underarmor on spawn.
+      Bikini armor enjoyers rejoice.
+  ariaworld:
+  - balance: Gave Bow Hunter a backpack.
+  ophaq:
+  - rscadd: Hammerhold people now have their own language... Hammerholdian! Selecting
+      Hammerhold as your origin will no longer give you Dwarvish.
+  - rscadd: Adds in a colorable variant of the sailor shirt and suspender belt.
+  - rscadd: Adds in the recipes and items into loadout.
+  - bugfix: Fixed the poleaxe standard flag sprite not adjusting itself visually in
+      a proper way.
+  zeroisthebiggay:
+  - balance: removes smash from whetstones
