@@ -53,18 +53,19 @@
 		sate_addiction(/datum/charflaw/addiction/kleptomaniac)
 	grant_pickpocket_xp(victim, exp_to_gain)
 
-/datum/component/storage/proc/pickpocket_show(mob/living/carbon/human/thief, is_belt = FALSE)
+/// A steal-odds label floated over one grid item. Client-local, so only the thief sees it, never the mark.
+/atom/movable/screen/pickpocket_odds
+	plane = ABOVE_HUD_PLANE
+	layer = ABOVE_HUD_LAYER + 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT // clicks fall through to the item beneath
+	maptext_x = 0
+	maptext_y = 20
+	maptext_width = 32
+	maptext_height = 12
+
+/datum/component/storage/proc/pickpocket_show(mob/living/carbon/human/thief)
 	if(isnull(thief.client) || !show_to(thief))
 		return FALSE
-	var/atom/real_location = real_location()
-	if(!istype(real_location))
-		return FALSE
-	for(var/obj/item/I in real_location.contents)
-		I.maptext = "<span style='text-align:center;color:#ffe670'>[thief.pickpocket_extract_chance(I, is_belt)]%</span>"
-		I.maptext_x = 0
-		I.maptext_y = 20
-		I.maptext_width = 32
-		I.maptext_height = 12
 	return TRUE
 
 /datum/pickpocket_session
@@ -75,6 +76,7 @@
 	var/margin = 0
 	var/exp_to_gain = 0
 	var/resolving = FALSE
+	var/list/odds_labels
 
 /datum/pickpocket_session/New(mob/living/carbon/human/thief, mob/living/carbon/human/victim, obj/item/storage/container, margin, exp_to_gain)
 	. = ..()
@@ -84,18 +86,16 @@
 	src.margin = margin
 	src.exp_to_gain = exp_to_gain
 	STR = container.GetComponent(/datum/component/storage)
-	if(!STR || !STR.pickpocket_show(thief, istype(container, /obj/item/storage/belt)))
+	if(!STR || !STR.pickpocket_show(thief))
 		qdel(src)
 		return
+	build_odds_labels()
 	RegisterSignal(thief, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	RegisterSignal(thief, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
 	RegisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
 
 /datum/pickpocket_session/Destroy()
-	if(!QDELETED(container))
-		for(var/obj/item/I in container.contents)
-			if(I.maptext)
-				I.maptext = ""
+	clear_odds_labels()
 	if(thief)
 		UnregisterSignal(thief, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(STR && thief.active_storage == STR)
@@ -107,6 +107,25 @@
 	container = null
 	STR = null
 	return ..()
+
+/// Float a private steal-odds label over each grid item, seen only by the thief.
+/datum/pickpocket_session/proc/build_odds_labels()
+	odds_labels = list()
+	if(isnull(thief.client))
+		return
+	var/is_belt = istype(container, /obj/item/storage/belt)
+	for(var/obj/item/I in container.contents)
+		var/atom/movable/screen/pickpocket_odds/label = new
+		label.screen_loc = I.screen_loc
+		label.maptext = "<span style='text-align:center;color:#ffe670'>[thief.pickpocket_extract_chance(I, is_belt)]%</span>"
+		thief.client.screen += label
+		odds_labels += label
+
+/datum/pickpocket_session/proc/clear_odds_labels()
+	if(thief?.client)
+		for(var/atom/movable/screen/pickpocket_odds/label in odds_labels)
+			thief.client.screen -= label
+	QDEL_LIST(odds_labels)
 
 /datum/pickpocket_session/proc/on_disturbed(datum/source)
 	SIGNAL_HANDLER
