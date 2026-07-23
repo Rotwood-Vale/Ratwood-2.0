@@ -149,7 +149,7 @@
 	if(HAS_TRAIT_FROM(sire, TRAIT_UNLYCKERABLE, REF(src))) // Cannot turn Gnolls to Sires
 		return FALSE
 
-	fully_heal(TRUE, FALSE)
+	revive(full_heal = TRUE)
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
 	original_mind?.transfer_to(src, TRUE)
