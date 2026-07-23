@@ -57,6 +57,7 @@
 	ears?.set_accessory_type(/datum/sprite_accessory/ears/nosferatu)
 
 /datum/clan/nosferatu/remove_vampire_look(mob/living/carbon/human/H)
+	return
 
 /datum/clan/nosferatu/proc/face_seen(mob/living/carbon/human/nosferatu)
 	nosferatu.AdjustMasquerade(-1)

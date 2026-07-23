@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /datum/antagonist/vampire/on_gain()
 	// the Curse takes precedence over the rot - covers dying to it partway through being sired
 	owner?.remove_antag_datum(/datum/antagonist/zombie)
+	owner?.current?.remove_status_effect(/datum/status_effect/zombie_infection)
 	SSmapping.retainer.vampires |= owner
 	//move_to_spawnpoint()
 	owner.special_role = name
