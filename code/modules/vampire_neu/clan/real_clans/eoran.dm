@@ -19,8 +19,8 @@
 
 	clane_covens = list(
 		/datum/coven/presence,
-		/datum/coven/bloodheal,
-		/datum/coven/eora
+		/datum/coven/eora,
+		/datum/coven/siren
 	)
 	leader = /datum/clan_leader/eoran
 	covens_to_select = 0

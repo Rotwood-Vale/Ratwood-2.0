@@ -573,6 +573,9 @@ And it also helps for the character set panel
 	if(!lost_organ || !removed)
 		return
 
+	if(special)
+		return
+
 	if(removed.slot == ORGAN_SLOT_EYES)
 		implant_vampire_eyes(lost_organ)
 	else if(removed.slot == ORGAN_SLOT_TONGUE)

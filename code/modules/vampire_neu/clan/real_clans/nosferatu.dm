@@ -16,8 +16,8 @@
 	leader = /datum/clan_leader/nosferatu
 	clane_covens = list(
 		/datum/coven/potence,
+		/datum/coven/quietus,
 		/datum/coven/obfuscate,
-		/datum/coven/bloodheal
 	)
 	blood_preference = BLOOD_PREFERENCE_RATS | BLOOD_PREFERENCE_DEAD | BLOOD_PREFERENCE_KIN
 	extra_clan_traits = list(
@@ -35,8 +35,6 @@
 	. = ..()
 
 	if(is_vampire)
-		var/obj/item/organ/eyes/night_vision/vampire/NV = new()
-		NV.Insert(H, TRUE, FALSE)
 		H.ventcrawler = VENTCRAWLER_ALWAYS //someone might add vents
 
 /datum/clan/nosferatu/on_lose(mob/living/carbon/human/vampire)
