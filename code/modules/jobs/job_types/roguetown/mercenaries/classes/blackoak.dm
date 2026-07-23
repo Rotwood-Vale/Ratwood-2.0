@@ -114,7 +114,7 @@
 	r_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
 	l_hand = /obj/item/rogueweapon/sword/short/elf
 	beltl = /obj/item/quiver/arrows
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
 	cloak = /obj/item/clothing/cloak/forrestercloak
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
