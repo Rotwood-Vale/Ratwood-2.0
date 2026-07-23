@@ -79,6 +79,8 @@
 	var/bottom_exposed = FALSE
 	/// If TRUE, hide genital visuals only. The organs still function but are now a True/False toggle
 	var/hide_pintle_visuals = FALSE
+	/// Bypasses positioning and exposure checks entirely
+	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
 	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
@@ -240,11 +242,27 @@
 
 /datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
+	if(!bodypart)
+		return FALSE
 
 	var/self_target = FALSE
 	var/datum/sex_controller/user_controller = user.sexcon
 	if(user_controller.target == user)
 		self_target = TRUE
+
+	// Freeuse: target has opted to skip positioning/exposure checks entirely.
+	// Adjacency is still enforced so people can't reach across the map.
+	if(target.sexcon.freeuse)
+		if(!user.sexcon.Adjacent_Or_Closet(target))
+			return FALSE
+
+		if(!isnull(user_controller.current_action) && user_controller.current_action == src.type)
+			target.sexcon.update_current_accessible_body_zones(location, grabs)
+
+		if(user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
+			user_controller.using_zones += location
+
+		return TRUE
 
 	var/signalargs = list(src, bodypart, self_target)
 	signalargs += args
@@ -380,6 +398,8 @@
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
 				external.refresh_cum()
+		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
+			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
@@ -420,6 +440,10 @@
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
+		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
+			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		else if(splashed_user.has_flaw(/datum/charflaw/malodorous) && !user.has_flaw(/datum/charflaw/malodorous))
+			user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -1136,6 +1160,7 @@
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
 		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -1237,6 +1262,9 @@
 		if("toggle_hide_pintle_visuals")
 			hide_pintle_visuals = !hide_pintle_visuals
 			update_exposure()
+		if("toggle_freeuse")
+			freeuse = !freeuse
+			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)

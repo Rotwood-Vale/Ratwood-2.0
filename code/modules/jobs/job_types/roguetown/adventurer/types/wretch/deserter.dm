@@ -109,6 +109,7 @@
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"Kulah Khud"	= /obj/item/clothing/head/roguetown/helmet/sallet/zyb,
 			"Otavan Helmet" = /obj/item/clothing/head/roguetown/helmet/otavan,
+			"Cataphract Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/cataphract,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -121,6 +122,7 @@
 			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
 			"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
 			"Scalemail"		= /obj/item/clothing/suit/roguetown/armor/plate/scale,
+			"Cataphract's Armor"	= /obj/item/clothing/suit/roguetown/armor/plate/cataphract,
 		)
 		var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
 		armor = armors[armorchoice]
@@ -225,6 +227,7 @@
 		"Steel Shishak" 		 = /obj/item/clothing/head/roguetown/helmet/sallet/shishak,
 		"Nomad Helmet" 			 = /obj/item/clothing/head/roguetown/helmet/nomadhelmet,
 		"Grenzelhoft Plume Hat"  = /obj/item/clothing/head/roguetown/grenzelhofthat,
+		"Janissary Helm"  = /obj/item/clothing/head/roguetown/helmet/janissaryhelm,
 		"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -310,6 +313,14 @@
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
 				shoes = /obj/item/clothing/shoes/roguetown/boots/otavan
 				gloves = /obj/item/clothing/gloves/roguetown/otavan
+			if("Janissary Set")
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
+				pants = /obj/item/clothing/under/roguetown/chainlegs/kilt
+				neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				shoes = /obj/item/clothing/shoes/roguetown/shalal/reinforced
+				gloves = /obj/item/clothing/gloves/roguetown/chain
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel

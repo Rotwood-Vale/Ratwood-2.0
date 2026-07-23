@@ -65,6 +65,7 @@
 				"[user] tries to infuse [target] with lux, but it refuses to take.")
 			target.visible_message(span_danger("[target]'s body convulses violently, rejecting the light!"), span_warning("Something is terribly wrong..."))
 			return FALSE
+	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		display_results(user, target, span_notice("The lux refuses to meld with [target]'s heart. Their damage must be too severe still."),
 			"[user] works the lux into [target]'s innards, but nothing happens.",
@@ -82,7 +83,6 @@
 			"[user] works the lux into [target]'s innards, but nothing happens.",
 			"[user] works the lux into [target]'s innards, but nothing happens.")
 		return FALSE
-	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	display_results(user, target, span_notice("You succeed in restarting [target]'s heart with the infusion of lux."),
 		"[user] works the lux into [target]'s innards.",
 		"[user] works the lux into [target]'s innards.")

@@ -13,8 +13,8 @@
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
-		traits_applied = list(TRAIT_DODGEEXPERT)
-		)
+	)
+	traits_applied = list(TRAIT_DODGEEXPERT)
 
 	subclass_skills = list(
 		/datum/skill/combat/firearms = 5,//Your entire point is GUN.
@@ -65,17 +65,17 @@
 		// 	if("Long Rifle")
 		// 		beltr = /obj/item/quiver/bullet/lead
 		// 		r_hand = /obj/item/gun/ballistic/firearm/arquebus
-		// 	if("Blunderbuss") 
+		// 	if("Blunderbuss")
 		// 		beltr = /obj/item/quiver/bullet/grapeshot
 		// 		r_hand = /obj/item/gun/ballistic/firearm/blunderbuss
-				
+
 		var/weapons2 = list("Scimitar","Whip","Club")
 		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
 		switch(weapon_choice2)
 			if("Scimitar")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/iron
-			if("Whip") 
+			if("Whip")
 				beltl = /obj/item/rogueweapon/whip
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel

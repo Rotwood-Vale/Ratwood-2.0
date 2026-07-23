@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Deserter wretch knights now have a cataphract helmet and cataphract armor as loadout choices."
+  - rscadd: "Deserter fighter now has a janissary loadout option."

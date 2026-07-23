@@ -22,7 +22,7 @@
 
 /turf/closed/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
-	if(!wallpress)
+	if(!can_wallpress())
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -47,8 +47,24 @@
 	for(var/obj/structure/lever/hidden/lever in contents)
 		lever.feel_button(user)
 
-/turf/closed/proc/wallpress(mob/living/user, mob/living/pressing_mob = null)
-	if(user.wallpressed)
+/// Whether a mob can currently lean against us. Anything that returns TRUE must be dense and occupy an adjacent turf.
+/atom/proc/can_wallpress()
+	return FALSE
+
+/turf/closed/can_wallpress()
+	return wallpress
+
+/// The atom in this turf that can be leaned against, if any.
+/turf/proc/get_wallpress_atom()
+	if(can_wallpress())
+		return src
+	for(var/obj/checked_obj in src)
+		if(checked_obj.can_wallpress())
+			return checked_obj
+	return null
+
+/atom/proc/wallpress(mob/living/user, mob/living/pressing_mob = null)
+	if(user.is_wallpressed())
 		return
 	if(user.is_shifted)
 		return
@@ -61,8 +77,7 @@
 		dir2wall = get_dir(user,src)
 	if(!(dir2wall in GLOB.cardinals))
 		return
-	user.wallpressed = dir2wall
-	user.update_wallpress_slowdown()
+	user.set_wallpressed(dir2wall)
 	if(pressing_mob)
 		user.visible_message(span_info("[user] is pushed against [src] by [pressing_mob]."))
 	else if(user.m_intent == MOVE_INTENT_SNEAK)
@@ -103,15 +118,14 @@
 	return 255
 
 /turf/closed/proc/wallshove(mob/living/user)
-	if(user.wallpressed)
+	if(user.is_wallpressed())
 		return
 	if(!(user.mobility_flags & MOBILITY_STAND))
 		return
 	var/dir2wall = get_dir(user,src)
 	if(!(dir2wall in GLOB.cardinals))
 		return
-	user.wallpressed = dir2wall
-	user.update_wallpress_slowdown()
+	user.set_wallpressed(dir2wall)
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(NORTH)
@@ -125,6 +139,20 @@
 		if(WEST)
 			user.setDir(WEST)
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
+
+/// Sets wallpressed to a cardinal dir or FALSE, doing any related effects
+/mob/living/proc/set_wallpressed(new_wallpressed = FALSE)
+	if(wallpressed == new_wallpressed)
+		return
+	wallpressed = new_wallpressed
+	if(!wallpressed)
+		reset_offsets("wall_press")
+	update_wallpress_slowdown()
+
+/// The cardinal dir of the wall we're pressed against, or FALSE.
+/mob/living/proc/is_wallpressed()
+	SHOULD_BE_PURE(TRUE)
+	return wallpressed
 
 /mob/living/proc/update_wallpress_slowdown()
 	if(!wallpressed)
@@ -281,7 +309,7 @@
 				user.movement_type &= ~FLYING
 				if(istype(user.loc, /turf/open/transparent/openspace)) // basically only apply this slop after we moved. if we are hovering on the openspace turf, then good, we are doing an 'active climb' instead of the usual vaulting action
 					var/climber2wall_dir = get_dir(climber, src)
-					climber.wallpressed = climber2wall_dir
+					climber.set_wallpressed(climber2wall_dir)
 					switch(climber2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 						if(NORTH)
 							climber.setDir(NORTH)
