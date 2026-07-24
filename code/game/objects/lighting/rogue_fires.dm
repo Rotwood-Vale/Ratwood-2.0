@@ -314,6 +314,11 @@
 	layer = TABLE_LAYER
 	cookonme = FALSE
 
+/obj/machinery/light/rogue/candle/floorcandle/OnCrafted(dirin)
+	..() // Base candles offset via pixel x/y, which doesn't handle nicely with floor candles - this resets the offset, so they are placed next the the crafter.
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/machinery/light/rogue/candle/floorcandle/alt
 	icon_state = "floorcandlee1"
 	base_state = "floorcandlee"
