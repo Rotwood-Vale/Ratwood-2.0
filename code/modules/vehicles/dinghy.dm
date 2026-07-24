@@ -58,6 +58,7 @@
 		if(new_dir)
 			user.setDir(new_dir)
 		return TRUE
+	.=..()
 
 /obj/item/rogueweapon/mace/oar
 	name = "oar"

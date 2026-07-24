@@ -211,7 +211,7 @@
 		if (istype(src,/turf/open/water/bloody))
 			L.add_mob_blood(L)
 
-		if(!(L.movement_type & FLYING) && !in_dinghy))
+		if(!(L.movement_type & FLYING) && !in_dinghy)
 			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
 				L.SoakMob(FULL_BODY)
 			else

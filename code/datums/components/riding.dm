@@ -276,6 +276,22 @@
 		vehicle_move_delay = vehicle_move_delay - slowvalue
 		slowed = FALSE
 
+/datum/component/riding/dinghy/keycheck(mob/user)
+	return !keytype || user?.is_holding_item_of_type(keytype)
+
+/datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	var/atom/movable/AM = parent
+	restore_position(M)
+	unequip_buckle_inhands(M)
+	M.updating_glide_size = TRUE
+	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
+		qdel(src)
+	if(driver == M)
+		driver = null
+		for(var/mob/living/rider in AM.buckled_mobs)
+			driver = rider
+			break
+
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
 	del_on_unbuckle_all = TRUE

@@ -148,7 +148,7 @@
 	var/rain_sound = FALSE
 	var/last_droning_sound
 	var/sound/droning_sound
-	
+
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()
 	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
@@ -161,7 +161,8 @@
 	var/movement_blocked = FALSE
 	/// Are we locking our movement input? This holds you in place so you can turn on the spot
 	var/movement_locked = FALSE
-
+	/// World time cooldown before the mob can turn again
+	var/last_turn = 0
 	/// A rolling buffer of any keys held currently
 	var/list/keys_held = list()
 	/// The direction we WANT to move, based off our keybinds
