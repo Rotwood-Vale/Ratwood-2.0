@@ -258,7 +258,6 @@
 	cloaked_mobs -= ally
 
 /datum/coven_power/obfuscate/cloak_the_gathering/on_concealed_death(mob/living/source)
-	SIGNAL_HANDLER
 
 	cloaked_mobs -= source
 	return ..()
