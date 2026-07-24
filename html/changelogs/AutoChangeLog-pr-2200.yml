@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - bugfix: "Floor candles now place directly adjacent to the crafter."
