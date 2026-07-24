@@ -1,4 +1,0 @@
-author: "Kroto-Ker"
-delete-after: True
-changes:
-  - rscdel: "Redundant link when loadout items are examined on a player."

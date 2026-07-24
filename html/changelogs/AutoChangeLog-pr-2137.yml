@@ -1,5 +1,0 @@
-author: "Taliazure"
-delete-after: True
-changes:
-  - bugfix: "Fixed the Grand Mace starting weapon choice not spawning correctly."
-  - code_imp: "Corrected Grand Mace loadout assignment to match other weapon options."
