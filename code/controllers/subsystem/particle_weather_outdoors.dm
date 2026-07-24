@@ -238,7 +238,6 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 // Updates overlays and vis_contents for outdoor effects
 /datum/controller/subsystem/outdoor_effects/proc/update_outdoor_effect_overlays(datum/outdoor_info/OE)
-	var/old_sunlight_overlay = OE.sunlight_overlay
 	var/mutable_appearance/MA
 	if (OE.state != SKY_BLOCKED)
 		MA = get_sunlight_overlay(1,1,1,1) /* fully lit */
@@ -260,15 +259,24 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 		MA = get_sunlight_overlay(fr, fg, fb, fa)
 
-	OE.sunlight_overlay = MA
-	//Get weather overlay if not weatherproof
-	if(OE.weatherproof)
-		OE.source_turf.underlays -= shared_weather_overlay
-	else
-		OE.source_turf.underlays |= shared_weather_overlay
-	OE.source_turf.underlays -= old_sunlight_overlay
-	OE.source_turf.underlays += MA
-	OE.source_turf.luminosity = max(OE.source_turf.luminosity, MA.luminosity)
+	var/turf/source_turf = OE.source_turf
+	var/dirty = OE.underlays_dirty
+
+	var/want_weather = !OE.weatherproof
+	if(dirty || want_weather != OE.weather_applied)
+		if(want_weather)
+			source_turf.underlays |= shared_weather_overlay
+		else
+			source_turf.underlays -= shared_weather_overlay
+		OE.weather_applied = want_weather
+
+	if(dirty || MA != OE.sunlight_overlay)
+		source_turf.underlays -= OE.sunlight_overlay
+		source_turf.underlays |= MA
+		OE.sunlight_overlay = MA
+
+	OE.underlays_dirty = FALSE
+	source_turf.luminosity = max(source_turf.luminosity, MA.luminosity)
 
 //Retrieve an overlay from the list - create if necessary
 /datum/controller/subsystem/outdoor_effects/proc/get_sunlight_overlay(fr, fg, fb, fa)
