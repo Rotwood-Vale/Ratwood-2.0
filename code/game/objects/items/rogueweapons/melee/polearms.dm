@@ -10,10 +10,8 @@
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 50
+	penfactor = 45
 	item_d_type = "stab"
-	effective_range = 2
-	effective_range_type = EFF_RANGE_EXACT
 
 /datum/intent/spear/thrust/oneh
 	name = "one-handed thrust"
