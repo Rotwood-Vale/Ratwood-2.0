@@ -332,8 +332,17 @@ And it also helps for the character set panel
 				to_chat(member, "<span class='notice'>[new_leader.real_name] has become the new [leader_title] of [name].</span>")
 
 
+/datum/clan/proc/get_frenzy_messages()
+	return list(
+		"A crimson haze bleeds into the edges of my sight, and the [span_danger("Beast")] shifts.",
+		"My fingers curl - they want to [span_danger("tear")], to [span_danger("crush")].",
+		"The [span_danger("thirst")] rises in my throat, and my patience burns away.",
+		"Every pulse around me is an [span_danger("invitation")] I strain not to answer.",
+		"The Beast hurls itself at its chains - it is [span_userdanger("almost loose")].",
+	)
+
 /datum/clan/proc/frenzy_message(mob/living/message)
-	to_chat(message,"I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>.")
+	to_chat(message, pick(get_frenzy_messages()))
 
 /datum/clan/proc/adjust_bloodpool_size(adjust)
 	for(var/mob/living/mob as anything in clan_members)

@@ -2,7 +2,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gender = MALE
 	base_intents = list(INTENT_HELP, INTENT_HARM)
-	hud_possible = list(ANTAG_HUD)
+	hud_possible = list(ANTAG_HUD, VAMPIRE_BLOOD_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
 	var/keen_ears_disabled = FALSE

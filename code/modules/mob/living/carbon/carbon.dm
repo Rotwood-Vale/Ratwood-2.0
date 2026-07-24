@@ -10,6 +10,8 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	hud_list[VAMPIRE_BLOOD_HUD] = new /image/vampire_blood_glow('icons/mob/hud.dmi', src, "")
+	GLOB.vampire_blood_hud?.add_to_hud(src)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled

@@ -22,7 +22,26 @@
 #define COVENS_PER_CLAN 3
 #define COVENS_PER_WRETCH_CLAN 2
 
-/// Mandatory mofe_after() before a vampire can batform. (SHAPESHIFT_MOVEAFTER - vampire.generation) SECONDS 
+#define VAMPIRE_SIGHT_GREYSCALE list(0.299,0.299,0.299,0, 0.587,0.587,0.587,0, 0.114,0.114,0.114,0, 0,0,0,1, 0,0,0,0)
+#define VAMPIRE_SIGHT_BODY_COLOR "#d02a2a"
+#define VAMPIRE_SIGHT_GLOW_COLOR "#8f1c1c"
+#define VAMPIRE_SIGHT_GLOW_SIZE 2.5
+#define VAMPIRE_SIGHT_PULSE_TIME 7
+#define VAMPIRE_SIGHT_PULSE_PEAK 200
+#define VAMPIRE_SIGHT_PULSE_PEAK_FRENZY 255
+#define VAMPIRE_SIGHT_VIGNETTE_ALPHA 150
+#define VAMPIRE_SIGHT_TARGET(plane) "vampsight_[plane]"
+#define VAMPIRE_SIGHT_ANCHOR "CENTER-12,CENTER-7"
+GLOBAL_LIST_INIT(vampire_sight_capture_planes, list(
+	"[FLOOR_PLANE]" = 1,
+	"[WALL_PLANE]" = 2,
+	"[GAME_PLANE_LOWER]" = 3,
+	"[GAME_PLANE]" = 4,
+	"[GAME_PLANE_FOV_HIDDEN]" = 5,
+	"[GAME_PLANE_UPPER]" = 6,
+))
+
+/// Mandatory mofe_after() before a vampire can batform. (SHAPESHIFT_MOVEAFTER - vampire.generation) SECONDS
 #define SHAPESHIFT_MOVEAFTER 5
 
 /// Vitae drained from mobs **with client** is multiplied by this define

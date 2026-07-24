@@ -32,3 +32,12 @@
 
 /datum/clan/thronleer/apply_clan_components(mob/living/carbon/human/H)
 	H.AddComponent(/datum/component/vampire_disguise)
+
+/datum/clan/thronleer/get_frenzy_messages()
+	return list(
+		"My weak soul buckles, and the [span_danger("Beast")] pours through every crack.",
+		"Ritual and restraint [span_danger("desert")] me. Only the raw thirst remains.",
+		"The composure my House prizes slips through my fingers like [span_danger("water")].",
+		"Something base and starving [span_userdanger("wears my face")] now.",
+		"Tradition cannot hold this - the [span_danger("hunger")] is older than any House.",
+	)
