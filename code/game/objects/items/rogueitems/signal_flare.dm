@@ -35,6 +35,25 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 
 	return GLOB.signal_flare_codebook
 
+// Shared by the canister and the Wolkenmaw itself: what a character's role tells them about the codes,
+// independent of whether they're currently holding a live round.
+/proc/get_signal_flare_codebook_lines(mob/user)
+	var/list/lines = list()
+	if(!user)
+		return lines
+	var/list/codebook = get_signal_flare_codebook()
+	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
+	var/static/list/townsfolk = GLOB.youngfolk_positions + GLOB.peasant_positions + GLOB.yeoman_positions + GLOB.church_positions + GLOB.courtier_positions
+	if(user.job in can_interpret)
+		lines += span_notice("You recognize the signal codes etched in cryptic shorthand markings:")
+		for(var/color in codebook)
+			lines += span_notice("&nbsp;&nbsp;<font color='[color]'><b>[color]</b></font>: [codebook[color]]")
+	else if(user.job in townsfolk)
+		lines += span_cult("You recognize the <font color='orange'><b>orange</b></font> flare: every man and woman knows it means [codebook[FLARE_SHELTER_COLOR]]")
+	else
+		lines += span_notice("The colors carry meaning, but you lack the training to interpret them.")
+	return lines
+
 /obj/item/signal_flare
 	name = "signal flare canister"
 	desc = "A sealed alchemical canister brimming with flammable powder and colored cloth. Load it into a Wolkenmaw to send a brilliant plume of colored smoke visible for miles. One use only. Be wise with it, you fool."
@@ -57,17 +76,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	. = ..()
 	if(spent)
 		return
-	var/list/codebook = get_signal_flare_codebook()
-	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
-	var/static/list/townsfolk = GLOB.youngfolk_positions + GLOB.peasant_positions + GLOB.yeoman_positions + GLOB.church_positions + GLOB.courtier_positions
-	if(user.job in can_interpret)
-		. += span_notice("You recognize the signal codes etched in cryptic shorthand markings:")
-		for(var/color in codebook)
-			. += span_notice("&nbsp;&nbsp;<font color='[color]'><b>[color]</b></font>: [codebook[color]]")
-	else if(user.job in townsfolk)
-		. += span_cult("You recognize the <font color='orange'><b>orange</b></font> flare: every man and woman knows it means [codebook[FLARE_SHELTER_COLOR]]")
-	else
-		. += span_notice("The colors carry meaning, but you lack the training to interpret them.")
+	. += get_signal_flare_codebook_lines(user)
 
 /obj/item/signal_flare/attack_self(mob/living/user)
 	if(spent)
@@ -75,7 +84,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		return
 	to_chat(user, span_notice("I need to load this into a Wolkenmaw to fire it."))
 
-/obj/item/flaregun
+/obj/item/signal_flare_gun
 	name = "Wolkenmaw"
 	desc = "A magical handgonne of wood and dark iron with a wide mouth, a Grenzelhoftian import. Break it open, feed it an alchemical flare canister, and cock it shut to send a brilliant plume of colored smoke visible for miles, inviting either friend or foe. Be wise with it, you fool."
 	icon = 'icons/roguetown/items/flaregun.dmi'
@@ -107,22 +116,22 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	var/break_open_sound = 'sound/items/knife_open.ogg'
 	var/dry_fire_sound = 'modular_helmsguard/sound/arquebus/musketcock.ogg'
 
-/obj/item/flaregun/loaded
+/obj/item/signal_flare_gun/loaded
 	spawn_loaded = TRUE
 
-/obj/item/flaregun/Initialize(mapload)
+/obj/item/signal_flare_gun/Initialize(mapload)
 	. = ..()
 	if(spawn_loaded && !canister)
 		canister = new(src)
 	update_gun_icon()
 
-/obj/item/flaregun/Destroy()
+/obj/item/signal_flare_gun/Destroy()
 	if(canister)
 		canister.forceMove(drop_location())
 		canister = null
 	return ..()
 
-/obj/item/flaregun/Exited(atom/movable/gone, atom/newLoc)
+/obj/item/signal_flare_gun/Exited(atom/movable/gone, atom/newLoc)
 	. = ..()
 	if(gone == canister)
 		canister = null
@@ -130,10 +139,10 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		update_gun_icon()
 
 // Closed and cocked shows the ready sprite, while broken open shows the unload sprite.
-/obj/item/flaregun/proc/update_gun_icon()
+/obj/item/signal_flare_gun/proc/update_gun_icon()
 	icon_state = cocked ? "flaregun_default" : "flaregun_unload"
 
-/obj/item/flaregun/examine(mob/user)
+/obj/item/signal_flare_gun/examine(mob/user)
 	. = ..()
 	if(!canister)
 		. += span_notice("Its chamber is empty.")
@@ -143,60 +152,53 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		. += span_notice("It's loaded, but must be cocked shut before it can fire.")
 	else
 		. += span_notice("It's loaded and ready to fire.")
+	. += get_signal_flare_codebook_lines(user)
 
-/obj/item/flaregun/attackby(obj/item/W, mob/living/user, params)
+/obj/item/signal_flare_gun/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/signal_flare))
-		var/obj/item/signal_flare/C = W
+		var/obj/item/signal_flare/new_canister = W
 		if(canister)
 			to_chat(user, span_warning("There's already a canister in the chamber."))
 			return
 		if(cocked)
 			to_chat(user, span_warning("[src] is snapped shut. I need to break it open before I can load it."))
 			return
-		if(C.spent)
+		if(new_canister.spent)
 			to_chat(user, span_warning("This canister is spent. It would accomplish nothing."))
 			return
-		if(!user.transferItemToLoc(C, src))
+		if(!user.transferItemToLoc(new_canister, src))
 			return
-		canister = C
+		canister = new_canister
 		update_gun_icon()
 		playsound(src, load_sound, 100)
-		user.visible_message(span_notice("[user] slots [C] into [src]'s open chamber. It must be cocked shut before it can fire."))
+		user.visible_message(span_notice("[user] slots [new_canister] into [src]'s open chamber. It must be cocked shut before it can fire."))
 		return
 	return ..()
 
-/obj/item/flaregun/attack_self(mob/living/user)
-	if(canister?.spent)
-		eject_canister(user)
-		return
-	if(!cocked)
+/obj/item/signal_flare_gun/attack_self(mob/living/user)
+	if(!cocked && !canister?.spent)
 		cocked = TRUE
 		update_gun_icon()
 		playsound(src, cock_sound, 100)
 		user.visible_message(span_notice("[user] snaps [src] shut and cocks it[canister ? ". It's ready to fire" : ""]."))
 		return
-	if(!canister)
-		dry_fire(user)
-		return
-	fire_flare(user)
+	eject_canister(user)
 
-/obj/item/flaregun/proc/dry_fire(mob/living/user)
-	cocked = FALSE
-	update_gun_icon()
+/obj/item/signal_flare_gun/proc/dry_fire(mob/living/user)
 	playsound(src, dry_fire_sound, 30, TRUE)
 	user.visible_message(span_danger("[src]'s hammer falls on an empty chamber. *click*"))
 
-/obj/item/flaregun/attack_right(mob/user)
+/obj/item/signal_flare_gun/attack_right(mob/user)
 	if(canister && isliving(user))
 		eject_canister(user)
 		return
 	return ..()
 
-/obj/item/flaregun/afterattack(atom/target, mob/living/user, proximity, params)
+/obj/item/signal_flare_gun/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!istype(user))
 		return
-	if(proximity && ((target in user.contents) || !isturf(target)))
+	if(proximity_flag && ((target in user.contents) || !isturf(target)))
 		return
 	if(!cocked)
 		to_chat(user, span_warning("[src] needs to be cocked first."))
@@ -206,21 +208,22 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		return
 	fire_flare(user)
 
-/obj/item/flaregun/proc/eject_canister(mob/living/user)
-	var/obj/item/signal_flare/C = canister
+/obj/item/signal_flare_gun/proc/eject_canister(mob/living/user)
+	var/obj/item/signal_flare/ejected_canister = canister
 	canister = null
 	cocked = FALSE
 	update_gun_icon()
 	playsound(src, break_open_sound, 100)
-	C.forceMove(get_turf(src))
-	if(C.spent)
+	if(!ejected_canister)
+		user.visible_message(span_notice("[user] breaks [src] open. The chamber is empty."))
+		return
+	ejected_canister.forceMove(get_turf(src))
+	if(ejected_canister.spent)
 		user.visible_message(span_notice("[user] breaks open [src], and the spent canister clatters to the ground."))
 	else
-		user.put_in_hands(C)
-		user.visible_message(span_notice("[user] breaks open [src] and unloads [C]."))
+		user.visible_message(span_notice("[user] breaks open [src], and the canister tumbles to the ground."))
 
-
-/obj/item/flaregun/proc/fire_flare(mob/living/user)
+/obj/item/signal_flare_gun/proc/fire_flare(mob/living/user)
 	if(firing)
 		return
 	var/area/user_area = get_area(user)
@@ -231,7 +234,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	do_fire_flare(user)
 	firing = FALSE
 
-/obj/item/flaregun/proc/do_fire_flare(mob/living/user)
+/obj/item/signal_flare_gun/proc/do_fire_flare(mob/living/user)
 	var/list/codebook = get_signal_flare_codebook()
 	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
 	var/user_can_interpret = (user.job in can_interpret)
@@ -280,8 +283,6 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	user.visible_message(span_warning("[user] fires [src]! A [chosen_color] plume of smoke erupts skyward!"))
 	playsound(user.loc, pick(fire_sound), 100, TRUE)
 	canister.mark_spent()
-	cocked = FALSE
-	update_gun_icon()
 
 	var/obj/effect/signal_flare_light/muzzle_flash = new(origin)
 	muzzle_flash.set_light(4, 2, 2, l_color = "#ffddaa", l_on = TRUE)
@@ -304,10 +305,10 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	var/hex = flare_hex[chosen_color]
 	addtimer(CALLBACK(src, PROC_REF(flare_illuminate), origin, hex, meaning, colored_name, chosen_color, can_interpret), 2 SECONDS)
 
-/obj/item/flaregun/proc/spawn_smoke_puff(turf/origin)
+/obj/item/signal_flare_gun/proc/spawn_smoke_puff(turf/origin)
 	new /obj/effect/particle_effect/smoke/arquebus(origin)
 
-/obj/item/flaregun/proc/flare_illuminate(turf/origin, hex, meaning, colored_name, chosen_color, list/can_interpret)
+/obj/item/signal_flare_gun/proc/flare_illuminate(turf/origin, hex, meaning, colored_name, chosen_color, list/can_interpret)
 	var/obj/effect/signal_flare_light/glow = new(origin)
 	glow.set_light(8, 4, 3, l_color = hex, l_on = TRUE)
 
@@ -316,12 +317,12 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	playsound(origin, pick('sound/misc/explode/explosionfar (1).ogg', 'sound/misc/explode/explosionfar (2).ogg', 'sound/misc/explode/explosionfar (3).ogg'), 40, TRUE)
 
 	var/list/scatter_turfs = list()
-	var/area/TA
+	var/area/turf_area
 
-	for(var/turf/T in range(7, origin))
-		TA = get_area(T)
-		if(isopenturf(T) && TA.outdoors)
-			scatter_turfs += T
+	for(var/turf/candidate_turf in range(7, origin))
+		turf_area = get_area(candidate_turf)
+		if(isopenturf(candidate_turf) && turf_area.outdoors)
+			scatter_turfs += candidate_turf
 
 	for(var/i in 1 to 4)
 		if(!length(scatter_turfs))
@@ -340,16 +341,16 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 		if(isopenspace(landing))
 			continue
 
-		var/obj/effect/signal_flare_remnant/R = new(landing)
+		var/obj/effect/signal_flare_remnant/remnant = new(landing)
 
-		R.color = hex
-		var/mutable_appearance/ember_glow = mutable_appearance(R.icon, R.icon_state)
+		remnant.color = hex
+		var/mutable_appearance/ember_glow = mutable_appearance(remnant.icon, remnant.icon_state)
 		ember_glow.blend_mode = BLEND_ADD
 		ember_glow.color = hex
-		R.overlays += ember_glow
-		R.set_light(2, 1, 2, l_color = hex, l_on = TRUE)
+		remnant.overlays += ember_glow
+		remnant.set_light(2, 1, 2, l_color = hex, l_on = TRUE)
 
-		QDEL_IN(R, 60 SECONDS)
+		QDEL_IN(remnant, 60 SECONDS)
 
 		// Embers have a chance to set fire where they land
 		if(prob(10)) 	

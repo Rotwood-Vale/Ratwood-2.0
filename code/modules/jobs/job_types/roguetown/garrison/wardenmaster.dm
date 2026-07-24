@@ -46,7 +46,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
-	beltr = /obj/item/flaregun/loaded
+	beltr = /obj/item/signal_flare_gun/loaded
 	id = /obj/item/scomstone/garrison
 
 /datum/outfit/job/roguetown/wardenmaster/post_equip(mob/living/carbon/human/H)

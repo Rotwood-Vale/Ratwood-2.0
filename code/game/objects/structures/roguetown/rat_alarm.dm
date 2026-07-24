@@ -10,10 +10,10 @@
 
 /datum/looping_sound/rat_alarm/on_stop()
 	. = ..()
-	var/obj/structure/lever/wall/rat_alarm/L = parent
-	if(!istype(L) || !L.active)
+	var/obj/structure/lever/wall/rat_alarm/lever = parent
+	if(!istype(lever) || !lever.active)
 		return
-	L.alarm_ended()
+	lever.alarm_ended()
 
 /obj/structure/lever/wall/rat_alarm
 	name = "alarm lever"
@@ -58,7 +58,7 @@
 	var/area/local_area = get_area(src)
 	var/area_name = local_area ? local_area.name : "an unknown location"
 
-	src.visible_message(span_warning("The gears turn. Something doesn't. A wet crunch, then a hundred tiny screams. Soon, you hear their friends scurrying along to make it stop."))
+	visible_message(span_warning("The gears turn. Something doesn't. A wet crunch, then a hundred tiny screams. Soon, you hear their friends scurrying along to make it stop."))
 
 	addtimer(CALLBACK(src, PROC_REF(broadcast_alarm), area_name), NORMAL_SCOM_TRANSMISSION_DELAY)
 	addtimer(CALLBACK(src, PROC_REF(play_start_sequence)), 5)
@@ -69,20 +69,20 @@
 
 /obj/structure/lever/wall/rat_alarm/proc/start_soundloop()
 	soundloop = new(src, TRUE)
-	for(var/mob/living/M in get_hearers_in_range(world.view + 7, src))
-		if(M.client && get_dist(src, M) > world.view)
-			to_chat(M, span_warning("You hear a horrible mechanical screeching nearby. An alarm perhaps?"))
+	for(var/mob/living/hearer in get_hearers_in_range(world.view + 7, src))
+		if(hearer.client && get_dist(src, hearer) > world.view)
+			to_chat(hearer, span_warning("You hear a horrible mechanical screeching nearby, and beneath it, something small and frantic screaming."))
 
 /obj/structure/lever/wall/rat_alarm/proc/broadcast_alarm(area_name)
 	var/msg = "<big><span style='color: [GARRISON_SCOM_COLOR]'>Alarm at [area_name]. Someone please come.</span></big>"
-	for(var/atom/A in SSroguemachine.scomm_machines)
-		if(istype(A, /obj/item/scomstone/bad/garrison) || istype(A, /obj/item/scomstone/garrison))
-			var/obj/item/scomstone/S = A
-			S.repeat_message(msg, src, null)
-		else if(istype(A, /obj/structure/roguemachine/scomm))
-			var/obj/structure/roguemachine/scomm/S = A
-			if(S.garrisonline)
-				S.repeat_message(msg, src, null)
+	for(var/atom/machine in SSroguemachine.scomm_machines)
+		if(istype(machine, /obj/item/scomstone/bad/garrison) || istype(machine, /obj/item/scomstone/garrison))
+			var/obj/item/scomstone/stone = machine
+			stone.repeat_message(msg, src, null)
+		else if(istype(machine, /obj/structure/roguemachine/scomm))
+			var/obj/structure/roguemachine/scomm/scomm_machine = machine
+			if(scomm_machine.garrisonline)
+				scomm_machine.repeat_message(msg, src, null)
 	SSroguemachine.crown?.repeat_message(msg, src, null)
 
 /obj/structure/lever/wall/rat_alarm/proc/cancel_alarm()
@@ -105,7 +105,7 @@
 	addtimer(CALLBACK(src, PROC_REF(show_end_message)), 5)
 
 /obj/structure/lever/wall/rat_alarm/proc/show_end_message()
-	src.visible_message(span_notice("Finally, the gears stop turning. For now. You thought you heard a squeak, but no more."))
+	visible_message(span_notice("Finally, the gears stop turning. For now. You thought you heard a squeak, but no more."))
 
 /obj/structure/lever/wall/rat_alarm/proc/reset_cooldown()
 	alarm_cooldown = FALSE
