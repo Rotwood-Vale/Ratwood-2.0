@@ -10,7 +10,9 @@
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	tutorial = "Having proven yourself both loyal and capable, you have been knighted to serve the realm as the royal family's sentry. \
 	You listen to your Liege, the Marshal, and the Knight Captain, defending your Lord and realm - the last beacon of chivalry in these dark times. \
-	You're wholly dedicated to the standing Regent and their safety. Do not fail."
+	You're wholly dedicated to the standing Regent and their safety. Do not fail. \
+	You may pick your own Squire, but if you have none, you must take on any willing Squire and train them; teaching combat and duty is a core part of your role and is not optional. \
+	Consistently turning them away or neglecting one without good reason fails what is expected of you in this rigid hierarchy."
 	display_order = JDO_KNIGHT
 	whitelist_req = TRUE
 	outfit = /datum/outfit/job/roguetown/knight
@@ -53,6 +55,9 @@
 					H.mind.person_knows_me(MF)
 
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
+		INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, squire_duty_acknowledgement), "Taking on and training a Squire is a core duty of your role and is not optional. You may pick your own first, \
+			but if you have none you must accept any willing Squire. Teach them combat and the duties of the role, and give them real chances to learn. \
+			Consistently turning willing Squires away, or neglecting your own without good in-character reason, fails your role and may be ban-worthy.")
 
 /datum/outfit/job/roguetown/knight
 	neck = /obj/item/clothing/neck/roguetown/bevor
@@ -70,6 +75,19 @@
 /datum/outfit/job/roguetown/knight/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.verbs |= /mob/living/carbon/human/proc/take_squire
+
+/*
+	The shared Knight & Squire system: the roundstart duty acknowledgement, the Take Squire verb,
+	and the proximity buffs / stress events that bind a knight and their squire together.
+	Also used by the Squire (garrison/squire.dm) and Knight Captain (nobility/captain.dm) jobs.
+*/
+
+/mob/living/carbon/human/proc/squire_duty_acknowledgement(message)
+	set waitfor = FALSE
+	UNTIL(!client || (!advsetup && advjob && cloak))
+	while(client)
+		if(alert(src, message, "Knight & Squire Duty", "I acknowledge.") == "I acknowledge.")
+			return
 
 /mob/living/carbon/human/proc/take_squire()
 	set name = "Take Squire"
