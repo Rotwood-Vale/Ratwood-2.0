@@ -4,14 +4,13 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 
-type Tier = 'easy' | 'medium' | 'hard';
+type Tier = 'medium' | 'hard';
 
 type Delivery = 'hand' | 'board';
 
-const TIER_ORDER: Tier[] = ['easy', 'medium', 'hard'];
+const TIER_ORDER: Tier[] = ['medium', 'hard'];
 
 const TIER_LABELS: Record<Tier, string> = {
-  easy: 'Easy',
   medium: 'Medium',
   hard: 'Hard',
 };
@@ -101,7 +100,7 @@ const ActivePostingCard = (props: {
   purseBalance: number;
   onPost: (tier: Tier, delivery: Delivery, variety: string) => void;
 }) => {
-  const [tier, setTier] = useState<Tier>('easy');
+  const [tier, setTier] = useState<Tier>('medium');
   const [delivery, setDelivery] = useState<Delivery>('hand');
   const varieties = props.posting.varieties || [];
   const [varietyKey, setVarietyKey] = useState<string>(
@@ -149,7 +148,10 @@ const ActivePostingCard = (props: {
         bearer={summary?.bearer_summary}
         poster={selectedVariety?.poster_summaries?.[tier]}
       />
-      <div className="ContractLedger__CardRow" style={{ marginTop: 8 }}>
+      <div
+        className="ContractLedger__CardRow"
+        style={{ marginTop: 8, justifyContent: 'flex-start' }}
+      >
         {TIER_ORDER.map((t) => (
           <Button
             key={t}
@@ -161,15 +163,10 @@ const ActivePostingCard = (props: {
           </Button>
         ))}
       </div>
-      <div className="ContractLedger__CardRow" style={{ marginTop: 6 }}>
-        <Button
-          selected={delivery === 'board'}
-          onClick={() => setDelivery('board')}
-          style={toggleStyle(delivery === 'board')}
-          tooltip="Pin it to the ledger."
-        >
-          Post to board
-        </Button>
+      <div
+        className="ContractLedger__CardRow"
+        style={{ marginTop: 6, justifyContent: 'flex-start' }}
+      >
         <Button
           selected={delivery === 'hand'}
           onClick={() => setDelivery('hand')}
@@ -177,6 +174,14 @@ const ActivePostingCard = (props: {
           tooltip="Take the writ in hand and give it to someone yourself."
         >
           Writ in hand
+        </Button>
+        <Button
+          selected={delivery === 'board'}
+          onClick={() => setDelivery('board')}
+          style={toggleStyle(delivery === 'board')}
+          tooltip="Pin it to the ledger."
+        >
+          Post to board
         </Button>
       </div>
       <div className="ContractLedger__CardFooter">

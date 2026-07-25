@@ -1,11 +1,9 @@
 GLOBAL_LIST_INIT(towner_tier_difficulties, list(
-	TOWNER_POSTING_TIER_EASY = QUEST_DIFFICULTY_EASY,
 	TOWNER_POSTING_TIER_MEDIUM = QUEST_DIFFICULTY_MEDIUM,
 	TOWNER_POSTING_TIER_HARD = QUEST_DIFFICULTY_HARD,
 ))
 
 GLOBAL_LIST_INIT(towner_reward_caps, list(
-	TOWNER_POSTING_TIER_EASY = TOWNER_REWARD_CAP_EASY,
 	TOWNER_POSTING_TIER_MEDIUM = TOWNER_REWARD_CAP_MEDIUM,
 	TOWNER_POSTING_TIER_HARD = TOWNER_REWARD_CAP_HARD,
 ))
@@ -20,7 +18,7 @@ GLOBAL_LIST_INIT(towner_tier_flat_bonus, list(
 	levy_exempt = TRUE
 	guild_cut_exempt = TRUE
 	override_destination = /area/rogue/indoors/town/dwarfin
-	var/posting_tier = TOWNER_POSTING_TIER_EASY
+	var/posting_tier = TOWNER_POSTING_TIER_MEDIUM
 	var/loadout_variety
 	var/parcel_label = "sealed strongbox"
 	/// Noun the writ and messages use for the sealed goods (e.g. "strongbox", "ore-crate").

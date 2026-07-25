@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(questpool)
 	log_event("generate", "blockade-defense in-hand for [ER.name] (faction [Q.faction_id], reward [Q.reward_amount])")
 	return Q
 
-/datum/controller/subsystem/questpool/proc/issue_towner_quest(type, mob/living/carbon/human/poster, posting_tier = TOWNER_POSTING_TIER_EASY, to_hand = FALSE, loadout_variety = null)
+/datum/controller/subsystem/questpool/proc/issue_towner_quest(type, mob/living/carbon/human/poster, posting_tier = TOWNER_POSTING_TIER_MEDIUM, to_hand = FALSE, loadout_variety = null)
 	if(!type || !poster)
 		return null
 	var/datum/quest/Q = instantiate_quest_of_type(type)
