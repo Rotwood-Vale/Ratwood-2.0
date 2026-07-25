@@ -12,6 +12,7 @@
 		/datum/charflaw/leprosy,\
 		/datum/charflaw/scarred,\
 		/datum/charflaw/disfigured,\
+		/datum/charflaw/unsettling_beauty,\
 		/datum/charflaw/limbloss/arm_l,\
 		/datum/charflaw/limbloss/arm_r,\
 		/datum/charflaw/nudist,\

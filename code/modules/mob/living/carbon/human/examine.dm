@@ -15,6 +15,13 @@
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY) && user != src)
+		// 70% chance to give debuff, 30% chance to give buff
+		if(prob(70) && !user.has_stress_event(/datum/stressevent/uncanny))
+			user.add_stress(/datum/stressevent/uncanny)
+		else
+			if(!user.has_stress_event(/datum/stressevent/beautiful))
+				user.add_stress(/datum/stressevent/beautiful)
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
@@ -375,6 +382,24 @@
 					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING_BEAUTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_masc("[m1] unsettlingly handsome... something is deeply wrong.")
+					else
+						. += span_beautiful_masc("[m1] hauntingly handsome.")
+				if (SHE_HER, HE_HIM_F)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_fem("[m1] unsettlingly beautiful... something is deeply wrong.")
+					else
+						. += span_beautiful_fem("[m1] hauntingly beautiful.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					if(user.has_stress_event(/datum/stressevent/uncanny))
+						. += span_beautiful_nb("[m1] unsettlingly attractive... something is deeply wrong.")
+					else
+						. += span_beautiful_nb("[m1] hauntingly attractive.")
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
