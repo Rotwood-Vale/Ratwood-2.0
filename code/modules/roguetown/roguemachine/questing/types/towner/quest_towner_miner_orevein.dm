@@ -21,21 +21,19 @@ GLOBAL_LIST_INIT(towner_orevein_tier_tp, list(
 GLOBAL_LIST_INIT(towner_orevein_varieties, list(
 	OREVEIN_VARIETY_IRON = list(
 		"label" = "Iron Vein",
-		"blurb" = "Iron and coal, with a little cinnabar, gold, and the odd gem.",
+		"blurb" = "Iron and coal, with a little cinnabar and the odd gem.",
 		"tiers" = list(
 			TOWNER_POSTING_TIER_MEDIUM = list(
-				list("path" = /obj/item/rogueore/iron, "min" = 18, "max" = 24, "noun" = "iron"),
-				list("path" = /obj/item/rogueore/coal, "min" = 10, "max" = 14, "noun" = "coal"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
-				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 60),
+				list("path" = /obj/item/rogueore/iron, "min" = 14, "max" = 18, "noun" = "iron"),
+				list("path" = /obj/item/rogueore/coal, "min" = 8, "max" = 12, "noun" = "coal"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 2, "max" = 3, "noun" = "cinnabar"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 40),
 			),
 			TOWNER_POSTING_TIER_HARD = list(
-				list("path" = /obj/item/rogueore/iron, "min" = 26, "max" = 34, "noun" = "iron"),
-				list("path" = /obj/item/rogueore/coal, "min" = 14, "max" = 18, "noun" = "coal"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 5, "max" = 8, "noun" = "cinnabar"),
-				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 5, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+				list("path" = /obj/item/rogueore/iron, "min" = 26, "max" = 32, "noun" = "iron"),
+				list("path" = /obj/item/rogueore/coal, "min" = 12, "max" = 16, "noun" = "coal"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 80),
 			),
 		),
 	),
@@ -45,17 +43,15 @@ GLOBAL_LIST_INIT(towner_orevein_varieties, list(
 		"tiers" = list(
 			TOWNER_POSTING_TIER_MEDIUM = list(
 				list("path" = /obj/item/rogueore/copper, "min" = 20, "max" = 26, "noun" = "copper"),
-				list("path" = /obj/item/rogueore/tin, "min" = 7, "max" = 9, "noun" = "tin"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
-				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 60),
+				list("path" = /obj/item/rogueore/tin, "min" = 6, "max" = 9, "noun" = "tin"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 1, "max" = 2, "noun" = "cinnabar"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 20),
 			),
 			TOWNER_POSTING_TIER_HARD = list(
-				list("path" = /obj/item/rogueore/copper, "min" = 30, "max" = 36, "noun" = "copper"),
-				list("path" = /obj/item/rogueore/tin, "min" = 10, "max" = 12, "noun" = "tin"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 5, "max" = 8, "noun" = "cinnabar"),
-				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 5, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+				list("path" = /obj/item/rogueore/copper, "min" = 32, "max" = 40, "noun" = "copper"),
+				list("path" = /obj/item/rogueore/tin, "min" = 10, "max" = 14, "noun" = "tin"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 60),
 			),
 		),
 	),
@@ -64,12 +60,12 @@ GLOBAL_LIST_INIT(towner_orevein_varieties, list(
 		"blurb" = "Cut gems and raw gold, no base metal.",
 		"tiers" = list(
 			TOWNER_POSTING_TIER_MEDIUM = list(
-				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 4, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 2, "max" = 2, "noun" = "gems"),
 			),
 			TOWNER_POSTING_TIER_HARD = list(
-				list("path" = /obj/item/rogueore/gold, "min" = 5, "max" = 6, "noun" = "gold"),
-				list("pool" = "orevein_gems", "min" = 5, "max" = 7, "noun" = "gems"),
+				list("path" = /obj/item/rogueore/gold, "min" = 2, "max" = 3, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 3, "max" = 4, "noun" = "gems"),
 			),
 		),
 	),
@@ -78,12 +74,12 @@ GLOBAL_LIST_INIT(towner_orevein_varieties, list(
 		"blurb" = "Cinnabar with gold, prized by alchemists.",
 		"tiers" = list(
 			TOWNER_POSTING_TIER_MEDIUM = list(
-				list("path" = /obj/item/rogueore/gold, "min" = 4, "max" = 5, "noun" = "gold"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 6, "max" = 8, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 2, "max" = 3, "noun" = "gold"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 9, "max" = 11, "noun" = "cinnabar"),
 			),
 			TOWNER_POSTING_TIER_HARD = list(
-				list("path" = /obj/item/rogueore/gold, "min" = 8, "max" = 11, "noun" = "gold"),
-				list("path" = /obj/item/rogueore/cinnabar, "min" = 10, "max" = 14, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 4, "max" = 5, "noun" = "gold"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 14, "max" = 17, "noun" = "cinnabar"),
 			),
 		),
 	),
