@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(questpool)
 	log_event("generate", "blockade-defense in-hand for [ER.name] (faction [Q.faction_id], reward [Q.reward_amount])")
 	return Q
 
-/datum/controller/subsystem/questpool/proc/issue_towner_quest(type, mob/living/carbon/human/poster, posting_tier = TOWNER_POSTING_TIER_EASY, to_hand = FALSE)
+/datum/controller/subsystem/questpool/proc/issue_towner_quest(type, mob/living/carbon/human/poster, posting_tier = TOWNER_POSTING_TIER_EASY, to_hand = FALSE, loadout_variety = null)
 	if(!type || !poster)
 		return null
 	var/datum/quest/Q = instantiate_quest_of_type(type)
@@ -398,6 +398,7 @@ SUBSYSTEM_DEF(questpool)
 		return null
 	var/datum/quest/kill/recovery/towner/TQ = Q
 	TQ.posting_tier = posting_tier
+	TQ.loadout_variety = loadout_variety
 	Q.quest_difficulty = GLOB.towner_tier_difficulties[posting_tier] || QUEST_DIFFICULTY_EASY
 	Q.source = QUEST_SOURCE_TOWNER
 	Q.created_at = world.time
@@ -430,7 +431,7 @@ SUBSYSTEM_DEF(questpool)
 		pool += Q
 		adjust_region_count(Q, 1)
 	record_round_statistic(STATS_CONTRACTS_GENERATED)
-	log_event("generate", "towner-[to_hand ? "hand" : "pool"] [Q.quest_difficulty] [type] at [Q.target_spawn_area || "unknown"] (poster [poster.real_name], tier [posting_tier], reward [Q.reward_amount])")
+	log_event("generate", "towner-[to_hand ? "hand" : "pool"] [Q.quest_difficulty] [type] at [Q.target_spawn_area || "unknown"] (poster [poster.real_name], tier [posting_tier], variety [TQ.effective_variety() || "none"], reward [Q.reward_amount])")
 	return Q
 
 /datum/controller/subsystem/questpool/proc/generate_one(type, datum/threat_region/preferred_region, is_replacement = FALSE)

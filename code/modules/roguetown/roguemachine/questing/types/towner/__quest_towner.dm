@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(towner_tier_flat_bonus, list(
 	guild_cut_exempt = TRUE
 	override_destination = /area/rogue/indoors/town/dwarfin
 	var/posting_tier = TOWNER_POSTING_TIER_EASY
+	var/loadout_variety
 	var/parcel_label = "sealed strongbox"
 	/// Noun the writ and messages use for the sealed goods (e.g. "strongbox", "ore-crate").
 	var/sealed_noun = "strongbox"
@@ -59,6 +60,46 @@ GLOBAL_LIST_INIT(towner_tier_flat_bonus, list(
 
 /datum/quest/kill/recovery/towner/proc/build_bundle()
 	return list()
+
+/datum/quest/kill/recovery/towner/proc/get_varieties()
+	return null
+
+/datum/quest/kill/recovery/towner/proc/effective_variety()
+	var/list/varieties = get_varieties()
+	if(!length(varieties))
+		return null
+	if(loadout_variety && (loadout_variety in varieties))
+		return loadout_variety
+	return varieties[1]
+
+/datum/quest/kill/recovery/towner/proc/resolve_bundle_spec(list/spec)
+	var/list/bundle = list()
+	if(!length(spec))
+		return bundle
+	for(var/list/entry in spec)
+		if(entry["prob"] != null && !prob(entry["prob"]))
+			continue
+		var/count = rand(entry["min"], entry["max"])
+		if(count <= 0)
+			continue
+		var/pool = entry["pool"]
+		if(pool)
+			var/list/resolved = istext(pool) ? towner_bundle_pool(pool) : pool
+			if(!length(resolved))
+				continue
+			for(var/i in 1 to count)
+				var/ppath = pick(resolved)
+				bundle[ppath] = (bundle[ppath] || 0) + 1
+		else
+			var/path = entry["path"]
+			bundle[path] = (bundle[path] || 0) + count
+	return bundle
+
+/proc/towner_bundle_pool(pool_id)
+	switch(pool_id)
+		if("orevein_gems")
+			return GLOB.towner_orevein_gem_types
+	return null
 
 /datum/quest/kill/recovery/towner/proc/get_parcel_name()
 	return "[quest_giver_name]'s [parcel_label]"

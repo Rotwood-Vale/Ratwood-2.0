@@ -19,6 +19,95 @@ GLOBAL_LIST_INIT(towner_orevein_tier_tp, list(
 	TOWNER_POSTING_TIER_HARD = TOWNER_OREVEIN_TP_BUDGET_HARD,
 ))
 
+GLOBAL_LIST_INIT(towner_orevein_varieties, list(
+	OREVEIN_VARIETY_IRON = list(
+		"label" = "Iron Vein",
+		"blurb" = "Iron and coal, with a little cinnabar, gold, and the odd gem.",
+		"tiers" = list(
+			TOWNER_POSTING_TIER_EASY = list(
+				list("path" = /obj/item/rogueore/iron, "min" = 13, "max" = 18, "noun" = "iron"),
+				list("path" = /obj/item/rogueore/coal, "min" = 8, "max" = 11, "noun" = "coal"),
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 1, "noun" = "gold", "prob" = 50),
+			),
+			TOWNER_POSTING_TIER_MEDIUM = list(
+				list("path" = /obj/item/rogueore/iron, "min" = 18, "max" = 24, "noun" = "iron"),
+				list("path" = /obj/item/rogueore/coal, "min" = 10, "max" = 14, "noun" = "coal"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 60),
+			),
+			TOWNER_POSTING_TIER_HARD = list(
+				list("path" = /obj/item/rogueore/iron, "min" = 26, "max" = 34, "noun" = "iron"),
+				list("path" = /obj/item/rogueore/coal, "min" = 14, "max" = 18, "noun" = "coal"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 5, "max" = 8, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 5, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+			),
+		),
+	),
+	OREVEIN_VARIETY_CUPROSTANNIC = list(
+		"label" = "Copper Vein",
+		"blurb" = "Copper and tin, with small amount of luxury.",
+		"tiers" = list(
+			TOWNER_POSTING_TIER_EASY = list(
+				list("path" = /obj/item/rogueore/copper, "min" = 14, "max" = 19, "noun" = "copper"),
+				list("path" = /obj/item/rogueore/tin, "min" = 5, "max" = 7, "noun" = "tin"),
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 1, "noun" = "gold", "prob" = 50),
+			),
+			TOWNER_POSTING_TIER_MEDIUM = list(
+				list("path" = /obj/item/rogueore/copper, "min" = 20, "max" = 26, "noun" = "copper"),
+				list("path" = /obj/item/rogueore/tin, "min" = 7, "max" = 9, "noun" = "tin"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 3, "max" = 4, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 1, "noun" = "gems", "prob" = 60),
+			),
+			TOWNER_POSTING_TIER_HARD = list(
+				list("path" = /obj/item/rogueore/copper, "min" = 30, "max" = 36, "noun" = "copper"),
+				list("path" = /obj/item/rogueore/tin, "min" = 10, "max" = 12, "noun" = "tin"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 5, "max" = 8, "noun" = "cinnabar"),
+				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 5, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+			),
+		),
+	),
+	OREVEIN_VARIETY_GEMMIFEROUS = list(
+		"label" = "Gem Vein",
+		"blurb" = "Cut gems and raw gold, no base metal.",
+		"tiers" = list(
+			TOWNER_POSTING_TIER_EASY = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 1, "max" = 2, "noun" = "gems"),
+			),
+			TOWNER_POSTING_TIER_MEDIUM = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 3, "max" = 4, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 2, "max" = 3, "noun" = "gems"),
+			),
+			TOWNER_POSTING_TIER_HARD = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 5, "max" = 6, "noun" = "gold"),
+				list("pool" = "orevein_gems", "min" = 5, "max" = 7, "noun" = "gems"),
+			),
+		),
+	),
+	OREVEIN_VARIETY_AURICINNABAR = list(
+		"label" = "Cinnabar Vein",
+		"blurb" = "Cinnabar with gold, prized by alchemists.",
+		"tiers" = list(
+			TOWNER_POSTING_TIER_EASY = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 1, "max" = 2, "noun" = "gold"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 4, "max" = 5, "noun" = "cinnabar"),
+			),
+			TOWNER_POSTING_TIER_MEDIUM = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 4, "max" = 5, "noun" = "gold"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 6, "max" = 8, "noun" = "cinnabar"),
+			),
+			TOWNER_POSTING_TIER_HARD = list(
+				list("path" = /obj/item/rogueore/gold, "min" = 8, "max" = 11, "noun" = "gold"),
+				list("path" = /obj/item/rogueore/cinnabar, "min" = 10, "max" = 14, "noun" = "cinnabar"),
+			),
+		),
+	),
+))
+
 /datum/quest/kill/recovery/towner/miner_orevein
 	quest_type = QUEST_TOWNER_MINER_OREVEIN
 	parcel_label = "ores"
@@ -26,6 +115,9 @@ GLOBAL_LIST_INIT(towner_orevein_tier_tp, list(
 
 /datum/quest/kill/recovery/towner/miner_orevein/get_eligible_regions()
 	return GLOB.towner_orevein_regions
+
+/datum/quest/kill/recovery/towner/miner_orevein/get_varieties()
+	return GLOB.towner_orevein_varieties
 
 /datum/quest/kill/recovery/towner/miner_orevein/get_tier_tp_budget()
 	return GLOB.towner_orevein_tier_tp[posting_tier] || TOWNER_OREVEIN_TP_BUDGET_EASY
@@ -65,26 +157,8 @@ GLOBAL_LIST_INIT(towner_orevein_tier_tp, list(
 		. += behemoth
 
 /datum/quest/kill/recovery/towner/miner_orevein/build_bundle()
-	var/list/bundle = list()
-	switch(posting_tier)
-		if(TOWNER_POSTING_TIER_HARD)
-			bundle[/obj/item/rogueore/iron] = rand(26, 34)
-			bundle[/obj/item/rogueore/coal] = rand(14, 18)
-			bundle[/obj/item/rogueore/cinnabar] = rand(5, 8)
-			bundle[/obj/item/rogueore/gold] = rand(3, 5)
-			for(var/i in 1 to rand(2, 3))
-				var/gem_path = pick(GLOB.towner_orevein_gem_types)
-				bundle[gem_path] = (bundle[gem_path] || 0) + 1
-		if(TOWNER_POSTING_TIER_MEDIUM)
-			bundle[/obj/item/rogueore/iron] = rand(18, 24)
-			bundle[/obj/item/rogueore/coal] = rand(10, 14)
-			bundle[/obj/item/rogueore/cinnabar] = rand(3, 4)
-			bundle[/obj/item/rogueore/gold] = rand(1, 2)
-			if(prob(60))
-				bundle[pick(GLOB.towner_orevein_gem_types)] = 1
-		else
-			bundle[/obj/item/rogueore/iron] = rand(13, 18)
-			bundle[/obj/item/rogueore/coal] = rand(8, 11)
-			if(prob(50))
-				bundle[/obj/item/rogueore/gold] = 1
-	return bundle
+	var/list/meta = GLOB.towner_orevein_varieties[effective_variety()]
+	var/list/tiers = meta?["tiers"]
+	if(!tiers)
+		return list()
+	return resolve_bundle_spec(tiers[posting_tier] || tiers[TOWNER_POSTING_TIER_EASY])
