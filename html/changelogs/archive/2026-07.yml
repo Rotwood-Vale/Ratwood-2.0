@@ -357,3 +357,10 @@
   - rscadd: added a forced pop-up of the voting ui whenever a vote is called.
   kimesik:
   - bugfix: some "Gronnic" stuff is now actually called nation-agnostic.
+2026-07-25:
+  Arturlang:
+  - rscadd: use tg underlay lighting instead of atom movable lighting
+  Kroto-Ker:
+  - bugfix: Toggling masked examine now shows headshot in chat.
+  Shadow-Quill:
+  - bugfix: Floor candles now place directly adjacent to the crafter.
