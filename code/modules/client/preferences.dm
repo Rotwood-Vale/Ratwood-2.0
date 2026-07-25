@@ -118,6 +118,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/sensitive_brands = FALSE
+	var/facial_brands = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
 	var/voting_popup = TRUE
