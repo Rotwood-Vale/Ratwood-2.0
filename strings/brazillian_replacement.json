@@ -68,7 +68,7 @@
 		"boss": "chefe",
 		"yes": "sim",
 		"no": "não",
-		"my ": "meu",
+		"my": "meu",
 		"you're": "você é",
 		"your": "seu",
 		"you": "você",
@@ -80,6 +80,7 @@
 		"shi": "chee",
 		"thi": "thee",
 		"sh": "ch",
-		"ish": "eesh"
+		"ish": "eesh",
+		"who are you": "quem é você"
 	}
 }
