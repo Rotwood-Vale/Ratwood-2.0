@@ -111,10 +111,39 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
 	update_tongue_noise_verbs()
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/on_keen_ears_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/update_keen_ears_verb()
+	var/verb_path = /mob/living/carbon/human/verb/toggle_keen_ears_ic
+	verbs -= verb_path
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		verbs += verb_path
+
+/mob/living/carbon/human/proc/toggle_keen_ears()
+	if(!HAS_TRAIT(src, TRAIT_KEENEARS))
+		to_chat(src, span_warning("I do not possess keen ears."))
+		return FALSE
+	keen_ears_disabled = !keen_ears_disabled
+	if(keen_ears_disabled)
+		to_chat(src, span_notice("Your keen ears are now dulled."))
+	else
+		to_chat(src, span_notice("Your keen ears are now sharp again."))
+	return !keen_ears_disabled
+
+/mob/living/carbon/human/verb/toggle_keen_ears_ic()
+	set name = "Toggle Keen Ears"
+	set category = "IC"
+	toggle_keen_ears()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
@@ -596,70 +625,38 @@
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"*/
+		. = update_stamina_hud() || update_energy_hud() || update_temperature_hud()
 
-		if(hud_used.stamina)
-			if(stat != DEAD)
-				. = 1
-				if(stamina >= max_stamina)
-					hud_used.stamina.icon_state = "stam0"
-				else if(stamina > max_stamina*0.90)
-					hud_used.stamina.icon_state = "stam10"
-				else if(stamina > max_stamina*0.80)
-					hud_used.stamina.icon_state = "stam20"
-				else if(stamina > max_stamina*0.70)
-					hud_used.stamina.icon_state = "stam30"
-				else if(stamina > max_stamina*0.60)
-					hud_used.stamina.icon_state = "stam40"
-				else if(stamina > max_stamina*0.50)
-					hud_used.stamina.icon_state = "stam50"
-				else if(stamina > max_stamina*0.40)
-					hud_used.stamina.icon_state = "stam60"
-				else if(stamina > max_stamina*0.30)
-					hud_used.stamina.icon_state = "stam70"
-				else if(stamina > max_stamina*0.20)
-					hud_used.stamina.icon_state = "stam80"
-				else if(stamina > max_stamina*0.10)
-					hud_used.stamina.icon_state = "stam90"
-				else if(stamina >= 0)
-					hud_used.stamina.icon_state = "stam100"
-		if(hud_used.energy)
-			if(stat != DEAD)
-				. = 1
-				if(energy <= 0)
-					hud_used.energy.icon_state = "energy0"
-				else if(energy > max_energy*0.90)
-					hud_used.energy.icon_state = "energy100"
-				else if(energy > max_energy*0.80)
-					hud_used.energy.icon_state = "energy90"
-				else if(energy > max_energy*0.70)
-					hud_used.energy.icon_state = "energy80"
-				else if(energy > max_energy*0.60)
-					hud_used.energy.icon_state = "energy70"
-				else if(energy > max_energy*0.50)
-					hud_used.energy.icon_state = "energy60"
-				else if(energy > max_energy*0.40)
-					hud_used.energy.icon_state = "energy50"
-				else if(energy > max_energy*0.30)
-					hud_used.energy.icon_state = "energy40"
-				else if(energy > max_energy*0.20)
-					hud_used.energy.icon_state = "energy30"
-				else if(energy > max_energy*0.10)
-					hud_used.energy.icon_state = "energy20"
-				else if(energy > 0)
-					hud_used.energy.icon_state = "energy10"
-		if(hud_used.temperature)
-			if(stat != DEAD)
-				. = 1
-				if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
-					hud_used.temperature.icon_state = "tempnormal"
-				else if(bodytemperature < BODYTEMP_NORMAL_MIN && bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempcold"
-				else if(bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempverycold"
-				else if(bodytemperature >= BODYTEMP_NORMAL_MAX && bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "temphot"
-				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempveryhot"
+
+/mob/living/carbon/human/proc/update_temperature_hud()
+	if(isnull(hud_used))
+		return FALSE
+	if(isnull(hud_used.temperature) || stat == DEAD)
+		return FALSE
+	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
+		hud_used.temperature.icon_state = "tempnormal"
+	else if(bodytemperature < BODYTEMP_NORMAL_MIN && bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempcold"
+	else if(bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempverycold"
+	else if(bodytemperature >= BODYTEMP_NORMAL_MAX && bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "temphot"
+	else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempveryhot"
+
+/mob/living/carbon/human/update_stamina_hud()
+	if(!hud_used || stat == DEAD || !hud_used.stamina)
+		return FALSE
+	var/ratio = max_stamina ? (1 - (stamina / max_stamina)) : 0
+	hud_used.stamina.set_meter_fill(ratio, "stam100", "stam20", "stam10")
+	return TRUE
+
+/mob/living/carbon/human/update_energy_hud()
+	if(!hud_used || stat == DEAD || !hud_used.energy)
+		return FALSE
+	var/ratio = max_energy ? (energy / max_energy) : 0
+	hud_used.energy.set_meter_fill(ratio, "energy100", "energy20", "energy10")
+	return TRUE
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -1212,6 +1209,10 @@
 	adjust_bodytemperature(final_delta)
 
 	return final_delta
+
+/mob/living/carbon/human/adjust_bodytemperature(amount, min_temp = 0, max_temp = 600)
+	. = ..()
+	update_temperature_hud()
 
 /*/mob/living/carbon/human/proc/update_heretic_commune()
 	if(HAS_TRAIT(src, TRAIT_COMMIE) || HAS_TRAIT(src, TRAIT_CABAL) || HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_DEPRAVED))

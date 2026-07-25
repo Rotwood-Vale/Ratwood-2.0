@@ -37,9 +37,9 @@
 //	That lack of means enforce you not to evil:
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
 	daily_payments["Knight Captain"] = 40
-	if(SSmapping.config.map_name == "Dun World")
+	if(SSmapping.current_map.map_name == "Dun World")
 		daily_payments["Sergeant"] = 40 //Garrison
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		daily_payments["Slave Master"] = 50
 		daily_payments["Cataphract"] = 40
 		daily_payments["Janissary Sergeant"] = 40 //Garrison
@@ -51,7 +51,7 @@
 		daily_payments["Man at Arms"] = 30
 		daily_payments["Warden"] = 25
 		daily_payments["Dungeoneer"] = 30
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
 		daily_payments["Master Warden"] = 35 //Garrison
 		daily_payments["City Guard"] = 30
@@ -63,7 +63,7 @@
 	daily_payments["Head Physician"] = 30 //Doctors
 	daily_payments["Apothecary"] = 20 //paid by the keep to heal people, would make sense.
 	daily_payments["Court Magician"] = 50 //University
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		daily_payments["Palace Chaplain"] = 30
 		daily_payments["Headslave"] = 20 //Manor-House
 	else
@@ -74,7 +74,7 @@
 	daily_payments["Magicians Associate"] = 10
 	daily_payments["Jester"] = 6
 
-	if(SSmapping.config.map_name == "Roguetest")
+	if(SSmapping.current_map.map_name == "Roguetest")
 		daily_payments["Shophand"] = 999
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)

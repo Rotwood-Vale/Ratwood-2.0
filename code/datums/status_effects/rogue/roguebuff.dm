@@ -659,6 +659,7 @@
 		owner.adjustToxLoss(-healing_on_tick, 0)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
 		owner.adjustCloneLoss(-healing_on_tick, 0)
+		owner.updatehealth()
 // Lesser miracle effect end
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
@@ -1520,7 +1521,7 @@
 	to_chat(owner, span_warning("My footsteps feel lighter and quieter. What is that droning sound in my head...?"))
 	// inspired by matthiosmuffle
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
-	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon") 
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
 
 /datum/status_effect/buff/stagehands_silence/on_remove()
 	. = ..()
@@ -1802,15 +1803,6 @@
 	id = "psydonic_endurance"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
-
-/datum/status_effect/buff/psydonic_endurance/on_apply()
-	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(owner, TRAIT_HEAVYARMOR))
-		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
-/datum/status_effect/buff/psydonic_endurance/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"

@@ -134,6 +134,16 @@
 	)
 	craftdiff = 2
 
+/datum/crafting_recipe/roguetown/leather/container/belt/suspenders_colored
+	name = "suspenders (colorable)"
+	result = /obj/item/storage/belt/rogue/leather/suspenders/butler/colored
+	reqs = list(
+		/obj/item/natural/hide/cured = 1,
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 1,
+	)
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/leather/container/belt/surgicalbag
 	name = "surgeon's bag"
 	result = list(/obj/item/storage/belt/rogue/surgery_bag/empty)

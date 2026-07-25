@@ -1,4 +1,0 @@
-author: "Skyglazer"
-delete-after: True
-changes:
-  - rscdel: "Removed Barbarian and Amazon from the list of possible Licker subclasses."

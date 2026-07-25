@@ -654,7 +654,7 @@
 	var/list/out = list()
 	for(var/key in L)
 		out[key] = ceil(L[key])
-	. = out 
+	. = out
 
 /proc/assoc_list_strip_value(list/input)
 	var/list/ret = list()
@@ -772,6 +772,69 @@ GLOBAL_LIST_EMPTY(string_lists)
 		return (call(cmp)(L[i],A) > 0) ? i : i+1
 	else
 		return i
+
+
+/**
+ * Picks a random element from a list based on a weighting system.
+ * For example, given the following list:
+ * A = 6, B = 3, C = 1, D = 0
+ * A would have a 60% chance of being picked,
+ * B would have a 30% chance of being picked,
+ * C would have a 10% chance of being picked,
+ * and D would have a 0% chance of being picked.
+ * You should only pass integers in.
+ */
+/proc/pick_weight(list/list_to_pick)
+	if(length(list_to_pick) == 0)
+		return null
+
+	var/total = 0
+	for(var/item in list_to_pick)
+		if(!list_to_pick[item])
+			list_to_pick[item] = 0
+		total += list_to_pick[item]
+
+	total = rand(1, total)
+	for(var/item in list_to_pick)
+		var/item_weight = list_to_pick[item]
+		if(item_weight == 0)
+			continue
+
+		total -= item_weight
+		if(total <= 0)
+			return item
+
+	return null
+
+/**
+ * Like pick_weight, but allowing for nested lists.
+ *
+ * For example, given the following list:
+ * list(A = 1, list(B = 1, C = 1))
+ * A would have a 50% chance of being picked,
+ * and list(B, C) would have a 50% chance of being picked.
+ * If list(B, C) was picked, B and C would then each have a 50% chance of being picked.
+ * So the final probabilities would be 50% for A, 25% for B, and 25% for C.
+ *
+ * Weights should be integers. Entries without weights are assigned weight 1 (so unweighted lists can be used as well)
+ */
+/proc/pick_weight_recursive(list/list_to_pick)
+	var/result = pick_weight(fill_with_ones(list_to_pick))
+	while(islist(result))
+		result = pick_weight(fill_with_ones(result))
+	return result
+
+/**
+* Like pick_weight, but decreases the value of the picked element by 1
+ * For example, given the following list:
+ * A = 6, B = 3, C = 1, D = 0
+ * A would have a 60% chance of being picked, after which it would decrease by one and the new list would be
+ * A = 5, B = 3, C = 1, D = 0
+ * Tt would then have a 55.55...% to be picked, rinse and repeat
+*/
+/proc/pick_weight_take(list/list_to_pick)
+	. = pick_weight(list_to_pick)
+	list_to_pick[.]--
 
 ///Returns a list with all weakrefs resolved
 /proc/recursive_list_resolve(list/list_to_resolve)
@@ -1121,3 +1184,4 @@ GLOBAL_LIST_EMPTY(string_lists)
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
 			return TRUE
+

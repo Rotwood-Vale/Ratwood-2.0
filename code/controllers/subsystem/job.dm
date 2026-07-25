@@ -604,7 +604,7 @@ SUBSYSTEM_DEF(job)
 
 				if(job.plevel_req > player.client.patreonlevel())
 					continue
-					
+
 				#ifdef USES_PQ
 				if(!isnull(job.min_pq) && (get_playerquality(player.ckey) < job.min_pq) && level != JP_LOW) //since its required people on low can roll for it
 					continue
@@ -971,11 +971,11 @@ SUBSYSTEM_DEF(job)
 		return TRUE
 	if(prefs.vice5?.type in job.vice_restrictions)
 		return TRUE
-	
+
 	// Legacy charflaw check
 	if(prefs.charflaw?.type in job.vice_restrictions)
 		return TRUE
-	
+
 	return FALSE
 
 /datum/controller/subsystem/job/proc/should_use_towner_spawn(mob/living/carbon/human/H, client/fallback_client)
@@ -1072,7 +1072,7 @@ SUBSYSTEM_DEF(job)
 	if(!istype(get_area(T), /area/rogue/indoors/town/tavern))
 		return FALSE
 
-	var/map_name = SSmapping?.config?.map_name
+	var/map_name = SSmapping?.current_map?.map_name
 	if(map_name == "Dun Manor")
 		if(T.z != 3 || T.y <= 70)
 			return FALSE

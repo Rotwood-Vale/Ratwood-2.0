@@ -576,6 +576,7 @@
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 	//Old people get the option to become glass cannons. Expert Knives + Expert in their chosen weapon, but a permenant -I STR, -I PER, -2 SPD and -2 CON debuff.
 /datum/advclass/sfighter/amazon
 	name = "Amazon"
@@ -613,6 +614,7 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("strength", 1)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
@@ -666,6 +668,7 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("strength", 1)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
@@ -718,6 +721,7 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("strength", 2)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 			pants = /obj/item/clothing/under/roguetown/tights/black
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots
@@ -767,6 +771,7 @@
 			H.change_stat("willpower", 2)
 			H.change_stat("constitution", 1)
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/bikini
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 			pants = /obj/item/clothing/under/roguetown/trou/leather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots
@@ -813,6 +818,7 @@
 			H.change_stat("constitution", 3)
 			H.change_stat("speed", -1)
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
 			pants = /obj/item/clothing/under/roguetown/trou/leather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots

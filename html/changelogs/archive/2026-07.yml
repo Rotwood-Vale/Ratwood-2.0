@@ -129,3 +129,238 @@
   - qol: Removed the click cooldown for filling liquid containers from a body of water.
       This cuts down on unnecessary delay, & brings the filling speed on par with
       wells.
+2026-07-11:
+  Arturlang:
+  - bugfix: janissary now gets the dodge expert trait as intended
+  GarrusVakarian:
+  - rscadd: Big Man towner thugs can now choose to spawn with a mace
+  Skyglazer:
+  - rscdel: Removed Barbarian and Amazon from the list of possible Licker subclasses.
+2026-07-12:
+  Arturlang:
+  - rscadd: MC now can account for maptick lag
+  EvenInDeathIStillServe:
+  - rscadd: The sex menu will now open using ctrl+shift+click in addition to MMB drag.
+2026-07-13:
+  EvenInDeathIStillServe:
+  - rscadd: Knaves get rapiers, sabres, messers, falchions and estocs in their shop
+      tab.
+  - rscadd: Added a "freeuse" sexcon toggle that makes it so that sex actions targeting
+      you will bypass any positioning or clothing checks.
+  IronDragoon:
+  - qol: Adds IC menu verb to toggle Keen Ears trait in round
+  PPooch:
+  - bugfix: Prevented buckling oneself to an object, and throwing the object and self
+      around or up to a different Z level.
+2026-07-14:
+  PPooch:
+  - bugfix: fixed edge case of a corpse being too suffocated to be resurrected by
+      lux surgery
+  Xander3359:
+  - bugfix: Fixed an exploit that allowed you to phase through windows.
+2026-07-15:
+  BlindPoet:
+  - rscadd: ability to purchase cup-hilt rapier for knaves
+  Yuckuza:
+  - rscadd: Shalal saber is now craftable with steel on an anvil
+2026-07-16:
+  2whatever2:
+  - balance: Teleport rune now only needs one invoker rather than 2. Go kidnap people
+      or teleport valuables.
+  - bugfix: Briar's Thorns now hurts yourself and now raises wielded damage instead
+      of only onehanded damage.
+  - bugfix: Rewind Enchantment now triggers its cooldown when the rewind is applied
+      rather than after the rewind is done.
+  - bugfix: Chaos Enchantment now actually functions.
+  AllCorruptingWyrm:
+  - rscadd: Rustland lore tips.
+  EvenInDeathIStillServe:
+  - rscadd: Malodorous vice's visual effect is now less obtrusive and is tied to the
+      character instead of being a cloud that lingers.
+  - rscadd: Sex with a malodorous person will make you reek, too. It can be washed
+      off with a bath and soap.
+  Gug1234:
+  - bugfix: Changes the fluted half-plate recipe to actually use a fluted cuirass.
+  KeberosNihilus:
+  - balance: Gave the Court Magician a Crownstone instead of a generic gold ring.
+  PPooch:
+  - bugfix: Commoner Towner stat pack Bookworm now works
+  Randumb-Phantomb:
+  - image: Adds 2 new hairstyles. 'Reckless' which is perfect for getting the hair
+      out of your way as you work, and 'Loyal' which is perfect for showing your loyalty
+      to hair product companies, since it's a big voluminous style.
+  SadStarfish7:
+  - qol: Changes "Guard helm" to "Savoyard helm" to represent what it actually is.
+  Skyglazer:
+  - rscadd: 'Astratan Paladins can now choose which style of helmet they prefer.
+
+      /:cl'
+  Teragenic:
+  - rscadd: Adds Cursed Collar to Hordemaster
+  The-Sun-In-Splendour:
+  - rscadd: drake-kin, dragon-kin to wild-kin race titles
+  - rscadd: drakevolk, dragonvolk to wild-kin race titles
+  Xander3359:
+  - bugfix: Fixed being unable to climb into an open window from a wall cling
+  - rscadd: Added a toggle in prefs to enable/disable cursed collars
+  Yuckuza:
+  - balance: Exorcist warrior class gets +1 to knife skill when playing as an old-aged
+      character.
+  - balance: Rebalanced Matthios Gilded Flail to perform better than its non-antag
+      peasant war flail counterpart.
+  - balance: Capped direct attacks on dropped rougeweapons and rogueclothes at 5 x
+      demolition mod. Layman's terms, you can't instantly drop a concheck-dropped
+      silver weapon to 0 integrity.
+  - balance: Weapons and clothing/armor can NOT be deleted/destroyed by direct attacks
+      when in a broken state (i.e. 0 integrity). Lava, fire, acid, and always_delete
+      still work to break things.
+  - balance: Catchpole maul option gets +1 strength at the cost of -1 int and speed
+      in line with cityguard's maul option.
+  - rscadd: Adds crafting recipes for the Maciejowski and Peasant War Flail to the
+      anvil iron recipe pool.
+  - rscadd: Shamshir craftable at an anvil with steel.
+  annikaRU:
+  - rscadd: Executed the local venard who claimed their dorpels were top quality to
+      put put on the heirs blacksteel staff, local garrison has discovered they were
+      not "top quality".
+  kimesik:
+  - balance: Higher integrity for vicious leggings
+  - balance: Better resistances for vicious helmet, plate, leggings and gauntlets.
+  lalaria1:
+  - rscadd: gave hunter three athletics
+  zeroisthebiggay:
+  - balance: squires get novice armorsmithing
+  - balance: squires get novice weaponsmithing
+  - balance: squires get apprentice sewing
+  zoktiik:
+  - balance: Improved the navaja thug's knife skill. Miscreant thug now has apprentice
+      knives, and a few of their other skills have been improved too.
+  - spellcheck: Removed the duplicate examine text from Inquisition-specific papers.
+2026-07-17:
+  DorfGuy1:
+  - qol: Pottery no longer has a chance to explode in oven
+  EvenInDeathIStillServe:
+  - balance: Pickpocketing storaget items will now pick a random item from within
+      it to steal.
+  - balance: Belts are now pickpocketing targets, by targeting groin. Hip slots are
+      leg targets.
+  - balance: Pickpocketing delay increased from 0.5 seconds to 1 second.
+  SneakySlinky:
+  - balance: buff to ww and gnoll armor (it was broken)
+  - code_imp: added additional set of brackets to line of code in species.dm, Line
+      2036
+2026-07-18:
+  awwliedacoder:
+  - bugfix: message on forced drug sniffing
+2026-07-21:
+  Arturlang:
+  - rscadd: if you hold ctrl and your back is facing a wall, you can double input
+      a movement key to that wall to lean into it
+  - rscadd: you can now wall-lean on windows now
+  - bugfix: fix issues where wall leaning could persist slowdown on the mob
+  - code_imp: refactored how wall leaning works and turned it into a setter/getter
+      syntax
+  - bugfix: improve how stamina and fatigue updates were handled for optimization
+      purpose
+  - rscadd: stamina and fatigue bars now use a alpha mask and animate between states,
+      and no longer use icon variants for each type, with a alpha mask cutting the
+      icon dynamically.
+2026-07-22:
+  RadiantFlash7:
+  - rscadd: Map Tally system
+  - rscadd: default Map preference in option
+  - code_imp: Ported TG's vote subsystem
+2026-07-23:
+  Broill:
+  - rscadd: Changed the robe and hood of the necromancer into the necromancer hood
+      and necromancer robe.
+  DorfGuy1:
+  - qol: craft recipe for kneaded clay
+  Heheniy:
+  - qol: flat chastity no longer gives mood debuff to people with sheaths
+  SneakySlinky:
+  - balance: Gnolls and WWs now take 30% reduced damage from hits, rather than +30
+      damage from all hits.
+  UntoldTactics:
+  - balance: Psydonic plate armor has been buffed to the same armor integrity as regular
+      plate but loses its ability to give people heavy armor wear trait on equip.
+  - balance: Leather bracers nerfed in both armor value and integrity to match other
+      leather items.
+  - balance: Brigandine rerebracers buffed to offer a relevant alternative to proper
+      steel bracers with accompanying tradeoff in total integrity.
+  - balance: Heavy leather boots, fur boots and Psydonic leather boots have been buffed
+      from 100 -> 250 (~87 -> ~220 in game) integrity to match properly with the rest
+      of their hardened leather counterparts. The integrity of regular boots now match
+      the integrity of other leather items.
+  - balance: Knight-captain's unique armor has recieved a total value overhaul. Their
+      helmet, brigandine and chausses now have C blunt and piercing protection alongside
+      the typical S and A slash and stab values of plate armor. Their brigandine and
+      chausses have been given the integrity values of proper plate armor pieces.
+      In the case of the brigandine this equalizes their coverage and integrity total
+      to the same as the hedge knight bandit's roundstart darkened steel plate.
+  - balance: The Marshal sub-class 'Knight Commander' has had their unique coat buffed
+      by 50 integrity points, making it on-par with other brigandine+ armors (e.g
+      city watch armor)
+  - balance: The coif, padded coif and heavy padded coif now have properly assigned
+      integrity values. The padded coif and heavy padded coif are equivilent to a
+      gambeson and padded gambeson respectively. Chop crit protection added to heavy
+      padded coif.
+  WolfOrion:
+  - bugfix: you no longer need facial reconstruction surgery if killed as a werewolf
+      and then revived
+  Yuckuza:
+  - balance: Leather and hide corslets are now wearable in the shirt (aka gambeson)
+      slot.
+  - rscadd: All Amazon loadout options get a chainmail corslet underarmor on spawn.
+      Bikini armor enjoyers rejoice.
+  ariaworld:
+  - balance: Gave Bow Hunter a backpack.
+  ophaq:
+  - rscadd: Hammerhold people now have their own language... Hammerholdian! Selecting
+      Hammerhold as your origin will no longer give you Dwarvish.
+  - rscadd: Adds in a colorable variant of the sailor shirt and suspender belt.
+  - rscadd: Adds in the recipes and items into loadout.
+  - bugfix: Fixed the poleaxe standard flag sprite not adjusting itself visually in
+      a proper way.
+  zeroisthebiggay:
+  - balance: removes smash from whetstones
+2026-07-24:
+  Arturlang:
+  - balance: canceling the pin do_after removes all pin stun
+  - rscadd: memory logging subsystem
+  Heheniy:
+  - bugfix: wrong stockings offset on males
+  Kroto-Ker:
+  - rscdel: Redundant link when loadout items are examined on a player.
+  RadiantFlash7:
+  - rscadd: Old age buff to parrying
+  - rscadd: Retainer Subclass to men at arms for old age MAA.
+  - rscadd: MAA & Town Guards are once more able to be old
+  - balance: old age once more grants 3 int instead of 2.
+  Taliazure:
+  - bugfix: Fixed the Grand Mace starting weapon choice not spawning correctly.
+  - code_imp: Corrected Grand Mace loadout assignment to match other weapon options.
+  - rscadd: Added Tuscan Red and Smoky Quartz as selectable dwarf skin colors.
+  - code_imp: Added new dwarf skin color definitions and registered them for character
+      creation.
+  Xander3359:
+  - bugfix: Fixed being able to resist out of things while skullcracked
+  - bugfix: Fixed hearths making a ton of sound spam when you fan the flames.
+  Yuckuza:
+  - rscadd: Deserter wretch knights now have a cataphract helmet and cataphract armor
+      as loadout choices.
+  - rscadd: Deserter fighter now has a janissary loadout option.
+  ariaworld:
+  - bugfix: Strong intent now correctly gives a bonus to unarmed fists as well.
+  awwliedacoder:
+  - bugfix: null-ref hangup on update_temperature_hud.
+  - rscadd: added a forced pop-up of the voting ui whenever a vote is called.
+  kimesik:
+  - bugfix: some "Gronnic" stuff is now actually called nation-agnostic.
+2026-07-25:
+  Arturlang:
+  - rscadd: use tg underlay lighting instead of atom movable lighting
+  Kroto-Ker:
+  - bugfix: Toggling masked examine now shows headshot in chat.
+  Shadow-Quill:
+  - bugfix: Floor candles now place directly adjacent to the crafter.

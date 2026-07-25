@@ -251,6 +251,9 @@
 
 
 	if(thrown_thing)
+		if(src in thrown_thing.buckled_mobs) //Buckling to a chair and then grab-throwing the chair
+			to_chat(src, span_notice("I am not tricky enough to throw [thrown_thing] while I am buckled to it."))
+			return
 		// Admin alert for coin throws
 		if(istype(thrown_thing, /obj/item/roguecoin))
 			var/obj/item/roguecoin/coin = thrown_thing

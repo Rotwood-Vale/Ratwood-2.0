@@ -94,21 +94,24 @@
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
-		drink_act(user, L)
+		for(var/drink in 1 to 30)
+			if(drink_act(user, L))
+				return
+		to_chat(user, span_warning("I've had enough."))
 		return
 	..()
 
 /obj/structure/well/fountain/proc/drink_act(mob/user, mob/living/L)
 	if(L.stat != CONSCIOUS)
-		return
+		return TRUE
 	if(do_after(L, 2.5 SECONDS, target = src))
 		var/list/waterl = list(/datum/reagent/water = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
 		playsound(user,pick('sound/items/drink_gen (1).ogg','sound/items/drink_gen (2).ogg','sound/items/drink_gen (3).ogg'), 100, TRUE)
-		drink_act(user, L)
-	return
+		return FALSE
+	return TRUE
 
 
 /obj/structure/well/fountainswamp
@@ -152,12 +155,12 @@
 
 /obj/structure/well/fountainswamp/proc/drink_act(mob/user, mob/living/L)
 	if(L.stat != CONSCIOUS)
-		return
+		return TRUE
 	if(do_after(L, 2.5 SECONDS, target = src))
 		var/list/waterl = list(/datum/reagent/water/gross = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
 		playsound(user,pick('sound/items/drink_gen (1).ogg','sound/items/drink_gen (2).ogg','sound/items/drink_gen (3).ogg'), 100, TRUE)
-		drink_act(user, L)
-	return
+		return FALSE
+	return TRUE

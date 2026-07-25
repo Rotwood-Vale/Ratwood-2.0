@@ -32,18 +32,10 @@
 		lines += ext_lines
 	return lines
 
-/mob/living/carbon/human/proc/get_examine_item_name_with_custom_link(mob/user, obj/item/I)
-	if(!I)
-		return ""
-	var/display_name = I.get_examine_string(user)
-	if(!I.has_customized_identity() && !I.always_show_examine_link)
-		return display_name
-	return "<a href='?src=[REF(src)];task=show_custom_item_info;item_ref=[REF(I)]'>[display_name]</a>"
-
 /mob/living/carbon/human/proc/get_examine_item_name_with_hover(mob/user, obj/item/I)
 	if(!I)
 		return ""
-	var/display_name = get_examine_item_name_with_custom_link(user, I)
+	var/display_name = I.get_examine_string(user)
 	if(!I.show_examine_hover_tooltip())
 		return display_name
 	var/self_examine = (src == user)
@@ -51,7 +43,7 @@
 	if(!tooltip_html)
 		return display_name
 	var/label = display_name
-	if(!I.has_customized_identity() && !I.always_show_examine_link)
+	if(!I.always_show_examine_link)
 		label = "<u><font color='#add8e6'>[display_name]</font></u>"
 	return "<span data-component=\"TooltipHTML\" data-position=\"bottom-start\" data-html=\"[html_encode(tooltip_html)]\">[label]</span>"
 
@@ -95,10 +87,15 @@
 	if(observer_privilege)
 		obscure_name = FALSE
 
+	if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
+		. = list("[chat_headshot(headshot_link)]\nø ------------ ø")
+	else
+		. = list("ø ------------ ø")
+
 	if(name in unknown_names)
-		. = list(span_info("ø ------------ ø\nThis is <EM>[name]</EM>."))
+		. += span_info("This is <EM>[name]</EM>.")
 	else if(obscure_name)
-		. = list(span_info("ø ------------ ø\nThis is an unknown <EM>[name]</EM>."))
+		. += span_info("This is an unknown <EM>[name]</EM>.")
 	else
 		on_examine_face(user)
 		var/used_name = name
@@ -128,7 +125,7 @@
 			used_name = real_name
 		if(migrant_type)
 			used_title = MIGRANT_ROLE(migrant_type)
-			. = list(span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [race_name] [used_title]."))
+			. += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
 		else if(job)
 			var/datum/job/J = SSjob.GetJob(job)
 			if(!J || J.wanderer_examine)
@@ -154,25 +151,15 @@
 			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
-		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot))
-			if(display_as_wanderer)
-				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
-			else if(display_as_lowlife)
-				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the lowlife [race_name].")
-			else if(used_title)
-				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
-			else
-				display1 = span_info("ø ------------ ø\n[chat_headshot(headshot_link)]\nThis is the <EM>[used_name]</EM>, the [race_name].")
+		if(display_as_wanderer)
+			display1 = span_info("This is <EM>[used_name]</EM>, the wandering [race_name].")
+		else if(display_as_lowlife)
+			display1 = span_info("This is <EM>[used_name]</EM>, the lowlife [race_name].")
+		else if(used_title)
+			display1 = span_info("This is <EM>[used_name]</EM>, the [race_name] [used_title].")
 		else
-			if(display_as_wanderer)
-				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [race_name].")
-			else if(display_as_lowlife)
-				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the lowlife [race_name].")
-			else if(used_title)
-				display1 = span_info("ø ------------ ø\nThis is <EM>[used_name]</EM>, the [race_name] [used_title].")
-			else
-				display1 = span_info("ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
-		. = list("[display1] [display2]")
+			display1 = span_info("This is the <EM>[used_name]</EM>, the [race_name].")
+		. += "[display1] [display2]"
 
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
@@ -415,11 +402,11 @@
 
 	if(user != src && get_dist(user, src) <= 3)
 		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
-		if(malodorous_flaw && malodorous_flaw.is_reeking())
+		if((malodorous_flaw && malodorous_flaw.is_reeking()) || has_status_effect(/datum/status_effect/debuff/stinky_contact))
 			var/can_see_stink = !isliving(user) // adminghost always sees it
 			if(isliving(user))
 				var/mob/living/living_user = user
-				can_see_stink = living_user.can_smell()
+				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
 				. += span_greentext("They reek.")
 
@@ -1058,14 +1045,13 @@
 					var/skilldiff = user.get_skill_level(user_skill) - get_skill_level(src_skill)
 					. += "<font size = 3><i>[skilldiff_report(skilldiff)] in my wielded skill than they are in theirs.</i></font>"
 
+	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(get_dist(src, H) <= ((2 + clamp(floor(((H.STAPER - 10))),-1, 4)) + HAS_TRAIT(user, TRAIT_INTELLECTUAL)))
 			. += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
-
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
-		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	/// Rumours & Gossip
 	if(length(rumour) || length(noble_gossip))
@@ -1115,18 +1101,20 @@
 			if(femgen)
 				. += span_info(femgen)
 
-	// Print out branding
-	for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
-		if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
-			. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
-		if(istype(branded_bodypart, /obj/item/bodypart/chest))
-			var/obj/item/bodypart/chest/buttocks = branded_bodypart
-			if(length(buttocks.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
-				. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(buttocks.branded_writing_on_buttocks)]."
-		else if(istype(branded_bodypart, /obj/item/bodypart/head))
-			var/obj/item/bodypart/head/neck = branded_bodypart
-			if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
-				. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
+		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
+			if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
+				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+			if(istype(branded_bodypart, /obj/item/bodypart/chest))
+				var/obj/item/bodypart/chest/chest = branded_bodypart
+				if(length(chest.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest.branded_writing_on_buttocks)]."
+				if(length(chest.branded_writing_on_stomach) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
+					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(chest.branded_writing_on_stomach)]."
+			else if(istype(branded_bodypart, /obj/item/bodypart/head))
+				var/obj/item/bodypart/head/neck = branded_bodypart
+				if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
