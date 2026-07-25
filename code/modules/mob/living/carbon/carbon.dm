@@ -1027,6 +1027,8 @@
 	else
 		clear_fullscreen("brute")*/
 
+	var/no_redflash = client?.prefs?.no_redflash
+	var/flash_pain = FALSE
 	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
 	if(hurtdamage > 5) //float
 		var/severity = 0
@@ -1037,19 +1039,25 @@
 				severity = 2
 			if(40 to 60)
 				severity = 3
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+				flash_pain = TRUE
 			if(60 to 80)
 				severity = 4
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+				flash_pain = TRUE
 			if(80 to 99)
 				severity = 5
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+				flash_pain = TRUE
 			if(99 to INFINITY)
 				severity = 6
+				flash_pain = TRUE
+		if(no_redflash)
+			overlay_fullscreen("brute_alt", /atom/movable/screen/fullscreen/brute_alt, severity)
+		else
+			if(flash_pain)
 				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+			overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 	else
 		clear_fullscreen("brute")
+		clear_fullscreen("brute_alt")
 		clear_fullscreen("painflash")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)

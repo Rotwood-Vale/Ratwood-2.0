@@ -41,6 +41,15 @@
 	else
 		return flash_fullscreen(state)
 
+/mob/proc/on_toggle_redflash()
+	var/mob/living/carbon/user = src
+	if(!istype(user))
+		return
+	clear_fullscreen("brute")
+	clear_fullscreen("brute_alt")
+	clear_fullscreen("painflash")
+	user.update_damage_hud()
+
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if(!screen)
@@ -109,6 +118,11 @@
 
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
+	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/brute_alt
+	icon_state = "brutedamageoverlay_alt"
 	layer = UI_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
