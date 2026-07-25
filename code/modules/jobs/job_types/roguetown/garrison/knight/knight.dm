@@ -11,7 +11,7 @@
 	tutorial = "Having proven yourself both loyal and capable, you have been knighted to serve the realm as the royal family's sentry. \
 	You listen to your Liege, the Marshal, and the Knight Captain, defending your Lord and realm - the last beacon of chivalry in these dark times. \
 	You're wholly dedicated to the standing Regent and their safety. Do not fail. \
-	You may pick your own Squire, but if you have none, you must take on any willing Squire and train them; teaching combat and duty is a core part of your role and is not optional. \
+	You may pick your own Squire, but if you have none, you must take on any willing Squire and involve them in your duties; whether you train them, interact with them, or have them tend your arms and armour, actually engaging with them is not optional. \
 	Consistently turning them away or neglecting one without good reason fails what is expected of you in this rigid hierarchy."
 	display_order = JDO_KNIGHT
 	whitelist_req = TRUE
@@ -55,8 +55,8 @@
 					H.mind.person_knows_me(MF)
 
 		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
-		INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, squire_duty_acknowledgement), "Taking on and training a Squire is a core duty of your role and is not optional. You may pick your own first, \
-			but if you have none you must accept any willing Squire. Teach them combat and the duties of the role, and give them real chances to learn. \
+		INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, squire_duty_acknowledgement), "Taking on a Squire and involving them in your duties is a core part of your role and is not optional. You may pick your own first, \
+			but if you have none you must accept any willing Squire. Engage with them however you like, be it training, roleplay, or having them tend your arms and armour, just do not neglect them. \
 			Consistently turning willing Squires away, or neglecting your own without good in-character reason, fails your role and may be ban-worthy.")
 
 /datum/outfit/job/roguetown/knight

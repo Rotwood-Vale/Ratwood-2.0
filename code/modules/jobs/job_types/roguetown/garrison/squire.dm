@@ -14,8 +14,8 @@
 	tutorial = "Your folks said you were going to be something, they had better aspirations for you than the life of a peasant. You practiced the basics \
 		in the field alongside your friends, swordfighting with sticks, chasing rabbits with grain flail, and helping around the house lifting heavy \
 		bags of grain. The Knight took notice of your potential and brought you on as his personal ward. You're going to be something someday. \
-		A Knight may choose their own Squire first, but if you find yourself without a master, do not despair, as no willing Squire is meant to go \
-		untrained and a Knight is bound to take one on. Seek them out."
+		A Knight may choose their own Squire first, but if you find yourself without a master, do not despair, as no willing Squire is meant to be \
+		left idle and a Knight is bound to take one on. Seek them out."
 	outfit = /datum/outfit/job/roguetown/squire
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE

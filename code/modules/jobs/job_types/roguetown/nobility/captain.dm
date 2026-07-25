@@ -76,7 +76,7 @@
 
 		// Knight & Squire system (Take Squire verb, proximity buffs, stress events, this acknowledgement) is defined in garrison/knight/knight.dm
 		INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, squire_duty_acknowledgement), "As Knight Captain, leading and organizing the realm's Knights is your first and foremost duty. \
-			You also oversee the training of Squires; should you have none, you may take on a willing Squire and teach them combat and their duties. \
+			You may also take on a willing Squire should you have none; involve them in your duties however you see fit, be it training, roleplay, or tending your arms and armour. \
 			Consistently turning willing Squires away, or neglecting your own without good in-character reason, is a failure of your role and may be ban-worthy.")
 
 /datum/advclass/captain/infantry
