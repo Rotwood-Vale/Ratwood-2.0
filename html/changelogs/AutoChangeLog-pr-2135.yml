@@ -1,4 +1,4 @@
 author: "Arturlang"
 delete-after: True
 changes:
-  - rscadd: "memory logging subsystem"
+  - bugfix: "some unlimited loop runtimes"

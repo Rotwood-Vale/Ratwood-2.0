@@ -324,3 +324,67 @@
       a proper way.
   zeroisthebiggay:
   - balance: removes smash from whetstones
+2026-07-24:
+  Arturlang:
+  - balance: canceling the pin do_after removes all pin stun
+  - rscadd: memory logging subsystem
+  Heheniy:
+  - bugfix: wrong stockings offset on males
+  Kroto-Ker:
+  - rscdel: Redundant link when loadout items are examined on a player.
+  RadiantFlash7:
+  - rscadd: Old age buff to parrying
+  - rscadd: Retainer Subclass to men at arms for old age MAA.
+  - rscadd: MAA & Town Guards are once more able to be old
+  - balance: old age once more grants 3 int instead of 2.
+  Taliazure:
+  - bugfix: Fixed the Grand Mace starting weapon choice not spawning correctly.
+  - code_imp: Corrected Grand Mace loadout assignment to match other weapon options.
+  - rscadd: Added Tuscan Red and Smoky Quartz as selectable dwarf skin colors.
+  - code_imp: Added new dwarf skin color definitions and registered them for character
+      creation.
+  Xander3359:
+  - bugfix: Fixed being able to resist out of things while skullcracked
+  - bugfix: Fixed hearths making a ton of sound spam when you fan the flames.
+  Yuckuza:
+  - rscadd: Deserter wretch knights now have a cataphract helmet and cataphract armor
+      as loadout choices.
+  - rscadd: Deserter fighter now has a janissary loadout option.
+  ariaworld:
+  - bugfix: Strong intent now correctly gives a bonus to unarmed fists as well.
+  awwliedacoder:
+  - bugfix: null-ref hangup on update_temperature_hud.
+  - rscadd: added a forced pop-up of the voting ui whenever a vote is called.
+  kimesik:
+  - bugfix: some "Gronnic" stuff is now actually called nation-agnostic.
+2026-07-25:
+  Arturlang:
+  - rscadd: use tg underlay lighting instead of atom movable lighting
+  Kroto-Ker:
+  - bugfix: Toggling masked examine now shows headshot in chat.
+  Shadow-Quill:
+  - bugfix: Floor candles now place directly adjacent to the crafter.
+2026-07-26:
+  Arturlang:
+  - bugfix: inserting organs into the head no longer heals all wounds
+  - bugfix: revenants can no longer run around without downsides from their head wounds
+      if they remove their head
+  awwliedacoder:
+  - bugfix: fixed rebel win-time mesage from 2:30 -> 2:45
+  zoktiik:
+  - refactor: Significantly modified the branding iron's code for more clarity in
+      control flow.
+  - code_imp: Made examine code not iterate thru the target's bodyparts if they have
+      not been branded at all.
+  - qol: Using the branding iron on someone now immediately shows you a prompt asking
+      where to mark, instead of making you wait for the do_after to make your (very
+      awkwardly-timed) decision.
+  - qol: The Crude Branding Stick (loadout item) can now be used on someone else if
+      they are in compliance mode, regardless of conscious state.
+  - bugfix: The zone you selected to brand (on the targeting doll) & the branding
+      description you wrote are now cached when using the iron on someone, making
+      them impossible to change midway through.
+  - rscadd: Added Facial (head [not neck]) and Sensitive (genitalia, breasts [not
+      chest]) Branding preferences, default off. When disabled, they will prevent
+      someone else from branding you there.
+  - rscadd: The stomach area can now be branded. Why not.
