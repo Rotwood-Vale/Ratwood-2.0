@@ -77,12 +77,14 @@
 		"and": "e",
 		"in": "em",
 		"the": "o",
-		"shi": "chee",
-		"thi": "thee",
-		"sh": "ch",
-		"ish": "eesh"
 	},
 	"multiword": {
 		"who are you": "quem é você"
-	}
+	},
+	"syllable": {
+        "shi": "chee",
+		"thi": "thee",
+		"sh": "ch",
+		"ish": "eesh"
+    }
 }
