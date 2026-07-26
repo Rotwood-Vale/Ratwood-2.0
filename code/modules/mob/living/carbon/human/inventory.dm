@@ -470,59 +470,12 @@
 	stored.attack_hand(src) // take out thing from belt
 	return
 
-/mob/living/carbon/human/proc/smart_equipcloak() // put held thing in cloak or take most recent item out of cloak
-	if(incapacitated())
-		return
-	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_cloak = get_item_by_slot(SLOT_CLOAK)
-	if(equip_scabbard(thing, equipped_cloak, SLOT_CLOAK))
-		return
-	if(!equipped_cloak) // We also let you equip a cloak like this
-		if(!thing)
-			to_chat(src, span_warning("I have no cloak to take something out of!"))
-			return
-		if(equip_to_slot_if_possible(thing, SLOT_CLOAK))
-			update_inv_hands()
-		return
-	if(!SEND_SIGNAL(equipped_cloak, COMSIG_CONTAINS_STORAGE)) // not a storage item
-		if(!thing)
-			equipped_cloak.attack_hand(src)
-		else
-			to_chat(src, span_warning("I can't fit anything in!"))
-		return
-	if(thing) // put thing in cloak
-		if(thing.inv_storage_delay)
-			if(!move_after(src, thing.inv_storage_delay, target = thing, progress = TRUE))
-				return
-		if(!SEND_SIGNAL(equipped_cloak, COMSIG_TRY_STORAGE_INSERT, thing, src))
-			to_chat(src, span_warning("I can't fit anything in!"))
-		return
-	if(!equipped_cloak.contents.len) // nothing to take out
-		to_chat(src, span_warning("There's nothing in your cloak to take out!"))
-		return
-	var/obj/item/stored = equipped_cloak.contents[equipped_cloak.contents.len]
-	if(!stored || stored.on_found(src))
-		return
-	if(istype(stored, /obj/item/rogueweapon/scabbard))
-		var/obj/item/rogueweapon/scabbard/scab = stored
-		if(scab.hol_comp.sheathed)
-			stored.attack_right(src)
-			return
-	stored.attack_hand(src) // take out thing from cloak
-
 /mob/living/carbon/human/proc/equip_scabbard(obj/item/thing, obj/item/equipped, slot_id)
 	var/obj/item/use_thing = null
 
 	if(!equipped)
 		return FALSE
-	var/datum/component/holster/HC = equipped.GetComponent(/datum/component/holster)
-	if(HC)
-		if(!HC.sheathed && thing)
-			HC.eat_sword(src, thing)
-		if(HC.sheathed && !thing)
-			HC.right_click(src, src)
-		return TRUE
-	if(!HC)
+	if(!istype(equipped, /obj/item/rogueweapon/scabbard))
 		if(SEND_SIGNAL(equipped, COMSIG_CONTAINS_STORAGE))
 			if(!equipped.contents.len)
 				return FALSE
@@ -533,11 +486,14 @@
 				return FALSE
 			use_thing = stored
 
-	if(use_thing)
-		HC = use_thing.GetComponent(/datum/component/holster)
-	if(!istype(HC))
+	var/obj/item/rogueweapon/scabbard/scab = use_thing ? use_thing : equipped
+	if(!istype(scab))
 		return FALSE
-	if(!HC.sheathed && thing)
-		return HC.eat_sword(src, thing)
-	if(HC.sheathed && !thing)
-		return HC.right_click(src, src)
+	if(!thing)
+		if(!scab.sheathed)
+			return FALSE
+		return scab.attack_hand(src)
+	if(!istype(thing, scab.valid_blade))
+		return FALSE
+	return scab.attackby(thing, src)
+
