@@ -1008,27 +1008,6 @@
 		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
-/*
-	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
-		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 15)
-				severity = 1
-			if(15 to 30)
-				severity = 2
-			if(30 to 45)
-				severity = 3
-			if(45 to 70)
-				severity = 4
-			if(70 to 85)
-				severity = 5
-			if(85 to INFINITY)
-				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")*/
 
 	var/no_redflash = client?.prefs?.no_redflash
 	var/flash_pain = FALSE
@@ -1041,8 +1020,10 @@
 			clear_fullscreen("painflash")
 		if(5 to 20)
 			severity = 1
+			clear_fullscreen("painflash")
 		if(20 to 40)
 			severity = 2
+			clear_fullscreen("painflash")
 		if(40 to 60)
 			severity = 3
 			flash_pain = TRUE
