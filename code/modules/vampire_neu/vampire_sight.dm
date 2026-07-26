@@ -222,7 +222,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	var/active = FALSE
 	var/list/relays
 	var/list/boost_relays
-	var/tunnel_severity = 0
 	var/beat_timer
 	var/last_pt = 0
 	var/last_peak = 0
@@ -283,7 +282,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		last_peak = peak
 		pulse_blood_plane(pt, peak)
 	if(HAS_TRAIT(owner, TRAIT_IN_FRENZY))
-		update_prey_lock()
+		show_frenzy_tunnel()
 
 /datum/vampire_sight/proc/on_owner_logout(datum/source)
 	SIGNAL_HANDLER
@@ -293,11 +292,11 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	if(!active)
 		return
 	active = FALSE
-	tunnel_severity = 0
 	stop_beat()
 	clear_relays()
 	GLOB.blood_sight_viewers = max(0, GLOB.blood_sight_viewers - 1)
 	if(owner)
+		owner.clear_fullscreen("frenzy")
 		UnregisterSignal(owner, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_LOGOUT))
 		var/atom/movable/screen/plane_master/PM = blood_plane_master()
 		if(PM)
@@ -389,12 +388,8 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		animate(boost, color = surge, time = 3, flags = ANIMATION_PARALLEL, easing = SINE_EASING)
 		animate(color = settled, time = 10)
 
-/datum/vampire_sight/proc/update_prey_lock()
-	var/severity = owner.frenzy_target ? 9 : 7
-	if(severity == tunnel_severity)
-		return
-	tunnel_severity = severity
-	owner.overlay_fullscreen("frenzy", /atom/movable/screen/fullscreen/frenzy, severity)
+/datum/vampire_sight/proc/show_frenzy_tunnel()
+	owner.overlay_fullscreen("frenzy", /atom/movable/screen/fullscreen/frenzy, 7)
 
 /datum/vampire_sight/proc/pulse_time_for(mob/living/vamp)
 	var/hunger = clamp(1 - (vamp.bloodpool / max(1, vamp.maxbloodpool)), 0, 1)
@@ -411,15 +406,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	layer = CRIT_LAYER
 	plane = FULLSCREEN_PLANE
 	color = "#8a0000"
-	alpha = 0
-
-/atom/movable/screen/fullscreen/frenzy/New()
-	. = ..()
-	animate(src, alpha = VAMPIRE_SIGHT_VIGNETTE_ALPHA, time = 6, easing = SINE_EASING)
-
-/atom/movable/screen/fullscreen/frenzy/update_for_view(client_view)
-	. = ..()
-	transform = transform.Scale(1.4)
 
 /mob/living/proc/beast_shake(strength = 1.5, shakes = 7)
 	if(isnull(client) || !client.prefs?.shake)
@@ -444,7 +430,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	if(!eyes)
 		return
 	eyes.set_edge_drain(0)
-	eyes.vampire_sight?.update_prey_lock()
+	eyes.vampire_sight?.show_frenzy_tunnel()
 	eyes.vampire_sight?.refresh_pulse()
 	eyes.vampire_sight?.start_beat()
 
@@ -463,8 +449,10 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
 	eyes?.vampire_sight?.feed_surge()
 
-/mob/living/proc/beast_world_swell(scale = 1.12, time = 2)
+/mob/living/proc/beast_world_shake(scale = 1.12, time = 2)
 	if(isnull(client) || !hud_used)
+		return
+	if(!client.prefs?.shake)
 		return
 	for(var/planekey in GLOB.vampire_sight_capture_planes)
 		var/atom/movable/screen/plane_master/PM = hud_used.plane_masters?[planekey]
@@ -477,7 +465,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	if(isnull(client))
 		return
 	playsound_local(src, 'sound/health/heartbeat.ogg', 100, FALSE)
-	beast_world_swell()
+	beast_world_shake()
 
 /mob/living/proc/beast_edge_update()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
