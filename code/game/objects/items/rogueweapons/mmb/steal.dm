@@ -228,8 +228,8 @@
 		thief.changeNext_move(clickcd)
 		return
 
-	// The contested detection check: thieving + speed vs perception + speed, scaled by the mark's awareness.
-	var/thief_score = roll("[thiefskill + 1]d6") + round((thief.STASPD - 10) / 3)
+	// The contested detection check: thieving + fortune vs perception + speed, scaled by the mark's awareness.
+	var/thief_score = roll("[thiefskill + 1]d6") + round((thief.STALUC - 10) / 3)
 	var/victim_score
 	if(victim_unaware)
 		victim_score = round(effective_targetperception * 0.35)
