@@ -149,12 +149,12 @@
 /datum/reagent/consumable/poppy_milk/on_mob_life(mob/living/carbon/M)
 	M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/ozium)
-	..()
+	return ..()
 
 /datum/reagent/consumable/poppy_milk/overdose_process(mob/living/M)
 	M.adjustToxLoss(3, FALSE)
 	..()
-	. = 1
+	return ..()
 
 // Tea ported from Vanderlin from Misc Fixes PR #862
 /datum/reagent/consumable/golden_calendula_tea
@@ -178,7 +178,7 @@
 		M.adjustOxyLoss(-0.25, FALSE)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1  * REAGENTS_EFFECT_MULTIPLIER)
 		M.adjustCloneLoss(-0.75  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
-	..()
+	return ..()
 
 /datum/reagent/consumable/chocolate
 	name = "hot chocolate"
@@ -201,7 +201,7 @@
 		M.adjustOxyLoss(-0.15, FALSE)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.3  * REAGENTS_EFFECT_MULTIPLIER)
 		M.adjustCloneLoss(-0.3  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
-	..()
+	return ..()
 
 /datum/reagent/consumable/spiced_chocolate
 	name = "spiced chocolate"
@@ -224,7 +224,7 @@
 		M.adjustOxyLoss(-0.15, FALSE)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5  * REAGENTS_EFFECT_MULTIPLIER)
 		M.adjustCloneLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
-	..()
+	return ..()
 
 /datum/reagent/consumable/soothing_valerian_tea
 	name = "Soothing Valerian Tea"
@@ -236,4 +236,4 @@
 
 /datum/reagent/consumable/soothing_valerian_tea/on_mob_life(mob/living/carbon/M)
 	M.energy_add(3)
-	..()
+	return ..()
