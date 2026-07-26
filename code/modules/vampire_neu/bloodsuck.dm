@@ -28,7 +28,7 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(VDrinker && istype(human_victim.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_WORN_SILVER_PSICROSS))
 			to_chat(src, span_userdanger("SILVER! HISSS!!!"))
 			return
 		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_SILVER_BLESSED))
