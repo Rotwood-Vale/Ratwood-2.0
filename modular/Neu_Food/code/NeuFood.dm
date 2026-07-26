@@ -288,6 +288,7 @@
 /obj/item/reagent_containers/powder/flour/proc/wet(obj/item/I, mob/living/user)
 	var/found_table = locate(/obj/structure/table) in (loc)
 	var/obj/item/reagent_containers/R = I
+	var/is_container = istype(R, /obj/item/reagent_containers)
 	// if false, this is a special case like orison
 	update_cooktime(user)
 	if(water_added)

@@ -84,13 +84,13 @@
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	M.sate_addiction(/datum/charflaw/addiction/smoker)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -110,14 +110,14 @@
 	M.AdjustImmobilized(-20, FALSE)
 	M.AdjustParalyzed(-20, FALSE)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2  * REAGENTS_EFFECT_MULTIPLIER)
 	M.adjustToxLoss(2  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustBruteLoss(2  * REAGENTS_EFFECT_MULTIPLIER, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5  * REAGENTS_EFFECT_MULTIPLIER)
@@ -126,19 +126,19 @@
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
 	M.adjustToxLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
 	M.adjustBruteLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3  * REAGENTS_EFFECT_MULTIPLIER)
 	M.adjustToxLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustBruteLoss(5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
@@ -173,7 +173,7 @@
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
@@ -187,7 +187,7 @@
 	..()
 	M.adjustToxLoss(1, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
@@ -222,7 +222,7 @@
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
@@ -240,7 +240,7 @@
 		M.losebreath++
 		M.adjustOxyLoss(1, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
@@ -264,7 +264,7 @@
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/M)
 	if(prob(30))
@@ -279,7 +279,7 @@
 				M.emote("frown")
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
 	M.Jitter(5)
@@ -304,7 +304,7 @@
 	if(prob(50))
 		M.emote(pick("twitch","laugh","frown"))
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/pumpup
 	name = "Pump-Up"
@@ -331,7 +331,7 @@
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
 	to_chat(M, "<span class='danger'>I can't stop shaking, my heart beats faster and faster...</span>")
@@ -377,14 +377,14 @@
 
 /datum/reagent/drug/mentha/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/mentha/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/blackberry
 	name = "Blackberry"
 	description = "Extract from the blackberry. Produces a sweet-tart sensation."
@@ -404,13 +404,12 @@
 
 /datum/reagent/drug/blackberry/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
-
+	return TRUE
 /datum/reagent/drug/blackberry/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 	
 /datum/reagent/drug/apple 
 	name = "Apple"
@@ -429,14 +428,13 @@
 
 /datum/reagent/drug/apple/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
-
+	return TRUE
 /datum/reagent/drug/apple/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/chocolate 
 	name = "Chocolate"
 	description = "Extract from the chocolate. Produces a sourness and coolness sensation."
@@ -455,14 +453,14 @@
 
 /datum/reagent/drug/chocolate/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/chocolate/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/strawberry 
 	name = "Strawberry"
 	description = "Extract from the strawberry. Produces a sourness and coolness sensation."
@@ -481,14 +479,14 @@
 
 /datum/reagent/drug/strawberry/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/strawberry/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/carrot  
 	name = "Carrot"
 	description = "Extract from the carrot. Produces a sourness and coolness sensation."
@@ -507,14 +505,14 @@
 
 /datum/reagent/drug/carrot/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/carrot/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/lime
 	name = "Lime"
 	description = "Extract from the lime. Produces a sourness and coolness sensation."
@@ -534,14 +532,14 @@
 
 /datum/reagent/drug/lime/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/lime/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
-	
+	return TRUE
+
 /datum/reagent/drug/salvia
 	name = "Salvia"
 	description = "Extract from the salvia. Produces a spicy, earthy and bitter sensation."
@@ -560,13 +558,13 @@
 
 /datum/reagent/drug/salvia/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/salvia/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/valeriana
 	name = "Valeriana"
@@ -584,7 +582,7 @@
 	V.add_stress(/datum/stressevent/valerianasmoke)
 	if(prob(20))
 		M.drowsyness += 3
-		M.emote(pick("yawn"))
+		M.emote("yawn")
 		M.visible_message("<span class='notice'>[M]'s looks sleepy and relaxed</span>")
 	..()
 
@@ -593,7 +591,7 @@
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/calendula
 	name = "Calendula"
@@ -622,7 +620,7 @@
 
 /datum/reagent/drug/calendula/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/calendula/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
@@ -657,13 +655,13 @@
 	if(HAS_TRAIT(M, TRAIT_TOXIMMUNE))
 		M.adjustToxLoss(0.1)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/petun/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/jacksberries
 	name = "jacksberries"
@@ -686,13 +684,13 @@
 
 /datum/reagent/drug/jacksberries/on_mob_life(mob/living/carbon/M)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/jacksberries/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/abyss
 	name = "Abyss"
@@ -722,10 +720,10 @@
 		M.adjustOxyLoss(0.1)
 	M.apply_status_effect(/datum/status_effect/buff/abyss)
 	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/drug/abyss/overdose_process(mob/living/M)
 	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
 	..()
-	. = 1
+	return TRUE

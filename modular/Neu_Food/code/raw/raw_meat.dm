@@ -328,7 +328,7 @@
 	icon_state = "spidermince"
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider/attackby(obj/item/I, mob/living/user)
-	var/found_table = locate(/obj/structure/table) in (loc)
+	var/obj/structure/table/found_table = locate() in (loc)
 	update_cooktime(user)
 	if(!isdarkelf(user))
 		to_chat(user, span_warning("You lack knowledge of underdark delicacies!"))
