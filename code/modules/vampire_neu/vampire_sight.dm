@@ -86,10 +86,7 @@
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
 	eyes?.update_vampire_sight()
 
-/datum/atom_hud/vampire_blood
-	hud_icons = list(VAMPIRE_BLOOD_HUD)
-
-GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
+GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
 /mob/living/proc/can_be_blood_drunk()
 	return FALSE
@@ -103,47 +100,115 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 		return FALSE
 	return blood_volume > 0
 
-/image/vampire_blood_glow
-	var/pulsing = FALSE
-	var/pulse_time = 0
-	var/peak = 0
-	var/last_dir = 0
-	var/last_pulled = FALSE
-	var/last_appearance
+/datum/component/blood_glow
+	var/mutable_appearance/ma
+	var/turf/watched_turf
+	var/rebuild_scheduled = FALSE
 
-/mob/living/carbon/proc/refresh_blood_glow(pulse_time = VAMPIRE_SIGHT_PULSE_TIME, peak = VAMPIRE_SIGHT_PULSE_PEAK)
-	var/image/vampire_blood_glow/glow = hud_list?[VAMPIRE_BLOOD_HUD]
-	if(!istype(glow))
+/datum/component/blood_glow/Initialize()
+	if(!iscarbon(parent))
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/blood_glow/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_LIVING_OVERLAYS_APPLIED, PROC_REF(on_overlays_changed))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_state_changed))
+	RegisterSignal(parent, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	watch_turf(get_turf(parent))
+	build(TRUE)
+
+/datum/component/blood_glow/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_LIVING_OVERLAYS_APPLIED, COMSIG_LIVING_DEATH, COMSIG_LIVING_LIFE, COMSIG_MOVABLE_MOVED))
+	watch_turf(null)
+
+/datum/component/blood_glow/Destroy(force)
+	var/atom/movable/carrier = parent
+	if(ma && !QDELETED(carrier))
+		carrier.cut_overlay(ma)
+	ma = null
+	return ..()
+
+/datum/component/blood_glow/proc/watch_turf(turf/new_turf)
+	if(watched_turf == new_turf)
 		return
-	if(!length(GLOB.vampire_blood_hud?.hudusers) || !can_be_blood_drunk())
-		if(glow.pulsing)
-			glow.pulsing = FALSE
-			animate(glow, alpha = 0, time = 2)
+	if(watched_turf)
+		UnregisterSignal(watched_turf, list(COMSIG_TURF_ENTERED, COMSIG_TURF_EXITED))
+	watched_turf = new_turf
+	if(watched_turf)
+		RegisterSignal(watched_turf, list(COMSIG_TURF_ENTERED, COMSIG_TURF_EXITED), PROC_REF(on_turf_occupancy))
+
+/datum/component/blood_glow/proc/is_sight_vampire(atom/thing)
+	if(!isliving(thing))
+		return FALSE
+	var/mob/living/L = thing
+	var/obj/item/organ/eyes/night_vision/vampire/eyes = L.getorganslot(ORGAN_SLOT_EYES)
+	return eyes?.vampire_sight?.active
+
+/datum/component/blood_glow/proc/suppressed()
+	var/turf/here = get_turf(parent)
+	if(!here)
+		return TRUE
+	for(var/mob/living/L in here)
+		if(is_sight_vampire(L))
+			return TRUE
+	return FALSE
+
+/datum/component/blood_glow/proc/on_overlays_changed(datum/source)
+	SIGNAL_HANDLER
+	if(rebuild_scheduled)
 		return
-	var/pulled = (pulledby != null)
-	if(glow.pulsing && pulse_time == glow.pulse_time && peak == glow.peak && dir == glow.last_dir && pulled == glow.last_pulled && appearance == glow.last_appearance)
+	rebuild_scheduled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(do_rebuild)), 0)
+
+/datum/component/blood_glow/proc/do_rebuild()
+	rebuild_scheduled = FALSE
+	build(TRUE)
+
+/datum/component/blood_glow/proc/on_state_changed(datum/source)
+	SIGNAL_HANDLER
+	build(TRUE)
+
+/datum/component/blood_glow/proc/on_life(datum/source)
+	SIGNAL_HANDLER
+	build(FALSE)
+
+/datum/component/blood_glow/proc/on_moved(datum/source)
+	SIGNAL_HANDLER
+	watch_turf(get_turf(parent))
+	build(FALSE)
+
+/datum/component/blood_glow/proc/on_turf_occupancy(datum/source, atom/movable/thing)
+	SIGNAL_HANDLER
+	if(is_sight_vampire(thing))
+		build(FALSE)
+
+/datum/component/blood_glow/proc/build(force)
+	var/mob/living/carbon/carrier = parent
+	if(QDELETED(carrier))
 		return
-	glow.last_dir = dir
-	glow.last_pulled = pulled
-	glow.last_appearance = appearance
-	glow.pulse_time = pulse_time
-	glow.peak = peak
-	glow.appearance = appearance
-	glow.override = FALSE
-	glow.dir = dir
-	glow.transform = pulled ? transform : matrix()
+	if(!carrier.can_be_blood_drunk() || suppressed())
+		if(ma)
+			carrier.cut_overlay(ma)
+			ma = null
+		return
+	if(ma && !force)
+		return
+	if(ma)
+		carrier.cut_overlay(ma)
+		ma = null
+	var/mutable_appearance/glow = new(carrier)
+	glow.plane = BLOOD_GLOW_PLANE
+	glow.transform = matrix()
 	glow.pixel_x = 0
 	glow.pixel_y = 0
 	glow.pixel_z = 0
-	glow.layer = ABOVE_MOB_LAYER
 	glow.color = VAMPIRE_SIGHT_BODY_COLOR
 	glow.blend_mode = BLEND_ADD
-	glow.appearance_flags = KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | NO_CLIENT_COLOR
-	glow.filters = list(filter(type = "blur", size = 1), filter(type = "drop_shadow", x = 0, y = 0, size = VAMPIRE_SIGHT_GLOW_SIZE, color = VAMPIRE_SIGHT_GLOW_COLOR))
-	glow.pulsing = TRUE
-	glow.alpha = 90
-	animate(glow, alpha = peak, time = pulse_time, loop = -1, flags = ANIMATION_PARALLEL, easing = SINE_EASING)
-	animate(alpha = 90, time = pulse_time)
+	glow.alpha = 255
+	glow.appearance_flags = KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA
+	glow.filters = null
+	ma = glow
+	carrier.add_overlay(glow)
 
 /atom/movable/vampire_sight_relay
 	plane = GAME_PLANE_HIGHEST
@@ -159,6 +224,8 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 	var/list/boost_relays
 	var/tunnel_severity = 0
 	var/beat_timer
+	var/last_pt = 0
+	var/last_peak = 0
 
 /datum/vampire_sight/New(obj/item/organ/eyes/night_vision/vampire/_eyes)
 	eyes = _eyes
@@ -170,6 +237,24 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 	eyes = null
 	return ..()
 
+/datum/vampire_sight/proc/blood_plane_master()
+	return owner?.hud_used?.plane_masters?["[BLOOD_GLOW_PLANE]"]
+
+/datum/vampire_sight/proc/pulse_blood_plane(pulse_time, peak)
+	var/atom/movable/screen/plane_master/PM = blood_plane_master()
+	if(!PM)
+		return
+	PM.alpha = 90
+	animate(PM, alpha = peak, time = pulse_time, loop = -1, flags = ANIMATION_PARALLEL, easing = SINE_EASING)
+	animate(alpha = 90, time = pulse_time)
+
+/datum/vampire_sight/proc/refresh_pulse()
+	if(!active || !owner)
+		return
+	last_pt = pulse_time_for(owner)
+	last_peak = peak_for(owner)
+	pulse_blood_plane(last_pt, last_peak)
+
 /datum/vampire_sight/proc/enable()
 	if(active)
 		return
@@ -177,15 +262,32 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 	if(!istype(owner))
 		return
 	active = TRUE
+	GLOB.blood_sight_viewers++
+	if(GLOB.blood_sight_viewers == 1)
+		for(var/mob/living/carbon/body as anything in GLOB.carbon_list)
+			body.AddComponent(/datum/component/blood_glow)
 	refresh_planes()
 	build_relays()
-	GLOB.vampire_blood_hud.add_hud_to(owner)
-	GLOB.vampire_blood_hud.hide_single_atomhud_from(owner, owner)
+	last_pt = pulse_time_for(owner)
+	last_peak = peak_for(owner)
+	pulse_blood_plane(last_pt, last_peak)
+	RegisterSignal(owner, COMSIG_HUMAN_LIFE, PROC_REF(on_owner_life))
+	RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(on_owner_logout))
+
+/datum/vampire_sight/proc/on_owner_life(datum/source)
+	SIGNAL_HANDLER
 	var/pt = pulse_time_for(owner)
 	var/peak = peak_for(owner)
-	for(var/mob/living/carbon/body in view(owner))
-		body.refresh_blood_glow(pt, peak)
-	START_PROCESSING(SSfastprocess, src)
+	if(pt != last_pt || peak != last_peak)
+		last_pt = pt
+		last_peak = peak
+		pulse_blood_plane(pt, peak)
+	if(HAS_TRAIT(owner, TRAIT_IN_FRENZY))
+		update_prey_lock()
+
+/datum/vampire_sight/proc/on_owner_logout(datum/source)
+	SIGNAL_HANDLER
+	disable()
 
 /datum/vampire_sight/proc/disable()
 	if(!active)
@@ -193,13 +295,19 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 	active = FALSE
 	tunnel_severity = 0
 	stop_beat()
-	STOP_PROCESSING(SSfastprocess, src)
 	clear_relays()
+	GLOB.blood_sight_viewers = max(0, GLOB.blood_sight_viewers - 1)
 	if(owner)
-		GLOB.vampire_blood_hud.remove_hud_from(owner)
-		GLOB.vampire_blood_hud.unhide_single_atomhud_from(owner, owner)
+		UnregisterSignal(owner, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_LOGOUT))
+		var/atom/movable/screen/plane_master/PM = blood_plane_master()
+		if(PM)
+			animate(PM)
+			PM.alpha = 0
 		refresh_planes()
-		owner = null
+	if(!GLOB.blood_sight_viewers)
+		for(var/mob/living/carbon/body as anything in GLOB.carbon_list)
+			qdel(body.GetComponent(/datum/component/blood_glow))
+	owner = null
 
 /mob/living/proc/refresh_world_planes()
 	if(!hud_used)
@@ -298,19 +406,6 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 /datum/vampire_sight/proc/peak_for(mob/living/vamp)
 	return HAS_TRAIT(vamp, TRAIT_IN_FRENZY) ? VAMPIRE_SIGHT_PULSE_PEAK_FRENZY : VAMPIRE_SIGHT_PULSE_PEAK
 
-/datum/vampire_sight/process()
-	if(QDELETED(owner) || !active)
-		return PROCESS_KILL
-	if(isnull(owner.client))
-		disable()
-		return
-	var/pt = pulse_time_for(owner)
-	var/peak = peak_for(owner)
-	for(var/mob/living/carbon/body in view(owner))
-		body.refresh_blood_glow(pt, peak)
-	if(HAS_TRAIT(owner, TRAIT_IN_FRENZY))
-		update_prey_lock()
-
 /atom/movable/screen/fullscreen/frenzy
 	icon_state = "passage"
 	layer = CRIT_LAYER
@@ -350,11 +445,13 @@ GLOBAL_DATUM_INIT(vampire_blood_hud, /datum/atom_hud/vampire_blood, new)
 		return
 	eyes.set_edge_drain(0)
 	eyes.vampire_sight?.update_prey_lock()
+	eyes.vampire_sight?.refresh_pulse()
 	eyes.vampire_sight?.start_beat()
 
 /mob/living/proc/beast_release()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
 	eyes?.vampire_sight?.stop_beat()
+	eyes?.vampire_sight?.refresh_pulse()
 	clear_fullscreen("frenzy", 25)
 	update_vampire_sight()
 
