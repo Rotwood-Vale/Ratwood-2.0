@@ -1,4 +1,0 @@
-author: "awwliedacoder"
-delete-after: True
-changes:
-  - bugfix: "fixed rebel win-time mesage from 2:30 -> 2:45"

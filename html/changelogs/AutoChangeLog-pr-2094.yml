@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "inserting organs into the head no longer heals all wounds"
-  - bugfix: "revenants can no longer run around without downsides from their head wounds if they remove their head"
