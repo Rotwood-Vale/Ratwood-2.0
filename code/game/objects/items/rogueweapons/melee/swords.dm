@@ -1439,7 +1439,7 @@
 	desc = "A tool made for nobler tasks than shedding blood, discreet and ever ready, as you should be too."
 	pixel_y = 0
 	pixel_x = 0
-	bigboy = TRUE
+	bigboy = FALSE
 	icon = 'icons/roguetown/weapons/special/hand32.dmi'
 	icon_state = "staffblade"
 	item_state = "staffblade"
