@@ -117,19 +117,18 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	if(watched_turf)
 		RegisterSignal(watched_turf, list(COMSIG_TURF_ENTERED, COMSIG_TURF_EXITED), PROC_REF(on_turf_occupancy))
 
-/datum/component/blood_glow/proc/is_sight_vampire(atom/thing)
-	if(!isliving(thing))
+/datum/component/blood_glow/proc/is_vampire(atom/thing)
+	if(!iscarbon(thing))
 		return FALSE
-	var/mob/living/L = thing
-	var/obj/item/organ/eyes/night_vision/vampire/eyes = L.getorganslot(ORGAN_SLOT_EYES)
-	return eyes?.vampire_sight?.active
+	var/mob/living/carbon/carbon = thing
+	return carbon.clan || carbon.mind?.has_antag_datum(/datum/antagonist/vampire)
 
 /datum/component/blood_glow/proc/suppressed()
 	var/turf/here = get_turf(parent)
 	if(!here)
 		return TRUE
-	for(var/mob/living/L in here)
-		if(is_sight_vampire(L))
+	for(var/mob/living/living in here)
+		if(is_vampire(living))
 			return TRUE
 	return FALSE
 
@@ -159,7 +158,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
 /datum/component/blood_glow/proc/on_turf_occupancy(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
-	if(is_sight_vampire(thing))
+	if(is_vampire(thing))
 		build(FALSE)
 
 /datum/component/blood_glow/proc/build(force)
@@ -205,6 +204,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	var/beat_timer
 	var/last_pt = 0
 	var/last_peak = 0
+	var/update_on_z_change = TRUE
 
 /datum/vampire_sight/New(obj/item/organ/eyes/night_vision/vampire/_eyes)
 	eyes = _eyes
@@ -252,6 +252,19 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	pulse_blood_plane(last_pt, last_peak)
 	RegisterSignal(owner, COMSIG_HUMAN_LIFE, PROC_REF(on_owner_life))
 	RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(on_owner_logout))
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_owner_z_change))
+
+/datum/vampire_sight/proc/on_owner_z_change(datum/source, old_z, new_z)
+	SIGNAL_HANDLER
+	if(update_on_z_change)
+		INVOKE_ASYNC(src, PROC_REF(reapply_planes))
+
+/datum/vampire_sight/proc/reapply_planes()
+	if(!active || QDELETED(owner) || isnull(owner.client))
+		return
+	refresh_planes()
+	rebuild_relays()
+	pulse_blood_plane(last_pt, last_peak)
 
 /datum/vampire_sight/proc/on_owner_life(datum/source)
 	SIGNAL_HANDLER
@@ -277,7 +290,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	GLOB.blood_sight_viewers = max(0, GLOB.blood_sight_viewers - 1)
 	if(owner)
 		owner.clear_fullscreen("frenzy")
-		UnregisterSignal(owner, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_LOGOUT))
+		UnregisterSignal(owner, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_Z_CHANGED))
 		var/atom/movable/screen/plane_master/PM = blood_plane_master()
 		if(PM)
 			animate(PM)
