@@ -503,12 +503,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  */
 /area/proc/update_areasize()
-	set background = 1
 	if(outdoors)
 		return FALSE
 	areasize = 0
 	for(var/turf/open/T in contents)
 		areasize++
+		CHECK_TICK()
 
 /**
  * Causes a runtime error
@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	icon_state = "start"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	
+
 /area/space
 	icon_state = "space"
 	requires_power = TRUE
