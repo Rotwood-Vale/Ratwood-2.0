@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	areasize = 0
 	for(var/turf/open/T in contents)
 		areasize++
-		CHECK_TICK()
+		CHECK_TICK
 
 /**
  * Causes a runtime error
