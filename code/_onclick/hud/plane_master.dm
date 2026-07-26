@@ -25,8 +25,6 @@
 		return
 	if(render_target == VAMPIRE_SIGHT_TARGET(plane))
 		render_target = null
-	if(eyes.edge_drain > 0)
-		filters += filter(type = "color", color = eyes.drain_matrix())
 
 /atom/movable/screen/plane_master/vampire_sight
 	name = "blood-sight plane master"

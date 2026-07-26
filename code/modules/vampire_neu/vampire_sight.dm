@@ -7,29 +7,9 @@
 	var/list/sight_greyscale = VAMPIRE_SIGHT_GREYSCALE
 	var/list/sight_redboost
 	var/sight_anchor = VAMPIRE_SIGHT_ANCHOR
-	var/edge_drain = 0
-
-/obj/item/organ/eyes/night_vision/vampire/proc/drain_matrix()
-	var/kept = 1 - edge_drain
-	return list(
-		0.299 + (0.701 * kept), 0.299 - (0.299 * kept), 0.299 - (0.299 * kept), 0,
-		0.587 - (0.587 * kept), 0.587 + (0.413 * kept), 0.587 - (0.587 * kept), 0,
-		0.114 - (0.114 * kept), 0.114 - (0.114 * kept), 0.114 + (0.886 * kept), 0,
-		0, 0, 0, 1,
-		0, 0, 0, 0,
-	)
 
 /obj/item/organ/eyes/night_vision/vampire/proc/sight_owns_planes()
 	return vampire_sight?.active
-
-/obj/item/organ/eyes/night_vision/vampire/proc/set_edge_drain(amount)
-	amount = round(clamp(amount, 0, 1), 0.1)
-	if(amount == edge_drain)
-		return
-	edge_drain = amount
-	var/mob/living/wearer = owner
-	if(istype(wearer))
-		wearer.refresh_world_planes()
 
 /obj/item/organ/eyes/night_vision/vampire/proc/refresh_sight()
 	vampire_sight?.rebuild_relays()
@@ -429,7 +409,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
-	eyes.set_edge_drain(0)
 	eyes.vampire_sight?.show_frenzy_tunnel()
 	eyes.vampire_sight?.refresh_pulse()
 	eyes.vampire_sight?.start_beat()
@@ -454,7 +433,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		return
 	if(!client.prefs?.shake)
 		return
-	for(var/planekey in GLOB.vampire_sight_capture_planes)
+	for(var/planekey in GLOB.vampire_sight_capture_planes + list("[BLOOD_GLOW_PLANE]"))
 		var/atom/movable/screen/plane_master/PM = hud_used.plane_masters?[planekey]
 		if(!PM)
 			continue
@@ -466,14 +445,3 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		return
 	playsound_local(src, 'sound/health/heartbeat.ogg', 100, FALSE)
 	beast_world_shake()
-
-/mob/living/proc/beast_edge_update()
-	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
-		return
-	if(HAS_TRAIT(src, TRAIT_IN_FRENZY) || eyes.sight_owns_planes() || isnull(client))
-		eyes.set_edge_drain(0)
-		return
-	var/hunger = clamp((VITAE_LEVEL_HUNGRY - bloodpool) / VITAE_LEVEL_HUNGRY, 0, 1)
-	var/tension = clamp((frenzy_hardness - 3) / 7, 0, 1)
-	eyes.set_edge_drain(max(hunger, tension))

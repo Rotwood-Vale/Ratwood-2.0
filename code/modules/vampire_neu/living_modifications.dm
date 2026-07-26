@@ -305,8 +305,6 @@
 			if(prob(3))
 				playsound(get_turf(src), pick('sound/vo/hungry1.ogg','sound/vo/hungry2.ogg','sound/vo/hungry3.ogg'), 100, TRUE, -1)
 
-	beast_edge_update()
-
 	if(bloodpool < 100 && prob(9))
 		if(last_frenzy_check + 5 MINUTES < world.time)
 			rollfrenzy()

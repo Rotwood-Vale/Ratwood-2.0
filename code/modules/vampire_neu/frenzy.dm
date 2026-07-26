@@ -63,7 +63,6 @@
 				frenzy_hardness = max(1, frenzy_hardness - 1)
 			else
 				frenzy_hardness = min(10, frenzy_hardness + 1)
-		beast_edge_update()
 
 /mob/living/carbon/proc/enter_frenzymod()
 	if(HAS_TRAIT(src, TRAIT_IN_FRENZY))
