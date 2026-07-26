@@ -80,7 +80,9 @@
 		"shi": "chee",
 		"thi": "thee",
 		"sh": "ch",
-		"ish": "eesh",
+		"ish": "eesh"
+	},
+	"multiword": {
 		"who are you": "quem é você"
 	}
 }
