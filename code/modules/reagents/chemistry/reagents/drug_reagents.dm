@@ -350,13 +350,13 @@
 	..()
 
 /datum/reagent/drug/food_reagent
-    var/datum/stressevent/stress_type
+	var/datum/stressevent/stress_type
 
 
 /datum/reagent/drug/food_reagent/on_mob_metabolize(mob/living/living_mob)
-    var/mob/living/carbon/carbon_mob = living_mob
-    carbon_mob.add_stress(stress_type)
-    . = ..()
+	var/mob/living/carbon/carbon_mob = living_mob
+	carbon_mob.add_stress(stress_type)
+	. = ..()
 
 /datum/reagent/drug/mentha // distinct from SS13 menthol, for the mentha zigs
 	name = "Mentha"
@@ -373,15 +373,15 @@
 	..()
 
 /datum/reagent/drug/food_reagent/mentha
-    stress_type = /datum/stressevent/menthasmoke
+	stress_type = /datum/stressevent/menthasmoke
 
 /datum/reagent/drug/mentha/on_mob_life(mob/living/carbon/M)
 	..()
 	return TRUE
 
 /datum/reagent/drug/mentha/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -400,14 +400,15 @@
 	..()
 
 /datum/reagent/drug/food_reagent/blackberry
-    stress_type = /datum/stressevent/blackberrysmoke
+	stress_type = /datum/stressevent/blackberrysmoke
 
 /datum/reagent/drug/blackberry/on_mob_life(mob/living/carbon/M)
 	..()
 	return TRUE
+
 /datum/reagent/drug/blackberry/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 	
@@ -430,8 +431,8 @@
 	..()
 	return TRUE
 /datum/reagent/drug/apple/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -456,8 +457,8 @@
 	return TRUE
 
 /datum/reagent/drug/chocolate/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -482,8 +483,8 @@
 	return TRUE
 
 /datum/reagent/drug/strawberry/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -508,8 +509,8 @@
 	return TRUE
 
 /datum/reagent/drug/carrot/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -535,8 +536,8 @@
 	return TRUE
 
 /datum/reagent/drug/lime/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -588,8 +589,8 @@
 
 
 /datum/reagent/drug/valeriana/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -609,11 +610,11 @@
 
 /datum/reagent/drug/calendula/on_mob_metabolize(mob/living/M)
 	var/list/wCount = M.get_wounds()
-	M.adjustBruteLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustFireLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(-0.25, 0)
+	M.adjustBruteLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustFireLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(-0.25, FALSE)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1  * REAGENTS_EFFECT_MULTIPLIER)
-	M.adjustCloneLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustCloneLoss(-0.5  * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	if(wCount.len > 0)
 		M.heal_wounds(0.5)  // twice worse than the tea
 	..()
@@ -623,8 +624,8 @@
 	return TRUE
 
 /datum/reagent/drug/calendula/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	. = 1
 
@@ -658,8 +659,8 @@
 	return TRUE
 
 /datum/reagent/drug/petun/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1 * REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -687,8 +688,8 @@
 	return TRUE
 
 /datum/reagent/drug/jacksberries/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
 
@@ -723,7 +724,7 @@
 	return TRUE
 
 /datum/reagent/drug/abyss/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, 0)
-	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, 0)
+	M.adjustToxLoss(0.1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
+	M.adjustOxyLoss(1.1*REAGENTS_EFFECT_MULTIPLIER, FALSE)
 	..()
 	return TRUE
