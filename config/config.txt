@@ -117,7 +117,7 @@ LOG_ATTACK
 DISABLE_MEMORY_STATS
 
 ## sort mapload atom init by type for exact per-type memory attribution in memory_stats.log
-## changes atom init order - profiling runs only, leave off for live
+## changes atom init order - use only for profiling, unknown if this can cause issues
 #MEMORY_STATS_SORTED_INIT
 
 ## log pda messages
