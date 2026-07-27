@@ -388,3 +388,8 @@
       chest]) Branding preferences, default off. When disabled, they will prevent
       someone else from branding you there.
   - rscadd: The stomach area can now be branded. Why not.
+2026-07-27:
+  Arturlang:
+  - bugfix: some unlimited loop runtimes
+  awwliedacoder:
+  - image: volfmantle cloak did not have all the required icon_state's.

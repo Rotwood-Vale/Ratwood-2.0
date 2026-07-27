@@ -1,4 +1,0 @@
-author: "awwliedacoder"
-delete-after: True
-changes:
-  - image: "volfmantle cloak did not have all the required icon_state's."
