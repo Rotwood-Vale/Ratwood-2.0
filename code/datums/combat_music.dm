@@ -493,7 +493,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_starsugar.ogg')
 
 /datum/combat_music/mamsdue // old bandit music afaik
-	name = "Mammons Due (Loud!)
+	name = "Mammons Due (Loud!)"
 	desc = "Everything is moving so fast!"
 	shortname = "Mams"
 	credits = "Consumer Softproducts - Rent Due"
