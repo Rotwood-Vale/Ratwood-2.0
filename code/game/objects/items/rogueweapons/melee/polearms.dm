@@ -135,7 +135,8 @@
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 1.1
-	clickcd = 13
+	clickcd = 15
+	swingdelay = 2
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	blunt_chipping = TRUE
