@@ -142,6 +142,8 @@
 		L.stamina_add(stamina_cost)
 	L.forceMove(newtarg)
 	if(pulling)
+		/// Grab chains can loop back on themselves (A grabs B while B grabs A), ensure we only grab along olong each mob only once
+		var/list/atom/movable/already_dragged = list(L, pulling)
 		L.stop_pulling()
 		pulling.forceMove(newtarg)
 		L.start_pulling(pulling, supress_message = TRUE)
@@ -149,18 +151,16 @@
 			L.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
 		if(isliving(pulling))
 			var/mob/living/P = pulling
-			while(P.pulling && isliving(P.pulling))
-				was_pulled_buckled = FALSE
-				pulling = P.pulling
-				if(pulling in P.buckled_mobs)
-					was_pulled_buckled = TRUE
+			while(isliving(P.pulling) && !(P.pulling in already_dragged))
+				var/mob/living/next_pulled = P.pulling
+				was_pulled_buckled = (next_pulled in P.buckled_mobs)
+				already_dragged += next_pulled
 				P.stop_pulling()
-				pulling.forceMove(newtarg)
-				P.start_pulling(pulling, supress_message = TRUE)
+				next_pulled.forceMove(newtarg)
+				P.start_pulling(next_pulled, supress_message = TRUE)
 				if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
-					P.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
-				if(isliving(pulling))
-					P = pulling
+					P.buckle_mob(next_pulled, TRUE, TRUE, 90, 0, 0)
+				P = next_pulled
 
 /obj/structure/stairs/dark
 	icon_state = "desc"//visual change for dark basements and tight quarters
@@ -180,7 +180,7 @@
 	name = "curved stairs"
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "woodCCW"
-	
+
 /obj/structure/stairs/ccwdown
 	icon = 'icons/obj/stairscurve.dmi'
 	icon_state = "woodCCWdown"
