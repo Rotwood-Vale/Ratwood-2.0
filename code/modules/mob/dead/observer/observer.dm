@@ -1100,6 +1100,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	see_invisible = initial(see_invisible)
 	lighting_alpha = initial(lighting_alpha)
 	update_sight()
+	hud_used?.plane_masters_update() //Take our own planes back.
 
 /mob/dead/observer/proc/on_observed_sight_change(datum/source)
 	SIGNAL_HANDLER
@@ -1112,25 +1113,37 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_sight()
 	sync_observed_screens()
 
-/// Take the current overlays and alerts of the observed mob. Later changes arrive through push_screen_to_observers().
+/// Take the whole screen of the observed mob. Later changes arrive through push_screen_to_observers().
 /mob/dead/observer/proc/sync_observed_screens()
-	clear_observed_screens()
 	var/mob/target = observetarget
 	if(isnull(target) || !client)
 		return
+	clear_observed_screens()
 	for(var/category in target.screens)
 		add_observed_screen(target.screens[category])
 	for(var/category in target.alerts)
 		add_observed_screen(target.alerts[category])
+	//Whatever else their client draws, such as the vision relays of special eyes.
+	for(var/atom/movable/screen_object as anything in target.client?.screen)
+		add_observed_screen(screen_object)
 	client.color = target.client?.color || ""
+	hud_used?.plane_masters_update()
 
-/mob/dead/observer/proc/add_observed_screen(atom/movable/screen/screen_object)
+/// Trade our planes for the ones of the mob we observe. We then render the world the way their eyes do.
+/mob/dead/observer/proc/sync_observed_planes()
+	var/datum/hud/target_hud = observetarget?.hud_used
+	if(!target_hud || !client)
+		return
+	for(var/thing in target_hud.plane_masters)
+		add_observed_screen(target_hud.plane_masters[thing])
+
+/mob/dead/observer/proc/add_observed_screen(atom/movable/screen_object)
 	if(!screen_object || !client)
 		return
 	LAZYOR(observed_screens, screen_object)
 	client.screen |= screen_object
 
-/mob/dead/observer/proc/remove_observed_screen(atom/movable/screen/screen_object)
+/mob/dead/observer/proc/remove_observed_screen(atom/movable/screen_object)
 	if(!screen_object)
 		return
 	LAZYREMOVE(observed_screens, screen_object)
@@ -1139,13 +1152,27 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/clear_observed_screens()
 	if(client)
-		for(var/atom/movable/screen/screen_object as anything in observed_screens)
+		for(var/atom/movable/screen_object as anything in observed_screens)
 			client.screen -= screen_object
 		client.color = ""
 	observed_screens = null
 
+/// Draw a screen object on our client and on every ghost that watches us. Use this instead of client.screen += object.
+/mob/proc/add_screen_object(atom/movable/screen_object)
+	if(!screen_object)
+		return
+	client?.screen |= screen_object
+	push_screen_to_observers(screen_object)
+
+/// Take a screen object off our client and off every ghost that watches us.
+/mob/proc/remove_screen_object(atom/movable/screen_object)
+	if(!screen_object)
+		return
+	client?.screen -= screen_object
+	push_screen_to_observers(screen_object, TRUE)
+
 /// Send a screen change to every ghost that watches our HUD, such as a blindness overlay or an alert.
-/mob/proc/push_screen_to_observers(atom/movable/screen/screen_object, remove = FALSE)
+/mob/proc/push_screen_to_observers(atom/movable/screen_object, remove = FALSE)
 	if(!screen_object || !length(observers))
 		return
 	for(var/mob/dead/observer/watcher as anything in observers)
