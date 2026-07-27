@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			user.forceMove(target)
 			user.movement_type &= ~FLYING
 			if(istype(user.loc, /turf/open/transparent/openspace)) // basically only apply this slop after we moved. if we are hovering on the openspace turf, then good, we are doing an 'active climb' instead of the usual vaulting action
-				climber.wallpressed = climber2wall_dir
+				climber.set_wallpressed(climber2wall_dir)
 				switch(climber2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 					if(NORTH)
 						climber.setDir(NORTH)
@@ -180,10 +180,10 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			if (!A.dextrous)
 				return
 		if(L.mobility_flags & MOBILITY_MOVE)
-			wallpress(L)
+			climb_from_openspace(L)
 			return
 
-/turf/open/transparent/openspace/proc/wallpress(mob/living/user) // only cardinals, correct chat
+/turf/open/transparent/openspace/proc/climb_from_openspace(mob/living/user) // only cardinals, correct chat
 	var/turf/climb_target = src
 	var/mob/living/carbon/human/climber = user // https://discord.com/channels/1389349752700928050/1389452066493169765/1413195734441922580
 	if(!(climber.stat != CONSCIOUS))
@@ -241,8 +241,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 						playsound(climber, 'sound/foley/climb.ogg', sfx_vol)
 					else
 						playsound(climber, pick(cloth_wipe_sfx), 100, TRUE)
-					climber.update_wallpress_slowdown()
-					climber.wallpressed = wall2wall_dir // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
+					climber.set_wallpressed(wall2wall_dir) // we set our wallpressed flag to TRUE and regain blue bar somewhat, might wanna remove dat idk
 					switch(wall2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 						if(NORTH)
 							climber.setDir(NORTH)
@@ -282,7 +281,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				to_chat(living_user, span_warning("There's nowhere to tie the rope here."))
 				return
 			var/obj/structure/rope_ladder/rope = new(target)
-			if(living_user.wallpressed)
+			if(living_user.is_wallpressed())
 				rope.dir = living_user.dir
 			else
 				rope.dir = get_dir(src, living_user)

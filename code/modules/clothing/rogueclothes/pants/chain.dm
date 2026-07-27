@@ -122,9 +122,12 @@
 
 /obj/item/clothing/under/roguetown/chainlegs/captain
 	name = "captain's chausses"
-	desc = "Cuisses made of plated steel, offering additional protection against blunt force. These are specially fitted for the captain."
+	desc = "Cuisses made of plated steel, offering additional protection against blunt force and projectiles. These are specially fitted for the captain."
 	icon_state = "capplateleg"
 	item_state = "capplateleg"
+	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	max_integrity = ARMOR_INT_LEG_STEEL_PLATE // Integrity of plate chausses.
+	armor_class = ARMOR_CLASS_HEAVY
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	dropshrink = 0.8

@@ -314,6 +314,11 @@
 	layer = TABLE_LAYER
 	cookonme = FALSE
 
+/obj/machinery/light/rogue/candle/floorcandle/OnCrafted(dirin)
+	..() // Base candles offset via pixel x/y, which doesn't handle nicely with floor candles - this resets the offset, so they are placed next the the crafter.
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/machinery/light/rogue/candle/floorcandle/alt
 	icon_state = "floorcandlee1"
 	base_state = "floorcandlee"
@@ -735,7 +740,7 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
 					boilloop.start()
 				else
 					boilloop.stop()

@@ -1,14 +1,18 @@
+GLOBAL_DATUM_INIT(lighting_underlay_dark, /mutable_appearance, create_lighting_underlay("dark"))
+GLOBAL_DATUM_INIT(lighting_underlay_transparent, /mutable_appearance, create_lighting_underlay("transparent"))
+
 /datum/lighting_object
 	var/mutable_appearance/current_underlay
+	var/mutable_appearance/private_underlay
 
 	var/needs_update = FALSE
 
 	var/turf/affected_turf
 
-/proc/create_lighting_underlay()
+/proc/create_lighting_underlay(icon_state = "transparent")
 	var/mutable_appearance/underlay = new()
 	underlay.icon = LIGHTING_ICON
-	underlay.icon_state = "transparent"
+	underlay.icon_state = icon_state
 	underlay.plane = LIGHTING_PLANE
 	underlay.layer = LIGHTING_LAYER
 	underlay.invisibility = INVISIBILITY_LIGHTING
@@ -23,7 +27,7 @@
 
 	. = ..()
 
-	current_underlay = create_lighting_underlay()
+	current_underlay = GLOB.lighting_underlay_dark
 
 	affected_turf = source
 	if(affected_turf.lighting_object)
@@ -103,25 +107,28 @@
 	if(affected_turf.outdoor_effect?.sunlight_overlay?.luminosity)
 		set_luminosity = max(set_luminosity, affected_turf.outdoor_effect.sunlight_overlay.luminosity)
 
-	var/mutable_appearance/current_underlay = src.current_underlay
+	// remove the currently applied underlay before any mutation so removal matches by value
 	affected_turf.underlays -= current_underlay
 
+	var/mutable_appearance/new_underlay
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		current_underlay.icon_state = "transparent"
-		current_underlay.color = null
+		new_underlay = GLOB.lighting_underlay_transparent
 	else if(!set_luminosity)
-		current_underlay.icon_state = "dark"
-		current_underlay.color = null
+		new_underlay = GLOB.lighting_underlay_dark
 	else
-		current_underlay.icon_state = null
-		current_underlay.color = list(
+		if(!private_underlay)
+			private_underlay = create_lighting_underlay()
+		private_underlay.icon_state = null
+		private_underlay.color = list(
 			rr, rg, rb, 00,
 			gr, gg, gb, 00,
 			br, bg, bb, 00,
 			ar, ag, ab, 00,
 			00, 00, 00, 01
 		)
+		new_underlay = private_underlay
 
-	affected_turf.underlays += current_underlay
+	affected_turf.underlays += new_underlay
+	current_underlay = new_underlay
 	affected_turf.luminosity = set_luminosity

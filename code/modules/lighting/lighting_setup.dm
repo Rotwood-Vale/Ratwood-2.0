@@ -8,6 +8,7 @@
 			if(!IS_DYNAMIC_LIGHTING(T))
 				continue
 
-			new /datum/lighting_object(T)
+			T.underlays += GLOB.lighting_underlay_dark
+			T.luminosity = 0
 			CHECK_TICK
 		CHECK_TICK
