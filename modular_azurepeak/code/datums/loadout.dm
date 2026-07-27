@@ -343,6 +343,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Capless Grenzelhoft Hat"
 	path = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
 
+/datum/loadout_item/loadoutpapakha
+	name = "Soft-sided papakha"
+	path = /obj/item/clothing/head/roguetown/loadoutpapakha
+
 //CLOAKS
 /datum/loadout_item/tabard
 	name = "Tabard"
