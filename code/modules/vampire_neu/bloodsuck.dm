@@ -19,7 +19,7 @@
 	if(victim.dna?.species && (NOBLOOD in victim.dna.species.species_traits))
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
-	if(!can_be_blood_drunk())
+	if(!victim.can_be_blood_drunk())
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
 
