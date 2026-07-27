@@ -142,7 +142,7 @@
 		L.stamina_add(stamina_cost)
 	L.forceMove(newtarg)
 	if(pulling)
-		/// Grab chains can loop back on themselves (A grabs B while B grabs A), ensure we only grab along olong each mob only once
+		/// Grab chains can loop back on themselves (A grabs B while B grabs A), ensure we only grab each mob along only once
 		var/list/atom/movable/already_dragged = list(L, pulling)
 		L.stop_pulling()
 		pulling.forceMove(newtarg)
