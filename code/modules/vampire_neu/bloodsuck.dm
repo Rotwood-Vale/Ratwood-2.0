@@ -8,6 +8,14 @@
 /mob/living/carbon/human/proc/remove_bite()
 	remove_overlay(SUNDER_LAYER)
 
+/// Whether there's actually blood here for a vampire to drink - false for the bloodless (skeletons etc) and the dry.
+/mob/living/carbon/proc/has_drainable_blood()
+	if(dna?.species && (NOBLOOD in dna.species.species_traits))
+		return FALSE
+	if(blood_volume <= 0)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/drinksomeblood(mob/living/carbon/victim, sublimb_grabbed)
 	if(world.time <= next_move)
 		return
@@ -16,10 +24,7 @@
 	if(!istype(victim))
 		to_chat(src, span_warning("I can only drink blood from living, intelligent beings!"))
 		return
-	if(victim.dna?.species && (NOBLOOD in victim.dna.species.species_traits))
-		to_chat(src, span_warning("Sigh. No blood."))
-		return
-	if(victim.blood_volume <= 0)
+	if(!victim.has_drainable_blood())
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
 
