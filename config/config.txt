@@ -114,7 +114,7 @@ LOG_EMOTE
 LOG_ATTACK
 
 ## disable periodic memory usage logging and the statpanel memory readouts
-#DISABLE_MEMORY_STATS
+DISABLE_MEMORY_STATS
 
 ## sort mapload atom init by type for exact per-type memory attribution in memory_stats.log
 ## changes atom init order - profiling runs only, leave off for live
