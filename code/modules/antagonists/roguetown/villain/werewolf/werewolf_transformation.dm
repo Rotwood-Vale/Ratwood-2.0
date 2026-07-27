@@ -36,6 +36,7 @@
 
 
 	// Werewolf reverts to human form during the day
+	else if(transformed)
 		if(GLOB.tod != "night")
 			if(!untransforming)
 				untransforming = world.time // Start untransformation phase
