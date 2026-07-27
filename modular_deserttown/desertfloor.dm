@@ -4,9 +4,9 @@
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	icon_state = "dune1"
 	footstep = FOOTSTEP_SOFT_BAREFOOT
-	//barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	barefootstep = FOOTSTEP_SOFT_BAREFOOT
+	clawfootstep = FOOTSTEP_SOFT_BAREFOOT
+	heavyfootstep = FOOTSTEP_SOFT_BAREFOOT
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(
