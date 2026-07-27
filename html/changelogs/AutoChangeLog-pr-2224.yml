@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - admin: "the modify traits menu is now far more usable, and actually lists all traits"
