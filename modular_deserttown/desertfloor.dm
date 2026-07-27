@@ -3,7 +3,7 @@
 	desc = "Its course and rough, and it gets everywhere."
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	icon_state = "dune1"
-	footstep = FOOTSTEP_SOFT_BAREFOOT
+	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
 	clawfootstep = FOOTSTEP_SOFT_BAREFOOT
 	heavyfootstep = FOOTSTEP_SOFT_BAREFOOT
