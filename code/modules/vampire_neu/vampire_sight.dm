@@ -329,8 +329,8 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		boost.layer = (order * 0.1) + 0.05
 		boost.blend_mode = BLEND_ADD
 		boost.color = eyes.current_redboost()
-		owner.client.screen += grey
-		owner.client.screen += boost
+		owner.add_screen_object(grey) //Goes to our client and to any ghost watching us.
+		owner.add_screen_object(boost)
 		relays += grey
 		relays += boost
 		boost_relays += boost
@@ -342,9 +342,9 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	build_relays()
 
 /datum/vampire_sight/proc/clear_relays()
-	if(owner?.client)
+	if(owner)
 		for(var/relay in relays)
-			owner.client.screen -= relay
+			owner.remove_screen_object(relay)
 	boost_relays = list()
 	QDEL_LIST(relays)
 	relays = list()
