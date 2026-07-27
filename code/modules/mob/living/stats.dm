@@ -20,6 +20,13 @@
 	var/list/statindex = list()
 	var/datum/patron/patron = /datum/patron/godless
 
+/// Print our stat block to someone watching us, such as an observer on our HUD.
+/mob/living/proc/print_stats(mob/user)
+	if(!user)
+		return
+	to_chat(user, "<span class='info'>STR: \Roman [STASTR] | PER: \Roman [STAPER] | INT: \Roman [STAINT] | CON: \Roman [STACON]</span>")
+	to_chat(user, "<span class='info'>WIL: \Roman [STAWIL] | SPD: \Roman [STASPD] | FOR: \Roman [STALUC] | PATRON: [patron]</span>")
+
 /mob/living/proc/init_faith()
 	set_patron(/datum/patron/godless)
 

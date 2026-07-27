@@ -11,9 +11,11 @@
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
-	if (client && screen.should_show_to(src))
+	var/show_screen = screen.should_show_to(src)
+	if (client && show_screen)
 		screen.update_for_view(client.view)
 		client.screen += screen
+	push_screen_to_observers(screen, !show_screen)
 
 	return screen
 
@@ -28,6 +30,7 @@
 	if(client && screen.should_show_to(src))
 		screen.update_for_view(client.view)
 		client.screen += screen
+	push_screen_to_observers(screen)
 
 	flick(state,screen)
 	return screen
@@ -46,11 +49,13 @@
 	else
 		if(client)
 			client.screen -= screen
+		push_screen_to_observers(screen, TRUE)
 		qdel(screen)
 
 /mob/proc/clear_fullscreen_after_animate(atom/movable/screen/fullscreen/screen)
 	if(client)
 		client.screen -= screen
+	push_screen_to_observers(screen, TRUE)
 	qdel(screen)
 
 /mob/proc/clear_fullscreens()
@@ -58,20 +63,23 @@
 		clear_fullscreen(category)
 
 /mob/proc/hide_fullscreens()
-	if(client)
-		for(var/category in screens)
+	for(var/category in screens)
+		if(client)
 			client.screen -= screens[category]
+		push_screen_to_observers(screens[category], TRUE)
 
 /mob/proc/reload_fullscreen()
-	if(client)
-		var/atom/movable/screen/fullscreen/screen
-		for(var/category in screens)
-			screen = screens[category]
-			if(screen.should_show_to(src))
+	var/atom/movable/screen/fullscreen/screen
+	for(var/category in screens)
+		screen = screens[category]
+		var/show_screen = screen.should_show_to(src)
+		if(client)
+			if(show_screen)
 				screen.update_for_view(client.view)
 				client.screen |= screen
 			else
 				client.screen -= screen
+		push_screen_to_observers(screen, !show_screen)
 
 /atom/movable/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'

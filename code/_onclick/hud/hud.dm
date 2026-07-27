@@ -309,6 +309,10 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+		//A rebuild empties the screen of the watcher, so hand back the overlays and alerts we lend them.
+		var/mob/dead/observer/watcher = viewmob
+		if(istype(watcher) && watcher.observetarget == mymob)
+			watcher.sync_observed_screens()
 
 	return TRUE
 

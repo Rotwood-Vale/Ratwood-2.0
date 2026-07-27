@@ -8,6 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -18,6 +19,7 @@ type OrbitTarget = {
   orbiters?: number;
   job?: string;
   role?: string;
+  subclass?: string;
   department?: string;
   antag_role?: string;
   antag_group?: 'minor' | 'major';
@@ -30,6 +32,8 @@ type OrbitData = {
   dead: OrbitTarget[];
   ghosts: OrbitTarget[];
   orbiting_ref?: string;
+  observing_ref?: string;
+  can_observe?: BooleanLike;
 };
 
 type OrbitSectionKey = (typeof SECTIONS)[number]['key'];
@@ -50,6 +54,7 @@ type OrbitTargetIndexed = OrbitTarget & {
   displayName: string;
   tooltip: string;
   roleLabel: string;
+  roleDisplay: string;
   roleLabelLower: string;
   groupKey: string;
   healthStateColor: string;
@@ -263,7 +268,14 @@ function groupByRoleLabel(items: OrbitTargetIndexed[]): RoleGroup[] {
 }
 
 function buildSearchKey(item: OrbitTarget) {
-  return [item.full_name, item.job, item.role, item.department, item.antag_role]
+  return [
+    item.full_name,
+    item.job,
+    item.role,
+    item.subclass,
+    item.department,
+    item.antag_role,
+  ]
     .filter(Boolean)
     .join(' ')
     .toLowerCase();
@@ -284,8 +296,12 @@ function getDisplayName(fullName: string) {
     .replace(TRAILING_DUPLICATE_SUFFIX_REGEX, '');
 }
 
+function withSubclass(roleText: string, item: OrbitTarget) {
+  return item.subclass ? `${roleText} - ${item.subclass}` : roleText;
+}
+
 function getTooltipRoleText(item: OrbitTarget) {
-  const baseRoleText = getBaseRoleText(item);
+  const baseRoleText = withSubclass(getBaseRoleText(item), item);
   if (!item.antag_role || item.antag_role === baseRoleText) {
     return baseRoleText;
   }
@@ -360,6 +376,7 @@ function buildIndexedTarget(
     displayName,
     tooltip: buildItemTooltip(item.full_name, item, sectionKey),
     roleLabel,
+    roleDisplay: withSubclass(roleLabel, item),
     roleLabelLower: roleLabel.toLowerCase(),
     groupKey,
     healthStateColor,
@@ -374,11 +391,24 @@ type OrbitTargetButtonProps = {
   sectionColor: string;
   colorMode: 'role' | 'health';
   showRole: boolean;
+  canObserve: boolean;
+  observed: boolean;
   onOrbit: (ref: string) => void;
+  onObserve: (ref: string) => void;
 };
 
 const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
-  const { item, selected, sectionColor, colorMode, showRole, onOrbit } = props;
+  const {
+    item,
+    selected,
+    sectionColor,
+    colorMode,
+    showRole,
+    canObserve,
+    observed,
+    onOrbit,
+    onObserve,
+  } = props;
   const appliedColor = colorMode === 'health' ? item.healthStateColor : item.selection_color;
   const hasSelectionColor = !!appliedColor;
   const textColor = colorMode === 'health' ? item.healthTextColor : item.roleTextColor;
@@ -403,7 +433,9 @@ const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
         <Stack>
           <Stack.Item>
             {item.displayName}
-            {showRole && item.roleLabel !== UNASSIGNED_ROLE_LABEL && ` [${item.roleLabel}]`}
+            {showRole &&
+              item.roleLabel !== UNASSIGNED_ROLE_LABEL &&
+              ` [${item.roleDisplay}]`}
           </Stack.Item>
           {!!item.orbiters && (
             <Stack.Item>
@@ -412,6 +444,16 @@ const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
           )}
         </Stack>
       </Button>
+      {canObserve && (
+        <Button
+          compact
+          icon="eye"
+          onClick={() => onObserve(item.ref)}
+          selected={observed}
+          tooltip="Watch their screen"
+          tooltipPosition="bottom-start"
+        />
+      )}
     </Stack.Item>
   );
 });
@@ -423,6 +465,8 @@ export const Orbit = () => {
   const [query, setQuery] = useState('');
   const [colorMode, setColorMode] = useState<'role' | 'health'>('role');
   const orbitRef = data.orbiting_ref;
+  const observingRef = data.observing_ref;
+  const canObserve = !!data.can_observe;
   const isRoleColorMode = colorMode === 'role';
   const aliveTargets = data.alive || EMPTY_TARGETS;
   const deadTargets = data.dead || EMPTY_TARGETS;
@@ -430,6 +474,11 @@ export const Orbit = () => {
 
   const normalizedQuery = query.trim().toLowerCase();
   const handleOrbit = useCallback((ref: string) => act('orbit', { ref }), [act]);
+  const handleObserve = useCallback(
+    (ref: string) => act('observe', { ref }),
+    [act],
+  );
+  const handleStopObserving = useCallback(() => act('stop_observing'), [act]);
   const handleRefresh = useCallback(() => act('refresh'), [act]);
   const toggleColorMode = useCallback(() => {
     setColorMode((mode) => (mode === 'role' ? 'health' : 'role'));
@@ -531,7 +580,10 @@ export const Orbit = () => {
                           sectionColor={section.color}
                           colorMode="role"
                           showRole={false}
+                          canObserve={canObserve}
+                          observed={observingRef === item.ref}
                           onOrbit={handleOrbit}
+                          onObserve={handleObserve}
                         />
                       ))}
                     </Stack>
@@ -551,7 +603,10 @@ export const Orbit = () => {
                                   sectionColor={section.color}
                                   colorMode={colorMode}
                                   showRole
+                                  canObserve={canObserve}
+                                  observed={observingRef === item.ref}
                                   onOrbit={handleOrbit}
+                                  onObserve={handleObserve}
                                 />
                               ))}
                             </Stack>

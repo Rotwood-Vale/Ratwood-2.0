@@ -30,6 +30,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
+	var/list/observed_screens	//Screen objects borrowed from observetarget, such as blindness overlays and alerts.
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
@@ -438,6 +439,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(0)
 
 /mob/dead/observer/Move(NewLoc, direct)
+	if(observetarget) //Moving away gives us our own eyes back.
+		reset_perspective(null)
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
@@ -661,12 +664,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else //Circular
 			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
 
-	orbit(target,orbitsize, FALSE, 20, rot_seg)
+	//A ghost copies the appearance of a body. KEEP_TOGETHER then moves the spin center onto the overlays, so orbit by pixel.
+	orbit(target, orbitsize, FALSE, 20, rot_seg, FALSE, TRUE) //no pre_rotation, pixel_orbit
 	orbiting_ref = REF(target)
 
 /mob/dead/observer/orbit()
 	setDir(2)//reset dir so the right directional sprites show up
-	pixel_x = 25 //it's coal sire but it works to properly orbit around your target instead of a tile off to the side
 	return ..()
 
 /mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
@@ -784,7 +787,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client)
 		ghost_others = client.prefs.ghost_others //A quick update just in case this setting was changed right before calling the proc
 
-	if (!ghostvision)
+	if(!isnull(observetarget)) //Borrowed eyes. We see the dark exactly like the mob we observe.
+		sight = observetarget.sight
+		see_in_dark = observetarget.see_in_dark
+		see_invisible = observetarget.see_invisible
+		lighting_alpha = observetarget.lighting_alpha
+	else if (!ghostvision)
 		see_invisible = SEE_INVISIBLE_LIVING
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
@@ -1035,17 +1043,127 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				verbs -= /mob/dead/observer/verb/possess
 
 /mob/dead/observer/reset_perspective(atom/A)
-	if(client)
-		if(ismob(client.eye) && (client.eye != src))
-			var/mob/target = client.eye
-			observetarget = null
-			if(target.observers)
-				target.observers -= src
-				UNSETEMPTY(target.observers)
+	cleanup_observe()
 	if(..())
 		if(hud_used)
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
+
+/// Look through the eyes of another mob. Copies the HUD, the sight and the darkness.
+/mob/dead/observer/proc/do_observe(mob/mob_eye)
+	if(!client || !istype(mob_eye) || mob_eye == src)
+		return FALSE
+	if(istype(mob_eye, /mob/dead/new_player))
+		return FALSE
+	if(mob_eye == observetarget) //A second look at the same mob gives our own eyes back.
+		reset_perspective(null)
+		return TRUE
+	if(is_hidden_from_ghosts(mob_eye, src))
+		to_chat(src, span_warning("That one is hidden from me."))
+		return FALSE
+	//Two ghosts must never watch each other. A sight update would then bounce between them forever.
+	var/mob/chain = mob_eye
+	while(isobserver(chain))
+		var/mob/dead/observer/eyes = chain
+		if(eyes == src)
+			return FALSE
+		chain = eyes.observetarget
+
+	reset_perspective(null)
+
+	client.eye = mob_eye
+	client.perspective = EYE_PERSPECTIVE
+	observetarget = mob_eye
+	if(mob_eye.hud_used)
+		client.screen = list()
+		LAZYINITLIST(mob_eye.observers)
+		mob_eye.observers |= src
+		mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
+	RegisterSignal(mob_eye, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_observed_sight_change))
+	sync_observed_vision()
+	to_chat(src, span_notice("I see through [mob_eye]'s eyes. Orbit or follow something else to stop."))
+	return TRUE
+
+/// Stop observing and restore our own eyes.
+/mob/dead/observer/proc/cleanup_observe()
+	var/mob/target = observetarget
+	if(isnull(target))
+		return
+	observetarget = null
+	UnregisterSignal(target, COMSIG_MOB_UPDATE_SIGHT)
+	if(target.observers)
+		target.observers -= src
+		UNSETEMPTY(target.observers)
+	clear_observed_screens()
+	sight = initial(sight)
+	see_in_dark = initial(see_in_dark)
+	see_invisible = initial(see_invisible)
+	lighting_alpha = initial(lighting_alpha)
+	update_sight()
+
+/mob/dead/observer/proc/on_observed_sight_change(datum/source)
+	SIGNAL_HANDLER
+	sync_observed_vision()
+
+/// Copy the eyesight of the observed mob: darkness, vision flags, screen overlays and alerts.
+/mob/dead/observer/proc/sync_observed_vision()
+	if(isnull(observetarget))
+		return
+	update_sight()
+	sync_observed_screens()
+
+/// Take the current overlays and alerts of the observed mob. Later changes arrive through push_screen_to_observers().
+/mob/dead/observer/proc/sync_observed_screens()
+	clear_observed_screens()
+	var/mob/target = observetarget
+	if(isnull(target) || !client)
+		return
+	for(var/category in target.screens)
+		add_observed_screen(target.screens[category])
+	for(var/category in target.alerts)
+		add_observed_screen(target.alerts[category])
+	client.color = target.client?.color || ""
+
+/mob/dead/observer/proc/add_observed_screen(atom/movable/screen/screen_object)
+	if(!screen_object || !client)
+		return
+	LAZYOR(observed_screens, screen_object)
+	client.screen |= screen_object
+
+/mob/dead/observer/proc/remove_observed_screen(atom/movable/screen/screen_object)
+	if(!screen_object)
+		return
+	LAZYREMOVE(observed_screens, screen_object)
+	if(client)
+		client.screen -= screen_object
+
+/mob/dead/observer/proc/clear_observed_screens()
+	if(client)
+		for(var/atom/movable/screen/screen_object as anything in observed_screens)
+			client.screen -= screen_object
+		client.color = ""
+	observed_screens = null
+
+/// Send a screen change to every ghost that watches our HUD, such as a blindness overlay or an alert.
+/mob/proc/push_screen_to_observers(atom/movable/screen/screen_object, remove = FALSE)
+	if(!screen_object || !length(observers))
+		return
+	for(var/mob/dead/observer/watcher as anything in observers)
+		if(watcher.observetarget != src)
+			continue
+		if(remove)
+			watcher.remove_observed_screen(screen_object)
+		else
+			watcher.add_observed_screen(screen_object)
+
+/// Give every ghost that watches our HUD the same screen color.
+/mob/proc/push_client_colour_to_observers()
+	if(!length(observers))
+		return
+	for(var/mob/dead/observer/watcher as anything in observers)
+		if(watcher.observetarget != src || !watcher.client)
+			continue
+		watcher.client.color = client?.color || ""
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
@@ -1057,23 +1175,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	reset_perspective(null)
 
-	var/eye_name = null
-
-	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
+	var/eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
 
 	if (!eye_name)
 		return
 
-	var/mob/mob_eye = creatures[eye_name]
-	//Istype so we filter out points of interest that are not mobs
-	if(client && mob_eye && istype(mob_eye))
-		client.eye = mob_eye
-		if(mob_eye.hud_used)
-			client.screen = list()
-			LAZYINITLIST(mob_eye.observers)
-			mob_eye.observers |= src
-			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
-			observetarget = mob_eye
+	do_observe(creatures[eye_name])
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
@@ -1189,6 +1296,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /datum/orbit_menu/ui_data(mob/user)
 	var/list/data = list()
 	data["orbiting_ref"] = owner?.orbiting_ref
+	data["observing_ref"] = owner?.observetarget ? REF(owner.observetarget) : null
+	data["can_observe"] = check_rights_for(user?.client, R_WATCH) //Everyone else right clicks the mob instead.
 	return data
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -1217,7 +1326,33 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				to_chat(ui.user, span_notice("That target is protected from ghost orbit."))
 				return TRUE
 
+			//A second click on the same target cancels instead of starting again.
+			if(owner.observetarget == target)
+				owner.reset_perspective(null)
+			if(owner.orbiting_ref == ref)
+				owner.orbiting?.end_orbit(owner)
+				SStgui.update_uis(src)
+				return TRUE
+
 			owner.ManualFollow(target)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("observe")
+			if(!check_rights_for(ui.user.client, R_WATCH))
+				return TRUE
+
+			var/mob/target = locate(params["ref"])
+			if(!ismob(target))
+				to_chat(ui.user, span_notice("That target is no longer available."))
+				return TRUE
+
+			owner.do_observe(target)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("stop_observing")
+			owner.reset_perspective(null)
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -1511,6 +1646,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				entry["selection_color"] = selection_color
 		if(M.job)
 			entry["job"] = M.job
+		if(M.advjob) //Subclass, such as the one a Wretch or an Adventurer picks.
+			entry["subclass"] = M.advjob
 		if(isliving(M))
 			var/mob/living/L = M
 			if(L.maxHealth > 0)
