@@ -876,8 +876,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 					continue
 				if(overrides.len && (A in overrides))
 					continue
-				if(A.IsObscured())
-					continue
 				statpanel(listed_turf.name, null, A)
 
 
