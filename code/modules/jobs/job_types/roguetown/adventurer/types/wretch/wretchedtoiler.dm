@@ -9,7 +9,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg' //We don't have the original .ogg and I'm lazy. You get thrall music now. Change it if you want.
 	class_select_category = CLASS_CAT_TRADER
 	extra_context = "Choose between 2 options: being an EVIL mastermind or a WRETCHED servant" //choose between master and servant
-	maximum_possible_slots = 5 // We can toil a LOT but if the entire wretch slot is just omnicrafters this will become problematic
+	maximum_possible_slots = 1 
 
 	// balance isn't real i picked these bc they're funny
 	subclass_stats = list(
@@ -35,6 +35,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/tanning = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT, //summon monsters? I think?
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, //miracle regen? I think?
