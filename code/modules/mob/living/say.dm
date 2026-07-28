@@ -89,9 +89,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE, MODE_SING = TRUE)
 
 	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
-		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
+	if(client && !forced)
+		// Remove the accent-escape brackets before filtering so a split word like "\[f\]\[orbidden\]" can't evade the IC filter and reassemble in the displayed message.
+		var/static/regex/escape_bracket_regex = regex(@"\[([^\]]*)\]?", "g")
+		var/filtered_message = findtext(message, "\[") ? replacetext(message, escape_bracket_regex, "$1") : message
+		if(CHAT_FILTER_CHECK(filtered_message))
+			ic_blocked = TRUE
 
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
