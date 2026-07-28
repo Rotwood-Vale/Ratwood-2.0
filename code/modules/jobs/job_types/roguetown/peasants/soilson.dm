@@ -38,11 +38,12 @@
 	subclass_stats = list(
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_SPD = 1,
 		STATKEY_INT = -1,//simple and honest
 	)
 	subclass_skills = list(
+		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -80,7 +81,8 @@
 	if(H.age == AGE_OLD)//So ppl have reason to pick this I guess?
 		H.adjust_skillrank_up_to(/datum/skill/labor/farming, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/labor/butchering, 6, TRUE)
-
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 2, TRUE)
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/random
