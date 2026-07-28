@@ -1,0 +1,8 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - rscadd: "Wrapping text in [ ] when you speak keeps those words exactly as typed, skipping your accent."
+  - rscadd: "Speech inside \"quotes\" in me and subtle emotes now uses your character's accent."
+  - bugfix: "Subtle(big) emotes no longer mangle line breaks into # symbols."
+  - bugfix: "Me(big) no longer keeps stray returns from the input box."
+  - code_imp: "Refactored accent code"
