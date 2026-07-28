@@ -77,6 +77,7 @@
 /mob/living/proc/apply_overlay(cache_index, update_vision = TRUE)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+		SEND_SIGNAL(src, COMSIG_LIVING_OVERLAYS_APPLIED)
 	if(update_vision)
 		request_overlay_vision_update()
 
@@ -85,6 +86,7 @@
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+		SEND_SIGNAL(src, COMSIG_LIVING_OVERLAYS_APPLIED)
 	if(update_vision)
 		request_overlay_vision_update()
 

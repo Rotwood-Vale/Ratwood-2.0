@@ -1,0 +1,4 @@
+author: "RandomGooberCoder"
+delete-after: True
+changes:
+  - bugfix: "Fixes Hear Vocal Bark save/load logic, removes the lack of inability to actually turn voice barks off"

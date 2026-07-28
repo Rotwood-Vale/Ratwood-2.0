@@ -1,0 +1,4 @@
+author: "ariaworld"
+delete-after: True
+changes:
+  - bugfix: "Fixes reusable projectiles disappearing when blocked by shields."

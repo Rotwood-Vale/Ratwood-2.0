@@ -1,0 +1,7 @@
+author: "Teragenic"
+delete-after: True
+changes:
+  - rscadd: "Adds two unique blades for Hand Advisor subclass and Court Physician"
+  - rscadd: "Gave Court Phys. Sword skill for their new sword."
+  - rscadd: "Adds two new scabbards and Sheathes for Nobles and Royals. Silver and Golden variant respectively."
+  - code_imp: "Turns holsters into a component"

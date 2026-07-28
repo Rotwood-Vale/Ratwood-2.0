@@ -202,6 +202,11 @@
 	if(!target_coven || !coven_name)
 		return FALSE
 
+	// powers have to come down before the action button does, deactivate() reaches for it on the way out
+	for(var/datum/coven_power/power in target_coven.known_powers)
+		if(power.active)
+			power.deactivate()
+
 	if(target_coven.coven_action)
 		target_coven.coven_action.Remove(src)
 		QDEL_NULL(target_coven.coven_action)
@@ -210,11 +215,6 @@
 		QDEL_NULL(target_coven.research_interface)
 
 	pre_coven_removal(target_coven)
-
-	for(var/datum/coven_power/power in target_coven.known_powers)
-		power.deactivate()
-		if(power.discipline.coven_action)
-			power.discipline.coven_action.Remove(src)
 
 	target_coven.owner = null
 	target_coven.current_power = null
@@ -240,8 +240,10 @@
 /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
-	for(var/datum/coven/coven as anything in covens)
-		if(coven.type != coven_type)
+	// covens is keyed by name, so iterating it hands us the names rather than the covens themselves
+	for(var/coven_name in covens)
+		var/datum/coven/coven = covens[coven_name]
+		if(coven?.type != coven_type)
 			continue
 		return coven
 	return null

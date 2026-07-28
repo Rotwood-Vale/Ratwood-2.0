@@ -1,0 +1,7 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "vampires using nightvision only see the color red, with valid prey glowing with a red heartbeat glow, scaling on how hungry you are"
+  - rscadd: "frenzy now has a bunch new visual effects, red overlay, screen zooming in and out as you roll to resist frenzy, and new message lines for resisting it"
+  - bugfix: "frenzy trying to suck blood out of mobs without blood"
+  - bugfix: "vampire examine showing mobs having blood when they have NOBLOOD flag on their species"

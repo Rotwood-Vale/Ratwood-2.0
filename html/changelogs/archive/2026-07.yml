@@ -393,3 +393,10 @@
   - bugfix: some unlimited loop runtimes
   awwliedacoder:
   - image: volfmantle cloak did not have all the required icon_state's.
+2026-07-28:
+  Arturlang:
+  - admin: the modify traits menu is now far more usable, and actually lists all traits
+  - bugfix: werewolves never untransforming
+  - bugfix: probably fix cyclical grab loops crashing the server
+  ophaq:
+  - qol: Allows sex in chests by bumping their mob storage to 2 instead of 1.

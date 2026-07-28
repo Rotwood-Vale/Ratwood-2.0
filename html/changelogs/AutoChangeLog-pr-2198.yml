@@ -1,0 +1,10 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "being de-vamped should correctly remove all vamp traits and vamp eyes and vampiric visuals"
+  - bugfix: "some clans not getting the same essential traits and buffs for clan leaders, including custom clans"
+  - bugfix: "obfsucate not working due to sneak making you always invisible"
+  - bugfix: "vampire siring not reviving you properly and removing zombie-ism"
+  - bugfix: "nosferatu being scared if you self-examine"
+  - balance: "remove duplicate blood healing from nosferatu and eora, giving them quietus and siren covens instead"
+  - balance: "all clan leaders who wouldn't usually get a lord-inherited spell get the bat shapeshift"
