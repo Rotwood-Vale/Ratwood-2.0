@@ -364,3 +364,39 @@
   - bugfix: Toggling masked examine now shows headshot in chat.
   Shadow-Quill:
   - bugfix: Floor candles now place directly adjacent to the crafter.
+2026-07-26:
+  Arturlang:
+  - bugfix: inserting organs into the head no longer heals all wounds
+  - bugfix: revenants can no longer run around without downsides from their head wounds
+      if they remove their head
+  awwliedacoder:
+  - bugfix: fixed rebel win-time mesage from 2:30 -> 2:45
+  zoktiik:
+  - refactor: Significantly modified the branding iron's code for more clarity in
+      control flow.
+  - code_imp: Made examine code not iterate thru the target's bodyparts if they have
+      not been branded at all.
+  - qol: Using the branding iron on someone now immediately shows you a prompt asking
+      where to mark, instead of making you wait for the do_after to make your (very
+      awkwardly-timed) decision.
+  - qol: The Crude Branding Stick (loadout item) can now be used on someone else if
+      they are in compliance mode, regardless of conscious state.
+  - bugfix: The zone you selected to brand (on the targeting doll) & the branding
+      description you wrote are now cached when using the iron on someone, making
+      them impossible to change midway through.
+  - rscadd: Added Facial (head [not neck]) and Sensitive (genitalia, breasts [not
+      chest]) Branding preferences, default off. When disabled, they will prevent
+      someone else from branding you there.
+  - rscadd: The stomach area can now be branded. Why not.
+2026-07-27:
+  Arturlang:
+  - bugfix: some unlimited loop runtimes
+  awwliedacoder:
+  - image: volfmantle cloak did not have all the required icon_state's.
+2026-07-28:
+  Arturlang:
+  - admin: the modify traits menu is now far more usable, and actually lists all traits
+  - bugfix: werewolves never untransforming
+  - bugfix: probably fix cyclical grab loops crashing the server
+  ophaq:
+  - qol: Allows sex in chests by bumping their mob storage to 2 instead of 1.

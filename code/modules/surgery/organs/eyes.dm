@@ -74,7 +74,7 @@
 			eye_color = HMN.eye_color
 		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-	for(var/datum/wound/facial/eyes/eye_wound as anything in M.get_wounds())
+	for(var/datum/wound/facial/eyes/eye_wound in M.get_wounds())
 		qdel(eye_wound)
 	M.update_tint()
 	owner.update_sight()
@@ -155,7 +155,7 @@
 	name = "construct eyes"
 	desc = "Some beast's eyes, preserved through artifice and with magical rock embedded in their back. Seems to fit a construct's head."
 	icon_state = "eyeball-con"
-	
+
 /obj/item/organ/eyes/night_vision/zombie/on_life()
 	. = ..()
 	if (!(owner.mob_biotypes & MOB_UNDEAD))
