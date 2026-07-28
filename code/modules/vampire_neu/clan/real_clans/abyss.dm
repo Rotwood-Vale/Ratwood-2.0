@@ -18,3 +18,12 @@
 
 /datum/clan/abyss/get_downside_string()
 	return "burn in sunlight, and in the presence of the Ten"
+
+/datum/clan/abyss/get_frenzy_messages()
+	return list(
+		"The demons of old whisper, and their only counsel is [span_danger("blood")].",
+		"Something [span_danger("ancient")] uncoils in my chest, unholy and starving.",
+		"The dark I worship reaches back through me, and it means to [span_danger("feed")].",
+		"My patrons stir in the abyss - they would have me [span_userdanger("rend and drink")].",
+		"Faith and reason [span_danger("burn away")]. Only black appetite is left.",
+	)

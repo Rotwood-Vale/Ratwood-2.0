@@ -19,7 +19,7 @@
 	if(victim.dna?.species && (NOBLOOD in victim.dna.species.species_traits))
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
-	if(victim.blood_volume <= 0)
+	if(!victim.can_be_blood_drunk())
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
 
@@ -43,6 +43,7 @@
 	victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
+	beast_feed_pulse()
 
 	SEND_SIGNAL(src, COMSIG_LIVING_DRINKED_LIMB_BLOOD, victim)
 	victim.visible_message(span_danger("[src] drinks from [victim]'s [parse_zone(sublimb_grabbed)]!"), \

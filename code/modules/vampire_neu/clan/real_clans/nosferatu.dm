@@ -72,3 +72,12 @@
 
 /datum/clan/nosferatu/proc/face_seen(mob/living/carbon/human/nosferatu)
 	nosferatu.AdjustMasquerade(-1)
+
+/datum/clan/nosferatu/get_frenzy_messages()
+	return list(
+		"The thing beneath my skin [span_danger("bares its teeth")], and I cannot hide it.",
+		"Years spent unseen, and the Beast would drag me into the [span_danger("light")] to feed.",
+		"My twisted shape strains toward them, patience [span_danger("gnawed away")].",
+		"The monster I wear on the outside [span_userdanger("wants out")].",
+		"Every sewer-instinct screams to seize a throat and [span_danger("drink")].",
+	)

@@ -50,3 +50,12 @@
 
 /datum/clan/eoran/apply_clan_components(mob/living/carbon/human/H)
 	H.AddComponent(/datum/component/vampire_disguise)
+
+/datum/clan/eoran/get_frenzy_messages()
+	return list(
+		"Their beauty [span_danger("maddens")] me - I want to possess it, drink it in.",
+		"To be adored is not enough. The Beast wants them [span_danger("ruined")] and mine.",
+		"My composure cracks like porcelain, and something [span_danger("ugly")] grins through.",
+		"Eora's gift curdles to [span_userdanger("obsession")]; I must have their everything.",
+		"Vanity and [span_danger("hunger")] braid together until I cannot tell them apart.",
+	)
