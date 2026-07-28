@@ -549,6 +549,16 @@
 	sellprice = 50
 	is_silver = TRUE
 
+/obj/item/clothing/neck/roguetown/psicross/silver/equipped(mob/user, slot)
+	. = ..()
+	if(isliving(user) && (slot_flags & slotdefine2slotbit(slot))) //worn in a slot this cross actually goes in
+		ADD_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
+
+/obj/item/clothing/neck/roguetown/psicross/silver/dropped(mob/user)
+	. = ..()
+	if(isliving(user))
+		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
+
 /obj/item/clothing/neck/roguetown/psicross/g
 	name = "golden psycross"
 	desc = "'Purity afloat, for paradise awaits!'"

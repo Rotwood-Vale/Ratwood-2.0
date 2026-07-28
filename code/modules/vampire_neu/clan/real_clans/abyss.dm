@@ -16,6 +16,11 @@
 	H.faction |= "Abyss"
 	H.AddElement(/datum/element/holy_weakness)
 
+/datum/clan/abyss/on_lose(mob/living/carbon/human/vampire)
+	. = ..()
+	vampire.faction -= "Abyss"
+	vampire.RemoveElement(/datum/element/holy_weakness)
+
 /datum/clan/abyss/get_downside_string()
 	return "burn in sunlight, and in the presence of the Ten"
 

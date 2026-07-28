@@ -686,6 +686,8 @@
  * visibly available again.
  */
 /datum/coven_power/proc/cooldown_expire()
+	if(isnull(owner))
+		return
 	owner.update_action_buttons()
 
 /**
@@ -770,7 +772,7 @@
 	last_action_context = null
 	last_target = null
 
-	discipline.coven_action.active = FALSE
+	discipline?.coven_action?.active = FALSE
 	//discipline.coven_action.build_all_button_icons()
 
 

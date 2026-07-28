@@ -263,6 +263,8 @@
 #define TRAIT_GOODWRITER "Great Writer"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
+/// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
+#define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"Assassin"
 #define TRAIT_EQUESTRIAN "Equestrian"
 #define TRAIT_REGROW_LIMBS "Regrow Limbs" //OV ADD, regrows lost limbs at cost of nutrition

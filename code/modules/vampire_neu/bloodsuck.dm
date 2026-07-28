@@ -28,7 +28,7 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(VDrinker && istype(human_victim.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_WORN_SILVER_PSICROSS))
 			to_chat(src, span_userdanger("SILVER! HISSS!!!"))
 			return
 		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_SILVER_BLESSED))
@@ -150,7 +150,7 @@
 	if(HAS_TRAIT_FROM(sire, TRAIT_UNLYCKERABLE, REF(src))) // Cannot turn Gnolls to Sires
 		return FALSE
 
-	fully_heal(TRUE, FALSE)
+	revive(full_heal = TRUE)
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
 	original_mind?.transfer_to(src, TRUE)
