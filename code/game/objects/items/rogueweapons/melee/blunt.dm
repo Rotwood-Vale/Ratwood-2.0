@@ -618,8 +618,8 @@
 	slot_flags = null//No.
 	smelt_bar_num = 2
 	minstr = 14
-	wdefense = 2
-	wdefense_wbonus = 1//3
+	wdefense = 4
+	wdefense_wbonus = 2//6
 	demolition_mod = 1.25//Oh, yes...
 	pixel_y = -16
 	pixel_x = -16
@@ -645,10 +645,10 @@
 	desc = "You could probably crack a man's spine just by tapping them with this. \
 	Only a lunatic would carry something so heavy, however."
 	icon_state = "cross"
-	force_wielded = 34//-1 compared to grand mace.
+	force_wielded = 36//+1 compared to grand mace.
 	smeltresult = /obj/item/ingot/steel
 	minstr = 15
-	wdefense_wbonus = 4//6
+	wdefense_wbonus = 5
 	smelt_bar_num = 3
 	max_integrity = 350
 
@@ -688,7 +688,7 @@
 	icon_state = "dwarfhammer"
 	smeltresult = /obj/item/ingot/steel
 	minstr = 11//+2STR from Grudgebearer Soldier. Should cover this.
-	wdefense_wbonus = 3//5
+	wdefense_wbonus = 3//7
 	smelt_bar_num = 3//You'll break my heart.
 	max_integrity = 340
 
@@ -698,7 +698,7 @@
 	This one has been well balanced, allowing for a weaker wielder to make use of it."
 	icon_state = "spiky"
 	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
-	wdefense_wbonus = 2//4
+	wdefense_wbonus = 3//7
 	minstr = 10//+1STR from Grudgebearer Smith. It should be fine.
 	smelt_bar_num = 3//Please don't...
 	max_integrity = 320
