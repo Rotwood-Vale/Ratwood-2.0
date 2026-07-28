@@ -12,7 +12,7 @@
 	sellprice = 1
 	max_integrity = 200
 	blade_dulling = DULLING_BASHCHOP
-	mob_storage_capacity = 1
+	mob_storage_capacity = 2
 	allow_dense = FALSE
 
 /obj/structure/closet/crate/chest/gold

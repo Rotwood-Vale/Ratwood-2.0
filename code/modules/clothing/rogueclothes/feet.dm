@@ -23,7 +23,7 @@
 	gender = PLURAL
 	icon_state = "blackboots"
 	item_state = "blackboots"
-	max_integrity = 80
+	max_integrity = ARMOR_INT_SIDE_LEATHER
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 	armor = ARMOR_CLOTHING
@@ -85,6 +85,7 @@
 	desc = "Blacksteel-heeled boots. The leather refuses to be worn down, no matter how far you march through these lands."
 	icon_state = "psydonboots"
 	item_state = "psydonboots"
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//On par with Heavy Leather Boots.
 	salvage_amount = 1
@@ -222,8 +223,8 @@
 	icon_state = "alboots"
 	item_state = "alboots"
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
-	max_integrity = 100			//Half that of iron boots
-	armor = ARMOR_LEATHER_GOOD			//Better than regular leather.
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
+	armor = ARMOR_LEATHER_GOOD	//Better than regular leather.
 	color = null
 	cold_protection = FOOT_LEFT | FOOT_RIGHT
 	min_cold_protection_temperature = 50
@@ -456,7 +457,7 @@
 	gender = PLURAL
 	icon_state = "furlinedboots"
 	item_state = "furlinedboots"
-	max_integrity = 160
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	armor = ARMOR_CLOTHING
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur

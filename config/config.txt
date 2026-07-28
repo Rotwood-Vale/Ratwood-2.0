@@ -113,6 +113,9 @@ LOG_EMOTE
 ## log attack messages
 LOG_ATTACK
 
+## disable periodic memory usage logging and the statpanel memory readouts, will open a cmd panel every 30 seconds on windows
+DISABLE_MEMORY_STATS
+
 ## log pda messages
 LOG_PDA
 

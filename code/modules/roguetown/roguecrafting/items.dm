@@ -531,3 +531,14 @@
 		/obj/item/alch/irondust = 2,
 		)
 	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/survival/kneaded_clay
+	name = "kneaded clay"
+	result = /obj/item/natural/clay/kneaded
+	reqs = list(
+		/obj/item/natural/clay = 2,
+		/datum/reagent/water = 2,
+		)
+	skillcraft = /datum/skill/craft/ceramics
+	req_table = TRUE
+	craftdiff = 2

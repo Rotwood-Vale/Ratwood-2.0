@@ -56,7 +56,7 @@
 /datum/outfit/job/roguetown/shophand/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		if(should_wear_femme_clothes(H))
 			pants = /obj/item/clothing/under/roguetown/tights
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
