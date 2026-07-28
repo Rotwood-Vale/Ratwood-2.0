@@ -741,7 +741,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
-	hear_barks = TRUE
+	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
 		bark_id = pick(GLOB.bark_random_list)
