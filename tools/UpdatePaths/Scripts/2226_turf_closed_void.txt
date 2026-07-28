@@ -1,5 +1,5 @@
 # Repaths the bare /turf/closed and /turf/closed/basic tiles to the new
-# cheap grid-filler turf /turf/closed/void (shared baseturfs, no dynamic
+# cheap filler turf /turf/closed/void (shared baseturfs, no dynamic
 # lighting, no sunlight/weather processing). {@OLD} preserves any mapedits.
 /turf/closed/basic : /turf/closed/void{@OLD}
 /turf/closed : /turf/closed/void{@OLD}
