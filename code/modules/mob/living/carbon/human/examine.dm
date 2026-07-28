@@ -96,6 +96,10 @@
 		. += span_info("This is <EM>[name]</EM>.")
 	else if(obscure_name)
 		. += span_info("This is an unknown <EM>[name]</EM>.")
+		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
+			var/heretic_text = get_heretic_text(user)
+			if(heretic_text)
+				. += span_notice(heretic_text)
 	else
 		on_examine_face(user)
 		var/used_name = name
