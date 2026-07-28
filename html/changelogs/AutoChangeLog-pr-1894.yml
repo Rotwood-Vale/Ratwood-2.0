@@ -1,0 +1,7 @@
+author: "Xaytan"
+delete-after: True
+changes:
+  - balance: "Raised soilson con bonus to 2, from 1"
+  - balance: "Raised soilson athletics to 5, from 0"
+  - balance: "Added druidic trickery 2 to dendorite soilsons"
+  - balance: "Raised pilgrim farmer athletics to 4, from 0"
