@@ -658,6 +658,7 @@
 	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
+	is_silver = TRUE
 	minstr = 8//Handled by the unique interaction below. Inverted to start, since they spawn with it, and funny stuff can happen.
 
 /obj/item/rogueweapon/mace/maul/grand/malum/pickup(mob/living/user)
@@ -668,7 +669,7 @@
 	..()
 
 //This thing is warded. For fluff. And because it's COOL, we give them silver blessings.
-//+1 DEF from it, too. For a total of 7 defence when wielded.
+//+1 DEF from it, too. For a total of 10 defence when wielded.
 /obj/item/rogueweapon/mace/maul/grand/malum/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
