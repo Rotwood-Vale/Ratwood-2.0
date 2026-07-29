@@ -55,6 +55,10 @@
 				to_chat(minister, span_warning("Word reaches the bureau that my sponsor is gone. My office is void, though the learning stays with me."))
 		if(partner && !QDELETED(partner))
 			partner.ministry_partner = null
+		// The seal is spent either way. Leaving it paired blocks the ring being re-cut.
+		QDEL_NULL(M.seal)
+		if(M.ring)
+			M.ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 		active_ministries.Cut(i, i + 1)
 		qdel(M)
 
