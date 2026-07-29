@@ -539,7 +539,6 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/rogue/grass,
 						/turf/open/floor/rogue/dunes,
-						/turf/open/floor/rogue/dune,
 						/turf/open/floor/rogue/grassred,
 						/turf/open/floor/rogue/grassyel,
 						/turf/open/floor/rogue/grasscold,
@@ -1874,4 +1873,4 @@
 	icon_state = "dune_5"
 
 /obj/structure/roguesand/dune/six
-	icon_state = "dune_6"	
+	icon_state = "dune_6"
