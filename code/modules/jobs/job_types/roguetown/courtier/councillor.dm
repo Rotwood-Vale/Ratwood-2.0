@@ -116,7 +116,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	writ = null
 	return ..()
 
-// Extra perks. Runs after keys, traits and skills.
 /datum/ministry/proc/archive_bonus(mob/living/carbon/human/H)
 	return
 
@@ -126,6 +125,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	parcel.mailer = sender
 	parcel.mailedto = recipient.real_name
+	parcel.update_icon()
 	var/obj/item/roguemachine/mastermail/master = SSroguemachine.hermailermaster
 	if(!master)
 		parcel.forceMove(fallback || get_turf(recipient))
@@ -140,7 +140,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(notice)
 		to_chat(recipient, span_notice(notice))
 
-// Every charter and its current standing.
 /proc/ministry_roster()
 	var/obj/structure/roguemachine/ministry_bureau/bureau = SSroguemachine.ministry_bureau
 	bureau.prune_ministries()
@@ -191,15 +190,15 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/church/archive_bonus(mob/living/carbon/human/H)
 	H.put_in_hands(new /obj/item/ritechalk(get_turf(H)))
 	if(!H.patron || istype(H.patron, /datum/patron/godless))
-		to_chat(H, span_warning("You hold no faith. Odd."))
+		to_chat(H, span_warning("I hold no faith. Odd."))
 		return
 	if(H.devotion)
 		H.devotion.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
-		to_chat(H, span_notice("The archive deepens your existing devotion to [H.patron.name]."))
+		to_chat(H, span_notice("The archive deepens my existing devotion to [H.patron.name]."))
 		return
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_2)
-	to_chat(H, span_notice("The archive stirs your faith. You feel the first whispers of [H.patron.name]'s gifts."))
+	to_chat(H, span_notice("The archive stirs my faith. I feel the first whispers of [H.patron.name]'s gifts."))
 
 /datum/ministry/night
 	name = "Night Ministry"
@@ -231,15 +230,15 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/inquisition/archive_bonus(mob/living/carbon/human/H)
 	if(H.devotion)
 		if(!istype(H.patron, /datum/patron/old_god))
-			to_chat(H, span_warning("You are already bound to a credo more alive than PSYDON's. Your boots are conspicuously empty."))
+			to_chat(H, span_warning("I am already bound to a credo more alive than PSYDON's. My boots are conspicuously empty."))
 			return
 		H.devotion.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
-		to_chat(H, span_notice("The archive reaffirms your covenant. ENDVRE."))
+		to_chat(H, span_notice("The archive reaffirms my covenant. ENDVRE."))
 		return
 	H.set_patron(/datum/patron/old_god)
 	var/datum/devotion/C = new /datum/devotion(H, GLOB.patronlist[/datum/patron/old_god])
 	C.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
-	to_chat(H, span_notice("The dusty notes in the back of the archive remind you of the Old God's covenant. Surely, PSYDON yet lives!"))
+	to_chat(H, span_notice("The dusty notes in the back of the archive remind me of the Old God's covenant. Surely, PSYDON yet lives!"))
 
 /datum/ministry/mage
 	name = "Arcane Ministry"
@@ -258,7 +257,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation, H)
 	H.mind.adjust_spellpoints(9)
-	to_chat(H, span_notice("The archive imparts the arcyne secrets of the previous Minister. You feel a thrum of latent power."))
+	to_chat(H, span_notice("The archive imparts the arcyne secrets of the previous Minister. I feel a thrum of latent power."))
 
 /datum/ministry/physician
 	name = "Physician Ministry"
@@ -273,7 +272,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 
 /datum/ministry/physician/archive_bonus(mob/living/carbon/human/H)
 	H.put_in_hands(new /obj/item/storage/belt/rogue/surgery_bag/full/physician(get_turf(H)))
-	to_chat(H, span_notice("The previous Minister's surgeon kit is collecting dust in the back of the archive. Following their notes, you might make use of it."))
+	to_chat(H, span_notice("The previous Minister's surgeon kit is collecting dust in the back of the archive. Following their notes, I might make use of it."))
 
 /datum/ministry/innkeeper
 	name = "Tavern Ministry"
@@ -338,7 +337,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 			to_chat(councillor, span_notice(line))
 		return
 
-	var/picked = input(councillor, "Whose patronage do you seek?", "[name]") as null|anything in prospects
+	var/picked = input(councillor, "Whose patronage do I seek?", "[name]") as null|anything in prospects
 	if(!picked)
 		return
 	var/mob/living/carbon/human/head = prospects[picked]
@@ -353,12 +352,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	var/datum/ministry/charter_ref = charter
 	councillor.say("[head.real_name], let me be your voice within the keep.")
-	var/answer = alert(head, "[councillor.real_name] petitions to serve as your [initial(charter_ref.display_title)]. They will be granted a measure of your trade's knowledge, and you a seal to speak with them.", "Ministry", "Accept", "Refuse")
+	var/answer = alert(head, "[councillor.real_name] petitions to serve as my [initial(charter_ref.display_title)]. They will be granted a measure of my trade's knowledge, and some keys to my place of responsibility. In return I shall receive a writ to speak with them.", "Ministry", "Accept", "Refuse")
 	if(answer != "Accept")
 		to_chat(councillor, span_warning("[head.real_name] declines my petition."))
-		to_chat(head, span_notice("You decline the petition."))
+		to_chat(head, span_notice("I decline the petition."))
 		return
-	// Revalidate after the prompt.
 	if(QDELETED(councillor) || QDELETED(head) || councillor.stat == DEAD || head.stat == DEAD)
 		return
 	if(!(head in get_hearers_in_view(petition_range, councillor)))
@@ -382,11 +380,10 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	proto.partner = head
 
 	head.visible_message(span_notice("[head.real_name] takes [councillor.real_name] into their confidence."))
-	to_chat(head, span_notice("You accept the petition. The writ will reach you by post once they are sworn in."))
+	to_chat(head, span_notice("I accept the petition. The writ will reach me by post once they are sworn in."))
 	to_chat(councillor, span_notice("[head.real_name] accepts. Go to the bureau in the council chamber to be sworn in."))
 
 // ===== WRIT OF MINISTRY =====
-// The partner's half. Records the oath and carries their voice to the minister's ring.
 
 /obj/item/paper/scroll/ministry_writ
 	name = "writ of ministry"
@@ -440,7 +437,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	icon_state = "contractsigned"
 	name = open_name || initial(name)
 
-// Rolled up it folds like any scroll. Unrolled it carries the partner's voice.
 /obj/item/paper/scroll/ministry_writ/attack_self(mob/user)
 	// Let the parent clear the mail wrapper first, otherwise read() stays blocked.
 	if(mailer || !open || !paired_ring || !ishuman(user))
@@ -448,26 +444,39 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	var/mob/living/carbon/human/H = user
 	if(!H.ministry_partner || H.ministry_partner.partner != H)
 		return ..()
-	if(H.restrained() || H.incapacitated())
-		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
-		return
-	if(world.time < speech_cooldown)
-		to_chat(H, span_warning("The ink is still settling from its last use."))
-		return
-	if(QDELETED(paired_ring))
-		to_chat(H, span_warning("The writ has no paired ring. The bond is broken."))
-		return
-	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
-		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
+	if(!can_speak_ministry(H))
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
 	visible_message(span_notice("[H] murmurs over the writ."))
-	var/msg = input(H, "Send word to your minister.", "Ministry Channel") as null|text
-	if(!msg || QDELETED(paired_ring))
+	var/msg = input(H, "Send word to my minister.", "Ministerial Murmurs...") as null|text
+	if(!msg)
+		return
+	if(!can_speak_ministry(H))
+		return
+	if(H.ministry_partner?.partner != H || !open || mailer)
+		to_chat(H, span_warning("The writ is no longer mine to speak upon."))
 		return
 	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
 	paired_ring.relay_ministry_message(msg, H.real_name, "Patron")
+
+/obj/item/paper/scroll/ministry_writ/proc/can_speak_ministry(mob/living/carbon/human/H)
+	if(H.restrained() || H.incapacitated())
+		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
+		return FALSE
+	if(world.time < speech_cooldown)
+		to_chat(H, span_warning("The ink is still settling from its last use."))
+		return FALSE
+	if(QDELETED(paired_ring))
+		to_chat(H, span_warning("The writ has no paired ring. The bond is broken."))
+		return FALSE
+	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
+		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
+		return FALSE
+	if(get_atom_on_turf(src, /mob) != H)
+		to_chat(H, span_warning("The writ has left my hands."))
+		return FALSE
+	return TRUE
 
 /obj/item/paper/scroll/ministry_writ/proc/relay_ministry_message(msg, speaker_name, speaker_role)
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
@@ -484,7 +493,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	send_speech(message, 1, src, , spans, message_language = language)
 
-// Minister's Signet, works paired with the partner's seal like a two-way SCOM.
+// Minister's signet, paired to the partner's writ like a two-way SCOM.
 /obj/item/clothing/ring/minister
 	name = "minister's signet"
 	desc = "A signet ring bearing the mark of a ministerial office. Press it to your lips to speak with your patron."
@@ -513,26 +522,39 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(!H.ministry_active || H.ministry_active.councillor != H)
 		to_chat(H, span_warning("The ring is cold and dead in my hand. It was not made for me."))
 		return
-	if(H.restrained() || H.incapacitated())
-		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
-		return
-	if(world.time < speech_cooldown)
-		to_chat(H, span_warning("The ring's metal is still heated from its last use."))
-		return
-	if(QDELETED(paired_writ))
-		to_chat(H, span_warning("The ring has no paired seal. The bond is broken."))
-		return
-	if(!ismob(get_atom_on_turf(paired_writ, /mob)))
-		to_chat(H, span_warning("The seal is not being carried. My words find no one."))
+	if(!can_speak_ministry(H))
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
 	visible_message(span_notice("[H] presses their ring against their mouth."))
 	var/msg = input(H, "Speak into the ring.", "Ministerial Murmurs...") as null|text
-	if(!msg || QDELETED(paired_writ))
+	if(!msg)
+		return
+	if(!can_speak_ministry(H))
+		return
+	if(H.ministry_active?.councillor != H)
+		to_chat(H, span_warning("The ring has gone cold. My office is no longer mine."))
 		return
 	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
 	paired_writ.relay_ministry_message(msg, H.real_name, "Minister")
+
+/obj/item/clothing/ring/minister/proc/can_speak_ministry(mob/living/carbon/human/H)
+	if(H.restrained() || H.incapacitated())
+		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
+		return FALSE
+	if(world.time < speech_cooldown)
+		to_chat(H, span_warning("The ring's metal is still heated from its last use."))
+		return FALSE
+	if(QDELETED(paired_writ))
+		to_chat(H, span_warning("The ring has no paired writ. The bond is broken."))
+		return FALSE
+	if(!ismob(get_atom_on_turf(paired_writ, /mob)))
+		to_chat(H, span_warning("The writ is not being carried. My words find no one."))
+		return FALSE
+	if(get_atom_on_turf(src, /mob) != H)
+		to_chat(H, span_warning("The ring has left my hands."))
+		return FALSE
+	return TRUE
 
 /obj/item/clothing/ring/minister/proc/relay_ministry_message(msg, speaker_name, speaker_role)
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
