@@ -202,7 +202,6 @@
 	to_chat(M.partner, span_notice("[user.real_name] has been sworn in as my [M.display_title]."))
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)
 
-// Pass old_ring to re-cut it instead of striking a new one.
 /obj/structure/roguemachine/ministry_bureau/proc/issue_regalia(datum/ministry/M, mob/living/carbon/human/receiver, obj/item/clothing/ring/minister/old_ring)
 	var/obj/item/clothing/ring/minister/ring = old_ring
 	if(ring)
@@ -242,13 +241,20 @@
 	SStreasury.give_money_treasury(MINISTRY_REISSUE_COST * 10, "Ministry Recasting")
 
 	var/obj/item/clothing/ring/minister/old_ring = M.ring
+	var/obj/item/clothing/ring/minister/recycled
 	if(old_ring)
 		old_ring.paired_writ = null
-		old_ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 		M.ring = null
+		if(old_ring.find_items_mob_carrier() == user)
+			recycled = old_ring
+		else
+			old_ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 	QDEL_NULL(M.writ)
-	issue_regalia(M, user)
+	issue_regalia(M, user, recycled)
 	playsound(src, 'sound/foley/coins1.ogg', 100, TRUE, -1)
-	to_chat(user, span_notice("The bureau strikes a new mark and scores through the old. Whatever became of the last ring, it answers to no one now."))
+	if(recycled)
+		to_chat(user, span_notice("The bureau allows me to polish my ring to new standing, and posts a new writ to match."))
+	else
+		to_chat(user, span_notice("The bureau strikes a new mark and scores through the old. Whatever became of the last ring, it answers to no one now."))
 
 #undef MINISTRY_REISSUE_COST
