@@ -2067,3 +2067,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(desc != initial(desc))
 		return TRUE
 	return FALSE
+
+// The mob carrying this, through any depth of containers.
+/obj/item/proc/find_items_mob_carrier()
+	if(ismob(loc))
+		return loc
+	for(var/atom/location as anything in get_nested_locs(src))
+		if(ismob(location))
+			return location
+	return null
