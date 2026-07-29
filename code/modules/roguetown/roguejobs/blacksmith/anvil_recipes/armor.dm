@@ -427,6 +427,11 @@
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half,/obj/item/natural/hide/cured,/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate
 
+/datum/anvil_recipe/armor/steel/otavanplate
+	name = "Otavan Half-Plate, Steel (+1 Cuirass, Steel, +2 Cloth)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half,/obj/item/natural/cloth,/obj/item/natural/cloth)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/otavan
+
 /datum/anvil_recipe/armor/steel/halfplate/fluted
 	name = "Fluted Half-Plate, Steel (+1 Fluted Cuirass, Steel +1 Iron, +2 Cured Leather)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted, /obj/item/natural/hide/cured, /obj/item/ingot/iron, /obj/item/natural/hide/cured)
@@ -577,6 +582,15 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored
 
+/datum/anvil_recipe/armor/steel/helmetsallzyb
+	name = "Kulah Khud"
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/zyb
+
+/datum/anvil_recipe/armor/steel/helmetsallshis
+	name = "Shishak, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/shishak
+
 /datum/anvil_recipe/armor/steel/helmetbuc
 	name = "Bucket Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
@@ -600,6 +614,11 @@
 	name = "Etruscan Bascinet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
+
+/datum/anvil_recipe/armor/steel/helmetotavan
+	name = "Otavan Helmet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/otavan
 
 /datum/anvil_recipe/armor/steel/helmetknight
 	name = "Knight's Helmet, Steel (+1 Steel)"
