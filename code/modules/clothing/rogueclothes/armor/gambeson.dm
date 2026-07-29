@@ -58,38 +58,38 @@
 	color = "#b49679"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
-	var/shiftable = TRUE
-	var/shifted = FALSE
 	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	
+	var/shiftable = TRUE
+	var/shifted = FALSE
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/attack_right(mob/user)
-	if(!shiftable)
+	if(!shiftable || !user)
 		return
+
 	if(shifted)
-		if(alert("Would you like to wear your gambeson normally? -Restores greyscaling, new style.",, "Yes", "No") != "No")
-			icon_state = "gambesonp"
-			color = "#976E6B"
-			update_icon()
-			shifted = FALSE
-			if(user)
-				if(ishuman(user))
-					var/mob/living/carbon/H = user
-					H.update_inv_shirt()
-					H.update_inv_armor()
+		if(alert("Would you like to wear your gambeson normally? -Restores greyscaling, new style.",, "Yes", "No") != "Yes")
 			return
-	else
-		if(alert("Would you like to wear your gambeson traditionally? -Removes Greyscaling, old style.",, "Yes", "No") != "No")
-			icon_state = "gambesonpold"
-			color = null
-			update_icon()
-			shifted = TRUE
-			if(user)
-				if(ishuman(user))
-					var/mob/living/carbon/H = user
-					H.update_inv_shirt()
-					H.update_inv_armor()
-			return
+		icon_state = "gambesonp"
+		color = "#976E6B"
+		update_icon()
+		shifted = FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_shirt()
+			H.update_inv_armor()
+		return
+
+	if(alert("Would you like to wear your gambeson traditionally? -Removes Greyscaling, old style.",, "Yes", "No") != "Yes")
+		return
+	icon_state = "gambesonpold"
+	color = null
+	update_icon()
+	shifted = TRUE
+	if(ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_shirt()
+		H.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 	name = "royal gambeson"
@@ -140,8 +140,8 @@
 	detail_tag = "_detail"
 	shiftable = FALSE
 	sellprice = 30
-	var/picked = FALSE
 	dropshrink = 0.9
+	var/picked = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/attack_right(mob/user)
 	..()
@@ -198,7 +198,7 @@
 			H.update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/Initialize(mapload)
-	. = ..()		
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/update_icon()
@@ -241,8 +241,8 @@
 	color = "#1d1d22"
 	detail_color = "#FFFFFF"
 	sellprice = 40
-	var/picked = FALSE
 	shiftable = FALSE
+	var/picked = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/attack_right(mob/user)
 	..()

@@ -493,6 +493,11 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/sabre/shamshir
 
+/datum/anvil_recipe/weapons/steel/shashka
+	name = "Shashka, Steel"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/steppesman
+
 /datum/anvil_recipe/weapons/steel/hook
 	name = "Hook Sword, Steel"
 	req_blade = /obj/item/blade/steel_sword
@@ -508,6 +513,18 @@
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long
+
+/datum/anvil_recipe/weapons/steel/sharpfeder
+	name = "Dueling Longsword, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/frei
+
+/datum/anvil_recipe/weapons/steel/elongsword
+	name = "Basket-Hilted Longsword, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_sword
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/sword/long/etruscan
 
 /datum/anvil_recipe/weapons/steel/shalal
 	name = "Shalal Saber, Steel (+1 Steel)"
