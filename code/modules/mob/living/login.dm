@@ -3,6 +3,8 @@
 	..()
 	if(client)
 		client.update_ooc_verb_visibility()
+		if(client.prefs)
+			no_redflash = client.prefs.no_redflash
 	//Mind updates
 	sync_mind()
 	mind.show_memory(src, 0)
