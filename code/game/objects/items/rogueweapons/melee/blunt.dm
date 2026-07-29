@@ -659,7 +659,6 @@
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
 	is_silver = TRUE
-	wdefense_wbonus = 5 // 7
 	minstr = 8//Handled by the unique interaction below. Inverted to start, since they spawn with it, and funny stuff can happen.
 
 /obj/item/rogueweapon/mace/maul/grand/malum/pickup(mob/living/user)
@@ -670,7 +669,7 @@
 	..()
 
 //This thing is warded. For fluff. And because it's COOL, we give them silver blessings.
-//Being silver is already a huge boon. Component did give 1 extra wdef but that's been shifted to the wdefense_wbonus.
+//Being silver is already a huge boon. No need for additional boons on this guy.
 /obj/item/rogueweapon/mace/maul/grand/malum/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
