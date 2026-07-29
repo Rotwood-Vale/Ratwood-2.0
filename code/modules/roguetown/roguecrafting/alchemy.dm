@@ -208,7 +208,10 @@
 /datum/crafting_recipe/roguetown/alchemy/s2cto
 	name = "stone to clay"
 	category = "Transmutation"
-	result = list(/obj/item/natural/clay = 2)
+	result = list(
+		/obj/item/natural/clay
+		/obj/item/natural/clay
+	)
 	reqs = list(/obj/item/natural/stone = 1)
 	craftdiff = 2
 	verbage_simple = "transmute"
