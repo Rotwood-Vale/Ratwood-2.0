@@ -2050,7 +2050,8 @@
 				spilled.forceMove(user.drop_location())
 			user.visible_message(span_danger("[user] disembowels themselves, their organs spilling out!"), span_notice("You feel a horrible pain as your organs spill out!"))
 			user.emote("scream", null, null, TRUE, TRUE) // forced scream
-			user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+			if(!user.no_redflash)
+				user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
 			return
 	..()
 
