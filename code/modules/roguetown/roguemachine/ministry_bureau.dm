@@ -5,7 +5,7 @@
 
 /obj/structure/roguemachine/ministry_bureau
 	name = "ministerial bureau"
-	desc = "A cabinet of sealed correspondence and official records, sorted by house. A councillor bearing an agreed charter may be sworn in here."
+	desc = "A cabinet of sealed correspondence and official records, recording the accomplishments of the Ministers of yore. A councillor bearing an agreed charter may be sworn in here. What's more, a Ministry's signet ring could be re-issued here with ten zenarii."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "closetlord"
 	density = TRUE
