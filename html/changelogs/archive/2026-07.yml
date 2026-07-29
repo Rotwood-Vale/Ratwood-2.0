@@ -388,3 +388,74 @@
       chest]) Branding preferences, default off. When disabled, they will prevent
       someone else from branding you there.
   - rscadd: The stomach area can now be branded. Why not.
+2026-07-27:
+  Arturlang:
+  - bugfix: some unlimited loop runtimes
+  awwliedacoder:
+  - image: volfmantle cloak did not have all the required icon_state's.
+2026-07-28:
+  Arturlang:
+  - admin: the modify traits menu is now far more usable, and actually lists all traits
+  - bugfix: werewolves never untransforming
+  - bugfix: probably fix cyclical grab loops crashing the server
+  ophaq:
+  - qol: Allows sex in chests by bumping their mob storage to 2 instead of 1.
+2026-07-29:
+  Arturlang:
+  - rscadd: vampires using nightvision only see the color red, with valid prey glowing
+      with a red heartbeat glow, scaling on how hungry you are
+  - rscadd: frenzy now has a bunch new visual effects, red overlay, screen zooming
+      in and out as you roll to resist frenzy, and new message lines for resisting
+      it
+  - bugfix: frenzy trying to suck blood out of mobs without blood
+  - bugfix: vampire examine showing mobs having blood when they have NOBLOOD flag
+      on their species
+  - rscdel: remove is obscured as it was dead code and was causing perf issues
+  - bugfix: being de-vamped should correctly remove all vamp traits and vamp eyes
+      and vampiric visuals
+  - bugfix: some clans not getting the same essential traits and buffs for clan leaders,
+      including custom clans
+  - bugfix: obfsucate not working due to sneak making you always invisible
+  - bugfix: vampire siring not reviving you properly and removing zombie-ism
+  - bugfix: nosferatu being scared if you self-examine
+  - balance: remove duplicate blood healing from nosferatu and eora, giving them quietus
+      and siren covens instead
+  - balance: all clan leaders who wouldn't usually get a lord-inherited spell get
+      the bat shapeshift
+  CloverIsLucky:
+  - balance: 'Mordhau Grip: BASH Damfactor and clickcd nerfed from 1.2 and 13 to 1.1
+      and 15 respectively; added some swing delay back.'
+  - code_imp: Pomel Strike gets minuscule blunt chipping.
+  RadiantFlash7:
+  - rscadd: Provides better Clarification of how/why Map votes end the way they do.
+  RandomGooberCoder:
+  - bugfix: Fixes Hear Vocal Bark save/load logic, removes the lack of inability to
+      actually turn voice barks off
+  Teragenic:
+  - qol: Adds on how to speak the language on Language Examine.
+  - rscadd: Adds two unique blades for Hand Advisor subclass and Court Physician
+  - rscadd: Gave Court Phys. Sword skill for their new sword.
+  - rscadd: Adds two new scabbards and Sheathes for Nobles and Royals. Silver and
+      Golden variant respectively.
+  - code_imp: Turns holsters into a component
+  - rscadd: Adds loadout helmet layerable Papakha
+  Xaytan:
+  - balance: Raised soilson con bonus to 2, from 1
+  - balance: Raised soilson athletics to 5, from 0
+  - balance: Added druidic trickery 2 to dendorite soilsons
+  - balance: Raised pilgrim farmer athletics to 4, from 0
+  Yuckuza:
+  - balance: added neck peel protection to the froggemund helm
+  ariaworld:
+  - bugfix: Fixes reusable projectiles disappearing when blocked by shields.
+  hugmeorelse:
+  - rscadd: Wrapping text in [ ] when you speak keeps those words exactly as typed,
+      skipping your accent.
+  - rscadd: Speech inside "quotes" in me and subtle emotes now uses your character's
+      accent.
+  - bugfix: 'Subtle(big) emotes no longer mangle line breaks into # symbols.'
+  - bugfix: Me(big) no longer keeps stray returns from the input box.
+  - code_imp: Refactored accent code
+  wikimody:
+  - rscadd: Antipope sight is no longer stopped by mere mortal masks (he can see other
+      heretics even if their faces are covered)

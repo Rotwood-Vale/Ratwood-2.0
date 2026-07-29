@@ -4,7 +4,8 @@
 	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_SIMPLE
 	display_statistics = TRUE
-
+	/// Tracks bonus votes added from player map preferences.
+	var/list/preference_votes = list()
 /datum/vote/map_vote/New()
 	. = ..()
 	default_choices = SSmap_vote.get_valid_map_vote_choices()
@@ -15,6 +16,9 @@
 	if(!.)
 		return FALSE
 
+	preference_votes.Cut()
+	for(var/map in choices)
+		preference_votes[map] = 0
 	if(length(choices) == 1) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
 		var/datum/map_config/change_me_out = global.config.maplist[choices[1]]
 		finalize_vote(choices[1])// voted by not voting, very sad.
@@ -55,7 +59,64 @@
 	return VOTE_AVAILABLE
 
 /datum/vote/map_vote/get_result_text(list/all_winners, real_winner, list/non_voters)
-	return null
+	var/title_text
+
+	if(override_question)
+		title_text = span_bold(override_question)
+	else
+		title_text = span_bold("[capitalize(name)] Vote")
+
+	var/returned_text = "Winner Selection: Simple"
+
+	var/total_votes = 0
+	var/preference_total = 0
+
+	for(var/map in choices)
+		total_votes += choices[map]
+		preference_total += preference_votes[map]
+
+	var/player_total = total_votes - preference_total
+
+	if(total_votes <= 0)
+		return span_bold("Vote Result: Inconclusive - No Votes!")
+
+	returned_text += "\n"
+	returned_text += "\nTotal Votes: [total_votes]"
+	returned_text += "\nPlayer Votes: [player_total]"
+	returned_text += "\nPreference Votes: [preference_total]"
+
+	if(display_statistics)
+		returned_text += "\n\nResults:"
+
+		for(var/map in choices)
+			var/total = choices[map]
+			var/pref = preference_votes[map]
+			var/player = total - pref
+
+			var/percentage = round((total / total_votes) * 100, 0.1)
+			var/text = "[percentage]"
+			var/spaces_needed = max(0, 5 - length(text))
+			var/percentage_text = ""
+
+			for(var/i in 1 to spaces_needed)
+				percentage_text += " "
+
+			percentage_text += "[text]%"
+			var/current_tally = SSmap_vote.map_vote_cache[map]
+			returned_text += "\n[percentage_text] | [span_bold(map)]: [player] votes"
+
+			if(pref)
+				returned_text += " (+[pref] preference)"
+
+			returned_text += " = [total] total"
+
+			returned_text += " | Tally: [current_tally]"
+	if(real_winner)
+		returned_text += "\n"
+		returned_text += get_winner_text(all_winners, real_winner, non_voters)
+
+	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
+
 
 /datum/vote/map_vote/get_vote_result(list/non_voters)
 	// Even if we have default no vote off,
@@ -74,7 +135,7 @@
 
 		if(their_preferred_map in choices)
 			choices[their_preferred_map] += 1
-
+			preference_votes[their_preferred_map] += 1
 	return ..()
 
 /datum/vote/map_vote/finalize_vote(winning_option)

@@ -876,8 +876,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 					continue
 				if(overrides.len && (A in overrides))
 					continue
-				if(A.IsObscured())
-					continue
 				statpanel(listed_turf.name, null, A)
 
 
@@ -975,6 +973,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
+		return 0
+	if(buckled == M) // mutual buckling makes every Move() recurse between the two of us until the server dies
 		return 0
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
