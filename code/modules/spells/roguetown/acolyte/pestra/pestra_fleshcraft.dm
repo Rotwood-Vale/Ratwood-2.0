@@ -2,8 +2,8 @@
 	name = "Fleshcraft"
 	desc = "Reshape flesh through divine craft."
 	overlay_state = "fleshcraft"
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon_state = "fleshcraft"
 	clothes_req = FALSE
 	releasedrain = 10
