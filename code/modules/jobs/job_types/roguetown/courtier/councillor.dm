@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
-	paired_ring.relay_ministry_message(msg, H.real_name, "Patron")
+	paired_ring.relay_ministry_message(msg)
 
 /obj/item/paper/scroll/ministry_writ/proc/can_speak_ministry(mob/living/carbon/human/H)
 	if(H.restrained() || H.incapacitated())
@@ -470,17 +470,17 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(QDELETED(paired_ring))
 		to_chat(H, span_warning("The writ has no paired ring. The bond is broken."))
 		return FALSE
-	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
+	if(!paired_ring.find_items_mob_carrier())
 		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
 		return FALSE
-	if(get_atom_on_turf(src, /mob) != H)
+	if(find_items_mob_carrier() != H)
 		to_chat(H, span_warning("The writ has left my hands."))
 		return FALSE
 	return TRUE
 
-/obj/item/paper/scroll/ministry_writ/proc/relay_ministry_message(msg, speaker_name, speaker_role)
+/obj/item/paper/scroll/ministry_writ/proc/relay_ministry_message(msg)
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
-	say("<font color='#C8A84B'><b>[speaker_name] ([speaker_role]):</b> [msg]</font>")
+	say("<font color='#C8A84B'>[msg]</font>")
 
 /obj/item/paper/scroll/ministry_writ/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
@@ -536,7 +536,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
-	paired_writ.relay_ministry_message(msg, H.real_name, "Minister")
+	paired_writ.relay_ministry_message(msg)
 
 /obj/item/clothing/ring/minister/proc/can_speak_ministry(mob/living/carbon/human/H)
 	if(H.restrained() || H.incapacitated())
@@ -548,17 +548,17 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(QDELETED(paired_writ))
 		to_chat(H, span_warning("The ring has no paired writ. The bond is broken."))
 		return FALSE
-	if(!ismob(get_atom_on_turf(paired_writ, /mob)))
+	if(!paired_writ.find_items_mob_carrier())
 		to_chat(H, span_warning("The writ is not being carried. My words find no one."))
 		return FALSE
-	if(get_atom_on_turf(src, /mob) != H)
+	if(find_items_mob_carrier() != H)
 		to_chat(H, span_warning("The ring has left my hands."))
 		return FALSE
 	return TRUE
 
-/obj/item/clothing/ring/minister/proc/relay_ministry_message(msg, speaker_name, speaker_role)
+/obj/item/clothing/ring/minister/proc/relay_ministry_message(msg)
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
-	say("<font color='#C8A84B'><b>[speaker_name] ([speaker_role]):</b> [msg]</font>")
+	say("<font color='#C8A84B'>[msg]</font>")
 
 /obj/item/clothing/ring/minister/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
