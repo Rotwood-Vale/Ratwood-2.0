@@ -94,8 +94,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /mob/living/carbon/human
 	var/datum/ministry/ministry_active
 	var/datum/ministry/ministry_partner
-	// Agreed-but-unsworn ministry. Held by the councillor until the bureau seats them.
-	var/datum/ministry/ministry_pending
+	var/datum/ministry/ministry_pending // held until finalized by clicking on the bureau
 
 /datum/ministry
 	var/name = "Ministry"
@@ -217,7 +216,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/inquisition/archive_bonus(mob/living/carbon/human/H)
 	if(H.devotion)
 		if(!istype(H.patron, /datum/patron/old_god))
-			to_chat(H, span_warning("You are already bound to a credo more alive than PSYDON's. The Old God will not share."))
+			to_chat(H, span_warning("You are already bound to a credo more alive than PSYDON's. Your boots are conspicuously empty."))
 			return
 		H.devotion.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
 		to_chat(H, span_notice("The archive reaffirms your covenant. ENDVRE."))
@@ -251,8 +250,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	name = "Physician Ministry"
 	display_title = "Minister of Health"
 	ministry_keys = list(/obj/item/roguekey/physician, /obj/item/roguekey/courtphysician)
-	archive_traits = list(TRAIT_EMPATH, TRAIT_MEDICINE_EXPERT)
-	archive_skills = list(/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT)
+	archive_traits = list(TRAIT_EMPATH, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
+	archive_skills = list(
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN
+	)
 	ring_type = /obj/item/clothing/ring/minister/physician
 	seal_type = /obj/item/seal_of_ministry/physician
 
@@ -380,10 +382,12 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	ministry_type = M.type
 	name = "writ of the [M.name]"
 	desc = "A charter appointing [minister.real_name] to the office of [M.display_title]."
+	var/datum/job/ruler = SSjob.GetJobType(/datum/job/roguetown/lord)
+	var/ruler_title = ruler?.display_title || ruler?.title || "Grand Duke"
 	info = "<font face=\"[FOUNTAIN_PEN_FONT]\" color=#14103f>"
 	info += "<center><b>Writ of Ministry</b></center><hr/>"
-	info += "Let it be known that on this day, [partner.real_name], [partner.mind?.assigned_role || "of the town"], \
-			does receive into their confidence [minister.real_name], Councillor of the keep, \
+	info += "Let it be known that, [partner.real_name], [partner.mind?.assigned_role || "of the town"], \
+			does receive into their confidence [minister.real_name], Councillor to the [ruler_title], \
 			granting unto them the office and privileges of <b>[M.display_title]</b>.<br/><br/>"
 	info += "The Minister shall speak for this house within the council chamber. The seal accompanying this writ \
 			shall carry their voice, and bear yours in return.<br/><br/>"
@@ -409,8 +413,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	sellprice = 100
 	slot_flags = ITEM_SLOT_RING
 	var/obj/item/seal_of_ministry/paired_seal
-	var/ministry_cooldown = 0
-	var/ministry_cooldown_time = 1 MINUTES
+	var/speech_cooldown = 0
+	var/speech_cooldown_time = 1 MINUTES
 
 /obj/item/clothing/ring/minister/Destroy()
 	if(paired_seal)
@@ -434,13 +438,13 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(H.restrained() || H.incapacitated())
 		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
 		return
-	if(world.time < ministry_cooldown)
+	if(world.time < speech_cooldown)
 		to_chat(H, span_warning("The ring's metal is still heated from its last use."))
 		return
 	if(QDELETED(paired_seal))
 		to_chat(H, span_warning("The ring has no paired seal. The bond is broken."))
 		return
-	if(!ismob(paired_seal.loc))
+	if(!ismob(get_atom_on_turf(paired_seal, /mob)))
 		to_chat(H, span_warning("The seal is not being carried. My words find no one."))
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
@@ -448,7 +452,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	var/msg = input(H, "Speak into the ring.", "Ministry Channel") as null|text
 	if(!msg || QDELETED(paired_seal))
 		return
-	ministry_cooldown = world.time + ministry_cooldown_time
+	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
 	paired_seal.relay_ministry_message(msg, H.real_name, "Minister")
 
@@ -461,11 +465,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	if(isitem(loc))
-		var/obj/item/I = loc
-		I.send_speech(message, 1, I, , spans, message_language = language)
-		return
-	send_speech(message, 1, src, , spans, message_language = language)
+	// Speak from whatever is sitting on the turf, so a bagged ring still carries.
+	var/atom/movable/source = get_atom_on_turf(src, /mob)
+	if(!source)
+		source = src
+	source.send_speech(message, 1, source, , spans, message_language = language)
 
 /obj/item/clothing/ring/minister/guild
 	name = "guild minister's signet"
@@ -512,8 +516,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.6
 	var/obj/item/clothing/ring/minister/paired_ring
-	var/ministry_cooldown = 0
-	var/ministry_cooldown_time = 1 MINUTES
+	var/speech_cooldown = 0
+	var/speech_cooldown_time = 1 MINUTES
 
 /obj/item/seal_of_ministry/Destroy()
 	if(paired_ring)
@@ -532,13 +536,13 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(H.restrained() || H.incapacitated())
 		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
 		return
-	if(world.time < ministry_cooldown)
+	if(world.time < speech_cooldown)
 		to_chat(H, span_warning("The seal is still reforming from its last break."))
 		return
 	if(QDELETED(paired_ring))
 		to_chat(H, span_warning("The seal has no paired ring. The bond is broken."))
 		return
-	if(!ismob(paired_ring.loc))
+	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
 		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
@@ -546,7 +550,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	var/msg = input(H, "Send word to your minister.", "Ministry Channel") as null|text
 	if(!msg || QDELETED(paired_ring))
 		return
-	ministry_cooldown = world.time + ministry_cooldown_time
+	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
 	paired_ring.relay_ministry_message(msg, H.real_name, "Patron")
 
@@ -559,11 +563,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	if(isitem(loc))
-		var/obj/item/I = loc
-		I.send_speech(message, 1, I, , spans, message_language = language)
-		return
-	send_speech(message, 1, src, , spans, message_language = language)
+	// Speak from whatever is sitting on the turf, so a bagged seal still carries.
+	var/atom/movable/source = get_atom_on_turf(src, /mob)
+	if(!source)
+		source = src
+	source.send_speech(message, 1, source, , spans, message_language = language)
 
 /obj/item/seal_of_ministry/guild
 	name = "guild seal of ministry"
