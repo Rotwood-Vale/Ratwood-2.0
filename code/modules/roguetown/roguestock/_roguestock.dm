@@ -12,6 +12,7 @@
 	// If the type of item is a mint item it will be reminted into coins
 	// Legacy: used by old export price calculation
 	var/export_price = 1
+	var/autoexport_disabled = FALSE
 	var/stockpile_limit = 100
 	var/importexport_amt = 10
 	var/import_only = FALSE

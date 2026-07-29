@@ -54,6 +54,7 @@ type Data = {
   categories: string[];
   category: string;
   food_stipend: BooleanLike;
+  fiscal_authority: BooleanLike;
   treasury_floor: number;
   below_floor: BooleanLike;
   charter_unlocked: BooleanLike;
@@ -110,14 +111,14 @@ const StockRowView = (props: {
   const stipendCovers =
     !!data.food_stipend &&
     ['Fruit', 'Vegetable', 'Animal', 'Seafood'].includes(row.category);
+  const embargoed = !!row.withdraw_disabled && !data.fiscal_authority;
+  const overriding = !!row.withdraw_disabled && !!data.fiscal_authority;
   const canWithdraw =
-    !row.withdraw_disabled &&
+    !embargoed &&
     row.amount > 0 &&
     (row.withdraw_price <= data.budget || stipendCovers);
   const canImport =
-    !row.withdraw_disabled &&
-    row.import_price > 0 &&
-    row.import_price <= data.budget;
+    !embargoed && row.import_price > 0 && row.import_price <= data.budget;
   return (
     <div
       style={{
@@ -170,6 +171,17 @@ const StockRowView = (props: {
             }}
           >
             (no deposits)
+          </span>
+        )}
+        {!!row.withdraw_disabled && (
+          <span
+            style={{
+              color: SEAL_RED,
+              fontSize: FONT_BODY,
+              marginLeft: '4px',
+            }}
+          >
+            (no withdraws)
           </span>
         )}
         {!compact && row.desc && (
@@ -228,8 +240,13 @@ const StockRowView = (props: {
           }}
           disabled={!canWithdraw}
           onClick={() => act('withdraw', { ref: row.ref })}
+          title={
+            overriding
+              ? 'Closed to the public. You may withdraw as a Clerk / Steward.'
+              : undefined
+          }
         >
-          {row.withdraw_disabled ? 'Closed' : `Buy ${row.withdraw_price}m`}
+          {embargoed ? 'Closed' : `Buy ${row.withdraw_price}m`}
         </button>
         <button
           type="button"
@@ -244,9 +261,11 @@ const StockRowView = (props: {
           title={
             row.import_price <= 0
               ? 'No region has supply of this good today.'
-              : data.charter_active
-                ? 'Import directly. Pays duty to the Crown.'
-                : 'Import directly. The surcharge covers transport.'
+              : overriding
+                ? 'Closed to the public. You may withdraw as a Clerk / Steward.'
+                : data.charter_active
+                  ? 'Import directly. Pays duty to the Crown.'
+                  : 'Import directly. The surcharge covers transport.'
           }
         >
           {row.import_price > 0 ? `Import ${row.import_price}m` : 'NO SUPPLY'}

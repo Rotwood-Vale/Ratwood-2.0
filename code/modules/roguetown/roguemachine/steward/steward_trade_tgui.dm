@@ -273,6 +273,21 @@
 	data["autoexport_percentage"] = round(SStreasury.autoexport_percentage * 100)
 	data["region_rows"] = SStreasury.cached_region_rows
 
+	var/autoexport_barred = 0
+	for(var/datum/roguestock/A as anything in SStreasury.stockpile_datums)
+		if(A.autoexport_disabled)
+			autoexport_barred++
+	var/shortage_goods_open = 0
+	for(var/datum/economic_event/E as anything in GLOB.active_economic_events)
+		if(E.event_type != ECON_EVENT_SHORTAGE)
+			continue
+		for(var/good_id in E.affected_goods)
+			var/datum/roguestock/A = SStreasury.stockpile_by_trade_good[good_id]
+			if(A && !A.autoexport_disabled)
+				shortage_goods_open++
+	data["autoexport_barred"] = autoexport_barred
+	data["shortage_goods_open"] = shortage_goods_open
+
 	data["auto_import"] = build_auto_import_data()
 
 	var/list/petition_state = list()
@@ -365,6 +380,7 @@
 			"automatic_limit" = entry.automatic_limit ? TRUE : FALSE,
 			"accepting" = entry.accept_toggle_enabled ? TRUE : FALSE,
 			"withdraw_disabled" = entry.withdraw_disabled ? TRUE : FALSE,
+			"autoexport_disabled" = entry.autoexport_disabled ? TRUE : FALSE,
 			"margin_per_unit" = margin_per_unit,
 			"arbitrage_potential" = arbitrage_potential,
 		))
@@ -525,6 +541,13 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 	"toggle_auto_limit",
 	"toggle_stockpile_accept",
 	"toggle_withdraw_disabled",
+	"toggle_autoexport_disabled",
+	"allow_withdraw_category",
+	"bar_withdraw_category",
+	"allow_autoexport_category",
+	"bar_autoexport_category",
+	"bar_autoexport_shortages",
+	"allow_autoexport_all",
 	"set_buy_price",
 	"set_sell_price",
 	"set_stockpile_limit",
@@ -685,6 +708,7 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 			var/datum/roguestock/D = SSeconomy.find_stockpile_by_trade_good(params["good_id"])
 			if(D)
 				D.accept_toggle_enabled = !D.accept_toggle_enabled
+				SStreasury.dirty_market_view()
 			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_withdraw_disabled")
@@ -693,6 +717,7 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 			var/datum/roguestock/D = SSeconomy.find_stockpile_by_trade_good(params["good_id"])
 			if(D)
 				D.withdraw_disabled = !D.withdraw_disabled
+				SStreasury.dirty_market_view()
 			SStgui.update_uis(src)
 			return TRUE
 		if("set_buy_price")
@@ -799,6 +824,7 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 				if(!tg || tg.category != category)
 					continue
 				A.accept_toggle_enabled = TRUE
+			SStreasury.dirty_market_view()
 			SStgui.update_uis(src)
 			return TRUE
 		if("reject_category")
@@ -814,6 +840,78 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 				if(!tg || tg.category != category)
 					continue
 				A.accept_toggle_enabled = FALSE
+			SStreasury.dirty_market_view()
+			SStgui.update_uis(src)
+			return TRUE
+		if("allow_withdraw_category", "bar_withdraw_category")
+			if(SScity_assembly?.is_alderman(usr))
+				return TRUE
+			var/category = params["category"]
+			if(!category)
+				return TRUE
+			var/barred = (action == "bar_withdraw_category")
+			for(var/datum/roguestock/A in SStreasury.stockpile_datums)
+				if(!A.trade_good_id)
+					continue
+				var/datum/trade_good/tg = GLOB.trade_goods[A.trade_good_id]
+				if(!tg || tg.category != category)
+					continue
+				A.withdraw_disabled = barred
+			SStreasury.dirty_market_view()
+			SStgui.update_uis(src)
+			return TRUE
+		if("allow_autoexport_category", "bar_autoexport_category")
+			if(SScity_assembly?.is_alderman(usr))
+				return TRUE
+			var/category = params["category"]
+			if(!category)
+				return TRUE
+			var/barred = (action == "bar_autoexport_category")
+			for(var/datum/roguestock/A in SStreasury.stockpile_datums)
+				if(!A.trade_good_id)
+					continue
+				var/datum/trade_good/tg = GLOB.trade_goods[A.trade_good_id]
+				if(!tg || tg.category != category)
+					continue
+				A.autoexport_disabled = barred
+			SStreasury.dirty_market_view()
+			SStgui.update_uis(src)
+			return TRUE
+		if("bar_autoexport_shortages")
+			if(SScity_assembly?.is_alderman(usr))
+				return TRUE
+			var/barred_count = 0
+			for(var/datum/economic_event/E as anything in GLOB.active_economic_events)
+				if(E.event_type != ECON_EVENT_SHORTAGE)
+					continue
+				for(var/good_id in E.affected_goods)
+					var/datum/roguestock/A = SStreasury.stockpile_by_trade_good[good_id]
+					if(!A || A.autoexport_disabled)
+						continue
+					A.autoexport_disabled = TRUE
+					barred_count++
+			SStreasury.dirty_market_view()
+			if(barred_count)
+				to_chat(usr, span_info("Autoexport barred on [barred_count] good\s under shortage."))
+			else
+				to_chat(usr, span_warning("No shortage goods left to bar."))
+			SStgui.update_uis(src)
+			return TRUE
+		if("allow_autoexport_all")
+			if(SScity_assembly?.is_alderman(usr))
+				return TRUE
+			for(var/datum/roguestock/A as anything in SStreasury.stockpile_datums)
+				A.autoexport_disabled = FALSE
+			SStreasury.dirty_market_view()
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_autoexport_disabled")
+			if(SScity_assembly?.is_alderman(usr))
+				return TRUE
+			var/datum/roguestock/D = SSeconomy.find_stockpile_by_trade_good(params["good_id"])
+			if(D)
+				D.autoexport_disabled = !D.autoexport_disabled
+				SStreasury.dirty_market_view()
 			SStgui.update_uis(src)
 			return TRUE
 		if("multiply_all_buy")
@@ -930,6 +1028,8 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 			var/list/lines = list()
 			for(var/datum/roguestock/D in SStreasury.stockpile_datums)
 				if(!D.trade_good_id || !D.automatic_price || !D.importexport_amt)
+					continue
+				if(D.autoexport_disabled)
 					continue
 				var/datum/trade_good/tg = GLOB.trade_goods[D.trade_good_id]
 				if(!tg || tg.category != category)

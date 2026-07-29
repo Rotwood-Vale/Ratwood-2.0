@@ -87,6 +87,16 @@
 	// Item 6 decrees: bump defaults up to any roundstart-active charter's mandated floor.
 	enforce_wage_floors()
 
+/proc/has_fiscal_authority(mob/user)
+	if(!user)
+		return FALSE
+	if(user.job == "Steward" || user.job == "Clerk" || user.job == "Grand Duke")
+		return TRUE
+	if(SSticker.regentmob && user == SSticker.regentmob)
+		return TRUE
+	return FALSE
+
+
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P
