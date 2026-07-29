@@ -55,7 +55,7 @@
 				to_chat(minister, span_warning("Word reaches the bureau that my sponsor is gone. My office is void, though the learning stays with me."))
 		if(partner && !QDELETED(partner))
 			partner.ministry_partner = null
-			to_chat(partner, span_warning("The bureau strikes my minister's name from its records. The writ I was sent is so much paper."))
+			to_chat(partner, span_warning("The bureau strikes my minister's name from its records. The writ I was sent is no more."))
 		// Leaving the writ paired would block the ring being re-cut.
 		if(M.writ)
 			M.writ.paired_ring = null
@@ -75,7 +75,6 @@
 		return ..()
 	reissue_regalia(user, P)
 
-// Re-cuts a spent ring for the current partner.
 /obj/structure/roguemachine/ministry_bureau/proc/resync_ring(mob/living/carbon/human/user, obj/item/clothing/ring/minister/ring)
 	if(!QDELETED(ring.paired_writ))
 		to_chat(user, span_warning("This ring still answers to its writ. There is nothing to mend."))
@@ -140,7 +139,6 @@
 		to_chat(user, span_warning("I step away before the rite is complete."))
 		return
 
-	// Revalidate after the wait.
 	if(user.ministry_active || user.ministry_pending != M)
 		return
 	prune_ministries()
@@ -158,7 +156,6 @@
 
 	swear_in(user, M)
 
-// Drops a void charter and frees the partner's reservation.
 /obj/structure/roguemachine/ministry_bureau/proc/clear_pending(mob/living/carbon/human/user)
 	var/datum/ministry/M = user.ministry_pending
 	user.ministry_pending = null
@@ -177,7 +174,6 @@
 	user.ministry_spent = M.type
 	SStreasury.noble_incomes[user] += M.income_bonus
 
-	// Reuse a spent ring of this office if they still have it.
 	var/obj/item/clothing/ring/minister/old_ring
 	if(reforming)
 		for(var/obj/item/clothing/ring/minister/candidate in user.GetAllContents())
@@ -186,7 +182,6 @@
 				break
 	issue_regalia(M, user, old_ring)
 
-	// Already trained, don't grant twice.
 	if(!reforming)
 		var/turf/T = get_turf(src)
 		for(var/key_type in M.ministry_keys)
@@ -204,10 +199,10 @@
 		to_chat(user, span_notice("The bureau records my office restored under [M.partner.real_name]. My learning stands as it was."))
 	else
 		to_chat(user, span_notice("The rite is complete. I am [M.display_title], and the knowledge of the [M.name] is mine to draw upon."))
-	to_chat(M.partner, span_notice("[user.real_name] has been sworn in as your [M.display_title]."))
+	to_chat(M.partner, span_notice("[user.real_name] has been sworn in as my [M.display_title]."))
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)
 
-// Makes the paired ring and writ. Pass old_ring to re-cut instead of striking new.
+// Pass old_ring to re-cut it instead of striking a new one.
 /obj/structure/roguemachine/ministry_bureau/proc/issue_regalia(datum/ministry/M, mob/living/carbon/human/receiver, obj/item/clothing/ring/minister/old_ring)
 	var/obj/item/clothing/ring/minister/ring = old_ring
 	if(ring)
@@ -222,9 +217,8 @@
 	M.writ = writ
 	if(receiver)
 		receiver.put_in_hands(ring)
-	post_to_ministry(writ, "[M.councillor.real_name], [M.display_title]", M.partner, "Your writ of ministry has been posted. Collect it from any HERMES.", get_turf(src))
+	post_to_ministry(writ, "[M.councillor.real_name], [M.display_title]", M.partner, "My writ of ministry has been posted. I can collect it from any HERMES.", get_turf(src))
 
-// Paid recast. Old ring goes inert, old writ is deleted.
 /obj/structure/roguemachine/ministry_bureau/proc/reissue_regalia(mob/living/carbon/human/user, obj/item/roguecoin/gold/coins)
 	var/datum/ministry/M = user.ministry_active
 	if(!M || !M.active)
