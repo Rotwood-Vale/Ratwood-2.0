@@ -481,8 +481,8 @@ const RegionRow = (props: {
           <span
             title={
               side === 'import'
-                ? 'Units available today at this price. Buying beyond exhausts daily production and the price climbs.'
-                : 'Units the buyer still wants today at this price. Selling beyond saturates demand and the price drops.'
+                ? `${region.capacity_today} of ${region.capacity_total} units left today at this price, up to ${region.batch_capacity} per shipment. Buying beyond that increases the price.`
+                : `${region.capacity_today} of ${region.capacity_total} units still wanted today at this price, up to ${region.batch_capacity} per shipment. Selling beyond that drops the price.`
             }
             style={{
               color: capacityColor,

@@ -378,8 +378,8 @@
 				continue
 			produces += list(list(
 				"good_id" = good_id,
-				"total" = region.produces[good_id],
-				"today" = max(0, region.produces_today[good_id] || 0),
+				"total" = region.get_day_capacity_total(good_id, TRUE),
+				"today" = region.get_day_capacity(good_id, TRUE),
 			))
 		var/list/demands = list()
 		for(var/good_id in region.demands)
@@ -387,8 +387,8 @@
 				continue
 			demands += list(list(
 				"good_id" = good_id,
-				"total" = region.demands[good_id],
-				"today" = max(0, region.demands_today[good_id] || 0),
+				"total" = region.get_day_capacity_total(good_id, FALSE),
+				"today" = region.get_day_capacity(good_id, FALSE),
 			))
 		region_rows += list(list(
 			"region_id" = region_id,
@@ -415,8 +415,9 @@
 		out += list(list(
 			"region_id" = rid,
 			"unit_price" = price,
-			"capacity_today" = max(0, today),
-			"capacity_total" = pace,
+			"capacity_today" = r.get_day_capacity(good_id, TRUE),
+			"capacity_total" = r.get_day_capacity_total(good_id, TRUE),
+			"batch_capacity" = r.get_batch_capacity(good_id, TRUE),
 			"is_blockaded" = r.is_region_blockaded ? TRUE : FALSE,
 		))
 	for(var/i in 1 to length(out) - 1)
@@ -440,8 +441,9 @@
 		out += list(list(
 			"region_id" = rid,
 			"unit_price" = price,
-			"capacity_today" = max(0, today),
-			"capacity_total" = pace,
+			"capacity_today" = r.get_day_capacity(good_id, FALSE),
+			"capacity_total" = r.get_day_capacity_total(good_id, FALSE),
+			"batch_capacity" = r.get_batch_capacity(good_id, FALSE),
 			"is_blockaded" = r.is_region_blockaded ? TRUE : FALSE,
 		))
 	for(var/i in 1 to length(out) - 1)

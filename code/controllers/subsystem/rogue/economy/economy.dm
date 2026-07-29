@@ -216,10 +216,16 @@ SUBSYSTEM_DEF(economy)
 		var/datum/economic_region/region = GLOB.economic_regions[region_id]
 		region.produces_today = list()
 		region.demands_today = list()
+		region.produces_day_start = list()
+		region.demands_day_start = list()
 		for(var/good_id in region.produces)
-			region.produces_today[good_id] = max(1, round(region.produces[good_id] * pop_mult))
+			var/produced_units = max(1, round(region.produces[good_id] * pop_mult))
+			region.produces_today[good_id] = produced_units
+			region.produces_day_start[good_id] = produced_units
 		for(var/good_id in region.demands)
-			region.demands_today[good_id] = max(1, round(region.demands[good_id] * pop_mult))
+			var/demanded_units = max(1, round(region.demands[good_id] * pop_mult))
+			region.demands_today[good_id] = demanded_units
+			region.demands_day_start[good_id] = demanded_units
 	for(var/datum/crown_import/CI as anything in GLOB.crown_imports)
 		CI.reset_daily_demand()
 	SStreasury.dirty_market_view()

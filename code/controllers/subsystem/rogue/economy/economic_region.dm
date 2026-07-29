@@ -38,6 +38,9 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	var/list/produces_today = list()
 	var/list/demands_today = list()
 
+	var/list/produces_day_start = list()
+	var/list/demands_day_start = list()
+
 	/// -1 = never cleared. Otherwise the cooldown window runs from this day.
 	var/day_last_cleared = -1
 
@@ -45,8 +48,24 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	. = ..()
 	produces_today = produces.Copy()
 	demands_today = demands.Copy()
+	produces_day_start = produces.Copy()
+	demands_day_start = demands.Copy()
 	if(!associated_marker_id)
 		associated_marker_id = "[region_id]_blockade"
+
+/datum/economic_region/proc/get_day_capacity(good_id, importing)
+	var/list/today = importing ? produces_today : demands_today
+	return max(0, today[good_id] || 0)
+
+/datum/economic_region/proc/get_day_capacity_total(good_id, importing)
+	var/list/day_start = importing ? produces_day_start : demands_day_start
+	return max(0, day_start[good_id] || 0)
+
+/datum/economic_region/proc/get_batch_capacity(good_id, importing)
+	var/pace = (importing ? produces[good_id] : demands[good_id]) || 0
+	if(pace <= 0)
+		return 0
+	return clamp((importing ? produces_today[good_id] : demands_today[good_id]) || 0, 0, pace)
 
 /datum/economic_region/kingsfield
 	region_id = TRADE_REGION_KINGSFIELD
