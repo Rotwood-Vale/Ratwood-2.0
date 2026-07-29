@@ -1780,7 +1780,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_destroyed = TRUE
 		burn()
 		return TRUE
-	if (ismob(loc) && !always_destroy)
+	if (!always_destroy && (ismob(loc) || isclothing(src) || istype(src, /obj/item/rogueweapon)))
 		return FALSE
 
 	obj_destroyed = TRUE

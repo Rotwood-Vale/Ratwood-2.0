@@ -86,7 +86,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		r_hand = /obj/item/rogueweapon/sword/sabre/dec
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
@@ -159,7 +159,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 6, TRUE)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
@@ -208,7 +208,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant

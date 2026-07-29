@@ -15,7 +15,7 @@
 	if(!isnum(range_add))
 		range_add = 0
 	var/steal_radius = 1 + range_add
-	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand")
+	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand", "r_leg", "l_leg")
 	// Pickpocketting checks
 	if(get_dist(thief, victim) > steal_radius)
 		to_chat(thief, span_warning("[victim] is too far away."))
@@ -43,7 +43,7 @@
 	var/list/mobsbehind = list()
 	var/exp_to_gain = thief.STAINT
 	to_chat(thief, span_notice("I try to steal from [victim]..."))	
-	if(!do_after(thief, 5, target = victim, progress = 0))
+	if(!do_after(thief, 1 SECONDS, target = victim, progress = 0))
 		return
 	// Pickpocketting checks after the channel in case something changed
 	if(get_dist(thief, victim) > steal_radius)
@@ -71,15 +71,26 @@
 					if (victim.get_item_by_slot(SLOT_NECK))
 						stealpos.Add(victim.get_item_by_slot(SLOT_NECK))
 				if("groin")
-					if (victim.get_item_by_slot(SLOT_BELT_R))
-						stealpos.Add(victim.get_item_by_slot(SLOT_BELT_R))
+					if (victim.get_item_by_slot(SLOT_BELT))
+						stealpos.Add(victim.get_item_by_slot(SLOT_BELT))
+				if("l_leg")
 					if (victim.get_item_by_slot(SLOT_BELT_L))
 						stealpos.Add(victim.get_item_by_slot(SLOT_BELT_L))
+				if("r_leg")
+					if (victim.get_item_by_slot(SLOT_BELT_R))
+						stealpos.Add(victim.get_item_by_slot(SLOT_BELT_R))
 				if("r_hand", "l_hand")
 					if (victim.get_item_by_slot(SLOT_RING))
 						stealpos.Add(victim.get_item_by_slot(SLOT_RING))
 			if(length(stealpos) > 0)
 				var/obj/item/picked = pick(stealpos)
+				if(istype(picked,/obj/item/storage))
+					var/obj/item/storage/container = picked
+					var/datum/component/storage/STR = container.GetComponent(/datum/component/storage)
+					var/list/stuff = STR.contents()
+					if(stuff.len > 0)
+						picked = pick(stuff)
+						STR.remove_from_storage(picked, get_turf(victim))
 				victim.dropItemToGround(picked)
 				thief.put_in_active_hand(picked)
 				to_chat(thief, span_green("I stole [picked]!"))

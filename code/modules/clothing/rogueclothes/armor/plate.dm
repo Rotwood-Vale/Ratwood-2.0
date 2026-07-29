@@ -183,9 +183,9 @@
 	name = "vicious half-plate"
 	desc = "A fluted half-plate armour-set which stirs with the same violence driving our world. This inner motive makes it far less restrictive."
 	armor_class = ARMOR_CLASS_MEDIUM
-	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most(heavy armor levels, pretty much. But worse resistances, we get the bonus over the other sets of being medium and being unequippable.)
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
+	armor = ARMOR_ASCENDANT
 	icon_state = "graggarplate"
-	armor = ARMOR_CUIRASS
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/Initialize(mapload)
 	. = ..()

@@ -154,7 +154,7 @@
 					add_roundpoints(job.round_contrib_points, H.ckey)
 	add_roundplayed(key_list)
 	update_god_rankings()
-	
+
 	for(var/mob/M in GLOB.mob_list)
 		M.do_game_over()
 
@@ -210,7 +210,7 @@
 	world.TgsAnnounceRoundEnd()
 
 	sleep(10 SECONDS)
-	SSvote.initiate_vote("map", "Actors")
+	SSvote.initiate_vote("Map", "Actors", null, forced = TRUE)
 	ready_for_reboot = TRUE
 	standard_reboot()
 

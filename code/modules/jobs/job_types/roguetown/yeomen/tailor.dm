@@ -69,7 +69,7 @@
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 	else if(should_wear_masc_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
