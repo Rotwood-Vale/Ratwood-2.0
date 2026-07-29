@@ -23837,7 +23837,8 @@
 /obj/structure/closet/crate/roguecloset/dark{
 	pixel_x = -2;
 	keylock = 1;
-	locked = "royal"
+	locked = 1;
+	lockid = "royal"
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
@@ -58065,7 +58066,8 @@
 /obj/structure/closet/crate/roguecloset/dark{
 	pixel_x = -2;
 	keylock = 1;
-	locked = "royal"
+	locked = 1;
+	lockid = "royal"
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
@@ -103729,7 +103731,8 @@
 /obj/structure/closet/crate/roguecloset/dark{
 	pixel_x = -2;
 	keylock = 1;
-	locked = "royal"
+	locked = 1;
+	lockid = "royal"
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor/rockhill)
