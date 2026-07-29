@@ -44,18 +44,17 @@
 	else
 		return flash_fullscreen(state)
 
-/mob/proc/on_toggle_redflash(no_redflash_pref)
-	var/mob/living/luser = src
-	if(!istype(luser))
-		return
-	luser.no_redflash = no_redflash_pref
-	var/mob/living/carbon/user = src
+/mob/proc/update_redflash_pref(no_redflash_pref, update_hud = TRUE)
+	var/mob/living/user = src
 	if(!istype(user))
 		return
+	user.no_redflash = no_redflash_pref
+	// Any time the pref could change (i.e. w/ mind transfer), we will need to make sure only the appropriate overlays get displayed.
 	clear_fullscreen("brute")
 	clear_fullscreen("brute_alt")
 	clear_fullscreen("painflash")
-	user.update_damage_hud()
+	if(update_hud) // We are also calling this proc from /mob/living/Login(), which triggers an update itself
+		user.update_damage_hud()
 
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]

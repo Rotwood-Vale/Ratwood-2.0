@@ -294,7 +294,7 @@
 			to_chat(src, "Your screen will no longer flash red or white from pain or other events.")
 		else
 			to_chat(src, "Your screen will now flash red or white from pain or other events.")
-	mob.on_toggle_redflash(prefs.no_redflash)
+	mob.update_redflash_pref(prefs.no_redflash)
 
 /client/verb/masked_examine()
 	set category = "Options"
