@@ -36969,7 +36969,8 @@
 /obj/structure/closet/crate/roguecloset/dark{
 	pixel_x = -3;
 	keylock = 1;
-	locked = "cphysician"
+	locked = 1;
+	lockid = "cphysician"
 	},
 /obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/concrete,
