@@ -489,10 +489,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	var/atom/movable/source = get_atom_on_turf(src, /mob)
-	if(!source)
-		source = src
-	source.send_speech(message, 1, source, , spans, message_language = language)
+	if(isitem(loc))
+		var/obj/item/I = loc
+		I.send_speech(message, 1, I, , spans, message_language = language)
+		return
+	send_speech(message, 1, src, , spans, message_language = language)
 
 /obj/item/clothing/ring/minister/guild
 	name = "guild minister's signet"
@@ -584,10 +585,11 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	var/atom/movable/source = get_atom_on_turf(src, /mob)
-	if(!source)
-		source = src
-	source.send_speech(message, 1, source, , spans, message_language = language)
+	if(isitem(loc))
+		var/obj/item/I = loc
+		I.send_speech(message, 1, I, , spans, message_language = language)
+		return
+	send_speech(message, 1, src, , spans, message_language = language)
 
 /obj/item/seal_of_ministry/guild
 	name = "guild seal of ministry"
