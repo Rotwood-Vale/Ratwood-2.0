@@ -7655,6 +7655,10 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
+"bJC" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor/rockhill)
 "bJK" = (
 /obj/structure/table/wood/poor,
 /obj/item/paper,
@@ -615070,7 +615074,7 @@ cQd
 pTR
 tpQ
 ged
-ged
+bJC
 ged
 wtF
 jZx

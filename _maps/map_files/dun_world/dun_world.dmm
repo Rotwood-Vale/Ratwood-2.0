@@ -89983,6 +89983,10 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cavewet/bogcaves/west)
+"sJf" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor)
 "sJi" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/churchbrick,
@@ -323833,7 +323837,7 @@ xHQ
 rrD
 fAA
 iJY
-xHQ
+sJf
 xHQ
 qIt
 qIt

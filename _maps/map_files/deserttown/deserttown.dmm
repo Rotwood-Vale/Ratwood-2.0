@@ -46488,7 +46488,6 @@
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/under/dungeon/desert_pyramid)
 "nyg" = (
-/obj/item/bodypart/l_arm/devil,
 /obj/item/bodypart/r_arm/goblin,
 /obj/item/bodypart/r_arm,
 /obj/item/reagent_containers/food/snacks/zizo_bane,
@@ -65136,6 +65135,10 @@
 /obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/church/basement)
+"sTz" = (
+/obj/structure/roguemachine/scomm/r,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/manor/desert)
 "sTD" = (
 /obj/structure/fluff/walldeco/stone/bronze,
 /turf/closed/wall/mineral/rogue/sandstone,
@@ -74002,9 +74005,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/outdoors/town/desert)
 "vvu" = (
-/obj/structure/roguemachine/scomm/l{
-	scom_tag = "Qasr - Sheikh Office"
-	},
+/obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/rogue/deserttile{
 	icon_state = "tilewhitebluespecial";
 	color = "#b8ae9e"
@@ -534382,7 +534383,7 @@ oTJ
 hZy
 wBj
 vVO
-jgz
+sTz
 klw
 klw
 klw
