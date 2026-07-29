@@ -44,5 +44,20 @@
 		else
 			to_chat(user, span_notice("They can not be risen!"))
 			revert_cast()
-
+	for(var/mob/living/simple_animal/A in targets)
+		if(istype(A, /mob/living/simple_animal/hostile/retaliate/rogue/saiga) ||istype(A, /mob/living/simple_animal/hostile/retaliate/rogue/wolf))
+			if (A.stat < DEAD && !A.InCritical())
+				to_chat(user, span_notice("They aren't dead enough yet!"))
+				revert_cast()
+			switch(A.type)
+				if(/mob/living/simple_animal/hostile/retaliate/rogue/saiga)
+					playsound(get_turf(A), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
+					new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead(A.loc)
+					A.visible_message(span_danger("[A] walks again... As a terrifying deadite!"))
+					qdel(A)
+				if(/mob/living/simple_animal/hostile/retaliate/rogue/wolf)
+					playsound(get_turf(A), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
+					new /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead(A.loc)
+					A.visible_message(span_danger("[A] walks again... As a terrifying deadite!"))
+					qdel(A)
 	return
