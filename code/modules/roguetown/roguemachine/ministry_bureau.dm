@@ -55,8 +55,11 @@
 				to_chat(minister, span_warning("Word reaches the bureau that my sponsor is gone. My office is void, though the learning stays with me."))
 		if(partner && !QDELETED(partner))
 			partner.ministry_partner = null
-		// The seal is spent either way. Leaving it paired blocks the ring being re-cut.
-		QDEL_NULL(M.seal)
+			to_chat(partner, span_warning("The bureau strikes my minister's name from its records. The writ I was sent is so much paper."))
+		// Leaving the writ paired would block the ring being re-cut.
+		if(M.writ)
+			M.writ.paired_ring = null
+			M.writ = null
 		if(M.ring)
 			M.ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 		active_ministries.Cut(i, i + 1)
@@ -74,8 +77,8 @@
 
 // Re-cuts a spent ring for the current partner.
 /obj/structure/roguemachine/ministry_bureau/proc/resync_ring(mob/living/carbon/human/user, obj/item/clothing/ring/minister/ring)
-	if(!QDELETED(ring.paired_seal))
-		to_chat(user, span_warning("This ring still answers to its seal. There is nothing to mend."))
+	if(!QDELETED(ring.paired_writ))
+		to_chat(user, span_warning("This ring still answers to its writ. There is nothing to mend."))
 		return
 	prune_ministries()
 	var/datum/ministry/M = user.ministry_active
@@ -90,13 +93,13 @@
 		return
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
-	if(user.ministry_active != M || !M.active || QDELETED(ring) || !QDELETED(ring.paired_seal))
+	if(user.ministry_active != M || !M.active || QDELETED(ring) || !QDELETED(ring.paired_writ))
 		return
 	QDEL_NULL(M.ring)
-	QDEL_NULL(M.seal)
+	QDEL_NULL(M.writ)
 	issue_regalia(M, user, ring)
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)
-	to_chat(user, span_notice("The bureau re-cuts the old mark for [M.partner.real_name] and posts them a seal to match."))
+	to_chat(user, span_notice("The bureau re-cuts the old mark for [M.partner.real_name] and posts them a writ to match."))
 
 /obj/structure/roguemachine/ministry_bureau/attack_hand(mob/living/carbon/human/user)
 	. = ..()
@@ -178,7 +181,7 @@
 	var/obj/item/clothing/ring/minister/old_ring
 	if(reforming)
 		for(var/obj/item/clothing/ring/minister/candidate in user.GetAllContents())
-			if(candidate.type == M.ring_type && QDELETED(candidate.paired_seal))
+			if(candidate.type == M.ring_type && QDELETED(candidate.paired_writ))
 				old_ring = candidate
 				break
 	issue_regalia(M, user, old_ring)
@@ -204,23 +207,24 @@
 	to_chat(M.partner, span_notice("[user.real_name] has been sworn in as your [M.display_title]."))
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)
 
-// Makes the paired ring and seal. Pass old_ring to re-cut instead of striking new.
+// Makes the paired ring and writ. Pass old_ring to re-cut instead of striking new.
 /obj/structure/roguemachine/ministry_bureau/proc/issue_regalia(datum/ministry/M, mob/living/carbon/human/receiver, obj/item/clothing/ring/minister/old_ring)
 	var/obj/item/clothing/ring/minister/ring = old_ring
 	if(ring)
 		ring.desc = initial(ring.desc)
 	else
 		ring = new M.ring_type(get_turf(src))
-	var/obj/item/seal_of_ministry/seal = new M.seal_type(get_turf(src))
-	ring.paired_seal = seal
-	seal.paired_ring = ring
+	var/obj/item/paper/scroll/ministry_writ/writ = new(get_turf(src))
+	writ.finalize(M.councillor, M.partner, M)
+	ring.paired_writ = writ
+	writ.paired_ring = ring
 	M.ring = ring
-	M.seal = seal
+	M.writ = writ
 	if(receiver)
 		receiver.put_in_hands(ring)
-	post_seal(seal, M.councillor, M)
+	post_to_ministry(writ, "[M.councillor.real_name], [M.display_title]", M.partner, "Your writ of ministry has been posted. Collect it from any HERMES.", get_turf(src))
 
-// Paid recast. Old ring goes inert, old seal is deleted.
+// Paid recast. Old ring goes inert, old writ is deleted.
 /obj/structure/roguemachine/ministry_bureau/proc/reissue_regalia(mob/living/carbon/human/user, obj/item/roguecoin/gold/coins)
 	var/datum/ministry/M = user.ministry_active
 	if(!M || !M.active)
@@ -245,15 +249,12 @@
 
 	var/obj/item/clothing/ring/minister/old_ring = M.ring
 	if(old_ring)
-		old_ring.paired_seal = null
+		old_ring.paired_writ = null
 		old_ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 		M.ring = null
-	QDEL_NULL(M.seal)
+	QDEL_NULL(M.writ)
 	issue_regalia(M, user)
 	playsound(src, 'sound/foley/coins1.ogg', 100, TRUE, -1)
 	to_chat(user, span_notice("The bureau strikes a new mark and scores through the old. Whatever became of the last ring, it answers to no one now."))
-
-/obj/structure/roguemachine/ministry_bureau/proc/post_seal(obj/item/seal_of_ministry/seal, mob/living/carbon/human/minister, datum/ministry/M)
-	post_to_ministry(seal, "[minister.real_name], [M.display_title]", M.partner, "Your seal of ministry has been posted. Collect it from any HERMES.", get_turf(src))
 
 #undef MINISTRY_REISSUE_COST
