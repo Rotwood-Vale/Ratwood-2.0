@@ -274,6 +274,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/merchant
 	name = "Trade Ministry"
 	display_title = "Minister of Trade"
+	income_bonus = 70 // Trade Ministry is the weakest so more income helps cope
 	ministry_keys = list(/obj/item/roguekey/shop)
 	archive_traits = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
 	archive_skills = list(/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN)
