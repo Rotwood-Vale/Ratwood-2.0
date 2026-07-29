@@ -44,7 +44,7 @@
 /// Ensures that the rider bumps into things that the mount bumps in to
 /datum/component/riding/proc/vehicle_mob_bump(datum/source, atom/bumped_into)
 	SIGNAL_HANDLER
-	if(driver.m_intent != MOVE_INTENT_RUN || !(driver.mobility_flags & MOBILITY_STAND))
+	if(driver && driver.m_intent != MOVE_INTENT_RUN || !(driver.mobility_flags & MOBILITY_STAND))
 		return
 	bumped_into.Bumped(driver)
 	if(driver.IsImmobilized())
