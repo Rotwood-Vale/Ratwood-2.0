@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - rscdel: "remove is obscured as it was dead code and was causing perf issues"
