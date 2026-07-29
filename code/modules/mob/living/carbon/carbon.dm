@@ -1009,7 +1009,6 @@
 	else
 		clear_fullscreen("oxy")
 
-	var/no_redflash = client?.prefs?.no_redflash
 	var/flash_pain = FALSE
 	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
 	var/severity = 0

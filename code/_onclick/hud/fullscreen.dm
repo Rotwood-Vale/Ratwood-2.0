@@ -33,15 +33,22 @@
 	flick(state,screen)
 	return screen
 
-/// Easy drop-in replacement for flash_fullscreen("redflashX") that checks whether the client has no-redflash on. Returns the same screen obj that flash_fullscreen does.
+/// Easy drop-in replacement for flash_fullscreen("redflashX") that checks whether the mob has no-redflash on. Returns the same screen obj that flash_fullscreen does.
 /mob/proc/fullscreen_redflash(state)
 	RETURN_TYPE(/atom/movable/screen/fullscreen/flashholder)
-	if(client?.prefs?.no_redflash)
+	var/mob/living/user = src
+	if(!istype(user))
+		return
+	if(user.no_redflash)
 		return
 	else
 		return flash_fullscreen(state)
 
-/mob/proc/on_toggle_redflash()
+/mob/proc/on_toggle_redflash(no_redflash_pref)
+	var/mob/living/luser = src
+	if(!istype(luser))
+		return
+	luser.no_redflash = no_redflash_pref
 	var/mob/living/carbon/user = src
 	if(!istype(user))
 		return

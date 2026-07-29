@@ -3117,6 +3117,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
+	character.no_redflash = no_redflash // Caching the pref on the mob instead of checking client?.prefs?.no_redflash every single time
 	if(skip_normal_prefs)
 		_load_statpack() /// This should load statpack preferences, I'm at my limit here.
 		character.statpack = statpack
