@@ -73,12 +73,10 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		cloak = null
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/petition_ministry, H)
+	if(SSroguemachine.ministry_bureau) // No bureau mapped in, no ministries to be had.
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/petition_ministry, H)
 
 // ===== MINISTRIES =====
-// A councillor petitions a faction head to serve as their voice in the keep.
-// The head keeps a writ and a seal; the councillor takes their charter to the
-// bureau to be sworn in, gaining that faction's keys, skills and secrets.
 
 GLOBAL_LIST_INIT(ministry_charters, list(
 	"Guildmaster" = /datum/ministry/guild,
@@ -94,7 +92,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /mob/living/carbon/human
 	var/datum/ministry/ministry_active
 	var/datum/ministry/ministry_partner
-	var/datum/ministry/ministry_pending // held until finalized by clicking on the bureau
+	var/datum/ministry/ministry_pending // Finalized by clicking on the bureau.
+	var/ministry_spent // We already trained the skills. Lock to reforming this one only.
 
 /datum/ministry
 	var/name = "Ministry"
@@ -118,31 +117,52 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	seal = null
 	return ..()
 
-// Extra perks beyond keys, traits and skills. Runs after those are applied.
+// Extra perks. Runs after keys, traits and skills.
 /datum/ministry/proc/archive_bonus(mob/living/carbon/human/H)
 	return
 
-// Reports every charter and its standing, so a councillor knows who is worth
-// walking to before they go looking.
+// Duplicating some HERMES logic here for mailing the writ and seal.
+/proc/post_to_ministry(obj/item/parcel, sender, mob/living/carbon/human/recipient, notice, turf/fallback)
+	if(!parcel || QDELETED(recipient))
+		return
+	parcel.mailer = sender
+	parcel.mailedto = recipient.real_name
+	var/obj/item/roguemachine/mastermail/master = SSroguemachine.hermailermaster
+	if(!master)
+		parcel.forceMove(fallback || get_turf(recipient))
+		return
+	parcel.forceMove(master.loc)
+	var/datum/component/storage/STR = master.GetComponent(/datum/component/storage)
+	STR?.handle_item_insertion(parcel, prevent_warning = TRUE)
+	master.new_mail = TRUE
+	master.update_icon()
+	recipient.apply_status_effect(/datum/status_effect/ugotmail)
+	recipient.playsound_local(recipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
+	if(notice)
+		to_chat(recipient, span_notice(notice))
+
+// Every charter and its current standing.
 /proc/ministry_roster()
 	var/obj/structure/roguemachine/ministry_bureau/bureau = SSroguemachine.ministry_bureau
-	bureau?.prune_ministries()
+	bureau.prune_ministries()
 	var/list/lines = list()
 	for(var/job_title in GLOB.ministry_charters)
 		var/charter = GLOB.ministry_charters[job_title]
-		var/datum/ministry/M = bureau?.active_ministries?[charter]
+		var/datum/ministry/M = bureau.active_ministries[charter]
 		if(M)
 			lines += "[job_title] — served by [M.councillor?.real_name || "a minister"]."
 			continue
 		var/mob/living/carbon/human/holder
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
-			if(H.mind?.assigned_role == job_title && H.stat != DEAD)
+			if(H.mind?.assigned_role == job_title && !QDELETED(H))
 				holder = H
 				break
 		if(!holder)
 			lines += "[job_title] — no one holds the post."
 		else if(holder.ministry_partner)
 			lines += "[job_title] — already spoken for."
+		else if(holder.stat == DEAD)
+			lines += "[job_title] — dead, but not yet gone."
 		else
 			lines += "[job_title] — open to petition."
 	return lines
@@ -282,7 +302,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	seal_type = /obj/item/seal_of_ministry/merchant
 
 // ===== PETITION SPELL =====
-// Sits on the councillor's HUD until they've struck a deal and been sworn in.
 
 /obj/effect/proc_holder/spell/self/petition_ministry
 	name = "Petition Ministry"
@@ -304,19 +323,26 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		to_chat(councillor, span_notice("My charter is agreed. The bureau in the council chamber awaits my swearing-in."))
 		return
 
-	SSroguemachine.ministry_bureau?.prune_ministries()
+	var/obj/structure/roguemachine/ministry_bureau/bureau = SSroguemachine.ministry_bureau
+	bureau.prune_ministries()
 	var/list/prospects = list()
 	for(var/mob/living/carbon/human/head in (get_hearers_in_view(petition_range, councillor) - councillor))
 		var/charter = GLOB.ministry_charters[head.mind?.assigned_role]
 		if(!charter || head.stat == DEAD)
 			continue
+		if(councillor.ministry_spent && councillor.ministry_spent != charter)
+			continue
 		if(head.ministry_partner)
 			continue
-		if(SSroguemachine.ministry_bureau?.active_ministries?[charter])
+		if(bureau.active_ministries[charter])
 			continue
 		prospects[head.name] = head
 	if(!length(prospects))
-		to_chat(councillor, span_warning("There is nobody here whose patronage I might seek."))
+		if(councillor.ministry_spent)
+			var/datum/ministry/spent = councillor.ministry_spent
+			to_chat(councillor, span_warning("I am schooled in one trade alone. Only a new [initial(spent.display_title)]'s sponsor will have me."))
+		else
+			to_chat(councillor, span_warning("There is nobody here whose patronage I might seek."))
 		for(var/line in ministry_roster())
 			to_chat(councillor, span_notice(line))
 		return
@@ -341,7 +367,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		to_chat(councillor, span_warning("[head.real_name] declines my petition."))
 		to_chat(head, span_notice("You decline the petition."))
 		return
-	// Everything could have changed while the prompt sat open.
+	// Revalidate after the prompt.
 	if(QDELETED(councillor) || QDELETED(head) || councillor.stat == DEAD || head.stat == DEAD)
 		return
 	if(!(head in get_hearers_in_view(petition_range, councillor)))
@@ -351,7 +377,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(councillor.ministry_active || councillor.ministry_pending || head.ministry_partner)
 		to_chat(head, span_warning("The arrangement has already been overtaken by events."))
 		return
-	if(SSroguemachine.ministry_bureau?.active_ministries?[charter])
+	if(SSroguemachine.ministry_bureau.active_ministries[charter])
 		to_chat(head, span_warning("A minister of this house has already been seated."))
 		return
 
@@ -363,13 +389,13 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 
 	var/obj/item/paper/scroll/ministry_writ/writ = new(get_turf(head))
 	writ.finalize(councillor, head, proto)
-	head.put_in_hands(writ)
+	post_to_ministry(writ, "[councillor.real_name], Councillor", head, "Your writ of ministry has been posted. Collect it from any HERMES.", get_turf(head))
 	head.visible_message(span_notice("[head.real_name] takes [councillor.real_name] into their confidence."))
-	to_chat(head, span_notice("You accept the petition. Keep this writ as your record of it."))
+	to_chat(head, span_notice("You accept the petition. The writ recording it will reach you by post."))
 	to_chat(councillor, span_notice("[head.real_name] accepts. Go to the bureau in the council chamber to be sworn in."))
 
 // ===== WRIT OF MINISTRY =====
-// The partner's copy. Arrives finalized, stays with them. Nothing to sign.
+// The partner's record. Arrives finalized, nothing to sign.
 
 /obj/item/paper/scroll/ministry_writ
 	name = "writ of ministry"
@@ -404,9 +430,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	icon_state = "contractsigned"
 
-// ===== MINISTER'S SIGNET =====
-// Paired with a seal held by the partner. Speak into one, the other hears.
-
+// Minister's Signet, works paired with the partner's seal like a two-way SCOM.
 /obj/item/clothing/ring/minister
 	name = "minister's signet"
 	desc = "A signet ring bearing the mark of a ministerial office. Press it to your lips to speak with your patron."
@@ -423,7 +447,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		paired_seal = null
 	return ..()
 
-// Works worn or in hand.
 /obj/item/clothing/ring/minister/attack_self(mob/user)
 	. = ..()
 	attack_right(user)
@@ -450,7 +473,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
 	visible_message(span_notice("[H] presses their ring against their mouth."))
-	var/msg = input(H, "Speak into the ring.", "Ministry Channel") as null|text
+	var/msg = input(H, "Speak into the ring.", "Ministerial Murmurs...") as null|text
 	if(!msg || QDELETED(paired_seal))
 		return
 	speech_cooldown = world.time + speech_cooldown_time
@@ -466,7 +489,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	// Speak from whatever is sitting on the turf, so a bagged ring still carries.
 	var/atom/movable/source = get_atom_on_turf(src, /mob)
 	if(!source)
 		source = src
@@ -507,8 +529,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	desc = "A ring bearing the mammon-hoarding marque of the Merchant's Guild."
 
 // ===== SEAL OF MINISTRY =====
-// The partner's half of the pair.
-
 /obj/item/seal_of_ministry
 	name = "seal of ministry"
 	desc = "A sealed dispatch bearing a ministerial mark. The wax is soft and dark."
@@ -564,7 +584,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	if(!language)
 		language = get_default_language()
-	// Speak from whatever is sitting on the turf, so a bagged seal still carries.
 	var/atom/movable/source = get_atom_on_turf(src, /mob)
 	if(!source)
 		source = src
