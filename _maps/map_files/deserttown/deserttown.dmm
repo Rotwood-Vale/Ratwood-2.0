@@ -67191,6 +67191,10 @@
 /obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/church/basement)
+"sTz" = (
+/obj/structure/roguemachine/scomm/r,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/manor/desert)
 "sTD" = (
 /obj/structure/fluff/walldeco/stone/bronze,
 /turf/closed/wall/mineral/rogue/sandstone,
@@ -76349,9 +76353,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/outdoors/town/desert)
 "vvu" = (
-/obj/structure/roguemachine/scomm/l{
-	scom_tag = "Qasr - Sheikh Office"
-	},
+/obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/rogue/deserttile{
 	color = "#b8ae9e";
 	icon_state = "tilewhitebluespecial"
@@ -536996,7 +536998,7 @@ oTJ
 hZy
 wBj
 vVO
-jgz
+sTz
 klw
 klw
 klw
