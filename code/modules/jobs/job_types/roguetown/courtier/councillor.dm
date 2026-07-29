@@ -103,25 +103,24 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	var/list/archive_traits = list()
 	var/list/archive_skills = list()
 	var/ring_type
-	var/seal_type
 	var/mob/living/carbon/human/councillor
 	var/mob/living/carbon/human/partner
 	var/obj/item/clothing/ring/minister/ring
-	var/obj/item/seal_of_ministry/seal
+	var/obj/item/paper/scroll/ministry_writ/writ
 	var/active = FALSE
 
 /datum/ministry/Destroy()
 	councillor = null
 	partner = null
 	ring = null
-	seal = null
+	writ = null
 	return ..()
 
 // Extra perks. Runs after keys, traits and skills.
 /datum/ministry/proc/archive_bonus(mob/living/carbon/human/H)
 	return
 
-// Duplicating some HERMES logic here for mailing the writ and seal.
+// Duplicating some HERMES logic here for mailing the writ.
 /proc/post_to_ministry(obj/item/parcel, sender, mob/living/carbon/human/recipient, notice, turf/fallback)
 	if(!parcel || QDELETED(recipient))
 		return
@@ -180,7 +179,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE
 	)
 	ring_type = /obj/item/clothing/ring/minister/guild
-	seal_type = /obj/item/seal_of_ministry/guild
 
 /datum/ministry/church
 	name = "Church Ministry"
@@ -189,7 +187,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	archive_traits = list(TRAIT_RITUALIST, TRAIT_VOTARY)
 	archive_skills = list(/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE)
 	ring_type = /obj/item/clothing/ring/minister/church
-	seal_type = /obj/item/seal_of_ministry/church
 
 /datum/ministry/church/archive_bonus(mob/living/carbon/human/H)
 	H.put_in_hands(new /obj/item/ritechalk(get_turf(H)))
@@ -215,7 +212,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE
 	)
 	ring_type = /obj/item/clothing/ring/minister/night
-	seal_type = /obj/item/seal_of_ministry/night
 
 /datum/ministry/inquisition
 	name = "Inquisition Ministry"
@@ -231,7 +227,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT
 	)
 	ring_type = /obj/item/clothing/ring/minister/inquisition
-	seal_type = /obj/item/seal_of_ministry/inquisition
 
 /datum/ministry/inquisition/archive_bonus(mob/living/carbon/human/H)
 	if(H.devotion)
@@ -256,7 +251,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE
 	)
 	ring_type = /obj/item/clothing/ring/minister/mage
-	seal_type = /obj/item/seal_of_ministry/mage
 
 /datum/ministry/mage/archive_bonus(mob/living/carbon/human/H)
 	if(!H.mind)
@@ -276,7 +270,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN
 	)
 	ring_type = /obj/item/clothing/ring/minister/physician
-	seal_type = /obj/item/seal_of_ministry/physician
 
 /datum/ministry/physician/archive_bonus(mob/living/carbon/human/H)
 	H.put_in_hands(new /obj/item/storage/belt/rogue/surgery_bag/full/physician(get_turf(H)))
@@ -289,7 +282,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	archive_traits = list(TRAIT_CICERONE, TRAIT_EMPATH, TRAIT_TAVERN_FIGHTER)
 	archive_skills = list(/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN)
 	ring_type = /obj/item/clothing/ring/minister/innkeeper
-	seal_type = /obj/item/seal_of_ministry/innkeeper
 
 /datum/ministry/merchant
 	name = "Trade Ministry"
@@ -299,7 +291,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	archive_traits = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
 	archive_skills = list(/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN)
 	ring_type = /obj/item/clothing/ring/minister/merchant
-	seal_type = /obj/item/seal_of_ministry/merchant
 
 // ===== PETITION SPELL =====
 
@@ -377,6 +368,9 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(councillor.ministry_active || councillor.ministry_pending || head.ministry_partner)
 		to_chat(head, span_warning("The arrangement has already been overtaken by events."))
 		return
+	if(councillor.ministry_spent && councillor.ministry_spent != charter)
+		to_chat(head, span_warning("This one is schooled in another trade entirely."))
+		return
 	if(SSroguemachine.ministry_bureau.active_ministries[charter])
 		to_chat(head, span_warning("A minister of this house has already been seated."))
 		return
@@ -387,15 +381,12 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	proto.councillor = councillor
 	proto.partner = head
 
-	var/obj/item/paper/scroll/ministry_writ/writ = new(get_turf(head))
-	writ.finalize(councillor, head, proto)
-	post_to_ministry(writ, "[councillor.real_name], Councillor", head, "Your writ of ministry has been posted. Collect it from any HERMES.", get_turf(head))
 	head.visible_message(span_notice("[head.real_name] takes [councillor.real_name] into their confidence."))
-	to_chat(head, span_notice("You accept the petition. The writ recording it will reach you by post."))
+	to_chat(head, span_notice("You accept the petition. The writ will reach you by post once they are sworn in."))
 	to_chat(councillor, span_notice("[head.real_name] accepts. Go to the bureau in the council chamber to be sworn in."))
 
 // ===== WRIT OF MINISTRY =====
-// The partner's record. Arrives finalized, nothing to sign.
+// The partner's half. Records the oath and carries their voice to the minister's ring.
 
 /obj/item/paper/scroll/ministry_writ
 	name = "writ of ministry"
@@ -404,10 +395,21 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	open = TRUE
 	textper = 150
 	var/ministry_type
+	var/open_name
+	var/obj/item/clothing/ring/minister/paired_ring
+	var/speech_cooldown = 0
+	var/speech_cooldown_time = 10 SECONDS
+
+/obj/item/paper/scroll/ministry_writ/Destroy()
+	if(paired_ring)
+		paired_ring.paired_writ = null
+		paired_ring = null
+	return ..()
 
 /obj/item/paper/scroll/ministry_writ/proc/finalize(mob/living/carbon/human/minister, mob/living/carbon/human/partner, datum/ministry/M)
 	ministry_type = M.type
-	name = "writ of the [M.name]"
+	open_name = "writ of the [M.name]"
+	name = open_name
 	desc = "A charter appointing [minister.real_name] to the office of [M.display_title]."
 	var/datum/job/ruler = SSjob.GetJobType(/datum/job/roguetown/lord)
 	var/ruler_title = ruler?.display_title || ruler?.title || "Grand Duke"
@@ -416,19 +418,71 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	info += "Let it be known that, [partner.real_name], [partner.mind?.assigned_role || "of the town"], \
 			does receive into their confidence [minister.real_name], Councillor to the [ruler_title], \
 			granting unto them the office and privileges of <b>[M.display_title]</b>.<br/><br/>"
-	info += "The Minister shall speak for this house within the council chamber. The seal accompanying this writ \
-			shall carry their voice, and bear yours in return.<br/><br/>"
+	info += "The Minister shall speak for this house within the council chamber. Unroll this writ and speak \
+			upon it to reach them, wherever they stand.<br/><br/>"
 	info += "SIGNED,<br/>"
 	info += "[minister.real_name], [M.display_title] of [SSmapping.map_adjustment.realm_name]"
 	info += "</font>"
 	update_icon_state()
 
+/obj/item/paper/scroll/ministry_writ/examine(mob/user)
+	. = ..()
+	if(paired_ring && open)
+		. += span_notice("Speak upon it to reach the minister.")
+
 /obj/item/paper/scroll/ministry_writ/update_icon_state()
+	if(mailer)
+		return ..()
 	if(!open)
 		icon_state = "scroll_closed"
 		name = "scroll"
 		return
 	icon_state = "contractsigned"
+	name = open_name || initial(name)
+
+// Rolled up it folds like any scroll. Unrolled it carries the partner's voice.
+/obj/item/paper/scroll/ministry_writ/attack_self(mob/user)
+	// Let the parent clear the mail wrapper first, otherwise read() stays blocked.
+	if(mailer || !open || !paired_ring || !ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	if(!H.ministry_partner || H.ministry_partner.partner != H)
+		return ..()
+	if(H.restrained() || H.incapacitated())
+		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
+		return
+	if(world.time < speech_cooldown)
+		to_chat(H, span_warning("The ink is still settling from its last use."))
+		return
+	if(QDELETED(paired_ring))
+		to_chat(H, span_warning("The writ has no paired ring. The bond is broken."))
+		return
+	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
+		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
+		return
+	H.changeNext_move(CLICK_CD_INTENTCAP)
+	visible_message(span_notice("[H] murmurs over the writ."))
+	var/msg = input(H, "Send word to your minister.", "Ministry Channel") as null|text
+	if(!msg || QDELETED(paired_ring))
+		return
+	speech_cooldown = world.time + speech_cooldown_time
+	H.whisper(msg)
+	paired_ring.relay_ministry_message(msg, H.real_name, "Patron")
+
+/obj/item/paper/scroll/ministry_writ/proc/relay_ministry_message(msg, speaker_name, speaker_role)
+	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
+	say("<font color='#C8A84B'><b>[speaker_name] ([speaker_role]):</b> [msg]</font>")
+
+/obj/item/paper/scroll/ministry_writ/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(!message)
+		return
+	if(!language)
+		language = get_default_language()
+	if(isitem(loc))
+		var/obj/item/I = loc
+		I.send_speech(message, 1, I, , spans, message_language = language)
+		return
+	send_speech(message, 1, src, , spans, message_language = language)
 
 // Minister's Signet, works paired with the partner's seal like a two-way SCOM.
 /obj/item/clothing/ring/minister
@@ -437,14 +491,14 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	icon_state = "signet"
 	sellprice = 100
 	slot_flags = ITEM_SLOT_RING
-	var/obj/item/seal_of_ministry/paired_seal
+	var/obj/item/paper/scroll/ministry_writ/paired_writ
 	var/speech_cooldown = 0
-	var/speech_cooldown_time = 1 MINUTES
+	var/speech_cooldown_time = 10 SECONDS
 
 /obj/item/clothing/ring/minister/Destroy()
-	if(paired_seal)
-		paired_seal.paired_ring = null
-		paired_seal = null
+	if(paired_writ)
+		paired_writ.paired_ring = null
+		paired_writ = null
 	return ..()
 
 /obj/item/clothing/ring/minister/attack_self(mob/user)
@@ -465,20 +519,20 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	if(world.time < speech_cooldown)
 		to_chat(H, span_warning("The ring's metal is still heated from its last use."))
 		return
-	if(QDELETED(paired_seal))
+	if(QDELETED(paired_writ))
 		to_chat(H, span_warning("The ring has no paired seal. The bond is broken."))
 		return
-	if(!ismob(get_atom_on_turf(paired_seal, /mob)))
+	if(!ismob(get_atom_on_turf(paired_writ, /mob)))
 		to_chat(H, span_warning("The seal is not being carried. My words find no one."))
 		return
 	H.changeNext_move(CLICK_CD_INTENTCAP)
 	visible_message(span_notice("[H] presses their ring against their mouth."))
 	var/msg = input(H, "Speak into the ring.", "Ministerial Murmurs...") as null|text
-	if(!msg || QDELETED(paired_seal))
+	if(!msg || QDELETED(paired_writ))
 		return
 	speech_cooldown = world.time + speech_cooldown_time
 	H.whisper(msg)
-	paired_seal.relay_ministry_message(msg, H.real_name, "Minister")
+	paired_writ.relay_ministry_message(msg, H.real_name, "Minister")
 
 /obj/item/clothing/ring/minister/proc/relay_ministry_message(msg, speaker_name, speaker_role)
 	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
@@ -528,97 +582,3 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /obj/item/clothing/ring/minister/merchant
 	name = "trade minister's signet"
 	desc = "A ring bearing the mammon-hoarding marque of the Merchant's Guild."
-
-// ===== SEAL OF MINISTRY =====
-/obj/item/seal_of_ministry
-	name = "seal of ministry"
-	desc = "A sealed dispatch bearing a ministerial mark. The wax is soft and dark."
-	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "scroll_closed"
-	w_class = WEIGHT_CLASS_TINY
-	dropshrink = 0.6
-	var/obj/item/clothing/ring/minister/paired_ring
-	var/speech_cooldown = 0
-	var/speech_cooldown_time = 1 MINUTES
-
-/obj/item/seal_of_ministry/Destroy()
-	if(paired_ring)
-		paired_ring.paired_seal = null
-		paired_ring = null
-	return ..()
-
-/obj/item/seal_of_ministry/attack_self(mob/user)
-	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(!H.ministry_partner || H.ministry_partner.partner != H)
-		to_chat(H, span_warning("The wax is inert. This seal answers to another hand."))
-		return
-	if(H.restrained() || H.incapacitated())
-		to_chat(H, span_warning("I cannot use this while restrained or incapacitated!"))
-		return
-	if(world.time < speech_cooldown)
-		to_chat(H, span_warning("The seal is still reforming from its last break."))
-		return
-	if(QDELETED(paired_ring))
-		to_chat(H, span_warning("The seal has no paired ring. The bond is broken."))
-		return
-	if(!ismob(get_atom_on_turf(paired_ring, /mob)))
-		to_chat(H, span_warning("My minister is not carrying their ring. My words find no one."))
-		return
-	H.changeNext_move(CLICK_CD_INTENTCAP)
-	visible_message(span_notice("[H] murmurs into the wax of the seal."))
-	var/msg = input(H, "Send word to your minister.", "Ministry Channel") as null|text
-	if(!msg || QDELETED(paired_ring))
-		return
-	speech_cooldown = world.time + speech_cooldown_time
-	H.whisper(msg)
-	paired_ring.relay_ministry_message(msg, H.real_name, "Patron")
-
-/obj/item/seal_of_ministry/proc/relay_ministry_message(msg, speaker_name, speaker_role)
-	playsound(src, 'sound/misc/scom.ogg', 80, FALSE, -1)
-	say("<font color='#C8A84B'><b>[speaker_name] ([speaker_role]):</b> [msg]</font>")
-
-/obj/item/seal_of_ministry/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	if(!message)
-		return
-	if(!language)
-		language = get_default_language()
-	if(isitem(loc))
-		var/obj/item/I = loc
-		I.send_speech(message, 1, I, , spans, message_language = language)
-		return
-	send_speech(message, 1, src, , spans, message_language = language)
-
-/obj/item/seal_of_ministry/guild
-	name = "guild seal of ministry"
-	desc = "A rolled dispatch sealed with the crossed-hammer mark of the Guildmaster. The wax feels warm when held."
-
-/obj/item/seal_of_ministry/church
-	name = "church seal of ministry"
-	desc = "A scroll bound shut with the Pantheon cross in pale wax. It carries the faint smell of flower petals."
-
-/obj/item/seal_of_ministry/night
-	name = "night seal of ministry"
-	desc = "A plain roll of parchment, sealed with unmarked black wax. Nothing about it invites curiosity."
-
-/obj/item/seal_of_ministry/inquisition
-	name = "inquisition seal of ministry"
-	desc = "A tightly rolled writ sealed with a silver stamp. The edges are sharp and precise."
-
-/obj/item/seal_of_ministry/mage
-	name = "arcane seal of ministry"
-	desc = "A scroll whose wax seal faintly glows with a glyph that shifts when you aren't looking directly at it."
-
-/obj/item/seal_of_ministry/physician
-	name = "physician seal of ministry"
-	desc = "A clinical roll of parchment sealed in dark red wax. Smells faintly of camphor."
-
-/obj/item/seal_of_ministry/innkeeper
-	name = "tavern seal of ministry"
-	desc = "A short scroll sealed with the inn's tap-mark pressed into amber wax. It smells vaguely of ale."
-
-/obj/item/seal_of_ministry/merchant
-	name = "trade seal of ministry"
-	desc = "A folded dispatch sealed with the merchant's mark in green wax, the edges worn from handling."
