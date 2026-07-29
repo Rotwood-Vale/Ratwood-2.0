@@ -170,3 +170,16 @@
 	if(!do_after(living_user, 1 SECONDS, target = src))
 		return
 	living_user.forceMove(src)
+
+/turf/open/floor/dune
+	name = "dune"
+	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler"
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "sand"
+	density = FALSE
+	opacity = TRUE
+	floor_tile = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
