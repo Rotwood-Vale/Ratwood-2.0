@@ -25650,6 +25650,12 @@
 	},
 /turf/open/water/bath,
 /area/rogue/indoors/town/manor/desert)
+"hss" = (
+/obj/structure/roguemachine/scomm/r{
+	scom_tag = Qasr - Sheikh Office
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/manor/desert)
 "hsD" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock,
 /turf/open/floor/rogue/citybrick/citybrick1,
@@ -65135,10 +65141,6 @@
 /obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/church/basement)
-"sTz" = (
-/obj/structure/roguemachine/scomm/r,
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/manor/desert)
 "sTD" = (
 /obj/structure/fluff/walldeco/stone/bronze,
 /turf/closed/wall/mineral/rogue/sandstone,
@@ -534383,7 +534385,7 @@ oTJ
 hZy
 wBj
 vVO
-sTz
+hss
 klw
 klw
 klw
