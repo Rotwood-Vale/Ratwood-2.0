@@ -425,7 +425,7 @@
 
 
 /datum/reagent/drug/food_reagent/apple
-    stress_type = /datum/stressevent/applesmoke
+	stress_type = /datum/stressevent/applesmoke
 
 /datum/reagent/drug/apple/on_mob_life(mob/living/carbon/M)
 	..()
