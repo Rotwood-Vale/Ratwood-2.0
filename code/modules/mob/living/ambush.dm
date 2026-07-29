@@ -185,7 +185,7 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 	for(var/obj/structure/flora/rogueshroom/RX in orange(max_dist, src))
 		if(isturf(RX.loc) && !get_dist(RX.loc, src) < min_dist)
 			possible_targets += get_adjacent_ambush_turfs(RX.loc)
-	for(var/obj/effect/decal/dune/D in orange(max_dist, src))
+	for(var/obj/structure/roguesand/dune/D in orange(max_dist, src))
 		if(isturf(D.loc) && get_dist(D.loc, src) >= min_dist)
 			possible_targets += get_adjacent_ambush_turfs(D.loc)
 	for(var/obj/structure/flora/newtree/RS in orange(max_dist, src))

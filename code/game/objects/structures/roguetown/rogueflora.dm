@@ -1219,3 +1219,4 @@
 /obj/structure/flora/roguegrass/jungle/sparse/Initialize(mapload)
 	. = ..()
 	icon_state = "grassb[rand(1, 5)]"
+

@@ -1818,22 +1818,10 @@
 	turf_destruction("blunt")
 	return
 
-/turf/open/floor/rogue/dune
+/obj/structure/roguesand/dune
 	name = "dune"
 	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
-	icon = 'icons/turf/roguefloor.dmi'
-	icon_state = "dune"
-	density = FALSE
-	opacity = TRUE
-	floor_tile = null
-	footstep = FOOTSTEP_SAND
-	barefootstep = FOOTSTEP_SAND
-	clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_SAND
 
-/obj/effect/decal/dune
-	name = "dune"
-	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "dune_1"
 
@@ -1841,43 +1829,49 @@
 	density = FALSE
 	opacity = TRUE
 	mouse_opacity = 0
+	max_integrity = 10
+	layer = 4.1
 
-/obj/effect/decal/dune/Crossed(atom/movable/O)
+	blade_dulling = DULLING_CUT
+	attacked_sound = "plantcross"
+	destroy_sound = "plantcross"
+
+
+/obj/structure/roguesand/dune/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/roguegrass) //bro its fine trust me
 
+/obj/structure/roguesand/dune/Crossed(atom/movable/O)
+	. = ..()
 	if(!isliving(O))
 		return
-
 	opacity = FALSE
 
-/obj/effect/decal/dune/Uncrossed(atom/movable/O)
-	. = ..()
 
+/obj/structure/roguesand/dune/Uncrossed(atom/movable/O)
+	. = ..()
 	if(!isliving(O))
 		return
-
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		if(L != O)
 			return
-
 	opacity = TRUE
 
-
-/obj/effect/decal/dune/one
+/obj/structure/roguesand/dune/one
 	icon_state = "dune_1"
 
-/obj/effect/decal/dune/two
+/obj/structure/roguesand/dune/two
 	icon_state = "dune_2"
 
-/obj/effect/decal/dune/three
+/obj/structure/roguesand/dune/three
 	icon_state = "dune_3"
 
-/obj/effect/decal/dune/four
+/obj/structure/roguesand/dune/four
 	icon_state = "dune_4"
 
-/obj/effect/decal/dune/five
+/obj/structure/roguesand/dune/five
 	icon_state = "dune_5"
 
-/obj/effect/decal/dune/six
-	icon_state = "dune_6"
+/obj/structure/roguesand/dune/six
+	icon_state = "dune_6"	
