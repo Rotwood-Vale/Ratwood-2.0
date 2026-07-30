@@ -145,6 +145,8 @@
 	fueluse = 0
 	no_refuel = TRUE
 	crossfire = FALSE
+	healing_range = 2
+	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
 	heat_level = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
@@ -170,6 +172,7 @@
 
 /obj/machinery/light/rogue/campfire/fireplace/inn
 	name = "grand fireplace"
+	healing_range = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/crafted
 	density = FALSE
@@ -854,6 +857,9 @@
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
 	heat_level = 5
+	var/healing_range = 1
+	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
+	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
 
 /obj/machinery/light/rogue/campfire/process()
 	..()
@@ -861,6 +867,31 @@
 		var/turf/open/O = loc
 		if(IS_WET_OPEN_TURF(O))
 			extinguish()
+
+	if(on)
+		var/list/hearers_in_range = get_hearers_in_LOS(healing_range, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/living/carbon/human/human in hearers_in_range)
+			var/distance = get_dist(src, human)
+			if(distance > healing_range || human.construct)
+				continue
+			if(!human.has_status_effect(stamina_status_effect))
+				to_chat(human, span_info("The warmth of the fire comforts me, affording me a short rest. I would need to lie down on a bed to get a better rest."))
+			human.apply_status_effect(stamina_status_effect)
+			human.add_stress(/datum/stressevent/campfire)
+			if(human.resting && !human.cmode)
+				var/valid_bed = FALSE
+				var/turf/T = get_turf(human)
+				for(var/obj/O in T.contents)
+					for(var/path in acceptable_beds)
+						if(ispath(O.type, path))
+							valid_bed = TRUE
+							break
+					if(valid_bed)
+						break
+				if(valid_bed)
+					if(!human.has_status_effect(/datum/status_effect/buff/campfire))
+						to_chat(human, span_info("Settling in by the flames lifts the burdens of the week."))
+					human.apply_status_effect(/datum/status_effect/buff/campfire)
 
 /obj/machinery/light/rogue/campfire/onkick(mob/user)
 	if(isliving(user) && on)
