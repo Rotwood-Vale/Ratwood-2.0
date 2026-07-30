@@ -1344,7 +1344,7 @@
 "Bc" = (
 /obj/structure/curtain/brown,
 /obj/structure/curtain/brown,
-/turf/closed/indestructible/rock,
+/turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/tomb/indoors)
 "By" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1415,7 +1415,7 @@
 /area/rogue/under/tomb/indoors)
 "CZ" = (
 /obj/structure/curtain/brown,
-/turf/closed/indestructible/rock,
+/turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/tomb/indoors)
 "Db" = (
 /obj/item/natural/stone{

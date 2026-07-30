@@ -90,20 +90,23 @@
 	var/turf/bathspot = get_turf(target)
 	if(!istype(bathspot, /turf/open/water/bath) && !locate(/obj/structure/hotspring) in bathspot)
 		return
-	if(ishuman(target))
-		visible_message(span_info("[user] begins washing [target] with the [src]."))
-		if(do_after(user, 50))
-			wash_atom(target,CLEAN_MEDIUM)
-			if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-				visible_message(span_info("[user] expertly cleans and soothes [target] with the [src]."))
-				to_chat(target, span_love("I feel so relaxed and clean!"))
-				target.add_stress(/datum/stressevent/bathcleaned)
-			else
-				visible_message(span_info("[user] tries their best to scrub [target] with the [src]."))
-				to_chat(target, span_warning("That's a bit nicer, I guess."))
-				target.add_stress(/datum/stressevent/bath)
-			var/datum/charflaw/malodorous/malodorous_flaw = target.get_flaw(/datum/charflaw/malodorous)
-			malodorous_flaw?.on_bath(target)
-			uses -= 1
-			if(uses == 0)
-				qdel(src)
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	visible_message(span_info("[user] begins washing [H] with the [src]."))
+	if(do_after(user, 50))
+		wash_atom(target,CLEAN_MEDIUM)
+		if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+			visible_message(span_info("[user] expertly cleans and soothes [H] with the [src]."))
+			to_chat(H, span_love("I feel so relaxed and clean!"))
+			H.add_stress(/datum/stressevent/bathcleaned)
+		else
+			visible_message(span_info("[user] tries their best to scrub [H] with the [src]."))
+			to_chat(H, span_warning("That's a bit nicer, I guess."))
+			H.add_stress(/datum/stressevent/bath)
+		var/datum/charflaw/malodorous/malodorous_flaw = H.get_flaw(/datum/charflaw/malodorous)
+		malodorous_flaw?.on_bath(H)
+		H.remove_status_effect(/datum/status_effect/debuff/stinky_contact)
+		uses -= 1
+		if(uses == 0)
+			qdel(src)

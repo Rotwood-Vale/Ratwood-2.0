@@ -89,9 +89,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE, MODE_SING = TRUE)
 
 	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
-		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
+	if(client && !forced)
+		// Remove the accent-escape brackets before filtering so a split word like "\[f\]\[orbidden\]" can't evade the IC filter and reassemble in the displayed message.
+		var/static/regex/escape_bracket_regex = regex(@"\[([^\]]*)\]?", "g")
+		var/filtered_message = findtext(message, "\[") ? replacetext(message, escape_bracket_regex, "$1") : message
+		if(CHAT_FILTER_CHECK(filtered_message))
+			ic_blocked = TRUE
 
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -325,7 +328,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			keenears = HAS_TRAIT(H, TRAIT_KEENEARS)
+			keenears = H.has_keen_ears()
 			var/name_to_highlight = H.nickname
 			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")	//We don't need to highlight an unset or blank one.
 				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[H.highlight_color]>[name_to_highlight]</font></b>")
@@ -472,8 +475,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			if(get_dist(potential_listener, src) > message_range) //they're out of range of normal hearing
 				continue // don't check ghostwhisper prefs here, those are for admins
-			if(do_ghost_protection && isobserver(potential_listener) && !ghost_bypasses_ghost_protection(potential_listener))
-				continue
+			if(do_ghost_protection && isobserver(potential_listener))
+				var/mob/dead/observer/potential_observer = potential_listener
+				if(!potential_observer.bypasses_ghost_protection(potential_listener))
+					continue
 			if(!is_in_zweb(src.z,potential_listener.z))
 				continue
 			listening |= potential_listener
@@ -493,7 +498,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		admin_listeners[observer] = TRUE
 	if(do_ghost_protection) // don't loop over the whole listening list unless we really have to
 		for(var/mob/dead/observer/ghost in listening) // a necessary evil so ghosts don't show up in the seen log
-			if(ghost_bypasses_ghost_protection(ghost))
+			if(ghost.bypasses_ghost_protection())
 				continue
 			listening -= ghost
 	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
@@ -585,7 +590,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		for(var/i in 1 to barks)
 			if(total_delay > BARK_MAX_TIME)
 				break
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, bark), listening, message_range, (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, bark), hears_barks, message_range, (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
 			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 
 /mob/proc/binarycheck()

@@ -276,6 +276,12 @@
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/turfs/stone/brick/bricklight
+	name = "wall (stonebrick light) (2 stoneblocks, 1 lamptern)"
+	result = /turf/closed/wall/mineral/rogue/stonebrick/stonebricklight
+	reqs = list(/obj/item/natural/stoneblock = 2, /obj/item/flashlight/flare/torch/lantern = 1)
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/turfs/stone/decorated
 	name = "wall decorated (stone) (2 stone)"
 	result = /turf/closed/wall/mineral/rogue/decostone
@@ -416,9 +422,9 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/twigplatform
-	name = "platform (twig) (3 sticks)"
+	name = "platform (twig) (2 sticks)" //no more cursed single stick left over
 	result = /turf/open/floor/rogue/twig/platform
-	reqs = list(/obj/item/grown/log/tree/stick = 3)
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	skillcraft = /datum/skill/craft/crafting
 	verbage_simple = "assemble"
 	verbage = "assembles"
@@ -516,7 +522,7 @@
 // Dark Wood Walls
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall
-	name = "Dark Wood Wall"
+	name = "dark wood wall (2 wood planks)"
 	result = /turf/closed/wall/mineral/rogue/wooddark
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
@@ -525,13 +531,32 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwindow
-	name =	"Dark Wood Murderhole"
+	name =	"dark wood murderhole (2 wood planks)"
 	result = /turf/closed/wall/mineral/rogue/wooddark/window
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
 	verbage_simple = "construct"
 	verbage = "constructs"
 	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall/vertical
+	name = "dark wood wall vertical (2 wood planks)"
+	result = /turf/closed/wall/mineral/rogue/wooddark/vertical
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall/horizontal
+	name = "dark wood wall horizontal (2 wood planks)"
+	result = /turf/closed/wall/mineral/rogue/wooddark/horizontal
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 3
+
 // Druidic Grass Turfs
 
 /datum/crafting_recipe/roguetown/turfs/druidic_grass

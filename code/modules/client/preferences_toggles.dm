@@ -122,6 +122,8 @@
 		list("id" = "deadchat", "label" = "Show Deadchat", "enabled" = !!(owner.prefs.chat_toggles & CHAT_DSAY), "desc" = "Receive deadchat messages."),
 		list("id" = "legacy_craft", "label" = "Enable Legacy Craft", "enabled" = !!owner.legacycraft, "desc" = "Use legacy crafting UI/behavior."),
 		list("id" = "roleplay_ads", "label" = "Receive Roleplay Ads", "enabled" = !!(owner.prefs.toggles & ROLEPLAY_ADS), "desc" = "Receive notifications for new roleplay ads."),
+		list("id" = "voting_popup", "label" = "Enable Voting UI Popup", "enabled" = !!owner.prefs.voting_popup, "desc" = "Allow a popup of the voting-ui."),
+	
 	)
 
 	var/list/audio_entries = list(
@@ -136,6 +138,9 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
+		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
+		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 	)
 
 	data["categories"] = list(
@@ -229,6 +234,14 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("facial_branding")
+				owner.toggle_facial_brands()
+			if("sensitive_branding")
+				owner.toggle_sensitive_brands()
+			if("cursed_collars")
+				owner.toggle_cursed_collars()
+			if("voting_popup")
+				owner.toggle_voting_popup()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -439,6 +452,30 @@
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
 
+/client/verb/toggle_facial_brands()
+	set category = "Options"
+	set name = "Toggle Facial Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.facial_brands = !prefs.facial_brands
+		prefs.save_preferences()
+		if(prefs.facial_brands)
+			to_chat(src, "Your head area can now be branded by others.")
+		else
+			to_chat(src, "Your head area can no longer be branded by others.")
+
+/client/verb/toggle_sensitive_brands()
+	set category = "Options"
+	set name = "Toggle Sensitive Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.sensitive_brands = !prefs.sensitive_brands
+		prefs.save_preferences()
+		if(prefs.sensitive_brands)
+			to_chat(src, "Your genital and breast organs can now be branded by others.")
+		else
+			to_chat(src, "Your genital and breast organs can no longer be branded by others.")
+
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
 	set name = "Toggle Edging Content"
@@ -450,6 +487,41 @@
 			to_chat(src, "You ENDVRE through orgasms.")
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
+
+/client/verb/toggle_voting_popup()
+	set category = "Options"
+	set name = "Toggle Voting Popup"
+	set hidden = 1
+	if(!prefs)
+		return
+
+	prefs.voting_popup = !prefs.voting_popup
+	prefs.save_preferences()
+	if(prefs.voting_popup)
+		to_chat(src, "You will see a popup of the voting ui as a vote is called.")
+	else
+		to_chat(src, "You will no longer see a popup of the voting ui as a vote is called.")
+
+	
+/client/verb/toggle_cursed_collars() // Toggles cursed collars. Will drop existing collars if toggled off while wearing one
+	set category = "Options"
+	set name = "Toggle Cursed Collars"
+	set hidden = 1
+	if(!prefs)
+		return
+	prefs.cursed_collarable = !prefs.cursed_collarable
+	prefs.save_preferences()
+	if(prefs.cursed_collarable)
+		to_chat(src, "You can now be collared.")
+		return
+	to_chat(src, "You are no longer able to be collared")
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/human_user = usr
+	var/obj/item/clothing/neck/roguetown/cursed_collar/collar = human_user.wear_neck
+	if(!istype(collar))
+		return
+	collar.dropped(human_user)
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"

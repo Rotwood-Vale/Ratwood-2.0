@@ -2,6 +2,8 @@
 /obj/effect/proc_holder/spell/invoked/lesser_heal
 	name = "Miracle"
 	desc = "Heals target over time, causes damage if something is embedded in target. Burns undead instead of healing them if you worship the Ten.<br>Does not work on those worshipping the dead god."
+	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "lesserheal"
 	releasedrain = 30
 	chargedrain = 0
@@ -98,7 +100,9 @@
 /obj/effect/proc_holder/spell/invoked/heal
 	name = "Fortify"
 	desc = "Improves the targets ability to receive healing, buffing all healing done on them by 50%<br>Burns undead instead of healing them if you worship the Ten."
-	overlay_state = "astrata"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "fortify"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -393,7 +397,7 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/blood_heal
-	name = "Blood transfer Miracle"
+	name = "Blood Transfer Miracle"
 	desc = "Transfers the blood from myself to the target with divine magycks. Ratio of transfer scales with holy skill."
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "bloodheal"
@@ -422,6 +426,12 @@
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/UH = user
+
+		if(UH.doing)
+			to_chat(UH, span_warning("I can't cast this while doing something else."))
+			revert_cast()
+			return FALSE
+
 		if(NOBLOOD in UH.dna?.species?.species_traits)
 			to_chat(UH, span_warning("I have no blood to provide."))
 			revert_cast()

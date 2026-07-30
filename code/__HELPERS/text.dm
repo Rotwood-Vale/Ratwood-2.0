@@ -493,14 +493,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	// Parse colour
 	if(!barebones)
-		var/regex/hexgex = regex(@"(?<=-=)(.{6})", "g")
-		while(hexgex.Find(t))
-			var/endblock = findtext(t, "=-", hexgex.index)
-			if(!endblock)
-				break
-			t = replacetext(t, "=-", "</font>", hexgex.index, endblock+2)
-			var/c_code = sanitize_hexcolor(hexgex.match)
-			t = replacetext(t, "-=[hexgex.match]", "<font color='[c_code]'>", hexgex.index-2, endblock+2)
+		// Because `[.\n]` would just match the literal . character and newlines,
+		// we have to use [\S\s\n] here to match all non-spaces, all spaces, and all newlines.
+		// Also if you try to add \r it explodes, don't do that.
+		var/regex/hexgex = regex(@"-=([A-Za-z0-9]{6})([\S\s\n]+?)=-", "g")
+		// group 1 - color. group 2 - affected text
+		t = hexgex.Replace_char(t, "<font color='$1'>$2</font>")
 
 	// Parse hr and small
 

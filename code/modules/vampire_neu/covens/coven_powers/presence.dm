@@ -51,8 +51,8 @@
 
 
 /datum/coven_power/presence/awe/deactivate(mob/living/carbon/human/target)
-	. = ..()
 	target.remove_overlay(MUTATIONS_LAYER)
+	. = ..()
 
 //DREAD GAZE
 /datum/coven_power/presence/dread_gaze

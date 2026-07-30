@@ -2,6 +2,8 @@
 /obj/effect/proc_holder/spell/self/call_to_slaughter
 	name = "Call to Slaughter"
 	desc = "Grants you and all allies nearby a buff to their strength, willpower, and constitution."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "call_to_slaughter"
 	recharge_time = 5 MINUTES
 	invocations = list("LAMBS TO THE SLAUGHTER!")
@@ -30,8 +32,10 @@
 /obj/effect/proc_holder/spell/invoked/projectile/blood_net
 	name = "Unholy Grasp"
 	desc = "Toss forth an unholy snare of blood and guts a short distance, summoned from your leftover trophies sacrificed to Graggar. Like a net, may it snare your target!"
-	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "unholy_grasp"
+	clothes_req = FALSE
 	range = 3													//It's a net, so low range.
 	req_inhand = /obj/item/alch/viscera							//Need to have viscera inhand to cast this.
 	associated_skill = /datum/skill/magic/holy
@@ -111,7 +115,9 @@
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter
 	name = "Revel in Slaughter"
 	desc = "The blood of your enemy shall boil, their skin feeling as if it's being ripped apart! Graggar demands their blood must FLOW!!!"
-	overlay_state = "bloodsteal"
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "revel_in_slaughter"
 	recharge_time = 1 MINUTES
 	invocations = list("YOUR BLOOD WILL BOIL TILL IT'S SPILLED!")
 	invocation_type = "shout"
@@ -155,6 +161,8 @@
 /obj/effect/proc_holder/spell/self/graggar_bloodrage
 	name = "Bloodrage"
 	desc = "Grants you unbound strength for a short while."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "bloodrage"
 	recharge_time = 5 MINUTES
 	invocations = list("GRAGGAR!! GRAGGAR!! GRAGGAR!!",

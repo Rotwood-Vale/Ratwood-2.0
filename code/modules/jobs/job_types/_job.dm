@@ -404,7 +404,7 @@
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)//gives the desert language to all the desert people!
 	. = ..()
-	if(SSmapping.config.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
+	if(SSmapping.current_map.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
 		H.grant_language(/datum/language/celestial)
 
 /datum/outfit/job

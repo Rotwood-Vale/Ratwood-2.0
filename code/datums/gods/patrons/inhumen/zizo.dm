@@ -1,10 +1,10 @@
 /datum/patron/inhumen/zizo
 	name = "Zizo"
-	domain = "Necromancy, Progress, The Rot, Left-Handed Magicks"
-	desc = "The God-Head was the mortal snow elf Zinoviya, abandoned by Her Divine Father PSYDON. When She found out She was denied godhood, She struck PSYDON down and took it Herself, plunging the world into the Second Coming of the Rot. Burn the world to ash, and build it anew."
-	worshippers = "Necromancers, Maddened Mages, The Undead"
-	virtues = "Progress, Undeath, Ambition"
-	sins = "Ignorance, Stagnation, Humility"
+	domain = "Necromancy, Ambition, The Rot, Left-Handed Magicks"
+	desc = "In the ancient times there was a mortal who formed a mighty empire, and through the sacrifice of its population ascended to godhood. Those who were weaker were bound even in death, their oaths eternal and their labor without end. Zizo is proof of humanity’s sheer potential. Now chained in the underworld she whispers to mortals to act in her name, rebuild her power and allow her to be freed to roam the mortal world once more, and continue her regime."
+	worshippers = "Necromancers, the undead, secretive cabals, conquerors and madmen."
+	virtues = "Ambition, Domination, Undeath"
+	sins = "Humility, Ignorance, Stagnation"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
@@ -17,9 +17,9 @@
 					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
 	)
 	confess_lines = list(
-		"PRAISE ZIZO!",
-		"LONG LIVE ZIZO!",
-		"ZIZO IS QUEEN!",
+		"PRAISE ZIZO THE IMMORTAL!",
+		"LONG LIVE ZIZO THE IMMORTAL!",
+		"ZIZO IS THE QUEEN ETERNAL!",
 	)
 	storyteller = /datum/storyteller/zizo
 

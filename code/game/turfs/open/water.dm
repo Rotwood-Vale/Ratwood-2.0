@@ -248,8 +248,7 @@
 				to_chat(user, span_warning("[C] is full."))
 				return
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
-			if(do_after(user, 8, target = src))
-				user.changeNext_move(CLICK_CD_MELEE)
+			if(do_after(user, 0.8 SECONDS, target = src))
 				C.reagents.add_reagent(water_reagent, 300)
 				to_chat(user, span_notice("I fill [C] from [src]."))
 				// If the user is filling a water purifier and the water isn't already clean...
@@ -312,7 +311,7 @@
 
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
-			if(do_after(L, 30, target = src))
+			if(do_after(L, 3 SECONDS, target = src))
 				if(wash_in)
 					wash_atom(item2wash, CLEAN_STRONG)
 					L.update_inv_hands()
@@ -335,36 +334,36 @@
 			if(C.is_mouth_covered())
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
-		drink_act(user, L)
+		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
+		for(var/drink in 1 to 40)
+			if(drink_act(user, L))
+				return
+		to_chat(user, span_warning("I've had enough."))
 		return
 	..()
 
 /turf/open/water/proc/drink_act(mob/user, mob/living/L)
-	playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 	if(L.stat != CONSCIOUS)
-		return
-
-	if(do_after(L, 25, target = src))
+		return TRUE
+	if(do_after(L, 2.5 SECONDS, target = src))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+			if(ispath(water_reagent, /datum/reagent/blood) && (H.dna?.species?.id == "gnoll"))
 				if(!H.gnoll_bloodpool_feed())
-					return
+					return FALSE
 				playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 				if(!mapped)
 					water_volume = max(water_volume - 2, 0)
 					if(water_volume <= 0)
 						water_reagent = water_reagent_purified
 				return
-		if (istype(src,/turf/open/water/sewer))
-			to_chat(user, span_userdanger("Have I gone mad!? Why am I drinking sewage!?"))
 		var/list/waterl = list(src.water_reagent = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
 		playsound(user,pick('sound/items/drink_gen (1).ogg','sound/items/drink_gen (2).ogg','sound/items/drink_gen (3).ogg'), 100, TRUE)
-		drink_act(user, L)
-	return
+		return FALSE
+	return TRUE
 
 /turf/open/water/Destroy()
 	. = ..()
@@ -431,6 +430,19 @@
 	icon_state = "paving"
 	water_color = pick("#705a43","#697043", "#6C6543")
 	.  = ..()
+
+/turf/open/water/sewer/onbite(mob/user)
+	// I think it's okay to have these checks copy-pasted for something you really, *really* aren't supposed to be doing anyways.
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.is_mouth_covered())
+				return
+		to_chat(L, span_userdanger("Have I gone mad!? Why am I drinking sewage?"))
+	..()
 
 /turf/open/water/swamp
 	name = "murk"

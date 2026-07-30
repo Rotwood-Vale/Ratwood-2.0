@@ -100,9 +100,6 @@
 /turf/open/floor/update_icon()
 	. = ..()
 
-/turf/open/floor/attack_paw(mob/user)
-	return attack_hand(user)
-
 /turf/open/floor/proc/gets_drilled()
 	return
 
@@ -162,9 +159,27 @@
 
 /turf/open/floor/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.has_status_effect(/datum/status_effect/debuff/climbing_lfwb))
-			if(do_after(L, 10, target = src))
-				L.forceMove(src)
-				return
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	if(!living_user.has_status_effect(/datum/status_effect/debuff/climbing_lfwb))
+		return
+	if(is_blocked_turf())
+		to_chat(living_user, span_notice("can't move here!"))
+		return
+	if(!do_after(living_user, 1 SECONDS, target = src))
+		return
+	living_user.forceMove(src)
+
+/turf/open/floor/dune
+	name = "dune"
+	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler"
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "sand"
+	density = FALSE
+	opacity = TRUE
+	floor_tile = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY

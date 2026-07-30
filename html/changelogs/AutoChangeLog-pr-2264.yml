@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "Dislocated limb hand-touch treatment procedure now works again. Remember to be on weak intent."
