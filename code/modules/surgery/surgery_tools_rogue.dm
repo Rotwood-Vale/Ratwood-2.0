@@ -221,7 +221,7 @@
 			setbranding = inputty
 			to_chat(user, span_warning("我更换了[!branding_low_quality ? "铁制" : "煤炭"]尖端，它将印下[setbranding]。"))
 		else
-			to_chat(user, span_info("I clear the current branding symbol."))
+			to_chat(user, span_info("我清除了当前烙印符号。"))
 			setbranding = null
 	..()
 
@@ -249,7 +249,7 @@
 	var/list/zone_options = list()
 
 	if(QDELETED(branding_part) || !istype(branding_part))
-		to_chat(user, span_warning("They don't have this part..."))
+		to_chat(user, span_warning("他们没有这个部位……"))
 		return TRUE
 
 	// Construct a prompt for zone-specific branding code. If you change any of these strings, make sure they're changed in the switch case later.
@@ -324,16 +324,16 @@
 		zone_options += "Cancel"
 	else // failsafe
 		if(covered)
-			to_chat(user, span_warning("That part is covered!"))
+			to_chat(user, span_warning("那个部位被遮挡了！"))
 		else
-			to_chat(user, span_warning("It doesn't seem like this part can be branded!"))
+			to_chat(user, span_warning("这个部位似乎无法烙印！"))
 		return TRUE
 
 	var/branding_text = setbranding // No switcheroos partway through.
 	var/final_answer // String. The button the user clicks on when prompted which part to brand.
 
 	// Prompt before do_after
-	final_answer = tgui_alert(user, "What do you wish to brand?", "Please answer in [DisplayTimeText(10 SECONDS)]!", zone_options, 10 SECONDS)
+	final_answer = tgui_alert(user, "你想烙印哪个部位？", "请在[DisplayTimeText(10 SECONDS)]内选择！", zone_options, 10 SECONDS)
 
 	if(!final_answer || final_answer == "Cancel")
 		return TRUE
@@ -343,22 +343,22 @@
 		switch(final_answer)
 			if("Breasts", "Dick", "Vagina", "Testes")
 				if(!target.client)
-					to_chat(user, span_warning("[target] can't receive a brand here right now."))
+					to_chat(user, span_warning("[target]现在无法在这里接受烙印。"))
 					log_combat(user, target, "Branding on offline mob blocked: \"[branding_text]\" on [final_answer]")
 					return TRUE
 				if(!target.client.prefs?.sensitive_brands)
-					to_chat(user, span_warning("[target] has sensitive brands disabled."))
-					to_chat(target, span_warning("A branding attempt on my [LOWER_TEXT(final_answer)] was blocked by preferences."))
+					to_chat(user, span_warning("[target]已禁用敏感部位烙印。"))
+					to_chat(target, span_warning("一次对我[LOWER_TEXT(final_answer)]的烙印尝试被偏好设置阻止了。"))
 					log_combat(user, target, "Branding prefblocked: \"[branding_text]\" on [final_answer]")
 					return TRUE
 			if("Head")
 				if(!target.client)
-					to_chat(user, span_warning("[target] can't receive a brand here right now."))
+					to_chat(user, span_warning("[target]现在无法在这里接受烙印。"))
 					log_combat(user, target, "Branding on offline mob blocked: \"[branding_text]\" on [final_answer]")
 					return TRUE
 				if(!target.client.prefs?.facial_brands)
-					to_chat(user, span_warning("[target] has facial brands disabled."))
-					to_chat(target, span_warning("A branding attempt on my [LOWER_TEXT(final_answer)] was blocked by preferences."))
+					to_chat(user, span_warning("[target]已禁用面部烙印。"))
+					to_chat(target, span_warning("一次对我[LOWER_TEXT(final_answer)]的烙印尝试被偏好设置阻止了。"))
 					log_combat(user, target, "Branding prefblocked: \"[branding_text]\" on [final_answer]")
 					return TRUE
 
@@ -367,15 +367,15 @@
 	if(!branding_self) 
 		if(branding_low_quality)
 			if(!target.compliance)  // we can only brand ourselves OR the other character must be compliant
-				to_chat(user, span_warning("[target]'s moving too much to let me brand [target.p_them()]!"))
+				to_chat(user, span_warning("[target]动得太厉害了，我无法给[target.p_them()]烙印！"))
 				return TRUE
 			branding_delay += 3 SECONDS // if they are compliant then there will still be an added delay
-		user.visible_message(span_warning("[user] slowly wields [src] towards [target]'s [LOWER_TEXT(final_answer)]."))
-		to_chat(target, span_userdanger("[user] is trying to brand me on the [LOWER_TEXT(final_answer)]!"))
+		user.visible_message(span_warning("[user]缓缓将[src]移向[target]的[LOWER_TEXT(final_answer)]。"))
+		to_chat(target, span_userdanger("[user]正试图在我的[LOWER_TEXT(final_answer)]上烙印！"))
 	else
 		if(!branding_low_quality)
 			branding_delay -= 4 SECONDS // quicker to brand yourself using a good tool
-		user.visible_message(span_warning("[user] slowly wields [src] onto [user.p_their()] [LOWER_TEXT(final_answer)]."))
+		user.visible_message(span_warning("[user]缓缓将[src]移向[user.p_their()][LOWER_TEXT(final_answer)]。"))
 
 	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s)")
 
@@ -441,7 +441,7 @@
 				to_chat(user, span_warning("我在现有印记上重新烙印。"))
 			testes.branded_writing = branding_text
 		if("Mouth")
-			user.visible_message(span_info("[target] [description_recoil] as \the [src] sears onto [target.p_their()] lips! The branding leaves an unrecognizable burn."))
+			user.visible_message(span_info("[target][description_recoil]，[src]烙上了[target.p_their()]的嘴唇！烙印留下了难以辨认的灼痕。"))
 			target.apply_status_effect(/datum/status_effect/mouth_branded)
 			to_chat(target, span_userdanger("你的嘴唇被烧焦了！"))
 			apply_message = FALSE
@@ -454,8 +454,8 @@
 	if(!branding_self && apply_knockdown)
 		target.Knockdown(1 SECONDS)
 	if(apply_message)
-		user.visible_message(span_info("[target] [description_recoil] as \the [src] sears a mark on [target.p_their()] [LOWER_TEXT(final_answer)]! The fresh brand shows [span_boldwarning(branding_text)]."))
-		to_chat(target, span_userdanger("You have been branded!"))
+		user.visible_message(span_info("[target][description_recoil]，[src]在[target.p_their()]的[LOWER_TEXT(final_answer)]上烙下印记！崭新的烙印显示出[span_boldwarning(branding_text)]。"))
+		to_chat(target, span_userdanger("你被烙印了！"))
 	
 	target.emote(prob(50) ? "painscream" : "scream", forced = TRUE)
 	target.Stun(40)
