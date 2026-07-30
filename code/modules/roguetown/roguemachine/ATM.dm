@@ -171,13 +171,13 @@
 	var/job_text // what tax bracket the user falls into, for examine text purpose
 	var/fine_exempt_status = SStreasury.check_fine_exemption(user) ? "Exempt from fines." : "Not exempt from fines." // returns TRUE/FALSE
 
-	if(HAS_TRAIT(person, TRAIT_OUTLANDER))
+	if(HAS_TRAIT(user, TRAIT_OUTLANDER))
 		job_text = "Outlanders"
-	else if(HAS_TRAIT(person, TRAIT_NOBLE))
+	else if(HAS_TRAIT(user, TRAIT_NOBLE))
 		job_text = "Nobles"
-	else if(HAS_TRAIT(person, TRAIT_RESIDENT) || (person.job in GLOB.yeoman_positions))
+	else if(HAS_TRAIT(user, TRAIT_RESIDENT) || (user.job in GLOB.yeoman_positions))
 		job_text = "Yeomen"
-	else if(person.job in GLOB.church_positions)
+	else if(user.job in GLOB.church_positions)
 		job_text = "Clergymen"
 	else
 		job_text = "Peasants"
