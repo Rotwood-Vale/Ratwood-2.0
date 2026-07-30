@@ -335,7 +335,7 @@
 
 	
 
-	zombie.blood_volume = BLOOD_VOLUME_NORMAL
+	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE)
 	if(!infected_wake)	// if we died, heal all this too
@@ -384,7 +384,7 @@
 
 	record_round_statistic(STATS_DEADITES_WOKEN_UP)
 	// Heal the zombie
-	zombie.blood_volume = BLOOD_VOLUME_NORMAL
+	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE) // Zombies don't breathe
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE) // Zombies are immune to poison
 

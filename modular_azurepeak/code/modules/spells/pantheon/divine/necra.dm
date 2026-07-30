@@ -44,7 +44,7 @@
 		user.stamina_add(2.5)
 
 		living_target.adjustOxyLoss(-10)
-		living_target.blood_volume = max((BLOOD_VOLUME_SURVIVE * 1.5), living_target.blood_volume)
+		living_target.set_blood_volume(max((BLOOD_VOLUME_SURVIVE * 1.5), living_target.get_blood_volume()))
 
 		if (living_target.health <= 5)
 			if (prob(5))

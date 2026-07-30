@@ -76,7 +76,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 100, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 100, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 100 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 100 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -86,7 +86,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 50, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 50, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 50 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 50 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -96,7 +96,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 50, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 50, 0))
 			message_admins("[key_name_admin(usr)] removed 50 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 50 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -106,7 +106,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 100, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 100, 0))
 			message_admins("[key_name_admin(usr)] removed 100 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 100 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -116,9 +116,9 @@
 		var/mob/living/M = locate(href_list["heal_blood_set"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.blood_volume) as num|null
+			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.get_blood_volume()) as num|null
 			if(new_amount != null)
-				H.blood_volume = clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM)
+				H.set_blood_volume(clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM))
 				message_admins("[key_name_admin(usr)] set [key_name_admin(M)]'s blood volume to [new_amount].")
 				log_admin("[key_name(usr)] set [key_name(M)]'s blood volume to [new_amount].")
 				show_heal_panel(M)

@@ -1692,8 +1692,8 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		to_chat(user, span_notice("Reagents detected: none."))
 
 	var/blood_amt = 0
-	if(isnum(H.blood_volume) && H.blood_volume > 0)
-		blood_amt = H.blood_volume
+	if(isnum(H.get_blood_volume()) && H.get_blood_volume() > 0)
+		blood_amt = H.get_blood_volume()
 	else if(H.reagents && hascall(H.reagents, "get_reagent_amount"))
 		blood_amt = H.reagents.get_reagent_amount(/datum/reagent/blood)
 

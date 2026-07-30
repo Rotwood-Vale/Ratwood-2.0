@@ -30,7 +30,7 @@
 			else
 				playsound(get_turf(M), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
 				user.visible_message("[user] mutters an incantation and [M] twitches with unnatural life!")
-				M.blood_volume = BLOOD_VOLUME_NORMAL
+				M.set_blood_volume(BLOOD_VOLUME_NORMAL)
 				M.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 				M.setToxLoss(0, updating_health = FALSE, forced = TRUE)
 				M.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)

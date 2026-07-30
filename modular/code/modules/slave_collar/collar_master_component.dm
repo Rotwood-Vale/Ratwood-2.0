@@ -500,13 +500,13 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	master.adjustBruteLoss(-damage_share)
 
 	// Share blood if applicable
-	if(master.blood_volume && pet.blood_volume)
-		var/blood_diff = BLOOD_VOLUME_NORMAL - master.blood_volume
+	if(master.get_blood_volume() && pet.get_blood_volume())
+		var/blood_diff = BLOOD_VOLUME_NORMAL - master.get_blood_volume()
 		if(blood_diff > 0)
-			var/blood_share = min(blood_diff * 0.5, pet.blood_volume - BLOOD_VOLUME_SAFE)
+			var/blood_share = min(blood_diff * 0.5, pet.get_blood_volume() - BLOOD_VOLUME_SAFE)
 			if(blood_share > 0)
-				pet.blood_volume -= blood_share
-				master.blood_volume += blood_share
+				pet.adjust_blood_volume(-(blood_share))
+				master.adjust_blood_volume(blood_share)
 
 	return TRUE
 
@@ -883,8 +883,8 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	pet.adjustOxyLoss(master.getOxyLoss() * 0.5)
 
 	// Pass blood level if it exists
-	if(pet.blood_volume && master.blood_volume)
-		pet.blood_volume = max(BLOOD_VOLUME_SAFE, pet.blood_volume - (BLOOD_VOLUME_NORMAL - master.blood_volume) * 0.5)
+	if(pet.get_blood_volume() && master.get_blood_volume())
+		pet.set_blood_volume(max(BLOOD_VOLUME_SAFE, pet.get_blood_volume() - (BLOOD_VOLUME_NORMAL - master.get_blood_volume()) * 0.5))
 
 	// Pass organ damage
 	for(var/obj/item/organ/organ in master.internal_organs)

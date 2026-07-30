@@ -262,8 +262,8 @@
 	heal_effect.color = "#129160"
 	var/list/wound_count = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+2, BLOOD_VOLUME_NORMAL) //Reduced blood replenishment compared to cleric miracle.
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+2, BLOOD_VOLUME_NORMAL)) //Reduced blood replenishment compared to cleric miracle.
 		if(wound_count.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
