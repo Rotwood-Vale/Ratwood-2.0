@@ -88,12 +88,22 @@
 	if(display_statistics)
 		returned_text += "\n\nResults:"
 
-		for(var/map in choices)
-			var/total = choices[map]
-			var/pref = preference_votes[map]
-			var/player = total - pref
+		// Total votes including map tallies
+		var/grand_total_votes = total_votes
 
-			var/percentage = round((total / total_votes) * 100, 0.1)
+		for(var/map in choices)
+			grand_total_votes += SSmap_vote.map_vote_cache[map]
+
+		for(var/map in choices)
+			var/current_tally = SSmap_vote.map_vote_cache[map]
+			var/total = choices[map] + current_tally
+			var/pref = preference_votes[map]
+			var/player = choices[map] - pref
+
+			var/percentage = 0
+			if(grand_total_votes)
+				percentage = round((total / grand_total_votes) * 100, 0.1)
+
 			var/text = "[percentage]"
 			var/spaces_needed = max(0, 5 - length(text))
 			var/percentage_text = ""
@@ -102,18 +112,13 @@
 				percentage_text += " "
 
 			percentage_text += "[text]%"
-			var/current_tally = SSmap_vote.map_vote_cache[map]
+
 			returned_text += "\n[percentage_text] | [span_bold(map)]: [player] votes"
 
 			if(pref)
 				returned_text += " (+[pref] preference)"
 
-			returned_text += " = [total] total"
-
-			returned_text += " | Tally: [current_tally]"
-	if(real_winner)
-		returned_text += "\n"
-		returned_text += get_winner_text(all_winners, real_winner, non_voters)
+			returned_text += " + [current_tally] tally = [total] total"
 
 	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
