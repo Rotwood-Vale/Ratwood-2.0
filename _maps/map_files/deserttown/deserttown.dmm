@@ -25650,12 +25650,6 @@
 	},
 /turf/open/water/bath,
 /area/rogue/indoors/town/manor/desert)
-"hss" = (
-/obj/structure/roguemachine/scomm/r{
-	scom_tag = Qasr - Sheikh Office
-	},
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/manor/desert)
 "hsD" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock,
 /turf/open/floor/rogue/citybrick/citybrick1,
@@ -72325,6 +72319,12 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/town/basement/desert)
+"uTK" = (
+/obj/structure/roguemachine/scomm/r{
+	scom_tag = "Qasr - Sheikh Office"
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/manor/desert)
 "uTL" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -534385,7 +534385,7 @@ oTJ
 hZy
 wBj
 vVO
-hss
+uTK
 klw
 klw
 klw
