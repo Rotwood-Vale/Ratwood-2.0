@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		"CHILD OF KAIN!",
 	)
 	rogue_enabled = TRUE
+	typecache_datum_blacklist = list(/datum/antagonist/zombie) //the rot cannot claim what the Curse already holds
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE // Base vampire shouldn't be directly selectable - use Vampire Lord or specific subtypes
 	var/datum/clan/default_clan = /datum/clan/nosferatu
@@ -24,6 +25,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/datum/clan/forcing_clan
 	var/generation
 	var/research_points = 10
+	var/list/pre_embrace_state
 
 /datum/antagonist/vampire/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation)
 	. = ..()
@@ -68,6 +70,9 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		return span_boldnotice("Another deadite.")
 
 /datum/antagonist/vampire/on_gain()
+	// the Curse takes precedence over the rot - covers dying to it partway through being sired
+	owner?.remove_antag_datum(/datum/antagonist/zombie)
+	owner?.current?.remove_status_effect(/datum/status_effect/zombie_infection)
 	SSmapping.retainer.vampires |= owner
 	//move_to_spawnpoint()
 	owner.special_role = name

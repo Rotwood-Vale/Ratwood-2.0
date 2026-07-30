@@ -30,6 +30,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
+	var/list/observed_screens	//Screen objects borrowed from observetarget, such as blindness overlays and alerts.
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
@@ -1039,6 +1040,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(ismob(client.eye) && (client.eye != src))
 			var/mob/target = client.eye
 			observetarget = null
+			clear_observed_screens()
 			if(target.observers)
 				target.observers -= src
 				UNSETEMPTY(target.observers)
@@ -1046,6 +1048,52 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(hud_used)
 			client.screen = list()
 			hud_used.show_hud(hud_used.hud_version)
+
+/mob/dead/observer/proc/add_observed_screen(atom/movable/screen_object)
+	if(!screen_object || !client)
+		return
+	LAZYOR(observed_screens, screen_object)
+	client.screen |= screen_object
+
+/mob/dead/observer/proc/remove_observed_screen(atom/movable/screen_object)
+	if(!screen_object)
+		return
+	LAZYREMOVE(observed_screens, screen_object)
+	if(client)
+		client.screen -= screen_object
+
+/mob/dead/observer/proc/clear_observed_screens()
+	if(client)
+		for(var/atom/movable/screen_object as anything in observed_screens)
+			client.screen -= screen_object
+		client.color = ""
+	observed_screens = null
+
+/// Draw a screen object on our client and on every ghost that watches us. Use this instead of client.screen += object.
+/mob/proc/add_screen_object(atom/movable/screen_object)
+	if(!screen_object)
+		return
+	client?.screen |= screen_object
+	push_screen_to_observers(screen_object)
+
+/// Take a screen object off our client and off every ghost that watches us.
+/mob/proc/remove_screen_object(atom/movable/screen_object)
+	if(!screen_object)
+		return
+	client?.screen -= screen_object
+	push_screen_to_observers(screen_object, TRUE)
+
+/// Send a screen change to every ghost that watches our HUD, such as a blindness overlay or an alert.
+/mob/proc/push_screen_to_observers(atom/movable/screen_object, remove = FALSE)
+	if(!screen_object || !length(observers))
+		return
+	for(var/mob/dead/observer/watcher as anything in observers)
+		if(watcher.observetarget != src)
+			continue
+		if(remove)
+			watcher.remove_observed_screen(screen_object)
+		else
+			watcher.add_observed_screen(screen_object)
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"

@@ -42,7 +42,7 @@
 	..()
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Bardiche","Sword & Shield")

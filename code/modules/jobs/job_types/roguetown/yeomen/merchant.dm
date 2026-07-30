@@ -83,7 +83,7 @@
 		H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	else if(should_wear_femme_clothes(H))
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		head = /obj/item/clothing/head/roguetown/sultan/merchant
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/open
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/merchantbisht

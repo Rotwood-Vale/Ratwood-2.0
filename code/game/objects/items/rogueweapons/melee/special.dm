@@ -765,6 +765,7 @@
 
 //This is awful and I apologise.
 /obj/item/rogueweapon/spear/keep_standard/attack_self(mob/living/user)
+	..()
 	if(secondary_tag)
 		if(wielded)
 			detail_tag = "_det1"
@@ -774,7 +775,6 @@
 			detail_tag = "_det"
 			update_icon()
 			user.update_inv_hands()
-	..()
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()

@@ -311,6 +311,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Hood"
 	path = /obj/item/clothing/head/roguetown/roguehood
 
+/datum/loadout_item/necromhood
+    name = "Necromancer Hood"
+    path = /obj/item/clothing/head/roguetown/necromhood
+
 /datum/loadout_item/hijab
 	name = "Hijab"
 	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
@@ -338,7 +342,11 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/tri_grenzelhoft_hat_capless
 	name = "Capless Grenzelhoft Hat"
 	path = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
-	
+
+/datum/loadout_item/loadoutpapakha
+	name = "Soft-sided papakha"
+	path = /obj/item/clothing/head/roguetown/loadoutpapakha
+
 //CLOAKS
 /datum/loadout_item/tabard
 	name = "Tabard"
@@ -533,6 +541,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
 
+/datum/loadout_item/Necromrobe
+    name = "Necromancer Robes"
+    path = /obj/item/clothing/suit/roguetown/shirt/robe/necromancer
+
 /datum/loadout_item/phys_robe
 	name = "Physicker's Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/phys
@@ -556,6 +568,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/sailorshirt
 	name = "Striped Shirt"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
+
+/datum/loadout_item/sailorshirt_colorable
+	name = "Striped Shirt (Colorable)"
+	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored
 
 /datum/loadout_item/sailorjacket
 	name = "Leather Jacket"
@@ -757,6 +773,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/butlersuspenders
 	name = "Suspenders"
 	path = /obj/item/storage/belt/rogue/leather/suspenders/butler
+
+/datum/loadout_item/butlersuspenders_colorable
+	name = "Suspenders (Colorable)"
+	path = /obj/item/storage/belt/rogue/leather/suspenders/butler/colored
 
 /datum/loadout_item/ragmask
 	name = "Rag Mask"
@@ -1694,27 +1714,27 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_chausses
-	name = "Gronn Byrine Chausses"
+	name = "Byrine Chausses"
 	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_gloves
-	name = "Gronn Byrine Gloves"
+	name = "Byrine Gloves"
 	path = /obj/item/clothing/gloves/roguetown/chain/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_hauberk
-	name = "Gronn Byrine"
+	name = "Byrine"
 	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_fur_pants
-	name = "Gronn Fur Pants"
+	name = "Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_bone_gloves
-	name = "Gronn Bone Gloves"
+	name = "Bone Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
 	triumph_cost = 3
 
@@ -1724,7 +1744,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_ravager_mantle
-	name = "Gronn Ravager Mantle"
+	name = "Ravager Mantle"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
 	triumph_cost = 3
 
@@ -2312,6 +2332,27 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Scabbard"
 	path = /obj/item/rogueweapon/scabbard/sword
 	triumph_cost = 1
+
+/datum/loadout_item/scabbard/noble
+	name = "Noble Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword/noble
+	triumph_cost = 2
+
+/datum/loadout_item/scabbard/royal
+	name = "Royal Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword/royal
+	triumph_cost = 3
+
+/datum/loadout_item/scabbard/sheathe/noble
+	name = "Noble Sheathe"
+	path = /obj/item/rogueweapon/scabbard/sheath/noble
+	triumph_cost = 1
+
+/datum/loadout_item/scabbard/sheathe/royal
+	name = "Royal Sheathe"
+	path = /obj/item/rogueweapon/scabbard/sheath/royal
+	triumph_cost = 1
+
 
 /datum/loadout_item/greatweaponstrap
 	name = "Great Weapon Strap"
