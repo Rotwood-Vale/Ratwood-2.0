@@ -2227,14 +2227,6 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				if(H.bodytemperature + warmth > BODYTEMP_NORMAL_MAX)
 					warmth = BODYTEMP_NORMAL_MAX - H.bodytemperature
 				H.adjust_bodytemperature(warmth)
-				H.energy_add(warmth)
-				var/heal_rate = round(warmth / -2)
-				H.adjustBruteLoss(heal_rate, 0)
-				H.adjustFireLoss(heal_rate, 0)
-				H.adjustOxyLoss(heal_rate, 0)
-				H.adjustToxLoss(heal_rate, 0)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, heal_rate)
-				H.adjustCloneLoss(heal_rate)
 	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
 		var/burn_damage = 0
 
