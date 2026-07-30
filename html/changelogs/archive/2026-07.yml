@@ -459,3 +459,21 @@
   wikimody:
   - rscadd: Antipope sight is no longer stopped by mere mortal masks (he can see other
       heretics even if their faces are covered)
+2026-07-30:
+  Heheniy:
+  - bugfix: lock on closet in head physician bedroom and duke closet on rockhill map
+      not working
+  Kroto-Ker:
+  - balance: Restored old vagabond mage.
+  MickDick1:
+  - bugfix: fixed fixeye sticky bug
+  Yuckuza:
+  - rscadd: Dueling longsword now craftable on an anvil.
+  - rscadd: Basket-hilted longsword (aka the Etruscan longsword) now craftable on
+      an anvil.
+  - rscadd: Aavanic shashka now craftable on an anvil.
+  - balance: Standard Maul weapon defense increased from 3 when wielded to 6.
+  - balance: Grand Maul weapon defense increased from 6 to 9 when wielded. Grand Maul
+      force raised from 34 to 36.
+  - balance: Dwarven Maul and Spiked Maul weapon defense increased to 7 when wielded.
+  - bugfix: Malum templar maul now functions like a silver weapon as intended.
