@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		pref_load.apply_descriptors(C)
 
 	for(var/language_type in languages)
-		C.grant_language(language_type)
+		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	for(var/language_type in languages)
-		C.remove_language(language_type)
+		C.remove_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	// Clear organ DNA since it wont match as we're changing the species
 	C.dna.organ_dna = list()
