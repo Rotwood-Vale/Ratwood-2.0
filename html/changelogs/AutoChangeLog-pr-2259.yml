@@ -1,0 +1,4 @@
+author: "2whatever2"
+delete-after: True
+changes:
+  - bugfix: "Blacksteel Armet now properly hides your hair."
