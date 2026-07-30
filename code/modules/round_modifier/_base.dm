@@ -14,7 +14,10 @@
 	var/gnoll_slots = 0
 	var/list/weather_weights
 
+/*
 /datum/round_modifier/lightsout
 	name = "Lights Out"
 	desc = "Hope you have flint!"
+	weight = 2
 	trigger_events = list(/datum/round_event_control/lightsout/forced)
+*/

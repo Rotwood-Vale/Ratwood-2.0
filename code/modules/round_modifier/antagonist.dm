@@ -27,7 +27,7 @@
 	cost = 4
 	min_chaos = 3
 	incompatible = list(/datum/round_modifier/low_gnolls, /datum/round_modifier/medium_gnolls)
-	gnoll_slots = 8
+	gnoll_slots = 6
 
 /datum/round_modifier/high_wretches
 	name = "High Wretches"

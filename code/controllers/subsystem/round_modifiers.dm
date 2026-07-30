@@ -70,12 +70,19 @@
 					if(weather_type in weather_list)
 						weather_list[weather_type] = round(weather_list[weather_type] * M.weather_weights[weather_type])
 
+	var/players = 0
+	for(var/mob/dead/new_player/NP in GLOB.new_player_list)
+		if(NP.ready == PLAYER_READY_TO_PLAY)
+			players++
+	var/mult = clamp(players / 60, 0.5, 1)
+
 	for(var/job_title in slots)
 		var/datum/job/J = SSjob.GetJob(job_title)
 		if(!J)
 			continue
-		J.total_positions = slots[job_title]
-		J.spawn_positions = slots[job_title]
+		var/scaled = round(slots[job_title] * mult, 1)
+		J.total_positions = scaled
+		J.spawn_positions = scaled
 
 	if(!length(active_modifiers))
 		to_chat(world, span_notice("<b>Nothing.</b>"))
