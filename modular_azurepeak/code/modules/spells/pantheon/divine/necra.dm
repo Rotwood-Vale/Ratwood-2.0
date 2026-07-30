@@ -388,16 +388,6 @@
 		removing_object = choices[removing_object] 	// then get the correct object from the label...
 		marked_objects -= removing_object 			// ...to remove from the marked list.
 
-		// var/old_obj = marked_objects[last_index]
-		// marked_objects -= old_obj
-
-		// marked_objects[O] = label
-
-		// last_index++
-		// if(last_index > holyskill)
-		// 	last_index = 1
-		// return
-
 	to_chat(user, span_info("I whisper a name and mark the grave for later use..."))
 	marked_objects[O] = label
 
