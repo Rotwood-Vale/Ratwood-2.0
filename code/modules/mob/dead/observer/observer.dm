@@ -679,6 +679,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	pixel_y = 0
 	pixel_x = 0
 	animate(src, pixel_y = 2, time = 10, loop = -1)
+	if(observetarget) //Moving ends the orbit, and the end of an orbit gives us our own eyes back.
+		reset_perspective(null)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
@@ -1207,7 +1209,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!eye_name)
 		return
 
-	do_observe(creatures[eye_name])
+	var/mob/mob_eye = creatures[eye_name]
+	ManualFollow(mob_eye) //Orbit them as well, so moving away drops the borrowed eyes.
+	do_observe(mob_eye)
 
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
@@ -1323,8 +1327,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /datum/orbit_menu/ui_data(mob/user)
 	var/list/data = list()
 	data["orbiting_ref"] = owner?.orbiting_ref
-	data["observing_ref"] = owner?.observetarget ? REF(owner.observetarget) : null
-	data["can_observe"] = check_rights_for(user?.client, R_WATCH) //Everyone else right clicks the mob instead.
 	return data
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -1354,32 +1356,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				return TRUE
 
 			//A second click on the same target cancels instead of starting again.
-			if(owner.observetarget == target)
-				owner.reset_perspective(null)
 			if(owner.orbiting_ref == ref)
 				owner.orbiting?.end_orbit(owner)
 				SStgui.update_uis(src)
 				return TRUE
 
 			owner.ManualFollow(target)
-			SStgui.update_uis(src)
-			return TRUE
-
-		if("observe")
-			if(!check_rights_for(ui.user.client, R_WATCH))
-				return TRUE
-
-			var/mob/target = locate(params["ref"])
-			if(!ismob(target))
-				to_chat(ui.user, span_notice("That target is no longer available."))
-				return TRUE
-
-			owner.do_observe(target)
-			SStgui.update_uis(src)
-			return TRUE
-
-		if("stop_observing")
 			owner.reset_perspective(null)
+			if(params["auto_observe"])
+				owner.do_observe(target)
 			SStgui.update_uis(src)
 			return TRUE
 

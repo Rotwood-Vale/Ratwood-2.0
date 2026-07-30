@@ -73,4 +73,8 @@
 	return FALSE
 
 /mob/living/attack_ghost_secondary(mob/dead/observer/user)
+	if(user.observetarget == src) //A second right click gives them their own eyes back.
+		user.reset_perspective(null)
+		return TRUE
+	user.ManualFollow(src) //Orbit as well, the way the orbit menu does with auto-observe on.
 	return user.do_observe(src)

@@ -8,7 +8,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -32,8 +31,6 @@ type OrbitData = {
   dead: OrbitTarget[];
   ghosts: OrbitTarget[];
   orbiting_ref?: string;
-  observing_ref?: string;
-  can_observe?: BooleanLike;
 };
 
 type OrbitSectionKey = (typeof SECTIONS)[number]['key'];
@@ -391,24 +388,11 @@ type OrbitTargetButtonProps = {
   sectionColor: string;
   colorMode: 'role' | 'health';
   showRole: boolean;
-  canObserve: boolean;
-  observed: boolean;
   onOrbit: (ref: string) => void;
-  onObserve: (ref: string) => void;
 };
 
 const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
-  const {
-    item,
-    selected,
-    sectionColor,
-    colorMode,
-    showRole,
-    canObserve,
-    observed,
-    onOrbit,
-    onObserve,
-  } = props;
+  const { item, selected, sectionColor, colorMode, showRole, onOrbit } = props;
   const appliedColor = colorMode === 'health' ? item.healthStateColor : item.selection_color;
   const hasSelectionColor = !!appliedColor;
   const textColor = colorMode === 'health' ? item.healthTextColor : item.roleTextColor;
@@ -444,16 +428,6 @@ const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
           )}
         </Stack>
       </Button>
-      {canObserve && (
-        <Button
-          compact
-          icon="eye"
-          onClick={() => onObserve(item.ref)}
-          selected={observed}
-          tooltip="Watch their screen"
-          tooltipPosition="bottom-start"
-        />
-      )}
     </Stack.Item>
   );
 });
@@ -464,21 +438,22 @@ export const Orbit = () => {
   const { act, data } = useBackend<OrbitData>();
   const [query, setQuery] = useState('');
   const [colorMode, setColorMode] = useState<'role' | 'health'>('role');
+  const [autoObserve, setAutoObserve] = useState(false);
   const orbitRef = data.orbiting_ref;
-  const observingRef = data.observing_ref;
-  const canObserve = !!data.can_observe;
   const isRoleColorMode = colorMode === 'role';
   const aliveTargets = data.alive || EMPTY_TARGETS;
   const deadTargets = data.dead || EMPTY_TARGETS;
   const ghostTargets = data.ghosts || EMPTY_TARGETS;
 
   const normalizedQuery = query.trim().toLowerCase();
-  const handleOrbit = useCallback((ref: string) => act('orbit', { ref }), [act]);
-  const handleObserve = useCallback(
-    (ref: string) => act('observe', { ref }),
-    [act],
+  const handleOrbit = useCallback(
+    (ref: string) => act('orbit', { ref, auto_observe: autoObserve }),
+    [act, autoObserve],
   );
-  const handleStopObserving = useCallback(() => act('stop_observing'), [act]);
+  const toggleAutoObserve = useCallback(
+    () => setAutoObserve((observing) => !observing),
+    [],
+  );
   const handleRefresh = useCallback(() => act('refresh'), [act]);
   const toggleColorMode = useCallback(() => {
     setColorMode((mode) => (mode === 'role' ? 'health' : 'role'));
@@ -547,6 +522,16 @@ export const Orbit = () => {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
+                    color={autoObserve ? 'good' : 'transparent'}
+                    icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+                    onClick={toggleAutoObserve}
+                    tooltip="Toggle Auto-Observe. When active, orbiting someone also
+                    shows you their screen, their vision and their inventory."
+                    tooltipPosition="bottom-start"
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
                     icon={isRoleColorMode ? 'id-badge' : 'heartbeat'}
                     onClick={toggleColorMode}
                     tooltip={
@@ -580,10 +565,7 @@ export const Orbit = () => {
                           sectionColor={section.color}
                           colorMode="role"
                           showRole={false}
-                          canObserve={canObserve}
-                          observed={observingRef === item.ref}
                           onOrbit={handleOrbit}
-                          onObserve={handleObserve}
                         />
                       ))}
                     </Stack>
@@ -603,10 +585,7 @@ export const Orbit = () => {
                                   sectionColor={section.color}
                                   colorMode={colorMode}
                                   showRole
-                                  canObserve={canObserve}
-                                  observed={observingRef === item.ref}
                                   onOrbit={handleOrbit}
-                                  onObserve={handleObserve}
                                 />
                               ))}
                             </Stack>
