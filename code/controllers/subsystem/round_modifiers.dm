@@ -72,8 +72,7 @@
 
 	var/players = 0
 	for(var/mob/dead/new_player/NP in GLOB.new_player_list)
-		if(NP.ready == PLAYER_READY_TO_PLAY)
-			players++
+		players++
 	var/mult = clamp(players / 60, 0.5, 1)
 
 	for(var/job_title in slots)
