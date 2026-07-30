@@ -372,17 +372,31 @@
 
 // Replace logic when at cap
 	if(length(marked_objects) >= holyskill)
-		to_chat(user, span_warning("I'm focusing on too many graves already. One slips from my mind..."))
+		// Build a display list: label -> obj
+		var/list/choices = list()
+		for(var/obj/graves as anything in marked_objects)
+			choices[marked_objects[graves]] = graves
 
-		var/old_obj = marked_objects[last_index]
-		marked_objects -= old_obj
+		var/removing_object = tgui_input_list(user, "I'm focusing on too many graves already. Do I let one slip from my mind..?", "FORGET", choices, marked_objects[1])
 
-		marked_objects[O] = label
+		if(!removing_object)
+			to_chat(user, span_warning("I choose to forget nothing."))
+			revert_cast()
+			return FALSE
 
-		last_index++
-		if(last_index > holyskill)
-			last_index = 1
-		return
+		to_chat(user, span_warning("[removing_object] slips from my mind...")) // show the labled grave first
+		removing_object = choices[removing_object] 	// then get the correct object from the label...
+		marked_objects -= removing_object 			// ...to remove from the marked list.
+
+		// var/old_obj = marked_objects[last_index]
+		// marked_objects -= old_obj
+
+		// marked_objects[O] = label
+
+		// last_index++
+		// if(last_index > holyskill)
+		// 	last_index = 1
+		// return
 
 	to_chat(user, span_info("I whisper a name and mark the grave for later use..."))
 	marked_objects[O] = label
