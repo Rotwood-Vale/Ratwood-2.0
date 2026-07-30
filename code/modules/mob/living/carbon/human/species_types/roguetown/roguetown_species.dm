@@ -41,8 +41,8 @@
 			return strings("welsh_replacement.json", type, convert_HTML = TRUE)
 		if("Saut al-Atash accent")
 			return
-		if("Valley accent")
-			return strings("valley_replacement.json", type, convert_HTML = TRUE)
+		if("Gallant accent")
+			return strings("gallant_replacement.json", type, convert_HTML = TRUE)
 		if("Kazengun accent")
 			return strings("kazengun_replacement.json", type, convert_HTML = TRUE)
 		if("Xinyi accent")
@@ -79,33 +79,137 @@
 #define REGEX_ENDWORD 3
 #define REGEX_ANY 4
 
-/// Applies a named accent's full transformation pipeline to a test message and returns the result.
-/// Returns null for accents that have no text transformations (font-only or no accent).
+
+/*
+	Lets a player speak a name or foreign word exactly as they typed it by putting \[brackets\]
+	around it. For each word or phrase in brackets, we save the original text and leave a
+	numbered marker, like "<#1#>", where it was. The accent code doesn't touch the markers
+	because they have no letters in them, so afterward accent_escape_restore puts the saved
+	text back in place of each marker.
+*/
+/proc/accent_escape_extract(message, list/escapes)
+	// A message starting with '*' is an emote, so skip
+	if(!message || message[1] == "*")
+		return message
+	// This finds one \[insert whatever here\] at a time. Static so it is built once instead of on every call.
+	var/static/regex/escape_regex = regex(@"\[([^\]]*)\]?")
+
+	// Search from the start each time, since we rebuild the message whenever we pull one out. Each pass removes an opening bracket, so this always finishes.
+	while(escape_regex.Find(message, 1))
+		// Save the text that was inside the brackets.
+		escapes += (escape_regex.group[1] || "")
+		// Swap the \[word\] out for a numbered marker. The number is its place in the escapes list.
+		message = copytext(message, 1, escape_regex.index) + "<#[escapes.len]#>" + copytext(message, escape_regex.index + length(escape_regex.match))
+	return message
+
+/*
+	The other half of accent_escape_extract: puts each saved word back in place of its
+	"<#N#>" marker, so the brackets are gone and the original words come back unchanged. Runs
+	after the accent code so nothing changes the text
+	we bring back.
+*/
+/proc/accent_escape_restore(message, list/escapes)
+	if(!message)
+		return message
+	// Put each saved word back where its marker is. A player shouldn't be able to fake a marker
+	for(var/i in 1 to escapes.len)
+		message = replacetext(message, "<#[i]#>", escapes[i])
+	return message
+
+
+/*
+	It takes the speaker's five accent word lists and applies each kind of replacement in turn.
+	autopunct and do_trim are on for speech, while the emote quote path turns them off so the quoted words are
+	left exactly as typed.
+*/
+/proc/apply_accent_pipeline(message, list/multiword, list/fullword, list/startword, list/endword, list/syllable, autopunct = TRUE, do_trim = TRUE)
+	// Only pull out \[\] if the message actually has one, so we skip making the list when there is nothing to escape.
+	var/list/accent_escapes
+	if(message && findtext(message, "\["))
+		accent_escapes = list()
+		message = accent_escape_extract(message, accent_escapes)
+	// Replace whole words that are made up of more than one word.
+	message = treat_message_accent(message, multiword, REGEX_FULLWORD)
+	// One pass over each word, applying the shared universal list and this accent's whole-word list at once.
+	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), fullword)
+	// Replace the start of words.
+	message = treat_message_accent(message, startword, REGEX_STARTWORD)
+	// Replace the end of words.
+	message = treat_message_accent(message, endword, REGEX_ENDWORD)
+	// Replace letters or syllables anywhere inside words.
+	message = treat_message_accent(message, syllable, REGEX_ANY)
+
+	if(autopunct)
+		message = autopunct_bare(message)
+	if(do_trim)
+		message = trim(message)
+
+	// Put the escaped words back last so they stay exactly as typed 
+	if(accent_escapes)
+		message = accent_escape_restore(message, accent_escapes)
+	return message
+
+/*
+	The emote version of the say escape brackets, working the other way around where it applies the
+	speaker's accent ONLY to text inside "quotes" in a me/subtle emote and
+	leaves the rest of the emote alone.
+*/
+/proc/accent_emote_quotes(message, mob/living/carbon/human/H)
+	// Stop early for non-humans or messages with no quotes to handle.
+	if(!message || !ishuman(H))
+		return message
+	if(!findtext(message, "\"") && !findtext(message, "&#34;") && !findtext(message, "&quot;"))
+		return message
+	var/accent = H.char_accent
+
+	// Look up the speaker's five accent word lists once.
+	var/list/multiword = get_accent_list_for_name(accent, "multiword")
+	var/list/fullword = get_accent_list_for_name(accent, "full")
+	var/list/startword = get_accent_list_for_name(accent, "start")
+	var/list/endword = get_accent_list_for_name(accent, "end")
+	var/list/syllable = get_accent_list_for_name(accent, "syllable")
+
+	// Built once. Matches an opening quote in any of its three forms
+	var/static/regex/quote_regex = regex(@{"(&#34;|&quot;|")([\S\s\n]*?)(&#34;|&quot;|")"})
+	var/search_pos = 1
+
+	while(quote_regex.Find(message, search_pos))
+		var/match_at = quote_regex.index
+		var/match_len = length(quote_regex.match)
+		var/open_quote = quote_regex.group[1]
+		var/inner_text = quote_regex.group[2]
+		var/close_quote = quote_regex.group[3]
+		// Accent only the text inside the quotes.
+		var/accented = apply_accent_pipeline(inner_text, multiword, fullword, startword, endword, syllable, autopunct = FALSE, do_trim = FALSE)
+		// Keep the same quote marks that were matched, whichever form they arrived in.
+		var/rebuilt = "[open_quote][accented][close_quote]"
+		// Put the accented text (with its quotes) back into the message.
+		message = copytext(message, 1, match_at) + rebuilt + copytext(message, match_at + match_len)
+
+		// Move past what we just wrote so we don't scan it again.
+		search_pos = match_at + length(rebuilt)
+	return message
+
+
 /proc/apply_accent_preview(accent_name, message)
-	if(accent_name == "No accent" || accent_name == "Saut al-Atash accent")
+	if(accent_name == "No accent" || accent_name == "Saut al-Atash accent" || accent_name == "Posh accent")
 		return null
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "multiword"), REGEX_FULLWORD)
-	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), get_accent_list_for_name(accent_name, "full"))
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "start"), REGEX_STARTWORD)
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "end"), REGEX_ENDWORD)
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "syllable"), REGEX_ANY)
-	message = autopunct_bare(message)
-	return trim(message)
+	var/list/multiword = get_accent_list_for_name(accent_name, "multiword")
+	var/list/fullword = get_accent_list_for_name(accent_name, "full")
+	var/list/startword = get_accent_list_for_name(accent_name, "start")
+	var/list/endword = get_accent_list_for_name(accent_name, "end")
+	var/list/syllable = get_accent_list_for_name(accent_name, "syllable")
+	return apply_accent_pipeline(message, multiword, fullword, startword, endword, syllable)
+
 
 /datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
-
-	//message = treat_message_accent(message, strings("accent_universal.json", "universal"), REGEX_FULLWORD)
-
-	message = treat_message_accent(message, get_accent_multiword(source), REGEX_FULLWORD)
-	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), get_accent(source))
-	message = treat_message_accent(message, get_accent_start(source), REGEX_STARTWORD)
-	message = treat_message_accent(message, get_accent_end(source), REGEX_ENDWORD)
-	message = treat_message_accent(message, get_accent_any(source), REGEX_ANY)
-
-	message = autopunct_bare(message)
-
-	speech_args[SPEECH_MESSAGE] = trim(message)
+	var/list/multiword = get_accent_multiword(source)
+	var/list/fullword = get_accent(source)
+	var/list/startword = get_accent_start(source)
+	var/list/endword = get_accent_end(source)
+	var/list/syllable = get_accent_any(source)
+	speech_args[SPEECH_MESSAGE] = apply_accent_pipeline(message, multiword, fullword, startword, endword, syllable)
 
 /proc/get_value_from_accent(key, list/accent_list)
 	if (!key)

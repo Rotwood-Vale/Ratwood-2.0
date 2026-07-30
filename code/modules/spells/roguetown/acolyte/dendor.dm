@@ -2,9 +2,11 @@
 /obj/effect/proc_holder/spell/targeted/blesscrop
 	name = "Bless Crops"
 	desc = "Bless a targeted soil plot or tree. Druidic Trickery increases stored charges. Revives dead plants, gives them nutrition and water if low & boosts their growth. Blessed seed powder can expend all charges to bless up to five nearby planted soils at once."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "blesscrop"
 	range = 5
 	selection_type = "range"
-	overlay_state = "blesscrop"
 	releasedrain = 15
 	charge_type = "charges"
 	recharge_time = 1
@@ -325,9 +327,11 @@
 /obj/effect/proc_holder/spell/targeted/beasttame
 	name = "Tame Beast"
 	desc = "Pacifies a targeted tameable beast with Dendor's blessing, permanently soothing its anger. Has 2 charges; each restores in 10 seconds, or 1 minute if both are spent."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "tamebeast"
 	range = 5
 	selection_type = "range"
-	overlay_state = "tamebeast"
 	releasedrain = 30
 	charge_type = "charges"
 	recharge_time = 1
@@ -460,10 +464,10 @@
 /obj/effect/proc_holder/spell/targeted/conjure_glowshroom
 	name = "Fungal Illumination"
 	desc = "Summons glowing mushrooms that shock people that try moving into them. Dendorites are immune."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "glowshroom"
 	range = 1
-	action_icon_state = "glowshroom"
-	action_icon = 'icons/mob/actions/genericmiracles.dmi'
-	overlay_state = "blesscrop"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
 	chargetime = 1 SECONDS
@@ -472,7 +476,7 @@
 	cast_without_targets = TRUE
 	sound = 'sound/items/dig_shovel.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("Treefather light the way.")
+	invocations = list("Treefather light the way!")
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 	devotion_cost = 30
 
@@ -497,7 +501,9 @@
 /obj/effect/proc_holder/spell/targeted/conjure_vines
 	name = "Vine Sprout"
 	desc = "Summon vines nearby."
-	overlay_state = "blesscrop"
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "vine"
 	releasedrain = 90
 	invocations = list("Treefather, bring forth vines.")
 	invocation_type = "shout"
@@ -528,6 +534,8 @@
 /obj/effect/proc_holder/spell/self/howl/call_of_the_moon
 	name = "Call of the Moon"
 	desc = "Draw upon the the secrets of the hidden firmament to converse with the mooncursed."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
 	overlay_state = "howl"
 	antimagic_allowed = FALSE
 	recharge_time = 600
@@ -555,7 +563,9 @@
 /obj/effect/proc_holder/spell/invoked/spiderspeak
 	name = "Spider Speak"
 	desc = "Makes spiders not attack the target."
-	overlay_state = "tamebeast"
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "spider"
 	releasedrain = 15
 	chargedrain = 0
 	chargetime = 1 SECONDS

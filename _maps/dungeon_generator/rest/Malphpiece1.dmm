@@ -7,13 +7,13 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
 "ai" = (
-/obj/item/rogueweapon/shield/buckler/palloy,
-/obj/item/rogueweapon/sword/sabre/palloy,
+/obj/item/rogueweapon/shield/buckler/ancient,
+/obj/item/rogueweapon/sword/sabre/ancient,
 /obj/item/clothing/mask/rogue/facemask/copper,
 /obj/item/clothing/neck/roguetown/gorget/copper,
 /obj/item/clothing/wrists/roguetown/bracers/copper,
 /obj/item/clothing/head/roguetown/helmet/coppercap,
-/obj/item/clothing/suit/roguetown/armor/plate/half/aalloy,
+/obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit,
 /obj/structure/closet/crate/chest,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/indoors)

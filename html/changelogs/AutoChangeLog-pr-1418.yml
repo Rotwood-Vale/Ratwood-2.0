@@ -1,7 +1,0 @@
-author: "KeberosNihilus"
-delete-after: True
-changes:
-  - balance: "Light Brigandine now costs 1 steel / 1 cloth instead of 1 iron / 1 cloth similar to the other Brigandine armors. Splint exists as the Iron variant of the stuff, so now there's no overlap."
-  - balance: "Fencing Cuirass now costs 2 steel / 1 cured leather instead of 1 steel / 1 fencing jacket. No longer need a tailor, but now you need more steel."
-  - balance: "Light Brigandine goes from 315 -> 290 HP. Studded Leather has 270 for comparison."
-  - balance: "Fencer's Cuirass goes from 180 -> 225 HP. A Steel Breastplate has 270, for comparison.\n\\:cl:\n<!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->\n<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->\n<!-- By contributing to this codebase, you confirm that any code and sprites you provide are legal to share and will be licensed under the terms specified in README.md — AGPLv3 for code and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that the project maintainers are under no obligation to remove any materials that do not violate these licenses. -->"

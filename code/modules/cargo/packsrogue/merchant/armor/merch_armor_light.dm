@@ -63,10 +63,20 @@
 
 /datum/supply_pack/rogue/light_armor/reinforced_hood
 	name = "Reinforced Hood"
-	cost = 40 //It's armour. Quite good, given layering, too. Someone else can adjust this. EDIT: I'm someone else. If it's such good armor, let's make it as expensive as the other good armor in its class, like the padded gambeson. Steel mask is probably better, you're buying this if you want swag.
+	cost = 40 // The mage hood type, in a sense. This is the one that fits on the face or head but not the neck.
 	contains = list(
-					/obj/item/clothing/head/roguetown/roguehood/reinforced,
-				)
+					/obj/item/clothing/head/roguetown/roguehood/reinforced)
+
+/datum/supply_pack/rogue/light_armor/padded_leather_hood
+	name = "Padded Leather Hood" // The newer version of the hood that fits around the neck like a coif.
+	cost = 40
+	contains = list(
+					/obj/item/clothing/head/roguetown/helmet/leather/armorhood)
+
+/datum/supply_pack/rogue/light_armor/studded_leather_hood
+	name = "Studded Leather Hood"
+	cost = 50
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced,)
 
 // Exotic import stuff goes here. Should probably be a little pricier than normal stuff. 2x average? Be sure to name the purchase option so it relates to the actual item, but also what slot it fills.
 

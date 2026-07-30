@@ -1,5 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes:
-  - rscadd: "addiction vices each have their own separate debuffs, meaning you can stack and clear them individually"
-  - balance: "across the board made addictions take longer to give you negative effects by about fifty percent"

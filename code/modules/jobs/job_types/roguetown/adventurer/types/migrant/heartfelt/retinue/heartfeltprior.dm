@@ -2,7 +2,7 @@
 /datum/advclass/heartfelt/retinue/prior
 	name = "Heartfeltian Prior"
 	tutorial = "The Prior of Heartfelt, you were destined for ascension within the Church, but fate intervened with the barony's downfall, \
-	delaying it indefinitely. Still guided by the blessings of Astrata, you journey to the Vale, determined to offer what aid and solace you can."
+	delaying it indefinitely. Still guided by the blessings of Astrata, you journey to these lands, determined to offer what aid and solace you can."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/prior
@@ -25,7 +25,6 @@
 	/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-	/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
 	/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 	/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 	/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,

@@ -26,6 +26,10 @@
 	/// Associated maniac key
 	var/inscryption_key
 
+	var/static/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+	var/static/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
+
+
 	food_type = /obj/item/reagent_containers/food/snacks/organ/heart
 
 /obj/item/organ/heart/Destroy()
@@ -107,33 +111,32 @@
 	..()
 	if(owner.client && beating)
 		failed = FALSE
-		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
-
-
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
-			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
-//			to_chat(owner, span_notice("I feel my heart slow down..."))
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
+		var/new_beat = BEAT_NONE
+		if(H.health <= H.crit_threshold)
+			new_beat = BEAT_SLOW
+		else if(H.jitteriness && H.health > HEALTH_THRESHOLD_FULLCRIT)
+			new_beat = BEAT_FAST
+		if(beat != new_beat)	
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
-			beat = BEAT_NONE
-
-		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
-				beat = BEAT_FAST
-		else if(beat == BEAT_FAST)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
-			beat = BEAT_NONE
-
+			beat = new_beat
+			var/sound/heartbeat_sound
+			switch(beat)
+				if(BEAT_SLOW)
+					heartbeat_sound = slowbeat
+				if(BEAT_FAST)
+					heartbeat_sound = fastbeat
+			if(heartbeat_sound)
+				H.playsound_local(null, heartbeat_sound, 40, FALSE, channel = CHANNEL_HEARTBEAT)
 	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 				span_danger("I feel a terrible pain in my chest, as if my heart has stopped!"))
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+
+
 /obj/item/organ/heart/construct
 	name = "construct core"
 	desc = "Swirling with a blessing of Astrata and pulsing with lux inside. This allows a construct to move."

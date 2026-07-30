@@ -120,7 +120,11 @@
 			if(mmb_intent.get_chargetime())
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
+					stop_attack()
 					return
+	if(modifiers["shift"] && modifiers["ctrl"] && modifiers["left"])
+		A.MiddleMouseDrop_T(src, src)
+		return
 	if(modifiers["left"] && atkswinging == "left")
 		if(active_hand_index == 1)
 			used_hand = 1
@@ -191,9 +195,6 @@
 
 	if(!atkswinging)
 		face_atom(A)
-
-	if(!modifiers["catcher"] && A.IsObscured())
-		return
 
 	if(dir == get_dir(A,src)) //they are behind us and we are not facing them
 		return
@@ -394,25 +395,6 @@
 		var/mob/living/carbon/human/H = src
 		H.stamina_add(used_intent.misscost)
 
-//Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
-/atom/proc/IsObscured()
-	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
-		return FALSE
-	var/turf/T = get_turf_pixel(src)
-	if(!T)
-		return FALSE
-	for(var/atom/movable/AM in T)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
-			return TRUE
-	return FALSE
-
-/turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
-			return TRUE
-	return FALSE
-
 /atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	if(ismob(src))
 		var/mob/M = src
@@ -593,8 +575,6 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		if(A.invisibility > user.see_invisible)
 			continue
 		if(overrides.len && (A in overrides))
-			continue
-		if(A.IsObscured())
 			continue
 		if(!A.name)
 			continue

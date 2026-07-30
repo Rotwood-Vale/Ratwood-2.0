@@ -178,3 +178,5 @@
 	else
 		flags_inv |= HIDE_HEADTOP
 	user.update_inv_head()
+	user.update_fov_angles()
+	user.update_vision_cone()

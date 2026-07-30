@@ -66,6 +66,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/critical = FALSE
 	/// Some wounds cause instant death for CRITICAL_WEAKNESS
 	var/mortal = FALSE
+	/// Some wounds cause instant death for SHATTER_WEAKNESS
+	var/shatter_wound = FALSE
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
 	/// Amount we heal passively, always
@@ -80,17 +82,26 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/list/severity_names = list()
 	/// Whether miracles heal it.
 	var/healable_by_miracles = TRUE
+	/// Whether we're storing the on_gain effects on the owner mob and should cleanup them if we're deleted
+	var/should_persist_effects = FALSE
+	var/datum/weakref/persisted_on
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
-		remove_from_bodypart()
+		remove_from_bodypart(force = should_persist_effects)
 	else if(owner)
 		remove_from_mob()
+	else if(persisted_on)
+		var/mob/living/persisted_mob = persisted_on.resolve()
+		if(persisted_mob)
+			on_mob_loss(persisted_mob)
+
 	if(werewolf_infection_timer)
 		deltimer(werewolf_infection_timer)
 		werewolf_infection_timer = null
 	bodypart_owner = null
 	owner = null
+	persisted_on = null
 	. = ..()
 	return QDEL_HINT_IWILLGC
 
@@ -163,7 +174,18 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	owner = bodypart_owner.owner
 	bodypart_owner.bleeding += bleed_rate // immediately apply our base bleeding
 	on_bodypart_gain(affected)
-	INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
+	// ensure we do not re-apply effects if we're holding onto them between attachments
+	if(!should_persist_effects)
+		INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner) //this is literally a fucking lint error like new species cannot possible spawn with wounds until after its ass
+	else if(persisted_on)
+		var/mob/living/persisted_mob = persisted_on.resolve()
+		if(persisted_mob != affected.owner)
+			if(persisted_mob)
+				on_mob_loss(persisted_mob)
+			INVOKE_ASYNC(src, PROC_REF(on_mob_gain), affected.owner)
+	persisted_on = null
+	if(HAS_TRAIT(affected, TRAIT_PERSIST_WOUNDS))
+		should_persist_effects = TRUE
 	if(crit_message)
 		var/message = get_crit_message(affected.owner, affected)
 		if(message)
@@ -181,9 +203,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		affected.bandage_expire() //new bleeding wounds always expire bandages, fuck you
 	if(disabling)
 		affected.update_disabled()
+	affected.owner?.mark_zone_selector_hud_dirty()
 
 /// Removes this wound from a given bodypart
-/datum/wound/proc/remove_from_bodypart()
+/datum/wound/proc/remove_from_bodypart(force = FALSE)
 	if(!bodypart_owner)
 		return FALSE
 	set_bleed_rate(0)
@@ -193,13 +216,17 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	bodypart_owner = null
 	owner = null
 	on_bodypart_loss(was_bodypart)
-	on_mob_loss(was_owner)
+	if(!should_persist_effects || force)
+		on_mob_loss(was_owner)
+	else
+		persisted_on = WEAKREF(was_owner)
 	return TRUE
 
 /// Effects when a wound is lost on a bodypart
 /datum/wound/proc/on_bodypart_loss(obj/item/bodypart/affected)
 	if(disabling)
 		affected.update_disabled()
+	affected.owner?.mark_zone_selector_hud_dirty()
 
 /// Returns whether or not this wound can be applied to a given mob
 /datum/wound/proc/can_apply_to_mob(mob/living/affected)
@@ -222,7 +249,12 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	sortList(affected.simple_wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
 	owner = affected
 	owner.simple_bleeding += bleed_rate // immediately apply our base bleed to the host mob
-	on_mob_gain(affected)
+	var/mob/living/persisted_mob = persisted_on?.resolve()
+	if(persisted_mob && persisted_mob != affected)
+		on_mob_loss(persisted_mob)
+	if(persisted_mob != affected)
+		on_mob_gain(affected)
+	persisted_on = null
 	if(crit_message)
 		var/message = get_crit_message(affected)
 		if(message)
@@ -244,8 +276,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
 		affected.emote("deathgurgle", forced = TRUE)
 		affected.death()
-	if(affected.hud_used?.zone_select)
-		affected.hud_used.zone_select.update_icon()
+	if(shatter_wound && HAS_TRAIT(affected, TRAIT_SHATTER_WEAKNESS))
+		affected.emote("scream", forced = TRUE)
+		affected.death()
+	affected.mark_zone_selector_hud_dirty()
 
 /// Removes this wound from a given, simpler than adding to a bodypart - No extra effects
 /datum/wound/proc/remove_from_mob()
@@ -261,8 +295,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/on_mob_loss(mob/living/affected)
 	if(mob_overlay)
 		affected.update_damage_overlays()
-	if(affected.hud_used?.zone_select)
-		affected.hud_used.zone_select.update_icon()
+	affected.mark_zone_selector_hud_dirty()
 
 /// Called on handle_wounds(), on the life() proc
 /datum/wound/proc/on_life()
@@ -283,6 +316,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /datum/wound/proc/set_bleed_rate(amount)
 	if(!owner)
 		return
+	var/old_bleed_visible = FALSE
+	if(bodypart_owner)
+		old_bleed_visible = !!bodypart_owner.get_hud_bleed_rate()
 
 	// do simple bleeding
 	if(owner.simple_wounds?.len)
@@ -293,6 +329,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		bodypart_owner.bleeding -= bleed_rate
 		bleed_rate = amount
 		bodypart_owner.bleeding += bleed_rate
+		if(old_bleed_visible != !!bodypart_owner.get_hud_bleed_rate())
+			bodypart_owner.owner?.mark_zone_selector_hud_dirty()
 
 /// Heals this wound by the given amount, and deletes it if it's healed completely
 /datum/wound/proc/heal_wound(heal_amount)
@@ -306,9 +344,9 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(whp <= 0)
 		if(!should_persist())
 			if(bodypart_owner)
-				remove_from_bodypart(src)
+				remove_from_bodypart(force = TRUE)
 			else if(owner)
-				remove_from_mob(src)
+				remove_from_mob()
 			else
 				qdel(src)
 	return amount_healed
@@ -331,8 +369,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(mob_overlay != old_overlay)
 		owner?.update_damage_overlays()
 	record_round_statistic(STATS_WOUNDS_SEWED)
-	if(owner.hud_used?.zone_select)
-		owner.hud_used.zone_select.update_icon()
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Checks if this wound has a special infection (zombie or werewolf)
@@ -429,6 +466,11 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		clotting_rate = max(0.01, (clotting_rate + CLOT_RATE_INCREASE_PER_HIT))
 		clotting_threshold += CLOT_THRESHOLD_INCREASE_PER_HIT
 	..()
+
+/datum/wound/proc/handle_ooze_wound(obj/item/bodypart/affected)
+	if(bodypart_owner || owner || QDELETED(affected) || QDELETED(affected.owner))
+		return FALSE
+	return TRUE
 
 #undef CLOT_THRESHOLD_INCREASE_PER_HIT
 #undef CLOT_RATE_INCREASE_PER_HIT

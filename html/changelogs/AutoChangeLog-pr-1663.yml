@@ -1,5 +1,0 @@
-author: "NotGoldenglow"
-delete-after: True
-changes:
-  - rscadd: "New loadout option for Foreigner Grenzelhoftian adventurer, including tracking skill and a crossbow."
-  - balance: "Armbrustschütze gains tracking skill, athletics and sword skill to maintain parity between the adventurer/mercenary counterpart."

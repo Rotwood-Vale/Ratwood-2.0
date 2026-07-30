@@ -9,6 +9,7 @@
 	sellprice = 10
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/reagent_containers/powder/spice
 	name = "spice"
@@ -60,7 +61,6 @@
 /datum/reagent/druqks/on_mob_metabolize(mob/living/M)
 	M.overlay_fullscreen("druqk", /atom/movable/screen/fullscreen/druqks)
 	M.set_drugginess(30)
-	M.update_body_parts_head_only()
 	if(M.client)
 		ADD_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.area_entered(get_area(M), M.client)
@@ -75,7 +75,6 @@
 	if(M.client)
 		REMOVE_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 //		if(M.client.screen && M.client.screen.len)
 ///			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in M.client.screen
 //			PM.backdrop(M.client.mob)
@@ -107,8 +106,10 @@
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
 			if(!C.can_smell())
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
+			
 			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("[user] attempts to force me to inhale [src]!"))
+								span_danger("I attempt to force [C] to inhale [src]!"))
+		
 			if(C.cmode)
 				if(!CH.grabbedby)
 					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
@@ -487,7 +488,6 @@
 	M.remove_status_effect(/datum/status_effect/buff/herozium)
 	if(M.client)
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 
 /datum/reagent/herozium/overdose_process(mob/living/M)
 	if(prob(30))

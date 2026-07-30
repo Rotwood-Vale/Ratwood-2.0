@@ -7,6 +7,9 @@
 /datum/stressevent/vice/nympho
 	desc = list(span_boldred("I'm feeling randy..."),span_boldred("I need to sate my desires."))
 
+/datum/stressevent/vice/baothamarked
+	desc = list(span_boldred("My brand burns painfully..."),span_boldred("I need to sate this brand's yearning soon."))
+
 /datum/stressevent/vice/sadist
 	desc = list(span_boldred("I need to hear someone whimper."),span_boldred("I crave the suffering of others."))
 
@@ -542,3 +545,8 @@
 	timer = 30 SECONDS
 	stressadd = 4
 	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")
+
+/datum/stressevent/stinky_contact
+	timer = 15 MINUTES
+	stressadd = 2
+	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")

@@ -326,6 +326,14 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	icon_state = "sailorblues"
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored
+	name = "striped shirt"
+	icon_state = "sailorcolorable"
+	item_state = "sailorcolorable"
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+	boobed_detail = FALSE
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
 	icon_state = "sailorreds"
 
@@ -377,6 +385,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/tribalrag
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -389,6 +398,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	salvage_result = /obj/item/natural/hide
 	salvage_amount = 1
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 	name = "scholar's robe"
@@ -415,6 +425,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/green
 	color = CLOTHING_GREEN
@@ -451,6 +462,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -487,6 +499,7 @@
 	salvage_amount = 2
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/princess
 	color = CLOTHING_WHITE
@@ -634,6 +647,7 @@
 	slot_flags = ITEM_SLOT_SHIRT
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 2
+	dropshrink = null
 
 //................ Noble Dress ............... //
 /obj/item/clothing/suit/roguetown/shirt/dress/noble
@@ -681,6 +695,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	icon_state = "velvetdress"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	dropshrink = 0.9
 
 //Servant Clothing:
 //................ Maid Dress   ............... //

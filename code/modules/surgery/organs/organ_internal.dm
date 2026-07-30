@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = BODY_ZONE_CHEST
+	var/zone_checked
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = 0
@@ -207,6 +208,8 @@
 			return TRUE
 
 /obj/item/organ/Initialize(mapload)
+	if(!zone_checked)
+		zone_checked = check_zone(zone)
 	. = ..()
 	if(accessory_type)
 		set_accessory_type(accessory_type)
@@ -342,7 +345,8 @@
 	if(!isnull(colors))
 		accessory_colors = colors
 	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-	accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
+	if(accessory) //a null type is valid, it just means there's no accessory left to colour
+		accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
 	update_accessory_colors()
 
 /obj/item/organ/proc/build_colors_for_accessory(list/source_key_list)
