@@ -772,7 +772,7 @@
 
 	var/turf/open/floor/F = loc
 	if(isfloorturf(F) && F.heat)
-		examination += span_biginfo("It is warm here. Sitting down on something would refresh me.")
+		examination += span_biginfo("It is warm here. It refreshes and heals me.")
 
 	examination += "ø ------------ ø</span>"
 

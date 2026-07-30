@@ -569,7 +569,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(IsSleeping())
 		SEND_SIGNAL(src, COMSIG_CARBON_HANDLE_SLEEP)
 		var/sleepy_mod = 0.5
-		var/in_bed = FALSE
 		var/doesnt_hunger = HAS_TRAIT(src, TRAIT_NOHUNGER)
 		if(HAS_TRAIT(src, TRAIT_BETTER_SLEEP))
 			energy_add(sleepy_mod * 4)
@@ -588,16 +587,11 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			var/obj/structure/bed/rogue/bed = locate() in loc
 			if(bed)
 				sleepy_mod = bed.sleepy
-				in_bed = TRUE
 			else
 				if(HAS_TRAIT(src, TRAIT_OUTDOORSMAN))
 					var/obj/structure/flora/newbranch/branch = locate() in loc
 					if(branch)
 						sleepy_mod = 1.6 // little worse than a bedroll
-		if((buckled || in_bed) && isfloorturf(loc))
-			var/turf/open/floor/F = loc
-			if(F.heat)
-				energy_add(F.heat * 4)
 		if(sleepy_mod >= 2 && bodytemperature < BODYTEMP_NORMAL_MIN) // if we're sleeping on a bedroll or better
 			adjust_bodytemperature(0.5) // not exactly the best way to regain heat but it'll keep you from freezing to death, won't protect you from a snowstorm though
 		if(drunkenness)
@@ -644,23 +638,17 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else if(!IsSleeping() && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 		// Resting on a bed or something
 		var/sleepy_mod = 0
-		var/in_bed = FALSE
 		if(buckled?.sleepy)
 			sleepy_mod = buckled.sleepy
 		else if(isturf(loc) && !(mobility_flags & MOBILITY_STAND))
 			var/obj/structure/bed/rogue/bed = locate() in loc
 			if(bed)
 				sleepy_mod = bed.sleepy
-				in_bed = TRUE
 			else
 				if(HAS_TRAIT(src, TRAIT_OUTDOORSMAN))
 					var/obj/structure/flora/newbranch/branch = locate() in loc
 					if(branch)
 						sleepy_mod = 0.8 // better than leaning against a wall, since you get this while NOT asleep
-		if((buckled || in_bed) && isfloorturf(loc))
-			var/turf/open/floor/F = loc
-			if(F.heat)
-				energy_add(F.heat * 4)
 		if(sleepy_mod > 0)
 			if(eyesclosed)
 				var/armor_blocked = FALSE
