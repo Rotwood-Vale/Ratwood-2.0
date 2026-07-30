@@ -1959,6 +1959,18 @@
 			set_wallpressed(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
+		if (NAMEOF(src, blood_volume))
+			set_blood_volume(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, bloodpool))
+			set_bloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, maxbloodpool))
+			set_maxbloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
