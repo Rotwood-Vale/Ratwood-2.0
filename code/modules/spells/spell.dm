@@ -516,6 +516,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
+	user.stop_attack() // Clear lingering spell effects after it is successfully cast
 	for(var/atom/target in targets)
 		var/location
 		if(isliving(target))
@@ -557,6 +558,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			. = range(distance,center)
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
+	user.stop_attack()
 	start_recharge()
 	switch(charge_type)
 		if("recharge")

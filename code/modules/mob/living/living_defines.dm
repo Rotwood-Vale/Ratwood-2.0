@@ -3,9 +3,9 @@
 	sight = 0
 	see_in_dark = 8
 	hud_possible = list(ANTAG_HUD)
-	
+
 	typing_indicator_enabled = TRUE
-	
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -27,7 +27,8 @@
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
 	var/resting = FALSE
-	var/wallpressed = FALSE
+	/// Cardinal dir of the wall we're pressed against, or FALSE. Use set_wallpressed()/is_wallpressed().
+	VAR_PROTECTED/wallpressed = FALSE
 	var/climbing = FALSE
 
 	var/pixelshift_layer = 0
@@ -63,7 +64,7 @@
 
 	var/tod = null // Time of death
 
-	/// The boolean "Are we on fire?" var. 
+	/// The boolean "Are we on fire?" var.
 	var/on_fire = FALSE
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/fire_stacks = 0
@@ -191,6 +192,10 @@
 	 * All it does is track when a mob is sneaking so we don't have to constantly reset alpha values as this fucks with how things are intended to be.
 	 * if you really need to cancel someone who is sneaking, call update_sneak_invis(TRUE).*/
 	var/rogue_sneaking = FALSE
+	/**
+	 * are we currently sneaking and thus invisible due to it
+	 */
+	var/sneak_faded = FALSE
 	/* Can be used to change the lighting threshholds at which players can sneak.*/
 	var/rogue_sneaking_light_threshhold = 0.15
 

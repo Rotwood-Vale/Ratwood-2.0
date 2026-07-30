@@ -58,7 +58,7 @@
 	var/obj/item/bodypart/head/dullahan/eaterrelay
 	if(ishuman(src))
 		var/mob/living/carbon/human = src
-		if(!human.get_bodypart_shallow(BODY_ZONE_HEAD))
+		if(!human.get_bodypart(BODY_ZONE_HEAD))
 			if(isdullahan(src))
 				var/datum/species/dullahan/dullahan = human.dna.species
 				eaterrelay = dullahan.my_head

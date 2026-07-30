@@ -60,7 +60,8 @@
 		var/wepchoice = input("Choose your weapon", "Available weapons") as anything in weapons
 		switch(wepchoice)
 			if("Grand Mace")
-				backr = /obj/item/rogueweapon/mace/goden/steel
+				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Spiked Maul")
 				r_hand = /obj/item/rogueweapon/mace/maul/spiked
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -115,7 +116,8 @@
 				if("Axe")
 					backr = /obj/item/rogueweapon/stoneaxe/battle
 				if("Grand Mace")
-					backr = /obj/item/rogueweapon/mace/goden/steel
+					r_hand = /obj/item/rogueweapon/mace/goden/steel
+					backr = /obj/item/rogueweapon/scabbard/gwstrap
 				if("Maul")
 					r_hand = /obj/item/rogueweapon/mace/maul/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap

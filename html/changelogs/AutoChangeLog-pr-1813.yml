@@ -1,0 +1,4 @@
+author: "2whatever2"
+delete-after: True
+changes:
+  - bugfix: "Gnolls can now see who is marked through masks now."

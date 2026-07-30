@@ -111,6 +111,10 @@
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(!climbable)
+		if(can_wallpress() && user == O && isliving(O))
+			var/mob/living/presser = O
+			if(presser.mobility_flags & MOBILITY_MOVE)
+				wallpress(presser)
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -134,7 +138,7 @@
 		density = FALSE
 		. = step(A,get_dir(A, loc))
 		density = TRUE
-		
+
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	if(QDELETED(src))
 		return
@@ -297,3 +301,13 @@
 				return  "It appears heavily damaged."
 			if(1 to 25)
 				return  span_warning("It's falling apart!")
+
+/obj/structure/proc/set_climbable(new_climbable)
+	if(new_climbable == climbable)
+		return
+	var/turf/our_turf = get_turf(src)
+	climbable = new_climbable
+	if(climbable)
+		our_turf.climbable_atom_count++
+	else
+		our_turf.climbable_atom_count--

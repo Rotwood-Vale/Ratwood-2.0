@@ -66,7 +66,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 		pants = /obj/item/clothing/under/roguetown/tights/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
-		if(SSmapping.config.map_name == "Desert Town")
+		if(SSmapping.current_map.map_name == "Desert Town")
 			head = /obj/item/clothing/head/roguetown/turban/red
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold/steward
@@ -76,7 +76,7 @@
 		/obj/item/mini_flagpole/steward = 1,
 	)
 	id = /obj/item/scomstone
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
 		// shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/red//actually dress under overshirt doesn't look too bad
 	if(H.mind)

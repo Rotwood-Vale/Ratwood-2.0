@@ -186,6 +186,11 @@
 	name = "Frypan, Iron"
 	created_item = /obj/item/cooking/pan
 
+/datum/anvil_recipe/tools/iron/tallowpot
+	name = "Tallowpot, Iron (x2) (+1 Iron)"
+	created_item = /obj/item/inqarticles/tallowpot
+	createditem_num = 2
+
 /datum/anvil_recipe/tools/iron/keyring
 	name = "Keyrings (x3)"
 	created_item = /obj/item/storage/keyring

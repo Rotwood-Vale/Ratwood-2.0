@@ -1079,7 +1079,6 @@ var/global/list/Q_WITNESS_EFFECTS = list(
 
 	var/list/skill_cands = list()
 	var/list/blocked_skills = list(
-		/datum/skill/combat/staves,
 		/datum/skill/magic/blood
 	)
 

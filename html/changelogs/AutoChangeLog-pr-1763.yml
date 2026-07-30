@@ -1,5 +1,0 @@
-author: "NotGoldenglow"
-delete-after: True
-changes:
-  - rscadd: "Separates Hunted vice into two different \"Marked By\" categories. The old Hunted vice now concerns GNOLLS, so remember to change yours out if you don't want that."
-  - balance: "Gnolls and Assasssins may now hunt different prey."

@@ -50,6 +50,8 @@
 		calculate_move_dir()
 		if(!movement_locked && !(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
+		else if(movement_locked && mob)
+			SEND_SIGNAL(mob, COMSIG_MOB_MOVEMENT_LOCKED_KEY_PRESSED, camera_relative_dir(movement))
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.

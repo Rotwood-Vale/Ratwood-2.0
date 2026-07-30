@@ -255,9 +255,6 @@
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), 25)
 
 
-/obj/structure/mineral_door/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/structure/mineral_door/attack_hand(mob/user)
 	. = ..()
 	if(.)

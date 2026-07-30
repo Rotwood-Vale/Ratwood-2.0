@@ -1,6 +1,6 @@
 /datum/language/celestial
 	name = "Sama'glos"
-	desc = "The divine language of celestial beings and the desert kingdoms. Also known as Sandspeak, it carries the wisdom of the heavens and the shifting sands."
+	desc = "(Spoken with ,c) The divine language of celestial beings and the desert kingdoms. Also known as Sandspeak, it carries the wisdom of the heavens and the shifting sands."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"

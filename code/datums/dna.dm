@@ -256,6 +256,7 @@
 		update_hair()
 		if(mutcolor_update)
 			update_body_parts()
+	mark_zone_selector_hud_dirty()
 
 
 

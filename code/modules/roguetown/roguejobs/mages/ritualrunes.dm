@@ -681,7 +681,6 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "portal"
 	tier = 2
-	req_invokers = 2
 	invocation = "Xel’tharr un’korel!"
 	ritual_number = FALSE
 	req_keyword = TRUE

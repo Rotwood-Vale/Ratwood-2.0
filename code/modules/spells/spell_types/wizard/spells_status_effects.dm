@@ -55,7 +55,7 @@
 /datum/status_effect/buff/witherd
 	id = "withered"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/witherd
-	duration = 30 SECONDS
+	duration = 90 SECONDS
 	effectedstats = list(STATKEY_SPD = -2,STATKEY_STR = -2,STATKEY_CON= -2,STATKEY_WIL = -2)
 
 /atom/movable/screen/alert/status_effect/buff/witherd
@@ -94,7 +94,7 @@
 	. = ..()
 	var/mob/living/target = owner
 	target.update_vision_cone()
-	target.add_movespeed_modifier(MOVESPEED_ID_LIGHTNINGSTRUCK, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
+	target.add_movespeed_modifier(MOVESPEED_ID_LIGHTNINGSTRUCK, update=TRUE, priority=100, multiplicative_slowdown=2, movetypes=GROUND)
 
 /datum/status_effect/buff/lightningstruck/on_remove()
 	. = ..()

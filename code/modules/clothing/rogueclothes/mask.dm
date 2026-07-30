@@ -843,12 +843,12 @@
 	apply_mask_style(choice, user)
 
 /obj/item/clothing/mask/rogue/xylixmask/AltRightClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	open_style_menu(user)
 
 /obj/item/clothing/mask/rogue/xylixmask/ShiftRightClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(findtext(icon_state, "_snout"))
 		var/snout_index = xylixmask_snout_states.Find(icon_state)
@@ -881,7 +881,7 @@
 		H.update_fov_angles()
 		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])

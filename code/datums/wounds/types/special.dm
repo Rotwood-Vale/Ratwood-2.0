@@ -342,7 +342,7 @@
 	else
 		owner?.visible_message(span_smallred("The musculature around <b>[owner]</b>'s [bodypart_owner.name] relaxes its agonal seizing..."))
 
-/datum/wound/grievous/remove_from_bodypart()
+/datum/wound/grievous/remove_from_bodypart(force = FALSE)
 	bodypart_owner?.grievously_wounded = FALSE
 	. = ..()
 
@@ -351,6 +351,113 @@
 
 /datum/wound/grievous/pre_skullshatter
 	name = "shattered skull"
+
+//Unique wounds for ooze-people.
+/datum/wound/slime
+	var/paralysis
+	var/knockout
+	sleep_healing = 1
+	critical = TRUE
+
+/datum/wound/slime/knockout
+	name = "neural core rupture"
+	check_name = span_bone("RUPTURE!")
+	crit_message = list(
+		"Ooze leaks from the neural core!",
+		"The neural core is pierced!",
+		"The neural core is torn!",
+	)
+	woundpain = 60
+	whp = 20
+	knockout = 4 SECONDS
+
+/datum/wound/slime/paralyze
+	name = "shattered neural core"
+	check_name = span_bone("<B>SHATTERED!</B>")
+	crit_message = list(
+		"THE NEURAL CORE SHATTERS!",
+		"THE NEURAL CORE SPLITS IN HALF!",
+		"THE NEURAL CORE CAVES IN!",
+	)
+	woundpain = 100
+	whp = 40
+	paralysis = TRUE
+
+/datum/wound/slime/on_mob_gain(mob/living/affected)
+	. = ..()
+	affected.Slowdown(20)
+	shake_camera(affected, 2, 2)
+	ADD_TRAIT(affected, TRAIT_DISFIGURED, "[type]")
+	if(knockout)
+		affected.Unconscious(knockout)
+	if(paralysis)
+		ADD_TRAIT(affected, TRAIT_NO_BITE, "[type]")
+		ADD_TRAIT(affected, TRAIT_PARALYSIS, "[type]")
+		ADD_TRAIT(affected, TRAIT_NOPAIN, "[type]")
+		if(iscarbon(affected))
+			var/mob/living/carbon/carbon_affected = affected
+			carbon_affected.update_disabled_bodyparts()
+
+/datum/wound/slime/on_mob_loss(mob/living/affected)
+	. = ..()
+	REMOVE_TRAIT(affected, TRAIT_DISFIGURED, "[type]")
+	if(paralysis)
+		REMOVE_TRAIT(affected, TRAIT_NO_BITE, "[type]")
+		REMOVE_TRAIT(affected, TRAIT_PARALYSIS, "[type]")
+		REMOVE_TRAIT(affected, TRAIT_NOPAIN, "[type]")
+		if(iscarbon(affected))
+			var/mob/living/carbon/carbon_affected = affected
+			carbon_affected.update_disabled_bodyparts()
+
+/datum/wound/slime/on_bodypart_gain(obj/item/bodypart/affected)
+	. = ..()
+	affected.temporary_crit_paralysis(20 SECONDS)
+	affected.owner.add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, multiplicative_slowdown = 1.3)
+
+/datum/wound/slime/on_bodypart_loss(obj/item/bodypart/affected)
+	. = ..()
+	if(!affected.owner)
+		return
+	affected.owner.remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+
+/datum/wound/slime/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/slime) && (type == other.type))
+		return FALSE
+	return TRUE
+
+/datum/wound/dynamic/ooze
+	name = "membrasion"
+	whp = 5
+	bleed_rate = null
+	clotting_threshold = null
+	sewn_clotting_threshold = null
+	woundpain = 5
+	passive_healing = 1
+	sew_threshold = 50
+	can_sew = FALSE
+	can_cauterize = FALSE
+	passive_healing = 0.5
+	severity_names = list(
+		"minor" = 20,
+		"moderate" = 60,
+		"big" = 120,
+		"massive" = 180
+	)
+
+#define OOZE_UPG_WHPRATE 1
+#define OOZE_UPG_PAINRATE 1
+#define OOZE_UPG_SELFHEAL 1
+
+/datum/wound/dynamic/ooze/upgrade(dam, armor)
+	whp += (dam * OOZE_UPG_WHPRATE)
+	woundpain += (dam * OOZE_UPG_PAINRATE)
+	passive_healing += OOZE_UPG_SELFHEAL
+	update_name()
+	..()
+
+#undef OOZE_UPG_WHPRATE
+#undef OOZE_UPG_PAINRATE
+#undef OOZE_UPG_SELFHEAL
 
 /datum/wound/sunder
 	name = "sundered"
@@ -729,5 +836,5 @@
 		if(BP)
 			to_chat(C, span_userdanger("I feel pins and needles in [BP]!"))
 			BP.add_wound(/datum/wound/frostbite)
-			C.clear_fullscreen("hypothermia") 
+			C.clear_fullscreen("hypothermia")
 		qdel(src)

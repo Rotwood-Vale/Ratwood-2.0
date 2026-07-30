@@ -88,12 +88,13 @@
 /datum/magic_item/mythic/briarcurse/on_apply(obj/item/i)
 	.=..()
 	i.force = i.force + 10
+	i.force_wielded = i.force_wielded + 10
 
-/datum/magic_item/mythic/briarcurse/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/magic_item/mythic/briarcurse/on_hit(obj/item/source, atom/target, mob/living/user, proximity_flag, click_parameters)
 	.=..()
 	if(isliving(target))
-		var/mob/living/carbon/targeted = target
-		targeted.adjustBruteLoss(10)
+		var/mob/living/carbon/H = user
+		H.adjustBruteLoss(10)
 		to_chat(user, span_notice("[source] gouges you with it's sharp edges!"))
 
 /datum/magic_item/mythic/rewind
@@ -110,10 +111,10 @@
 	else
 		var/turf/target_turf = get_turf(user)
 		active_item = TRUE
+		last_used = world.time
 		sleep(5 SECONDS)
 		to_chat(user, span_notice("[source] rewinds you back in time!"))
 		do_teleport(user, target_turf, channel = TELEPORT_CHANNEL_QUANTUM)
-		last_used = world.time
 
 /datum/magic_item/mythic/rewind/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
 	if(world.time < last_used + REWIND_COOLDOWN)
@@ -121,10 +122,10 @@
 	if(!active_item)
 		var/turf/target_turf = get_turf(owner)
 		active_item = TRUE
+		last_used = world.time
 		sleep(5 SECONDS)
 		to_chat(owner, span_notice("[I] rewinds you back in time!"))
 		do_teleport(owner, target_turf, channel = TELEPORT_CHANNEL_QUANTUM)
-		last_used = world.time
 		active_item = FALSE
 
 
@@ -134,28 +135,29 @@
 	var/last_used
 
 /datum/magic_item/mythic/chaos_storm/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (last_used[source] + (10 SECONDS)))
+	if(!proximity_flag)
 		return
-
+	if(world.time < last_used + 10 SECONDS)
+		return
 	if(isliving(target))
-		var/mob/living/L = target
+		var/mob/living/targeted = target
 		switch(rand(1,5))
 			if(1)
-				L.apply_damage(15, BURN)
-				L.adjust_fire_stacks(5)
-				L.ignite_mob()
-				to_chat(L, span_warning("Chaotic flames engulf you!"))
+				targeted.apply_damage(15, BURN)
+				targeted.adjust_fire_stacks(5)
+				targeted.ignite_mob()
+				to_chat(targeted, span_warning("Chaotic flames engulf you!"))
 			if(2)
-				L.apply_damage(10, BRUTE)
-				L.Knockdown(20)
-				to_chat(L, span_warning("Chaotic force slams into you!"))
+				targeted.apply_damage(10, BRUTE)
+				targeted.Knockdown(20)
+				to_chat(targeted, span_warning("Chaotic force slams into you!"))
 			if(3)
-				L.electrocute_act(12, source, 1)
-				to_chat(L, span_warning("Chaotic lightning courses through you!"))
+				targeted.electrocute_act(12, source, 1)
+				to_chat(targeted, span_warning("Chaotic lightning courses through you!"))
 			if(4)
-				L.OffBalance(2.5 SECONDS)
-				to_chat(L, span_warning("Chaotic energy disrupts your coordination!"))
+				targeted.OffBalance(2.5 SECONDS)
+				to_chat(targeted, span_warning("Chaotic energy disrupts your coordination!"))
 			if(5)
-				L.confused += 2 SECONDS
-				to_chat(L, span_warning("Chaotic energy scrambles your thoughts!"))
-	last_used[source] = world.time
+				targeted.confused += 2 SECONDS
+				to_chat(targeted, span_warning("Chaotic energy scrambles your thoughts!"))
+	last_used = world.time

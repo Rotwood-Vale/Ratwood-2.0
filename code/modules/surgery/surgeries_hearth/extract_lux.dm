@@ -7,7 +7,7 @@
 		/datum/surgery_step/extract_lux,
 		/datum/surgery_step/cauterize
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/extract_lux
@@ -17,7 +17,7 @@
 		TOOL_IMPROVISED_SCALPEL = 45,
 		TOOL_SHARP = 30,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 8 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
 	surgery_flags_blocked = SURGERY_CONSTRUCT
@@ -41,7 +41,7 @@
 /datum/surgery_step/extract_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("painscream")
-	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		display_results(user, target, span_notice("You cannot draw lux from [target]; they have none left to give."),
 		"[user] extracts lux from [target]'s innards.",
 		"[user] extracts lux from [target]'s innards.")

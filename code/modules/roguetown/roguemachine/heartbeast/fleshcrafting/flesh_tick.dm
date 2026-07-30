@@ -33,7 +33,7 @@
 	if(!SSchimeric_tech.get_node_status("CORPSE_TICKS") && target.stat == DEAD)
 		return FALSE
 
-	if(target.has_status_effect(/datum/status_effect/debuff/devitalised))
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 
 	var/datum/component/leechtick_attachment/existing = target.GetComponent(/datum/component/leechtick_attachment)

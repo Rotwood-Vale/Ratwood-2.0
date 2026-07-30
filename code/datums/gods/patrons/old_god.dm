@@ -26,12 +26,14 @@
 /obj/effect/proc_holder/spell/self/check_boot
 	name = "BOOT-CHECK"
 	desc = "Checks your boot for variety of items."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "BOOTCHECK"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
 	chargedloop = null
 	sound = null
-	overlay_state = "BOOTCHECK"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 10 MINUTES
@@ -138,6 +140,8 @@
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
 	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ENDURE"
 	releasedrain = 20
 	chargedrain = 0

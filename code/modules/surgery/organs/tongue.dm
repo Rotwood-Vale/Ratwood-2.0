@@ -25,6 +25,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar,
@@ -45,7 +46,7 @@
 	if(modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
-	for(var/datum/wound/facial/ears/tongue_wound as anything in M.get_wounds())
+	for(var/datum/wound/facial/ears/tongue_wound in M.get_wounds())
 		qdel(tongue_wound)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -191,8 +192,7 @@
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/monkey))
+		/datum/language/draconic))
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
 	. = ..()

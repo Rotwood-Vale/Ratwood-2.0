@@ -78,6 +78,8 @@
 /obj/effect/proc_holder/spell/self/abyssor_wind
 	name = "Second Wind"
 	desc = "Rise if fallen, and regain some of your stamina."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssor_wind"
 	releasedrain = 10
 	chargedrain = 0
@@ -116,6 +118,8 @@
 /obj/effect/proc_holder/spell/invoked/aquatic_compulsion
 	name = "Aquatic Compulsion"
 	desc = "Compel a fish to leap out from targeted water tile and towards you."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "aqua"
 	releasedrain = 15
 	chargedrain = 0
@@ -303,6 +307,8 @@
 /obj/effect/proc_holder/spell/invoked/call_dreamfiend
 	name = "Summon Dreamfiend"
 	desc = "Summons a Dreamfiend to hound your target."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "dreamfiend"
 	range = 7
 	no_early_release = TRUE
@@ -386,6 +392,8 @@
 /obj/effect/proc_holder/spell/invoked/abyssal_infusion
 	name = "Abyssal Infusion"
 	desc = "Consumes an anglerfish to bless target with ability to call upon Abyssal Strength."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssal_infusion"
 	range = 7
 	no_early_release = TRUE
@@ -442,6 +450,8 @@
 /obj/effect/proc_holder/spell/invoked/abyssal_strength
 	name = "Abyssal Strength"
 	desc = "Buffs all your stats besides fortune, and lowers your perception."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssal_strength1"
 	range = 7
 	no_early_release = TRUE

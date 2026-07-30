@@ -158,7 +158,6 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
 
-
 /obj/structure/lever/attackby(obj/item/I, mob/user, params)
 	var/obj/item = user.get_active_held_item()
 	if(user.used_intent.type == /datum/intent/chisel )
@@ -210,6 +209,14 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/lever/hidden
 	icon = null
+
+/obj/structure/lever/pretoggled
+	toggled = TRUE
+	icon_state = "leverfloor1"
+
+/obj/structure/lever/wall/pretoggled
+	toggled = TRUE
+	icon_state = "leverwall1"
 
 /obj/structure/lever/hidden/proc/feel_button(mob/living/user)
 	if(isliving(user))
@@ -343,7 +350,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/englauncher/proc/can_user_rotate(mob/user)
 	var/mob/living/L = user
 	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return FALSE
 		else
 			return TRUE
@@ -618,7 +625,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	return ..()
 */
 /obj/structure/floordoor/obj_break(damage_flag)
-	obj_flags = null
+	set_is_platform(FALSE)
+	obj_flags &= ~BLOCK_Z_IN_UP
 	..()
 
 /obj/structure/floordoor/redstone_triggered(mob/user)
@@ -627,20 +635,22 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	togg = !togg
 	if(togg)
 		icon_state = "[base_state]0"
-		obj_flags = null
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/atom/movable/M in loc)
 				T.Entered(M)
 	else
 		icon_state = "[base_state]1"
-		obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/floordoor/open
-		icon_state = "floorhatch0"
-		base_state = "floorhatch"
-		togg = TRUE
-		obj_flags = null
+	icon_state = "floorhatch0"
+	base_state = "floorhatch"
+	togg = TRUE
+	obj_flags = null
 
 /obj/structure/floordoor/gatehatch
 	name = ""
@@ -668,7 +678,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	if(togg)
 		sleep(delay2open)
 		icon_state = "[base_state]0"
-		obj_flags = null
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/atom/movable/M in loc)
@@ -678,7 +689,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	else
 		sleep(delay2close)
 		icon_state = "[base_state]1"
-		obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 		sleep(40-delay2close)
 		changing_state = FALSE
 

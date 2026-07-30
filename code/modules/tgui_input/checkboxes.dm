@@ -10,8 +10,11 @@
  * max_checked - The maximum number of checkboxes that can be checked (optional)
  * timeout - The timeout for the input (optional)
  * default_checked - A list of items to start as checked (optional)
+ * descriptions - Assoc list of item = description, shown under the item (optional)
+ * strict_modern - Skips the legacy input fallback, for callers that can't work with a single choice
+ * window_width / window_height - Size of the window (optional)
  */
-/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, ui_state = GLOB.tgui_always_state, list/default_checked = null)
+/proc/tgui_input_checkboxes(mob/user, message, title = "Select", list/items, min_checked = 1, max_checked = 50, timeout = 0, ui_state = GLOB.tgui_always_state, list/default_checked = null, list/descriptions = null, strict_modern = FALSE, window_width = 425, window_height = 300)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -26,10 +29,10 @@
 	if(isnull(user.client))
 		return null
 
-	if(!user.client.prefs.tgui_pref)
+	if(!user.client.prefs.tgui_pref && !strict_modern)
 		var/our_input = input(user, message, title) as null|anything in items
 		return our_input ? list(our_input) : null
-	var/datum/tgui_checkbox_input/input = new(user, message, title, items, min_checked, max_checked, timeout, ui_state, default_checked)
+	var/datum/tgui_checkbox_input/input = new(user, message, title, items, min_checked, max_checked, timeout, ui_state, default_checked, descriptions, window_width, window_height)
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -58,16 +61,24 @@
 	var/max_checked
 	/// Default selected items shown as checked when the UI opens
 	var/list/default_checked
+	/// Assoc list of item = description, displayed under the item
+	var/list/descriptions
+	/// Size of the window
+	var/window_width
+	var/window_height
 	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
 	var/datum/ui_state/state
 
-/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, min_checked, max_checked, timeout, ui_state, list/default_checked)
+/datum/tgui_checkbox_input/New(mob/user, message, title, list/items, min_checked, max_checked, timeout, ui_state, list/default_checked, list/descriptions, window_width, window_height)
 	src.title = title
 	src.message = message
 	src.items = items.Copy()
 	src.min_checked = min_checked
 	src.max_checked = max_checked
 	src.state = ui_state
+	src.descriptions = descriptions?.Copy()
+	src.window_width = window_width
+	src.window_height = window_height
 	src.default_checked = list()
 	if(length(default_checked))
 		for(var/item in default_checked)
@@ -84,6 +95,7 @@
 	state = null
 	items?.Cut()
 	default_checked?.Cut()
+	descriptions?.Cut()
 
 	return ..()
 
@@ -116,9 +128,12 @@
 	var/list/data = list()
 
 	data["items"] = items
+	data["descriptions"] = descriptions
 	data["min_checked"] = min_checked
 	data["max_checked"] = max_checked
 	data["default_checked"] = default_checked
+	data["window_width"] = window_width
+	data["window_height"] = window_height
 	data["large_buttons"] = FALSE // user.read_preference(/datum/preference/toggle/tgui_large_buttons)
 	data["message"] = message
 	data["swapped_buttons"] = FALSE //  !user.read_preference(/datum/preference/toggle/tgui_swapped_buttons)
@@ -133,7 +148,7 @@
 
 	switch(action)
 		if("submit")
-			var/list/selections = params["entry"]
+			var/list/selections = params["entry"] || list()
 			if(length(selections) >= min_checked && length(selections) <= max_checked)
 				var/list/valid_selections = list()
 				for(var/raw_entry in selections)
