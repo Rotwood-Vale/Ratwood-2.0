@@ -145,7 +145,7 @@
 /datum/coven_power/proc/can_afford()
 	switch(cost_system)
 		if(COVEN_COST_VITAE)
-			return (owner.bloodpool >= vitae_cost)
+			return (owner.get_bloodpool() >= vitae_cost)
 
 /**
  * Returns if this power can currently be activated

@@ -87,11 +87,11 @@
 
 	clan.handle_bloodsuck(src, blood_handle)
 
-	if(victim.bloodpool > 0)
+	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
 		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
-		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
-			used_vitae = victim.bloodpool
+		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
+			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
 		victim.adjust_bloodpool(-used_vitae)
 		victim.adjust_hydration(- used_vitae * 0.1)
