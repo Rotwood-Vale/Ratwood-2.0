@@ -476,8 +476,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		return
 	if(istype(W, /obj/item/rogueweapon/pick))
 		if(!isliving(user))
-			..()
-			return
+			return ..()
 		var/mob/living/L = user
 		if(!L.client || !L.client.prefs?.autopicking)
 			..()
