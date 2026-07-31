@@ -34,6 +34,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 	)
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
