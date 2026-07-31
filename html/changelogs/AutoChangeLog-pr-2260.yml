@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - admin: "The prompt that appears when adjusting a player's PQ will no longer show the \"allowed adjustment range\" of -20 to 20 if you have the right permission to ignore that requirement anyways."
