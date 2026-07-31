@@ -29,6 +29,8 @@
 	var/STAWIL
 	var/cmode_music
 	var/list/base_intents
+	/// Default language from before we turned, restored on cure.
+	var/prior_default_language
 
 	/// Whether or not we have been turned
 	var/has_turned = FALSE
@@ -198,9 +200,10 @@
 		for(var/trait in traits_zombie)
 			REMOVE_TRAIT(zombie, trait, "[type]")
 		zombie.remove_client_colour(/datum/client_colour/monochrome)
-		zombie.remove_language(/datum/language/undead)
-		var/datum/language_holder/language_holder = zombie.get_language_holder()
-		language_holder.selected_default_language = null
+		zombie.remove_language(/datum/language/undead, source = "[type]")
+		if(has_turned)
+			var/datum/language_holder/language_holder = zombie.get_language_holder()
+			language_holder.selected_default_language = prior_default_language
 
 		if(has_turned && become_rotman)
 			zombie.STACON = max(zombie.STACON - 2, 1) //ur rotting bro
@@ -269,8 +272,9 @@
 	zombie.faction += "undead"
 	zombie.faction += "zombie"
 	zombie.faction -= "neutral"
-	zombie.grant_language(/datum/language/undead)
+	zombie.grant_language(/datum/language/undead, source = "[type]")
 	var/datum/language_holder/language_holder = zombie.get_language_holder()
+	prior_default_language = language_holder.selected_default_language
 	language_holder.selected_default_language = /datum/language/undead
 	zombie.verbs |= /mob/living/carbon/human/proc/zombie_seek
 	for(var/obj/item/bodypart/zombie_part as anything in zombie.bodyparts)

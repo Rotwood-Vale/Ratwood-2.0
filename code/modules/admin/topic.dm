@@ -1092,7 +1092,7 @@
 	else if(href_list["remove_language"])
 		var/mob/M = locate(href_list["remove_language"])
 		var/datum/language/lang = text2path(href_list["language"])
-		M.remove_language(lang)
+		M.remove_language(lang, source = LANGUAGE_SOURCE_ALL)
 		message_admins(span_danger("Admin [key_name_admin(usr)] removed [lang] from [key_name_admin(M)]"))
 		log_admin("[usr] removed [lang] to [M].")
 		show_player_panel_next(M, "languages")
