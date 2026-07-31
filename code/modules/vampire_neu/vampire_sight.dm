@@ -176,6 +176,14 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		carrier.cut_overlay(ma)
 		ma = null
 	var/mutable_appearance/glow = new(carrier)
+	// UI/effect overlays (typing bubble on FULLSCREEN_PLANE, KEEP_APART point bubbles/anims) don't flatten
+	// into the glow and would leak red onto their own plane, so drop them from the copy
+	var/list/leaky_overlays
+	for(var/mutable_appearance/overlay as anything in glow.overlays)
+		if((overlay.appearance_flags & KEEP_APART) || overlay.plane == FULLSCREEN_PLANE)
+			LAZYADD(leaky_overlays, overlay)
+	if(leaky_overlays)
+		glow.overlays -= leaky_overlays
 	glow.plane = BLOOD_GLOW_PLANE
 	glow.transform = matrix()
 	glow.pixel_x = 0
@@ -188,6 +196,17 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	glow.filters = null
 	ma = glow
 	carrier.add_overlay(glow)
+
+/mob/living/carbon/proc/debug_blood_glow_leak()
+	var/datum/component/blood_glow/glow = GetComponent(/datum/component/blood_glow)
+	if(!glow)
+		glow = AddComponent(/datum/component/blood_glow)
+	display_typing_indicator()
+	glow.build(TRUE)
+	var/leaked = glow.ma && (typing_indicator_current in glow.ma.overlays)
+	clear_typing_indicator()
+	to_chat(usr, span_notice("[src] blood-glow typing-overlay leak: [leaked ? "LEAK — bug present" : "CLEAN — fixed"]"))
+	return leaked
 
 /atom/movable/vampire_sight_relay
 	plane = GAME_PLANE_HIGHEST
