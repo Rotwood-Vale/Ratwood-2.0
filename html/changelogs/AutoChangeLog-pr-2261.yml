@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - qol: "Necra's Sight now asks which marker to drop if you exceed your limit, including choosing to forget none and cancelling the addition of the new object."
