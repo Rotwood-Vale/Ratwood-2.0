@@ -233,7 +233,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	if(!screenmob.client)
 		return FALSE
 
-	update_colorblind_hud_palette(screenmob.client?.prefs)
+	// Mutates the shared hud objects, so follow the owner's prefs, not the viewer's (observers would rewrite our UI)
+	update_colorblind_hud_palette(mymob?.client?.prefs)
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
