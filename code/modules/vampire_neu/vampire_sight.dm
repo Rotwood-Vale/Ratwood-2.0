@@ -197,17 +197,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	ma = glow
 	carrier.add_overlay(glow)
 
-/mob/living/carbon/proc/debug_blood_glow_leak()
-	var/datum/component/blood_glow/glow = GetComponent(/datum/component/blood_glow)
-	if(!glow)
-		glow = AddComponent(/datum/component/blood_glow)
-	display_typing_indicator()
-	glow.build(TRUE)
-	var/leaked = glow.ma && (typing_indicator_current in glow.ma.overlays)
-	clear_typing_indicator()
-	to_chat(usr, span_notice("[src] blood-glow typing-overlay leak: [leaked ? "LEAK — bug present" : "CLEAN — fixed"]"))
-	return leaked
-
 /atom/movable/vampire_sight_relay
 	plane = GAME_PLANE_HIGHEST
 	blend_mode = BLEND_DEFAULT
