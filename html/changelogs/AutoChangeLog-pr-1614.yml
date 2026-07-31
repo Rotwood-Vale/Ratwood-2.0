@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "Anastasis spell icon cooldown should now behave as expected."
