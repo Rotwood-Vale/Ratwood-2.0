@@ -1410,6 +1410,7 @@
 /area/rogue/dietroyt)
 "rk" = (
 /obj/effect/landmark/start/dungeoneer,
+/obj/structure/roguemachine/ticket_manager,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "rl" = (
