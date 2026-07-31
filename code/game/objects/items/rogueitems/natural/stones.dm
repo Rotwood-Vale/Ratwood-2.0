@@ -482,12 +482,11 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			return ..()
 		user.doing = FALSE
 		while(!QDELETED(src) && user.Adjacent(src))
-			if((L.energy > 0) && do_after(user, CLICK_CD_MELEE, TRUE, src))
-				..()
-				if(QDELETED(src))
-					break
-			else
+			if((L.energy <= 0)
 				break
+			if(!do_after(user, CLICK_CD_MELEE, TRUE, src)
+				break
+			..()
 		return
 	if( user.used_intent.type == /datum/intent/chisel )
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
