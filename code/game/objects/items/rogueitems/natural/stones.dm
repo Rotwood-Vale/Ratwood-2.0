@@ -479,8 +479,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			return ..()
 		var/mob/living/L = user
 		if(!L.client || !L.client.prefs?.autopicking)
-			..()
-			return
+			return ..()
 		user.doing = FALSE
 		while(!QDELETED(src) && user.Adjacent(src))
 			if((L.energy > 0) && do_after(user, CLICK_CD_MELEE, TRUE, src))
