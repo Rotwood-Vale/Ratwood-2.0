@@ -477,3 +477,20 @@
       force raised from 34 to 36.
   - balance: Dwarven Maul and Spiked Maul weapon defense increased to 7 when wielded.
   - bugfix: Malum templar maul now functions like a silver weapon as intended.
+2026-07-31:
+  2whatever2:
+  - bugfix: Blacksteel Armet now properly hides your hair.
+  - rscadd: Raise Deadite now works on Volfs and Saigas.
+  - bugfix: Gnolls can now see who is marked through masks now.
+  - balance: Hemophages no longer heal or regain energy. from drinking blood or dirty
+      blood.
+  PPooch:
+  - bugfix: Dislocated limb hand-touch treatment procedure now works again. Remember
+      to be on weak intent.
+  RadiantFlash7:
+  - bugfix: map_vote is no longer weighted
+  Shadow-Quill:
+  - bugfix: Nervelocks now correctly shows the tax rate that affects you, as well
+      as if you are exempt from fines or not.
+  Xander3359:
+  - balance: bow and crossbow damage now stop scaling above 15 perception
