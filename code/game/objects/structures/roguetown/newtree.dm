@@ -109,14 +109,13 @@
 				L.mind.add_sleep_experience(/datum/skill/misc/climbing, exp_to_gain, FALSE)
 
 /obj/structure/flora/newtree/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
 	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)
-		return
+		return ..()
 	var/mob/living/L = user
 	if(L.client && !L.client.prefs?.autowoodcut)
-		return
+		return ..()
 	if(user.doing)
-		return
+		return ..()
 	user.doing = FALSE
 	while(!QDELETED(src) && user.Adjacent(src))
 		if((L.energy > 0) && do_after(user, 1.5 SECONDS, TRUE, src))
