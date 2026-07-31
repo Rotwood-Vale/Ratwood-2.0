@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "language adding and removal is now source-based, which means if you knew zizite's cant before becoming a zombie, deconversion won't remove it"
