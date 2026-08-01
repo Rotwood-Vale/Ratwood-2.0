@@ -1,37 +1,35 @@
-/obj/effect/proc_holder/spell/invoked/projectile/repel
-	name = "Repel"
-	desc = "Shoot out a magical bolt that pushes out the target struck away from the caster."
+/obj/effect/proc_holder/spell/invoked/projectile/lesser_repel
+	name = "Lesser Repel"
+	desc = "Shoot out a magical bolt that pushes away a freestanding item from the caster. Doesn't work on large or living targets. Instead of repelling a target, it will throw an object in your hand if cast while in throw mode."
 	clothes_req = FALSE
 	range = 15
-	projectile_type = /obj/projectile/magic/repel
-	overlay_state = ""
+	projectile_type = /obj/projectile/magic/lesser_repel
+	overlay_state = "fetch"
 	sound = list('sound/magic/unmagnet.ogg')
 	active = FALSE
-	releasedrain = 7
+	releasedrain = 15
 	chargedrain = 0
 	chargetime = 0
 	recharge_time = 15 SECONDS
-	human_req = TRUE
 	warnie = "spellwarning"
-	overlay_state = "fetch"
 	no_early_release = TRUE
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
-	spell_tier = 2
-	invocations = list("Exmoveo!")
-	invocation_type = "shout"
+	spell_tier = 1
+	invocations = list("Minora Exmoveo!")
+	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_DISPLACEMENT
 	glow_intensity = GLOW_INTENSITY_LOW
-	cost = 2 // Same as fetch, make it discounted to account for being less useful
-	xp_gain = TRUE
+	cost = 1
 
-/obj/projectile/magic/repel
-	name = "bolt of repeling"
+/obj/projectile/magic/lesser_repel
+	name = "lesser bolt of repelling"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "curseblob"
 	range = 15
+	cannot_cross_z = TRUE
 
-/obj/effect/proc_holder/spell/invoked/projectile/repel/cast(list/targets, mob/living/user)
+/obj/effect/proc_holder/spell/invoked/projectile/lesser_repel/cast(list/targets, mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/proj = H.get_active_held_item()
@@ -48,16 +46,12 @@
 					return TRUE
 	. = ..()
 
-/obj/projectile/magic/repel/on_hit(target)
-
-	var/atom/throw_target = get_edge_target_turf(firer, get_dir(firer, target)) //ill be real I got no idea why this worked.
+/obj/projectile/magic/lesser_repel/on_hit(target)
+	var/atom/throw_target = get_edge_target_turf(firer, get_dir(firer, target))
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		L.throw_at(throw_target, 7, 4)
-		new /datum/magic_throw_slip_watcher(L)
+		L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+		return BULLET_ACT_BLOCK
 	else
 		if(isitem(target))
 			var/obj/item/I = target
