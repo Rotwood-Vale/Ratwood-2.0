@@ -642,6 +642,13 @@
 		return
 	var/found_movable = FALSE
 	for(var/atom/movable/A in contents)
+		if(istype(A, /obj/vehicle/ridden/dinghy))
+			continue
+
+		if(isliving(A))
+			var/mob/living/L = A
+			if(istype(L.buckled, /obj/vehicle/ridden/dinghy))
+				continue
 		if(!A.anchored)
 			found_movable = TRUE
 			if((A.loc == src))
