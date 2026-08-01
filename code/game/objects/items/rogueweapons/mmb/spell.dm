@@ -19,5 +19,3 @@
 		user.stop_attack()
 		return
 	user.changeNext_move(clickcd)
-	if(releasedrain)
-		user.stamina_add(releasedrain)
