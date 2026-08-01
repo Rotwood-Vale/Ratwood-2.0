@@ -316,6 +316,7 @@
 	icon = 'icons/roguetown/gems/gem_shell.dmi'
 	icon_state = "rungu_shell"
 	max_integrity = 75
+	sellprice = 35
 
 /obj/item/rogueweapon/mace/cudgel/flanged/psy
 	name = "psydonic flanged mace"
