@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - admin: "all kinds of crafting should now be logged, besides slapcrafting, also gravedigging related actions should be a bit better logged, and non-harmful attacks"

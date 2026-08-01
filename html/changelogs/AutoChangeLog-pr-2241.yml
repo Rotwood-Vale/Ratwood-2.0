@@ -1,7 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - balance: "Standard Maul weapon defense increased from 3 when wielded to 6."
-  - balance: "Grand Maul weapon defense increased from 6 to 9 when wielded. Grand Maul force raised from 34 to 36."
-  - balance: "Dwarven Maul and Spiked Maul weapon defense increased to 7 when wielded."
-  - bugfix: "Malum templar maul now functions like a silver weapon as intended."

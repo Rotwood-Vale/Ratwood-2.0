@@ -22570,7 +22570,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/garrison)
 "eKL" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave)
 "eKQ" = (
 /turf/open/water/river/flow,
@@ -64941,7 +64941,7 @@
 /obj/structure/roguewindow/harem3{
 	name = "Frosted Glass Window"
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town/tavern)
 "nyM" = (
 /obj/structure/roguerock,

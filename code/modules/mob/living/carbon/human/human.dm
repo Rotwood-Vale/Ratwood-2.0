@@ -1229,7 +1229,7 @@
 		return FALSE
 
 	var/datum/language_holder/language_holder = get_language_holder()
-	var/list/preserved_languages = language_holder?.languages?.Copy()
+	var/list/preserved_languages = language_holder ? language_holder.copy_language_cache(language_holder.languages) : null
 	var/selected_default_language = language_holder?.selected_default_language
 
 	client.prefs.copy_to(src, TRUE, FALSE)
@@ -1237,7 +1237,8 @@
 
 	if(language_holder && length(preserved_languages))
 		for(var/language_type in preserved_languages)
-			grant_language(language_type)
+			for(var/source in preserved_languages[language_type])
+				grant_language(language_type, source = source)
 		language_holder.selected_default_language = selected_default_language
 
 	return TRUE

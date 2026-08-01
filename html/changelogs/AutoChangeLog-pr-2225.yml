@@ -1,0 +1,5 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "ghosts can now right click people to observe them, that lets you see the same stuff they see, and their inventories, click their skills button to see their stats and skills"
+  - admin: "the admin orbit menu has a optional button you can click to observe the inventory and view of people"

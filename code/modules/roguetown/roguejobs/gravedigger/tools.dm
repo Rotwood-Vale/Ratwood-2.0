@@ -118,6 +118,7 @@
 								break
 
 						playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
+						user.log_message("tore open a grave-sized pit with [src]", LOG_GAME)
 
 				return
 
@@ -147,6 +148,7 @@
 						new /obj/structure/closet/dirthole(T)
 					else
 						T.ChangeTurf(/turf/open/floor/rogue/dirt/road, flags = CHANGETURF_INHERIT_AIR)
+					user.log_message("started digging a hole with [src]", LOG_GAME)
 
 					heldclod = new(src)
 					playsound(T, 'sound/items/dig_shovel.ogg', 100, TRUE)
