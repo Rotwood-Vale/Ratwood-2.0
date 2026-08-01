@@ -417,6 +417,13 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
 		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+	if(HAS_TRAIT(mind.current, TRAIT_EXPLOSIVE_SUPPLY))
+		mind.has_bomb = TRUE
+		to_chat(mind.current, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+	if(HAS_TRAIT(mind.current, TRAIT_DRUG_SUPPLY))
+		mind.has_drug_delivery = TRUE
+		to_chat(mind.current, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
+	close_ui()
 	close_ui()
 
 /datum/sleep_adv/Topic(href, list/href_list)

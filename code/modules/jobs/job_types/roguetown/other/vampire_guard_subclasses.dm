@@ -90,7 +90,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
+	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -128,7 +128,6 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, //Enough to make a wall, go grind if you want more.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
@@ -142,12 +141,12 @@
 	..()
 	to_chat(H, span_warning("You are a professional soldier, light in footwork, yet with years of experience in warfare and archery, far more than most mortals could claim. Your lord's will be done."))
 
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
-	head = /obj/item/clothing/head/roguetown/roguehood/studded //Minimal face protection, maximal auramaxxing.
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced //Minimal face protection, maximal auramaxxing.
 	mask = /obj/item/clothing/mask/rogue/ragmask/black //less face protection, go guardsman if you want that. Also ominious for aura.
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to archery's potental
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
+	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -176,7 +175,7 @@
 				beltl = /obj/item/quiver/arrows
 			if("Crossbow")
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/quiver/bolt/standard
+				beltl = /obj/item/quiver/bolts
 
 // Dodger melee class, excels in damage but also lacks the jack-of-all trades that is, guardsman and weaker tracking
 /datum/advclass/vampduelist
@@ -219,13 +218,13 @@
 			if("Messer & Parrying Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)//So it actually parries with said dagger.
-				l_hand = /obj/item/rogueweapon/sword/short/messer/duelist
+				l_hand = /obj/item/rogueweapon/sword/short/messer
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 				backr = /obj/item/rogueweapon/scabbard/sword
 			if("Messer & Buckler")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
-				l_hand = /obj/item/rogueweapon/sword/short/messer/duelist
+				l_hand = /obj/item/rogueweapon/sword/short/messer
 				r_hand = /obj/item/rogueweapon/shield/buckler
 				beltr = /obj/item/rogueweapon/scabbard/sword
 			if("Heavy Dagger & Parrying Dagger")
@@ -236,8 +235,8 @@
 			if("Dual Wield Messers")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-				l_hand = /obj/item/rogueweapon/sword/short/messer/duelist
-				r_hand = /obj/item/rogueweapon/sword/short/messer/duelist
+				l_hand = /obj/item/rogueweapon/sword/short/messer
+				r_hand = /obj/item/rogueweapon/sword/short/messer
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
 
@@ -250,7 +249,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
+	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	backl = /obj/item/storage/backpack/rogue/satchel
