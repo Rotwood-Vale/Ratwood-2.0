@@ -159,20 +159,23 @@
 
 /atom/movable/screen/skills/Click(location, control, params)
 	var/list/modifiers = params2list(params)
+	//An observer looking through this HUD reads the owner, not itself.
+	var/mob/living/owner = hud?.mymob || usr
+	if(!isliving(owner) || (owner != usr && !isobserver(usr)))
+		return
 
 	if(modifiers["right"])
 		var/ht
-		var/mob/living/L = usr
-		to_chat(L, "*----*")
-		if(ishuman(usr))
-			var/mob/living/carbon/human/M = usr
+		to_chat(usr, "*----*")
+		if(ishuman(owner))
+			var/mob/living/carbon/human/M = owner
 			if(length(M.vices))
 				for(var/datum/charflaw/vice in M.vices)
-					to_chat(M, "<span class='info'><small>[vice.desc]</small></span>")
-				to_chat(M, "*----*")
+					to_chat(usr, "<span class='info'><small>[vice.desc]</small></span>")
+				to_chat(usr, "*----*")
 			else if(M.charflaw)
-				to_chat(M, "<span class='info'>[M.charflaw.desc]</span>")
-				to_chat(M, "*----*")
+				to_chat(usr, "<span class='info'>[M.charflaw.desc]</span>")
+				to_chat(usr, "*----*")
 			if(M.mind)
 				if(M.mind.language_holder)
 					var/finn
@@ -181,24 +184,27 @@
 							continue
 						var/datum/language/LA = new X()
 						finn = TRUE
-						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")
+						to_chat(usr, "<span class='info'>[LA.name] - ,[LA.key]</span>")
 					if(!finn)
-						to_chat(M, "<span class='warning'>I don't know any languages.</span>")
-					else // open_language_menu
-						to_chat(M, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
-					to_chat(M, "*----*")
+						to_chat(usr, "<span class='warning'>I don't know any languages.</span>")
+					else if(owner == usr) // open_language_menu
+						to_chat(usr, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
+					to_chat(usr, "*----*")
 		for(var/X in GLOB.roguetraits)
-			if(HAS_TRAIT(L, X))
-				to_chat(L, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
+			if(HAS_TRAIT(owner, X))
+				to_chat(usr, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
 				ht = TRUE
 		if(!ht)
-			to_chat(L, "<span class='warning'>I have no special traits.</span>")
-		to_chat(L, "*----*")
+			to_chat(usr, "<span class='warning'>I have no special traits.</span>")
+		to_chat(usr, "*----*")
 		return
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.print_levels(H)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H != usr) //Watching someone else, so name the sheet and show their stats too.
+			to_chat(usr, "<span class='notice'><b>[H.real_name]</b></span>")
+			H.print_stats(usr)
+		H.ensure_skills().print_levels(usr)
 
 /atom/movable/screen/craft
 	name = "crafting menu"

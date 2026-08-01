@@ -18,6 +18,7 @@ type OrbitTarget = {
   orbiters?: number;
   job?: string;
   role?: string;
+  subclass?: string;
   department?: string;
   antag_role?: string;
   antag_group?: 'minor' | 'major';
@@ -50,6 +51,7 @@ type OrbitTargetIndexed = OrbitTarget & {
   displayName: string;
   tooltip: string;
   roleLabel: string;
+  roleDisplay: string;
   roleLabelLower: string;
   groupKey: string;
   healthStateColor: string;
@@ -263,7 +265,14 @@ function groupByRoleLabel(items: OrbitTargetIndexed[]): RoleGroup[] {
 }
 
 function buildSearchKey(item: OrbitTarget) {
-  return [item.full_name, item.job, item.role, item.department, item.antag_role]
+  return [
+    item.full_name,
+    item.job,
+    item.role,
+    item.subclass,
+    item.department,
+    item.antag_role,
+  ]
     .filter(Boolean)
     .join(' ')
     .toLowerCase();
@@ -284,8 +293,12 @@ function getDisplayName(fullName: string) {
     .replace(TRAILING_DUPLICATE_SUFFIX_REGEX, '');
 }
 
+function withSubclass(roleText: string, item: OrbitTarget) {
+  return item.subclass ? `${roleText} - ${item.subclass}` : roleText;
+}
+
 function getTooltipRoleText(item: OrbitTarget) {
-  const baseRoleText = getBaseRoleText(item);
+  const baseRoleText = withSubclass(getBaseRoleText(item), item);
   if (!item.antag_role || item.antag_role === baseRoleText) {
     return baseRoleText;
   }
@@ -360,6 +373,7 @@ function buildIndexedTarget(
     displayName,
     tooltip: buildItemTooltip(item.full_name, item, sectionKey),
     roleLabel,
+    roleDisplay: withSubclass(roleLabel, item),
     roleLabelLower: roleLabel.toLowerCase(),
     groupKey,
     healthStateColor,
@@ -403,7 +417,9 @@ const OrbitTargetButton = memo((props: OrbitTargetButtonProps) => {
         <Stack>
           <Stack.Item>
             {item.displayName}
-            {showRole && item.roleLabel !== UNASSIGNED_ROLE_LABEL && ` [${item.roleLabel}]`}
+            {showRole &&
+              item.roleLabel !== UNASSIGNED_ROLE_LABEL &&
+              ` [${item.roleDisplay}]`}
           </Stack.Item>
           {!!item.orbiters && (
             <Stack.Item>
@@ -422,6 +438,7 @@ export const Orbit = () => {
   const { act, data } = useBackend<OrbitData>();
   const [query, setQuery] = useState('');
   const [colorMode, setColorMode] = useState<'role' | 'health'>('role');
+  const [autoObserve, setAutoObserve] = useState(false);
   const orbitRef = data.orbiting_ref;
   const isRoleColorMode = colorMode === 'role';
   const aliveTargets = data.alive || EMPTY_TARGETS;
@@ -429,7 +446,14 @@ export const Orbit = () => {
   const ghostTargets = data.ghosts || EMPTY_TARGETS;
 
   const normalizedQuery = query.trim().toLowerCase();
-  const handleOrbit = useCallback((ref: string) => act('orbit', { ref }), [act]);
+  const handleOrbit = useCallback(
+    (ref: string) => act('orbit', { ref, auto_observe: autoObserve }),
+    [act, autoObserve],
+  );
+  const toggleAutoObserve = useCallback(
+    () => setAutoObserve((observing) => !observing),
+    [],
+  );
   const handleRefresh = useCallback(() => act('refresh'), [act]);
   const toggleColorMode = useCallback(() => {
     setColorMode((mode) => (mode === 'role' ? 'health' : 'role'));
@@ -495,6 +519,16 @@ export const Orbit = () => {
                 </Stack.Item>
                 <Stack.Item>
                   <Button icon="sync-alt" onClick={handleRefresh} tooltip="Refresh" />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    color={autoObserve ? 'good' : 'transparent'}
+                    icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+                    onClick={toggleAutoObserve}
+                    tooltip="Toggle Auto-Observe. When active, orbiting someone also
+                    shows you their screen, their vision and their inventory."
+                    tooltipPosition="bottom-start"
+                  />
                 </Stack.Item>
                 <Stack.Item>
                   <Button
