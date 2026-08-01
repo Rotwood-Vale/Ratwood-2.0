@@ -46,7 +46,7 @@
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
 
-	if(!isnull(life)
+	if(!isnull(life))
 		src.life = life
 
 	perform_exposure()

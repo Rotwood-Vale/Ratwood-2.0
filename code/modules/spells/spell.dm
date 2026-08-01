@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return releasedrain
 
 /obj/effect/proc_holder/spell/proc/calculate_chargetime(mob/living/user)
-	if(!user || !chargetime || miracle))
+	if(!user || !chargetime || miracle)
 		return chargetime
 	var/newtime = chargetime
 	//skill block
@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return 0.1
 
 /obj/effect/proc_holder/spell/proc/calculate_fatigue_drain(mob/living/user)
-	if(!user || !releasedrain || miracle))
+	if(!user || !releasedrain || miracle)
 		return releasedrain
 	var/newdrain = releasedrain
 	//skill block
@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return breakdown
 
 /obj/effect/proc_holder/spell/proc/calculate_cooldown(mob/living/user)
-	if(!user || is_cdr_exempt || miracle))
+	if(!user || is_cdr_exempt || miracle)
 		return initial(recharge_time)
 	var/base = initial(recharge_time)
 	if(user.STAINT > SPELL_SCALING_THRESHOLD)
