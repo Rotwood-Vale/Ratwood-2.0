@@ -18,8 +18,9 @@
 	alternate_worn_layer = UNDER_CLOAK_LAYER
 	strip_delay = 20
 	var/max_storage = 10
+	var/list/tweps = list()
 	var/list/fill_list = list() //use for custome fill that
-	storable_types = list(
+	var/list/storable_types = list(
 		/obj/item/bomb,
 		/obj/item/tntstick,
 		/obj/item/impact_grenade
