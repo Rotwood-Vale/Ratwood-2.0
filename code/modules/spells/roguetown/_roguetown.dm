@@ -56,6 +56,9 @@
 	. = ..()
 	if(.)
 		return FALSE
+	var/list/modifiers = params2list(params)
+	if(!modifiers["middle"])
+		return TRUE
 	if(!can_cast(caller) || !cast_check(FALSE, ranged_ability_user))
 		return FALSE
 	var/client/client = caller.client

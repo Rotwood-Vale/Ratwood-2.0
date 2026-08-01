@@ -115,7 +115,7 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		to_chat(user, span_warning("The miracle fizzles."))
 		return FALSE
