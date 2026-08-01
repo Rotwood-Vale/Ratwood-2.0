@@ -180,9 +180,9 @@
 	skill_level = 5
 
 /datum/artificer_recipe/contraptions/houndstone
-	name = "Houndstone (+1 cog, +1 Topar)"
+	name = "Houndstone (+1 cog, +1 Topar, +1 Houndstone Gem)"
 	required_item = /obj/item/ingot/steel
-	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow, /obj/item/roguegem/houndgem)
 	created_item = /obj/item/scomstone/bad/garrison
 	skill_level = 5
 

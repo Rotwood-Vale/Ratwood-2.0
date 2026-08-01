@@ -293,6 +293,21 @@
 	new /obj/item/roguebin(src)
 	new /obj/item/reagent_containers/glass/bucket(src)
 
+/datum/roguestock/import/houndstonegem
+	name = "Houndstone Gem Crate"
+	desc = "Gems needed for Houndstones."
+	item_type = /obj/structure/closet/crate/chest/steward/houndstonegem
+	export_price = 100
+	importexport_amt = 1
+
+/obj/structure/closet/crate/chest/steward/houndstonegem/Initialize(mapload)
+	. = ..()
+	new /obj/item/roguegem/houndgem(src)
+	new /obj/item/roguegem/houndgem(src)
+	new /obj/item/roguegem/houndgem(src)
+	new /obj/item/roguegem/houndgem(src)
+	new /obj/item/roguegem/houndgem(src)
+
 /datum/roguestock/import/craftsman
 	name = "Craftsman Crate"
 	desc = "Handsaw, chisel, hammer."
