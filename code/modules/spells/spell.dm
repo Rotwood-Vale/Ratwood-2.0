@@ -204,7 +204,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/miracle = FALSE
 	var/devotion_cost = 0
 	var/ignore_cockblock = FALSE //whether or not to ignore TRAIT_SPELLCOCKBLOCK
-	var/next_recharge_time = 0
 
 	action_icon_state = "spell0"
 	action_icon = 'icons/mob/actions/roguespells.dmi'
@@ -371,7 +370,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return TRUE
 	switch(charge_type)
 		if("recharge")
-			if(world.time < next_recharge_time)
+			if(charge_counter < recharge_time)
 				to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
@@ -407,11 +406,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
+	START_PROCESSING(SSfastprocess, src)
 
 	still_recharging_msg = span_warning("[name] is still recharging!")
 	charge_counter = recharge_time
 
 /obj/effect/proc_holder/spell/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
 	qdel(action)
 	return ..()
 
@@ -428,20 +429,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/calculate_recharge_time()
-	var/final_time = initial(recharge_time)
-	var/mob/living/user = ranged_ability_user || action?.owner
-
-	if(user && !is_cdr_exempt)
-		var/stain_diff = user.STAINT - SPELL_SCALING_THRESHOLD
-		if(stain_diff > 0)
-			stain_diff = min(stain_diff, SPELL_POSITIVE_SCALING_THRESHOLD - SPELL_SCALING_THRESHOLD)
-
-		final_time -= initial(recharge_time) * stain_diff * COOLDOWN_REDUCTION_PER_INT
-
-	return max(cooldown_min, round(final_time))
-
-
 /obj/effect/proc_holder/spell/proc/finish_recharge()
 	charge_counter = recharge_time
 
@@ -449,9 +436,23 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	var/final_time = calculate_recharge_time()
-	next_recharge_time = world.time + final_time
-	addtimer(CALLBACK(src, .proc/finish_recharge), final_time)
+	if(ranged_ability_user && !is_cdr_exempt)
+		if(ranged_ability_user.STAINT > SPELL_SCALING_THRESHOLD)
+			var/diff = min(ranged_ability_user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+			recharge_time = initial(recharge_time) - (initial(recharge_time) * diff * COOLDOWN_REDUCTION_PER_INT)
+	else if(ranged_ability_user.STAINT < SPELL_SCALING_THRESHOLD)
+		var/diff2 = SPELL_SCALING_THRESHOLD - ranged_ability_user.STAINT
+		recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
+
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/effect/proc_holder/spell/process()
+	if(charge_counter <= recharge_time) // Edge case when charge counter is set
+		charge_counter += 2	//processes 5 times per second instead of 10.
+		if(charge_counter >= recharge_time)
+			action.UpdateButtonIcon()
+			charge_counter = recharge_time
+			STOP_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	if(!ignore_los)
@@ -573,7 +574,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	start_recharge()
 	switch(charge_type)
 		if("recharge")
-			next_recharge_time = world.time
 			charge_counter = recharge_time
 		if("charges")
 			charge_counter++
