@@ -100,16 +100,6 @@
 		else
 			icon_state = "[item_state]0"
 
-/obj/item/bmbstrap/ai_get_custom_inventory()
-	return tweps
-
-/obj/item/bmbstrap/ai_withdraw_item(obj/item/it, mob/living/user)
-	if(it in tweps)
-		tweps -= it
-		update_icon()
-		return TRUE
-	return FALSE
-
 /obj/item/bmbstrap/Initialize()
 	. = ..()
 
@@ -124,7 +114,7 @@
 				if(!eatbomb(bomb))
 					break
 
-a/obj/item/bmbstrap/proc/eatbomb(obj/A)
+/obj/item/bmbstrap/proc/eatbomb(obj/A)
 	if(istype(A, /obj/item/bomb) || istype(A, /obj/item/tntstick) || istype(A, /obj/item/impact_grenade))
 		if(tweps.len < max_storage)
 			A.forceMove(src)
