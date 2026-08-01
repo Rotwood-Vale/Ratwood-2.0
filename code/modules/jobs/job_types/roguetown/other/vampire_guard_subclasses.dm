@@ -82,16 +82,16 @@
 
 	H.verbs |= /mob/proc/haltyell_exhausting //Soldier gets to halt people
 
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	mask = /obj/item/clothing/mask/rogue/facemask/steel //so they don't get sundered in the face
 	head = /obj/item/clothing/head/roguetown/helmet/sallet
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
 	backr = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather/black
@@ -149,9 +149,9 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to archery's potental
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut //demolishing fortifications or setting them up.
@@ -246,7 +246,7 @@
 	head = /obj/item/clothing/head/roguetown/duelhat //lowest of all guards in head armor in that only their coif really gives them any.
 	mask = /obj/item/clothing/mask/rogue/duelmask //I AM THE NIGHT
 	cloak = /obj/item/clothing/cloak/half //They get to auramax, as a treat
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
@@ -308,8 +308,8 @@
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
 	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm //I can see it getting ditched but sovlful
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	pants = /obj/item/clothing/under/roguetown/brigandinelegs
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy //Weaker to chest stabs, intentional, go upgrade your armor
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -359,7 +359,7 @@
 	to_chat(H, span_warning("Betwixt an occasional visit to a brothel, tavern or flophouse for your thirst for blood, you once told legends and myths of yills untold. One that someone could only dream of lyving, except you; yet now you've a prophecy to fulfil. Your lord's will be done."))
 	head = /obj/item/clothing/head/roguetown/bardhat //Thou hath nae hat then thou art nae bard O' myne.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy //Covers head, also semi-noticable
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient //Covers head, also semi-noticable
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	mask = /obj/item/clothing/mask/rogue/ragmask/black //Obligary face coverage
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to support class.
@@ -447,8 +447,8 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to casting ability
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/paalloy //Makes up for no gloves
-	neck = /obj/item/clothing/neck/roguetown/gorget/paalloy //No head armor but good anti-decap armor, intended.
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient //Makes up for no gloves
+	neck = /obj/item/clothing/neck/roguetown/gorget/ancient //No head armor but good anti-decap armor, intended.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	beltl = /obj/item/book/spellbook

@@ -256,6 +256,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/bell = FALSE //Does item have bell in it, used for attachables
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
+	var/unenchantable = FALSE /// Makes this item impossible to enchant, for temporary item
 
 	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
