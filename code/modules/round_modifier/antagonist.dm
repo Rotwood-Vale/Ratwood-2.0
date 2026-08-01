@@ -48,7 +48,8 @@
 /datum/round_modifier/werewolf
 	name = "Verevolf"
 	desc = "Men don the skin of wolves in darkling night."
-	cost = 4
+	cost = 6
+	weight = 5
 	min_chaos = 2
 	villain_events = list(/datum/round_event_control/antagonist/solo/werewolf)
 
