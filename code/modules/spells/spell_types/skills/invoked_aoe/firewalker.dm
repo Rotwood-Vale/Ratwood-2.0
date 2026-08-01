@@ -54,8 +54,8 @@
 		owner.add_filter(FIREWALKER_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 80, "size" = 1))
 
 /datum/status_effect/buff/firewalker/tick(seconds_between_ticks)
-    for(var/turf/nearby_turf as anything in RANGE_TURFS(2, owner))
-        new /obj/effect/hotspot(nearby_turf, null, null, 1)
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(2, owner))
+		new /obj/effect/hotspot(nearby_turf, null, null, 1)
 
 /datum/status_effect/buff/firewalker/on_remove()
 	. = ..()
