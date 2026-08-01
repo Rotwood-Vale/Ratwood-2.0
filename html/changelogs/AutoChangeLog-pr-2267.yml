@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - bugfix: "The animated overlay that shows when you're in combat mode now properly clears when you leave it."
