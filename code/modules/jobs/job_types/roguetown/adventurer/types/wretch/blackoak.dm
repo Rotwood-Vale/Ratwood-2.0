@@ -61,6 +61,7 @@
 	cloak = /obj/item/clothing/cloak/forrestercloak
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
+	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
@@ -143,7 +144,7 @@
 			else
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 		if("phalangite")
-			r_hand = /obj/item/rogueweapon/halberd/glaive/elvish
+			r_hand = /obj/item/rogueweapon/spear/naginata/elf
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 		if("macebearer")
@@ -156,13 +157,5 @@
 				if("Steel Warhammer")
 					r_hand = /obj/item/rogueweapon/mace/warhammer/steel
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-
-	var/helmets = list("Elven Barbute", "Winged Elven Barbute")
-	var/helmet_choice = input(H, "Choose your helmet.", "LEAVES OVER STEEL") as anything in helmets
-	switch(helmet_choice)
-		if("Elven Barbute")
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak, SLOT_HEAD, TRUE)
-		if("Winged Elven Barbute")
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak, SLOT_HEAD, TRUE)
 
 	wretch_select_bounty(H)

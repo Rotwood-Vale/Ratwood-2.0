@@ -88,8 +88,8 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/leyline_anchor)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/blade_storm)
 			if("phalangite")
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/azurean_phalanx)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/azurean_javelin)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/valean_phalanx)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/valean_javelin)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/advance)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gate_of_reckoning)
 			if("macebearer")
@@ -116,7 +116,7 @@
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 			pants = /obj/item/clothing/under/roguetown/chainlegs
 			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-			cloak = /obj/item/clothing/cloak/tabard/black
+			cloak = /obj/item/clothing/cloak/tabard
 			var/helmets = list(
 				"Pigface Bascinet"		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
 				"Guard Helmet"			= /obj/item/clothing/head/roguetown/helmet/heavy/guard,

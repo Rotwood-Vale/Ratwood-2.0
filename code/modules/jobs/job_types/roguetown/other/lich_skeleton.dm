@@ -560,13 +560,13 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/paalloy
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/paalloy
-	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/paalloy
+	head = /obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/paalloy
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/paalloy
-	gloves = /obj/item/clothing/gloves/roguetown/chain/paalloy
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
 	backr = /obj/item/rogueweapon/shield/wood
 
 
@@ -597,8 +597,8 @@ LICH SKELETONS
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/leyline_anchor)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/blade_storm)
 			if("phalangite")
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/azurean_phalanx)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/azurean_javelin)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/valean_phalanx)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/valean_javelin)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/advance)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gate_of_reckoning)
 			if("macebearer")
@@ -621,9 +621,9 @@ LICH SKELETONS
 			var/weapon_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 			switch(weapon_choice)
 				if("Ancient Khopesh")
-					beltr = /obj/item/rogueweapon/sword/sabre/palloy
+					beltr = /obj/item/rogueweapon/sword/sabre/ancient
 				if("Ancient Dagger")
-					beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/padagger
+					beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 			if(weapon_choice == "Ancient Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 			else
@@ -633,9 +633,9 @@ LICH SKELETONS
 			var/weapon_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 			switch(weapon_choice)
 				if("Ancient Spear")
-					r_hand = /obj/item/rogueweapon/spear/paalloy
+					r_hand = /obj/item/rogueweapon/spear/ancient
 				if("Ancient Bardiche")
-					r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy
+					r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("macebearer")
@@ -643,9 +643,9 @@ LICH SKELETONS
 			var/weapon_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 			switch(weapon_choice)
 				if("Ancient Mace")
-					beltr = /obj/item/rogueweapon/mace/steel/palloy
+					beltr = /obj/item/rogueweapon/mace/steel/ancient
 				if("Ancient Warhammer")
-					beltr = /obj/item/rogueweapon/mace/warhammer/steel/paalloy
+					beltr = /obj/item/rogueweapon/mace/warhammer/steel/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 	H.set_blindness(0)
 
@@ -662,7 +662,7 @@ LICH SKELETONS
 	var/tabard_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in tabards
 	switch(tabard_choice)
 		if("Black Jupon")
-			cloak = /obj/item/clothing/cloak/tabard/stabard/surcoat/lich
+			cloak = /obj/item/clothing/cloak/stabard
 		if("Black Tabard")
 			cloak = /obj/item/clothing/cloak/tabard/lich
 
