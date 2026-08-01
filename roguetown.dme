@@ -1994,6 +1994,7 @@
 #include "code\modules\jobs\job_types\roguetown\other\lich_skeleton.dm"
 #include "code\modules\jobs\job_types\roguetown\other\tester.dm"
 #include "code\modules\jobs\job_types\roguetown\other\vampire_guard.dm"
+#include "code\modules\jobs\job_types\roguetown\other\vampire_guard_subclasses.dm"
 #include "code\modules\jobs\job_types\roguetown\other\vampire_servant.dm"
 #include "code\modules\jobs\job_types\roguetown\other\vampire_spawn.dm"
 #include "code\modules\jobs\job_types\roguetown\peasants\bathmaid.dm"
