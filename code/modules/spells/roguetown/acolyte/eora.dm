@@ -389,19 +389,14 @@
 	to_chat(user, span_notice("You bless [target] with Eora's love!"))
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/bless_food/start_recharge()
-	if(ranged_ability_user)
-		var/holy_skill = ranged_ability_user.get_skill_level(associated_skill)
-		// Reduce recharge by 6 seconds per skill level
-		var/skill_reduction = (6 SECONDS) * holy_skill
-		recharge_time = base_recharge_time - skill_reduction
-		// Ensure recharge doesn't go below 0
-		if(recharge_time < 0)
-			recharge_time = 0
-	else
-		recharge_time = base_recharge_time
+/obj/effect/proc_holder/spell/invoked/bless_food/calculate_recharge_time()
+	if(!ranged_ability_user)
+		return base_recharge_time
 
-	START_PROCESSING(SSfastprocess, src)
+	var/holy_skill = ranged_ability_user.get_skill_level(associated_skill)
+	var/skill_reduction = (6 SECONDS) * holy_skill
+
+	return max(cooldown_min, base_recharge_time - skill_reduction)
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
 	name = "Amaranth Sanctuary"
@@ -549,7 +544,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
-			
+
 			to_chat(user, span_notice("You prune some branches."))
 			update_icon()
 			return TRUE
@@ -627,7 +622,7 @@
 
 		qdel(I)
 		tree_offerings += I.type
-		
+
 		happiness = min(happiness + 10, 100)
 		update_happiness_tier()
 
@@ -1158,7 +1153,7 @@
 	desc = "An iridescent seed that shifts colors in the light."
 	icon_state = "opalescent"
 	effect_desc = "Transforms held gems into rubies."
-	
+
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent/apply_effects(mob/living/eater)
 	for(var/obj/item/roguegem/G in eater.held_items)
 		var/obj/item/roguegem/ruby/new_gem = new(eater.loc)
@@ -1407,7 +1402,7 @@
 					H.nutrition = NUTRITION_LEVEL_STARVING + 50
 				if(SKILL_LEVEL_NOVICE to SKILL_LEVEL_JOURNEYMAN)
 					H.nutrition = NUTRITION_LEVEL_HUNGRY + 50
-				else	
+				else
 					H.nutrition = NUTRITION_LEVEL_WELL_FED
 	switch(hydrohomiecheck)
 		if(0 to HYDRATION_LEVEL_SMALLTHIRST)
@@ -1416,7 +1411,7 @@
 					H.hydration = HYDRATION_LEVEL_DEHYDRATED + 50
 				if(SKILL_LEVEL_NOVICE to SKILL_LEVEL_JOURNEYMAN)
 					H.hydration = HYDRATION_LEVEL_THIRSTY + 50
-				else	
+				else
 					H.hydration = HYDRATION_LEVEL_HYDRATED
 	if(assocskill > SKILL_LEVEL_APPRENTICE)
 		H.add_stress(/datum/stressevent/eoran_blessing_greater)
