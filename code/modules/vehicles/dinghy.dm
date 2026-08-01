@@ -13,6 +13,7 @@
 	layer = ABOVE_MOB_LAYER
 	move_resist = 0
 	var/allowed_turf = /turf/open/water //includes all subtypes of water
+	var/obj/item/rogueweapon/mace/oar/stored_oar = null
 
 /obj/vehicle/ridden/dinghy/Initialize(mapload)
 	. = ..()
@@ -24,6 +25,15 @@
 	D.allowed_turf_typecache = typecacheof(allowed_turf)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 3), TEXT_SOUTH = list(0, 3), TEXT_EAST = list(-2, 3), TEXT_WEST = list(2, 3)))
 	D.set_riding_offsets(2, list(TEXT_NORTH = list(0, -5), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(-10, 3), TEXT_WEST = list(10, 3)))
+
+/obj/vehicle/ridden/dinghy/examine(mob/user)
+	. = ..()
+
+	if(stored_oar)
+		. += span_notice("An oar is secured to the side of the dinghy.")
+		. += span_notice("Right-click the dinghy to retrieve it.")
+	else
+		. += span_notice("An oar can be secured to the side by clicking the dinghy with one.")
 
 /obj/vehicle/ridden/dinghy/relaymove(mob/user, direction)
 	if(user?.buckled != src)
@@ -47,6 +57,21 @@
 
 /obj/vehicle/ridden/dinghy/Click(location, control, params)
 	var/list/modifiers = params2list(params)
+
+	if(modifiers["right"])
+		var/mob/living/user = usr
+		if(!istype(user))
+			return
+
+		if(!stored_oar)
+			to_chat(user, span_warning("There isn't an oar stored on [src]."))
+			return TRUE
+
+		stored_oar.forceMove(drop_location())
+		user.put_in_hands(stored_oar)
+		to_chat(user, span_notice("I retrieve the oar from [src]."))
+		stored_oar = null
+		return TRUE
 	if(modifiers["ctrl"])
 		var/mob/user = usr
 		if(!isliving(user))
@@ -59,6 +84,22 @@
 			user.setDir(new_dir)
 		return TRUE
 	.=..()
+
+/obj/vehicle/ridden/dinghy/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/rogueweapon/mace/oar))
+		if(stored_oar)
+			to_chat(user, span_warning("There's already an oar secured to [src]."))
+			return TRUE
+
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, span_warning("I can't secure [I] to [src]."))
+			return TRUE
+
+		stored_oar = I
+		to_chat(user, span_notice("I secure [I] to [src]."))
+		return TRUE
+
+	return ..()
 
 /obj/item/rogueweapon/mace/oar
 	name = "oar"
