@@ -2,7 +2,7 @@
  * Do not make this learnable by wizards in general. It is part of spellblade's identity.
  * Design is that this is an Arcyne Bolt sidegrade that don't works well as a DPS spell
  * And is meant to be weaved in between attacks in melee to keep pressure
- * It can access all damage types and can crit, like Arcyne Bolt.  
+ * It can access all damage types and can crit, like Arcyne Bolt.
 */
 
 /obj/effect/proc_holder/spell/invoked/projectile/airblade
@@ -60,6 +60,7 @@
 /obj/projectile/energy/airblade
 	name = "Air Blade (Cut)"
 	icon_state = "air_blade_cut"
+	guard_deflectable = TRUE
 	damage = 40
 	woundclass = BCLASS_CUT
 	nodamage = FALSE

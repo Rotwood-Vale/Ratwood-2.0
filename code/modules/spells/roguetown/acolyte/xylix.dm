@@ -135,6 +135,9 @@
 		var/mob/living/target = targets[1]
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
+		if(spell_guard_check(target, TRUE))
+			target.visible_message(span_warning("[target] shrugs off the mockery!"))
+			return TRUE
 		if(!target.can_hear()) // Vicious mockery requires people to be able to hear you.
 			revert_cast()
 			return FALSE
@@ -282,11 +285,11 @@
 	var/dist = get_dist(Tt, Tu)
 	var/last_dir
 	var/turf/last_step
-	if(Tu.z > Tt.z) 
+	if(Tu.z > Tt.z)
 		last_step = get_step_multiz(Tu, DOWN)
 	else if(Tu.z < Tt.z)
 		last_step = get_step_multiz(Tu, UP)
-	else 
+	else
 		last_step = locate(Tu.x, Tu.y, Tu.z)
 	var/success = FALSE
 	for(var/i = 0, i <= dist, i++)
@@ -613,7 +616,7 @@
 		return null
 	to_chat(user, span_notice("You channel a parlor trick into your hand."))
 	return P
-	
+
 /obj/effect/proc_holder/spell/invoked/mimicry/cast(list/targets, mob/living/user)
 	var/atom/target = targets[1]
 	var/turf/T = get_turf(target)

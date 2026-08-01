@@ -26,7 +26,6 @@
 	name = "lesser bolt of fetching"
 	icon_state = "cursehand0"
 	range = 15
-	cannot_cross_z = TRUE
 
 /obj/projectile/magic/lesser_fetch/on_hit(target)
 	. = ..()

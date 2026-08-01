@@ -27,7 +27,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "curseblob"
 	range = 15
-	cannot_cross_z = TRUE
 
 /obj/effect/proc_holder/spell/invoked/projectile/lesser_repel/cast(list/targets, mob/living/user)
 	if(ishuman(user))

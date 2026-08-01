@@ -10,7 +10,7 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	no_early_release = TRUE
-	movement_interrupt = FALSE	
+	movement_interrupt = FALSE
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
@@ -42,9 +42,12 @@
 		animal.Paralyze(duration, updating = TRUE, ignore_canstun = TRUE)	//i think animal movement is coded weird, i cant seem to stun them
 	for(var/mob/living/L in range(area_of_effect, T))
 		if(L.anti_magic_check())
-			visible_message(span_warning("The tendrils of force can't seem to latch onto [L] "))  //antimagic needs some testing
+			L.visible_message(span_warning("The tendrils of force can't seem to latch onto [L]!"))
 			playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
-			return
+			continue
+		if(spell_guard_check(L, TRUE))
+			L.visible_message(span_warning("[L] breaks free of the tendrils!"))
+			continue
 		L.Immobilize(duration)
 		L.OffBalance(duration)
 		L.visible_message("<span class='warning'>[L] is held by tendrils of arcyne force!</span>")

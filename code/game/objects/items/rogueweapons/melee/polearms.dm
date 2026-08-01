@@ -389,8 +389,8 @@
 		And with this measure we shall gain great respect henceforth.' - Unknown Grandmaster of the Valean Spellblade Order, 900 AP."
 	force = 20
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/spear/thrust/azurean/oneh)
-	gripped_intents = list(/datum/intent/spear/thrust/azurean, /datum/intent/spear/thrust/azurean/pick, SPEAR_BASH)
+	possible_item_intents = list(/datum/intent/spear/thrust/valean/oneh)
+	gripped_intents = list(/datum/intent/spear/thrust/valean, /datum/intent/spear/thrust/valean/pick, SPEAR_BASH)
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 7
