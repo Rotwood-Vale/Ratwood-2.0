@@ -426,9 +426,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/calculate_recharge_time()
 	var/final_time = initial(recharge_time)
+	var/mob/living/user = ranged_ability_user || action?.owner
 
-	if(ranged_ability_user && !is_cdr_exempt)
-		var/stain_diff = ranged_ability_user.STAINT - SPELL_SCALING_THRESHOLD
+	if(user && !is_cdr_exempt)
+		var/stain_diff = user.STAINT - SPELL_SCALING_THRESHOLD
 		if(stain_diff > 0)
 			stain_diff = min(stain_diff, SPELL_POSITIVE_SCALING_THRESHOLD - SPELL_SCALING_THRESHOLD)
 
