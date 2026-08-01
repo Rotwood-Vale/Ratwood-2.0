@@ -327,7 +327,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
 				if("Crusader - Silver Weapon")
-					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Spear", "Silver Axe", "Silver Whip")
+					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flanged Mace", "Silver Flail", "Silver Spear", "Silver Axe", "Silver Whip")
 					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
 					switch(crusaderweapon_choice)
 						if("Silver Longsword")
@@ -337,6 +337,9 @@
 						if("Silver Mace")
 							H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							beltl = /obj/item/rogueweapon/mace/steel/silver
+						if("Silver Flanged Mace")
+							H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							beltl = /obj/item/rogueweapon/mace/cudgel/flanged/silver
 						if("Silver Flail")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							beltl = /obj/item/rogueweapon/flail/sflail/silver
@@ -363,7 +366,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
 					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
-	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
+	var/weapons = list("Longsword","Mace","Flanged Mace","Flail","Whip","Spear","Axe")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Longsword")
@@ -379,6 +382,12 @@
 				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
 			else
 				beltr = /obj/item/rogueweapon/mace
+		if("Flanged Mace")
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				beltr = /obj/item/rogueweapon/mace/cudgel/flanged/psy/old
+			else
+				beltr = /obj/item/rogueweapon/mace/cudgel/flanged
 		if("Flail")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/flail

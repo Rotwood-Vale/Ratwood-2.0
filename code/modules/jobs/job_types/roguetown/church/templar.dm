@@ -188,6 +188,7 @@
 		if(/datum/patron/divine/xylix)
 			weapons += "Cackle Lash"
 		if(/datum/patron/divine/ravox)
+			weapons += "Duel Settler"
 			weapons += "Censure"
 			weapons -= "Longsword"//Censure takes priority.
 		if(/datum/patron/divine/eora)
@@ -251,6 +252,11 @@
 		if("Cackle Lash")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/xylix(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Duel Settler")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/ravox(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Censure")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox(H), TRUE)
