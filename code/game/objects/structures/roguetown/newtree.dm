@@ -111,14 +111,14 @@
 /obj/structure/flora/newtree/attackby(obj/item/I, mob/living/user, params)
 	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)
 		return ..()
-	var/mob/living/LivingUser = user
-	if(LivingUser.client && !LivingUser.client.prefs?.autowoodcut)
+	var/mob/living/living_user = user
+	if(living_user.client && !living_user.client.prefs?.autowoodcut)
 		return ..()
 	if(user.doing)
 		return ..()
 	user.doing = FALSE
 	while(!QDELETED(src) && user.Adjacent(src))
-		if((LivingUser.energy > 0) && do_after(user, 1.5 SECONDS, TRUE, src))
+		if((living_user.energy > 0) && do_after(user, 1.5 SECONDS, TRUE, src))
 			if(QDELETED(src))
 				break
 			..()

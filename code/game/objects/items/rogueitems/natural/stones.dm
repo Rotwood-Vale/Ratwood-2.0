@@ -477,12 +477,12 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	if(istype(W, /obj/item/rogueweapon/pick))
 		if(!isliving(user))
 			return ..()
-		var/mob/living/LivingUser = user
-		if(!LivingUser.client || !LivingUser.client.prefs?.autopicking)
+		var/mob/living/living_user = user
+		if(!living_user.client || !living_user.client.prefs?.autopicking)
 			return ..()
 		user.doing = FALSE
 		while(!QDELETED(src) && user.Adjacent(src))
-			if((LivingUser.energy <= 0))
+			if((living_user.energy <= 0))
 				break
 			if(!do_after(user, CLICK_CD_MELEE, TRUE, src))
 				break

@@ -48,9 +48,9 @@
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
-				var/turf/StepTurf = get_step(src, dir)
-				if(istype(StepTurf, /turf/closed/mineral/random))
-					Spread(StepTurf)
+				var/turf/step_turf = get_step(src, dir)
+				if(istype(step_turf, /turf/closed/mineral/random))
+					Spread(step_turf)
 	var/turf/open/transparent/openspace/target = get_step_multiz(src, UP)
 	if(istype(target))
 		target.ChangeTurf(/turf/open/floor/rogue/naturalstone)
@@ -90,22 +90,22 @@
 		if(!isliving(user))
 			return
 
-		var/mob/living/LivingUser = user
-		if(LivingUser.client && !LivingUser.client.prefs?.autopicking)
+		var/mob/living/living_user = user
+		if(living_user.client && !living_user.client.prefs?.autopicking)
 			return
 		user.doing = FALSE
 		// Makes more sense for the check since they always
 		// become an open tile afterwards
 		while(density && user.Adjacent(src))
-			if((LivingUser.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
+			if((living_user.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
 				..()
 				var/olddam = turf_integrity
 				if(turf_integrity && turf_integrity > 10)
 					if(turf_integrity < olddam)
 						if(prob(50))
 							if(user.Adjacent(src))
-								var/obj/item/natural/stone/DroppedStone = new(src)
-								DroppedStone.forceMove(get_turf(user))
+								var/obj/item/natural/stone/dropped_stone = new(src)
+								dropped_stone.forceMove(get_turf(user))
 					if(!density)
 						break
 			else
@@ -126,9 +126,9 @@
 		return
 	if(damage_flag == "stab" || damage_flag == "blunt")
 		if(istype(src, /turf/closed/mineral/rogue) || istype(src, /turf/closed/mineral/random/rogue)) // if a natural stone wall was destroyed, spawn a trigger trap for mine shaft collapsing
-			var/turf/TargetedTurf = get_turf(src)
-			if(!isnull(TargetedTurf) && !locate(/obj/structure/mine_collapse) in TargetedTurf) // there isn't a trap here, add to turf
-				var/obj/structure/mine_collapse/new_trap = new /obj/structure/mine_collapse(TargetedTurf)
+			var/turf/targeted_turf = get_turf(src)
+			if(!isnull(targeted_turf) && !locate(/obj/structure/mine_collapse) in targeted_turf) // there isn't a trap here, add to turf
+				var/obj/structure/mine_collapse/new_trap = new /obj/structure/mine_collapse(targeted_turf)
 				if(new_trap) // to any future coders - do not randomize this type, it'll break the salt mines prison camp and let them mine iron, which'll let them break out too easily
 					new_trap.respawn_rock = src.type
 	if(damage_flag == "blunt")
@@ -207,8 +207,8 @@
 			gets_drilled(null, triggered_by_explosion = TRUE)
 	return
 
-/turf/closed/mineral/Spread(turf/SpreadTurf)
-	SpreadTurf.ChangeTurf(type)
+/turf/closed/mineral/Spread(turf/spread_turf)
+	spread_turf.ChangeTurf(type)
 
 /turf/closed/mineral/random
 	///if this isn't empty, swaps to one of them via pickweight
@@ -226,16 +226,16 @@
 	. = ..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/NewTurf = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
+		var/turf/new_turf = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 
-		if(NewTurf && ismineralturf(NewTurf))
-			var/turf/closed/mineral/MineralTurf = NewTurf
-			MineralTurf.mineralAmt = rand(1, 5)
-			MineralTurf.environment_type = src.environment_type
-			MineralTurf.turf_type = src.turf_type
-			MineralTurf.baseturfs = src.baseturfs
-			src = MineralTurf
-			MineralTurf.levelupdate()
+		if(new_turf && ismineralturf(new_turf))
+			var/turf/closed/mineral/mineral_turf = new_turf
+			mineral_turf.mineralAmt = rand(1, 5)
+			mineral_turf.environment_type = src.environment_type
+			mineral_turf.turf_type = src.turf_type
+			mineral_turf.baseturfs = src.baseturfs
+			src = mineral_turf
+			mineral_turf.levelupdate()
 
 /turf/closed/mineral/random/rogue
 //	layer = ABOVE_MOB_LAYER
