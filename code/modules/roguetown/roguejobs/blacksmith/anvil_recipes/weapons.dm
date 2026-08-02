@@ -264,7 +264,7 @@
 
 /datum/anvil_recipe/weapons/bronze/urumi
 	name = "Urumi, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/Bronze)
+	additional_items = list(/obj/item/ingot/bronze)
 	created_item = /obj/item/rogueweapon/whip/urumi/bronze
 
 /datum/anvil_recipe/weapons/bronze/spear
