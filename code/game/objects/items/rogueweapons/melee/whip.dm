@@ -306,7 +306,7 @@
 	wdefense = 0//use a shield or dodge
 	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
 	max_integrity = 100
-	max_blade_int = 120//actually have to worry about sharpening them
+	max_blade_int = 100//actually have to worry about sharpening them
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	sewrepair = FALSE//cant sew a metal coil dumbdumb
 	smeltresult = /obj/item/ingot/steel
@@ -317,8 +317,8 @@
 	icon_state = "i_urumi"
 	force = 28
 	minstr = 8
-	max_integrity = 150
-	max_blade_int = 160 // not sure how else to make this not just the worse version of the steel variant
+	max_integrity = 200
+	max_blade_int = 200 // not sure how else to make this not just the worse version of the steel variant
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/whip/urumi/bronze
@@ -338,6 +338,8 @@
 	force = 33
 	minstr = 12
 	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
+	max_integrity = 150
+	max_blade_int = 150
 	is_silver = TRUE
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/silver
@@ -359,6 +361,6 @@
 	icon_state = "bs_urumi"
 	force = 33
 	minstr = 11
-	max_integrity = 160
-	max_blade_int = 200
+	max_integrity = 280
+	max_blade_int = 280
 	smeltresult = /obj/item/ingot/blacksteel
