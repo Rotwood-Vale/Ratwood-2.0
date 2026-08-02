@@ -253,7 +253,7 @@
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind && caused_wound)
 			/*
-				WEREWOLF CHEW. WEREWOLFICATION
+				WEREWOLF CHEW. WEREWOLFIFICATION
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
 				if(HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
