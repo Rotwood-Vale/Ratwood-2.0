@@ -262,6 +262,11 @@
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	created_item = /obj/item/rogueweapon/whip/bronze
 
+/datum/anvil_recipe/weapons/bronze/urumi
+	name = "Urumi, Bronze (+1 Bronze)"
+	additional_items = list(/obj/item/ingot/Bronze)
+	created_item = /obj/item/rogueweapon/whip/urumi/bronze
+
 /datum/anvil_recipe/weapons/bronze/spear
 	name = "Spear, Bronze (+1 Bronze, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
@@ -300,6 +305,11 @@
 	name = "Sabre, Iron"
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/sabre/iron
+
+/datum/anvil_recipe/weapons/iron/urumi
+	name = "Urumi, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/whip/urumi/iron
 
 /datum/anvil_recipe/weapons/iron/dagger
 	name = "Dagger, Iron"
@@ -537,6 +547,11 @@
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long/shotel
+
+/datum/anvil_recipe/weapons/steel/urumi
+	name = "Urumi, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/whip/urumi
 
 /datum/anvil_recipe/weapons/steel/trainingsword
 	name = "Training Sword, Steel (+1 Steel)"
@@ -815,6 +830,11 @@
 	additional_items = list(/obj/item/rogueweapon/whip)
 	created_item = /obj/item/rogueweapon/whip/silver
 
+/datum/anvil_recipe/weapons/silver/urumi
+	name = "Urumi, Silver (+1 Silver)"
+	additional_items = list(/obj/item/ingot/silver)
+	created_item = /obj/item/rogueweapon/whip/urumi/silver
+
 /datum/anvil_recipe/weapons/silver/tossblade
 	name = "Tossblades, Silver (+1 Silver)"
 	additional_items = list(/obj/item/ingot/silver)
@@ -1031,7 +1051,7 @@
 /datum/anvil_recipe/weapons/blacksteel/decsword
 	name = "Blacksteel Arming Sword, Decorated (+1 Steel Arming Sword, +1 Gold, +1 Silk)"
 	additional_items = list(/obj/item/rogueweapon/sword, /obj/item/ingot/gold, /obj/item/natural/silk)
-	created_item = /obj/item/rogueweapon/sword/blacksteel/decorated
+	created_item = /obj/item/rogueweapon/sword/decorated/blacksteel
 
 /datum/anvil_recipe/weapons/blacksteel/longword
 	name = "Blacksteel Longsword (+1 Blacksteel, +1 Saffira, +1 Silk)"
@@ -1081,7 +1101,7 @@
 /datum/anvil_recipe/weapons/blacksteel/knuckles
 	name = "Blacksteel Knuckles (+1 Silk)"
 	additional_items = list(/obj/item/natural/silk)
-	created_item = /obj/item/clothing/gloves/roguetown/knuckles/blacksteel
+	created_item = /obj/item/rogueweapon/knuckles/blacksteel
 
 /datum/anvil_recipe/weapons/blacksteel/hurlbat
 	name = "Blacksteel Hurlbat (+1 Silk)"
@@ -1102,6 +1122,11 @@
 	name = "Whip, Blacksteel-Tipped (+1 Leather Whip, +1 Silk)"
 	additional_items = list(/obj/item/rogueweapon/whip, /obj/item/natural/silk)
 	created_item = /obj/item/rogueweapon/whip/blacksteel
+
+/datum/anvil_recipe/weapons/blacksteel/urumi
+	name = "Urumi, Blacksteel (+1 Blacksteel, +1 Silk)"
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/natural/silk)
+	created_item = /obj/item/rogueweapon/whip/urumi/blacksteel
 
 /datum/anvil_recipe/weapons/blacksteel/flail
 	name = "Blacksteel Flail (+1 Silk)"

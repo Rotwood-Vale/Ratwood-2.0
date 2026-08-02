@@ -869,7 +869,7 @@
 
 /obj/projectile/bullet/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
-	icon = 'icons/roguetown/weapons/ranged/sling_proj.dmi'
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
 	damage = 50
 	armor_penetration = 35

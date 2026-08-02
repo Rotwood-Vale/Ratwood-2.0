@@ -220,7 +220,7 @@
 	blade_class = BCLASS_CUT
 	attack_verb = list("lashes", "slices")
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
-	chargetime = 1 SECONDS
+	chargetime = 0.5 SECONDS
 	recovery = 7
 	penfactor = 20
 	reach = 3
@@ -232,7 +232,7 @@
 	blade_class = BCLASS_CUT
 	attack_verb = list("lashes", "slices")
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
-	chargetime = 1.5 SECONDS // longer charge cause heavy balance I guess
+	chargetime = 0.8 SECONDS // longer charge cause heavy balance I guess
 	recovery = 7
 	penfactor = 30
 	reach = 3
@@ -244,7 +244,7 @@
 	blade_class = BCLASS_CHOP //why not
 	attack_verb = list("cracks", "slashes")
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	chargetime = 1.8 SECONDS
+	chargetime = 0.7 SECONDS
 	recovery = 10
 	damfactor = 1.1
 	penfactor = 25
@@ -257,7 +257,7 @@
 	blade_class = BCLASS_CHOP //why not
 	attack_verb = list("cracks", "slashes")
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	chargetime = 1.2 SECONDS
+	chargetime = 0.9 SECONDS
 	recovery = 10
 	damfactor = 1.1
 	penfactor = 15
@@ -272,7 +272,7 @@
 	animname = "stab"
 	icon_state = "instab"
 	reach = 3
-	chargetime = 3 SECONDS // can't spam
+	chargetime = 1 SECONDS // can't spam
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
@@ -288,7 +288,7 @@
 	animname = "stab"
 	icon_state = "instab"
 	reach = 3
-	chargetime = 3.2 SECONDS // can't spam
+	chargetime = 1.2 SECONDS // can't spam
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
@@ -298,7 +298,7 @@
 	effective_range_type = EFF_RANGE_EXACT
 
 /obj/item/rogueweapon/whip/urumi
-	name = "Urumi"
+	name = "urumi"
 	desc = "Two dazzling lengths of razor sharp steel coiling outwards from a knucklebowed hilt. Somewhere between a sword and a whip, this flexible weapon is as much a danger to the wielder as it is their target."
 	icon_state = "urumi"
 	force = 30//higher force but intents that have less AP and require charging up like flail smash, think spinning the blade before you hit.
@@ -311,20 +311,20 @@
 	sewrepair = FALSE//cant sew a metal coil dumbdumb
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rougeweapon/whip/urumi/iron
-	name = "Iron Urumi"
+/obj/item/rogueweapon/whip/urumi/iron
+	name = "iron urumi"
 	desc = "A dazzling length of sharp iron coiling outwards from a knucklebowed hilt. Somewhere between a sword and a whip, this flexible weapon is as much a danger to the wielder as it is their target."
-	icon_state = "iurumi"
+	icon_state = "i_urumi"
 	force = 28
 	minstr = 8
 	max_integrity = 150
 	max_blade_int = 160 // not sure how else to make this not just the worse version of the steel variant
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/rougeweapon/whip/urumi/bronze
-	name = "Bronze Urumi"
+/obj/item/rogueweapon/whip/urumi/bronze
+	name = "bronze urumi"
 	desc = "A dazzling length bronze coiling outwards from a knucklebowed hilt. A heftier and ancient design for a more robustly built fighter."
-	icon_state = "burumi"
+	icon_state = "b_urumi"
 	force = 30
 	minstr = 12
 	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
@@ -332,9 +332,9 @@
 	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/rogueweapon/whip/urumi/silver
-	name = "Silver Urumi"
+	name = "silver urumi"
 	desc = "Two lengths of shimmering silver coiling outwards from a knucklebowed hilt. These hefty blades demand strength and dexterity from the aspiring sunderer of the unholy."
-	icon_state = "silverurumi"
+	icon_state = "silver_urumi"
 	force = 33
 	minstr = 12
 	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
@@ -354,7 +354,7 @@
 	)
 
 /obj/item/rogueweapon/whip/urumi/blacksteel
-	name = "Blacksteel Urumi"
+	name = "blacksteel urumi"
 	desc = "Two lengths of precious blacksteel coiling outwards from a finely ornamented hilt. As much an artpiece as it is weapon."
 	icon_state = "bs_urumi"
 	force = 33

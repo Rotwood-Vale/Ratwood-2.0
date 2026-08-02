@@ -280,7 +280,7 @@
 /obj/item/rogueweapon/knuckles/blacksteel
 	name = "blacksteel knuckles"
 	desc = "Take that, taste the pain!"
-	icon_state = "bsknuckle"
+	icon_state = "bsknuckledusters"
 	force = 30
 	max_integrity = 300
 	wdefense = 7

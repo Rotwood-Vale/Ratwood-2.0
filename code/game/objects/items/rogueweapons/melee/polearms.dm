@@ -830,6 +830,7 @@
 	desc = "A magnificent halberd of blacksteel. It is the finest arm-of-war that a sixteenth-century knight could ask for, especially \
 	when it comes to attracting fair maidens in the highest courts. Wrap a length of cloth around the shaft to bear your heraldry."
 	icon_state = "bs_halberd"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
 	force = 20
 	force_wielded = 35
@@ -867,15 +868,21 @@
 /obj/item/rogueweapon/halberd/blacksteel/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Banner") as anything in COLOR_MAP
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
 		user.visible_message(span_warning("[user] adds a banner to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		detail_color = COLOR_MAP[choice]
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "detail"
 		update_icon()
 
 /obj/item/rogueweapon/halberd/blacksteel/update_icon()
-	refresh_detail_overlay()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/rogueweapon/halberd/blacksteel/attack_self(mob/living/user)
 	. = ..()
@@ -993,6 +1000,7 @@
 	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak/oneh)
 	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
 	icon_state = "bs_eaglebeak"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
 	force = 20
 	force_wielded = 35
@@ -1030,15 +1038,21 @@
 /obj/item/rogueweapon/eaglebeak/blacksteel/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Banner") as anything in COLOR_MAP
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
 		user.visible_message(span_warning("[user] adds a banner to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		detail_color = COLOR_MAP[choice]
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "detail"
 		update_icon()
 
 /obj/item/rogueweapon/eaglebeak/blacksteel/update_icon()
-	refresh_detail_overlay()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/rogueweapon/eaglebeak/blacksteel/attack_self(mob/living/user)
 	. = ..()
@@ -1503,6 +1517,7 @@
 	force = 20
 	force_wielded = 30
 	icon_state = "quarterstaff_blacksteel"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	max_integrity = 350
 	smeltresult = /obj/item/ingot/blacksteel
 	wdefense_wbonus = 7	//12 when wielded.
@@ -1669,15 +1684,21 @@
 /obj/item/rogueweapon/spear/lance/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Banner") as anything in COLOR_MAP
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
 		user.visible_message(span_warning("[user] adds a banner to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		detail_color = COLOR_MAP[choice]
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "detail"
 		update_icon()
 
 /obj/item/rogueweapon/spear/lance/update_icon()
-	refresh_detail_overlay()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/rogueweapon/spear/lance/attack_self(mob/living/user)
 	. = ..()
