@@ -252,11 +252,15 @@
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind && caused_wound)
 			/*
-				WEREWOLF CHEW.
+				WEREWOLF CHEW. WEREWOLFICATION
 			*/
 			if(istype(user.dna.species, /datum/species/werewolf))
-				if(prob(30))
-					user.werewolf_feed(C)
+				if(HAS_TRAIT(C, TRAIT_SILVER_BLESSED))
+					to_chat(user, span_warning("BLEH! [C] tastes of SILVER! My gift cannot take hold."))
+				else
+					caused_wound?.werewolf_infect_attempt()
+					if(prob(30))
+						user.werewolf_feed(C, 10)
 
 			/*
 				ZOMBIE CHEW. ZOMBIFICATION
