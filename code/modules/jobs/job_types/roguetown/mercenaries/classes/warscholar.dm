@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_NALEDI
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -96,7 +96,7 @@
 	tutorial = "You are a Naledi Pontifex, a warrior trained into a hybridized style of movement-controlling magic and hand-to-hand combat. Your chosen Path determines your specialization, though you'll never match another mage in pure magical power. Instead, you manifest an imitation of a shard of PSYDON's blade and rely on trickery and battlefield control."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
 	subclass_languages = list(/datum/language/celestial)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE_T1)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE_T1, TRAIT_NALEDI)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_SPD = 2,
@@ -193,7 +193,7 @@
 
 /datum/advclass/mercenary/warscholar/vizier
 	name = "Naledi Vizier"
-	tutorial = "You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, a combination of the saint's power may be similar enough."
+	tutorial = "You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with it's Origin Magic."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -238,7 +238,7 @@
 		"MAROON" = "#5F1F34",
 		"BLACK" = "#242526"
 	))
-	to_chat(H, span_warning("You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, a combination of the saint's power may be similar enough."))
+	to_chat(H, span_warning("You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with it's Origin Magic."))
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 3, TRUE)
 		H.change_stat(STATKEY_SPD, -1)
@@ -246,29 +246,24 @@
 		H.change_stat(STATKEY_PER, 1)
 		H.mind?.adjust_spellpoints(3)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 
-	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
+	head = /obj/item/clothing/head/roguetown/roguehood/hierophant
+	cloak = /obj/item/clothing/cloak/hierophant
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
+	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	shoes = /obj/item/clothing/shoes/roguetown/boots
-	gloves = /obj/item/clothing/gloves/roguetown/angle
-	backr = /obj/item/storage/backpack/rogue/satchel/black
-	head = /obj/item/clothing/head/roguetown/roguehood/shalal/black
-	cloak = /obj/item/clothing/cloak/half
+	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
+	backr = /obj/item/storage/backpack/rogue/satchel/black
 
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/storage/belt/rogue/surgery_bag = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -276,14 +271,16 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/lesser_heal)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt) // because other clerics get holy bolt and so you're not entirely pressured to take combat spells
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // because other clerics get holy bolt and so you're not entirely pressured to take combat spells
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)
-
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//You're not meant to have both this and persist.
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/touch/orison)
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
 	H.merctype = 14
 
 
