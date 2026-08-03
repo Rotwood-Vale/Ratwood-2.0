@@ -45,3 +45,24 @@
   kimesik:
   - balance: CON influence on bleedrate reduced by half (5% per point). Its cap has
       been raised to 20.
+2026-08-02:
+  Arturlang:
+  - rscadd: ghosts can now right click people to observe them, that lets you see the
+      same stuff they see, and their inventories, click their skills button to see
+      their stats and skills
+  - admin: the admin orbit menu has a optional button you can click to observe the
+      inventory and view of people
+  - admin: all kinds of crafting should now be logged, besides slapcrafting, also
+      gravedigging related actions should be a bit better logged, and non-harmful
+      attacks
+  Yuckuza:
+  - rscadd: Added vorpal to the Vicious Greataxe, decapitate the weak, skulls for
+      the madstar!
+  jgDarkWolf:
+  - qol: Reverts lizard accent back to RW 1.0 lizard accent
+  zoktiik:
+  - bugfix: The animated overlay that shows when you're in combat mode now properly
+      clears when you leave it.
+2026-08-03:
+  Xander3359:
+  - bugfix: Fixed wild-kin antennas being unremovable
