@@ -30,7 +30,6 @@
 	switch(level)
 		if(0)
 			active_modifiers += new /datum/round_modifier/adventure
-			active_modifiers += new /datum/round_modifier/nowretch
 		if(1)
 			budget = rand(2, 5)
 			active_modifiers += new /datum/round_modifier/lesswretch
