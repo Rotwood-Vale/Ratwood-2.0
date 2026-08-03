@@ -74,6 +74,8 @@
 	if(user.client && !user.client.prefs?.autopicking)
 		return
 	var/obj/item/held_item = user.get_active_held_item()
+	if(user.doing)
+		return
 	if(do_after(user, 1 SECONDS, TRUE, src, TRUE, null, TRUE))
 		if(!ismineralturf(src))
 			return
@@ -92,7 +94,8 @@
 		var/mob/living/living_user = user
 		if(living_user.client && !living_user.client.prefs?.autopicking)
 			return
-		user.doing = FALSE
+		if(user.doing)
+			return
 		// Makes more sense for the check since they always
 		// become an open tile afterwards
 		while(density && user.Adjacent(src))
