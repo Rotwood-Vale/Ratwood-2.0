@@ -101,7 +101,7 @@
 			if("Longsword + Crossbow")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/long
-				beltr = /obj/item/quiver/bolt/standard
+				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			if("Longsword + Shield")
 				beltr = /obj/item/rogueweapon/scabbard/sword
@@ -130,8 +130,8 @@
 			if("Flamberge")
 				r_hand = /obj/item/rogueweapon/greatsword/grenz/flamberge
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Poleaxe")
-				r_hand = /obj/item/rogueweapon/greataxe/steel/knight
+			if("Halberd")
+				r_hand = /obj/item/rogueweapon/halberd
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Estoc")
 				r_hand = /obj/item/rogueweapon/estoc
@@ -149,15 +149,12 @@
 			"Barred Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/sheriff,
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
 			"Knight's Armet"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
-			"Knight's Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/old,
-			"Knight's Greatplumed Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume,
 			"Visored Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
 			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
 			"Hounskull Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
 			"Etruscan Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 			"Slitted Kettle"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
-			"Visored Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor,
-			"Great Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/great,
+			"Great Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy,
 			"Volf-Face Helm"		= /obj/item/clothing/head/roguetown/helmet/heavy/volfplate,
 			"None"
 		)
@@ -167,8 +164,8 @@
 
 		var/armors = list(
 			"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine/retinue,
-			"Coat of Plates"	= /obj/item/clothing/suit/roguetown/armor/brigandine/heavy,
-			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/cuirass,
+			"Coat of Plates"	= /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates,
+			"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half
 			"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted,
 		)
 		var/armorchoice = input(H, "Choose your armor.", "A BULWARK AGAINST THE LITE") as anything in armors
@@ -241,7 +238,7 @@
 				belt = /obj/item/storage/belt/rogue/leather/black //stylish belt
 				mask = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/vampire_noble //regal appearance
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 				r_hand = /obj/item/rogueweapon/scabbard/sword/royal
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
 				ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
@@ -250,14 +247,14 @@
 				belt = /obj/item/storage/belt/rogue/leather/black //stylish belt
 				mask = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/vampire_noble //regal appearance
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 				r_hand = /obj/item/rogueweapon/scabbard/sword/royal
 				armor = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
 				ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 			if("Noble (Light Armor + Skilled Appraisal)")
 				head = /obj/item/clothing/head/roguetown/chaperon/noble //nobility look
 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 				belt = /obj/item/storage/belt/rogue/leather/steel //similar to spymaster hand
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask //hidden face
@@ -267,7 +264,7 @@
 				head = /obj/item/clothing/head/roguetown/nyle/consortcrown //suitor/consort look
 				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 				cloak = /obj/item/clothing/cloak/half/red
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 				belt = /obj/item/storage/belt/rogue/leather //on-par with valiant
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
 				mask = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/vampire_noble
@@ -281,7 +278,7 @@
 		var/weapon_choice = input(H, "Choose your bow.", "WHAT MEANS DO YOU HUNT IN THE NITE?") as anything in weapons //Unlike vamp skirmisher, we specialise all-in only for our ranged pick because we have a ton of stuff already. No jack of all trades.
 		switch(weapon_choice)
 			if("Crossbow")
-				beltr = /obj/item/quiver/bolt/standard
+				beltr = /obj/item/quiver/bolts
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 			if("Recurve Bow")
@@ -297,7 +294,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot //intended, RP-orientated getup
-	saiga_shoes = /obj/item/clothing/shoes/roguetown/horseshoes/gold
 
 	id = /obj/item/clothing/ring/signet //Rich Look
 	beltl = /obj/item/rogueweapon/sword/sabre/dec //fancy blade, sabre too. Not a bad weapon. Starts on hip since you always get it regardless so you don't hit your vlord with it like I did picking disguise + bow

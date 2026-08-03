@@ -87,7 +87,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/sallet
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
+	armor = /obj/item/clothing/suit/roguetown/armor/splintarms/light
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
@@ -144,7 +144,7 @@
 	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced //Minimal face protection, maximal auramaxxing.
 	mask = /obj/item/clothing/mask/rogue/ragmask/black //less face protection, go guardsman if you want that. Also ominious for aura.
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to archery's potental
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -248,7 +248,7 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -293,7 +293,6 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, //Keeping captives, alive. We're not a lich's army, we have standards.
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT, //bombs, bombs and more bombs!
 	)
 
@@ -305,17 +304,17 @@
 	H.verbs |= /mob/proc/haltyell_exhausting //Halting the charred corpse is too funny, we're keeping it. sovl.
 
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm //I can see it getting ditched but sovlful
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
-	pants = /obj/item/clothing/under/roguetown/brigandinelegs
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy //Weaker to chest stabs, intentional, go upgrade your armor
+	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide //Weaker to chest stabs, intentional, go upgrade your armor
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/twstrap/bombstrap/firebomb
+	backr = /obj/item/bmbstrap/firebomb
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron //weaker, intended
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron //Ditto
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/brigandine
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/splintarms
 	belt = /obj/item/storage/belt/rogue/leather //A little bit of difference to other guards
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -381,7 +380,7 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T2)
 	if(H.mind)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/vicious_mockery)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
 		var/weapons = list("Harp","Lute","Accordion","Guitar","Hurdy-Gurdy","Viola","Vocal Talisman", "Psyaltery", "Flute")
 		var/weapon_choice = input(H, "Choose your instrument.", "STRINGS TO PLAY LYKE MORTALS.") as anything in weapons
 		H.set_blindness(0)
@@ -410,8 +409,7 @@
 	name = "Vampiric Battlemage"
 	tutorial = "You were a magos of old, ever since the embrace you've never had more time to practice your persuit of arcayne magicks, let alone revel in your taste for blood; now your master arises once more and your arcayne research shall see fruitation. Your lord's will be done."
 	outfit = /datum/outfit/job/roguetown/other/vampseigemage
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_ARCYNE)
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "ward" = TRUE)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_ARCYNE_T3)
 	category_tags = list(CTAG_VAMPGUARD)
 	subclass_stats = list(
 		STATKEY_INT = 3, //You've had long to study, a lot to study as well
@@ -421,8 +419,7 @@
 		// 7 weighted statline, mostly put into perception + int, they lack on their baseline speed being slightly higher unlike most mages on top of weaker martal talent
 	)
 	subclass_skills = list(
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAY,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_MASTER, //You've had a long, time to practice
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, //Weaker vs grapples, compared to everyone else
@@ -440,19 +437,19 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard() //Every wizzard gotta have the evyl laugh, I don't make the rules, sire.
 	H.verbs |= /mob/proc/haltyell_exhausting //Halting the charred corpse is too funny, we're keeping it. sovl.
 
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	head = /obj/item/clothing/head/roguetown/witchhat //EVERY PALLY IN THE KINGDOM ON MA TAIL
 	mask = /obj/item/clothing/mask/rogue/facemask/
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson //Less protection, due to casting ability
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient //Makes up for no gloves
-	neck = /obj/item/clothing/neck/roguetown/gorget/ancient //No head armor but good anti-decap armor, intended.
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient //No head armor but good anti-decap armor, intended.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	beltl = /obj/item/book/spellbook
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff/implement/greater
+	backr = /obj/item/rogueweapon/woodstaff/emerald
 
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
