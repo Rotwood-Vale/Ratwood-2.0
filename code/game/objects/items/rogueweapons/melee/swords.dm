@@ -688,8 +688,8 @@
 		. += span_notice("You can feel the unholy blade's enchantment resonate with your cursed nature, anyone that does not bare your curse will be unable to touch it.")
 
 /obj/item/rogueweapon/sword/long/judgement/vlord/Initialize()
-  ..()
-  add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_VAMPIRIC, "alpha" = 120, "size" = 2)) //Its a cursed blade, it gets to glow ominiously now.
+  	..()
+  	add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_VAMPIRIC, "alpha" = 120, "size" = 2)) //Its a cursed blade, it gets to glow ominiously now.
 
 /obj/item/rogueweapon/sword/long/marlin
 	name = "shalal saber"

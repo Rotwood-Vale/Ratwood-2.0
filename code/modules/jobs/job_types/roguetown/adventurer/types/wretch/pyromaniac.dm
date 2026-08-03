@@ -74,9 +74,9 @@
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin) // To not be instapaincritted if you accidentally hit yourself
 			if("BOMBS") //30 bombs. 18 fire, 4 tnt, 4 impacts, 4 firegas.
-				ADD_TRAIT(H, TRAIT_BOMBER_EXPERT, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_BOMBER_EXPERT, TRAIT_EXPLOSIVE_SUPPLY)
 				H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE)
-				backr = /obj/item/twstrap/bombstrap/firebomb
-				r_hand = /obj/item/twstrap/bombstrap/bomb_and_fire
-				l_hand = /obj/item/twstrap/bombstrap/bomb_and_fire
+				backr = /obj/item/bmbstrap/firebomb
+				r_hand = /obj/item/bmbstrap/bomb_and_fire
+				l_hand = /obj/item/bmbstrap/bomb_and_fire
 		wretch_select_bounty(H)
