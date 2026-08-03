@@ -87,7 +87,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/sallet
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	armor = /obj/item/clothing/suit/roguetown/armor/splintarms/light
+	armor = /obj/item/clothing/wrists/roguetown/splintarms
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
@@ -314,7 +314,7 @@
 	backr = /obj/item/bmbstrap/firebomb
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron //weaker, intended
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron //Ditto
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/splintarms
+	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	belt = /obj/item/storage/belt/rogue/leather //A little bit of difference to other guards
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -419,7 +419,7 @@
 		// 7 weighted statline, mostly put into perception + int, they lack on their baseline speed being slightly higher unlike most mages on top of weaker martal talent
 	)
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAY,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_MASTER, //You've had a long, time to practice
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, //Weaker vs grapples, compared to everyone else
