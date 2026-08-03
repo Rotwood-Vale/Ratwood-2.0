@@ -19,17 +19,23 @@
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
+	if(!target_has_both_accessible_feet(user, target))
 		return FALSE
 	return TRUE
+
+/datum/sex_action/force_footjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!target_has_both_accessible_feet(user, target))
+		to_chat(user, span_notice("Both of their feet need to be accessible."))
+		return TRUE
+	return FALSE
 
 /datum/sex_action/force_footjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s feet and clamps them around [user.p_their()] cock!"))
 
 /datum/sex_action/force_footjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] uses [target]'s feet to jerk off."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] uses [target]'s feet to jerk off."))
 	user.sexcon.outercourse_noise(target)
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)

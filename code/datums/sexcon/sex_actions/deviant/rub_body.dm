@@ -15,11 +15,15 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/rub_body/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))
+		to_chat(user, span_notice("I can't reach their body right now."))
+
 /datum/sex_action/rub_body/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] places [user.p_their()] hands onto [target]..."))
 
 /datum/sex_action/rub_body/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [target]'s body..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [target]'s body..."))
 	user.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(target, 0.5, 0, TRUE)

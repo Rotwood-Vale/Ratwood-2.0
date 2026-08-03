@@ -17,6 +17,13 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/grind_body/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return
+	if(!target.get_bodypart(check_zone(user.zone_selected)))
+		to_chat(user, span_notice("That body part isn't available."))
+
 /datum/sex_action/grind_body/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls themselves onto [target]..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
@@ -38,7 +45,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds over [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds over [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		if(user.sexcon.force > SEX_FORCE_HIGH)
 			user.sexcon.outercourse_noise(target)

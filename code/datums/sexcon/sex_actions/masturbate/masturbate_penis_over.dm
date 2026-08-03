@@ -26,12 +26,20 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/masturbate_penis_over/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!user.Adjacent(target) || !user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/masturbate_penis_over/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts jerking over [target]..."))
 
 /datum/sex_action/masturbate_penis_over/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/chosen_verb = pick(list("jerks [user.p_their()] cock", "strokes [user.p_their()] cock", "masturbates", "jerks off"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb] over [target]"))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb] over [target]"))
 	user.sexcon.generic_sex_noise()
 
 	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
@@ -39,9 +47,9 @@
 	if(user.sexcon.check_active_ejaculation())
 		var/cum_on_face = check_zone(user.zone_selected) == BODY_ZONE_HEAD
 		if(cum_on_face)
-			user.visible_message(span_love("[user] cums over [target]'s face!"))
+			user.sexcon_action_message(span_love("[user] cums over [target]'s face!"))
 		else
-			user.visible_message(span_love("[user] cums over [target]'s body!"))
+			user.sexcon_action_message(span_love("[user] cums over [target]'s body!"))
 		user.sexcon.cum_onto(target, cum_on_face = cum_on_face)
 
 /datum/sex_action/masturbate_penis_over/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)

@@ -23,17 +23,25 @@
 				return FALSE
 		else
 			return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
+	if(!user_has_both_accessible_feet(user))
 		return FALSE
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
 		return FALSE
 	return TRUE
 
+/datum/sex_action/force_foot_lick/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(..())
+		return TRUE
+	if(!user_has_both_accessible_feet(user))
+		to_chat(user, span_notice("I need both bare feet to do that."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/force_foot_lick/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [user.p_their()] feet against [target]'s head!"))
 
 /datum/sex_action/force_foot_lick/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to lick [user.p_their()] feet."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to lick [user.p_their()] feet."))
 	target.sexcon.make_sucking_noise()
 
 /datum/sex_action/force_foot_lick/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)

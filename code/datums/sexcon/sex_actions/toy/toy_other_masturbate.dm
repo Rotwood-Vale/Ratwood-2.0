@@ -21,12 +21,18 @@
 	// No clothing or body zone checks, can always jerk
 	return TRUE
 
+/datum/sex_action/toy_other_masturbate/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		to_chat(user, span_notice("I need to be closer to [target]."))
+		return TRUE
+	return FALSE
+
 /datum/sex_action/toy_other_masturbate/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts jerking [target]'s toy..."))
 
 /datum/sex_action/toy_other_masturbate/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/chosen_verb = pick(list("jerks [target]'s toy", "strokes [target]'s toy", "masturbates [target]'s toy", "jerks off [target]'s toy", "polishes [target]'s toy"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
 	user.sexcon.generic_sex_noise()
 
 	var/obj/item/dildo/dildo = get_dildo_on_belt(target)

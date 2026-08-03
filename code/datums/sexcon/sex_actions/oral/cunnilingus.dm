@@ -30,7 +30,7 @@
 	var/do_subtle = user.sexcon.do_subtle_action
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] sucks [target]'s clit..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] sucks [target]'s clit..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.oralcourse_noise(target)
 		user.sexcon.do_thrust_animate(target)
@@ -38,8 +38,12 @@
 	user.sexcon.perform_sex_action(target, 2, 3, TRUE)
 	user.sexcon.consume_oral_drips(target)
 	if(target.sexcon.check_active_ejaculation())
-		target.visible_message(span_love("[target] ejaculates into [user]'s mouth!"))
-		target.sexcon.cum_into(oral = TRUE, splashed_user = user)
+		user.sexcon_action_message(span_love("[target] ejaculates into [user]'s mouth!"))
+		var/bursts = target.sexcon.get_load_bursts()
+		for(var/i = 1; i <= bursts; i++)
+			target.sexcon.cum_into(oral = TRUE, splashed_user = user, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+			if(i < bursts)
+				sleep(10)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

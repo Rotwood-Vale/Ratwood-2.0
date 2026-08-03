@@ -18,6 +18,13 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/rimming/on_failed_start(mob/living/user, mob/living/target)
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("Their groin needs to be accessible."))
+		return
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
+		to_chat(user, span_notice("My mouth needs to be accessible."))
+
 /datum/sex_action/rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts rimming [target]'s butt..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = FALSE
@@ -26,7 +33,7 @@
 	var/do_subtle = user.sexcon.do_subtle_action
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rims [target]'s butt..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] rims [target]'s butt..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.oralcourse_noise(user)
 		user.sexcon.do_thrust_animate(target)
@@ -44,3 +51,4 @@
 	if(target.sexcon.finished_check())
 		return TRUE
 	return FALSE
+

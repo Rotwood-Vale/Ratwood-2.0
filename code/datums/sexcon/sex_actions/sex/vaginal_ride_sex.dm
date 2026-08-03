@@ -35,9 +35,9 @@
 
 /datum/sex_action/vaginal_ride_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.do_knot_action_as_bottom)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-rides [target]."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-rides [target]."))
 	user.sexcon.intercourse_noise(user, TRUE)
 	user.sexcon.do_thrust_animate(target)
 
@@ -47,10 +47,11 @@
 
 	target.sexcon.perform_sex_action(target, 2, 0, TRUE)
 	if(target.sexcon.check_active_ejaculation())
-		target.visible_message(span_love("[target] cums into [user]'s cunt!"))
-		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
+		user.sexcon_action_message(span_love("[target] cums into [user]'s cunt!"))
+		var/bursts = target.sexcon.get_load_bursts()
+		for(var/i = 1; i <= bursts; i++)
+			target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
 			sleep(10)
-			target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			target.try_impregnate(user)
 		target.virginity = FALSE
 		user.virginity = FALSE

@@ -24,18 +24,49 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_action/titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user == target)
+		return
+	if(!user.getorganslot(ORGAN_SLOT_PENIS))
+		to_chat(user, span_notice("I need a cock for that."))
+		return
+	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
+		to_chat(user, span_notice("They need breasts for that."))
+		return
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
+		to_chat(user, span_notice("My groin needs to be accessible."))
+		return
+	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
+		to_chat(user, span_notice("Their chest needs to be accessible."))
+		return
 /datum/sex_action/titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
+	if(breasts && breasts.breast_size < 2)
+		user.visible_message(span_warning("[user] presses [user.p_their()] cock against [target]'s chest and starts grinding it!"))
+		return
 	user.visible_message(span_warning("[user] grabs [target]'s tits and shoves [user.p_their()] cock inbetween!"))
 
 /datum/sex_action/titjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s tits."))
+	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
+	var/is_small_chest = breasts && breasts.breast_size < 2
+	if(is_small_chest)
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs [user.p_their()] cock against [target]'s chest"))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fucks [target]'s tits."))
 	user.sexcon.outercourse_noise(user)
 
-	user.sexcon.perform_sex_action(user, 2, 4, TRUE)
+	if(is_small_chest)
+		user.sexcon.perform_sex_action(user, 1, 2, TRUE)
+	else
+		user.sexcon.perform_sex_action(user, 2, 4, TRUE)
 
 	user.sexcon.handle_passive_ejaculation(target)
 
 /datum/sex_action/titjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
+	if(breasts && breasts.breast_size < 2)
+		user.visible_message(span_warning("[user] eases [user.p_their()] cock away from [target]'s chest."))
+		return
 	user.visible_message(span_warning("[user] pulls [user.p_their()] cock out from inbetween [target]'s tits."))
 
 /datum/sex_action/titjob/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
