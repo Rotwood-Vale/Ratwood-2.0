@@ -5157,7 +5157,7 @@
 "bvS" = (
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "bwa" = (
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/decrepit_equipment_spawner,
@@ -12724,8 +12724,8 @@
 /obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
-/turf/open/transparent/openspace/debug,
-/area/rogue/outdoors/town/roofs/desert)
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/town/roofs/desert/arena)
 "dBO" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -17086,7 +17086,7 @@
 	name = "Cell Door"
 	},
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "ePi" = (
 /obj/effect/decal/remains/human,
 /obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
@@ -35311,7 +35311,7 @@
 "klX" = (
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "kma" = (
 /obj/machinery/light/rogue/firebowl/standing{
 	pixel_x = 8;
@@ -46485,7 +46485,6 @@
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/under/dungeon/desert_pyramid)
 "nyg" = (
-/obj/item/bodypart/l_arm/devil,
 /obj/item/bodypart/r_arm/goblin,
 /obj/item/bodypart/r_arm,
 /obj/item/reagent_containers/food/snacks/zizo_bane,
@@ -60651,7 +60650,7 @@
 "rDB" = (
 /obj/effect/landmark/start/dt/courtslave,
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "rDC" = (
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/cave/spider)
@@ -70265,7 +70264,7 @@
 "uqg" = (
 /obj/structure/flora/roguegrass/desertgrass,
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "uqu" = (
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/indoors/town/garrison/desert)
@@ -78340,13 +78339,10 @@
 	color = "#b8ae9e"
 	},
 /area/rogue/under/dungeon/bizbaz)
-"wHu" = (
-/turf/closed/wall/mineral/rogue/sandbrick,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
 "wHx" = (
 /obj/structure/bars,
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "wHy" = (
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/under/dungeon)
@@ -83929,7 +83925,7 @@
 /area/rogue/outdoors/desertdeep/above)
 "yjy" = (
 /turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/town/garrison/desert/cell/outdoor)
+/area/rogue/indoors/town/garrison/desert/cell)
 "yjI" = (
 /obj/structure/stairs{
 	dir = 1;
@@ -424588,7 +424584,7 @@ ngd
 wHx
 wHx
 wHx
-wHu
+ngd
 bep
 icQ
 bep
@@ -425836,7 +425832,7 @@ ngd
 wHx
 wHx
 wHx
-wHu
+ngd
 bXl
 lWf
 lWf
@@ -543146,10 +543142,10 @@ rtw
 rtw
 ruT
 ruT
-tyc
-tyc
-kdC
-dqj
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -543459,9 +543455,9 @@ anm
 eOy
 ruT
 dBM
-tyc
-kdC
-kdC
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -543770,10 +543766,10 @@ qdn
 qRe
 auB
 ruT
-tyc
-tyc
-kdC
-kdC
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -544082,10 +544078,10 @@ qdn
 qdn
 vbt
 ruT
-tyc
-tyc
-kdC
-kdC
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -544394,10 +544390,10 @@ qdn
 qdn
 mss
 nyk
-tyc
-tyc
-kdC
-dqj
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -544706,10 +544702,10 @@ qdn
 qdn
 kgh
 ruT
-tyc
-tyc
-tyc
-tyc
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -545018,10 +545014,10 @@ qdn
 qRe
 xkZ
 ruT
-tyc
-tyc
-tyc
-tyc
+uHn
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
@@ -545331,9 +545327,9 @@ cfD
 tQm
 ruT
 dBM
-tyc
-tyc
-tyc
+uHn
+uHn
+uHn
 kdC
 kdC
 kdC
