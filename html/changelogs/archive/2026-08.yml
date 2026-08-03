@@ -63,3 +63,6 @@
   zoktiik:
   - bugfix: The animated overlay that shows when you're in combat mode now properly
       clears when you leave it.
+2026-08-03:
+  Xander3359:
+  - bugfix: Fixed wild-kin antennas being unremovable
