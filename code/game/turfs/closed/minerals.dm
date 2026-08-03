@@ -78,7 +78,6 @@
 		if(!ismineralturf(src))
 			return
 		attackby(held_item, user, multiplier = 2)
-		user.stamina_add(25)
 
 /turf/closed/mineral/attackby(obj/item/item, mob/user, params, multiplier)
 	if (!user.IsAdvancedToolUser())
@@ -118,7 +117,6 @@
 			if(!ismineralturf(src))
 				return
 			attackby(item, user, multiplier = 4)
-			user.stamina_add(25)
 	..()
 
 /turf/closed/mineral/turf_destruction(damage_flag)
