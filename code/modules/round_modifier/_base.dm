@@ -12,7 +12,26 @@
 	var/wretch_slots = 0
 	var/bandit_slots = 0
 	var/gnoll_slots = 0
+	var/adventurer_slots = 0
 	var/list/weather_weights
+
+/datum/round_modifier/adventure
+	name = "Adventure"
+	desc = "Wanderers flock to these lands."
+	min_chaos = 99
+	adventurer_slots = 20
+
+/datum/round_modifier/nowretch
+	name = "No Villains"
+	desc = "The land is peaceful, and its inhabitants calm."
+	min_chaos = 99
+	wretch_slots = -9
+
+/datum/round_modifier/lesswretch
+	name = "Low Wretches"
+	desc = "The land is almost clean of heresy."
+	min_chaos = 99
+	wretch_slots = -4
 
 /*
 /datum/round_modifier/lightsout

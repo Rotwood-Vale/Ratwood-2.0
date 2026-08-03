@@ -1,23 +1,30 @@
+/datum/round_modifier/low_bandits
+	name = "Low Bandits"
+	desc = "Some free men have come."
+	cost = 1
+	min_chaos = 1
+	bandit_slots = 4
+
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"
 	desc = "The free men have come."
 	cost = 2
 	weight = 30
 	min_chaos = 2
-	bandit_slots = 6
+	bandit_slots = 7
 
 /datum/round_modifier/low_gnolls
 	name = "Low Gnolls"
 	desc = "The dregs of a bloodbeast pack."
-	cost = 2
-	max_chaos = 2
+	cost = 1
+	weight = 20
 	gnoll_slots = 2
 
 /datum/round_modifier/medium_gnolls
 	name = "Medium Gnolls"
 	desc = "A pack of bloodbeasts."
-	cost = 3
-	min_chaos = 2
+	cost = 2
+	min_chaos = 1
 	incompatible = list(/datum/round_modifier/low_gnolls)
 	gnoll_slots = 4
 
@@ -25,7 +32,7 @@
 	name = "High Gnolls"
 	desc = "The bloodbeasts swarm! The GORESTAR laughs!"
 	cost = 4
-	min_chaos = 3
+	min_chaos = 2
 	incompatible = list(/datum/round_modifier/low_gnolls, /datum/round_modifier/medium_gnolls)
 	gnoll_slots = 6
 
@@ -74,14 +81,13 @@
 	name = "Assassins"
 	desc = "Ware! Knives in the dark!"
 	cost = 1
-	weight = 15
 	villain_events = list(/datum/round_event_control/antagonist/solo/assassins)
 
 /datum/round_modifier/rebel
 	name = "Rebellion"
 	desc = "The lowborn think to rule themselves!"
 	cost = 2
-	min_chaos = 2
+	min_chaos = 1
 	villain_events = list(/datum/round_event_control/antagonist/solo/rebel)
 
 /datum/round_modifier/dreamwalker

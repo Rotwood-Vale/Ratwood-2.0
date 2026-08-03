@@ -6,12 +6,16 @@
 
 /datum/controller/subsystem/gamemode/proc/chaos_vote_result(winner)
 	switch(winner)
-		if("Low Chaos")
-			level = 1
-		if("Medium Chaos")
-			level = 2
-		if("High Chaos")
-			level = 3
+		if("Adventure")
+			level = 0
+		if("Chaos")
+			var/players = length(GLOB.new_player_list)
+			if(players >= 140)
+				level = 3
+			else if(players >= 120)
+				level = 2
+			else
+				level = 1
 	to_chat(world, span_notice("<b>[winner]!</b>"))
 	roll_round_modifiers()
 
@@ -24,12 +28,16 @@
 		SSvote.end_vote()
 
 	switch(level)
+		if(0)
+			active_modifiers += new /datum/round_modifier/adventure
+			active_modifiers += new /datum/round_modifier/nowretch
 		if(1)
-			budget = rand(1, 3)
+			budget = rand(2, 5)
+			active_modifiers += new /datum/round_modifier/lesswretch
 		if(2)
-			budget = rand(3, 6)
+			budget = rand(6, 8)
 		if(3)
-			budget = rand(8, 12)
+			budget = rand(6, 12)
 
 	var/list/pool = list()
 	for(var/T in subtypesof(/datum/round_modifier))
@@ -53,13 +61,14 @@
 		budget -= M.cost
 		active_modifiers += M
 
-	var/list/slots = list("Wretch" = 9, "Bandit" = 0, "Gnoll" = 0)
+	var/list/slots = list("Wretch" = 9, "Bandit" = 0, "Gnoll" = 0, "Adventurer" = 20)
 	var/datum/forecast/forecast = SSParticleWeather?.selected_forecast
 
 	for(var/datum/round_modifier/M in active_modifiers)
 		slots["Wretch"] += M.wretch_slots
 		slots["Bandit"] += M.bandit_slots
 		slots["Gnoll"] += M.gnoll_slots
+		slots["Adventurer"] += M.adventurer_slots
 		for(var/event_type in M.villain_events)
 			var/datum/round_event_control/event = locate(event_type) in control
 			if(event)
@@ -70,18 +79,12 @@
 					if(weather_type in weather_list)
 						weather_list[weather_type] = round(weather_list[weather_type] * M.weather_weights[weather_type])
 
-	var/players = 0
-	for(var/mob/dead/new_player/NP in GLOB.new_player_list)
-		players++
-	var/mult = clamp(players / 60, 0.5, 1)
-
 	for(var/job_title in slots)
 		var/datum/job/J = SSjob.GetJob(job_title)
 		if(!J)
 			continue
-		var/scaled = round(slots[job_title] * mult, 1)
-		J.total_positions = scaled
-		J.spawn_positions = scaled
+		J.total_positions = slots[job_title]
+		J.spawn_positions = slots[job_title]
 
 	if(!length(active_modifiers))
 		to_chat(world, span_notice("<b>Nothing.</b>"))
