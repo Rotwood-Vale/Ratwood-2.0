@@ -50,10 +50,9 @@
 
 	user.sexcon.perform_sex_action(user, 3, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.sexcon_action_message(span_love("[user] cums into [target]'s holes at the same time!"))
-		var/bursts = user.sexcon.get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT|SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+		user.visible_message(span_love("[user] cums into [target]'s holes at the same time!"))
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT|SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
 			sleep(10)
 		user.virginity = FALSE
@@ -72,4 +71,3 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
-

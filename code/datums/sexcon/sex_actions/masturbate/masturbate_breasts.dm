@@ -19,12 +19,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/masturbate_breasts/on_failed_start(mob/living/user, mob/living/target)
-	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))
-		to_chat(user, span_notice("My chest needs to be accessible."))
-		return TRUE
-	return FALSE
-
 /datum/sex_action/masturbate_breasts/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts rubbing [user.p_their()] breasts..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
@@ -48,4 +42,3 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
-

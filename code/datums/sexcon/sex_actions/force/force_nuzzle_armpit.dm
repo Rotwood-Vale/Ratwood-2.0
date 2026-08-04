@@ -45,4 +45,3 @@
 	if(user.sexcon.finished_check())
 		return TRUE
 	return FALSE
-

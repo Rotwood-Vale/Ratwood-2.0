@@ -46,10 +46,9 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.sexcon_action_message(span_love("[user] cums into [target]'s cunt!"))
-		var/bursts = user.sexcon.get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
 			sleep(10)
 		user.virginity = FALSE
@@ -100,10 +99,9 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.sexcon_action_message(span_love("[user] cums into [target]'s cunt!"))
-		var/bursts = user.sexcon.get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+		user.visible_message(span_love("[user] cums into [target]'s cunt!"))
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
 			sleep(10)
 		user.virginity = FALSE
@@ -117,4 +115,3 @@
 
 /datum/sex_action/vaginal_sex/double/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] cocks out of [target]'s cunt."))
-

@@ -6,11 +6,19 @@
 #define SEX_ZONE_MOUTH				(1<<4)
 #define SEX_ZONE_CHEST				(1<<5)
 #define SEX_ZONE_CHEST_GRAB			(1<<6)
+#define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
-/mob/living/carbon/human/proc/sexcon_action_message(msg, vision_distance = DEFAULT_MESSAGE_RANGE)
-	if(!msg)
+/mob/living/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
+	if(!message)
 		return
-	visible_message(msg, vision_distance = vision_distance)
+	visible_message(message, self_message, blind_message, vision_distance)
+
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
+	if(sexcon?.suppress_action_messages)
+		return
+	if(!message)
+		return
+	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
 	/// The user and the owner of the controller
@@ -68,6 +76,8 @@
 	var/suppress_moan = FALSE
 	/// Allow players to decide if they want to subtly do this action or not (only for actions that can be done subtly)
 	var/do_subtle_action = FALSE
+	/// Suppress repeated action messages unless key action state changes.
+	var/suppress_action_messages = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/do_knot_action_as_bottom = FALSE
@@ -1338,9 +1348,14 @@
 	// Do action loop
 	var/performed_action_type = current_action
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	var/base_speed = -1
+	var/base_force = -1
+	var/base_knot_mode = FALSE
+	var/subtle_message_tick_counter = 0
+	var/was_subtle_mode = action.subtle_supported
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
+	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
@@ -1359,8 +1374,33 @@
 			break
 		if(desire_stop)
 			break
+		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
+		var/current_knot_mode = FALSE
+		if(action.knot_on_finish)
+			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
+				current_knot_mode = do_knot_action
+			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
+				current_knot_mode = do_knot_action_as_bottom
+		var/show_action_message = (speed != base_speed || force != base_force)
+		if(current_knot_mode != base_knot_mode)
+			show_action_message = TRUE
+		if(!is_subtle_mode && was_subtle_mode)
+			show_action_message = TRUE
+		if(!show_action_message && is_subtle_mode)
+			subtle_message_tick_counter++
+			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
+				show_action_message = TRUE
+				subtle_message_tick_counter = 0
+		else if(show_action_message)
+			subtle_message_tick_counter = 0
+		was_subtle_mode = is_subtle_mode
+		base_speed = speed
+		base_force = force
+		base_knot_mode = current_knot_mode
+		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
 			break

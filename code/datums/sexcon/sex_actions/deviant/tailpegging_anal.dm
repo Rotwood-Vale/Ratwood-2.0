@@ -35,3 +35,7 @@
 /datum/sex_action/tailpegging_anal/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls their tail out of [target]'s ass."))
 
+/datum/sex_action/tailpegging_anal/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(target.sexcon.finished_check())
+		return TRUE
+	return FALSE

@@ -19,7 +19,9 @@
 		return FALSE
 	if(!user.getorganslot(ORGAN_SLOT_PENIS))
 		return FALSE
-	if(!target_has_both_accessible_feet(user, target))
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
+		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 	return TRUE
 

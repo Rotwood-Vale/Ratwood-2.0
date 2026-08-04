@@ -44,10 +44,9 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.sexcon_action_message(span_love("[user] cums into [target]'s butt!"))
-		var/bursts = user.sexcon.get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+		user.visible_message(span_love("[user] cums into [target]'s butt!"))
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 				user.try_impregnate(target)
 			sleep(10)
@@ -97,10 +96,9 @@
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 	if(user.sexcon.check_active_ejaculation())
-		user.sexcon_action_message(span_love("[user] cums into [target]'s butt!"))
-		var/bursts = user.sexcon.get_load_bursts()
-		for(var/i = 1; i <= bursts; i++)
-			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE, show_excessive_cum_message = i == bursts)
+		user.visible_message(span_love("[user] cums into [target]'s butt!"))
+		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
+			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 				user.try_impregnate(target)
 			sleep(10)
@@ -114,4 +112,3 @@
 
 /datum/sex_action/anal_sex/double/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] cocks out of [target]'s butt."))
-

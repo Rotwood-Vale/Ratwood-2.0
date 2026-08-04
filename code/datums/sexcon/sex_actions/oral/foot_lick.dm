@@ -11,7 +11,9 @@
 /datum/sex_action/foot_lick/can_perform(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
-	if(!target_has_both_accessible_feet(user, target))
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
+		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
 		return FALSE

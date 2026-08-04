@@ -40,4 +40,3 @@
 
 /datum/sex_action/frotting/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] lets go of both their cocks."))
-
