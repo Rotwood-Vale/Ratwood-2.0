@@ -32,7 +32,6 @@
 			active_modifiers += new /datum/round_modifier/adventure
 		if(1)
 			budget = rand(2, 5)
-			active_modifiers += new /datum/round_modifier/lesswretch
 		if(2)
 			budget = rand(6, 8)
 		if(3)
