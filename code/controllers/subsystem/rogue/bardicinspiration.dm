@@ -35,6 +35,7 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	var/songsbought = 0
 	var/maxrhythms = 0
 	var/rhythmsbought = 0
+	var/audience_selecting = FALSE
 	var/datum/rhythm_tracker/rhythm_tracker
 	var/is_picking = FALSE // mutex
 	var/is_picking_rhythm = FALSE
@@ -77,7 +78,23 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/crescendo)
 	H.verbs += list(/mob/living/carbon/human/proc/setaudience, /mob/living/carbon/human/proc/clearaudience, /mob/living/carbon/human/proc/checkaudience, /mob/living/carbon/human/proc/picksongs, /mob/living/carbon/human/proc/resetsongs)
 
+/datum/inspiration/proc/prune_audience()
+	for(var/audience_entry in audience)
+		var/mob/living/carbon/human/audience_member = audience_entry
+		if(!istype(audience_member) || QDELETED(audience_member) || audience_member.stat == DEAD)
+			audience -= audience_entry
+	if(holder)
+		audience |= holder
 
+/datum/inspiration/proc/clear_audience()
+	audience_selecting = FALSE
+	for(var/audience_entry in audience)
+		var/mob/living/carbon/human/audience_member = audience_entry
+		if(!istype(audience_member) || QDELETED(audience_member))
+			continue
+		for(var/datum/status_effect/buff/song/song_buff in audience_member.status_effects)
+			audience_member.remove_status_effect(song_buff)
+	audience = holder ? list(holder) : list()
 
 
 /mob/living/carbon/human/proc/setaudience()
@@ -86,20 +103,13 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 
 	if(!inspiration)
 		return FALSE
-	if(inspiration.audience.len >= inspiration.maxaudience)
-		to_chat(src, "I cannot maintain a audience larger than [inspiration.maxaudience]!")
-		return FALSE
-	var/list/folksnearby = list()
-	for(var/mob/living/carbon/human/folks in view(7, loc))
-		if(!src.in_audience(folks))
-			folksnearby += folks
-
-	if(!folksnearby)
-		return
-	var/target = tgui_input_list(src, "Who will you perform for?", "Audience Choice", folksnearby)
-	if(target)
-		inspiration.audience |= target
-
+	inspiration.audience_selecting = !inspiration.audience_selecting
+	if(inspiration.audience_selecting)
+		to_chat(src, span_notice("Audience targeting enabled. Middle-click people to add or remove them. Left-click or right-click to cancel."))
+		balloon_alert(src, "audience targeting")
+	else
+		to_chat(src, span_notice("Audience targeting canceled."))
+		balloon_alert(src, "targeting canceled")
 
 	return TRUE
 
@@ -109,12 +119,10 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	set category = "Inspiration"
 	if(!inspiration)
 		return FALSE
-	if(src.has_status_effect(/datum/status_effect/buff/playing_music)) // cant clear while playing
-		return
-	inspiration.audience = list()
+	inspiration.clear_audience()
+	balloon_alert(src, "audience cleared")
 
 	return TRUE
-
 
 /mob/living/carbon/human/proc/checkaudience()
 	set name = "Check Audience"
@@ -131,6 +139,41 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 
 	return TRUE
 	
+/mob/proc/handle_bard_audience_click(atom/A, list/modifiers)
+	return FALSE
+
+/mob/living/carbon/human/handle_bard_audience_click(atom/A, list/modifiers)
+	if(!inspiration?.audience_selecting)
+		return FALSE
+	if(modifiers["left"] || modifiers["right"])
+		inspiration.audience_selecting = FALSE
+		to_chat(src, span_notice("Audience targeting canceled."))
+		balloon_alert(src, "targeting canceled")
+		return TRUE
+	if(!modifiers["middle"])
+		return TRUE
+	var/mob/living/carbon/human/target = A
+	if(!istype(target) || target == src)
+		balloon_alert(src, "middle-click a person")
+		return TRUE
+	inspiration.prune_audience()
+	if(!(target in view(7, src)))
+		balloon_alert(src, "too far")
+		return TRUE
+	if(target in inspiration.audience)
+		inspiration.audience -= target
+		target.balloon_alert(src, "removed from audience")
+		target.balloon_alert(target, "removed from audience")
+		return TRUE
+	var/audience_count = inspiration.audience.len - 1
+	if(audience_count >= inspiration.maxaudience)
+		balloon_alert(src, "audience full")
+		to_chat(src, span_warning("I cannot maintain an audience larger than [inspiration.maxaudience]!"))
+		return TRUE
+	inspiration.audience |= target
+	target.balloon_alert(src, "added to audience")
+	target.balloon_alert(target, "added to audience")
+	return TRUE
 
 /datum/inspiration/New(mob/living/carbon/human/holder)
 	. = ..()

@@ -198,7 +198,7 @@ const BardEditorContent = (props: {
     return (
       <Section fill>
         <Box color="label" textAlign="center" mt={4}>
-          Недоступно для предзаготовленных
+          Not available for pre-prepared
         </Box>
       </Section>
     );

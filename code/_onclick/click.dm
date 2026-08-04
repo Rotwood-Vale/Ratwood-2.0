@@ -99,6 +99,9 @@
 
 	last_client_interact = world.time
 
+	if(handle_bard_audience_click(A, modifiers))
+		return
+
 	if(check_click_intercept(params,A))
 		return
 
