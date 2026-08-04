@@ -851,7 +851,7 @@
 	. = ..()
 	if(slot == SLOT_HEAD)
 		active_item = TRUE
-		to_chat(user, span_hypnophrase("Dead mimic flesh envelops your head slippery, cold, and wet. The beast's hunger washes over you, you feel starved and emaciated, as if something has sapped your CONSTITUTION; however, in it's place is left a gnawning, greedy avarice coupled with FORTUNE enough to sate it."))
+		to_chat(user, span_hypnophrase("Dead mimic flesh envelops your head, slippery, cold, and wet. The beast's hunger washes over you; you feel starved and emaciated, as if something has sapped your CONSTITUTION; however, in its place is left a gnawing, greedy avarice coupled with FORTUNE enough to sate it."))
 		user.change_stat(STATKEY_LCK, 5)
 		user.change_stat(STATKEY_CON, -5)
 	return
@@ -861,7 +861,7 @@
 	if(!active_item)
 		return
 	if(active_item)
-		to_chat(user, span_hypnophrase("The vile corpse pulls free with a squelch. Your head is left wet, glossed slick with the creatures mucus... You feel your vigor return!"))
+		to_chat(user, span_hypnophrase("The vile corpse pulls free with a squelch. Your head is left wet, glossed slick with the creature's mucus... You feel your vigor return!"))
 		user.change_stat(STATKEY_LCK, -5)
 		user.change_stat(STATKEY_CON, 5)
 		active_item = FALSE
