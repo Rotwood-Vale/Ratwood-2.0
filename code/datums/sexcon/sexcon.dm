@@ -1366,7 +1366,7 @@
 	find_occupying_furniture()
 	find_occupying_grass()
 	while(TRUE)
-		if(!isnull(target.client) && target.client.prefs.sexable == FALSE) //Vrell - Needs changed to let me test sex mechanics solo
+		if(!target?.client?.prefs?.sexable) // no prefs/sexability means we should safely stop the loop
 			break
 		if(!user.stamina_add(action.stamina_cost * get_stamina_cost_multiplier()))
 			break
@@ -1692,7 +1692,7 @@
 			target.apply_status_effect(/datum/status_effect/quivering)
 			target.confused += 25
 			target.OffBalance(30 SECONDS)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
 				if(prob(10))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
@@ -1700,7 +1700,7 @@
 		
 /datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/mouth))
 				if(prob(10))
 					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))
