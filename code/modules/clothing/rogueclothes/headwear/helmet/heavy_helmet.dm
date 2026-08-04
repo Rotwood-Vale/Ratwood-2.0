@@ -839,7 +839,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/mimichead.dmi'
 	icon_state = "mimichead"
 	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)//druid helmet stats, seems fitting cause it's magic wood
-	max_integrity = ARMOR_INT_HELMET_ANTAG // -5 CON while wearing it so this should be fine, maybe
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	blocksound = list('sound/vo/mobs/mimic/mimic_attack1.ogg','sound/vo/mobs/mimic/mimic_attack2.ogg','sound/vo/mobs/mimic/mimic_attack3.ogg')
 	break_sound = 'sound/vo/mobs/mimic/mimic_death.ogg'
