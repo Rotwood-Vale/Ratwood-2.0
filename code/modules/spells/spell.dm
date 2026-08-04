@@ -715,7 +715,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			. = range(distance,center)
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
-	deactivate(user)
 	user.stop_attack()
 	start_recharge()
 	switch(charge_type)
