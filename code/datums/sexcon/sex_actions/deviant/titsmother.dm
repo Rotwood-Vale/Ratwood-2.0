@@ -69,7 +69,7 @@
 	target.sexcon.handle_passive_ejaculation(target)
 
 	// Oxyloss from strong intent and up, scaled by chest size.
-	var/oxyloss_amt = (breast_size >= 2) ? 0.5 : 0.1
+	var/oxyloss_amt = (breast_size >= 2) ? 1 : 0.2
 	user.sexcon.perform_deepthroat_oxyloss(target, oxyloss_amt)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
