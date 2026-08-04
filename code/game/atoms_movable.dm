@@ -592,6 +592,9 @@
 		return
 	return hit_atom.hitby(src, throwingdatum=throwingdatum)
 
+/atom/movable/proc/get_effective_throwforce(datum/thrownthing/throwingdatum)
+	return throwforce + (throwingdatum?.bonus_throwforce || 0)//bonus is typically 2 extra force unless the var is reused elsewhere
+
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum, damage_flag = "blunt")
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, AM.dir)
@@ -606,6 +609,12 @@
 	. = FALSE
 	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
+
+	var/bonus_throwforce = 0
+	if(isitem(src) && thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM))
+		range += 1
+		speed += 0.5
+		bonus_throwforce = 2
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
@@ -649,6 +658,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.force = force
+	TT.bonus_throwforce = bonus_throwforce
 	TT.callback = callback
 	TT.extra = extra
 	if(!QDELETED(thrower))
@@ -1297,4 +1307,3 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
-

@@ -181,6 +181,13 @@
 	craftdiff = 0
 	hides_from_books = FALSE
 
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/jarhelm
+	name = "rather large jar"
+	result = list(/obj/item/clothing/head/roguetown/helmet/heavy/jar)
+	reqs = list(/obj/item/natural/clay = 3)
+	craftdiff = 5
+	hides_from_books = FALSE
+
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery
 	name = "porcelain pottery"
 	structurecraft = null

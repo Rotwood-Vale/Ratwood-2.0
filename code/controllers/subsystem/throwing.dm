@@ -50,6 +50,8 @@ SUBSYSTEM_DEF(throwing)
 	var/mob/thrower
 	var/diagonals_first
 	var/dist_travelled = 0
+	/// right now just used by the throwingarm trait, adds extra damage on hit, go figure
+	var/bonus_throwforce = 0
 	var/start_time
 	var/dist_x
 	var/dist_y
