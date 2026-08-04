@@ -68,7 +68,7 @@
 		user.sexcon.perform_sex_action(target, 1, 0.2, FALSE)
 	target.sexcon.handle_passive_ejaculation(target)
 
-	// Oxyloss from strong intent and up, scaled by chest size.
+	// Oxyloss from sex intensity rough and up, scaled by chest size.
 	var/oxyloss_amt = (breast_size >= 2) ? 1 : 0.2
 	user.sexcon.perform_deepthroat_oxyloss(target, oxyloss_amt)
 

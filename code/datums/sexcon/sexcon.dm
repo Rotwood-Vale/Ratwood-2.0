@@ -8,6 +8,7 @@
 #define SEX_ZONE_CHEST_GRAB			(1<<6)
 #define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
+//Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
 /mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
 	if(sexcon?.suppress_action_messages)
 		return

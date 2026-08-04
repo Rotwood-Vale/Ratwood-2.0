@@ -224,6 +224,7 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+//Used only for the rub ears action currently, changes messaging/arousal if target has nonhuman ears
 /mob/living/carbon/human/proc/has_nonhuman_ears()
 	if(HAS_TRAIT(src, TRAIT_KEENEARS))
 		return TRUE
