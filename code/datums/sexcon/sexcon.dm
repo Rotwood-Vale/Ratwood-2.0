@@ -623,6 +623,12 @@
 		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
 		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
 		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		//Rolls impreg on deep climax in relevant scenarios
+		if(!is_oral_knot)
+			if(orifice & SEX_PART_CUNT)
+				user.try_impregnate(knotted_recipient)
+			else if((orifice & SEX_PART_ANUS) && HAS_TRAIT(knotted_recipient, TRAIT_BAOTHA_FERTILITY_BOON) && !knotted_recipient.getorganslot(ORGAN_SLOT_VAGINA))
+				user.try_impregnate(knotted_recipient)
 		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
 		return
 	var/climax_msg = "[user] makes a mess!"
