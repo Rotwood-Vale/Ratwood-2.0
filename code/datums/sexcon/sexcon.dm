@@ -7,6 +7,11 @@
 #define SEX_ZONE_CHEST				(1<<5)
 #define SEX_ZONE_CHEST_GRAB			(1<<6)
 
+/mob/living/carbon/human/proc/sexcon_action_message(msg, vision_distance = DEFAULT_MESSAGE_RANGE)
+	if(!msg)
+		return
+	visible_message(msg, vision_distance = vision_distance)
+
 /datum/sex_controller
 	/// The user and the owner of the controller
 	var/mob/living/carbon/human/user
