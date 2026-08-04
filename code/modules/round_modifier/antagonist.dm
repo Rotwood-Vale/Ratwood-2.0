@@ -11,6 +11,7 @@
 	cost = 2
 	weight = 30
 	min_chaos = 2
+	incompatible = list(/datum/round_modifier/low_bandits)
 	bandit_slots = 7
 
 /datum/round_modifier/low_gnolls
@@ -49,7 +50,7 @@
 	cost = 4
 	weight = 15
 	min_chaos = 3
-	incompatible = list(/datum/round_modifier/medium_bandits)
+	incompatible = list(/datum/round_modifier/medium_bandits, /datum/round_modifier/low_bandits)
 	bandit_slots = 10
 
 /*
