@@ -644,6 +644,7 @@
 	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()

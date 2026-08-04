@@ -68,6 +68,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
 
 
@@ -78,7 +79,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/flashlight/flare/torch
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -148,7 +149,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
 		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/projectile/repel)
-	if(H.mind)
 		var/weapons = list("Path of War","Path of Control","Path of Shadows","Path of Survival")
 		var/weapon_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons
 		switch(weapon_choice)
@@ -178,7 +178,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/flashlight/flare/torch
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -216,7 +216,7 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,
 	)
-	subclass_spellpoints = 9
+	subclass_spellpoints = 6
 
 /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	var/detailcolor
@@ -254,7 +254,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 	wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/flashlight/flare/torch
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -273,19 +273,38 @@
 		detailcolor = naledicolors[detailcolor]
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // because other clerics get holy bolt and so you're not entirely pressured to take combat spells
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//You're not meant to have both this and persist.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)	//increases heal effect,
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)		//wound/injurying reversion, revive capable at a cost
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)	//speedup with a cost
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)	//potential to heal and injure targets
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//Naledi Vizier spells functionally replace psydonite ones
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/touch/orison)
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
 	H.merctype = 14
 
 
 
 /datum/outfit/job/roguetown/mercenary/warscholar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+
+	for(var/obj/item/clothing/V in H.get_equipped_items(FALSE))
+		if(V.naledicolor)
+			V.color = detailcolor
+			V.update_icon()
+	H.regenerate_icons()
+
+/datum/outfit/job/roguetown/mercenary/warscholar_pontifex/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+
+	for(var/obj/item/clothing/V in H.get_equipped_items(FALSE))
+		if(V.naledicolor)
+			V.color = detailcolor
+			V.update_icon()
+	H.regenerate_icons()
+
+/datum/outfit/job/roguetown/mercenary/warscholar_vizier/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
 
 	for(var/obj/item/clothing/V in H.get_equipped_items(FALSE))

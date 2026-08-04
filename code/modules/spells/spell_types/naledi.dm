@@ -18,13 +18,15 @@
 	miracle = TRUE
 	devotion_cost = 10
 
-/obj/effect/proc_holder/spell/invoked/regression/cast/(atom/cast_on)
+/obj/effect/proc_holder/spell/invoked/regression/cast(list/targets, mob/living/user)
 	. = ..()
-
-	var/mob/living/target = cast_on
+	var/mob/living/owner = user
+	var/mob/living/target = targets[1]
 	if(!istype(target))
+		revert_cast()
 		return FALSE
 	if(!isliving(target))
+		revert_cast()
 		return FALSE
 
 	var/obj/effect/temp_visual/origin_restoration/V = new
@@ -93,7 +95,7 @@
 	C.apply_status_effect(/datum/status_effect/buff/originhealing, healing)
 
 
-bj/effect/temp_visual/origin_restoration
+/obj/effect/temp_visual/origin_restoration
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "anom"
 	duration = 10
@@ -196,8 +198,33 @@ bj/effect/temp_visual/origin_restoration
 	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/stasis/cast(list/targets, mob/user = usr)
-	if(isliving(targets[1]))
-		var/mob/living/carbon/target = targets[1]
+	var/mob/living/carbon/self = usr
+	var/mob/living/carbon/target = targets[1]
+	// Reverse a recently departed soul. Must be done within 1 minute.
+	if(target?.stat == DEAD)
+		if(!self.has_status_effect(/datum/status_effect/debuff/devitalised))
+			if(target.timeofdeath && (world.time - target.timeofdeath) <= 1 MINUTES)
+				if(alert(user, "[target] has very recently departed. Sacrifice your Lux to rewind their soul back?", "Origin Restoration", "Restore Them", "Leave Them") == "Restore Them")
+					var/obj/effect/temp_visual/origin_restoration/V = new
+					target.vis_contents += V
+					var/turf/user_turf = get_turf(user)
+					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHEAST)
+					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHWEST)
+					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHEAST)
+					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHWEST)
+					playsound(target.loc, 'sound/magic/regression1.ogg')
+					self.apply_status_effect(/datum/status_effect/debuff/devitalised)
+					target.setOxyLoss(0)
+					if(target.revive(full_heal = FALSE))
+						target.grab_ghost(force = TRUE)
+						target.emote("gasp")
+						target.Jitter(100)
+						if(target.mind)
+							target.mind.remove_antag_datum(/datum/antagonist/zombie)
+						target.apply_status_effect(/datum/status_effect/debuff/revived)
+						target.visible_message(span_blue("[user]'s Lux is forcefully torn away as [target]'s soul is rewound back into their body!"),	span_blue("A distant darkness releases its grip on me. I wake once more, feeling the remnants of a dying light..."))
+					return TRUE
+	if(isliving(target))
 		var/mob/living/carbon/C = target
 		C.apply_status_effect(/datum/status_effect/buff/stasis)
 		brute = target.getBruteLoss()
@@ -219,32 +246,9 @@ bj/effect/temp_visual/origin_restoration
 		play_indicator(target,'icons/mob/overhead_effects.dmi', "timestop", 100, OBJ_LAYER)
 		addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = 10 SECONDS)
 		return TRUE
-
-	var/mob/living/carbon/target = targets[1]
-	// Reverse a recently departed soul. Must be done within 1 minute.
-	if(target.stat == DEAD)
-		if(!H.has_status_effect(/datum/status_effect/debuff/devitalised))
-			if(target.timeofdeath && (world.time - target.timeofdeath) <= 1 MINUTES)
-				if(alert(owner, "[target] has very recently departed. Sacrifice your Lux to rewind their soul back?", "Origin Restoration", "Restore Them", "Leave Them") == "Restore Them")
-					var/obj/effect/temp_visual/origin_restoration/V = new
-					target.vis_contents += V
-					var/turf/user_turf = get_turf(owner)
-					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHEAST)
-					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHWEST)
-					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHEAST)
-					new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHWEST)
-					playsound(target.loc, 'sound/magic/regression1.ogg')
-					H.apply_status_effect(/datum/status_effect/debuff/devitalised/lesser)
-					target.setOxyLoss(0)
-					if(target.revive(full_heal = FALSE))
-						target.grab_ghost(force = TRUE)
-						target.emote("gasp")
-						target.Jitter(100)
-						if(target.mind)
-							target.mind.remove_antag_datum(/datum/antagonist/zombie)
-						target.apply_status_effect(/datum/status_effect/debuff/revived)
-						target.visible_message(span_blue("[owner]'s Lux is forcefully torn away as [target]'s soul is rewound back into their body!"),	span_blue("A distant darkness releases its grip on me. I wake once more, feeling the remnants of a dying light..."))
-					return TRUE
+	else
+		revert_cast()
+		return FALSE
 
 /obj/effect/proc_holder/spell/invoked/stasis/proc/remove_buff(mob/living/carbon/target)
 	do_teleport(target, origin, no_effects=TRUE)
@@ -316,24 +320,28 @@ bj/effect/temp_visual/origin_restoration
 /obj/effect/proc_holder/spell/invoked/acceleration
 	name = "Acceleration"
 	desc = "Displace a target slightly ahead of local time, dramatically increasing their speed and reactions. When reality catches up, the resulting temporal strain leaves them sluggish and exhausted."
-	fluff_desc = "One of the earliest applications of Origin Magick, Acceleration was first devised to hasten crop growth and shorten agricultural cycles. The experiment revealed a fundamental limitation of the art: while a subject's personal timeline can be advanced, the debt incurred cannot be avoided. Reality inevitably reconciles the discrepancy, repaying every stolen moment in equal measure. Though unsuitable for cultivation, the technique found lasting use among Naledi Viziers as a potent, if taxing, combat tool."
-	button_icon_state = "accel"
+//	fluff_desc = "One of the earliest applications of Origin Magick, Acceleration was first devised to hasten crop growth and shorten agricultural cycles. The experiment revealed a fundamental limitation of the art: while a subject's personal timeline can be advanced, the debt incurred cannot be avoided. Reality inevitably reconciles the discrepancy, repaying every stolen moment in equal measure. Though unsuitable for cultivation, the technique found lasting use among Naledi Viziers as a potent, if taxing, combat tool."
+	overlay_state = "accel"
 	sound = list('sound/magic/haste.ogg')
-	cast_range = 4
-	charge_required = FALSE
-	cooldown_time = 5 MINUTES
+	range = 4
+	recharge_time = 45 SECONDS
 	invocations = list("Aggil!")
-	invocation_type = INVOCATION_SHOUT
 
-/obj/effect/proc_holder/spell/invoked/acceleration/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/invoked/acceleration/cast(list/targets, mob/living/user)
 	. = ..()
-	var/mob/living/carbon/target = cast_on
+	var/mob/living/carbon/owner = user
+	var/mob/living/carbon/target = targets[1]
 
 	if(!istype(target))
+		revert_cast()
 		return FALSE
+
 	var/obj/effect/temp_visual/origin_restoration/V = new
 	target.vis_contents += V
-
+	if(target.has_status_effect(/datum/status_effect/buff/accel))
+		return FALSE
+	if(target.has_status_effect(/datum/status_effect/buff/haste))
+		return FALSE
 	var/turf/user_turf = get_turf(owner)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHEAST)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHWEST)
@@ -359,8 +367,7 @@ bj/effect/temp_visual/origin_restoration
 	id = "acceleration"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/accel
 	effectedstats = list(STATKEY_SPD = 20)
-	duration = 15 SECONDS
-	tick_interval = 1 SECONDS
+	duration = 10 SECONDS
 	var/afterimage_active = FALSE
 
 /datum/status_effect/buff/accel/on_creation(mob/living/new_owner, new_duration = null)
@@ -370,7 +377,7 @@ bj/effect/temp_visual/origin_restoration
 
 /datum/status_effect/buff/accel/on_apply()
 	. = ..()
-
+	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, "naledi_cat_nonsense")
 	ADD_TRAIT(owner, TRAIT_GUIDANCE, "naledi_cat_nonsense")
 	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, "naledi_cat_nonsense")
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, "naledi_cat_nonsense")
@@ -381,12 +388,9 @@ bj/effect/temp_visual/origin_restoration
 
 	to_chat(owner, span_green("My timeline races ahead of the present. I am unbound by time!"))
 
-/datum/status_effect/buff/accel/tick()
-	owner.stamina_add(-69)
-
 /datum/status_effect/buff/accel/on_remove()
 	. = ..()
-
+	REMOVE_TRAIT(owner, TRAIT_INFINITE_STAMINA, "naledi_cat_nonsense")
 	REMOVE_TRAIT(owner, TRAIT_GUIDANCE, "naledi_cat_nonsense")
 	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, "naledi_cat_nonsense")
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, "naledi_cat_nonsense")
@@ -408,7 +412,7 @@ bj/effect/temp_visual/origin_restoration
 	id = "deceleration"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/decel
 	effectedstats = list(STATKEY_SPD = -20)
-	duration = 15 SECONDS
+	duration = 5 SECONDS
 
 /datum/status_effect/debuff/decel/on_creation(mob/living/new_owner, new_duration = null)
 	if(new_duration)
@@ -458,25 +462,54 @@ bj/effect/temp_visual/origin_restoration
 /obj/effect/proc_holder/spell/invoked/divergence
 	name = "Divergence"
 	desc = "Shatters a target across several competing timelines, briefly immobilizing them and spawning 4 to 8 Time Echoes around them. Recovering an echo restores the target's vitality, while destroying one forces reality to violently reconcile the contradiction, inflicting damage."
-	fluff_desc = "The Naledi teach that every living thing exists atop an endless lattice of unrealized possibilities. Divergence tears open that lattice and scatters fragments of a victim's fate across nearby histories. To reclaim an echo is to remember a life that almost was. To destroy one is to deny that possibility ever existed, and reality rarely forgives the contradiction."
-	button_icon_state = "divergence"
+//	fluff_desc = "The Naledi teach that every living thing exists atop an endless lattice of unrealized possibilities. Divergence tears open that lattice and scatters fragments of a victim's fate across nearby histories. To reclaim an echo is to remember a life that almost was. To destroy one is to deny that possibility ever existed, and reality rarely forgives the contradiction."
+	overlay_state = "divergence"
 	sound = list('sound/magic/regression1.ogg', 'sound/magic/regression2.ogg', 'sound/magic/regression3.ogg')
-	cast_range = 5
-	self_cast_possible = TRUE
-	charge_required = FALSE
-	cooldown_time = 60 SECONDS
+	range = 5
+	recharge_time = 60 SECONDS
 	invocations = list("Naf'ir! Diverge, timeline!")
-	invocation_type = INVOCATION_SHOUT
 
-/obj/effect/proc_holder/spell/invoked/divergence/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/invoked/divergence/cast(list/targets, mob/living/user)
 	. = ..()
-	var/mob/living/target = cast_on
+	var/mob/living/target = targets[1]
 	if(!istype(target))
+		revert_cast()
 		return FALSE
+
+	if(target.has_status_effect(/datum/status_effect/debuff/divergence))
+		to_chat(user, span_warning("[target] is already fractured across diverging timelines!"))
+		revert_cast()
+		return FALSE
+
 	target.visible_message(span_blue("Origin Magick shatters [target] across diverging timelines!"), span_blue("I feel myself pulled apart into countless possibilities! I'm not here-- I'm there-- Huh?? Where??"))
-	target.apply_status_effect(/datum/status_effect/debuff/divergence, owner)
+	target.apply_status_effect(/datum/status_effect/debuff/divergence, user)
 	return TRUE
 
+/proc/arcyne_validate_blink_dest(turf/dest, mob/user)
+	if(!dest)
+		return "Invalid target location!"
+	if(dest.teleport_restricted)
+		return "I can't teleport here!"
+	var/turf/start = get_turf(user)
+	if(dest.z != start.z)
+		return "I can only teleport on the same plane!"
+	if(istransparentturf(dest))
+		return "I cannot teleport to the open air!"
+	if(dest.density)
+		return "I cannot teleport into a wall!"
+	for(var/obj/structure/roguewindow/W in dest)
+		if(W.density)
+			return "I cannot teleport through a window!"
+	for(var/obj/structure/mineral_door/door in dest)
+		if(door.density)
+			return "I cannot teleport through a door!"
+	for(var/obj/structure/bars/B in dest)
+		if(B.density)
+			return "I cannot teleport through bars!"
+	for(var/obj/structure/gate/G in dest)
+		if(G.density)
+			return "I cannot teleport through a gate!"
+	return null
 
 /datum/status_effect/debuff/divergence
 	id = "divergence"
@@ -774,34 +807,25 @@ bj/effect/temp_visual/origin_restoration
 /obj/effect/proc_holder/spell/invoked/ley_lines
 	name = "Ley Lines"
 	desc = "Creates a circle of arcyne power. Standing within it greatly enhances your spellcasting, increasing your intellect and reducing the cooldown of your spells. If you are not in Combat Mode, the ley lines instead restore your energy at a rapid pace.<br><br>While standing in a Leyline, you cannot defend yourself.<br><br>This will also grant a spell that makes you quickly move back to your Leylines."
-	fluff_desc = "'No! My Ley Lines!' is a common cry among Hierophants the moment they are dragged even an inch away from their carefully prepared nexus of power. Within its bounds, arcane formulae seem effortless, threads of mana unravel before the mind's eye, and complex spellwork flows with the precision of an auto-smither. Outside of it, reality becomes frustratingly ordinary once more. Most Magos give stern warnings this sensation can be addictive, and even dangerous. Hierophants take it as a suggestion."
-	button_icon_state = "rune2"
-	charge_sound = 'sound/magic/chargingold.ogg'
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_NO_MOVE
-	click_to_activate = FALSE
-	self_cast_possible = TRUE
-	charge_message = "<font color='#ffae00'>Prjperi! Connect! Se-Djed!"
-	charge_required = TRUE
-	charge_time = 1.5 SECONDS
-	charge_slowdown = CHARGING_SLOWDOWN_HEAVY
-	cooldown_time = 3 MINUTES
-	primary_resource_type = SPELL_COST_STAMINA
-	primary_resource_cost = 25
-	secondary_resource_type = SPELL_COST_ENERGY
-	secondary_resource_cost = 100
+//	fluff_desc = "'No! My Ley Lines!' is a common cry among Hierophants the moment they are dragged even an inch away from their carefully prepared nexus of power. Within its bounds, arcane formulae seem effortless, threads of mana unravel before the mind's eye, and complex spellwork flows with the precision of an auto-smither. Outside of it, reality becomes frustratingly ordinary once more. Most Magos give stern warnings this sensation can be addictive, and even dangerous. Hierophants take it as a suggestion."
+	overlay_state = "rune2"
+	sound = 'sound/magic/chargingold.ogg'
+	chargetime = 0
+	recharge_time = 3 MINUTES
+	releasedrain = 50
+
 	sound = 'sound/magic/swap.ogg'
 	var/obj/structure/leyline_circle/active_circle
 
-/obj/effect/proc_holder/spell/invoked/ley_lines/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/invoked/ley_lines/cast(list/targets, mob/living/user)
 	. = ..()
-	var/mob/living/carbon/human/H = owner
+	var/mob/living/carbon/human/H = user
 	if(!H)
 		return FALSE
 	if(active_circle && !QDELETED(active_circle))
 		qdel(active_circle)
 	active_circle = new(get_turf(H), H, src)
 	to_chat(H, span_blue("Arcyne sigils spread beneath your feet, and connect into a complex system of connections to the Ley."))
-	StartCooldown()
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/ley_lines/proc/on_circle_removed()
@@ -810,20 +834,17 @@ bj/effect/temp_visual/origin_restoration
 /obj/effect/proc_holder/spell/invoked/between_the_lines
 	name = "Between the Lines"
 	desc = "Return instantly to your Ley Lines, you addict."
-	fluff_desc = "Among the oldest Hierophant workings recorded, 'Between the Lines' is said to have been born from a simple problem: every moment spent away from a Ley Circle was a moment deprived of perfection. Rather than endure the indignity of walking back, the first Hierophants bent space itself, ensuring they could return to the intoxicating clarity of the Ley Lines without a single step."
-	button_icon_state = "rune3"
-	cooldown_time = 15 SECONDS
-	charge_required = FALSE
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_NO_MOVE
-	click_to_activate = FALSE
-	self_cast_possible = TRUE
-	charge_message = "<font color='#ffae00'>Se-Khep! Return! Khai!"
+//	fluff_desc = "Among the oldest Hierophant workings recorded, 'Between the Lines' is said to have been born from a simple problem: every moment spent away from a Ley Circle was a moment deprived of perfection. Rather than endure the indignity of walking back, the first Hierophants bent space itself, ensuring they could return to the intoxicating clarity of the Ley Lines without a single step."
+	overlay_state = "rune3"
+	recharge_time = 15 SECONDS
+	chargetime = 1.5 SECONDS
+	releasedrain = 30
+	chargedrain = 1
 	var/obj/structure/leyline_circle/linked_circle
 	var/max_range = 9
 
-/obj/effect/proc_holder/spell/invoked/between_the_lines/cast(atom/cast_on)
+/obj/effect/proc_holder/spell/invoked/between_the_lines/cast(list/targets, mob/living/user)
 	. = ..()
-	var/mob/living/user = owner
 	if(!user)
 		return FALSE
 	if(!linked_circle || QDELETED(linked_circle))
@@ -838,11 +859,6 @@ bj/effect/temp_visual/origin_restoration
 	playsound(T, 'sound/magic/blink.ogg', 50, TRUE)
 	return TRUE
 
-/obj/effect/leyline_ring
-	anchored = TRUE
-	density = FALSE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	layer = BELOW_OBJ_LAYER
 
 /datum/status_effect/buff/circle_of_power
 	id = "circle_of_power"
@@ -857,7 +873,7 @@ bj/effect/temp_visual/origin_restoration
 	. = ..()
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_NODEF, "[id]")
-		ADD_TRAIT(owner, TRAIT_LEYLINE_HASTE, "[id]")
+		ADD_TRAIT(owner, TRAIT_LEYLINE_HASTE, "[id]")	//Once charge calculation overhaul complete, apply trait benefit
 
 /datum/status_effect/buff/circle_of_power/on_remove()
 	if(owner)
@@ -884,12 +900,15 @@ bj/effect/temp_visual/origin_restoration
 
 /obj/effect/phantom_leyline
 	name = "phantom leyline"
-	icon = 'icons/effects/32x64.dmi'
-	icon_state = "leylinestable"
+	icon = 'icons/roguetown/misc/64x96.dmi'
+	icon_state = "obelisk"
 	anchored = TRUE
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 180
+	pixel_x = 0
+	pixel_y = 0
+	var/obj/effect/beam_target/beam_anchor
 
 /obj/structure/leyline_circle
 	name = "ley lines"
@@ -903,40 +922,64 @@ bj/effect/temp_visual/origin_restoration
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/owner
 	var/datum/mind/owner_mind
-	var/datum/action/cooldown/spell/ley_lines/parent_spell
+	var/obj/effect/proc_holder/spell/invoked/ley_lines/parent_spell
 	var/list/phantom_leylines = list()
 	var/list/active_beams = list()
 	var/obj/effect/leyline_ring/ring_a
 	var/obj/effect/leyline_ring/ring_b
 
-/obj/structure/leyline_circle/Initialize(mapload, mob/living/user, datum/action/cooldown/spell/ley_lines/spell)
+/obj/effect/leyline_ring
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = BELOW_OBJ_LAYER
+	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon_state = "astrata_chalky"
+
+/obj/effect/beam_target
+	anchored = TRUE
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = BELOW_OBJ_LAYER
+
+/obj/structure/leyline_circle/Initialize(mapload, mob/living/user, var/obj/effect/proc_holder/spell/invoked/ley_lines/spell)
 	. = ..()
 	owner = user
 	owner_mind = user?.mind
 	parent_spell = spell
 	if(owner_mind)
-		var/datum/action/cooldown/spell/between_the_lines/BTL = new
+		var/obj/effect/proc_holder/spell/invoked/between_the_lines/BTL = new
 		BTL.linked_circle = src
 		owner_mind.AddSpell(BTL)
 	ring_a = new(loc)
 	ring_b = new(loc)
-	ring_a.icon = icon
-	ring_b.icon = icon
-	ring_a.icon_state = icon_state
-	ring_b.icon_state = icon_state
 	ring_a.layer = layer + 0.1
 	ring_b.layer = layer + 0.2
-	ring_a.alpha = 110
-	ring_b.alpha = 110
+	ring_a.alpha = 255
+	ring_b.alpha = 255
 	ring_a.color = "#66AAFF"
 	ring_b.color = "#CC88FF"
-	ring_a.transform = matrix(1.8, 0, 0, 0.4, 0, 0)
-	ring_b.transform = matrix(0.4, 0, 0, 1.8, 0, 0)
-	animate(ring_a, transform = matrix(1.8, 0, 0, 0.4, 0, 0).Turn(360), time = 10 SECONDS, loop = -1)
-	animate(ring_b, transform = matrix(0.4, 0, 0, 1.8, 0, 0).Turn(-360), time = 13 SECONDS, loop = -1)
+
+	rotate_forever(ring_a, matrix(1.8, 0, 0, 0.4, 0, 0), 40 SECONDS, clockwise = TRUE)
+	rotate_forever(ring_b, matrix(0.4, 0, 0, 1.8, 0, 0), 40 SECONDS, clockwise = FALSE)
+	rotate_forever(src, matrix(), 40 SECONDS, clockwise = TRUE)
+
 	spawn_phantom_leylines()
 	START_PROCESSING(SSobj, src)
-	QDEL_IN(src, 30 SECONDS)
+	QDEL_IN(src, 50 SECONDS)
+
+/obj/structure/leyline_circle/proc/rotate_forever(atom/movable/A, matrix/base_matrix, time, clockwise = TRUE, steps = 24)
+	if(!A || !base_matrix)
+		return
+	var/direction = clockwise ? 1 : -1
+	animate(A, transform = base_matrix, time = 0)
+	for(var/i in 1 to steps)
+		var/matrix/step = matrix(base_matrix)
+		step.Turn(direction * 360 * i / steps)
+		if(i == steps)
+			animate(transform = step, time = time / steps, loop = -1)
+		else
+			animate(transform = step, time = time / steps)
 
 /obj/structure/leyline_circle/process()
 	if(QDELETED(owner))
@@ -960,7 +1003,8 @@ bj/effect/temp_visual/origin_restoration
 	for(var/obj/effect/phantom_leyline/L in phantom_leylines)
 		if(QDELETED(L))
 			continue
-		var/datum/beam/B = L.Beam(owner, icon_state = "medbeam", time = 35 SECONDS, maxdistance = 10)
+		var/atom/movable/source = L.beam_anchor || L
+		var/datum/beam/B = source.Beam(owner, icon_state = "medbeam", time = 35 SECONDS, maxdistance = 10)
 		if(B)
 			active_beams += B
 
@@ -972,17 +1016,25 @@ bj/effect/temp_visual/origin_restoration
 			qdel(B)
 	active_beams.Cut()
 
+
 /obj/structure/leyline_circle/proc/spawn_phantom_leylines()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/list/offsets = list(list(2, 2), list(-2, 2), list(2, -2), list(-2, -2))
+	var/list/offsets = list(list(2, 3), list(-2, 3), list(2, -2), list(-2, -2))
 	for(var/list/O in offsets)
 		var/turf/target = locate(T.x + O[1], T.y + O[2], T.z)
 		if(!target)
 			continue
+		var/turf/anchor_turf = locate(target.x, target.y + 1, target.z)
+		var/obj/effect/beam_target/BT = new(anchor_turf || target)
+		// origin pixel offset stays 0/0 — do not touch these, that's what fixes the endpoint bug
 		var/obj/effect/phantom_leyline/L = new(target)
+		L.pixel_x = -14   // shift obelisk art left/right to meet the beam's fixed anchor point
+		L.pixel_y = -24  // shift obelisk art up/down to meet the beam's fixed anchor point
+		L.beam_anchor = BT
 		phantom_leylines += L
+
 
 /obj/structure/leyline_circle/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -990,12 +1042,14 @@ bj/effect/temp_visual/origin_restoration
 	if(owner)
 		owner.remove_status_effect(/datum/status_effect/buff/circle_of_power)
 	if(owner_mind)
-		for(var/datum/action/cooldown/spell/between_the_lines/BTL in owner_mind.spell_list)
+		for(var/obj/effect/proc_holder/spell/invoked/between_the_lines/BTL in owner_mind.spell_list)
 			if(BTL.linked_circle == src)
 				owner_mind.RemoveSpell(BTL)
 				break
 	for(var/obj/effect/phantom_leyline/L in phantom_leylines)
 		if(!QDELETED(L))
+			if(L.beam_anchor && !QDELETED(L.beam_anchor))
+				qdel(L.beam_anchor)
 			qdel(L)
 	phantom_leylines.Cut()
 	if(ring_a)
