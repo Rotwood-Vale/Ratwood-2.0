@@ -34,7 +34,6 @@
 
 /datum/sex_action/footsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] puts [user.p_their()] feet on [target]'s face..."))
-	user.sexcon.show_progress = 0
 
 /datum/sex_action/footsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/verbstring = pick(list("smushes", "forces", "presses", "grinds", "rams", "jams"))
@@ -46,6 +45,7 @@
 	user.sexcon.perform_deepthroat_oxyloss(target, 0.5)
 	user.sexcon.perform_sex_action(target, 1, 0, TRUE)
 	user.sexcon.handle_passive_ejaculation(target)
+
 
 /datum/sex_action/footsmother/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] pulls [user.p_their()] feet off [target]'s face..."))
