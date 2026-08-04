@@ -24,12 +24,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/masturbate_other_breasts_orison/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))
-		to_chat(user, span_notice("Their chest needs to be accessible."))
-		return TRUE
-	return FALSE
-
 /datum/sex_action/masturbate_other_breasts_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] offers a quiet orison while touching [target]'s breasts..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0

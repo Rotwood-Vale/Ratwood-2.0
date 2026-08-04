@@ -18,7 +18,9 @@
 		return FALSE
 
 	// Need bare feet ofc
-	if(!user_has_both_accessible_feet(user))
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT))
+		return FALSE
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 
 	// Need to stand up

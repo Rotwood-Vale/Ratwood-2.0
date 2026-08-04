@@ -238,9 +238,6 @@
 	if(!ispath(ears.accessory_type, /datum/sprite_accessory/ears))
 		return FALSE
 
-	if(is_type_in_typecache(ears.accessory_type, GLOB.nonhuman_ears_excluded))
-		return FALSE
-
 	return TRUE
 
 /datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
