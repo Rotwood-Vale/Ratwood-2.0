@@ -356,7 +356,11 @@
 				if(sadv)
 					var/sleep_xp = sadv.get_sleep_xp(i.type)
 					var/needed_xp = sadv.get_requried_sleep_xp_for_skill(i.type, 1)
-					if(needed_xp > 0)
+					if(sleep_xp > needed_xp)
+						sleep_xp -= sadv.get_requried_sleep_xp_for_skill(i.type, 1)
+						needed_xp = sadv.get_requried_sleep_xp_for_skill(i.type, 2) - sadv.get_requried_sleep_xp_for_skill(i.type, 1)
+						percent = 100 + clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
+					else
 						percent = clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
 			else
 				// Below Apprentice, XP is tracked directly on skill_experience
