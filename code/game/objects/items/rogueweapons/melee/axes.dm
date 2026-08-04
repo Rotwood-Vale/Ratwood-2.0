@@ -583,7 +583,6 @@
 	force_wielded = 40
 	max_blade_int = 250
 	icon = 'icons/roguetown/weapons/64.dmi'
-	vorpal = TRUE
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
