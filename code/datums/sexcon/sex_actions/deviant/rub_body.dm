@@ -15,10 +15,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/rub_body/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))
-		to_chat(user, span_notice("I can't reach their body right now."))
-
 /datum/sex_action/rub_body/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] places [user.p_their()] hands onto [target]..."))
 

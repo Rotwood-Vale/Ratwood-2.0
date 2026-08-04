@@ -20,25 +20,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/thighjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return
-	if(check_same_tile)
-		var/same_tile = (get_turf(user) == get_turf(target))
-		var/grab_bypass = (aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
-		if(!same_tile && !grab_bypass)
-			to_chat(user, span_notice("I need to be on the same tile as them, or hold them aggressively."))
-			return
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		to_chat(user, span_notice("I need a cock for that."))
-		return
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("My groin needs to be accessible."))
-		return
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
-		return
-
 /datum/sex_action/thighjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s thighs and shoves [user.p_their()] cock inbetween!"))
 

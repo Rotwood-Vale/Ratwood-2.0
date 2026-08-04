@@ -33,15 +33,6 @@
 		return TRUE
 	return FALSE
 
-/datum/sex_action/masturbate_container/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/holding = user.get_active_held_item()
-	if(istype(holding, /obj/item/reagent_containers/glass) != TRUE)
-		to_chat(user, span_notice("I need a container in my hand."))
-		return TRUE
-	if(..())
-		return TRUE
-	return FALSE
-
 /datum/sex_action/masturbate_container/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts masturbating over [user.get_active_held_item()]..."))
 

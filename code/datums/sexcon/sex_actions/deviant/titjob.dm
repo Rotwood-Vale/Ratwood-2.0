@@ -24,21 +24,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/titjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		to_chat(user, span_notice("I need a cock for that."))
-		return
-	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
-		to_chat(user, span_notice("They need breasts for that."))
-		return
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("My groin needs to be accessible."))
-		return
-	if(!check_location_accessible(user, target, BODY_ZONE_CHEST))
-		to_chat(user, span_notice("Their chest needs to be accessible."))
-		return
 /datum/sex_action/titjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = target.getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts && breasts.breast_size < 2)

@@ -19,14 +19,6 @@
 	return TRUE
 
 
-/datum/sex_action/force_thighjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		to_chat(user, span_notice("They need a cock for that."))
-		return
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
-		return
-
 /datum/sex_action/force_thighjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] moves [user.p_their()] thighs between [target]'s cock..."))
 

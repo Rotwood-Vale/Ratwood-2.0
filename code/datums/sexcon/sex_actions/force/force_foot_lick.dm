@@ -29,14 +29,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/force_foot_lick/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(..())
-		return TRUE
-	if(!user_has_both_accessible_feet(user))
-		to_chat(user, span_notice("I need both bare feet to do that."))
-		return TRUE
-	return FALSE
-
 /datum/sex_action/force_foot_lick/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [user.p_their()] feet against [target]'s head!"))
 

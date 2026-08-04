@@ -32,14 +32,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/force_suck_nipples/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(..())
-		return TRUE
-	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))
-		to_chat(user, span_notice("My chest needs to be accessible."))
-		return TRUE
-	return FALSE
-
 /datum/sex_action/force_suck_nipples/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head down to swallow and suck on [user.p_their()] nipples!"))
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)

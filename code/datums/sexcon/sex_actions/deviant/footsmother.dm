@@ -30,19 +30,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/footsmother/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user.resting)
-		to_chat(user, span_notice("I need to stand up first."))
-		return
-	if(!check_location_accessible(target, target, BODY_ZONE_PRECISE_MOUTH))
-		to_chat(user, span_notice("Their mouth needs to be accessible."))
-		return
-	if(!user_has_both_accessible_feet(user))
-		to_chat(user, span_notice("I need both bare feet to do that."))
-		return
-	if(!target.resting)
-		to_chat(user, span_notice("They need to be lying down first."))
-
 /datum/sex_action/footsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] puts [user.p_their()] feet on [target]'s face..."))
 	user.sexcon.show_progress = 0

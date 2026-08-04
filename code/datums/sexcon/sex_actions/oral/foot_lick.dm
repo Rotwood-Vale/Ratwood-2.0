@@ -17,14 +17,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/foot_lick/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(..())
-		return TRUE
-	if(!target_has_both_accessible_feet(user, target))
-		to_chat(user, span_notice("Both of their feet need to be accessible."))
-		return TRUE
-	return FALSE
-
 /datum/sex_action/foot_lick/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts licking [target]'s feet..."))
 

@@ -21,19 +21,6 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/footjob/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		to_chat(user, span_notice("They need a cock for that."))
-		return
-	if(!user_has_both_accessible_feet(user))
-		to_chat(user, span_notice("I need both bare feet to do that."))
-		return
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
-		return
-
 /datum/sex_action/footjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] puts [user.p_their()] feet on [target]'s cock..."))
 
