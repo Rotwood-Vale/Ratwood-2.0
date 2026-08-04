@@ -19681,6 +19681,10 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/desertdeep)
+"fDr" = (
+/obj/structure/fluff/statue/small,
+/turf/closed/wall/mineral/rogue/sandbrick,
+/area/rogue/indoors/town/garrison/desert/cell)
 "fDH" = (
 /turf/closed/wall/mineral/rogue/tent{
 	dir = 4
@@ -35310,6 +35314,7 @@
 /area/rogue/indoors/town/academy/desert)
 "klX" = (
 /obj/structure/bed/rogue/shit,
+/obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/indoors/town/garrison/desert/cell)
 "kma" = (
@@ -424892,7 +424897,7 @@ coX
 oxi
 oxi
 apT
-ngd
+fDr
 yjy
 yjy
 yjy
@@ -426764,7 +426769,7 @@ izB
 izB
 ngd
 naE
-ngd
+fDr
 uqg
 yjy
 yjy
