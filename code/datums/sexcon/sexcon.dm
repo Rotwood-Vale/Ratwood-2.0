@@ -78,6 +78,8 @@
 	var/do_subtle_action = FALSE
 	/// Suppress repeated action messages unless key action state changes.
 	var/suppress_action_messages = FALSE
+	/// Tracks whether the one-time orison indulgence notice has been shown for the current action.
+	var/orison_indulgence_notice_shown = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/do_knot_action_as_bottom = FALSE
@@ -1310,6 +1312,7 @@
 		action.on_finish(user, target)
 	desire_stop = FALSE
 	user.doing = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = null
 	bed = null
 	target_on_bed = FALSE
@@ -1333,6 +1336,7 @@
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = action_type
 	bed = null
 	target_on_bed = FALSE
