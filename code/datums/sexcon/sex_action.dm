@@ -33,56 +33,6 @@
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
 
-/datum/sex_action/proc/base_on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(require_grab && user && target)
-		var/grabstate = user.get_highest_grab_state_on(target)
-		if(grabstate == null || grabstate < required_grab_state)
-			to_chat(user, span_notice("I need to have a tight hold on them."))
-			return TRUE
-	if(check_same_tile && user && target && user != target)
-		var/same_tile = (get_turf(user) == get_turf(target))
-		var/grab_bypass = (aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
-		if(!same_tile && !grab_bypass)
-			to_chat(user, span_notice("I need to be on the same tile as them, or hold them aggressively."))
-			return TRUE
-	if((user_sex_part & SEX_PART_JAWS) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-		to_chat(user, span_notice("My mouth needs to be accessible."))
-		return TRUE
-	if((target_sex_part & SEX_PART_JAWS) && target && !check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		to_chat(user, span_notice("Their mouth needs to be accessible."))
-		return TRUE
-	if((user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_SLIT_SHEATH)) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("My groin needs to be accessible."))
-		return TRUE
-	if((target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_SLIT_SHEATH)) && target && !check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
-		return TRUE
-	if((user_sex_part & SEX_PART_COCK) && !user.sexcon.can_use_penis())
-		to_chat(user, span_notice("I can't use my cock right now."))
-		return TRUE
-	return FALSE
-
-/datum/sex_action/proc/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return base_on_failed_start(user, target)
-
-/datum/sex_action/proc/user_has_both_accessible_feet(mob/living/carbon/human/user)
-	if(!user)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/proc/target_has_both_accessible_feet(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!user || !target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_L_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_R_FOOT))
-		return FALSE
-	return TRUE
-
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
 
@@ -148,27 +98,4 @@
 	if(!isnull(modular_result))
 		return modular_result
 
-	return FALSE
-
-/datum/sex_action/chastityplay/on_failed_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(..())
-		return TRUE
-	if(target && !can_reach_target_groin(user, target))
-		to_chat(user, span_notice("I can't reach them well enough to do that."))
-		return TRUE
-	if((user_sex_part & SEX_PART_JAWS) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-		to_chat(user, span_notice("My mouth needs to be accessible."))
-		return TRUE
-	if((target_sex_part & SEX_PART_JAWS) && !check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		to_chat(user, span_notice("Their mouth needs to be accessible."))
-		return TRUE
-	if((user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_SLIT_SHEATH)) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("My groin needs to be accessible."))
-		return TRUE
-	if((target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_SLIT_SHEATH)) && !check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		to_chat(user, span_notice("Their groin needs to be accessible."))
-		return TRUE
-	if((user_sex_part & SEX_PART_COCK) && !user.sexcon.can_use_penis())
-		to_chat(user, span_notice("I can't use my cock right now."))
-		return TRUE
 	return FALSE

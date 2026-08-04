@@ -36,33 +36,12 @@
 	if(action.target_sex_part & target_sexcon.knotted_part)
 		target_sexcon.knot_remove()
 
-/datum/sex_controller/proc/resolve_knot_action(datum/sex_action/knot_action = null)
-	if(knot_action)
-		return knot_action
-	if(!user?.sexcon?.current_action)
-		return null
-	return SEX_ACTION(user.sexcon.current_action)
-
-/datum/sex_controller/proc/resolve_knot_bottom(mob/living/carbon/human/knot_btm = null)
-	return knot_btm ? knot_btm : target
-
-/datum/sex_controller/proc/can_initiate_knot_try(datum/sex_controller/user_sexcon, datum/sex_controller/btm_sexcon, knot_swap_roles)
-	if(knot_swap_roles)
-		// In inverted-role actions (e.g. riding/blowjob), only the receptive actor's
-		// explicit "force knot" toggle should initiate a knot.
-		return !!btm_sexcon?.do_knot_action_as_bottom
-	return !!user_sexcon?.do_knot_action
-
-/datum/sex_controller/proc/is_bottom_forcing_knot(knot_swap_roles, datum/sex_controller/btm_sexcon)
-	return knot_swap_roles && !!btm_sexcon?.do_knot_action_as_bottom
-
-/datum/sex_controller/proc/can_bottom_self_release_knot()
-	return knotted_status == KNOTTED_AS_BTM && knotted_forced_by_bottom
-
 /datum/sex_controller/proc/knot_try(datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null)
-	var/datum/sex_action/action = resolve_knot_action(knot_action)
+	var/datum/sex_action/action = knot_action
 	if(!action)
-		return
+		if(!user.sexcon.current_action)
+			return
+		action = SEX_ACTION(user.sexcon.current_action)
 	if(!action.knot_on_finish) // the current action does not support knot climaxing, abort
 		return
 
@@ -72,7 +51,7 @@
 		return
 
 	// btm is the receptive participant; explicitly passed for inverted-role actions (riding, blowjob) where self.target may not point at the rider/sucker
-	var/mob/living/carbon/human/btm = resolve_knot_bottom(knot_btm)
+	var/mob/living/carbon/human/btm = knot_btm ? knot_btm : target
 	if(!btm)
 		return
 	var/datum/sex_controller/user_sexcon = user?.sexcon
@@ -80,13 +59,13 @@
 	if(!user_sexcon || !btm_sexcon)
 		return
 
-	if(!can_initiate_knot_try(user_sexcon, btm_sexcon, knot_swap_roles))
+	if(!user_sexcon.do_knot_action && !(knot_swap_roles && btm_sexcon.do_knot_action_as_bottom))
 		return
 	if(!user.sexcon.knot_penis_type()) // don't have that dog in 'em
 		return
 	if(!btm.client?.prefs?.sexable)
 		return
-	var/btm_forced = is_bottom_forcing_knot(knot_swap_roles, btm_sexcon)
+	var/btm_forced = knot_swap_roles && btm_sexcon.do_knot_action_as_bottom && !user_sexcon.do_knot_action
 	if(user_sexcon.considered_limp())
 		if(!user.sexcon.knotted_status)
 			to_chat(user, span_notice("My [user.sexcon.get_knot_synonym()] was too soft to tie."))
@@ -296,7 +275,7 @@
 	if(isnull(top.client) || !top.client?.prefs.sexable || isnull(btm.client) || !btm.client?.prefs.sexable) // we respect safewords here, let the players untie themselves
 		knot_remove()
 		return
-	if(top.stat >= SOFT_CRIT && !top.IsSleeping()) // keep tied while sleeping; still remove if injured/unconscious/dead
+	if(top.stat >= SOFT_CRIT) // only removed if the knot owner is injured/asleep/dead
 		knot_remove()
 		return
 	if(btm.pulling == top || top.pulling == btm)
@@ -402,26 +381,29 @@
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
 		if(top.sexcon.knotted_part_partner&(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)) // use top's knotted_part_partner var to check what effect we need to apply, as bottom may be double knotted or more
-			var/spurt_count = top.sexcon.get_load_bursts()
 			var/datum/status_effect/facial/internal/creampie = btm.has_status_effect(/datum/status_effect/facial/internal)
 			if(!creampie)
-				btm.apply_status_effect(/datum/status_effect/facial/internal, spurt_count)
+				btm.apply_status_effect(/datum/status_effect/facial/internal)
 				btm.visible_message(span_love("[btm] takes a load inside them!"), span_love("I take a load inside me!"))
 			else
-				creampie.refresh_cum(spurt_count)
+				creampie.refresh_cum()
 			if(top?.dna?.species?.id == "gnoll")
 				btm.has_gnoll_scent_this_round = TRUE
+			if(top.has_flaw(/datum/charflaw/malodorous) && !btm.has_flaw(/datum/charflaw/malodorous))
+				btm.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+			else if (btm.has_flaw(/datum/charflaw/malodorous) && !top.has_flaw(/datum/charflaw/malodorous))
+				top.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 			modular_record_collar_receive_event(btm, top)
+			var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)
-			apply_creampie_drip(btm, knot_orifice, spurt_count = spurt_count)
+			apply_creampie_drip(btm, knot_orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
 		if(top.sexcon.knotted_part_partner&SEX_PART_JAWS)
-			var/spurt_count = top.sexcon.get_load_bursts()
 			var/datum/status_effect/facial/facial = btm.has_status_effect(/datum/status_effect/facial)
 			if(!facial)
-				btm.apply_status_effect(/datum/status_effect/facial, spurt_count)
+				btm.apply_status_effect(/datum/status_effect/facial)
 				btm.visible_message(span_love("[btm] takes a load down their throat!"), span_love("I take a load down my throat!"))
 			else
-				facial.refresh_cum(spurt_count)
+				facial.refresh_cum()
 			if(btm.reagents)
 				if(top.getorganslot(ORGAN_SLOT_PENIS))
 					btm.reagents.add_reagent(/datum/reagent/erpjuice/cum, top.sexcon.get_semen_volume())
@@ -434,7 +416,6 @@
 /datum/sex_controller/proc/knot_exit(keep_top_status = FALSE, keep_btm_status = FALSE)
 	var/mob/living/carbon/human/top = knotted_owner
 	var/mob/living/carbon/human/btm = knotted_recipient
-	var/knot_orifice = knotted_part_partner
 	if(istype(top) && top?.sexcon?.knotted_status)
 		if(!keep_top_status) // only keep the status if we're reapplying the knot
 			top.remove_status_effect(/datum/status_effect/knotted)
@@ -458,48 +439,7 @@
 		btm.sexcon.knotted_part_partner = SEX_PART_NULL
 		btm.sexcon.knotted_forced_by_bottom = FALSE
 		log_combat(btm, btm, "Stopped knot tugging")
-	if(!keep_top_status && !keep_btm_status)
-		// This helper can sleep while emitting delayed spurts, so dispatch it asynchronously.
-		// knot_exit() is reachable from Destroy(), which must never block.
-		INVOKE_ASYNC(src, PROC_REF(modular_release_knot_spurt_pool), top, btm, knot_orifice)
 	if(knotted_status) // this should never trigger, but if it does clear up the invalid state
-		if(src.user)
-			src.user.remove_status_effect(/datum/status_effect/knot_tied)
-			src.user.remove_status_effect(/datum/status_effect/knotted)
-			UnregisterSignal(src.user, COMSIG_MOVABLE_MOVED)
-		knotted_owner = null
-		knotted_recipient = null
-		knotted_status = KNOTTED_NULL
-		knotted_part = SEX_PART_NULL
-		knotted_part_partner = SEX_PART_NULL
-		knotted_forced_by_bottom = FALSE
-
-// Destroy() is SHOULD_NOT_SLEEP, so teardown must never call spurt-release helpers.
-/datum/sex_controller/proc/knot_exit_cleanup_only()
-	var/mob/living/carbon/human/top = knotted_owner
-	var/mob/living/carbon/human/btm = knotted_recipient
-	if(istype(top) && top?.sexcon?.knotted_status)
-		top.remove_status_effect(/datum/status_effect/knotted)
-		UnregisterSignal(top.sexcon.user, COMSIG_MOVABLE_MOVED)
-		top.sexcon.knotted_owner = null
-		top.sexcon.knotted_recipient = null
-		top.sexcon.knotted_status = KNOTTED_NULL
-		top.sexcon.knotted_part = SEX_PART_NULL
-		top.sexcon.knotted_part_partner = SEX_PART_NULL
-		top.sexcon.knotted_forced_by_bottom = FALSE
-		log_combat(top, top, "Stopped knot tugging")
-	if(istype(btm) && btm?.sexcon?.knotted_status)
-		btm.remove_status_effect(/datum/status_effect/knot_tied)
-		btm.reset_pull_offsets(btm, GRAB_AGGRESSIVE)
-		UnregisterSignal(btm.sexcon.user, COMSIG_MOVABLE_MOVED)
-		btm.sexcon.knotted_owner = null
-		btm.sexcon.knotted_recipient = null
-		btm.sexcon.knotted_status = KNOTTED_NULL
-		btm.sexcon.knotted_part = SEX_PART_NULL
-		btm.sexcon.knotted_part_partner = SEX_PART_NULL
-		btm.sexcon.knotted_forced_by_bottom = FALSE
-		log_combat(btm, btm, "Stopped knot tugging")
-	if(knotted_status)
 		if(src.user)
 			src.user.remove_status_effect(/datum/status_effect/knot_tied)
 			src.user.remove_status_effect(/datum/status_effect/knotted)
@@ -604,7 +544,7 @@
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
 		return FALSE
-	if(L.sexcon.can_bottom_self_release_knot())
+	if(L.sexcon.knotted_status == KNOTTED_AS_BTM && L.sexcon.knotted_forced_by_bottom)
 		var/mob/living/carbon/human/top = L.sexcon.knotted_owner
 		if(istype(top) && top.sexcon)
 			var/do_forceful_removal = L.cmode || L.sexcon.arousal > MAX_AROUSAL / 4 || L.sexcon.manual_arousal > SEX_MANUAL_AROUSAL_PARTIAL // bottom forced the knot, so bottom can wrench free
