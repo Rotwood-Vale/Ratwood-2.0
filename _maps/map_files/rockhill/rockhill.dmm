@@ -8283,6 +8283,13 @@
 /obj/machinery/light/rogue/candle/floorcandle,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church)
+"bQb" = (
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "bQg" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
@@ -55884,6 +55891,13 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/bograt/above)
+"mpK" = (
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/town/church)
 "mpP" = (
 /obj/structure/roguewindow/openclose{
 	dir = 8
@@ -59741,13 +59755,6 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
-"nid" = (
-/obj/effect/decal/carpet/kover_darkred{
-	pixel_x = 16;
-	pixel_y = 10
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
 "nig" = (
 /obj/structure/stairs,
 /obj/machinery/light/rogue/candle/blue/l{
@@ -70220,13 +70227,6 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/dungeon/sunkenchurch)
-"pzZ" = (
-/obj/effect/decal/carpet/kover_darkred{
-	pixel_x = 16;
-	pixel_y = 10
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/indoors/town/church)
 "pAd" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -87653,6 +87653,13 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
+"tzV" = (
+/obj/machinery/light/rogue/campfire/fireplace/blue{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "tzW" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -299266,7 +299273,7 @@ rSC
 gLf
 rRb
 edI
-pzi
+tzV
 qti
 qBX
 qBX
@@ -522158,7 +522165,7 @@ pZg
 ogG
 eBW
 eBW
-nid
+bQb
 bbh
 jBF
 pZg
@@ -540329,7 +540336,7 @@ dBa
 aSI
 tXT
 kQz
-pzZ
+mpK
 kQl
 vFj
 ixJ
