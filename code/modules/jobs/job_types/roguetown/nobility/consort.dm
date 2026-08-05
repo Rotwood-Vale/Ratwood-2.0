@@ -36,13 +36,13 @@
 	outfit = /datum/outfit/job/roguetown/lady/heartthrob
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_KEENEARS, TRAIT_NOBLE)
-	subclass_stats = list(
+	subclass_stats = list( // 10 stats total, 7 without the leadership carrot. stats based on Gallant Suitor.
 		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 2,
+		STATKEY_PER = 1,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 1,
 		STATKEY_STR = 1,
-		STATKEY_LCK = 2,
+		STATKEY_LCK = 3,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -84,13 +84,12 @@
 	outfit = /datum/outfit/job/roguetown/lady/sapio
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_KEENEARS, TRAIT_INTELLECTUAL, TRAIT_NOBLE)
-	subclass_stats = list(
+	subclass_stats = list( // 9 stats total, 6 without the leadership carrot. based on heartfelt magos. i'd consider -2 con too but that's rough.
 		STATKEY_INT = 4,
-		STATKEY_PER = 2,
+		STATKEY_PER = 3,
 		STATKEY_CON = -1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_STR = -1,
+		STATKEY_WIL = 2,
+		STATKEY_STR = -2,
 		STATKEY_LCK = 3,
 	)
 	subclass_spellpoints = 24
@@ -108,7 +107,7 @@
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 	)
 
-/datum/outfit/job/roguetown/lady/sapio/pre_equip(mob/living/carbon/human/H) //tbd - something mage-y but with drip expected of a noble. should be easy enough
+/datum/outfit/job/roguetown/lady/sapio/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/nyle/consortcrown
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
@@ -146,12 +145,12 @@
 	outfit = /datum/outfit/job/roguetown/lady/trophy
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_KEENEARS, TRAIT_NUTCRACKER, TRAIT_NOBLE)
-	subclass_stats = list(
-		STATKEY_INT = 3,
+	subclass_stats = list( // 10 stats total, 7 without the carrot. based on consort's current stat block.
+		STATKEY_INT = 2,
 		STATKEY_PER = 2,
-		STATKEY_WIL = 3,
+		STATKEY_WIL = 1,
 		STATKEY_SPD = 2,
-		STATKEY_LCK = 5,
+		STATKEY_LCK = 3,
 	)
 	subclass_skills = list(
 	    /datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
@@ -199,11 +198,10 @@
 	outfit = /datum/outfit/job/roguetown/lady/housespouse
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_SEEDKNOW, TRAIT_KEENEARS, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_NOBLE)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 3,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
+	subclass_stats = list( //10 stats total, 7 without carrot. based on senechal. high int for skill progression and crafting %
+		STATKEY_INT = 3,
+		STATKEY_PER = 2,
+		STATKEY_SPD = 1,
 		STATKEY_STR = 1,
 		STATKEY_LCK = 3,
 	)
