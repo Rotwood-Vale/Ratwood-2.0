@@ -14,7 +14,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 //Seer to see other Inhumen.
-	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
+	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_GODHAND, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
 //Support class statline, somewhat better than Bishop's. No armour traits, DE or CR, so needs good stats desperately.
 	subclass_stats = list(
 		STATKEY_INT = 4,
