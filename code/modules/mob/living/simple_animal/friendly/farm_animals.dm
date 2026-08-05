@@ -405,4 +405,4 @@
 	speak_chance = 4
 	health = 10000
 	maxHealth = 10000
-	pooptype = /obj/item/ingot/blacksteel //if fed precious metals he has a chance to give you back a blacksteel bar through his ways
+	pooptype = /obj/item/ingot/steel
