@@ -377,7 +377,7 @@
 	speak_emote = list("squeeks")
 	emote_hear = list("chops.")
 	emote_see = list("dances.", "stares.")
-	speak_chance = 1
+	speak_chance = 2
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/roguekey/porta = 1)
@@ -398,11 +398,4 @@
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
-
-/mob/living/simple_animal/grenchensnacker/fritz
-	name = "Fritz"
-	desc = "The Crafter's Guild pet Grenchensnacker Fritz, gifted by the Fuchsholz estate as a sign of goodwill, he now spends his days eating the guild's silver and gold ore."
-	speak_chance = 4
-	health = 10000
-	maxHealth = 10000
-	pooptype = /obj/item/ingot/blacksteel //if fed precious metals he has a chance to give you back a blacksteel bar through his ways
+	pooptype = /obj/item/ingot/steel
