@@ -1174,7 +1174,9 @@
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
 
-	if(HAS_TRAIT(src, TRAIT_COMMIE))
+	if(HAS_TRAIT(src, TRAIT_GODHAND) && istype(examiner.patron?.type, /datum/patron/inhumen))
+		heretic_text += "Chosen prophet of the Four."
+	else if(HAS_TRAIT(src, TRAIT_COMMIE))
 		if(seer)
 			heretic_text += "Matthiosan."
 			if(HAS_TRAIT(examiner, TRAIT_COMMIE))
@@ -1204,7 +1206,9 @@
 	var/heretic_text
 	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		return
-	if(HAS_TRAIT(src, TRAIT_COMMIE) && HAS_TRAIT(examiner, TRAIT_COMMIE))
+	if(HAS_TRAIT(src, TRAIT_GODHAND) && istype(examiner.patron?.type, /datum/patron/inhumen))
+		heretic_text += "♝"
+	else if(HAS_TRAIT(src, TRAIT_COMMIE) && HAS_TRAIT(examiner, TRAIT_COMMIE))
 		heretic_text += "♠"
 	else if(HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(examiner, TRAIT_CABAL))
 		heretic_text += "♦"
