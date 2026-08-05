@@ -302,7 +302,7 @@
 	icon_state = "compliance"
 	alert_group = ALERT_DEBUFF
 
-/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/handle_click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
 	var/mob/user = usr
