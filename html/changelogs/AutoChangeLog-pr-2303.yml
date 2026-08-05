@@ -1,0 +1,4 @@
+author: "Heheniy"
+delete-after: True
+changes:
+  - qol: "characters who not breath or cant sense stink does not get mood debuff near stinky characters"
