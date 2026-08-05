@@ -14,13 +14,13 @@
 
 	var/ritechoices = list()
 	switch (user.patron?.type)
-		if(/datum/patron/inhumen/graggar || HAS_TRAIT(user, TRAIT_GODHAND))
+		if(/datum/patron/inhumen/graggar)
 			ritechoices+="Rune of Violence"
-		if(/datum/patron/inhumen/zizo || HAS_TRAIT(user, TRAIT_GODHAND))
+		if(/datum/patron/inhumen/zizo)
 			ritechoices+="Rune of ZIZO"
-		if(/datum/patron/inhumen/matthios || HAS_TRAIT(user, TRAIT_GODHAND))
+		if(/datum/patron/inhumen/matthios)
 			ritechoices+="Rune of Transaction"
-		if(/datum/patron/inhumen/baotha || HAS_TRAIT(user, TRAIT_GODHAND))
+		if(/datum/patron/inhumen/baotha)
 			ritechoices+="Rune of Hedonism"
 		if(/datum/patron/divine/astrata)
 			ritechoices+="Rune of Sun"
@@ -48,6 +48,16 @@
 
 	if(HAS_TRAIT(user, TRAIT_DREAMWALKER) && !("Rune of Stirring" in ritechoices))
 		ritechoices+="Rune of Stirring"
+
+	if(HAS_TRAIT(user, TRAIT_GODHAND))
+		if(!("Rune of Violence" in ritechoices))
+			ritechoices+="Rune of Violence"
+		if(!("Rune of ZIZO" in ritechoices))
+			ritechoices+="Rune of ZIZO"
+		if(!("Rune of Transaction" in ritechoices))
+			ritechoices+="Rune of Transaction"
+		if(!("Rune of Hedonism" in ritechoices))
+			ritechoices+="Rune of Hedonism"
 
 	var/runeselection = input(user, "Which rune shall I inscribe?", src) as null|anything in ritechoices
 	var/turf/step_turf = get_step(get_turf(user), user.dir)
