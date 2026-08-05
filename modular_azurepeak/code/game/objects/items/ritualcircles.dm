@@ -2259,7 +2259,7 @@
 		loc.visible_message(span_cult("Anguish already plagues this one's heart."))
 		return
 	if(HAS_TRAIT(target, TRAIT_GODHAND))
-		loc.visible_message(span_cult("The four will not let their chosen get taken away."))
+		loc.visible_message(span_cult("The Four will not let their chosen get taken away."))
 		return
 	var/prompt = alert(target, "DO YOU ACCEPT THE ONE'S WILL?",, "VERILY", "NAE")
 	if(prompt == "VERILY")

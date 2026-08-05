@@ -1649,6 +1649,10 @@ Necra's Censer (by ARefrigerator)
 		to_chat(user, span_warning("No divine patrons are available."))
 		return
 
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		loc.visible_message(span_cult("The Four will not let their chosen get taken away."))
+		return
+
 	var/choice = input(target, "The star opens your soul. Choose your patron, or refuse.", "The Ten") as null|anything in divine_options
 	if(!choice)
 		to_chat(target, span_danger("You turn away from the light."))
