@@ -421,7 +421,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE)
 	maximum_possible_slots = 1
 	//+9 weighted stat total. Atgervi Shaman's stats 1:1.
 	subclass_stats = list(
@@ -569,7 +569,7 @@
 
 
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE) //Minor regen, starts maxed out.
+		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1, start_maxed = TRUE) //Minor regen, starts maxed out.
 		wretch_select_bounty(H)
 
 	// You can convert those the church has shunned.
