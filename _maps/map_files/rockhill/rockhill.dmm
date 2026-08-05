@@ -5219,7 +5219,6 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor/rockhill)
 "bht" = (
-/obj/structure/stairs/stone,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "bhu" = (
@@ -12509,8 +12508,8 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq)
 "cKx" = (
-/obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/pipe,
+/obj/structure/roguewindow/harem3/frosted,
+/turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cKC" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -13689,9 +13688,8 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/bath)
 "cXr" = (
-/obj/structure/roguewindow,
-/obj/structure/roguewindow,
-/turf/open/floor/rogue/blocks,
+/obj/machinery/light/rogue/torchholder,
+/turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cXz" = (
 /obj/structure/fluff/statue/knight/r{
@@ -14929,6 +14927,10 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/manor/rockhill)
+"dkv" = (
+/obj/structure/stairs/stone,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dkH" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 4;
@@ -23404,8 +23406,10 @@
 /area/rogue/indoors/town)
 "fcQ" = (
 /obj/structure/fluff/walldeco/church/line{
+	dir = 8;
+	layer = 2;
 	pixel_x = 0;
-	pixel_y = -1
+	pixel_y = 0
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -38128,16 +38132,6 @@
 "iuy" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/bog)
-"iuC" = (
-/obj/structure/fluff/walldeco/church/line{
-	pixel_x = 0;
-	pixel_y = -1
-	},
-/obj/structure/fluff/clock{
-	pixel_y = 22
-	},
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "iuL" = (
 /obj/item/seeds/pipeweed,
 /obj/item/seeds/pipeweed,
@@ -43228,9 +43222,6 @@
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/manor/rockhill)
-"jAY" = (
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "jAZ" = (
 /obj/effect/wisp/green,
 /turf/open/floor/rogue/cobble/mossy,
@@ -55143,10 +55134,7 @@
 /area/rogue/outdoors/woodsrat/north)
 "mhM" = (
 /obj/structure/roguewindow,
-/obj/structure/bars{
-	layer = 2;
-	color = "#b0a497"
-	},
+/obj/structure/roguewindow,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mhO" = (
@@ -61947,13 +61935,12 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
 "nHG" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8;
+/obj/structure/roguewindow,
+/obj/structure/bars{
 	layer = 2;
-	pixel_x = 0;
-	pixel_y = 0
+	color = "#b0a497"
 	},
-/turf/open/floor/rogue/churchbrick,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nHI" = (
 /obj/structure/mineral_door/wood/donjon{
@@ -74893,10 +74880,6 @@
 /obj/machinery/light/rogue/firebowl/standing/green,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/sunken)
-"qBX" = (
-/obj/structure/roguewindow/harem3/frosted,
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "qCa" = (
 /obj/structure/table/wood{
 	icon_state = "map6"
@@ -87990,6 +87973,16 @@
 	},
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors)
+"tEl" = (
+/obj/structure/fluff/walldeco/church/line{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/structure/fluff/clock{
+	pixel_y = 22
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "tEo" = (
 /obj/structure/bars/passage/shutter{
 	redstone_id = "fireexperiment1"
@@ -88175,6 +88168,13 @@
 /obj/machinery/light/rogue/torchholder/hotspring/standing,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield/rockhill)
+"tGr" = (
+/obj/structure/fluff/walldeco/church/line{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "tGs" = (
 /obj/structure/chair/bench/couchablack/r,
 /obj/structure/fluff/walldeco/painting/seraphina{
@@ -298855,8 +298855,8 @@ rSC
 gLf
 uEX
 edI
-iuC
-bht
+tEl
+dkv
 fpo
 fpo
 sco
@@ -299720,7 +299720,7 @@ gLf
 uEX
 edI
 qZA
-fcQ
+tGr
 fpo
 fpo
 ouf
@@ -300152,8 +300152,8 @@ gLf
 rRb
 edI
 wvi
-jAY
-nHG
+bht
+fcQ
 baz
 sco
 kdN
@@ -300583,10 +300583,10 @@ rSC
 gLf
 lrs
 gRj
-qBX
+cKx
 ejQ
 ejQ
-qBX
+cKx
 gRj
 kdN
 kdN
@@ -302742,7 +302742,7 @@ edI
 edI
 edI
 edI
-cKx
+cXr
 rSM
 msq
 mXh
@@ -406421,10 +406421,10 @@ sco
 sco
 jgf
 sco
-mhM
+nHG
 sco
 sco
-mhM
+nHG
 sco
 sco
 wbg
@@ -408578,7 +408578,7 @@ noZ
 vPr
 sco
 hQf
-cXr
+hQf
 hQf
 sco
 msq
@@ -412037,7 +412037,7 @@ nFR
 nFR
 mmr
 xvd
-cXr
+mhM
 hbQ
 qqj
 sfu
