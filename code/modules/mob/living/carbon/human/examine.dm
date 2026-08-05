@@ -1167,6 +1167,7 @@
 /mob/living/proc/get_heretic_text(mob/examiner)
 	var/heretic_text = null
 	var/seer
+	var/heretic_examiner
 
 	if(HAS_TRAIT(src,TRAIT_DECEIVING_MEEKNESS))
 		return null
@@ -1174,7 +1175,10 @@
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
 
-	if(HAS_TRAIT(src, TRAIT_GODHAND) && istype(examiner.patron?.type, /datum/patron/inhumen))
+	if(HAS_TRAIT(examiner, TRAIT_COMMIE)|| HAS_TRAIT(examiner, TRAIT_CABAL)||HAS_TRAIT(examiner, TRAIT_HORDE)||HAS_TRAIT(examiner, TRAIT_DEPRAVED))
+		heretic_examiner = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_GODHAND) && heretic_examiner)
 		heretic_text += "Chosen prophet of the Four."
 	else if(HAS_TRAIT(src, TRAIT_COMMIE))
 		if(seer)
@@ -1204,9 +1208,13 @@
 /// Same as get_heretic_text, but returns a simple symbol depending on the type of heretic!
 /mob/living/proc/get_heretic_symbol(mob/examiner)
 	var/heretic_text
+	var/heretic_examiner
 	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		return
-	if(HAS_TRAIT(src, TRAIT_GODHAND) && istype(examiner.patron?.type, /datum/patron/inhumen))
+	if(HAS_TRAIT(examiner, TRAIT_COMMIE)|| HAS_TRAIT(examiner, TRAIT_CABAL)||HAS_TRAIT(examiner, TRAIT_HORDE)||HAS_TRAIT(examiner, TRAIT_DEPRAVED))
+		heretic_examiner = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_GODHAND) && heretic_examiner)
 		heretic_text += "♝"
 	else if(HAS_TRAIT(src, TRAIT_COMMIE) && HAS_TRAIT(examiner, TRAIT_COMMIE))
 		heretic_text += "♠"
