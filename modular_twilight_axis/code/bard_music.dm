@@ -329,7 +329,7 @@ SUBSYSTEM_DEF(bard_music)
 		SStgui.update_uis(src)
 
 /obj/item/rogue/instrument/proc/play_track(mob/living/user, datum/bard_timed_track/track)
-	if(!user || !track || playing || !(src in user.held_items) || user.get_inactive_held_item())
+	if(!user || !track || playing || ((!(src in user.held_items) || user.get_inactive_held_item()) && !user.getorganslot(ORGAN_SLOT_VOICE)))
 		return
 	var/stressevent = music_skill_event(user)
 	curfile = track.file_path
@@ -337,6 +337,7 @@ SUBSYSTEM_DEF(bard_music)
 		stop_music(user)
 		return
 	playing = TRUE
+	
 	soundloop.set_mid_sounds(list(curfile))
 	soundloop.mid_length = max(track.duration_seconds * 10, 1)
 	soundloop.start()
@@ -576,9 +577,9 @@ SUBSYSTEM_DEF(bard_music)
 
 /obj/item/rogue/instrument/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
-	if(!usr || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/can_use_in_range = usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)
+	var/harpy_organ = usr.getorganslot(ORGAN_SLOT_VOICE)
+	if(!usr || (!can_use_in_range && !harpy_organ))
 		return FALSE
 	var/mob/living/user = usr
 	add_fingerprint(user)
