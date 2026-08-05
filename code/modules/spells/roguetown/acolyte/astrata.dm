@@ -521,7 +521,7 @@
 	chargetime = 0
 	releasedrain = 5
 	miracle = TRUE
-	devotion_cost = 100//See below as to why. Slowdown and funny damage.
+	devotion_cost = 50//See below as to why. Slowdown and funny damage.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
 	var/obj/item/rogueweapon/conjured_spear = null
