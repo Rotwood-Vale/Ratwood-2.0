@@ -35,13 +35,13 @@
 	tutorial = "A former swordsman, either through battle or through bravado you won the Grand Duke's heart. Your sword arm may have gotten rusty with time, but you're still more than capable of showing any would-be assassins the meaning of 'til Death do us part'."
 	outfit = /datum/outfit/job/roguetown/lady/heartthrob
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_KEENEARS, TRAIT_NOBLE)
-	subclass_stats = list( // 10 stats total, 7 without the leadership carrot. stats based on Gallant Suitor.
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_KEENEARS, TRAIT_DECEIVING_MEEKNESS, TRAIT_NOBLE)
+	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_PER = 1,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_STR = 1,
+		STATKEY_SPD = 3,
+		STATKEY_STR = -1,
 		STATKEY_LCK = 3,
 	)
 	subclass_skills = list(
@@ -60,20 +60,20 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/nyle/consortcrown
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 	beltl = /obj/item/storage/keyring/royal
 	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	backr = /obj/item/storage/backpack/rogue/satchel
-	l_hand = /obj/item/rogueweapon/sword/sabre/dec
+	l_hand = /obj/item/rogueweapon/sword/rapier/dec
 	id = /obj/item/scomstone/garrison
 	if(should_wear_femme_clothes(H))
 		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak
 		armor = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
 	else if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/darkcloak/bear
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 //		SSticker.rulermob = H
 
@@ -104,7 +104,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/lady/sapio/pre_equip(mob/living/carbon/human/H)
@@ -141,10 +141,10 @@
 /datum/advclass/lady/trophy
 // This is just the regular Consort as it is right now, along with the ridiculous 15 points of extra stats.
 	name = "Trophy"
-	tutorial = "You were once an individual of some note. A Noble, an envoy, a suitor. Now, either for politics, metrics or just to save your - or your beloved's, skin, you're nothing but the Grand Duke's armpiece. Smile for the people, wave for the crowds."
+	tutorial = "You were once an individual of some note. A Noble, an envoy, a suitor. Now, either for politics, metrics or just to save your - or your beloved's, skin, you're nothing but the Grand Duke's armpiece. Smile for the people, wave for the crowds, scheme from the shadows."
 	outfit = /datum/outfit/job/roguetown/lady/trophy
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_SEEPRICES, TRAIT_KEENEARS, TRAIT_NUTCRACKER, TRAIT_NOBLE)
+	traits_applied = list(TRAIT_SEEPRICES, TRAIT_KEENEARS, TRAIT_LIGHT_STEP, TRAIT_NUTCRACKER, TRAIT_NOBLE)
 	subclass_stats = list( // 10 stats total, 7 without the carrot. based on consort's current stat block.
 		STATKEY_INT = 2,
 		STATKEY_PER = 2,
@@ -154,14 +154,14 @@
 	)
 	subclass_skills = list(
 	    /datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
-	    /datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
+	    /datum/skill/misc/sneaking = SKILL_LEVEL_LEGENDARY,
 	    /datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 	    /datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-	    /datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+	    /datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 	    /datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 	    /datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-	    /datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-	    /datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+	    /datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+	    /datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/lady/trophy/pre_equip(mob/living/carbon/human/H) //tbd - though this might just be fine as is, considering it's base consort
@@ -197,7 +197,7 @@
 	tutorial = "Through your caring ways and dutiful nature, you provide for your beloved and your children in the way you're best at. You're very aware that the household of your beloved is well-manned with servants to cook and clean, but you don't care. After all, food tastes much better when it's made with love."
 	outfit = /datum/outfit/job/roguetown/lady/housespouse
 	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_SEEDKNOW, TRAIT_KEENEARS, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_NOBLE)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_SEEDKNOW, TRAIT_KEENEARS, TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_NOBLE)
 	subclass_stats = list( //10 stats total, 7 without carrot. based on senechal. high int for skill progression and crafting %
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,
@@ -206,18 +206,16 @@
 		STATKEY_LCK = 3,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/cooking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE, //so they can tend to their lovely garden ofc
+		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN, //so they can tend to their lovely garden ofc
 	)
 
 /datum/outfit/job/roguetown/lady/housespouse/pre_equip(mob/living/carbon/human/H) //tbd - something cute and homely but still noble.
