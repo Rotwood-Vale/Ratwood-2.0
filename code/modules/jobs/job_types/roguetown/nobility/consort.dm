@@ -32,7 +32,7 @@
 /datum/advclass/lady/heartthrob
 // swords-themed consort. since there's only one of them, it's better than suitor and prince. this will be a running theme.
 	name = "Heartthrob"
-	tutorial = "A former swordsman, either through battle or through bravado you won the Grand Duke's heart. Your sword arm may be rusty with inexperience, but you're still more than capable of showing any would-be assassins the meaning of 'til Death do us part'."
+	tutorial = "A former swordsman, either through battle or through bravado you won the Grand Duke's heart. Your sword arm may have gotten rusty with time, but you're still more than capable of showing any would-be assassins the meaning of 'til Death do us part'."
 	outfit = /datum/outfit/job/roguetown/lady/heartthrob
 	category_tags = list(CTAG_CONSORT)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_KEENEARS, TRAIT_NOBLE)
