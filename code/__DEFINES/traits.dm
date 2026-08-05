@@ -222,7 +222,7 @@
 #define TRAIT_COUNTERCOUNTERSPELL "Counter Counterspell"
 #define TRAIT_UNSEEMLY "Ugly"
 #define TRAIT_HERETIC_SEER "Heretic Seer"
-#define TRAIT_GODHAND "Godhand"
+#define TRAIT_GODHAND "Godhand" // Suposed to be Heresiath ecxclusive, give only to true chosen of all assendant gods
 #define TRAIT_DUALWIELDER "Dual Wielder"
 #define TRAIT_SENTINELOFWITS "Sentinel of Wits"
 #define TRAIT_KEENEARS "Keen Ears"

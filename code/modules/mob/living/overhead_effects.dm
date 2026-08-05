@@ -46,6 +46,9 @@
 					else if(HAS_TRAIT(H, TRAIT_HERETIC_SEER) && istype(private,/datum/patron/inhumen))	//Seers should see all inhumen symbols.
 						vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[patron?.name]", offset_list, y_offset, icon_plane)
 						pass = TRUE
+					else if(HAS_TRAIT(src, TRAIT_GODHAND) && istype(H.patron?.type, /datum/patron/inhumen))	// Heresiath shows assendant symbol based on the observers (idealy he woudl get his own)
+						vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[H.patron.name]", offset_list, y_offset, icon_plane)
+						pass = TRUE
 					if(soundin && pass)
 						var/turf/T = get_turf(src)
 						H.playsound_local(T, soundin, 100, FALSE)
