@@ -66,3 +66,11 @@
 2026-08-03:
   Xander3359:
   - bugfix: Fixed wild-kin antennas being unremovable
+2026-08-04:
+  Kroto-Ker:
+  - rscadd: Rakunvolk race title.
+  - bugfix: Busker is playable.
+  PPooch:
+  - bugfix: Ration wrapping papers are back in the Merchant's adventuring supplies.
+  ophaq:
+  - rscadd: Adds wilderness guide to LE so they don't trigger ambushes or maneaters.

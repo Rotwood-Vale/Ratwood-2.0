@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - bugfix: "Dust devils should no longer be able to spawn in the enslaved adventurer spawn on desert town"

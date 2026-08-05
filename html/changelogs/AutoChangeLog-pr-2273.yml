@@ -1,4 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - rscadd: "Adds wilderness guide to LE so they don't trigger ambushes or maneaters."
