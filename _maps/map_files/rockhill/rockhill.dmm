@@ -8711,7 +8711,6 @@
 /area/rogue/indoors/town/church)
 "bUv" = (
 /obj/effect/landmark/mapGenerator/rogue/bograt,
-/turf/closed/void,
 /area/rogue/under/cavewet)
 "bUA" = (
 /turf/open/floor/rogue/ruinedwood,
@@ -10056,7 +10055,6 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "cjc" = (
-/turf/closed/void,
 /area/rogue/under/cave)
 "cje" = (
 /obj/structure/fluff/railing/border{
@@ -12583,7 +12581,6 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/basement)
 "cLm" = (
-/turf/closed/void,
 /area/rogue/under/cavewet)
 "cLn" = (
 /obj/effect/decal/cobbleedge{
@@ -13694,7 +13691,6 @@
 "cXr" = (
 /obj/structure/roguewindow,
 /obj/structure/roguewindow,
-/turf/closed/void,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cXz" = (
 /obj/structure/fluff/statue/knight/r{
@@ -17364,7 +17360,6 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill)
 "dME" = (
-/turf/closed/void,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "dMF" = (
 /obj/effect/decal/cobbleedge{
@@ -29633,7 +29628,6 @@
 /area/rogue/outdoors/town/grove)
 "gxA" = (
 /obj/structure/underworld/barrier,
-/turf/closed/void,
 /area/rogue/under/cave)
 "gxB" = (
 /obj/structure/table/wood/poor,
@@ -55123,7 +55117,6 @@
 /area/rogue/outdoors/woodsrat/north)
 "mhM" = (
 /obj/structure/roguewindow,
-/turf/closed/void,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mhO" = (
 /obj/structure/fluff/railing/border/north,
@@ -59748,6 +59741,13 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
+"nid" = (
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "nig" = (
 /obj/structure/stairs,
 /obj/machinery/light/rogue/candle/blue/l{
@@ -70220,6 +70220,13 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/dungeon/sunkenchurch)
+"pzZ" = (
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/town/church)
 "pAd" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -95005,7 +95012,6 @@
 /area/rogue/outdoors/bograt/north)
 "vhc" = (
 /obj/effect/landmark/mapGenerator/rogue/decap,
-/turf/closed/void,
 /area/rogue/under/cavewet)
 "vhf" = (
 /obj/structure/fluff/walldeco/painting/seraphina{
@@ -102240,7 +102246,6 @@
 /area/rogue/outdoors/rtfield/rockhill/above)
 "wLE" = (
 /obj/effect/landmark/mapGenerator/rogue/forestrat,
-/turf/closed/void,
 /area/rogue/under/cavewet)
 "wLH" = (
 /obj/structure/spider/stickyweb{
@@ -522153,7 +522158,7 @@ pZg
 ogG
 eBW
 eBW
-eBW
+nid
 bbh
 jBF
 pZg
@@ -540324,7 +540329,7 @@ dBa
 aSI
 tXT
 kQz
-kQz
+pzZ
 kQl
 vFj
 ixJ
