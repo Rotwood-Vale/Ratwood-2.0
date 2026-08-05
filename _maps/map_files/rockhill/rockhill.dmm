@@ -12716,7 +12716,9 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cavewet)
 "cMD" = (
-/obj/structure/fluff/wallclock,
+/obj/structure/fluff/clock{
+	pixel_y = 22
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cMH" = (
@@ -15216,12 +15218,10 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/bograt/above)
 "dop" = (
-/obj/effect/decal/carpet/kover_darkred{
-	pixel_x = 16;
-	pixel_y = 10
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
+/obj/effect/landmark/start/guildsman,
+/obj/structure/chair/wood,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "doz" = (
 /obj/machinery/light/rogue/candle/l{
 	pixel_x = 32
@@ -29316,6 +29316,7 @@
 	name = "Crafter's Guild";
 	pixel_y = -32
 	},
+/obj/structure/chair/wood,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "gts" = (
@@ -37964,12 +37965,9 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "irG" = (
-/obj/effect/decal/carpet/kover_darkred{
-	pixel_x = 16;
-	pixel_y = 10
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/indoors/town/church)
+/obj/structure/fluff/grindwheel,
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "irR" = (
 /obj/machinery/light/rogue/torchholder{
 	dir = 1
@@ -39296,10 +39294,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/church)
-"iHL" = (
-/obj/structure/fluff/grindwheel,
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "iHP" = (
 /obj/machinery/light/rogue/campfire/densefire,
 /turf/open/floor/rogue/cobblerock,
@@ -55258,7 +55252,11 @@
 /area/rogue/indoors/town/church)
 "miK" = (
 /obj/structure/chair/bench/couchablack,
-/turf/open/floor/carpet/royalblack,
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = -10
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "miX" = (
 /obj/effect/landmark/events/haunts,
@@ -90790,7 +90788,7 @@
 "uln" = (
 /obj/structure/chair/bench/couchablack/r,
 /obj/structure/fluff/wallclock,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ulq" = (
 /obj/structure/stairs{
@@ -95299,7 +95297,6 @@
 /area/rogue/outdoors/beach/harbor)
 "vka" = (
 /obj/structure/table/wood/map/two,
-/obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vkb" = (
@@ -410740,7 +410737,7 @@ wbg
 sJD
 bRG
 msq
-iHL
+irG
 msq
 sCn
 sco
@@ -517450,10 +517447,10 @@ xHV
 dMk
 qpe
 dMk
-dvm
+dop
 jWC
 ehz
-suK
+gnI
 sco
 vnZ
 vnZ
@@ -518314,7 +518311,7 @@ sco
 sco
 gAm
 hTf
-dvm
+dop
 hNH
 huP
 gtr
@@ -522181,7 +522178,7 @@ pZg
 ogG
 eBW
 eBW
-dop
+eBW
 bbh
 jBF
 pZg
@@ -540352,7 +540349,7 @@ dBa
 aSI
 tXT
 kQz
-irG
+kQz
 kQl
 vFj
 ixJ
