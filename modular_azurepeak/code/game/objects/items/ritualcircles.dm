@@ -1265,7 +1265,7 @@
 /obj/structure/ritualcircle/zizo/attack_hand(mob/living/user)
 	if(!..())
 		return
-	if((user.patron?.type) != /datum/patron/inhumen/zizo)
+	if((user.patron?.type) != /datum/patron/inhumen/zizo && !HAS_TRAIT(user, TRAIT_GODHAND))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
@@ -1467,7 +1467,7 @@
 /obj/structure/ritualcircle/matthios/attack_hand(mob/living/user)
 	if(!..())
 		return
-	if((user.patron?.type) != /datum/patron/inhumen/matthios)
+	if((user.patron?.type) != /datum/patron/inhumen/matthios && !HAS_TRAIT(user, TRAIT_GODHAND))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
@@ -1718,7 +1718,7 @@
 /obj/structure/ritualcircle/graggar/attack_hand(mob/living/user)
 	if(!..())
 		return
-	if((user.patron?.type) != /datum/patron/inhumen/graggar)
+	if((user.patron?.type) != /datum/patron/inhumen/graggar && !HAS_TRAIT(user, TRAIT_GODHAND))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
@@ -1949,7 +1949,7 @@
 	var/baotharites = list("Conversion", "Unholy Boon of Fertility", "Rite of Armaments")
 
 /obj/structure/ritualcircle/baotha/attack_hand(mob/living/user)
-	if((user.patron?.type) != /datum/patron/inhumen/baotha)
+	if((user.patron?.type) != /datum/patron/inhumen/baotha&& !HAS_TRAIT(user, TRAIT_GODHAND))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
