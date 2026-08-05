@@ -14,13 +14,13 @@
 
 	var/ritechoices = list()
 	switch (user.patron?.type)
-		if(/datum/patron/inhumen/graggar)
+		if(/datum/patron/inhumen/graggar || HAS_TRAIT(user, TRAIT_GODHAND))
 			ritechoices+="Rune of Violence"
-		if(/datum/patron/inhumen/zizo)
+		if(/datum/patron/inhumen/zizo || HAS_TRAIT(user, TRAIT_GODHAND))
 			ritechoices+="Rune of ZIZO"
-		if(/datum/patron/inhumen/matthios)
+		if(/datum/patron/inhumen/matthios || HAS_TRAIT(user, TRAIT_GODHAND))
 			ritechoices+="Rune of Transaction"
-		if(/datum/patron/inhumen/baotha)
+		if(/datum/patron/inhumen/baotha || HAS_TRAIT(user, TRAIT_GODHAND))
 			ritechoices+="Rune of Hedonism"
 		if(/datum/patron/divine/astrata)
 			ritechoices+="Rune of Sun"
