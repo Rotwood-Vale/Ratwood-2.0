@@ -5219,6 +5219,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor/rockhill)
 "bht" = (
+/obj/structure/stairs/stone,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "bhu" = (
@@ -12508,8 +12509,8 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq)
 "cKx" = (
-/obj/structure/stairs/stone,
-/turf/open/floor/rogue/churchbrick,
+/obj/machinery/light/rogue/torchholder,
+/turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cKC" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -13690,7 +13691,7 @@
 "cXr" = (
 /obj/structure/roguewindow,
 /obj/structure/roguewindow,
-/turf/closed/void,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cXz" = (
 /obj/structure/fluff/statue/knight/r{
@@ -14395,9 +14396,6 @@
 "dfx" = (
 /obj/structure/stairs{
 	dir = 8
-	},
-/obj/structure/fluff/railing/border{
-	dir = 1
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -23406,10 +23404,8 @@
 /area/rogue/indoors/town)
 "fcQ" = (
 /obj/structure/fluff/walldeco/church/line{
-	dir = 8;
-	layer = 2;
 	pixel_x = 0;
-	pixel_y = 0
+	pixel_y = -1
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -28064,14 +28060,10 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church)
 "geK" = (
-/obj/structure/fluff/walldeco/church/line{
-	pixel_x = 0;
-	pixel_y = -1
+/obj/structure/stairs/ccw{
+	dir = 4
 	},
-/obj/structure/fluff/clock{
-	pixel_y = 22
-	},
-/turf/open/floor/rogue/churchbrick,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "geO" = (
 /obj/structure/floordoor/gatehatch/outer{
@@ -35628,10 +35620,6 @@
 /area/rogue/indoors/town/shop)
 "hQf" = (
 /obj/structure/roguewindow,
-/obj/structure/bars{
-	layer = 2;
-	color = "#b0a497"
-	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hQm" = (
@@ -38140,6 +38128,16 @@
 "iuy" = (
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/shelter/bog)
+"iuC" = (
+/obj/structure/fluff/walldeco/church/line{
+	pixel_x = 0;
+	pixel_y = -1
+	},
+/obj/structure/fluff/clock{
+	pixel_y = 22
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "iuL" = (
 /obj/item/seeds/pipeweed,
 /obj/item/seeds/pipeweed,
@@ -39407,8 +39405,8 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/sunken)
 "iJd" = (
-/obj/structure/stairs,
 /obj/structure/mineral_door/swing_door,
+/obj/structure/stairs,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "iJk" = (
@@ -40414,10 +40412,10 @@
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/indoors/town/manor/rockhill)
 "iWm" = (
+/obj/structure/mineral_door/swing_door,
 /obj/structure/stairs{
 	dir = 4
 	},
-/obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "iWs" = (
@@ -43231,9 +43229,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/manor/rockhill)
 "jAY" = (
-/obj/structure/roguewindow,
-/obj/structure/roguewindow,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jAZ" = (
 /obj/effect/wisp/green,
@@ -55147,7 +55143,11 @@
 /area/rogue/outdoors/woodsrat/north)
 "mhM" = (
 /obj/structure/roguewindow,
-/turf/closed/void,
+/obj/structure/bars{
+	layer = 2;
+	color = "#b0a497"
+	},
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mhO" = (
 /obj/structure/fluff/railing/border/north,
@@ -61947,8 +61947,13 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
 "nHG" = (
-/obj/machinery/light/rogue/torchholder,
-/turf/closed/wall/mineral/rogue/pipe,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8;
+	layer = 2;
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nHI" = (
 /obj/structure/mineral_door/wood/donjon{
@@ -71375,13 +71380,6 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
-"pNn" = (
-/obj/structure/fluff/walldeco/church/line{
-	pixel_x = 0;
-	pixel_y = -1
-	},
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "pNq" = (
 /obj/structure/mannequin/male,
 /turf/open/floor/carpet/stellar{
@@ -74895,6 +74893,10 @@
 /obj/machinery/light/rogue/firebowl/standing/green,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/sunken)
+"qBX" = (
+/obj/structure/roguewindow/harem3/frosted,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "qCa" = (
 /obj/structure/table/wood{
 	icon_state = "map6"
@@ -87988,10 +87990,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors)
-"tEl" = (
-/obj/structure/roguewindow,
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "tEo" = (
 /obj/structure/bars/passage/shutter{
 	redstone_id = "fireexperiment1"
@@ -298857,8 +298855,8 @@ rSC
 gLf
 uEX
 edI
-geK
-cKx
+iuC
+bht
 fpo
 fpo
 sco
@@ -299722,7 +299720,7 @@ gLf
 uEX
 edI
 qZA
-pNn
+fcQ
 fpo
 fpo
 ouf
@@ -300154,8 +300152,8 @@ gLf
 rRb
 edI
 wvi
-bht
-fcQ
+jAY
+nHG
 baz
 sco
 kdN
@@ -300585,10 +300583,10 @@ rSC
 gLf
 lrs
 gRj
-sco
+qBX
 ejQ
 ejQ
-sco
+qBX
 gRj
 kdN
 kdN
@@ -302744,7 +302742,7 @@ edI
 edI
 edI
 edI
-nHG
+cKx
 rSM
 msq
 mXh
@@ -406423,10 +406421,10 @@ sco
 sco
 jgf
 sco
-hQf
+mhM
 sco
 sco
-hQf
+mhM
 sco
 sco
 wbg
@@ -407286,7 +407284,7 @@ vPr
 vPr
 vPr
 vPr
-mhM
+hQf
 sCn
 sco
 mDf
@@ -408150,7 +408148,7 @@ nhJ
 vIS
 hqR
 rpA
-mhM
+hQf
 sCn
 sco
 dAF
@@ -408579,9 +408577,9 @@ yht
 noZ
 vPr
 sco
-mhM
+hQf
 cXr
-mhM
+hQf
 sco
 msq
 sco
@@ -409017,9 +409015,9 @@ wjy
 msH
 sCn
 sco
-jAY
-jAY
-tEl
+hQf
+hQf
+hQf
 sco
 wOa
 sCn
@@ -411175,7 +411173,7 @@ rTQ
 msq
 rTQ
 iSq
-mhM
+hQf
 jma
 qqj
 eBZ
@@ -411607,7 +411605,7 @@ nFR
 nFR
 wjy
 xvd
-mhM
+hQf
 hbQ
 qqj
 teb
@@ -412039,7 +412037,7 @@ nFR
 nFR
 mmr
 xvd
-mhM
+cXr
 hbQ
 qqj
 sfu
@@ -413335,7 +413333,7 @@ sCn
 nzg
 nYU
 gfj
-sCn
+geK
 rWA
 pXU
 sco
