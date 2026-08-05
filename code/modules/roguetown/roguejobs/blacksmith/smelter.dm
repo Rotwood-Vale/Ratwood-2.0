@@ -242,7 +242,7 @@
 		if(item.smeltresult == /obj/item/ingot/gold)
 			purifiedalloy = purifiedalloy + 2
 		if(item.smeltresult == /obj/item/ingot/silver)
-			blacksteelalloy = blacksteelalloy + 1
+			blacksteelalloy = blacksteelalloy + 3
 		if(item.smeltresult == /obj/item/ingot/steel)
 			blacksteelalloy = blacksteelalloy + 2
 
@@ -254,7 +254,7 @@
 	else if(purifiedalloy == 11)
 		max_contained_items = 4
 		alloy = /obj/item/ingot/gilbranze // 3 aaslag, 1 gold, makes 4 gilbranze, 2 is too few to be worth doing anything with
-	else if(blacksteelalloy == 7)
+	else if(blacksteelalloy == 10)
 		max_contained_items = 2 // 1 ingot is too few to do anything meaningful with and makes prices too high to sell anything
 		alloy = /obj/item/ingot/blacksteel
 	else
