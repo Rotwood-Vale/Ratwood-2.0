@@ -85,6 +85,16 @@
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 
+		//gives hieresiath faith traits of every assendant patron 
+		for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/inhumen])
+			var/datum/patron/patron = GLOB.patronlist[path]
+			if(!patron || !patron.name)
+				continue
+			patron.on_gain(H)
+		//and any potential patreon specyfic launguthes
+		H.grant_language(/datum/language/thievescant) // mathias
+		H.grant_language(/datum/language/undead) // zizo
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
