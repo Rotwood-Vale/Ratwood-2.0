@@ -1213,6 +1213,7 @@
 		return
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
+	
 	if(HAS_TRAIT(src, TRAIT_COMMIE) && (HAS_TRAIT(examiner, TRAIT_COMMIE)||seer))
 		heretic_text += "♠"
 	else if(HAS_TRAIT(src, TRAIT_CABAL) && (HAS_TRAIT(examiner, TRAIT_CABAL)||seer))
