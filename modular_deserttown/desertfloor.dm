@@ -331,7 +331,9 @@
 /obj/effect/decal/deserttemplehole
 	icon = 'modular_deserttown/icons/temple.dmi'
 	icon_state = "temp_floor_hole"
+	anchored = TRUE
 
 /obj/effect/decal/deserttempleedge
 	icon = 'modular_deserttown/icons/temple.dmi'
 	icon_state = "temp_floor_edge"
+	anchored = TRUE

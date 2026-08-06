@@ -41,6 +41,18 @@
 	spookysounds = SPOOKY_FROG
 	spookynight = SPOOKY_FOREST
 
+/area/rogue/outdoors/desert/mirage
+	name = "Fleeting Repose"
+	first_time_text = "Fleeting Repose"
+	icon_state = ""
+	ambientsounds = AMB_TOWNDAY
+	ambientnight = AMB_TOWNNIGHT
+	spookysounds = SPOOKY_GEN
+	spookynight = SPOOKY_GEN
+	droning_sound = 'sound/newmusic/lovecraft2.ogg'
+	droning_sound_dusk = 'sound/newmusic/lovecraft2.ogg'
+	droning_sound_night = 'sound/newmusic/lovecraft2.ogg'
+
 /area/rogue/outdoors/desertdeep
 	name = "Deep Dunes"
 	icon_state = "desertdeep"
@@ -60,7 +72,8 @@
 		new /datum/ambush_config/lamia_party = 50,
 		new /datum/ambush_config/dunewell_raider/hard = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/headless = 10,
-		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/ifrit = 20,)
 	converted_type = /area/rogue/indoors/shelter/desertdeep
 	deathsight_message = "an empty, parched desert"
 	threat_region = THREAT_REGION_DESERT_DEEP

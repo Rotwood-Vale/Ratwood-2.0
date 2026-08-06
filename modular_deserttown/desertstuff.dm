@@ -320,6 +320,9 @@
 	clear_all_beams()
 	return ..()
 
+/obj/structure/obelisk/active
+	var/current_beam_night = FALSE   // tracks which colour state the active beams are in
+
 /obj/structure/obelisk/active/process()
 	var/list/found = list()
 	for(var/mob/living/carbon/human/H in view(scan_range, src))
@@ -327,22 +330,32 @@
 			continue
 		found += H
 
-	// drop anyone who wandered off — their buff/debuff will just expire naturally
+	// drop anyone who wandered off - their buff/debuff will just expire naturally
 	// since we stop refreshing it (see apply_obelisk_effect)
 	for(var/mob/living/carbon/human/old in targets)
 		if(!(old in found))
 			remove_target(old)
 
-	var/night = is_leyline_night()
+	var/night
+	if(GLOB.tod == "night")
+		night = TRUE
+	else
+		night = FALSE
+
+	// day/night flipped while people were already standing here - refresh their beam colour
+	if(night != current_beam_night && length(targets))
+		refresh_beam_colour(night)
+	current_beam_night = night
 
 	for(var/mob/living/carbon/human/H in found)
 		if(!(H in targets))
-			add_target(H)
+			add_target(H, night)
 		apply_obelisk_effect(H, night)
 
-/obj/structure/obelisk/active/proc/add_target(mob/living/carbon/human/H)
+/obj/structure/obelisk/active/proc/add_target(mob/living/carbon/human/H, night)
 	targets += H
-	var/datum/beam/B = src.Beam(H, icon_state = "medbeam", time = 35 SECONDS, maxdistance = scan_range + 2)
+	var/beam_icon_state = night ? "drainbeam" : "medbeam"
+	var/datum/beam/B = src.Beam(H, icon_state = beam_icon_state, time = 35 SECONDS, maxdistance = scan_range + 2)
 	if(B)
 		active_beams[H] = B
 
@@ -353,11 +366,21 @@
 		qdel(B)
 	active_beams -= H
 
+/obj/structure/obelisk/active/proc/refresh_beam_colour(night)
+	var/beam_icon_state = night ? "drainbeam" : "medbeam"
+	for(var/mob/living/carbon/human/H in targets)
+		var/datum/beam/old_beam = active_beams[H]
+		if(old_beam && !QDELETED(old_beam))
+			qdel(old_beam)
+		var/datum/beam/B = src.Beam(H, icon_state = beam_icon_state, time = 35 SECONDS, maxdistance = scan_range + 2)
+		if(B)
+			active_beams[H] = B
+
 /obj/structure/obelisk/active/proc/apply_obelisk_effect(mob/living/carbon/human/H, night)
 	if(night)
-		H.apply_status_effect(/datum/status_effect/debuff/leyline_drain, 5 SECONDS, 25, 15)
+		H.apply_status_effect(/datum/status_effect/buff/energy_shift/leyline_drain, 5 SECONDS)
 	else
-		H.apply_status_effect(/datum/status_effect/buff/obelisk_power, 5 SECONDS, 25, 15)
+		H.apply_status_effect(/datum/status_effect/buff/energy_shift/obelisk_power, 5 SECONDS)
 
 /obj/structure/obelisk/active/proc/clear_all_beams()
 	for(var/mob/living/carbon/human/H in active_beams)
@@ -367,73 +390,63 @@
 	active_beams.Cut()
 	targets.Cut()
 
-/obj/structure/obelisk/proc/is_leyline_night()
+#define OBELISK_ENERGY_FILTER "obelisk_energy_filter"
 
-/datum/status_effect/debuff/leyline_drain
-	id = "leyline_drain"
-	duration = -1
+/datum/status_effect/buff/energy_shift
+	id = "energy_shift"
+	duration = 5 SECONDS
 	tick_interval = 1 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/leyline_drain
-	var/drain_amount = -5
+	var/amount = 5			// always positive, direction comes from sign
+	var/sign = 1			// 1 = restore, -1 = drain
+	var/outline_colour = "#3a86ff"
 
-/datum/status_effect/debuff/leyline_drain/on_apply()
-	owner.add_filter("invigoration_filter", 2, list("type" = "outline", "color" = "#3a86ff", "alpha" = 80, "size" = 1))
+/datum/status_effect/buff/energy_shift/on_apply()
+	owner.add_filter(OBELISK_ENERGY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 80, "size" = 1))
 	return TRUE
 
-/datum/status_effect/debuff/leyline_drain/tick()
+/datum/status_effect/buff/energy_shift/tick()
 	. = ..()
 	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(owner.stat == DEAD)
 		return
-	owner.energy_add(drain_amount)
+	owner.energy_add(sign * amount)
 
-/datum/status_effect/debuff/leyline_drain/on_remove()
-	owner.remove_filter("invigoration_filter")
+/datum/status_effect/buff/energy_shift/on_remove()
+	owner.remove_filter(OBELISK_ENERGY_FILTER)
 	return ..()
 
-/atom/movable/screen/alert/status_effect/debuff/leyline_drain
-	name = "Drained"
-	desc = "The leyline pulls energy from my body."
-	icon_state = "leyline_drain"
+#undef OBELISK_ENERGY_FILTER
 
-
+// --- Restore variant ---
 
 /atom/movable/screen/alert/status_effect/buff/obelisk_power
 	name = "Invigorated"
 	desc = "The obelisk replenishes my energy."
 	icon_state = "buff"
 
-
-
-/datum/status_effect/buff/obelisk_power
+/datum/status_effect/buff/energy_shift/obelisk_power
 	id = "obelisk_power"
-	duration = -1
-	tick_interval = 1 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/buff/obelisk_power
-	var/restore_amount = 5
+	amount = 5
+	sign = 1
+	outline_colour = "#3a86ff"
 
-/datum/status_effect/buff/obelisk_power/on_apply()
-	owner.add_filter("invigoration_filter", 2, list("type" = "outline", "color" = "#3a86ff", "alpha" = 80, "size" = 1))
-	return TRUE
+// --- Drain variant ---
 
-/datum/status_effect/buff/obelisk_power/tick()
-	. = ..()
+/atom/movable/screen/alert/status_effect/debuff/leyline_drain
+	name = "Drained"
+	desc = "The obelisk pulls energy from my body."
+	icon_state = "leyline_drain"
 
-	if(QDELETED(owner))
-		qdel(src)
-		return
-
-	if(owner.stat == DEAD)
-		return
-	owner.energy_add(restore_amount)
-
-/datum/status_effect/buff/obelisk_power/on_remove()
-	owner.remove_filter("invigoration_filter")
-	return ..()
+/datum/status_effect/buff/energy_shift/leyline_drain
+	id = "leyline_drain"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/leyline_drain
+	amount = 5
+	sign = -1
+	outline_colour = "#d62828"
 
 /obj/structure/obelisk/tall
 	icon_state = "obelisk_tall"
@@ -583,8 +596,10 @@
 	if(has_buckled_mobs())
 		return
 
-	if(!ishuman(AM))
-		return
+	if(istype(AM, /mob/living/simple_animal))
+		var/mob/living/simple_animal/L = AM
+		L.Paralyze(40)
+		buckle_mob(L, TRUE)
 
 	var/mob/living/carbon/human/L = AM
 
@@ -601,13 +616,9 @@
 
 /obj/structure/quicksand/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	var/mob/living/carbon/human/Human = buckled_mob
-	var/escape_amount = max(20 - user.STASTR, 2)
+	var/escape_amount = max(CEILING((20 - user.STASTR) / 2, 1), 2)
 	var/escape_time = escape_amount SECONDS
-	if(user != buckled_mob)
-		escape_time = 5 SECONDS
-		user.visible_message(span_warning("[user] tries to pull [buckled_mob] out of the quicksand!"))
-	else
-		user.visible_message(span_warning("[user] struggles to escape the quicksand!"))
+	user.visible_message(span_warning("[user] struggles to escape the quicksand!"))
 
 	if(!do_after(user, escape_time, FALSE, src))
 		return
@@ -619,6 +630,28 @@
 	Human.stamina_add(75)
 
 	visible_message(span_notice("[buckled_mob] drags themselves free of the quicksand!"))
+
+/obj/structure/quicksand/attackby(obj/item/I, mob/user, params)
+
+	if(istype(I, /obj/item/rogueweapon/shovel))
+		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
+		to_chat(user, span_info("I start digging up \the [name]..."))
+		if(do_after(user, 5 SECONDS, src))
+			playsound(loc,'sound/items/empty_shovel.ogg', 100, TRUE)
+			qdel(src)
+			return
+	. = ..()
+
+/obj/structure/quicksand/attack_hand(mob/user)
+	if(has_buckled_mobs())
+		var/person = buckled_mobs[1].name
+		if(user == buckled_mobs[1])
+			person = "themself"
+		user.visible_message(span_warning("[user.name] starts to pull [person] out of the quicksand!"))
+		if(do_after(user, 2 SECONDS))
+			unbuckle_mob(buckled_mobs[1], TRUE)
+			user.visible_message(span_warning("[user.name] pulls [person] out of the quicksand."))
+	. = ..()
 
 /obj/structure/quicksand/process()
 	if(!has_buckled_mobs())

@@ -1858,7 +1858,9 @@
 	. = ..()
 	if(!isliving(O))
 		return
+	var/mob/living/carbon/human/H = O
 	opacity = FALSE
+	H.OffBalance(3 SECONDS)
 
 
 /obj/structure/roguesand/dune/Uncrossed(atom/movable/O)

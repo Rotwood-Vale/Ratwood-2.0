@@ -42,6 +42,8 @@
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/ifrit
+/datum/action/cooldown/mob_cooldown/fire_breath/cone/ifrit
+	fire_range = 6
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ifrit/get_sound(input)
 	switch(input)
@@ -58,7 +60,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ifrit/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire = new(src)
+	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/ifrit/fire = new(src)
 	fire.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, fire)
 	ADD_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
@@ -74,7 +76,7 @@
 	icon_dead = "ifrit_dead"
 	base_intents = list(/datum/intent/simple/bite/dragon_bite)
 	ranged_cooldown_time = 20 SECONDS
-	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_breath
+	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/ifrit/fire_breath
 	var/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/firewheel
 	pixel_x = -32
 
