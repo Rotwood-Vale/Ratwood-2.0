@@ -1,6 +1,5 @@
 #define TAB_MAIN 1
 #define TAB_BANK 2
-#define TAB_STOCK 3
 #define TAB_IMPORT 4
 #define TAB_BOUNTIES 5
 #define TAB_LOG 6
@@ -24,9 +23,16 @@
 	var/compact = TRUE
 	var/total_deposit = 0
 	var/list/excluded_jobs = list("Wretch","Vagabond","Adventurer")
-	var/current_category = "Raw Materials"
-	var/list/categories = list("Raw Materials", "Foodstuffs", "Fruits", "Seafood")
 	var/list/daily_payments = list() // Associative list: job name -> payment amount
+	// Last trade-modal quote keyed by ckey. Read by ui_data to round-trip per-user. (Step 15)
+	var/list/last_trade_quote = list()
+	// Per-user ledger view state keyed by ckey: list("open", "page", "filter"). Only populated
+	// into ui_static_data while a user has the Ledger tab open, so the full ledger never rides
+	// the per-tick Market Scroll payload.
+	var/list/ledger_view = list()
+	// Item 6 decrees: anti-spam gate on Letter of Citizenry printing.
+	var/residency_print_cooldown = 0
+	COOLDOWN_DECLARE(fulfill_retry_cooldown)
 
 /obj/structure/roguemachine/steward/Initialize(mapload)
 	. = ..()
@@ -77,6 +83,8 @@
 
 	if(SSmapping.current_map.map_name == "Roguetest")
 		daily_payments["Shophand"] = 999
+	// Item 6 decrees: bump defaults up to any roundstart-active charter's mandated floor.
+	enforce_wage_floors()
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
@@ -125,14 +133,16 @@
 	if(href_list["switchtab"])
 		current_tab = text2num(href_list["switchtab"])
 	if(href_list["import"])
-		var/datum/roguestock/D = locate(href_list["import"]) in SStreasury.stockpile_datums
+		// Step 15: crown imports (GLOB.crown_imports) replaced the legacy roguestock imports.
+		var/datum/crown_import/D = locate(href_list["import"]) in GLOB.crown_imports
 		if(!D)
 			return
-		if(SStreasury.treasury_value < D.get_import_price())
+		var/amt = D.get_import_price()
+		// ES deviation, fund-API-backed (was a raw treasury_value -= that desynced from the
+		// Crown's Purse, letting the next mint/burn resurrect the spent money)
+		if(!SStreasury.burn(SStreasury.discretionary_fund, amt, "Import: [D.name]"))
 			say("Insufficient mammon.")
 			return
-		var/amt = D.get_import_price()
-		SStreasury.treasury_value -= amt
 		SStreasury.total_import += amt
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
 		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
@@ -147,11 +157,6 @@
 		if(!SStreasury.do_export(D))
 			say("Insufficient stock.")
 			return
-	if(href_list["togglewithdraw"])
-		var/datum/roguestock/D = locate(href_list["togglewithdraw"]) in SStreasury.stockpile_datums
-		if(!D)
-			return
-		D.withdraw_disabled = !D.withdraw_disabled
 	if(href_list["setbounty"])
 		var/datum/roguestock/D = locate(href_list["setbounty"]) in SStreasury.stockpile_datums
 		if(!D)
@@ -178,21 +183,9 @@
 				if(newtax > D.payout_price)
 					scom_announce("The bounty for [D.name] was increased.")
 				D.payout_price = newtax
-	if(href_list["setprice"])
-		var/datum/roguestock/D = locate(href_list["setprice"]) in SStreasury.stockpile_datums
-		if(!D)
-			return
-		if(!D.percent_bounty)
-			var/newtax = input(usr, "Set a new price to withdraw [D.name]", src, D.withdraw_price) as null|num
-			if(newtax)
-				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-					return
-				if(findtext(num2text(newtax), "."))
-					return
-				newtax = CLAMP(newtax, 0, 999)
-				if(newtax < D.withdraw_price)
-					scom_announce("The withdraw price for [D.name] was decreased.")
-				D.withdraw_price = newtax
+	// Step 15: stockpile price/limit/withdraw management moved to the StewardTrade TGUI
+	// (setprice/setlimit/togglewithdraw Topic handlers removed). Ratwood keeps the passive
+	// import rate handler; that system is not covered by the TGUI.
 	if(href_list["setrate"])
 		var/datum/roguestock/D = locate(href_list["setrate"]) in SStreasury.stockpile_datums
 		if(!D)
@@ -209,19 +202,6 @@
 			newrate = CLAMP(newrate, 0, D.generation_max)
 			scom_announce("[realmname] will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
 			D.passive_generation = newrate
-	if(href_list["setlimit"])
-		var/datum/roguestock/D = locate(href_list["setlimit"]) in SStreasury.stockpile_datums
-		if(!D)
-			return
-		var/newlimit = input(usr, "Set a new limit for [D.name]", src, D.stockpile_limit) as null|num
-		if(newlimit)
-			if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-				return
-			if(findtext(num2text(newlimit), "."))
-				return
-			newlimit = CLAMP(newlimit, 0, 999)
-			scom_announce("The stockpile limit for [D.name] was changed to [newlimit].")
-			D.stockpile_limit = newlimit
 	if(href_list["givemoney"])
 		var/X = locate(href_list["givemoney"])
 		if(!X)
@@ -245,11 +225,29 @@
 			return
 		for(var/mob/living/A in SStreasury.bank_accounts)
 			if(A == X)
+				// Levying a Crown fine is a fiscal-authority action, same gate as toggling wages.
+				var/is_authorized = FALSE
+				if(usr.job == "Steward" || usr.job == "Clerk" || usr.job == "Grand Duke")
+					is_authorized = TRUE
+				if(SSticker.regentmob && usr == SSticker.regentmob)
+					is_authorized = TRUE
+				if(!is_authorized)
+					say("Only the Steward, Clerk, or Ruler may levy fines.")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				// Ratwood per-category fine exemption on top of the decree caps below.
 				if(SStreasury.check_fine_exemption(A))
 					say("By our Liege's mercy, they can not be fined!")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				var/newtax = input(usr, "How much to fine [X]", src) as null|num
+				// Item 6 decrees: charter exemptions (Great Writ) and caps (Golden Bull,
+				// one-fine-per-day) bound the Crown's fines - surface the ceiling up front.
+				var/max_fine = SStreasury.get_max_fine_for(A)
+				if(max_fine <= 0)
+					say("[A] cannot be fined by the Crown at this time.")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				var/newtax = input(usr, "How much to fine [A]? (Maximum [max_fine]m)", src, max_fine) as null|num
 				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 					return
 				if(findtext(num2text(newtax), "."))
@@ -258,8 +256,25 @@
 					return
 				if(newtax < 1)
 					return
+				if(newtax > max_fine)
+					newtax = max_fine
+					say("The ledger will accept no more than [max_fine]m from [A]. Amount adjusted.")
 				SStreasury.give_money_account(-newtax, A, "NERVE MASTER")
 				break
+	if(href_list["printresidency"])
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		if(world.time < residency_print_cooldown)
+			say("The machine is still warming its quill.")
+			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+			return
+		var/mob/living/carbon/human/H = usr
+		var/obj/item/citizenry_letter/letter = new(get_turf(src))
+		letter.issuer_name = H.real_name
+		letter.issuer_year = CALENDAR_EPOCH_YEAR
+		residency_print_cooldown = world.time + 1 MINUTES
+		playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
+		say("Letter of Citizenry issued, signed by [H.real_name].")
 	if(href_list["payroll"])
 		var/list/L = list(GLOB.noble_positions) + list(GLOB.garrison_positions) + list(GLOB.courtier_positions) + list(GLOB.church_positions) + list(GLOB.yeoman_positions) + list(GLOB.peasant_positions) + list(GLOB.youngfolk_positions) + list(GLOB.inquisition_positions)
 		var/list/things = list()
@@ -282,8 +297,8 @@
 			return
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.job == job_to_pay)
-				record_round_statistic(STATS_WAGES_PAID)
-				SStreasury.give_money_account(amount_to_pay, H, "NERVE MASTER")
+				if(SStreasury.give_money_account(amount_to_pay, H, "NERVE MASTER"))
+					record_round_statistic(STATS_WAGES_PAID, amount_to_pay)
 	if(href_list["setdailypay"])
 		var/list/L = list(GLOB.noble_positions) + list(GLOB.garrison_positions) + list(GLOB.courtier_positions) + list(GLOB.church_positions) + list(GLOB.yeoman_positions) + list(GLOB.peasant_positions) + list(GLOB.youngfolk_positions) + list(GLOB.inquisition_positions)
 		var/list/things = list()
@@ -295,7 +310,11 @@
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
-		var/amount_to_pay = input(usr, "Set daily payment for [job_to_pay] (0 to remove)", src, daily_payments[job_to_pay] ? daily_payments[job_to_pay] : 0) as null|num
+		// Item 6 decrees: active charters (Indenture of War, Covenant of Noc & Pestra) floor
+		// certain wages - the Nerve Master refuses to set covered jobs below the floor.
+		var/wage_floor = SStreasury.get_wage_floor(job_to_pay)
+		var/payprompt = wage_floor > 0 ? "Set daily payment for [job_to_pay] (floor: [wage_floor]m by Charter; 0 not permitted)" : "Set daily payment for [job_to_pay] (0 to remove)"
+		var/amount_to_pay = input(usr, payprompt, src, daily_payments[job_to_pay] ? daily_payments[job_to_pay] : wage_floor) as null|num
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
 		if(findtext(num2text(amount_to_pay), "."))
@@ -303,6 +322,9 @@
 		if(isnull(amount_to_pay))
 			return
 		amount_to_pay = CLAMP(amount_to_pay, 0, 999)
+		if(wage_floor > 0 && amount_to_pay < wage_floor)
+			amount_to_pay = wage_floor
+			say("By Charter, [job_to_pay]'s wage may not fall below [wage_floor]m. Payment set to the floor.")
 		if(amount_to_pay == 0)
 			daily_payments -= job_to_pay
 			say("Daily payment for [job_to_pay] removed.")
@@ -311,8 +333,13 @@
 			say("Daily payment for [job_to_pay] set to [amount_to_pay]m.")
 	if(href_list["removedailypay"])
 		var/job_to_remove = href_list["removedailypay"]
-		daily_payments -= job_to_remove
-		say("Daily payment for [job_to_remove] removed.")
+		var/removal_floor = SStreasury.get_wage_floor(job_to_remove)
+		if(removal_floor > 0)
+			daily_payments[job_to_remove] = removal_floor
+			say("By Charter, [job_to_remove]'s wage cannot be removed. Payment held at the floor of [removal_floor]m.")
+		else
+			daily_payments -= job_to_remove
+			say("Daily payment for [job_to_remove] removed.")
 	if(href_list["togglewages"])
 		var/X = locate(href_list["togglewages"])
 		if(!X)
@@ -342,31 +369,245 @@
 				break
 	if(href_list["compact"])
 		compact = !compact
-	if(href_list["changecat"])
-		current_category = href_list["changecat"]
-	if(href_list["changeautoexport"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		var/new_autoexport = input(usr, "Set a new autoexport percentage between 0 and 100", src, SStreasury.autoexport_percentage * 100) as null|num
-		if(!new_autoexport && new_autoexport != 0)
-			return
-		if(findtext(num2text(new_autoexport), "."))
-			return
-		if(new_autoexport < 0 || new_autoexport > 100)
-			to_chat(usr, span_warning("Invalid autoexport percentage. Must be between 0 and 100."))
-			return
-		new_autoexport = round(new_autoexport)
-		SStreasury.autoexport_percentage = new_autoexport * 0.01
+	// Step 15: category browsing and the auto-export slider live in the StewardTrade TGUI now.
+	if(href_list["trade_tgui"])
+		open_trade_tgui(usr)
+		return
 
 	return attack_hand(usr)
 
-/obj/structure/roguemachine/steward/proc/do_import(datum/roguestock/D,number)
+// ── StewardTrade TGUI trade helpers (Step 15) ────────────────────────────────────────────────
+
+/obj/structure/roguemachine/steward/proc/quote_trade(mob/user, side, region_id, good_id, quantity)
+	// Carry the request identity on EVERY return (including the error early-returns below), so the
+	// TradeModal's incoming-quote filter (side/region_id/good_id must match) doesn't discard an
+	// error quote and leave the modal spinning without ever showing the failure reason.
+	. = list(
+		"ok" = FALSE,
+		"reason" = "",
+		"side" = side,
+		"region_id" = region_id,
+		"good_id" = good_id,
+	)
+	if(!user_can_act(user))
+		.["reason"] = "out of reach"
+		return
+	var/is_alderman_acting = alderman_has_access(user)
+	if(locked && !is_alderman_acting)
+		.["reason"] = "machine locked"
+		return
+	var/datum/economic_region/region = GLOB.economic_regions[region_id]
+	var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+	if(!region || !tg)
+		.["reason"] = "unknown region or good"
+		return
+	quantity = clamp(round(quantity), 1, TRADE_MAX_BULK_UNITS)
+	var/daily_pace
+	var/used_today
+	if(side == "import")
+		daily_pace = region.produces[good_id] || 0
+		used_today = daily_pace - (region.produces_today[good_id] || 0)
+	else
+		daily_pace = region.demands[good_id] || 0
+		used_today = daily_pace - (region.demands_today[good_id] || 0)
+	if(daily_pace <= 0)
+		.["reason"] = side == "import" ? "region does not produce this" : "region does not demand this"
+		return
+	var/starting_index = max(0, used_today)
+	// Base portion = units priced inside daily capacity (overshoot = 0).
+	// Escalation portion = units priced past capacity.
+	var/base_unit_price = side == "import" \
+		? SSeconomy.compute_import_unit_price(good_id, region, 1) \
+		: SSeconomy.compute_export_unit_price(good_id, region, 1)
+	var/base_subtotal = 0
+	var/escalation_subtotal = 0
+	for(var/i in 1 to quantity)
+		var/idx = starting_index + i
+		var/unit
+		if(side == "import")
+			unit = SSeconomy.compute_import_unit_price(good_id, region, idx)
+		else
+			unit = SSeconomy.compute_export_unit_price(good_id, region, idx)
+		if(idx <= daily_pace)
+			base_subtotal += unit
+		else
+			// Per overshoot unit: import surcharge (unit > base) or export shortfall (unit < base).
+			// Server ships escalation_subtotal as a positive magnitude; the client adds + or −
+			// based on side. total uses the signed delta directly.
+			escalation_subtotal += abs(unit - base_unit_price)
+			base_subtotal += base_unit_price
+	var/total
+	if(side == "import")
+		total = base_subtotal + escalation_subtotal
+	else
+		total = base_subtotal - escalation_subtotal
+	var/balance = SStreasury.discretionary_fund.balance
+	var/can_afford = side == "import" ? (balance >= total) : TRUE
+	var/warrant_remaining = -1
+	var/warrant_ok = TRUE
+	if(is_alderman_acting && SScity_assembly?.current_warrant)
+		warrant_remaining = SScity_assembly.current_warrant.trade_remaining
+		warrant_ok = SScity_assembly.can_consume_trade(total)
+	var/datum/roguestock/stockpile_entry = SSeconomy.find_stockpile_by_trade_good(good_id)
+	var/stockpile_amount = stockpile_entry?.stockpile_amount || 0
+	. = list(
+		"ok" = TRUE,
+		"reason" = "",
+		"side" = side,
+		"region_id" = region_id,
+		"good_id" = good_id,
+		"region_name" = region.name,
+		"good_name" = tg.name,
+		"quantity" = quantity,
+		"max_units" = TRADE_MAX_BULK_UNITS,
+		"daily_pace" = daily_pace,
+		"capacity_today" = max(0, daily_pace - starting_index),
+		"base_unit_price" = base_unit_price,
+		"base_subtotal" = base_subtotal,
+		"escalation_subtotal" = escalation_subtotal,
+		"total" = total,
+		"balance" = balance,
+		"balance_after" = side == "import" ? balance - total : balance + total,
+		"is_blockaded" = region.is_region_blockaded ? 1 : 0,
+		"is_alderman_acting" = is_alderman_acting ? 1 : 0,
+		"warrant_remaining" = warrant_remaining,
+		"warrant_ok" = warrant_ok ? 1 : 0,
+		"can_afford" = can_afford ? 1 : 0,
+		"stockpile_amount" = stockpile_amount,
+		"stockpile_after" = side == "import" ? stockpile_amount + quantity : max(0, stockpile_amount - quantity),
+	)
+
+/obj/structure/roguemachine/steward/proc/handle_trade_import(mob/user, region_id, good_id, quantity)
+	if(!user_can_act(user))
+		return
+	var/is_alderman_acting = alderman_has_access(user)
+	if(locked && !is_alderman_acting)
+		return
+	var/datum/economic_region/region = GLOB.economic_regions[region_id]
+	var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+	if(!region || !tg)
+		return
+	quantity = clamp(round(quantity), 1, TRADE_MAX_BULK_UNITS)
+	if(quantity < 1)
+		return
+	var/daily_pace = region.produces[good_id] || 0
+	if(daily_pace <= 0)
+		to_chat(user, span_warning("[region.name] does not produce [tg.name]."))
+		return
+	var/produces_today = region.produces_today[good_id] || 0
+	var/starting_index = max(0, daily_pace - produces_today)
+	var/total = 0
+	for(var/i in 1 to quantity)
+		total += SSeconomy.compute_import_unit_price(good_id, region, starting_index + i)
+	if(is_alderman_acting && !SScity_assembly.can_consume_trade(total))
+		to_chat(user, span_warning("Your warrant cannot cover this trade. Remaining: [SScity_assembly.current_warrant.trade_remaining]m."))
+		return
+	var/spent = SSeconomy.manual_import(user, region_id, good_id, quantity)
+	if(spent > 0)
+		if(is_alderman_acting)
+			SScity_assembly.consume_trade(spent, user, "import [quantity] [tg.name] from [region.name]")
+		say("Emerald Summit imports [quantity] [tg.name] from [region.name] for [spent] mammon.")
+		playsound(src, 'sound/misc/coininsert.ogg', 100, FALSE, -1)
+	SStgui.update_uis(src)
+
+/obj/structure/roguemachine/steward/proc/handle_trade_export(mob/user, region_id, good_id, quantity)
+	if(!user_can_act(user))
+		return
+	var/is_alderman_acting = alderman_has_access(user)
+	if(locked && !is_alderman_acting)
+		return
+	var/datum/economic_region/region = GLOB.economic_regions[region_id]
+	var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+	if(!region || !tg)
+		return
+	quantity = clamp(round(quantity), 1, TRADE_MAX_BULK_UNITS)
+	if(quantity < 1)
+		return
+	var/daily_pace = region.demands[good_id] || 0
+	if(daily_pace <= 0)
+		to_chat(user, span_warning("[region.name] does not demand [tg.name]."))
+		return
+	var/datum/roguestock/entry = SSeconomy.find_stockpile_by_trade_good(good_id)
+	if(!entry || entry.stockpile_amount < quantity)
+		to_chat(user, span_warning("Insufficient [tg.name] in stockpile: have [entry?.stockpile_amount || 0], need [quantity]."))
+		return
+	var/demands_today = region.demands_today[good_id] || 0
+	var/starting_index = max(0, daily_pace - demands_today)
+	var/total = 0
+	for(var/i in 1 to quantity)
+		total += SSeconomy.compute_export_unit_price(good_id, region, starting_index + i)
+	if(is_alderman_acting && !SScity_assembly.can_consume_trade(total))
+		to_chat(user, span_warning("Your warrant cannot cover this trade. Remaining: [SScity_assembly.current_warrant.trade_remaining]m."))
+		return
+	var/gained = SSeconomy.manual_export(user, region_id, good_id, quantity)
+	if(gained > 0)
+		if(is_alderman_acting)
+			SScity_assembly.consume_trade(gained, user, "export [quantity] [tg.name] to [region.name]")
+		say("Emerald Summit exports [quantity] [tg.name] to [region.name] for [gained] mammon.")
+		playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
+	SStgui.update_uis(src)
+
+/obj/structure/roguemachine/steward/proc/handle_trade_region_import(mob/user, region_id)
+	if(!user_can_act(user))
+		return
+	if(locked && !alderman_has_access(user))
+		return
+	var/datum/economic_region/region = GLOB.economic_regions[region_id]
+	if(!region)
+		return
+	var/list/options = list()
+	for(var/good_id in region.produces)
+		var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+		if(!tg || !tg.importable)
+			continue
+		options["[tg.name]"] = good_id
+	if(!length(options))
+		to_chat(user, span_warning("[region.name] has no importable goods."))
+		return
+	var/pick_name = input(user, "Import what from [region.name]?", src) as null|anything in options
+	if(!pick_name)
+		return
+	var/good_id = options[pick_name]
+	var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+	var/quantity = input(user, "How many [tg.name] to import from [region.name]? (max [TRADE_MAX_BULK_UNITS])", src, 1) as null|num
+	if(!quantity || quantity < 1)
+		return
+	handle_trade_import(user, region_id, good_id, quantity)
+
+/obj/structure/roguemachine/steward/proc/handle_trade_region_export(mob/user, region_id)
+	if(!user_can_act(user))
+		return
+	if(locked && !alderman_has_access(user))
+		return
+	var/datum/economic_region/region = GLOB.economic_regions[region_id]
+	if(!region)
+		return
+	var/list/options = list()
+	for(var/good_id in region.demands)
+		var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+		if(!tg)
+			continue
+		options["[tg.name]"] = good_id
+	if(!length(options))
+		to_chat(user, span_warning("[region.name] has no demanded goods."))
+		return
+	var/pick_name = input(user, "Export what to [region.name]?", src) as null|anything in options
+	if(!pick_name)
+		return
+	var/good_id = options[pick_name]
+	var/datum/trade_good/tg = GLOB.trade_goods[good_id]
+	var/quantity = input(user, "How many [tg.name] to export to [region.name]? (max [TRADE_MAX_BULK_UNITS])", src, 1) as null|num
+	if(!quantity || quantity < 1)
+		return
+	handle_trade_export(user, region_id, good_id, quantity)
+
+/obj/structure/roguemachine/steward/proc/do_import(datum/crown_import/D, number)
 	if(!D)
 		return
 	D = new D
-	if(number > D.importexport_amt)
+	if(number > D.import_amt)
 		return
-	testing("number1 is [number]")
+
 	if(!number)
 		number = 1
 	var/area/A = GLOB.areas_by_type[/area/rogue/indoors/town/warehouse]
@@ -380,12 +621,15 @@
 	I.forceMove(T)
 	playsound(T, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 	number += 1
-	testing("number2 is [number]")
+
 	addtimer(CALLBACK(src, PROC_REF(do_import), D.type, number), 3 SECONDS)
 
 /obj/structure/roguemachine/steward/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
+		return
+	if(locked && alderman_has_access(user))
+		open_trade_tgui(user)
 		return
 	if(locked)
 		to_chat(user, span_warning("It's locked. Of course."))
@@ -399,13 +643,15 @@
 			contents += "<center>NERVE MASTER<BR>"
 			contents += "--------------<BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_BANK]'>\[Bank\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[Stockpile\]</a><BR>"
+			contents += "<a href='?src=\ref[src];trade_tgui=1'>\[Trade & Stockpile\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[Import\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_BOUNTIES]'>\[Bounties\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[Passive Imports\]</a><BR>"
+			contents += "<a href='?src=\ref[src];printresidency=1'>\[Print Letter of Citizenry\]</a><BR>"
 			contents += "</center>"
 		if(TAB_BANK)
 			var/total_deposit = 0
@@ -439,98 +685,36 @@
 					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "Unsuspend Wages" : "Suspend Wages"
 					contents += "<a href='?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
 		if(TAB_STOCK)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
-			contents += "<center>Stockpile<BR>"
+			contents += "<a href='?src=ef[src];switchtab=[TAB_MAIN]'>[Return]</a><BR>"
+			contents += "<center>Passive Imports<BR>"
 			contents += "--------------<BR>"
-			if(compact)
-				contents += "Treasury: [SStreasury.treasury_value]m"
-				contents += " / Lord's Tax: [SStreasury.tax_value*100]%"
-				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
-				contents += "<center>Auto Export Stockpile Above: "
-				contents += "<a href='?src=\ref[src];changeautoexport=1'>[SStreasury.autoexport_percentage * 100]%</a></center><BR>"
-				contents += "<center>Current Passive Spending: [SStreasury.get_current_passive_spending()]m </center><BR>"
-				var/selection = "<center>Categories: "
-				for(var/category in categories)
-					if(category == current_category)
-						selection += "<b>[current_category]</b> "
-					else
-						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
-				contents += selection + "<BR>"
-				contents += "--------------</center><BR>"
-				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
-					if(A.category != current_category)
-						continue
-					contents += "<b>[A.name]:</b>"
-					contents += " [A.held_items[1]] | [A.held_items[2]]"
-					contents += " || SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
-					contents += " / BUY: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]m</a>"
-					contents += " / LIMIT: <a href='?src=\ref[src];setlimit=\ref[A]'>[A.stockpile_limit]</a>"
-					if(!A.no_passive)
-						contents += " / R.P.I.R.: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation] ([A.generation_price]m)</a>"
-					if(!A.export_only)
-						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];import=\ref[A]'>\[IMP [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
-					else
-						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
-
-			else
-				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%<BR>"
-				contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m</center><BR>"
-				var/selection = "<center>Categories: "
-				for(var/category in categories)
-					if(category == current_category)
-						selection += "<b>[current_category]</b> "
-					else
-						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
-				contents += selection + "<BR>"
-				contents += "--------------<BR>"
-				contents += "Category Passive Spending: [SStreasury.get_current_passive_spending(current_category)]m</center><BR>"
-				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
-					if(A.category != current_category)
-						continue
-					contents += "[A.name]<BR>"
-					contents += "[A.desc]<BR>"
-					contents += "Stockpiled Amount (Local): [A.held_items[1]]<BR>"
-					contents += "Stockpiled Amount (Remote): [A.held_items[2]]<BR>"
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR>"
-					contents += "Withdraw Price: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]</a><BR>"
-					if(!A.no_passive)
-						contents += "Remote Passive Import Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a><BR>"
-						contents += "R.P.I.R. Price: [A.generation_price] | Total Rate Price: [A.generation_price * A.passive_generation]<BR>"
-					contents += "Demand: [A.demand2word()]<BR>"
-					if(!A.export_only)
-						if(A.importexport_amt)
-							contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[Export [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
-					else
-						if(A.importexport_amt)
-							contents += " <a href='?src=\ref[src];export=\ref[A]'>\[Export [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
-					contents += "<a href='?src=\ref[src];togglewithdraw=\ref[A]'>\[[A.withdraw_disabled ? "Enable" : "Disable"] Withdrawing\]</a><BR><BR>"
+			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
+			contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m per tick</center><BR>"
+			// Ratwood passive imports: rate management stays here; prices, limits and manual
+			// import/export moved to the StewardTrade TGUI.
+			for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
+				if(A.no_passive)
+					continue
+				contents += "<b>[A.name]:</b> [A.stockpile_amount]/[A.stockpile_limit]"
+				contents += " / Rate: <a href='?src=ef[src];setrate=ef[A]'>[A.passive_generation]</a> ([A.generation_price]m each)<BR>"
 		if(TAB_IMPORT)
+			// Step 15: renders GLOB.crown_imports (regional sourcing + blockade surcharges).
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
 			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
 			contents += "<center>Imports<BR>"
 			contents += "--------------<BR>"
 			if(compact)
-				contents += "Treasury: [SStreasury.treasury_value]m"
-				contents += " / Lord's Tax: [SStreasury.tax_value*100]%"
-				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
-				for(var/datum/roguestock/import/A in SStreasury.stockpile_datums)
-					contents += "<b>[A.name]:</b>"
-					contents += " <a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
+				contents += "Treasury: [SStreasury.treasury_value]m</center><BR>"
+				for(var/datum/crown_import/A in GLOB.crown_imports)
+					var/blockade_tag = A.is_blockaded() ? " <font color='#c44'>(BLOCKADED)</font>" : ""
+					contents += "<b>[A.name][blockade_tag]:</b>"
+					contents += " <a href='?src=\ref[src];import=\ref[A]'>\[Import [A.import_amt] ([A.get_import_price()])\]</a><BR>"
 			else
-				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
-				for(var/datum/roguestock/import/A in SStreasury.stockpile_datums)
-					contents += "[A.name]<BR>"
-					contents += "[A.desc]<BR>"
-					if(!A.stable_price)
-						contents += "Demand: [A.demand2word()]<BR>"
-					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.importexport_amt] ([A.get_import_price()])\]</a><BR><BR>"
+				contents += "Treasury: [SStreasury.treasury_value]m</center><BR>"
+				for(var/datum/crown_import/A in GLOB.crown_imports)
+					var/blockade_tag_full = A.is_blockaded() ? " <font color='#c44'>(BLOCKADED - 2x COST)</font>" : ""
+					contents += "<b>[A.name][blockade_tag_full]</b> - <i>[A.desc]</i> "
+					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.import_amt] ([A.get_import_price()])\]</a><BR>"
 		if(TAB_BOUNTIES)
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
 			contents += "<center>Bounties<BR>"
@@ -627,10 +811,20 @@
 
 #undef TAB_MAIN
 #undef TAB_BANK
-#undef TAB_STOCK
 #undef TAB_IMPORT
 #undef TAB_BOUNTIES
 #undef TAB_LOG
 #undef TAB_STATISTICS
 #undef TAB_PAYDAY
 #undef TAB_SALTMINE
+
+// Item 6 (decrees): bump configured wages up to any active charter's mandated floor, and
+// ensure floored jobs missing from the payments list get an entry at the floor.
+/obj/structure/roguemachine/steward/proc/enforce_wage_floors()
+	for(var/job in daily_payments)
+		var/floor = SStreasury.get_wage_floor(job)
+		if(floor > 0 && (daily_payments[job] || 0) < floor)
+			daily_payments[job] = floor
+	for(var/job in SStreasury.enumerate_wage_floored_jobs())
+		if(isnull(daily_payments[job]))
+			daily_payments[job] = SStreasury.get_wage_floor(job)

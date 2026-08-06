@@ -42,51 +42,10 @@
 				say("Blueblood for the Freefolk!")
 				playsound(src, 'sound/vo/mobs/ghost/laugh (5).ogg', 100, TRUE)
 				return
-	if(H in SStreasury.bank_accounts)
-		var/amt = SStreasury.bank_accounts[H]
-		if(!amt)
-			say("Your balance is nothing.")
-			return
-		if(amt < 0)
-			say("Your balance is NEGATIVE.")
-			return
-		var/list/choicez = list()
-		if(amt > 10)
-			choicez += "GOLD"
-		if(amt > 5)
-			choicez += "SILVER"
-		choicez += "BRONZE"
-		var/selection = input(user, "You have [amt] mammon in your account. Choose which currency you'd like to withdraw.", src) as null|anything in choicez
-		if(!selection)
-			return
-		amt = SStreasury.bank_accounts[H]
-		var/mod = 1
-		if(selection == "GOLD")
-			mod = 10
-		if(selection == "SILVER")
-			mod = 5
-		var/coin_amt = input(user, "There is [SStreasury.treasury_value] mammon in the treasury, and [amt] mammon in your account. You may withdraw [floor(amt/mod)] [selection] COINS from your account.", src) as null|num
-		coin_amt = round(coin_amt)
-		if(coin_amt < 1)
-			return
-		// checks the maximum coin limit before deducting balance; prevents stacks of >=20
-		var/max_coins = 20
-		if(coin_amt > max_coins)
-			to_chat(user, span_warning("Maximum withdrawal limit exceeded. You can only withdraw up to [max_coins] coins at once."))
-			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-			return
-		amt = SStreasury.bank_accounts[H]
-		if(!Adjacent(user))
-			return
-		if((coin_amt*mod) > amt)
-			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-			return
-		if(!SStreasury.withdraw_money_account(coin_amt*mod, H))
-			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-			return
-		record_round_statistic(STATS_MAMMONS_WITHDRAWN, coin_amt * mod)
-		budget2change(coin_amt*mod, user, selection)
-	else
+		// A fully-drilled nervelock can no longer serve customers.
+		to_chat(H, span_warning("The NERVELOCK's mouth gapes wide and chewed - it cannot serve while drilled."))
+		return
+	if(!SStreasury.has_account(H))
 		to_chat(user, span_warning("The machine bites my finger."))
 		if(!drilled)
 			icon_state = "atm-b"
@@ -100,6 +59,9 @@
 		spawn(5)
 			say("New account created.")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+		return
+	// Step 16: legacy input() withdrawal menu replaced by the MeisterPanel TGUI (atm_tgui.dm).
+	open_meister_tgui(H)
 
 /*
 /obj/structure/roguemachine/atm/attack_right(mob/user)
@@ -183,6 +145,7 @@
 		job_text = "Peasants"
 
 	. += span_info("For [job_text], the current tax rate on deposits is [tax_rate] percent. [fine_exempt_status]")
+	. += span_smallnotice("Crown levies - Contract: [round(SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY) * 100)]%, Headeater: [round(SStreasury.get_tax_rate(TAX_CATEGORY_HEADEATER_LEVY) * 100)]%, Import: [round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * 100)]%, Export: [round(SStreasury.get_tax_rate(TAX_CATEGORY_EXPORT_DUTY) * 100)]%")
 
 /obj/structure/roguemachine/atm/proc/drill(obj/structure/roguemachine/atm)
 	if(!drilling)
@@ -212,7 +175,10 @@
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
 		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
 			loc.visible_message(span_warning("The Nervelock spills its bounty!"))
-			SStreasury.treasury_value -= 20 // Takes from the treasury
+			// fund-API-backed; a barren purse yields nothing to drain
+			if(!SStreasury.burn(SStreasury.discretionary_fund, 20, "Freefolk parasite drain"))
+				drill(src)
+				return
 			mammonsiphoned += 20
 			budget2change(20, null, "SILVER")
 			playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
