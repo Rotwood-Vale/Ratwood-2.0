@@ -13,10 +13,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
-	storyteller_antag_flags = STORYTELLER_ANTAG_VILLAIN | STORYTELLER_ANTAG_ROUNDSTART
-	storyteller_favor_flags = STORYTELLER_FAVOR_VAMPIRE_LORD | STORYTELLER_FAVOR_MASQUERADE
-	storyteller_slot_scaling = 2
-	storyteller_maxcaps = list(/datum/storyteller/astrata = 2)
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "Vspawn"
 	confess_lines = list(
@@ -134,8 +130,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 	if(HAS_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE))
 		REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, null)
-	if(HAS_TRAIT(owner, TRAIT_RAGE))
-		REMOVE_TRAIT(owner, TRAIT_RAGE, null)
 
 /datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
 	if(!vampdude)

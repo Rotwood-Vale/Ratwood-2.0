@@ -161,6 +161,7 @@
 #define TRAIT_PSYDONITE "Psydonite's Devotion" // Anti-Miracles on a selective basis, anastasis / cure rot still apply.
 #define TRAIT_BLACKBAGGER "Apprehension Techniques" // Capable of using Garrotes and Blackbags. Apprehension techniques.
 #define TRAIT_RESONANCE "Resonance Caster"//Casting miracles will buff nearby miraclists. Or, would, had I finished it. Instead it applies fortify in an AoE. - Carl
+
 /// Snowflake trait given to Eoran's wearing their bud
 #define TRAIT_EORAN_CONTENTED "Eoran Contented"
 
@@ -314,6 +315,14 @@
 #define TRAIT_MASTER_MASON "Master Masonry"
 
 #define TRAIT_TRIBAL "Island Tribe-member"
+
+// Vampire traits (AP Port) - IronDragoon
+#define TRAIT_DUSTABLE "Dustable"
+#define TRAIT_DUST_LEAVE_HEAD "Dust Leave Head"
+#define TRAIT_DUST_DELETE_GEAR "Dust Delete Gear"
+#define TRAIT_SECONDLIFE "Second Life"
+#define TRAIT_QUICKSILVERRESISTANT "Quicksilver Resistance"
+#define TRAIT_VAMPIRE_SPAWN_PROTECTION "Vampire Spawn Protection"
 
 // If you want description to show up you gotta have the trait name defined BEFORE this lol
 
@@ -566,6 +575,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DUSTABLE = span_warning("If I die that is for the end for me, I will turn to dust."),
 	TRAIT_SECONDLIFE = span_warning("I may be granted another chance upon death, but who knows where I'll end up..."),
 	TRAIT_QUICKSILVERRESISTANT = span_warning("Quick silver won't work to cure me..."),
+	TRAIT_VAMPIRE_SPAWN_PROTECTION = span_notice("The sun's wrath cannot touch me... for now."),
 ))
 
 // trait accessor defines
@@ -919,10 +929,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COVEN_RESISTANT "coven_resistance"
 #define TRAIT_MOVEMENT_BLOCKED "movement_blocked"
 
-#define TRAIT_DUSTABLE "Dustable"
-#define TRAIT_DUST_LEAVE_HEAD "Dust Leave Head"
-#define TRAIT_DUST_DELETE_GEAR "Dust Delete Gear"
-#define TRAIT_SECONDLIFE "Second Life"
-#define TRAIT_QUICKSILVERRESISTANT "Quicksilver Resistance"
 /// Mobs that have this trait cannot be extinguished
 #define TRAIT_NO_EXTINGUISH "no_extinguish"

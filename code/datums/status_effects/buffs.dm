@@ -40,6 +40,24 @@
 	SEND_SOUND(owner, sound('sound/blank.ogg', volume = 25))
 	owner.adjustBruteLoss(3)
 
+/datum/status_effect/vampire_spawn_protection
+	id = "vampire_spawn_protection"
+	duration = 5 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/buff/vampire_spawn_protection
+
+/atom/movable/screen/alert/status_effect/buff/vampire_spawn_protection
+	name = "Averted Gaze"
+	desc = "The blood of my sacrificed victim still obscures my presence before the Sun-Tyrant. Until it dries, Her gaze cannot reach me."
+	icon_state = "buff"
+
+/datum/status_effect/vampire_spawn_protection/on_apply()
+	ADD_TRAIT(owner, TRAIT_VAMPIRE_SPAWN_PROTECTION, "vampire_spawn_protection")
+	return TRUE
+
+/datum/status_effect/vampire_spawn_protection/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_VAMPIRE_SPAWN_PROTECTION, "vampire_spawn_protection")
+	if(isliving(owner))
+		to_chat(owner, span_warning("My spawn protection has faded. The sun will burn me now."))
 
 /datum/status_effect/cyborg_power_regen
 	id = "power_regen"
