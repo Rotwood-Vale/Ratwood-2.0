@@ -7,7 +7,6 @@
 	blade_dulling = DULLING_BASH
 	anchored = TRUE
 	max_integrity = 999999
-	var/budget = 0
 
 /datum/bounty
 	var/target
@@ -179,9 +178,10 @@
 	// Deduct money from user
 	budget -= round(amount)
 
-	//Deduct royal tax from amount
-	var/royal_tax = round(amount * 0.1)
-	SStreasury.treasury_value += royal_tax
+	//Deduct royal tax from amount, pulls from the kingdom's current tax setting.
+	var/royal_tax = round(amount * SStreasury.tax_value)
+	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
+	SStreasury.mint(SStreasury.discretionary_fund, royal_tax, "Bounty tax")
 	SStreasury.log_entries += "+[royal_tax] to treasury (bounty tax)"
 
 	amount -= royal_tax
@@ -356,7 +356,8 @@
 		return
 
 	budget -= cost
-	SStreasury.treasury_value += cost
+	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
+	SStreasury.mint(SStreasury.discretionary_fund, cost, "Bounty scroll fee")
 	SStreasury.log_entries += "+[cost] to treasury (bounty scroll fee)"
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))

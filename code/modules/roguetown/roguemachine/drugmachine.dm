@@ -20,7 +20,6 @@
 	var/list/held_items = list()
 	locked = FALSE
 	lockid = "nightman"
-	var/budget = 0
 	var/secret_budget = 0
 	var/recent_payments = 0
 	var/last_payout = 0

@@ -206,6 +206,7 @@
 #define TRAIT_IWASUNZOMBIFIED "iwasunzombified" //prevents PQ gain from curing a zombie twice
 #define TRAIT_IWASHAUNTED "iwashaunted" //prevents spawning a haunt from a decapitated body twice
 #define TRAIT_PSYCHOSIS "Psychosis" //replaces all ambience with creepy shit
+#define TRAIT_FRESHSPAWN "freshspawn" //marker on freshly-spawned ambush/quest mobs; set for 60s after spawn, never read - inert marker matching AP
 #define TRAIT_SCREENSHAKE "Tremors" //screen will always be shaking, you cannot stop it
 #define TRAIT_NORUN "Decayed Flesh"
 #define TRAIT_PUNISHMENT_CURSE "PunishmentCurse"
@@ -216,6 +217,17 @@
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
+#define TRAIT_ALDERMAN "Alderman of the Assembly"
+#define TRAIT_ALDERMAN_CENSURED "Assembly Censure"
+#define TRAIT_ARREARS "In Arrears" // poll-tax defaulter (POLL_TAX_DEBT_DAYS_TO_DEBTOR+ days owed) — cleared when the debt is paid
+#define TRAIT_DEBTOR "Debtor" // generic loan defaulter — always applied alongside a faction-specific trait
+#define TRAIT_DEBTOR_CROWN "Debtor of the Crown"
+#define TRAIT_DEBTOR_CHURCH "Debtor of the Church"
+#define TRAIT_DEBTOR_MERCHANT "Debtor of the Merchant Guild"
+#define TRAIT_DEBTOR_BATHHOUSE "Debtor of the Bathhouse"
+#define TRAIT_AGENT_MERCHANT "Agent of the Merchant Guild"
+#define TRAIT_AGENT_BATHHOUSE "Agent of the Bathhouse"
+#define TRAIT_AGENT_CHURCH "Ecclesiastical Benefactor"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
 #define TRAIT_RESIDENT "Resident"
@@ -315,6 +327,16 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the realm see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
+	TRAIT_ALDERMAN = span_info("Alderman of the Assembly, voice of the respectable citizenry of Rotwood Vale. Upon my charter I may spend the Crown's Purse and commission the realm's defense within the bounds the Commons have set me."),
+	TRAIT_ALDERMAN_CENSURED = span_warning("The Assembly has censured my name. No seat, no warrant shall be mine until the week ends."),
+	TRAIT_DEBTOR = span_warning("I am a defaulter on a debt. My name is known to those I owe."),
+	TRAIT_DEBTOR_CROWN = span_warning("I am indebted to the Crown's coffers."),
+	TRAIT_DEBTOR_CHURCH = span_warning("I am indebted to the Church."),
+	TRAIT_DEBTOR_MERCHANT = span_warning("I am indebted to the Merchant Guild."),
+	TRAIT_DEBTOR_BATHHOUSE = span_warning("I am indebted to the Bathhouse."),
+	TRAIT_AGENT_MERCHANT = span_info("I am a chartered agent of the Merchant Guild. I keep its tally and ledger."),
+	TRAIT_AGENT_BATHHOUSE = span_info("I am an agent of the Bathhouse. I keep its tally and ledger."),
+	TRAIT_AGENT_CHURCH = span_info("I am a Benefactor of the Church. The faithful know my name."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),

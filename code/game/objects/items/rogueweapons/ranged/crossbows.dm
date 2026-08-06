@@ -1,5 +1,6 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	has_item_quality = TRUE
 	name = "crossbow"
 	desc = "A deadly weapon that shoots a bolt with terrific power."
 	icon = 'icons/roguetown/weapons/misc32.dmi'

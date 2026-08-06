@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	switch(mode)
 		if(0)
 			if(findtext(message, "secrets of the throat"))
-				say("My commands are: Make Decree, Make Announcement, Set Taxes, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
+				say("My commands are: Make Decree, Make Announcement, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 			if(findtext(message, "make announcement"))
 				if(nocrown)
@@ -186,6 +186,15 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				say("All decrees shall be purged!")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				purge_decrees()
+				return
+			if(findtext(message, "revise charter"))
+				if(notlord || nocrown)
+					say("You are not my master!")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				say("The charters of the realm lay before thee...")
+				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+				give_decree_popup(H)
 				return
 			if(findtext(message, "make law"))
 				if(!SScommunications.can_announce(H))
@@ -309,8 +318,28 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 /obj/structure/roguemachine/titan/proc/give_tax_popup(mob/living/carbon/human/user)
 	if(!Adjacent(user))
 		return
-	var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
-	taxsetter.ui_interact(user)
+	// The legacy flat sales tax (SStreasury.tax_value) still drives transaction taxes, so the
+	// Lord keeps direct control of it alongside the new Taxation 2 panel (category levies +
+	// per-class poll tax). TODO: migrate tax_value consumers onto tax_rates categories, then
+	// drop the legacy branch.
+	var/choice = alert(user, "Which levies shall you adjust?", "Crown Taxation", "Sales Tax", "Levies & Poll Tax", "Cancel")
+	if(!Adjacent(user))
+		return
+	switch(choice)
+		if("Sales Tax")
+			var/newtax = input(user, "Set a new tax percentage (1-99)", src, SStreasury.tax_value*100) as null|num
+			if(newtax)
+				if(!Adjacent(user))
+					return
+				if(findtext(num2text(newtax), "."))
+					return
+				newtax = CLAMP(newtax, 1, 99)
+				SStreasury.tax_value = newtax / 100
+				priority_announce("The new tax in [SSmapping.map_adjustment.realm_name] shall be [newtax] percent.", "The Generous Lord Decrees", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
+		if("Levies & Poll Tax")
+			var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
+			taxsetter.ui_interact(user)
+
 
 /obj/structure/roguemachine/titan/proc/make_announcement(mob/living/user, raw_message)
 	if(!SScommunications.can_announce(user))
@@ -399,3 +428,10 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	priority_announce("[H.name], the [H.get_role_title()], sits as the regent of the realm.", "A New Regent Resides", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 	SSticker.regentmob = H
 	SSticker.regentday = GLOB.dayspassed
+
+// Item 6 (decrees): the Lord's charter panel - revoke/restore the realm's ancient compacts.
+/obj/structure/roguemachine/titan/proc/give_decree_popup(mob/living/carbon/human/user)
+	if(!Adjacent(user))
+		return
+	var/datum/decree_setter/panel = new
+	panel.ui_interact(user)

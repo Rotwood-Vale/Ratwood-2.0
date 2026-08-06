@@ -1,12 +1,10 @@
 // Pricing engine compatibility vars added to existing recipe datums.
-// hides_from_books: when TRUE, recipe is excluded from price derivation.
-// display_category: ITEM_CAT_* string for market bucketing. Null → engine falls back to defaults.
+// hides_from_books already exists on both recipe datums in this codebase.
+// display_category: ITEM_CAT_* string for market bucketing. Null means the engine falls back to defaults.
 /datum/anvil_recipe
-	var/hides_from_books = FALSE
 	var/display_category
 
 /datum/crafting_recipe
-	var/hides_from_books = FALSE
 	var/display_category
 
 /datum/crafting_recipe/proc/build_display_cache()

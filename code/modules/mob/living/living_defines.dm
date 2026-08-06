@@ -222,3 +222,7 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	// --- Fellowship (AP Quest 2 port) ---
+	var/datum/fellowship/current_fellowship
+	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites

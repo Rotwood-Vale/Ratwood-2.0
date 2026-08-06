@@ -550,3 +550,9 @@
 	timer = 15 MINUTES
 	stressadd = 2
 	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")
+
+// Indebted charflaw: missed the daily debt payment.
+/datum/stressevent/debt
+	timer = 25 MINUTES
+	stressadd = 3
+	desc = span_red("I couldn't pay my debts in time.")

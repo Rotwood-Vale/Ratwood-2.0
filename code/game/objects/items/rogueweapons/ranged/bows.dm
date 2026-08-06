@@ -78,6 +78,7 @@
 //bow objs ฅ^•ﻌ•^ฅ
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow
+	has_item_quality = TRUE
 	name = "shortbow"
 	desc = "This simply hewn shortbow is functional enough. What it lacks in poundage or accuracy, \
 	it makes up for with a decently swift draw."

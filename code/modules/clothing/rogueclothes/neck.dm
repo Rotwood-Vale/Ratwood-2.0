@@ -654,6 +654,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/ornateamulet
+	no_loot_taint = TRUE
 	name = "ornate amulet"
 	desc = "A beautiful amulet made of solid gold."
 	icon_state = "ornateamulet"
@@ -1067,6 +1068,7 @@
 	..()
 
 /obj/item/clothing/neck/roguetown/carved
+	no_loot_taint = TRUE
 	name = "carved amulet"
 	desc = "You shouldn't be seeing this."
 	icon_state = "psycross_w"

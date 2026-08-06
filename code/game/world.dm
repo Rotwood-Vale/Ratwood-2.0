@@ -91,6 +91,8 @@ GLOBAL_VAR(restart_counter)
 
 	load_bypassage()
 
+	load_calendar_events()
+
 	load_patreons()
 
 //	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
