@@ -26,6 +26,8 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 
 /obj/item/cannonball/explosive/detonate(turf/T)
 	..()
+	for(var/mob/living/L in T)//direct hit gibs
+		L.gib()
 	explosion(T, 2, 4, 6, 8)
 
 //Flare charge. Blinds in a wide radius.
