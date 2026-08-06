@@ -340,7 +340,7 @@ SUBSYSTEM_DEF(bard_music)
 	
 	soundloop.set_mid_sounds(list(curfile))
 	soundloop.mid_length = max(track.duration_seconds * 10, 1)
-	soundloop.start()
+	soundloop.start(user)
 	user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
 	user.bard_music_playing = TRUE
 	current_player = user
@@ -577,11 +577,14 @@ SUBSYSTEM_DEF(bard_music)
 
 /obj/item/rogue/instrument/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	var/can_use_in_range = usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)
-	var/harpy_organ = usr.getorganslot(ORGAN_SLOT_VOICE)
-	if(!usr || (!can_use_in_range && !harpy_organ))
-		return FALSE
 	var/mob/living/user = usr
+	if(!isliving(user))
+		return
+	var/harpy_organ = user.getorganslot(ORGAN_SLOT_VOICE)
+	if(!harpy_organ) // Harpy organs don't need proximity check
+		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return FALSE
+
 	add_fingerprint(user)
 	ensure_timed_tracks()
 	switch(action)
