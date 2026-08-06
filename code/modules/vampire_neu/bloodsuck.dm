@@ -73,9 +73,9 @@
 	else
 		blood_handle |= BLOOD_PREFERENCE_LIVING
 
-	if(HAS_TRAIT(victim, TRAIT_CLERGY) || HAS_TRAIT(victim, TRAIT_INQUISITION))
+	if(HAS_TRAIT(victim, TRAIT_INQUISITION) || HAS_TRAIT(victim, TRAIT_CLERGY))
 		blood_handle |= BLOOD_PREFERENCE_HOLY
-	if(HAS_TRAIT(victim, TRAIT_CLERGY) || HAS_TRAIT(victim, TRAIT_INQUISITION) || HAS_TRAIT(victim, TRAIT_NOBLE))
+	if(HAS_TRAIT(victim, TRAIT_INQUISITION) || HAS_TRAIT(victim, TRAIT_NOBLE) || HAS_TRAIT(victim, TRAIT_CLERGY))
 		blood_handle |= BLOOD_PREFERENCE_FANCY //More variety
 	if(VVictim)
 		blood_handle |= BLOOD_PREFERENCE_KIN
@@ -126,7 +126,7 @@
 					to_chat(src, span_warning("I decide [victim] is unworthy."))
 				else
 					visible_message(span_danger("[src] begins channeling their energies to [victim]!"))
-					if(!do_mob(src, victim, 7 SECONDS, double_progress = TRUE, can_move = FALSE))
+					if(!do_mob(src, victim, 7 SECONDS, double_progress = TRUE)) //can_move = FALSE was here, but this is part of AP NPC rework so can't easily add. Excluding for now, may need a workaround
 						to_chat(src, span_warning("I was interrupted during my siring!"))
 						return
 					if(HAS_TRAIT_FROM(victim, TRAIT_REFUSED_VAMP_CONVERT, REF(src)))
@@ -135,7 +135,7 @@
 
 					if(victim.stat == DEAD) // If you accept the prompt as a corpse, you get turned into a corpse vampire, which RR's you pretty much
 						return FALSE
-
+    
 					if(HAS_TRAIT(victim, TRAIT_UNLYCKERABLE))
 						return FALSE
 
