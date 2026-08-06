@@ -38,7 +38,7 @@
 			if(HAS_TRAIT(H, TRAIT_VAMPIRE_SPAWN_PROTECTION))
 				if(!in_sunlight)
 					in_sunlight = TRUE
-					to_chat(H, span_danger("I am shielded from the Sun-Tyrant's scorn."))
+					to_chat(H, span_danger("She is ignoring me, for now. I feel very uneasy."))
 				return
 
 			if(!in_sunlight)
