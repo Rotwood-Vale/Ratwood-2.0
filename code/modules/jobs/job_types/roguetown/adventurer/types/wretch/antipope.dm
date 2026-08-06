@@ -108,10 +108,10 @@
 
 /datum/outfit/job/roguetown/wretch/antipope/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	/datum/outfit/job/roguetown/wretch/antipope/choose_miracles(H)
+	H.choose_miracles_heresiarch()
 
 
-/datum/outfit/job/roguetown/wretch/antipope/proc/choose_miracles(mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/choose_miracles_heresiarch()
 	var/t3_count = 1
 	var/t2_count = 1
 	var/t1_count = 1
@@ -135,49 +135,49 @@
 			if(patron.miracles[checked_miracle] == CLERIC_T0)
 				t0[initial(checked_miracle.name)] = checked_miracle
 	for(var/miracle in t3)
-		if(H.mind?.has_spell(t3[miracle]))
+		if(src.mind?.has_spell(t3[miracle]))
 			t3.Remove(miracle)
 	for(var/miracle in t2)
-		if(H.mind?.has_spell(t2[miracle]))
+		if(src.mind?.has_spell(t2[miracle]))
 			t2.Remove(miracle)
 	for(var/miracle in t1)
-		if(H.mind?.has_spell(t1[miracle]))
+		if(src.mind?.has_spell(t1[miracle]))
 			t1.Remove(miracle)
 	for(var/miracle in t0)
-		if(H.mind?.has_spell(t0[miracle]))
+		if(src.mind?.has_spell(t0[miracle]))
 			t0.Remove(miracle)
 	for(var/i in 1 to t3_count)
-		var/t3_choice = input(H,"Choose your Tier Three Miracle.", "TAKE UP DARK KNOWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
+		var/t3_choice = input(src,"Choose your Tier Three Miracle.", "TAKE UP DARK KNOWLEDGE ([t3_count] CHOICES REMAIN)") as anything in t3
 		if(t3_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t3[t3_choice]
-			H.mind?.AddSpell(new chosen_miracle)
+			src.mind?.AddSpell(new chosen_miracle)
 			t3.Remove(t3_choice)
 			t3_count--
 	for(var/i in 1 to t2_count)
-		var/t2_choice = input(H,"Choose your Tier Two Miracle.", "TAKE UP DARK KNOWLEDGE ([t2_count] CHOICES REMAIN)") as anything in t2
+		var/t2_choice = input(src,"Choose your Tier Two Miracle.", "TAKE UP DARK KNOWLEDGE ([t2_count] CHOICES REMAIN)") as anything in t2
 		if(t2_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t2[t2_choice]
-			H.mind?.AddSpell(new chosen_miracle)
+			src.mind?.AddSpell(new chosen_miracle)
 			t2.Remove(t2_choice)
 			t2_count--
 	for(var/i in 1 to t1_count)
-		var/t1_choice = input(H,"Choose your Tier One Miracle.", "TAKE UP DARK KNOWLEDGE ([t1_count] CHOICES REMAIN)") as anything in t1
+		var/t1_choice = input(src,"Choose your Tier One Miracle.", "TAKE UP DARK KNOWLEDGE ([t1_count] CHOICES REMAIN)") as anything in t1
 		if(t1_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t1[t1_choice]
-			H.mind?.AddSpell(new chosen_miracle)
+			src.mind?.AddSpell(new chosen_miracle)
 			t1.Remove(t1_choice)
 			t1_count--
 	for(var/i in 1 to t0_count)
-		var/t0_choice = input(H,"Choose your Tier Zero Miracle.", "TAKE UP DARK KNOWLEDGE ([t0_count] CHOICES REMAIN)") as anything in t0
+		var/t0_choice = input(src,"Choose your Tier Zero Miracle.", "TAKE UP DARK KNOWLEDGE ([t0_count] CHOICES REMAIN)") as anything in t0
 		if(t0_choice)
 			var/obj/effect/proc_holder/chosen_miracle = t0[t0_choice]
-			H.mind?.AddSpell(new chosen_miracle)
+			src.mind?.AddSpell(new chosen_miracle)
 			t0.Remove(t0_choice)
 			t0_count--
 
-	if(H.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+	if(src.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle))
+		src.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
+		src.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 
 
 /mob/living/carbon/human/proc/completesermon_evil()
@@ -273,6 +273,10 @@
 	if(!mind)
 		return
 
+	if (!COOLDOWN_FINISHED(src, switch_faith_antipope_coldown))
+		to_chat(src, span_warning("I cant switch my patrons so often."))
+		return
+
 	var/list/god_choice = list()
 	var/list/god_type = list()
 
@@ -293,7 +297,6 @@
 	if(patron && istype(patron, new_patron_type))
 		to_chat(src, span_info("You already follow [string_choice]."))
 		return
-	patron = new new_patron_type()
 	
 	//Might as well futureprof
 	var/saved_level = CLERIC_T0
@@ -301,24 +304,27 @@
 	var/saved_devotion_gain = CLERIC_REGEN_MINOR
 	var/saved_current_devotion = 0
 
-	if(target.devotion)
+	if(src.devotion)
 		saved_level = src.devotion.level
 		saved_devotion_gain = src.devotion.passive_devotion_gain
 		saved_max_progression = src.devotion.max_progression
 		saved_current_devotion = src.devotion.devotion
 
-		// Remove all granted spells
-		for(var/obj/effect/proc_holder/spell/S in target.devotion.granted_spells)
-			target.mind.RemoveSpell(S)
+		src.mind.RemoveAllMiracles()
+		if(src.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/command_undead))
+			src.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/command_undead)
+		if(src.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/gravemark))
+			src.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/gravemark)
+		src.devotion.Destroy()
 
-		target.devotion.Destroy()
-
-	// Convert to priest's patron
-	target.patron = new user.patron.type()
+	patron = new new_patron_type()
 
 	// Grant new devotion
-	var/datum/devotion/new_devotion = new /datum/devotion(target, target.patron)
-	target.devotion = new_devotion
-	new_devotion.grant_miracles(target, saved_level, saved_devotion_gain, saved_max_progression)
+	var/datum/devotion/new_devotion = new /datum/devotion(src, src.patron)
+	src.devotion = new_devotion
+	new_devotion.grant_miracles(src, saved_level, saved_devotion_gain, saved_max_progression)
+	new_devotion.devotion = saved_current_devotion
 
-	COOLDOWN_START(src, switch_faith_antipope, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
+	src.choose_miracles_heresiarch()
+
+	COOLDOWN_START(src, switch_faith_antipope_coldown, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
