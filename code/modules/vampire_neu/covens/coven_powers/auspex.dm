@@ -33,7 +33,7 @@
 /datum/coven_power/auspex/heightened_senses/activate()
 	. = ..()
 
-	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
+	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
 	owner.apply_status_effect(/datum/status_effect/buff/auspex, level)
 
 	owner.update_sight()
@@ -41,7 +41,7 @@
 /datum/coven_power/auspex/heightened_senses/deactivate()
 	. = ..()
 
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
 	owner.remove_status_effect(/datum/status_effect/buff/auspex)
 
 	owner.update_sight()
@@ -63,8 +63,8 @@
 /datum/coven_power/auspex/ear_for_lies/activate()
 	. = ..()
 
-	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
-	ADD_TRAIT(owner, TRAIT_KEENEARS, TRAIT_VAMPIRE)
+	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
+	ADD_TRAIT(owner, TRAIT_KEENEARS, VAMPIRE_TRAIT)
 	owner.apply_status_effect(/datum/status_effect/buff/auspex, level)
 
 	owner.update_sight()
@@ -72,8 +72,8 @@
 /datum/coven_power/auspex/ear_for_lies/deactivate()
 	. = ..()
 
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_KEENEARS, TRAIT_VAMPIRE)
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_KEENEARS, VAMPIRE_TRAIT)
 	owner.remove_status_effect(/datum/status_effect/buff/auspex)
 
 	owner.update_sight()
@@ -95,9 +95,9 @@
 /datum/coven_power/auspex/spirit_touch/activate()
 	. = ..()
 
-	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
-	ADD_TRAIT(owner, TRAIT_KEENEARS, TRAIT_VAMPIRE)
-	ADD_TRAIT(owner, TRAIT_PERFECT_TRACKER, TRAIT_VAMPIRE)
+	ADD_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
+	ADD_TRAIT(owner, TRAIT_KEENEARS, VAMPIRE_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PERFECT_TRACKER, VAMPIRE_TRAIT)
 	owner.apply_status_effect(/datum/status_effect/buff/auspex, level)
 
 	owner.update_sight()
@@ -105,9 +105,9 @@
 /datum/coven_power/auspex/spirit_touch/deactivate()
 	. = ..()
 
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_KEENEARS, TRAIT_VAMPIRE)
-	REMOVE_TRAIT(owner, TRAIT_PERFECT_TRACKER, TRAIT_VAMPIRE)
+	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, VAMPIRE_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_KEENEARS, VAMPIRE_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PERFECT_TRACKER, VAMPIRE_TRAIT)
 	owner.remove_status_effect(/datum/status_effect/buff/auspex)
 
 	owner.update_sight()
@@ -126,4 +126,4 @@
 	. = ..()
 	owner.visible_message("<font color='red'>[owner]'s eyes turn blank, like they are not even here.</font>", "<font color='red'>I begin to channel my consciousness into a psychic projection.</font>")
 	if(do_after(owner, 6 SECONDS, src))
-		owner.scry_ghost(/mob/dead/observer/eye/arcane)
+		owner.scry_ghost(/mob/dead/observer/rogue/arcaneeye)

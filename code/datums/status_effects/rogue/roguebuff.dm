@@ -2143,6 +2143,11 @@
 	desc = "I've sacrificed some of my learning to help me learn something new"
 	icon_state = "buff"
 
+// Vampire port from AP - IronDragoon
+/atom/movable/screen/alert/status_effect/buff/celerity
+	name = "Celerity"
+	desc = "Your body is under perfect control."
+	icon_state = "buff"
 
 /datum/status_effect/buff/celerity
 	id = "celerity"
@@ -2153,6 +2158,58 @@
 /datum/status_effect/buff/celerity/New(list/arguments)
 	effectedstats[STATKEY_SPD] = arguments[2]
 	. = ..()
+
+/datum/status_effect/buff/potence
+	id = "potence"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_STR = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/potence
+	name = "Potence"
+	desc = "I am a force of destruction."
+	icon_state = "buff"
+
+/datum/status_effect/buff/potence/New(list/arguments)
+	effectedstats[STATKEY_STR] = arguments[2]
+	. = ..()
+
+/datum/status_effect/buff/auspex
+	id = "auspex"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_PER = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/buff/auspex/New(list/arguments)
+	effectedstats[STATKEY_PER] = arguments[2]
+	. = ..()
+
+/datum/status_effect/buff/fotv
+	id = "fotv"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 1, STATKEY_CON = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/vampire_float
+	name = "Float"
+	desc = "My body is floating off the ground."
+	icon_state = "vampire_float"
+
+/datum/status_effect/buff/vampire_float
+	id = "vampire_float"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/vampire_float
+	duration = 2 MINUTES
+
+/datum/status_effect/buff/vampire_float/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("I am hovering off the ground."))
+	owner.movement_type = FLYING
+
+/datum/status_effect/buff/vampire_float/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("I fall back to the ground."))
+	owner.movement_type = GROUND
+// end of Vampire port from AP - IronDragoon
 
 /datum/status_effect/buff/fotv
 	id = "fotv"
