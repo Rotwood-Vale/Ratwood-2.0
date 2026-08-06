@@ -313,8 +313,8 @@
 
 /obj/effect/proc_holder/spell/invoked/invisibility/gnoll
 	name = "Stalk"
-	desc = "Fade from view. Lasts until you attack. Taking damage makes it impossible to go invisible for a minute."
-	recharge_time = 2 MINUTES
+	desc = "Fade from view. Lasts for 3 minutes or until you attack. Taking damage makes it impossible to go invisible for a minute."
+	recharge_time = 3 MINUTES
 	overlay_icon = 'icons/mob/actions/gnollmiracles.dmi'
 	action_icon = 'icons/mob/actions/gnollmiracles.dmi'
 	overlay_state = "stalk"
@@ -338,8 +338,11 @@
 		revert_cast()
 		return FALSE
 
-	// Practically indefinite
-	var/base_dur = 999 MINUTES
+	if(!do_after(target, 10 SECONDS))
+		revert_cast()
+		return FALSE
+
+	var/base_dur = 3 MINUTES
 
 	target.visible_message(span_warning("[target] vanishes into the scent of the hunt!"), span_notice("You vanish, the hunt guides your shadows."))
 
