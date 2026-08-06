@@ -20,6 +20,7 @@
 							/obj/structure/flora/ausbushes/ppflowers = 0.1,
 							/obj/structure/flora/ausbushes/ywflowers = 0.1,
 							/obj/item/natural/stone = 1,
+							/obj/structure/quicksand = 4,
 							/obj/item/natural/rock = 1,
 							/obj/item/magic/artifact = 0.1,
 							/obj/structure/leyline = 0.05,

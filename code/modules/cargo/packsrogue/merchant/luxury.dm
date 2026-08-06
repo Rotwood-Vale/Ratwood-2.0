@@ -121,3 +121,10 @@
 	contains = list(
 					/obj/item/rogueweapon/scabbard/sheath/royal
 				)
+
+/datum/supply_pack/rogue/luxury/sandstormgoggle
+	name = "Sandstorm Goggles"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/mask/rogue/spectacles/goggles
+				)

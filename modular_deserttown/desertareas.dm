@@ -23,9 +23,18 @@
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
 	deathsight_message = "somewhere in the dunes, next to towering walls"
 	threat_region = THREAT_REGION_DESERT_NEAR
-	
+
 /area/rogue/outdoors/desert/river
 	name = "river"
+	icon_state = "river"
+	ambientsounds = AMB_RIVERDAY
+	ambientnight = AMB_RIVERNIGHT
+	spookysounds = SPOOKY_FROG
+	spookynight = SPOOKY_FOREST
+
+/area/rogue/outdoors/desert/oasis
+	name = "Oasis"
+	first_time_text = "Forgotten Oasis"
 	icon_state = "river"
 	ambientsounds = AMB_RIVERDAY
 	ambientnight = AMB_RIVERNIGHT
@@ -43,16 +52,14 @@
 	droning_sound = 'sound/music/area/desert/Iberia1.ogg'
 	droning_sound_dusk = 'sound/music/area/desert/NightPrayer.ogg'
 	droning_sound_night = 'sound/music/area/desert/Moonrise.ogg'
-	ambush_times = list("night","dawn","dusk","day")	
+	ambush_times = list("night","dawn","dusk","day")
 	ambush_mobs = list(
 		/mob/living/carbon/human/species/skeleton/npc/ambush = 30,
-		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 60,
-		/mob/living/simple_animal/hostile/retaliate/rogue/spider/rock = 30,
-		/mob/living/carbon/human/species/goblin/npc/ambush/cave = 50,
-		/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog = 15,
-		/mob/living/carbon/human/species/skeleton/npc/bogguard = 10,
-		/mob/living/carbon/human/species/skeleton/npc/rockhill = 15,
-		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 20,
+		new /datum/ambush_config/dunewell_raider = 60,
+		new /datum/ambush_config/antlion_party = 30,
+		new /datum/ambush_config/lamia_party = 50,
+		new /datum/ambush_config/dunewell_raider/hard = 20,
+		/mob/living/simple_animal/hostile/retaliate/rogue/headless = 10,
 		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
 	converted_type = /area/rogue/indoors/shelter/desertdeep
 	deathsight_message = "an empty, parched desert"
@@ -269,7 +276,7 @@
 	droning_sound = 'sound/music/area/desert/DarMeshq.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	
+
 /area/rogue/indoors/town/garrison/desert/cell
 	name = "dungeon cell"
 	icon_state = "cell"
