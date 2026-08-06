@@ -52,7 +52,6 @@
 	var/mob/living/carbon/last_owner = null
 	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
 	var/should_regenerate = FALSE
-	var/instrumental_organ = FALSE
 
 	grid_width = 32
 	grid_height = 32
