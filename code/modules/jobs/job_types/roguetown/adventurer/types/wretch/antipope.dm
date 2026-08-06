@@ -71,6 +71,7 @@
 		/obj/item/ritechalk = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/organ/heart = 1,
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
