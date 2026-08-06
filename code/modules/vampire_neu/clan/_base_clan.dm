@@ -13,7 +13,7 @@ And it also helps for the character set panel
 	var/list/restricted_covens = list()
 	var/list/common_covens = list() //Covens that you don't start with but are easier to purchase like catiff instead of non clan discs
 
-	/// Traits every vampire gets whatever their Clan. Override extra_clan_traits instead of this one.
+	/// List of traits that are applied to members of this Clan
 	var/list/clane_traits = list(
 		TRAIT_STRONGBITE,
 		TRAIT_VAMPBITE,
@@ -28,9 +28,8 @@ And it also helps for the character set panel
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_SILVER_WEAK,
 		TRAIT_VAMPMANSION,
+		TRAIT_ZOMBIE_IMMUNE,
 	)
-	/// Traits unique to this Clan, handed out on top of clane_traits.
-	var/list/extra_clan_traits = list()
 
 	var/blood_preference = BLOOD_PREFERENCE_ALL
 
@@ -66,16 +65,12 @@ And it also helps for the character set panel
 
 	var/mob/living/clan_leader
 	var/leader_title = "Vampire Lord"
-	/// Clans that don't name their own leader still get the standard lord kit, picking one shouldn't be a trap
-	var/datum/clan_leader/leader = /datum/clan_leader/lord
+	var/datum/clan_leader/leader = /datum/clan_leader/wretch
 	/// Set to FALSE for clans that shouldn't be selectable
 	var/selectable_by_vampires = TRUE
 
 	var/covens_to_select = COVENS_PER_CLAN
-
-/// Every trait a member of this Clan gets - the ones common to all vampires, plus this Clan's own.
-/datum/clan/proc/get_clan_traits()
-	return clane_traits | extra_clan_traits
+	var/handling_organ_loss = FALSE
 
 /datum/clan/proc/get_downside_string()
 	return "burn in sunlight"
@@ -100,12 +95,11 @@ And it also helps for the character set panel
 	// Add to appropriate member lists
 	clan_members |= H
 	if(is_vampire)
-		cache_pre_embrace_state(H)
 		apply_clan_components(H)
 		RegisterSignal(H, COMSIG_HUMAN_LIFE, PROC_REF(on_vampire_life))
 
 		// Apply vampire-specific traits
-		for(var/trait in get_clan_traits())
+		for(var/trait in clane_traits)
 			ADD_TRAIT(H, trait, "clan")
 
 		implant_vampire_eyes(H)
@@ -127,7 +121,8 @@ And it also helps for the character set panel
 		H.playsound_local(get_turf(H), 'sound/music/vampintro.ogg', 80, FALSE, pressure_affected = FALSE)
 		for(var/datum/coven/coven as anything in clane_covens)
 			H.give_coven(coven)
-		H.give_coven(/datum/coven/bloodheal)
+		if(!H.covens || !H.covens["Bloodheal"])
+			H.give_coven(/datum/coven/bloodheal)
 	else
 		non_vampire_members |= H
 		// Apply non-vampire specific benefits (lighter version)
@@ -147,38 +142,6 @@ And it also helps for the character set panel
 	handle_member_joining(H, is_vampire)
 	post_gain(H)
 
-
-/// Records what the Embrace is about to overwrite so on_lose can put it back.
-/datum/clan/proc/cache_pre_embrace_state(mob/living/carbon/human/H)
-	var/datum/antagonist/vampire/vamp = H.mind?.has_antag_datum(/datum/antagonist/vampire)
-	if(!vamp || vamp.pre_embrace_state)
-		return
-
-	vamp.pre_embrace_state = list(
-		"limbs_id" = H.dna?.species?.limbs_id,
-		"cmode_music" = H.cmode_music,
-	)
-
-/// Puts back everything cache_pre_embrace_state() saved.
-/datum/clan/proc/restore_pre_embrace_state(mob/living/carbon/human/H)
-	var/datum/antagonist/vampire/vamp = H.mind?.has_antag_datum(/datum/antagonist/vampire)
-	var/list/cached = vamp?.pre_embrace_state
-	if(!cached)
-		return
-
-	H.cmode_music = cached["cmode_music"]
-
-	if(H.dna?.species)
-		H.dna.species.limbs_id = cached["limbs_id"]
-
-	var/blood_granted = cached["blood_skill_granted"]
-	if(blood_granted)
-		H.adjust_skillrank(/datum/skill/magic/blood, -blood_granted, TRUE)
-
-	vamp.pre_embrace_state = null
-
-	H.update_body()
-	H.update_body_parts(redraw = TRUE)
 
 /datum/clan/proc/apply_non_vampire_look(mob/living/carbon/human/H)
 	// Subtle changes for non-vampires - they look more human but with slight clan influence
@@ -271,6 +234,8 @@ And it also helps for the character set panel
 
 /datum/clan/proc/apply_clan_components(mob/living/carbon/human/H)
 	H.AddComponent(/datum/component/sunlight_vulnerability)
+	if (H.job == "Stray")
+		return
 	H.AddComponent(/datum/component/vampire_disguise)
 
 /datum/clan/proc/disable_covens(mob/living/carbon/human/vampire)
@@ -291,27 +256,18 @@ And it also helps for the character set panel
 /datum/clan/proc/on_lose(mob/living/carbon/human/vampire)
 	SHOULD_CALL_PARENT(TRUE)
 
-	// the organ hook has to go first, it re-implants the vampire eyes the moment we pull them out below
-	UnregisterSignal(vampire, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_ORGAN_REMOVED))
-	restore_mortal_eyes(vampire)
+	UnregisterSignal(vampire, COMSIG_HUMAN_LIFE)
+	UnregisterSignal(vampire, COMSIG_MOB_ORGAN_REMOVED)
 
 	var/datum/action/clan_menu/clan_action = locate(/datum/action/clan_menu) in vampire.actions
 	QDEL_NULL(clan_action)
 
 	// Remove unique Clan feature traits
-	for(var/trait in get_clan_traits())
+	for(var/trait in clane_traits)
 		REMOVE_TRAIT(vampire, trait, "clan")
 
-	remove_vampire_look(vampire)
-	restore_pre_embrace_state(vampire)
-
-	// clan accessory overlay applied in on_gain
-	if(current_accessory && accessories_layers[current_accessory])
-		vampire.remove_overlay(accessories_layers[current_accessory])
-
 	vampire.update_body()
-	if(vampire.dna?.species) // surely it's impossible to not have a species?
-		vampire.mob_biotypes = vampire.dna.species.inherent_biotypes
+	vampire.maxbloodpool = initial(vampire.maxbloodpool)
 
 	var/datum/component/sunlight_vulnerability/sun_comp = vampire.GetComponent(/datum/component/sunlight_vulnerability)
 	if(sun_comp)
@@ -319,11 +275,27 @@ And it also helps for the character set panel
 
 	var/datum/component/vampire_disguise/disguise_comp = vampire.GetComponent(/datum/component/vampire_disguise)
 	if(disguise_comp)
-		// it's been holding their mortal appearance since the Embrace, so use it before it goes
-		disguise_comp.restore_original_appearance(vampire)
 		qdel(disguise_comp)
 
-	vampire.verbs -= /mob/living/carbon/human/proc/disguise_verb
+	remove_verb(vampire, /mob/living/carbon/human/proc/disguise_verb)
+	remove_verb(vampire, /mob/living/carbon/human/proc/vampire_telepathy)
+
+
+	// Restore normal eyes
+	var/obj/item/organ/eyes/eyes = vampire.getorganslot(ORGAN_SLOT_EYES)
+	if(istype(eyes, /obj/item/organ/eyes/night_vision/vampire))
+		var/list/eyecache = vampire.cache_eye_color()
+		eyes.Remove(vampire, TRUE)
+		QDEL_NULL(eyes)
+		eyes = new /obj/item/organ/eyes()
+		eyes.Insert(vampire)
+		vampire.set_eye_color(eyecache["eye_color"], eyecache["second_color"], TRUE)
+
+	// Reset mob biotype to non-undead
+	vampire.mob_biotypes = initial(vampire.mob_biotypes)
+
+	// Deactivate all active coven powers before removal
+	disable_covens(vampire)
 
 	clan_members -= vampire
 
@@ -334,7 +306,9 @@ And it also helps for the character set panel
 		vampire.remove_coven(coven)
 
 	// Bloodheal coven has snowflake behavior since it is added to all vampires. So - snowflake removal.
-	vampire.remove_coven(/datum/coven/bloodheal)
+	// Covens are stored in an associative list by name, so we access by name
+	if(vampire.covens && vampire.covens["Bloodheal"])
+		vampire.remove_coven("Bloodheal")
 
 	var/list/spells_to_remove = list(
 		/datum/action/clan_menu,
@@ -347,9 +321,6 @@ And it also helps for the character set panel
 		leader.remove_leader(vampire)
 		clan_leader = null
 		handle_leadership_succession()
-
-	// last, because remove_leader() subtracts its vitae bonus off this and would leave us short
-	vampire.maxbloodpool = initial(vampire.maxbloodpool)
 
 /datum/clan/proc/handle_leadership_succession()
 	// Find someone else with a position to promote
@@ -386,17 +357,8 @@ And it also helps for the character set panel
 				to_chat(member, "<span class='notice'>[new_leader.real_name] has become the new [leader_title] of [name].</span>")
 
 
-/datum/clan/proc/get_frenzy_messages()
-	return list(
-		"A crimson haze bleeds into the edges of my sight, and the [span_danger("Beast")] shifts.",
-		"My fingers curl - they want to [span_danger("tear")], to [span_danger("crush")].",
-		"The [span_danger("thirst")] rises in my throat, and my patience burns away.",
-		"Every pulse around me is an [span_danger("invitation")] I strain not to answer.",
-		"The Beast hurls itself at its chains - it is [span_userdanger("almost loose")].",
-	)
-
 /datum/clan/proc/frenzy_message(mob/living/message)
-	to_chat(message, pick(get_frenzy_messages()))
+	to_chat(message,"I'm full of <span class='danger'><b>ANGER</b></span>, and I'm about to flare up in <span class='danger'><b>RAGE</b></span>.")
 
 /datum/clan/proc/adjust_bloodpool_size(adjust)
 	for(var/mob/living/mob as anything in clan_members)
@@ -406,31 +368,47 @@ And it also helps for the character set panel
 	H.process_vampire_life()
 
 /datum/clan/proc/setup_vampire_abilities(mob/living/carbon/human/H)
-	H.verbs |= /mob/living/carbon/human/proc/disguise_verb
-
-	H.cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg'
-
-	// need to be careful and not remove any ranks once antag datum is removed
-	var/blood_skill_target = 2
-	var/blood_granted = max(0, blood_skill_target - H.get_skill_level(/datum/skill/magic/blood))
-	H.adjust_skillrank_up_to(/datum/skill/magic/blood, blood_skill_target, TRUE)
-	var/datum/antagonist/vampire/vamp = H.mind?.has_antag_datum(/datum/antagonist/vampire)
-	if(vamp?.pre_embrace_state)
-		vamp.pre_embrace_state["blood_skill_granted"] = blood_granted
-
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix_neu)
+	if (H.job == "Stray")
+		return
+	add_verb(H, /mob/living/carbon/human/proc/disguise_verb)
+	add_verb(H, /mob/living/carbon/human/proc/vampire_telepathy)
+
+	H.adjust_skillrank_up_to(/datum/skill/magic/blood, 2, TRUE)
+
+
 
 /// Applies clan-specific vampire look.
 /datum/clan/proc/apply_vampire_look(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(FALSE)
-	H.skin_tone = "c9d3de"
-	H.set_hair_color("#181a1d", null, null, null, null, FALSE)
-	H.set_facial_hair_color("#181a1d", null, null, null, null, FALSE)
-	H.set_eye_color("#FF0000", "#FF0000", TRUE)
 	var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
-	ears?.accessory_colors = "#c9d3de"
 	var/obj/item/organ/breasts/breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
-	breasts?.accessory_colors = "#c9d3de"
+	//if the character has their vampire skin color set, use that
+	if(!isnull(H.vampire_skin))
+		H.skin_tone = sanitize_hexcolor(H.vampire_skin, 6, FALSE)
+		breasts?.accessory_colors = H.vampire_skin
+	else
+		H.skin_tone = "c9d3de"
+		breasts?.accessory_colors = "#c9d3de"
+	//if the character has their vampire hair color set, use that
+	if(!isnull(H.vampire_hair))
+		H.set_hair_color(H.vampire_hair, null, null, null, null, FALSE)
+		H.set_facial_hair_color(H.vampire_hair, null, null, null, null, FALSE)
+	else
+		H.set_hair_color("#181a1d", null, null, null, null, FALSE)
+		H.set_facial_hair_color("#181a1d", null, null, null, null, FALSE)
+	//if the character has their vampire eye color set, use that
+	if(!isnull(H.vampire_eyes))
+		H.set_eye_color(H.vampire_eyes, H.vampire_eyes, TRUE)
+	else
+		H.set_eye_color("#FF0000", "#FF0000", TRUE)
+	H.update_body()
+	H.update_body_parts(redraw = TRUE)
+	//if the character has their vampire ear color set, use that
+	if(!isnull(H.vampire_ears))
+		ears?.accessory_colors = H.vampire_ears
+	else
+		ears?.accessory_colors = H.vampire_skin
 	H.update_body()
 	H.update_body_parts(redraw = TRUE)
 
@@ -552,43 +530,33 @@ And it also helps for the character set panel
 		TRUE,
 	)
 
-/// restore the mob's old eyes once they're de-vamped
-/datum/clan/proc/restore_mortal_eyes(mob/living/carbon/human/to_restore)
-	if(!to_restore)
-		return
-
-	var/obj/item/organ/eyes/eyes = to_restore.getorganslot(ORGAN_SLOT_EYES)
-	if(!istype(eyes, /obj/item/organ/eyes/night_vision/vampire))
-		return
-
-	var/eye_type = /obj/item/organ/eyes
-	var/list/species_organs = to_restore.dna?.species?.organs
-	if(species_organs && species_organs[ORGAN_SLOT_EYES])
-		eye_type = species_organs[ORGAN_SLOT_EYES]
-
-	var/list/eyecache = to_restore.cache_eye_color()
-	eyes.Remove(to_restore, TRUE)
-	QDEL_NULL(eyes)
-	eyes = new eye_type
-	eyes.Insert(to_restore)
-	to_restore.set_eye_color(
-		eyecache["eye_color"],
-		eyecache["second_color"],
-		TRUE,
-	)
-
 /// Prevents tongue and eye loss by the vampyre
 /datum/clan/proc/on_organ_loss(mob/living/carbon/lost_organ, obj/item/organ/removed, special, drop_if_replaced)
-	if(!lost_organ || !removed)
+	if(handling_organ_loss)
 		return
 
-	if(special)
+	handling_organ_loss = TRUE
+
+	if(!lost_organ || !removed)
+		handling_organ_loss = FALSE
+		return
+
+	if(removed.slot == ORGAN_SLOT_BRAIN)
+		UnregisterSignal(lost_organ, COMSIG_MOB_ORGAN_REMOVED, PROC_REF(on_organ_loss))
+		handling_organ_loss = FALSE
 		return
 
 	if(removed.slot == ORGAN_SLOT_EYES)
 		implant_vampire_eyes(lost_organ)
-	else if(removed.slot == ORGAN_SLOT_TONGUE)
+		handling_organ_loss = FALSE
+		return
+
+	if(removed.slot == ORGAN_SLOT_TONGUE)
 		removed.Insert(lost_organ)
+		handling_organ_loss = FALSE
+		return
+
+	handling_organ_loss = FALSE
 
 /datum/clan/proc/open_clan_menu(mob/living/carbon/human/user)
 	if(!user.covens || !length(user.covens))
@@ -622,9 +590,9 @@ And it also helps for the character set panel
 	status_type = STATUS_EFFECT_REFRESH
 
 /atom/movable/screen/alert/status_effect/debuff/blood_disgust
-	name = "Sanguine Curse"
-	desc = "<span class='warning'>This type of blood does not go down well.</span>\n"
-	icon_state = "hunger2"
+	name = "Incompatible Blood"
+	desc = "<span class='artery'>This taste is so REPULSIVE it PHYSICALLY HURTS to drink...</span>\n"
+	icon_state = "vbloodx"
 
 /datum/status_effect/debuff/blood_disgust/on_apply()
 	. = ..()
@@ -637,7 +605,7 @@ And it also helps for the character set panel
 	owner.remove_stress(/datum/stressevent/bad_blood)
 
 /datum/stressevent/bad_blood
-	desc = span_warning("That blood was revolting!")
+	desc = span_artery("That blood was revolting! It churns and burns within me...")
 	stressadd = 3
 	max_stacks = 10
 	stressadd_per_extra_stack = 3
