@@ -88,6 +88,8 @@
 #include "alchemy/refining_potions/gender_swap.dm"			// 变性药水 (gender swap + organ chooser)
 #include "alchemy/refining_potions/aphrodisiac.dm"			// 媚药 (forced estrus, ERP-gated)
 #include "alchemy/refining_potions/vigor_potion.dm"			// 精力药剂 (limitless energy / endless ejaculation, ERP-gated)
+#include "alchemy/refining_potions/abstinence_potion.dm"		// 禁欲药水 (forced chastity: blocked climax, herb-based)
+#include "alchemy/refining_potions/enlargement_potion.dm"		// 丰盈药水 (temporarily enlarges sexual organs)
 #include "alchemy/refining_potions/flying.dm"				// 飞行药水 (3-minute magic flight)
 #include "alchemy/refining_potions/anticorruption.dm"		// 防腐药水 (splash: food never rots / corpse preserved)
 #include "alchemy/refining_potions/hardened_potion.dm"		// 硬化药剂 (take 20% less brute damage for the duration)
@@ -206,6 +208,10 @@
 // Custom items: 7 Witcher-style sword oils — apply to a melee weapon (3 uses/bottle, empty bottle returned);
 // 4-min coating adds +50% of the swing's damage vs its matching enemy family only (humanoid/beast/arachnid/demon/cursed/vampire/necrophage).
 #include "items/sword_oils.dm"
+// 记忆之吻：手持点击铭刻他人气息，独处时重温记忆与感受（ERP 饰品）
+#include "items/memory_kiss_token.dm"
+// 记忆之吻制作配方：炼金台，宝石x1 + 水50 → 记忆之吻，炼金1级
+#include "crafting/memory_kiss_token_recipe.dm"
 #include "weapons/magical_archery.dm"
 #include "weapons/moonlight_greatsword.dm"
 #include "admin/adminspell.dm"
