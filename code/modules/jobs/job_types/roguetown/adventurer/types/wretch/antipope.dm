@@ -99,6 +99,8 @@
 		//and any potential patreon specyfic launguthes
 		H.grant_language(/datum/language/thievescant) // mathias
 		H.grant_language(/datum/language/undead) // zizo
+		
+		ADD_TRAIT(H, TRAIT_DEATHSIGHT, "godhand") // zizo cleric trait
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
@@ -265,13 +267,58 @@
 	to_chat(src, span_warning("This one is not in a ready state to be questioned..."))
 
 /mob/living/carbon/human/proc/switch_faith_antipope()
-	set name = "Change patreon"
+	set name = "Change Patron"
 	set category = "Antipope"
 
-	var/list/patrons = list()
+	if(!mind)
+		return
+
+	var/list/god_choice = list()
+	var/list/god_type = list()
+
 	for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/inhumen])
-		var/datum/patron/patron = GLOB.patronlist[path]
-		if(!patron || !patron.name)
+		var/datum/patron/patron_choice = GLOB.patronlist[path]
+		if(!patron_choice || !patron_choice.name)
 			continue
-		patrons += patron
-	patrons.Remove(src.patreon)
+
+		god_choice += list("[patron_choice.name]" = icon(icon = 'icons/mob/overhead_effects.dmi', icon_state = "sign_[patron_choice.name]"))
+		god_type[patron_choice.name] = patron_choice.type
+
+	var/string_choice = show_radial_menu(src, src, god_choice, require_near = FALSE)
+	if(!string_choice)
+		return
+	var/new_patron_type = god_type[string_choice]
+	if(!new_patron_type)
+		return
+	if(patron && istype(patron, new_patron_type))
+		to_chat(src, span_info("You already follow [string_choice]."))
+		return
+	patron = new new_patron_type()
+	
+	//Might as well futureprof
+	var/saved_level = CLERIC_T0
+	var/saved_max_progression = CLERIC_T1
+	var/saved_devotion_gain = CLERIC_REGEN_MINOR
+	var/saved_current_devotion = 0
+
+	if(target.devotion)
+		saved_level = src.devotion.level
+		saved_devotion_gain = src.devotion.passive_devotion_gain
+		saved_max_progression = src.devotion.max_progression
+		saved_current_devotion = src.devotion.devotion
+
+		// Remove all granted spells
+		for(var/obj/effect/proc_holder/spell/S in target.devotion.granted_spells)
+			target.mind.RemoveSpell(S)
+
+		target.devotion.Destroy()
+
+	// Convert to priest's patron
+	target.patron = new user.patron.type()
+
+	// Grant new devotion
+	var/datum/devotion/new_devotion = new /datum/devotion(target, target.patron)
+	target.devotion = new_devotion
+	new_devotion.grant_miracles(target, saved_level, saved_devotion_gain, saved_max_progression)
+
+	COOLDOWN_START(src, switch_faith_antipope, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
