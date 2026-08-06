@@ -17,6 +17,7 @@
 	lockid = "nightman"
 	var/list/categories = list(
 		"Alcohols",
+		"Discreet Zads", // Zadcote port: bathhouse zad restock + spare cages
 		"Drugs",
 		"Exotic Apparel",
 		"Instruments",
