@@ -66,3 +66,36 @@
 2026-08-03:
   Xander3359:
   - bugfix: Fixed wild-kin antennas being unremovable
+2026-08-04:
+  Kroto-Ker:
+  - rscadd: Rakunvolk race title.
+  - bugfix: Busker is playable.
+  PPooch:
+  - bugfix: Ration wrapping papers are back in the Merchant's adventuring supplies.
+  ophaq:
+  - rscadd: Adds wilderness guide to LE so they don't trigger ambushes or maneaters.
+2026-08-06:
+  CloverIsLucky:
+  - qol: 'Astrata''s Lighting Spear(javeline) costs less devotion cost: From 100 to
+      50.'
+  EvenInDeathIStillServe:
+  - rscadd: 'Adds 2 head markings: tall eyes and blank face'
+  - rscadd: Adds four ears. That's one ear option called four ears.
+  Heheniy:
+  - bugfix: now can sew repair pirte tricon
+  - bugfix: '% of skill xp after 100% progress shows correctly'
+  - qol: shovel can now afflict grass tiles
+  - qol: characters who not breath or cant sense stink does not get mood debuff near
+      stinky characters
+  IronDragoon:
+  - bugfix: Dust devils should no longer be able to spawn in the enslaved adventurer
+      spawn on desert town
+  Kroto-Ker:
+  - rscadd: Heat dispersal system. Standing next to fires warms and heals you.
+  Yuckuza:
+  - balance: Deadite antag datums now get the strong bite trait.
+  ophaq:
+  - qol: Allows the dye brush to re-dye existing curtains without having to chop them
+      down.
+  skippymcspeederton-dot:
+  - balance: Added Dark Vision to Dark Elves

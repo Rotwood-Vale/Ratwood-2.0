@@ -643,6 +643,15 @@
 		hud_used.temperature.icon_state = "temphot"
 	else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
 		hud_used.temperature.icon_state = "tempveryhot"
+	var/atom/movable/screen/temperature/tempicon = hud_used.temperature
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		if(!tempicon.heated_tile)
+			tempicon.heated_tile = TRUE
+			tempicon.add_overlay("tempheated")
+	else if(tempicon.heated_tile)
+		tempicon.heated_tile = FALSE
+		tempicon.cut_overlay("tempheated")
 
 /mob/living/carbon/human/update_stamina_hud()
 	if(!hud_used || stat == DEAD || !hud_used.stamina)

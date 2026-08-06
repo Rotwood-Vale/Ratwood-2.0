@@ -56,7 +56,8 @@
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_ROTMAN,
 		TRAIT_NORUN,
-		TRAIT_SILVER_WEAK
+		TRAIT_SILVER_WEAK,
+		TRAIT_STRONGBITE,
 	)
 	/// Traits applied to the owner when we are cured and turn into just "rotmen"
 	var/static/list/traits_rotman = list(
