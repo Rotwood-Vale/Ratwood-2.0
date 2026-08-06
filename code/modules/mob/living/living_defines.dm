@@ -222,3 +222,13 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	/// Fixes to the hunger/thirst nonsense, stuffing them in species rather than mob.
+	var/hunger_stage
+	var/thirst_stage
+	var/vitae_stage
+	/// Vampire Hugbox stuff
+	var/vampire_revival_progress = 0
+	var/vampire_revival_target = 7 MINUTES // vamp timer testing goes here, base value should be 7 minutes
+	var/vampire_time_of_death = 0
+	var/vampire_resurrect_chances = 1 // 1 by default, it goes up by 1 per player you drain dry.

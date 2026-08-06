@@ -861,6 +861,19 @@
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[m1][stun_absorption[i]["examine_message"]]"
 
+	// Vampire port from AP - IronDragoon
+	if(user?.mind?.has_antag_datum(/datum/antagonist/vampire) && HAS_TRAIT(src, TRAIT_VAMPIRE_TORPOR))
+		var/time_remaining = max(0, vampire_revival_target - vampire_revival_progress)
+
+		var/total_seconds = round(time_remaining / 10)
+		var/minutes = floor(total_seconds / 60)
+		var/seconds = total_seconds % 60
+
+		if(minutes > 0)
+			msg += "<font color='#8b0000'>[m1] is in a <b>death torpor</b> and may rise in [minutes] minute[minutes == 1 ? "" : "s"], [seconds] second[seconds == 1 ? "" : "s"].</font>"
+		else
+			msg += "<font color='#8b0000'>[m1] is in a <b>death torpor</b> and may rise in [seconds] second[seconds == 1 ? "" : "s"].</font>"
+
 	if(!appears_dead)
 		if(!skipface)
 			//Disgust

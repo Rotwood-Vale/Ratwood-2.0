@@ -211,6 +211,11 @@
 /proc/pacify_corpse(mob/living/corpse, mob/user, coin_pq = PQ_GAIN_BURIAL_COIN)
 	if((corpse.stat != DEAD) || !corpse.mind)
 		return FALSE
+
+	if(HAS_TRAIT(corpse, TRAIT_VAMPIRE_TORPOR))
+		REMOVE_TRAIT(corpse, TRAIT_VAMPIRE_TORPOR, TRAIT_GENERIC)
+		user.visible_message(span_warning("The body within twitches, trembles, hits against the grave and then... stillness."))
+
 	var/attacker_ckey = corpse.lastattackerckey || TRUE
 	if(ishuman(corpse))
 		var/mob/living/carbon/human/human_corpse = corpse
