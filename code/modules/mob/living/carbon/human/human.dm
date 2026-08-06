@@ -629,7 +629,7 @@
 
 
 /mob/living/carbon/human/proc/update_temperature_hud()
-	if(isnull(hud_used.temperature) || stat == DEAD)
+	if(isnull(hud_used?.temperature) || stat == DEAD)
 		return FALSE
 	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
 		hud_used.temperature.icon_state = "tempnormal"
