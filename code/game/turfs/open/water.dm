@@ -644,12 +644,12 @@
 	for(var/atom/movable/A in contents)
 		// Dinghies only resist the current if a rider has an oar.
 		if(istype(A, /obj/vehicle/ridden/dinghy))
-			var/obj/vehicle/ridden/dinghy/D = A
+			var/obj/vehicle/ridden/dinghy/Dinghy = A
 			var/has_oar = FALSE
 
-			for(var/mob/living/L in D.buckled_mobs)
-				var/obj/item/active = L.get_active_held_item()
-				var/obj/item/inactive = L.get_inactive_held_item()
+			for(var/mob/living/Living in Dinghy.buckled_mobs)
+				var/obj/item/active = Living.get_active_held_item()
+				var/obj/item/inactive = Living.get_inactive_held_item()
 				if(istype(active, /obj/item/rogueweapon/mace/oar) || istype(inactive, /obj/item/rogueweapon/mace/oar))
 					has_oar = TRUE
 					break
@@ -658,8 +658,8 @@
 
 		// Riders don't get processed separately if buckled into a dinghy.
 		if(isliving(A))
-			var/mob/living/L = A
-			if(istype(L.buckled, /obj/vehicle/ridden/dinghy))
+			var/mob/living/Living = A
+			if(istype(Living.buckled, /obj/vehicle/ridden/dinghy))
 				continue
 
 		if(!A.anchored)

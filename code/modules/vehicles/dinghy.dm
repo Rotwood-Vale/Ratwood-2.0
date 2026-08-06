@@ -13,18 +13,18 @@
 	layer = ABOVE_MOB_LAYER
 	move_resist = 0
 	var/allowed_turf = /turf/open/water //includes all subtypes of water
-	var/obj/item/rogueweapon/mace/oar/stored_oar = null
+	var/obj/item/rogueweapon/mace/oar/stored_oar
 
 /obj/vehicle/ridden/dinghy/Initialize(mapload)
 	. = ..()
 	var/datum/component/riding/base_riding = GetComponent(/datum/component/riding)
 	if(base_riding && !istype(base_riding, /datum/component/riding/dinghy))
 		qdel(base_riding)
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding/dinghy)
-	D.keytype = /obj/item/rogueweapon/mace/oar
-	D.allowed_turf_typecache = typecacheof(allowed_turf)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 3), TEXT_SOUTH = list(0, 3), TEXT_EAST = list(-2, 3), TEXT_WEST = list(2, 3)))
-	D.set_riding_offsets(2, list(TEXT_NORTH = list(0, -5), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(-10, 3), TEXT_WEST = list(10, 3)))
+	var/datum/component/riding/Dinghy = LoadComponent(/datum/component/riding/dinghy)
+	Dinghy.keytype = /obj/item/rogueweapon/mace/oar
+	Dinghy.allowed_turf_typecache = typecacheof(allowed_turf)
+	Dinghy.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 3), TEXT_SOUTH = list(0, 3), TEXT_EAST = list(-2, 3), TEXT_WEST = list(2, 3)))
+	Dinghy.set_riding_offsets(2, list(TEXT_NORTH = list(0, -5), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(-10, 3), TEXT_WEST = list(10, 3)))
 
 /obj/vehicle/ridden/dinghy/examine(mob/user)
 	. = ..()
@@ -45,8 +45,8 @@
 	return driver_move(user, direction)
 
 /obj/vehicle/ridden/dinghy/handle_buckled_mob_movement(newloc, direct, glide_size_override)
-	for(var/m in buckled_mobs)
-		var/mob/living/buckled_mob = m
+	for(var/mob/living/mob in buckled_mobs)
+		var/mob/living/buckled_mob = mob
 		if(!buckled_mob || buckled_mob.loc == newloc)
 			continue
 		buckled_mob.forceMove(newloc)

@@ -279,16 +279,17 @@
 /datum/component/riding/dinghy/keycheck(mob/user)
 	return !keytype || user?.is_holding_item_of_type(keytype)
 
-/datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
-	var/atom/movable/AM = parent
-	restore_position(M)
-	unequip_buckle_inhands(M)
-	M.updating_glide_size = TRUE
-	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
+/datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/Mob, force = FALSE)
+	var/atom/movable/AtomMovable = parent
+	restore_position(Mob)
+	unequip_buckle_inhands(Mob)
+	Mob.updating_glide_size = TRUE
+	if(del_on_unbuckle_all && !AtomMovable.has_buckled_mobs())
 		qdel(src)
-	if(driver == M)
+		return
+	if(driver == Mob)
 		driver = null
-		for(var/mob/living/rider in AM.buckled_mobs)
+		for(var/mob/living/rider in AtomMovable.buckled_mobs)
 			driver = rider
 			break
 

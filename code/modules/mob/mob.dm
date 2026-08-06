@@ -910,7 +910,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * no transform not set
  * * we are not restrained
  */
-/mob/proc/canface(atom/A)
+/mob/proc/can_face(atom/A)
 	if(client)
 		if(world.time < client.last_turn)
 			return FALSE
@@ -951,7 +951,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	setDir(direction)
 
 ///Checks mobility move as well as parent checks
-/mob/living/canface(atom/A)
+/mob/living/can_face(atom/A)
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	var/is_dinghy_buckled = istype(buckled, /obj/vehicle/ridden/dinghy)
 	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE) && !is_dinghy_buckled)
@@ -988,17 +988,15 @@ GLOBAL_VAR_INIT(mobids, 1)
 		for(var/obj/item/grabbing/G in grabbedby) // only chokeholds prevent turning
 			if(G.chokehold)
 				return FALSE
-	if(!animal_mount && IsImmobilized() && !is_dinghy_buckled)
-		return FALSE
 	return ..()
 
-/mob/dead/observer/canface()
+/mob/dead/observer/can_face()
 	return TRUE
 
 ///Hidden verb to turn east
 /mob/verb/eastface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	apply_face_direction(EAST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
@@ -1007,7 +1005,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn west
 /mob/verb/westface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	apply_face_direction(WEST)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
@@ -1016,7 +1014,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn north
 /mob/verb/northface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	apply_face_direction(NORTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
@@ -1025,7 +1023,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn south
 /mob/verb/southface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	apply_face_direction(SOUTH)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
