@@ -32,6 +32,8 @@
 	var/frenzy_chance_boost = 10
 	var/humanity = 7
 
+	var/last_telepathy_use = 0
+
 	var/potence_weapon_buff = 0
 
 	/// List of covens this mob possesses

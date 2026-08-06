@@ -277,8 +277,9 @@ And it also helps for the character set panel
 	if(disguise_comp)
 		qdel(disguise_comp)
 
-	remove_verb(vampire, /mob/living/carbon/human/proc/disguise_verb)
-	remove_verb(vampire, /mob/living/carbon/human/proc/vampire_telepathy)
+	// Not sure how we remove verbs currently, need to check this. It may happen anyway but if not need to figure a workaround
+	// remove_verb(vampire, /mob/living/carbon/human/proc/disguise_verb)
+	// remove_verb(vampire, /mob/living/carbon/human/proc/vampire_telepathy)
 
 
 	// Restore normal eyes
@@ -371,8 +372,8 @@ And it also helps for the character set panel
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix_neu)
 	if (H.job == "Stray")
 		return
-	add_verb(H, /mob/living/carbon/human/proc/disguise_verb)
-	add_verb(H, /mob/living/carbon/human/proc/vampire_telepathy)
+	H.verbs |= /mob/living/carbon/human/proc/disguise_verb
+	H.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
 
 	H.adjust_skillrank_up_to(/datum/skill/magic/blood, 2, TRUE)
 

@@ -133,6 +133,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
+	var/vampire_skin = null // Vamp prefs from AP Port - IronDragoon
+	var/vampire_eyes = null
+	var/vampire_hair = null
+	var/vampire_ears = null
+
 	//Quirk list
 	var/list/all_quirks = list()
 
@@ -1471,8 +1476,33 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				dat += "<b>[capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 			else
 				dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=antag;task=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
-
-
+	// AP Vampire port, adding this framework so other antag stuff can be added. Likely want to migrate Gnoll prefs to in here also
+	dat += "<br><br>Antag appearances will update when you close and reopen the Special Roles window"
+	dat += "<br><b>Vampire Headshot:</b> <a href='?_src_=prefs;preference=vampire_headshot;task=input'>Change</a>"
+	if(vampire_headshot_link != null)
+		dat += "<br><img src='[vampire_headshot_link]' width='100px' height='100px'>"
+	dat += "<br><b>Vampire Skin Color: </b>"
+	if (!isnull(vampire_skin))
+		dat += "<a href='?_src_=prefs;preference=vampire_skin;task=input'> <span style='border: 1px solid #161616; background-color: [vampire_skin ? vampire_skin : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a> <a href='?_src_=prefs;preference=vampire_skin_clear;task=input'>clear</a>"
+	else
+		dat += "<a href='?_src_=prefs;preference=vampire_skin;task=input'>(C)</a>"
+	dat += "<br><b>Vampire Eye Color:</b>"
+	if (!isnull(vampire_eyes))
+		dat += "<a href='?_src_=prefs;preference=vampire_eyes;task=input'> <span style='border: 1px solid #161616; background-color: [vampire_eyes ? vampire_eyes : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vampire_eyes_clear;task=input'>clear</a></a>"
+	else
+		dat += "<a href='?_src_=prefs;preference=vampire_eyes;task=input'>(C)</a>"
+	dat += "<br><b>Vampire Hair Color:</b> "
+	if (!isnull(vampire_hair))
+		dat += "<a href='?_src_=prefs;preference=vampire_hair;task=input'> <span style='border: 1px solid #161616; background-color: [vampire_hair ? vampire_hair : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vampire_hair_clear;task=input'>clear</a></a>"
+	else
+		dat += "<a href='?_src_=prefs;preference=vampire_hair;task=input'>(C)</a>"
+	dat += "<br><b>Vampire Ear Color:</b> "
+	if (!isnull(vampire_ears))
+		dat += "<a href='?_src_=prefs;preference=vampire_ears;task=input'> <span style='border: 1px solid #161616; background-color: [vampire_ears ? vampire_ears : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vampire_ears_clear;task=input'>clear</a></a>"
+	else
+		dat += "<a href='?_src_=prefs;preference=vampire_ears;task=input'>(C)</a>"
+	dat += "<BR><b>Quicksilver Resistant:</b> <a href='?_src_=prefs;preference=qsr;task=input'>[qsr_pref ? "Yes" : "No"]</a>"
+	dat += "</body>"
 	dat += "</body>"
 
 	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Role</div>", 250, 300) //no reason not to reuse the occupation window, as it's cleaner that way

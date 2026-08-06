@@ -759,6 +759,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
+	S["vampire_skin"]		>> vampire_skin
+	S["vampire_hair"]		>> vampire_hair
+	S["vampire_eyes"]		>> vampire_eyes
+	S["vampire_ears"]		>> vampire_ears
 	S["family"]				>> family
 	S["gender_choice"] 		>> gender_choice
 	S["setspouse"] 			>> setspouse
