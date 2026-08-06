@@ -3,6 +3,8 @@
 //Gets the ability to torture, recycled from normal heretic, combined with EVIL sermons and some extra miracles from other Inhumen patrons.
 #define EVIL_PRIEST_SERMON_COOLDOWN (30 MINUTES)
 #define EVIL_PRIEST_SWITCH_FAITH_COOLDOWN (10 MINUTES)
+#define EVIL_PRIEST_ANNOUNCEMENT_COOLDOWN (5 MINUTES)
+
 /datum/advclass/wretch/antipope
 	name = "Heresiarch" //formerly Doomsayer
 	tutorial = "They are pretentious. They are weak. They are complacent. And they are hopeless. But you. You will change this. \
@@ -87,6 +89,7 @@
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 		H.verbs |= /mob/living/carbon/human/proc/switch_faith_antipope
+		H.verbs |= /mob/living/carbon/human/proc/church_evil_announcement
 
 		H.mind.current.faction += "[H.name]_faction" // for necromancing
 
@@ -329,7 +332,7 @@
 
 	COOLDOWN_START(src, switch_faith_antipope_coldown, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
 
-/mob/living/carbon/human/proc/church_evil_announcement() // Shares coldown with priest anouncment so i dont bloat cooldown declares further
+/mob/living/carbon/human/proc/church_evil_announcement() // Like the bishop's announcement, but needs a cross next to you and has a longer coldown
 	set name = "Announcement"
 	set category = "Antipope"
 
@@ -352,16 +355,15 @@
 		var/found_structure = FALSE
 		var/list/search_area = view(1, src)
 		var/chanelling_cross = null
-		for(var/obj/A in search_area)
-			if(istype(A, /obj/structure/fluff/psycross))
-				if(istype(A, /obj/structure/fluff/psycross/zizocross) || istype(A, /obj/structure/fluff/psycross/graggarcross) || istype(A, /obj/structure/fluff/psycross/baothacross) || istype(A, /obj/structure/fluff/psycross/matthioscross))
-					A.visible_message(span_notice("The unholy cross starts to glow with an otherworldly light."), runechat_message = TRUE)
-					found_structure = TRUE
-					chanelling_cross = A
+		for(var/obj/structure/fluff/psycross/A in search_area)
+			if(istype(A, /obj/structure/fluff/psycross/zizocross) || istype(A, /obj/structure/fluff/psycross/graggar) || istype(A, /obj/structure/fluff/psycross/baotha) || istype(A, /obj/structure/fluff/psycross/matthios))
+				A.visible_message(span_notice("Unholy cross starts to glow with an otherworldly light."))
+				found_structure = TRUE
+				chanelling_cross = A
 				break
 
 		if(!found_structure)
-			to_chat(user, span_warning("I need a cross of one of the Four to empower my words."))
+			to_chat(src, span_warning("I need a cross of one of the Four to empower my words."))
 			return FALSE
 		
 		visible_message(span_warning("[src] takes a deep breath, preparing to speak something to the glowing cross.."))
@@ -369,7 +371,7 @@
 			
 			found_structure = FALSE
 			search_area = view(1, src)
-			for(var/obj/A in search_area)
+			for(var/obj/structure/fluff/psycross/A in search_area)
 				if(A == chanelling_cross)
 					found_structure = TRUE
 					break
@@ -380,7 +382,7 @@
 			visible_message(span_notice("[src] speaks to the cross, and the words echo across the realm!"))
 			say(announcementinput)
 			priority_announce("[announcementinput]", "Heresiarch preaches", 'sound/misc/bell.ogg', sender = src)
-			COOLDOWN_START(src, priest_announcement, PRIEST_ANNOUNCEMENT_COOLDOWN * 2) // Double the coldown since your gods have to intervene to even let you do so, and EVIL announcment shoudnt be spamable
+			COOLDOWN_START(src, priest_announcement, EVIL_PRIEST_ANNOUNCEMENT_COOLDOWN) // Double and a half the coldown since your gods have to intervene to even let you do so, and EVIL announcment shoudnt be spamable
 		else
 			to_chat(src, span_warning("Your announcement was interrupted!"))
 			return FALSE
