@@ -14,17 +14,36 @@
 	move_resist = 0
 	var/allowed_turf = /turf/open/water //includes all subtypes of water
 	var/obj/item/rogueweapon/mace/oar/stored_oar
+	var/list/riding_offset_all
+	var/list/riding_offset_2
 
 /obj/vehicle/ridden/dinghy/Initialize(mapload)
 	. = ..()
+	riding_offset_all = list(TEXT_NORTH = list(0, 3), TEXT_SOUTH = list(0, 3), TEXT_EAST = list(-2, 3), TEXT_WEST = list(2, 3))
+	riding_offset_2 = list(TEXT_NORTH = list(0, -5), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(-10, 3), TEXT_WEST = list(10, 3))
+
 	var/datum/component/riding/base_riding = GetComponent(/datum/component/riding)
 	if(base_riding && !istype(base_riding, /datum/component/riding/dinghy))
 		qdel(base_riding)
 	var/datum/component/riding/Dinghy = LoadComponent(/datum/component/riding/dinghy)
-	Dinghy.keytype = /obj/item/rogueweapon/mace/oar
 	Dinghy.allowed_turf_typecache = typecacheof(allowed_turf)
-	Dinghy.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 3), TEXT_SOUTH = list(0, 3), TEXT_EAST = list(-2, 3), TEXT_WEST = list(2, 3)))
-	Dinghy.set_riding_offsets(2, list(TEXT_NORTH = list(0, -5), TEXT_SOUTH = list(0, 11), TEXT_EAST = list(-10, 3), TEXT_WEST = list(10, 3)))
+	Dinghy.set_riding_offsets(RIDING_OFFSET_ALL, riding_offset_all)
+	Dinghy.set_riding_offsets(2, riding_offset_2)
+	ADD_TRAIT(src, TRAIT_OAR_PROPELLED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_ALLOWS_BUCKLED_FACING, INNATE_TRAIT)
+
+/obj/vehicle/ridden/proc/is_resisting_current()
+	return FALSE
+
+
+/obj/vehicle/ridden/dinghy/is_resisting_current()
+	if(!HAS_TRAIT(src, TRAIT_OAR_PROPELLED))
+		return FALSE
+	for(var/mob/living/Living in buckled_mobs)
+		for(var/obj/item/I in Living.held_items)
+			if(HAS_TRAIT(I, TRAIT_OAR))
+				return TRUE
+	return FALSE
 
 /obj/vehicle/ridden/dinghy/examine(mob/user)
 	. = ..()
@@ -101,6 +120,14 @@
 
 	return ..()
 
+/obj/vehicle/ridden/dinghy/post_buckle_mob(mob/living/M)
+	. = ..()
+	ADD_TRAIT(M, TRAIT_ON_BOAT, "BOAT_TRAIT")
+
+/obj/vehicle/ridden/dinghy/post_unbuckle_mob(mob/living/M)
+	. = ..()
+	REMOVE_TRAIT(M, TRAIT_ON_BOAT, "BOAT_TRAIT")
+
 /obj/item/rogueweapon/mace/oar
 	name = "oar"
 	desc = "A wooden club with a flattened head for paddling boats about."
@@ -110,6 +137,10 @@
 	force = 15
 	wdefense = 10
 	smeltresult = null
+
+/obj/item/rogueweapon/mace/oar/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_OAR, INNATE_TRAIT)
 
 /datum/crafting_recipe/roguetown/survival/oar
 	name = "Oar (1 Log, 2 Fibers)"

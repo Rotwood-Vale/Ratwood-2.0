@@ -924,7 +924,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(stat != CONSCIOUS)
 		return FALSE
-	if(buckled && !get_buckled_animal_mount() && !istype(buckled, /obj/vehicle/ridden/dinghy))
+	if(buckled && !get_buckled_animal_mount() && !HAS_TRAIT(buckled, TRAIT_ALLOWS_BUCKLED_FACING))
 		return FALSE
 	return TRUE
 

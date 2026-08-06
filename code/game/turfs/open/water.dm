@@ -202,7 +202,6 @@
 			qdel(F)
 	if(isliving(AM) && !AM.throwing)
 		var/mob/living/L = AM
-		var/in_dinghy = istype(L.buckled, /obj/vehicle/ridden/dinghy)
 		if(HAS_TRAIT(L, TRAIT_CURSE_ABYSSOR))
 			L.freak_out()
 			L.visible_message(span_warning("[L] spasms violently upon touching the water!"), span_danger("The water... it burns me!"))
@@ -211,7 +210,7 @@
 		if (istype(src,/turf/open/water/bloody))
 			L.add_mob_blood(L)
 
-		if(!(L.movement_type & FLYING) && !in_dinghy)
+		if(!(L.movement_type & FLYING) && !HAS_TRAIT(L, TRAIT_ON_BOAT))
 			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
 				L.SoakMob(FULL_BODY)
 			else
@@ -230,9 +229,11 @@
 						if(AM.loc == src)
 							water_overlay.layer = ABOVE_MOB_LAYER
 							water_overlay.plane = GAME_PLANE_HIGHEST
-
-			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+			if(HAS_TRAIT(L, TRAIT_WATERBREATHING)&& temperature <= 250 && L.bodytemperature > BODYTEMP_NORMAL_MIN + 10)	//abyssorites+axian no longer get cold from river
 				L.adjust_bodytemperature(-5)
+			else if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				L.adjust_bodytemperature(-5)
+
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -642,32 +643,18 @@
 		return
 	var/found_movable = FALSE
 	for(var/atom/movable/A in contents)
-		// Dinghies only resist the current if a rider has an oar.
-		if(istype(A, /obj/vehicle/ridden/dinghy))
-			var/obj/vehicle/ridden/dinghy/Dinghy = A
-			var/has_oar = FALSE
-
-			for(var/mob/living/Living in Dinghy.buckled_mobs)
-				var/obj/item/active = Living.get_active_held_item()
-				var/obj/item/inactive = Living.get_inactive_held_item()
-				if(istype(active, /obj/item/rogueweapon/mace/oar) || istype(inactive, /obj/item/rogueweapon/mace/oar))
-					has_oar = TRUE
-					break
-			if(has_oar)
-				break
-
-		// Riders don't get processed separately if buckled into a dinghy.
+		if(istype(A, /obj/vehicle/ridden) && HAS_TRAIT(A, TRAIT_OAR_PROPELLED))
+			var/obj/vehicle/ridden/Vehicle = A
+			if(Vehicle.is_resisting_current())
+				continue
 		if(isliving(A))
 			var/mob/living/Living = A
-			if(istype(Living.buckled, /obj/vehicle/ridden/dinghy))
+			if(istype(Living.buckled, /obj/vehicle/ridden))
 				continue
-
 		if(!A.anchored)
 			found_movable = TRUE
 			if(A.loc == src)
 				A.ConveyorMove(dir)
-
-	// stop processing once there's nothing left to move
 	if(!found_movable)
 		STOP_PROCESSING(SSrivers, src)
 		return

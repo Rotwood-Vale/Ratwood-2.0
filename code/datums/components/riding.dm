@@ -277,7 +277,10 @@
 		slowed = FALSE
 
 /datum/component/riding/dinghy/keycheck(mob/user)
-	return !keytype || user?.is_holding_item_of_type(keytype)
+	for(var/obj/item/I in user.held_items)
+		if(HAS_TRAIT(I, TRAIT_OAR))
+			return TRUE
+	return FALSE
 
 /datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/Mob, force = FALSE)
 	var/atom/movable/AtomMovable = parent
