@@ -152,3 +152,15 @@
 	name = "回忆药剂瓶"
 	desc = "一瓶预装的回忆药剂，饮下足量并待其消化后，会被沉睡的记忆牵引、送回上一次安睡之处。"
 	list_reagents = list(/datum/reagent/memory_potion = 30)                       // 预装 30 单位（与其精炼产量一致，30 >= 5 触发阈值）。
+
+// 禁欲药水（强制贞洁）：压制高潮、维持快感，约 8 分钟。预装 50 单位（与其精炼产量一致）。
+/obj/item/reagent_containers/glass/bottle/rogue/forced_chastity
+	name = "禁欲药水瓶"
+	desc = "一瓶预装的禁欲药水，饮下后快感堆积却无法高潮——欲泄而不能的甜蜜酷刑。"
+	list_reagents = list(/datum/reagent/forced_chastity_potion = 50)              // 预装 50 单位（与其精炼产量一致）。
+
+// 丰盈药水：临时增大性器官尺寸，约 5 分钟。预装 30 单位（与其精炼产量一致）。
+/obj/item/reagent_containers/glass/bottle/rogue/enlargement
+	name = "丰盈药水瓶"
+	desc = "一瓶预装的丰盈药水，饮下后一股暖流蔓延全身——某些部位会暂时比平时更加饱满丰腴。"
+	list_reagents = list(/datum/reagent/enlargement_potion = 30)                 // 预装 30 单位（与其精炼产量一致）。
