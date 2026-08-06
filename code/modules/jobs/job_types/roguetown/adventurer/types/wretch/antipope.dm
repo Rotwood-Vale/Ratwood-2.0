@@ -328,3 +328,59 @@
 	src.choose_miracles_heresiarch()
 
 	COOLDOWN_START(src, switch_faith_antipope_coldown, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
+
+/mob/living/carbon/human/proc/church_evil_announcement() // Shares coldown with priest anouncment so i dont bloat cooldown declares further
+	set name = "Announcement"
+	set category = "Antipope"
+
+	if(stat)
+		return
+
+	if (istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		to_chat(src, span_warning("I can't do this here! They'll know!"))
+		return FALSE
+
+	var/announcementinput = input("Spread Their word", "Make an Announcement") as text|null
+	if(announcementinput)
+		if(!src.can_speak_vocal())
+			to_chat(src,span_warning("I can't speak!"))
+			return FALSE
+		if (!COOLDOWN_FINISHED(src, priest_announcement))
+			to_chat(src, span_warning("You must wait before speaking again."))
+			return
+	
+		var/found_structure = FALSE
+		var/list/search_area = view(1, src)
+		var/chanelling_cross = null
+		for(var/obj/A in search_area)
+			if(istype(A, /obj/structure/fluff/psycross))
+				if(istype(A, /obj/structure/fluff/psycross/zizocross) || istype(A, /obj/structure/fluff/psycross/graggarcross) || istype(A, /obj/structure/fluff/psycross/baothacross) || istype(A, /obj/structure/fluff/psycross/matthioscross))
+					A.visible_message(span_notice("The unholy cross starts to glow with an otherworldly light."), runechat_message = TRUE)
+					found_structure = TRUE
+					chanelling_cross = A
+				break
+
+		if(!found_structure)
+			to_chat(user, span_warning("I need a cross of one of the Four to empower my words."))
+			return FALSE
+		
+		visible_message(span_warning("[src] takes a deep breath, preparing to speak something to the glowing cross.."))
+		if(do_after(src, 15 SECONDS, target = src))
+			
+			found_structure = FALSE
+			search_area = view(1, src)
+			for(var/obj/A in search_area)
+				if(A == chanelling_cross)
+					found_structure = TRUE
+					break
+			if(!found_structure)
+				to_chat(src, span_warning("The cross is no longer present!"))
+				return FALSE
+
+			visible_message(span_notice("[src] speaks to the cross, and the words echo across the realm!"))
+			say(announcementinput)
+			priority_announce("[announcementinput]", "Heresiarch preaches", 'sound/misc/bell.ogg', sender = src)
+			COOLDOWN_START(src, priest_announcement, PRIEST_ANNOUNCEMENT_COOLDOWN * 2) // Double the coldown since your gods have to intervene to even let you do so, and EVIL announcment shoudnt be spamable
+		else
+			to_chat(src, span_warning("Your announcement was interrupted!"))
+			return FALSE
