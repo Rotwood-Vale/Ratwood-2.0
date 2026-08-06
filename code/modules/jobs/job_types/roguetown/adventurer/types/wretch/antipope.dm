@@ -2,6 +2,7 @@
 //Locked to Inhumen. Powerful support class with, however, very limited combat potential.
 //Gets the ability to torture, recycled from normal heretic, combined with EVIL sermons and some extra miracles from other Inhumen patrons.
 #define EVIL_PRIEST_SERMON_COOLDOWN (30 MINUTES)
+#define EVIL_PRIEST_SWITCH_FAITH_COOLDOWN (10 MINUTES)
 /datum/advclass/wretch/antipope
 	name = "Heresiarch" //formerly Doomsayer
 	tutorial = "They are pretentious. They are weak. They are complacent. And they are hopeless. But you. You will change this. \
@@ -84,6 +85,9 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
+		H.verbs |= /mob/living/carbon/human/proc/switch_faith_antipope
+
+		H.mind.current.faction += "[H.name]_faction" // for necromancing
 
 		//gives hieresiath faith traits of every assendant patron 
 		for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/inhumen])
@@ -101,6 +105,10 @@
 
 /datum/outfit/job/roguetown/wretch/antipope/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
+	/datum/outfit/job/roguetown/wretch/antipope/choose_miracles(H)
+
+
+/datum/outfit/job/roguetown/wretch/antipope/proc/choose_miracles(mob/living/carbon/human/H)
 	var/t3_count = 1
 	var/t2_count = 1
 	var/t1_count = 1
@@ -165,9 +173,9 @@
 			t0_count--
 
 	if(H.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle))
-		H.mind?.current.faction += "[H.name]_faction"
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+
 
 /mob/living/carbon/human/proc/completesermon_evil()
 	set name = "Inhumen Sermon"
@@ -254,3 +262,15 @@
 		H.confess_sins("patron")
 		return
 	to_chat(src, span_warning("This one is not in a ready state to be questioned..."))
+
+/mob/living/carbon/human/proc/switch_faith_antipope()
+	set name = "Change patreon"
+	set category = "Antipope"
+
+	var/list/patrons = list()
+	for(var/path as anything in GLOB.patrons_by_faith[/datum/faith/inhumen])
+		var/datum/patron/patron = GLOB.patronlist[path]
+		if(!patron || !patron.name)
+			continue
+		patrons += patron
+	patrons.Remove(src.patreon)
