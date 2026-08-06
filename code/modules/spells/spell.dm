@@ -703,8 +703,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(user.mmb_intent && user.mmb_intent.mob_light)
 		QDEL_NULL(user.mmb_intent.mob_light)
-	if(mob_charge_effect)
-		QDEL_NULL(mob_charge_effect)
 	START_PROCESSING(SSfastprocess, src) // ensure we always end up reprocessing after casting
 
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
