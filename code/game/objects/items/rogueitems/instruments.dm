@@ -245,7 +245,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 /obj/item/rogue/instrument/equipped(mob/living/user, slot)
 	. = ..()
 	if(playing && user.get_active_held_item() != src)
-		stop_music(user)
+		stop_music(user) 
 
 /obj/item/rogue/instrument/getonmobprop(tag)
 	. = ..()
