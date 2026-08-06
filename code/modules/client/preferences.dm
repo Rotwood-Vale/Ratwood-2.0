@@ -133,10 +133,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
-	var/vampire_skin = null // Vamp prefs from AP Port - IronDragoon
+	// Vamp prefs from AP Port - IronDragoon
+	var/vampire_headshot_link
+	var/vampire_skin = null 
 	var/vampire_eyes = null
 	var/vampire_hair = null
 	var/vampire_ears = null
+	var/qsr_pref = FALSE
 
 	//Quirk list
 	var/list/all_quirks = list()

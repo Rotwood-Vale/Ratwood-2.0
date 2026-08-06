@@ -72,13 +72,10 @@ GLOBAL_LIST_INIT(vampire_clan_selection_i18n, build_vampire_clan_selection_i18n(
 		"vitaeBonus" = 0
 	))
 
-	var/lang = user?.client?.preferred_ui_language || DEFAULT_PREFERRED_UI_LANGUAGE
 	data["clans"] = clans
 	data["selectedClanId"] = selected_is_custom ? "custom" : "[selected_clan_type]"
 	data["pendingCustomName"] = pending_custom_name
 	data["defaultClanName"] = "Nosferatu"
-	data["language"] = lang
-	data["i18nOverrides"] = GLOB.vampire_clan_selection_i18n[lang]
 	return data
 
 /datum/vampire_clan_selection_menu/ui_act(action, list/params)

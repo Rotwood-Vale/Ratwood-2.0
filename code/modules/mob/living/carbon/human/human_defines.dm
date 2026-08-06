@@ -164,6 +164,7 @@
 	var/original_voice
 
 	// Setting up vars for vampire color values, ported from AP - IronDragoon
+	var/vampire_headshot_link
 	var/vampire_skin = null
 	var/vampire_eyes = null
 	var/vampire_hair = null
