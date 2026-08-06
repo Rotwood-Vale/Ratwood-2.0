@@ -397,6 +397,11 @@ Inquisitorial armory down here
 		for(var/mob/living/carbon/human/H in view(get_turf(src)))
 			if(H.patron?.type == /datum/patron/old_god)	//Psydonites get VERY depressed seeing an artifact get turned into an ulapool caber.
 				H.add_stress(/datum/stressevent/syoncalamity)
+		if(isliving(A))//THEY'LL HAVE TO GLUE YOU BACK TOGETHER IN HELL
+			var/mob/living/target = A
+			target.gib()
+		if(user != A && isliving(user))
+			user.gib()
 	if(isitem(A) && on && user.used_intent.type == /datum/intent/bless)
 		var/datum/component/silverbless/CP = A.GetComponent(/datum/component/silverbless)
 		if(CP)
