@@ -28,9 +28,18 @@
 		H.adjust_skillrank_up_to(/datum/skill/magic/blood, 4, TRUE)
 		var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(generation = GENERATION_NEONATE)
 		H.mind.add_antag_datum(new_antag)
+		H.apply_status_effect(STATUS_EFFECT_VAMPIRE_SPAWN_PROTECTION)
+		REMOVE_TRAIT(H, TRAIT_OUTLAW, JOB_TRAIT)
+		if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE))
+			REMOVE_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, null)
+		if(HAS_TRAIT(H, TRAIT_RAGE))
+			REMOVE_TRAIT(H, TRAIT_RAGE, null)
+		to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards.")) //giving this notice, since its part of the bounty system
+		if(HAS_TRAIT(H, TRAIT_DNR))
+			ADD_TRAIT(H, TRAIT_DUSTABLE, TRAIT_GENERIC)//give DNR vampires the option to turn to dust
 
 /datum/reagent/vampsolution
-	metabolization_rate = 1
+	metabolization_rate = 0.5
 
 /datum/reagent/vampsolution/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(30)

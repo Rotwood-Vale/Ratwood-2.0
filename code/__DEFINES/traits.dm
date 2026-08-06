@@ -562,7 +562,10 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	TRAIT_DUSTABLE = span_warning("If I die that is for the end for me, I will turn to dust."),
+	TRAIT_SECONDLIFE = span_warning("I may be granted another chance upon death, but who knows where I'll end up..."),
+	TRAIT_QUICKSILVERRESISTANT = span_warning("Quick silver won't work to cure me..."),
 ))
 
 // trait accessor defines
@@ -915,5 +918,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COVEN_BANE "coven_bane"
 #define TRAIT_COVEN_RESISTANT "coven_resistance"
 #define TRAIT_MOVEMENT_BLOCKED "movement_blocked"
+
+#define TRAIT_DUSTABLE "Dustable"
+#define TRAIT_DUST_LEAVE_HEAD "Dust Leave Head"
+#define TRAIT_DUST_DELETE_GEAR "Dust Delete Gear"
+#define TRAIT_SECONDLIFE "Second Life"
+#define TRAIT_QUICKSILVERRESISTANT "Quicksilver Resistance"
 /// Mobs that have this trait cannot be extinguished
 #define TRAIT_NO_EXTINGUISH "no_extinguish"

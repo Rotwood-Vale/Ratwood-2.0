@@ -55,13 +55,28 @@
 		SSdroning.kill_loop(client)
 		SSdroning.kill_rain(client)
 
+	// Dusting deaths - IronDragoon
+	if(!gibbed && HAS_TRAIT(src, TRAIT_DUSTABLE))
+		if(HAS_TRAIT(src, TRAIT_DUST_LEAVE_HEAD))
+			var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+			if(head)
+				head.drop_limb()
+		var/delete_gear = HAS_TRAIT(src, TRAIT_DUST_DELETE_GEAR)
+		if(delete_gear)
+			for(var/obj/item/gear in get_equipped_items(TRUE) + held_items)
+				qdel(gear)
+		dust(just_ash=TRUE, drop_items=!delete_gear)
+		return
+
 	if(mind)
 		if(!gibbed)
-			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
-			if(VD)
-				dust(just_ash=TRUE,drop_items=TRUE)
-				return
-
+			var/has_secondlife = HAS_TRAIT(mind.current, TRAIT_SECONDLIFE)
+			if(has_secondlife)
+				var/respawn_time = 5 SECONDS
+				var/datum/mind/playermind = mind
+				addtimer(CALLBACK(src, PROC_REF(secondliferespawn), playermind), respawn_time, TIMER_UNIQUE)
+				REMOVE_TRAIT(mind.current,TRAIT_SECONDLIFE,TRAIT_GENERIC)
+		
 		var/datum/antagonist/lich/L = mind.has_antag_datum(/datum/antagonist/lich)
 		if (L && !L.out_of_lives)
 			if(L.consume_phylactery())
@@ -203,3 +218,34 @@
 				CA.adjust_triumphs(-1)
 			CA.add_stress(/datum/stressevent/viewgib)
 	return ..()
+
+/mob/living/carbon/human/proc/secondliferespawn(datum/mind/mind)
+	var/mob_type = /mob/living/carbon/human
+	var/turf/T = get_turf(src)
+	var/mob/living/body
+
+	//drop everything they had on the ground
+	if(T)
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			for(var/obj/item/I as anything in BP.embedded_objects)
+				I.forceMove(T)
+
+	if(mind.current)
+		if(mind.current.stat != DEAD)
+			return
+		else
+			body = mind.current
+	if(!body)
+		body = new mob_type(T)
+		var/mob/ghostie = mind.get_ghost(TRUE)
+		if(ghostie.client && ghostie.client.prefs)
+			ghostie.client.prefs.copy_to(body)
+		mind.transfer_to(body)
+	else
+		body.forceMove(pick(GLOB.secondlife_respawns))
+		body.revive(full_heal = TRUE, admin_revive = TRUE)
+	mind.grab_ghost(TRUE)
+	body.flash_act()
+
+	playsound(T, 'sound/magic/antimagic.ogg', 50, TRUE)

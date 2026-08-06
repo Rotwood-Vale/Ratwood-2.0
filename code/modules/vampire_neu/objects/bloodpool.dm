@@ -170,9 +170,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	data["maxCupDeposit"] = max_cup_deposit
 	data["activeProjects"] = active_project_data
 	data["availableProjects"] = available_project_data
-	var/lang = user?.client?.preferred_ui_language || DEFAULT_PREFERRED_UI_LANGUAGE
-	data["language"] = lang
-	data["i18nOverrides"] = GLOB.crimson_crucible_i18n[lang]
 	return data
 
 /obj/structure/vampire/bloodpool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
