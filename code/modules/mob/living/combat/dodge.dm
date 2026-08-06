@@ -232,6 +232,10 @@
 			to_chat(src, span_info("Roll to dodge... [prob2defend]%"))
 		if(!prob(prob2defend))
 			return FALSE
+
+	// Should only show success cause it terminates earlier otherwise
+	if(src.client)
+		log_combat(src, user, "dodged", null, defense_log_note(user))
 	dodgecd = TRUE
 	playsound(src, 'sound/combat/dodge.ogg', 100, FALSE)
 	throw_at(turfy, 1, 2, src, FALSE)

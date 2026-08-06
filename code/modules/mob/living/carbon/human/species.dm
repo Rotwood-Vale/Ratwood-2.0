@@ -1356,7 +1356,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
-		log_combat(user, target, "punched")
+		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 		if(ishuman(user) && user.mind)
 			var/text = "[bodyzone2readablezone(selzone)]..."
 			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
@@ -1487,7 +1487,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user
 				)
 				to_chat(user, span_danger("I shove [target.name], knocking them down!"))
-				log_combat(user, target, "shoved", "knocking them down")
+				log_combat(user, target, "shoved", null, "knocking them down")
 
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
@@ -1500,7 +1500,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				)
 				to_chat(user, span_danger("I shove [target.name] onto \the [target_table]!"))
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-				log_combat(user, target, "shoved", "onto [target_table] (table)")
+				log_combat(user, target, "shoved", null, "onto [target_table] (table)")
 
 			else if(target_collateral_mob)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
@@ -1513,7 +1513,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user
 				)
 				to_chat(user, span_danger("I shove [target.name] into [target_collateral_mob.name]!"))
-				log_combat(user, target, "shoved", "into [target_collateral_mob.name]")
+				log_combat(user, target, "shoved", null, "into [target_collateral_mob.name]")
 
 		else
 			target.visible_message(
@@ -1582,7 +1582,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					target.stop_pulling(TRUE)
 					playsound(target.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 
-			log_combat(user, target, "shoved", append_message)
+			log_combat(user, target, "shoved", null, append_message)
 
 //shameless copypaste
 /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -1631,7 +1631,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						span_danger("[user] crushes me underneath them![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I crush [target] underneath myself![target.next_attack_msg.Join()]"))
 			target.next_attack_msg.Cut()
-			log_combat(user, target, "kicked")
+			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 			if(ishuman(user) && user.mind)
 				var/text = "[bodyzone2readablezone(selzone)]..."
@@ -1759,7 +1759,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.visible_message(span_danger("[user.name] tailslams [target.name]!"),
 								span_danger("I'm tailslammed by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, span_danger("I slam [target.name] with my tail!"))
-			log_combat(user, target, "kicked")
+			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 
 		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)

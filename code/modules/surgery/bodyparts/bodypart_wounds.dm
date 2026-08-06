@@ -327,6 +327,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -407,6 +409,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -539,6 +543,7 @@
 		if(owner.client)
 			winset(owner.client, "outputwindow.output", "max-lines=1")
 			winset(owner.client, "outputwindow.output", "max-lines=100")
+			log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 
 
 	for(var/wound_type in shuffle(attempted_wounds))
@@ -546,6 +551,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 

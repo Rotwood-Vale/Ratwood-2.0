@@ -956,8 +956,10 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true.
+/// Values store as dicts, fields below, so readers match instead of parsing prose. The parent writes disk logs from
+/// the raw message argument, so none of the metadata reaches them.
+/mob/log_message(message, message_type, color=null, log_globally = TRUE, event = null, list/witnesses = null, target = null, attacker = null, receipt = FALSE)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
@@ -972,15 +974,24 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/colored_message = message
+	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
+	// would show as literal text
+	var/list/entry_value = list("msg" = message)
 	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
+		entry_value["color"] = color
+	if(event)
+		entry_value["event"] = event
+	if(witnesses)
+		entry_value["witnesses"] = witnesses
+	if(target)
+		entry_value["target"] = target
+	if(attacker)
+		entry_value["attacker"] = attacker
+	if(receipt)
+		entry_value["receipt"] = TRUE
 
 	//Removed sorting by message type, now sorts by timestamp regardless of message type
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = entry_value)
 
 	logging[smessage_type] += timestamped_message
 

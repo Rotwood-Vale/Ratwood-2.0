@@ -448,6 +448,7 @@
 			if(owner.client)
 				winset(owner.client, "outputwindow.output", "max-lines=1")
 				winset(owner.client, "outputwindow.output", "max-lines=100")
+				log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 		var/dislocation_type
 		var/fracture_type = /datum/wound/fracture/head
 		var/necessary_damage = 0.9
@@ -515,6 +516,8 @@
 		if(applied)
 			if(user?.client)
 				GLOB.azure_round_stats[STATS_CRITS_MADE]++
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 

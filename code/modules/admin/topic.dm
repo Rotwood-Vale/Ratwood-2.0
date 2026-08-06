@@ -1202,7 +1202,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
+		//a highlight toggle pinged from the POV page's javascript, record it and do not re-render
+		if(href_list["povhl"])
+			usr.client.toggle_pov_highlight(M, href_list["log_src"], href_list["pov_mode"], href_list["povhl"])
+			return
+
+		//same for the filter checkboxes, so a page turn keeps what was filtered out
+		if(href_list["povfilter"])
+			usr.client.set_pov_filters(M, href_list["log_src"], href_list["pov_mode"], href_list["povfilter"])
+			return
+
+		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"] || INDIVIDUAL_ATTACK_LOG, text2num(href_list["log_page"]) || 1, href_list["pov_mode"], href_list["pov_paging"], text2num(href_list["page_len"]) || 0, text2num(href_list["pov_tail"]), href_list["pov_focus"], href_list["pov_fresh"], text2num(href_list["pov_at"]))
 	else if(href_list["languagemenu"])
 		if(!check_rights(R_ADMIN))
 			return

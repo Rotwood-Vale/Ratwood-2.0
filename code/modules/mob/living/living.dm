@@ -1143,7 +1143,6 @@
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
-	log_combat(src, null, "surrendered")
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
@@ -1158,10 +1157,14 @@
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
+	log_combat(src, src, "surrendered")
+	log_admin("([key_name(src)]) surrendered at [AREACOORD(src)].")
+	SSblackbox.record_feedback("tally", "submit", 1, "surrenders")
 
 /mob/living/proc/end_submit()
 	surrendering = 0
 	update_mobility()
+	log_combat(src, src, "stopped surrendering")
 
 /mob/living/proc/toggle_compliance()
 	set name = "Toggle Compliance"
