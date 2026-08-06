@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(quest_components)
-
 /datum/component/quest_object
 	var/datum/weakref/quest_ref
 	var/is_mob = FALSE
@@ -10,10 +8,10 @@ GLOBAL_LIST_EMPTY(quest_components)
 /datum/component/quest_object/Initialize(datum/quest/target_quest)
 	if(!override_compatibility && !isitem(parent) && !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	quest_ref = WEAKREF(target_quest)
 	is_mob = ismob(parent)
-	
+
 	if(!no_outline)
 		if(is_mob)
 			var/mob/M = parent
@@ -28,13 +26,11 @@ GLOBAL_LIST_EMPTY(quest_components)
 			RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_dropped))
 
 	RegisterSignal(target_quest, COMSIG_PARENT_QDELETING, PROC_REF(on_quest_deleted))
-	GLOB.quest_components += src
 
 /datum/component/quest_object/Destroy()
-	GLOB.quest_components -= src
 	if(QDELETED(parent))
 		return ..()
-		
+
 	var/datum/quest/Q = quest_ref?.resolve()
 	if(Q && !Q.complete && isitem(parent))
 		var/obj/item/I = parent
@@ -42,7 +38,7 @@ GLOBAL_LIST_EMPTY(quest_components)
 		if(Q.quest_type == QUEST_COURIER && (Q.target_delivery_item && istype(I, Q.target_delivery_item)) && !QDELETED(I))
 			Q.target_delivery_item = null
 			qdel(I)
-	
+
 	return ..()
 
 /datum/component/quest_object/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -51,9 +47,9 @@ GLOBAL_LIST_EMPTY(quest_components)
 	var/datum/quest/Q = quest_ref.resolve()
 	if(!Q || Q.complete)
 		return
-	
+
 	var/list/user_scrolls = find_quest_scrolls(user)
-	for(var/obj/item/paper/scroll/quest/scroll in user_scrolls)
+	for(var/obj/item/quest_writ/scroll in user_scrolls)
 		var/datum/quest/user_quest = scroll.assigned_quest
 		if(user_quest && ((user_quest.quest_type == QUEST_RETRIEVAL && istype(parent, user_quest.target_item_type)) || \
 						(user_quest.quest_type == QUEST_COURIER && istype(parent, user_quest.target_delivery_item))))
@@ -68,17 +64,17 @@ GLOBAL_LIST_EMPTY(quest_components)
 		return
 
 	var/list/user_scrolls = find_quest_scrolls(user)
-	for(var/obj/item/paper/scroll/quest/scroll in user_scrolls)
+	for(var/obj/item/quest_writ/scroll in user_scrolls)
 		var/datum/quest/user_quest = scroll.assigned_quest
-		if(user_quest && (user_quest.quest_type in list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_OUTLAW)) && istype(parent, user_quest.target_mob_type))
+		if(user_quest && (user_quest.quest_type in list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY)) && istype(parent, user_quest.target_mob_type))
 			examine_list += span_notice("This looks like the target of your quest: [user_quest.title]!")
-			if(Q.target_spawn_area != get_area(get_turf(src)))
+			if(Q.target_spawn_area != get_area_name(get_turf(parent)))
 				examine_list += span_notice("It was last reported in the [Q.target_spawn_area] area, however.")
 			break
 
 /datum/component/quest_object/proc/find_quest_scrolls(atom/container)
 	var/list/scrolls = list()
-	for(var/obj/item/paper/scroll/quest/Q in container)
+	for(var/obj/item/quest_writ/Q in container)
 		scrolls += Q
 	for(var/obj/item/storage/S in container)
 		scrolls += find_quest_scrolls(S)
@@ -88,12 +84,11 @@ GLOBAL_LIST_EMPTY(quest_components)
 	SIGNAL_HANDLER
 
 	var/datum/quest/Q = quest_ref.resolve()
-	if(!Q || Q.complete || !istype(dead_mob, Q.target_mob_type))
+	if(!Q || Q.complete)
 		return
 
 	dead_mob.remove_filter("quest_item_outline")
 
-	// Notify quest of progress
 	Q.progress_current++
 	Q.on_progress_update()
 
@@ -106,29 +101,57 @@ GLOBAL_LIST_EMPTY(quest_components)
 
 	if(QDELETED(parent))
 		return
-	
+
 	var/datum/quest/Q = quest_ref?.resolve()
-	
+
 	if(ismob(parent))
 		var/mob/M = parent
 		M.remove_filter(outline_filter_id)
 	else if(isitem(parent))
 		var/obj/item/I = parent
 		I.remove_filter(outline_filter_id)
-		// Only delete the item if it's part of an incomplete fetch or courier quest
-		if(Q && !Q.complete && ((Q.quest_type == QUEST_RETRIEVAL && istype(I, Q.target_item_type)) || (Q.quest_type == QUEST_COURIER && istype(I, Q.target_delivery_item))))
-			qdel(I)
+		if(Q && !Q.complete)
+			if(Q.quest_type == QUEST_RETRIEVAL && Q.target_item_type && istype(I, Q.target_item_type))
+				qdel(I)
+			else if(Q.quest_type == QUEST_COURIER && Q.target_delivery_item && istype(I, Q.target_delivery_item))
+				qdel(I)
 	qdel(src)
 
 // ==================== SPECIALIZED COMPONENT SUBTYPES ====================
 
-/// Component for kill/clearout/outlaw quests - handles mob death
+/// Component for kill quests - tallies a guardian's death toward quest progress.
 /datum/component/quest_object/kill
+	var/counted = FALSE
 
 /datum/component/quest_object/kill/Initialize(datum/quest/target_quest)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+
+/datum/component/quest_object/kill/on_target_death(mob/living/dead_mob, gibbed)
+	dead_mob?.remove_filter("quest_item_outline")
+	count_kill()
+
+/datum/component/quest_object/kill/proc/on_parent_qdel(datum/source)
+	SIGNAL_HANDLER
+	count_kill()
+
+/// Guard against double-counting when a mob both dies and is later qdeleted.
+/datum/component/quest_object/kill/proc/count_kill()
+	if(counted)
+		return
+	counted = TRUE
+	var/datum/quest/Q = quest_ref?.resolve()
+	if(!Q || Q.complete)
+		return
+	var/datum/quest/kill/KQ = Q
+	if(istype(KQ))
+		KQ.on_guardian_killed()
+		if(!KQ.kills_count_progress)
+			return
+	Q.progress_current++
+	Q.on_progress_update()
 
 /// Component for retrieval quests - handles item collection
 /datum/component/quest_object/retrieval
@@ -175,32 +198,31 @@ GLOBAL_LIST_EMPTY(quest_components)
 	if(!istype(drop_area, Q.target_delivery_location))
 		return
 
-	// Handle parcel delivery
 	if(istype(dropped_item, /obj/item/parcel))
 		var/obj/item/parcel/parcel = dropped_item
-		if(parcel.contained_item && istype(parcel.contained_item, Q.target_delivery_item))
-			parcel.remove_filter(outline_filter_id)
-			if(parcel.contained_item)
-				parcel.contained_item.remove_filter(outline_filter_id)
-
-			// Notify quest of progress
-			Q.progress_current++
-			Q.on_progress_update()
-			return
-
-	// Handle direct item delivery
-	else if(istype(dropped_item, Q.target_delivery_item))
-		dropped_item.remove_filter(outline_filter_id)
-
-		// Notify quest of progress
+		parcel.remove_filter(outline_filter_id)
+		for(var/obj/item/I as anything in parcel.contained_items)
+			I.remove_filter(outline_filter_id)
 		Q.progress_current++
 		Q.on_progress_update()
 		return
 
-/// Component for kill quest spawners
+	else if(istype(dropped_item, Q.target_delivery_item))
+		dropped_item.remove_filter(outline_filter_id)
+		Q.progress_current++
+		Q.on_progress_update()
+		return
+
+/// Attached to the quest_spawn effect holding a dormant kill mob; tears the effect down when
+/// the quest is deleted so no orphaned spawn effects linger.
 /datum/component/quest_object/mob_spawner
 	override_compatibility = TRUE
 	no_outline = TRUE
+
+/datum/component/quest_object/mob_spawner/Initialize(datum/quest/target_quest)
+	. = ..()
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
 
 /datum/component/quest_object/mob_spawner/on_quest_deleted(datum/source)
 	if(QDELETED(parent))
@@ -208,3 +230,4 @@ GLOBAL_LIST_EMPTY(quest_components)
 
 	qdel(parent)
 	qdel(src)
+

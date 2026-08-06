@@ -109,7 +109,7 @@
 		/obj/item/roguegear,
 	)
 	var/list/excluded_materials = list(
-		/obj/item/ingot/aalloy,
+		/obj/item/ingot/aaslag,
 	)
 	var/list/excluded_material_parents = list()
 	var/list/default_disabled_materials = list(
@@ -118,7 +118,7 @@
 		/obj/item/ingot/silverblessed,
 		/obj/item/ingot/silverblessed/bullion,
 		/obj/item/ingot/steelholy,
-		/obj/item/ingot/purifiedaalloy,
+		/obj/item/ingot/gilbranze,
 	)
 	var/list/disabled_materials = list()
 	var/list/allowed_categories = list(
@@ -465,7 +465,7 @@
 	if(!locked)
 		return ..()
 
-	if(istype(P, /obj/item/roguecoin/aalloy) || istype(P, /obj/item/roguecoin/inqcoin))
+	if(istype(P, /obj/item/roguecoin/gilbranze) || istype(P, /obj/item/roguecoin/inqcoin))
 		return
 	if(istype(P, /obj/item/roguecoin))
 		var/key = escrow_key(user)

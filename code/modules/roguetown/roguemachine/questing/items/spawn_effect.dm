@@ -8,25 +8,27 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/atom/movable/contained_atom
-	var/datum/proximity_monitor/proximity_monitor
 
 /obj/effect/quest_spawn/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 7)
 
 /obj/effect/quest_spawn/Destroy(force)
-	. = ..()
 	QDEL_NULL(contained_atom)
+	// Must QDEL, not null: only the monitor's own Destroy() runs QDEL_LIST(checkers), and this
+	// spawner has 225 of them (range 7). Assigning null instead orphans every checker on the map
+	// with a dangling monitor, and each one runtimes on Crossed() for the rest of the round.
 	QDEL_NULL(proximity_monitor)
+	. = ..()
 
 /obj/effect/quest_spawn/HasProximity(mob/nearby)
 	if(!contained_atom)
 		return
 
-	if(!isliving(nearby) || !nearby.ckey)
+	if(!istype(nearby))
 		return
 
-	var/datum/component/quest_object/quest_component = contained_atom.GetComponent(/datum/component/quest_object)
+	var/datum/component/quest_object/quest_component = GetComponent(/datum/component/quest_object)
 	if(!istype(quest_component))
 		return
 
@@ -34,8 +36,15 @@
 	if(!istype(quest))
 		return
 
-	var/atom/scroll = quest.quest_scroll_ref?.resolve()
-	if(!scroll || get_dist(get_turf(src), get_turf(scroll)) > 7)
+	if(get_dist(get_turf(src), get_turf(quest.quest_scroll_ref?.resolve())) > 7)
+		return
+
+	// Pop every spawner this quest owns at once so the whole encounter materializes together.
+	quest.pop_all_spawners()
+
+/// Materializes the contained mob onto our turf with the warning flash + sound.
+/obj/effect/quest_spawn/proc/reveal_contained()
+	if(!contained_atom)
 		return
 
 	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = get_turf(src), icon_state = "mobwarning", layer = 18)
