@@ -2958,6 +2958,7 @@
 #include "code\modules\vampire_neu\covens\_base_coven.dm"
 #include "code\modules\vampire_neu\covens\coven_unlock_menu.dm"
 #include "code\modules\vampire_neu\covens\coven_powers\_base_power.dm"
+#include "code\modules\vampire_neu\covens\coven_powers\auspex.dm"
 #include "code\modules\vampire_neu\covens\coven_powers\bloodheal.dm"
 #include "code\modules\vampire_neu\covens\coven_powers\celerity.dm"
 #include "code\modules\vampire_neu\covens\coven_powers\demonic.dm"
