@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "ghosts can no longer make you close your eyes while looking through your eyes"
