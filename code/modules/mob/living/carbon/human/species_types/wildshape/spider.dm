@@ -154,15 +154,8 @@
 
 /obj/item/rogueweapon/spider_fang/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
-
-/obj/item/rogueweapon/spider_fang/attack_self(mob/living/user)
-	var/obj/item/rogueweapon/spider_fang/active = user.get_active_held_item()
-	var/obj/item/rogueweapon/spider_fang/inactive = user.get_inactive_held_item()
-	if(active)
-		user.dropItemToGround(active, TRUE)
-	if(inactive && inactive != active)
-		user.dropItemToGround(inactive, TRUE)
 
 // SPIDER SPELLS //
 /obj/effect/proc_holder/spell/self/spiderfangs
@@ -178,22 +171,24 @@
 	..()
 	var/obj/item/rogueweapon/spider_fang/left/l
 	var/obj/item/rogueweapon/spider_fang/right/r
-	var/active = user.get_active_held_item()
-	var/inactive = user.get_inactive_held_item()
 
-	if(istype(active, /obj/item/rogueweapon/spider_fang) || istype(inactive, /obj/item/rogueweapon/spider_fang))
-		if(istype(active, /obj/item/rogueweapon/spider_fang))
-			user.dropItemToGround(active, TRUE)
-		if(istype(inactive, /obj/item/rogueweapon/spider_fang) && inactive != active)
-			user.dropItemToGround(inactive, TRUE)
-		to_chat(user, span_notice("My fangs retract."))
+	l = user.get_active_held_item()
+	r = user.get_inactive_held_item()
+	if(extended)
+		if(istype(l, /obj/item/rogueweapon/spider_fang))
+			user.dropItemToGround(l, TRUE)
+			qdel(l)
+		if(istype(r, /obj/item/rogueweapon/spider_fang))
+			user.dropItemToGround(r, TRUE)
+			qdel(r)
+		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")
 		extended = FALSE
 	else
-		l = new(user, 1)
-		r = new(user, 2)
+		l = new(user,1)
+		r = new(user,2)
 		user.put_in_hands(l, TRUE, FALSE, TRUE)
 		user.put_in_hands(r, TRUE, FALSE, TRUE)
-		to_chat(user, span_notice("My fangs extend."))
+		//user.visible_message("Your claws extend.", "You feel your claws extending.", "You hear a sound of claws extending.")
 		extended = TRUE
 
 /obj/effect/proc_holder/spell/self/createhoney

@@ -23,6 +23,6 @@
 
 /datum/skill/magic/druidic
 	name = "Druidic Trickery"
-	desc = "Governs mastery over Dendor's nature rites. Unlocks higher tiers of animal transformation. Permits use of fey circles at Expert rank. Gates access to the Sanctified Tree's rituals by rank — from Novice through Master. Gained by completing tree bounties, sanctifying trees, and harvesting crops as a Dendor patron."
+	desc = "Currently only increases the tier of animals you are allowed to transform into - capping out at Tier 3."
 	expert_name = "Druid"
-	max_skillbook_level = 3
+	max_skillbook_level = 0
