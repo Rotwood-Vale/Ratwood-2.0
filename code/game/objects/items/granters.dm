@@ -292,15 +292,6 @@
 	icon_state ="scrolldarkred"
 	remarks = list("Ventos adversos..", "Terra sibilat..", "Lapides vetusti..")
 
-
-/obj/item/book/granter/spell/blackstone/aerosolize
-	name = "Scroll of Aerosolize"
-	spell = /obj/effect/proc_holder/spell/invoked/aerosolize
-	spellname = "Aerosolize"
-	icon_state ="scrolldarkred"
-	remarks = list("Lapides corrodunt..", "Spuma venenosa..", "Guttae flavescentes..")
-
-
 /obj/item/book/granter/spell/blackstone/guidance
 	name = "Scroll of Guidance"
 	spell = /obj/effect/proc_holder/spell/invoked/guidance
@@ -387,6 +378,12 @@
 	var/spellpoints = 3
 	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
 	pickup_sound =  'sound/blank.ogg'
+
+/obj/item/book/granter/spell_points/already_known(mob/user)
+	if(LAZYLEN(user.mind?.spell_point_pools))
+		to_chat(user, span_warning("My specialized training prevents me from absorbing this kind of knowledge."))
+		return TRUE
+	return ..()
 
 /obj/item/book/granter/spell_points/on_reading_finished(mob/user)
 	var/arcaneskill = user.get_skill_level(/datum/skill/magic/arcane)

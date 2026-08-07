@@ -43,7 +43,7 @@
 				to_chat(user, span_warning("The body is wracked by toxicity."))
 			if(150 to INFINITY)
 				to_chat(user, span_necrosis("The body is devastated by toxicity."))
-		
+
 		return TRUE
 	revert_cast()
 	return FALSE
@@ -128,7 +128,7 @@
 			// Try to attach the limb
 			if(limb.attach_limb(human_target))
 				human_target.visible_message(
-					span_info("\The [limb] attaches itself to [human_target]!"), 
+					span_info("\The [limb] attaches itself to [human_target]!"),
 					span_notice("\The [limb] attaches itself to me!")
 				)
 				attached_count++
@@ -183,7 +183,7 @@
 			// Try to insert the organ
 			if(organ.Insert(human_target))
 				human_target.visible_message(
-					span_info("\The [organ] attaches itself to [human_target]!"), 
+					span_info("\The [organ] attaches itself to [human_target]!"),
 					span_notice("\The [organ] attaches itself to me!")
 				)
 				attached_count++
@@ -271,6 +271,9 @@
 	var/atom/target = targets[1]
 	if(isliving(target))
 		var/mob/living/carbon/M = target
+		if(spell_guard_check(M, TRUE))
+			M.visible_message(span_warning("[M] wards off the pestilent vermin!"))
+			return TRUE
 		M.visible_message(span_warning("[M] is surrounded by a cloud of pestilent vermin!"), span_notice("You surround [M] in a cloud of pestilent vermin!"))
 		M.apply_status_effect(/datum/status_effect/buff/infestation/) //apply debuff
 		SEND_SIGNAL(src, COMSIG_INFESTATION_CHARGE_ADD, 10)
@@ -444,7 +447,7 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/cure_rot/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/cure_rot/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		return FALSE
 	var/found = null
@@ -520,7 +523,7 @@
 	devotion_cost = 45
 	var/datum/component/infestation_charges/charge_component
 
-/obj/effect/proc_holder/spell/invoked/pestra_heal/cast_check(skipcharge = 0, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/pestra_heal/cast_check(skipcharge, mob/user = usr)
 	if(!..())
 		return FALSE
 	if(!charge_component)
@@ -635,7 +638,7 @@
 	devotion_cost = 25
 	var/datum/component/infestation_charges/charge_component
 
-/obj/effect/proc_holder/spell/invoked/pestilent_blade/cast_check(skipcharge = 0, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/pestilent_blade/cast_check(skipcharge, mob/user = usr)
 	if(!..())
 		return FALSE
 

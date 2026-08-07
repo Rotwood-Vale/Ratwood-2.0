@@ -13,6 +13,7 @@
 	overlay_state = "prestidigitation"
 	chargedrain = 0
 	chargetime = 0
+	skipcharge = TRUE
 	releasedrain = 5 // this influences -every- cost involved in the spell's functionality, if you want to edit specific features, do so in handle_cost
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane

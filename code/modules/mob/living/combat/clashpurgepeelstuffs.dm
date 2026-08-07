@@ -20,13 +20,13 @@
 	if(H.has_status_effect(/datum/status_effect/buff/clash))	//They also have Clash active. It'll trigger the special event.
 		clash(user, IM, IU)
 	else	//Otherwise, we just riposte them.
-		var/sharpnesspenalty = 0.15
+		var/sharpnesspenalty = RIPOSTE_SHARPNESS_FACTOR
 		if(IM.wbalance == WBALANCE_HEAVY || IU.blade_dulling == DULLING_SHAFT_CONJURED)
 			sharpnesspenalty += 0.05
 		if(IU.max_blade_int)
 			IU.remove_bintegrity((IU.blade_int * sharpnesspenalty), user)
 		else
-			var/integdam = max((IU.max_integrity / 5), (INTEG_PARRY_DECAY_NOSHARP * 5))
+			var/integdam = max((IU.max_integrity / RIPOSTE_INTEG_DIVISOR), (INTEG_PARRY_DECAY_NOSHARP * 5))
 			if(IU.blade_dulling == DULLING_SHAFT_CONJURED)
 				integdam *= 2
 			IU.take_damage(integdam, BRUTE, IM.d_type)
@@ -67,7 +67,7 @@
 		skilldiff = skilldiff - HU.get_skill_level(IU.associated_skill)
 	else
 		instantwin = TRUE	//THEY are Guarding with a book or something -- no chance for them.
-	
+
 	//Weapon checks.
 	var/lengthdiff = IM.wlength - IU.wlength //The longer the weapon the better.
 	var/wieldeddiff = IM.wielded - IU.wielded //If ours is wielded but theirs is not.
@@ -85,7 +85,7 @@
 			prob_us += 10
 		else if(statdiff <= -2)
 			prob_opp += 10
-	
+
 	for(var/wepdiff in wepdiffs)
 		if(wepdiff > 0)
 			prob_us += 10
@@ -97,7 +97,7 @@
 		prob_us += 10
 	else if(wildcard < 0 )
 		prob_opp += 10
-	
+
 	//Small bonus to the first one to strike in a Clash.
 	var/initiator_bonus = rand(5, 10)
 	prob_us += initiator_bonus
@@ -134,15 +134,15 @@
 			disarmed(IM)
 		if(instantwin)
 			HU.disarmed(IU)
-	
+
 	remove_status_effect(/datum/status_effect/buff/clash)
 	HU.remove_status_effect(/datum/status_effect/buff/clash)
 
-///Proc that will try to throw the src's held I and throw it 1 - 5 tiles to their side. 
+///Proc that will try to throw the src's held I and throw it 1 - 5 tiles to their side.
 ///At the moment it doesn't have a get_active_held_item() failsafe, so the I has to be defined first.
 ///This is due to, uh, bad code.
 /mob/living/carbon/human/proc/disarmed(obj/item/I)
-	visible_message(span_suicide("[src] is disarmed!"), 
+	visible_message(span_suicide("[src] is disarmed!"),
 					span_boldwarning("I'm disarmed!"))
 	var/turnangle = (prob(50) ? 270 : 90)
 	var/turndir = turn(dir, turnangle)
@@ -201,12 +201,12 @@
 	var/min_target = min(HT.STASTR, HT.STACON, HT.STAWIL, HT.STAINT, HT.STAPER, HT.STASPD)
 	var/max_user = min(max(STASTR, STACON, STAWIL, STAINT, STAPER, STASPD), 14)
 	var/min_user = min(STASTR, STACON, STAWIL, STAINT, STAPER, STASPD)
-	
+
 	if(max_target > max_user)
 		finalprob -= max_target
 	if(min_target > min_user)
 		finalprob -= 3 * min_target
-	
+
 	if(max_target < max_user)
 		finalprob += max_user
 	if(min_target < min_user)
@@ -233,7 +233,7 @@
 	for(var/slot in slots)
 		if(isnull(slot) || !istype(slot, /obj/item/clothing))
 			slots.Remove(slot)
-	
+
 	var/highest_ac = ARMOR_CLASS_NONE
 
 	for(var/obj/item/clothing/C in slots)
@@ -248,11 +248,11 @@
 		if(mainh && istype(mainh, /obj/item/clothing))
 			var/obj/item/clothing/CMH = mainh
 			if(CMH.armor_class > highest_ac)
-				highest_ac = CMH.armor_class 
+				highest_ac = CMH.armor_class
 		if(offh && istype(offh, /obj/item/clothing))
 			var/obj/item/clothing/COH = offh
 			if(COH.armor_class > highest_ac)
-				highest_ac = COH.armor_class 
-	
+				highest_ac = COH.armor_class
+
 	return highest_ac
 

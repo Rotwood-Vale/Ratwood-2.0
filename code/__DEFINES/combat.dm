@@ -385,6 +385,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
 #define INTEG_PARRY_DECAY_NOSHARP	5	//Integrity decay on parry for weapons with no sharpness OR for off-hand parries.
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
 #define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
 #define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
@@ -400,3 +402,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
 #define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
 #define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.
+
+//Cast time reduction
+#define TOPER_CAST_TIME_REDUCTION 0.1
+#define EMERALD_CAST_TIME_REDUCTION 0.15
+#define SAPPHIRE_CAST_TIME_REDUCTION 0.2
+#define QUARTZ_CAST_TIME_REDUCTION 0.25
+#define RUBY_CAST_TIME_REDUCTION 0.3
+#define DIAMOND_CAST_TIME_REDUCTION 0.35
+#define RIDDLE_OF_STEEL_CAST_TIME_REDUCTION 0.4

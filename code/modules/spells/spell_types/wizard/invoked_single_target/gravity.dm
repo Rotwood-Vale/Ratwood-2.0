@@ -23,7 +23,7 @@
 	gesture_required = TRUE
 	range = 7
 	var/delay = 5
-	var/damage = 0 // damage based off your str 
+	var/damage = 0 // damage based off your str
 	var/area_of_effect = 0
 
 
@@ -34,21 +34,24 @@
 	for(var/turf/affected_turf in view(area_of_effect, T))
 		if(affected_turf.density)
 			continue
-			
+
 
 	for(var/turf/affected_turf in view(area_of_effect, T))
-	
+
 		new /obj/effect/temp_visual/gravity_trap(affected_turf)
-	
+
 		playsound(T, 'sound/magic/gravity.ogg', 80, TRUE, soundping = FALSE)
 
 		sleep(delay)
 		new /obj/effect/temp_visual/gravity(affected_turf)
-		for(var/mob/living/L in affected_turf.contents) 
+		for(var/mob/living/L in affected_turf.contents)
 			if(L.anti_magic_check())
-				visible_message(span_warning("The gravity fades away around you [L] "))  //antimagic needs some testing
+				L.visible_message(span_warning("The gravity fades away around [L]!"))
 				playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
-				return TRUE
+				continue
+			if(spell_guard_check(L, TRUE))
+				L.visible_message(span_warning("[L] stands firm against the crushing force!"))
+				continue
 
 			if(L.STASTR <= 15)
 				L.adjustBruteLoss(60)
@@ -58,8 +61,8 @@
 				L.OffBalance(10)
 				L.adjustBruteLoss(15)
 				to_chat(L, "<span class='userdanger'>You're magically weighed down, and your strength resist!</span>")
-			
-			
+
+
 	return TRUE
 /obj/effect/temp_visual/gravity
 	icon = 'icons/effects/effects.dmi'

@@ -26,6 +26,9 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		user.visible_message("<font color='yellow'>[user] makes a fist at [target]!</font>")
+		if(spell_guard_check(target, TRUE))
+			target.visible_message(span_warning("[target] endures the crushing pressure!"))
+			return TRUE
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon = target
 			if(carbon.patron?.type != /datum/patron/divine/abyssor)
@@ -64,6 +67,9 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		user.visible_message("<font color='yellow'>[user] raises a hand towards [target]!</font>")
+		if(spell_guard_check(target, TRUE))
+			target.visible_message(span_warning("[target] stands firm against the undertow!"))
+			return TRUE
 		var/turf/targettile = get_turf(target)
 		if(istype(targettile, /turf/open/water))
 			target.Knockdown(10)
@@ -219,7 +225,7 @@
 			return FALSE
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD))
 			target.visible_message(span_danger("[target] is crushed by divine pressure!"), span_userdanger("I'm crushed by divine pressure!"))
-			target.adjustBruteLoss(30)			
+			target.adjustBruteLoss(30)
 			return TRUE
 
 		var/conditional_buff = FALSE
@@ -330,12 +336,12 @@
 /obj/effect/proc_holder/spell/invoked/call_dreamfiend/cast(list/targets, mob/living/user)
 	. = ..()
 	var/mob/living/carbon/target = targets[1]
-	
+
 	if(!istype(target))
 		to_chat(user, span_warning("This spell only works on creatures capable of dreaming!"))
 		revert_cast()
 		return FALSE
-	
+
 	if(!summon_dreamfiend(
 		target = target,
 		user = user,
@@ -380,11 +386,11 @@
 		return FALSE
 
 	var/turf/spawn_turf = pick(turfs)
-	
+
 	F = new F(spawn_turf)
 	F.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
 	F.ai_controller.set_blackboard_key(BB_MAIN_TARGET, target)
-	
+
 	F.visible_message(span_notice("A [F] manifests following after [target]... countless teeth bared with hostility!"))
 	return TRUE
 
@@ -516,7 +522,7 @@
 				to_chat(user, span_warning("The whispers in your head grow louder..."))
 	else
 		casts_in_stage = min(casts_in_stage + 1, 100)
-	
+
 	target.apply_status_effect(
 		/datum/status_effect/buff/abyssal,
 		stats["str"],
@@ -569,7 +575,7 @@
 		STATKEY_SPD = speed_malus,
 		STATKEY_PER = perception_malus
 	)
-	
+
 	return ..()
 
 /datum/status_effect/buff/abyssal/on_apply()
