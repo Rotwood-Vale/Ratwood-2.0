@@ -119,9 +119,9 @@
 /mob/living/carbon/human/proc/choose_miracles_heresiarch()
 
 	if(!src.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/wound_heal))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+		src.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
 	if(!src.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/evil_resurrect))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)
+		src.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)
 	
 	var/t3_count = 1
 	var/t2_count = 1
