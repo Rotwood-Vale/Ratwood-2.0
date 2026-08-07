@@ -4,7 +4,8 @@
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) text2file(text,log) //rustg_log_write
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 #define logtime time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 
 //print a warning message to world.log
@@ -195,10 +196,6 @@
 /proc/log_config(text)
 	WRITE_LOG(GLOB.config_error_log, "\[[logtime]] [text]")
 	SEND_TEXT(world.log, text)
-
-/// Logging for lua scripting
-/proc/log_lua(text, list/data)
-	WRITE_LOG(GLOB.debug_lua, "\[[logtime]] [text] [data]")
 
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, "\[[logtime]] [text]")

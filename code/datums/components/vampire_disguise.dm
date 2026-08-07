@@ -69,7 +69,13 @@
 	disguised = TRUE
 	COOLDOWN_START(src, transform_cooldown, 5 SECONDS)
 
-	// Restore human appearance
+	restore_original_appearance(H)
+
+	to_chat(H, span_notice("I assume a mortal guise."))
+	return TRUE
+
+// Restore human appearance
+/datum/component/vampire_disguise/proc/restore_original_appearance(mob/living/carbon/human/H)
 	H.skin_tone = cache_skin
 	if(islist(cache_hair))
 		H.set_hair_color(
@@ -95,10 +101,8 @@
 	var/obj/item/organ/breasts/breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
 	breasts?.accessory_colors = cache_boobs
 
-	H.set_eye_color(cache_eyes["eye_color"], cache_eyes["second_color"], TRUE)
-
-	to_chat(H, span_notice("I assume a mortal guise."))
-	return TRUE
+	if(islist(cache_eyes))
+		H.set_eye_color(cache_eyes["eye_color"], cache_eyes["second_color"], TRUE)
 
 /datum/component/vampire_disguise/proc/remove_disguise(mob/living/carbon/human/H)
 	if(!disguised)
@@ -137,9 +141,8 @@
 	original_ear_accessory_colors = ears?.accessory_colors
 	return ..()
 
-/datum/component/vampire_disguise/nosferatu/apply_disguise(mob/living/carbon/human/H)
+/datum/component/vampire_disguise/nosferatu/restore_original_appearance(mob/living/carbon/human/H)
 	var/obj/item/organ/ears/ears = H.getorganslot(ORGAN_SLOT_EARS)
-	ears?.set_accessory_type(original_ear_accessory_type)
-	ears?.accessory_colors = original_ear_accessory_colors
+	ears?.set_accessory_type(original_ear_accessory_type, original_ear_accessory_colors)
 	return ..()
 

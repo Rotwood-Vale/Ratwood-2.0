@@ -545,3 +545,8 @@
 	timer = 30 SECONDS
 	stressadd = 4
 	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")
+
+/datum/stressevent/stinky_contact
+	timer = 15 MINUTES
+	stressadd = 2
+	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")

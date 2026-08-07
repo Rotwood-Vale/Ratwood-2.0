@@ -26,6 +26,7 @@
 #define GAME_PLANE_HIGHEST -2
 #define WEATHER_EFFECT_PLANE -1
 #define BLACKNESS_PLANE 0
+#define BLOOD_GLOW_PLANE 12
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define

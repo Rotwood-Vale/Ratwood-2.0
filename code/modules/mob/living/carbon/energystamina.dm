@@ -1,3 +1,11 @@
+/// Refreshes the stamina HUD bar. Overridden by mobs that have one.
+/mob/living/proc/update_stamina_hud()
+	return FALSE
+
+/// Refreshes the energy HUD bar. Overridden by mobs that have one.
+/mob/living/proc/update_energy_hud()
+	return FALSE
+
 /mob/living/proc/update_stamina() //update hud and regen after last_fatigued delay on taking
 	max_stamina = max_energy / 10
 
@@ -24,7 +32,7 @@
 		else
 			stamina = 0
 
-	update_health_hud()
+	update_stamina_hud()
 
 /mob/living/proc/update_energy()
 	var/athletics_skill = 0
@@ -53,14 +61,14 @@
 	energy += added
 	if(energy > max_energy)
 		energy = max_energy
-		update_health_hud()
+		update_energy_hud()
 		return FALSE
 	else
 		if(energy <= 0)
 			energy = 0
 			if(m_intent == MOVE_INTENT_RUN) //can't sprint at zero stamina
 				toggle_rogmove_intent(MOVE_INTENT_WALK)
-		update_health_hud()
+		update_energy_hud()
 		return TRUE
 
 /mob/proc/stamina_add(added as num)
@@ -145,7 +153,7 @@
 
 	if(stamina >= max_stamina)
 		stamina = max_stamina
-		update_health_hud()
+		update_stamina_hud()
 		if(m_intent == MOVE_INTENT_RUN) //can't sprint at full fatigue
 			toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
 		if(!emote_override)
@@ -181,7 +189,7 @@
 		return FALSE
 	else
 		last_fatigued = world.time
-		update_health_hud()
+		update_stamina_hud()
 		return TRUE
 
 /mob/living/carbon

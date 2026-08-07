@@ -29,7 +29,7 @@
 	"Goat-Kin", "Rous-Kin", "Possum-Kin", "Pig-Kin", "Boar-Kin", "Rabbit-Kin", "Cabbit-Kin", "Hare-Kin", "Horse-Kin",
 	"Donkey-Kin", "Hyena-Kin", "Deer-Kin", "Bear-Kin", "Panda-Kin", "Coyote-Kin", "Moose-Kin",
 	"Jackal-Kin", "Panther-Kin", "Lynx-Kin", "Leopard-Kin", "Monkey-Kin", "Bird-Kin", "Seal-Kin", "Frog-Kin",
-	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera"
+	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Drakian-Kin", "Dragon-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera", "Moth-Kin"
 	)
 
 	default_color = "444"
@@ -125,6 +125,7 @@
 		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/frills/anthro,
 		/datum/customizer/organ/wings/anthro,
+		/datum/customizer/organ/antennas/anthro,
 		/datum/customizer/organ/neck_feature/anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
@@ -143,6 +144,8 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/wolf,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,

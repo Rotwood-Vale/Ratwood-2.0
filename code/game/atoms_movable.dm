@@ -455,12 +455,6 @@
 
 	unbuckle_all_mobs(force=1)
 
-#ifndef DISABLE_DREAMLUAU
-	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
-	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
-#endif
-
 	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
@@ -1053,25 +1047,25 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/grant_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.grant_language(dt, body)
+	H.grant_language(dt, body, source)
 
-/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+/atom/movable/proc/grant_all_languages(omnitongue = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder()
-	H.grant_all_languages(omnitongue)
+	H.grant_all_languages(omnitongue, source)
 
 /atom/movable/proc/get_random_understood_language()
 	var/datum/language_holder/H = get_language_holder()
 	. = H.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/remove_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.remove_language(dt, body)
+	H.remove_language(dt, body, source)
 
-/atom/movable/proc/remove_all_languages()
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_SOURCE_ALL)
 	var/datum/language_holder/H = get_language_holder()
-	H.remove_all_languages()
+	H.remove_all_languages(source)
 
 /atom/movable/proc/has_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()

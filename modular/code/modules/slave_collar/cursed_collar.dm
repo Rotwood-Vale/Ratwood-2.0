@@ -47,17 +47,21 @@
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/reset_received_cum_count()
 	received_cum_count = 0
 
-/obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/C, mob/living/user)
-	if(!istype(C))
+/obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/target, mob/living/user)
+	if(!istype(target))
 		return ..()
 
-	if(C.get_item_by_slot(SLOT_NECK))
-		to_chat(user, span_warning("[C] is already wearing something around their neck!"))
+	if(!target.client?.prefs?.cursed_collarable)
+		to_chat(user, span_warning("[target] has cursed collars disabled in their prefs!"))
 		return
 
-	var/obj/item/chastity/existing_chastity = C.chastity_device
+	if(target.get_item_by_slot(SLOT_NECK))
+		to_chat(user, span_warning("[target] is already wearing something around their neck!"))
+		return
+
+	var/obj/item/chastity/existing_chastity = target.chastity_device
 	if(istype(existing_chastity) && existing_chastity.chastity_cursed)
-		to_chat(user, span_warning("[C] is already bound by cursed chastity."))
+		to_chat(user, span_warning("[target] is already bound by cursed chastity."))
 		return
 
 	var/datum/mind/master_mind = collar_master
@@ -72,34 +76,43 @@
 		return
 
 	var/surrender_mod = 1
-	if(C.surrendering || C.compliance)
+	if(target.surrendering || target.compliance)
 		surrender_mod = 0.5
 
 	applying = TRUE
-	if(do_mob(user, C, 50 * surrender_mod))
-		playsound(loc, 'sound/foley/equip/equip_armor_plate.ogg', 30, TRUE, -2)
+	if(!do_mob(user, target, 50 * surrender_mod))
+		applying = FALSE
+		return
 
-		// Get or create collar master datum first
-		var/datum/component/collar_master/CM = master_mind.GetComponent(/datum/component/collar_master)
-		if(!CM)
-			CM = master_mind.AddComponent(/datum/component/collar_master)
+	if(tgui_alert(target, "Submit to the collar's control?", "Cursed Collar", list("Yes!", "No")) != "Yes!")
+		user.visible_message(span_warning("[target] resists the collar's control."))
+		to_chat(target, span_warning("Your defiant will prevents the collar from binding to you!"))
+		applying = FALSE
+		return
 
-		// Try to equip
-		if(!C.equip_to_slot_if_possible(src, SLOT_NECK, TRUE, TRUE))
-			to_chat(user, span_warning("You fail to lock the collar around [C]'s neck!"))
-			applying = FALSE
-			return
+	playsound(loc, 'sound/foley/equip/equip_armor_plate.ogg', 30, TRUE, -2)
 
-		// Add pet to the master's list before sending collar signals
-		if(!CM.add_pet(C))
-			to_chat(user, span_warning("The collar fails to bind [C]."))
-			C.dropItemToGround(src, force = TRUE)
-			applying = FALSE
-			return
+	// Get or create collar master datum first
+	var/datum/component/collar_master/CM = master_mind.GetComponent(/datum/component/collar_master)
+	if(!CM)
+		CM = master_mind.AddComponent(/datum/component/collar_master)
 
-		SEND_SIGNAL(C, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-		log_combat(user, C, "tried to collar", addition="with [src]")
+	// Try to equip
+	if(!target.equip_to_slot_if_possible(src, SLOT_NECK, TRUE, TRUE))
+		to_chat(user, span_warning("You fail to lock the collar around [target]'s neck!"))
+		applying = FALSE
+		return
+
+	// Add pet to the master's list before sending collar signals
+	if(!CM.add_pet(target))
+		to_chat(user, span_warning("The collar fails to bind [target]."))
+		target.dropItemToGround(src, force = TRUE)
+		applying = FALSE
+		return
+
+	SEND_SIGNAL(target, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	log_combat(user, target, "tried to collar", addition="with [src]")
 	applying = FALSE
 
 /obj/item/clothing/neck/roguetown/cursed_collar/attack_self(mob/user)

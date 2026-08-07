@@ -12,6 +12,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 	appearance_flags = APPEARANCE_UI
+	blockscharging = TRUE
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/datum/hud/hud = null // A reference to the owner HUD, if any.
 	var/lastclick
@@ -54,14 +55,21 @@
 		else if(is_rogueheat_palette_icon(component.icon))
 			component.icon = prefs.get_rogueheat_icon()
 
+/atom/movable/screen/proc/allow_click_from(mob/user)
+	return !(hud?.mymob && hud.mymob != user)
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
-	var/mob/user = usr
-	var/paramslist = params2list(params)
-	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		examine_ui(user)
+	if(!allow_click_from(usr))
 		return FALSE
+	return handle_click(location, control, params)
+
+/atom/movable/screen/proc/handle_click(location, control, params)
+	var/list/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(usr)
+	return FALSE
 
 /atom/movable/screen/proc/examine_ui(mob/user)
 	var/list/inspec = list("----------------------")
@@ -140,7 +148,7 @@
 	plane = HUD_PLANE
 	name = "swap hand"
 
-/atom/movable/screen/swap_hand/Click()
+/atom/movable/screen/swap_hand/handle_click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -156,22 +164,28 @@
 	icon_state = "skills"
 	screen_loc = ui_skill_menu
 
-/atom/movable/screen/skills/Click(location, control, params)
+/atom/movable/screen/skills/allow_click_from(mob/user)
+	return TRUE // read-only, observers may inspect skills
+
+/atom/movable/screen/skills/handle_click(location, control, params)
 	var/list/modifiers = params2list(params)
+	//An observer looking through this HUD reads the owner, not itself.
+	var/mob/living/owner = hud?.mymob || usr
+	if(!isliving(owner) || (owner != usr && !isobserver(usr)))
+		return
 
 	if(modifiers["right"])
 		var/ht
-		var/mob/living/L = usr
-		to_chat(L, "*----*")
-		if(ishuman(usr))
-			var/mob/living/carbon/human/M = usr
+		to_chat(usr, "*----*")
+		if(ishuman(owner))
+			var/mob/living/carbon/human/M = owner
 			if(length(M.vices))
 				for(var/datum/charflaw/vice in M.vices)
-					to_chat(M, "<span class='info'><small>[vice.desc]</small></span>")
-				to_chat(M, "*----*")
+					to_chat(usr, "<span class='info'><small>[vice.desc]</small></span>")
+				to_chat(usr, "*----*")
 			else if(M.charflaw)
-				to_chat(M, "<span class='info'>[M.charflaw.desc]</span>")
-				to_chat(M, "*----*")
+				to_chat(usr, "<span class='info'>[M.charflaw.desc]</span>")
+				to_chat(usr, "*----*")
 			if(M.mind)
 				if(M.mind.language_holder)
 					var/finn
@@ -180,24 +194,27 @@
 							continue
 						var/datum/language/LA = new X()
 						finn = TRUE
-						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")
+						to_chat(usr, "<span class='info'>[LA.name] - ,[LA.key]</span>")
 					if(!finn)
-						to_chat(M, "<span class='warning'>I don't know any languages.</span>")
-					else // open_language_menu
-						to_chat(M, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
-					to_chat(M, "*----*")
+						to_chat(usr, "<span class='warning'>I don't know any languages.</span>")
+					else if(owner == usr) // open_language_menu
+						to_chat(usr, "<a href='?src=[REF(M)];task=open_language_menu;'>Language Menu</a>")
+					to_chat(usr, "*----*")
 		for(var/X in GLOB.roguetraits)
-			if(HAS_TRAIT(L, X))
-				to_chat(L, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
+			if(HAS_TRAIT(owner, X))
+				to_chat(usr, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
 				ht = TRUE
 		if(!ht)
-			to_chat(L, "<span class='warning'>I have no special traits.</span>")
-		to_chat(L, "*----*")
+			to_chat(usr, "<span class='warning'>I have no special traits.</span>")
+		to_chat(usr, "*----*")
 		return
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.print_levels(H)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H != usr) //Watching someone else, so name the sheet and show their stats too.
+			to_chat(usr, "<span class='notice'><b>[H.real_name]</b></span>")
+			H.print_stats(usr)
+		H.ensure_skills().print_levels(usr)
 
 /atom/movable/screen/craft
 	name = "crafting menu"
@@ -205,7 +222,7 @@
 	screen_loc = rogueui_craft
 	var/last_craft
 
-/atom/movable/screen/craft/Click(location, control, params)
+/atom/movable/screen/craft/handle_click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(world.time < lastclick + 3 SECONDS)
 		return
@@ -240,7 +257,7 @@
 	icon_state = "area_edit"
 	screen_loc = ui_building
 
-/atom/movable/screen/area_creator/Click()
+/atom/movable/screen/area_creator/handle_click()
 	if(usr.incapacitated() || (isobserver(usr) && !IsAdminGhost(usr)))
 		return TRUE
 	var/area/A = get_area(usr)
@@ -254,7 +271,7 @@
 	icon_state = "talk_wheel"
 	screen_loc = ui_language_menu
 
-/atom/movable/screen/language_menu/Click()
+/atom/movable/screen/language_menu/handle_click()
 	var/mob/M = usr
 	var/datum/language_holder/H = M.get_language_holder()
 	H.open_language_menu(usr)
@@ -299,7 +316,7 @@
 	hover_preview_layer.color = can_equip ? "#c5c5c5" : "#fd0279"
 
 
-/atom/movable/screen/inventory/Click(location, control, params)
+/atom/movable/screen/inventory/handle_click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -440,7 +457,7 @@
 /atom/movable/screen/inventory/hand/add_overlays()
 	return
 
-/atom/movable/screen/inventory/hand/Click(location, control, params)
+/atom/movable/screen/inventory/hand/handle_click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	var/mob/user = hud?.mymob
@@ -467,7 +484,7 @@
 	. = ..()
 	master = new_master
 
-/atom/movable/screen/close/Click()
+/atom/movable/screen/close/handle_click()
 	var/datum/component/storage/S = master
 	S.hide_from(usr)
 	return TRUE
@@ -478,7 +495,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/atom/movable/screen/drop/Click()
+/atom/movable/screen/drop/handle_click()
 	if(ismob(usr))
 		var/mob/M = usr
 		M.playsound_local(M, 'sound/misc/click.ogg', 100)
@@ -490,10 +507,10 @@
 	icon_state = "help"
 	screen_loc = ui_acti
 
-/atom/movable/screen/act_intent/Click(location, control, params)
+/atom/movable/screen/act_intent/handle_click(location, control, params)
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
-/atom/movable/screen/act_intent/segmented/Click(location, control, params)
+/atom/movable/screen/act_intent/segmented/handle_click(location, control, params)
 	if(usr.client.prefs.toggles & INTENT_STYLE)
 		var/_x = text2num(params2list(params)["icon-x"])
 		var/_y = text2num(params2list(params)["icon-y"])
@@ -613,7 +630,7 @@
 			set_rogintent_slot(border_slots[1], "intentselected", used_index, 0.01, roguehud_icon)
 			set_rogintent_slot(border_slots[2], used, other, 0.01, roguehud_icon)
 
-/atom/movable/screen/act_intent/rogintent/Click(location, control, params)
+/atom/movable/screen/act_intent/rogintent/handle_click(location, control, params)
 
 	var/list/modifiers = params2list(params)
 
@@ -706,7 +723,7 @@
 	if(input in 1 to 4)
 		icon_state = "mmbintents[input]"
 
-/atom/movable/screen/quad_intents/Click(location, control, params)
+/atom/movable/screen/quad_intents/handle_click(location, control, params)
 	if(ismob(usr))
 		var/mob/M = usr
 		M.playsound_local(M, 'sound/misc/click.ogg', 100)
@@ -740,7 +757,7 @@
 		giving = 0
 	update_icon()
 
-/atom/movable/screen/give_intent/Click(location, control, params)
+/atom/movable/screen/give_intent/handle_click(location, control, params)
 	if(ismob(usr))
 		var/mob/M = usr
 		M.playsound_local(M, 'sound/misc/click.ogg', 100)
@@ -766,7 +783,7 @@
 /atom/movable/screen/def_intent/update_icon()
 	icon_state = "def[hud.mymob.d_intent]n"
 
-/atom/movable/screen/def_intent/Click(location, control, params)
+/atom/movable/screen/def_intent/handle_click(location, control, params)
 	var/_y = text2num(params2list(params)["icon-y"])
 
 	if(_y>=0 && _y<17)
@@ -784,7 +801,7 @@
 /atom/movable/screen/cmode/update_icon()
 	icon_state = "combat[hud.mymob.cmode]"
 
-/atom/movable/screen/cmode/Click(location, control, params)
+/atom/movable/screen/cmode/handle_click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(isliving(usr))
 		var/mob/living/L = usr
@@ -814,7 +831,7 @@
 	name = "run/walk toggle"
 	icon_state = "running"
 
-/atom/movable/screen/mov_intent/Click(location, control, params)
+/atom/movable/screen/mov_intent/handle_click(location, control, params)
 	toggle(usr)
 
 /atom/movable/screen/mov_intent/update_icon_state()
@@ -835,7 +852,7 @@
 	icon_state = "sneak0"
 	screen_loc = rogueui_moves
 
-/atom/movable/screen/rogmove/Click(location, control, params)
+/atom/movable/screen/rogmove/handle_click(location, control, params)
 	var/mob/M = usr
 	toggle(M)
 
@@ -906,7 +923,7 @@
 		icon = 'icons/mob/advsetup.dmi'
 		animate(src, alpha = 255, time = 30)
 
-/atom/movable/screen/advsetup/Click(location,control,params)
+/atom/movable/screen/advsetup/handle_click(location,control,params)
 	if(!hud)
 		qdel(src)
 		return
@@ -925,7 +942,7 @@
 	icon = 'icons/mob/roguehud.dmi'
 	icon_state = "eye"
 
-/atom/movable/screen/eye_intent/Click(location,control,params)
+/atom/movable/screen/eye_intent/handle_click(location,control,params)
 	var/list/modifiers = params2list(params)
 	var/_y = text2num(params2list(params)["icon-y"])
 
@@ -998,7 +1015,7 @@
 	name = "stop pulling"
 	icon_state = "pull"
 
-/atom/movable/screen/pull/Click()
+/atom/movable/screen/pull/handle_click()
 	if(isobserver(usr))
 		return
 	usr.stop_pulling()
@@ -1015,7 +1032,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/atom/movable/screen/rest/Click()
+/atom/movable/screen/rest/handle_click()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.lay_down()
@@ -1036,7 +1053,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/atom/movable/screen/restup/Click(location, control, params)
+/atom/movable/screen/restup/handle_click(location, control, params)
 	var/paramslist = params2list(params)
 
 	if(isliving(usr))
@@ -1052,7 +1069,7 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
-/atom/movable/screen/restdown/Click(location, control, params)
+/atom/movable/screen/restdown/handle_click(location, control, params)
 	var/paramslist = params2list(params)
 
 	if(isliving(usr))
@@ -1078,7 +1095,7 @@
 	. = ..()
 	master = new_master
 
-/atom/movable/screen/storage/Click(location, control, params)
+/atom/movable/screen/storage/handle_click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["right"])
 		if(master)
@@ -1109,7 +1126,7 @@
 	icon_state = "catch0"
 	var/throwy = 0
 
-/atom/movable/screen/throw_catch/Click()
+/atom/movable/screen/throw_catch/handle_click()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
@@ -1166,7 +1183,7 @@
 	highlight_tokens = null
 	return ..()
 
-/atom/movable/screen/zone_sel/Click(location, control,params)
+/atom/movable/screen/zone_sel/handle_click(location, control,params)
 	if(isobserver(usr))
 		return
 
@@ -1624,7 +1641,7 @@
 	name = "health doll"
 	screen_loc = rogueui_targetdoll
 
-/atom/movable/screen/healthdoll/Click(location, control, params)
+/atom/movable/screen/healthdoll/handle_click(location, control, params)
 	if (ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.check_for_injuries(H)
@@ -1682,7 +1699,7 @@
 	if(indicator.color)
 		indicator.color = null
 
-/atom/movable/screen/healths/blood/Click(location, control, params)
+/atom/movable/screen/healths/blood/handle_click(location, control, params)
 	var/list/modifiers = params2list(params)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -1793,7 +1810,7 @@
 	. = ..()
 	src.parent = parent
 
-/atom/movable/screen/component_button/Click(location, control, params)
+/atom/movable/screen/component_button/handle_click(location, control, params)
 	if(parent)
 		parent.component_click(src, params)
 
@@ -1808,7 +1825,7 @@
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/backhudl/Click()
+/atom/movable/screen/backhudl/handle_click()
 	return
 
 /atom/movable/screen/backhudl/ghost
@@ -1830,7 +1847,7 @@
 	name = "tile selection indicator"
 	icon_state = "boxoff"
 
-/atom/movable/screen/aim/boxaim/Click()
+/atom/movable/screen/aim/boxaim/handle_click()
 	if(ismob(usr))
 		var/mob/M = usr
 		if(M.boxaim == TRUE)
@@ -1902,7 +1919,7 @@
 			stress_state_layer.color = null
 
 
-/atom/movable/screen/stress/Click(location,control,params)
+/atom/movable/screen/stress/handle_click(location,control,params)
 	var/list/modifiers = params2list(params)
 
 	if(ishuman(usr))
@@ -2002,7 +2019,7 @@
 			name = L.rmb_intent.name
 			desc = L.rmb_intent.desc
 
-/atom/movable/screen/rmbintent/Click(location,control,params)
+/atom/movable/screen/rmbintent/handle_click(location,control,params)
 	var/list/modifiers = params2list(params)
 
 	if(isliving(usr))
@@ -2074,7 +2091,7 @@
 		holder = null
 	return ..()
 
-/atom/movable/screen/rintent_selection/Click(location,control,params)
+/atom/movable/screen/rintent_selection/handle_click(location,control,params)
 	var/list/modifiers = params2list(params)
 
 	if(isliving(usr))
@@ -2168,6 +2185,42 @@
 			rain_layer.icon_state = "rainlay"
 		rain_layer.alpha = show_rain ? 255 : 0
 
+/**
+ * Renders a vertical bar filled to `ratio` (0-1) by masking a sprite. The `mid_state` and `low_state`
+ * are a separate animated icon state in place of `full_state` at low levels.
+ * args:
+ * 	meter_bar_fill_height: the height of the fill sprite in pixels
+ * 	meter_bar_mid_fraction: the fraction of the bar at which we swap to a mid-warning icon state
+ * 	meter_bar_low_fraction: the fraction of the bar at which we swap to a low-warning icon state
+ * 	meter_bar_fill_anim_time: the base time in deciseconds for the masked fill to slide to a new level
+ * 	meter_bar_fill_anim_scale: extra time in deciseconds added at a full-range change, scaled by how far the fill moves
+ */
+/atom/movable/screen/proc/set_meter_fill(
+	ratio,
+	full_state,
+	mid_state,
+	low_state,
+	meter_bar_fill_height = 47,
+	meter_bar_mid_fraction = 0.2,
+	meter_bar_low_fraction = 0.1,
+	meter_bar_fill_anim_time = 2,
+	meter_bar_fill_anim_scale = 0.4 SECONDS,
+)
+	ratio = clamp(ratio, 0, 1)
+	if(ratio <= meter_bar_low_fraction)
+		icon_state = low_state
+	else if(ratio <= meter_bar_mid_fraction)
+		icon_state = mid_state
+	else
+		icon_state = full_state
+	var/offset = -round((1 - ratio) * meter_bar_fill_height)
+	var/list/existing = filter_data?["meter_fill"]
+	if(existing)
+		var/time = meter_bar_fill_anim_time + round(abs(offset - existing["y"]) / meter_bar_fill_height * meter_bar_fill_anim_scale)
+		transition_filter("meter_fill", list("y" = offset), time, SINE_EASING)
+	else
+		add_filter("meter_fill", 1, alpha_mask_filter(y = offset, icon = icon(icon, full_state)))
+
 /atom/movable/screen/stamina
 	name = "stamina"
 	icon_state = "stam100"
@@ -2202,8 +2255,9 @@
 	icon = 'icons/mob/rogueheat.dmi'
 	screen_loc = rogueui_temperature
 	layer = HUD_LAYER+0.1
+	var/heated_tile = FALSE
 
-/atom/movable/screen/temperature/Click(location, control, params)
+/atom/movable/screen/temperature/handle_click(location, control, params)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.check_temperature_state(H)
@@ -2254,7 +2308,7 @@
 	var/atom/movable/screen/readtext/textleft
 	var/reading
 
-/atom/movable/screen/read/Click(location, control, params)
+/atom/movable/screen/read/handle_click(location, control, params)
 	. = ..()
 	destroy_read()
 	if(!usr || !usr.client)
@@ -2395,7 +2449,7 @@
 
 	animate(fill, time = duration)
 
-/atom/movable/screen/bloodpool/Click(location,control,params)
+/atom/movable/screen/bloodpool/handle_click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["left"] && modifiers["shift"])
 		examine_ui(usr)
@@ -2427,7 +2481,7 @@
 	src.icon = icon
 	src.parent_screen = parent_screen
 
-/atom/movable/screen/bloodpool_maskpart/Click(location, control, params)
+/atom/movable/screen/bloodpool_maskpart/handle_click(location, control, params)
 	if(parent_screen)
 		return parent_screen.Click(location, control, params)
 	return FALSE
