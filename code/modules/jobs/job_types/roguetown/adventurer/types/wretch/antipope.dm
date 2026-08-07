@@ -455,7 +455,7 @@
 		if(evil_churchecancurse_selection(P))
 			posible_targets["[P.real_name] ([P.advjob])"] = P
 
-	posible_targets_names = assoc_list_strip_value(posible_targets)
+	var/list/posible_targets_names = assoc_list_strip_value(posible_targets)
 
 	var/target_pick = input("Who shall receive a curse?", "Select Target") as null|anything in posible_targets_names
 
