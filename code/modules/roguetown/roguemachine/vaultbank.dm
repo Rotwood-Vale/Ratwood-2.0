@@ -664,7 +664,7 @@
 /obj/structure/roguemachine/vaultbank/church
 	name = "\improper CHURCH JAWBANK"
 	desc = "A biomechanical obelisk that holds the alms and tithe of the Church's faithful. Throttle it with a strike to spill that which is rightfully yours."
-	alert_jobs = list("Priest", "Martyr", "Acolyte")
+	alert_jobs = list("Bishop", "Martyr", "Acolyte")
 	alert_location = "the Church"
 	bash_floor = 500
 	lump_payout = 100
@@ -678,7 +678,7 @@
 /obj/structure/roguemachine/vaultbank/church/can_issue_loan(mob/user)
 	if(!user)
 		return FALSE
-	return user.job == "Priest" || user.job == "Martyr"
+	return user.job == "Bishop" || user.job == "Martyr"
 
 /obj/structure/roguemachine/vaultbank/church/allowed_rates()
 	return list(0, 10, 15, 20, 25, 50)
@@ -766,8 +766,8 @@
 	name = "\improper BATHHOUSE JAWBANK"
 	desc = "A biomechanical obelisk that secures the takings of the Bathhouse. Throttle it with a strike to spill that which is rightfully yours."
 	// ES deviation: AP's "Bathmaster"/"Bathhouse Attendant" -> ES job titles are
-	// "Nightmaster"/"Nightswain" ("Bathmaster" is only an advclass name, never H.job).
-	alert_jobs = list("Nightmaster", "Nightswain")
+	// Ratwood keeps AP job titles: "Bathmaster"/"Bathhouse Attendant".
+	alert_jobs = list("Bathmaster", "Bathhouse Attendant")
 	alert_location = "the Bathhouse"
 	bash_floor = 500
 	lump_payout = 100
@@ -781,10 +781,10 @@
 /obj/structure/roguemachine/vaultbank/bathhouse/can_issue_loan(mob/user)
 	if(!user)
 		return FALSE
-	return user.job == "Nightmaster" // ES deviation: AP's "Bathmaster" is ES's "Nightmaster"
+	return user.job == "Bathmaster"
 
 /obj/structure/roguemachine/vaultbank/bathhouse/get_authority_label()
-	return "the Nightmaster"
+	return "the Bathmaster"
 
 /obj/structure/roguemachine/vaultbank/bathhouse/get_patronage_writ_path()
 	return /obj/item/patronage_writ/token

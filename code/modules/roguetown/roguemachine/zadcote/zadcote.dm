@@ -445,7 +445,7 @@
 	desc = "A bathhouse zadcote. The perches are warm with steam, a faint smell of incense in the air."
 	faction = ZADCOTE_FACTION_BATHHOUSE
 	motto = "BATHHOUSE ZADCOTE"
-	// ES deviation: AP's "Bathmaster"/"Bathhouse Attendant" -> ES "Nightmaster"/"Nightswain".
-	operator_jobs = list("Nightmaster", "Nightswain")
+	// Ratwood keeps AP job titles.
+	operator_jobs = list("Bathmaster", "Bathhouse Attendant")
 	operator_trait = TRAIT_AGENT_BATHHOUSE
 	allows_voyeur = TRUE

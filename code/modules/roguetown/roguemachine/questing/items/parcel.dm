@@ -55,7 +55,7 @@
 	var/static/list/area_jobs = list(
 		/area/rogue/indoors/town/tavern = list("Innkeeper", "Tapster", "Cook"),
 		/area/rogue/indoors/town/bath = list("Bathhouse Attendant", "Bathmaster"),
-		/area/rogue/indoors/town/church = list("Priest", "Acolyte", "Templar", "Sexton", "Martyr"),
+		/area/rogue/indoors/town/church = list("Bishop", "Acolyte", "Templar", "Mortician", "Martyr"),
 		/area/rogue/indoors/town/dwarfin = list("Guildmaster", "Guildsman"),
 		/area/rogue/indoors/town/shop = list("Merchant", "Shophand"),
 		/area/rogue/indoors/town/manor = list("Councillor", "Seneschal", "Servant", "Hand", "Knight", "Prince", "Marshal", "Steward", "Clerk", "Grand Duke"),
