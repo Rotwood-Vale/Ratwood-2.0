@@ -165,6 +165,7 @@
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)
 					if("Avant Origin (Acceleration)")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)
-				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//You're not meant to have both this and persist.
+				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
+

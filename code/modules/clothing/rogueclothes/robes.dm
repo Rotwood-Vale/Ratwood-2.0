@@ -219,7 +219,7 @@
 	heat_protection = CHEST | GROIN
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
-/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -250,7 +250,7 @@
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
-/obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize()
+/obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
 	. = ..()
 	update_icon()
 

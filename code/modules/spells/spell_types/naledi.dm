@@ -624,7 +624,7 @@
 	var/datum/status_effect/debuff/divergence/master
 	var/collapsing = FALSE
 
-/obj/effect/divergence_fragment/Initialize()
+/obj/effect/divergence_fragment/Initialize(mapload)
 	. = ..()
 
 	addtimer(CALLBACK(src, PROC_REF(start_jitter)), 4)
@@ -771,7 +771,7 @@
 	layer = ABOVE_MOB_LAYER
 	alpha = 180
 
-/obj/effect/divergence_afterimage/Initialize()
+/obj/effect/divergence_afterimage/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 5)
 

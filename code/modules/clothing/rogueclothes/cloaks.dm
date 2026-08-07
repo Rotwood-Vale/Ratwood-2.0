@@ -1699,7 +1699,7 @@
 	detail_tag = "_detail"
 	naledicolor = TRUE
 
-/obj/item/clothing/cloak/hierophant/Initialize()
+/obj/item/clothing/cloak/hierophant/Initialize(mapload)
 	. = ..()
 	update_icon()
 
