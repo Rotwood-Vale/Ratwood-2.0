@@ -1009,7 +1009,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //LIFE//
 ////////
 // Hunger/Thirst restructuring from AP - IronDragoon
-if(H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
+/datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+
+	if(H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		var/hunger_rate = HUNGER_FACTOR
 		H.adjust_nutrition(-hunger_rate)
 		var/obj/item/organ/breasts/breasts = H.has_breasts()
@@ -1020,13 +1022,12 @@ if(H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 				breasts.milk_stored += milk_to_make
 				H.adjust_nutrition(-milk_to_make)
 
-			else if(H.nutrition < NUTRITION_LEVEL_STARVING && breasts.milk_stored > 0)
-				var/milk_to_take = min(hunger_rate, breasts.milk_stored)
-				breasts.milk_stored -= milk_to_take
-				H.adjust_nutrition(milk_to_take)
+		else if(H.nutrition < NUTRITION_LEVEL_STARVING && breasts.milk_stored > 0)
+			var/milk_to_take = min(hunger_rate, breasts.milk_stored)
+			breasts.milk_stored -= milk_to_take
+			H.adjust_nutrition(milk_to_take)
 
 	if(H.hydration > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
-
 		var/hydration_rate = HUNGER_FACTOR
 		H.adjust_hydration(-hydration_rate)
 
