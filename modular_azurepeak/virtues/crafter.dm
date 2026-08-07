@@ -1,7 +1,7 @@
 // Virtues that let you unlock crafter role
 /datum/virtue/utility/blacksmith
 	name = "Blacksmith's Apprentice (5 TRI)"
-	triumph_cost = 5 //Gives access to level 2 in smithing crafting weapon and armorsmithing. Makes it so you can start smithing night 1 and be at legendary by night 3. Bad.
+	triumph_cost = 5 //Gives access to level 2 in smithing crafting weapon and armorsmithing. Makes it so you can start smithing night 1 and be at legendary by night 3 if you have the uncap traits. Bad for balance, and functions nearly identical to failed squire.
 	desc = "In my youth, I worked under a skilled blacksmith, honing my skills with an anvil."
 	added_traits = list(TRAIT_SMITHING_EXPERT)
 	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
