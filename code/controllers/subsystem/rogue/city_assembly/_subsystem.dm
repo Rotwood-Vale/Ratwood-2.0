@@ -356,9 +356,17 @@ SUBSYSTEM_DEF(city_assembly)
 /datum/controller/subsystem/city_assembly/proc/restore_defense(amount, mob/actor, reason = "")
 	if(!current_warrant)
 		return FALSE
-	current_warrant.defense_remaining += amount
+	current_warrant.defense_remaining = min(current_warrant.defense_daily_cap, current_warrant.defense_remaining + amount)
 	log_game("CITY ASSEMBLY WARRANT: defense +[amount]p by [key_name(actor)] ([reason]). Remaining: [current_warrant.defense_remaining]p.")
 	return TRUE
+
+/// AP-parity alias: writ recalls refund the Alderman's warrant through this name.
+/datum/controller/subsystem/city_assembly/proc/refund_defense(amount, mob/actor, reason = "")
+	if(amount <= 0)
+		return FALSE
+	if(!resolve_get_alderman())
+		return FALSE
+	return restore_defense(amount, actor, reason)
 
 /datum/controller/subsystem/city_assembly/proc/is_alderman(mob/user)
 	var/mob/current = resolve_get_alderman()
