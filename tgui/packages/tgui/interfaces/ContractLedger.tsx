@@ -452,6 +452,9 @@ const ActiveStrip = (props: {
         </span>
         <span>Nervelock Balance: {props.balance} Mammons</span>
       </div>
+      <div className="ContractLedger__FellowshipHint">
+        You can form a fellowship in the IC Tab
+      </div>
       {blockReason && (
         <div
           className="ContractLedger__ActiveRow"
