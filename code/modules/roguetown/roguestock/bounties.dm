@@ -40,6 +40,14 @@
 		return FALSE  // Thats the HEADEATER's job
 	if(istype(I, /obj/item/storage))
 		return FALSE //Anti-Exploit fix
+	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry/skysugarbase))
+		return FALSE
+	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/skysugarslab))
+		return FALSE
+	if(istype(I, /obj/item/reagent_containers/powder/starsugar/skysugar))
+		return FALSE
+	if(istype(I, /obj/item/reagent_containers/food/snacks/allspice))
+		return FALSE
 	if(I.get_real_price() > 0)
 		if(istype(I, /obj/item/roguestatue))
 			return TRUE
