@@ -38,7 +38,7 @@
 
 /obj/structure/roguemachine/ship_fulfillment/get_mechanics_examine(mob/user)
 	. = ..()
-	. += span_info("Left-click with an item to deposit it for matching ship demands. You must have a MEISTER account to deposit - the crate will refuse goods otherwise.")
+	. += span_info("Left-click with an item to deposit it for matching ship demands. You must have a NERVELOCK account to deposit - the crate will refuse goods otherwise.")
 	. += span_info("Right-click to dump everything on your tile into the crate at once.")
 	. += span_info("Certain items like kegs can be click dragged or offloaded in hand.")
 	. += span_info("Stacks, handcarts, and bins are unloaded automatically.")
@@ -170,7 +170,7 @@
 	if(!SSmerchant_trade)
 		return
 	if(!(user in SStreasury.bank_accounts))
-		say("No account found for [user]. Submit your fingers to a Meister for inspection.")
+		say("No account found for [user]. Submit your fingers to a Nervelock for inspection.")
 		return
 	var/list/tally = list("total_producer" = 0, "total_gross" = 0, "total_duty" = 0, "total_cut" = 0, "total_kin_bonus" = 0, "total_quality_delta" = 0, "lines" = list())
 	for(var/obj/item/I in get_turf(user))
@@ -245,7 +245,7 @@
 		return
 	if(!(user in SStreasury.bank_accounts))
 		if(message)
-			say("No account found for [user]. Submit your fingers to a Meister for inspection.")
+			say("No account found for [user]. Submit your fingers to a Nervelock for inspection.")
 		return
 	if(I.atc_sealed)
 		if(message)
@@ -341,7 +341,7 @@
 	if(!SSmerchant_trade)
 		return
 	if(!(user in SStreasury.bank_accounts))
-		say("No account found for [user]. Submit your fingers to a Meister for inspection.")
+		say("No account found for [user]. Submit your fingers to a Nervelock for inspection.")
 		return
 	if(keg.anchored)
 		to_chat(user, span_warning("[keg] is fixed in place - bottle its spirits and deposit those instead."))

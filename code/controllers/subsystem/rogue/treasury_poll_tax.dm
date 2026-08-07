@@ -85,7 +85,7 @@
 	levy_rates_changed_day = GLOB.dayspassed
 	var/final_text = jointext(lines, "\n")
 	if(concordat_active)
-		final_text += "\nBy the Concordat of Zenitstadt, [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of the Summit, drawn from the Crown's share."
+		final_text += "\nBy the Concordat of Zenitstadt, [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of the Vale, drawn from the Crown's share."
 	var/final_announcement_text = bad_guy ? bad_announcement_text : good_announcement_text
 	priority_announce(final_text, final_announcement_text, pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'))
 	log_game("TAX RATES: [usr ? key_name(usr) : "system"] changed levy rates - [jointext(lines, " | ")]")

@@ -67,7 +67,7 @@
 		to_chat(user, span_warning("I already owe a debt. I cannot hold two at once."))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("I have no Meister account to receive these funds. I must open one first."))
+		to_chat(user, span_warning("I have no Nervelock account to receive these funds. I must open one first."))
 		return
 	if(source_fund_id == "church" && (user.job in GLOB.church_positions))
 		to_chat(user, span_warning("The Church prohibits usury to its own. Astrata's coin is for the poor and the downtrodden, not the faithful."))
@@ -88,7 +88,7 @@
 		to_chat(user, span_warning("I already owe a debt."))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("My Meister account is gone."))
+		to_chat(user, span_warning("My Nervelock account is gone."))
 		return
 	var/datum/fund/issuing_fund = SStreasury.resolve_fund_by_id(source_fund_id)
 	if(!issuing_fund)
@@ -110,12 +110,12 @@
 	user.visible_message(span_notice("[user] signs the loan contract and pockets [lender_label]'s coin."), \
 		span_notice("I accept the loan of [principal]m from [lender_label], repayable in [term_days] day\s at [pct]%/day. Total due: [total_due]m."))
 	playsound(get_turf(user), 'sound/misc/gold_license.ogg', 60, FALSE, -1)
-	send_ooc_note("<b>MEISTER:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
+	send_ooc_note("<b>NERVELOCK:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
 	qdel(src)
 
 /obj/item/loan_contract/indenture
 	name = "writ of indenture"
-	desc = "A binding indenture between two institutions of Emerald Summit. Only the named target's authorised hand may seal it."
+	desc = "A binding indenture between two institutions of Rotwood Vale. Only the named target's authorised hand may seal it."
 	var/target_fund_id
 
 /obj/item/loan_contract/indenture/examine(mob/user)

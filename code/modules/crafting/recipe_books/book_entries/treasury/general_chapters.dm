@@ -25,7 +25,7 @@
 //    as of item 6, on top of the general fine cap (GENERIC_RATE_CAP).
 //  - Patronage: all three writs are real as of the Step 16 Meister Panel port
 //    (code/modules/banking/patronage_writ.dm; TRAIT_AGENT_MERCHANT/BATHHOUSE/CHURCH,
-//    PATRON_CAP_* in code/__DEFINES/banking.dm). Drafted from the MEISTER's Patronage tab.
+//    PATRON_CAP_* in code/__DEFINES/banking.dm). Drafted from the NERVELOCK's Patronage tab.
 //  - Mercenary Statue: only the public mercenary roster is real
 //    (code/game/objects/structures/roguetown/talkstatue_mercenary.dm + talkstatue_tgui.dm).
 //    No "wretch roster" hidden tab exists anywhere in ES - cut that whole section.
@@ -56,7 +56,7 @@
 		</div>
 
 		<ul>
-			<li><b>The Great Writ of the Summit</b> - Nobility pays no tax and levy, and cannot be fined.</li>
+			<li><b>The Great Writ of the Vale</b> - Nobility pays no tax and levy, and cannot be fined.</li>
 			<li><b>The Zenitstadt Concordat</b> - The Church, and any declared benefactors of the Church, pays no taxation and levy. While in force, [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church Fund.</li>
 			<li><b>The Otavan Accords</b> - The Inquisition pays no tax and no levy.</li>
 			<li><b>The Golden Bull of Kingsfield</b> - burghers are capped at [GOLDEN_BULL_BURGHER_CAP * 100]% of balance per levy or fine, with a [GOLDEN_BULL_DAILY_FINE_CAP]-mammon ceiling on each fine and a [GOLDEN_BULL_POLL_CAP]m poll-tax cap. While it stands, the burghers replenish the Burgher Pledge daily.</li>
@@ -117,7 +117,7 @@
 /datum/book_entry/treasury_general/patronage/inner_book_html(mob/user)
 	return {"
 		<div>
-		<p>Three factions extend patronage. The faction's authority (the Merchant, the Nightmaster, or the Bishop/Martyr) drafts a writ from the <b>Patronage tab of any MEISTER</b> and hands it to a chosen bearer, who claims it by using it in hand. The same tab shows the current roll and lets the authority revoke a name.</p>
+		<p>Three factions extend patronage. The faction's authority (the Merchant, the Nightmaster, or the Bishop/Martyr) drafts a writ from the <b>Patronage tab of any NERVELOCK</b> and hands it to a chosen bearer, who claims it by using it in hand. The same tab shows the current roll and lets the authority revoke a name.</p>
 
 		<ul>
 			<li><b>Writ of Charter</b> (Emerald Trading Company, up to [PATRON_CAP_MERCHANT] Agents) - the Agent gains Burgher residency, is recognised at GOLDFACE even if their day job is something else: they may browse and buy the Harbor tab's cultural stock, and may hail and send away ships on the Merchant's behalf. An Agent personally recognises ships from their own character origin as kin for buying purposes (see <i>The Kinship Bonus</i>). An Agent is locked out of the Market, Management, and Ledger controls.</li>

@@ -410,7 +410,7 @@
 			. += span_notice("[F.name]'s balance is sealed from afar. Step closer to count the coin.")
 	else
 		. += span_warning("This jawbank is unbound to any treasury. Notify staff.")
-	. += span_info("Only [get_authority_label()] may withdraw or draft writs of loan from this jawbank - through a MEISTER's Institutional tab, not the jawbank itself.")
+	. += span_info("Only [get_authority_label()] may withdraw or draft writs of loan from this jawbank - through a NERVELOCK's Institutional tab, not the jawbank itself.")
 	. += span_info("Strike it with any weapon to throttle coins loose.")
 
 // ============================================================================
@@ -468,7 +468,7 @@
 	if(F.balance < amount)
 		to_chat(user, span_warning("[F.name] cannot honor a withdrawal of [amount]m."))
 		return
-	if(!SStreasury.burn(F, amount, "MEISTER withdrawal by [user.real_name]"))
+	if(!SStreasury.burn(F, amount, "NERVELOCK withdrawal by [user.real_name]"))
 		return
 	budget2change(amount, user)
 	playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)

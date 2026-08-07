@@ -182,9 +182,9 @@
 			if(L.defaulted)
 				REMOVE_TRAIT(debtor, TRAIT_DEBTOR, TRAIT_GENERIC)
 				REMOVE_TRAIT(debtor, L.get_faction_debtor_trait(), TRAIT_GENERIC)
-				send_ooc_note("<b>MEISTER:</b> The stigma of default is lifted. [outstanding]m was drawn from your account to settle the outstanding debt in full.", name = debtor.real_name)
+				send_ooc_note("<b>NERVELOCK:</b> The stigma of default is lifted. [outstanding]m was drawn from your account to settle the outstanding debt in full.", name = debtor.real_name)
 			else
-				send_ooc_note("<b>MEISTER:</b> Your loan of [L.principal]m has been repaid in full ([outstanding]m drawn from your account).", name = debtor.real_name)
+				send_ooc_note("<b>NERVELOCK:</b> Your loan of [L.principal]m has been repaid in full ([outstanding]m drawn from your account).", name = debtor.real_name)
 			loans -= L
 			qdel(L)
 			continue
@@ -198,7 +198,7 @@
 			ADD_TRAIT(debtor, TRAIT_DEBTOR, TRAIT_GENERIC)
 			ADD_TRAIT(debtor, L.get_faction_debtor_trait(), TRAIT_GENERIC)
 			var/still_owed = L.get_remaining_due()
-			send_ooc_note("<b>MEISTER:</b> Your loan of [L.principal]m has come due and you cannot pay. [seized]m was seized; [still_owed]m remains owed to [destination.name]. You are marked a defaulter until the debt is settled.", name = debtor.real_name)
+			send_ooc_note("<b>NERVELOCK:</b> Your loan of [L.principal]m has come due and you cannot pay. [seized]m was seized; [still_owed]m remains owed to [destination.name]. You are marked a defaulter until the debt is settled.", name = debtor.real_name)
 			record_round_statistic(STATS_LOANS_DEFAULTED, 1)
 			log_game("LOAN DEFAULT: [L.debtor_name] defaulted on [outstanding]m loan from [destination.name]. [seized]m seized, [still_owed]m remaining.")
 

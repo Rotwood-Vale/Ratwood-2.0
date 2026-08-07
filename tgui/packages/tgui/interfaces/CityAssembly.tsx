@@ -264,7 +264,7 @@ export const CityAssembly = () => {
           </button>
           <div style={titleStyle}>The City Assembly</div>
           <div style={subtitleStyle}>
-            Voice of the respectable citizenry of Emerald Summit
+            Voice of the respectable citizenry of Rotwood Vale
           </div>
           <hr style={rulerStyle} />
 

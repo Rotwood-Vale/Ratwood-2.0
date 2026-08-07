@@ -32,7 +32,7 @@ ES deviations from AP:
 
 /obj/structure/roguemachine/noticeboard
 	name = "Notice Board"
-	desc = "A large wooden notice board, carrying postings from all across Emerald Summit. A ZAD perch sits atop it."
+	desc = "A large wooden notice board, carrying postings from all across Rotwood Vale. A ZAD perch sits atop it."
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "noticeboard0"
 	density = TRUE
@@ -45,7 +45,7 @@ ES deviations from AP:
 
 /obj/structure/roguemachine/boardbarrier //Blocks sprite locations
 	name = ""
-	desc = "A large wooden notice board, carrying postings from all across Emerald Summit. A ZAD perch sits atop it."
+	desc = "A large wooden notice board, carrying postings from all across Rotwood Vale. A ZAD perch sits atop it."
 	icon = 'icons/roguetown/underworld/underworld.dmi'
 	icon_state = "spiritpart"
 	density = TRUE

@@ -65,7 +65,7 @@
 
 		<h3>How it works</h3>
 		<ul>
-			<li>You need a MEISTER account. The crate refuses goods from anyone without one.</li>
+			<li>You need a NERVELOCK account. The crate refuses goods from anyone without one.</li>
 			<li><b>Left-click (or attack) with an item:</b> deposit that one item.</li>
 			<li><b>Right-click the crate:</b> dump everything on your tile into it at once, with a running tally announced when it's done.</li>
 			<li>Handcarts and storage bins on your tile are unpacked automatically - the crate matches their contents one item at a time.</li>

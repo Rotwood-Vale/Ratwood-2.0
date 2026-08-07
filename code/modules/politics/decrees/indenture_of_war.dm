@@ -14,13 +14,13 @@
 		"Warden" = 20,
 		"Squire" = 10,
 	)
-	flavor_text = {"This Indenture of War, made betwene the Crown of the Summit on the one part, and the armed men of the Realm on the other part, witnesseth that:
+	flavor_text = {"This Indenture of War, made betwene the Crown of the Vale on the one part, and the armed men of the Realm on the other part, witnesseth that:
 
 The Crown shall paye unto its soldiery their just wages, by the daye, and without lette or delay, according to the ranks herein set forth. The Marshal of the Realm at threescore marks, the Knights at twoscore, a Sergeant at twoscore likewise, a Man at Armes at a score, a Warden at a score, and a Squire at ten. Beneath these sums no wage shall fall whilst this Indenture stands.
 
 In return, the armed men of the Realm shall do their trewe service to the Duke, and shall obey the Duke's lieutenants and officers in all things lawful and reasonable. And if the saide armed men shall break or contravene this Indenture, they shall be at the Duke's wille and mercye. And if the Crown shall break this Indenture - withholding the wages herein pledged, or setting them lower than here set forth - the soldier is released from his oath, and the Crown shall answer for the faith it hath broken.
 
-In witness whereof, the Crown of the Summit hath set his seale to this Indenture, and the said armed men of the Realm have set their seales in like manner.
+In witness whereof, the Crown of the Vale hath set his seale to this Indenture, and the said armed men of the Realm have set their seales in like manner.
 
 Yeven under the seal of the Crown."}
 	revoke_text = "The %RULER% has broken the Indenture of War. The soldier's oath is dissolved, and the Crown's armed men stand at liberty of service - let the garrison remember whose seal was cut first."

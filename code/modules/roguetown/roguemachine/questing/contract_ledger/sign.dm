@@ -78,7 +78,7 @@
 		return
 
 	if(!SStreasury.has_account(user))
-		say("No account on record - register with a Meister before turning in the contract.")
+		say("No account on record - register with a Nervelock before turning in the contract.")
 		return
 
 	var/base_reward = scroll.assigned_quest.reward_amount

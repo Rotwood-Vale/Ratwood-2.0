@@ -48,7 +48,7 @@
 	treasury_value = discretionary_fund.balance
 	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, loan_amount, "Arrears advance from the Emerald Trading Company"))
 	priority_announce(
-		"The Crown's coffers ran dry at payroll. The Burghers of Emerald Summit, by their standing pledge, advance [loan_amount]m at no interest to cover the day's wages. Should the Crown fail again on the morrow, the realm enters sequestration.",
+		"The Crown's coffers ran dry at payroll. The Burghers of Rotwood Vale, by their standing pledge, advance [loan_amount]m at no interest to cover the day's wages. Should the Crown fail again on the morrow, the realm enters sequestration.",
 		"THE BURGHERS LEND",
 		'sound/misc/royal_decree2.ogg',
 		"Captain",

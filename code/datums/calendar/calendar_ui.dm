@@ -9,7 +9,7 @@
 /client/verb/view_ic_calendar()
 	set category = "IC"
 	set name = "View Calendar"
-	set desc = "View the Summit Calendar - the month, season, and upcoming feast daes."
+	set desc = "View the Vale Calendar - the month, season, and upcoming feast daes."
 	open_calendar_ui()
 
 /datum/calendar_ui

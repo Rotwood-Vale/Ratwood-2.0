@@ -275,7 +275,7 @@ const ContractCard = (props: { contract: Contract }) => {
     cantAfford ||
     fellowshipShort;
   const title = noAccount
-    ? 'No bank account. Register with a Meister first.'
+    ? 'No bank account. Register with a Nervelock first.'
     : takeCooldown > 0
       ? `Guild cooldown, wait ${takeCooldown}s before signing another.`
       : atCap
@@ -418,7 +418,7 @@ const ActiveStrip = (props: {
   const { act, data } = useBackend<ContractLedgerData>();
   const takeCooldown = data.take_cooldown_remaining || 0;
   const blockReason = !data.has_account
-    ? 'You have no bank account. Register with a Meister before signing any contract.'
+    ? 'You have no bank account. Register with a Nervelock before signing any contract.'
     : takeCooldown > 0
       ? `Guild cooldown active, wait ${takeCooldown}s before signing another contract.`
       : null;
@@ -443,7 +443,7 @@ const ActiveStrip = (props: {
             {fellowshipNote}
           </span>
         </span>
-        <span>Meister Balance: {props.balance} Mammons</span>
+        <span>Nervelock Balance: {props.balance} Mammons</span>
       </div>
       {blockReason && (
         <div

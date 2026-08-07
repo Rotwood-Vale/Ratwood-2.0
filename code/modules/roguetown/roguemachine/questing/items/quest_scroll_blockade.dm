@@ -27,7 +27,7 @@
 			to_chat(user, span_warning(Q.claim_failure_reason(user)))
 			return
 		if(!SStreasury.has_account(user))
-			to_chat(user, span_warning("No account on record - register with a Meister before taking a contract, lest there be no purse to pay you."))
+			to_chat(user, span_warning("No account on record - register with a Nervelock before taking a contract, lest there be no purse to pay you."))
 			return
 		Q.quest_receiver_reference = WEAKREF(user)
 		Q.quest_receiver_name = user.real_name

@@ -507,7 +507,7 @@
 	if(spent > 0)
 		if(is_alderman_acting)
 			SScity_assembly.consume_trade(spent, user, "import [quantity] [tg.name] from [region.name]")
-		say("Emerald Summit imports [quantity] [tg.name] from [region.name] for [spent] mammon.")
+		say("[SSmapping.map_adjustment.realm_name] imports [quantity] [tg.name] from [region.name] for [spent] mammon.")
 		playsound(src, 'sound/misc/coininsert.ogg', 100, FALSE, -1)
 	SStgui.update_uis(src)
 

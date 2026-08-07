@@ -26,7 +26,7 @@
 		to_chat(user, span_danger("It seems uninterested by [H]"))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("[src] refuses the head - to benefit from the Crown's bounties you must be registered with a Meister."))
+		to_chat(user, span_warning("[src] refuses the head - to benefit from the Crown's bounties you must be registered with a Nervelock."))
 		return
 	eathead(H, user)
 
@@ -85,7 +85,7 @@
 
 /obj/structure/roguemachine/headeater/attack_right(mob/user)
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("[src] refuses to process bounties without a registered account. Visit a Meister."))
+		to_chat(user, span_warning("[src] refuses to process bounties without a registered account. Visit a Nervelock."))
 		return
 	if(ishuman(user))
 		for(var/obj/I in get_turf(src))
