@@ -25552,6 +25552,14 @@
 "fBL" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/physician)
+"aam" = (
+/obj/item/roguemachine/zadcote/merchant,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/physician)
+"aai" = (
+/obj/structure/roguemachine/escrow,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/physician)
 "fBN" = (
 /obj/structure/fluff/walldeco/maidendrape{
 	pixel_y = -32
@@ -35382,6 +35390,10 @@
 "hMX" = (
 /turf/open/floor/rogue/grassgrey,
 /area/rogue/outdoors/bograt/sunken)
+"aaa" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
+/turf/open/floor/rogue/grassgrey,
+/area/rogue/outdoors/bograt/sunken)
 "hNb" = (
 /obj/structure/table/wood/large_table/south_east,
 /turf/open/floor/rogue/ruinedwood,
@@ -41513,6 +41525,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "jfX" = (
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
+"aao" = (
+/obj/item/roguemachine/zadcote/bathhouse,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "jgc" = (
@@ -71539,6 +71555,10 @@
 "pOf" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
+"aal" = (
+/obj/item/roguemachine/zadcote/steward,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/exposed/town/keep)
 "pOg" = (
 /obj/structure/gate{
 	gid = "firebigger";
@@ -99046,6 +99066,10 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cave)
 "wbg" = (
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/town/rockhill)
+"aak" = (
+/obj/structure/roguemachine/scrapper,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
 "wbi" = (
@@ -165825,7 +165849,7 @@ xeg
 scK
 lXl
 xkd
-jfX
+aao
 ofB
 scK
 eCL
@@ -264201,7 +264225,7 @@ wwX
 hMX
 wwX
 xRy
-hMX
+aaa
 lVD
 hMX
 hMX
@@ -293791,8 +293815,8 @@ hNi
 hNi
 tKJ
 qIw
-fBL
-fBL
+aai
+aam
 fBL
 rfG
 bcG
@@ -388728,7 +388752,7 @@ xAt
 xAt
 xAt
 eoy
-wbg
+aak
 jlt
 aEt
 ajv
@@ -395192,7 +395216,7 @@ kIS
 qrC
 pOf
 pOf
-pOf
+aal
 sTJ
 wrj
 snF

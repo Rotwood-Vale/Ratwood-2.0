@@ -9821,6 +9821,10 @@
 "bZZ" = (
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"aaf" = (
+/obj/item/roguemachine/zadcote/steward,
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors/town)
 "caa" = (
 /obj/machinery/light/rogue/candle/blue{
 	pixel_y = -32
@@ -50857,6 +50861,10 @@
 "kDS" = (
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/town)
+"aad" = (
+/obj/structure/roguemachine/escrow,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/outdoors/town)
 "kDU" = (
 /obj/structure/table/wood,
 /obj/item/candle/gold/lit{
@@ -62543,6 +62551,10 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/north)
 "mXZ" = (
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/physician)
+"aag" = (
+/obj/item/roguemachine/zadcote/merchant,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/physician)
 "mYa" = (
@@ -90355,6 +90367,10 @@
 "sNZ" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield)
+"aae" = (
+/obj/structure/roguemachine/scrapper,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield)
 "sOd" = (
 /obj/structure/chair/bench/ultimacouch/r,
 /obj/structure/fluff/railing/border/east,
@@ -90434,6 +90450,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/underdarker/dunsouth)
 "sPj" = (
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/underdark)
+"aab" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark)
 "sPu" = (
@@ -117030,6 +117050,10 @@
 "ylh" = (
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
+"aai" = (
+/obj/item/roguemachine/zadcote/bathhouse,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "ylo" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab,
 /turf/open/water/swamp/deep,
@@ -129045,7 +129069,7 @@ mnN
 mnN
 mnN
 mnN
-sPj
+aab
 sPj
 sPj
 nOh
@@ -186467,7 +186491,7 @@ cqm
 xNL
 mMx
 ylh
-ylh
+aai
 cqm
 bVe
 wSO
@@ -297159,7 +297183,7 @@ sNZ
 sNZ
 sNZ
 jFA
-sNZ
+aae
 kTT
 ibp
 ibp
@@ -306243,7 +306267,7 @@ vAb
 mhG
 nbL
 mXZ
-mXZ
+aag
 vRV
 dkS
 rCj
@@ -307600,7 +307624,7 @@ dkS
 kDS
 kDS
 kDS
-kDS
+aad
 dVt
 cCB
 mYC
@@ -312583,7 +312607,7 @@ sns
 sns
 eKH
 fSt
-bZZ
+aaf
 jfV
 dra
 goW

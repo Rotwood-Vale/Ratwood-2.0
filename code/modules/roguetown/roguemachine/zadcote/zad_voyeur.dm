@@ -138,5 +138,5 @@
 /atom/movable/screen/alert/scryingeye
 	name = "SCRYING EYE"
 	desc = "I SEE YOU."
-	icon_state = "scryingeye"
+	icon_state = "blackeye" // Ratwood lacks a dedicated scryingeye state; blackeye is the closest arcane-watcher icon
 	timeout = 8 SECONDS

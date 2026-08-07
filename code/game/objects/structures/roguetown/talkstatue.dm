@@ -18,7 +18,7 @@ ported - see talkstatue_tgui.dm's header comment for exactly what was stubbed ou
 /obj/structure/roguemachine/talkstatue
 	name = "talking statue"
 	desc = "Don't map this one! Map the others!"
-	icon = 'icons/roguetown/misc/machines.dmi'
+	icon = 'icons/roguetown/misc/economy_machines.dmi' // carries the mercstatue sprite from upstream
 	icon_state = "mercstatue"
 	density = FALSE
 	anchored = TRUE
