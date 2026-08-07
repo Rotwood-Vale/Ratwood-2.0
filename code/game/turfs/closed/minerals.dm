@@ -48,9 +48,9 @@
 	if (mineralType && mineralAmt && spread && spreadChance)
 		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
-				var/turf/T = get_step(src, dir)
-				if(istype(T, /turf/closed/mineral/random))
-					Spread(T)
+				var/turf/step_turf = get_step(src, dir)
+				if(istype(step_turf, /turf/closed/mineral/random))
+					Spread(step_turf)
 	var/turf/open/transparent/openspace/target = get_step_multiz(src, UP)
 	if(istype(target))
 		target.ChangeTurf(/turf/open/floor/rogue/naturalstone)
@@ -62,30 +62,52 @@
 		return TRUE
 	return ..()
 
-/turf/closed/mineral/attackby(obj/item/I, mob/user, params, multiplier)
+// This is snowflaked bump code for mineral walls. Bumping into walls allows you to mine them, if you have apprentice+ skill.
+// My wrists hurt. Let us have this. okay?
+/turf/closed/mineral/Bumped(atom/movable/AM)
+	. = ..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/user = AM
+	if(!istype(user.used_intent, /datum/intent/pick) || user.get_skill_level(/datum/skill/labor/mining) < SKILL_LEVEL_APPRENTICE)
+		return
+	if(user.client && !user.client.prefs?.autopicking)
+		return
+	var/obj/item/held_item = user.get_active_held_item()
+	if(user.doing)
+		return
+	if(do_after(user, 1 SECONDS, TRUE, src, TRUE, null, TRUE))
+		if(!ismineralturf(src))
+			return
+		attackby(held_item, user, multiplier = 2)
+
+/turf/closed/mineral/attackby(obj/item/item, mob/user, params, multiplier)
 	if (!user.IsAdvancedToolUser())
 		to_chat(usr, span_warning("I don't have the dexterity to do this!"))
 		return
 	lastminer = user
 	..()
-	if(istype(I, /obj/item/rogueweapon/pick))
+	if(istype(item, /obj/item/rogueweapon/pick))
 		if(!isliving(user))
 			return
 
-		var/mob/living/L = user
-		user.doing = FALSE
+		var/mob/living/living_user = user
+		if(living_user.client && !living_user.client.prefs?.autopicking)
+			return
+		if(user.doing)
+			return
 		// Makes more sense for the check since they always
 		// become an open tile afterwards
 		while(density && user.Adjacent(src))
-			if((L.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
+			if((living_user.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
 				..()
 				var/olddam = turf_integrity
 				if(turf_integrity && turf_integrity > 10)
 					if(turf_integrity < olddam)
 						if(prob(50))
 							if(user.Adjacent(src))
-								var/obj/item/natural/stone/S = new(src)
-								S.forceMove(get_turf(user))
+								var/obj/item/natural/stone/dropped_stone = new(src)
+								dropped_stone.forceMove(get_turf(user))
 					if(!density)
 						break
 			else
@@ -93,12 +115,11 @@
 
 /turf/closed/mineral/attack_right(mob/user)
 	var/obj/item = user.get_active_held_item()
-	if(user.used_intent.type == /datum/intent/pick && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_JOURNEYMAN))
-		if(do_after(user, 4 SECONDS, TRUE, src))
+	if(istype(user.used_intent, /datum/intent/pick) && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_APPRENTICE))
+		if(do_after(user, 2 SECONDS, TRUE, src))
 			if(!ismineralturf(src))
 				return
-			src.attackby(item, user, multiplier = 4)
-			user.stamina_add(25)
+			attackby(item, user, multiplier = 4)
 	..()
 
 /turf/closed/mineral/turf_destruction(damage_flag)
@@ -106,9 +127,9 @@
 		return
 	if(damage_flag == "stab" || damage_flag == "blunt")
 		if(istype(src, /turf/closed/mineral/rogue) || istype(src, /turf/closed/mineral/random/rogue)) // if a natural stone wall was destroyed, spawn a trigger trap for mine shaft collapsing
-			var/turf/T = get_turf(src)
-			if(!isnull(T) && !locate(/obj/structure/mine_collapse) in T) // there isn't a trap here, add to turf
-				var/obj/structure/mine_collapse/new_trap = new /obj/structure/mine_collapse(T)
+			var/turf/targeted_turf = get_turf(src)
+			if(!isnull(targeted_turf) && !locate(/obj/structure/mine_collapse) in targeted_turf) // there isn't a trap here, add to turf
+				var/obj/structure/mine_collapse/new_trap = new /obj/structure/mine_collapse(targeted_turf)
 				if(new_trap) // to any future coders - do not randomize this type, it'll break the salt mines prison camp and let them mine iron, which'll let them break out too easily
 					new_trap.respawn_rock = src.type
 	if(damage_flag == "blunt")
@@ -187,8 +208,8 @@
 			gets_drilled(null, triggered_by_explosion = TRUE)
 	return
 
-/turf/closed/mineral/Spread(turf/T)
-	T.ChangeTurf(type)
+/turf/closed/mineral/Spread(turf/spread_turf)
+	spread_turf.ChangeTurf(type)
 
 /turf/closed/mineral/random
 	///if this isn't empty, swaps to one of them via pickweight
@@ -206,16 +227,16 @@
 	. = ..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
+		var/turf/new_turf = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 
-		if(T && ismineralturf(T))
-			var/turf/closed/mineral/M = T
-			M.mineralAmt = rand(1, 5)
-			M.environment_type = src.environment_type
-			M.turf_type = src.turf_type
-			M.baseturfs = src.baseturfs
-			src = M
-			M.levelupdate()
+		if(new_turf && ismineralturf(new_turf))
+			var/turf/closed/mineral/mineral_turf = new_turf
+			mineral_turf.mineralAmt = rand(1, 5)
+			mineral_turf.environment_type = src.environment_type
+			mineral_turf.turf_type = src.turf_type
+			mineral_turf.baseturfs = src.baseturfs
+			src = mineral_turf
+			mineral_turf.levelupdate()
 
 /turf/closed/mineral/random/rogue
 //	layer = ABOVE_MOB_LAYER

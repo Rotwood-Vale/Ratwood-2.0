@@ -263,6 +263,7 @@
 	using = new/atom/movable/screen/skills
 	using.icon = ui_style
 	using.screen_loc = rogueui_skills
+	using.hud = src //An observer reads the owner of the HUD off this.
 	static_inventory += using
 
 	using = new/atom/movable/screen/craft
