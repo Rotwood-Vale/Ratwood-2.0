@@ -705,7 +705,7 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
 	if(H.mind)
-		var/weapons = list("Path of the Preacher", "Path of the Shepard")
+		var/weapons = list("Path of the Preacher", "Path of the Shepard", "Path of the Sword Maiden", "Path of the Bell")
 		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
 		switch(weapon_choice)
 			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
@@ -719,6 +719,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
+			if("Path of the Sword Maiden")//I see...
+				r_hand = /obj/item/rogueweapon/greatsword/zwei //Claymore
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)//So you won't feel like carrying dead weight in your hands.
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 2, TRUE)
 
 	if(istype(H.patron, /datum/patron/divine))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
