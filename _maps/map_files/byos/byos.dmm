@@ -129,10 +129,6 @@
 /obj/item/reagent_containers/glass/bowl,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/tribeden)
-"afu" = (
-/obj/item/rogueweapon/pick/aalloy,
-/turf/open/floor/rogue/naturalstone/sandstone,
-/area/rogue/indoors)
 "afF" = (
 /obj/structure/fluff/walldeco/chains,
 /obj/structure/closet/crate/coffin/vampire,
@@ -980,7 +976,6 @@
 /area/rogue/indoors/town/tavern)
 "aUL" = (
 /obj/structure/rack/rogue,
-/obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer,
 /obj/item/rogueweapon/sword/decorated,
 /turf/open/floor/rogue/tile,
 /area/rogue/under/cave/byos/wrath)
@@ -6860,7 +6855,6 @@
 "ghx" = (
 /obj/machinery/light/rogue/candle/red/r,
 /obj/structure/fluff/railing/border/west,
-/obj/item/rogueweapon/hoe/aalloy,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/byos/pride)
 "gia" = (
@@ -7508,12 +7502,6 @@
 	dir = 1
 	},
 /area/rogue/under/town/basement)
-"gLV" = (
-/obj/item/rogueweapon/pick/aalloy,
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/indoors/town/manor/byos{
-	first_time_text = null
-	})
 "gMN" = (
 /obj/item/natural/rock,
 /turf/open/floor/rogue/dunes,
@@ -8525,12 +8513,6 @@
 "hFU" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/tribeden)
-"hGf" = (
-/obj/item/rogueweapon/hammer/aalloy,
-/turf/closed/wall/mineral/rogue/stone/moss,
-/area/rogue/indoors/town/manor/byos{
-	first_time_text = null
-	})
 "hGo" = (
 /obj/structure/bars/grille,
 /obj/effect/decal/cleanable/blood/old,
@@ -9805,7 +9787,6 @@
 /area/rogue/under/cave)
 "iOw" = (
 /obj/structure/closet/crate/drawer,
-/obj/item/clothing/ring/aalloy,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/byos{
 	first_time_text = null
@@ -11158,7 +11139,6 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/roguecloset,
-/obj/item/clothing/head/roguetown/helmet/heavy/aalloy,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/byos{
 	first_time_text = null
@@ -13859,7 +13839,6 @@
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/beach/byos)
 "mkS" = (
-/obj/item/rogueweapon/shovel/aalloy,
 /obj/structure/composter,
 /turf/open/floor/rogue/blocks/paving,
 /area/rogue/indoors)
@@ -14305,14 +14284,6 @@
 	},
 /turf/open/lava,
 /area/rogue/under/cavelava/byos/volcanic)
-"mHT" = (
-/obj/structure/fluff/statue/zizo{
-	pixel_x = -16;
-	pixel_y = 6;
-	desc = "Gaze upon the beauty of Progress."
-	},
-/turf/open/floor/rogue/church,
-/area/rogue/under/cave/byos/pride)
 "mIV" = (
 /turf/closed/mineral/rogue/bedrock/sandstone,
 /area/rogue/outdoors/jungle)
@@ -22788,7 +22759,6 @@
 /obj/item/candle/yellow,
 /obj/item/candle/yellow,
 /obj/item/candle/yellow,
-/obj/item/cooking/pan/aalloy,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/chapel{
 	droning_sound = 'sound/music/area/churchdawn.ogg';
@@ -25819,10 +25789,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
-"wqd" = (
-/obj/item/rogueweapon/hoe/aalloy,
-/turf/open/floor/rogue/dirt/nospawn,
-/area/rogue/indoors)
 "wqo" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -27999,12 +27965,6 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/indoors/byos/ship)
-"yiK" = (
-/obj/item/rogueweapon/pick/aalloy,
-/turf/open/floor/rogue/cobble,
-/area/rogue/indoors/town/manor/byos{
-	first_time_text = null
-	})
 "yjh" = (
 /obj/structure/closet/crate/chest,
 /obj/item/ingot/blacksteel,
@@ -87776,7 +87736,7 @@ dNc
 dNc
 dNc
 dNc
-hGf
+caQ
 aOO
 gdJ
 gBj
@@ -90422,7 +90382,7 @@ jVe
 wDc
 fZP
 jVe
-yiK
+gdJ
 gdJ
 caQ
 dkU
@@ -91625,7 +91585,7 @@ gdJ
 bSD
 xmq
 xmq
-yiK
+gdJ
 jVe
 jVe
 gdJ
@@ -95859,7 +95819,7 @@ bSD
 bSD
 bSD
 dkU
-gLV
+bSD
 gdJ
 dkU
 xmq
@@ -178063,7 +178023,7 @@ tMU
 ewh
 tfH
 ewh
-afu
+ewh
 tMU
 eWy
 eWy
@@ -178465,7 +178425,7 @@ eWy
 eWy
 tMU
 jlm
-wqd
+jlm
 qJP
 jlm
 tMU
@@ -211984,7 +211944,7 @@ msE
 kas
 jVn
 kas
-mHT
+kas
 kas
 kas
 ggz

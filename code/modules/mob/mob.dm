@@ -812,16 +812,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 			if(SSgamemode.roundvoteend)
 				stat("ROUND END: [DisplayTimeText(time_left)]")
 			if(client?.holder)
-				if(GLOB.extend_round_timestamp)
-					var/elapsed_ticks = GLOB.round_timer
-					var/elapsed_seconds = FLOOR(elapsed_ticks * 0.1, 1)
-					var/hours = FLOOR(elapsed_seconds / 3600, 1)
-					var/remaining = MODULUS(elapsed_seconds, 3600)
-					var/minutes = FLOOR(remaining / 60, 1)
-					var/seconds = MODULUS(remaining, 60)
-					var/min_str = minutes < 10 ? "0[minutes]" : "[minutes]"
-					var/sec_str = seconds < 10 ? "0[seconds]" : "[seconds]"
-					stat(null, "ROUND EndTime: [hours]:[min_str]:[sec_str]")
 				stat(null, "ROUND TrueTime: [worldtime2text()] [world.time]")
 			stat(null, "STORYTELLER: [SSgamemode.storyteller_name]")
 			stat(null, "TIMEOFDAY: [days] ᛉ [uppertext(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]")

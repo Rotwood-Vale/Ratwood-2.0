@@ -1426,25 +1426,21 @@ GLOBAL_VAR_INIT(extend_round_timestamp, 0)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/extension_minutes = input(usr, "How many minutes should we adjust the round end by? (Negative to reduce)", "Adjust Round End", 30) as num|null
-	if(extension_minutes == null)
+	if(alert("Prolong the end of the round by 30 minutes. This delays the vote, or delays the end after the vote is successful. Are you sure?",,"Yes","Cancel") == "Cancel")
 		return
 
-	var/extension_time = extension_minutes MINUTES
-	var/action = extension_minutes > 0 ? "extended" : extension_minutes < 0 ? "reduced" : "made no change to"
+	if(world.time < GLOB.extend_round_timestamp + (1 MINUTES))
+		to_chat(usr, "<span class='notice'>Someone recently pressed this button! Wait a minute before pressing it again.</span>")
+		return
 
-	if(alert("Adjust the round end by [extension_minutes] minutes ([action]). This delays the vote, or delays the end after the vote is successful. Are you sure?",,"Yes","Cancel") == "Cancel")
+	if((GLOB.round_timer > world.time + (3 * ROUND_EXTENSION_TIME)) || SSgamemode.round_ends_at - world.time > (3 * ROUND_EXTENSION_TIME))
+		to_chat(usr, "<span class='notice'>Failsafe! Round end is already over 3 times out! Ignoring.</span>")
 		return
 
 	if(SSgamemode.round_ends_at != 0) // End round is already ticking.
-		SSgamemode.round_ends_at += extension_time
+		SSgamemode.round_ends_at += ROUND_EXTENSION_TIME
 	else //We push back the automated endround vote.
-		var/current_round_timer = GLOB.round_timer
-		if(current_round_timer > world.time)
-			current_round_timer -= SSticker.round_start_time
-		GLOB.round_timer = current_round_timer + extension_time
-		if(extension_time < 0 && STATION_TIME_PASSED() >= GLOB.round_timer && !SSvote.current_vote)
-			SSvote.initiate_vote("endround")
-	log_admin("[key_name(usr)] [action] the round by [abs(extension_minutes)] minutes.")
-	message_admins("[key_name(usr)] [action] the round by [abs(extension_minutes)] minutes.")
+		GLOB.round_timer = GLOB.round_timer + ROUND_EXTENSION_TIME
+	log_admin("[key_name(usr)] extended the round by 30 minutes.")
+	message_admins("[key_name(usr)] extended the round by 30 minutes.")
 	GLOB.extend_round_timestamp = world.time

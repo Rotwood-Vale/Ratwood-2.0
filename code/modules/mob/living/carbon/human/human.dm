@@ -113,15 +113,28 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SLIPPERY), PROC_REF(on_slippery_trait_changed))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SLIPPERY), PROC_REF(on_slippery_trait_changed))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
 	update_tongue_noise_verbs()
 	update_keen_ears_verb()
+	update_slippery_trait()
 
 /mob/living/carbon/human/proc/on_keen_ears_trait_changed(datum/source, trait)
 	SIGNAL_HANDLER
 	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/on_slippery_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_slippery_trait()
+
+/mob/living/carbon/human/proc/update_slippery_trait()
+	if(HAS_TRAIT(src, TRAIT_SLIPPERY))
+		passtable_on(src, TRAIT_SLIPPERY)
+	else
+		passtable_off(src, TRAIT_SLIPPERY)
 
 /mob/living/carbon/human/proc/update_keen_ears_verb()
 	var/verb_path = /mob/living/carbon/human/verb/toggle_keen_ears_ic

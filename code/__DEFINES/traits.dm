@@ -75,6 +75,7 @@
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
 #define TRAIT_STUDENT		"Student"
 #define TRAIT_INTELLECTUAL "Intellectual"
+#define TRAIT_SLIPPERY "Slippery"
 #define TRAIT_GRAVEROBBER "Experienced Grave Robber"
 #define TRAIT_PURITAN "Otavan Emissary"
 #define TRAIT_PURITAN_ADVENTURER "Interrogator"
@@ -552,6 +553,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang"),
 	TRAIT_EXTREME_TEMPERATURE_IMMUNE = span_info("I will not suffer ills from extreme temperatures, wether hot or cold, yet fire and ice can still harm me."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
+	TRAIT_SLIPPERY = span_info("I can slip through tables, railings, and similar obstacles with ease."),
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),

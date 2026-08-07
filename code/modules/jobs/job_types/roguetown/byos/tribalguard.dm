@@ -26,7 +26,7 @@
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	// cmode_music = 'sound/music/hornofthebeast.ogg'
 	// social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_PASSTABLE)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_SLIPPERY)
 	job_subclasses = list(
 		/datum/advclass/tribalguard/hunter,
 		/datum/advclass/tribalguard/warrior,
