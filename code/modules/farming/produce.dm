@@ -78,7 +78,7 @@
 /obj/item/reagent_containers/food/snacks/grown/wheat
 	seed = /obj/item/seeds/wheat
 	name = "wheat grain"
-	desc = ""
+	desc = "Wheat grains, ready to be milled into powder."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "wheat"
 	gender = PLURAL
@@ -93,7 +93,7 @@
 /obj/item/reagent_containers/food/snacks/grown/oat
 	seed = /obj/item/seeds/wheat/oat
 	name = "oat grain"
-	desc = ""
+	desc = "Oat grains, ready to be milled and boiled."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "oat"
 	gender = PLURAL
@@ -208,17 +208,30 @@
 	name = "lime"
 	seed = /obj/item/seeds/lime
 	desc = "A small, green citrus fruit with a sharp, tangy flavor, often used to add zest to dishes and drinks."
-	icon_state = "lemon" // Need a real icon
+	icon_state = "lime"
 	tastes = list("lime" = 1)
 	splat_color = "#00FF00"
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine
 	name = "tangerine"
 	seed = /obj/item/seeds/tangerine
-	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments."
+	desc = "A small, easy-to-peel citrus fruit with a vibrant orange color and sweet, juicy segments. It is most popularly known for \
+	being the predecessor to 'marmalade'; a deliciously spreadable jam, born through smothering tangerines in sugar and dousing them in boiling fat."
 	icon_state = "tangerine"
 	tastes = list("tangerine" = 1)
 	splat_color = "#FFA500"
+
+/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine_sugared
+	name = "smothered tangerine"
+	desc = "Sugared tangerines, smothered in sweetness and awaiting to be baptized in a pot of boiling fat."
+	icon_state = "tangerinesugar"
+	faretype = FARE_FINE
+	splat_color = "#FFA500"
+	tastes = list("overpoweringly sweet" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS)
+	deep_fried_type = /obj/item/reagent_containers/food/snacks/marmalade
+	eat_effect = /datum/status_effect/buff/sweet
+
 
 /obj/item/reagent_containers/food/snacks/grown/fruit/plum
 	name = "plum"

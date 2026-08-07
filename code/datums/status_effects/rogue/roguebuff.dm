@@ -42,7 +42,7 @@
 	duration = 8 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/snackbuff
-	name = "Good snack"
+	name = "Good Snack"
 	desc = "Better than plain bread. Tasty."
 	icon_state = "foodbuff"
 
@@ -77,7 +77,7 @@
 	duration = 30 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/mealbuff
-	name = "Good meal"
+	name = "Good Meal"
 	desc = "A meal a day keeps the barber away, or at least it makes it slightly easier."
 	icon_state = "foodbuff"
 
@@ -111,7 +111,7 @@
 	duration = 8 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/sweet
-	name = "Sweet embrace"
+	name = "Sweet Embrace"
 	desc = "Sweets are always a sign of good luck, everything goes well when you eat some of them."
 	icon_state = "foodbuff"
 

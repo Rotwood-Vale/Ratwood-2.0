@@ -235,3 +235,8 @@
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
 					/obj/item/reagent_containers/food/snacks/fish/clownfish,
 				)
+				
+/datum/supply_pack/rogue/food/goldenapple
+	name = "Apple Of Ambrosia"
+	cost = 60
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/apple/gold)
