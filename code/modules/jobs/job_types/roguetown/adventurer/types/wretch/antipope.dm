@@ -4,6 +4,7 @@
 #define EVIL_PRIEST_SERMON_COOLDOWN (30 MINUTES)
 #define EVIL_PRIEST_SWITCH_FAITH_COOLDOWN (10 MINUTES)
 #define EVIL_PRIEST_ANNOUNCEMENT_COOLDOWN (5 MINUTES)
+#define EVIL_PRIEST_CURSE_COOLDOWN (15 MINUTES)
 
 /datum/advclass/wretch/antipope
 	name = "Heresiarch" //formerly Doomsayer
@@ -409,16 +410,35 @@
 
 	return TRUE
 
+/mob/living/carbon/human/proc/evil_churchecancurse_selection(mob/living/carbon/human/H)
+	
+	// Ascendants may in fact turn their back on their followers
+	if(istype(H.patron, /datum/patron/inhumen))
+		return TRUE
+	// Ones rejecting the pantheon arent protected by it
+	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+		return TRUE
+	// Patron doesnt protect the excomunicated
+	if(H.real_name in GLOB.excommunicated_players)
+		return TRUE
+	if(H.real_name in GLOB.apostasy_players)
+		return TRUE
+
+	return FALSE
+
 /mob/living/carbon/human/proc/evil_churchpriestcurse(mob/living/carbon/human/H in GLOB.player_list)
-	set name = "Divine Curse"
+	set name = "Ascendants Curse"
 	set category = "Antipope"
 
-	if (stat)
-		return
+	var/list/posible_targets = list()
+	for(var/mob/living/carbon/human/P in GLOB.player_list)
+		if(evil_churchecancurse_selection(P))
+			posible_targets += "[P.true_name] ([P.advjob])" 
 
-	var/target_name = input("Who shall receive a curse?", "Target Name") as text|null
 
-	if (!target_name)
+	var/target_pick = input("Who shall receive a curse?", "Select Target") as null|anything in posible_targets
+
+	if (!target_pick)
 		return
 
 	if (istype(get_area(src), /area/rogue/indoors/town/church/chapel))
@@ -428,15 +448,11 @@
 	if(!src.key)
 		return
 
-	if(!src.mind || !src.mind.do_i_know(name=target_name))
-		to_chat(src, span_warning("I don't know anyone by that name."))
-		return
-
 	var/list/curse_choices = list(
-		"Curse of Astrata" = /datum/curse/astrata,
-		"Curse of Noc" = /datum/curse/noc,
-		"Curse of Dendor" = /datum/curse/dendor,
-		"Curse of Abyssor" = /datum/curse/abyssor,
+		"Curse of Zizo" = /datum/curse/zizo,
+		"Curse of Baotha" = /datum/curse/baotha,
+		"Curse of Graggar" = /datum/curse/graggar,
+		"Curse of Matthios" = /datum/curse/matthios,
 	)
 
 	var/curse_pick = input("Choose a curse to apply or lift.", "Select Curse") as null|anything in curse_choices
@@ -445,19 +461,19 @@
 
 	var/curse_type = curse_choices[curse_pick]
 
-	if (H.real_name == target_name)
+	if (H == target_pick)
 		var/datum/curse/temp = new curse_type()
 
 		if (H.is_cursed(temp))
 			H.remove_curse(temp)
-			priority_announce("[real_name] has lifted [curse_pick] from [H.real_name]! They are once again part of the flock!", title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
-			message_admins("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
-			log_game("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")
+			priority_announce("Heresiath has lifted [curse_pick] from [H.real_name]! They are free from ascendants grasps!", title = "PITY", sound = 'sound/misc/bell.ogg')
+			message_admins("ASCEDANT CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
+			log_game("ASCEDANT CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")
 		else
 			if (length(H.curses) >= 1)
 				to_chat(src, span_syndradio("[H.real_name] is already afflicted by another curse."))
-				message_admins("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
-				log_game("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
+				message_admins("ASCEDANT CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
+				log_game("ASCEDANT CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
 				return
 
 			if (!COOLDOWN_FINISHED(src, priest_curse))
@@ -465,14 +481,14 @@
 				return
 
 			//Check if we can curse this person.
-			if(!churchecancurse(H))
+			if(!evil_churchecancurse(H))
 				return
 
-			COOLDOWN_START(src, priest_curse, PRIEST_CURSE_COOLDOWN)
+			COOLDOWN_START(src, priest_curse, EVIL_PRIEST_CURSE_COOLDOWN)
 			H.add_curse(curse_type)
 
-			priority_announce("[real_name] has stricken [H.real_name] with [curse_pick]! SHAME!", title = "JUDGEMENT", sound = 'sound/misc/excomm.ogg')
-			message_admins("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
-			log_game("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
+			priority_announce("Heresiath has stricken [H.real_name] with [curse_pick]! FEAR!", title = "ASCEDANT IRE", sound = 'sound/misc/excomm.ogg')
+			message_admins("ASCEDANT CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
+			log_game("ASCEDANT CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
 
 		return
