@@ -1,7 +1,7 @@
 /datum/quest/kill/blockade_defense
 	quest_type = QUEST_BLOCKADE_DEFENSE
 	quest_difficulty = QUEST_DIFFICULTY_HARD
-	tp_budget = BLOCKADE_WAVE_1_TP
+	tp_budget = BLOCKADE_WAVE_BASE_TP
 	threat_bands_cleared = QUEST_BANDS_BLOCKADE
 	required_fellowship_size = 0
 
@@ -15,7 +15,7 @@
 	/// TRUE after materialize() arms the quest and before the bearer has triggered wave 1
 	/// by entering the landmark's proximity. Prevents double-fire via check_arrival.
 	var/armed = FALSE
-	var/list/wave_budgets = list(BLOCKADE_WAVE_1_TP, BLOCKADE_WAVE_2_TP, BLOCKADE_WAVE_3_TP)
+	var/max_defenders_seen = 0
 	/// Auto-fail timer that fires if the bearer never reaches the landmark. Without this, a writ
 	/// stashed in a drawer or handed to someone who never travels keeps the blockade slot locked
 	/// until round-end.
@@ -146,6 +146,31 @@
 	announce_to_bearer("<b>You have reached the blockade.</b> Ready yourselves.")
 	spawn_wave(1)
 
+/datum/quest/kill/blockade_defense/proc/count_defenders(obj/effect/landmark/quest_spawner/landmark)
+	if(!landmark)
+		return BLOCKADE_DEFENDER_SCALE_MIN
+	var/turf/center = get_turf(landmark)
+	if(!center)
+		return BLOCKADE_DEFENDER_SCALE_MIN
+	var/count = 0
+	for(var/mob/living/L in range(BLOCKADE_DEFENDER_SCAN_RANGE, center))
+		if(!L.client)
+			continue
+		if(L.stat == DEAD)
+			continue
+		count++
+	return count
+
+/datum/quest/kill/blockade_defense/proc/wave_tp_budget(defenders)
+	var/n = clamp(defenders, BLOCKADE_DEFENDER_SCALE_MIN, BLOCKADE_DEFENDER_SCALE_MAX)
+	var/mult = 1 + (n - BLOCKADE_DEFENDER_SCALE_MIN) * BLOCKADE_TP_PER_EXTRA_DEFENDER
+	return round(BLOCKADE_WAVE_BASE_TP * mult)
+
+/// Reward multiplier from peak turnout, same band as the fight. Baseline at MIN (×1.0).
+/datum/quest/kill/blockade_defense/proc/reward_turnout_mult()
+	var/n = clamp(max_defenders_seen, BLOCKADE_DEFENDER_SCALE_MIN, BLOCKADE_DEFENDER_SCALE_MAX)
+	return 1 + (n - BLOCKADE_DEFENDER_SCALE_MIN) * BLOCKADE_REWARD_PER_EXTRA_DEFENDER
+
 /datum/quest/kill/blockade_defense/proc/spawn_wave(wave_num)
 	if(failed || complete)
 		return
@@ -156,7 +181,9 @@
 		fail_quest("landmark_lost")
 		return
 	current_wave = wave_num
-	tp_budget = wave_budgets[wave_num]
+	var/defenders = count_defenders(landmark)
+	max_defenders_seen = max(max_defenders_seen, defenders)
+	tp_budget = wave_tp_budget(defenders)
 	total_spawned_tp = 0
 	progress_current = 0
 	progress_required = 1
@@ -324,7 +351,7 @@
 		B.active_quest_ref = null
 		SSeconomy.clear_blockade(B, "cleared")
 	var/mob/lead = quest_receiver_reference?.resolve()
-	var/payout = reward_amount
+	var/payout = round(reward_amount * reward_turnout_mult())
 	if(payout > 0)
 		if(lead && SStreasury.has_account(lead))
 			SStreasury.bank_accounts[lead] += payout // ES deviation: integer player ledger (no per-player fund/get_account)
