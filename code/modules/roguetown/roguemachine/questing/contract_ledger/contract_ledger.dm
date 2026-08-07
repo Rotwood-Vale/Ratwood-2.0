@@ -180,6 +180,7 @@
 		if(istype(Q, /datum/quest/kill))
 			var/datum/quest/kill/KQ = Q
 			threat_bands = KQ.threat_bands_cleared
+		var/lapse_minutes = max(0, round((Q.get_lapse_time() - world.time) / 600, 1))
 		listing += list(list(
 			"ref" = REF(Q),
 			"title" = Q.title || "Unnamed Contract",
@@ -199,6 +200,7 @@
 			"is_towner" = Q.source == QUEST_SOURCE_TOWNER,
 			"is_standing" = Q.source == QUEST_SOURCE_RUMOR || Q.source == QUEST_SOURCE_DEFENSE || Q.source == QUEST_SOURCE_TOWNER,
 			"required_fellowship_size" = Q.required_fellowship_size,
+			"lapse_minutes" = lapse_minutes,
 		))
 	return listing
 
