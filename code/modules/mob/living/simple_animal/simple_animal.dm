@@ -554,6 +554,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		to_chat(user, "<span class='notice'>I finish butchering: [butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)].</span>")
 		gib()
 
+/mob/living/simple_animal/mark_contract_spawned()
+	. = ..()
+	head_butcher = null
+
 /mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, botch_chance, perfect_chance)
 	var/list/parts = list()
 	if(botch_count)
