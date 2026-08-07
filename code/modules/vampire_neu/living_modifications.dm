@@ -290,26 +290,12 @@
 		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
-	// Apply thirst effects based on bloodpool levels
-	switch(bloodpool)
-		if(VITAE_LEVEL_HUNGRY to VITAE_LEVEL_FED)
-			apply_status_effect(/datum/status_effect/debuff/thirstyt1)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt2)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt3)
-		if(VITAE_LEVEL_STARVING to VITAE_LEVEL_HUNGRY)
-			apply_status_effect(/datum/status_effect/debuff/thirstyt2)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt1)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt3)
-		if(-INFINITY to VITAE_LEVEL_STARVING)
-			apply_status_effect(/datum/status_effect/debuff/thirstyt3)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt1)
-			remove_status_effect(/datum/status_effect/debuff/thirstyt2)
-			if(prob(3))
-				playsound(get_turf(src), pick('sound/vo/hungry1.ogg','sound/vo/hungry2.ogg','sound/vo/hungry3.ogg'), 100, TRUE, -1)
-
+	// Handled by a centralised nutrition proc now
 	if(bloodpool < 100 && prob(9))
 		if(last_frenzy_check + 5 MINUTES < world.time)
 			rollfrenzy()
+
+	dna.species.update_needs(src)
 
 /mob/living/carbon/human/proc/get_clan_hierarchy_examine(mob/living/carbon/human/examiner)
 	if(!clan || !clan_position || !examiner.clan)

@@ -222,3 +222,8 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	/// Fixes to the hunger/thirst nonsense, stuffing them in species rather than mob. Ported from AP by IronDragoon
+	var/hunger_stage
+	var/thirst_stage
+	var/vitae_stage
