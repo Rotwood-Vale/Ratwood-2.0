@@ -291,7 +291,7 @@
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
 	force = 15
-	force_wielded = 25
+	force_wielded = 30//on par with other silver axe, but less integ so probably fine. This thing is dumb fun.
 	minstr = 11
 	max_blade_int = 200
 	anvilrepair = /datum/skill/craft/carpentry

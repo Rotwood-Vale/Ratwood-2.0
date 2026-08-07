@@ -271,6 +271,10 @@
 	stressadd = 2
 	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
 
+/datum/stressevent/sundercritted
+	stressadd = 5 //Its literally killing you, sire.
+	desc = span_boldred("I CAN FEEL MY SOUL TEARING APART FROM BLESSED FLAMES, I NEED TO GET AWAY!")
+
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
 	stressadd = 5

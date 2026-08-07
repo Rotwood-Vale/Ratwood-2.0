@@ -758,8 +758,6 @@
 	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike. </br>'Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.'"
 	icon_state = "psysword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
 	minstr = 9
 	wdefense = 6
 	dropshrink = 1
@@ -793,8 +791,6 @@
 	desc = "A longsword with a blade of pure silver. The weight doesn't just burden your hand, but your very soul as well; an unspoken oath, to stand against the horrors that lurk within the nite. </br>'Swing with precision and purpose, levyman o' the Gods. The nite is long and many-an-evil cur would engineer civilization's destruction, while Astrata's gaze leers elsewhere. So long as you wield this sword, you have a duty that beckons.'"
 	icon_state = "silverlongsword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
 	minstr = 9
 	wdefense = 6
 	dropshrink = 1
@@ -818,8 +814,6 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
@@ -845,8 +839,6 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
@@ -967,8 +959,6 @@
 	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
 	minstr = 7
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
@@ -1003,8 +993,6 @@
 	icon = 'icons/roguetown/weapons/daggers32.dmi'
 	icon_state = "silverswordshort"
 	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
 	minstr = 7
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
@@ -1317,8 +1305,6 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
-	force_wielded = 20
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver
@@ -1342,8 +1328,6 @@
 	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
-	force_wielded = 20
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
@@ -1378,8 +1362,8 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
+	force = 26//relic's should feel special, so let's give it a bit more oomph than the other rapiers.
+	force_wielded = 26
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver
@@ -1464,8 +1448,6 @@
 	desc = "An arming sword, fitted with a blade of pure silver. It is the bane of vampyres, nitebeasts, and deadites throughout all of Psydonia; cursed flesh erupts into holy fire, and unholy bravado twists into mortal fear."
 	icon_state = "silversword"
 	sheathe_icon = "silversword"
-	force = 18
-	force_wielded = 23
 	minstr = 9
 	wdefense = 5
 	is_silver = TRUE

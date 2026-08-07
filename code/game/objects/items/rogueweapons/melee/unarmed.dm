@@ -154,7 +154,7 @@
 	name = "psydonic katar"
 	desc = "An exotic weapon taken from the hands of wandering monks, an esoteric design to the Otavan Orthodoxy. Special care was taken into account towards the user's knuckles: silver-tipped steel from tip to edges, and His holy cross reinforcing the heart of the weapon, with curved shoulders to allow its user to deflect incoming blows - provided they lead it in with the blade."
 	icon_state = "psykatar"
-	force = 19
+	force = 25//I HATE HERETICS AND FLESH RAAAAAGHHH
 	wdefense = 3
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -174,7 +174,7 @@
 	name = "psydonic knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
 	icon_state = "psyknuckle"
-	force = 22
+	force = 26//I HATE SKELETONS AND ARMOR RAAAAAAAAAGH
 	wdefense = 5
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -194,7 +194,7 @@
 	name = "enduring knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, its holy blessing long since faded. You are HIS weapon, you needn't fear Aeon."
 	icon_state = "psyknuckle"
-	force = 17
+	force = 25//on par with steel knuckles.
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY

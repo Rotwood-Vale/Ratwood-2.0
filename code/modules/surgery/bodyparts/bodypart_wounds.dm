@@ -301,6 +301,7 @@
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used))
 				attempted_wounds += /datum/wound/sunder
+				owner.add_stress(/datum/stressevent/sundercritted) //You're still being sundered, sire.
 	if((bclass in GLOB.charring_bclasses))
 		used = round(damage_dividend * 20 + (dam / 3))
 		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
@@ -388,8 +389,14 @@
 	if(bclass in GLOB.sunder_bclasses)
 		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			used = round(damage_dividend * 20 + (dam / 2))
-			if(prob(used))
-				attempted_wounds += list(/datum/wound/sunder/chest)
+			if(prob(used) && !owner.mind)
+				attempted_wounds += /datum/wound/sunder/chest
+			if(prob(used) && owner.sunder_stacks > 100 && owner.mind)
+				attempted_wounds += /datum/wound/sunder/chest
+			if(prob(used) && owner.sunder_stacks < 150 && owner.mind) //We don't want too many stacks or we'll never recover.
+				owner.sunder_stacks += 40
+				to_chat(owner, span_userdanger("A CRITICAL BLOW SUNDERS ME WITH SACRED FLAME!"))
+				owner.add_stress(/datum/stressevent/sundercritted)
 
 	// Check if critical resistance applies
 	var/has_crit_attempt = length(attempted_wounds)
@@ -510,8 +517,14 @@
 	if(bclass in GLOB.sunder_bclasses)
 		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			used = round(damage_dividend * 20 + (dam / 2), 1)
-			if(prob(used))
+			if(prob(used) && !owner.mind)
 				attempted_wounds += /datum/wound/sunder/head
+			if(prob(used) && owner.sunder_stacks > 100 && owner.mind)
+				attempted_wounds += /datum/wound/sunder/head
+			if(prob(used) && owner.sunder_stacks < 150 && owner.mind) //We don't want too many stacks or we'll never recover.
+				owner.sunder_stacks += 40
+				to_chat(owner, span_userdanger("A CRITICAL BLOW SUNDERS ME WITH SACRED FLAME!"))
+				owner.add_stress(/datum/stressevent/sundercritted)
 
 	var/has_crit_attempt = length(attempted_wounds) || try_knockout
 	if(!has_crit_attempt)

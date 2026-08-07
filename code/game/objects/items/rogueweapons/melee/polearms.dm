@@ -469,8 +469,6 @@
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
-	force = 15
-	force_wielded = 25
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
@@ -482,8 +480,6 @@
 	name = "silver spear"
 	desc = "A winged staff, tipped with a silver spearhead. It bares a resemblenece to the 'boar spear', but with a critical difference; instead of stopping hogs, it halts charging deadites from spreading their sickness any further."
 	icon_state = "silverspear"
-	force = 15
-	force_wielded = 25
 	minstr = 11
 	wdefense = 6
 	is_silver = TRUE
@@ -1127,6 +1123,8 @@
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	icon_state = "psygsword"
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike/bad)
+	force = 25
+	force_wielded = 40//relics should be special, and the ordinator should be especially so. Toe-to-toe with antag weapons like viscious axe.
 
 /obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()
 	AddComponent(\
@@ -1143,8 +1141,8 @@
 	name = "forgotten blade"
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
-	force = 20
-	force_wielded = 25
+	force = 30//rare dungeon loot, why not make it something you can one AND two hand.
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust, /datum/intent/rend/krieg)
@@ -1168,6 +1166,8 @@
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
+	force = 30
+	force_wielded = 35//regular greatsword wielded force, but good one-handed force so ordinator can use this with consecretia or twohand just as effectively.
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 

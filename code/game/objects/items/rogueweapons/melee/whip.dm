@@ -124,11 +124,10 @@
 	is_silver = TRUE
 	force = 25
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12
+	minstr = 10//so inspector can use the damn thing
 	wdefense = 0
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
-	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/whip/antique/psywhip/ComponentInitialize()
 	AddComponent(\

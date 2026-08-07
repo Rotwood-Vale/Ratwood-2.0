@@ -345,8 +345,8 @@
 	name = "silver war axe"
 	desc = "A hefty battle axe, fashioned from pure silver. Even with a one-handed grasp, an efforted swing carries enough momentum to cleave through maille-and-flesh alike."
 	icon_state = "silveraxe"
-	force = 20
-	force_wielded = 25
+	force = 28//this thing is forced one handed, puts it between battleaxe and steel axe roughly.
+	force_wielded = 28
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	minstr = 11
 	max_blade_int = 400
@@ -394,8 +394,8 @@
 	name = "enduring war axe"
 	desc = "An ornate battle axe, its silver tarnished by neglect. Even a dim light can pierce the dark."
 	icon_state = "psyaxe"
-	force = 20
-	force_wielded = 25
+	force = 25
+	force_wielded = 30
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
@@ -499,8 +499,8 @@
 	blunt_chip_strength = BLUNT_CHIP_STRONG // eagle's beak uses BLUNT_CHIP_ABSURD instead
 
 /obj/item/rogueweapon/greataxe/silver
-	force = 15
-	force_wielded = 25
+	force = 20
+	force_wielded = 30//on par with halberd.
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust)
 	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/rangedthrust)

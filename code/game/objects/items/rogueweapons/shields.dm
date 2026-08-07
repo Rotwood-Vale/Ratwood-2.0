@@ -272,19 +272,19 @@
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
 	icon_state = "psyshield"
-	force = 15
-	throwforce = 5
-	throw_speed = 1
-	throw_range = 3
+	force = 25
+	throwforce = 40//god i need to see a skeleton gib from the ordinator chucking their shield at it's face.
+	throw_speed = 2
+	throw_range = 6
 	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
 	wlength = WLENGTH_NORMAL
 	resistance_flags = null
 	flags_1 = CONDUCT_1
 	wdefense = 14
-	coverage = 50
+	coverage = 60
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
-	max_integrity = 350
+	max_integrity = 400//500 with blessing
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
@@ -293,7 +293,7 @@
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
 		silver_type = SILVER_PSYDONIAN,\
-		added_force = -3,\
+		added_force = 0,\
 		added_blade_int = 0,\
 		added_int = 100,\
 		added_def = 1,\

@@ -513,7 +513,7 @@
 	desc = "A dagger of pure silver; the bane of vampyres, verevolves, deadites, and all other unsaintly nitecreechers. Errant light transforms into a blinding glare, when cast along the blade's edge."
 	icon_state = "sildagger"
 	sheathe_icon = "sildagger"
-	force = 15
+	force = 21//one under elvish dagger, cheaper recipe.
 	wdefense = 6
 	sellprice = 50
 	smeltresult = /obj/item/ingot/silver
@@ -588,6 +588,7 @@
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of vampyres and verevolves, in the hands of a faithful hunter."
 	icon_state = "psydagger"
 	sheathe_icon = "psydagger"
+	force = 22//if i see confessors smelting this one more time i'm going to rip my fingernails out.
 	smeltresult = /obj/item/ingot/silverblessed
 	sellprice = 70
 	picklvl = 1.1
