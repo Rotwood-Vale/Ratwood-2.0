@@ -390,10 +390,7 @@
 
 
 /mob/living/carbon/human/proc/evil_churchecancurse(mob/living/carbon/human/H, apostasy = FALSE)
-	if (!H.devotion && apostasy)
-		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
-		return FALSE
-
+	
 	//Flavor messages for cursing certain god's faithful.
 	if(istype(H.patron, /datum/patron/divine/dendor))
 		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained. Yet his madness but a pale shadow of Graggar own and the strugle will be short."))
@@ -403,12 +400,33 @@
 		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the divine only barely penetrates the depths."))
 		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
 
-	//Let's not curse heretical antags.
-	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
-		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
+	if(HAS_TRAIT(H, TRAIT_GODHAND))
+		to_chat(src, span_warning("Four will not curse thier own chosen!"))
 		return FALSE
 
-	return TRUE
+	if(H.job == /datum/job/roguetown/priest)
+		to_chat(src, span_warning("Ten stand behind this one united, the curse cant gain a foothold!"))
+		return FALSE
+
+	if(H.job == /datum/job/roguetown/absolver) // absolvers alredy are proven to be able to undo gods works with the armour ritual, and can remove vampirism and werwolfism with their lux manipulation, i think thats a resonable combination of those facts
+		to_chat(src, span_warning("The curse have been unvoven by mortal hands before it coudl get a hold!"))
+		to_chat(H, span_warning("Something have tried to gain a hold on your lux, but you managed to remove it!"))
+		return FALSE
+
+	// Ascendants may in fact turn their back on their followers
+	if(istype(H.patron, /datum/patron/inhumen))
+		return TRUE
+	// Ones rejecting the pantheon arent protected by it
+	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+		return TRUE
+	// Patron doesnt protect the excomunicated
+	if(H.real_name in GLOB.excommunicated_players)
+		return TRUE
+	if(H.real_name in GLOB.apostasy_players)
+		return TRUE
+
+	to_chat(src, span_warning("This one is protected by the Ten. Ascendants arent willing to bother getting the curse past them.")) // Reminder that cannonicly ascendants are stronger, so not going to bother is the reson, not cant
+	return FALSE
 
 /mob/living/carbon/human/proc/evil_churchecancurse_selection(mob/living/carbon/human/H)
 	
@@ -430,13 +448,15 @@
 	set name = "Ascendants Curse"
 	set category = "Antipope"
 
+	
 	var/list/posible_targets = list()
 	for(var/mob/living/carbon/human/P in GLOB.player_list)
 		if(evil_churchecancurse_selection(P))
-			posible_targets += "[P.true_name] ([P.advjob])" 
+			posible_targets["[P.real_name] ([P.advjob])"] = P
 
+	posible_targets_names = assoc_list_strip_value(posible_targets)
 
-	var/target_pick = input("Who shall receive a curse?", "Select Target") as null|anything in posible_targets
+	var/target_pick = input("Who shall receive a curse?", "Select Target") as null|anything in posible_targets_names
 
 	if (!target_pick)
 		return
@@ -447,6 +467,8 @@
 
 	if(!src.key)
 		return
+
+	target_pick = posible_targets[target_pick]
 
 	var/list/curse_choices = list(
 		"Curse of Zizo" = /datum/curse/zizo,
