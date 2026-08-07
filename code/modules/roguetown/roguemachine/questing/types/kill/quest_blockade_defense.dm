@@ -12,7 +12,6 @@
 	var/wave_warn_30s_id
 	var/datum/weakref/wave_landmark_ref
 	var/datum/weakref/blockade_ref
-	var/failed = FALSE
 	/// TRUE after materialize() arms the quest and before the bearer has triggered wave 1
 	/// by entering the landmark's proximity. Prevents double-fire via check_arrival.
 	var/armed = FALSE
