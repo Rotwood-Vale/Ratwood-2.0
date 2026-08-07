@@ -709,6 +709,10 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	target.remove_status_effect(/datum/status_effect/debuff/excomm)
 	target.remove_stress(/datum/stressevent/excommunicated)
 
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+
 	// Save devotion state
 	var/saved_level = CLERIC_T0
 	var/saved_max_progression = CLERIC_T1
@@ -732,10 +736,6 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 	var/datum/devotion/new_devotion = new /datum/devotion(target, target.patron)
 	target.devotion = new_devotion
 	new_devotion.grant_miracles(target, saved_level, saved_devotion_gain, saved_max_progression)
-
-	// Apply revival debuff as a small cost to conversion in addition to the cooldown
-	user.apply_status_effect(/datum/status_effect/debuff/devitalised)
-	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 
 	var/announcement_text = "[user.real_name] has brought [target.real_name] back into the fold of the church! [target.real_name] now follows [user.patron.name]!"
 	priority_announce(announcement_text, title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
