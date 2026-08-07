@@ -34,22 +34,26 @@
 	food = 0
 
 	del_on_deaggro = 120 SECONDS
-	var/burrow_anim_time = 12 // deciseconds - match to your animation length
-	var/burrowed = FALSE
-	var/next_burrow = 0
-	var/burrow_cooldown = 8 SECONDS
 	var/burrow_move_to_delay = 2 // fast "swim" speed while submerged and approaching
 	var/emerge_range = 1 // distance from target before it surfaces to strike
 	var/burrow_giveup_time = 15 SECONDS
 	var/burrow_started = 0
+	var/burrow_anim_time = 12 // deciseconds - length of the dive/emerge overlay, worm is still visible+tangible during this
+	var/burrow_travel_time = 15 // deciseconds - how long it's fully gone (godmode+invisible) before reappearing
+	var/burrowed = FALSE
+	var/next_burrow = 0
+	var/burrow_cooldown = 8 SECONDS
+	var/burrow_ambush_chance = 20 // % chance per check to re-burrow and flank while it has a target
+	var/burrow_retry_delay = 3 SECONDS // gap between ambush chance rolls if one fails
 	var/burrow_fx_state = "leave-hatchling"
 	var/emerge_fx_state = "invade-hatchling"
 
-/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/can_burrow()
-	var/turf/T = get_turf(src)
-	if(!isturf(T))
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/can_burrow(turf/Turf)
+	if(!Turf)
+		Turf = get_turf(src)
+	if(!isturf(Turf))
 		return FALSE
-	if(!WORM_BURROWABLE(T))
+	if(!WORM_BURROWABLE(Turf))
 		return FALSE
 	return TRUE
 
@@ -59,52 +63,76 @@
 	if(!can_burrow())
 		return
 	burrowed = TRUE
-	burrow_started = world.time
 	next_burrow = world.time + burrow_cooldown
 	visible_message(span_warning("[src] dives beneath the sand!"))
+	play_burrow_fx(burrow_fx_state)
+	addtimer(CALLBACK(src, PROC_REF(go_underground)), burrow_anim_time)
 
-	var/image/fx = image(icon, loc = src, icon_state = burrow_fx_state)
-	fx.layer = ABOVE_MOB_LAYER
-	fx.plane = GAME_PLANE
-	flick_overlay(fx, viewers(src), burrow_anim_time)
-
-	addtimer(CALLBACK(src, PROC_REF(finish_burrow)), burrow_anim_time)
-
-/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/finish_burrow()
+/// Worm is done diving - now fully hidden and safe while it travels.
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/go_underground()
 	if(!burrowed)
 		return
-	alpha = 0
+	status_flags |= GODMODE
+	invisibility = INVISIBILITY_MAXIMUM
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	addtimer(CALLBACK(src, PROC_REF(travel_and_emerge)), burrow_travel_time)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/emerge()
 	if(!burrowed)
 		return
 	burrowed = FALSE
+	status_flags &= ~GODMODE
+	invisibility = 0
 	density = TRUE
 	mouse_opacity = initial(mouse_opacity)
 	visible_message(span_danger("[src] erupts from beneath the sand!"))
+	play_burrow_fx(emerge_fx_state)
+	if(target)
+		AttackingTarget()
 
-	var/image/fx = image(icon, loc = src, icon_state = emerge_fx_state)
-	fx.layer = ABOVE_MOB_LAYER
-	fx.plane = GAME_PLANE
-	flick_overlay(fx, viewers(src), burrow_anim_time)
-	alpha = 255
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/travel_and_emerge()
+	if(!burrowed)
+		return
+	var/turf/dest = target ? get_flank_turf(target) : get_turf(src)
+	if(!dest || !can_burrow(dest))
+		dest = get_turf(src)
+	forceMove(dest)
+	emerge()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/play_burrow_fx(state)
+	var/image/fx = image(icon, loc = src, icon_state = state)
+	fx.layer = FLY_LAYER
+	fx.plane = plane
+
+	var/list/client/show_to = list()
+	for(var/mob/M as anything in viewers(src))
+		if(M.client)
+			show_to += M.client
+
+	flick_overlay(fx, show_to, burrow_anim_time)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/get_flank_turf(atom/A)
+	if(!isliving(A))
+		return get_turf(A)
+	var/mob/living/Living = A
+	var/behind_dir = turn(Living.dir, 180)
+	var/turf/behind = get_step(Living, behind_dir)
+	if(behind && can_burrow(behind))
+		return behind
+	return get_turf(Living)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/sandworm/handle_automated_action()
-	if(burrowed && !can_burrow())
-		emerge()
-
 	if(burrowed)
-		move_to_delay = burrow_move_to_delay
-		handle_burrowed_approach()
-		return // skip normal chase/attack AI entirely while submerged
-
+		return // mid-teleport - fully handled by timers, skip normal AI
 	move_to_delay = initial(move_to_delay)
-
-	if(!target && world.time >= next_burrow && can_burrow())
-		burrow()
-
+	if(world.time >= next_burrow && can_burrow())
+		if(!target)
+			burrow()
+		else if(prob(burrow_ambush_chance))
+			burrow()
+		else
+			next_burrow = world.time + burrow_retry_delay
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/handle_burrowed_approach()
@@ -121,16 +149,6 @@
 		return
 	var/turf/dest = get_flank_turf(target)
 	step_to(src, dest, 0, move_to_delay)
-
-/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/proc/get_flank_turf(atom/A)
-	if(!isliving(A))
-		return get_turf(A)
-	var/mob/living/L = A
-	var/behind_dir = turn(L.dir, 180)
-	var/turf/behind = get_step(L, behind_dir)
-	if(behind && WORM_BURROWABLE(behind))
-		return behind
-	return get_turf(L) // can't get behind them, just close in directly
 
 /mob/living/simple_animal/hostile/retaliate/rogue/sandworm/wormling
 
@@ -211,15 +229,45 @@
 
 	var/charge_ready = TRUE
 	burrow_fx_state = "leave-adult"
-	emerge_fx_state = "invade-juvenile"
+	emerge_fx_state = "invade-adult"
+	var/slam_ready = TRUE
+	var/slam_cooldown = 12 SECONDS
+	var/slam_cast_time = 1 SECONDS
+	var/slam_range = 2
+	var/slam_damage = 25
+	var/slam_knockdown_time = 30 // deciseconds
 
 /mob/living/simple_animal/hostile/retaliate/rogue/sandworm/elder/AttackingTarget()
-
-	if(charge_ready && isliving(target))
-		var/mob/living/L = target
-		charge_ready = FALSE
-		L.Knockdown(30)
-		visible_message(span_danger("[src] slams into [L]!"))
-		addtimer(VARSET_CALLBACK(src, charge_ready, TRUE), 12 SECONDS)
+	if(slam_ready && isliving(target))
+		slam_ready = FALSE
+		addtimer(VARSET_CALLBACK(src, slam_ready, TRUE), slam_cooldown)
+		try_slam(target)
+		return TRUE
 	. = ..()
 
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/elder/proc/try_slam(atom/target_atom)
+	var/dist = get_dist(src, target_atom)
+	if(!can_see(src, target_atom, slam_range) || dist >= slam_range || dist > 1)
+		return
+	visible_message(span_boldwarning("[src] rears up, sand cascading off its coils!"))
+	var/turf/warn_turf = get_turf(target_atom)
+	new /obj/effect/temp_visual/paw_swipe(warn_turf)
+	addtimer(CALLBACK(src, PROC_REF(do_slam), target_atom), slam_cast_time)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/elder/proc/do_slam(atom/target_atom)
+	var/dist = get_dist(src, target_atom)
+	if(!can_see(src, target_atom, slam_range) || dist >= slam_range || dist > 1)
+		visible_message(span_alert("[src] slams into empty sand as [target_atom.p_they()] dodge clear!"))
+		return
+	playsound(loc, 'sound/combat/shieldraise.ogg', 100)
+	if(isliving(target_atom))
+		var/mob/living/victim = target_atom
+		var/def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
+		var/blocked = victim.run_armor_check(def_zone, "stab", damage = slam_damage)
+		victim.apply_damage(slam_damage, BRUTE, def_zone, blocked)
+		if(blocked < 100)
+			victim.Knockdown(slam_knockdown_time)
+		var/turf/target_turf = get_turf(target_atom)
+		new /obj/effect/temp_visual/paw_swipe(target_turf)
+		to_chat(victim, span_userdanger("[src] slams down on top of you!"))
+		playsound(victim, 'sound/combat/hits/punch/punch (1).ogg', 100, TRUE)

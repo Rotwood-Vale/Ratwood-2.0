@@ -12,7 +12,7 @@
 	ambush_times = list("night")
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/badger = 10,
-				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/raccoon = 25,
+				/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/wormling = 25,
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 20,
 				/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 30,
 				/mob/living/simple_animal/hostile/retaliate/rogue/fox = 30,
@@ -69,11 +69,14 @@
 		/mob/living/carbon/human/species/skeleton/npc/ambush = 30,
 		new /datum/ambush_config/dunewell_raider = 60,
 		new /datum/ambush_config/antlion_party = 30,
-		new /datum/ambush_config/lamia_party = 50,
+		new /datum/ambush_config/lamia_party = 30,
 		new /datum/ambush_config/dunewell_raider/hard = 20,
+		new /datum/ambush_config/worm_hatchling_party = 30,
+		/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/stalker = 40,
+		/mob/living/simple_animal/hostile/retaliate/rogue/sandworm/elder = 20,
+		/mob/living/simple_animal/hostile/retaliate/rogue/ifrit = 20,
 		/mob/living/simple_animal/hostile/retaliate/rogue/headless = 10,
-		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,
-		/mob/living/simple_animal/hostile/retaliate/rogue/ifrit = 20,)
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead = 10,)
 	converted_type = /area/rogue/indoors/shelter/desertdeep
 	deathsight_message = "an empty, parched desert"
 	threat_region = THREAT_REGION_DESERT_DEEP

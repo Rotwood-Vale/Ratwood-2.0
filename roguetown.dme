@@ -2992,6 +2992,7 @@
 #include "modular\ambush\ambush_config\mirespiders_ambush.dm"
 #include "modular\ambush\ambush_config\mount_decap_ambush.dm"
 #include "modular\ambush\ambush_config\southern_coast_ambush.dm"
+#include "modular\ambush\ambush_config\worm_hatchling_ambush.dm"
 #include "modular\churchloop\artefactsten.dm"
 #include "modular\churchloop\churchquests.dm"
 #include "modular\churchloop\churchresearch.dm"

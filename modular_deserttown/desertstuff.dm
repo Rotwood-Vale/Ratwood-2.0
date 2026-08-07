@@ -590,28 +590,20 @@
 
 	AddElement(/datum/element/mob_overlay_effect, 2, -2, 100)
 
-/obj/structure/quicksand/Crossed(atom/movable/AM)
+/obj/structure/quicksand/Crossed(atom/movable/AtomMovable)
 	. = ..()
-
 	if(has_buckled_mobs())
 		return
-
-	if(istype(AM, /mob/living/simple_animal))
-		var/mob/living/simple_animal/L = AM
-		L.Paralyze(40)
-		buckle_mob(L, TRUE)
-
-	var/mob/living/carbon/human/L = AM
-
-	if(L.buckled)
+	if(!ishuman(AtomMovable))
 		return
-
-	if(L.m_intent == MOVE_INTENT_SNEAK)
+	var/mob/living/carbon/human/Living = AtomMovable
+	if(Living.buckled)
 		return
-
-	buckle_mob(L, TRUE, check_loc = FALSE)
-	SEND_SIGNAL(src, COMSIG_MOB_OVERLAY_FORCE_UPDATE, L)
-	visible_message(span_warning("[L] sinks into the quicksand!"))
+	if(Living.m_intent == MOVE_INTENT_SNEAK)
+		return
+	buckle_mob(Living, TRUE, check_loc = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOB_OVERLAY_FORCE_UPDATE, Living)
+	visible_message(span_warning("[Living] sinks into the quicksand!"))
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/quicksand/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)

@@ -58,6 +58,7 @@
 							/obj/item/magic/manacrystal = 0.1,
 							/obj/structure/closet/dirthole/closed/loot = 0.5,
 							/obj/structure/flora/roguegrass/swampweed = 0.5,
+							/obj/structure/flora/roguegrass/pyroclasticflowers = 0.5,
 							/obj/structure/flora/roguegrass/herb/random = 2,
 							/obj/effect/decal/remains/bear = 0.5,
 							/obj/effect/decal/remains/human = 0.3,
