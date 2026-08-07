@@ -155,7 +155,7 @@
 /datum/supply_pack/rogue/aavnr/freifechter_gloves
 	name = "Fencing Gloves"
 	cost = 45
-	contains = list(/obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter)
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/grenzelgloves)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
@@ -168,11 +168,11 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter,
 		/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic,
 		/obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short,
-		/obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter,
+		/obj/item/clothing/gloves/roguetown/angle/grenzelgloves,
 		/obj/item/clothing/wrists/roguetown/bracers/leather,
 		/obj/item/clothing/neck/roguetown/psicross/reform,
-		/obj/item/rogueweapon/sword/sabre/freifechter,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter,
+		/obj/item/rogueweapon/sword/sabre,
+		/obj/item/rogueweapon/huntingknife/idagger/navaja,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1

@@ -3,16 +3,6 @@
 // must be defined BEFORE the plain steak "Meat" entry - stockpile matching walks
 // SStreasury.stockpile_datums in definition order with istype(), same reason hide/cured
 // precedes hide in stockpile_rawmat.dm.
-/datum/roguestock/stockpile/rat
-	name = "Lesser Meat"
-	desc = "Barely edible flesh harvested from rous."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat
-	trade_good_id = TRADE_GOOD_MEAT_EXOTIC
-	importexport_amt = 5
-	stockpile_amount = 0
-	stockpile_limit = 20
-	category = "Animal"
-
 /datum/roguestock/stockpile/volf
 	name = "Bushmeat"
 	desc = "Barely edible flesh harvested from volfs."
@@ -25,18 +15,6 @@
 	withdraw_price = 4
 	category = "Animal"
 
-/datum/roguestock/stockpile/bear
-	name = "Greater Bushmeat"
-	desc = "Barely edible flesh harvested from bears."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear
-	trade_good_id = TRADE_GOOD_MEAT_EXOTIC
-	importexport_amt = 5
-	stockpile_amount = 0
-	stockpile_limit = 20
-	payout_price = 6
-	withdraw_price = 9
-	category = "Animal"
-
 /datum/roguestock/stockpile/meat
 	name = "Meat"
 	desc = "Edible flesh harvested from animals."
@@ -45,44 +23,6 @@
 	importexport_amt = 10
 	stockpile_amount = 5
 	stockpile_limit = 50
-	category = "Animal"
-
-/datum/roguestock/stockpile/deer
-	name = "Venison"
-	desc = "Delicious and edible flesh harvested from saiga or deer."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga
-	trade_good_id = TRADE_GOOD_MEAT_EXOTIC
-	importexport_amt = 5
-	stockpile_amount = 0
-	stockpile_limit = 20
-	payout_price = 8
-	withdraw_price = 16
-	category = "Animal"
-
-/datum/roguestock/stockpile/deer_ribs
-	name = "Venison Ribs"
-	desc = "Edible ribs harvested from saiga or deer."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs
-	trade_good_id = TRADE_GOOD_MEAT_EXOTIC
-	importexport_amt = 5
-	stockpile_amount = 0
-	stockpile_limit = 20
-	// ES-only cut (no AP entry); priced to match parent Venison
-	payout_price = 8
-	withdraw_price = 16
-	category = "Animal"
-
-/datum/roguestock/stockpile/deer_loins
-	name = "Venison Loins"
-	desc = "Edible loins harvested from saiga or deer."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins
-	trade_good_id = TRADE_GOOD_MEAT_EXOTIC
-	importexport_amt = 5
-	stockpile_amount = 0
-	stockpile_limit = 20
-	// ES-only cut (no AP entry); priced to match parent Venison
-	payout_price = 8
-	withdraw_price = 16
 	category = "Animal"
 
 /datum/roguestock/stockpile/spider
@@ -133,24 +73,6 @@
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/fatty
 	trade_good_id = TRADE_GOOD_PORK
 	stockpile_amount = 2
-	importexport_amt = 5
-	stockpile_limit = 25
-	category = "Animal"
-
-/datum/roguestock/stockpile/ham
-	name = "Ham"
-	desc = "A prime cut of swine flesh, raw and ready for steaming."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/ham
-	trade_good_id = TRADE_GOOD_HAM
-	importexport_amt = 5
-	stockpile_limit = 25
-	category = "Animal"
-
-/datum/roguestock/stockpile/pork_belly
-	name = "Pork Belly"
-	desc = "A fatty slab of swine belly, raw and ready to be cured into bacon."
-	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly
-	trade_good_id = TRADE_GOOD_PORK_BELLY
 	importexport_amt = 5
 	stockpile_limit = 25
 	category = "Animal"

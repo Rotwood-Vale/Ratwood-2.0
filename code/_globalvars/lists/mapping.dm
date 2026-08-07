@@ -98,5 +98,3 @@ GLOBAL_LIST_EMPTY(streetlamp_list)
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
-// AP Quest 2 port: all mapped /obj/effect/landmark/quest_spawner anchors
-GLOBAL_LIST_EMPTY(quest_landmarks_list)

@@ -80,7 +80,6 @@
 		/datum/supply_pack/rogue/gems/jade,
 		/datum/supply_pack/rogue/merc_weapons/naginata,
 		/datum/supply_pack/rogue/merc_weapons/katana,
-		/datum/supply_pack/rogue/merc_weapons/tossbladekazengun,
 
 		/datum/supply_pack/rogue/kazengun/kanabo,
 		/datum/supply_pack/rogue/kazengun/ssangsudo,
@@ -96,10 +95,8 @@
 		/datum/supply_pack/rogue/kazengun/chonin_kit,
 		/datum/supply_pack/rogue/kazengun/kouken_kit,
 		/datum/supply_pack/rogue/luxury/fancyteaset,
-		/datum/supply_pack/rogue/alcohol/kgunlager,
 		/datum/supply_pack/rogue/alcohol/kgunplum,
 		/datum/supply_pack/rogue/alcohol/kgunsake,
-		/datum/supply_pack/rogue/alcohol/kgunshochu,
 	)
 	hail_lines = list(
 		"Kazengun greets the factor. Tea, silk, and rice are in the hold. The terms are simple; the courtesies are not.",

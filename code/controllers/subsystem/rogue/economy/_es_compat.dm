@@ -101,10 +101,8 @@ GLOBAL_LIST_INIT(crown_authority_roles, list(
 /datum/controller/subsystem/merchant_trade/proc/unlock_catalog(cid)
 	return FALSE
 
-// ---- Ticker realm name stub (Step 9e: noticeboard ui_static_data reads this) ----
-// AP's SSticker carries a configurable realm_name; ES's ticker has no equivalent var yet.
-/datum/controller/subsystem/ticker
-	var/realm_name = "Emerald Summit"
+// Ticker realm name stub not needed: Ratwood's SSticker already carries realm_name,
+// kept in sync with SSmapping.map_adjustment.realm_name.
 
 // ---- Cultural stock stubs (Step 9d follow-up: foreign realm cultural stock / bulk drinks export) ----
 // trade_ship.dm's roll_cultural_stock()/build_drinks_lines() read these vars off supply packs and

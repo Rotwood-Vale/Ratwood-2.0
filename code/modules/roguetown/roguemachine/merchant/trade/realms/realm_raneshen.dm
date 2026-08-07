@@ -64,7 +64,6 @@
 	victualling_preserved_pool = list(
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/crackerscooked, "qty_min" = VICTUALLING_QTY_HUGE_MIN, "qty_max" = VICTUALLING_QTY_HUGE_MAX, "price" = VICTUALLING_PRICE_HARDTACK),
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/raisinbread, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_FISH),
-		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/bun_jamtallow, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_SIMPLE),
 	)
 	victualling_drinks_pool = list(
 		list("recipe" = /datum/brewing_recipe/tangerine_wine),
@@ -77,8 +76,6 @@
 		/datum/supply_pack/rogue/gems/amber,
 		/datum/supply_pack/rogue/gems/coral,
 		/datum/supply_pack/rogue/food/pepper,
-		/datum/supply_pack/rogue/luxury/spice,
-		/datum/supply_pack/rogue/food/chocolate,
 		/datum/supply_pack/rogue/raneshen/janissary_kit,
 		/datum/supply_pack/rogue/raneshen/desert_rider_kit,
 		/datum/supply_pack/rogue/raneshen/megarmach_coat,
@@ -106,7 +103,6 @@
 		/datum/supply_pack/rogue/raneshen/bronze_axe,
 		/datum/supply_pack/rogue/raneshen/bronze_spear,
 		/datum/supply_pack/rogue/raneshen/bronze_knife,
-		/datum/supply_pack/rogue/alcohol/wineraneshen,
 	)
 	hail_lines = list(
 		"In the name of the Autarch, and by leave of the Emir who stamped my charter, Raneshen greets the Factor. My hold is long-travelled; do not make it stand idle.",

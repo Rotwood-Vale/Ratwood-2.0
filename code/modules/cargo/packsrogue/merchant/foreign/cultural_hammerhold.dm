@@ -81,21 +81,21 @@
 /datum/supply_pack/rogue/hammerhold/slayer_axe
 	name = "Slayer Axe"
 	cost = 600
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/slayer)
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/hammerhold/slayer_greataxe
 	name = "Slayer Greataxe"
 	cost = 750
-	contains = list(/obj/item/rogueweapon/stoneaxe/battle/slayer)
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/hammerhold/slayer_belt
 	name = "Rugged Dwarven Belt"
 	cost = 80
-	contains = list(/obj/item/storage/belt/rogue/leather/slayer)
+	contains = list(/obj/item/storage/belt/rogue/leather)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
@@ -111,7 +111,7 @@
 	no_name_quantity = TRUE
 	cost = 720
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/plate/full/dwarvencapt,
+		/obj/item/clothing/suit/roguetown/armor/plate/full,
 		/obj/item/clothing/head/roguetown/helmet/heavy/dwarven/smith,
 		/obj/item/clothing/gloves/roguetown/plate/dwarven,
 		/obj/item/clothing/shoes/roguetown/boots/armor/dwarven,
@@ -128,7 +128,7 @@
 		/obj/item/clothing/head/roguetown/helmet/heavy/dwarven,
 		/obj/item/clothing/gloves/roguetown/plate/dwarven,
 		/obj/item/clothing/shoes/roguetown/boots/armor/dwarven,
-		/obj/item/rogueweapon/shield/tower/metal/dwarf,
+		/obj/item/rogueweapon/shield/tower/metal,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1

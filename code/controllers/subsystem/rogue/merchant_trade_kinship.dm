@@ -33,10 +33,13 @@
 /datum/controller/subsystem/merchant_trade/proc/try_claim_kinship_for(mob/living/carbon/human/H)
 	if(!H?.client?.prefs)
 		return
-	var/datum/virtue/O = H.client.prefs.virtue_origin
-	if(!istype(O))
-		return
-	var/new_realm = origin_name_to_realm_id(O.name)
+	// Ratwood deviation: no origin virtue slot; match either picked virtue against the realm table
+	var/datum/virtue/O = H.client.prefs.virtue
+	var/new_realm = istype(O) ? origin_name_to_realm_id(O.name) : null
+	if(!new_realm)
+		O = H.client.prefs.virtuetwo
+		if(istype(O))
+			new_realm = origin_name_to_realm_id(O.name)
 	if(new_realm == current_kinship_realm)
 		return
 	current_kinship_realm = new_realm
@@ -80,10 +83,9 @@
 	var/is_agent = (H.job == "Shophand") || HAS_TRAIT(H, TRAIT_AGENT_MERCHANT)
 	if(!is_agent || !H.client?.prefs)
 		return 1
-	var/datum/virtue/O = H.client.prefs.virtue_origin
-	if(!istype(O))
+	var/agent_realm = get_pref_origin_realm(H)
+	if(!agent_realm)
 		return 1
-	var/agent_realm = origin_name_to_realm_id(O.name)
 	if(agent_realm && agent_realm == realm_id)
 		return KINSHIP_BUY_MULT
 	return 1
@@ -97,7 +99,16 @@
 	var/is_agent = (H.job == "Shophand") || HAS_TRAIT(H, TRAIT_AGENT_MERCHANT)
 	if(!is_agent)
 		return null
-	var/datum/virtue/O = H.client.prefs.virtue_origin
-	if(!istype(O))
+	return get_pref_origin_realm(H)
+
+// Ratwood deviation: no dedicated origin-virtue pref slot; derive a realm from either picked virtue.
+/datum/controller/subsystem/merchant_trade/proc/get_pref_origin_realm(mob/living/carbon/human/H)
+	if(!H?.client?.prefs)
 		return null
-	return origin_name_to_realm_id(O.name)
+	var/datum/virtue/O = H.client.prefs.virtue
+	var/realm = istype(O) ? origin_name_to_realm_id(O.name) : null
+	if(!realm)
+		O = H.client.prefs.virtuetwo
+		if(istype(O))
+			realm = origin_name_to_realm_id(O.name)
+	return realm

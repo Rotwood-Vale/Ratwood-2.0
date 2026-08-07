@@ -169,7 +169,7 @@ upstream. That cost gate was not reimplemented here - flagged for follow-up if w
 
 	var/merc_count = valid_recipients.len
 	to_chat(sender, span_notice("My message has been broadcast to [merc_count] mercenary[merc_count == 1 ? "" : "s"]."))
-	src.bark(1)
+	src.statue_bark(1)
 
 	sender.log_talk(message, LOG_SAY, tag="mercenary statue broadcast (to [recipient_keys.Join(", ")])")
 
@@ -330,7 +330,7 @@ upstream. That cost gate was not reimplemented here - flagged for follow-up if w
 	if(pending_direct_responses[response_id])
 		pending_direct_responses -= response_id
 
-/obj/structure/roguemachine/talkstatue/mercenary/proc/bark(mode)
+/obj/structure/roguemachine/talkstatue/mercenary/proc/statue_bark(mode)
 	if(mode == 1)
 		var/random = rand(1,4)
 		switch(random)

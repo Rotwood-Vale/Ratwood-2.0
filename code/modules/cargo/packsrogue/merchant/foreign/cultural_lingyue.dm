@@ -98,6 +98,6 @@
 /datum/supply_pack/rogue/lingyue/zhanmadao
 	name = "Zhanmadao"
 	cost = 230
-	contains = list(/obj/item/rogueweapon/greatsword/miaodao)
+	contains = list(/obj/item/rogueweapon/greatsword)
 	ship_qty_min = 1
 	ship_qty_max = 1

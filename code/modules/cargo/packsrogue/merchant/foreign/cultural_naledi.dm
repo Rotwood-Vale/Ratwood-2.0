@@ -16,7 +16,7 @@
 		/obj/item/clothing/mask/rogue/lordmask/naledi,
 		/obj/item/clothing/neck/roguetown/psicross/naledi,
 		/obj/item/clothing/shoes/roguetown/sandals,
-		/obj/item/rogueweapon/woodstaff/implement_magi2/grand,
+		/obj/item/rogueweapon/woodstaff/naledi,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1

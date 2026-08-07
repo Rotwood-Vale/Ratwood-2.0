@@ -86,7 +86,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/list/keycontrol = list("crafterguild", "craftermaster")
-	var/locked = TRUE
+	locked = TRUE
 	budget = 0
 	var/list/material_prices
 	var/list/derived_material_prices

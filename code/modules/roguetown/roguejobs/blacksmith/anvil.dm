@@ -34,8 +34,8 @@
 				SEND_SIGNAL(current_workpiece, COMSIG_ITEM_ADDED_TO_FORGING, consumed, user)
 				if(istype(consumed, /obj/item/ingot))
 					var/obj/item/ingot/I = consumed
-					forging_comp.material_quality += I.quality
-					previous_material_quality = I.quality
+					forging_comp.material_quality += I.item_quality
+					previous_material_quality = I.item_quality
 				else
 					forging_comp.material_quality += previous_material_quality
 				forging_comp.current_recipe.num_of_materials += 1
@@ -146,8 +146,8 @@
 			SEND_SIGNAL(current_workpiece, COMSIG_ITEM_ADDED_TO_FORGING, W, user)
 			if(istype(W, /obj/item/ingot))
 				var/obj/item/ingot/I = W
-				forging_comp.material_quality += I.quality
-				previous_material_quality = I.quality
+				forging_comp.material_quality += I.item_quality
+				previous_material_quality = I.item_quality
 			else
 				forging_comp.material_quality += previous_material_quality
 			forging_comp.current_recipe.num_of_materials += 1
@@ -258,7 +258,7 @@
 				var/quality_value = 1
 				if(istype(current_workpiece, /obj/item/ingot))
 					var/obj/item/ingot/ingot_ref = current_workpiece
-					quality_value = ingot_ref.quality
+					quality_value = ingot_ref.item_quality
 				else if(istype(current_workpiece, /obj/item/blade))
 					var/obj/item/blade/blade_ref = current_workpiece
 					quality_value = blade_ref.quality

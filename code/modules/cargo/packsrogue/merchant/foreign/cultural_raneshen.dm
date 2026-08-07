@@ -9,9 +9,9 @@
 	no_name_quantity = TRUE
 	cost = 440
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen,
+		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy,
 		/obj/item/clothing/suit/roguetown/armor/plate/scale,
-		/obj/item/clothing/head/roguetown/helmet/sallet/raneshen,
+		/obj/item/clothing/head/roguetown/helmet/sallet,
 		/obj/item/clothing/neck/roguetown/chaincoif/full,
 		/obj/item/clothing/mask/rogue/facemask/steel,
 		/obj/item/clothing/gloves/roguetown/chain,
@@ -29,14 +29,14 @@
 	no_name_quantity = TRUE
 	cost = 300
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/raneshen,
-		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen,
-		/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen,
+		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy,
+		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat,
+		/obj/item/clothing/head/roguetown/roguehood/shalal/hijab,
 		/obj/item/clothing/neck/roguetown/gorget/copper,
 		/obj/item/clothing/mask/rogue/facemask/copper,
 		/obj/item/clothing/wrists/roguetown/bracers/copper,
 		/obj/item/clothing/gloves/roguetown/angle,
-		/obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen,
+		/obj/item/clothing/under/roguetown/trou/leather/pontifex,
 		/obj/item/clothing/shoes/roguetown/shalal,
 		/obj/item/storage/belt/rogue/leather/shalal,
 	)
@@ -46,14 +46,14 @@
 /datum/supply_pack/rogue/raneshen/megarmach_coat
 	name = "Megarmach Scale Coat"
 	cost = 140
-	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/raneshen)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/raneshen/tower_shield
 	name = "Shalal Tower Shield"
 	cost = 80
-	contains = list(/obj/item/rogueweapon/shield/tower/raneshen)
+	contains = list(/obj/item/rogueweapon/shield/tower)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
@@ -116,7 +116,7 @@
 /datum/supply_pack/rogue/raneshen/headscarf
 	name = "Padded Headscarf"
 	cost = 30
-	contains = list(/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/raneshen)
+	contains = list(/obj/item/clothing/head/roguetown/roguehood/shalal/hijab)
 	ship_qty_min = 2
 	ship_qty_max = 4
 
@@ -158,7 +158,7 @@
 /datum/supply_pack/rogue/raneshen/pontifex_trou
 	name = "Pontifex Trousers"
 	cost = 40
-	contains = list(/obj/item/clothing/under/roguetown/trou/leather/pontifex/raneshen)
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/pontifex)
 	ship_qty_min = 2
 	ship_qty_max = 4
 
@@ -183,7 +183,7 @@
 /datum/supply_pack/rogue/raneshen/gladius
 	name = "Gladius"
 	cost = 70
-	contains = list(/obj/item/rogueweapon/sword/iron/short/gladius)
+	contains = list(/obj/item/rogueweapon/sword/short/gladius)
 	ship_qty_min = 2
 	ship_qty_max = 4
 

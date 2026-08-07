@@ -30,8 +30,8 @@
 	item_type = /obj/item/bodypart/l_arm/prosthetic/woodleft // representative limb; also drives derived pricing
 	alt_item_types = list(
 		/obj/item/bodypart/r_arm/prosthetic/woodright,
-		/obj/item/bodypart/l_leg/prosthetic/woodleft,
-		/obj/item/bodypart/r_leg/prosthetic/woodright,
+		/obj/item/bodypart/l_leg/prosthetic,
+		/obj/item/bodypart/r_leg/prosthetic,
 	)
 
 /datum/trade_good/equipment/crafted/steel_prosthetic

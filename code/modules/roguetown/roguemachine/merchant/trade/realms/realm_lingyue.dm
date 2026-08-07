@@ -87,9 +87,6 @@
 		/datum/supply_pack/rogue/kazengun/ssangsudo,
 		/datum/supply_pack/rogue/kazengun/mentorhat,
 		/datum/supply_pack/rogue/luxury/fancyteaset,
-		/datum/supply_pack/rogue/alcohol/zhonghuangjiu,
-		/datum/supply_pack/rogue/alcohol/baijiu,
-		/datum/supply_pack/rogue/alcohol/yaojiu,
 		/datum/supply_pack/rogue/alcohol/shejiu,
 	)
 	hail_lines = list(

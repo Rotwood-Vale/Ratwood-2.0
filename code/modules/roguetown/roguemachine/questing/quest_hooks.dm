@@ -74,8 +74,5 @@ GLOBAL_LIST_INIT(tavern_positions, list("Innkeeper", "Tapster", "Cook"))
 	record_round_statistic(STATS_RUMOR_POINTS_GENERATED, rumor_points - before)
 
 // ---- Quest logging helper (AP _logging.dm:103; ES routes through log_game) ----
-/proc/log_quest(ckey, datum/mind/mind, mob/body, text)
-	log_game("QUEST: [ckey] / [body?.real_name] / [text]")
-
 // NOTE: quest_recovery_shipments is now the real GLOBAL_LIST_INIT in types/kill/quest_recovery.dm
 // (Chunk 5). The Chunk 4 stub that lived here has been removed.

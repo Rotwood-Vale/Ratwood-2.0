@@ -73,9 +73,9 @@
 	name = "Cured Ham (Jamón)"
 	cost = 45
 	contains = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/ham,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/ham,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/ham,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/salami,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/salami,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/salami,
 	)
 	ship_qty_min = 2
 	ship_qty_max = 5

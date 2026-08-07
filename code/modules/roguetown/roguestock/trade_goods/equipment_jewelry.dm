@@ -152,42 +152,42 @@
 /datum/trade_good/equipment/crafted/amber_circlet
 	id = TRADE_GOOD_AMBER_CIRCLET
 	name = "petriamber circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/amber
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/amber
 
 /datum/trade_good/equipment/crafted/jade_circlet
 	id = TRADE_GOOD_JADE_CIRCLET
 	name = "joapstone circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/jade
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/jade
 
 /datum/trade_good/equipment/crafted/shell_circlet
 	id = TRADE_GOOD_SHELL_CIRCLET
 	name = "shell circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/shell
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/shell
 
 /datum/trade_good/equipment/crafted/rose_circlet
 	id = TRADE_GOOD_ROSE_CIRCLET
 	name = "rosellusk circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/rose
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/rose
 
 /datum/trade_good/equipment/crafted/onyxa_circlet
 	id = TRADE_GOOD_ONYXA_CIRCLET
 	name = "onyxa circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/onyxa
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/onyxa
 
 /datum/trade_good/equipment/crafted/turq_circlet
 	id = TRADE_GOOD_TURQ_CIRCLET
 	name = "ceruleabaster circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/turq
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/turq
 
 /datum/trade_good/equipment/crafted/coral_circlet
 	id = TRADE_GOOD_CORAL_CIRCLET
 	name = "aoetal circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/coral
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/coral
 
 /datum/trade_good/equipment/crafted/opal_circlet
 	id = TRADE_GOOD_OPAL_CIRCLET
 	name = "opaloise circlet"
-	item_type = /obj/item/clothing/head/roguetown/circlet/opal
+	item_type = /obj/item/clothing/head/roguetown/circlet/carvedgem/opal
 
 // ============================================================================
 // JEWELRY - CARVED CURIOS

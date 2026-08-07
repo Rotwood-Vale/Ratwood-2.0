@@ -1,5 +1,6 @@
 #define TAB_MAIN 1
 #define TAB_BANK 2
+#define TAB_STOCK 3
 #define TAB_IMPORT 4
 #define TAB_BOUNTIES 5
 #define TAB_LOG 6
@@ -685,7 +686,7 @@
 					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "Unsuspend Wages" : "Suspend Wages"
 					contents += "<a href='?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
 		if(TAB_STOCK)
-			contents += "<a href='?src=ef[src];switchtab=[TAB_MAIN]'>[Return]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Passive Imports<BR>"
 			contents += "--------------<BR>"
 			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
@@ -696,7 +697,7 @@
 				if(A.no_passive)
 					continue
 				contents += "<b>[A.name]:</b> [A.stockpile_amount]/[A.stockpile_limit]"
-				contents += " / Rate: <a href='?src=ef[src];setrate=ef[A]'>[A.passive_generation]</a> ([A.generation_price]m each)<BR>"
+				contents += " / Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a> ([A.generation_price]m each)<BR>"
 		if(TAB_IMPORT)
 			// Step 15: renders GLOB.crown_imports (regional sourcing + blockade surcharges).
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
@@ -811,6 +812,7 @@
 
 #undef TAB_MAIN
 #undef TAB_BANK
+#undef TAB_STOCK
 #undef TAB_IMPORT
 #undef TAB_BOUNTIES
 #undef TAB_LOG

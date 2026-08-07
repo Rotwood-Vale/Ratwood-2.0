@@ -7,9 +7,6 @@
 /datum/crafting_recipe
 	var/display_category
 
-/datum/crafting_recipe/proc/build_display_cache()
-	return // no-op until recipe display cache is ported
-
 GLOBAL_LIST_EMPTY(material_baseline_prices)
 GLOBAL_LIST_EMPTY(derived_sellprices)
 GLOBAL_LIST_EMPTY(derived_categories)
@@ -403,50 +400,9 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 	return new_derivations
 
 /proc/food_recipe_derive_pass(list/audit_lines, list/missing_materials, list/trade_good_lookup)
-	var/total_new = 0
-	var/list/recipe_paths = subtypesof(/datum/food_recipe)
-	for(var/iteration in 1 to PRICING_ENGINE_FOOD_RECIPE_MAX_PASSES)
-		var/this_pass = 0
-		for(var/datum/food_recipe/recipe_path as anything in recipe_paths)
-			var/base = initial(recipe_path.base_item)
-			var/result_path = initial(recipe_path.result_type)
-			if(!base || !result_path)
-				continue
-			if(trade_good_lookup && trade_good_lookup[result_path])
-				continue
-			if(GLOB.derived_sellprices[result_path])
-				continue
-			var/category = initial(recipe_path.display_category) || ITEM_CAT_FOODSTUFF_FRESH
-			var/list/local_missing = list()
-			var/list/breakdown = list()
-			var/material_cost = build_input_breakdown(base, 1, local_missing, breakdown)
-			var/list/ingredient_list = initial(recipe_path.ingredients)
-			if(islist(ingredient_list))
-				for(var/path in ingredient_list)
-					if(ispath(path, /datum/reagent))
-						continue
-					material_cost += build_input_breakdown(path, 1, local_missing, breakdown)
-			if(missing_materials)
-				for(var/m in local_missing)
-					if(!(m in missing_materials))
-						missing_materials += m
-			var/derived = derive_price_from_cost(material_cost, category, 1)
-			var/markup = GLOB.item_cat_markups[category] || PRICING_ENGINE_DEFAULT_MARKUP
-			if(audit_lines)
-				audit_lines += csv_row(list("food[iteration]", initial(recipe_path.name), "[result_path]", category, "", "[material_cost]", "[markup]", "1", "[derived]", jointext(breakdown, " + "), jointext(local_missing, ",")))
-			if(derived <= 0)
-				continue
-			if(register_derived_price(result_path, derived, category))
-				this_pass++
-				if(ispath(result_path, /obj/item/reagent_containers/food/snacks))
-					var/obj/item/reagent_containers/food/snacks/result_proto = result_path
-					var/cooked_path = initial(result_proto.cooked_type)
-					if(cooked_path && register_derived_price(cooked_path, derived, category))
-						this_pass++
-		total_new += this_pass
-		if(!this_pass)
-			break
-	return total_new
+	// Ratwood deviation: cooking recipes are /datum/crafting_recipe/cooking subtypes and are
+	// already covered by the crafting-recipe derive pass. No separate food recipe datum exists.
+	return 0
 
 /proc/build_input_breakdown(path, qty, list/missing_materials_log, list/breakdown)
 	var/unit_cost = recipe_material_cost_for(path, missing_materials_log)
@@ -623,19 +579,6 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 				sorted_reqs += "[p]=[CR.reqs[p]]"
 			reqs = jointext(sortList(sorted_reqs), ",")
 		recipe_keys += "c:[result_path]|[reqs]|[CR.display_category]|y[recipe_result_yield(CR, result_path)]"
-	for(var/datum/food_recipe/FR as anything in subtypesof(/datum/food_recipe))
-		var/base = initial(FR.base_item)
-		var/result_path = initial(FR.result_type)
-		if(!base || !result_path)
-			continue
-		var/ingr = ""
-		var/list/ingredient_list = initial(FR.ingredients)
-		if(islist(ingredient_list))
-			var/list/sorted_ingr = list()
-			for(var/p in ingredient_list)
-				sorted_ingr += "[p]"
-			ingr = jointext(sortList(sorted_ingr), ",")
-		recipe_keys += "f:[result_path]|[base]|[ingr]|[initial(FR.display_category)]"
 	parts += "recipes:[jointext(sortList(recipe_keys), "|")]"
 	var/list/sellprice_keys = list()
 	for(var/datum/anvil_recipe/AR as anything in GLOB.anvil_recipes)

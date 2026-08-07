@@ -21,7 +21,7 @@
 /datum/supply_pack/rogue/kazengun/haraate
 	name = "Haraate Brigandine"
 	cost = 200
-	contains = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
@@ -101,7 +101,7 @@
 	cost = 380
 	contains = list(
 		/obj/item/clothing/suit/roguetown/armor/gambeson,
-		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper,
+		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast,
 		/obj/item/clothing/head/roguetown/mentorhat,
 		/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1,
 		/obj/item/clothing/shoes/roguetown/armor/rumaclan,
@@ -114,7 +114,7 @@
 	no_name_quantity = TRUE
 	cost = 800
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/shrinekeeper,
+		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast,
 		/obj/item/clothing/head/roguetown/helmet/sallet/beastskull,
 		/obj/item/clothing/mask/rogue/facemask/steel/kazengun/full,
 		/obj/item/clothing/gloves/roguetown/eastgloves2,
