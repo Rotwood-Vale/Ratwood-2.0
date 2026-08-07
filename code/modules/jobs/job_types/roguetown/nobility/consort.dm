@@ -77,67 +77,6 @@
 		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 //		SSticker.rulermob = H
 
-/datum/advclass/lady/sapio
-// wizard consort. better than wizard prince, not QUITE as good statswise as wizard duke or magic-wise as magos. also lacks access to alchemy expert.
-	name = "Sapio"
-	tutorial = "An intellectual of note, your wits and wiles captured the Grand Duke's attention, and later, their heart. They say love is the most powerful magic, but you're still not quite convinced it beats a fireball."
-	outfit = /datum/outfit/job/roguetown/lady/sapio
-	category_tags = list(CTAG_CONSORT)
-	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_KEENEARS, TRAIT_INTELLECTUAL, TRAIT_NOBLE)
-	subclass_stats = list( // 9 stats total, 6 without the leadership carrot. based on heartfelt magos. i'd consider -2 con too but that's rough.
-		STATKEY_INT = 4,
-		STATKEY_PER = 3,
-		STATKEY_CON = -1,
-		STATKEY_WIL = 2,
-		STATKEY_STR = -2,
-		STATKEY_LCK = 3,
-	)
-	subclass_spellpoints = 24
-	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
-	)
-
-/datum/outfit/job/roguetown/lady/sapio/pre_equip(mob/living/carbon/human/H)
-	..()
-	head = /obj/item/clothing/head/roguetown/nyle/consortcrown
-	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
-	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	beltl = /obj/item/storage/keyring/royal
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
-	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
-	id = /obj/item/scomstone/garrison
-	if(should_wear_femme_clothes(H))
-		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak
-		armor = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
-		pants = /obj/item/clothing/under/roguetown/trou/formal/shorts
-	else if(should_wear_masc_clothes(H))
-		cloak = /obj/item/clothing/cloak/darkcloak/bear
-		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
-		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
-		pants = /obj/item/clothing/under/roguetown/tights/black
-	backpack_contents = list(
-		/obj/item/roguegem/amethyst = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/recipe_book/alchemy = 1,
-		/obj/item/recipe_book/magic = 1,
-		/obj/item/chalk = 1,
-	)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message) 
-//		SSticker.rulermob = H
-
 /datum/advclass/lady/trophy
 // This is just the regular Consort as it is right now, along with the ridiculous 15 points of extra stats.
 	name = "Trophy"
