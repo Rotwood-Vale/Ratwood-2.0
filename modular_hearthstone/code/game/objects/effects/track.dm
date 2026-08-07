@@ -1,6 +1,6 @@
 /turf
 	///Default probatility of leaving a track when entering this turf
-	var/track_prob = 0
+	var/track_prob = 10
 
 //Base probabilities to leave a track.
 /turf/open/floor/rogue/dirt
