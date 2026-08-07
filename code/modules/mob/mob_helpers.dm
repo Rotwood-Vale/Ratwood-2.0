@@ -170,7 +170,7 @@
 				newletter="ah"
 			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
-			if(LOWER_TEXT(newletter))=="c")
+			if(LOWER_TEXT(newletter)=="c")
 				newletter="lr"
 			if(LOWER_TEXT(newletter)=="e")
 				newletter="do"
