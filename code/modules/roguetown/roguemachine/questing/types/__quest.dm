@@ -207,7 +207,7 @@
 /datum/quest/proc/calculate_reward(turf/origin_turf, turf/target_turf)
 	var/base = get_base_reward()
 	var/additional = get_additional_reward(origin_turf, target_turf)
-	return base + additional
+	return round((base + additional) * QUEST_REWARD_GLOBAL_MULT)
 
 /// Calculate deposit based on difficulty
 /datum/quest/proc/calculate_deposit()
