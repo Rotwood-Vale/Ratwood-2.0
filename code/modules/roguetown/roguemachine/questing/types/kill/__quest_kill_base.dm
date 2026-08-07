@@ -211,22 +211,21 @@
 		total_spawned_tp += initial(new_mob.threat_point) || 0
 		spawned++
 		sleep(1)
-	// Rewrite progress_required to match what actually spawned. Kill-any-faction tracking means
-	// this is the true completion count — but only for quests where kills ARE the objective.
-	// Recovery keeps its preview-set progress_required (= 1 for the parcel delivery).
 	if(spawned > 0 && kills_count_progress)
 		progress_required = spawned
 	return spawned
 
-/// Spend tp_budget picking weighted mob types from faction.mob_types. Returns flat list of mob
-/// type paths to spawn. Mirrors ambush.dm purchase loop (first-pick sets tone, subsequent picks
-/// may go cheaper to stay under budget). Hard cap of QUEST_KILL_MAX_MOBS spawns.
+/datum/quest/kill/proc/compose_candidates()
+	return faction.mob_types.Copy()
+
 /datum/quest/kill/proc/compose_warband()
 	var/list/result = list()
 	if(!faction || !length(faction.mob_types) || tp_budget <= 0)
 		return result
 	var/budget = tp_budget
-	var/list/candidates = faction.mob_types.Copy()
+	var/list/candidates = compose_candidates()
+	if(!length(candidates))
+		return result
 	// First purchase.
 	var/first_pick = pickweight(candidates)
 	result += first_pick
