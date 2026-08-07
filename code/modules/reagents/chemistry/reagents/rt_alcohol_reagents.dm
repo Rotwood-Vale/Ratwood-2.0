@@ -369,6 +369,70 @@
 	color = "#330038"
 	quality = DRINK_VERYGOOD
 
+/datum/reagent/consumable/ethanol/spicedwine
+	name = "Spiced Wine"
+	boozepwr = 10
+	taste_description = "overpoweringly aromatic, sweetening the tongue and numbing the lips"
+	color = "#a11a00"
+	quality = DRINK_GOOD
+
+/datum/reagent/consumable/ethanol/spicedwine/on_mob_life(mob/living/carbon/M)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-0.2  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.2  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+
+/datum/reagent/consumable/ethanol/spicedwine/aged
+	name = "Aged Spiced Wine"
+	boozepwr = 20
+	taste_description = "richly aromatic spiciness, evoking the memory of a holidae's snow-speckled nite"
+	color = "#961800"
+	quality = DRINK_VERYGOOD
+
+/datum/reagent/consumable/ethanol/spicedwine/aged/on_mob_life(mob/living/carbon/M)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-0.4  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.4  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+
+/datum/reagent/consumable/ethanol/spicedwine/delectable
+	name = "Delectable Spiced Wine"
+	boozepwr = 40
+	taste_description = "heavenly aromatic sweetness, followed by an ever-familiar warmness in the heart"
+	color = "#821500"
+	quality = DRINK_FANTASTIC
+
+/datum/reagent/consumable/ethanol/spicedwine/delectable/on_mob_life(mob/living/carbon/M)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-0.7  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-0.7  * REAGENTS_EFFECT_MULTIPLIER, 0)
+	..()
+
+/datum/reagent/consumable/ethanol/cider/ambrosia
+	name = "Ambrosia"
+	boozepwr = 100 //Strong Lifeblood, in essence, that'll also leave you completely sloshed. In jubilation, of course!
+	taste_description = "divine bliss with hints of appled crispness, followed by what feels like a greatmaul to the forehead"
+	color = "#FFD700"
+	quality = DRINK_FANTASTIC
+
+/datum/reagent/consumable/ethanol/cider/ambrosia/on_mob_life(mob/living/carbon/M)
+	if(ishuman(M))
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+20, BLOOD_VOLUME_NORMAL)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(4)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustFireLoss(-5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-5, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -5 * REAGENTS_EFFECT_MULTIPLIER)
+	..()
+
+/datum/reagent/consumable/ethanol/cider/ambrosia
+
 // Elf Production - Berries & Herbal
 
 /datum/reagent/consumable/ethanol/elfred
