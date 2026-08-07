@@ -347,6 +347,9 @@ const chunkSplitter = {
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
  */
+export type ActFunctionType = (action: string, payload?: object) => void;
+export type RoutedActFunctionType = (action: string, payload?: object, routeId?: string | null) => void;
+
 export const sendAct = (action: string, payload: object = {}) => {
   // Validate that payload is an object
   // prettier-ignore

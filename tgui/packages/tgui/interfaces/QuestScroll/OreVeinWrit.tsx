@@ -3,6 +3,7 @@ import { writParagraph } from './shared';
 
 export const OreVeinWrit = (props: {
   pickupRegion?: string | null;
+  realm?: string;
   reward: number;
   levyRate: number;
   levyExempt: boolean;

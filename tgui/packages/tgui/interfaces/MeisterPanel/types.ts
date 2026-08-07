@@ -22,6 +22,7 @@ export type ActiveLoan = {
   days_total: number;
   due_on_day: number;
   days_until_due: number;
+  minutes_until_due: number;
   remaining: number;
   defaulted: boolean;
   creditor: string;
@@ -43,7 +44,9 @@ export type LedgerLoan = {
   creditor_label: string;
   debtor: string;
   is_institutional: boolean;
+  target_id: string;
   target_label: string;
+  minutes_until_due: number;
   principal: number;
   interest_pct: number;
   due_on_day: number;
