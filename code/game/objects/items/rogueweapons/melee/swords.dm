@@ -2019,7 +2019,7 @@
 			var/obj/item/mainhand = user.get_active_held_item()
 			var/obj/item/offhand = user.get_inactive_held_item()
 			if(HAS_TRAIT(user, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
-				probby += 20	//We give notable bonus to dual-wielders who use two hooked swords.
+				probby += 20	//We give notable bonus to dual-wielders who use two hooked swords, this time for real.
 			if(prob(probby))
 				M.dropItemToGround(I, force = FALSE, silent = FALSE)
 				user.stop_pulling()
