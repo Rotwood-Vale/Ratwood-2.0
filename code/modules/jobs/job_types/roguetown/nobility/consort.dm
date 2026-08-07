@@ -24,7 +24,6 @@
 	advjob_examine = TRUE
 	job_subclasses = list(
 		/datum/advclass/lady/heartthrob,
-		/datum/advclass/lady/sapio,
 		/datum/advclass/lady/housespouse,
 		/datum/advclass/lady/trophy
 	)
