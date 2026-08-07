@@ -455,7 +455,25 @@
 	set name = "Ascendants Curse"
 	set category = "Antipope"
 
+	var/found_structure = FALSE
+	var/list/search_area = view(1, src)
+	for(var/obj/structure/fluff/psycross/A in search_area)
+		if(istype(A, /obj/structure/fluff/psycross/zizocross) || istype(A, /obj/structure/fluff/psycross/graggar) || istype(A, /obj/structure/fluff/psycross/baotha) || istype(A, /obj/structure/fluff/psycross/matthios))
+			A.visible_message(span_notice("Unholy cross glows with an otherworldly light."))
+			found_structure = TRUE				
+			break
+
+	if(!found_structure)
+		to_chat(src, span_warning("I need a cross of one of the Four to chanell the curse."))
+		return FALSE
 	
+	if (istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		to_chat(src, span_warning("I can't do this here! They'll know!"))
+		return FALSE
+
+	if(!src.key)
+		return
+
 	var/list/posible_targets = list()
 	for(var/mob/living/carbon/human/P in GLOB.player_list)
 		if(evil_churchecancurse_selection(P))
@@ -466,13 +484,6 @@
 	var/target_pick = input("Who shall receive a curse?", "Select Target") as null|anything in posible_targets_names
 
 	if (!target_pick)
-		return
-
-	if (istype(get_area(src), /area/rogue/indoors/town/church/chapel))
-		to_chat(src, span_warning("I can't do this here! They'll know!"))
-		return FALSE
-
-	if(!src.key)
 		return
 
 	target_pick = posible_targets[target_pick]
