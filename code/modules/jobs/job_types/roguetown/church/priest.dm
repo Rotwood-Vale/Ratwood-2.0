@@ -385,6 +385,19 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
 		return FALSE
 
+	if(HAS_TRAIT(H, TRAIT_GODHAND))
+		to_chat(src, span_warning("Four stand behind this one united, the curse cant gain a foothold!"))
+		return FALSE
+
+	if(H.job == /datum/job/roguetown/priest)
+		to_chat(src, span_warning("Ten will not curse their own chosen!"))
+		return FALSE
+
+	if(H.job == /datum/job/roguetown/absolver) // absolvers alredy are proven to be able to undo gods works with the armour ritual, and can remove vampirism and werwolfism with their lux manipulation, i think thats a resonable combination of those facts
+		to_chat(src, span_warning("The curse have been unvoven by mortal hands before it coudl get a hold!"))
+		to_chat(H, span_warning("Something have tried to gain a hold on your lux, but you managed to remove it!"))
+		return FALSE
+
 	return TRUE
 
 /mob/living/carbon/human/proc/churcheapostasy(mob/living/carbon/human/H in GLOB.player_list)
