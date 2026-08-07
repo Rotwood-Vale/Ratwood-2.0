@@ -322,8 +322,8 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	// Lord keeps direct control of it alongside the new Taxation 2 panel (category levies +
 	// per-class poll tax). TODO: migrate tax_value consumers onto tax_rates categories, then
 	// drop the legacy branch.
-	var/choice = alert(user, "Which levies shall you adjust?", "Crown Taxation", "Sales Tax", "Levies & Poll Tax", "Cancel")
-	if(!Adjacent(user))
+	var/choice = input(user, "Which levies shall you adjust?", "Crown Taxation") as null|anything in list("Sales Tax", "Deposit Taxes & Fines", "Levies & Poll Tax")
+	if(!choice || !Adjacent(user))
 		return
 	switch(choice)
 		if("Sales Tax")
@@ -336,6 +336,23 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				newtax = CLAMP(newtax, 1, 99)
 				SStreasury.tax_value = newtax / 100
 				priority_announce("The new tax in [SSmapping.map_adjustment.realm_name] shall be [newtax] percent.", "The Generous Lord Decrees", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
+		if("Deposit Taxes & Fines")
+			// Ratwood per-category deposit taxation and fine exemptions
+			// (SStreasury.taxation_cat_settings). The upstream TaxSetter TGUI only drives
+			// the new levy/poll rates, so the categories are adjusted here.
+			var/list/new_settings = list()
+			for(var/category in SStreasury.taxation_cat_settings)
+				var/cur_amount = SStreasury.taxation_cat_settings[category]["taxAmount"]
+				var/cur_exempt = SStreasury.taxation_cat_settings[category]["fineExemption"]
+				var/newamt = input(user, "[category]: deposit tax percent (0-99). Currently [cur_amount]%.", src, cur_amount) as null|num
+				if(isnull(newamt) || !Adjacent(user))
+					return
+				newamt = CLAMP(round(newamt), 0, 99)
+				var/exempt_choice = alert(user, "[category]: exempt from fines? Currently [cur_exempt ? "exempt" : "not exempt"].", "Fine Exemption", "Exempt", "Not Exempt")
+				if(!Adjacent(user))
+					return
+				new_settings[category] = list("taxAmount" = newamt, "fineExemption" = (exempt_choice == "Exempt"))
+			SStreasury.set_taxes(new_settings, "The Generous Lord Decrees", "The Tyrannical Lord Dictates")
 		if("Levies & Poll Tax")
 			var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
 			taxsetter.ui_interact(user)

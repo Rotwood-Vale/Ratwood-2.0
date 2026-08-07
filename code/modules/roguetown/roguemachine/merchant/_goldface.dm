@@ -75,13 +75,18 @@
 		"Alcohols",
 		"Apparel",
 		"Consumable",
+		"Cosmetics", // Ratwood pack groups the upstream list dropped
+		"Food",
+		"Games",
 		"Gems",
 		"Instruments",
 		"Luxury",
 		"Livestock",
+		"Magic",
 		"Perfumes",
 		"Raw Materials",
 		"Seeds",
+		"Substances",
 		"Tools",
 		"Wardrobe",
 		"Zadpacks",
@@ -92,11 +97,13 @@
 		"Armor (Iron)",
 		"Armor (Steel)",
 		"Armor (Exotic)",
+		"Imported Armor (Light)", // Ratwood pack groups the upstream list dropped
 		"Potions",
 		"Weapons (Ranged)",
 		"Weapons (Iron and Shields)",
 		"Weapons (Steel)",
 		"Weapons (Foreign)",
+		"Weapons (Exotic)",
 	)
 	var/is_public = FALSE // Whether it is a public access vendor.
 	var/extra_fee = 0 // Public-tier Porters/Gnomes margin tacked onto base price. Meant to make publicface very unprofitable until Gnomes are unlocked and the margin flows to the Merchant Fund.
