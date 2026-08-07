@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 #define QUEST_BANDS_RAID 3
 #define QUEST_BANDS_BOUNTY 3
 #define QUEST_BANDS_RECOVERY 2
+#define QUEST_BANDS_BLOCKADE 6
 
 #define QUEST_REWARD_GLOBAL_MULT 1 // AP end-state: head-bounty stripping on contract mobs replaced the flat reward cut
 

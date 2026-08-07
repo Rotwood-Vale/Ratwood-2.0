@@ -2,7 +2,7 @@
 	quest_type = QUEST_BLOCKADE_DEFENSE
 	quest_difficulty = QUEST_DIFFICULTY_HARD
 	tp_budget = BLOCKADE_WAVE_1_TP
-	threat_bands_cleared = QUEST_BANDS_RAID * 2
+	threat_bands_cleared = QUEST_BANDS_BLOCKADE
 	required_fellowship_size = 0
 
 	var/current_wave = 0
