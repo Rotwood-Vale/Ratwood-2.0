@@ -21,6 +21,7 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	heat_level = 4
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -36,17 +37,8 @@
 	if(.)
 		return
 
-	if(on)
-		var/mob/living/carbon/human/H = user
+	if(!on)
 
-		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
-
-			if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
-				H.adjust_bodytemperature(75)
-		return TRUE //fires that are on always have this interaction with lmb unless its a torch
-
-	else
 		if(icon_state == "[base_state]over")
 			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
 				"<span class='notice'>I start to pick up [src]...</span>")
@@ -86,6 +78,7 @@
 	cookonme = FALSE
 	crossfire = FALSE
 	density = FALSE
+	heat_level = 3
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -154,6 +147,7 @@
 	crossfire = FALSE
 	healing_range = 2
 	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
+	heat_level = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
@@ -508,6 +502,7 @@
 	on = FALSE
 	cookonme = TRUE
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
 	var/mob/living/carbon/human/lastuser
@@ -866,9 +861,11 @@
 	cookonme = TRUE
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 5
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
+
 /obj/machinery/light/rogue/campfire/process()
 	..()
 	if(isopenturf(loc))
@@ -944,6 +941,7 @@
 	pass_flags = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
+	heat_level = 5
 
 /obj/machinery/light/rogue/campfire/densefire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -971,6 +969,7 @@
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+	heat_level = 5
 
 
 /obj/machinery/light/rogue/campfire/pyre/post_buckle_mob(mob/living/M)
