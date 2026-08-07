@@ -20,7 +20,10 @@ SUBSYSTEM_DEF(questpool)
 	// Front-load every region to its full target so roundstart has a healthy mix.
 	regen_kill_targets(total_kill_target())
 	regen_fetch_targets()
-	log_world("QuestPool: seeded [length(pool)] contracts from [length(GLOB.quest_landmarks_list)] landmarks ([length(SSregionthreat.threat_regions)] threat regions)")
+	var/world_spawners = 0
+	for(var/obj/effect/landmark/quest_spawner/L in world)
+		world_spawners++
+	log_world("QuestPool: seeded [length(pool)] contracts from [length(GLOB.quest_landmarks_list)] landmarks ([world_spawners] spawner atoms in world, [length(SSregionthreat.threat_regions)] threat regions)")
 	return ..()
 
 /datum/controller/subsystem/questpool/proc/get_nearest_ledger_turf(turf/reference)
