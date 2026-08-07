@@ -195,7 +195,7 @@
 		to_chat(src, span_warning("I can't do this here! They'll know!"))
 		return FALSE
 
-	if (!COOLDOWN_FINISHED(src, evil_priest_sermon))
+	if (!COOLDOWN_FINISHED(src, priest_sermon))
 		to_chat(src, span_warning("You cannot inspire others so early."))
 		return
 
@@ -207,7 +207,7 @@
 
 	src.visible_message(span_notice("[src] finishes the sermon, inspiring those nearby!"))
 	playsound(src.loc, 'sound/magic/ahh2.ogg', 80, TRUE)
-	COOLDOWN_START(src, evil_priest_sermon, EVIL_PRIEST_SERMON_COOLDOWN)
+	COOLDOWN_START(src, priest_sermon, EVIL_PRIEST_SERMON_COOLDOWN)
 
 	for (var/mob/living/carbon/human/H in view(7, src))
 		if (!H.patron)
@@ -276,7 +276,7 @@
 	if(!mind)
 		return
 
-	if (!COOLDOWN_FINISHED(src, switch_faith_antipope_coldown))
+	if (!COOLDOWN_FINISHED(src, priest_change_miracles))
 		to_chat(src, span_warning("I cant switch my patrons so often."))
 		return
 
@@ -330,7 +330,7 @@
 
 	src.choose_miracles_heresiarch()
 
-	COOLDOWN_START(src, switch_faith_antipope_coldown, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
+	COOLDOWN_START(src, priest_change_miracles, EVIL_PRIEST_SWITCH_FAITH_COOLDOWN)
 
 /mob/living/carbon/human/proc/church_evil_announcement() // Like the bishop's announcement, but needs a cross next to you and has a longer coldown
 	set name = "Announcement"
@@ -386,3 +386,93 @@
 		else
 			to_chat(src, span_warning("Your announcement was interrupted!"))
 			return FALSE
+
+
+/mob/living/carbon/human/proc/evil_churchecancurse(mob/living/carbon/human/H, apostasy = FALSE)
+	if (!H.devotion && apostasy)
+		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
+		return FALSE
+
+	//Flavor messages for cursing certain god's faithful.
+	if(istype(H.patron, /datum/patron/divine/dendor))
+		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained. Yet his madness but a pale shadow of Graggar own and the strugle will be short."))
+
+	//Abyssor's clergy are gripped by his dream.
+	if (istype(H.patron, /datum/patron/divine/abyssor))
+		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the divine only barely penetrates the depths."))
+		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
+
+	//Let's not curse heretical antags.
+	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/human/proc/evil_churchpriestcurse(mob/living/carbon/human/H in GLOB.player_list)
+	set name = "Divine Curse"
+	set category = "Antipope"
+
+	if (stat)
+		return
+
+	var/target_name = input("Who shall receive a curse?", "Target Name") as text|null
+
+	if (!target_name)
+		return
+
+	if (istype(get_area(src), /area/rogue/indoors/town/church/chapel))
+		to_chat(src, span_warning("I can't do this here! They'll know!"))
+		return FALSE
+
+	if(!src.key)
+		return
+
+	if(!src.mind || !src.mind.do_i_know(name=target_name))
+		to_chat(src, span_warning("I don't know anyone by that name."))
+		return
+
+	var/list/curse_choices = list(
+		"Curse of Astrata" = /datum/curse/astrata,
+		"Curse of Noc" = /datum/curse/noc,
+		"Curse of Dendor" = /datum/curse/dendor,
+		"Curse of Abyssor" = /datum/curse/abyssor,
+	)
+
+	var/curse_pick = input("Choose a curse to apply or lift.", "Select Curse") as null|anything in curse_choices
+	if (!curse_pick)
+		return
+
+	var/curse_type = curse_choices[curse_pick]
+
+	if (H.real_name == target_name)
+		var/datum/curse/temp = new curse_type()
+
+		if (H.is_cursed(temp))
+			H.remove_curse(temp)
+			priority_announce("[real_name] has lifted [curse_pick] from [H.real_name]! They are once again part of the flock!", title = "REDEMPTION", sound = 'sound/misc/bell.ogg')
+			message_admins("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
+			log_game("DIVINE CURSE: [real_name] ([ckey]) has removed [curse_pick] from [H.real_name])")
+		else
+			if (length(H.curses) >= 1)
+				to_chat(src, span_syndradio("[H.real_name] is already afflicted by another curse."))
+				message_admins("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
+				log_game("DIVINE CURSE: [real_name] ([ckey]) has attempted to strike [H.real_name] ([H.ckey] with [curse_pick])")
+				return
+
+			if (!COOLDOWN_FINISHED(src, priest_curse))
+				to_chat(src, span_warning("You must wait before invoking a curse again."))
+				return
+
+			//Check if we can curse this person.
+			if(!churchecancurse(H))
+				return
+
+			COOLDOWN_START(src, priest_curse, PRIEST_CURSE_COOLDOWN)
+			H.add_curse(curse_type)
+
+			priority_announce("[real_name] has stricken [H.real_name] with [curse_pick]! SHAME!", title = "JUDGEMENT", sound = 'sound/misc/excomm.ogg')
+			message_admins("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
+			log_game("DIVINE CURSE: [real_name] ([ckey]) has stricken [H.real_name] ([H.ckey] with [curse_pick])")
+
+		return
