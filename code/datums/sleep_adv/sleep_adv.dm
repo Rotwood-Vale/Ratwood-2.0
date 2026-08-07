@@ -122,6 +122,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 /datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE)
 	var/mob/living/L = mind.current
 	var/datum/skill/skillref = GetSkillRef(skill)
+	var/base_amt = amt
 	if(SSmapping?.map_adjustment?.map_file_name == "byos.dmm")
 		if(skillref && (skillref.type == /datum/skill/craft/carpentry || skillref.type == /datum/skill/craft/masonry))
 			amt *= 2
@@ -168,7 +169,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
 
 	adjust_sleep_xp(skill, amt)
-	add_cross_training_experience(skill, amt)
+	add_cross_training_experience(skill, base_amt)
 
 	var/can_advance_post = enough_sleep_xp_to_advance(skill, 1)
 	var/capped_post = enough_sleep_xp_to_advance(skill, 2)
