@@ -127,13 +127,20 @@
 		"Adventuring Supplies",
 		"Alcohols",
 		"Consumable",
+		"Cosmetics", // Ratwood pack groups restored from the pre-port SILVERFACE
+		"Food",
+		"Games",
 		"Gems",
 		"Instruments",
 		"Luxury",
 		"Livestock",
+		"Magic",
 		"Perfumes",
+		"Raw Materials",
 		"Seeds",
+		"Substances",
 		"Tools",
+		"Weapons (Exotic)",
 		"Weapons (Foreign)",
 	)
 	categories_gamer = list()
@@ -164,12 +171,13 @@
 		"Apparel",
 		"Wardrobe",
 		"Armor (Light)",
+		"Imported Armor (Light)",
 	)
 	categories_gamer = list()
 
 /obj/structure/roguemachine/goldface/public/apothecary
 	name = "Apothecary's SILVERFACE"
-	lockid = "apothecary"
+	lockid = "physician"
 	profit_id = list("Head Physician","Apothecary")
 	categories = list(
 		"Potions",
