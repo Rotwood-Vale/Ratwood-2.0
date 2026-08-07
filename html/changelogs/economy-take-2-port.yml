@@ -1,0 +1,11 @@
+author: Hug
+
+delete-after: True
+
+changes:
+  - rscadd: "Economy 2/3 port (Azure Peak 6849/6930/7000 via Emerald Summit): multi-fund treasury with Church, Merchant, Bathhouse and Innkeeper jawbanks, personal and institutional loans, poll tax, decrees and charters, and the City Assembly."
+  - rscadd: "Quest 2: pre-generated contracts on the contract ledger, fellowships (parties up to 6), faction warbands scaled by regional threat, blockade defense, towner smith and miner quests, and innkeeper rumor contracts."
+  - rscadd: "Foreign trade: eleven realms hail trade ships with cultural goods, a pricing engine auto-values craftables, standing orders and petitions for the Steward, and crown imports with regional sourcing and blockade surcharges."
+  - rscadd: "New machines: Nervelock banking panel (ATM), escrow commissioner, scrapper, mercenary talkstatue, and zadcote messenger birds. New Steward trade TGUI, stockpile TGUI, noticeboard with Avisa news, and calendar."
+  - tweak: "Passive imports live on: suppliers now deliver straight into the town stockpile and the Crown pays through the new fund ledger. Rate control moved to the Nerve Master's Passive Imports tab."
+  - tweak: "The Collectable Treasures vault bounty is retired to match upstream; treasures now sell through the trade-good market instead of minting."
