@@ -798,15 +798,15 @@
 
 	fragments += F
 
-// HIEROPHANT UNIQUE SPELL - LEY LINES
+// HIEROPHANT UNIQUE SPELL - Obelisks of Power
 // On use, create a tile that will disable your Parry/Dodge, but grant you capped INT.
 // This is only active while you are standing on said tile.
 // Lasts 30 seconds.
 // If Combat Mode is off, this will instead restore your Energy.
 
 /obj/effect/proc_holder/spell/invoked/ley_lines
-	name = "Ley Lines"
-	desc = "Creates a circle of arcyne power. Standing within it greatly enhances your spellcasting, increasing your intellect and reducing the cooldown of your spells. If you are not in Combat Mode, the ley lines instead restore your energy at a rapid pace.<br><br>While standing in a Leyline, you cannot defend yourself.<br><br>This will also grant a spell that makes you quickly move back to your Leylines."
+	name = "Obelisks of Power"
+	desc = "Creates a circle of arcyne power. Standing within it greatly enhances your spellcasting, increasing your intellect and reducing the cooldown of your spells. If you are not in Combat Mode, the obelisks instead restore your energy at a rapid pace.<br><br>While standing in a Arcyne Loop, you cannot defend yourself.<br><br>This will also grant a spell that makes you quickly move back to your Arcyne Loop."
 //	fluff_desc = "'No! My Ley Lines!' is a common cry among Hierophants the moment they are dragged even an inch away from their carefully prepared nexus of power. Within its bounds, arcane formulae seem effortless, threads of mana unravel before the mind's eye, and complex spellwork flows with the precision of an auto-smither. Outside of it, reality becomes frustratingly ordinary once more. Most Magos give stern warnings this sensation can be addictive, and even dangerous. Hierophants take it as a suggestion."
 	overlay_state = "rune2"
 	sound = 'sound/magic/chargingold.ogg'
@@ -825,15 +825,15 @@
 	if(active_circle && !QDELETED(active_circle))
 		qdel(active_circle)
 	active_circle = new(get_turf(H), H, src)
-	to_chat(H, span_blue("Arcyne sigils spread beneath your feet, and connect into a complex system of connections to the Ley."))
+	to_chat(H, span_blue("Arcyne sigils spread beneath your feet as Ancient Obelisks fade in from a lost time. A connection forms, a loop, tying these obelisks to the sigils."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/ley_lines/proc/on_circle_removed()
 	active_circle = null
 
 /obj/effect/proc_holder/spell/invoked/between_the_lines
-	name = "Between the Lines"
-	desc = "Return instantly to your Ley Lines, you addict."
+	name = "Between the spires"
+	desc = "Return instantly to your Arcyne Loop, you addict."
 //	fluff_desc = "Among the oldest Hierophant workings recorded, 'Between the Lines' is said to have been born from a simple problem: every moment spent away from a Ley Circle was a moment deprived of perfection. Rather than endure the indignity of walking back, the first Hierophants bent space itself, ensuring they could return to the intoxicating clarity of the Ley Lines without a single step."
 	overlay_state = "rune3"
 	recharge_time = 15 SECONDS
@@ -850,7 +850,7 @@
 	if(!linked_circle || QDELETED(linked_circle))
 		return FALSE
 	if(get_dist(user, linked_circle) > max_range)
-		user.balloon_alert(user, "Too far from my ley line! Noooo! My ley lines!!")
+		user.balloon_alert(user, "Too far from my arcyne loop!")
 		return FALSE
 	var/turf/T = get_turf(linked_circle)
 	if(!T)
@@ -899,7 +899,7 @@
 	icon_state = "circle_of_power"
 
 /obj/effect/phantom_leyline
-	name = "phantom leyline"
+	name = "phantom obelisks"
 	icon = 'icons/roguetown/misc/64x96.dmi'
 	icon_state = "obelisk"
 	anchored = TRUE
@@ -911,7 +911,7 @@
 	var/obj/effect/beam_target/beam_anchor
 
 /obj/structure/leyline_circle
-	name = "ley lines"
+	name = "Arcyne Loop"
 	desc = "A circle of arcyne power woven into the land."
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "astrata_chalky"
