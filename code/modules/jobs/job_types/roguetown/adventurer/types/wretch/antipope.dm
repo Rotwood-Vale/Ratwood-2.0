@@ -91,6 +91,7 @@
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 		H.verbs |= /mob/living/carbon/human/proc/switch_faith_antipope
 		H.verbs |= /mob/living/carbon/human/proc/church_evil_announcement
+		H.verbs |= /mob/living/carbon/human/proc/evil_churchpriestcurse
 
 		H.mind.current.faction += "[H.name]_faction" // for necromancing
 
