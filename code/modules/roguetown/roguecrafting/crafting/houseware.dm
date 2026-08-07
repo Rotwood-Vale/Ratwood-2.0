@@ -54,6 +54,16 @@
 /obj/item/reagent_containers/glass/cup/wooden/crafted
 	sellprice = 3
 
+/datum/crafting_recipe/roguetown/survival/peppermill
+	name = "peppermill"
+	category = "Houseware"
+	result = list(
+		/obj/item/reagent_containers/peppermill
+		)
+	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/natural/whetstone = 1, /obj/item/reagent_containers/food/snacks/pepper = 5) //Currently unrefillable, so see this as an equal exchange.
+	skillcraft = /datum/skill/craft/carpentry //If this feels a bit too oppressive, try reducing the difficulty level a bit. Remember that it shouldn't be easier to obtain than importing, otherwise.
+	craftdiff = 4
+
 /datum/crafting_recipe/roguetown/survival/woodtray
 	name = "wooden trays (x2) (1 small log)"
 	category = "Houseware"
