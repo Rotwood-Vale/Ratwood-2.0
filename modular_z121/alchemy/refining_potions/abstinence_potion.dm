@@ -2,7 +2,7 @@
 // 禁欲药水 (Forced Chastity Potion) —— 一味【精炼药剂(非酒)】
 // ----------------------------------------------------------------------------
 // 中文总览(WHY/HOW)：
-//   配方：5 级"calming"(平静)气味 + 底料【乳汁 30 + 情欲液 30】 → 50 单位禁欲药水；技能：熟练。
+//   配方：5 级"平静"气味 + 底料【乳汁 30 + 情欲液 30】 → 50 单位禁欲药水；技能：熟练。
 //      气味材料：1 artemisia(草药,3pt) + 1 alchemical ozium(炼金臭葱石,2pt) = 5pt，两种不同类型可同锅。
 //   效果：药力持续期间（约 8 分钟，50u × 10s/u），饮者体内快感不断累积攀升，却始终无法达到高潮——
 //         精力槽被持续压制为零，使一切高潮路径(is_spent)皆被阻断；同时逐拍推高情欲值(arousal)
@@ -192,7 +192,7 @@
 // 配方：★按气味等级①★ 5 级"calming"(平静)气味 + 底料(乳汁 30 + 情欲液 30) → 禁欲药水 50。技能：熟练。
 // ----------------------------------------------------------------------------
 // 中文：
-//   · "calming"是原版【运气药水】(lck_potion)配方的 smells_like。气味材料(两种不同类型)：
+//   · "平静"是原版【七叶草药剂】(lck_potion)配方的 smells_like。气味材料(两种不同类型)：
 //     artemisia(草药, major=3pt) + alchemical ozium(炼金臭葱石, med=2pt) = 5pt 正好达标。
 //     且两者不同类型，可同时放入炼药锅。artemisia 是采集草药，ozium 是炼金台合成物。
 //   · 底料减半：乳汁 30 + 情欲液 30 = 60，恰好达到精炼锅起沸下限(waterneed=60)。
@@ -201,7 +201,7 @@
 // ============================================================================
 /datum/alch_refining_formula/forced_chastity
 	name = "禁欲药水"										// Formula name.
-	required_scent = "calming"								// Smells_like of lck_potion (Potion of Seven Clovers).
+	required_scent = "平静"								// lck_potion(七叶草药剂) 的 smells_like。
 	required_scent_points = 5								// >= 5: 1 artemisia(3) + 1 alchemical ozium(2) = 5.
 	required_base = list(/datum/reagent/consumable/milk = 30,	// 30 breast milk (halved)...
 						/datum/reagent/erpjuice/cum = 30)		// ...+ 30 lust-fluid (halved) = 60 total.
