@@ -297,7 +297,6 @@
 	// Direct sunlight should stop the process too.
 	if(is_in_torpor_sunlight())
 		progress_gain = 0
-Expand commentComment on line R284Resolved
 	// Coffins and graves accelerate the timer. A cross, however, will properly round-remove a vampire and ash them.
 	if(progress_gain)
 		if(istype(loc, /obj/structure/closet/crate/coffin))
@@ -330,10 +329,7 @@ Expand commentComment on line R284Resolved
 
 	if(!T.can_see_sky())
 		return FALSE
-
-	if(HAS_TRAIT(src, TRAIT_WEATHER_PROTECTED))
-		return FALSE
-
+		
 	if(HAS_TRAIT(src, TRAIT_VAMPIRE_SPAWN_PROTECTION))
 		return FALSE
 
