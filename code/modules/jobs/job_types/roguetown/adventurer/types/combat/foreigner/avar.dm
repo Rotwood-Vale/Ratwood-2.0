@@ -55,7 +55,7 @@
 		/obj/item/flashlight/flare/torch/lantern,
 		/obj/item/storage/belt/rogue/pouch/coins/poor,
 		/obj/item/rogueweapon/scabbard/sheath/aavnik,
-		/obj/item/rogueweapon/whip/nagaika,
+		/obj/item/rogueweapon/whip/nagaika
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 

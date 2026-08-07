@@ -234,7 +234,7 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
 		You have [DisplayTimeText(duration)] to vote.")))
-
+	
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
 		var/datum/action/vote/voting_action = new()
@@ -243,10 +243,13 @@ SUBSYSTEM_DEF(vote)
 
 		new_voter.player_details.player_actions += voting_action
 		generated_actions += voting_action
-
+		
 		if(current_vote.vote_sound)
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
 
+		if(SSvote.initialized && new_voter.prefs.voting_popup)
+			SSvote.ui_interact(new_voter.mob)
+			
 	return TRUE
 
 /**

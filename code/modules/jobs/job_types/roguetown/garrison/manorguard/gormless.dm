@@ -37,7 +37,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms/iron
 	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
-
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Stunmace & Shield","Maul - 14STR Minimum")

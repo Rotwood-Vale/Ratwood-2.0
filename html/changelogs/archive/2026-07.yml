@@ -270,3 +270,227 @@
   - rscadd: Map Tally system
   - rscadd: default Map preference in option
   - code_imp: Ported TG's vote subsystem
+2026-07-23:
+  Broill:
+  - rscadd: Changed the robe and hood of the necromancer into the necromancer hood
+      and necromancer robe.
+  DorfGuy1:
+  - qol: craft recipe for kneaded clay
+  Heheniy:
+  - qol: flat chastity no longer gives mood debuff to people with sheaths
+  SneakySlinky:
+  - balance: Gnolls and WWs now take 30% reduced damage from hits, rather than +30
+      damage from all hits.
+  UntoldTactics:
+  - balance: Psydonic plate armor has been buffed to the same armor integrity as regular
+      plate but loses its ability to give people heavy armor wear trait on equip.
+  - balance: Leather bracers nerfed in both armor value and integrity to match other
+      leather items.
+  - balance: Brigandine rerebracers buffed to offer a relevant alternative to proper
+      steel bracers with accompanying tradeoff in total integrity.
+  - balance: Heavy leather boots, fur boots and Psydonic leather boots have been buffed
+      from 100 -> 250 (~87 -> ~220 in game) integrity to match properly with the rest
+      of their hardened leather counterparts. The integrity of regular boots now match
+      the integrity of other leather items.
+  - balance: Knight-captain's unique armor has recieved a total value overhaul. Their
+      helmet, brigandine and chausses now have C blunt and piercing protection alongside
+      the typical S and A slash and stab values of plate armor. Their brigandine and
+      chausses have been given the integrity values of proper plate armor pieces.
+      In the case of the brigandine this equalizes their coverage and integrity total
+      to the same as the hedge knight bandit's roundstart darkened steel plate.
+  - balance: The Marshal sub-class 'Knight Commander' has had their unique coat buffed
+      by 50 integrity points, making it on-par with other brigandine+ armors (e.g
+      city watch armor)
+  - balance: The coif, padded coif and heavy padded coif now have properly assigned
+      integrity values. The padded coif and heavy padded coif are equivilent to a
+      gambeson and padded gambeson respectively. Chop crit protection added to heavy
+      padded coif.
+  WolfOrion:
+  - bugfix: you no longer need facial reconstruction surgery if killed as a werewolf
+      and then revived
+  Yuckuza:
+  - balance: Leather and hide corslets are now wearable in the shirt (aka gambeson)
+      slot.
+  - rscadd: All Amazon loadout options get a chainmail corslet underarmor on spawn.
+      Bikini armor enjoyers rejoice.
+  ariaworld:
+  - balance: Gave Bow Hunter a backpack.
+  ophaq:
+  - rscadd: Hammerhold people now have their own language... Hammerholdian! Selecting
+      Hammerhold as your origin will no longer give you Dwarvish.
+  - rscadd: Adds in a colorable variant of the sailor shirt and suspender belt.
+  - rscadd: Adds in the recipes and items into loadout.
+  - bugfix: Fixed the poleaxe standard flag sprite not adjusting itself visually in
+      a proper way.
+  zeroisthebiggay:
+  - balance: removes smash from whetstones
+2026-07-24:
+  Arturlang:
+  - balance: canceling the pin do_after removes all pin stun
+  - rscadd: memory logging subsystem
+  Heheniy:
+  - bugfix: wrong stockings offset on males
+  Kroto-Ker:
+  - rscdel: Redundant link when loadout items are examined on a player.
+  RadiantFlash7:
+  - rscadd: Old age buff to parrying
+  - rscadd: Retainer Subclass to men at arms for old age MAA.
+  - rscadd: MAA & Town Guards are once more able to be old
+  - balance: old age once more grants 3 int instead of 2.
+  Taliazure:
+  - bugfix: Fixed the Grand Mace starting weapon choice not spawning correctly.
+  - code_imp: Corrected Grand Mace loadout assignment to match other weapon options.
+  - rscadd: Added Tuscan Red and Smoky Quartz as selectable dwarf skin colors.
+  - code_imp: Added new dwarf skin color definitions and registered them for character
+      creation.
+  Xander3359:
+  - bugfix: Fixed being able to resist out of things while skullcracked
+  - bugfix: Fixed hearths making a ton of sound spam when you fan the flames.
+  Yuckuza:
+  - rscadd: Deserter wretch knights now have a cataphract helmet and cataphract armor
+      as loadout choices.
+  - rscadd: Deserter fighter now has a janissary loadout option.
+  ariaworld:
+  - bugfix: Strong intent now correctly gives a bonus to unarmed fists as well.
+  awwliedacoder:
+  - bugfix: null-ref hangup on update_temperature_hud.
+  - rscadd: added a forced pop-up of the voting ui whenever a vote is called.
+  kimesik:
+  - bugfix: some "Gronnic" stuff is now actually called nation-agnostic.
+2026-07-25:
+  Arturlang:
+  - rscadd: use tg underlay lighting instead of atom movable lighting
+  Kroto-Ker:
+  - bugfix: Toggling masked examine now shows headshot in chat.
+  Shadow-Quill:
+  - bugfix: Floor candles now place directly adjacent to the crafter.
+2026-07-26:
+  Arturlang:
+  - bugfix: inserting organs into the head no longer heals all wounds
+  - bugfix: revenants can no longer run around without downsides from their head wounds
+      if they remove their head
+  awwliedacoder:
+  - bugfix: fixed rebel win-time mesage from 2:30 -> 2:45
+  zoktiik:
+  - refactor: Significantly modified the branding iron's code for more clarity in
+      control flow.
+  - code_imp: Made examine code not iterate thru the target's bodyparts if they have
+      not been branded at all.
+  - qol: Using the branding iron on someone now immediately shows you a prompt asking
+      where to mark, instead of making you wait for the do_after to make your (very
+      awkwardly-timed) decision.
+  - qol: The Crude Branding Stick (loadout item) can now be used on someone else if
+      they are in compliance mode, regardless of conscious state.
+  - bugfix: The zone you selected to brand (on the targeting doll) & the branding
+      description you wrote are now cached when using the iron on someone, making
+      them impossible to change midway through.
+  - rscadd: Added Facial (head [not neck]) and Sensitive (genitalia, breasts [not
+      chest]) Branding preferences, default off. When disabled, they will prevent
+      someone else from branding you there.
+  - rscadd: The stomach area can now be branded. Why not.
+2026-07-27:
+  Arturlang:
+  - bugfix: some unlimited loop runtimes
+  awwliedacoder:
+  - image: volfmantle cloak did not have all the required icon_state's.
+2026-07-28:
+  Arturlang:
+  - admin: the modify traits menu is now far more usable, and actually lists all traits
+  - bugfix: werewolves never untransforming
+  - bugfix: probably fix cyclical grab loops crashing the server
+  ophaq:
+  - qol: Allows sex in chests by bumping their mob storage to 2 instead of 1.
+2026-07-29:
+  Arturlang:
+  - rscadd: vampires using nightvision only see the color red, with valid prey glowing
+      with a red heartbeat glow, scaling on how hungry you are
+  - rscadd: frenzy now has a bunch new visual effects, red overlay, screen zooming
+      in and out as you roll to resist frenzy, and new message lines for resisting
+      it
+  - bugfix: frenzy trying to suck blood out of mobs without blood
+  - bugfix: vampire examine showing mobs having blood when they have NOBLOOD flag
+      on their species
+  - rscdel: remove is obscured as it was dead code and was causing perf issues
+  - bugfix: being de-vamped should correctly remove all vamp traits and vamp eyes
+      and vampiric visuals
+  - bugfix: some clans not getting the same essential traits and buffs for clan leaders,
+      including custom clans
+  - bugfix: obfsucate not working due to sneak making you always invisible
+  - bugfix: vampire siring not reviving you properly and removing zombie-ism
+  - bugfix: nosferatu being scared if you self-examine
+  - balance: remove duplicate blood healing from nosferatu and eora, giving them quietus
+      and siren covens instead
+  - balance: all clan leaders who wouldn't usually get a lord-inherited spell get
+      the bat shapeshift
+  CloverIsLucky:
+  - balance: 'Mordhau Grip: BASH Damfactor and clickcd nerfed from 1.2 and 13 to 1.1
+      and 15 respectively; added some swing delay back.'
+  - code_imp: Pomel Strike gets minuscule blunt chipping.
+  RadiantFlash7:
+  - rscadd: Provides better Clarification of how/why Map votes end the way they do.
+  RandomGooberCoder:
+  - bugfix: Fixes Hear Vocal Bark save/load logic, removes the lack of inability to
+      actually turn voice barks off
+  Teragenic:
+  - qol: Adds on how to speak the language on Language Examine.
+  - rscadd: Adds two unique blades for Hand Advisor subclass and Court Physician
+  - rscadd: Gave Court Phys. Sword skill for their new sword.
+  - rscadd: Adds two new scabbards and Sheathes for Nobles and Royals. Silver and
+      Golden variant respectively.
+  - code_imp: Turns holsters into a component
+  - rscadd: Adds loadout helmet layerable Papakha
+  Xaytan:
+  - balance: Raised soilson con bonus to 2, from 1
+  - balance: Raised soilson athletics to 5, from 0
+  - balance: Added druidic trickery 2 to dendorite soilsons
+  - balance: Raised pilgrim farmer athletics to 4, from 0
+  Yuckuza:
+  - balance: added neck peel protection to the froggemund helm
+  ariaworld:
+  - bugfix: Fixes reusable projectiles disappearing when blocked by shields.
+  hugmeorelse:
+  - rscadd: Wrapping text in [ ] when you speak keeps those words exactly as typed,
+      skipping your accent.
+  - rscadd: Speech inside "quotes" in me and subtle emotes now uses your character's
+      accent.
+  - bugfix: 'Subtle(big) emotes no longer mangle line breaks into # symbols.'
+  - bugfix: Me(big) no longer keeps stray returns from the input box.
+  - code_imp: Refactored accent code
+  wikimody:
+  - rscadd: Antipope sight is no longer stopped by mere mortal masks (he can see other
+      heretics even if their faces are covered)
+2026-07-30:
+  Heheniy:
+  - bugfix: lock on closet in head physician bedroom and duke closet on rockhill map
+      not working
+  Kroto-Ker:
+  - balance: Restored old vagabond mage.
+  MickDick1:
+  - bugfix: fixed fixeye sticky bug
+  Yuckuza:
+  - rscadd: Dueling longsword now craftable on an anvil.
+  - rscadd: Basket-hilted longsword (aka the Etruscan longsword) now craftable on
+      an anvil.
+  - rscadd: Aavanic shashka now craftable on an anvil.
+  - balance: Standard Maul weapon defense increased from 3 when wielded to 6.
+  - balance: Grand Maul weapon defense increased from 6 to 9 when wielded. Grand Maul
+      force raised from 34 to 36.
+  - balance: Dwarven Maul and Spiked Maul weapon defense increased to 7 when wielded.
+  - bugfix: Malum templar maul now functions like a silver weapon as intended.
+2026-07-31:
+  2whatever2:
+  - bugfix: Blacksteel Armet now properly hides your hair.
+  - rscadd: Raise Deadite now works on Volfs and Saigas.
+  - bugfix: Gnolls can now see who is marked through masks now.
+  - balance: Hemophages no longer heal or regain energy. from drinking blood or dirty
+      blood.
+  PPooch:
+  - bugfix: Dislocated limb hand-touch treatment procedure now works again. Remember
+      to be on weak intent.
+  RadiantFlash7:
+  - bugfix: map_vote is no longer weighted
+  Shadow-Quill:
+  - bugfix: Nervelocks now correctly shows the tax rate that affects you, as well
+      as if you are exempt from fines or not.
+  Xander3359:
+  - balance: bow and crossbow damage now stop scaling above 15 perception

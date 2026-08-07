@@ -1,4 +1,4 @@
-/datum/advclass/busker
+/datum/advclass/vagabond_busker
 	name = "Busker"
 	examine_name = "Beggar"
 	tutorial = "You've lost pretty much everything - everything but your instrument and an adequate ability to play it. Maybe a jaunty tune will send a few zennies your way - whether through pitied gratitute, or by distracting long enough for you to swipe a coinpurse."
@@ -9,9 +9,16 @@
 	traits_applied = list(TRAIT_EMPATH)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
-		STATKEY_INT = 1,
+		STATKEY_PER = 1,
 		STATKEY_CON = -2,
 		STATKEY_STR = -1,
+	)
+	subclass_skills = list(
+		/datum/skill/misc/music = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN
 	)
 
 /datum/outfit/job/roguetown/vagabond/busker/pre_equip(mob/living/carbon/human/H)
@@ -32,13 +39,6 @@
 
 	if(prob(10))
 		r_hand = /obj/item/rogue/instrument/flute
-
-	if (H.mind)
-		H.adjust_skillrank(/datum/skill/misc/music, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/stealing, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 
 	var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
 	var/weapon_choice = input("Choose your instrument.", "TAKE UP ARMS") as anything in weapons

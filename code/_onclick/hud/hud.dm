@@ -233,7 +233,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	if(!screenmob.client)
 		return FALSE
 
-	update_colorblind_hud_palette(screenmob.client?.prefs)
+	// Mutates the shared hud objects, so follow the owner's prefs, not the viewer's (observers would rewrite our UI)
+	update_colorblind_hud_palette(mymob?.client?.prefs)
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
@@ -309,10 +310,22 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+		//A rebuild empties the screen of the watcher, so hand back the overlays and alerts we lend them.
+		var/mob/dead/observer/watcher = viewmob
+		if(istype(watcher) && watcher.observetarget == mymob)
+			watcher.sync_observed_screens()
 
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
+	//A watcher borrows the planes of the mob it observes. Filters, render targets and pulses on those planes then reach it too.
+	var/mob/dead/observer/watcher = mymob
+	if(istype(watcher) && watcher.observetarget?.hud_used)
+		for(var/thing in plane_masters)
+			mymob.client?.screen -= plane_masters[thing]
+		watcher.sync_observed_planes()
+		return
+
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
