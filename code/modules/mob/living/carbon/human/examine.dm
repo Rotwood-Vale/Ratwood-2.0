@@ -1190,22 +1190,16 @@
 			heretic_text += "A member of Zizo's cabal."
 			if(HAS_TRAIT(examiner, TRAIT_CABAL))
 				heretic_text += " May their ambitions not interfere with mine."
-		else if(HAS_TRAIT(examiner, TRAIT_CABAL))
-			heretic_text += "Fellow follower of Her truth."
 	else if((HAS_TRAIT(src, TRAIT_HORDE)))
 		if(seer)
 			heretic_text += "Hardened by Graggar's Rituals."
 			if(HAS_TRAIT(examiner, TRAIT_HORDE))
 				heretic_text += " Mine were a glorious memory."
-		else if(HAS_TRAIT(examiner, TRAIT_HORDE))
-			heretic_text += "Their eyes are filled with the same madness as mine."
 	else if((HAS_TRAIT(src, TRAIT_DEPRAVED)))
 		if(seer)
 			heretic_text += "Baotha's Touched."
 			if(HAS_TRAIT(examiner, TRAIT_DEPRAVED))
 				heretic_text += " She leads us to the greatest ends."
-		else if(HAS_TRAIT(examiner, TRAIT_DEPRAVED))
-			heretic_text += "A true pleasure seeker like myself."
 
 	return heretic_text
 
