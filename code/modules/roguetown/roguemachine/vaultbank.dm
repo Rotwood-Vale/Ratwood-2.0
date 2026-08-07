@@ -435,6 +435,9 @@
 		return TRUE
 	return FALSE
 
+/obj/structure/roguemachine/vaultbank/proc/allowed_rates()
+	return list(10, 15, 20, 25, 50)
+
 /obj/structure/roguemachine/vaultbank/proc/can_withdraw(mob/user, amount)
 	return can_issue_loan(user)
 

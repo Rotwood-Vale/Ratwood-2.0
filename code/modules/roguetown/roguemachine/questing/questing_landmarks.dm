@@ -118,7 +118,7 @@
 		if(length(region_matches))
 			picked = pick(region_matches)
 
-	if(!picked)
+	if(!picked && !region)
 		var/list/type_matches = list()
 		for(var/obj/effect/landmark/quest_spawner/landmark as anything in candidates)
 			if(QDELETED(landmark))
@@ -131,7 +131,7 @@
 		if(length(type_matches))
 			picked = pick(type_matches)
 
-	if(!picked)
+	if(!picked && !region)
 		var/list/any_type_match = list()
 		for(var/obj/effect/landmark/quest_spawner/landmark as anything in candidates)
 			if(QDELETED(landmark))

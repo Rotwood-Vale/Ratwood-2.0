@@ -157,6 +157,7 @@
 		data["crown_purse_balance"] = SStreasury?.discretionary_fund?.balance || 0
 		data["defense_costs"] = GLOB.defense_quest_tier_costs.Copy()
 		data["defense_regions_by_type"] = build_defense_regions_by_type()
+		data["blockade_region_labels"] = build_blockade_region_labels()
 		data["defense_destinations"] = build_rumor_destinations()
 		// Powers the Commission tab's per-region "(xN reward)" suffix and yield flavor line.
 		data["region_tp_multipliers"] = build_region_tp_multipliers()

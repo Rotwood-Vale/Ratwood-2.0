@@ -203,7 +203,6 @@
 	to_chat(user, span_warning ("The thorns prick me."))
 	user.adjustBruteLoss(4)
 
-//kazengite update
 /obj/item/clothing/head/roguetown/mentorhat
 	name = "worn bamboo hat"
 	desc = "A reinforced bamboo hat."
