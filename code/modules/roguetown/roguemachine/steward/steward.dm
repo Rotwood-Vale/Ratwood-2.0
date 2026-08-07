@@ -155,6 +155,11 @@
 		var/datum/roguestock/D = locate(href_list["export"]) in SStreasury.stockpile_datums
 		if(!D)
 			return
+		// Trade-good entries must export through the StewardTrade TGUI (manual_export), which
+		// enforces and decrements regional demand. This legacy handler has no UI link anymore;
+		// without this guard a crafted href could mint at best-region prices with no demand cap.
+		if(D.trade_good_id)
+			return
 		if(!SStreasury.do_export(D))
 			say("Insufficient stock.")
 			return
@@ -544,7 +549,7 @@
 	if(gained > 0)
 		if(is_alderman_acting)
 			SScity_assembly.consume_trade(gained, user, "export [quantity] [tg.name] to [region.name]")
-		say("Emerald Summit exports [quantity] [tg.name] to [region.name] for [gained] mammon.")
+		say("[SSmapping.map_adjustment.realm_name] exports [quantity] [tg.name] to [region.name] for [gained] mammon.")
 		playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
 	SStgui.update_uis(src)
 

@@ -254,6 +254,14 @@
 					if(message)
 						say("The Crown's ledger is thin. No purchases today.")
 					return
+				// Refuse outright if the purse cannot cover the payout - the goods must never be
+				// consumed without compensation (give_money_account is burn-backed now).
+				if(!R.mint_item)
+					var/projected = round((R.payout_price * B.amount) * (1 - SStreasury.get_tax_value_for(H)))
+					if(projected > treasury_balance)
+						if(message)
+							say("The Crown's Purse cannot cover a load of this size. Try smaller bundles or return when the Crown is solvent.")
+						return
 				var/bundle_amt = B.amount
 				var/full_on_arrival = (R.stockpile_amount >= R.stockpile_limit)
 				R.stockpile_amount += bundle_amt
@@ -262,7 +270,7 @@
 					if(try_auto_export_units(R, bundle_amt) <= 0)
 						R.stockpile_amount -= bundle_amt
 						if(message)
-							say("The Crown's [R.name] stockpile is full and region demands can absorb your load. Try smaller bundles or take it elsewhere.")
+							say("The Crown's [R.name] stockpile is full and no region demands can absorb your load. Try smaller bundles or take it elsewhere.")
 						return
 					auto_exported = TRUE
 				SStreasury.dirty_market_view()
@@ -325,6 +333,22 @@
 						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					say("[tg_overflow.name] overflow - minted to Crown's Purse.")
 					return
+			// Settlement is computed up front so the solvency check below can refuse the
+			// deposit before any stock is credited or the item consumed - give_money_account
+			// is burn-backed now, and the machine must never eat goods it cannot pay for.
+			var/list/settlement = R.get_quality_settlement(I)
+			var/amt = settlement["seller_payout"]
+			var/crown_delta = settlement["crown_delta"]
+			var/quality_baseline = settlement["baseline"]
+			var/true_value = I.get_real_price()
+			var/mint_amt = 0
+			if(!R.mint_item && amt)
+				var/projected_balance = (SStreasury.discretionary_fund?.balance || 0) + max(crown_delta, 0)
+				var/post_tax = round(amt * (1 - SStreasury.get_tax_value_for(H)))
+				if(post_tax > projected_balance)
+					if(message)
+						say("The Crown's Purse cannot cover this purchase. Return when the Crown is solvent.")
+					return
 			var/auto_exported = FALSE
 			var/full_on_arrival = (!R.mint_item && R.stockpile_amount >= R.stockpile_limit)
 			if(full_on_arrival)
@@ -336,12 +360,6 @@
 					return
 				auto_exported = TRUE
 			R.refresh_auto_price()
-			var/list/settlement = R.get_quality_settlement(I)
-			var/amt = settlement["seller_payout"]
-			var/crown_delta = settlement["crown_delta"]
-			var/quality_baseline = settlement["baseline"]
-			var/true_value = I.get_real_price()
-			var/mint_amt = 0
 			if(message && I.has_item_quality && I.item_quality != ITEM_QUALITY_STANDARD)
 				var/flavor = quality_delta_flavor(I.item_quality)
 				if(flavor)
@@ -376,15 +394,23 @@
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			if(amt)
 				SStreasury.economic_output += true_value
-				var/bounty_msg = "+[amt] from [R.name] bounty"
+				// Ratwood per-category deposit tax, same as the bundle branch: the Crown
+				// pays out the post-tax amount
+				var/tax_rate = SStreasury.get_tax_value_for(H)
+				var/taxed = round(amt * tax_rate)
+				var/seller_delta = amt - quality_baseline
+				amt -= taxed
+				var/bounty_msg = "+[amt] from [R.name] bounty. [taxed]m taxed"
 				if(R.mint_item)
-					bounty_msg = "+[amt] from [R.name] bounty (Crown's share: +[mint_amt]m)"
+					bounty_msg = "+[amt] from [R.name] bounty (Crown's share: +[mint_amt]m). [taxed]m taxed"
 				if(crown_delta != 0)
-					var/seller_delta = amt - quality_baseline
 					var/seller_sign = seller_delta > 0 ? "+" : ""
 					var/crown_sign = crown_delta > 0 ? "+" : ""
-					bounty_msg = "+[amt] from [R.name] bounty (quality: you [seller_sign][seller_delta]m, Crown [crown_sign][crown_delta]m vs. [quality_baseline]m baseline)"
-				SStreasury.give_money_account(amt, H, bounty_msg)
+					bounty_msg = "+[amt] from [R.name] bounty (quality: you [seller_sign][seller_delta]m, Crown [crown_sign][crown_delta]m vs. [quality_baseline]m baseline). [taxed]m taxed"
+				if(!SStreasury.give_money_account(amt, H, bounty_msg) && R.mint_item)
+					// Treasure payouts are minted money by nature - never let the machine eat a
+					// treasure unpaid because the purse ran low mid-settlement.
+					SStreasury.give_money_account(amt, H, bounty_msg, mint_new = TRUE)
 				if(auto_exported && message)
 					say("Crown's [R.name] stockpile is full - shipped regionally on your behalf.")
 			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)

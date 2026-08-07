@@ -116,8 +116,11 @@ SUBSYSTEM_DEF(treasury)
 					if(X.demand > initial(X.demand))
 						X.demand -= rand(5,15)
 			// Ratwood passive imports, adapted to the flat stockpile_amount model (the old
-			// remote stockpile is gone). Suppliers deliver straight into the town stockpile,
-			// capped at stockpile_limit, and the Crown's Purse pays via the fund API.
+			// remote stockpile is gone). Each supplier is paid from the Crown's Purse via the
+			// fund API BEFORE their goods land; a supplier the purse can't cover delivers
+			// nothing, zeroes their rate, and raises their price - matching the old
+			// "suppliers of the resource you couldn't pay get mad" behavior without minting
+			// free goods.
 			var/total_generated_cost = 0
 			var/wasted_time = FALSE
 			var/realmname = SSmapping.map_adjustment.realm_name
@@ -128,18 +131,20 @@ SUBSYSTEM_DEF(treasury)
 					A.passive_generation = 0
 					A.generation_price += 2
 					continue
+				var/supplier_cost = A.passive_generation * A.generation_price //Even if we don't have space for all of it, pay anyways
+				if(!burn(discretionary_fund, supplier_cost, "Passive Imports ([A.name])"))
+					wasted_time = TRUE
+					A.passive_generation = 0
+					A.generation_price += 2
+					continue
 				A.stockpile_amount = min(A.stockpile_amount + A.passive_generation, A.stockpile_limit)
-				total_generated_cost += A.passive_generation * A.generation_price //Even if we don't have space for it, pay anyways
-				if(total_generated_cost >= treasury_value)                        //You shouldn't passively import resources that nobody is buying, use regular import for that
-					wasted_time = TRUE
+				total_generated_cost += supplier_cost
+			if(wasted_time)
+				log_to_steward("-[total_generated_cost]m spent on Passive Imports before the treasury ran dry. Unpaid suppliers cancelled their imports and raised their prices.")
+				scom_announce("[realmname] failed to pay the Import Rate. Some resources have not been delivered, and those rates were set to 0.") //the treasury just got drained, shame unto the current steward
+			else if(total_generated_cost > 0)
+				log_to_steward("-[total_generated_cost]m spent on Passive Imports.")
 			if(total_generated_cost > 0)
-				if(!burn(discretionary_fund, total_generated_cost, "Passive Imports"))
-					wasted_time = TRUE
-				if(wasted_time)
-					log_to_steward("-[total_generated_cost]m owed on Passive Imports, treasury drained, unable to pay remaining suppliers. Imports automatically cancelled, prices raised, do not waste supplier time.")
-					scom_announce("[realmname] failed to pay the Import Rate. Resources have not been delivered, rates set to 0.") //the treasury just got drained, shame unto the current steward
-				else
-					log_to_steward("-[total_generated_cost]m spent on Passive Imports.")
 				record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, total_generated_cost)
 				total_import += total_generated_cost
 		var/area/A = GLOB.areas_by_type[/area/rogue/indoors/town/vault]
