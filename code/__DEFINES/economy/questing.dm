@@ -155,3 +155,19 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 // Multiplied by (region's delivery_reward_multiplier - 1.0), so a 1.0× region adds nothing and a
 // 2.0× region (Terrorbog, Mt Decap, Underdark) adds the full amount.
 #define QUEST_DELIVERY_THREAT_BONUS 20
+
+// Contract corpse cleanup (Viscera Cleanup port): dead warband corpses dust after a delay,
+// severed contract heads dust faster.
+#define QUEST_MOB_DUST_DELAY (5 MINUTES)
+#define QUEST_HEAD_DUST_DELAY (5 SECONDS)
+
+// Blockade wave scaling (July blockade rescale): base wave budget plus per-defender scaling.
+#define BLOCKADE_WAVE_BASE_TP 180
+#define BLOCKADE_DEFENDER_SCAN_RANGE 7
+#define BLOCKADE_DEFENDER_SCALE_MIN 3
+#define BLOCKADE_DEFENDER_SCALE_MAX FELLOWSHIP_MAX_MEMBERS
+#define BLOCKADE_TP_PER_EXTRA_DEFENDER 0.20
+#define BLOCKADE_REWARD_PER_EXTRA_DEFENDER 0.20
+// Flat travel premium added to blockade writ rewards for out-of-the-way regions.
+#define BLOCKADE_TRAVEL_FEE_COAST 75
+#define BLOCKADE_TRAVEL_FEE_MOUNTAIN 150

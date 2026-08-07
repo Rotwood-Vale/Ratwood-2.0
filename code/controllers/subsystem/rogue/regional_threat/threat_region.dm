@@ -22,6 +22,9 @@
 	/// Faction-id -> weight, for kill/blockade faction selection. Set per-region on the
 	/// /datum/threat_region subtypes; a kill quest's preview() picks a faction from this table.
 	var/list/faction_weights = list()
+	/// Flat mammon added to a blockade writ's reward for the journey out to this region.
+	/// Waves stay flat in TP; only the payout reflects distance.
+	var/blockade_travel_fee = 0
 
 // Ratwood regions are typed subtypes with vars set at definition, so New() only
 // fills quest-surface defaults a subtype left unset.

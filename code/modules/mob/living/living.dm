@@ -3,6 +3,9 @@
 	var/melee_cooldown = CLICK_CD_MELEE
 	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
 	var/no_head_bounty = FALSE
+	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
+	var/contract_spawned = FALSE
+	var/contract_dust_scheduled = FALSE
 	var/zone_selector_hud_dirty = FALSE
 	var/zone_selector_hud_update_queued = FALSE
 
@@ -2397,11 +2400,28 @@
 	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
 	offerer.stop_offering_item()
 
-/mob/living/proc/strip_head_bounty()
+// Contract-spawned mobs: heads pay no HEADEATER bounty (the contract reward is the payment)
+// and the corpse dusts itself a while after death so cleared warbands don't litter the wilds.
+/mob/living/proc/mark_contract_spawned()
 	no_head_bounty = TRUE
+	contract_spawned = TRUE
+	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_contract_death))
 
-/mob/living/carbon/strip_head_bounty()
+/mob/living/carbon/mark_contract_spawned()
 	. = ..()
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
 	if(istype(head))
 		head.no_head_bounty = TRUE
+
+/mob/living/proc/on_contract_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(gibbed || contract_dust_scheduled) // already torn apart, or a timer is already pending
+		return
+	contract_dust_scheduled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(dust_contract_corpse)), QUEST_MOB_DUST_DELAY)
+
+/mob/living/proc/dust_contract_corpse()
+	contract_dust_scheduled = FALSE
+	if(QDELETED(src) || stat != DEAD) // skip if it was somehow revived in the meantime
+		return
+	dust()
