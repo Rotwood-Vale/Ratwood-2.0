@@ -23,11 +23,8 @@
 /obj/structure/roguemachine/contractledger/proc/build_blockade_recall_list()
 	var/list/out = list()
 	for(var/datum/blockade/B as anything in GLOB.active_blockades)
-		var/obj/item/quest_writ/S = B.active_scroll_ref?.resolve()
-		if(!S || QDELETED(S))
-			continue
-		var/datum/quest/kill/blockade_defense/Q = S.assigned_quest
-		if(!istype(Q))
+		var/datum/quest/kill/blockade_defense/Q = B.active_quest_ref?.resolve()
+		if(!istype(Q) || QDELETED(Q))
 			continue
 		var/datum/economic_region/ER = B.get_region()
 		var/reason = Q.recall_blocker()
@@ -274,6 +271,10 @@
 	// can hand it back. Pre-checked via can_consume_defense in the caller, so this should hold.
 	if(is_alderman_acting && cost > 0 && SScity_assembly.consume_defense(cost, steward, "blockade defense commission ([region_name])"))
 		Q.warrant_consumed = cost
+	// Levy exemption is the Steward's prerogative alone, and never rides a free Request.
+	var/levy_exempt = (!is_directive && !is_alderman_acting && params["levy_exempt"]) ? TRUE : FALSE
+	if(levy_exempt)
+		Q.levy_exempt = TRUE
 	var/bonus_mult = get_commission_bonus_pay_mult(bonus_pay_level)
 	if(bonus_mult != 1.0)
 		Q.reward_amount = round(Q.reward_amount * bonus_mult)
@@ -289,16 +290,16 @@
 		"region" = region_name,
 		"cost" = cost,
 		"in_hands" = TRUE,
-		"levy_exempt" = FALSE,
+		"levy_exempt" = levy_exempt,
 		"bonus_pay_level" = bonus_pay_level,
 		"funding" = funding,
 		"day" = GLOB.dayspassed,
 	))
-	SSquestpool.log_event("defense_issue", "[steward.real_name] commissioned blockade defense on [region_name] (faction [Q.faction_id]) for [cost]m ([funding])[bonus_label_text ? " ([bonus_label_text])" : ""]")
+	SSquestpool.log_event("defense_issue", "[steward.real_name] commissioned blockade defense on [region_name] (faction [Q.faction_id]) for [cost]m ([funding])[levy_exempt ? " (levy-exempt)" : ""][bonus_label_text ? " ([bonus_label_text])" : ""]")
 	scom_announce("A blockade defense writ has been issued for [region_name][bonus_label_text ? " - [bonus_label_text] attached" : ""].")
 	playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
 	var/source_label = is_directive ? "as a Request" : (funding == "crown" ? "from Crown's Purse" : "from the Pledge")
-	to_chat(steward, span_notice("Blockade writ drafted [source_label] to your hand: <b>[Q.get_title()]</b>[bonus_label_text ? " - <i>[bonus_label_text]</i>" : ""]."))
+	to_chat(steward, span_notice("Blockade writ drafted [source_label] to your hand: <b>[Q.get_title()]</b>[levy_exempt ? " - <i>levy-exempt</i>" : ""][bonus_label_text ? " - <i>[bonus_label_text]</i>" : ""]."))
 	return TRUE
 
 /// Steward recall: cancels a still-armed writ within the recall window and refunds the draft.
@@ -326,13 +327,9 @@
 	if(!chosen)
 		to_chat(steward, span_warning("That region is not currently blockaded."))
 		return
-	var/obj/item/quest_writ/S = chosen.active_scroll_ref?.resolve()
-	if(!S || QDELETED(S))
+	var/datum/quest/kill/blockade_defense/Q = chosen.active_quest_ref?.resolve()
+	if(!istype(Q) || QDELETED(Q))
 		to_chat(steward, span_warning("No writ is in circulation for that blockade."))
-		return
-	var/datum/quest/kill/blockade_defense/Q = S.assigned_quest
-	if(!istype(Q))
-		to_chat(steward, span_warning("That writ cannot be recalled."))
 		return
 	var/blocker = Q.recall_blocker()
 	if(blocker)
