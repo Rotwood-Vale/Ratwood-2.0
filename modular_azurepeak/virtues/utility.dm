@@ -92,9 +92,10 @@
 					to_chat(recipient, span_notice("As a resident of the vale, you find yourself in the local tavern."))
 
 /datum/virtue/utility/failed_squire
-	name = "Failed Squire"
+	name = "Failed Squire (8 TRI)"
 	desc = "I was once a squire in training, but failed to achieve knighthood. Though my dreams of glory were dashed, I retained my knowledge of equipment maintenance and repair, including how to polish arms and armor."
 	added_traits = list(TRAIT_SQUIRE_REPAIR)
+	triumph_cost = 8 //Bye.
 	added_stashed_items = list(
 		"Hammer" = /obj/item/rogueweapon/hammer/iron,
 		"Polishing Cream" = /obj/item/polishing_cream,
