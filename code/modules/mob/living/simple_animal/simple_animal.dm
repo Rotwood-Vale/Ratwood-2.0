@@ -539,6 +539,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		for(var/j in 1 to amount)
 			var/obj/item/I = new path(Tsec)
 			I.add_mob_blood(src)
+			if(no_head_bounty && (istype(I, /obj/item/natural/head) || istype(I, /obj/item/bodypart/head)))
+				I.sellprice = 0
 			if(istype(I,/obj/item/reagent_containers/food/snacks))
 				I.item_flags |= FRESH_FOOD_ITEM
 				if(rotstuff)

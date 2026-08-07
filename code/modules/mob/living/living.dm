@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
+	var/no_head_bounty = FALSE
 	var/zone_selector_hud_dirty = FALSE
 	var/zone_selector_hud_update_queued = FALSE
 
@@ -2394,3 +2396,12 @@
 		)
 	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
 	offerer.stop_offering_item()
+
+/mob/living/proc/strip_head_bounty()
+	no_head_bounty = TRUE
+
+/mob/living/carbon/strip_head_bounty()
+	. = ..()
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	if(istype(head))
+		head.no_head_bounty = TRUE
