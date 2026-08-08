@@ -245,7 +245,6 @@
 /obj/effect/proc_holder/spell/invoked/abscond
 	name = "Abscond"
 	desc = "Disappear in a flash of smoke! (With a range of 4 tiles)"
-	mute_allowed = TRUE
 	releasedrain = 30
 	warnie = "spellwarning"
 	movement_interrupt = TRUE
@@ -389,7 +388,6 @@
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "mimicry"
-	mute_allowed = TRUE
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -655,7 +653,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle
 	name = "Divine Fetch"
 	miracle = TRUE
-	mute_allowed = TRUE
 	devotion_cost = 10
 	invocations = list()
 	associated_skill = /datum/skill/magic/holy
@@ -672,7 +669,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/repel/miracle
 	name = "Divine Repel"
 	miracle = TRUE
-	mute_allowed = TRUE
 	devotion_cost = 14
 	invocations = list()
 	associated_skill = /datum/skill/magic/holy
@@ -692,7 +688,6 @@
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "slipsquare1"
 	miracle = TRUE
-	mute_allowed = TRUE
 	devotion_cost = 30
 	chargetime = 0.5 SECONDS
 	invocations = list()
@@ -706,7 +701,6 @@
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "slipsquare2"
 	miracle = TRUE
-	mute_allowed = TRUE
 	devotion_cost = 60
 	chargetime = 1 SECONDS
 	invocations = list()

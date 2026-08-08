@@ -166,6 +166,8 @@
 						continue
 
 					var/obj/effect/proc_holder/spell/newspell = new spell_type
+					if(istype(patron, /datum/patron/divine/xylix) && newspell.miracle)
+						newspell.mute_allowed = TRUE
 					if(!silent)
 						to_chat(holder, span_boldnotice("I have unlocked a new spell: [newspell]"))
 					holder.mind.AddSpell(newspell, holder)

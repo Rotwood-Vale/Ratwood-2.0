@@ -35,9 +35,9 @@
 		if(!istype(spawn_turf))
 			continue
 		if(!isclosedturf(spawn_turf) && !locate(/obj/effect/forcefield/mime) in spawn_turf)
-			var/obj/effect/forcefield/mime/W = new /obj/effect/forcefield/mime(spawn_turf)
+			var/obj/effect/forcefield/mime/mime_forcefield = new /obj/effect/forcefield/mime(spawn_turf)
 			if(summon_lifespan)
-				QDEL_IN(W, summon_lifespan)
+				QDEL_IN(mime_forcefield, summon_lifespan)
 	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair
@@ -81,11 +81,10 @@
 /obj/item/chair/mime
 	name = "invisible chair"
 	desc = ""
-	icon = null
-	icon_state = null
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
+	alpha = 15
 	origin_type = /obj/structure/chair/mime
 
 

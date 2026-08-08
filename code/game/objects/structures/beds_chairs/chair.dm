@@ -344,11 +344,10 @@
 	name = "invisible chair"
 	desc = ""
 	anchored = FALSE
-	icon_state = null
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	buildstacktype = null
 	item_chair = /obj/item/chair/mime
-	alpha = 0
+	alpha = 15
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5
