@@ -3,9 +3,9 @@
 	wave_type = /datum/migrant_wave/lich
 
 	weight = 6
-	max_occurrences = 1
+	max_occurrences = 0
 
-	earliest_start = 15 MINUTES
+	earliest_start = 180 MINUTES
 
 	tags = list(
 		TAG_HAUNTED,
