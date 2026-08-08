@@ -323,13 +323,13 @@
 	if(!iscarbon(target))
 		return BULLET_ACT_HIT
 	var/mob/living/carbon/C = target
-	// Douse fire stacks — 10 per hit, so max stacks (20) requires two bolts
+	// Douse fire stacks - 10 per hit, so max stacks (20) requires two bolts
 	if(C.fire_stacks > 0)
 		C.adjust_fire_stacks(-10)
 		if(C.fire_stacks <= 0)
 			C.extinguish_mob() // also extinguishes any burning clothing/items
-	// Chill the target — less than half as much as washing in cold river water
-	if(C.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 30)
+	// Chill the target - less than half as much as washing in cold river water
+	if(C.bodytemperature > BODYTEMP_NORMAL_MIN + 30)
 		C.adjust_bodytemperature(-30)
 	// Head-aim and mood debuff logic is human-only
 	if(!ishuman(C))
