@@ -2939,6 +2939,7 @@
 #include "code\modules\vampire_neu\frenzy.dm"
 #include "code\modules\vampire_neu\living_modifications.dm"
 #include "code\modules\vampire_neu\vampire.dm"
+#include "code\modules\vampire_neu\vampire_sight.dm"
 #include "code\modules\vampire_neu\vampirelord.dm"
 #include "code\modules\vampire_neu\clan\_base_clan.dm"
 #include "code\modules\vampire_neu\clan\clan_heirarchy.dm"

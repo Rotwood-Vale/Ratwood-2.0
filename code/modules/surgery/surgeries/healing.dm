@@ -112,8 +112,8 @@
 /********************BRUTE STEPS********************/
 /datum/surgery_step/heal/brute/basic
 	name = "Tend bruises"
-	brutehealing = 10
-	missinghpbonus = 6
+	brutehealing = 15
+	missinghpbonus = 7
 	requires_tech = FALSE
 	replaced_by = /datum/surgery_step/heal/brute/upgraded
 
@@ -126,7 +126,7 @@
 
 /datum/surgery_step/heal/brute/upgraded/femto
 	name = "Tend bruises (Exp.)"
-	brutehealing = 30
+	brutehealing = 20
 	missinghpbonus = 2
 	requires_tech = TRUE
 	replaced_by = null
@@ -134,47 +134,47 @@
 /********************BURN STEPS********************/
 /datum/surgery_step/heal/burn/basic
 	name = "Tend burns"
-	burnhealing = 10
-	missinghpbonus = 7.5
+	burnhealing = 15
+	missinghpbonus = 7
 	requires_tech = FALSE
 	replaced_by = /datum/surgery_step/heal/burn/upgraded
 
 /datum/surgery_step/heal/burn/upgraded
 	name = "Tend burns (Adv.)"
-	burnhealing = 10
-	missinghpbonus = 5
+	burnhealing = 20
+	missinghpbonus = 4
 	requires_tech = TRUE
 	replaced_by = /datum/surgery_step/heal/burn/upgraded/femto
 
 /datum/surgery_step/heal/burn/upgraded/femto
 	name = "Tend burns (Exp.)"
-	burnhealing = 10
-	missinghpbonus = 2.5
+	burnhealing = 20
+	missinghpbonus = 2
 	requires_tech = TRUE
 	replaced_by = null
 
 /********************COMBO STEPS********************/
 /datum/surgery_step/heal/combo
 	name = "Tend damage"
-	brutehealing = 6
-	burnhealing = 6
-	missinghpbonus = 7.5
+	brutehealing = 7
+	burnhealing = 7
+	missinghpbonus = 7
 	requires_tech = FALSE
 	replaced_by = /datum/surgery_step/heal/combo/upgraded
 
 /datum/surgery_step/heal/combo/upgraded
 	name = "Tend damage (Adv.)"
-	brutehealing = 6
-	burnhealing = 6
-	missinghpbonus = 5
+	brutehealing = 7
+	burnhealing = 7
+	missinghpbonus = 4
 	requires_tech = TRUE
 	replaced_by = /datum/surgery_step/heal/combo/upgraded/femto
 
 /datum/surgery_step/heal/combo/upgraded/femto
 	name = "Tend damage (Exp.)"
-	brutehealing = 6
-	burnhealing = 6
-	missinghpbonus = 2.5
+	brutehealing = 7
+	burnhealing = 7
+	missinghpbonus = 2
 	requires_tech = TRUE
 	replaced_by = null
 

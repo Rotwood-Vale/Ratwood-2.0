@@ -89,9 +89,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE, MODE_SING = TRUE)
 
 	var/ic_blocked = FALSE
-	if(client && !forced && CHAT_FILTER_CHECK(message))
-		//The filter doesn't act on the sanitized message, but the raw message.
-		ic_blocked = TRUE
+	if(client && !forced)
+		// Remove the accent-escape brackets before filtering so a split word like "\[f\]\[orbidden\]" can't evade the IC filter and reassemble in the displayed message.
+		var/static/regex/escape_bracket_regex = regex(@"\[([^\]]*)\]?", "g")
+		var/filtered_message = findtext(message, "\[") ? replacetext(message, escape_bracket_regex, "$1") : message
+		if(CHAT_FILTER_CHECK(filtered_message))
+			ic_blocked = TRUE
 
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -587,7 +590,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		for(var/i in 1 to barks)
 			if(total_delay > BARK_MAX_TIME)
 				break
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, bark), listening, message_range, (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, bark), hears_barks, message_range, (vocal_volume * (is_yell ? 1.5 : 1)), BARK_DO_VARY(vocal_pitch, vocal_pitch_range), vocal_current_bark), total_delay)
 			total_delay += rand(DS2TICKS(vocal_speed / BARK_SPEED_BASELINE), DS2TICKS(vocal_speed / BARK_SPEED_BASELINE) + DS2TICKS((vocal_speed / BARK_SPEED_BASELINE) * (is_yell ? 0.5 : 1))) TICKS
 
 /mob/proc/binarycheck()

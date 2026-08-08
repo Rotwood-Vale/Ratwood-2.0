@@ -64,6 +64,8 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 /datum/controller/subsystem/outdoor_effects/proc/fullPlonk()
 	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(SSmapping.level_trait(z, ZTRAIT_IGNORE_WEATHER_TRAIT))
+			continue
 		GLOB.SUNLIGHT_QUEUE_WORK += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
@@ -81,6 +83,8 @@ SUBSYSTEM_DEF(outdoor_effects)
 
 /datum/controller/subsystem/outdoor_effects/proc/InitializeTurfs(list/targets)
 	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(SSmapping.level_trait(z, ZTRAIT_IGNORE_WEATHER_TRAIT))
+			continue
 		GLOB.SUNLIGHT_QUEUE_WORK += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 
 

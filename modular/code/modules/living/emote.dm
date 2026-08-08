@@ -41,6 +41,7 @@
 	user.do_subtle_emote(message)
 
 /mob/proc/do_subtle_emote(message)
+	message = replacetext(message, regex("(?:\\r\\n?|\\n)", "g"), "<br>")
 	var/distance = 4
 	var/list/ghostless = get_hearers_in_view(distance, src)
 	var/list/mobsinview = list()

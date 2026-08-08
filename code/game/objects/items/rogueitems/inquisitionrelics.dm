@@ -1473,7 +1473,7 @@ Inquisitorial armory down here
 	icon_state = "blackeye"
 	var/obj/item/inqarticles/bmirror/source
 
-/atom/movable/screen/alert/blackmirror/Click()
+/atom/movable/screen/alert/blackmirror/handle_click()
 	var/mob/living/L = usr
 	var/lookat = null
 
