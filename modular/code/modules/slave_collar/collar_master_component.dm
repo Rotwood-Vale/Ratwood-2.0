@@ -355,7 +355,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		do_sparks(2, FALSE, pet)
 
 	// Add a temporary overlay effect
-	pet.flash_fullscreen("redflash3")
+	pet.fullscreen_redflash("redflash3")
 	addtimer(CALLBACK(pet, TYPE_PROC_REF(/mob/living, clear_fullscreen), "pain"), 2 SECONDS)
 	log_collar_command(pet, COLLAR_LOG_SHOCK, "intensity=[intensity] damage=[damage]")
 

@@ -1,0 +1,4 @@
+author: "yupup123"
+delete-after: True
+changes:
+  - bugfix: "Fixes the subclass preview menu for some classes missing theirs (like suitor and refugee)."

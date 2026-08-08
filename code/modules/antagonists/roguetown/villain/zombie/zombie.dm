@@ -418,7 +418,7 @@
 
 
 	if (converted || infected_wake)
-		zombie.flash_fullscreen("redflash3")
+		zombie.fullscreen_redflash("redflash3")
 		zombie.emote("scream") // Warning for nearby players
 		zombie.Knockdown(1)
 

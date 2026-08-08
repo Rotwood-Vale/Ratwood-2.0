@@ -149,7 +149,6 @@
 		var/weapon_choice = input(H, "Choose your tools.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
 		switch(weapon_choice)
 			if("Applied Alchemy")
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
 				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
 			if("Magical Medicine")
 				l_hand = /obj/item/storage/belt/rogue/surgery_bag
