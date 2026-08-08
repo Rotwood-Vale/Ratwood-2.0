@@ -93,8 +93,8 @@
 /datum/migrant_wave/bandit
 	name = "Bandit Raid"
 	track = MIGRANT_TRACK_SPECIAL
-	weight = 16
-	min_round_time = 45 MINUTES
+	weight = 0
+	min_round_time = 300 MINUTES
 	is_raid = TRUE
 	spawn_landmark = "Bandit"
 	required_roles = list(
@@ -107,8 +107,8 @@
 /datum/migrant_wave/assassin
 	name = "Assassin Hit"
 	track = MIGRANT_TRACK_SPECIAL
-	weight = 12
-	min_round_time = 60 MINUTES
+	weight = 0
+	min_round_time = 300 MINUTES
 	is_raid = TRUE
 	required_roles = list(
 		/datum/migrant_role/assassin = 1,
@@ -120,8 +120,8 @@
 /datum/migrant_wave/gnolls
 	name = "Gnoll raid"
 	track = MIGRANT_TRACK_SPECIAL
-	weight = 12
-	min_round_time = 45 MINUTES
+	weight = 0
+	min_round_time = 300 MINUTES
 	is_raid = TRUE
 	required_roles = list(
 		/datum/migrant_role/gnoll = 1,
