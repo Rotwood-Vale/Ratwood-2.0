@@ -138,7 +138,7 @@ LICH SKELETONS
 	H.STACON = 6
 	H.STAWIL = 12
 	H.STAINT = 5
-	H.STAPER = 15
+	H.STAPER = 12 // You don't have eyes
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
@@ -171,25 +171,21 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Recurve Bow","Yew Longbow", "Crossbow", "Sling")
+	var/weapons = list("Recurve Bow","Yew Longbow", "Sling")
 	var/weapons_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 	switch(weapons_choice)
 		if("Recurve Bow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			beltr = /obj/item/quiver/ancient
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 		if("Yew Longbow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			beltr = /obj/item/quiver/ancient
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
-		if("Crossbow")
-			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			beltr = /obj/item/quiver/boltsancient
-			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 		if("Sling")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			beltr = /obj/item/quiver/sling/ancient
-			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_EXPERT, TRUE)
 	var/neckwear = list("Coif", "Gorget")
 	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
 	switch(neckwear_choice)
