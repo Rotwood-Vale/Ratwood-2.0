@@ -70,6 +70,8 @@
 
 /datum/config_entry/flag/disable_memory_stats	// disables periodic memory usage logging (SSmemory_stats) and the statpanel memory readouts. Absent = enabled.
 
+/datum/config_entry/flag/memory_stats_sorted_init	// sorts mapload atom init by type so per-type memory attribution is exact. Changes atom init order - profiling runs only.
+
 /datum/config_entry/flag/disable_memory_stats/ValidateAndSet(str_val)
 	. = ..()
 	if(.)

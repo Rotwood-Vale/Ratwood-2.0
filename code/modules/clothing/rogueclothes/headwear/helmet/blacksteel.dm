@@ -6,7 +6,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatehelm"
 	item_state = "bplatehelm"
-	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor = ARMOR_PLATE_BSTEEL
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)

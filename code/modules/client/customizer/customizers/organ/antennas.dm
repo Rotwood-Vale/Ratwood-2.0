@@ -33,3 +33,31 @@
 		/datum/sprite_accessory/antenna/moth/regal,
 		/datum/sprite_accessory/antenna/moth/mothra,
 		)
+
+/datum/customizer/organ/antennas/anthro
+	customizer_choices = list(/datum/customizer_choice/organ/antennas/anthro)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
+/datum/customizer_choice/organ/antennas/anthro
+	name = "Anthro Antennas"
+	organ_type = /obj/item/organ/antennas/moth
+	sprite_accessories = list(
+		/datum/sprite_accessory/antenna/moth/plain,
+		/datum/sprite_accessory/antenna/moth/reddish,
+		/datum/sprite_accessory/antenna/moth/royal,
+		/datum/sprite_accessory/antenna/moth/gothic,
+		/datum/sprite_accessory/antenna/moth/whitefly,
+		/datum/sprite_accessory/antenna/moth/lovers,
+		/datum/sprite_accessory/antenna/moth/burnt_off,
+		/datum/sprite_accessory/antenna/moth/firewatch,
+		/datum/sprite_accessory/antenna/moth/deathhead,
+		/datum/sprite_accessory/antenna/moth/poison,
+		/datum/sprite_accessory/antenna/moth/ragged,
+		/datum/sprite_accessory/antenna/moth/moonfly,
+		/datum/sprite_accessory/antenna/moth/oakworm,
+		/datum/sprite_accessory/antenna/moth/jungle,
+		/datum/sprite_accessory/antenna/moth/witchwing,
+		/datum/sprite_accessory/antenna/moth/regal,
+		/datum/sprite_accessory/antenna/moth/mothra,
+		)

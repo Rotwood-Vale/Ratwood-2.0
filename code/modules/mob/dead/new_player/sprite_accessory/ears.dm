@@ -372,6 +372,13 @@
 	color_key_names = list("Ears", "Inner")
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
+/datum/sprite_accessory/ears/four_ears
+	name = "Four Ears"
+	icon_state = "four_ears"
+	color_keys = 2
+	color_key_names = list("Ears", "Details")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
 /datum/sprite_accessory/ears/shadekin/band_left
 	name = "Shadekin (Band Left)"
 	icon_state = "m_ears_shadekinbandleft"

@@ -14802,7 +14802,7 @@
 /obj/structure/table/wood/long_table/right,
 /obj/item/recipe_book/sewing,
 /obj/item/recipe_book/leatherworking,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town)
 "dRN" = (
 /obj/structure/fluff/walldeco/chains{

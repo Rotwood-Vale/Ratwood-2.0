@@ -96,10 +96,18 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("No valid maps.")
 		return
 
-	// winner is now DIRECTLY a map_id
-	var/winner_id = pick_weight(valid_maps)
-	var/datum/map_config/winner_cfg = config.maplist[winner_id]
+	// Pick the map with the highest tally
+	var/winner_id
+	var/winner_amount = -1
 
+	for(var/map_id in valid_maps)
+		var/tally = map_vote_cache[map_id]
+
+		if(tally > winner_amount)
+			winner_id = map_id
+			winner_amount = tally
+
+	var/datum/map_config/winner_cfg = config.maplist[winner_id]
 	if(!winner_cfg)
 		send_map_vote_notice("Winner map could not be resolved (bad map_id: [winner_id]).")
 		return

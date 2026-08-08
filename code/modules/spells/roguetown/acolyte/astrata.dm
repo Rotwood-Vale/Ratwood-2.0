@@ -57,11 +57,17 @@
 	var/revive_pq = PQ_GAIN_REVIVE
 
 /obj/effect/proc_holder/spell/invoked/revive/start_recharge()
+	var/old_recharge = recharge_time
 	// Because the cooldown for anastasis is so incredibly low, not having tech impacts them more heavily than other faiths
 	var/tech_resurrection_modifier = SSchimeric_tech.get_resurrection_multiplier()
 	if(tech_resurrection_modifier > 1)
-		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 2.5)
+		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 1.25)
+	else
+		recharge_time = initial(recharge_time)
+	if(charge_counter >= old_recharge && old_recharge > 0)
+		charge_counter = recharge_time
 	. = ..()
+
 
 /obj/effect/proc_holder/spell/invoked/revive/cast(list/targets, mob/living/user)
 	..()
@@ -515,7 +521,7 @@
 	chargetime = 0
 	releasedrain = 5
 	miracle = TRUE
-	devotion_cost = 100//See below as to why. Slowdown and funny damage.
+	devotion_cost = 50//See below as to why. Slowdown and funny damage.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
 	var/obj/item/rogueweapon/conjured_spear = null
