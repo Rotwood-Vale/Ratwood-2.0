@@ -722,7 +722,6 @@
 			if("Path of the Sword Maiden")//I see...
 				r_hand = /obj/item/rogueweapon/greatsword/zwei //Claymore
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)//So you won't feel like carrying dead weight in your hands.
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 2, TRUE)
 
 	if(istype(H.patron, /datum/patron/divine))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
