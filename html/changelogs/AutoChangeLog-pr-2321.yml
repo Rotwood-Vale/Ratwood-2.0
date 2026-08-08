@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - bugfix: "Hooksword disarm intent now properly grants bonus success chance when dual-wielded."
