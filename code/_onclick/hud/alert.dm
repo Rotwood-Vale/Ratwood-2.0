@@ -106,6 +106,10 @@
 	var/alert_group = ALERT_STATUS //decides where on the screen the alert shows up, if it's a debuff, status effect, or buff
 	nomouseover = FALSE
 
+// Alerts track their owner via mob_viewer rather than hud; an observer seeing someone else's alert can't act on it.
+/atom/movable/screen/alert/allow_click_from(mob/user)
+	return !(mob_viewer && mob_viewer != user)
+
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking"
@@ -221,7 +225,7 @@
 	icon_state = "mind_control"
 	var/command
 
-/atom/movable/screen/alert/mind_control/Click()
+/atom/movable/screen/alert/mind_control/handle_click()
 	..()
 	var/mob/living/L = usr
 	to_chat(L, span_mind_control("[command]"))
@@ -236,7 +240,7 @@
 	desc = ""
 	icon_state = "embeddedobject"
 
-/atom/movable/screen/alert/embeddedobject/Click()
+/atom/movable/screen/alert/embeddedobject/handle_click()
 	if(!..())
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -257,7 +261,7 @@
 	desc = ""
 	icon_state = "fire"
 
-/atom/movable/screen/alert/fire/Click()
+/atom/movable/screen/alert/fire/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
@@ -319,7 +323,7 @@
 	icon_state = "template"
 	timeout = 300
 
-/atom/movable/screen/alert/notify_cloning/Click()
+/atom/movable/screen/alert/notify_cloning/handle_click()
 	if(!usr || !usr.client)
 		return
 	var/mob/dead/observer/G = usr
@@ -333,7 +337,7 @@
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/atom/movable/screen/alert/notify_action/Click()
+/atom/movable/screen/alert/notify_action/handle_click()
 	..()
 	if(!usr || !usr.client)
 		return
@@ -369,7 +373,7 @@
 	desc = ""
 	icon_state = "restrained"
 
-/atom/movable/screen/alert/restrained/Click()
+/atom/movable/screen/alert/restrained/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
@@ -378,7 +382,7 @@
 	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
 		return L.resist_restraints()
 
-/atom/movable/screen/alert/restrained/buckled/Click()
+/atom/movable/screen/alert/restrained/buckled/handle_click()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return

@@ -125,7 +125,7 @@
 		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/frills/anthro,
 		/datum/customizer/organ/wings/anthro,
-		/datum/customizer/organ/antennas/moth,
+		/datum/customizer/organ/antennas/anthro,
 		/datum/customizer/organ/neck_feature/anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
@@ -144,6 +144,8 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/wolf,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,

@@ -56,7 +56,8 @@
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_ROTMAN,
 		TRAIT_NORUN,
-		TRAIT_SILVER_WEAK
+		TRAIT_SILVER_WEAK,
+		TRAIT_STRONGBITE,
 	)
 	/// Traits applied to the owner when we are cured and turn into just "rotmen"
 	var/static/list/traits_rotman = list(
@@ -417,7 +418,7 @@
 
 
 	if (converted || infected_wake)
-		zombie.flash_fullscreen("redflash3")
+		zombie.fullscreen_redflash("redflash3")
 		zombie.emote("scream") // Warning for nearby players
 		zombie.Knockdown(1)
 
