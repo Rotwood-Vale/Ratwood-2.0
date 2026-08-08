@@ -116,3 +116,13 @@ SUBSYSTEM_DEF(regionthreat)
 		threat_regions += new path()
 
 	log_world("RegionThreat: Loaded [threat_regions.len] threat regions for [map.realm_name]")
+
+	// Re-point the trade roads' blockade regions at this map's wilderness. Runs here rather
+	// than in SSeconomy so the remap is in place before anything reads threat_region_id.
+	if(map.blockade_route_map)
+		for(var/trade_id in map.blockade_route_map)
+			var/datum/economic_region/ER = GLOB.economic_regions[trade_id]
+			if(!ER)
+				stack_trace("RegionThreat: blockade_route_map names unknown trade region [trade_id]")
+				continue
+			ER.threat_region_id = map.blockade_route_map[trade_id]

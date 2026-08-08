@@ -30,6 +30,14 @@
 
 	var/list/threat_regions
 
+	/// TRADE_REGION_* -> THREAT_REGION_* remap for blockades. The /datum/economic_region
+	/// defaults point at dun_world's wilderness; a map with its own threat_regions list must
+	/// remap every trade road here or those roads can never be blockaded (roll_blockade
+	/// silently skips any region whose threat region isn't instantiated on the loaded map).
+	/// Target regions must have hard quest spawners mapped in their areas, or the
+	/// blockade-defense landmark check filters them out the same way.
+	var/list/blockade_route_map
+
 /// called on map config is loaded.
 /// You need to change things manually here.
 /datum/map_adjustment/proc/on_mapping_init()

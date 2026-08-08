@@ -64,6 +64,7 @@
 	GLOB.active_blockades += B
 	ER.is_region_blockaded = TRUE
 	SStreasury.dirty_market_view()
+	log_world("Blockade: [faction_id] cut the road to [ER.name] (defense region: [ER.threat_region_id])")
 	record_round_statistic(STATS_BLOCKADES_FIRED, 1)
 	if(daily_report_diff)
 		var/list/fired = daily_report_diff["blockades_fired"]
