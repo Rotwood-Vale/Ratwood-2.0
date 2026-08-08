@@ -70,13 +70,13 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	if(!center)
 		return
 
-	for(var/atom/movable/A in range(radius, src))
-		if(A.anchored)
+	for(var/atom/movable/Atom in range(radius, src))
+		if(Atom.anchored)
 			continue
-		if(A.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
+		if(Atom.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
 			continue
 
-		var/turf/target = get_turf(A)
+		var/turf/target = get_turf(Atom)
 		if(!target)
 			continue
 
@@ -86,29 +86,29 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 			if(!has_wind_path(center, target))
 				continue
 
-		apply_tornado_force(A)
+		apply_tornado_force(Atom)
 
 /obj/effect/weather/tornado/proc/has_wind_path(turf/from, turf/target)
-	for(var/turf/T in get_line(from, target))
-		if(T == from)
+	for(var/turf/Turf in get_line(from, target))
+		if(Turf == from)
 			continue
-		if(is_wind_blocked(T))
+		if(is_wind_blocked(Turf))
 			return FALSE
 	return TRUE
 
 /obj/effect/weather/tornado/proc/is_wind_blocked(turf/T)
 	if(T.density)
 		return TRUE
-	for(var/obj/O in T)
-		if(!O.density)
+	for(var/obj/Object in T)
+		if(!Object.density)
 			continue
 
-		if(istype(O, /obj/structure/mineral_door))
-			var/obj/structure/mineral_door/D = O
-			if(D.density) // closed
+		if(istype(Object, /obj/structure/mineral_door))
+			var/obj/structure/mineral_door/Door = Object
+			if(Door.density) // closed
 				return TRUE
 			continue // open door: wind passes
-		if(istype(O, /obj/structure/roguewindow))
+		if(istype(Object, /obj/structure/roguewindow))
 			return TRUE // glass blocks wind regardless of open state
 	return FALSE
 

@@ -1842,34 +1842,34 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Crossed))
 
 /datum/component/roguedune/proc/Crossed(datum/source, atom/movable/AM)
-	var/atom/A = parent
+	var/atom/Parent = parent
 
 	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.m_intent == MOVE_INTENT_SNEAK)
+		var/mob/living/Living = AM
+		if(Living.m_intent == MOVE_INTENT_SNEAK)
 			return
 		else
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(A.loc, 'sound/foley/footsteps/dunewalk2.ogg', 100, FALSE, -1)
-			L.consider_ambush()
+			if(!(HAS_TRAIT(Living, TRAIT_AZURENATIVE) && Living.m_intent != MOVE_INTENT_RUN))
+				playsound(Parent.loc, 'sound/foley/footsteps/dunewalk2.ogg', 100, FALSE, -1)
+			Living.consider_ambush()
 	return
 
 /obj/structure/roguesand/dune/Crossed(atom/movable/O)
 	. = ..()
 	if(!isliving(O))
 		return
-	var/mob/living/carbon/human/H = O
+	var/mob/living/carbon/human/Human = O
 	opacity = FALSE
-	H.OffBalance(3 SECONDS)
+	Human.OffBalance(3 SECONDS)
 
 
 /obj/structure/roguesand/dune/Uncrossed(atom/movable/O)
 	. = ..()
 	if(!isliving(O))
 		return
-	var/turf/T = get_turf(src)
-	for(var/mob/living/L in T)
-		if(L != O)
+	var/turf/Turf = get_turf(src)
+	for(var/mob/living/Living in Turf)
+		if(Living != O)
 			return
 	opacity = TRUE
 
