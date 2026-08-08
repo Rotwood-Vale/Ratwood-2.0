@@ -1,4 +1,0 @@
-author: "kimesik"
-delete-after: True
-changes:
-  - balance: "CON influence on bleedrate reduced by half (5% per point). Its cap has been raised to 20."

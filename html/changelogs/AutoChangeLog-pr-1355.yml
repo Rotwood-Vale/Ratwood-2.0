@@ -1,6 +1,0 @@
-author: "MickDick1"
-delete-after: True
-changes:
-  - rscadd: "New machine for managing prisoner sentencing/quota/variables"
-  - code_imp: "Added a multiplier to the saltmine tracking machine that increases over time"
-  - rscadd: "Nervemaster now gets reports on prisoners in the mine"

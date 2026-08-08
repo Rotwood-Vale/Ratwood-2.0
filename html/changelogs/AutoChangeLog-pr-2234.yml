@@ -1,6 +1,0 @@
-author: "UntoldTactics"
-delete-after: True
-changes:
-  - qol: "Janissary Jezail sub-class now has the fusilier trait."
-  - balance: "Janissary Jezail sub-class now starts with light armor instead of janissary medium maille."
-  - balance: "Fine babouche now matches the integrity value of heavy leather boots."
