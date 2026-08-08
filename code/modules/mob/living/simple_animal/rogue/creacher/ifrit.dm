@@ -110,6 +110,8 @@
 	QDEL_NULL(fire_breath)
 	firewheel.Remove(src)
 	QDEL_NULL(firewheel)
+	.=..()
+
 /mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch/boss
 	loot = list(/obj/item/roguekey/mage/ifrit)
 
