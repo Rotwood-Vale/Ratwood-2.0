@@ -1,0 +1,4 @@
+author: "kimesik"
+delete-after: True
+changes:
+  - rscadd: "Heretic Monk wretch class, 1 slot."

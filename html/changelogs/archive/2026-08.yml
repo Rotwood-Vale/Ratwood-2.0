@@ -127,3 +127,12 @@
   - rscadd: Removed mason set and carpenter set for commoner. Now it the craftsman
       set. It gives you the traits that let you get the most out of wood and chiseling
       and a slightly nicer axe + hammer.
+2026-08-08:
+  UntoldTactics:
+  - balance: Psydonic Grand Mace now has the same wielded defense bonus as
+  Yuckuza:
+  - bugfix: Hooksword disarm intent now properly grants bonus success chance when
+      dual-wielded.
+  wikimody:
+  - bugfix: gragar net is no longer considered secular, seer doesn't instantly forget
+      heretics he sees
