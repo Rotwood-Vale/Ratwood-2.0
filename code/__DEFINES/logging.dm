@@ -47,6 +47,7 @@
 
 #define WITNESS_NAME 1
 #define WITNESS_DIST 2
+#define WITNESS_TAG 3
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

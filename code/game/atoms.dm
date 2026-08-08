@@ -1119,7 +1119,7 @@
 		if(!viewer.client) // clientless mobs are never witnesses
 			continue
 		var/witness_dist = (viewer.z == user.z) ? get_dist(user, viewer) : -1
-		witness_names[viewer.ckey || REF(viewer)] = list("[key_name(viewer)][viewers[viewer] || ""]", witness_dist < 0 ? null : witness_dist)
+		witness_names[viewer.ckey || REF(viewer)] = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
 	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, event = event, witnesses = witness_names, target = target_ckey)
 
 /proc/log_seen_viewers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE, event = null)

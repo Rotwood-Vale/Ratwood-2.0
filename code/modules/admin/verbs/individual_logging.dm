@@ -5,7 +5,7 @@
 	log_combat() mints one "event" id shared by its three writes (attacker line, seen entry, target receipt).
 	Forward lines and seen entries carry the target's ckey as "target"; receipts are flagged "receipt" and carry
 	the attacker's ckey as "attacker", absent when that attacker is keyless. log_seen() stores "witnesses" as
-	ckey to list(name, tiles away), the name tagged ^ v ~ or a direction digit. Disk logs carry none of it.
+	ckey to list(name, tiles away, perception tag), the tag ^ v ~ or a direction digit. Disk logs carry none of it.
 
 	Invariants:
 	1. The witnessed pass must finish before the offscreen pass. It marks event ids; the pull takes only unmarked ones.
@@ -23,7 +23,8 @@
 #define POV_SORT_BLOCK 1024
 /// Also enforced in the page's javascript, keep them in step
 #define POV_HIGHLIGHT_MAX 10
-#define POV_SCENE_GAP 60
+/// Silence long enough to call it a new scene. world.time units, like the rows' "time"
+#define POV_SCENE_GAP (60 SECONDS)
 #define POV_CACHE_MAX 3
 /// Timelines that keep their highlights and filters. Above POV_CACHE_MAX so selections outlive a rebuild
 #define POV_PREFS_MAX 10
@@ -58,6 +59,10 @@
 /// Null when unknown or across a z level
 /proc/witness_distance(witness_entry)
 	return islist(witness_entry) ? witness_entry[WITNESS_DIST] : null
+
+/// The perception tag, ^ v ~ or a direction digit. Null when they saw it plainly
+/proc/witness_tag(witness_entry)
+	return (islist(witness_entry) && length(witness_entry) >= WITNESS_TAG) ? witness_entry[WITNESS_TAG] : null
 
 //pov_mode null shows the generate buttons. pov_paging is navigation inside a built POV, neither logged nor limited.
 //pov_tail counts back from the end, so a focus link still lands on its entry after more has been logged
@@ -208,6 +213,10 @@
 	while(length(admin.pov_log_cache) > POV_CACHE_MAX)
 		admin.pov_log_cache.Cut(1, 2)
 
+/// Newest first on the row's precomputed time
+/proc/cmp_pov_time_dsc(list/a, list/b)
+	return b["time"] - a["time"]
+
 /// Bottom up merge sort, yielding throughout so a big timeline never blocks a tick. Returns a new list.
 /proc/sort_pov_entries(list/timeline)
 	if(length(timeline) < 2)
@@ -215,7 +224,7 @@
 	var/list/sorted_blocks = list()
 	for(var/start = 1, start <= timeline.len, start += POV_SORT_BLOCK)
 		var/list/block = timeline.Copy(start, min(start + POV_SORT_BLOCK, timeline.len + 1))
-		sortTim(block, GLOBAL_PROC_REF(cmp_text_dsc))
+		sortTim(block, GLOBAL_PROC_REF(cmp_pov_time_dsc))
 		sorted_blocks += list(block)
 		CHECK_TICK
 	while(sorted_blocks.len > 1)
@@ -228,18 +237,22 @@
 		sorted_blocks = next_round
 	return sorted_blocks[1]
 
-/// Merges two sorted blocks, newest first, keeping each entry's actor
+/// Merges two sorted blocks of rows, newest first. Ties prefer left, keeping the merge stable
 /proc/merge_pov_blocks(list/left, list/right)
 	var/list/out = list()
 	var/left_index = 1
 	var/right_index = 1
 	while(left_index <= left.len && right_index <= right.len)
 		CHECK_TICK
-		var/list/from = (sorttext(left[left_index], right[right_index]) > 0) ? right : left
-		var/entry = (from == left) ? left[left_index++] : right[right_index++]
-		out += entry
-		out[entry] = from[entry]
-	// the remaining side is already sorted, and list addition keeps the actor associations
+		var/list/left_row = left[left_index]
+		var/list/right_row = right[right_index]
+		if(left_row["time"] >= right_row["time"])
+			out += list(left_row)
+			left_index++
+		else
+			out += list(right_row)
+			right_index++
+	// the remaining side is already sorted
 	if(left_index <= left.len)
 		out += left.Copy(left_index)
 	else if(right_index <= right.len)
@@ -249,7 +262,7 @@
 // Building a POV timeline: the subject's own rows, everything they witnessed, then the offscreen pulls
 
 /// The subject's own rows, everything they witnessed, and what they missed. all_mobs also sweeps clientless mobs.
-/// Display key -> list("entry" = stored value, "actor" = whose block it renders in; absent on the subject's own rows)
+/// Flat list of pov_timeline_row()s. "actor" is absent on the subject's own rows
 /proc/build_pov_entries(mob/M, list/log_source, all_mobs = FALSE, list/actor_labels = list())
 	. = list()
 	// marked event ids. The offscreen pass pulls only unmarked ones, so a flurry of three with one seen pulls two
@@ -283,6 +296,12 @@
 			actor_labels[row_class] = roster_labels[actor_id]
 		add_pov_offscreen_actions(., attack_entries, already_added, actor_id, included_events)
 
+/// "time" is precomputed so the sort never digs into the stored value or throws on a malformed one
+/proc/pov_timeline_row(entry_key, value, actor_id = null)
+	. = list("key" = entry_key, "entry" = value, "time" = log_entry_field(value, "time") || 0)
+	if(actor_id)
+		.["actor"] = actor_id
+
 /// The subject's own rows. Their forward attacks mark included_events; their receipts do NOT, because a hit on them is
 /// meant to show in both their thread and the attacker's block. Receipts are indexed instead, for the distance handoff.
 /proc/add_pov_own_entries(list/output, list/log_source, list/included_events, list/subject_receipts)
@@ -291,8 +310,8 @@
 		var/list/entries = log_source[num2text(type)]
 		for(var/entry in entries)
 			var/value = entries[entry]
-			var/list/wrapper = list("entry" = value)
-			output["<b>[log_normalize_html(entry)]</b><br>[log_entry_text(value)]"] = wrapper
+			var/list/wrapper = pov_timeline_row(entry, value)
+			output += list(wrapper)
 			if(type != LOG_ATTACK)
 				continue
 			var/event_id = log_entry_field(value, "event")
@@ -348,7 +367,7 @@
 		var/event_id = log_entry_field(value, "event")
 		if(event_id)
 			included_events[event_id] = TRUE
-		output["<b>[log_normalize_html(entry)]</b><br>[log_entry_text(value)]"] = list("actor" = actor_id, "entry" = value)
+		output += list(pov_timeline_row(entry, value, actor_id))
 
 /// What the subject did NOT see, matched by event id. Unwitnessed swings pull as forward rows.
 /// Hits taken pull as receipts only when "attacker" is null; a keyed attacker's copy renders on their side.
@@ -370,7 +389,7 @@
 				continue
 			included_events[event_id] = TRUE
 		already_added[entry] = TRUE
-		output["<b>[log_normalize_html(entry)]</b><br>[log_entry_text(value)]"] = list("actor" = actor_id, "entry" = value)
+		output += list(pov_timeline_row(entry, value, actor_id))
 
 // Rendering a POV timeline: the page frame, then each row styled into its actor's block
 
@@ -472,21 +491,21 @@
 	var/last_place
 	var/have_block = FALSE
 	var/index = start_index
-	var/prev_secs
-	for(var/entry in entries)
+	var/prev_time
+	for(var/list/wrapper as anything in entries)
 		CHECK_TICK
-		var/cur_secs = pov_entry_seconds(entry)
-		if(!isnull(prev_secs) && prev_secs - cur_secs > POV_SCENE_GAP)
-			if(have_block)
-				. += "</div>"
-			. += "<div style='text-align:center; color:#8a8a8a; font-size:11px; padding:3px;'>&#8212;&#8212; [pov_gap_label(prev_secs - cur_secs)] &#8212;&#8212;</div>"
-			have_block = FALSE
-			last_place = null // time passed, so the scene after the break restates where it happens
-		prev_secs = cur_secs
-
-		var/list/wrapper = entries[entry]
 		var/actor = wrapper["actor"] // the subject's own rows carry none
 		var/stored = wrapper["entry"]
+		var/raw_key = wrapper["key"]
+
+		var/cur_time = wrapper["time"]
+		if(prev_time && prev_time - cur_time > POV_SCENE_GAP)
+			if(have_block)
+				. += "</div>"
+			. += "<div style='text-align:center; color:#8a8a8a; font-size:11px; padding:3px;'>&#8212;&#8212; [DisplayTimeText(prev_time - cur_time, 1)] apart &#8212;&#8212;</div>"
+			have_block = FALSE
+			last_place = null // time passed, so the scene after the break restates where it happens
+		prev_time = cur_time
 		var/block_class = actor ? pov_row_class(actor) : subject_class
 		var/label = actor ? (actor_labels[block_class] || actor) : subject_label
 		var/row_style = actor ? "background:#1e1e1e; border-left:4px solid #5a5a5a;" : "background:#000000; border-left:4px solid #eac0b9;"
@@ -510,21 +529,19 @@
 		if(is_receipt)
 			row_marks += "<font color='#ff8f6b'>&#8592;</font> "
 
-		// key shape: "<b>\[date time\] who where (LOG #n)</b><br>message". The full view prints time plus message and
-		// reprints the rest only when it changes; the whole key stays in the tooltip and the focused view
-		var/br_pos = findtext(entry, "<br>")
-		var/full_key = copytext(entry, 4, br_pos - 4)
-		var/message = is_receipt ? "<i>[copytext(entry, br_pos + 4)]</i>" : copytext(entry, br_pos + 4)
+		// raw key shape: "\[YYYY-MM-DD hh:mm:ss\] who where (LOG #n)", built in log_message()
+		var/full_key = log_normalize_html(raw_key)
+		var/message = is_receipt ? "<i>[log_entry_text(stored)]</i>" : log_entry_text(stored)
 		var/line
 		var/place_line = ""
 		if(focused)
 			line = "<b>[full_key]</b><br>[row_marks][message]"
 		else
-			var/place = pov_entry_place(entry, br_pos)
+			var/place = pov_entry_place(raw_key)
 			if(place != last_place)
 				last_place = place
 				place_line = "<div class='[block_class] row' style='[row_style] color:#8a8a8a; font-size:12px; padding:1px 5px;'>[place]</div>"
-			line = "<font color='#8a8a8a'>[copytext(entry, 16, 24)]</font> [row_marks][message]"
+			line = "<font color='#8a8a8a'>[copytext(raw_key, 13, 21)]</font> [row_marks][message]"
 		if(!isnull(witnesses))
 			line += pov_witness_html(witnesses, "pov[index]")
 
@@ -549,7 +566,7 @@
 			last_actor = actor
 			// the container the highlight paints as one box. Border is pre-emitted transparent so lighting it shifts no layout
 			. += "<div class='blk [block_class]' style='border:2px solid transparent; margin-top:3px;'>"
-			. += "<div class='[block_class] hdr' style='[row_style] [header_style]'>[pov_highlight_link(block_class, label, header_colour)][actor ? pov_pivot_link(actor, cur_secs, pov_mode) : ""]</div>"
+			. += "<div class='[block_class] hdr' style='[row_style] [header_style]'>[pov_highlight_link(block_class, label, header_colour)][actor ? pov_pivot_link(actor, cur_time, pov_mode) : ""]</div>"
 		if(place_line)
 			. += place_line
 		// class tokens drive the browser side: blk/row/hdr for what to touch, a/t for who, dim/atk for the filters
@@ -557,50 +574,41 @@
 	if(have_block)
 		. += "</div>"
 
-/// Read off the tag the gatherer left on the name. Z arrows are flipped (above it means it happened below them);
-/// direction digits already point at the event, so they stand.
+/// Z arrows are flipped, a witness above means it happened below them. Direction digits already point at the event
 /proc/pov_perception_glyph(witness_entry)
-	if(!witness_entry)
+	var/tag = witness_tag(witness_entry)
+	if(!tag)
 		return ""
 	var/static/list/glyphs = list("^" = "&#8650;", "v" = "&#8648;", "~" = "~")
-	var/tag = copytext(witness_display_name(witness_entry), -1)
 	return glyphs[tag] || pov_numpad_arrow(tag) || ""
 
 /// Everything in the key but the time and log number. Cut at fixed text log_message writes, no guessing.
-/proc/pov_entry_place(entry, br_pos)
-	var/log_pos = findlasttext(entry, " (LOG #", br_pos, 1)
-	return copytext(entry, 26, log_pos || (br_pos - 4))
-
-/proc/pov_gap_label(gap)
-	if(gap < 120)
-		return "[gap] seconds apart"
-	return "[round(gap / 60)] minutes apart"
+/proc/pov_entry_place(raw_key)
+	var/log_pos = findlasttext(raw_key, " (LOG #")
+	return copytext(raw_key, 23, log_pos || 0)
 
 /// "a" plus a ckey-flattened id. Rows, highlights, label lookups and the page's javascript all key off this.
 /proc/pov_row_class(actor_id)
 	return "a[ckey("[actor_id]")]"
 
-/// Fixed offsets into the "<b>\[YYYY-MM-DD hh:mm:ss\]" prefix every log key carries
-/proc/pov_entry_seconds(entry)
-	return text2num(copytext(entry, 16, 18)) * 3600 + text2num(copytext(entry, 19, 21)) * 60 + text2num(copytext(entry, 22, 24))
-
 /// The newest entry at or before a moment, entries running newest first
-/proc/pov_entry_index_at(list/entries, at_seconds)
+/proc/pov_entry_index_at(list/entries, at_time)
 	var/index = 0
-	for(var/entry in entries)
+	for(var/list/wrapper as anything in entries)
 		index++
-		if(pov_entry_seconds(entry) <= at_seconds)
+		var/entry_time = wrapper["time"]
+		if(entry_time && entry_time <= at_time)
 			return index
 	return index || 1
 
 /// Opens that person's POV in the same mode, landing on the moment pivoted from rather than the top of their timeline
-/proc/pov_pivot_link(actor_id, at_seconds, pov_mode)
+/proc/pov_pivot_link(actor_id, at_time, pov_mode)
 	var/id_text = "[actor_id]"
 	// players are keyed by ckey, mobs by ref string, which always carries a bracket
 	var/mob/target = findtext(id_text, "\[") ? locate(id_text) : get_mob_by_key(id_text)
 	if(!istype(target))
 		return ""
-	return " <a href='?_src_=holder;[HrefToken()];individuallog=[REF(target)];log_type=[INDIVIDUAL_POV_LOG];log_src=[target.client ? LOGSRC_CLIENT : LOGSRC_MOB];pov_mode=[pov_mode];pov_at=[at_seconds];pov_focus=1;page_len=[POV_FOCUS_PAGE_LEN]'>&#8644;</a>"
+	return " <a href='?_src_=holder;[HrefToken()];individuallog=[REF(target)];log_type=[INDIVIDUAL_POV_LOG];log_src=[target.client ? LOGSRC_CLIENT : LOGSRC_MOB];pov_mode=[pov_mode];pov_at=[at_time];pov_focus=1;page_len=[POV_FOCUS_PAGE_LEN]'>&#8644;</a>"
 
 /// A POV block header's text: who they are, plus the role they were holding if they have one
 /proc/pov_actor_label(mob/actor, name_text)
@@ -827,15 +835,12 @@
 	var/list/shown = list()
 	for(var/witness_key in witnesses)
 		var/witness_entry = witnesses[witness_key]
-		var/shown_name = witness_display_name(witness_entry)
-		var/tag = copytext(shown_name, -1)
+		var/shown_name = log_normalize_html(witness_display_name(witness_entry))
+		var/tag = witness_tag(witness_entry)
 		var/code = text2num(tag)
-		var/mark = marks[tag] || (code ? pov_numpad_arrow(num2text(10 - code)) : null)
-		// normalize after the tag is read: encoding could expand the last character the tag logic keys on
+		var/mark = tag ? (marks[tag] || (code ? pov_numpad_arrow(num2text(10 - code)) : null)) : null
 		if(mark)
-			shown_name = "[log_normalize_html(copytext(shown_name, 1, -1))] <font color='#8a8a8a'>[mark]</font>"
-		else
-			shown_name = log_normalize_html(shown_name)
+			shown_name += " <font color='#8a8a8a'>[mark]</font>"
 
 		shown += shown_name
 	var/toggle = "<span style='color:#7fb2d9; text-decoration:underline;' onclick=\"var e=document.getElementById('[element_id]');e.style.display=(e.style.display=='none')?'inline':'none';\">(+[length(shown)])</span>"

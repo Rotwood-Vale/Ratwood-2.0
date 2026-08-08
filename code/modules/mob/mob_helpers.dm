@@ -976,7 +976,7 @@
 
 	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
 	// would show as literal text
-	var/list/entry_value = list("msg" = message)
+	var/list/entry_value = list("msg" = message, "time" = world.time)
 	if(color)
 		entry_value["color"] = color
 	if(event)
