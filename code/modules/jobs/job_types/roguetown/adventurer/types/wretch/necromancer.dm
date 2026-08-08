@@ -1,3 +1,4 @@
+/*
 /datum/advclass/wretch/necromancer
 	name = "Necromancer"
 	tutorial = "You have been ostracized and hunted by society for your dark magics and perversion of life."
@@ -93,3 +94,5 @@
 			backr = /obj/item/rogueweapon/woodstaff/amethyst
 		if("toper-focused staff")
 			backr = /obj/item/rogueweapon/woodstaff/toper
+
+*/// Necro is being disabled for now, needs to be reworked into a seperate antag

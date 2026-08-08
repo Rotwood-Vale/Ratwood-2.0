@@ -37,7 +37,7 @@
 		/datum/advclass/wretch/deserter/maa,
 		/datum/advclass/wretch/berserker,
 		/datum/advclass/wretch/hedgemage,
-		/datum/advclass/wretch/necromancer,
+		///datum/advclass/wretch/necromancer, Necro is being disabled for now, needs to be reworked into a seperate antag
 		/datum/advclass/wretch/heretic,
 		/datum/advclass/wretch/heretic/spy,
 		/datum/advclass/wretch/heretic/monk,
