@@ -231,7 +231,6 @@
 	on_icon = "metalizer_flick"
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_BULKY
-	misfire_chance = 15
 	charge_per_source = 5
 
 /obj
@@ -300,7 +299,7 @@
 	off_icon = "smelter_off"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
-	misfire_chance = 10
+	misfire_chance = 0
 	charge_per_source = 6
 
 /obj/item/contraption/smelter/misfire_result()
