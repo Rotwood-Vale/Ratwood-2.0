@@ -489,6 +489,7 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
+	armor_class = null	//Needs no armor class, unique absolver gear.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 	name = "psydonic bucket helmet"
