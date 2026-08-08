@@ -29,7 +29,7 @@
 		to_chat(user, span_warning("This must be cast on a container."))
 		return null
 	if(!con.spillable)
-		to_chat(user, span_warning("[con] is not a container."))
+		to_chat(user, span_warning("[con] is not an open container."))
 		return null
 	if(con.reagents.total_volume <= 0)
 		to_chat(user, span_warning("[con] is empty."))
