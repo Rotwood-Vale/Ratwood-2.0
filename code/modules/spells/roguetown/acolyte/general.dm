@@ -453,7 +453,7 @@
 	var/delay = 1.5 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/blood_heal/proc/bond_check(mob/living/carbon/human/user, mob/living/target, revert = TRUE)
-	if (!istype(user, /mob/living/carbon/human) || !istype(target, /mob/living/carbon/human))
+	if (!ishuman(user) || !ishuman(target))
 		to_chat(user, span_warning("I can only forge a bloodbond with other humanoids!"))
 		if (revert)
 			revert_cast()
