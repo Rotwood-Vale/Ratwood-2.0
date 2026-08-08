@@ -15,7 +15,7 @@
 	vision_range = 8
 	aggro_vision_range = 8
 	base_intents = list(/datum/intent/simple/bite, /datum/intent/simple/claw)
-	move_to_delay = 8
+	move_to_delay = 15
 
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
@@ -164,9 +164,9 @@
 	melee_damage_lower = 8
 	melee_damage_upper = 14
 
-	move_to_delay = 1
+	move_to_delay = 8
 
-	STASPD = 15
+	STASPD = 11
 	STASTR = 6
 	STACON = 5
 	burrow_anim_time = 8 // deciseconds animation length
@@ -184,16 +184,17 @@
 	icon_state = "juvenile"
 	icon_dead = "juvenile-dead"
 
-	health = 140
-	maxHealth = 140
+	health = 400
+	maxHealth = 400
 
 	melee_damage_lower = 22
 	melee_damage_upper = 32
 
-	move_to_delay = 1.4
+	move_to_delay = 10
 
-	STASTR = 9
-	STASPD = 13
+	STASTR = 12
+	STACON = 11
+	STASPD = 10
 	burrow_anim_time = 12 // deciseconds animation length
 	burrow_cooldown = 4 SECONDS
 	burrow_fx_state = "leave-juvenile"
@@ -213,13 +214,13 @@
 
 	icon = 'icons/roguetown/mob/monster/adultsandworm.dmi'
 
-	health = 420
-	maxHealth = 420
+	health = 620
+	maxHealth = 620
 
 	melee_damage_lower = 35
 	melee_damage_upper = 55
 
-	move_to_delay = 2
+	move_to_delay = 12
 
 	STASTR = 15
 	STACON = 12

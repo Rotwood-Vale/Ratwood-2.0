@@ -278,7 +278,7 @@
 
 /obj/structure/obelisk
 	name = "ancient obelisk"
-	desc = ""
+	desc = "An ancient obelisk. It has archaic inscriptions in the stone work- ancient Drakian, maybe?"
 	icon = 'modular_deserttown/icons/temple_objects_verytall.dmi'
 	opacity = 0
 	max_integrity = 1000
@@ -293,6 +293,24 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -16
 	abstract_type = /obj/structure/obelisk
+	var/translation // set per instance in the map
+
+/obj/structure/obelisk/attack_hand(mob/user)
+	.=..()
+	attempt_translate(user)
+
+/obj/structure/obelisk/proc/attempt_translate(mob/living/user)
+	if(!translation)
+		to_chat(user, span_notice("You find nothing decipherable on the obelisk."))
+		return
+	to_chat(user, span_notice("You begin studying the archaic inscriptions..."))
+	if(!do_after(user, 3 SECONDS, target = src))
+		return
+	var/chance = 	clamp(20 + (user.STAINT - 10) * 6, 0, 100)
+	if(prob(chance))
+		to_chat(user, span_notice("Understanding dawns on you: [translation]"))
+	else
+		to_chat(user, span_warning("The drakian script remains indecipherable to you."))
 
 /obj/structure/obelisk/destroyed
 	desc = "An ancient obelisk. Whatever magic it once held is long since gone, damaged beyond function."
@@ -582,7 +600,7 @@
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
 	max_integrity = -1
-	alpha = 100
+	alpha = 125
 	plane = -8
 
 /obj/structure/quicksand/Initialize(mapload)
@@ -632,7 +650,7 @@
 			playsound(loc,'sound/items/empty_shovel.ogg', 100, TRUE)
 			qdel(src)
 			return
-	. = ..()
+	return
 
 /obj/structure/quicksand/attack_hand(mob/user)
 	if(has_buckled_mobs())
@@ -654,6 +672,23 @@
 
 /obj/structure/quicksand/user_buckle_mob(mob/living/buckled_mob, mob/living/user)
 	return
+
+/datum/crafting_recipe/roguetown/quicksand
+	name = "quicksand pit"
+	result = /obj/structure/quicksand
+	reqs = list(/datum/reagent/water = 240)
+	time = 10 SECONDS
+	verbage_simple = "mixes together"
+	verbage = "mixes together"
+	craftsound = 'sound/foley/Building-01.ogg'
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/quicksand/TurfCheck(mob/user, turf/T)
+	if(isclosedturf(T))
+		return
+	if(!istype(T, /turf/open/floor/rogue/dunes))
+		return
+	return TRUE
 
 
 ////decorative templestuff
