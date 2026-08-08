@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - bugfix: "gragar net is no longer considered secular, seer doesn't instantly forget heretics he sees"
