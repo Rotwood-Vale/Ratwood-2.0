@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 			if(get_dist(src, A) > 7 || A.loc.z != src.loc.z) // cheap quick dist test instead of calling hearers
 				to_chat(src, span_warning("[A] is too far away for me to invite into my audience."))
 				return
-			inspiration.toggle_audience_member(A)
+			inspiration.prune_audience(A)
 			return
 	return ..()
 
