@@ -1,0 +1,4 @@
+author: "Heheniy"
+delete-after: True
+changes:
+  - bugfix: "church quests reroll cooldown no longer shows decimals of minutes"
