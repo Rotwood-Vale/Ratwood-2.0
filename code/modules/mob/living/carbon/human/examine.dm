@@ -94,6 +94,10 @@
 
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
+		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
+			var/heretic_text = get_heretic_text(user)
+			if(heretic_text)
+				. += span_notice(heretic_text)
 	else if(obscure_name)
 		. += span_info("This is an unknown <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
@@ -1202,15 +1206,19 @@
 /// Same as get_heretic_text, but returns a simple symbol depending on the type of heretic!
 /mob/living/proc/get_heretic_symbol(mob/examiner)
 	var/heretic_text
+	var/seer = FALSE
 	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		return
-	if(HAS_TRAIT(src, TRAIT_COMMIE) && HAS_TRAIT(examiner, TRAIT_COMMIE))
+	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
+		seer = TRUE
+	
+	if(HAS_TRAIT(src, TRAIT_COMMIE) && (HAS_TRAIT(examiner, TRAIT_COMMIE)||seer))
 		heretic_text += "♠"
-	else if(HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(examiner, TRAIT_CABAL))
+	else if(HAS_TRAIT(src, TRAIT_CABAL) && (HAS_TRAIT(examiner, TRAIT_CABAL)||seer))
 		heretic_text += "♦"
-	else if(HAS_TRAIT(src, TRAIT_HORDE) && HAS_TRAIT(examiner, TRAIT_HORDE))
+	else if(HAS_TRAIT(src, TRAIT_HORDE) && (HAS_TRAIT(examiner, TRAIT_HORDE)||seer))
 		heretic_text += "♠"
-	else if(HAS_TRAIT(src, TRAIT_DEPRAVED) && HAS_TRAIT(examiner, TRAIT_DEPRAVED))
+	else if(HAS_TRAIT(src, TRAIT_DEPRAVED) && (HAS_TRAIT(examiner, TRAIT_DEPRAVED)||seer))
 		heretic_text += "♥"
 
 	return heretic_text

@@ -643,14 +643,14 @@ GLOBAL_LIST_EMPTY(soil_list)
 /obj/structure/soil/proc/get_natural_growth_bonuses()
 	var/blessed_bonus = (blessed_time > 0) ? 0.20 : 0.0
 	var/living_light_bonus = 0.0
-	for(var/obj/structure/flora/roguetree/wise/sanctified/tree in range(10, src))
+/* 	for(var/obj/structure/flora/roguetree/wise/sanctified/tree in range(10, src))
 		if(tree.tree_data?.has_heal_aura)
 			living_light_bonus = 0.10
-			break
+			break */
 	var/dendor_rune_bonus = 0.0
-	for(var/obj/structure/ritualcircle/dendor in range(5, src))
+/* 	for(var/obj/structure/ritualcircle/dendor in range(5, src))
 		dendor_rune_bonus = 0.05
-		break
+		break */
 	var/total = min(blessed_bonus + living_light_bonus + dendor_rune_bonus, 0.35)
 	return list("blessed" = blessed_bonus, "living_light" = living_light_bonus, "dendor_rune" = dendor_rune_bonus, "total" = total)
 

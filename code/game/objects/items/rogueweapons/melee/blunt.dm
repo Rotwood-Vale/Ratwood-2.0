@@ -460,6 +460,7 @@
 	force_wielded = 35
 	minstr = 12
 	smelt_bar_num = 2
+	wdefense_wbonus = 5
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 

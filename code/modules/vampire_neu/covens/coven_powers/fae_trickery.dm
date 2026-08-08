@@ -394,7 +394,7 @@
 	var/datum/riddle/riddle
 	var/bad_answers = 0
 
-/atom/movable/screen/alert/riddle/Click()
+/atom/movable/screen/alert/riddle/handle_click()
 	if(iscarbon(usr) && (usr == mob_viewer))
 		var/mob/living/carbon/M = usr
 		if(riddle)
