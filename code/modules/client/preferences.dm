@@ -118,8 +118,11 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/sensitive_brands = FALSE
+	var/facial_brands = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
+	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
 	var/restricted_species_pref = null
@@ -211,6 +214,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
+	var/autowoodcut = TRUE
+	var/autopicking = TRUE
 	var/runmode = FALSE
 	var/no_examine_blocks = FALSE
 	var/no_autopunctuate = FALSE
@@ -1991,6 +1996,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						/datum/language/kazengunese,
 						/datum/language/etruscan,
 						/datum/language/gronnic,
+						/datum/language/hammerholdian,
 						/datum/language/otavan,
 						/datum/language/aavnic,
 						/datum/language/merar

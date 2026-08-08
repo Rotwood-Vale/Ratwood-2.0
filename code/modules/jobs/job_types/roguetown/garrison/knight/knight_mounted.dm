@@ -55,7 +55,7 @@
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Longsword + Crossbow")
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/long
 				beltr = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
@@ -72,7 +72,7 @@
 				beltl = /obj/item/rogueweapon/mace/goden/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Sabre + Recurve Bow")
-				l_hand = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
@@ -119,7 +119,7 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
 	
 	if (H.mind)

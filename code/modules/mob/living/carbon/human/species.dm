@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		pref_load.apply_descriptors(C)
 
 	for(var/language_type in languages)
-		C.grant_language(language_type)
+		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	for(var/language_type in languages)
-		C.remove_language(language_type)
+		C.remove_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	// Clear organ DNA since it wont match as we're changing the species
 	C.dna.organ_dna = list()
@@ -1281,6 +1281,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return
 
 		var/damage = user.get_punch_dmg()
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			damage += (damage * STRONG_STANCE_DMG_BONUS)
 		if(target.has_status_effect(/datum/status_effect/buff/clash) && target.get_active_held_item() && ishuman(user))
 			var/obj/item/IM = target.get_active_held_item()
 			target.process_clash(user, IM)
@@ -2033,7 +2035,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
-	damage = max(damage-blocked+armor,0)
+	damage = max((damage - blocked) * (1 - armor / 100), 0)
 //	var/hit_percent =  (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	var/atom/movable/screen/zone_sel/zone_sel
@@ -2219,6 +2221,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 		if(env_adjust)
 			H.adjust_bodytemperature(env_adjust)
+
+		if(isfloorturf(cur_turf) && H.bodytemperature < BODYTEMP_NORMAL_MAX)
+			var/turf/open/floor/F = cur_turf
+			if(F.heat)
+				var/warmth = F.heat * 4
+				if(H.bodytemperature + warmth > BODYTEMP_NORMAL_MAX)
+					warmth = BODYTEMP_NORMAL_MAX - H.bodytemperature
+				H.adjust_bodytemperature(warmth)
 	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
 		var/burn_damage = 0
 

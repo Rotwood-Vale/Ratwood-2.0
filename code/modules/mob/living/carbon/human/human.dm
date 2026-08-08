@@ -629,7 +629,9 @@
 
 
 /mob/living/carbon/human/proc/update_temperature_hud()
-	if(isnull(hud_used?.temperature) || stat == DEAD)
+	if(isnull(hud_used))
+		return FALSE
+	if(isnull(hud_used.temperature) || stat == DEAD)
 		return FALSE
 	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
 		hud_used.temperature.icon_state = "tempnormal"
@@ -641,6 +643,15 @@
 		hud_used.temperature.icon_state = "temphot"
 	else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
 		hud_used.temperature.icon_state = "tempveryhot"
+	var/atom/movable/screen/temperature/tempicon = hud_used.temperature
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		if(!tempicon.heated_tile)
+			tempicon.heated_tile = TRUE
+			tempicon.add_overlay("tempheated")
+	else if(tempicon.heated_tile)
+		tempicon.heated_tile = FALSE
+		tempicon.cut_overlay("tempheated")
 
 /mob/living/carbon/human/update_stamina_hud()
 	if(!hud_used || stat == DEAD || !hud_used.stamina)
@@ -1161,7 +1172,7 @@
 
 		for(var/datum/wound/W in BP.wounds)
 			if(istype(W, /datum/wound/heatstroke))
-				W.remove_from_bodypart()
+				BP.remove_wound(W)
 				found = TRUE
 
 	if(found)
@@ -1227,7 +1238,7 @@
 		return FALSE
 
 	var/datum/language_holder/language_holder = get_language_holder()
-	var/list/preserved_languages = language_holder?.languages?.Copy()
+	var/list/preserved_languages = language_holder ? language_holder.copy_language_cache(language_holder.languages) : null
 	var/selected_default_language = language_holder?.selected_default_language
 
 	client.prefs.copy_to(src, TRUE, FALSE)
@@ -1235,7 +1246,8 @@
 
 	if(language_holder && length(preserved_languages))
 		for(var/language_type in preserved_languages)
-			grant_language(language_type)
+			for(var/source in preserved_languages[language_type])
+				grant_language(language_type, source = source)
 		language_holder.selected_default_language = selected_default_language
 
 	return TRUE

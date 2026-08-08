@@ -124,6 +124,7 @@
 		user.visible_message("<span class='info'>[user] begins grinding up [to_grind].</span>")
 		playsound(loc, 'sound/foley/mortarpestle.ogg', 100, FALSE)
 		if(do_after(user, 10, target = src))
+			user.log_message("ground [to_grind] into [english_list(foundrecipe.valid_outputs, "nothing")] with [src]", LOG_GAME)
 			for(var/output in foundrecipe.valid_outputs)
 				for(var/i in 1 to foundrecipe.valid_outputs[output])
 					new output(get_turf(src))

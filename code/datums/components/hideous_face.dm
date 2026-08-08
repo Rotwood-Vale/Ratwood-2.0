@@ -20,7 +20,7 @@
 
 /datum/component/hideous_face/proc/on_examine(mob/source, mob/user, list/examine_list)
 	var/mob/living/carbon/human/H = parent
-	if ((H.wear_mask?.flags_inv & HIDEFACE) && (H.head?.flags_inv & HIDEFACE))
+	if ((H.wear_mask?.flags_inv & HIDEFACE) && (H.head?.flags_inv & HIDEFACE) && user == parent)
 		return
 	examine_list += span_warning("[H]'s face is horrifying!")
 	if(!iscarbon(user))

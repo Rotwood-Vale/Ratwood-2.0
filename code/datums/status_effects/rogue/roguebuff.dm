@@ -1804,15 +1804,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
 
-/datum/status_effect/buff/psydonic_endurance/on_apply()
-	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(owner, TRAIT_HEAVYARMOR))
-		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
-/datum/status_effect/buff/psydonic_endurance/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"
 	desc = "I am protected by blessed Psydonian plate armor."
