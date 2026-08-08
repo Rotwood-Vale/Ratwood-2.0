@@ -88,7 +88,7 @@
 
 /obj/item/reagent_containers/food/snacks/jamtallowslice
 	name = "slice of jamtallow"
-	desc = "A portion of jammy paradise, bearing the same hues as Azuria's morning skies. It yearns to be savored not by its lonesome, but upon a slice of bread - ideally, butterdoughed or toasted."
+	desc = "A portion of jammy paradise, bearing the same hues as Ferentia's morning skies. It yearns to be savored not by its lonesome, but upon a slice of bread - ideally, butterdoughed or toasted."
 	icon = 'modular/Neu_Food/icons/others/sweet.dmi'
 	icon_state = "jamtallow_slice"
 	faretype = FARE_POOR
@@ -133,7 +133,7 @@
 
 /obj/item/reagent_containers/food/snacks/marmaladeslice
 	name = "slice of marmalade"
-	desc = "A portion of jammy paradise, bearing the same hues as Azuria's evening seas. It yearns to be savored not by its lonesome, but upon a slice of bread - ideally, butterdoughed or toasted."
+	desc = "A portion of jammy paradise, bearing the same hues as Ferentia's evening seas. It yearns to be savored not by its lonesome, but upon a slice of bread - ideally, butterdoughed or toasted."
 	icon = 'modular/Neu_Food/icons/others/sweet.dmi'
 	icon_state = "marmalade_slice"
 	faretype = FARE_POOR
@@ -207,7 +207,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/sugarshape/dmark
 	name = "sugarshape of ducal mark"
-	desc = "A mound of sugar, shaped into a decorative mark with Azuria's sigil. It yearns to be completed beneath an oven's heat, or to be milled back down into sugarpowder."
+	desc = "A mound of sugar, shaped into a decorative mark with Ferentia's sigil. It yearns to be completed beneath an oven's heat, or to be milled back down into sugarpowder."
 	cooked_type = /obj/item/reagent_containers/food/snacks/sugarstatue/dmark
 
 /obj/item/reagent_containers/food/snacks/grown/sugarshape/smark
@@ -314,7 +314,7 @@
 
 /obj/item/reagent_containers/food/snacks/sugarstatue/dmark
 	name = "ducal sugarglass mark"
-	desc = "A decorative piece of sugarglass, meticulously fashioned to mimic a sigil of Azuria's royal house. Deliciously regal!"
+	desc = "A decorative piece of sugarglass, meticulously fashioned to mimic a sigil of Ferentia's royal house. Deliciously regal!"
 	icon_state = "sugarstatuemarkd"
 	bitesize = 2
 

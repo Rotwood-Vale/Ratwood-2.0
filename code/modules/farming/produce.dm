@@ -480,7 +480,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/pepperseed
 	name = "pepperberries"
-	desc = "A relative to the Azurian jackberry, stripped free of its fruity skin. Roasting it seems to've dulled its humor-imbalancing \
+	desc = "A relative to the Ferentian jackberry, stripped free of its fruity skin. Roasting it seems to've dulled its humor-imbalancing \
 	properties, though it'll still need to be milled down before it can be used for culinary matters."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "pepperseed"
@@ -800,7 +800,7 @@
 /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry/skysugarbase
 	name = "panacea of skysugar"
 	desc = "A combination of perplexingly diverse ingredients, that - when specifically boiled in fat - merges together to create an \
-	alchemically pure substance. South of Azuria's border, it's known as 'skysugar'; a Pestran heresy, rumored to've originally been \
+	alchemically pure substance. South of Ferentia's border, it's known as 'skysugar'; a Pestran heresy, rumored to've originally been \
 	brewed to cure that which even a quicksilver poultice couldn't mend. Despite its fruity aroma, it probably shouldn't be nibbled at."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "lux_impure_combo"
@@ -815,7 +815,7 @@
 /obj/item/reagent_containers/food/snacks/grown/skysugarslab
 	name = "skysugar slab"
 	desc = "A crystalline brick that radiates with an almost-ethereal hue, yet to be broken up at an alchemical lab. They call \
-	it 'luchtblauw' in Old Azurian; alchemically purified starsugar, to a ninth-of-a-hundreth dram. Born of a Pestran heresy, this \
+	it 'luchtblauw' in Old Emperial; alchemically purified starsugar, to a ninth-of-a-hundreth dram. Born of a Pestran heresy, this \
 	mysterious substance is both ludicrously potent and condemned by the Church. Even so, it's worth its weight in gold; and in the \
 	hands of a yeoman willing to 'break bad', it can be sold to an amoral Merchant or Bathmatron for a hefty sum."
 	icon = 'icons/roguetown/items/produce.dmi'
@@ -832,7 +832,7 @@
 /obj/item/reagent_containers/powder/starsugar/skysugar
 	name = "skysugar"
 	desc = "A crystalline powder that radiates with an almost-ethereal hue, and feels deathly cold to the touch. They call \
-	it 'luchtblauw' in Old Azurian; alchemically purified starsugar, to a ninth-of-a-hundreth dram. Born of a Pestran heresy, this \
+	it 'luchtblauw' in Old Emperial; alchemically purified starsugar, to a ninth-of-a-hundreth dram. Born of a Pestran heresy, this \
 	mysterious substance is both ludicrously potent and condemned by the Church. Even so, it's worth its weight in gold; and in the \
 	hands of a yeoman willing to 'break bad', it can be sold to an amoral Merchant or Bathmatron for a hefty sum."
 	icon = 'icons/roguetown/items/produce.dmi'

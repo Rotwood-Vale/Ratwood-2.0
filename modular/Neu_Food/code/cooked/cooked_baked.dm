@@ -237,7 +237,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/bun_marmalade
 	name = "marmaladed bun"
-	desc = "A delicious treat to bring along for those long-and-lonesome hikes through the Azurian forests; doubly-so, if you happen to be a tallow-coated wildkin of the urisine variety."
+	desc = "A delicious treat to bring along for those long-and-lonesome hikes through the Ferentian forests; doubly-so, if you happen to be a tallow-coated wildkin of the urisine variety."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	tastes = list("sweet-tarty jamminess" = 1, "a lavish break from the dae's woes" = 1)
 	icon_state = "bun_marmalade"
@@ -497,7 +497,7 @@
 /*	.................   Tomatoplate  ................... */
 /obj/item/reagent_containers/food/snacks/rogue/tomatoplate
 	name = "tomatoplate"
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket; all it's missing is a cold pint of \
 	ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -534,7 +534,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/meattomatoplate
 	name = "sausaged tomatoplate"
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and crispy sasuages; all it's missing \
 	is a cold pint of ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -571,7 +571,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate
 	name = "fished tomatoplate"
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and oily fishes; all it's missing \
 	is a cold pint of ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -608,7 +608,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/oniontomatoplate
 	name = "onioned tomatoplate"
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and crunchy onions; all it's missing \
 	is a cold pint of ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -645,7 +645,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/truffletomatoplate
 	name = "truffled tomatoplate"
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and decadant truffles; all it's missing \
 	is a cold pint of ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -682,7 +682,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/poisontruffletomatoplate
 	name = "truffled tomatoplate" //Like jackberried treats, this is a poisoned variant! For those who don't properly source their truffles.. or simply want to poison others!
-	desc = "A culinary delight from Azuria's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
+	desc = "A culinary delight from Ferentia's shores, purported to've originated from an inflow of Etruscean refugees from long ago. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and decadant truffles; all it's missing \
 	is a cold pint of ale and an ongoing game of lampternball to jeer at."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
@@ -719,7 +719,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/peartomatoplate
 	name = "pearacotta tomatoplate"
-	desc = "A curious spin on an Azurian classic, attributed to the hands of Vanderlin's most esteemed culinarians. The \
+	desc = "A curious spin on an Ferentian classic, attributed to the hands of Vanderlin's most esteemed culinarians. The \
 	richness of the flatbread's sauced tomatoes is perfectly complemented by its cheesey blanket and sweet pears; a melody of flavors \
 	that has helped to embolden the creativity of Psydonia's artists for centuries-hence, and - hopefully - centuries-more."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'

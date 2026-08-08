@@ -666,9 +666,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.smoketime = 0
 	if(prob(50))
 		var/atom/current_loc = loc
-		var/obj/item/clothing/mask/cigarette/pipe/westman/W = new /obj/item/clothing/mask/cigarette/pipe/westman(current_loc)
-		W.packeditem = 0
-		W.smoketime = 0
+		var/obj/item/clothing/mask/cigarette/pipe/westman/WMAN = new /obj/item/clothing/mask/cigarette/pipe/westman(current_loc)
+		WMAN.packeditem = 0
+		WMAN.smoketime = 0
 		qdel(src)
 		return INITIALIZE_HINT_QDEL
 
