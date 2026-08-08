@@ -293,10 +293,10 @@
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				dam += 10
-			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
-				used *= 2
 			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
 				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			attempted_wounds += /datum/wound/artery		//basically does sword-tier wounds.
 		if(prob(used))
@@ -385,10 +385,10 @@
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				dam += 10
-			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
-				used *= 2
 			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
 				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(prob(used))
 			if(HAS_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS))
 				attempted_wounds += /datum/wound/artery/chest
