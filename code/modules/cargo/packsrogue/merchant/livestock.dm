@@ -11,6 +11,12 @@
 					/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled,
 				)
 
+/datum/supply_pack/rogue/livestock/beetle
+	name = "Giant Wooly Chafer Beetle"
+	cost = 200//more expensive cause they have utility or something
+	contains = list(
+					/mob/living/simple_animal/hostile/retaliate/rogue/beetle/tame/saddled,
+				)
 
 /datum/supply_pack/rogue/livestock/chicken
 	name = "Chicken"
