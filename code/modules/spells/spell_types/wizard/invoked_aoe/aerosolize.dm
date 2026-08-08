@@ -51,6 +51,7 @@
 /obj/effect/proc_holder/spell/invoked/aerosolize/wave
 	name = "Aerosol Wave"
 	desc = "Turns the reagents of a container into a wave of odious smoke traveling in the direction the caster is facing."
+	overlay_state = "aerosol_wave"
 	chargetime = 6
 	spell_tier = 3 // technically an AOE (?)
 	cost = 3 // this ones a bit better
