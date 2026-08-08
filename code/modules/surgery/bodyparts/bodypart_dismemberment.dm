@@ -99,7 +99,7 @@
 	//the casterless branch is player-only or NPC mobs eating a body would spam it
 	if(user)
 		log_combat(user, C, "dismembered", null, "([src.name])", severe = TRUE)
-	else if(C.mind || C.ckey)
+	else if(C.client || C.mind)
 		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
 
 	if(!HAS_TRAIT(C, TRAIT_NOPAIN))

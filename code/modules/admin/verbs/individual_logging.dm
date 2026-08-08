@@ -25,13 +25,10 @@
 #define POV_HIGHLIGHT_MAX 10
 #define POV_SCENE_GAP 60
 #define POV_CACHE_MAX 3
+/// Timelines that keep their highlights and filters. Above POV_CACHE_MAX so selections outlive a rebuild
+#define POV_PREFS_MAX 10
 
 /client/var/last_pov_log_generation = 0
-/// All three keyed by pov_cache_key(). Cache is oldest first, oldest dropped when full
-/client/var/list/pov_log_cache
-/client/var/list/pov_log_highlights
-/// Three characters: attacks, highlighted, faded
-/client/var/list/pov_log_filters
 
 /// Stored text is mixed: player text arrives html_encoded at input, system text (names, places) arrives raw.
 /// Decode then encode lands both at exactly one encoding, so text shows as typed instead of as markup.
@@ -101,7 +98,7 @@
 		if(pov_mode && pov_mode != "players" && pov_mode != "all")
 			pov_mode = null
 		var/cache_key = pov_cache_key(M, source, pov_mode)
-		var/would_build = pov_mode && !pov_paging && (pov_fresh || !LAZYACCESS(admin?.pov_log_cache, cache_key))
+		var/would_build = pov_mode && (!LAZYACCESS(admin?.pov_log_cache, cache_key) || (pov_fresh && !pov_paging))
 		var/cooldown_left = admin ? max(0, admin.last_pov_log_generation + POV_LOG_COOLDOWN - world.time) : 0
 		if(would_build && cooldown_left)
 			to_chat(usr, span_warning("You generated a POV log moments ago. Try again in [DisplayTimeText(cooldown_left)]."))
@@ -120,7 +117,7 @@
 				dat += "<center><font size='1'>Timeline generated [DisplayTimeText(world.time - built)] ago. \
 					<a href='?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[ntype];log_src=[source];pov_mode=[pov_mode];pov_fresh=1'>Rebuild fresh</a></font></center>"
 		else
-			dat += pov_generate_prompt(M, ntype, source, cooldown_left)
+			dat += pov_generate_prompt(M, ntype, source, cooldown_left, pov_tail, pov_focus, page_len)
 	else
 		concatenated_logs = collect_individual_log_entries(log_source, ntype)
 		if(length(concatenated_logs))
@@ -159,8 +156,15 @@
 // Serving a POV timeline: the generate prompt, the cache, the cooldown and the yielding sort
 
 /// cooldown_left says why the buttons will not work yet, since a blocked pivot lands here with no other explanation
-/proc/pov_generate_prompt(mob/M, ntype, source, cooldown_left = 0)
+/proc/pov_generate_prompt(mob/M, ntype, source, cooldown_left = 0, pov_tail = null, pov_focus = FALSE, page_len = 0)
 	var/generate_href = "?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[ntype];log_src=[source]"
+	// carries where they were reading, so a build blocked mid navigation comes back to the same place
+	if(!isnull(pov_tail))
+		generate_href += ";pov_tail=[pov_tail]"
+	if(pov_focus)
+		generate_href += ";pov_focus=1"
+	if(page_len)
+		generate_href += ";page_len=[page_len]"
 	. = list(
 		"<center><i>The POV log is assembled on demand and this action is logged.</i><br>",
 		"<a href='[generate_href];pov_mode=players'>Generate (Players Only)</a>",
@@ -183,7 +187,7 @@
 		return cached["entries"]
 
 	var/all_mobs = (pov_mode == "all")
-	if(!pov_paging && admin)
+	if(admin)
 		admin.last_pov_log_generation = world.time
 		log_admin("[key_name(admin)] generated the [all_mobs ? "all mobs" : "players only"] POV log of [key_name(M)]")
 		message_admins("[key_name_admin(admin)] generated the [all_mobs ? "all mobs" : "players only"] POV log of [key_name_admin(M)]")
@@ -743,6 +747,13 @@
 
 
 /// Toggles one name in the admin's remembered set. The page paints instantly and pings this alongside.
+/proc/pov_touch_prefs(list/prefs, cache_key)
+	var/entry = prefs[cache_key]
+	prefs -= cache_key
+	prefs[cache_key] = entry
+	while(length(prefs) > POV_PREFS_MAX)
+		prefs.Cut(1, 2)
+
 /client/proc/toggle_pov_highlight(mob/M, source, pov_mode, hl_class)
 	if(!M || !pov_mode)
 		return
@@ -756,11 +767,16 @@
 	var/list/highlights = pov_log_highlights[cache_key]
 	if(hl_class in highlights)
 		highlights -= hl_class
+		if(length(highlights))
+			pov_touch_prefs(pov_log_highlights, cache_key)
+		else
+			pov_log_highlights -= cache_key
 		return
 	if(length(highlights) >= POV_HIGHLIGHT_MAX)
 		to_chat(src, span_warning("POV highlight limit of [POV_HIGHLIGHT_MAX] reached. Remove one first."))
 		return
 	highlights += hl_class
+	pov_touch_prefs(pov_log_highlights, cache_key)
 
 /// Remembers which filter boxes were ticked, pinged the same way highlights are
 /client/proc/set_pov_filters(mob/M, source, pov_mode, state)
@@ -773,8 +789,10 @@
 		var/digit = copytext(state, position, position + 1)
 		if(digit != "0" && digit != "1")
 			return
+	var/cache_key = pov_cache_key(M, source, pov_mode)
 	LAZYINITLIST(pov_log_filters)
-	pov_log_filters[pov_cache_key(M, source, pov_mode)] = state
+	pov_log_filters[cache_key] = state
+	pov_touch_prefs(pov_log_filters, cache_key)
 
 /// A header's name doubles as the highlight control, so there is no second widget for it
 /proc/pov_highlight_link(actor_class, label, colour)
@@ -805,11 +823,11 @@
 /proc/pov_witness_html(list/witnesses, element_id)
 	if(!length(witnesses))
 		return " (<font color='[SEEN_LOG_WITNESS_COLOR]'>Witnesses: nobody</font>)"
+	var/static/list/marks = list("^" = "&#8648;", "v" = "&#8650;", "~" = "~")
 	var/list/shown = list()
 	for(var/witness_key in witnesses)
 		var/witness_entry = witnesses[witness_key]
 		var/shown_name = witness_display_name(witness_entry)
-		var/static/list/marks = list("^" = "&#8648;", "v" = "&#8650;", "~" = "~")
 		var/tag = copytext(shown_name, -1)
 		var/code = text2num(tag)
 		var/mark = marks[tag] || (code ? pov_numpad_arrow(num2text(10 - code)) : null)
