@@ -122,7 +122,7 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum, damage_flag = "blunt")
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		var/effective_throwforce = I.get_effective_throwforce(throwingdatum)
+		var/effective_throwforce = throwingdatum ? throwingdatum.get_effective_throwforce() : I.throwforce//raw AM throwface is used for fallback if a throwingdatum is, for some ungodly reason, null
 		// Hit the selected zone, or else a random zone centered on the chest
 		var/zone = throwingdatum?.target_zone || ran_zone(BODY_ZONE_CHEST, 65)
 		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)

@@ -62,7 +62,7 @@
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_flag = "blunt")
 	..()
-	var/effective_throwforce = AM.get_effective_throwforce(throwingdatum)
+	var/effective_throwforce = throwingdatum ? throwingdatum.get_effective_throwforce() : AM.throwforce
 	if(effective_throwforce > 5)
 		take_damage(effective_throwforce * 0.1, BRUTE, damage_flag, 1, get_dir(src, AM))
 

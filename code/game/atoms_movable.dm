@@ -592,9 +592,6 @@
 		return
 	return hit_atom.hitby(src, throwingdatum=throwingdatum)
 
-/atom/movable/proc/get_effective_throwforce(datum/thrownthing/throwingdatum)
-	return throwforce + (throwingdatum?.bonus_throwforce || 0)//bonus is typically 2 extra force unless the var is reused elsewhere
-
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum, damage_flag = "blunt")
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, AM.dir)
