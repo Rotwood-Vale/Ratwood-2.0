@@ -107,6 +107,8 @@
 		
 		ADD_TRAIT(H, TRAIT_DEATHSIGHT, "godhand") // zizo cleric trait
 
+		ADD_TRAIT(H, TRAIT_DEATHSIGHT, "godhand") // zizo cleric trait
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()

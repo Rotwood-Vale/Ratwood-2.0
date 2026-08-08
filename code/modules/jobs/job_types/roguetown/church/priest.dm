@@ -686,6 +686,11 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		to_chat(user, span_warning("[target] wasn't marked by the enemy as a heretic!"))
 		revert_cast()
 		return FALSE
+	
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		to_chat(user, span_warning("Grip of the Four on [target] is to strong to overcome"))
+		revert_cast()
+		return FALSE
 
 	if(HAS_TRAIT(target, TRAIT_GODHAND))
 		to_chat(user, span_warning("Grip of the Four on [target] is to strong to overcome"))
