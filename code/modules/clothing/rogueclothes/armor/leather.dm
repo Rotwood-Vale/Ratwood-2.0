@@ -104,6 +104,22 @@
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
 
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee
+	name = "forester's cuirass"
+	desc = "A hardened leather harness with a reinforced pauldron worn over a maille coat. Imbued with Dendor's essence, it is built sturdier for front-line fighting."
+	armor = ARMOR_CUIRASS
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 30
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee/upgraded
+	name = "forester's hauberk"
+	desc = "A forester's cuirass reinforced with plates and maille rings, the result of careful smithwork."
+	icon_state = "forestbrig"
+	armor = ARMOR_CUIRASS
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 20
+	equip_delay_self = 4 SECONDS
+	smeltresult = /obj/item/ingot/steel
+
 /obj/item/clothing/suit/roguetown/armor/leather/studded
 	name = "studded leather armor"
 	desc = "Studded leather is the most durable of all hides and leathers and about as light."
