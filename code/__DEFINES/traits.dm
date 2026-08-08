@@ -120,7 +120,7 @@
 #define TRAIT_VAMPMANSION "vampiremansion"
 #define TRAIT_ZURCH 	"Hidden Domiciles" //allows entry to Wretch Camp
 #define TRAIT_LICHLAIR "lichlair" //Access to the lich's lair on the CentCom Z level.
-
+#define TRAIT_GNOLL "Gnoll" //Access to the gnoll caverns
 //Hearthstone port (Tracking)
 #define TRAIT_PERFECT_TRACKER "Huntmaster" //Will always find any tracks and analyzes them perfectly.
 #define TRAIT_ZIZOSIGHT "Blessing of Zizo" // I can see just a bit more clearly in darkness.
@@ -483,6 +483,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_PESTRAS_BLESSING = span_infection("The sacred black rot of Pestra burns within me. Should intelligent foes try to harm me, they will feel her greatest plague."),
 	TRAIT_HERESIARCH = span_warning("I've been touched by the truth of Psydonia. Lyfe as we understand cannot persist under the Ten or the pretense of Psydon. Something must change."),
 	TRAIT_ZURCH = span_warning("I know of sacred sites of worship where followers of the Ascendants convene, and the path to the nearest conclave is etched into my memory."),
+	TRAIT_GNOLL = span_warning("I know of the depths of caverns frequented by those of the Gorestar and Gnolls"),
 	TRAIT_CURSE_ASTRATA = span_warning("I am forsaken by the Sun. I will find no rest under Her unwavering gaze."),
 	TRAIT_CURSE_NOC = span_warning("I am forsaken by the Moon. I will find no salvation in His grace."),
 	TRAIT_CURSE_DENDOR = span_warning("I am forsaken by the Treefather. Reason and common sense abandon me."),

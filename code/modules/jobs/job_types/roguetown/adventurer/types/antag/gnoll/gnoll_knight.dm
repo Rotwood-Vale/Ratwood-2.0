@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/gnoll/knight
 	category_tags = list(CTAG_GNOLL)
 	applies_post_equipment = FALSE
-	traits_applied = list(TRAIT_HEAVYARMOR) // Flavoring
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_GNOLL) // Flavoring
 
 	subclass_stats = list(
 		STATKEY_WIL = 5,
