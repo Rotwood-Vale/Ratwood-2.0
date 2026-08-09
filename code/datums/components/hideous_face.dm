@@ -27,6 +27,9 @@
 		return
 
 	var/mob/living/carbon/carbon_user = user
+
+	if(istype(carbon_user?.clan, /datum/clan/nosferatu))
+		return
 	if(!HAS_TRAIT(carbon_user, TRAIT_EORAN_CALM) && !HAS_TRAIT(carbon_user, TRAIT_EORAN_SERENE))
 		to_chat(carbon_user, span_userdanger("By [carbon_user.patron?.name]! They are disgusting!!!"))
 		carbon_user.stress_freakout()
@@ -35,6 +38,7 @@
 	var/mob/living/carbon/human/H = parent
 	if ((H.wear_mask?.flags_inv & HIDEFACE) && (H.head?.flags_inv & HIDEFACE))
 		return
-	if(!H.CheckEyewitness(H, H, 7, FALSE))
+
+	if(!H.CheckEyewitness(H, H, 7, FALSE, ignore_kindred = TRUE))
 		return
 	seen_callback?.Invoke(H)

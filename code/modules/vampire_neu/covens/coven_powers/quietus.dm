@@ -70,9 +70,8 @@
 /datum/coven_power/quietus/silence_of_death/proc/should_affect_target(mob/living/carbon/human/target)
 	if(target == owner)
 		return FALSE
-	if(target.clan_position?.is_subordinate_to(owner))
-		return FALSE
-	if(target.clan_position?.is_superior_to(owner))
+	//the silence spares your own Clan, rival kindred get no such mercy
+	if(target.is_clanmate(owner))
 		return FALSE
 	return TRUE
 
@@ -190,6 +189,9 @@
 
 /datum/coven_power/quietus/baals_caress/can_activate(atom/target, alert = FALSE)
 	. = ..()
+	if(!.)
+		return FALSE
+
 	var/obj/item/rogueweapon/target_weapon = target
 	if(!istype(target_weapon))
 		if(alert)
@@ -216,9 +218,20 @@
 	check_flags = COVEN_CHECK_CAPABLE | COVEN_CHECK_CONSCIOUS | COVEN_CHECK_IMMOBILE | COVEN_CHECK_LYING
 	violates_masquerade = TRUE
 
+	var/obj/effect/proc_holder/spell/granted_spell
+
 /datum/coven_power/quietus/taste_of_death/post_gain()
 	. = ..()
-	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash/quietus)
+	if(!owner?.mind)
+		return
+	granted_spell = new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash/quietus
+	owner.mind.AddSpell(granted_spell)
+
+/datum/coven_power/quietus/taste_of_death/post_lose()
+	. = ..()
+	if(granted_spell)
+		owner?.mind?.RemoveSpell(granted_spell)
+		granted_spell = null
 
 /obj/effect/proc_holder/spell/invoked/projectile/acidsplash/quietus
 	projectile_type = /obj/projectile/magic/acidsplash/quietus
@@ -242,7 +255,7 @@
 /datum/coven_power/quietus/dagons_call/activate()
 	. = ..()
 	var/mob/living/lastattacker = owner.lastattacker_weakref?.resolve()
-	if(isliving(lastattacker))
+	if(isliving(lastattacker) && !lastattacker.is_clanmate(owner))
 		lastattacker.adjustStaminaLoss(80)
 		lastattacker.adjust_fire_stacks(6)
 		lastattacker.adjustFireLoss(10)

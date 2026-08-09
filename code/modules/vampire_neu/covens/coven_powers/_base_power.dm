@@ -389,9 +389,6 @@
 /datum/coven_power/proc/pre_activation(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	//resources are still spent if activation is theoretically possible, but it gets prevented
-	spend_resources()
-
 	var/signal_return = SEND_SIGNAL(src, COMSIG_POWER_PRE_ACTIVATION, src, target) | SEND_SIGNAL(owner, COMSIG_POWER_PRE_ACTIVATION, src, target)
 	if (target)
 		signal_return |= SEND_SIGNAL(target, COMSIG_POWER_PRE_ACTIVATION_ON, src)
@@ -400,9 +397,12 @@
 		return
 
 	if (!pre_activation_checks(target))
-		discipline.coven_action.active = FALSE
+		discipline?.coven_action?.active = FALSE
 		//discipline.coven_action.build_all_button_icons()
 		return
+
+	//only charge once we know the power is actually going off
+	spend_resources()
 
 	activate(target)
 
@@ -628,9 +628,11 @@
  * * on_activation - if this proc is being called by activate(), which will stop it from triggering unless multi_activate is true.
  */
 /datum/coven_power/proc/do_cooldown(on_activation = FALSE)
-	if (multi_activate && !on_activation)
+	//multi_activate powers start their cooldown on activation, everything else on deactivation
+	if (multi_activate != on_activation)
 		return
 
+	deltimer(cooldown_timer)
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), cooldown_length, TIMER_STOPPABLE)
 
 /**
@@ -800,6 +802,14 @@
  * when it is gained. Triggered by parent /datum/coven/post_gain().
  */
 /datum/coven_power/proc/post_gain()
+	return
+
+/**
+ * Mirror of post_gain(), letting a power undo anything it handed its owner
+ * (granted spells, traits, items) when the Coven is taken away.
+ * Triggered by /mob/living/carbon/human/proc/remove_coven().
+ */
+/datum/coven_power/proc/post_lose()
 	return
 
 /**
