@@ -43,23 +43,29 @@
 
 /datum/outfit/job/roguetown/disciple/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
+	var/devotion_gain = CLERIC_REGEN_WEAK
+	var/devotion_limit = CLERIC_REQ_1
+	if(H.has_flaw(/datum/charflaw/addiction/alcoholic))//THE LEADER OF THE EIGHT ENDURING FISTS SWAYED BACK AND FORTH TO TRICK THE HERETICS, DRUNK WITH INTERNAL FIRE. THEY WERE BUT FROGS IN A WELL LOOKING UP AT THE NIGHT SKY THINKING THEY HAD REACHED THE HEAVENS.
+		ADD_TRAIT(H, TRAIT_DRUNK_HEALING, TRAIT_GENERIC)
 	if(H.mind)
-		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Staves, +I PER / +I INT")
+		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Polearms, +I PER / +I INT")
 		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
-			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest endurer.
+			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest psychud. Weighted 12 stats but no weapons, period.
+				devotion_gain = CLERIC_REGEN_DEVOTEE
+				devotion_limit = CLERIC_REQ_2
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)//dreamwalkers HATE the aquatic punch monk.
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)//bite the necromancer's nose and ears off for Psydon.
 				H.change_stat(STATKEY_INT, 1)
 				H.change_stat(STATKEY_SPD, 1)
-			if("Pugilist - Master Athletics, Pain Resistance")//classic disciple but with the weapon choices not being a noob trap. You could get these round start with 1 bullion regardless.
+			if("Pugilist - Master Athletics, Pain Resistance")//classic disciple but with the weapon choices not being a noob trap that debuffs you for grabbing a weapon you can make with 1 bullion roundstart.
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
@@ -72,10 +78,10 @@
 						r_hand = /obj/item/rogueweapon/katar/psydon
 					if("Knuckledusters")
 						r_hand = /obj/item/rogueweapon/knuckles/psydon
-			if("Quarterstaff - Expert Staves, +I PER / +I INT")//stave user but with no int and per malus so they dont get foled.
+			if("Quarterstaff - Expert Polearms, +I PER / +I INT")//stave user but with no int and per malus so they dont get folded.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted//no pugulist gloves for you sire, you have a staff.
 				H.change_stat(STATKEY_PER, 1)
 				H.change_stat(STATKEY_INT, 1)
 
@@ -95,4 +101,9 @@
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(
+		H,
+		cleric_tier = CLERIC_T2,//locked tier 2, but can have variable devotion gain and limit based on weapon choice.
+		passive_gain = devotion_gain,
+		devotion_limit = devotion_limit,
+	)
