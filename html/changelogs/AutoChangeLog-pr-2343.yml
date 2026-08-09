@@ -1,0 +1,5 @@
+author: "yupup123"
+delete-after: True
+changes:
+  - balance: "Powders can't be force inhaled through masks."
+  - balance: "Powders take just as long as a potion to be force inhaled."
