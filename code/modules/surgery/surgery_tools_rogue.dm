@@ -18,6 +18,7 @@
 	associated_skill = /datum/skill/combat/knives
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = null
+	is_tool = TRUE
 
 	grid_width = 32
 	grid_height = 64

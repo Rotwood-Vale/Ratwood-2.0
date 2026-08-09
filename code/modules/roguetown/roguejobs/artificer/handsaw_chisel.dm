@@ -21,6 +21,7 @@
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/axes		//Not an axe but fuck it - you're logging anyway.
 	max_blade_int = 300
+	is_tool = TRUE
 
 //................	Chisel	............... //
 /obj/item/rogueweapon/chisel
@@ -46,6 +47,7 @@
 	associated_skill = /datum/skill/combat/knives	//Not a knife but kinda similar to etching so..
 	max_blade_int = 300
 	dropshrink = 0.9
+	is_tool = TRUE
 	var/already_assembled
 
 /obj/item/rogueweapon/chisel/attackby(obj/item/W, mob/living/user, params)
@@ -115,6 +117,7 @@
 	possible_item_intents = list(/datum/intent/hit)
 	gripped_intents =  list(/datum/intent/chisel)
 	already_assembled = TRUE
+	is_tool = TRUE
 
 /obj/item/rogueweapon/chisel/assembly/mallet
 	icon_state = "chiselm"

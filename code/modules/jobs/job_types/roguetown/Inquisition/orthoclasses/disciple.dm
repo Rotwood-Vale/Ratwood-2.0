@@ -10,12 +10,13 @@
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(
 		TRAIT_CIVILIZEDBARBARIAN,
+		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
 	)
 	subclass_stats = list(
+		STATKEY_STR = 3,
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
-		STATKEY_STR = 2,
-		STATKEY_INT = -2,
+		STATKEY_INT = -1,
 		STATKEY_SPD = -1
 	)
 	subclass_skills = list(
@@ -26,7 +27,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,//lets them brew booze like a trappist monk, soulful.
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
@@ -43,25 +44,36 @@
 /datum/outfit/job/roguetown/disciple/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
 	if(H.mind)
-		var/weapons = list("Discipline - Unarmed", "Katar", "Knuckledusters", "Quarterstaff")
+		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Staves, +I PER / +I INT")
 		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
-			if("Discipline - Unarmed")
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
+			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest endurer.
+				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
-			if("Katar")
-				r_hand = /obj/item/rogueweapon/katar/psydon
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Knuckledusters")
-				r_hand = /obj/item/rogueweapon/knuckles/psydon
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
+				H.change_stat(STATKEY_INT, 1)
+				H.change_stat(STATKEY_SPD, 1)
+			if("Pugilist - Master Athletics, Pain Resistance")//classic disciple but with the weapon choices not being a noob trap. You could get these round start with 1 bullion regardless.
+				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				var/pugtype = list("Katar", "Knuckledusters")
+				var/pug_choice = input(H,"Choose your PUGILIST WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in pugtype
+				switch(pug_choice)
+					if("Katar")
+						r_hand = /obj/item/rogueweapon/katar/psydon
+					if("Knuckledusters")
+						r_hand = /obj/item/rogueweapon/knuckles/psydon
+			if("Quarterstaff - Expert Staves, +I PER / +I INT")//stave user but with no int and per malus so they dont get foled.
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				H.change_stat(STATKEY_PER, 1)
@@ -81,5 +93,6 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
