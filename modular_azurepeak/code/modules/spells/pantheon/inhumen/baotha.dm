@@ -32,7 +32,7 @@
 			to_chat(user, span_warning("They're already blessed by these effects!"))
 			revert_cast()
 			return FALSE
-		target.apply_status_effect(/datum/status_effect/buff/druqks/baotha) //Gets the trait temorarily, basically will just stop any active/upcoming ODs.	
+		target.apply_status_effect(/datum/status_effect/buff/druqks/baotha) //Gets the trait temorarily, basically will just stop any active/upcoming ODs.
 		target.visible_message("<span class='info'>[target]'s eyes appear to gloss over!</span>", "<span class='notice'>I feel.. at ease.</span>")
 
 //Enrapturing Powder - T2, basically a crackhead blowing cocaine in your face.
@@ -123,7 +123,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	recharge_time = 5 SECONDS 
+	recharge_time = 5 SECONDS
 	miracle = TRUE
 	devotion_cost = 10
 	/// Assoc list matching human mobs to a list of faked vice names, for consistency in presentation.
@@ -134,7 +134,7 @@
 		revert_cast()
 		return FALSE
 	var/mob/living/carbon/human/target = targets[1]
-	
+
 	if(!length(target.vices))
 		to_chat(user, span_warning("They have no vices."))
 		revert_cast()
@@ -149,7 +149,7 @@
 	// If you fail this check, the spell will try to convincingly lie to you about the vices you don't already know.
 	if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
 		if(!fake_vices_cache[target])
-			
+
 			// Gather up what vices the caster knows to be true, then randomize the rest.
 			var/list/vice_paths = generate_vice_paths(target, our_human)
 
@@ -168,7 +168,7 @@
 		if(prob(50 + ((target.STAPER - 10) * 10)))
 			to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
 
-	if(!vice_names) // if the caster actually passed the check, show real vices instead. 
+	if(!vice_names) // if the caster actually passed the check, show real vices instead.
 		vice_names = list()
 		for(var/datum/charflaw/charflaw in target.vices)
 			vice_names += charflaw.name
@@ -190,7 +190,7 @@
 /obj/effect/proc_holder/spell/invoked/baothavice/proc/generate_vice_paths(mob/living/carbon/human/target, mob/living/carbon/human/our_human)
 	RETURN_TYPE(/list)
 	var/list/vice_paths = list()
-	var/vices_to_gen = max(length(target.vices), 1) // We decrement this when we're guaranteeed to know a vice. 
+	var/vices_to_gen = max(length(target.vices), 1) // We decrement this when we're guaranteeed to know a vice.
 	var/baothamarked_nympho_check = FALSE
 
 	// First, we'll copy vices that are readily apparent to the caster, so as to make the readout convincing. Thankfully, we will only have to do this once per person.
@@ -256,7 +256,7 @@
 				if(plausible_vice_filter(vice_roll, vice_paths))
 					vice_paths += vice_roll
 					break
-	
+
 	return vice_paths
 
 /// Filter randomly-picked fake vices that the target could not plausibly have. A false result means the vice will not be picked.
@@ -318,7 +318,7 @@
 	taste_description = "sin"
 
 /datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
+	if(HAS_TRAIT(M, TRAIT_CRACKHEAD) || HAS_TRAIT(M, TRAIT_GODHAND))
 		if(volume >= 60)
 			M.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
 		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -347,7 +347,7 @@
 		if(thing.reagents.holder_full())
 			to_chat(user, span_warning("[thing] is full."))
 			return
-		
+
 		user.visible_message(span_info("[user] closes [user.p_their()] eyes in prayer and extends a hand over [thing] as a sweet smelling ichor begins to stream from [user.p_their()] fingertips..."), span_notice("I call forth [user.patron.name], to fill [thing] with Her blessings..."))
 
 		var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
@@ -370,7 +370,7 @@
 
 			if(prob(80))
 				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
-		
+
 		return max(50, fatigue_spent)
 	else
 		to_chat(user, span_info("I'll need to find a container that can hold Her blessing."))
@@ -496,7 +496,7 @@
 			return FALSE
 
 		target.visible_message(
-			span_info("[target] is forced to inhale deeply a sweet smelling mist. They twist in pain, yet a smile decorates their face!"), 
+			span_info("[target] is forced to inhale deeply a sweet smelling mist. They twist in pain, yet a smile decorates their face!"),
 			span_notice("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.")
 		)
 		target.adjustToxLoss(3)
@@ -506,4 +506,4 @@
 /datum/stressevent/lasthigh
 	timer = 10 MINUTES
 	stressadd = -99
-	desc = span_hypnophrase("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.") 
+	desc = span_hypnophrase("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.")
