@@ -233,9 +233,12 @@
 			BB.damage -= (BB.damage * (user.client.chargedprog / 100))
 			BB.embedchance /= 2
 			BB.accuracy -= 15
-		else
-			BB.damage = BB.damage
-		BB.damage *= damfactor * (user.STAPER > 10 ? user.STAPER / 10 : 1)
+		var/perception_modifier = user.STAPER
+		if(perception_modifier > 15) // Bow damage hardcapped at 15 PER
+			perception_modifier = 15
+		if(perception_modifier < 10)
+			perception_modifier = 10
+		BB.damage *= damfactor * (perception_modifier / 10)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()

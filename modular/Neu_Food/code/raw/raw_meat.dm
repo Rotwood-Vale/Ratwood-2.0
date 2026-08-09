@@ -483,7 +483,15 @@
 	if(!LAZYLEN(candidates))
 		to_chat(user, span_warning("The meat remains cold. No echoes of violence are hungry enough."))
 		return
+	user.fullscreen_redflash("redflash3")
+	to_chat(user, span_userdanger("The echoes of millions of screams assault your ears, visions of raining blood, mountains of skulls! THE GORESTAR HEARS YOUR UNHOLY PRAYER!"))
+	user.playsound_local(get_turf(user), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
+	user.emote("agony", forced = TRUE)
+	user.Paralyze(4 SECONDS, ignore_canstun = TRUE)
+	user.Knockdown(4 SECONDS)
 
+	sleep(7 SECONDS)
+	
 	var/mob/C = pick(candidates)
 	var/mob/living/carbon/human/H = new(get_turf(user))
 	H.key = C.key
@@ -506,7 +514,14 @@
 		to_chat(user, "You need to be a human to test this.")
 		return
 
-	to_chat(user, span_boldnotice("I feel dreadful!"))
+	user.fullscreen_redflash("redflash3")
+	to_chat(user, span_userdanger("The echoes of millions of screams assault your ears, visions of raining blood, mountains of skulls! THE GORESTAR HEARS YOUR UNHOLY PRAYER!"))
+	user.playsound_local(get_turf(user), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
+	user.emote("agony", forced = TRUE)
+	user.Paralyze(4 SECONDS, ignore_canstun = TRUE)
+	user.Knockdown(4 SECONDS)
+
+	sleep(7 SECONDS)
 
 	var/mob/living/carbon/human/H = new(get_turf(user))
 	H.key = user.key

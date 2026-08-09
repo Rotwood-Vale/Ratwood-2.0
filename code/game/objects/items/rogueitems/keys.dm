@@ -142,6 +142,42 @@
 	icon_state = "mazekey"
 	lockid = "manor"
 
+/obj/item/roguekey/manor/guestroom/i
+	name = "Manor Guestroom I Key"
+	desc = "This key will open the manor first guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom1"
+
+/obj/item/roguekey/manor/guestroom/ii
+	name = "Manor Guestroom II Key"
+	desc = "This key will open the manor second guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom2"
+
+/obj/item/roguekey/manor/guestroom/iii
+	name = "Manor Guestroom III Key"
+	desc = "This key will open the manor third guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom3"
+
+/obj/item/roguekey/manor/counsilroom/i
+	name = "Counsillor's Room I Key"
+	desc = "This key will open the manor first councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil1"
+
+/obj/item/roguekey/manor/counsilroom/ii
+	name = "Counsillor's Room II Key"
+	desc = "This key will open the manor second councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil2"
+
+/obj/item/roguekey/manor/counsilroom/iii
+	name = "Counsillor's Room III Key"
+	desc = "This key will open the manor third councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil3"
+
 /obj/item/roguekey/heir
 	name = "heir room key"
 	desc = "A highly coveted key belonging to the doors of the heirs of this realm."
@@ -477,6 +513,48 @@
 	icon_state = "bathkey"
 	lockid = "nightmaiden"
 
+/obj/item/roguekey/nightmaiden/rooms/i
+	name = "baths room I key"
+	desc = "This regal key opens the baths first room."
+	icon_state = "bathkey"
+	lockid = "lux1"
+
+/obj/item/roguekey/nightmaiden/rooms/ii
+	name = "baths room II key"
+	desc = "This regal key opens the baths second room."
+	icon_state = "bathkey"
+	lockid = "lux2"
+
+/obj/item/roguekey/nightmaiden/rooms/iii
+	name = "baths room III key"
+	desc = "This regal key opens the baths third room."
+	icon_state = "bathkey"
+	lockid = "lux3"
+
+/obj/item/roguekey/nightmaiden/rooms/iv
+	name = "baths room IV key"
+	desc = "This regal key opens the baths fourth room."
+	icon_state = "bathkey"
+	lockid = "lux4"
+
+/obj/item/roguekey/nightmaiden/rooms/v
+	name = "baths room V key"
+	desc = "This regal key opens the baths fifth room."
+	icon_state = "bathkey"
+	lockid = "lux5"
+
+/obj/item/roguekey/nightmaiden/rooms/punish
+	name = "baths punishment room  key"
+	desc = "This regal key opens the baths punishment room."
+	icon_state = "spikekey"
+	lockid = "punishroom"
+
+/obj/item/roguekey/nightmaiden/rooms/steam
+	name = "baths steam room key"
+	desc = "This regal key opens the baths steam room."
+	icon_state = "bathkey"
+	lockid = "steam"
+
 /obj/item/roguekey/mercenary
 	name = "mercenary key"
 	desc = "Why, a mercenary would not kick doors down."
@@ -666,41 +744,41 @@
 
 //bathhouse lockers
 
-/obj/item/roguekey/locker1
+/obj/item/roguekey/bathlocker1
 	name = "locker I key"
 	desc = "The key to the first locker."
 	icon_state = "brownkey"
-	lockid = "locker1"
+	lockid = "bathlocker1"
 
-/obj/item/roguekey/locker2
+/obj/item/roguekey/bathlocker2
 	name = "locker II key"
 	desc = "The key to the second locker."
 	icon_state = "brownkey"
-	lockid = "locker2"
+	lockid = "bathlocker2"
 
-/obj/item/roguekey/locker3
+/obj/item/roguekey/bathlocker3
 	name = "locker III key"
 	desc = "The key to the third locker."
 	icon_state = "brownkey"
-	lockid = "locker3"
+	lockid = "bathlocker3"
 
-/obj/item/roguekey/locker4
+/obj/item/roguekey/bathlocker4
 	name = "locker IV key"
 	desc = "The key to the fourth locker."
 	icon_state = "brownkey"
-	lockid = "locker4"
+	lockid = "bathlocker4"
 
-/obj/item/roguekey/locker5
+/obj/item/roguekey/bathlocker5
 	name = "locker V key"
 	desc = "The key to the fifth locker."
 	icon_state = "brownkey"
-	lockid = "locker5"
+	lockid = "bathlocker5"
 
-/obj/item/roguekey/locker6
+/obj/item/roguekey/bathlocker6
 	name = "locker VI key"
 	desc = "The key to the sixth locker."
 	icon_state = "brownkey"
-	lockid = "locker6"
+	lockid = "bathlocker6"
 
 //BYOS keys
 /obj/item/roguekey/tribal

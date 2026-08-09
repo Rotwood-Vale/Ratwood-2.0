@@ -54,6 +54,12 @@
 	droning_sound = 'sound/music/area/gobcamp.ogg'
 	deathsight_message = "A hidden goblin-stained fortress"
 
+/area/rogue/under/dungeon/orcfort
+	name = "orc encampment"
+	// first_time_text = "idk what a good name is for this"
+	droning_sound = 'sound/music/area/gobcamp.ogg'
+	deathsight_message = "A hidden orc-stained fortress"
+
 /area/rogue/under/dungeon/inferno
 	name = "inferno"
 	icon_state = "fire_chamber"

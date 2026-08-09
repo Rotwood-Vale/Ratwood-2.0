@@ -15,7 +15,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient
 	name = "ancient barbute"
-	desc = "Polished gilbranze plates, pounded to form a visored helmet. Zizo commands progress, and progress commands sacrifice; let these sundered legionnaires rise again, to spill the blood of unenlightened fools. A coiled pocket is perched atop the rim, awaiting to be plumed."
+	desc = "Polished gilbranze plates, pounded to form a visored helmet. Zizo commands ambition, and ambition commands sacrifice; let these sundered legionnaires rise again, to spill the blood of unenlightened fools. A coiled pocket is perched atop the rim, awaiting to be plumed."
 	icon_state = "ancientbarbute"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -166,7 +166,7 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
-	
+
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient
 	name = "ancient bascinet"
 	desc = "An ancient greathelm of polished gilbranze. There is no sight more haunting than that of a noble knight, long-succumbed to the undying forces of evil. Add a feather to show the colors of your family or allegiance."
@@ -489,6 +489,7 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
+	armor_class = null	//Needs no armor class, unique absolver gear.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 	name = "psydonic bucket helmet"
@@ -695,6 +696,7 @@
 	icon_state = "frogmouth"
 	item_state = "frogmouth"
 	emote_environment = 3
+	body_parts_inherent = HEAD|NECK // can't peel off the solid plate bottom portion of the helm
 	body_parts_covered = FULL_HEAD|NECK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
 	block2add = FOV_RIGHT|FOV_LEFT
@@ -731,7 +733,6 @@
 	desc = "A heavy frogmouth helmet, forged from avantyne. A wide slit allows for a practical amount of visibility considered unusual for this style of helmet. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizofrogmouth"
 	item_state = "zizofrogmouth"
-	block2add = FOV_BEHIND
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	armor = ARMOR_ASCENDANT
 
@@ -759,6 +760,7 @@
 	desc = "A rugged helmet which stirs with the same violence which drives our world."
 	icon_state = "graggarplatehelm"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
+	armor = ARMOR_ASCENDANT
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	var/active_item = FALSE
 
@@ -820,6 +822,7 @@
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	icon_state = "capbarbute"
+	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
 	adjustable = CAN_CADJUST
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY

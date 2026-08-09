@@ -153,7 +153,14 @@
 	baseturfs = list(/turf/open/floor/rogue/blocks)
 	neighborlay = "dirtedge"
 	climbdiff = 4
-	damage_deflection = 20
+	damage_deflection = 20 
+
+/turf/closed/wall/mineral/rogue/stonebrick/stonebricklight
+	name = "lit stone brick wall"
+	desc = "Rows of overlapping bricks form this wall, this one glows with a soft light."
+	icon = 'icons/turf/roguewall.dmi'
+	icon_state = "stonebricklight"
+	light_outer_range = 4
 
 /turf/closed/wall/mineral/rogue/wood
 	name = "wooden wall"
@@ -580,3 +587,11 @@
 	name = "thick dungeon shroud"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "shroud1"
+	baseturfs = /turf/closed/dungeon_void
+
+/turf/closed/dungeon_void/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
+	flags_1 |= INITIALIZED_1
+	turf_integrity = max_integrity
+	opaque_atom_count = 1
+	return INITIALIZE_HINT_NORMAL

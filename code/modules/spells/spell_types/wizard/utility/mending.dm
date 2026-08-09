@@ -13,8 +13,8 @@
 	sound = 'sound/magic/whiteflame.ogg'
 	cost = 2
 	spell_tier = 1 // Utility. For repair
-	glow_color = null
-	glow_intensity = 0
+	glow_color = GLOW_COLOR_ARCANE
+	glow_intensity = GLOW_INTENSITY_LOW
 
 	miracle = FALSE
 
@@ -65,6 +65,9 @@
 		if(I.body_parts_covered_dynamic != I.body_parts_covered)
 			I.repair_coverage()
 			to_chat(user, span_info("[I]'s shorn layers mend together."))
+
+	
+	return TRUE
 
 
 /obj/effect/proc_holder/spell/invoked/mending/lesser

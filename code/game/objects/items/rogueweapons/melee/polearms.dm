@@ -134,8 +134,9 @@
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.2
-	clickcd = 13
+	damfactor = 1.1
+	clickcd = 15
+	swingdelay = 2
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	blunt_chipping = TRUE
@@ -1232,6 +1233,7 @@
 	)
 	bigboy = TRUE
 	gripsprite = TRUE
+	special = /datum/special_intent/piercing_lunge
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
@@ -1699,6 +1701,7 @@
 	force = 35
 	force_wielded = 55
 	minstr = 15
+	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 	wdefense = 15
 	max_integrity = 555
 	max_blade_int = 555

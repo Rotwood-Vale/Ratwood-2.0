@@ -299,8 +299,8 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
 	throw_speed = 0.5
-	throw_range = 3
-	var/fuze = 7.5 SECONDS
+	throw_range = 6
+	var/fuze = 5.5 SECONDS
 	var/lit = FALSE
 	var/prob2fail = 1
 
@@ -349,7 +349,7 @@
 			if(!skipprob && prob(prob2fail))
 				snuff()
 			else
-				explosion(T, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+				explosion(T, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 				loud_message("A muted explosion echos in the ears of those whom hear it", hearing_distance = 14)
 				qdel(src) //IMPORTANT!! go into walls /turf/closed/wall/ and see /turf/closed/wall/ex_act. Its bounded with /proc/explosion. Same for /obj/structure and /obj/structure/ex_act because if you going to fuck intergity or whatever this shit called players will skin you alive for breaking their equipment and keys
 		else //also /turf/open/floor/ex_act for comment above
@@ -423,7 +423,7 @@
 			if(!skipprob && prob(prob2fail))
 				snuff()
 			else
-				explosion(T, devastation_range = 3, light_impact_range = 10, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+				explosion(T, devastation_range = 5, heavy_impact_range = 6, light_impact_range = 10, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 				loud_message("A loud explosion rings in the ears of those whom hear it", hearing_distance = 28)
 				qdel(src)
 

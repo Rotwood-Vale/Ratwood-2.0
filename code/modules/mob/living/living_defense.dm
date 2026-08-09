@@ -368,62 +368,8 @@
 	return TRUE
 
 
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
-// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
-// //		to_chat(M, "No attacking people at spawn, you jackass.")
-// 		return FALSE
-
-	if (M.used_intent.type == INTENT_HARM)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, span_info("I don't want to hurt anyone!"))
-			return FALSE
-
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, span_warning("I can't bite with my mouth covered!"))
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-			visible_message(span_danger("[M.name] bites [src]!"), \
-							span_danger("[M.name] bites you!"), span_hear("I hear a chomp!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_danger("I bite [src]!"))
-			return TRUE
-		else
-			visible_message(span_danger("[M.name]'s bite misses [src]!"), \
-							span_danger("I avoid [M.name]'s bite!"), span_hear("I hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_warning("My bite misses [src]!"))
-	return FALSE
-
 /mob/living/ex_act(severity, target)
 	..()
-
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
-// 	if(isturf(loc) && istype(loc.loc, /area/start))//commented out after deleting the areatype - this is old SS13 code
-// //		to_chat(M, "No attacking people at spawn, you jackass.")
-// 		return FALSE
-
-	if (M.used_intent.type == INTENT_HARM)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, span_info("I don't want to hurt anyone!"))
-			return FALSE
-
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, span_warning("I can't bite with my mouth covered!"))
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-			visible_message(span_danger("[M.name] bites [src]!"), \
-							span_danger("[M.name] bites you!"), span_hear("I hear a chomp!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_danger("I bite [src]!"))
-			return TRUE
-		else
-			visible_message(span_danger("[M.name]'s bite misses [src]!"), \
-							span_danger("I avoid [M.name]'s bite!"), span_hear("I hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, span_warning("My bite misses [src]!"))
-	return FALSE
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
@@ -469,6 +415,9 @@
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
+		if(no_redflash) // if we actually use the "type" variable here for some other flash, might want to make this check that.
+			type = /atom/movable/screen/fullscreen/blind
+			to_chat(src, span_warning("I'm momentarily blinded by the flash!"))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
 		return TRUE

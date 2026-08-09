@@ -118,11 +118,11 @@
 	. = ..()
 	var/list/mobs_in_view = oviewers(4, owner)
 	if(!LAZYLEN(mobs_in_view))
-		deactivate()
+		try_deactivate(direct = TRUE)
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.clan == owner.clan)
+		if(listener.is_clanmate(owner))
 			continue
 
 		listener.create_walk_to(2 SECONDS, owner)
@@ -153,11 +153,11 @@
 	. = ..()
 	var/list/mobs_in_view = oviewers(4, owner)
 	if(!LAZYLEN(mobs_in_view))
-		deactivate()
+		try_deactivate(direct = TRUE)
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.clan == owner.clan)
+		if(listener.is_clanmate(owner))
 			continue
 
 		listener.Stun(duration_length)
@@ -184,15 +184,18 @@
 	duration_length = 3 SECONDS
 	cooldown_length = 30 SECONDS
 
+	hostile = TRUE
+	violates_masquerade = TRUE
+
 /datum/coven_power/siren/shattering_crescendo/activate()
 	. = ..()
 	var/list/mobs_in_view = oviewers(7, owner)
 	if(!LAZYLEN(mobs_in_view))
-		deactivate()
+		try_deactivate(direct = TRUE)
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.clan == owner.clan)
+		if(listener.is_clanmate(owner))
 			continue
 
 		listener.Stun(duration_length)

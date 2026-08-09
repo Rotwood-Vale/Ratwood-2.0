@@ -1074,7 +1074,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	var/charges = H.quest_reroll_charges
 	var/next_left_ds = max(0, QUEST_COOLDOWN_DS - (world.time - H.quest_reroll_last_ds))
 	var/left_s = round(next_left_ds / 10)
-	var/mins = left_s / 60
+	var/mins = floor(left_s / 60)
 	var/secs = left_s % 60
 	var/secs_str = (secs < 10) ? "0[secs]" : "[secs]"
 

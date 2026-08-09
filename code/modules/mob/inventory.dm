@@ -516,6 +516,8 @@
 			var/obj/item/bodypart/BP = new path ()
 			BP.owner = src
 			BP.held_index = i
+			// todo: should this just use attach_limb?
 			bodyparts += BP
+			bodyparts_by_zone[BP.body_zone] = BP
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them

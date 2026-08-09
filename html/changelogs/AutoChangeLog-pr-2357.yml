@@ -1,0 +1,4 @@
+author: "UntoldTactics"
+delete-after: True
+changes:
+  - balance: "Inquisitor ordinator and inspector sub-class have devotion limits raised to 400 (from 250) and cleric regen set to minor (previous weak)"

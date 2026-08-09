@@ -118,6 +118,7 @@
 							new itempath(get_turf(src))
 					//handle player perception and reset for next time
 					src.visible_message("<span class='info'>The cauldron finishes boiling with a faint [found_recipe.smells_like] smell.</span>")
+					lastuser.log_message("brewed [found_recipe.type] in [src] (REAGENTS: [english_list(found_recipe.output_reagents, "none")]) (ITEMS: [english_list(found_recipe.output_items, "none")])", LOG_GAME)
 					record_featured_stat(FEATURED_STATS_ALCHEMISTS, lastuser)
 					record_round_statistic(STATS_POTIONS_BREWED)
 					//give xp for /datum/skill/craft/alchemy

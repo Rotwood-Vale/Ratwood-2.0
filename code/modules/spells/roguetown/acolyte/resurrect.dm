@@ -27,7 +27,11 @@
 	priest_excluded = TRUE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
+	var/old_recharge = recharge_time
 	recharge_time = initial(recharge_time) * SSchimeric_tech.get_resurrection_multiplier()
+	// If the spell was fully charged, keep it fully charged after adjusting recharge_time
+	if(charge_counter >= old_recharge && old_recharge > 0)
+		charge_counter = recharge_time
 	. = ..()
 
 /obj/effect/proc_holder/spell/invoked/resurrect/proc/get_current_required_items()
@@ -69,6 +73,11 @@
 			to_chat(user, span_warning("I need a holy [initial(temp_structure.name)] near [target]."))
 			revert_cast()
 			return FALSE
+			//OV edit
+		if(istype(target, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
+			target.revive()
+			return TRUE
+		//OV edit
 		var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
 		if(underworld_spirit)
 			var/mob/dead/observer/ghost = underworld_spirit.ghostize()
@@ -107,7 +116,7 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		to_chat(user, span_warning("The miracle fizzles."))
 		return FALSE
@@ -156,6 +165,9 @@
 /obj/effect/proc_holder/spell/invoked/resurrect/abyssor
 	name = "Abyssal Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>a dreamfiend will stalk the target and sap their stats until confronted by them."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	overlay_state = "resurrect"
 	sound = 'sound/magic/whale.ogg'
 	//A medley of common ocean fish, totalling 10
 	required_items = list(
@@ -172,7 +184,6 @@
 	debuff_type = /datum/status_effect/debuff/dreamfiend_curse
 	//This will be Abyssor's statue soon.
 	required_structure = /turf/open/water/ocean
-	overlay_state = "terrors"
 
 /datum/status_effect/debuff/dreamfiend_curse
 	id = "dreamfiend_curse"
@@ -269,8 +280,8 @@
 	alt_required_items = list(
 		/obj/item/heart_blood_vial/filled = 2
 	)
-	overlay_icon = 'icons/mob/actions/pestraspells.dmi'
-	action_icon = 'icons/mob/actions/pestraspells.dmi'
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "resurrect"
 
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
@@ -526,6 +537,9 @@
 /obj/effect/proc_holder/spell/invoked/resurrect/malum
 	name = "Diligent Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets willpower and strength will be sapped for a time."
+	overlay_icon = 'icons/mob/actions/malummiracles.dmi'
+	action_icon = 'icons/mob/actions/malummiracles.dmi'
+	overlay_state = "resurrect"
 	required_items = list(
 		/obj/item/ingot/iron = 3
 	)
@@ -538,6 +552,9 @@
 /obj/effect/proc_holder/spell/invoked/resurrect/ravox
 	name = "Just Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets strength and speed will be sapped for a time."
+	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	overlay_state = "resurrect"
 	// The items here are somewhat hard to pick as it still has to be something a ravox acolyte would reasonably obtain.
 	// Bones insinuate that mayhaps, they went out there to delete some skeletons for justice?
 	required_items = list(
@@ -608,6 +625,9 @@
 /obj/effect/proc_holder/spell/invoked/resurrect/noc
 	name = "Moonlit Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>Targets intelligence will be sapped for a time, in addition they will be burned by moonlight."
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
+	overlay_state = "resurrect"
 	required_items = list(
 		/obj/item/paper/scroll = 6
 	)
@@ -615,5 +635,4 @@
 		/obj/item/paper = 10
 	)
 	debuff_type = /datum/status_effect/debuff/noc_revival
-	overlay_state = "noc_revive"
 	sound = 'sound/magic/owlhoot.ogg'

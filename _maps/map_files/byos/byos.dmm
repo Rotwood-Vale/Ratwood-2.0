@@ -5297,7 +5297,7 @@
 	},
 /area/rogue/indoors)
 "fXv" = (
-/turf/closed,
+/turf/closed/void,
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cave)
 "fXD" = (
@@ -6068,7 +6068,7 @@
 	},
 /area/rogue/indoors/inq/boat/basement)
 "gJn" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue)
 "gJy" = (
 /obj/item/roguecoin/gold/pile,
@@ -8646,7 +8646,7 @@
 	},
 /area/rogue/indoors/vampire_manor)
 "jzf" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/mineral/rogue/sandstone,
 /area/rogue/under/cave)
 "jzp" = (
@@ -11762,9 +11762,6 @@
 	dir = 8
 	},
 /area/rogue/indoors/inq/boat/office)
-"mFf" = (
-/turf/closed,
-/area/rogue)
 "mFn" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -20677,7 +20674,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/shop)
 "vBC" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cave)
 "vBL" = (
@@ -22257,7 +22254,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "xtU" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "xud" = (
 /obj/structure/stairs/stone,
@@ -44121,12 +44118,12 @@ dxV
 aPO
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -44323,12 +44320,12 @@ pcB
 aPO
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -44525,12 +44522,12 @@ kYd
 kYd
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -44727,12 +44724,12 @@ gSJ
 aPO
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -44929,12 +44926,12 @@ iWk
 kYd
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -45131,12 +45128,12 @@ kYd
 nFS
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -45333,12 +45330,12 @@ nFS
 nFS
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -45535,12 +45532,12 @@ nFS
 nFS
 nFS
 nFS
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn
@@ -45737,12 +45734,12 @@ nFS
 nFS
 gJn
 gJn
-mFf
-mFf
-mFf
-mFf
-mFf
-mFf
+gJn
+gJn
+gJn
+gJn
+gJn
+gJn
 gJn
 gJn
 gJn

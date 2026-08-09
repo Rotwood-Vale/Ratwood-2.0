@@ -77,4 +77,4 @@
 		M.adjustOxyLoss(-1, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM)
 		M.adjustCloneLoss(-1 * REM, 0)
-	..()
+	return ..()

@@ -52,8 +52,7 @@
 	desc = "Plate chausses which stir with the innate violence driving our world"
 	icon_state = "graggarplatelegs"
 	armor = ARMOR_ASCENDANT
-	max_integrity = ARMOR_INT_LEG_STEEL_PLATE // Good good resistances, but less crit resist than the other ascendant armors. In trade, we can take off our pants to repair, and they are medium rather than heavy.
-	armor = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_LEG_ANTAG
 
 /obj/item/clothing/under/roguetown/platelegs/graggar/Initialize(mapload)
 	. = ..()
@@ -82,7 +81,7 @@
 /obj/item/clothing/under/roguetown/platelegs/zizo
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	name = "avantyne garments"
-	desc = "Leg garments worn by true anointed of the Dame of Progress. In Her name."
+	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
 	icon_state = "zizocloth"
 	armor = ARMOR_ASCENDANT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
