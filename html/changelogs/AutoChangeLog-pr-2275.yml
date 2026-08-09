@@ -1,9 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - rscadd: "Fire Cascade/firewalker spells"
-  - rscadd: "telegraphing penalties for wearing armor without traits"
-  - rscadd: "visible times for spell cooldowns"
-  - rscdel: "Aersolize removed"
-  - bugfix: "A host of fixes related to charge time/clickdelay for spells"
-  - bugfix: "light effects properly removed from mobs from spells"
