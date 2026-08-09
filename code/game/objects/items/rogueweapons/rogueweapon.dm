@@ -30,7 +30,6 @@
 	experimental_onhip = TRUE
 	experimental_onback = TRUE
 	resistance_flags = FIRE_PROOF
-	is_tool = FALSE
 	embedding = list(
 		"embed_chance" = 20,
 		"embedded_pain_multiplier" = 1,
@@ -39,6 +38,9 @@
 
 	/// Icon for sheathing. Only null for weapons that are unsheathable.
 	var/sheathe_icon = null
+
+	// whether this is actually a tool, like hoes and hammers, not a weapon proper. used to allow TRAIT_WEAPONLESS users to conduct repairs and such
+	var/is_tool = FALSE
 
 	/// Special datum holder
 	var/datum/special_intent/special
