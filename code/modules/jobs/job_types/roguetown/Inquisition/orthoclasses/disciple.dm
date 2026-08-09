@@ -12,7 +12,7 @@
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
 	)
-	subclass_stats = list(
+	subclass_stats = list(//(str 3(weighted 6) + wil 3 + con 3) = 12 - (INT -1 + SPD -1 (weighted -2) = 9 weighted stats. Old statblock was weighted 6 because morons dont know the stat weight rules for spd and str.
 		STATKEY_STR = 3,
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
