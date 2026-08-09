@@ -6,23 +6,13 @@
 	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/force_foot_lick/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		if(isdullahan(user))
-			var/datum/species/dullahan/dullahan = user.dna.species
-			if(dullahan.headless && !user.is_holding(dullahan.my_head))
-				return FALSE
-		else
-			return FALSE
+	if(user == target && !can_target_own_head(user))
+		return FALSE
 	return TRUE
 
 /datum/sex_action/force_foot_lick/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		if(isdullahan(user))
-			var/datum/species/dullahan/dullahan = user.dna.species
-			if(dullahan.headless && !user.is_holding(dullahan.my_head))
-				return FALSE
-		else
-			return FALSE
+	if(user == target && !can_target_own_head(user))
+		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))

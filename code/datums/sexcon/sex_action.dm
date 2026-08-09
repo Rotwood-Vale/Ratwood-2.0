@@ -51,6 +51,14 @@
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return TRUE
 
+/// A helper to handle dullahans targeting their own heads without code duplication.
+/// They can only target their own head if headless and holding their own head.
+/datum/sex_action/proc/can_target_own_head(mob/living/carbon/human/actor)
+	var/datum/species/dullahan/dullahan = actor.dna.species
+	if(!istype(dullahan))
+		return FALSE
+	return dullahan.headless && actor.is_holding(dullahan.my_head)
+
 // chastity play abstract action, contains shared code for actions that interact with chastity devices
 /datum/sex_action/chastityplay 
 	abstract_type = /datum/sex_action/chastityplay
