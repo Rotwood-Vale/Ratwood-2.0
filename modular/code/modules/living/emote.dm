@@ -29,7 +29,7 @@
 		if(type_override)
 			emote_type = type_override
 
-	user.log_message("SUBTLE - " + STRIP_HTML_TAGS(message, MAX_MESSAGE_LEN), LOG_EMOTE)
+	user.log_message("SUBTLE - " + message, LOG_EMOTE)
 	message = "<b>[user]</b> " + message
 /*
 	for(var/mob/M in GLOB.dead_mob_list)
