@@ -807,7 +807,6 @@
 /obj/effect/proc_holder/spell/invoked/ley_lines
 	name = "Obelisks of Power"
 	desc = "Creates a circle of arcyne power. Standing within it greatly enhances your spellcasting, increasing your intellect and reducing the cooldown of your spells. If you are not in Combat Mode, the obelisks instead restore your energy at a rapid pace.<br><br>While standing in a Arcyne Loop, you cannot defend yourself.<br><br>This will also grant a spell that makes you quickly move back to your Arcyne Loop."
-//	fluff_desc = "'No! My Ley Lines!' is a common cry among Hierophants the moment they are dragged even an inch away from their carefully prepared nexus of power. Within its bounds, arcane formulae seem effortless, threads of mana unravel before the mind's eye, and complex spellwork flows with the precision of an auto-smither. Outside of it, reality becomes frustratingly ordinary once more. Most Magos give stern warnings this sensation can be addictive, and even dangerous. Hierophants take it as a suggestion."
 	overlay_state = "rune2"
 	sound = 'sound/magic/chargingold.ogg'
 	chargetime = 0
@@ -834,7 +833,6 @@
 /obj/effect/proc_holder/spell/invoked/between_the_lines
 	name = "Between the spires"
 	desc = "Return instantly to your Arcyne Loop, you addict."
-//	fluff_desc = "Among the oldest Hierophant workings recorded, 'Between the Lines' is said to have been born from a simple problem: every moment spent away from a Ley Circle was a moment deprived of perfection. Rather than endure the indignity of walking back, the first Hierophants bent space itself, ensuring they could return to the intoxicating clarity of the Ley Lines without a single step."
 	overlay_state = "rune3"
 	recharge_time = 15 SECONDS
 	chargetime = 1.5 SECONDS
@@ -850,7 +848,7 @@
 	if(!linked_circle || QDELETED(linked_circle))
 		return FALSE
 	if(get_dist(user, linked_circle) > max_range)
-		user.balloon_alert(user, "Too far from my arcyne loop!")
+		user.balloon_alert(user, "too far from my arcyne loop!")
 		return FALSE
 	var/turf/T = get_turf(linked_circle)
 	if(!T)
@@ -942,7 +940,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = BELOW_OBJ_LAYER
 
-/obj/structure/leyline_circle/Initialize(mapload, mob/living/user, var/obj/effect/proc_holder/spell/invoked/ley_lines/spell)
+/obj/structure/leyline_circle/Initialize(mapload, mob/living/user, obj/effect/proc_holder/spell/invoked/ley_lines/spell)
 	. = ..()
 	owner = user
 	owner_mind = user?.mind
@@ -1028,7 +1026,7 @@
 			continue
 		var/turf/anchor_turf = locate(target.x, target.y + 1, target.z)
 		var/obj/effect/beam_target/BT = new(anchor_turf || target)
-		// origin pixel offset stays 0/0 — do not touch these, that's what fixes the endpoint bug
+		// origin pixel offset stays 0/0 - do not touch these, that's what fixes the endpoint bug
 		var/obj/effect/phantom_leyline/L = new(target)
 		L.pixel_x = -14   // shift obelisk art left/right to meet the beam's fixed anchor point
 		L.pixel_y = -24  // shift obelisk art up/down to meet the beam's fixed anchor point
