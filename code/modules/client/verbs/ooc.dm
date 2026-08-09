@@ -666,7 +666,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 // Need to add hide emotes, etc
 
 /client/verb/map_vote_tally_count()
-	set name = "Show Map Vote Tallies"
-	set desc = "View the current map vote tally counts."
+	set name = "Show Map Vote Info"
+	set desc = "View map vote status and active-vote behavior."
 	set category = "OOC"
 	to_chat(mob, SSmap_vote.tally_printout)

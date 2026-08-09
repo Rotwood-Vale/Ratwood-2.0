@@ -88,21 +88,14 @@
 	if(display_statistics)
 		returned_text += "\n\nResults:"
 
-		// Total votes including map tallies
-		var/grand_total_votes = total_votes
-
 		for(var/map in choices)
-			grand_total_votes += SSmap_vote.map_vote_cache[map]
-
-		for(var/map in choices)
-			var/current_tally = SSmap_vote.map_vote_cache[map]
-			var/total = choices[map] + current_tally
+			var/total = choices[map]
 			var/pref = preference_votes[map]
 			var/player = choices[map] - pref
 
 			var/percentage = 0
-			if(grand_total_votes)
-				percentage = round((total / grand_total_votes) * 100, 0.1)
+			if(total_votes)
+				percentage = round((total / total_votes) * 100, 0.1)
 
 			var/text = "[percentage]"
 			var/spaces_needed = max(0, 5 - length(text))
@@ -118,7 +111,7 @@
 			if(pref)
 				returned_text += " (+[pref] preference)"
 
-			returned_text += " + [current_tally] tally = [total] total"
+			returned_text += " = [total] total"
 
 	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
@@ -144,9 +137,10 @@
 	return ..()
 
 /datum/vote/map_vote/finalize_vote(winning_option)
-	SSmap_vote.finalize_map_vote(src)
+	SSmap_vote.finalize_map_vote(src, winning_option)
 /datum/controller/subsystem/map_vote/proc/get_valid_map_vote_choices()
 	var/list/choices = list()
+	var/connected_players = length(GLOB.player_list)
 
 	for(var/map_id in config.maplist)
 		var/datum/map_config/cfg = config.maplist[map_id]
@@ -154,6 +148,10 @@
 		if(!cfg)
 			continue
 		if(!cfg.votable)
+			continue
+		if(cfg.config_min_users && connected_players < cfg.config_min_users)
+			continue
+		if(cfg.config_max_users && connected_players > cfg.config_max_users)
 			continue
 
 		choices += map_id
