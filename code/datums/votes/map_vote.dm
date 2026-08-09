@@ -111,8 +111,6 @@
 			if(pref)
 				returned_text += " (+[pref] preference)"
 
-			returned_text += " = [total] total"
-
 	return fieldset_block(title_text, returned_text, "boxed_message purple_box")
 
 
