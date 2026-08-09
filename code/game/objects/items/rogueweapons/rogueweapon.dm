@@ -30,6 +30,7 @@
 	experimental_onhip = TRUE
 	experimental_onback = TRUE
 	resistance_flags = FIRE_PROOF
+	is_tool = FALSE
 	embedding = list(
 		"embed_chance" = 20,
 		"embedded_pain_multiplier" = 1,
