@@ -157,7 +157,7 @@
 		if("View Details")
 			project.show_details(user)
 		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
+			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", "Yes", "No") == "Yes")
 				cancel_project(project_type)
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
