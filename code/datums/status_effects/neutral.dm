@@ -128,7 +128,7 @@
 	desc = "AN AUDIO-PARASITE ON ME."
 	icon_state = "blackeye"	
 
-/atom/movable/screen/alert/bugged/Click()
+/atom/movable/screen/alert/bugged/handle_click()
 	var/mob/living/L = usr
 
 	if(!L.has_status_effect(/datum/status_effect/bugged))
@@ -186,7 +186,7 @@
 
 // Sadly we can't rely on /atom/movable/screen/Click() to return TRUE at all.
 // We MUST use the shitcode method of copypasting if both examine and toggle are to work properly.
-/atom/movable/screen/alert/status_effect/compliance/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/compliance/handle_click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
 	var/mob/user = usr

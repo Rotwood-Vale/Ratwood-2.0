@@ -1,6 +1,6 @@
 /datum/language/thievescant
 	name = "Thieves' Cant"
-	desc = "A secret language of gestures, expressions, and subtle body movements used by rogues, criminals, and the underworld to communicate without detection."
+	desc = "(Spoken with ,x) A secret language of gestures, expressions, and subtle body movements used by rogues, criminals, and the underworld to communicate without detection."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"

@@ -713,7 +713,7 @@
 	item_state = "citywatch"
 	blocksound = PLATEHIT
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE+50//need to make it cover arms so that it displays the sprite properly. Still, giving it atypically good integrity
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50 //need to make it cover arms so that it displays the sprite properly. Still, giving it atypically good integrity
 	armor_class = ARMOR_CLASS_MEDIUM
 	smelt_bar_num = 2
 	sewrepair = FALSE

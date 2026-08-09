@@ -119,6 +119,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar
@@ -156,8 +157,8 @@
 
 /datum/virtue/utility/feral_appetite
 	name = "Feral Appetite"
-	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
-	added_traits = list(TRAIT_NASTY_EATER)
+	desc = "I can eat just about ANYTHING, rotten or poisonous food and tainted water, even entrails..."
+	added_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER)
 
 /datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
 	..()

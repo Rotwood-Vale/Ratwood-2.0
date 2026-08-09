@@ -1277,7 +1277,7 @@
 
 /datum/status_effect/buff/flylordstriage/tick()
 	playsound(owner, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
-	owner.flash_fullscreen("redflash3")
+	owner.fullscreen_redflash("redflash3")
 	owner.emote("agony")
 	new /obj/effect/temp_visual/flies(get_turf(owner))
 	var/list/wCount = owner.get_wounds()
@@ -1803,15 +1803,6 @@
 	id = "psydonic_endurance"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
-
-/datum/status_effect/buff/psydonic_endurance/on_apply()
-	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(owner, TRAIT_HEAVYARMOR))
-		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
-/datum/status_effect/buff/psydonic_endurance/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"

@@ -80,6 +80,8 @@
 	damfactor = NONBLUNT_BLUNT_DAMFACTOR
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
 
 // A weaker strike for sword with high damage so that it don't end up becoming better than mace
 /datum/intent/sword/strike/bad
@@ -1419,6 +1421,32 @@
 	force = 25 // Same statline as the cup hilted etruscan rapier
 	wdefense = 8
 
+/obj/item/rogueweapon/sword/rapier/courtphysician
+	name = "cane blade"
+	desc = "A steel blade with a gold handle, intended to be concealed inside of a cane, bears the visage of a vulture on its pommel."
+	icon = 'icons/roguetown/weapons/swords32.dmi'
+	icon_state = "doccaneblade"
+	sheathe_icon = "doccaneblade"
+	sellprice = 100 //Gold handle
+	grid_width = 32
+	grid_height = 64
+	dropshrink = 0
+	bigboy = FALSE
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
+	gripped_intents = null
+	force_wielded = 0
+
+/obj/item/rogueweapon/sword/rapier/hand
+	name = "dark sister"
+	desc = "A tool made for nobler tasks than shedding blood, discreet and ever ready, as you should be too."
+	pixel_y = 0
+	pixel_x = 0
+	bigboy = FALSE
+	icon = 'icons/roguetown/weapons/special/hand32.dmi'
+	icon_state = "staffblade"
+	item_state = "staffblade"
+	sheathe_icon = "staffblade"
+
 /obj/item/rogueweapon/sword/cutlass
 	name = "cutlass"
 	desc = "The mariner's special: A short, broad sabre with a slightly curved blade optimized for slashing."
@@ -1990,8 +2018,8 @@
 					probby -= M.get_skill_level(I.associated_skill) * 5
 			var/obj/item/mainhand = user.get_active_held_item()
 			var/obj/item/offhand = user.get_inactive_held_item()
-			if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
-				probby += 20	//We give notable bonus to dual-wielders who use two hooked swords.
+			if(HAS_TRAIT(user, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
+				probby += 20	//We give notable bonus to dual-wielders who use two hooked swords, this time for real.
 			if(prob(probby))
 				M.dropItemToGround(I, force = FALSE, silent = FALSE)
 				user.stop_pulling()
@@ -2050,7 +2078,8 @@
 				spilled.forceMove(user.drop_location())
 			user.visible_message(span_danger("[user] disembowels themselves, their organs spilling out!"), span_notice("You feel a horrible pain as your organs spill out!"))
 			user.emote("scream", null, null, TRUE, TRUE) // forced scream
-			user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+			if(!user.no_redflash)
+				user.overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
 			return
 	..()
 

@@ -491,6 +491,11 @@
 		var/mob/living/carbon/human/target = targets[1]
 		var/mob/living/carbon/human/UH = user
 
+		if(target == UH)
+			to_chat(UH, span_warning("I cannot transfer my own blood to myself."))
+			revert_cast()
+			return FALSE
+
 		if(UH.doing)
 			to_chat(UH, span_warning("I can't cast this while doing something else."))
 			revert_cast()

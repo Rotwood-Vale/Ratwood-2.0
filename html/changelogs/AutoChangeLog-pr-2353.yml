@@ -1,0 +1,6 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: " blood duping with bloodpool"
+  - bugfix: "torpor giving you blood, now uses 2 blood a tick"
+  - bugfix: "vampire abilities affecting fellow-clan members"
