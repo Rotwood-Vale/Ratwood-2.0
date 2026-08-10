@@ -215,3 +215,22 @@
       preference, and returns the exact same thing flash_fullscreen does (or null
       if flashes are disabled). This way your code can check if the prefs blocked
       it.
+2026-08-10:
+  Arturlang:
+  - bugfix: ' blood duping with bloodpool'
+  - bugfix: torpor giving you blood, now uses 2 blood a tick
+  - bugfix: vampire abilities affecting fellow-clan members
+  EvenInDeathIStillServe:
+  - rscadd: Adds a Tall Eyes Outer head marking.
+  SillyMoff:
+  - qol: add info about energy and stamina while examine it
+  Slavica:
+  - rscadd: Added new variant of the Ponytail ( Witcher ) hairstyle
+  UntoldTactics:
+  - balance: Inquisitor ordinator and inspector sub-class have devotion limits raised
+      to 400 (from 250) and cleric regen set to minor (previous weak)
+  yupup123:
+  - balance: Powders can't be force inhaled through masks.
+  - balance: Powders take just as long as a potion to be force inhaled.
+  - bugfix: Fixes the bug that causes rolled assassins to not properly take up the
+      slot or leave a slot open.
