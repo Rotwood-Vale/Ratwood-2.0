@@ -287,8 +287,12 @@
 	if(!bodypart)
 		return FALSE
 
-	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.sexcon.Adjacent_Or_Closet(target))
-		return FALSE
+	if(!(sigbitflags & SKIP_ADJACENCY_CHECK))
+		if(src.ranged_los_action)
+			if(!can_see(user, target, src.ranged_los_distance))
+				return FALSE
+		else if(!user.sexcon.Adjacent_Or_Closet(target))
+			return FALSE
 
 	if(!self_target && !isnull(target.buckled) && istype(target.buckled, /obj/structure/bondage/gloryhole)) // gloryhole buckled mobs ignore tile/grab checks
 		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)

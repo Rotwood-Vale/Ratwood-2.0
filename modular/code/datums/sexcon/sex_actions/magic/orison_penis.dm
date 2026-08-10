@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_other_penis_orison
 	name = "Jerk them off with godhand"
 	check_same_tile = FALSE
+	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_COCK
 	subtle_supported = TRUE

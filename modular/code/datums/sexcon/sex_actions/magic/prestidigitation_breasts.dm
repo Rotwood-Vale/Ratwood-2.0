@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_other_breasts_prestidigitation
 	name = "Rub their breasts with magehand"
 	check_same_tile = FALSE
+	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	subtle_supported = TRUE
 

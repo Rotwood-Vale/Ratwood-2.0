@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_other_breasts_orison
 	name = "Rub their breasts with godhand"
 	check_same_tile = FALSE
+	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	subtle_supported = TRUE
 

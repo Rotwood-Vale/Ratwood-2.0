@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_other_anus_orison
 	name = "Finger their butt with godhand"
 	check_same_tile = FALSE
+	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_ANUS
 	subtle_supported = TRUE

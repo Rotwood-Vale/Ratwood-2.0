@@ -1,6 +1,7 @@
 /datum/sex_action/masturbate_other_vagina_prestidigitation
 	name = "Rub their clit with magehand"
 	check_same_tile = FALSE
+	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_CUNT
 	subtle_supported = TRUE

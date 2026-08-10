@@ -15,6 +15,8 @@
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(user == target)
 		return FALSE
+	if(!user.sexcon.Adjacent_Or_Closet(target))
+		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_CHEST))
 		return FALSE
 	if(!breasts)
