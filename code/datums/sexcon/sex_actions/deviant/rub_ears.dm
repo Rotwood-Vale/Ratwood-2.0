@@ -12,10 +12,12 @@
 /datum/sex_action/rub_ears/can_perform(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
+	if(!user.sexcon.Adjacent_Or_Closet(target)) // Should fix the long range ear gropes...
+		return FALSE
 	return TRUE
 
 /datum/sex_action/rub_ears/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] places [user.p_their()] on [target] ears..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] places [user.p_their()] hands on [target] ears..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/rub_ears/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
