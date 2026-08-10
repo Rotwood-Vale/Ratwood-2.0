@@ -289,7 +289,7 @@
 
 	if(!(sigbitflags & SKIP_ADJACENCY_CHECK))
 		if(src.ranged_los_action)
-			if(!can_see(user, target, src.ranged_los_distance))
+			if(!(target in view(src.ranged_los_distance, user)))
 				return FALSE
 		else if(!user.sexcon.Adjacent_Or_Closet(target))
 			return FALSE
