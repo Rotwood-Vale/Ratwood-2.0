@@ -99,7 +99,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltr = /obj/item/storage/keyring/priest
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
-	r_hand = /obj/item/rogueweapon/scabbard/sword
+	r_hand = /obj/item/rogueweapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backl = /obj/item/rogueweapon/shield/tower/holysee
 	gloves = /obj/item/clothing/gloves/roguetown/plate/holysee
@@ -114,7 +114,6 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
 		/obj/item/mini_flagpole/church,
-		/obj/item/rogueweapon/scabbard/gwstrap,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	if(H.mind)
