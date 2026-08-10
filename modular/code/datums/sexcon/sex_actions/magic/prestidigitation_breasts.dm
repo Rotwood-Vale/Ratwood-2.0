@@ -34,7 +34,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] squeezes [target]'s breasts with tingles of arcyne energy..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] squeezes [target]'s breasts with conjured hands..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 
 	var/skill_level = max(user.get_skill_level(/datum/skill/magic/arcane), 1)
 	user.sexcon.perform_sex_action(target, max(1, (skill_level * 0.75)), 4, TRUE)
