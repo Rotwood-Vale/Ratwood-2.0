@@ -264,7 +264,10 @@
 	// Freeuse: target has opted to skip positioning/exposure checks entirely.
 	// Adjacency is still enforced so people can't reach across the map.
 	if(target.sexcon.freeuse)
-		if(!user.sexcon.Adjacent_Or_Closet(target))
+		if(src.ranged_los_action)
+			if(!(target in view(src.ranged_los_distance, user)))
+				return FALSE
+		else if(!user.sexcon.Adjacent_Or_Closet(target))
 			return FALSE
 
 		if(!isnull(user_controller.current_action) && user_controller.current_action == src.type)
