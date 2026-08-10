@@ -37,9 +37,16 @@ SUBSYSTEM_DEF(map_vote)
 /datum/controller/subsystem/map_vote/proc/write_cache()
 	rustg_file_write(json_encode(map_vote_cache), MAP_VOTE_CACHE_LOCATION)
 
+/datum/controller/subsystem/map_vote/proc/should_cache_map_tally(map_name)
+	return map_name != "Desert Town"
+
 /datum/controller/subsystem/map_vote/proc/sanitize_cache()
 	var/max = 200
 	for(var/map_name in map_vote_cache)
+		if(!should_cache_map_tally(map_name))
+			map_vote_cache -= map_name
+			continue
+
 		var/found = FALSE
 
 		for(var/id in config.maplist)
@@ -79,7 +86,8 @@ SUBSYSTEM_DEF(map_vote)
 			continue
 
 		var/datum/map_config/cfg = config.maplist[map_id]
-		map_vote_cache[map_id] += (map_vote.choices[map_id] * cfg.voteweight) + flat
+		if(should_cache_map_tally(cfg.map_name))
+			map_vote_cache[map_id] += (map_vote.choices[map_id] * cfg.voteweight) + flat
 
 	sanitize_cache()
 
@@ -91,21 +99,36 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("Admin override active. Map not changed.")
 		return
 
-	var/list/valid_maps = filter_cache_to_valid_maps()
-	if(!length(valid_maps))
-		send_map_vote_notice("No valid maps.")
-		return
-
-	// Pick the map with the highest tally
+	var/connected_players = length(GLOB.player_list)
+	var/list/valid_maps = list()
 	var/winner_id
 	var/winner_amount = -1
 
-	for(var/map_id in valid_maps)
+	for(var/map_id in map_vote.choices)
+		var/datum/map_config/cfg = config.maplist[map_id]
+		if(!cfg)
+			continue
+		if(!cfg.votable)
+			continue
+		if(cfg.config_min_users && connected_players < cfg.config_min_users)
+			continue
+		if(cfg.config_max_users && connected_players > cfg.config_max_users)
+			continue
+
+		valid_maps[map_id] = TRUE
+
 		var/tally = map_vote_cache[map_id]
+		if(isnull(tally))
+			tally = 0
+		tally += (map_vote.choices[map_id] * cfg.voteweight) + flat
 
 		if(tally > winner_amount)
 			winner_id = map_id
 			winner_amount = tally
+
+	if(!length(valid_maps))
+		send_map_vote_notice("No valid maps.")
+		return
 
 	var/datum/map_config/winner_cfg = config.maplist[winner_id]
 	if(!winner_cfg)
@@ -174,6 +197,8 @@ SUBSYSTEM_DEF(map_vote)
 	for(var/map_id in map_vote_cache)
 		var/datum/map_config/cfg = config.maplist[map_id]
 		if(!cfg)
+			continue
+		if(!should_cache_map_tally(cfg.map_name))
 			continue
 
 		data += "[cfg.map_name] - [map_vote_cache[map_id]]"

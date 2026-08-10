@@ -92,10 +92,18 @@
 		var/grand_total_votes = total_votes
 
 		for(var/map in choices)
-			grand_total_votes += SSmap_vote.map_vote_cache[map]
+			var/datum/map_config/cfg = global.config.maplist[map]
+			if(cfg && SSmap_vote.should_cache_map_tally(cfg.map_name))
+				grand_total_votes += SSmap_vote.map_vote_cache[map]
 
 		for(var/map in choices)
-			var/current_tally = SSmap_vote.map_vote_cache[map]
+			var/current_tally = 0
+			var/datum/map_config/cfg = global.config.maplist[map]
+			if(cfg && SSmap_vote.should_cache_map_tally(cfg.map_name))
+				current_tally = SSmap_vote.map_vote_cache[map]
+			if(isnull(current_tally))
+				current_tally = 0
+
 			var/total = choices[map] + current_tally
 			var/pref = preference_votes[map]
 			var/player = choices[map] - pref
