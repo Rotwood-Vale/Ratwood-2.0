@@ -71,14 +71,19 @@
 	health = DRAGON_BROODMOTHER_HEALTH
 	maxHealth = DRAGON_BROODMOTHER_HEALTH
 	name = "ifrit Matriarch"
+	health = 8000
+	maxHealth = 8000
 	icon_state = "ifrit_queen"
 	icon_living = "ifrit_queen"
-	icon_dead = "ifrit_dead"
-	base_intents = list(/datum/intent/simple/bite/dragon_bite)
+	icon_dead = "ifrit_queen_dead"
+	base_intents = list(/datum/intent/unarmed/dragonclaw)
 	ranged_cooldown_time = 20 SECONDS
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/ifrit/fire_breath
 	var/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/firewheel
 	pixel_x = -32
+	STACON = 20
+	STASTR = 20
+	STASPD = 13
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch/Initialize(mapload)
 	. = ..()
@@ -104,6 +109,8 @@
 	ADD_TRAIT(src, TRAIT_STRONGBITE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE1, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_GUIDANCE, TRAIT_GENERIC)	//The ifrit boss si dangerious
+	src.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch/Destroy()
 	fire_breath.Remove(src)
@@ -129,8 +136,6 @@
 	icon_state = "smoke"
 	invisibility = SEE_INVISIBLE_LIVING
 	anchored = TRUE
-
-/mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch
 
 /obj/effect/oneway/ifrit/attackby(obj/item/W, mob/user, params)
 	. = ..()

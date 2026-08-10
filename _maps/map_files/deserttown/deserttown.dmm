@@ -10049,7 +10049,15 @@
 /turf/closed/wall/mineral/rogue/sandbrick,
 /area/rogue/indoors/town/desert)
 "cLP" = (
-/obj/structure/bars/passage/steel,
+/obj/structure/bars/passage/steel{
+	redstone_id = "oathmarked"
+	},
+/obj/structure/curtain/magenta{
+	color = "#a1254a";
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
 /turf/open/floor/rogue/darkpath{
 	color = "#c4abff"
 	},
@@ -56484,7 +56492,9 @@
 /area/rogue/under/dungeon/desert_pyramid)
 "pUb" = (
 /obj/structure/table/wood,
-/obj/structure/lever,
+/obj/structure/lever{
+	redstone_id = "oathmarked"
+	},
 /turf/open/floor/rogue/deserttempletile,
 /area/rogue/under/cave)
 "pUj" = (
@@ -57759,7 +57769,6 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/skeletoncrypt)
 "qne" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/structure/table/wood/long_table/mid,
 /turf/open/floor/rogue/deserttempletile,
@@ -72252,6 +72261,11 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
+"uqM" = (
+/obj/structure/fluff/sandpile,
+/mob/living/simple_animal/hostile/retaliate/rogue/mimic/gold,
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/under/cave)
 "uqW" = (
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/darkpath,
@@ -83608,7 +83622,6 @@
 /area/rogue/under/cave)
 "xyc" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/structure/table/wood/long_table/east,
 /turf/open/floor/rogue/deserttempletile,
 /area/rogue/under/cave)
@@ -84946,7 +84959,7 @@
 /area/rogue/indoors/town/garrison/desert)
 "xRj" = (
 /obj/effect/decal/cleanable/sigil,
-/mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch,
+/mob/living/simple_animal/hostile/retaliate/rogue/ifrit/matriarch/boss,
 /turf/open/floor/rogue/darkpath{
 	color = "#c4abff"
 	},
@@ -157834,8 +157847,8 @@ uQT
 uQT
 uQT
 iqp
-wdA
-wdA
+bqS
+bqS
 wdA
 wdA
 wdA
@@ -157851,8 +157864,8 @@ wdA
 wdA
 wdA
 wdA
-wdA
-wdA
+bqS
+bqS
 uQT
 nNx
 nNx
@@ -158146,7 +158159,7 @@ uQT
 uQT
 uQT
 uQT
-wdA
+bqS
 dkv
 gaR
 mbl
@@ -158164,7 +158177,7 @@ tbU
 tbU
 iul
 dzr
-wdA
+bqS
 uQT
 nNx
 nNx
@@ -158458,7 +158471,7 @@ uQT
 uQT
 uQT
 uQT
-wdA
+bqS
 mbl
 mbl
 mbl
@@ -158476,7 +158489,7 @@ btz
 tbU
 nKb
 dzr
-wdA
+bqS
 uQT
 nNx
 nNx
@@ -158770,8 +158783,8 @@ uQT
 uQT
 uQT
 uQT
-wdA
-wdA
+bqS
+bqS
 wdA
 wdA
 wdA
@@ -158787,8 +158800,8 @@ wdA
 wdA
 wdA
 wdA
-wdA
-wdA
+bqS
+bqS
 uQT
 nNx
 nNx
@@ -277016,8 +277029,8 @@ wPj
 wPj
 wPj
 wPj
-uIZ
-wco
+pbN
+pbN
 aGG
 aGG
 aGG
@@ -277336,8 +277349,8 @@ qEz
 aGG
 aGG
 rwi
-wco
-uIZ
+pbN
+pbN
 wPj
 wPj
 wPj
@@ -277686,7 +277699,7 @@ nNt
 czX
 suf
 rRb
-uDc
+uqM
 hii
 vgl
 rRb
