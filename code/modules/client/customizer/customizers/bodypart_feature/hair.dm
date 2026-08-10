@@ -395,6 +395,7 @@
 		/datum/sprite_accessory/hair/head/ponytail8,
 		/datum/sprite_accessory/hair/head/bob_mane,
 		/datum/sprite_accessory/hair/head/ponytailwitcher,
+		/datum/sprite_accessory/hair/head/ponytailwitcheralt,
 		/datum/sprite_accessory/hair/head/poofy,
 		/datum/sprite_accessory/hair/head/princely,
 		/datum/sprite_accessory/hair/head/protagonist,

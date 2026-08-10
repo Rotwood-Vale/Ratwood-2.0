@@ -222,3 +222,6 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
+	var/no_redflash = FALSE
