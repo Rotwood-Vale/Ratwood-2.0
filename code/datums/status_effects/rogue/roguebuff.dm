@@ -669,8 +669,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
 	duration = 10 SECONDS
 	examine_text = "<font color='#ffae00'>SUBJECTPRONOUN is slowly being rewound in time!</font>"
-	var/healing_on_tick = 3
+	var/healing_on_tick = 2.5
 	var/outline_colour = "#ffc558"
+	var/increment
 
 /datum/status_effect/buff/originhealing/on_creation(mob/living/new_owner, new_healing_on_tick)
 	if(!isnull(new_healing_on_tick))
@@ -681,6 +682,8 @@
 	var/filter = owner.get_filter(REWIND_AURA)
 	if (!filter)
 		owner.add_filter(REWIND_AURA, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
+		duration = 20 SECONDS
 	return TRUE
 
 /datum/status_effect/buff/originhealing/on_remove()
@@ -707,12 +710,11 @@
 		if(most_damaged)
 			var/total_damage = most_damaged.brute_dam + most_damaged.burn_dam
 			if(total_damage > 0)
-				var/brute_heal = healing_on_tick
-				var/burn_heal = healing_on_tick
-				// Additional 8% rewind of current limb damage.
-				brute_heal += most_damaged.brute_dam * 0.08
-				burn_heal += most_damaged.burn_dam * 0.08
-				most_damaged.heal_damage(brute_heal, burn_heal)
+				//Vizier Time magic. SCALED HEALING. 36 healing over 10 seconds(Worse then over half acolyte heals with condition met, and basic keeper research)
+				//with convergence extra duration, scales to 120 over 20 seconds. Worse then Eora and ravox, but better then others.
+				increment++
+				healing_on_tick = round((3 + (1/3)) * (2.71828 ** (0.08986 * increment)))
+				most_damaged.heal_damage(healing_on_tick, healing_on_tick)
 				HM.update_damage_overlays()
 
 	var/list/wCount = owner.get_wounds()

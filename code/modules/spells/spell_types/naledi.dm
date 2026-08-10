@@ -16,7 +16,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 12 SECONDS
 	miracle = TRUE
-	devotion_cost = 10
+	devotion_cost = 50
 
 /obj/effect/proc_holder/spell/invoked/regression/cast(list/targets, mob/living/user)
 	. = ..()
@@ -31,13 +31,11 @@
 
 	var/obj/effect/temp_visual/origin_restoration/V = new
 	target.vis_contents += V
-
 	var/turf/user_turf = get_turf(owner)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHEAST)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHWEST)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHEAST)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHWEST)
-
 	if(!istype(target, /mob/living/carbon))
 		target.apply_status_effect(/datum/status_effect/buff/originhealing)
 		target.visible_message(span_info("Origin arts stabilize [target]!"), span_notice("A brief temporal correction passes through me."))
@@ -89,10 +87,9 @@
 
 	// Healing
 	C.visible_message(span_info("Origin arts rewind [C]'s body!"), span_notice("My body slowly recalls to a prior form!"))
-	var/healing = 3
-	if(target.has_status_effect(/datum/status_effect/buff/stasis))
-		healing += 2.5
-	C.apply_status_effect(/datum/status_effect/buff/originhealing, healing)
+	C.apply_status_effect(/datum/status_effect/buff/originhealing)
+	return
+
 
 
 /obj/effect/temp_visual/origin_restoration
@@ -132,7 +129,7 @@
 
 /obj/effect/proc_holder/spell/invoked/convergence
 	name = "Convergence"
-	desc = "Converges the targets past and present, causing them to heal 50% more."
+	desc = "Converges the targets past and present, empowering your Naledi arts to last longer."
 	overlay_state = "convergence"
 	releasedrain = 30
 	chargedrain = 0
@@ -149,7 +146,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 20 SECONDS
 	miracle = TRUE
-	devotion_cost = 20
+	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/convergence/cast(list/targets, mob/living/user)
 	. = ..()
@@ -159,7 +156,6 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.apply_status_effect(/datum/status_effect/buff/convergence)
-			C.apply_status_effect(/datum/status_effect/buff/fortify)
 		else
 			target.adjustBruteLoss(-50)
 			target.adjustFireLoss(-50)
@@ -195,7 +191,7 @@
 	var/blood = 0
 	var/list/datum/wound/snapshot_wounds
 	miracle = TRUE
-	devotion_cost = 30
+	devotion_cost = 100
 
 /obj/effect/proc_holder/spell/invoked/stasis/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/self = usr
@@ -326,6 +322,8 @@
 	range = 4
 	recharge_time = 45 SECONDS
 	invocations = list("Aggil!")
+	miracle = TRUE
+	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/acceleration/cast(list/targets, mob/living/user)
 	. = ..()
@@ -349,6 +347,9 @@
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, SOUTHWEST)
 
 	target.visible_message(span_blue("Origin magicks skip [target]'s body ahead in time!"), span_blue("My form is thrown ahead of the present!"))
+	if(target.has_status_effect(/datum/status_effect/buff/convergence))
+		target.apply_status_effect(/datum/status_effect/buff/accel, 16 SECONDS)
+		return TRUE
 	target.apply_status_effect(/datum/status_effect/buff/accel)
 
 	return TRUE
@@ -400,8 +401,9 @@
 		if(after_image_component)
 			qdel(after_image_component)
 		afterimage_active = FALSE
-
-	owner.apply_status_effect(/datum/status_effect/debuff/decel, 14 SECONDS)
+	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
+		owner.apply_status_effect(/datum/status_effect/debuff/decel, 16 SECONDS)
+	owner.apply_status_effect(/datum/status_effect/debuff/decel, 11 SECONDS)
 
 	to_chat(owner, span_red("Time catches up with me, with its toll."))
 
@@ -412,7 +414,9 @@
 	id = "deceleration"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/decel
 	effectedstats = list(STATKEY_SPD = -20)
-	duration = 5 SECONDS
+	duration = 11 SECONDS
+
+
 
 /datum/status_effect/debuff/decel/on_creation(mob/living/new_owner, new_duration = null)
 	if(new_duration)
@@ -468,6 +472,8 @@
 	range = 5
 	recharge_time = 60 SECONDS
 	invocations = list("Naf'ir! Diverge, timeline!")
+	miracle = TRUE
+	devotion_cost = 50
 
 /obj/effect/proc_holder/spell/invoked/divergence/cast(list/targets, mob/living/user)
 	. = ..()
@@ -524,8 +530,10 @@
 
 /datum/status_effect/debuff/divergence/on_creation(mob/living/new_owner, mob/living/new_caster)
 	. = ..()
-
 	caster = new_caster
+	if(caster.has_status_effect(/datum/status_effect/buff/convergence))
+		heal_per_fragment = 19
+		damage_per_fragment = 27
 
 /datum/status_effect/debuff/divergence/on_apply()
 	. = ..()
@@ -535,7 +543,7 @@
 
 	var/turf/center = get_turf(owner)
 
-	owner.Immobilize(3 SECONDS)
+	owner.Immobilize(2 SECONDS)
 
 	owner.visible_message(
 		span_warning("[owner]'s timeline fractures apart!"),
@@ -623,6 +631,7 @@
 
 	var/datum/status_effect/debuff/divergence/master
 	var/collapsing = FALSE
+
 
 /obj/effect/divergence_fragment/Initialize(mapload)
 	. = ..()
