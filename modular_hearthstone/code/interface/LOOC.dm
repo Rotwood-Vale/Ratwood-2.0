@@ -195,7 +195,8 @@
 			return
 
 	else if((mob?.stat == DEAD || isobserver(mob)) && !(holder && istype(mob, /mob/dead/observer/admin)))
-		to_chat(src, span_danger(isobserver(mob) ? "I cannot use LOOC while ghosted." : "I cannot use LOOC while dead, only SLOOC."))
+		var/refusal = isobserver(mob) ? "I cannot use LOOC while ghosted." : "I cannot use LOOC while dead, only SLOOC."
+		to_chat(src, span_danger(refusal))
 		return
 
 	if(!mob)
