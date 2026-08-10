@@ -600,7 +600,7 @@
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
 	max_integrity = -1
-	alpha = 125
+	alpha = 175
 	plane = -8
 
 /obj/structure/quicksand/Initialize(mapload)
