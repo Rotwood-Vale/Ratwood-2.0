@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/punchstunthreshold = 0
 	///base electrocution coefficient
-	var/siemens_coeff = 1 
+	var/siemens_coeff = 1
 	///what kind of damage overlays (if any) appear on our species when wounded?
 	var/damage_overlay_type = "human"
 	///to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///the actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
 	///the icon used for the wings
-	var/wings_icon = "Angel" 
+	var/wings_icon = "Angel"
 
 	///species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -2078,11 +2078,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.Slowdown(clamp(damage_amount/10, 1, 5))
 					shake_camera(H, 1, 1)
 				if(damage_amount < 10)
-					H.flash_fullscreen("redflash1")
+					H.fullscreen_redflash("redflash1")
 				else if(damage_amount < 20)
-					H.flash_fullscreen("redflash2")
+					H.fullscreen_redflash("redflash2")
 				else if(damage_amount >= 20)
-					H.flash_fullscreen("redflash3")
+					H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2096,11 +2096,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(damage_amount > 10 && prob(damage_amount))
 				H.emote("pain")
 			if(damage_amount < 10)
-				H.flash_fullscreen("redflash1")
+				H.fullscreen_redflash("redflash1")
 			else if(damage_amount < 20)
-				H.flash_fullscreen("redflash2")
+				H.fullscreen_redflash("redflash2")
 			else if(damage_amount >= 20)
-				H.flash_fullscreen("redflash3")
+				H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2334,9 +2334,9 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		return
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		H.adjust_bodytemperature(11)
+		H.adjust_bodytemperature(1)
 	else
-		H.adjust_bodytemperature(20)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
+		H.adjust_bodytemperature(5)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 30 seconds of being on fire to heatstroke
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))

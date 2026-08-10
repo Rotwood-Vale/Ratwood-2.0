@@ -229,11 +229,12 @@
 						if(AM.loc == src)
 							water_overlay.layer = ABOVE_MOB_LAYER
 							water_overlay.plane = GAME_PLANE_HIGHEST
-			if(HAS_TRAIT(L, TRAIT_WATERBREATHING)&& temperature <= 250 && L.bodytemperature > BODYTEMP_NORMAL_MIN + 10)	//abyssorites+axian no longer get cold from river
-				L.adjust_bodytemperature(-5)
-			else if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-				L.adjust_bodytemperature(-5)
 
+			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				if(HAS_TRAIT(L, TRAIT_WATERLOVING))
+					L.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+				else
+					L.adjust_bodytemperature(-5)
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))

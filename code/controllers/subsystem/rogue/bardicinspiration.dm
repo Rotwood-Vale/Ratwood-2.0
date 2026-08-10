@@ -77,8 +77,21 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/crescendo)
 	H.verbs += list(/mob/living/carbon/human/proc/setaudience, /mob/living/carbon/human/proc/clearaudience, /mob/living/carbon/human/proc/checkaudience, /mob/living/carbon/human/proc/picksongs, /mob/living/carbon/human/proc/resetsongs)
 
-
-
+/datum/inspiration/proc/toggle_audience_member(mob/living/carbon/human/target)
+	if(!holder || !target)
+		return FALSE
+	if(target in audience)
+		audience -= target
+		to_chat(holder, span_notice("I stop performing for [target.real_name]."))
+		target.balloon_alert(holder, "removed from audience")
+		return TRUE
+	if(audience.len >= maxaudience)
+		to_chat(holder, span_warning("I cannot maintain an audience larger than [maxaudience]!"))
+		return FALSE
+	audience |= target
+	to_chat(holder, span_notice("I begin performing for [target.real_name]."))
+	target.balloon_alert(holder, "added to audience")
+	return TRUE
 
 /mob/living/carbon/human/proc/setaudience()
 	set name = "Audience Choice"
@@ -284,5 +297,16 @@ GLOBAL_LIST_INIT(learnable_rhythms, (list(/obj/effect/proc_holder/spell/self/rhy
 	inspiration.next_rhythm_reset = world.time + BARD_RESET_COOLDOWN
 	verbs |= list(/mob/living/carbon/human/proc/pickrhythms)
 	to_chat(src, span_notice("The harmonies escape me. I can choose my rhythms again."))
+
+/mob/living/carbon/human/MiddleClickOn(atom/A, params)
+	// if we're holding an instrument and have inspiration with no other intents active, we'll add them to our inspiration audience, if possible
+	if(!mmb_intent && inspiration && A != src && isliving(A))
+		if(istype(get_active_held_item(), /obj/item/rogue/instrument))
+			if(get_dist(src, A) > 7 || A.loc.z != src.loc.z) // cheap quick dist test instead of calling hearers
+				to_chat(src, span_warning("[A] is too far away for me to invite into my audience."))
+				return
+			inspiration.toggle_audience_member(A)
+			return
+	return ..()
 
 #undef BARD_RESET_COOLDOWN

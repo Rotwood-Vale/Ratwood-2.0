@@ -73,6 +73,8 @@
 #define TRAIT_OUTDOORSMAN "Outdoorsman"
 #define TRAIT_WILDERNESSGUIDE "Wilderness Guide"
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
+/// Won't be frozen when swimming in water
+#define TRAIT_WATERLOVING "Water loving"
 #define TRAIT_STUDENT		"Student"
 #define TRAIT_INTELLECTUAL "Intellectual"
 #define TRAIT_GRAVEROBBER "Experienced Grave Robber"
