@@ -81,10 +81,6 @@
 			tongs.update_icon()
 		return
 
-	if(istype(attacking_item, /obj/item/rogueweapon/hammer))
-		to_chat(user, span_warning("\The [attacking_item] should be used at an anvil, not \the [src]!"))
-		return
-
 	if(attacking_item.firefuel)
 		. = ..()
 		if(!.) //False/null if using the item as fuel. If true, we want to try smelt it so go onto next segment.
@@ -98,10 +94,6 @@
 
 /obj/machinery/light/rogue/smelter/attack_right(mob/user)
 	var/obj/item/held_item = user.get_active_held_item()
-	if(istype(held_item, /obj/item/rogueweapon/tongs))
-		attackby(held_item, user)
-		return
-
 	if(held_item?.smeltresult)
 		add_item(held_item, user)
 
