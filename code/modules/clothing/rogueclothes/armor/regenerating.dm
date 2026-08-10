@@ -111,7 +111,7 @@
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	repair_time = 20 SECONDS
-	max_integrity = 350//INT_CHEST_MASTER integ + 50
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
