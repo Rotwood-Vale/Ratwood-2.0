@@ -597,6 +597,18 @@
 			if(belt_with_dildo.attached_toy)
 				. += "[m3] [get_examine_item_name_with_hover(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
 
+	//right belt
+	if(beltr && !(SLOT_BELT_R in obscured))
+		var/str = "[m3] [get_examine_item_name_with_hover(user, beltr)] on [m2] belt. "
+		str += beltr.integrity_check(is_smart)
+		. += str
+
+	//left belt
+	if(beltl && !(SLOT_BELT_L in obscured))
+		var/str = "[m3] [get_examine_item_name_with_hover(user, beltl)] on [m2] belt. "
+		str += beltl.integrity_check(is_smart)
+		. += str
+
 	// chastity cages go HERE, where they SHOULD'VE FUCKING GONE.
 	var/obj/item/chastity/worn_chastity = chastity_device
 	if(worn_chastity)
@@ -611,19 +623,6 @@
 	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
 	if(modular_chastity_toy_line)
 		. += modular_chastity_toy_line
-
-
-	//right belt
-	if(beltr && !(SLOT_BELT_R in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, beltr)] on [m2] belt. "
-		str += beltr.integrity_check(is_smart)
-		. += str
-
-	//left belt
-	if(beltl && !(SLOT_BELT_L in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, beltl)] on [m2] belt. "
-		str += beltl.integrity_check(is_smart)
-		. += str
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
