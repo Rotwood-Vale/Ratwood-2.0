@@ -3,6 +3,16 @@
 	icon = 'icons/mob/sprite_accessory/ears/ears.dmi'
 	color_key_name = "Ears"
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/can_flick = FALSE
+
+/datum/sprite_accessory/ears/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(!can_flick)
+		return ..()
+	var/obj/item/organ/ears/ear_organ = organ
+	if(!owner || !ear_organ.is_flicking)
+		return ..()
+	if(ear_organ.is_flicking && can_flick)
+		return "[icon_state]_flick"
 
 /datum/sprite_accessory/ears/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return is_human_part_visible(owner, HIDEEARS)
@@ -92,6 +102,7 @@
 /datum/sprite_accessory/ears/elf
 	name = "Elf"
 	icon_state = "elf"
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/elephant
 	name = "Elephant"
@@ -296,12 +307,14 @@
 	icon = 'icons/mob/sprite_accessory/elf.dmi'
 	icon_state = "elf"
 	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/elfw
 	name = "Elf (Wood)"
 	icon = 'icons/mob/sprite_accessory/elf.dmi'
 	icon_state = "elfw"
 	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/halforc
 	name = "Half Orc"
