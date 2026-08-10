@@ -214,4 +214,3 @@
 /datum/outfit/job/roguetown/churchling/neophyte/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	H.reset_clergy_devotion(CLERIC_T1, CLERIC_REGEN_DEVOTEE, FALSE, CLERIC_REQ_1)
-	
