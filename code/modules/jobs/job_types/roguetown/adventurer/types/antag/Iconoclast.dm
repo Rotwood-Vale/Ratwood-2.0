@@ -13,10 +13,10 @@
 		TRAIT_RITUALIST,
 		)
 	subclass_stats = list(
-		STATKEY_STR = 2,// LETS WRASSLE
-		STATKEY_WIL = 2,// This is our Go Big stat, we want lots of stamina for miracles and WRASSLIN.
-		STATKEY_LCK = 1,//We have a total of +9 in stats. 12+ if we have a bounty.
-		STATKEY_CON = 2	//-LCK +CON
+		STATKEY_STR = 2,
+		STATKEY_WIL = 2,
+		STATKEY_LCK = 1,
+		STATKEY_CON = 2, //We have a total of +10 in stats. +13 if we have a visible bounty.
 	)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -61,7 +61,7 @@
 	beltr = /obj/item/rogueweapon/katar
 	id = /obj/item/mattcoin
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Starts off maxed out.
 
 /datum/outfit/job/roguetown/bandit/iconoclast/post_equip(mob/living/carbon/human/H)
 	. = ..()
