@@ -24,13 +24,29 @@
 	var/death_time
 	var/last_time
 
-/datum/component/martyrweapon/Initialize()
+/datum/component/martyrweapon/Initialize(list/intents, list/intents_w, active_damage, active_damage_wielded)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(length(intents))
+		active_intents = intents.Copy()
+	if(length(intents_w))
+		active_intents_wielded = intents_w.Copy()
+
+	if(active_damage)
+		active_safe_damage = active_damage
+	if(active_damage_wielded)
+		active_safe_damage_wielded = active_damage_wielded
+
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+
+	var/obj/item/I = parent
+	inactive_intents = I.possible_item_intents.Copy()
+	inactive_intents_wielded = I.gripped_intents.Copy()
+
 	START_PROCESSING(SSdcs, src)
 
 /datum/component/martyrweapon/process()
@@ -284,6 +300,9 @@
 				H.energy_add(9999)//Go get 'em, Martyrissimo, it's your last 30 seconds, it's a frag or be fragged world
 				H.adjust_skillrank(/datum/skill/combat/wrestling, 6, FALSE)
 				H.adjust_skillrank(/datum/skill/combat/swords, 6, FALSE)
+				H.adjust_skillrank(/datum/skill/combat/axes, 6, FALSE)
+				H.adjust_skillrank(/datum/skill/combat/polearms, 6, FALSE)
+				H.adjust_skillrank(/datum/skill/combat/maces, 6, FALSE)
 				H.adjust_skillrank(/datum/skill/combat/unarmed, 6, FALSE)
 				H.adjust_skillrank(/datum/skill/misc/athletics, 6, FALSE)
 				ADD_TRAIT(current_holder, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
