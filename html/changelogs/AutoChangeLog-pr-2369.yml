@@ -1,0 +1,5 @@
+author: "Ephemeralis"
+delete-after: True
+changes:
+  - balance: "Churchlings can now use T2 miracles, up from T1."
+  - rscadd: "Added the 'Neophyte' churchling advclass, essentially a medium-armored templar squire with journeyman weapons. Starts with awful gear and T1 miracles."
