@@ -2,25 +2,8 @@
 	name = "Force them to suck nipples"
 	require_grab = TRUE
 	stamina_cost = 1.0
+	user_sex_part = SEX_PART_BREASTS
 	target_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/force_suck_nipples/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/force_suck_nipples/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
 
 /datum/sex_action/force_suck_nipples/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head down to swallow and suck on [user.p_their()] nipples!"))

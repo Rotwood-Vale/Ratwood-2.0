@@ -22,7 +22,7 @@
 		return FALSE
 	if(user.sexcon.knotted_status == KNOTTED_AS_BTM && target != user.sexcon.knotted_owner)
 		return FALSE
-	if(!(user.sexcon.knotted_part_partner&(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_JAWS|SEX_PART_SLIT_SHEATH))) // if we're not knotted anyone of these, abort
+	if(!(user.sexcon.knotted_part_partner & ALL_KNOTTABLE_SEX_PARTS)) // if we're not knotted inside, abort
 		return FALSE
 	return TRUE
 

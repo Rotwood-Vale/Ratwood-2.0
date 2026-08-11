@@ -7,28 +7,18 @@
 	knot_on_finish = TRUE
 
 /datum/sex_action/throat_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(isdullahan(target) && knot_on_finish)
+	if(knot_on_finish && isdullahan(target))
 		var/datum/species/dullahan/dullahan = target.dna.species
 		if(dullahan.headless)
 			return FALSE
 	return TRUE
 
 /datum/sex_action/throat_sex/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.can_use_penis())
-		return FALSE
-	if(isdullahan(target) && knot_on_finish)
+	if(knot_on_finish && isdullahan(target))
 		var/datum/species/dullahan/dullahan = target.dna.species
 		if(dullahan.headless)
 			return FALSE

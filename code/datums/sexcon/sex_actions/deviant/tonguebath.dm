@@ -1,6 +1,7 @@
 /datum/sex_action/tonguebath
 	name = "Bathe with tongue"
 	user_sex_part = SEX_PART_JAWS
+	target_sex_part = SEX_PART_GROIN
 
 /datum/sex_action/tonguebath/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)

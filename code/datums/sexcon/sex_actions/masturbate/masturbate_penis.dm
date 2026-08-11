@@ -1,25 +1,20 @@
 /datum/sex_action/masturbate_penis
 	name = "Jerk off"
 	category = SEX_CATEGORY_HANDS
-	user_sex_part = SEX_PART_COCK
-	target_sex_part = SEX_PART_COCK
+	user_sex_part = SEX_PART_COCK // only user part to avoid self-targeting restrictions
 	subtle_supported = TRUE
 
 /datum/sex_action/masturbate_penis/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
+	if(!(. = ..()))
 		return FALSE
 	return TRUE
 
-/datum/sex_action/masturbate_penis/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/masturbate_penis/can_perform(mob/living/user, mob/living/target)
 	if(user != target)
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.can_use_penis())
+	if(!(. = ..()))
 		return FALSE
 	return TRUE
 

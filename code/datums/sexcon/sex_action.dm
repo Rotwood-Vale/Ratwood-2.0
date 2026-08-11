@@ -30,11 +30,19 @@
 	var/subtle_supported = FALSE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
+	/// Requires can_use_penis() to be TRUE for the user in standard sex part checks.
+	var/user_needs_functional = FALSE
+	/// Requires chastity on user_sex_part, if supported by the affected part.
+	var/user_needs_chastity = FALSE
+	/// Requires chastity on target_sex_part, if supported by the affected part.
+	var/target_needs_chastity = FALSE
+	/// Requires can_use_penis() to be TRUE for the target in standard sex part checks.
+	var/target_needs_functional = FALSE
 	/// Central intimate-state validation participation. Generic actions default to both roles; chastityplay keeps bespoke checks.
 	var/intimate_check_flags = SEX_ACTION_INTIMATE_CHECK_BOTH
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	return TRUE
+	return has_accessible_needed_parts(user, target)
 
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -49,15 +57,150 @@
 	return FALSE
 
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!has_all_needed_parts(user, user_sex_part, user == target))
+		return FALSE
+	if(!has_all_needed_parts(target, target_sex_part))
+		return FALSE
 	return TRUE
 
-/// A helper to handle dullahans targeting their own heads without code duplication.
-/// They can only target their own head if headless and holding their own head.
-/datum/sex_action/proc/can_target_own_head(mob/living/carbon/human/actor)
-	var/datum/species/dullahan/dullahan = actor.dna.species
-	if(!istype(dullahan))
+/datum/sex_action/proc/has_all_needed_parts(mob/living/carbon/human/actor, parts_to_check = null, self = FALSE)
+	if(parts_to_check == SEX_PART_NULL) // & doesn't work here because it's 0
+		return TRUE // no further checks
+	// Needs ALL parts, not just one.
+	// Because of that, this only checks ones that can fail
+	// and only ever returns TRUE at the end.
+	if(parts_to_check & SEX_PART_FEET) // ditto, but maybe this should have a limb check?
+		if(self && !is_part_self_accessible(actor, SEX_PART_FEET))
+			return FALSE
+	if(parts_to_check & SEX_PART_FOOT) // this was added JUST to support single-foot foot licking actions. ugh
+		if(self && !is_part_self_accessible(actor, SEX_PART_FOOT))
+			return FALSE
+	if((parts_to_check & SEX_PART_BREASTS) && !actor.getorganslot(ORGAN_SLOT_BREASTS))
 		return FALSE
-	return dullahan.headless && actor.is_holding(dullahan.my_head)
+	if(parts_to_check & SEX_PART_JAWS)
+		if(self && !is_part_self_accessible(actor, SEX_PART_JAWS))
+			return FALSE
+	if((parts_to_check & SEX_PART_CUNT) && !actor.getorganslot(ORGAN_SLOT_VAGINA))
+		return FALSE
+	if((parts_to_check & SEX_PART_BALLS) && !actor.getorganslot(ORGAN_SLOT_TESTICLES))
+		return FALSE
+	var/obj/item/organ/penis/penis = actor.getorganslot(ORGAN_SLOT_PENIS)
+	if((parts_to_check & SEX_PART_SLIT_SHEATH) && penis?.sheath_type != SHEATH_TYPE_SLIT)
+		return FALSE
+	if((parts_to_check & SEX_PART_COCK) && !penis)
+		return FALSE
+	if((parts_to_check & SEX_PART_TAIL) && !actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
+		return FALSE
+	return TRUE
+
+// this proc is fail-open, e.g. it returns TRUE by default and all checks are early false returns
+// (except for the null check at the start, i guess)
+/datum/sex_action/proc/actor_parts_are_usable(mob/living/carbon/human/actor, mob/living/carbon/human/user, parts_to_check, needs_functional, needs_chastity)
+	var/mob/living/carbon/human/accessor = user || actor // check this for access, but not self-restrictions
+	if(parts_to_check == SEX_PART_NULL) // & doesn't work here because it's 0
+		return TRUE // no further checks
+	var/needs_groin_check = FALSE
+	if((parts_to_check & SEX_PART_ANUS))
+		if(needs_chastity && !actor.sexcon.has_chastity_anal())
+			return FALSE
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_ANUS))
+			return FALSE
+		needs_groin_check = TRUE
+	if((parts_to_check & SEX_PART_GROIN))
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_GROIN))
+			return FALSE
+		if(needs_chastity && !actor.sexcon.target_has_front_chastity())
+			return FALSE
+		// doesn't allow grabs to give access
+		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_GROIN))
+			return FALSE
+	if((parts_to_check & SEX_PART_CUNT) && actor.getorganslot(ORGAN_SLOT_VAGINA))
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_CUNT))
+			return FALSE
+		if((needs_functional && !actor.sexcon.can_use_vagina()) || (needs_chastity && !actor.sexcon.has_chastity_vagina()))
+			return FALSE
+		needs_groin_check = TRUE
+	if((parts_to_check & SEX_PART_TAIL))
+		if(!actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
+			return FALSE
+		needs_groin_check = TRUE
+	var/obj/item/organ/penis/penis = actor.getorganslot(ORGAN_SLOT_PENIS)
+	if(penis)
+		if(parts_to_check & SEX_PART_COCK)
+			if(user == actor && !is_part_self_accessible(user, SEX_PART_COCK))
+				return FALSE
+			// I hate chastity code so much
+			// Todo combine *needs_functional and *needs_chastity into one bitflag
+			if((needs_functional && !actor.sexcon.can_use_penis()) || (needs_chastity && !actor.sexcon.has_chastity_penis()))
+				return FALSE
+			needs_groin_check = TRUE
+		if((parts_to_check & SEX_PART_SLIT_SHEATH))
+			if(user == actor && !is_part_self_accessible(user, SEX_PART_SLIT_SHEATH))
+				return FALSE
+			if(penis?.sheath_type != SHEATH_TYPE_SLIT)
+				return FALSE
+			needs_groin_check = TRUE
+	if((parts_to_check & SEX_PART_BALLS) && actor.getorganslot(ORGAN_SLOT_TESTICLES))
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_BALLS))
+			return FALSE
+		needs_groin_check = TRUE
+	if(needs_groin_check && !check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_GROIN, TRUE))
+		return FALSE
+	if((parts_to_check & SEX_PART_JAWS))
+		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_MOUTH))
+			return FALSE
+		// dullahan/etc check
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_JAWS))
+			return FALSE
+	if((parts_to_check & SEX_PART_FEET))
+		// todo: do we need taur snowflake checks here?
+		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_L_FOOT) || !check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_R_FOOT))
+			return FALSE
+		// i have no clue who'd make it so a species can do self-footjobs, but there's support for it i guess
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_FEET))
+			return FALSE
+	if(parts_to_check & SEX_PART_FOOT) // this was added JUST to support single-foot foot licking actions. ugh
+		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_R_FOOT))
+			return FALSE
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_FOOT))
+			return FALSE
+	var/needs_chest_check = parts_to_check & SEX_PART_CHEST
+	if(parts_to_check & SEX_PART_BREASTS)
+		if(!actor.getorganslot(ORGAN_SLOT_BREASTS))
+			return FALSE
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_BREASTS))
+			return FALSE
+		needs_chest_check = TRUE
+	if(parts_to_check & SEX_PART_CHEST)
+		if(user == actor && !is_part_self_accessible(user, SEX_PART_CHEST))
+			return FALSE
+		needs_chest_check = TRUE
+	if(needs_chest_check && !check_location_accessible(accessor, actor, BODY_ZONE_CHEST))
+		return FALSE
+	return TRUE
+
+/datum/sex_action/proc/target_parts_are_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return actor_parts_are_usable(target, user, target_sex_part, target_needs_functional, target_needs_chastity)
+
+/datum/sex_action/proc/user_parts_are_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	// no second argument -> no user -> don't restrict self-actions
+	return actor_parts_are_usable(user, null, user_sex_part, user_needs_functional, user_needs_chastity)
+
+/datum/sex_action/proc/has_accessible_needed_parts(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return user_parts_are_accessible(user, target) && target_parts_are_accessible(user, target)
+
+/// A helper to handle dullahans targeting their own heads without code duplication.
+/// Generalised to handle any parts; the only ones we can use on ourselves are jaws for dullahans.
+/datum/sex_action/proc/is_part_self_accessible(mob/living/carbon/human/actor, parts_to_check = null)
+	// edit this to add exceptions for things like self-footjobs, self-foot-licking, etc for certain species
+	// also maybe we need a way to disable these checks per-action
+	if(parts_to_check & SEX_PART_JAWS)
+		var/datum/species/dullahan/dullahan = actor.dna.species
+		if(!istype(dullahan))
+			return FALSE
+		if(dullahan.headless && actor.is_holding(dullahan.my_head))
+			return TRUE
+	return FALSE
 
 // chastity play abstract action, contains shared code for actions that interact with chastity devices
 /datum/sex_action/chastityplay 

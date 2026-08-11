@@ -4,27 +4,8 @@
 	stamina_cost = 1.0
 	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_COCK
+	user_needs_functional = TRUE
 	target_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/force_blowjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/force_blowjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.can_use_penis())
-		return FALSE
-	return TRUE
 
 /datum/sex_action/force_blowjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head down to swallow and suck on [user.p_their()] cock!"))

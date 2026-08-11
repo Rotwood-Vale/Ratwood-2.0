@@ -9,13 +9,9 @@
 /datum/sex_action/masturbate_container/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS) && !user.getorganslot(ORGAN_SLOT_VAGINA))
+	if(!(. = ..()))
 		return FALSE
-	if(user.getorganslot(ORGAN_SLOT_PENIS) && !user.sexcon.has_chastity_penis())
-		return TRUE
-	if(user.getorganslot(ORGAN_SLOT_VAGINA) && !user.sexcon.has_chastity_vagina())
-		return TRUE
-	return FALSE
+	return TRUE
 
 /datum/sex_action/masturbate_container/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/holding = user.get_active_held_item()

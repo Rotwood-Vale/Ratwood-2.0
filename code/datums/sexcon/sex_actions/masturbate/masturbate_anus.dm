@@ -1,19 +1,17 @@
 /datum/sex_action/masturbate_anus
 	name = "Finger butt"
 	category = SEX_CATEGORY_HANDS
+	// use user part instead of target part so it doesn't get blocked by self-targeting restrictions
 	user_sex_part = SEX_PART_ANUS
-	target_sex_part = SEX_PART_ANUS
 	subtle_supported = TRUE
 
 /datum/sex_action/masturbate_anus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	return TRUE
+	return user == target
 
 /datum/sex_action/masturbate_anus/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
+	if(!(. = ..()))
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
+	if(user != target)
 		return FALSE
 	return TRUE
 

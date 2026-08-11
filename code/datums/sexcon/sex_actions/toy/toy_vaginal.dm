@@ -2,23 +2,20 @@
 	name = "Pleasure cunt with toy"
 	user_sex_part = SEX_PART_CUNT
 	category = SEX_CATEGORY_PENETRATE
-	target_sex_part = SEX_PART_CUNT
 
 /datum/sex_action/toy_vagina/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)
 		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user))
 		return FALSE
 	return TRUE
 
-/datum/sex_action/toy_vagina/can_perform(mob/living/user, mob/living/target)
+/datum/sex_action/toy_anal/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user != target)
 		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user))
 		return FALSE

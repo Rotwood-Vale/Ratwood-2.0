@@ -3,21 +3,8 @@
 	require_grab = TRUE
 	stamina_cost = 1.0
 	user_sex_part = SEX_PART_COCK|SEX_PART_CUNT
+	user_needs_functional = FALSE
 	target_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/force_crotch_nuzzle/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/force_crotch_nuzzle/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target && !can_target_own_head(user))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	return TRUE
 
 /datum/sex_action/force_crotch_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] crotch!"))
