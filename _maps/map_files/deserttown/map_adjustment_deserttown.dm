@@ -124,6 +124,9 @@
 		/datum/job/roguetown/tribalguard,
 		/datum/job/roguetown/tribalrabble,
 		/datum/job/roguetown/tribalvillager,
+		/datum/job/roguetown/slaver,
+		/datum/job/roguetown/slave,
+		/datum/job/roguetown/baron,
 		
 	)
 
@@ -137,9 +140,6 @@
 		// /datum/job/roguetown/azeb,
 		// /datum/job/roguetown/azebagha,
 		// /datum/job/roguetown/slavemaster,
-		/datum/job/roguetown/slaver,
-		/datum/job/roguetown/slave,
-		/datum/job/roguetown/baron,
 		// /datum/job/roguetown/dtslave,
 
 	threat_regions = list(
