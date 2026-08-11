@@ -90,7 +90,7 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Knuckledusters")
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltl = /obj/item/rogueweapon/knuckles/psydon/old
+					beltl = /obj/item/rogueweapon/knuckles/silver/psy/old
 					gloves = /obj/item/clothing/gloves/roguetown/bandages
 				else
 					beltl = /obj/item/rogueweapon/knuckles/bronzeknuckles
@@ -345,7 +345,7 @@
 							l_hand = /obj/item/rogueweapon/spear/silver
 						if("Silver Axe")
 							H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+							l_hand = /obj/item/rogueweapon/stoneaxe/battle/silver
 						if("Silver Whip")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!
@@ -369,14 +369,14 @@
 		if("Longsword")
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/sword/long/oldpsysword
+				beltr = /obj/item/rogueweapon/sword/long/silver/psy/old
 			else
 				beltr = /obj/item/rogueweapon/sword/long
 			r_hand = /obj/item/rogueweapon/scabbard/sword
 		if("Mace")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
+				beltr = /obj/item/rogueweapon/mace/cudgel/silver/psy/old
 			else
 				beltr = /obj/item/rogueweapon/mace
 		if("Flail")
@@ -388,7 +388,7 @@
 		if("Spear")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				r_hand = /obj/item/rogueweapon/spear/psyspear/old
+				r_hand = /obj/item/rogueweapon/spear/silver/psy/old
 			else
 				r_hand = /obj/item/rogueweapon/spear
 			backr = /obj/item/rogueweapon/scabbard/gwstrap

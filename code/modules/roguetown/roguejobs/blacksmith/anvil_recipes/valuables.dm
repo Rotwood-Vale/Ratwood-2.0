@@ -270,6 +270,6 @@
 	req_bar = /obj/item/ingot/silver
 	hides_from_books = TRUE
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver/, /obj/item/ingot/draconic, /obj/item/ingot/weeping, /obj/item/riddleofsteel, /obj/item/grown/log/tree)
-	created_item = /obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+	created_item = /obj/item/rogueweapon/greatsword/silver/psy/dragonslayer
 	appro_skill = /datum/skill/craft/weaponsmithing
 	craftdiff = SKILL_LEVEL_LEGENDARY

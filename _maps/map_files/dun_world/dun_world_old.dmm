@@ -14946,7 +14946,7 @@
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "dUw" = (
-/obj/item/rogueweapon/greatsword/psygsword,
+/obj/item/rogueweapon/greatsword/silver/psy,
 /obj/structure/closet/crate/chest/inqreliquary{
 	locked = 1;
 	lockid = "psy_bog_dung_lootkey_two"
@@ -37459,7 +37459,7 @@
 "jGC" = (
 /obj/structure/table/wood/poor/alt,
 /obj/item/roguecoin/gilbranze/pile,
-/obj/item/rogueweapon/greatsword/bsword/psy,
+/obj/item/rogueweapon/greatsword/silver/bsword/psy,
 /obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
@@ -48790,7 +48790,7 @@
 	icon_state = "cobbleedge-sread"
 	},
 /obj/structure/table/church,
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy,
 /obj/structure/spider/stickyweb/mirespider,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)

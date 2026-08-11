@@ -583,7 +583,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy
 	name = "psydonic dagger"
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of vampyres and verevolves, in the hands of a faithful hunter."
 	icon_state = "psydagger"
@@ -592,7 +592,7 @@
 	sellprice = 70
 	picklvl = 1.1
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/idagger/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -861,22 +861,13 @@
 		added_def = 3,\
 	)
 
-/obj/item/rogueweapon/huntingknife/throwingknife/psydon
+/obj/item/rogueweapon/huntingknife/throwingknife/silver/psy
 	name = "psydonic tossblade"
 	desc = "An unconventional method of delivering silver to a heretic; but one PSYDON smiles at, all the same. Doubles as an actual knife in a pinch, though obviously not as well. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
 	item_state = "bone_dagger"
-	force = 10
-	throwforce = 20
-	armor_penetration = 50
-	max_integrity = 150
-	wdefense = 3
 	icon_state = "throw_knifep"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
-	is_silver = TRUE
-	sellprice = 6
-	picklvl = 0.9
 
-/obj/item/rogueweapon/huntingknife/throwingknife/psydon/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/throwingknife/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\

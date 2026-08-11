@@ -61,7 +61,7 @@
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/psy,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
@@ -81,18 +81,18 @@
 	var/weapon_choice = input(H,"FIND YOUR TRUTHS.", "WIELD THEM IN HIS NAME.") as anything in weapons
 	switch(weapon_choice)
 		if("Psydonic Broadsword")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/psy/preblessed(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/silver/psy/preblessed(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		if("Daybreak (Whip)")
-			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/whip/silver/psy/relic(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Stigmata (Halberd)")
-			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/halberd/silver/psy/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Consecratia (Flail)")
-			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail/relic(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/silver/psy/relic(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 	//Now, for their 'sect'. They can either choose a heavy gambeson and +1SPD, or inquisitor coat and +1STR.
 	var/sect = list("Ancient - Gilbranze, Gambesons & Speed", "New Age - Silver, Overcoats & Strength")

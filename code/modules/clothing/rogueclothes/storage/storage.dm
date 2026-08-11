@@ -415,7 +415,7 @@
 /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/rogueweapon/huntingknife/throwingknife/psydon/K = new()
+		var/obj/item/rogueweapon/huntingknife/throwingknife/silver/psy/K = new()
 		knives += K
 	update_icon()
 

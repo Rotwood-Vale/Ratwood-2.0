@@ -52,14 +52,14 @@
 		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Blessed Psydonic Dagger")
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sheath
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 			if("Psydonic Handmace")
-				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
+				l_hand = /obj/item/rogueweapon/mace/cudgel/silver/psy
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 			if("Psydonic Shortsword")
-				l_hand = /obj/item/rogueweapon/sword/short/psy
+				l_hand = /obj/item/rogueweapon/sword/short/silver/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")

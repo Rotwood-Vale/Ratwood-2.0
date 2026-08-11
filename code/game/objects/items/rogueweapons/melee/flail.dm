@@ -166,17 +166,15 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/sflail/psyflail
+/obj/item/rogueweapon/flail/sflail/silver/psy
 	name = "psydonic flail"
 	desc = "An ornate flail, plated in a ceremonial veneer of silver. Its flanged head can crumple even the toughest of darksteel-maille."
 	icon_state = "psyflail"
 	force = 35
 	minstr = 10
-	wdefense = 0
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/flail/sflail/psyflail/ComponentInitialize()
+/obj/item/rogueweapon/flail/sflail/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -187,7 +185,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/flail/sflail/psyflail/old
+/obj/item/rogueweapon/flail/sflail/silver/psy/old
 	name = "enduring flail"
 	desc = "An ornate flail, its silver tarnished by neglect. Bring down the COMET on the unholy."
 	icon_state = "psyflail"
@@ -198,16 +196,16 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/flail/sflail/psyflail/old/ComponentInitialize()
+/obj/item/rogueweapon/flail/sflail/silver/psy/old/ComponentInitialize()
 	return
 
-/obj/item/rogueweapon/flail/sflail/psyflail/relic
+/obj/item/rogueweapon/flail/sflail/silver/psy/relic
 	name = "Consecratia"
 	desc = "The weight of His anguish, His pain, His hope and His love for humenkind - all hanging on the ornamental silver-steel head chained to this arm. <br><br>A declaration of love for all that Psydon lives for, and a crushing reminder to the arch-nemesis that they will not triumph as long as He endures."
 	icon_state = "psymorningstar"
 	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
 
-/obj/item/rogueweapon/flail/sflail/psyflail/relic/ComponentInitialize()
+/obj/item/rogueweapon/flail/sflail/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

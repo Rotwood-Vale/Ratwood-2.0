@@ -746,48 +746,6 @@
 	user.visible_message(span_warning("[user] wipes [src] down with its cloth."),span_notice("I wipe [src] down with its cloth."))
 	return
 
-/obj/item/rogueweapon/sword/long/oldpsysword
-	name = "enduring longsword"
-	desc = "A steel longsword with an angled crossguard. The lesser clerics of the Psydonic Orders oft-carry these blades, and - though it may not carry the bite of silver - it still humbles men and monsters alike with a well-poised strike."
-	icon_state = "opsysword"
-	sheathe_icon = "opsysword"
-	dropshrink = 1
-
-/obj/item/rogueweapon/sword/long/psysword
-	name = "psydonic longsword"
-	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike. </br>'Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.'"
-	icon_state = "psysword"
-	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
-	minstr = 9
-	wdefense = 6
-	dropshrink = 1
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
-
-/obj/item/rogueweapon/sword/long/psysword/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
-/obj/item/rogueweapon/sword/long/psysword/preblessed/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
 /obj/item/rogueweapon/sword/long/silver
 	name = "silver longsword"
 	desc = "A longsword with a blade of pure silver. The weight doesn't just burden your hand, but your very soul as well; an unspoken oath, to stand against the horrors that lurk within the nite. </br>'Swing with precision and purpose, levyman o' the Gods. The nite is long and many-an-evil cur would engineer civilization's destruction, while Astrata's gaze leers elsewhere. So long as you wield this sword, you have a duty that beckons.'"
@@ -811,6 +769,49 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/sword/long/silver/psy
+	name = "psydonic longsword"
+	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike. </br>'Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.'"
+	icon_state = "psysword"
+	sheathe_icon = "psysword"
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/sword/long/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/long/silver/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/long/silver/psy/old
+	name = "enduring longsword"
+	desc = "A steel longsword with an angled crossguard. The lesser clerics of the Psydonic Orders oft-carry these blades, and - though it may not carry the bite of silver - it still humbles men and monsters alike with a well-poised strike."
+	icon_state = "opsysword"
+	sheathe_icon = "opsysword"
+	dropshrink = 1
+	force = 25
+	force_wielded = 30
+	is_silver = FALSE
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/sword/long/silver/psy/old/ComponentInitialize()
+	return
 
 /obj/item/rogueweapon/sword/long/kriegmesser/silver
 	name = "silver broadsword"
@@ -839,23 +840,26 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/long/kriegmesser/psy
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/psy
 	name = "psydonic broadsword"
 	desc = "Sunder, cleave, smite; a sea of coagulated blackness, speckled with crimson. Absolve, cherish, endure; the will of one, christened to save Psydonia when all else is lost. </br>'Even here it is not safe, and even this grave has been defaced. Yet, someone has written on this stone, in some angry hand - HOPE RIDES ALONE..'"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
-	minstr = 11
-	wdefense = 6
-	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	alt_intents = null // Can't mordhau this
 	smeltresult = /obj/item/ingot/silverblessed
-	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/long/kriegmesser/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -962,41 +966,6 @@
 	sheathe_icon = "iswordshort_d"
 	max_integrity = 75
 
-/obj/item/rogueweapon/sword/short/psy
-	name = "psydonic shortsword"
-	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
-	icon_state = "psyswordshort"
-	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
-	minstr = 7
-	wdefense = 3
-	wbalance = WBALANCE_SWIFT
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
-
-/obj/item/rogueweapon/sword/short/psy/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
-/obj/item/rogueweapon/sword/short/psy/preblessed/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 100,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
 /obj/item/rogueweapon/sword/short/silver
 	name = "silver shortsword"
 	desc = "A shortsword with a blade of pure silver. In the marginalia of tomes depicting Psydonia's crusading orders, there is no sight more iconic than that of the hauberk-draped paladin; a kite shield in one hand, and this glimmering sidearm in the other."
@@ -1016,6 +985,36 @@
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/short/silver/psy
+	name = "psydonic shortsword"
+	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
+	icon = 'icons/roguetown/weapons/32.dmi'
+	icon_state = "psyswordshort"
+	sheathe_icon = "psyswordshort"
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/sword/short/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/short/silver/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
 		added_blade_int = 100,\
 		added_int = 50,\
@@ -1314,7 +1313,7 @@
 	name = "silver rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Immortalized by Rockhill's witch hunters, this weapon - though cumberstone in an untrained hand - is surprisingly adept at both parrying and riposting."
 	icon_state = "silverrapier"
-	sheathe_icon = "psyrapier"
+	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
 	force = 20
@@ -1335,21 +1334,12 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy
+/obj/item/rogueweapon/sword/rapier/silver/psy
 	name = "psydonic rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Such a resplendent weapon not only pierces the gaps within a heathen's maille, but also serves as the symbol of an Otavan diplomat's authority."
-	icon_state = "silverrapier"
-	sheathe_icon = "rapier"
-	max_integrity = 225
-	max_blade_int = 225
-	force = 20
-	force_wielded = 20
-	minstr = 8
-	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
-	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/rapier/psy/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1360,7 +1350,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1371,21 +1361,15 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/rapier/psy/relic
+/obj/item/rogueweapon/sword/rapier/silver/psy/relic
 	name = "Eucharist"
 	desc = "Etruscan shape falling prey to Otavan craftsmanship. Saint Malum's smiths created an uniquely thin blade, capable of swiftly skewering the unholy and the miscreants through gaps that most claim to have never existed in the first place. <b> Silver-dipped steel crowned upon a basket hilt that keeps righteous hands safe from harm."
 	icon_state = "psyrapier"
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
-	minstr = 8
-	wdefense = 8
-	smeltresult = /obj/item/ingot/silver
-	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/rapier/psy/relic/ComponentInitialize()
+/obj/item/rogueweapon/sword/rapier/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

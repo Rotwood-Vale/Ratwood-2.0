@@ -76690,7 +76690,7 @@
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains3"
 	},
-/obj/item/rogueweapon/whip/psywhip_lesser,
+/obj/item/rogueweapon/whip/silver/psy,
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/beach)
@@ -92739,7 +92739,7 @@
 /obj/structure/closet/crate/coffin{
 	locked = 1
 	},
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy,
+/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy,
 /obj/effect/decal/remains/human,
 /obj/effect/particle_effect/smoke{
 	lifetime = 14400

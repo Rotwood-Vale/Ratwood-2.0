@@ -442,19 +442,16 @@
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
 
-/obj/item/rogueweapon/spear/psyspear
+/obj/item/rogueweapon/spear/silver/psy
 	name = "psydonic spear"
 	desc = "An ornate spear, plated in a ceremonial veneer of silver. The barbs pierce your palm, and - for just a moment - you see red. Never forget that you are why Psydon wept."
 	icon_state = "psyspear"
 	force = 20
 	force_wielded = 30
-	minstr = 11
-	wdefense = 6
 	resistance_flags = FIRE_PROOF	//It's meant to be smacked by a "lamptern", and is special enough to warrant overriding the spear weakness
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/spear/psyspear/ComponentInitialize()
+/obj/item/rogueweapon/spear/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -465,7 +462,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/spear/psyspear/old
+/obj/item/rogueweapon/spear/silver/psy/old
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
@@ -475,7 +472,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/spear/psyspear/old/ComponentInitialize()
+/obj/item/rogueweapon/spear/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/spear/silver
@@ -833,15 +830,37 @@
 	force_wielded = 33 // +3
 	max_integrity = 300 // +50
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic
-	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
-	icon_state = "psyhalberd"
+/obj/item/roguetown/halberd/silver //unobtainium. purely for psydonic subtype
+	name = "silver halberd"
+	force = 10//Use the spear instead if you're going to one-hand this.
+	force_wielded = 25
+	minstr = 11
+	wdefense = 7
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
 
-/obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
+/obj/item/rogueweapon/halberd/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/halberd/silver/psy
+	name = "psydonic halberd"
+	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
+	icon_state = "silverhalberd"
+	force_wielded = 30
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/halberd/silver/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
 		added_blade_int = 100,\
@@ -849,24 +868,19 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/halberd/psyhalberd
-	name = "psydonic halberd"
-	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
-	icon_state = "silverhalberd"
-	force = 10//Use the spear instead if you're going to one-hand this.
-	minstr = 11
-	wdefense = 7
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
+/obj/item/rogueweapon/halberd/silver/psy/relic
+	name = "Stigmata"
+	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	icon_state = "psyhalberd"
 
-/obj/item/rogueweapon/halberd/psyhalberd/ComponentInitialize()
+/obj/item/rogueweapon/halberd/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
+		pre_blessed = BLESSING_PSYDONIAN,\
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
-		added_blade_int = 50,\
-		added_int = 50,\
+		added_blade_int = 100,\
+		added_int = 100,\
 		added_def = 2,\
 	)
 
@@ -1102,16 +1116,38 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/greatsword/psygsword
+/obj/item/roguetown/greatsword/silver //unobtainium. purely for psydonic subtype
+	name = "silver greatsword"
+	force = 12
+	force_wielded = 30
+	minstr = 11
+	wdefense = 6
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/greatsword/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/greatsword/silver/psy
 	name = "psydonic greatsword"
 	desc = "It is said that a Psydonian smith was guided by Saint Malum himself to forge such a formidable blade, and given the task to slay a daemon preying on the Otavan farmlands. The design was retrieved, studied, and only a few replicas made - for they believe it dulls its edge."
 	icon_state = "silverexealt"
+	force = 14
+	force_wielded = 35
 	minstr = 11//+2, in exchange for the better defense. Is this really a problem? C'mon. It didn't need -5 force.
 	wdefense = 6
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/psygsword/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1122,13 +1158,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic
+/obj/item/rogueweapon/greatsword/silver/psy/relic
 	name = "Apocrypha"
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	icon_state = "psygsword"
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike/bad)
 
-/obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1139,7 +1175,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy
+/obj/item/rogueweapon/greatsword/silver/bsword/psy
 	name = "forgotten blade"
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
@@ -1150,10 +1186,9 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust, /datum/intent/rend/krieg)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/lunge, /datum/intent/sword/thrust/estoc)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1164,14 +1199,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/relic
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/getonmobprop(tag)
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -1180,7 +1214,7 @@
 			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 			if("onbelt") return list("shrink" = 0.3, "sx" = -4, "sy" = -6, "nx" = 5, "ny" = -6, "wx" = 0, "wy" = -6, "ex" = -1, "ey" = -6, "nturn" = 100, "sturn" = 156, "wturn" = 90, "eturn" = 180, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/relic/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/relic/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1191,14 +1225,13 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/unforgotten
 	name = "unforgotten blade"
 	desc = "High Inquisitor Archibald once recorded an expedition of seven brave Adjudicators into Gronnian snow-felled wastes to root out evil. Its leader, Holy Ordinator Guillemin, was said to have held on for seven daes and seven nights against darksteel-clad heretics before Psydon acknowledged his endurance. Nothing but his blade remained - his psycross wrapped around its hilt in remembrance."
 	icon_state = "forgottenblade"
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/bsword/psy/unforgotten/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1392,6 +1425,7 @@
 	icon_state = "quarterstaff_silver"
 	max_integrity = 250
 	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/silver/ComponentInitialize()
 	AddComponent(\
@@ -1404,18 +1438,11 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy
+/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy
 	name = "psydonic quarterstaff"
-	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
-	force = 20
-	force_wielded = 27
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
-	icon_state = "quarterstaff_silver"
-	max_integrity = 250
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/woodstaff/quarterstaff/psy/ComponentInitialize()
+/obj/item/rogueweapon/woodstaff/quarterstaff/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1689,7 +1716,7 @@
 
 //
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+/obj/item/rogueweapon/greatsword/silver/psy/dragonslayer
 	name = "\"Daemonslayer\""
 	desc = "'That thing was too big to be called a sword. Too big, too thick, too heavy, and too rough. No, it was more like a large hunk of silver.' </br>Intimidatingly massive, unfathomably powerful, and - above all else - a testament to one's guts."
 	icon_state = "machaslayer"
@@ -1709,7 +1736,7 @@
 	is_silver = TRUE
 	smeltresult = /obj/item/rogueweapon/sword/long/kriegmesser/silver //Too thick to completely melt.
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer/ComponentInitialize()
+/obj/item/rogueweapon/greatsword/silver/psy/dragonslayer/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\

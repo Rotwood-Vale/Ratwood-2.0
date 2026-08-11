@@ -778,7 +778,7 @@
 /datum/anvil_recipe/weapons/silver/waraxe
 	name = "War Axe, Silver (+2 Silver, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/silver
 
 /datum/anvil_recipe/weapons/silver/poleaxe
 	name = "Poleaxe, Silver (+2 Silver, +2 Small Logs)"
@@ -1065,62 +1065,62 @@
 
 /datum/anvil_recipe/weapons/psy/axe
 	name = "Psydonic War Axe (+1 Blessed Silver, +1 Stick)"
-	created_item = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
+	created_item = /obj/item/rogueweapon/stoneaxe/battle/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/stick)
 
 /datum/anvil_recipe/weapons/psy/poleaxe
 	name = "Psydonic Poleaxe (+2 Blessed Silver, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/psy
+	created_item = /obj/item/rogueweapon/greataxe/silver/psy/
 
 /datum/anvil_recipe/weapons/psy/mace
 	name = "Psydonic Grand Mace (+1 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/mace/goden/psy
+	created_item = /obj/item/rogueweapon/mace/goden/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/spear
 	name = "Psydonic Spear (+1 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/spear/psyspear
+	created_item = /obj/item/rogueweapon/spear/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/dagger
 	name = "Psydonic Dagger"
-	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/psy
 
 /datum/anvil_recipe/weapons/psy/shortsword
 	name = "Psydonic Shortsword"
-	created_item = /obj/item/rogueweapon/sword/short/psy
+	created_item = /obj/item/rogueweapon/sword/short/silver/psy
 
 /datum/anvil_recipe/weapons/psy/katar
 	name = "Psydonic Katar"
-	created_item = /obj/item/rogueweapon/katar/psydon
+	created_item = /obj/item/rogueweapon/katar/silver/psy
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/rogueweapon/knuckles/silver/psy
 
 /datum/anvil_recipe/weapons/psy/cudgel
 	name = "Psydonic Handmace"
-	created_item = /obj/item/rogueweapon/mace/cudgel/psy
+	created_item = /obj/item/rogueweapon/mace/cudgel/silver/psy
 
 /datum/anvil_recipe/weapons/psy/halberd
 	name = "Psydonic Halberd (+2 Blessed Silver, +1 Small Log)"
-	created_item = /obj/item/rogueweapon/halberd/psyhalberd
+	created_item = /obj/item/rogueweapon/halberd/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed, /obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/weapons/psy/gsword
 	name = "Psydonic Greatsword (+2 Blessed Silver)"
-	created_item = /obj/item/rogueweapon/greatsword/psygsword
+	created_item = /obj/item/rogueweapon/greatsword/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)
 
 /datum/anvil_recipe/weapons/psy/sword
 	name = "Psydonic Longsword (+1 Blessed Silver)"
-	created_item = /obj/item/rogueweapon/sword/long/psysword
+	created_item = /obj/item/rogueweapon/sword/long/silver/psy
 	additional_items = list(/obj/item/ingot/silverblessed)
 
 /datum/anvil_recipe/weapons/psy/whip
 	name = "Psydonic Whip (+3 Cured Leather)"
-	created_item = /obj/item/rogueweapon/whip/psywhip_lesser
+	created_item = /obj/item/rogueweapon/whip/silver/psy
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK

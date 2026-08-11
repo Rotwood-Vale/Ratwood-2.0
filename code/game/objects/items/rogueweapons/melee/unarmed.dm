@@ -150,16 +150,31 @@
 	icon_state = "avplug"
 	slot_flags = ITEM_SLOT_RING
 
-/obj/item/rogueweapon/katar/psydon
-	name = "psydonic katar"
-	desc = "An exotic weapon taken from the hands of wandering monks, an esoteric design to the Otavan Orthodoxy. Special care was taken into account towards the user's knuckles: silver-tipped steel from tip to edges, and His holy cross reinforcing the heart of the weapon, with curved shoulders to allow its user to deflect incoming blows - provided they lead it in with the blade."
-	icon_state = "psykatar"
+/obj/item/rogueweapon/katar/silver //unobtainium. purely for psydonic subtype
+	name = "silver katar"
 	force = 19
 	wdefense = 3
 	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/katar/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/katar/silver/psy
+	name = "psydonic katar"
+	desc = "An exotic weapon taken from the hands of wandering monks, an esoteric design to the Otavan Orthodoxy. Special care was taken into account towards the user's knuckles: silver-tipped steel from tip to edges, and His holy cross reinforcing the heart of the weapon, with curved shoulders to allow its user to deflect incoming blows - provided they lead it in with the blade."
+	icon_state = "psykatar"
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/katar/psydon/ComponentInitialize()
+/obj/item/rogueweapon/katar/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -170,16 +185,32 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/knuckles/psydon
-	name = "psydonic knuckles"
-	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
-	icon_state = "psyknuckle"
+/obj/item/rogueweapon/knuckles/silver //unobtainium. purely for psydonic subtype
+	name = "silver knuckles"
 	force = 22
 	wdefense = 5
 	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/knuckles/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/knuckles/silver/psy
+	name = "psydonic knuckles"
+	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
+	icon_state = "psyknuckle"
+	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/knuckles/psydon/ComponentInitialize()
+/obj/item/rogueweapon/knuckles/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -190,7 +221,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/knuckles/psydon/old
+/obj/item/rogueweapon/knuckles/silver/psy/old
 	name = "enduring knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, its holy blessing long since faded. You are HIS weapon, you needn't fear Aeon."
 	icon_state = "psyknuckle"
@@ -199,7 +230,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/knuckles/psydon/old/ComponentInitialize()
+/obj/item/rogueweapon/knuckles/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/knuckles

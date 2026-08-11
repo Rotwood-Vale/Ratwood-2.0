@@ -311,7 +311,7 @@
 /datum/supply_pack/rogue/Knight/silverwaraxe
 	name = "Silver War Axe"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/silver)
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/silver)
 
 /datum/supply_pack/rogue/Knight/silverpoleaxe
 	name = "Silver Poleaxe"

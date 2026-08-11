@@ -341,22 +341,21 @@
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
 	resistance_flags = FLAMMABLE
 
-/obj/item/rogueweapon/stoneaxe/woodcut/silver
+/obj/item/rogueweapon/stoneaxe/battle/silver
 	name = "silver war axe"
 	desc = "A hefty battle axe, fashioned from pure silver. Even with a one-handed grasp, an efforted swing carries enough momentum to cleave through maille-and-flesh alike."
 	icon_state = "silveraxe"
 	force = 20
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	minstr = 11
 	max_blade_int = 400
 	smeltresult = /obj/item/ingot/silver
-	gripped_intents = null
 	wdefense = 5
 	is_silver = TRUE
 	blade_dulling = DULLING_SHAFT_METAL
+	resistance_flags = FIRE_PROOF
 
-/obj/item/rogueweapon/stoneaxe/woodcut/silver/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -367,19 +366,16 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy
 	name = "psydonic war axe"
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
 	force = 25
 	force_wielded = 30
-	minstr = 11
 	wdefense = 6
-	blade_dulling = DULLING_SHAFT_METAL
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -387,10 +383,10 @@
 		added_force = 0,\
 		added_blade_int = 50,\
 		added_int = 50,\
-		added_def = 1,\
+		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/old
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/old
 	name = "enduring war axe"
 	desc = "An ornate battle axe, its silver tarnished by neglect. Even a dim light can pierce the dark."
 	icon_state = "psyaxe"
@@ -400,7 +396,7 @@
 	smeltresult = /obj/item/ingot/steel
 	color = COLOR_FLOORTILE_GRAY
 
-/obj/item/rogueweapon/stoneaxe/battle/psyaxe/old/ComponentInitialize()
+/obj/item/rogueweapon/stoneaxe/battle/silver/psy/old/ComponentInitialize()
 	return
 
 /obj/item/rogueweapon/stoneaxe/battle/steppesman
@@ -526,22 +522,16 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust)
-	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/rangedthrust)
+/obj/item/rogueweapon/greataxe/silver/psy
+	force = 15
+	force_wielded = 30
 	name = "psydonic poleaxe"
 	desc = "A poleaxe, fitted with a reinforced shaft and a beaked axhead of alloyed silver. As the fragility of swords've become more apparent, the Psydonic Orders - following the disastrous Massacre of Blastenghyll - have shifted their focus towards arming their paladins with longer-lasting greatweapons."
 	icon_state = "silverpolearm"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	minstr = 12
-	max_blade_int = 350
-	max_integrity = 150 // compensates for the potential of using it to parry without actually using blunt parry integrity loss
-	associated_skill = /datum/skill/combat/polearms // yes it is located in the axe folder and uses axe subtypes it is a polearm
-	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
-/obj/item/rogueweapon/greataxe/psy/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/silver/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -552,7 +542,7 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/greataxe/psy/preblessed/ComponentInitialize()
+/obj/item/rogueweapon/greataxe/silver/psy/preblessed/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
