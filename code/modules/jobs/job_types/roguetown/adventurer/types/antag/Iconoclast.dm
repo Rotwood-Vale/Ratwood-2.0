@@ -15,7 +15,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_LCK = 1,
+		STATKEY_LCK = 2,
 		STATKEY_CON = 2, //We have a total of +10 in stats. +13 if we have a visible bounty.
 	)
 	subclass_skills = list(
