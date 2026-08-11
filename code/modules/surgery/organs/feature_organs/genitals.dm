@@ -12,8 +12,6 @@
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
 	var/branded_writing = ""
-	/// Branded enslavement mark
-	var/enslavement_mark = FALSE
 
 /obj/item/organ/penis/Initialize(mapload)
 	. = ..()
@@ -122,8 +120,6 @@
 	var/fertility = TRUE
 	var/impregnation_probability = IMPREG_PROB_DEFAULT
 	var/branded_writing = ""
-	/// Branded enslavement mark
-	var/enslavement_mark = FALSE
 
 /obj/item/organ/vagina/proc/be_impregnated(mob/living/carbon/human/father)
 	if(!owner)
@@ -151,8 +147,6 @@
 	var/milk_stored = 0
 	var/milk_max = 75
 	var/branded_writing = ""
-	/// Branded enslavement mark
-	var/enslavement_mark = FALSE
 
 /obj/item/organ/breasts/New()
 	..()
@@ -169,8 +163,6 @@
 	var/ball_size = DEFAULT_TESTICLES_SIZE
 	var/virility = TRUE
 	var/branded_writing = ""
-	/// Branded enslavement mark
-	var/enslavement_mark = FALSE
 
 /obj/item/organ/testicles/internal
 	name = "internal testicles"

@@ -434,12 +434,24 @@
 			branding_part.branded_writing = branding_text
 			apply_knockdown = FALSE
 			branding_part.enslavement_mark = enslave
+			if(enslave)
+				branding_part.brand_owner_name = user.real_name
+				branding_part.brand_owner = user
+			else
+				branding_part.brand_owner_name = ""
+				branding_part.brand_owner = null
 		if("Hind")
 			var/obj/item/bodypart/chest/buttocks = branding_part
 			if(length(buttocks.branded_writing_on_buttocks))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			buttocks.branded_writing_on_buttocks = branding_text
 			buttocks.enslavement_mark = enslave
+			if(enslave)
+				buttocks.brand_owner_name = user.real_name
+				buttocks.brand_owner = user
+			else
+				buttocks.brand_owner_name = ""
+				buttocks.brand_owner = null
 			branding_part = buttocks
 		if("Stomach")
 			var/obj/item/bodypart/chest/stomach = branding_part
@@ -447,6 +459,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			stomach.branded_writing_on_stomach = branding_text
 			stomach.enslavement_mark = enslave
+			if(enslave)
+				stomach.brand_owner_name = user.real_name
+				stomach.brand_owner = user
+			else
+				stomach.brand_owner_name = ""
+				stomach.brand_owner = null
 			branding_part = stomach
 		if("Neck")
 			var/obj/item/bodypart/head/neck = branding_part
@@ -454,6 +472,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			neck.branded_writing_on_neck = branding_text
 			neck.enslavement_mark = enslave
+			if(enslave)
+				neck.brand_owner_name = user.real_name
+				neck.brand_owner = user
+			else
+				neck.brand_owner_name = ""
+				neck.brand_owner = null
 			branding_part = neck
 		if("Breasts")
 			if(QDELETED(tits))
@@ -462,6 +486,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			tits.branded_writing = branding_text
 			tits.enslavement_mark = enslave
+			if(enslave)
+				tits.brand_owner_name = user.real_name
+				tits.brand_owner = user
+			else
+				tits.brand_owner_name = ""
+				tits.brand_owner = null
 		if("Dick")
 			if(QDELETED(penis))
 				return TRUE
@@ -469,6 +499,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			penis.branded_writing = branding_text
 			penis.enslavement_mark = enslave
+			if(enslave)
+				penis.brand_owner_name = user.real_name
+				penis.brand_owner = user
+			else
+				penis.brand_owner_name = ""
+				penis.brand_owner = null
 		if("Vagina")
 			if(QDELETED(vagina))
 				return TRUE
@@ -476,6 +512,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			vagina.branded_writing = branding_text
 			vagina.enslavement_mark = enslave
+			if(enslave)
+				vagina.brand_owner_name = user.real_name
+				vagina.brand_owner = user
+			else
+				vagina.brand_owner_name = ""
+				vagina.brand_owner = null
 		if("Testes")
 			if(QDELETED(testes))
 				return TRUE
@@ -483,6 +525,12 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			testes.branded_writing = branding_text
 			testes.enslavement_mark = enslave
+			if(enslave)
+				testes.brand_owner_name = user.real_name
+				testes.brand_owner = user
+			else
+				testes.brand_owner_name = ""
+				testes.brand_owner = null
 		if("Mouth")
 			user.visible_message(span_info("[target] [description_recoil] as \the [src] sears onto [target.p_their()] lips! The branding leaves an unrecognizable burn."))
 			target.apply_status_effect(/datum/status_effect/mouth_branded)

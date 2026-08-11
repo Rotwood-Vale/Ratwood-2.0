@@ -298,7 +298,27 @@
 					break
 
 		if(HAS_TRAIT(src, TRAIT_OWNED_SLAVE))
-			. += span_greentext("<b>[m1] I can see their brandings, this is an owned slave.</b>")
+			var/owner_name = ""
+			var/mob/living/brand_owner = null
+			for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+				if(bodypart.enslavement_mark && length(bodypart.brand_owner_name))
+					owner_name = bodypart.brand_owner_name
+					brand_owner = bodypart.brand_owner
+					break
+			if(!length(owner_name))
+				for(var/obj/item/organ/organ as anything in internal_organs)
+					if(organ.enslavement_mark && length(organ.brand_owner_name))
+						owner_name = organ.brand_owner_name
+						brand_owner = organ.brand_owner
+						break
+			if(!length(owner_name))
+				owner_name = "an unknown owner"
+			if(user == src)
+				. += span_greentext("<b>I have a branding marking me as owned by [owner_name].</b>")
+			else if(brand_owner && user == brand_owner)
+				. += span_greentext("<b>They are my property.</b>")
+			else
+				. += span_greentext("<b>[m1] I can see their branding; they are owned by [owner_name].</b>")
 
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)

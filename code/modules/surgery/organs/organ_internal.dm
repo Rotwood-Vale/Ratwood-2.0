@@ -52,6 +52,12 @@
 	var/mob/living/carbon/last_owner = null
 	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
 	var/should_regenerate = FALSE
+	/// Branded enslavement mark on this organ
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this organ, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this organ, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 32
