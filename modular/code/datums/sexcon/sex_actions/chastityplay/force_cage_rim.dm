@@ -1,26 +1,26 @@
 /datum/sex_action/chastityplay/force_cage_rim
-    name = "Force them to rim your shield"
-    require_grab = TRUE
-    stamina_cost = 1.0
-    user_sex_part = SEX_PART_ANUS
+	name = "Force them to rim your shield"
+	require_grab = TRUE
+	stamina_cost = 1.0
+	user_sex_part = SEX_PART_ANUS
 	user_needs_chastity = TRUE
-    target_sex_part = SEX_PART_JAWS
+	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/chastityplay/force_cage_rim/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] grabs [target] and shoves [target.p_their()] face beneath [user.p_their()] chastity shield with no ceremony!"))
+	user.visible_message(span_warning("[user] grabs [target] and shoves [target.p_their()] face beneath [user.p_their()] chastity shield with no ceremony!"))
 
 /datum/sex_action/chastityplay/force_cage_rim/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] keeps [target]'s face wedged beneath [user.p_their()] anal shield, using the hold to steer every movement of [target.p_their()] tongue..."))
-    user.sexcon.oralcourse_noise(target)
-    user.sexcon.perform_sex_action(user, 1.3, 0, TRUE)
-    user.sexcon.perform_sex_action(target, 0, 2.5, FALSE)
-    user.sexcon.handle_passive_ejaculation(target)
-    target.sexcon.handle_passive_ejaculation()
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] keeps [target]'s face wedged beneath [user.p_their()] anal shield, using the hold to steer every movement of [target.p_their()] tongue..."))
+	user.sexcon.oralcourse_noise(target)
+	user.sexcon.perform_sex_action(user, 1.3, 0, TRUE)
+	user.sexcon.perform_sex_action(target, 0, 2.5, FALSE)
+	user.sexcon.handle_passive_ejaculation(target)
+	target.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/chastityplay/force_cage_rim/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(span_warning("[user] shoves [target] back and the shield comes away from [target.p_their()] face with a faint wet sound."))
+	user.visible_message(span_warning("[user] shoves [target] back and the shield comes away from [target.p_their()] face with a faint wet sound."))
 
 /datum/sex_action/chastityplay/force_cage_rim/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(user.sexcon.finished_check())
-        return TRUE
-    return FALSE
+	if(user.sexcon.finished_check())
+		return TRUE
+	return FALSE
