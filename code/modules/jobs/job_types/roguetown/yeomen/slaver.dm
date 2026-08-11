@@ -53,6 +53,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/slaver/basic/pre_equip(mob/living/carbon/human/H)
