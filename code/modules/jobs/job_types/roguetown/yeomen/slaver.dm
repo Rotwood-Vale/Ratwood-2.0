@@ -9,26 +9,11 @@
 	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
 	display_order = JDO_SLAVER
 	job_traits = list(TRAIT_SLEUTH, TRAIT_DUNGEONMASTER)
-	job_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_CON = 2,
-		STATKEY_STR = 1
+	advclass_cat_rolls = list(CTAG_SLAVER = 2)
+	job_subclasses = list(
+		/datum/advclass/slaver
 	)
-	skills = list(
-		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-	)
-	outfit = /datum/outfit/job/roguetown/slaver/basic
+	outfit = /datum/outfit/job/roguetown/slaver
 	give_bank_account = 50
 	min_pq = 50
 	max_pq = null
@@ -42,6 +27,33 @@
 		return
 	var/mob/living/carbon/human/human_target = H
 	human_target.update_ownership_marks_for_slaver(human_target)
+
+/datum/outfit/job/roguetown/slaver
+
+/datum/advclass/slaver
+	name = "Slaver"
+	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
+	outfit = /datum/outfit/job/roguetown/slaver/basic
+	category_tags = list(CTAG_SLAVER)
+	subclass_stats = list(
+		STATKEY_PER = 2,
+		STATKEY_CON = 2,
+		STATKEY_STR = 1
+	)
+	subclass_skills = list(
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+	)
 
 /datum/outfit/job/roguetown/slaver/basic/pre_equip(mob/living/carbon/human/H)
 	..()
