@@ -1,32 +1,19 @@
 /datum/job/roguetown/slave
-	title = "Prisoner (Town)"
+	title = "Slave"
 	department_flag = PEASANTS
 	faction = "Station"
 	total_positions = 6
 	spawn_positions = 6
-
-/datum/job/roguetown/slave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
-	. = ..()
-	if(!ishuman(H))
-		return
-	var/mob/living/carbon/human/human_target = H
-	human_target.apply_ownership_mark(null, "")
-
 	allowed_races = ACCEPTED_RACES
 	tutorial = "Traded around like common goods you are deprived of your freedom and been trained into an obedient implement of your masters. Whether it be making them rich or making them comfortable you serve at their leisure with your continued well being entirely dependent on your owner's good will."
-
 	outfit = /datum/outfit/job/roguetown/slave
 	display_order = JDO_SLAVE
 	give_bank_account = 0
-	
 	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
-
 	cmode_music = 'sound/music/combat_bum.ogg'
 	advclass_cat_rolls = list(CTAG_SLAVE = 20)
-
-
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_OWNED_SLAVE)
 	job_subclasses = list(
@@ -34,6 +21,13 @@
 		/datum/advclass/slave/labor_slave,
 		/datum/advclass/slave/slave_sentry
 	)
+
+/datum/job/roguetown/slave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(H))
+		return
+	var/mob/living/carbon/human/human_target = H
+	human_target.apply_ownership_mark(null, "")
 
 /datum/outfit/job/roguetown/slave
 	neck = /obj/item/clothing/neck/roguetown/collar/leather

@@ -61,6 +61,7 @@ GLOBAL_LIST_INIT(nonhuman_positions, list(
 
 GLOBAL_LIST_INIT(noble_positions, list(
 	"Grand Duke",
+	"Baron",
 	"Consort",
 	"Suitor",
 	"Prince",
@@ -135,6 +136,7 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
+	"Slaver",
 	"Tailor",
 ))
 
@@ -150,6 +152,7 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Nightmaster",
 	"Tapster",
 	"Bathhouse Attendant",
+	"Slave",
 	"Prisoner",
 	"Beggar",
 	"Refugee",

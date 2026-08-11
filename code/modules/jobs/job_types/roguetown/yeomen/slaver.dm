@@ -2,34 +2,31 @@
 	title = "Slaver"
 	department_flag = YEOMEN
 	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = JCOLOR_YEOMAN
+	allowed_races = ACCEPTED_RACES
+	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
+	display_order = JDO_SLAVER
+	job_traits = list(TRAIT_SLEUTH, TRAIT_DUNGEONMASTER)
+	outfit = /datum/outfit/job/roguetown/slaver
+	give_bank_account = 50
+	min_pq = 50
+	max_pq = null
+	round_contrib_points = 4
+	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
+	social_rank = SOCIAL_RANK_YEOMAN
+	advclass_cat_rolls = list(CTAG_SLAVER = 2)
+	job_subclasses = list(
+		/datum/advclass/slaver
+	)
 
-/datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+/datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = TRUE)
 	. = ..()
 	if(!ishuman(H))
 		return
 	var/mob/living/carbon/human/human_target = H
 	human_target.update_ownership_marks_for_slaver(human_target)
-	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
-	total_positions = 1
-	spawn_positions = 1
-	selection_color = JCOLOR_YEOMAN
-	allowed_races = ACCEPTED_RACES
-	display_order = JDO_SLAVER
-	job_traits = list(TRAIT_SLEUTH, TRAIT_DUNGEONMASTER)
-	outfit = /datum/outfit/job/roguetown/slaver
-	give_bank_account = 50
-	
-	min_pq = 50
-	max_pq = null
-	round_contrib_points = 4
-	
-	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
-	social_rank = SOCIAL_RANK_YEOMAN
-	
-	advclass_cat_rolls = list(CTAG_SLAVER = 2)
-	job_subclasses = list(
-		/datum/advclass/slaver
-	)
 
 /datum/advclass/slaver
 	name = "Slaver"
