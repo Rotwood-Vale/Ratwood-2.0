@@ -128,6 +128,8 @@
 	var/cool_timer
 	/// Whether or not we are heated up
 	var/heated = FALSE
+	// If we mark them as a slave (applies trait, needs pref toggle)
+	var/enslave = FALSE
 	smeltresult = null
 
 /obj/item/rogueweapon/surgery/cautery/examine(mob/user)
@@ -205,8 +207,10 @@
 	. = ..()
 	if(!setbranding || !length(setbranding))
 		. += span_warning("There is no branding symbol set yet.")
+	if(enslave)
+		. += span_warning("It will imprint [setbranding], a permanent mark of ownership")
 	else
-		. += span_warning("It will imprint [setbranding].")
+		. += span_warning("It will imprint [setbranding]")
 
 /obj/item/rogueweapon/surgery/cautery/branding/attack_self(mob/living/user)
 	. = ..()
@@ -216,13 +220,23 @@
 		if(heated)
 			to_chat(user, span_warning("It is too hot to change the symbols!"))
 			return
-		var/inputty = stripped_input(user, "What would you like to set the brand?\nExample: a small drawing of a rous head", "Enter branding description", null, 64)
-		if(inputty)
-			setbranding = inputty
-			to_chat(user, span_warning("I swap the [!branding_low_quality ? "iron" : "coal"] tip so it will imprint [setbranding]."))
-		else
-			to_chat(user, span_info("I clear the current branding symbol."))
-			setbranding = null
+		var/list/options = list("Set symbol", "Toggle permanent slave mark", "Cancel")
+		var/choice = tgui_alert(user, "What would you like to do with the branding iron?", "Branding Iron", options, 10 SECONDS)
+		switch(choice)
+			if("Set symbol")
+				var/inputty = stripped_input(user, "What would you like to set the brand?\nExample: a small drawing of a rous head", "Enter branding description", null, 64)
+				if(inputty)
+					setbranding = inputty
+					to_chat(user, span_warning("I swap the [!branding_low_quality ? "iron" : "coal"] tip so it will imprint [setbranding]."))
+				else
+					to_chat(user, span_info("I clear the current branding symbol."))
+					setbranding = null
+			if("Toggle permanent slave mark")
+				enslave = !enslave
+				if(enslave)
+					to_chat(user, span_warning("I set the iron to leave a permanent mark of slavery."))
+				else
+					to_chat(user, span_info("I set the iron to leave a simple brand only."))
 	..()
 
 /obj/item/rogueweapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
@@ -377,18 +391,18 @@
 			branding_delay -= 4 SECONDS // quicker to brand yourself using a good tool
 		user.visible_message(span_warning("[user] slowly wields [src] onto [user.p_their()] [LOWER_TEXT(final_answer)]."))
 
-	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s)")
+	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s), slave mark: "[enslave])
 
 	if(!do_after(user, branding_delay, target = target))
 		if(!QDELETED(target))
-			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer]")
+			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
 		return TRUE
 	if(!user.Adjacent(target) || user.stat >= UNCONSCIOUS)
-		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer]")
+		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
 		return TRUE
 
 	if(QDELETED(branding_part))
-		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer]")
+		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
 		return TRUE
 
 	// Attempt to re-get the part and place the brand
@@ -401,45 +415,64 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			branding_part.branded_writing = branding_text
 			apply_knockdown = FALSE
+			if(enslave)
+				branding_part.enslavement_mark = TRUE
 		if("Hind")
 			var/obj/item/bodypart/chest/buttocks = branding_part
 			if(length(buttocks.branded_writing_on_buttocks))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			buttocks.branded_writing_on_buttocks = branding_text
+			if(enslave)
+				buttocks.enslavement_mark = TRUE
+			branding_part = buttocks
 		if("Stomach")
 			var/obj/item/bodypart/chest/stomach = branding_part
 			if(length(stomach.branded_writing_on_stomach))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			stomach.branded_writing_on_stomach = branding_text
+			if(enslave)
+				stomach.enslavement_mark = TRUE
+			branding_part = stomach
 		if("Neck")
 			var/obj/item/bodypart/head/neck = branding_part
 			if(length(neck.branded_writing_on_neck))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			neck.branded_writing_on_neck = branding_text
+			if(enslave)
+				neck.enslavement_mark = TRUE
+			branding_part = neck
 		if("Breasts")
 			if(QDELETED(tits))
 				return TRUE
 			if(length(tits.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			tits.branded_writing = branding_text
+			if(enslave)
+				tits.enslavement_mark = TRUE
 		if("Dick")
 			if(QDELETED(penis))
 				return TRUE
 			if(length(penis.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			penis.branded_writing = branding_text
+			if(enslave)
+				penis.enslavement_mark = TRUE
 		if("Vagina")
 			if(QDELETED(vagina))
 				return TRUE
 			if(length(vagina.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			vagina.branded_writing = branding_text
+			if(enslave)
+				vagina.enslavement_mark = TRUE
 		if("Testes")
 			if(QDELETED(testes))
 				return TRUE
 			if(length(testes.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			testes.branded_writing = branding_text
+			if(enslave)
+				testes.enslavement_mark = TRUE
 		if("Mouth")
 			user.visible_message(span_info("[target] [description_recoil] as \the [src] sears onto [target.p_their()] lips! The branding leaves an unrecognizable burn."))
 			target.apply_status_effect(/datum/status_effect/mouth_branded)
@@ -450,6 +483,8 @@
 			return TRUE
 
 	target.branded = TRUE // makes examine check for branding marks
+	if(enslave)
+		ADD_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
 	target.apply_damage(branding_damage, BURN, branding_part)
 	if(!branding_self && apply_knockdown)
 		target.Knockdown(1 SECONDS)

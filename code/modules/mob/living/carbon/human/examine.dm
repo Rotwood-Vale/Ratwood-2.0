@@ -1119,18 +1119,46 @@
 
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
 		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
-			if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
-				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+			var/brand_text = ""
+			if(length(branded_bodypart.branded_writing))
+				brand_text = branded_bodypart.branded_writing
+				if(branded_bodypart.enslavement_mark)
+					brand_text = "[brand_text], a mark of slavery"
+			else if(branded_bodypart.enslavement_mark)
+				brand_text = "a mark of slavery"
+			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
+				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
 				var/obj/item/bodypart/chest/chest = branded_bodypart
-				if(length(chest.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
-					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest.branded_writing_on_buttocks)]."
-				if(length(chest.branded_writing_on_stomach) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
-					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(chest.branded_writing_on_stomach)]."
+				var/chest_brand_text = ""
+				if(length(chest.branded_writing_on_buttocks))
+					chest_brand_text = chest.branded_writing_on_buttocks
+					if(chest.enslavement_mark)
+						chest_brand_text = "[chest_brand_text], a mark of slavery"
+				else if(chest.enslavement_mark)
+					chest_brand_text = "a mark of slavery"
+				if(length(chest_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest_brand_text)]."
+				var/stomach_brand_text = ""
+				if(length(chest.branded_writing_on_stomach))
+					stomach_brand_text = chest.branded_writing_on_stomach
+					if(chest.enslavement_mark)
+						stomach_brand_text = "[stomach_brand_text], a mark of slavery"
+				else if(chest.enslavement_mark)
+					stomach_brand_text = "a mark of slavery"
+				if(length(stomach_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
+					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(stomach_brand_text)]."
 			else if(istype(branded_bodypart, /obj/item/bodypart/head))
 				var/obj/item/bodypart/head/neck = branded_bodypart
-				if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
-					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+				var/neck_brand_text = ""
+				if(length(neck.branded_writing_on_neck))
+					neck_brand_text = neck.branded_writing_on_neck
+					if(neck.enslavement_mark)
+						neck_brand_text = "[neck_brand_text], a mark of slavery"
+				else if(neck.enslavement_mark)
+					neck_brand_text = "a mark of slavery"
+				if(length(neck_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck_brand_text)]."
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
