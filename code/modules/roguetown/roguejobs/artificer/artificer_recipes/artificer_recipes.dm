@@ -352,14 +352,6 @@
 	hammers_per_item = 6
 	skill_level = 6
 
-/datum/artificer_recipe/contraptions/smokepowder
-	name = "Smokepowder Flask (+1 Cured leather, +2 Coal Dust +2 Fire Essentia)"
-	required_item = /obj/item/natural/hide/cured
-	additional_items = list(/obj/item/natural/hide/cured, /obj/item/alch/firedust, /obj/item/alch/firedust, /obj/item/alch/coaldust, /obj/item/alch/coaldust)
-	created_item = /obj/item/powderflask
-	hammers_per_item = 4
-	skill_level = 4
-
 // --------- WEAPON -----------
 
 /datum/artificer_recipe/wood/weapons //Again, a bit silly, but is important
