@@ -311,7 +311,7 @@
 	if (isturf(targets[1]))
 		var/turf/front_turf = get_step(user, user.dir)
 		var/datum/effect_system/spark_spread/spark_spread_effect = new()
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		flick("flintstrike", src)
 		spark_spread_effect.set_up(1, 1, front_turf)
 		spark_spread_effect.start()
@@ -320,7 +320,7 @@
 	else
 		var/atom/target_atom = targets[1]
 		if (user.Adjacent(target_atom))
-			user.flash_fullscreen("whiteflash")
+			user.fullscreen_redflash("whiteflash")
 			flick("flintstrike", src)
 			target_atom.spark_act()
 			user.visible_message(span_notice("[user.name] exhales a directed spark toward [target_atom]!"), span_notice("You release a pinpoint ember toward [target_atom]."))

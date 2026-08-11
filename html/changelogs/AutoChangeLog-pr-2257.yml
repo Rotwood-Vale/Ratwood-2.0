@@ -1,4 +1,0 @@
-author: "Shadow-Quill"
-delete-after: True
-changes:
-  - bugfix: "Nervelocks now correctly shows the tax rate that affects you, as well as if you are exempt from fines or not."

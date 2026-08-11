@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		pref_load.apply_descriptors(C)
 
 	for(var/language_type in languages)
-		C.grant_language(language_type)
+		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	for(var/language_type in languages)
-		C.remove_language(language_type)
+		C.remove_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	// Clear organ DNA since it wont match as we're changing the species
 	C.dna.organ_dna = list()
@@ -2078,11 +2078,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.Slowdown(clamp(damage_amount/10, 1, 5))
 					shake_camera(H, 1, 1)
 				if(damage_amount < 10)
-					H.flash_fullscreen("redflash1")
+					H.fullscreen_redflash("redflash1")
 				else if(damage_amount < 20)
-					H.flash_fullscreen("redflash2")
+					H.fullscreen_redflash("redflash2")
 				else if(damage_amount >= 20)
-					H.flash_fullscreen("redflash3")
+					H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2096,11 +2096,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(damage_amount > 10 && prob(damage_amount))
 				H.emote("pain")
 			if(damage_amount < 10)
-				H.flash_fullscreen("redflash1")
+				H.fullscreen_redflash("redflash1")
 			else if(damage_amount < 20)
-				H.flash_fullscreen("redflash2")
+				H.fullscreen_redflash("redflash2")
 			else if(damage_amount >= 20)
-				H.flash_fullscreen("redflash3")
+				H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2221,6 +2221,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 		if(env_adjust)
 			H.adjust_bodytemperature(env_adjust)
+
+		if(isfloorturf(cur_turf) && H.bodytemperature < BODYTEMP_NORMAL_MAX)
+			var/turf/open/floor/F = cur_turf
+			if(F.heat)
+				var/warmth = F.heat * 4
+				if(H.bodytemperature + warmth > BODYTEMP_NORMAL_MAX)
+					warmth = BODYTEMP_NORMAL_MAX - H.bodytemperature
+				H.adjust_bodytemperature(warmth)
 	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
 		var/burn_damage = 0
 

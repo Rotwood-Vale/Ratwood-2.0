@@ -587,3 +587,11 @@
 	name = "thick dungeon shroud"
 	icon = 'icons/turf/roguewall.dmi'
 	icon_state = "shroud1"
+	baseturfs = /turf/closed/dungeon_void
+
+/turf/closed/dungeon_void/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
+	flags_1 |= INITIALIZED_1
+	turf_integrity = max_integrity
+	opaque_atom_count = 1
+	return INITIALIZE_HINT_NORMAL

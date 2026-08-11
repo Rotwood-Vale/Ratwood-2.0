@@ -1092,7 +1092,7 @@
 	else if(href_list["remove_language"])
 		var/mob/M = locate(href_list["remove_language"])
 		var/datum/language/lang = text2path(href_list["language"])
-		M.remove_language(lang)
+		M.remove_language(lang, source = LANGUAGE_SOURCE_ALL)
 		message_admins(span_danger("Admin [key_name_admin(usr)] removed [lang] from [key_name_admin(M)]"))
 		log_admin("[usr] removed [lang] to [M].")
 		show_player_panel_next(M, "languages")
@@ -1563,7 +1563,7 @@
 			return
 		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
 		var/client/mob_client = M.client
-		var/amt2change = input("How much to modify the PQ by? (20 to -20, or 0 to just add a note)") as null|num
+		var/amt2change = input("How much to modify the PQ by? ([!check_rights(R_BAN,0) ? "-20 to 20, or " : ""]0 to just add a note)") as null|num
 		if(!check_rights(R_BAN,0))
 			amt2change = CLAMP(amt2change, -20, 20)
 		var/raisin = stripped_input("State a short reason for this change", "Game Master", "", null)
