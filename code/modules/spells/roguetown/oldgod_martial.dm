@@ -29,7 +29,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_retribution/cast(mob/living/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume-100, 0)
+	user.blood_volume = max(user.blood_volume-50, 0) //Lowered from -100. An empowering hit that does more damage to you than the enemy even if you debuff them is never a good trade.
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_status_effect(/datum/status_effect/psydonic_retribution, user.get_active_held_item())
@@ -119,7 +119,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	devotion_cost = 60
 
 /obj/effect/proc_holder/spell/self/psydonic_inspire/cast(list/targets,mob/living/user = usr)
-	user.blood_volume = max(user.blood_volume-200, 0)//It's a mass AoE for an already powerful faction.
+	user.blood_volume = max(user.blood_volume-130, 0)//Lowered from -200 due to how useless this miracle was, leaving you almost dead if you had any kind of bleeding.
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	for(var/mob/living/carbon/target in view(6, get_turf(user)))
@@ -171,7 +171,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return FALSE
 	user.blood_volume = max(user.blood_volume+200, 0)
 	user.handle_blood()
-	user.apply_damage(200, BRUTE, spread_damage = TRUE)//Try to beat a bleedout? A point of damage for each point of blood.
+	user.apply_damage(100, BRUTE, spread_damage = TRUE)//The idea was good, but changing value of damage taken from -200 to -100 due to how inefficient and practically useless this is.
 	return TRUE
 
 //Inviolability. A shield around the user, harming any undead who strike them.
@@ -202,7 +202,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	user.blood_volume = max(user.blood_volume-300, 0)//RAAAA!!!!
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
-	user.apply_damage(300, BRUTE, spread_damage = TRUE)
+	user.apply_damage(200, BRUTE, spread_damage = TRUE) //300 damage is a lot and enough to cripple one limb instantly, lowering to 200.
 	user.apply_status_effect(/datum/status_effect/buff/inviolability)
 	return TRUE
 
@@ -290,10 +290,10 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/proc/lux_punish(mob/living/carbon/target)
 	target.visible_message(span_notice("[target] shimmers, as if they're to fade away entirely, before snapping back to reality."), \
 		span_userdanger("My own spark, my <b>lyfe</b>, flashes afore me. What have I done?"))
-	target.blood_volume = max(target.blood_volume-400, 0)//Take a guess.
+	target.blood_volume = max(target.blood_volume-200, 0)//Take a guess.
 	target.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
-	target.apply_damage(300, BRUTE, spread_damage = TRUE)
+	target.apply_damage(250, BRUTE, spread_damage = TRUE) //Lowered from 300. At 300, it's enough to literally cripple limbs, which renders the miracle only useful if you have the absolver ready to take damage or in bed. It's limited to one bolt at a time anyways, so at most you'll only use it once in battle.
 	playsound(target.loc, 'sound/magic/woundheal_crunch.ogg', 100, FALSE)
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/Destroy()

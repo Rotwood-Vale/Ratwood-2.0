@@ -224,7 +224,7 @@
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20
-	reloadtime = 8 SECONDS//Oh, yes...
+	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
 	hasloadedsprite = TRUE
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
 
