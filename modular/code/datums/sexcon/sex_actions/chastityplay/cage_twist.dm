@@ -2,22 +2,7 @@
     name = "Twist their cage"
     category = SEX_CATEGORY_HANDS
     target_sex_part = SEX_PART_COCK
-
-/datum/sex_action/chastityplay/cage_twist/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target_has_cage(target))
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/cage_twist/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target_has_cage(target))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/cage_twist/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))

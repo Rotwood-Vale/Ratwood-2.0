@@ -1,33 +1,9 @@
 /datum/sex_action/chastityplay/scissor_cage
     name = "Scissor against their belt"
     user_sex_part = SEX_PART_CUNT
+	user_needs_functional = TRUE
     target_sex_part = SEX_PART_CUNT
-
-/datum/sex_action/chastityplay/scissor_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/scissor_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/scissor_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] maneuvers close and presses [user.p_their()] bare cunt flush against the face of [target]'s chastity belt."))

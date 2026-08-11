@@ -1,25 +1,9 @@
 /datum/sex_action/chastityplay/cage_cunnilingus
     name = "Lick through their belt"
     user_sex_part = SEX_PART_JAWS
+	target_sex_part = SEX_PART_CUNT
+	target_needs_chastity = TRUE
     category = SEX_CATEGORY_PENETRATE
-
-/datum/sex_action/chastityplay/cage_cunnilingus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/cage_cunnilingus/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-        return FALSE
-    return TRUE
 
 /datum/sex_action/chastityplay/cage_cunnilingus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] drops to [user.p_their()] knees and brings [user.p_their()] mouth level with [target]'s chastity belt."))

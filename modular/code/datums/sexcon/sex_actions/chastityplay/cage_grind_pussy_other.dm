@@ -1,37 +1,9 @@
 /datum/sex_action/chastityplay/cage_grind_pussy_other
     name = "Grind your cage on their pussy"
     user_sex_part = SEX_PART_COCK
+	user_needs_chastity = TRUE
     target_sex_part = SEX_PART_CUNT
-
-/datum/sex_action/chastityplay/cage_grind_pussy_other/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_PENIS))
-        return FALSE
-    if(!user.sexcon.has_chastity_penis())
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/cage_grind_pussy_other/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_PENIS))
-        return FALSE
-    if(!user.sexcon.has_chastity_penis())
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_functional = TRUE
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] rolls [user.p_their()] hips forward until [user.p_their()] [get_chastity_device_name(user)] settles against [target]'s bare pussy."))

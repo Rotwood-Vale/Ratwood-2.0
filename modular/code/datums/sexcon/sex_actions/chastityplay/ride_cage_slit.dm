@@ -3,33 +3,14 @@
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
     user_sex_part = SEX_PART_SLIT_SHEATH
+	user_needs_functional = TRUE // is this really necessary? well, it was checked...
     target_sex_part = SEX_PART_COCK
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/ride_cage_slit/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    var/obj/item/organ/penis/user_penis = user.getorganslot(ORGAN_SLOT_PENIS)
-    if(!user_penis || user_penis.sheath_type != SHEATH_TYPE_SLIT)
-        return FALSE
-    if(user.sexcon.has_chastity_cage())
-        return FALSE
-    if(!target.sexcon.has_chastity_penis())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/ride_cage_slit/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    var/obj/item/organ/penis/user_penis = user.getorganslot(ORGAN_SLOT_PENIS)
-    if(!user_penis || user_penis.sheath_type != SHEATH_TYPE_SLIT)
-        return FALSE
-    if(!user.sexcon.can_use_penis())
-        return FALSE
-    if(!target.sexcon.has_chastity_penis())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
+    if(!(. = ..()))
+		return FALSE
+    if(user.sexcon.has_chastity_cage()) // isn't this redundant with the can_use_penis check?
         return FALSE
     return TRUE
 

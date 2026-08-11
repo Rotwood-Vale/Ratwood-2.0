@@ -1,7 +1,9 @@
 /datum/sex_action/chastityplay/cage_grind_slit_other
     name = "Grind your cage on their genital slit"
     user_sex_part = SEX_PART_COCK
+	user_needs_chastity = TRUE
     target_sex_part = SEX_PART_SLIT_SHEATH
+	target_needs_functional = TRUE
 
 /datum/sex_action/chastityplay/cage_grind_slit_other/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(!requires_other_target(user, target))

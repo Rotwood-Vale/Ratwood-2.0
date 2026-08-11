@@ -1,5 +1,9 @@
 /datum/sex_action/chastityplay/frot_cage_to_cage
     name = "Grind cage to cage"
+	user_sex_part = SEX_PART_COCK
+	user_needs_chastity = TRUE
+	target_sex_part = SEX_PART_COCK
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/frot_cage_to_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(!requires_other_target(user, target))

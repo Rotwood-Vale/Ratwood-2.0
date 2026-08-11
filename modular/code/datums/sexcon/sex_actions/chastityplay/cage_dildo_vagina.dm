@@ -2,26 +2,7 @@
     name = "Work their inverted dildo"
     category = SEX_CATEGORY_HANDS
     target_sex_part = SEX_PART_CUNT
-
-/datum/sex_action/chastityplay/cage_dildo_vagina/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/cage_dildo_vagina/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/cage_dildo_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))

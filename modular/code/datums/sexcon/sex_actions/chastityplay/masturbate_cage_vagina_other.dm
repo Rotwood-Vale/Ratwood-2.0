@@ -2,26 +2,7 @@
     name = "Rub their locked slit"
     category = SEX_CATEGORY_HANDS
     target_sex_part = SEX_PART_CUNT
-
-/datum/sex_action/chastityplay/masturbate_cage_vagina_other/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(user == target)
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/masturbate_cage_vagina_other/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(user == target)
-        return FALSE
-    if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/masturbate_cage_vagina_other/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] traces two fingers over the front panel of [target]'s chastity belt, finding the slot."))

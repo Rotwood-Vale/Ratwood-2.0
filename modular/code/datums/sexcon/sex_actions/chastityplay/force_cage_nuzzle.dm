@@ -3,24 +3,8 @@
     require_grab = TRUE
     stamina_cost = 1.0
     target_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/chastityplay/force_cage_nuzzle/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_penis())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/force_cage_nuzzle/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_penis())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-        return FALSE
-    return TRUE
+	user_sex_part = SEX_PART_COCK
+	user_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/force_cage_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] takes hold of [target]'s head and guides it firmly into [user.p_their()] [get_chastity_device_name(user)]."))

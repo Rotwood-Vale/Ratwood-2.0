@@ -1,29 +1,9 @@
 /datum/sex_action/chastityplay/scissor_cage_to_cage
     name = "Scissor belt to belt"
     user_sex_part = SEX_PART_CUNT
+	user_needs_chastity = TRUE
     target_sex_part = SEX_PART_CUNT
-
-/datum/sex_action/chastityplay/scissor_cage_to_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/scissor_cage_to_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/scissor_cage_to_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] maneuvers close until [user.p_their()] belt meets [target]'s belt \u2014 the contact announcing itself with a dull clunk of steel."))

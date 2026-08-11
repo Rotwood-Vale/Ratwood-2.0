@@ -4,24 +4,8 @@
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
     target_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/chastityplay/force_cage_cunnilingus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_vagina())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/force_cage_cunnilingus/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-        return FALSE
-    return TRUE
+	user_sex_part = SEX_PART_CUNT
+	user_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/force_cage_cunnilingus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] seizes [target] and drags [target.p_their()] face firmly against [user.p_their()] chastity belt!"))

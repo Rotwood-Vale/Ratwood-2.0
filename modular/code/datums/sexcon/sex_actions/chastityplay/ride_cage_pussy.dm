@@ -3,33 +3,9 @@
     stamina_cost = 1.0
     category = SEX_CATEGORY_PENETRATE
     user_sex_part = SEX_PART_CUNT
+	user_needs_functional = TRUE
     target_sex_part = SEX_PART_COCK
-
-/datum/sex_action/chastityplay/ride_cage_pussy/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_penis())
-        return FALSE
-    return TRUE
-
-/datum/sex_action/chastityplay/ride_cage_pussy/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    if(!requires_other_target(user, target))
-        return FALSE
-    if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-        return FALSE
-    if(user.sexcon.has_chastity_vagina())
-        return FALSE
-    if(!target.sexcon.has_chastity_penis())
-        return FALSE
-    if(!can_reach_target_groin(user, user))
-        return FALSE
-    if(!can_reach_target_groin(user, target))
-        return FALSE
-    return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/ride_cage_pussy/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
     user.visible_message(span_warning("[user] straddles [target] and settles [user.p_their()] weight down until [user.p_their()] pussy meets the bars of [target.p_their()] [get_chastity_device_name(target)]."))

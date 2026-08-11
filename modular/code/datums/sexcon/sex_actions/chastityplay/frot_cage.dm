@@ -1,7 +1,9 @@
 /datum/sex_action/chastityplay/frot_cage
 	name = "Frot with their chastity device"
 	user_sex_part =	SEX_PART_COCK
+	user_needs_functional = TRUE
 	target_sex_part = SEX_PART_COCK
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/frot_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!requires_other_target(user, target))
