@@ -104,6 +104,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast/buttered
 	name = "buttered toast"
+	desc = "Crisp and crunchy, yet not burnt - truly, an alchemical wonder. Now slathered with a healthy layer of butter."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "toast_butter"
 	faretype = FARE_FINE
