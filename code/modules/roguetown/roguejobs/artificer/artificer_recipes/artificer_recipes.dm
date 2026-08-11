@@ -180,9 +180,9 @@
 	skill_level = 5
 
 /datum/artificer_recipe/contraptions/houndstone
-	name = "Houndstone (+1 cog, +1 Topar)"
+	name = "Houndstone (+1 cog, +1 Topar, +1 Houndstone Gem)"
 	required_item = /obj/item/ingot/steel
-	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow, /obj/item/roguegem/houndgem)
 	created_item = /obj/item/scomstone/bad/garrison
 	skill_level = 5
 
@@ -207,6 +207,20 @@
 	created_item = /obj/item/contraption/folding_table_stored
 	hammers_per_item = 5
 	skill_level = 1
+
+/datum/artificer_recipe/contraptions/folding_alchcauldron
+	name = "Folding Cauldron (+1 Small Log, +Stone Pot, +Tin)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bucket/pot/stone, /obj/item/ingot/tin)
+	created_item = /obj/item/folding_table_stored/alchcauldron
+	skill_level = 3
+
+/datum/artificer_recipe/contraptions/folding_alchstation_stored
+	name = "Alchemical Station Kit (+2 Small Log, +Bottle, +Cog)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/reagent_containers/glass/bottle, /obj/item/roguegear)
+	created_item = /obj/item/folding_table_stored/alchstation
+	skill_level = 3
 
 /datum/artificer_recipe/contraptions/mess_kit
 	name = "Mess Kit (+2 Iron)" // 3 Iron, cuz you get a pot, a pan and other things for free.
@@ -276,10 +290,10 @@
 	skill_level = 3
 
 /datum/artificer_recipe/contraptions/artificerarmor
-	name = "Artificer armor (+3 ancient alloy ingot)(+2 Bronze gear)"
-	required_item = /obj/item/ingot/purifiedaalloy
-	additional_items = list(/obj/item/ingot/purifiedaalloy,/obj/item/ingot/purifiedaalloy, /obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/paalloy/artificer
+	name = "Artificer armor (+3 Gilbranze, +2 Bronze Gear)"
+	required_item = /obj/item/ingot/gilbranze
+	additional_items = list(/obj/item/ingot/gilbranze,/obj/item/ingot/gilbranze, /obj/item/roguegear/bronze,/obj/item/roguegear/bronze)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer
 	hammers_per_item = 12
 	skill_level = 4
 

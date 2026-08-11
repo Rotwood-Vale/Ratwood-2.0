@@ -170,8 +170,6 @@
 		user.update_inv_belt()
 		user.update_inv_back()
 
-	getonmobprop(tag)
-
 
 /obj/item/rogueweapon/scabbard/getonmobprop(tag)
 	..()
@@ -270,6 +268,7 @@
 
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.85
 
 	force = 3
 	max_integrity = 500
@@ -391,7 +390,6 @@
 	resistance_flags = NONE
 	experimental_onback = FALSE
 	bigboy = TRUE
-	sewrepair = TRUE
 
 	equip_delay_self = 5 SECONDS
 	unequip_delay_self = 5 SECONDS
@@ -428,8 +426,6 @@
 
 	if(user)
 		user.update_inv_back()
-
-	getonmobprop(tag)
 
 /obj/item/rogueweapon/scabbard/gwstrap/getonmobprop(tag)
 	..()
@@ -489,10 +485,9 @@
 				)
 
 
-/*
-	GENERIC SCABBARDS
-*/
-
+///////////////////////
+//	SWORD SCABBARDS  //
+///////////////////////
 
 /obj/item/rogueweapon/scabbard/sword
 	name = "simple scabbard"
@@ -524,6 +519,156 @@
 		if(!sheathing.sheathe_icon)
 			return FALSE
 
+/obj/item/rogueweapon/scabbard/sword/noble
+	name = "silver-decorated scabbard"
+	desc = "A sword's noble scabbard, enamored with elaborate silver decorations. It carries an aristocrat's sword upon a silver platter, and - just like an actual platter - can suffice at riposting an errant blow."
+	icon_state = "nscabbard"
+	associated_skill = /datum/skill/combat/shields
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	can_parry = TRUE
+	sewrepair = FALSE
+	wdefense = 4
+	max_integrity = 75
+	resistance_flags = null
+	sellprice = 50
+
+/obj/item/rogueweapon/scabbard/sword/royal
+	name = "gold-decorated scabbard"
+	desc = "A sword's royal scabbard, enamored with exquisite golden decorations. It pampers a champion's sword in a veil of gilded silk, reluctant to let go."
+	icon_state = "rscabbard"
+	associated_skill = /datum/skill/combat/shields
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	can_parry = TRUE
+	sewrepair = FALSE
+	wdefense = 6
+	max_integrity = 150
+	resistance_flags = null
+	sellprice = 100
+
+/obj/item/rogueweapon/scabbard/sheath/courtphysician
+	name = "fancy cane"
+	desc = "A decorated cane bearing the visage of a vulture."
+	icon_state = "doccanesheath"
+	item_state = "doccanesheath"
+	valid_blade = /obj/item/rogueweapon/sword/rapier/courtphysician
+	sellprice = 45
+
+/obj/item/rogueweapon/scabbard/sheath/courtphysician/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.5,
+					"sx" = -6,
+					"sy" = -6,
+					"nx" = 6,
+					"ny" = -5,
+					"wx" = -1,
+					"wy" = -5,
+					"ex" = -1,
+					"ey" = -5,
+					"nturn" = -45,
+					"sturn" = -45,
+					"wturn" = -45,
+					"eturn" = -45,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = FALSE
+				)
+			if("wielded")
+				return list(
+					"shrink" = 0.5,
+					"sx" = 0,
+					"sy" = 0,
+					"nx" = 0,
+					"ny" = 0,
+					"wx" = -3,
+					"wy" = 0,
+					"ex" = 3,
+					"ey" = 0,
+					"nturn" = -90,
+					"sturn" = 0,
+					"wturn" = -90,
+					"eturn" = 0,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = TRUE
+				)
+			if("onbelt")
+				return list(
+					"shrink" = 0.3,
+					"sx" = -2,
+					"sy" = -5,
+					"nx" = 4,
+					"ny" = -5,
+					"wx" = 0,
+					"wy" = -5,
+					"ex" = 2,
+					"ey" = -5,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 0,
+					"eturn" = 0,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0
+				)
+
+/obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
+	name = "velvet sister"
+	desc = "Sleek, fashionable and deadly. Traits shared by both staff and the one holding it. Never let yourself be outdone, never rely on merely one trick.\
+	The rontz embedded in the handle serves as focus for arcyne arts."
+	icon = 'icons/roguetown/weapons/special/hand32.dmi'
+	icon_state = "staffsheath"
+	item_state = "staffsheath"
+	valid_blade = /obj/item/rogueweapon/sword/rapier/hand
+	// Is meant to be a wand for mage 2.0, but we don't have that on RW.
+	sellprice = 100
+
+///////////////////////
+//	KNIFE SCABBARDS  //
+///////////////////////
+
+/obj/item/rogueweapon/scabbard/sheath/noble
+	name = "silver-decorated knife sheath"
+	desc = "A dagger's noble sheath, enamored with elaborate silver decorations. Oft-flaunted upon the faulds of a knight, it dangles and sways whenever its steely reserve is drawn."
+	icon_state = "nsheath"
+	associated_skill = /datum/skill/combat/shields
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	can_parry = TRUE
+	sewrepair = FALSE
+	wdefense = 2
+	max_integrity = 50
+	resistance_flags = null
+	sellprice = 50
+
+/obj/item/rogueweapon/scabbard/sheath/royal
+	name = "gold-decorated knife sheath"
+	desc = "A dagger's royal sheath, enamored with exquisite golden decorations. The hand that draws will spell the fate of many; be it for the kingdom or the world."
+	icon_state = "rsheath"
+	associated_skill = /datum/skill/combat/shields
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	can_parry = TRUE
+	sewrepair = FALSE
+	wdefense = 4
+	resistance_flags = null
+	sellprice = 100
 
 /*
 	KAZENGUN
@@ -542,7 +687,7 @@
 	can_parry = TRUE
 	wdefense = 8
 
-	max_integrity = 0
+	max_integrity = 220
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry
 	name = "ceremonial kazengun scabbard"
@@ -575,7 +720,8 @@
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
 	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
-	sellprice = 10
+	max_integrity = 220
+	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 	name = "plain lacquer scabbard"

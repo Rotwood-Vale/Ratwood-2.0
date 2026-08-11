@@ -317,7 +317,7 @@
 			H.social_rank = SOCIAL_RANK_PEASANT
 
 	// STAT PACK SELECTION
-	var/stat_packs = list("Agile - SPD +2, CON +1, STR -1, WIL -1", "Bookworm - INT +1, PER +1, WIL +1, STR -2, CON -2", "Toned - STR +1, CON +1, WIL +1, INT -1", "All-Rounded - No Changes")
+	var/stat_packs = list("Agile - SPD +2, CON +1, STR -1, WIL -1", "Bookworm - INT +1, PER +2, WIL +2, STR -2, CON -2", "Toned - STR +1, CON +1, WIL +1, INT -1", "All-Rounded - No Changes")
 	var/stat_choice = input(H, "Select your stat focus. [1/1]", "Stat Pack Selection") as anything in stat_packs
 
 	switch(stat_choice)
@@ -379,14 +379,13 @@
 			/obj/item/ingot/iron,
 			/obj/item/rogueore/coal
 		),
-		"Carpenter Set" = list(
-			/obj/item/rogueweapon/stoneaxe/woodcut/bronze,
-			/obj/item/rogueweapon/handsaw,
-			/obj/item/rogueweapon/hammer/copper,
+		"Craftsman Set" = list(
+			/obj/item/rogueweapon/stoneaxe/handaxe,
+			/obj/item/rogueweapon/hammer/steel,
 			/obj/item/folding_table_stored
 		),
 		"Hunter Set" = list(
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 			/obj/item/quiver/arrows,
 			/obj/item/rogueweapon/huntingknife/bronze,
 			/obj/item/storage/meatbag,
@@ -399,7 +398,7 @@
 			/obj/item/natural/worms,
 			/obj/item/natural/worms,
 			/obj/item/rogueweapon/huntingknife/bronze,
-			/obj/item/storage/roguebag/crafted
+			/obj/item/storage/roguebag
 		),
 		"Tailor Set" = list(
 			/obj/item/rogueweapon/huntingknife/scissors,
@@ -415,21 +414,13 @@
 			/obj/item/paper,
 			/obj/item/paper/scroll,
 			/obj/item/natural/feather
-		),
-		"Mason Set" = list(
-			/obj/item/rogueweapon/chisel,
-			/obj/item/rogueweapon/hammer/copper,
-			/obj/item/natural/stone,
-			/obj/item/natural/stone,
-			/obj/item/natural/stone,
-			/obj/item/folding_table_stored
 		)
 	)
 
 	// Daily Tools - basic combination
 	var/daily_tools_combos = list(
 		"Bronze Axe + Bronze Knife + Sheath" = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronze, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/sheath),
-		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short, /obj/item/quiver/arrows),
+		"Simple Bow + Quiver" = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow, /obj/item/quiver/arrows),
 		"Iron Spear + Backup Dagger" = list(/obj/item/rogueweapon/spear, /obj/item/rogueweapon/huntingknife/bronze, /obj/item/rogueweapon/scabbard/gwstrap),
 		"Fishing Rod + Worms" = list(/obj/item/fishingrod, /obj/item/natural/worms, /obj/item/natural/worms),
 		"Sickle + Farming Hoe" = list(/obj/item/rogueweapon/sickle, /obj/item/rogueweapon/hoe),
@@ -454,6 +445,9 @@
 						var/unique_key = "[item_name] ([profession_set_name] [counter])"
 						H.mind.special_items[unique_key] = item_path
 					counter++
+				if(profession_set_name == "Craftsman Set")
+					ADD_TRAIT(H, TRAIT_MASTER_CARPENTER, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_MASTER_MASON, TRAIT_GENERIC)
 				if(profession_set_name in profession_sets)
 					profession_sets -= profession_set_name
 
@@ -649,7 +643,6 @@
 			"Carpentry" = /datum/skill/craft/carpentry,
 			"Masonry" = /datum/skill/craft/masonry,
 			"Engineering" = /datum/skill/craft/engineering,
-			"Traps" = /datum/skill/craft/traps,
 			"Alchemy" = /datum/skill/craft/alchemy,
 			"Tanning" = /datum/skill/craft/tanning,
 			"Cooking" = /datum/skill/craft/cooking,
@@ -663,7 +656,6 @@
 			"Unarmed" = /datum/skill/combat/unarmed,
 			"Knives" = /datum/skill/combat/knives,
 			"Wrestling" = /datum/skill/combat/wrestling,
-			"Staves" = /datum/skill/combat/staves,
 			"Whips & Flails" = /datum/skill/combat/whipsflails,
 			"Bows" = /datum/skill/combat/bows,
 			"Crossbows" = /datum/skill/combat/crossbows,

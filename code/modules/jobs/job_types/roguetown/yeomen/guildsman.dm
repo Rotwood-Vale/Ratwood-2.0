@@ -11,7 +11,7 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "You are a member of the Rotwood Vale Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township of Rotwood Vale.\
+	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
 	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 
@@ -27,7 +27,6 @@
 	job_subclasses = list(
 		/datum/advclass/guildsman/artificer,
 		/datum/advclass/guildsman/blacksmith,
-		/datum/advclass/guildsman/architect
 	)
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
@@ -91,56 +90,62 @@
 			/obj/item/rogueweapon/hammer/iron = 1,
 			/obj/item/rogueweapon/tongs = 1,
 			/obj/item/recipe_book/blacksmithing = 1,
+			/obj/item/mini_flagpole/blacksmith = 1
 			)
 		belt = /obj/item/storage/belt/rogue/leather
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 		beltr = /obj/item/roguekey/crafterguild
 		cloak = /obj/item/clothing/cloak/apron/blacksmith
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
 /datum/advclass/guildsman/artificer
-	name = "Artificer"
-	tutorial = "You are an Artificer, oft known by the longer name of Artificer-Tinkerer. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
-	But your true calling is the creation of arcyne machines, alongside feats of engineering, creating mechanical and magical wonders whose art of creation has been passed down\
+	name = "Architech"
+	tutorial = "You are an Architech. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
+	But your true calling is the creation of arcyne machines, alongside feats of engineering, constructing, and creating mechanical and magical wonders whose art of creation has been passed down\
 	from a certain elven Artificer..."
 	outfit = /datum/outfit/job/roguetown/guildsman/artificer
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE_T1)
-	subclass_stats = list(
+	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT)
+	subclass_stats = list( // alchemy expert upon request
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
+		STATKEY_LCK = 2,
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // woodcutting, don't want a wild venard attacking you
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, //reduced for tradeoff
-		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, //they are builders, but not as good as craftsmen
-		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER, //raising so they don't need to early week grind to get items out, in parity to a smith's armor or weapon skill
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Artificer makes for a crappy substitute blacksmith but have the same spread
+		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER, 
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE, // can fill in for a blacksmith 
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	//Just for basic pottery/glass stuff.
+		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making
 	)
 
 /datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/articap
+	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
@@ -148,94 +153,33 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltl = /obj/item/roguekey/crafterguild
+	beltr = /obj/item/rogueweapon/pick/steel
+	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/backpack
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/steel = 1,
-						/obj/item/lockpickring/mundane = 1,
-						/obj/item/recipe_book/blacksmithing = 1,
-						/obj/item/recipe_book/engineering = 1,
-						/obj/item/recipe_book/ceramics = 1,
-						/obj/item/recipe_book/builder = 1,
-						/obj/item/recipe_book/survival = 1,
-						/obj/item/clothing/mask/rogue/spectacles/golden = 1, //putting them in the bag because bad eye sight virtue strips these
-						/obj/item/contraption/linker = 1,
+								/obj/item/rogueweapon/hammer/steel = 1,
+								/obj/item/rogueweapon/chisel = 1,
+								/obj/item/rogueweapon/handsaw = 1,
+								/obj/item/lockpickring/mundane = 1,
+								/obj/item/recipe_book/blacksmithing = 1,
+								/obj/item/recipe_book/engineering = 1,
+								/obj/item/recipe_book/ceramics = 1,
+								/obj/item/recipe_book/builder = 1,
+								/obj/item/recipe_book/survival = 1,
+								/obj/item/contraption/linker = 1,
+								/obj/item/mini_flagpole/artificer = 1,
+								/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+								/obj/item/mini_flagpole/blacksmith = 1,
+								/obj/item/rogueweapon/blowrod = 1,
+								/obj/item/dye_brush = 1,
+								/obj/item/roguekey/crafterguild = 1,
+								/obj/item/rogueweapon/huntingknife = 1,
+								/obj/item/flint = 1,
 						)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-
-/datum/advclass/guildsman/architect
-	name = "Architect"
-	tutorial = "You are a Guild Architect, a master of the art of building and construction. You build castles, fortifications and entire cities with your own hands. And you know how to source those materials yourself too.\
-	When there is no construction work around, your fellow Guildsmen appreciate your help with gathering materials."
-	outfit = /datum/outfit/job/roguetown/guildsman/architect
-
-	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT) // They get extra virtue for dipping into lumberjacking
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT,
-	)
-
-/datum/outfit/job/roguetown/guildsman/architect/pre_equip(mob/living/carbon/human/H)
-	..()
-	head = /obj/item/clothing/head/roguetown/hatblu
-	mask = /obj/item/clothing/mask/rogue/spectacles/golden
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/apron/waist/bar
-	pants = /obj/item/clothing/under/roguetown/trou
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/flashlight/flare/torch/lantern
-	beltl = /obj/item/rogueweapon/pick/steel
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
-	backl = /obj/item/storage/backpack/rogue/backpack
-	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/steel = 1,
-						/obj/item/rogueweapon/handsaw = 1,
-						/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-						/obj/item/rogueweapon/chisel = 1,
-						/obj/item/flashlight/flare/torch = 1,
-						/obj/item/flint = 1,
-						/obj/item/rogueweapon/huntingknife = 1,
-						/obj/item/rogueweapon/handsaw = 1,
-						/obj/item/dye_brush = 1,
-						/obj/item/recipe_book/engineering = 1,
-						/obj/item/recipe_book/builder = 1,
-						/obj/item/recipe_book/survival = 1,
-						/obj/item/roguekey/crafterguild = 1,
-						/obj/item/rogueweapon/blowrod = 1
-						)
-	if(SSmapping.config.map_name == "Desert Town")
-		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
-		head = /obj/item/clothing/head/roguetown/turban/random
-		shoes = /obj/item/clothing/shoes/roguetown/sandals
-	ADD_TRAIT(H, TRAIT_MASTER_CARPENTER, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_MASTER_MASON, TRAIT_GENERIC)

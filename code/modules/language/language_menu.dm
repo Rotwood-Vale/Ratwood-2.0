@@ -88,7 +88,7 @@
 				. = TRUE
 		if("remove_language")
 			if((is_admin || isobserver(AM)) && language_datum)
-				language_holder.remove_language(language_datum)
+				language_holder.remove_language(language_datum, source = LANGUAGE_SOURCE_ALL)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(AM)].")
 					log_admin("[key_name(user)] removed the language [language_name] to [key_name(AM)].")

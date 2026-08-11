@@ -69,7 +69,7 @@
 			return
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
@@ -373,9 +373,6 @@
 	keycontrol = "tavern"
 	will_hawk = FALSE
 
-/obj/structure/roguemachine/vendor/bathhouse
-	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
-
 /obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
 
@@ -397,12 +394,13 @@
 
 /obj/structure/roguemachine/vendor/innrockhill
 	keycontrol = "tavern"
+	will_hawk = FALSE
 
 /obj/structure/roguemachine/vendor/innrockhill/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix))
+	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix, /obj/item/roguekey/roomx))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
@@ -417,6 +415,24 @@
 
 	update_icon()
 
+
+/obj/structure/roguemachine/vendor/bathhouse
+	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
+
+/obj/structure/roguemachine/vendor/bathhouse/locker
+	will_hawk = FALSE
+
+/obj/structure/roguemachine/vendor/bathhouse/locker/Initialize(mapload)
+	. = ..()
+
+	// Add locker keys with a price of 10
+	for (var/X in list(/obj/item/roguekey/bathlocker1, /obj/item/roguekey/bathlocker2, /obj/item/roguekey/bathlocker3, /obj/item/roguekey/bathlocker4, /obj/item/roguekey/bathlocker5, /obj/item/roguekey/bathlocker6))
+		var/obj/P = new X(src)
+		held_items[P] = list()
+		held_items[P]["NAME"] = P.name
+		held_items[P]["PRICE"] = 5
+
+	update_icon()
 
 
 /obj/structure/roguemachine/vendor/merchant

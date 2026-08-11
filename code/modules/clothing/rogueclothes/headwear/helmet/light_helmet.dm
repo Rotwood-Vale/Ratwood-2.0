@@ -12,7 +12,6 @@
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_HELMET_CLOTH
 	color = "#463C2B"
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/fibers
 	salvage_amount = 2 // Major materials loss
 	cold_protection = HEAD
@@ -27,14 +26,62 @@
 	armor = ARMOR_LEATHER
 	sellprice = 10
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
+	sewrepair = TRUE
 	anvilrepair = null
 	smeltresult = null
-	sewrepair = TRUE
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	salvage_result = /obj/item/natural/hide/cured
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	
+/obj/item/clothing/head/roguetown/helmet/leather/chapeau
+	name = "Chapeau a Naled"
+	desc = "A leather cap, armored with layers of especially crafted armored coins each baring wards against supernatural forces. The heavy closeable, face-obscuring flaps are both practical, to protect from sand and dust and frigid nights--and to ensure the Otavan aids were not violating Naledi customs with their uncovered faces.</br>They are heavily associated with the Poet-Historian Aalis Petit and her writings and songs about the campaign into Naledi and through her, adventurous bards of Otava. "
+	icon_state = "chapnaled"
+	var/open_wear = TRUE
+	flags_inv = HIDEHAIR
+	body_parts_covered = HEAD|HAIR|EARS
+
+/obj/item/clothing/head/roguetown/helmet/leather/chapeau/attack_right(mob/user)
+	switch(open_wear)
+		if(FALSE)
+			icon_state = "chapnaledalt"
+			item_state = "chapnaledalt"
+			open_wear = TRUE
+			flags_inv = HIDESNOUT|HIDEHAIR
+			body_parts_covered_dynamic = HEAD|HAIR|FACE
+		if(TRUE)
+			icon_state = "chapnaled"
+			item_state = "chapnaled"
+			open_wear = FALSE
+			flags_inv = HIDEHAIR
+			body_parts_covered_dynamic = HEAD|HAIR|EARS
+	update_icon()
+	if(user)
+		if(ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/leather/chapeau/AltRightClick(mob/user)
+	if(!istype(loc, /mob/living/carbon))
+		return
+	var/mob/living/carbon/H = user
+	if(icon_state == "[initial(icon_state)]_snout")
+		icon_state = initial(icon_state)
+		H.update_inv_head()
+		update_icon()
+		return
+
+	var/icon/J = new('icons/roguetown/clothing/onmob/head.dmi')
+	var/list/istates = J.IconStates()
+	for(var/icon_s in istates)
+		if(findtext(icon_s, "[icon_state]_snout"))
+			icon_state += "_snout"
+			H.update_inv_head()
+			update_icon()
+			return
+
 
 /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -60,6 +107,7 @@
 	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/leather/advanced
 	name = "hardened leather helmet"
@@ -73,7 +121,6 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	anvilrepair = null
 	smeltresult = null
-	sewrepair = TRUE
 	blocksound = SOFTHIT
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -88,7 +135,6 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	sewrepair = TRUE
 	resistance_flags = FIRE_PROOF
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX //wide brim AND made out of silk
@@ -109,7 +155,6 @@
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER // spellsinger hat stats
-	sewrepair = TRUE
 	resistance_flags = FIRE_PROOF
 	var/picked = FALSE
 	color = "#262927"
@@ -167,18 +212,67 @@
 	armor = ARMOR_SPELLSINGER
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	blocksound = SOFTHIT
-	sewrepair = TRUE
 	flags_inv = HIDEEARS
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
 
-/obj/item/clothing/head/roguetown/hbit
+/obj/item/clothing/head/roguetown/horsey
 	name = "head bit"
 	desc = "A restraining head piece made of reinforced leather."
 	icon_state = "hbit"
 	item_state = "hbit"
 	body_parts_covered = HEAD|FACE
-	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
-	max_integrity = 400
-	armor = list("blunt" = 70, "slash" = 80, "stab" = 65, "piercing" = 40, "fire" = 0, "acid" = 0)
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_MOUTH
+
+//Leather padded hood, ported from Scarlet Reach by RoachwithaRoach, from vide noir
+/obj/item/clothing/head/roguetown/helmet/leather/armorhood
+	name = "padded leather hood"
+	desc = "A padded leather hood with buckles."
+	icon = 'modular_stonehedge/icons/clothing/armor/head.dmi'
+	mob_overlay_icon = 'modular_stonehedge/icons/clothing/armor/onmob/head.dmi'
+	icon_state = "studhood"
+	item_state = "studhood"
+	flags_inv =	HIDEHAIR|HIDEEARS|HIDEFACE
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK
+	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES|NECK
+	//Something between leather and metal helmet, worse than metal helmet by far.
+	armor = list("blunt" = 70, "slash" = 65, "stab" = 60, "piercing" = 20, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	sewrepair = TRUE
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	cold_protection = HEAD
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	block2add = FOV_BEHIND
+
+/obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
+	name = "studded leather hood"
+	desc = "A thick studded leather hood with buckles."
+	icon_state = "studhood" //make into new sprite
+	item_state = "studhood"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK
+	max_integrity = 280
+	//closer to metal helmet but still quite behind, same blunt resist of hardened leather helmet though.
+	armor = ARMOR_LEATHER_STUDDED
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH) //studded armor values with stab prot too
+
+/obj/item/clothing/head/roguetown/helmet/leather/armorhood/AdjustClothes(mob/user)
+	if(loc == user)
+		if(adjustable == CAN_CADJUST)
+			adjustable = CADJUSTED
+			if(toggle_icon_state)
+				icon_state = "[initial(icon_state)]_t"
+			flags_inv = null
+			body_parts_covered = NECK
+			block2add = null
+			if(ishuman(user))
+				var/mob/living/carbon/H = user
+				H.update_inv_head()
+				H.update_inv_neck()
+				H.update_inv_wear_mask()
+		else if(adjustable == CADJUSTED)
+			ResetAdjust(user)
+			if(user)
+				if(ishuman(user))
+					var/mob/living/carbon/H = user
+					H.update_inv_head()
+					H.update_inv_neck()
+					H.update_inv_wear_mask()

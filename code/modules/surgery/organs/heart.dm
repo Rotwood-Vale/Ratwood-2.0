@@ -26,6 +26,10 @@
 	/// Associated maniac key
 	var/inscryption_key
 
+	var/static/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+	var/static/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
+
+
 	food_type = /obj/item/reagent_containers/food/snacks/organ/heart
 
 /obj/item/organ/heart/Destroy()
@@ -107,33 +111,32 @@
 	..()
 	if(owner.client && beating)
 		failed = FALSE
-		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
-
-
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
-			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
-//			to_chat(owner, span_notice("I feel my heart slow down..."))
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
+		var/new_beat = BEAT_NONE
+		if(H.health <= H.crit_threshold)
+			new_beat = BEAT_SLOW
+		else if(H.jitteriness && H.health > HEALTH_THRESHOLD_FULLCRIT)
+			new_beat = BEAT_FAST
+		if(beat != new_beat)	
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
-			beat = BEAT_NONE
-
-		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
-				beat = BEAT_FAST
-		else if(beat == BEAT_FAST)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
-			beat = BEAT_NONE
-
+			beat = new_beat
+			var/sound/heartbeat_sound
+			switch(beat)
+				if(BEAT_SLOW)
+					heartbeat_sound = slowbeat
+				if(BEAT_FAST)
+					heartbeat_sound = fastbeat
+			if(heartbeat_sound)
+				H.playsound_local(null, heartbeat_sound, 40, FALSE, channel = CHANNEL_HEARTBEAT)
 	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 				span_danger("I feel a terrible pain in my chest, as if my heart has stopped!"))
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+
+
 /obj/item/organ/heart/construct
 	name = "construct core"
 	desc = "Swirling with a blessing of Astrata and pulsing with lux inside. This allows a construct to move."
@@ -219,3 +222,89 @@
 /datum/client_colour/cursed_heart_blood
 	priority = 100 //it's an indicator you're dying, so it's very high priority
 	colour = "red"
+
+/obj/item/organ/heart/t1
+	name = "completed heart"
+	icon_state = "heart"
+	desc = "The perfect art, it feels... Completed."
+	sellprice = 100
+
+/obj/item/organ/heart/t2
+	name = "blessed heart"
+	icon_state = "heart"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	sellprice = 200
+
+/obj/item/organ/heart/t3
+	name = "corrupted heart"
+	icon_state = "heart"
+	desc = "A cursed, perverted artifact. It can serve you well—what sacrifice are you willing to offer to survive?"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	sellprice = 300
+
+/datum/status_effect/buff/t1heart
+	id = "t1heart"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t1heart
+
+/atom/movable/screen/alert/status_effect/buff/t1heart
+	name = "Completed heart"
+	desc = "I have better version of heart now "
+
+/obj/item/organ/heart/t1/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t1heart)
+		ADD_TRAIT(M, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+
+/obj/item/organ/heart/t1/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t1heart))
+		M.remove_status_effect(/datum/status_effect/buff/t1heart)
+		REMOVE_TRAIT(M, TRAIT_SHOCKIMMUNE , ORGAN_TRAIT)
+
+/datum/status_effect/buff/t2heart
+	id = "t2heart"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t2heart
+
+/atom/movable/screen/alert/status_effect/buff/t2heart //your helper against mages
+	name = "Blessed heart"
+	desc = "A blessed heart... Maybe"
+
+/obj/item/organ/heart/t2/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t2heart)
+		ADD_TRAIT(M, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+		ADD_TRAIT(M, TRAIT_KNEESTINGER_IMMUNITY, ORGAN_TRAIT)
+
+/obj/item/organ/heart/t2/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t2heart))
+		M.remove_status_effect(/datum/status_effect/buff/t2heart)
+		REMOVE_TRAIT(M, TRAIT_SHOCKIMMUNE , ORGAN_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_KNEESTINGER_IMMUNITY , ORGAN_TRAIT)
+
+
+/datum/status_effect/buff/t3heart
+	id = "t3heart"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t3heart
+
+/atom/movable/screen/alert/status_effect/buff/t3heart
+	name = "Corrupted heart"
+	desc = "The cursed thing is inside me now."
+
+/obj/item/organ/heart/t3/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t3heart)
+		ADD_TRAIT(M, TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
+		ADD_TRAIT(M, TRAIT_KNEESTINGER_IMMUNITY, ORGAN_TRAIT)
+		ADD_TRAIT(M, TRAIT_HEAVYARMOR, ORGAN_TRAIT)
+
+/obj/item/organ/heart/t3/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.has_status_effect(/datum/status_effect/buff/t3heart))
+		M.remove_status_effect(/datum/status_effect/buff/t3heart)
+		REMOVE_TRAIT(M, TRAIT_SHOCKIMMUNE , ORGAN_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_KNEESTINGER_IMMUNITY , ORGAN_TRAIT)
+		REMOVE_TRAIT(M, TRAIT_HEAVYARMOR , ORGAN_TRAIT)

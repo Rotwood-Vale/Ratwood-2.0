@@ -217,6 +217,7 @@
 		to_chat(user, span_warning("Unfortunately, there's nothing there."))
 		return FALSE
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
+	user.mob_timers[MT_SNEAKATTACK] = world.time //Stops you from sneaking after hitting someone else.
 	I.funny_attack_effects(src, user)
 	var/statforce = get_complex_damage(I, user)
 	if(statforce)
@@ -296,14 +297,6 @@
 	*/
 	return FALSE
 
-
-/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	if(M.used_intent.type == INTENT_HELP)
-		help_shake_act(M)
-		return 0
-
-	if(..()) //successful monkey bite.
-		return 1
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)

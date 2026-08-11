@@ -44,6 +44,14 @@
 		return FALSE
 	return TRUE
 
+/mob/living/proc/is_kindred()
+	return !isnull(mind?.has_antag_datum(/datum/antagonist/vampire))
+
+/mob/living/proc/is_clanmate(mob/living/other)
+	if(isnull(clan) || isnull(other?.clan))
+		return FALSE
+	return clan == other.clan
+
 /datum/clan/proc/grant_hierarchy_actions(mob/living/carbon/human/H)
 	if(!H.clan_position)
 		return
@@ -83,13 +91,17 @@
 	else
 		hud_used?.bloodpool?.set_value((100 / (maxbloodpool / bloodpool)) / 100, 1 SECONDS)
 
-/mob/living/proc/CheckEyewitness(mob/living/source, mob/attacker, range = 0, affects_source = FALSE)
+/mob/living/proc/CheckEyewitness(mob/living/source, mob/attacker, range = 0, affects_source = FALSE, ignore_kindred = FALSE)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/human in oviewers(1, source))
+		if(ignore_kindred && human.is_kindred())
+			continue
 		if(get_turf(src) != turn(human.dir, 180))
 			seenby |= human
 	for(var/mob/living/carbon/human/human in viewers(actual_range, source))
+		if(ignore_kindred && human.is_kindred())
+			continue
 		if(affects_source)
 			if(human == source)
 				seenby |= human
@@ -202,6 +214,12 @@
 	if(!target_coven || !coven_name)
 		return FALSE
 
+	// powers have to come down before the action button does, deactivate() reaches for it on the way out
+	for(var/datum/coven_power/power in target_coven.known_powers)
+		if(power.active)
+			power.deactivate()
+		power.post_lose()
+
 	if(target_coven.coven_action)
 		target_coven.coven_action.Remove(src)
 		QDEL_NULL(target_coven.coven_action)
@@ -210,11 +228,6 @@
 		QDEL_NULL(target_coven.research_interface)
 
 	pre_coven_removal(target_coven)
-
-	for(var/datum/coven_power/power in target_coven.known_powers)
-		power.deactivate()
-		if(power.discipline.coven_action)
-			power.discipline.coven_action.Remove(src)
 
 	target_coven.owner = null
 	target_coven.current_power = null
@@ -240,8 +253,10 @@
 /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
-	for(var/datum/coven/coven as anything in covens)
-		if(coven.type != coven_type)
+	// covens is keyed by name, so iterating it hands us the names rather than the covens themselves
+	for(var/coven_name in covens)
+		var/datum/coven/coven = covens[coven_name]
+		if(coven?.type != coven_type)
 			continue
 		return coven
 	return null
@@ -282,7 +297,7 @@
 			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		heal_overall_damage(5, 5)
-		adjust_bloodpool(10)
+		adjust_bloodpool(-2)
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
 		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		to_chat(src, span_warning("You have recovered from Torpor."))

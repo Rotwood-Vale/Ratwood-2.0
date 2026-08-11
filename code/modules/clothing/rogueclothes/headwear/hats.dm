@@ -3,7 +3,6 @@
 	name = "straw hat"
 	desc = "It's scratchy and rustic, but at least it keeps the sun off your head while you toil in the fields."
 	icon_state = "strawhat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/fibers
 	salvage_amount = 2 // Minor materials loss
@@ -13,7 +12,6 @@
 /obj/item/clothing/head/roguetown/puritan
 	name = "buckled hat"
 	icon_state = "puritan_hat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/puritan/armored
@@ -36,13 +34,12 @@
 	name = "teller's hat"
 	icon_state = "tophat"
 	color = CLOTHING_BLACK
-	sewrepair = TRUE
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/bardhat
 	name = "bard's hat"
 	icon_state = "bardhat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
@@ -50,7 +47,6 @@
 /obj/item/clothing/head/roguetown/smokingcap
 	name = "smoking cap"
 	icon_state = "smokingc"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/fancyhat
@@ -58,7 +54,6 @@
 	desc = "A fancy looking hat with colorful feathers sticking out of it."
 	icon_state = "fancy_hat"
 	item_state = "fancyhat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/fedora
@@ -67,14 +62,12 @@
 	icon_state = "curator"
 	item_state = "curator"
 	nudist_approved = TRUE
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/head/roguetown/hatfur
 	name = "fur hat"
 	desc = "A comfortable warm hat lined with fur."
 	icon_state = "hatfur"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
@@ -83,9 +76,19 @@
 	name = "papakha"
 	icon_state = "papakha"
 	item_state = "papakha"
-	sewrepair = TRUE
 	armor = ARMOR_CLOTHING
 	blocksound = SOFTHIT
+	nudist_approved = TRUE
+	salvage_result = /obj/item/natural/fur
+	salvage_amount = 1
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+
+/obj/item/clothing/head/roguetown/loadoutpapakha
+	name = "Soft-sided papakha"
+	icon_state = "papakha"
+	item_state = "papakha"
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/fur
 	salvage_amount = 1
@@ -96,7 +99,6 @@
 	name = "fur hat"
 	desc = "A blue hat lined with fur."
 	icon_state = "hatblu"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
@@ -106,7 +108,6 @@
 	desc = "A hat worn by fishermen to protect from the sun."
 	icon_state = "fisherhat"
 	item_state = "fisherhat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 //	color = "#fbc588"
 	//dropshrink = 0.75
@@ -117,17 +118,16 @@
 	name = "flat hat"
 	icon_state = "flathat"
 	item_state = "flathat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/chaperon
 	name = "chaperon hat"
 	desc = "A utilitarian yet fashionable hat traditionally made from a hood. Usually worn as a status symbol."
 	icon_state = "chaperon"
 	item_state = "chaperon"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 
@@ -139,7 +139,6 @@
 	desc = "A hat which designates one as well-versed in the arts of cooking."
 	icon_state = "chef"
 	item_state = "chef"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/chaperon/greyscale
@@ -205,7 +204,6 @@
 	name = "chef's hat"
 	desc = "A hat which designates one as well-versed in the arts of cooking."
 	icon_state = "chef"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 
@@ -215,18 +213,17 @@
 	icon_state = "armingcap"
 	item_state = "armingcap"
 	flags_inv = HIDEEARS
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 	//dropshrink = 0.75
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/knitcap
 	name = "knit cap"
 	desc = "A simple knitted cap."
 	icon_state = "knitcap"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	//dropshrink = 0.75
 	cold_protection = HEAD
@@ -240,7 +237,6 @@
 	desc = "A simple headband to keep sweat out of your eyes."
 	icon_state = "headband"
 	item_state = "headband"
-	sewrepair = TRUE
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
 	nudist_approved = TRUE
@@ -255,7 +251,6 @@
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_TWIST) //Themed to protect against deadites and nitebeasts. Doesn't stop blunt-, smash-, or stabbing crits.
-	sewrepair = TRUE
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
 
@@ -279,7 +274,6 @@
 	desc = "A winding length of cloth, meticulously lined with heavy leather strips. Errant impacts are thwarted, yet not a degree of vision is impaired; valuable traits, for the Monk who must enlighten their villains with a white-knuckled sermon. </br>'..I kick ass for the Lord!'"
 	icon_state = "headband"
 	color = "#bfb8a9"
-	sewrepair = TRUE
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_SPELLSINGER //Highest preset protection value for head armor, without leaving people unable to sleep with the headband on. Should be appropriate for the Monk's role.
 	body_parts_covered = HEAD|HAIR|EARS
@@ -300,15 +294,15 @@
 	desc = "A fine leather slouch, beplumed with a crimson feather and fitted with a hidden steel skull cap. It serves as a reminder that the Holy Otavan Inquisition triumphs in one avenue above all else - fashion. </br>'To keep ones vision away from the heavens, and focused on the sin beneath the soil.'"
 	icon_state = "inqhat"
 	item_state = "inqhat"
-	max_integrity = 200
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	armor = ARMOR_SPELLSINGER
 	body_parts_covered = HEAD|HAIR|EARS
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	sewrepair = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF // drip is eternal
 
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
@@ -322,7 +316,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = NONE
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/priesthat
@@ -336,7 +329,6 @@
 	sellprice = 77
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/reqhat
@@ -351,20 +343,18 @@
 	desc = "A foreign silk headdress."
 	icon_state = "headdress"
 	sellprice = 10
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/headdress/alt
 	icon_state = "headdressalt"
-	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/nun
 	name = "nun's veil"
 	desc = "A humble hat for the faithful."
 	icon_state = "nun"
 	sellprice = 5
-	sewrepair = TRUE
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/hennin
 	name = "hennin"
@@ -372,21 +362,18 @@
 	icon_state = "hennin"
 	sellprice = 19
 	dynamic_hair_suffix = "+generic"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/bucklehat //lifeweb sprite
 	name = "folded hat"
 	desc = "A plain leather hat with decorative buckle. Made popular by the ne'er-do-wells of Etrusca."
 	icon_state = "bucklehat"
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/duelhat //lifeweb sprite
 	name = "duelist's hat"
 	desc = "A feathered leather hat, to show them all your superiority."
 	icon_state = "duelhat"
-	sewrepair = TRUE
 	color = COLOR_ALMOST_BLACK
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
@@ -396,7 +383,6 @@
 	name = "duelist's hat"
 	desc = "A feathered leather hat, to show them all your superiority."
 	icon_state = "duelisthat"
-	sewrepair = TRUE
 	detail_tag = "_detail"
 	detail_color = COLOR_SILVER
 	nudist_approved = TRUE
@@ -410,7 +396,6 @@
 	dynamic_hair_suffix = "+generic"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/wizhat/red
@@ -482,7 +467,6 @@
 	item_state = "witch"
 	detail_tag = "_detail"
 	icon = 'icons/roguetown/clothing/head.dmi'
-	sewrepair = TRUE
 	nudist_approved = TRUE
 	color = CLOTHING_BLACK
 	detail_color = CLOTHING_BROWN
@@ -518,11 +502,11 @@
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
 	anvilrepair = null
 	smeltresult = null
-	sewrepair = TRUE
 	blocksound = SOFTHIT
 	nudist_approved = TRUE // this gets an exception for being ARMOR_CLOTHING but why does it prevent crits???
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"
@@ -543,7 +527,6 @@
 	prevent_crits = list(BCLASS_TWIST)
 	anvilrepair = null
 	smeltresult = null
-	sewrepair = TRUE
 	blocksound = SOFTHIT
 	nudist_approved = TRUE
 	salvage_result = /obj/item/natural/hide/cured
@@ -565,7 +548,6 @@
 	toggle_icon_state = TRUE
 	blocksound = SOFTHIT
 	max_integrity = 100
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/veiled/update_icon()
@@ -595,7 +577,6 @@
 	item_state = "hijab_t"
 	icon_state = "deserthood_t"
 	color = "#b8252c"
-	hidesnoutADJ = FALSE
 	flags_inv = null
 	sleevetype = null
 	sleeved = null
@@ -608,7 +589,6 @@
 	edelay_type = 1
 	blocksound = SOFTHIT
 	max_integrity = 100
-	sewrepair = TRUE
 	muteinmouth = FALSE
 	spitoutmouth = FALSE
 	nudist_approved = TRUE
@@ -626,3 +606,22 @@
 		alternate_worn_layer = BACK_LAYER //Above Hair Layer
 	user.update_inv_wear_mask()
 	user.update_inv_head()
+
+// The exact same as the Grenzelhoft hat w/ the cap, but capless; no armor stats. Allows for drip with the helmet aesthetic PR
+/obj/item/clothing/head/roguetown/caplessgrenzelhofthat
+	name = "capless grenzelhoft plume hat"
+	desc = "Whether it's monsters or fair maidens, a true Grenzelhoftian slays both. This one lacks any protection beneath."
+	icon_state = "grenzelhat"
+	item_state = "grenzelhat"
+	icon = 'icons/roguetown/clothing/head.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	dynamic_hair_suffix = ""
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
+	color = "#262927"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#9c2525"
+
+

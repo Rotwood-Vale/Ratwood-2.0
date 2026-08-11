@@ -20,9 +20,29 @@
 	//This is used to optimize the map loader
 	return
 
+/// World grid filler (world.turf) - the cheapest possible turf: shared path baseturfs,
+/// no dynamic lighting, no sunlight/weather processing
+/turf/closed/void
+	baseturfs = /turf/closed/void
+	dynamic_lighting = FALSE
+
+/turf/closed/void/New()//Do not convert to Initialize
+	SHOULD_CALL_PARENT(FALSE)
+	return
+
+/turf/closed/void/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
+	flags_1 |= INITIALIZED_1
+	turf_integrity = max_integrity
+	opaque_atom_count = 1
+	return INITIALIZE_HINT_NORMAL
+
+/turf/closed/void/get_sky_and_weather_states()
+	return
+
 /turf/closed/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
-	if(!wallpress)
+	if(!can_wallpress())
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -47,8 +67,24 @@
 	for(var/obj/structure/lever/hidden/lever in contents)
 		lever.feel_button(user)
 
-/turf/closed/proc/wallpress(mob/living/user, mob/living/pressing_mob = null)
-	if(user.wallpressed)
+/// Whether a mob can currently lean against us. Anything that returns TRUE must be dense and occupy an adjacent turf.
+/atom/proc/can_wallpress()
+	return FALSE
+
+/turf/closed/can_wallpress()
+	return wallpress
+
+/// The atom in this turf that can be leaned against, if any.
+/turf/proc/get_wallpress_atom()
+	if(can_wallpress())
+		return src
+	for(var/obj/checked_obj in src)
+		if(checked_obj.can_wallpress())
+			return checked_obj
+	return null
+
+/atom/proc/wallpress(mob/living/user, mob/living/pressing_mob = null)
+	if(user.is_wallpressed())
 		return
 	if(user.is_shifted)
 		return
@@ -61,9 +97,13 @@
 		dir2wall = get_dir(user,src)
 	if(!(dir2wall in GLOB.cardinals))
 		return
-	user.wallpressed = dir2wall
-	user.update_wallpress_slowdown()
-	user.visible_message(pressing_mob ? span_info("[user] is pushed against [src] by [pressing_mob].") : span_info("[user] leans against [src]."))
+	user.set_wallpressed(dir2wall)
+	if(pressing_mob)
+		user.visible_message(span_info("[user] is pushed against [src] by [pressing_mob]."))
+	else if(user.m_intent == MOVE_INTENT_SNEAK)
+		to_chat(user, span_info("You press yourself against [src]."))
+	else
+		user.visible_message(span_info("[user] leans against [src]."))
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(SOUTH)
@@ -78,16 +118,34 @@
 			user.setDir(EAST)
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
 
+/mob/living/proc/get_wallpress_alpha()
+	var/skill_level = src.get_skill_level(/datum/skill/misc/sneaking)
+
+	switch(skill_level)
+		if(1)
+			return 128 //50%
+		if(2)
+			return 115 //55%
+		if(3)
+			return 102 //60%
+		if(4)
+			return 90 //65%
+		if(5)
+			return 77 //70%
+		if(6)
+			return 64 //75%
+
+	return 255
+
 /turf/closed/proc/wallshove(mob/living/user)
-	if(user.wallpressed)
+	if(user.is_wallpressed())
 		return
 	if(!(user.mobility_flags & MOBILITY_STAND))
 		return
 	var/dir2wall = get_dir(user,src)
 	if(!(dir2wall in GLOB.cardinals))
 		return
-	user.wallpressed = dir2wall
-	user.update_wallpress_slowdown()
+	user.set_wallpressed(dir2wall)
 	switch(dir2wall)
 		if(NORTH)
 			user.setDir(NORTH)
@@ -102,11 +160,36 @@
 			user.setDir(WEST)
 			user.set_mob_offsets("wall_press", _x = -12, _y = 0)
 
+/// Sets wallpressed to a cardinal dir or FALSE, doing any related effects
+/mob/living/proc/set_wallpressed(new_wallpressed = FALSE)
+	if(wallpressed == new_wallpressed)
+		return
+	wallpressed = new_wallpressed
+	if(!wallpressed)
+		reset_offsets("wall_press")
+	update_wallpress_slowdown()
+
+/// The cardinal dir of the wall we're pressed against, or FALSE.
+/mob/living/proc/is_wallpressed()
+	SHOULD_BE_PURE(TRUE)
+	return wallpressed
+
 /mob/living/proc/update_wallpress_slowdown()
-	if(wallpressed)
-		add_movespeed_modifier("wallpress", TRUE, 100, override = TRUE, multiplicative_slowdown = 3)
-	else
+	if(!wallpressed)
 		remove_movespeed_modifier("wallpress")
+		animate(src, alpha = 255, time = 10)
+		REMOVE_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+		return
+
+	add_movespeed_modifier("wallpress", TRUE, 100, override = TRUE, multiplicative_slowdown = 3)
+	if(m_intent != MOVE_INTENT_SNEAK)
+		return
+	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC) // spell restrictions don't seem to be working well so I'm doing it this way for now
+	var/lean_alpha = get_wallpress_alpha()
+	if(src.alpha != 0 && lean_alpha < src.alpha)
+		var/used_time = 50
+		used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 10)
+		animate(src, alpha = lean_alpha, time = used_time)
 
 /turf/closed/Bumped(atom/movable/AM)
 	..()
@@ -145,9 +228,6 @@
 				if(count < 2)
 					above.ScrapeAway()
 	. = ..()
-
-/turf/closed/attack_paw(mob/user)
-	return attack_hand(user)
 
 /turf/closed/attack_hand(mob/user)
 	if(wallclimb)
@@ -249,7 +329,7 @@
 				user.movement_type &= ~FLYING
 				if(istype(user.loc, /turf/open/transparent/openspace)) // basically only apply this slop after we moved. if we are hovering on the openspace turf, then good, we are doing an 'active climb' instead of the usual vaulting action
 					var/climber2wall_dir = get_dir(climber, src)
-					climber.wallpressed = climber2wall_dir
+					climber.set_wallpressed(climber2wall_dir)
 					switch(climber2wall_dir)// we are pressed against the wall after all that shit and are facing it, also hugging it too bcoz sou
 						if(NORTH)
 							climber.setDir(NORTH)
@@ -330,17 +410,6 @@
 	to_be_destroyed = FALSE
 	return src
 
-/turf/closed/indestructible/sandstone
-	name = "sandstone wall"
-	desc = ""
-	icon = 'icons/turf/walls/sandstone_wall.dmi'
-	icon_state = "sandstone"
-	baseturfs = /turf/closed/indestructible/sandstone
-	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/oldshuttle/corner
-	icon_state = "corner"
-
 /turf/closed/indestructible/splashscreen
 	name = ""
 	icon = 'icons/title_static.png'
@@ -368,77 +437,3 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
-
-/turf/closed/indestructible/abductor
-	icon_state = "alien1"
-
-/turf/closed/indestructible/opshuttle
-	icon_state = "wall3"
-
-/turf/closed/indestructible/fakeglass/Initialize(mapload)
-	. = ..()
-	icon_state = null //set the icon state to null, so our base state isn't visible
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
-
-/turf/closed/indestructible/opsglass/Initialize(mapload)
-	. = ..()
-	icon_state = null
-	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
-	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
-
-/turf/closed/indestructible/rock
-	name = "granite"
-	desc = ""
-	icon = 'icons/turf/mining.dmi'
-	icon_state = "rock2"
-
-/turf/closed/indestructible/rock/snow
-	name = "mountainside"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "snowrock"
-	bullet_sizzle = TRUE
-	bullet_bounce_sound = null
-
-/turf/closed/indestructible/rock/snow/ice
-	name = "iced rock"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "icerock"
-
-/turf/closed/indestructible/paper
-	name = "thick paper wall"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "paperwall"
-
-/turf/closed/indestructible/necropolis
-	name = "necropolis wall"
-	desc = ""
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "necro"
-	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/necropolis
-
-/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "necro1"
-	return TRUE
-
-/turf/closed/indestructible/riveted/boss
-	name = "necropolis wall"
-	desc = ""
-	icon = 'icons/turf/walls/boss_wall.dmi'
-	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
-	explosion_block = 50
-	baseturfs = /turf/closed/indestructible/riveted/boss
-
-/turf/closed/indestructible/riveted/boss/see_through
-	opacity = FALSE
-
-/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
-	return TRUE

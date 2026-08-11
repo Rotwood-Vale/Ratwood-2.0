@@ -28,12 +28,13 @@
 		M.adjustOxyLoss(-1.25, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-1.75*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1*REM)
 	..()
 
 /datum/reagent/medicine/stronghealth
 	name = "Strong Health Potion"
 	description = "Quickly regenerates all types of damage."
-	color = "#820000be"
+	color = "#820000"
 	taste_description = "rich lifeblood"
 	metabolization_rate = REAGENTS_METABOLISM * 3
 
@@ -51,6 +52,7 @@
 		M.adjustOxyLoss(-5, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-7*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -2.5*REM)
 	..()
 	. = 1
 
@@ -374,9 +376,9 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 /datum/reagent/toxin/killersice
 	name = "Killer's Ice"
-	description = "c8c9e9"
+	description = ""
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#c8c9e9"
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE

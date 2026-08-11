@@ -25,7 +25,7 @@
 	..()
 	set_light(2, 2, 1, l_color = "#551c1c")
 
-/obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux/L, mob/user)
+/obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux_impure/L, mob/user)
 	if(current_charges >= max_charges)
 		to_chat(user, span_notice("The crystal is already brimming with power."))
 		return FALSE
@@ -37,7 +37,7 @@
 	return TRUE
 
 /obj/item/necro_relics/necro_crystal/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/lux))
+	if(istype(I, /obj/item/reagent_containers/lux_impure))
 		return recharge(I, user)
 	return ..()
 
@@ -72,7 +72,7 @@
 		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_CABAL))
 		to_chat(user, span_warning("The crystal rejects you! It shatters within your grasp!"))
-		user.flash_fullscreen("redflash1")
+		user.fullscreen_redflash("redflash1")
 		new /obj/item/natural/glass_shard(get_turf(src))
 		playsound(src, "glassbreak", 70, TRUE)
 		qdel(src)
@@ -117,7 +117,7 @@
 	else
 		to_chat(user, span_notice("The crystal's glow lessens. [current_charges] use\s remain."))
 
-	user.flash_fullscreen("redflash1")
+	user.fullscreen_redflash("redflash1")
 	playsound(src, "shatter", 50, TRUE)
 
 	return TRUE

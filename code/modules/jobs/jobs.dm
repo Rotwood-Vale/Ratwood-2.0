@@ -81,8 +81,10 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 	"Jester",
 	"Seneschal",
 	"Servant",
+	"Court Chaplain",
 	//Desert
 	"Head Slave",
+	"Palace Chaplain",
 ))
 
 GLOBAL_LIST_INIT(garrison_positions, list(
@@ -170,11 +172,20 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Mercenary",
 	"Adventurer",
+	"Assassin",
 	"Court Agent",
 	"Enslaved Adventurer",
 	"Bandit",
 	"Wretch",
 	"Gnoll",
+))
+
+GLOBAL_LIST_INIT(tribal_positions, list(
+	"Chieftain",
+	"Tribal Shaman",
+	"Tribal Guard",
+	"Tribal Rabble",
+	"Tribal Villager",
 ))
 
 GLOBAL_LIST_INIT(roguewar_positions, list(
@@ -220,6 +231,7 @@ GLOBAL_LIST_INIT(job_assignment_order, get_job_assignment_order())
 	sorting_order += GLOB.yeoman_positions
 	sorting_order += GLOB.peasant_positions
 	sorting_order += GLOB.youngfolk_positions
+	sorting_order += GLOB.tribal_positions
 	return sorting_order
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(

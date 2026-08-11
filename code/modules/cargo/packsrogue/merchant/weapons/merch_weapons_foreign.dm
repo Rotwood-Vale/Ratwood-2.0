@@ -59,6 +59,11 @@
 	cost = 80
 	contains = list(/obj/item/rogueweapon/sword/sabre/mulyeog)
 
+/datum/supply_pack/rogue/merc_weapons/kazengunkodachi
+	name = "Kazengun Kodachi (Shortsword)"
+	cost = 70
+	contains = list(/obj/item/rogueweapon/sword/short/kazengun)
+
 /datum/supply_pack/rogue/merc_weapons/kazengundagger
 	name = "Kazengun Tanto (Dagger)"
 	cost = 80
@@ -77,7 +82,7 @@
 /datum/supply_pack/rogue/merc_weapons/kazengunscabbard_noparry
 	name = "Kazengun Scabbard (Ceremonial)"
 	cost = 40
-	contains = list(/obj/item/rogueweapon/scabbard/sword/kazengun/noparry)
+	contains = list(/obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout)
 
 /datum/supply_pack/rogue/merc_weapons/kazengunsheath
 	name = "Small Lacquer Sheath"

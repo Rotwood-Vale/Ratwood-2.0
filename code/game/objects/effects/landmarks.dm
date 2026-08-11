@@ -183,6 +183,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Head Physician"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/chaplain
+	name = "Court Chaplain"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/guardsman
 	name = "City Guard"
 	icon_state = "arrow"
@@ -202,6 +206,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/bogguardsman
 	name = "Bog Guard"
 	icon_state = "arrow"
+	jobspawn_override = list("Bog Guard", "Vanguard")
 
 /obj/effect/landmark/start/warden
 	name = "Warden"
@@ -278,6 +283,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/absolver
 	name = "Absolver"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/inqlate
+	name = "Inquisition Late"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Absolver", "Orthodoxist", "Inquisitor")
 
 /obj/effect/landmark/start/sergeant
 	name = "Sergeant"
@@ -459,24 +469,42 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/sapprentice
 	name = "Smithy Apprentice"
 	icon_state = "arrow"
+	
+/obj/effect/landmark/start/lich
+	name = "lich"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
 
-//goblin
+/obj/effect/landmark/start/lich/Initialize(mapload)
+	. = ..()
+	GLOB.lich_starts += loc
 
-/obj/effect/landmark/start/goblinking
-	name = "Goblin King"
+//tribal
+
+/obj/effect/landmark/start/tribalchieftain
+	name = "Chieftain"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblincook
-	name = "Goblin Cook"
+/obj/effect/landmark/start/tribalshaman
+	name = "Tribal Shaman"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblinguard
-	name = "Goblin Guard"
+/obj/effect/landmark/start/tribalguard
+	name = "Tribal Guard"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblinsmith
-	name = "Goblin Smith"
+/obj/effect/landmark/start/tribalrabble
+	name =  "Tribal Rabble"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribalvillager
+	name = "Tribal"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribelate
+	name = "Tribal Late"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Chieftain", "Tribal Shaman", "Tribal Guard", "Tribal Rabble", "Tribal Villager")
 
 //Antagonist spawns
 

@@ -88,9 +88,8 @@
 	if(isliving(AM) && !AM.throwing)
 		var/mob/living/user = AM
 		if(isliving(user) && !user.is_floor_hazard_immune())
-			for(var/obj/structure/S in src)
-				if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-					return
+			if(platform_atom_count > 0)
+				return
 			if(water_overlay)
 				if((get_dir(src, newloc) == SOUTH))
 					water_overlay.layer = BELOW_MOB_LAYER
@@ -154,9 +153,8 @@
 	if(!swimmer.check_armor_skill())
 		. += UNSKILLED_ARMOR_PENALTY
 	if(.) // this check is expensive so we only run it if we do expect to use stamina
-		for(var/obj/structure/S in src)
-			if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-				return 0
+		if(platform_atom_count > 0)
+			return 0
 		for(var/D in GLOB.cardinals) //adjacent to a floor to hold onto
 			if(istype(get_step(src, D), /turf/open/floor))
 				return 0
@@ -194,9 +192,8 @@
 
 /turf/open/water/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
-	for(var/obj/structure/S in src)
-		if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-			return
+	if(platform_atom_count > 0)
+		return
 	if(istype(AM, /obj/item/reagent_containers/food/snacks/fish))
 		var/obj/item/reagent_containers/food/snacks/fish/F = AM
 		if (F.sinkable)
@@ -226,7 +223,7 @@
 					playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
 				if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
 					water_overlay.layer = ABOVE_MOB_LAYER
-					water_overlay.plane = water_overlay.plane = GAME_PLANE_HIGHEST
+					water_overlay.plane = GAME_PLANE_HIGHEST
 				else
 					spawn(6)
 						if(AM.loc == src)
@@ -234,7 +231,10 @@
 							water_overlay.plane = GAME_PLANE_HIGHEST
 
 			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-				L.adjust_bodytemperature(-5)
+				if(HAS_TRAIT(L, TRAIT_WATERLOVING))
+					L.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+				else
+					L.adjust_bodytemperature(-5)
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))
@@ -251,8 +251,7 @@
 				to_chat(user, span_warning("[C] is full."))
 				return
 			playsound(user, 'sound/foley/drawwater.ogg', 100, FALSE)
-			if(do_after(user, 8, target = src))
-				user.changeNext_move(CLICK_CD_MELEE)
+			if(do_after(user, 0.8 SECONDS, target = src))
 				C.reagents.add_reagent(water_reagent, 300)
 				to_chat(user, span_notice("I fill [C] from [src]."))
 				// If the user is filling a water purifier and the water isn't already clean...
@@ -315,7 +314,7 @@
 
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
-			if(do_after(L, 30, target = src))
+			if(do_after(L, 3 SECONDS, target = src))
 				if(wash_in)
 					wash_atom(item2wash, CLEAN_STRONG)
 					L.update_inv_hands()
@@ -338,36 +337,36 @@
 			if(C.is_mouth_covered())
 				return
 		user.visible_message(span_info("[user] starts to drink from [src]."))
-		drink_act(user, L)
+		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
+		for(var/drink in 1 to 40)
+			if(drink_act(user, L))
+				return
+		to_chat(user, span_warning("I've had enough."))
 		return
 	..()
 
 /turf/open/water/proc/drink_act(mob/user, mob/living/L)
-	playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 	if(L.stat != CONSCIOUS)
-		return
-
-	if(do_after(L, 25, target = src))
+		return TRUE
+	if(do_after(L, 2.5 SECONDS, target = src))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			if(H.dna?.species?.id == "gnoll" && ispath(water_reagent, /datum/reagent/blood))
+			if(ispath(water_reagent, /datum/reagent/blood) && (H.dna?.species?.id == "gnoll"))
 				if(!H.gnoll_bloodpool_feed())
-					return
+					return FALSE
 				playsound(src, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 				if(!mapped)
 					water_volume = max(water_volume - 2, 0)
 					if(water_volume <= 0)
 						water_reagent = water_reagent_purified
 				return
-		if (istype(src,/turf/open/water/sewer))
-			to_chat(user, span_userdanger("Have I gone mad!? Why am I drinking sewage!?"))
 		var/list/waterl = list(src.water_reagent = 5)
 		var/datum/reagents/reagents = new()
 		reagents.add_reagent_list(waterl)
 		reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = INGEST)
 		playsound(user,pick('sound/items/drink_gen (1).ogg','sound/items/drink_gen (2).ogg','sound/items/drink_gen (3).ogg'), 100, TRUE)
-		drink_act(user, L)
-	return
+		return FALSE
+	return TRUE
 
 /turf/open/water/Destroy()
 	. = ..()
@@ -434,6 +433,19 @@
 	icon_state = "paving"
 	water_color = pick("#705a43","#697043", "#6C6543")
 	.  = ..()
+
+/turf/open/water/sewer/onbite(mob/user)
+	// I think it's okay to have these checks copy-pasted for something you really, *really* aren't supposed to be doing anyways.
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.stat != CONSCIOUS)
+			return
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			if(C.is_mouth_covered())
+				return
+		to_chat(L, span_userdanger("Have I gone mad!? Why am I drinking sewage?"))
+	..()
 
 /turf/open/water/swamp
 	name = "murk"
@@ -570,7 +582,6 @@
 	slowdown = 5
 	wash_in = TRUE
 	swim_skill = TRUE
-	var/river_processing
 	swimdir = TRUE
 
 /turf/open/water/river/muddy
@@ -608,32 +619,48 @@
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
-	if(isliving(AM))
-		if(!river_processing)
-			river_processing = addtimer(CALLBACK(src, PROC_REF(process_river)), 5, TIMER_STOPPABLE)
+	if(platform_atom_count <= 0)
+		START_PROCESSING(SSrivers, src)
 
 /turf/open/water/river/get_heuristic_slowdown(mob/traverser, travel_dir)
-	var/const/UPSTREAM_PENALTY = 2
-	var/const/DOWNSTREAM_BONUS = -2
+	var/const/UPSTREAM_PENALTY = 2 //Ratwood edit, Azure: 4
+	var/const/DOWNSTREAM_BONUS = -2 //Ratwood edit, Azure: -1
+	var/const/SIDESTREAM_PENALTY = 1 //Ratwood edit, Azure: 2
 	. = ..()
 	if(traverser.is_floor_hazard_immune())
 		return
-	for(var/obj/structure/S in src)
-		if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-			return
+	if(platform_atom_count > 0)
+		return
 	if(travel_dir == dir) // downriver
 		. += DOWNSTREAM_BONUS // faster!
 	else if(travel_dir == GLOB.reverse_dir[dir]) // upriver
 		. += UPSTREAM_PENALTY // slower
+	else 
+		. += SIDESTREAM_PENALTY // sidestream walking isn't free, bro
 
 /turf/open/water/river/proc/process_river()
-	river_processing = null
+	if(platform_atom_count > 0)
+		STOP_PROCESSING(SSrivers, src)
+		return
+	var/found_movable = FALSE
 	for(var/atom/movable/A in contents)
-		for(var/obj/structure/S in src)
-			if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-				return
-		if((A.loc == src))
-			A.ConveyorMove(dir)
+		if(!A.anchored)
+			found_movable = TRUE
+			if((A.loc == src))
+				A.ConveyorMove(dir)
+
+	// stop processing once there's nothing left to move
+	if(!found_movable)
+		STOP_PROCESSING(SSrivers, src)
+		return
+
+/turf/open/water/river/CanPass(atom/movable/mover, turf/target)
+	if(isliving(mover))
+		var/mob/mover_mob = mover
+		// prevent NPCs from constantly trying to go against the flow
+		if(!mover_mob.mind && get_dir(src, mover) == dir)
+			return FALSE
+	return ..()
 
 /turf/open/water/ocean
 	name = "salt water"
@@ -672,11 +699,11 @@
 
 /turf/open/water/bath/fakepond
 	name = "fake pond"
-	desc = "Soothing water, with soapy bubbles on the surface. Dyed green to mimic gently floating duckwater."
+	desc = "Soothing water, with soapy bubbles on the surface. Dyed to perfection."
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "pond"
 	water_level = 2
-	water_color = "#367e94"
+	water_color = "#26aa98"
 	slowdown = 3
 	swim_skill = TRUE
 	wash_in = TRUE

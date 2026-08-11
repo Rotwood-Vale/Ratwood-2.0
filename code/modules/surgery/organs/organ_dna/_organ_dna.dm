@@ -74,3 +74,21 @@
 	..()
 	var/obj/item/organ/vagina/vagina_organ = organ
 	vagina_organ.fertility = fertility
+
+/datum/organ_dna/wings
+	var/wings_color
+	var/wing_natural_gradient
+	var/wing_natural_color
+	var/wing_dye_gradient
+	var/wing_dye_color
+
+/datum/organ_dna/wings/imprint_organ(obj/item/organ/organ)
+	. = ..()
+	var/obj/item/organ/wings/wing_organ = organ
+	wing_organ.wings_color = wings_color
+	wing_organ.wing_natural_gradient = wing_natural_gradient
+	wing_organ.wing_natural_color = wing_natural_color
+	wing_organ.wing_dye_gradient = wing_dye_gradient
+	wing_organ.wing_dye_color = wing_dye_color
+
+

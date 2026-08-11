@@ -37,10 +37,6 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Socialite virtue conflicts with Ugly vice!"))
 				return TRUE
-			if(vice && vice.type == /datum/charflaw/eerie_beauty)
-				if(show_message && user)
-					to_chat(user, span_warning("Socialite virtue conflicts with Eerie Beauty vice!"))
-				return TRUE
 	
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
@@ -95,14 +91,6 @@
 					to_chat(user, span_warning("Ugly vice conflicts with Socialite virtue!"))
 				return TRUE
 	
-	// Eerie Beauty vs Socialite (Beautiful)
-	if(vice_type == /datum/charflaw/eerie_beauty)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/socialite)
-				if(show_message && user)
-					to_chat(user, span_warning("Eerie Beauty vice conflicts with Socialite virtue!"))
-				return TRUE
-	
 	// Mute vs Second Voice (can't have second voice if you're mute)
 	if(vice_type == /datum/charflaw/mute)
 		for(var/datum/virtue/virt in virtue_list)
@@ -118,7 +106,14 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Unintelligible vice conflicts with Second Voice virtue!"))
 				return TRUE
-	
+	// Lawless conflicts with: Nobility and High Society
+	if(vice_type == /datum/charflaw/lawless)
+		for(var/datum/virtue/virt in virtue_list)
+			if(virt && virt.type == /datum/virtue/utility/noble || virt.type == /datum/virtue/pack/highsociety)
+				if(show_message && user)
+					to_chat(user, span_warning("Lawless vice conflicts with the Nobility and High Society virtues - you can't be an outlaw and keep Astrata's grace!"))
+				return TRUE
+
 	return FALSE
 
 /datum/preferences/proc/check_vice_vice_conflict(vice_type, list/selected_vices, show_message = FALSE, mob/user = null)
@@ -1783,10 +1778,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				/datum/language/kazengunese,
 				/datum/language/etruscan,
 				/datum/language/gronnic,
+				/datum/language/hammerholdian,
 				/datum/language/otavan,
 				/datum/language/aavnic,
 				/datum/language/merar,
-				/datum/language/thievescant/signlanguage
+				/datum/language/thievescant/signlanguage,
+				/datum/language/abyssal,
 			)
 			var/list/choices = list("None")
 			for(var/language in selectable_languages)
@@ -1832,10 +1829,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					/datum/language/kazengunese,
 					/datum/language/etruscan,
 					/datum/language/gronnic,
+					/datum/language/hammerholdian,
 					/datum/language/otavan,
 					/datum/language/aavnic,
 					/datum/language/merar,
-					/datum/language/thievescant/signlanguage
+					/datum/language/thievescant/signlanguage,
+					/datum/language/abyssal,
 				)
 				
 				var/list/choices = list("None")

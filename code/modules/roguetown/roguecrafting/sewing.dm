@@ -499,7 +499,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/basiceast
-	name = "simple dobo robe"
+	name = "simple dopo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
@@ -975,6 +975,15 @@
 /datum/crafting_recipe/roguetown/sewing/sailorspants
 	name = "sailor's pants"
 	result = list(/obj/item/clothing/under/roguetown/tights/sailor)
+	reqs = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+	sellprice = 5
+
+/datum/crafting_recipe/roguetown/sewing/sailorshirt_colored
+	name = "striped shirt (colorable)"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored)
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1)
 	tools = list(/obj/item/needle)

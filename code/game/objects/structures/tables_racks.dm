@@ -37,9 +37,12 @@
 	blade_dulling = DULLING_BASHCHOP
 	debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/table/examine(mob/user)
+/obj/structure/table/Initialize(mapload)
 	. = ..()
-//	. += deconstruction_hints(user)
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding under %LOCATION!", \
+		"I hide under %LOCATION!", \
+		"I come out from under %LOCATION!")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
@@ -53,9 +56,6 @@
 	var/atom/A = loc
 	qdel(src)
 	new /obj/structure/table/wood(A)
-
-/obj/structure/table/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
 	if(Adjacent(user) && user.pulling)
@@ -171,8 +171,12 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/dumped = list()
+			for(var/obj/item/dumped_item in T.contents)
+				dumped += "[dumped_item]"
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message(span_notice("[user] empties [I] on [src]."))
+			user.log_message("emptied [I] onto [src] (CONTENTS: [english_list(dumped)])", LOG_GAME)
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
@@ -589,9 +593,6 @@
 				W.pixel_x = initial(W.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_x
 				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
-
-/obj/structure/rack/attack_paw(mob/living/user)
-	attack_hand(user)
 
 
 

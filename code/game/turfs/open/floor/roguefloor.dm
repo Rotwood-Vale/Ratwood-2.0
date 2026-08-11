@@ -348,6 +348,8 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_coldedge"
 	temperature = 160
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grasscold/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -375,6 +377,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_purpleedge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grasspurple/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -402,6 +406,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_greyedge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassgrey/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -429,6 +435,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_rededge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassred/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -454,6 +462,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_yeledge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassyel/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -485,9 +495,10 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grassedge"
-
 	spread_chance = 15
 	burn_power = 6
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grass/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -1378,8 +1389,11 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,
 						/turf/open/floor/rogue/cobble,
-						/turf/open/floor/rogue/cobble/mossy,
-						/turf/open/floor/rogue/blocks,)
+						/turf/open/floor/rogue/cobblerock,
+						/turf/open/floor/rogue/blocks,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/desert_grass,)
 
 /turf/open/floor/rogue/cobble/mossy/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -1443,6 +1457,9 @@
 						/turf/open/floor/rogue/snowpatchy,
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,
+						/turf/open/floor/rogue/dirt/desert,
+						/turf/open/floor/rogue/dirt/road/desert,
+						/turf/open/floor/rogue/desert_grass,
 						/turf/closed/wall/mineral)
 
 /turf/open/floor/rogue/cobblerock/cardinal_smooth(adjacencies)
@@ -1810,3 +1827,61 @@
 		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 	turf_destruction("blunt")
 	return
+
+/obj/structure/roguesand/dune
+	name = "dune"
+	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
+
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "dune_1"
+
+	anchored = TRUE
+	density = FALSE
+	opacity = TRUE
+	mouse_opacity = 0
+	max_integrity = 10
+	layer = 4.1
+
+	blade_dulling = DULLING_CUT
+	attacked_sound = "plantcross"
+	destroy_sound = "plantcross"
+
+
+/obj/structure/roguesand/dune/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/roguegrass) //bro its fine trust me
+
+/obj/structure/roguesand/dune/Crossed(atom/movable/O)
+	. = ..()
+	if(!isliving(O))
+		return
+	opacity = FALSE
+
+
+/obj/structure/roguesand/dune/Uncrossed(atom/movable/O)
+	. = ..()
+	if(!isliving(O))
+		return
+	var/turf/T = get_turf(src)
+	for(var/mob/living/L in T)
+		if(L != O)
+			return
+	opacity = TRUE
+
+/obj/structure/roguesand/dune/one
+	icon_state = "dune_1"
+
+/obj/structure/roguesand/dune/two
+	icon_state = "dune_2"
+
+/obj/structure/roguesand/dune/three
+	icon_state = "dune_3"
+
+/obj/structure/roguesand/dune/four
+	icon_state = "dune_4"
+
+/obj/structure/roguesand/dune/five
+	icon_state = "dune_5"
+
+/obj/structure/roguesand/dune/six
+	icon_state = "dune_6"

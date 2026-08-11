@@ -57,38 +57,18 @@
 	bitesize = 1
 	dropshrink = 0.75
 
-/obj/item/reagent_containers/food/snacks/tallow/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/survival/soap,
-		/datum/crafting_recipe/roguetown/survival/candle,
-		/datum/crafting_recipe/roguetown/survival/candle/eora,
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		/datum/crafting_recipe/roguetown/leather/container/javelinbag,
-		/datum/crafting_recipe/roguetown/leather/fingerless_leather_gloves,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/shorts,
-		/datum/crafting_recipe/roguetown/leather/armor/helmet/advanced,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/coat,
-		/datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/jacket,
-		/datum/crafting_recipe/roguetown/leather/hidebikini,
-		/datum/crafting_recipe/roguetown/leather/unique/otavanleatherpants,
-		/datum/crafting_recipe/roguetown/leather/unique/otavanboots,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
-
 /obj/item/reagent_containers/food/snacks/tallow/red
-	name = "redtallow"
+	name = "inquisitorial tallow"
 	desc = "Fatty tissue is harvested from slain creachurs and rendered of its membraneous sinew to produce a hard shelf-stable \
-	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute. As they say in Otava, Bon Appetit."
+	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute favored by the Inquisition. As they say in Otava, Bon Appetit."
 	icon_state = "redtallow"
 	tastes = list("grease" = 1, "oil" = 1, "regret" =1, "blood"=1,)
+
+/obj/item/reagent_containers/food/snacks/tallow/soft
+	name = "soft tallow"
+	desc = "Rendered tallow softened with additional fat, making it easier to spread for sealing. It resembles Inquisitorial Tallow, but lacks its holy sanction."
+	icon_state = "softtallow"
+	tastes = list("grease" = 1, "oil" = 1, "regret" =1)
 
 /obj/item/reagent_containers/food/snacks/tallow/attacked_by(obj/item/I, mob/living/user)
 	. = ..()

@@ -81,7 +81,7 @@
 			return FALSE
 		else	//Everyone else
 			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
-			H.emote("groan")
+			H.emote("groan", forced = TRUE)
 			H.Stun(10)
 			return FALSE
 	else

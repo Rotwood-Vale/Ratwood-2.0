@@ -21,6 +21,7 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	heat_level = 4
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -36,17 +37,8 @@
 	if(.)
 		return
 
-	if(on)
-		var/mob/living/carbon/human/H = user
+	if(!on)
 
-		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
-
-			if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
-				H.adjust_bodytemperature(75)
-		return TRUE //fires that are on always have this interaction with lmb unless its a torch
-
-	else
 		if(icon_state == "[base_state]over")
 			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
 				"<span class='notice'>I start to pick up [src]...</span>")
@@ -85,6 +77,8 @@
 	bulb_colour = "#ff9648"
 	cookonme = FALSE
 	crossfire = FALSE
+	density = FALSE
+	heat_level = 3
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -153,6 +147,7 @@
 	crossfire = FALSE
 	healing_range = 2
 	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
+	heat_level = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
@@ -183,6 +178,16 @@
 	density = FALSE
 	pixel_y = 32
 	cookonme = TRUE
+
+/obj/machinery/light/rogue/campfire/fireplace/crafted/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
+/obj/machinery/light/rogue/campfire/fireplace/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
 
 /obj/machinery/light/rogue/candle
 	name = "candles"
@@ -303,6 +308,11 @@
 	layer = TABLE_LAYER
 	cookonme = FALSE
 
+/obj/machinery/light/rogue/candle/floorcandle/OnCrafted(dirin)
+	..() // Base candles offset via pixel x/y, which doesn't handle nicely with floor candles - this resets the offset, so they are placed next the the crafter.
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/machinery/light/rogue/candle/floorcandle/alt
 	icon_state = "floorcandlee1"
 	base_state = "floorcandlee"
@@ -365,6 +375,10 @@
 	QDEL_NULL(torchy)
 	on = FALSE
 	set_light(0)
+	pixel_x = 0
+	pixel_y = 0
+	if(dirin == SOUTH)
+		pixel_y = 32
 	update_icon()
 
 	..(dirin, user)
@@ -488,6 +502,7 @@
 	on = FALSE
 	cookonme = TRUE
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
 	var/mob/living/carbon/human/lastuser
@@ -526,10 +541,9 @@
 /obj/machinery/light/rogue/hearth/attack_right(mob/user)
 	var/datum/skill/craft/cooking/cs = user?.get_skill_level(/datum/skill/craft/cooking)
 	var/cooktime_divisor = get_cooktime_divisor(cs)
-	if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+	while(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
 		try_cook(cooktime_divisor)
-		attack_right(user)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
 	lastuser = user // For processing food
@@ -721,7 +735,7 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
 					boilloop.start()
 				else
 					boilloop.stop()
@@ -847,9 +861,11 @@
 	cookonme = TRUE
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 5
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
+
 /obj/machinery/light/rogue/campfire/process()
 	..()
 	if(isopenturf(loc))
@@ -925,6 +941,7 @@
 	pass_flags = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
+	heat_level = 5
 
 /obj/machinery/light/rogue/campfire/densefire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -952,6 +969,7 @@
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+	heat_level = 5
 
 
 /obj/machinery/light/rogue/campfire/pyre/post_buckle_mob(mob/living/M)
@@ -969,3 +987,37 @@
 #undef MIN_STEW_TEMPERATURE
 #undef VOLUME_PER_STEW_COOK
 #undef VOLUME_PER_STEW_COOK_AFTER
+
+//Prestidigitation wisps are fun to decorate with!
+
+/obj/effect/wisp
+	name = "will-o'-the-wisp"
+	desc = "A small, fiery ball of light made up of mystical energy."
+	light_outer_range =  4
+	light_color = "#3FBAFD"
+	icon = 'icons/roguetown/items/lighting.dmi'
+	icon_state = "wisp"
+
+/obj/effect/wisp/infernal
+	name = "Infernal Wisp"
+	desc = "An ominous manifestation of latent ambient magick"
+	light_color = "#ff0008"
+	color = "#ff0008"
+
+/obj/effect/wisp/geothermal
+	name = "Odd Wisp"
+	desc = "A peculiar natural phenomena, seemingly related to the roiling lava below"
+	light_color = "#ff5630"
+	color = "#ff5630"
+
+/obj/effect/wisp/green
+	light_color = "#ffff00"
+	color = "#33ff00"
+
+/obj/effect/wisp/bluegreen
+	light_color = "#33ff00"
+	color = "#59ff93"
+
+/obj/effect/wisp/purple
+	light_color = "#ae00ff"
+	color = "#ff767d"

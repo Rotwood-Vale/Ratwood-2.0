@@ -13,8 +13,8 @@
 	sound = 'sound/magic/whiteflame.ogg'
 	cost = 2
 	spell_tier = 1 // Utility. For repair
-	glow_color = null
-	glow_intensity = 0
+	glow_color = GLOW_COLOR_ARCANE
+	glow_intensity = GLOW_INTENSITY_LOW
 
 	miracle = FALSE
 
@@ -59,9 +59,15 @@
 	if(I.obj_integrity >= I.max_integrity)
 		if(I.obj_broken)
 			I.obj_fix()
+		if (I.shoddy_repair && user.get_skill_level(/datum/skill/magic/arcane) >= SKILL_LEVEL_JOURNEYMAN)
+			I.shoddy_repair = FALSE
+			user.visible_message(span_info("[I] glows gently, arcyne magic amending the damage wrought by hasty repairs."))
 		if(I.body_parts_covered_dynamic != I.body_parts_covered)
 			I.repair_coverage()
 			to_chat(user, span_info("[I]'s shorn layers mend together."))
+
+	
+	return TRUE
 
 
 /obj/effect/proc_holder/spell/invoked/mending/lesser

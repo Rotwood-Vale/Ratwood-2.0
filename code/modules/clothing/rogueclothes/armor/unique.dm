@@ -19,8 +19,8 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/basiceast
-	name = "simple dobo robe"
-	desc = "A dirty dobo robe with white lapels. Can be upgraded through the use of a tailor to increase its integrity and protection."
+	name = "simple dopo robe"
+	desc = "A dirty dopo robe with white lapels. Can be upgraded through the use of a tailor to increase its integrity and protection."
 	icon_state = "eastsuit3"
 	item_state = "eastsuit3"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
@@ -42,8 +42,8 @@
 //the intent for these armors is to create specific weaknesses/strengths for people to play with
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
-	name = "decorated dobo robe"
-	desc = "A dobo robe with a red tassel. Leather inlays are sewn in. It looks sturdier than a simple robe."
+	name = "decorated dopo robe"
+	desc = "A dopo robe with a red tassel. Leather inlays are sewn in. It looks sturdier than a simple robe."
 	icon_state = "eastsuit2"
 	item_state = "eastsuit2"
 	armor = ARMOR_LEATHER_STUDDED // Makes it the equivalence of studded with less integrity and better armor 
@@ -53,7 +53,7 @@
 //still weak against blunt
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
-	name = "old dobo robe"
+	name = "old dopo robe"
 	desc = "The scars on your body were once stories of strength and bravado."
 	icon_state = "eastsuit1"
 	item_state = "eastsuit1"
@@ -95,15 +95,12 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_WOOD_ARMOR)
 
 
-/obj/item/clothing/suit/roguetown/armor/hcorset
+/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini/horsey
 	name = "harness corset"
 	desc = "A tight-fitting leather bodice reinforced for protection."
 	icon_state = "hcorset"
 	item_state = "hcorset"
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
-	max_integrity = 400
-	armor = list("blunt" = 80, "slash" = 90, "stab" = 80, "piercing" = 80, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
 	boobed = TRUE
 	flags_inv = 0
 

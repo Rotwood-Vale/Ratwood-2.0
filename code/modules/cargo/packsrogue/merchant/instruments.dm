@@ -70,6 +70,16 @@
 	cost = 30
 	contains = list(/obj/item/rogue/instrument/jawharp)
 
+/datum/supply_pack/rogue/instruments/banjo
+	name = "Banjo"
+	cost = 30
+	contains = list(/obj/item/rogue/instrument/banjo)
+
+/datum/supply_pack/rogue/instruments/harmonica
+	name = "Harmonica"
+	cost = 20
+	contains = list(/obj/item/rogue/instrument/harmonica)
+
 /datum/supply_pack/rogue/instruments/bagpipe
 	name = "Bagpipe"
 	cost = 30

@@ -82,6 +82,12 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/houndgem
+	name = "houndstone gem"
+	icon_state = "topaz_cut"
+	sellprice = 0
+	desc = "A component to make a Houndstone, it looks like a topaz."
+
 /obj/item/roguegem/yellow
 	name = "toper"
 	icon_state = "topaz_cut"
@@ -181,6 +187,14 @@
 	icon = 'icons/roguetown/gems/gem_opal.dmi'
 	icon_state = "raw_opal"
 	sellprice = 80
+
+/obj/item/roguegem/chitin
+	name = "beetle chitin plate"
+	desc = "A thick, iridescent plate of chitin shaved from a giant woolly chafer beetle. Prized by underdeep artisans for its durability and natural luster."
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "raw_shell"
+	color = "#7B8C5E"
+	sellprice = 15
 
 /obj/item/roguegem/diamond/Initialize(mapload)
 	. = ..()

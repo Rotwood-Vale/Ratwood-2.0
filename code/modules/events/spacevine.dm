@@ -346,18 +346,13 @@
 
 /obj/structure/vine/dendor
 	mutations = newlist(/datum/vine_mutation/earthy)
-	opacity = 1
+	opacity = 0
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/vine/attack_hand(mob/user)
 	for(var/datum/vine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 	. = ..()
-
-/obj/structure/vine/attack_paw(mob/living/user)
-	for(var/datum/vine_mutation/SM in mutations)
-		SM.on_hit(src, user)
-	user_unbuckle_mob(user,user)
 
 /datum/vine_controller
 	var/list/obj/structure/vine/vines

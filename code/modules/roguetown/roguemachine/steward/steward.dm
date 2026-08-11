@@ -6,6 +6,7 @@
 #define TAB_LOG 6
 #define TAB_STATISTICS 7
 #define TAB_PAYDAY 8
+#define TAB_SALTMINE 9
 
 /obj/structure/roguemachine/steward
 	name = "nerve master"
@@ -37,32 +38,45 @@
 //	That lack of means enforce you not to evil:
 /obj/structure/roguemachine/steward/proc/setup_default_payments()
 	daily_payments["Knight Captain"] = 40
-	daily_payments["Knight"] = 40
-	daily_payments["Sergeant"] = 40 //Garrison
-	daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
-	daily_payments["Master Warden"] = 35 //Garrison
-	daily_payments["Man at Arms"] = 30
+	if(SSmapping.current_map.map_name == "Dun World")
+		daily_payments["Sergeant"] = 40 //Garrison
+	if(SSmapping.current_map.map_name == "Desert Town")
+		daily_payments["Slave Master"] = 50
+		daily_payments["Cataphract"] = 40
+		daily_payments["Janissary Sergeant"] = 40 //Garrison
+		daily_payments["Janissary"] = 30
+		daily_payments["Azeb Agha"] = 40
+		daily_payments["Azeb"] = 20
+	else
+		daily_payments["Knight"] = 40
+		daily_payments["Man at Arms"] = 30
+		daily_payments["Warden"] = 25
+		daily_payments["Dungeoneer"] = 30
+	if(SSmapping.current_map.map_name == "Rockhill")
+		daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
+		daily_payments["Master Warden"] = 35 //Garrison
+		daily_payments["City Guard"] = 30
+		daily_payments["Vanguard"] = 20
 	daily_payments["Rookie"] = 20//paid more than squires because they don't get to live in a castle with maids cooking them dinner
-	daily_payments["City Guard"] = 30
-	daily_payments["Dungeoneer"] = 30
-	daily_payments["Warden"] = 25
-	daily_payments["Vanguard"] = 20
 	daily_payments["Veteran"] = 30
 	daily_payments["Squire"] = 10
-	daily_payments["Seneschal"] = 40 //Manor-House
-	daily_payments["Servant"] = 20
+//courtiers
 	daily_payments["Head Physician"] = 30 //Doctors
 	daily_payments["Apothecary"] = 20 //paid by the keep to heal people, would make sense.
 	daily_payments["Court Magician"] = 50 //University
+	if(SSmapping.current_map.map_name == "Desert Town")
+		daily_payments["Palace Chaplain"] = 30
+		daily_payments["Headslave"] = 20 //Manor-House
+	else
+		daily_payments["Court Chaplain"] = 30
+		daily_payments["Seneschal"] = 40 //Manor-House
+		daily_payments["Servant"] = 20
 	daily_payments["Archivist"] = 10
 	daily_payments["Magicians Associate"] = 10
 	daily_payments["Jester"] = 6
-	daily_payments["Azeb"] = 20
-	daily_payments["Azeb Agha"] = 40
-	daily_payments["Slave Master"] = 50
-	daily_payments["Janissary"] = 30
-	daily_payments["Janissary Sergeant"] = 40 //Garrison
-	daily_payments["Headslave"] = 20 //Manor-House
+
+	if(SSmapping.current_map.map_name == "Roguetest")
+		daily_payments["Shophand"] = 999
 
 /obj/structure/roguemachine/steward/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
@@ -90,7 +104,7 @@
 				return
 		to_chat(user, span_warning("Wrong key."))
 		return
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
@@ -105,6 +119,7 @@
 
 /obj/structure/roguemachine/steward/Topic(href, href_list)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 		return
 	if(href_list["switchtab"])
@@ -122,7 +137,7 @@
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
 		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
 		if(amt >= 100) //Only announce big spending.
-			scom_announce("Rotwood Vale imports [D.name] for [amt] mammon.", )
+			scom_announce("[realmname] imports [D.name] for [amt] mammon.", )
 		D.raise_demand()
 		addtimer(CALLBACK(src, PROC_REF(do_import), D.type), 10 SECONDS)
 	if(href_list["export"])
@@ -178,6 +193,22 @@
 				if(newtax < D.withdraw_price)
 					scom_announce("The withdraw price for [D.name] was decreased.")
 				D.withdraw_price = newtax
+	if(href_list["setrate"])
+		var/datum/roguestock/D = locate(href_list["setrate"]) in SStreasury.stockpile_datums
+		if(!D)
+			return              //Cheaper prices, no taxes, the price? Commitment. You can only change the rates at day. I'd like to make the window shorter,
+		if(GLOB.tod == "night") //less chance to micromanage, incentivize doing other things at later hours, make it unable to be changed at dusk too, but this needs testing first
+			say("Suppliers will only agree to modifying deals at times when Astrata shines.")
+			return
+		var/newrate = input(usr, "Set a new rate for remote imports for [D.name]", src, D.passive_generation) as null|num
+		if(!isnull(newrate))
+			if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+				return
+			if(findtext(num2text(newrate), "."))
+				return
+			newrate = CLAMP(newrate, 0, D.generation_max)
+			scom_announce("[realmname] will [newrate ? "now import [newrate] [D.name] every 5 hours." : "no longer import [D.name] periodically"]")
+			D.passive_generation = newrate
 	if(href_list["setlimit"])
 		var/datum/roguestock/D = locate(href_list["setlimit"]) in SStreasury.stockpile_datums
 		if(!D)
@@ -374,6 +405,7 @@
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
 			contents += "</center>"
 		if(TAB_BANK)
 			var/total_deposit = 0
@@ -417,6 +449,7 @@
 				contents += " / Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
 				contents += "<center>Auto Export Stockpile Above: "
 				contents += "<a href='?src=\ref[src];changeautoexport=1'>[SStreasury.autoexport_percentage * 100]%</a></center><BR>"
+				contents += "<center>Current Passive Spending: [SStreasury.get_current_passive_spending()]m </center><BR>"
 				var/selection = "<center>Categories: "
 				for(var/category in categories)
 					if(category == current_category)
@@ -429,10 +462,12 @@
 					if(A.category != current_category)
 						continue
 					contents += "<b>[A.name]:</b>"
-					contents += " [A.held_items[1] + A.held_items[2]]"
-					contents += " | SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
+					contents += " [A.held_items[1]] | [A.held_items[2]]"
+					contents += " || SELL: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]m</a>"
 					contents += " / BUY: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]m</a>"
 					contents += " / LIMIT: <a href='?src=\ref[src];setlimit=\ref[A]'>[A.stockpile_limit]</a>"
+					if(!A.no_passive)
+						contents += " / R.P.I.R.: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation] ([A.generation_price]m)</a>"
 					if(!A.export_only)
 						if(A.importexport_amt)
 							contents += " <a href='?src=\ref[src];import=\ref[A]'>\[IMP [A.importexport_amt] ([A.get_import_price()])\]</a> <a href='?src=\ref[src];export=\ref[A]'>\[EXP [A.importexport_amt] ([A.get_export_price()])\]</a> <BR>"
@@ -443,7 +478,8 @@
 			else
 				contents += "Treasury: [SStreasury.treasury_value]m<BR>"
 				contents += "Lord's Tax: [SStreasury.tax_value*100]%<BR>"
-				contents += "Guild's Tax: [SStreasury.queens_tax*100]%</center><BR>"
+				contents += "Guild's Tax: [SStreasury.queens_tax*100]%<BR>"
+				contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m</center><BR>"
 				var/selection = "<center>Categories: "
 				for(var/category in categories)
 					if(category == current_category)
@@ -451,15 +487,20 @@
 					else
 						selection += "<a href='?src=[REF(src)];changecat=[category]'>[category]</a> "
 				contents += selection + "<BR>"
-				contents += "--------------</center><BR>"
+				contents += "--------------<BR>"
+				contents += "Category Passive Spending: [SStreasury.get_current_passive_spending(current_category)]m</center><BR>"
 				for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
 					if(A.category != current_category)
 						continue
 					contents += "[A.name]<BR>"
 					contents += "[A.desc]<BR>"
-					contents += "Stockpiled Amount: [A.held_items[1] + A.held_items[2]]<BR>"
+					contents += "Stockpiled Amount (Local): [A.held_items[1]]<BR>"
+					contents += "Stockpiled Amount (Remote): [A.held_items[2]]<BR>"
 					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR>"
 					contents += "Withdraw Price: <a href='?src=\ref[src];setprice=\ref[A]'>[A.withdraw_price]</a><BR>"
+					if(!A.no_passive)
+						contents += "Remote Passive Import Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a><BR>"
+						contents += "R.P.I.R. Price: [A.generation_price] | Total Rate Price: [A.generation_price * A.passive_generation]<BR>"
 					contents += "Demand: [A.demand2word()]<BR>"
 					if(!A.export_only)
 						if(A.importexport_amt)
@@ -542,6 +583,27 @@
 					contents += " <a href='?src=\ref[src];removedailypay=[job_name]'>\[Remove\]</a><BR>"
 			else
 				contents += "<center>No daily payments configured.</center><BR>"
+		if(TAB_SALTMINE)
+			var/obj/structure/roguemachine/stockpile_saltcamp/stockpile = null
+			stockpile = locate(/obj/structure/roguemachine/stockpile_saltcamp) in GLOB.saltminestockpilemachines // we're assuming there is only ever one of these machines in the world
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
+			if(!isnull(stockpile))
+				var/gambled_salt = round(stockpile.salt_spent_on_gambling, 1)
+				var/total_accounts = length(stockpile.salt_accounts)
+				contents += "<center>Die Troyt Salt Mine Report:<BR>"
+				contents += "Total Salt Gambled: [gambled_salt] piles of salt</center><BR>"
+				if(total_accounts > 0)
+					contents += "--------------<BR>"
+					contents += "<table><tr><th>Prisoner Name</th><th>Salt Mined</th><th>Interest Rate</th></tr>"
+					for(var/i = 1; i <= total_accounts; i++)
+						var/name = stockpile.salt_accounts[i]
+						var/salt = stockpile.salt_accounts[name]
+						var/salt_max = stockpile.salt_accounts_max[name]
+						var/interest = stockpile.salt_accounts_interest_max[name] * 100
+						if(salt == 0 && stockpile.salt_ticket_win[name] > 0) // don't show ticket winners who have left the mines
+							continue
+						contents += "<tr><td>[name]</td><td>[salt] salt / [salt_max] max</td><td>[interest]%</a></td>"
+					contents += "</table>"
 
 	if(!canread)
 		contents = stars(contents)
@@ -571,3 +633,4 @@
 #undef TAB_LOG
 #undef TAB_STATISTICS
 #undef TAB_PAYDAY
+#undef TAB_SALTMINE

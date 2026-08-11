@@ -24,24 +24,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	overdose_threshold = null
 	var/hydration = 8
+	var/metabolized_acoffee = 0
 
-// Add variables to track initial and consumed amounts
-/mob/living/carbon/var/initial_acoffee_amount = 0 // Tracks the initial amount of Acorn Coffee when consumed
-/mob/living/carbon/var/metabolized_acoffee = 0 // Tracks the total amount of Acorn Coffee metabolized
+// you metabolize the coffee and it tracks it
+/datum/reagent/consumable/Acoffee/on_mob_add(mob/living/carbon/M)
+	metabolized_acoffee = 0
 
 /datum/reagent/consumable/Acoffee/on_mob_life(mob/living/carbon/M)
-	// Initialize the initial amount when first consumed
-	if(M.initial_acoffee_amount == 0)
-		M.initial_acoffee_amount = M.reagents.get_reagent_amount(src)
-
-	// Calculate the current amount and the amount metabolized in this cycle
-	var current_amount = M.reagents.get_reagent_amount(src)
-	var metabolized_now = (M.initial_acoffee_amount - current_amount) * metabolization_rate
-
-	// Update the total metabolized amount
-	M.metabolized_acoffee += metabolized_now
-	// Update the initial amount for the next cycle
-	M.initial_acoffee_amount = current_amount
+	metabolized_acoffee += metabolization_rate
 
 	// Apply the effects of Acorn Coffee
 	if(ishuman(M))
@@ -54,12 +44,17 @@
 	M.drowsyness = max(0, M.drowsyness - 3)
 	M.SetSleeping(0, FALSE)
 
-	// Remove the sleepytime status effect after 12u of Acorn Coffee has metabolized
-	if(M.metabolized_acoffee >= 12)
+	// Remove the sleepytime status effect after consumption
+	if(metabolized_acoffee >= metabolization_rate)
 		if(M.has_status_effect(/datum/status_effect/debuff/sleepytime))
 			M.remove_status_effect(/datum/status_effect/debuff/sleepytime)
 			M.remove_stress(/datum/stressevent/sleepytime)
-			M.mind.sleep_adv.advance_cycle()
+			to_chat(M, span_green("I feel much more focused from that coffee!"))
+			M.visible_message(span_info("[M] gains a look of focus in their eyes, the weary expression lifting from [M.p_them()]."))
+			M.adjust_triumphs(1)
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 3
+				M.mind.sleep_adv.advance_cycle()
 
 	..()
 

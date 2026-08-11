@@ -77,8 +77,9 @@
 		parent_mob.add_stress(/datum/stressevent/obsession_target_hurt)
 
 		// Visual distress effect
-		parent_mob.overlay_fullscreen("empathic_distress", /atom/movable/screen/fullscreen/painflash, 2)
-		addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "empathic_distress"), 5 SECONDS)
+		if(!parent_mob.no_redflash)
+			parent_mob.overlay_fullscreen("empathic_distress", /atom/movable/screen/fullscreen/painflash, 2)
+			addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "empathic_distress"), 5 SECONDS)
 
 	else if(health_change > 15) // Significant healing
 		to_chat(parent_mob, span_notice("You feel relief as [obsession_target] recovers."))

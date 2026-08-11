@@ -3,6 +3,8 @@
 	domain = "Trickery, Freedom, Inspiration, Fate, Fluvians"
 	desc = "The Trickster is an unknown amongst the Pantheon. They created the Fluvian race with the gift of Fate, and serve the sole purpose of pulling pranks on Gods and Mortals alike. Their followers see freedom as an absolute, and despise slavery."
 	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
+	virtues = "Humor, Friendship, Joy"
+	sins = "Slavery, Seriousness, Servility"
 	mob_traits = list(TRAIT_XYLIX)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/xylixslip					= CLERIC_T0,

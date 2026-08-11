@@ -111,6 +111,7 @@
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "syndicate"
 	icon_state = "deck_syndicate_full"
+	dropshrink = 0.8
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 	var/list/cards = list()
@@ -451,5 +452,12 @@
 			cards += "[i] of [suit]"
 		for(var/person in list("Page", "Knight", "Queen", "King"))
 			cards += "[person] of [suit]"
+	for(var/trump in list("The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lover", "The Chariot", "Justice", "The Hermit", "The Wheel of Fortune", "Strength", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World", "The Fool"))
+		cards += trump
+
+/obj/item/toy/cards/deck/tarot/majorarcana
+
+/obj/item/toy/cards/deck/tarot/majorarcana/populate_deck()
+	icon_state = "deck_[deckstyle]_full"
 	for(var/trump in list("The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lover", "The Chariot", "Justice", "The Hermit", "The Wheel of Fortune", "Strength", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World", "The Fool"))
 		cards += trump

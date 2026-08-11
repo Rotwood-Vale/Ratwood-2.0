@@ -240,6 +240,10 @@
 	to_chat(owner, span_warning("As I leave the influence of the tree, my strength returns."))
 
 /datum/status_effect/debuff/pomegranate_aura/tick()
+	if(HAS_TRAIT(owner, TRAIT_EORAN_CALM))
+		owner.remove_status_effect(src)
+		return
+
 	// Check if source tree still exists
 	var/obj/structure/eoran_pomegranate_tree/tree = source_ref?.resolve()
 	if(QDELETED(tree) || !istype(tree))

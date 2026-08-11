@@ -69,6 +69,7 @@
 		// /datum/job/roguetown/magician,// moved to an if-map-then-outfit statement in the baseblock
 		/datum/job/roguetown/jester, //are jesters really a desert thing? Maybe ought to push people into playing slaves instead..?
 		// /datum/job/roguetown/physician,
+		/datum/job/roguetown/chaplain,//ought have a psydonite alternative
 
 		/datum/job/roguetown/manorguard,//  mamaluk
 		// /datum/job/roguetown/rookie,//  mamalukrookie!
@@ -117,6 +118,12 @@
 		// /datum/job/roguetown/orphan,
 		// /datum/job/roguetown/prince,//dtprince
 		// /datum/job/roguetown/shophand,
+		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
 		
 	)
 

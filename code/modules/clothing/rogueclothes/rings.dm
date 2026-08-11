@@ -15,6 +15,8 @@
 	experimental_inhand = FALSE
 	drop_sound = 'sound/foley/coinphy (1).ogg'
 	nudist_approved = TRUE
+	sewrepair = FALSE
+	dropshrink = 0.4
 
 /obj/item/clothing/ring/silver
 	name = "silver ring"
@@ -22,7 +24,7 @@
 	sellprice = 33
 	is_silver = TRUE
 
-/obj/item/clothing/ring/aalloy
+/obj/item/clothing/ring/decrepit
 	name = "decrepit ring"
 	desc = "A coil of frayed bronze."
 	icon_state = "ring_a"
@@ -73,6 +75,12 @@
 	name = "rosestone ring"
 	icon_state = "ring_rose"
 	sellprice = 25
+
+/obj/item/clothing/ring/chitin
+	name = "chitin ring"
+	icon_state = "ring_shell"
+	color = "#7B8C5E"
+	sellprice = 20
 
 /obj/item/clothing/ring/opal
 	name = "opal ring"
@@ -186,14 +194,17 @@
 /obj/item/clothing/ring/signet
 	name = "gold signet ring"
 	icon_state = "signet"
-	desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted redtallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
+	desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
 	sellprice = 135
 	var/tallowed = FALSE
+	var/seal_label = "Lord Inquisitor of the Otavan Mission in The Vale"
+	var/seal_color = "#6b0000"
+	var/seal_is_official = TRUE
 
 /obj/item/clothing/ring/signet/silver
 	name = "silver signet ring"
 	icon_state = "signet_silver"
-	desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted redtallow, it can seal writs of religious importance."
+	desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
 	sellprice = 90
 	is_silver = TRUE
 
