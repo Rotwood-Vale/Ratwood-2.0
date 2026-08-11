@@ -61,7 +61,7 @@
 			return TRUE
 	return FALSE
 
-// For adding roundstart slavery mark
+// For adding roundstart slavery mark, this has explicit fallbacks to ensure the owner is always the slaver. Does not apply to ownership marks after the fact
 /mob/living/carbon/human/proc/update_owned_slave_trait()
 	if(has_active_ownership_mark())
 		ADD_TRAIT(src, TRAIT_OWNED_SLAVE, "[type]")
@@ -77,15 +77,23 @@
 /proc/is_slaver_owner(mob/living/owner)
 	return istype(owner) && owner.mind?.assigned_role == "Slaver"
 
-/mob/living/carbon/human/proc/apply_ownership_mark(mob/living/owner, branding_text = "", owner_name = null)
+/mob/living/carbon/human/proc/apply_ownership_mark(mob/living/owner, branding_text = "", owner_name = null, use_slaver_fallback = TRUE)
 	var/obj/item/bodypart/head/neck_bodypart = get_bodypart(BODY_ZONE_HEAD)
 	if(!neck_bodypart)
 		return FALSE
 
-	var/mob/living/owner_to_use = owner || get_current_slaver_owner()
+	var/mob/living/owner_to_use = owner
+	if(use_slaver_fallback && !owner_to_use)
+		owner_to_use = get_current_slaver_owner()
+
 	var/owner_display_name = owner_name
 	if(!length(owner_display_name))
-		owner_display_name = owner_to_use ? (owner_to_use.real_name || owner_to_use.name) : "the Slaver"
+		if(owner_to_use)
+			owner_display_name = owner_to_use.real_name || owner_to_use.name
+		else if(use_slaver_fallback)
+			owner_display_name = "the Slaver"
+		else
+			owner_display_name = ""
 
 	neck_bodypart.branded_writing_on_neck = branding_text
 	neck_bodypart.enslavement_mark = TRUE
@@ -115,21 +123,26 @@
 
 /mob/living/carbon/human/proc/get_active_ownership_brand_info()
 	var/list/info = list("name" = "", "owner" = null)
-	var/mob/living/current_slaver = get_current_slaver_owner()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.enslavement_mark && length(bodypart.brand_owner_name))
-			if(bodypart.brand_owner && !is_slaver_owner(bodypart.brand_owner) && bodypart.brand_owner != current_slaver)
+		if(bodypart.enslavement_mark)
+			if(length(bodypart.brand_owner_name))
+				info["name"] = bodypart.brand_owner_name
+				info["owner"] = bodypart.brand_owner
 				return info
-			info["name"] = bodypart.brand_owner_name
-			info["owner"] = bodypart.brand_owner
-			return info
+			if(!bodypart.brand_owner)
+				info["name"] = "the Slaver"
+				info["owner"] = null
+				return info
 	for(var/obj/item/organ/organ as anything in internal_organs)
-		if(organ.enslavement_mark && length(organ.brand_owner_name))
-			if(organ.brand_owner && !is_slaver_owner(organ.brand_owner) && organ.brand_owner != current_slaver)
+		if(organ.enslavement_mark)
+			if(length(organ.brand_owner_name))
+				info["name"] = organ.brand_owner_name
+				info["owner"] = organ.brand_owner
 				return info
-			info["name"] = organ.brand_owner_name
-			info["owner"] = organ.brand_owner
-			return info
+			if(!organ.brand_owner)
+				info["name"] = "the Slaver"
+				info["owner"] = null
+				return info
 	return info
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
