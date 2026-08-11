@@ -159,7 +159,7 @@
 			if("Old Magick")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
 
 	if(H.gender == FEMALE)
 		armor = /obj/item/clothing/suit/roguetown/armor/corset

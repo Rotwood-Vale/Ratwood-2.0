@@ -4,7 +4,7 @@
 	name = "toggle"
 	icon_state = "toggle"
 
-/atom/movable/screen/human/toggle/Click()
+/atom/movable/screen/human/toggle/handle_click()
 
 	var/mob/targetmob = usr
 
@@ -26,7 +26,7 @@
 	name = "equip"
 	icon_state = "act_equip"
 
-/atom/movable/screen/human/equip/Click()
+/atom/movable/screen/human/equip/handle_click()
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 
@@ -363,6 +363,7 @@
 	using = new/atom/movable/screen/skills
 	using.icon = ui_style
 	using.screen_loc = rogueui_skills
+	using.hud = src //An observer reads the owner of the HUD off this.
 	static_inventory += using
 
 	using = new/atom/movable/screen/craft

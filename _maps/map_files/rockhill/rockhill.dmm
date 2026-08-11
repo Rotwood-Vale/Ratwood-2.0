@@ -8699,7 +8699,7 @@
 /area/rogue/indoors/town/church)
 "bUv" = (
 /obj/effect/landmark/mapGenerator/rogue/bograt,
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cavewet)
 "bUA" = (
 /turf/open/floor/rogue/ruinedwood,
@@ -10044,7 +10044,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "cjc" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "cje" = (
 /obj/structure/fluff/railing/border{
@@ -12578,7 +12578,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/basement)
 "cLm" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cavewet)
 "cLn" = (
 /obj/effect/decal/cobbleedge{
@@ -29688,7 +29688,7 @@
 /area/rogue/outdoors/town/grove)
 "gxA" = (
 /obj/structure/underworld/barrier,
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "gxB" = (
 /obj/structure/table/wood/poor,
@@ -95104,7 +95104,7 @@
 /area/rogue/outdoors/bograt/north)
 "vhc" = (
 /obj/effect/landmark/mapGenerator/rogue/decap,
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cavewet)
 "vhf" = (
 /obj/structure/fluff/walldeco/painting/seraphina{
@@ -102328,7 +102328,7 @@
 /area/rogue/outdoors/rtfield/rockhill/above)
 "wLE" = (
 /obj/effect/landmark/mapGenerator/rogue/forestrat,
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cavewet)
 "wLH" = (
 /obj/structure/spider/stickyweb{

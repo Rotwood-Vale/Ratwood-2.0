@@ -476,6 +476,29 @@
 	. = ..()
 	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
+/obj/item/rogueweapon/huntingknife/idagger/blacksteel
+	name = "blacksteel dagger"
+	desc = "A magnificent dagger of blacksteel. The epitome of elegance, without the woes that such weapons traditionally inherit."
+	icon_state = "bs_dagger"
+	sheathe_icon = "bs_dagger"
+	force = 22
+	wdefense = 7
+	max_integrity = 180
+	max_blade_int = 250
+	smeltresult = /obj/item/ingot/blacksteel
+
+/obj/item/rogueweapon/huntingknife/idagger/blacksteel/heavy
+	name = "blacksteel misericorde"
+	desc = "A magnificent armor-piercing dagger of blacksteel. The curved handle is said to naturally improve one's aim, while locked in a \
+	lyfe-or-death struggle with plate-armored opponents."
+	icon_state = "bs_misericorde"
+	sheathe_icon = "bs_misericorde"
+	force = 25
+	wdefense = 5
+	max_integrity = 180
+	max_blade_int = 300
+	picklvl = 1.3
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 	name = "steel parrying dagger"
 	force = 12
@@ -535,8 +558,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	name = "silver-tipped stake"
 	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
-	icon_state = "stake" //Should hopefully autogenerate an inhand. Need to politely ask a coder to import a custom sprite for this stake, later.
-	icon = 'icons/roguetown/items/natural.dmi'
+	icon_state = "stake_silver"
 	force = 20
 	throwforce = 20
 	wdefense = 0
@@ -886,6 +908,19 @@
 		added_int = 100,\
 		added_def = 3,\
 	)
+
+/obj/item/rogueweapon/huntingknife/throwingknife/blacksteel
+	name = "blacksteel tossblade"
+	desc = "A magnificent tossblade of blacksteel. Unorthodox, but nevertheless beloved by assassins who can afford the price - and can't leave anything to chance. </br>This dagger can be stowed away inside a pair of boots, permitting it to be quickly drawn when needed."
+	item_state = "throw_knifebs"
+	max_integrity = 50
+	max_blade_int = 200
+	force = 16
+	throwforce = 28
+	armor_penetration = 50
+	icon_state = "throw_knifebs"
+	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 0)//embeds are funny
+	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
 	name = "bauernwehr"

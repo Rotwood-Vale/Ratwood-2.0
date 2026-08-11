@@ -179,6 +179,8 @@ Sunlight System
 /* check ourselves and neighbours to see what outdoor effects we need */
 /* turf won't initialize an outdoor_effect if sky_blocked*/
 /turf/proc/get_sky_and_weather_states()
+	if(SSmapping.level_trait(z, ZTRAIT_IGNORE_WEATHER_TRAIT))
+		return
 	var/TempState
 
 	var/roofStat = get_ceiling_status()

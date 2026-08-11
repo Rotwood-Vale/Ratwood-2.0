@@ -1,0 +1,11 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Ported all of the blacksteel weapons from Azure Peak, adjusted to work with ratwood combat and balance."
+  - rscadd: "Ported all of the blacksteel tools from Azure Peak; also ported Azure's much cleaner hammer and chisel shared procs"
+  - rscadd: "Added the Azure Peak donator skin urumis as a new subtype of whips. More force than whips, but all their intents require\ncharge time. Additionally, they have lower integrity and require more to craft."
+  - rscadd: "Gave bronze whip and silver stake knife proper dedicated sprites."
+  - rscadd: "As a consequence of the blacksteel variant having it, you can now attach a banner to the steel lance"
+  - balance: "Lance intent now has blunt chip, at full charge 32 damage chips through."
+  - balance: "Blacksteel smelting ratio changed to 2 silver and 2 steel."
+  - balance: "You can no longer smelt blessed silver for regular silver."
