@@ -41663,7 +41663,6 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "iQF" = (
-/obj/structure/well,
 /obj/item/reagent_containers/glass/bucket{
 	pixel_y = -12;
 	pixel_x = -8
@@ -294132,8 +294131,8 @@ qvR
 iEC
 sjP
 fxx
+juz
 iQF
-fxx
 sjP
 wSn
 uHW
