@@ -8,7 +8,7 @@
 	selection_color = JCOLOR_YEOMAN
 	allowed_races = ACCEPTED_RACES
 	display_order = JDO_SLAVER
-	job_traits = list(TRAIT_SLEUTH)
+	job_traits = list(TRAIT_SLEUTH, TRAIT_DUNGEONMASTER)
 	outfit = /datum/outfit/job/roguetown/slaver
 	give_bank_account = 50
 	

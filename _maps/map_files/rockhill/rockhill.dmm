@@ -3909,10 +3909,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
-"aQk" = (
-/obj/effect/landmark/start/baron,
-/turf/open/floor/rogue/ruinedwood/herringbone,
-/area/rogue/indoors)
 "aQp" = (
 /turf/open/water/swamp,
 /area/rogue/outdoors/mountains/decap/rockhill)
@@ -19475,6 +19471,10 @@
 	dir = 4
 	},
 /area/rogue/outdoors/town/roofs/tavern)
+"ebJ" = (
+/obj/effect/landmark/start/baron,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "ebK" = (
 /obj/machinery/anvil,
 /obj/item/rogueweapon/hammer/iron,
@@ -492437,7 +492437,7 @@ nqU
 xrv
 pOX
 nzG
-aQk
+ebJ
 jHm
 tmR
 pQr
