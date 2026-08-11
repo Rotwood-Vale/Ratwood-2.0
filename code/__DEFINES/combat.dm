@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define UNARMED_DAMAGE_DEFAULT		12
 
 // Tempo defines
-///Interval for checking our tempo lists. Only relevant to player mobs with TRAIT_TEMPO
+///Interval for checking our tempo lists
 #define TEMPO_CULL_DELAY 12 SECONDS
 #define TEMPO_DELAY_ONE 30 SECONDS
 #define TEMPO_DELAY_TWO	15 SECONDS

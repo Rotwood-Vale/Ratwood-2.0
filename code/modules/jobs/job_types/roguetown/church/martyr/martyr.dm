@@ -35,7 +35,6 @@
 		TRAIT_VOTARY,
 		TRAIT_CONVICTION,
 		TRAIT_HOLYWARRIOR,
-		TRAIT_TEMPO,
 	)
 
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.

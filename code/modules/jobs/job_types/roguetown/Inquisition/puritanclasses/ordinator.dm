@@ -16,7 +16,6 @@
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER,
-		TRAIT_TEMPO,
 		)
 	subclass_stats = list(
 		STATKEY_CON = 3,

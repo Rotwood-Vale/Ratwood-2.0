@@ -1288,9 +1288,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.process_clash(user, IM)
 			return
 
-		if(HAS_TRAIT(target, TRAIT_TEMPO))
-			if(ishuman(target) && ishuman(user) && user.mind && user != target)
-				target.process_tempo_attack(user)
+		if(ishuman(target) && ishuman(user) && user.mind && user != target)
+			target.process_tempo_attack(user)
 
 		if(user.mob_biotypes & MOB_UNDEAD)
 			if(target.has_status_effect(/datum/status_effect/buff/necras_vow))

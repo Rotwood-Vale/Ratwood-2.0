@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_noble.ogg'
-	traits_applied = list(TRAIT_BADTRAINER, TRAIT_TEMPO)
+	traits_applied = list(TRAIT_BADTRAINER)
 	//To give you an edge in specialty moves like feints and stop you from being feinted
 	subclass_stats = list(
 		STATKEY_INT = 4,
@@ -79,7 +79,7 @@
 	tutorial = "You put complete trust in your polearm, the most effective weapon the world has seen. Why wear armour when you cannot be hit? You can choose your polearm, and are exceptionally accurate."
 	outfit = /datum/outfit/job/roguetown/mercenary/freelancer_lancer
 	subclass_languages = list(/datum/language/aavnic)//Your character could not have possibly "graduated" without atleast some basic knowledge of Aavnic.
-	traits_applied = list(TRAIT_BADTRAINER, TRAIT_TEMPO)
+	traits_applied = list(TRAIT_BADTRAINER)
 	//To give you an edge in specialty moves like feints and stop you from being feinted
 	subclass_stats = list(
 		STATKEY_CON = 4,//This is going to need live testing, since I'm not sure they should be getting this much CON without using a statpack to spec. Revision pending.
