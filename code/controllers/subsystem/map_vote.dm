@@ -2,8 +2,6 @@
 #define SS_INIT_SUCCESS 2
 
 // How much bonus a loss adds to a player's banked pity vote for that map.
-// Not exposed via config.txt on purpose - this is a balance knob for
-// codebase maintainers, not something a host needs to remember to set.
 #define MAP_VOTE_BONUS_INCREMENT 1
 
 // Hard cap on a single player's banked bonus for a single map. Stops one
