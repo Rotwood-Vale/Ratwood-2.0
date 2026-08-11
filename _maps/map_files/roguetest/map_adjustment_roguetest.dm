@@ -17,3 +17,8 @@
 	tutorial_adjust = list(
 		/datum/job/roguetown/lord = "The Gronnmen are coming."
 	)
+	blacklist = list(
+		/datum/job/roguetown/slaver,
+		/datum/job/roguetown/slave,
+		/datum/job/roguetown/baron,
+	)
