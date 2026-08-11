@@ -2,11 +2,11 @@
 				BLOOD SYSTEM
 ****************************************************/
 
-/// Reads the mob's blood volume. blood_volume is VAR_PROTECTED, so non-living code must use this.
+/// Gives you the blood_volume of the mob, do not use the var itself
 /mob/living/proc/get_blood_volume()
 	return blood_volume
 
-/// Sets blood volume (clamped 0..BLOOD_VOLUME_MAXIMUM). Fires a change signal and refreshes the blood HUD.
+/// Sets blood volume (clamped 0..BLOOD_VOLUME_MAXIMUM). Fires a change signal and refreshes the blood HUD. Do not set the blood_volume var directly
 /mob/living/proc/set_blood_volume(amount)
 	amount = clamp(amount, 0, BLOOD_VOLUME_MAXIMUM)
 	if(amount == blood_volume)
@@ -16,7 +16,7 @@
 	update_blood_hud()
 	return blood_volume
 
-/// Adjusts blood volume by a delta, clamped. Convenience wrapper over set_blood_volume().
+/// Adjusts blood volume by a delta, clamped. Convenience wrapper over set_blood_volume(). Do not set the blood_volume var directly
 /mob/living/proc/adjust_blood_volume(amount)
 	return set_blood_volume(blood_volume + amount)
 
