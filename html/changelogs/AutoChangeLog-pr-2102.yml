@@ -1,8 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - qol: "Added a new \"Disable Red Flashes\" toggle that prevents the game from showing you red or white \"flash\" overlays, i.e. from pain, combat, sparks. This is not foolproof, but should affect the vast majority of cases."
-  - qol: "Pain overlay for \"Disable Red Flashes\" ON: The flashes of pain you get on-screen are replaced with a more \"static\" red-tinted overlay. This may get replaced in the future."
-  - qol: "\"Disable Red Flashes\" ON: Prolonged bright flashing effects, such as those from explosions and miracles, are changed to be fade-from-black instead. You will receive a small chat message indicating the momentary blindness."
-  - bugfix: "Fix for when \"Disable Red Flashes\" is OFF: The small blinking painflash that used to begin >40% pain, and persisted until you fully healed (<5% pain) now appropriately clears when below 40% pain."
-  - code_imp: "Added a new wrapper proc fullscreen_redflash that checks the new no_redflash preference, and returns the exact same thing flash_fullscreen does (or null if flashes are disabled). This way your code can check if the prefs blocked it."

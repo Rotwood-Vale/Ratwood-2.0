@@ -1,9 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - rscadd: "Adds stonebeard reserve and butterhairs to brewing recipes. Dwarves only. They require a mix of grains. Butterhairs requires butter (who would've guessed) while stonebeard requires some potato cuts. Increased their booze powers too. Butterhairs is also buttery colored now."
-  - qol: "Adjusts dwarven drunken healing from 0.2 -> 0.6!"
-  - rscadd: "Adds in dwarven armor and weapon recipes for smithing. They are EXPENSIVE! Dwarf only, no books. You gotta be a dwarf to make them (and wear them, I'm pretty sure)."
-  - bugfix: "Fixes several loadout issues with dwarven mercenaries and gave them a great weapon strap if they choose grand mace. Both classes have increased smithing levels to account for recent changes. Dwarven smith is more of an actual smith now than some subpar one."
-  - bugfix: "Fixes onmob dwarven gauntlets to actually show. Adjusted dwarven smith helmet a pixel."
-  - rscadd: "Removes underdweller from mercenary classes and moved it to race exclusive class for adventurers. Adjusted their loadout accordingly so they are not a mercenary anymore."

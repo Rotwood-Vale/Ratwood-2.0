@@ -1,6 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - qol: "Bards now always benefit from their own beneficial melodies as if they were a member of the audience without needing to spend a slot on themselves."
-  - qol: "Bards with inspiration that are holding an instrument in-hand (and with no MMB intents active) can MMB on other people to quickly add or remove them from their inspiration audience list."
-  - qol: "T3 bards can now use Rhythm without needing an instrument in their off-hand, but only if they're able to sing. Mouthgrabs, muzzles, silences and muting effects will prevent this as expected."

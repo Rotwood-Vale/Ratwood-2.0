@@ -60,6 +60,7 @@
 	var/old_recharge = recharge_time
 	// Because the cooldown for anastasis is so incredibly low, not having tech impacts them more heavily than other faiths
 	var/tech_resurrection_modifier = SSchimeric_tech.get_resurrection_multiplier()
+
 	if(tech_resurrection_modifier > 1)
 		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 1.25)
 	else
@@ -126,7 +127,7 @@
 	target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/revive/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/revive/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		return FALSE
 	var/found = null

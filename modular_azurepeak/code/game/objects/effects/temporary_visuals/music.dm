@@ -47,7 +47,20 @@
 		for(var/datum/status_effect/buff/song/song2remove in guy.status_effects)
 			guy.remove_status_effect(song2remove)
 	return ..()
-	
+
+/datum/status_effect/buff/playing_music/proc/get_music_stress_for(mob/living/carbon/human/listener)
+	if(!ishuman(owner))
+		return stress_to_apply
+	var/mob/living/carbon/human/performer = owner
+	if(performer.advjob != "Herald of Progress")// juuust to be safe.
+		return stress_to_apply
+	if(performer.has_status_effect(/datum/status_effect/buff/herald_progress_harmony))
+		return stress_to_apply
+	if(listener.patron && istype(listener.patron, /datum/patron/inhumen/zizo))
+		return stress_to_apply
+	if(performer.in_audience(listener))
+		return stress_to_apply
+	return /datum/stressevent/herald_progress_music
 
 /datum/status_effect/buff/playing_music/tick()
 	var/obj/effect/temp_visual/music_rogue/M = new /obj/effect/temp_visual/music_rogue(get_turf(owner))
@@ -58,15 +71,17 @@
 		for (var/mob/living/carbon/human/H in hearers(7, owner))
 			if (!H.client)
 				continue
-			if (!H.has_stress_event(stress_to_apply))
+			var/stress = get_music_stress_for(H)
+			if (stress && !H.has_stress_event(stress))
 				add_sleep_experience(owner, /datum/skill/misc/music, owner.STAINT)
-				H.add_stress(stress_to_apply)
+				H.add_stress(stress)
 				if (prob(50))
-					to_chat(H, stress_to_apply.desc)
+					var/datum/stressevent/stress_event = stress
+					to_chat(H, stress_event.desc)
 			
 			// Apply Xylix buff to those with the trait who hear the music
 			// Only apply if the hearer is not the one playing the music
-			if (H != owner && HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
+			if (stress == stress_to_apply && H != owner && HAS_TRAIT(H, TRAIT_XYLIX) && !H.has_status_effect(/datum/status_effect/buff/xylix_joy))
 				H.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 				to_chat(H, span_info("The music brings a smile to my face, and fortune to my steps!"))
 

@@ -1,0 +1,5 @@
+author: "Kroto-Ker"
+delete-after: True
+changes:
+  - rscadd: "Aerosol Wave"
+  - balance: "Reworks Aerosolize."

@@ -231,7 +231,10 @@
 							water_overlay.plane = GAME_PLANE_HIGHEST
 
 			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-				L.adjust_bodytemperature(-5)
+				if(HAS_TRAIT(L, TRAIT_WATERLOVING))
+					L.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+				else
+					L.adjust_bodytemperature(-5)
 		if(!istype(L, /mob/living/carbon/human/species/skeleton))
 			return
 		if(!istype(src, /turf/open/water/sewer))

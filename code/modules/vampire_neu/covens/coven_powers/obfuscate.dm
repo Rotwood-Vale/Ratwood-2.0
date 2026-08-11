@@ -1,6 +1,5 @@
 #define COMBAT_COOLDOWN_LENGTH 45 SECONDS
 #define REVEAL_COOLDOWN_LENGTH 15 SECONDS
-#define MASK_DURATION 5 MINUTES
 #define OBFUSCATE_ALPHA 10
 #define OBFUSCATE_FADE_TIME 0.5 SECONDS
 
@@ -63,6 +62,9 @@
 		if (HAS_TRAIT(viewer, TRAIT_BLIND) || viewer.stat >= UNCONSCIOUS)
 			continue
 
+		if (owner.is_clanmate(viewer))
+			continue
+
 		to_chat(owner, span_warning("You cannot use [src] while you're being observed!"))
 		return FALSE
 
@@ -83,6 +85,8 @@
 
 /datum/coven_power/obfuscate/cloak_of_shadows/pre_activation_checks()
 	. = ..()
+	if(!.)
+		return FALSE
 	return is_seen_check()
 
 /datum/coven_power/obfuscate/cloak_of_shadows/activate()
@@ -202,6 +206,8 @@
 
 /datum/coven_power/obfuscate/cloak_the_gathering/pre_activation_checks()
 	. = ..()
+	if(!.)
+		return FALSE
 	return is_seen_check()
 
 /datum/coven_power/obfuscate/cloak_the_gathering/activate()
@@ -212,14 +218,17 @@
 	conceal(owner)
 	cloaked_mobs = list(owner)
 
-	// Cloak nearby allies
+	// Cloak nearby Clan - the veil is not extended to cattle or rivals
 	for(var/mob/living/target in oviewers(3, owner))
-		if(target.client && target.stat < UNCONSCIOUS)
-			// Add faction/ally checks here as appropriate
-			conceal(target)
-			cloaked_mobs += target
-			to_chat(target, span_notice("You feel a supernatural veil fall over you..."))
-			RegisterSignal(target, aggressive_signals, PROC_REF(on_ally_combat_signal), override = TRUE)
+		if(target.stat >= UNCONSCIOUS)
+			continue
+		if(!target.is_clanmate(owner))
+			continue
+
+		conceal(target)
+		cloaked_mobs += target
+		to_chat(target, span_notice("You feel a supernatural veil fall over you..."))
+		RegisterSignal(target, aggressive_signals, PROC_REF(on_ally_combat_signal), override = TRUE)
 
 	to_chat(owner, span_notice("You extend your cloak to [length(cloaked_mobs) - 1] nearby allies."))
 
@@ -264,6 +273,5 @@
 
 #undef COMBAT_COOLDOWN_LENGTH
 #undef REVEAL_COOLDOWN_LENGTH
-#undef MASK_DURATION
 #undef OBFUSCATE_ALPHA
 #undef OBFUSCATE_FADE_TIME
