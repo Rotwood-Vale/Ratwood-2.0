@@ -60313,7 +60313,7 @@
 	dir = 8
 	},
 /obj/structure/mineral_door/bars{
-	lockid = s;
+	lockid = "DTManorCells";
 	locked = 1;
 	name = "Holding Cell Access"
 	},
