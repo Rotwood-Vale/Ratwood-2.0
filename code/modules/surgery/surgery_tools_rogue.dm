@@ -239,6 +239,24 @@
 					to_chat(user, span_info("I set the iron to leave a simple brand only."))
 	..()
 
+/obj/item/rogueweapon/surgery/cautery/branding/proc/update_slave_mark_trait(mob/living/carbon/human/target)
+	if(!istype(target))
+		return
+	var/has_slavery_mark = FALSE
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
+		if(bodypart.enslavement_mark)
+			has_slavery_mark = TRUE
+			break
+	if(!has_slavery_mark)
+		for(var/obj/item/organ/organ as anything in target.internal_organs)
+			if(organ.enslavement_mark)
+				has_slavery_mark = TRUE
+				break
+	if(has_slavery_mark)
+		ADD_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
+	else
+		REMOVE_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
+
 /obj/item/rogueweapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
 		return ..()
@@ -415,31 +433,27 @@
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			branding_part.branded_writing = branding_text
 			apply_knockdown = FALSE
-			if(enslave)
-				branding_part.enslavement_mark = TRUE
+			branding_part.enslavement_mark = enslave
 		if("Hind")
 			var/obj/item/bodypart/chest/buttocks = branding_part
 			if(length(buttocks.branded_writing_on_buttocks))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			buttocks.branded_writing_on_buttocks = branding_text
-			if(enslave)
-				buttocks.enslavement_mark = TRUE
+			buttocks.enslavement_mark = enslave
 			branding_part = buttocks
 		if("Stomach")
 			var/obj/item/bodypart/chest/stomach = branding_part
 			if(length(stomach.branded_writing_on_stomach))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			stomach.branded_writing_on_stomach = branding_text
-			if(enslave)
-				stomach.enslavement_mark = TRUE
+			stomach.enslavement_mark = enslave
 			branding_part = stomach
 		if("Neck")
 			var/obj/item/bodypart/head/neck = branding_part
 			if(length(neck.branded_writing_on_neck))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			neck.branded_writing_on_neck = branding_text
-			if(enslave)
-				neck.enslavement_mark = TRUE
+			neck.enslavement_mark = enslave
 			branding_part = neck
 		if("Breasts")
 			if(QDELETED(tits))
@@ -447,32 +461,28 @@
 			if(length(tits.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			tits.branded_writing = branding_text
-			if(enslave)
-				tits.enslavement_mark = TRUE
+			tits.enslavement_mark = enslave
 		if("Dick")
 			if(QDELETED(penis))
 				return TRUE
 			if(length(penis.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			penis.branded_writing = branding_text
-			if(enslave)
-				penis.enslavement_mark = TRUE
+			penis.enslavement_mark = enslave
 		if("Vagina")
 			if(QDELETED(vagina))
 				return TRUE
 			if(length(vagina.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			vagina.branded_writing = branding_text
-			if(enslave)
-				vagina.enslavement_mark = TRUE
+			vagina.enslavement_mark = enslave
 		if("Testes")
 			if(QDELETED(testes))
 				return TRUE
 			if(length(testes.branded_writing))
 				to_chat(user, span_warning("I reburn over the existing marking."))
 			testes.branded_writing = branding_text
-			if(enslave)
-				testes.enslavement_mark = TRUE
+			testes.enslavement_mark = enslave
 		if("Mouth")
 			user.visible_message(span_info("[target] [description_recoil] as \the [src] sears onto [target.p_their()] lips! The branding leaves an unrecognizable burn."))
 			target.apply_status_effect(/datum/status_effect/mouth_branded)
@@ -483,8 +493,7 @@
 			return TRUE
 
 	target.branded = TRUE // makes examine check for branding marks
-	if(enslave)
-		ADD_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
+	update_slave_mark_trait(target)
 	target.apply_damage(branding_damage, BURN, branding_part)
 	if(!branding_self && apply_knockdown)
 		target.Knockdown(1 SECONDS)
