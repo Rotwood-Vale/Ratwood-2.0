@@ -125,7 +125,7 @@
 		/datum/job/roguetown/tribalrabble,
 		/datum/job/roguetown/tribalvillager,
 		/datum/job/roguetown/slaver,
-		/datum/job/roguetown/slave,
+		/datum/job/roguetown/rockhillslave,
 		/datum/job/roguetown/baron,
 		
 	)

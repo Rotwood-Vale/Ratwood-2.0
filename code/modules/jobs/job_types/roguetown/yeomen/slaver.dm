@@ -9,36 +9,12 @@
 	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
 	display_order = JDO_SLAVER
 	job_traits = list(TRAIT_SLEUTH, TRAIT_DUNGEONMASTER)
-	outfit = /datum/outfit/job/roguetown/slaver
-	give_bank_account = 50
-	min_pq = 50
-	max_pq = null
-	round_contrib_points = 4
-	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
-	social_rank = SOCIAL_RANK_YEOMAN
-	advclass_cat_rolls = list(CTAG_SLAVER = 2)
-	job_subclasses = list(
-		/datum/advclass/slaver
-	)
-
-/datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = TRUE)
-	. = ..()
-	if(!ishuman(H))
-		return
-	var/mob/living/carbon/human/human_target = H
-	human_target.update_ownership_marks_for_slaver(human_target)
-
-/datum/advclass/slaver
-	name = "Slaver"
-	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
-	outfit = /datum/outfit/job/roguetown/slaver/basic
-	category_tags = list(CTAG_SLAVER)
-	subclass_stats = list(
+	job_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_CON = 2,
 		STATKEY_STR = 1
 	)
-	subclass_skills = list(
+	skills = list(
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
@@ -52,6 +28,20 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
+	outfit = /datum/outfit/job/roguetown/slaver/basic
+	give_bank_account = 50
+	min_pq = 50
+	max_pq = null
+	round_contrib_points = 4
+	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
+	social_rank = SOCIAL_RANK_YEOMAN
+
+/datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(H))
+		return
+	var/mob/living/carbon/human/human_target = H
+	human_target.update_ownership_marks_for_slaver(human_target)
 
 /datum/outfit/job/roguetown/slaver/basic/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -73,6 +63,8 @@
 		/obj/item/storage/keyring/rockhillslaver,
 		)
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/velvet
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+		armor = /obj/item/clothing/suit/roguetown/shirt/dress/velvet
 	else if(should_wear_masc_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+		armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal

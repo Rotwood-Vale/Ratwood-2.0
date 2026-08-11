@@ -362,6 +362,7 @@
 	/datum/job/roguetown/magician,\
 	/datum/job/roguetown/headslave,\
 	/datum/job/roguetown/slave,\
+	/datum/job/roguetown/rockhillslave,\
 
 #define NOBLE_ROLES \
 	/datum/job/roguetown/prince,\

@@ -19,6 +19,6 @@
 	)
 	blacklist = list(
 		/datum/job/roguetown/slaver,
-		/datum/job/roguetown/slave,
+		/datum/job/roguetown/rockhillslave,
 		/datum/job/roguetown/baron,
 	)

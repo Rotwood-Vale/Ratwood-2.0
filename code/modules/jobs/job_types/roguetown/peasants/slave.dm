@@ -1,4 +1,4 @@
-/datum/job/roguetown/slave
+/datum/job/roguetown/rockhillslave
 	title = "Slave"
 	department_flag = PEASANTS
 	faction = "Station"
@@ -22,14 +22,14 @@
 		/datum/advclass/slave/slave_sentry
 	)
 
-/datum/job/roguetown/slave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+/datum/job/roguetown/rockhillslave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	. = ..()
 	if(!ishuman(H))
 		return
 	var/mob/living/carbon/human/human_target = H
 	human_target.apply_ownership_mark(null, "")
 
-/datum/outfit/job/roguetown/slave
+/datum/outfit/job/roguetown/rockhillslave
 	neck = /obj/item/clothing/neck/roguetown/collar/leather
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 	pants = /obj/item/clothing/under/roguetown/tights/random
@@ -44,7 +44,7 @@
 	name = "House Slave"
 	tutorial = "You are trained as a servant, \
 	Keep the Master's abode clean, prepare meals, serve them."
-	outfit = /datum/outfit/job/roguetown/slave/house_slave
+	outfit = /datum/outfit/job/roguetown/rockhillslave/house_slave
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -61,7 +61,7 @@
 		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
 	)
 
-/datum/outfit/job/roguetown/slave/house_slave/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/rockhillslave/house_slave/pre_equip(mob/living/carbon/human/H)
 	..()
 	cloak = /obj/item/clothing/cloak/apron
 	head = /obj/item/clothing/head/roguetown/maidband
@@ -77,7 +77,7 @@
 	name = "Labor Slave"
 	tutorial = "You are trained as a laborer, \
 	Toil for the Master's needs, serve them."
-	outfit = /datum/outfit/job/roguetown/slave/labor_slave
+	outfit = /datum/outfit/job/roguetown/rockhillslave/labor_slave
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -95,7 +95,7 @@
 		/datum/skill/craft/masonry = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/slave/labor_slave/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/rockhillslave/labor_slave/pre_equip(mob/living/carbon/human/H)
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/allwrappings
 	head = /obj/item/clothing/head/roguetown/headband
@@ -113,7 +113,7 @@
 	maximum_possible_slots = 2
 	tutorial = "You are trained as a fighter, \
 	Protect your Master's interests, serve them."
-	outfit = /datum/outfit/job/roguetown/slave/slave_sentry
+	outfit = /datum/outfit/job/roguetown/rockhillslave/slave_sentry
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -135,7 +135,7 @@
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/slave/slave_sentry/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/rockhillslave/slave_sentry/pre_equip(mob/living/carbon/human/H)
 	..()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 	neck = /obj/item/clothing/neck/roguetown/gorget
