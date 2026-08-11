@@ -391,18 +391,18 @@
 			branding_delay -= 4 SECONDS // quicker to brand yourself using a good tool
 		user.visible_message(span_warning("[user] slowly wields [src] onto [user.p_their()] [LOWER_TEXT(final_answer)]."))
 
-	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s), slave mark: "[enslave])
+	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s), slave mark: [enslave]")
 
 	if(!do_after(user, branding_delay, target = target))
 		if(!QDELETED(target))
-			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
+			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
 		return TRUE
 	if(!user.Adjacent(target) || user.stat >= UNCONSCIOUS)
-		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
+		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
 		return TRUE
 
 	if(QDELETED(branding_part))
-		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer], slave mark: "[enslave]")
+		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
 		return TRUE
 
 	// Attempt to re-get the part and place the brand

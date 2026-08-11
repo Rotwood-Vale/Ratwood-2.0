@@ -48,8 +48,6 @@
 
 	/// Branded writing unique for head so it can be applied to neck
 	var/branded_writing_on_neck = ""
-	/// Branded enslavement mark
-	var/enslavement_mark = FALSE
 
 	grid_width = 64
 	grid_height = 64

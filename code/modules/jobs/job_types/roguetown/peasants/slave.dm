@@ -1,4 +1,4 @@
-late/datum/job/roguetown/slave
+/datum/job/roguetown/slave
 	title = "Prisoner (Town)"
 	department_flag = PEASANTS
 	faction = "Station"
@@ -24,7 +24,7 @@ late/datum/job/roguetown/slave
 	job_traits = list(TRAIT_OWNED_SLAVE)
 	job_subclasses = list(
 		/datum/advclass/slave/house_slave,
-		/datum/advclass/slave/slave_sentry,
+		/datum/advclass/slave/labor_slave,
 		/datum/advclass/slave/slave_sentry
 	)
 
@@ -38,11 +38,11 @@ late/datum/job/roguetown/slave
 
 // Slave Subclasses
 
-// Maid/Housework Slave
 /datum/advclass/slave/house_slave
+	parent_type = /datum/advclass
 	name = "House Slave"
 	tutorial = "You are trained as a servant, \
-	Keep the Master's abode clean, prepare meals, serve them."	
+	Keep the Master's abode clean, prepare meals, serve them."
 	outfit = /datum/outfit/job/roguetown/slave/house_slave
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
@@ -51,7 +51,7 @@ late/datum/job/roguetown/slave
 		STATKEY_WIL = 1
 	)
 	subclass_skills = list(
-		/datum/skill/craft/pottery = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/music = SKILL_LEVEL_JOURNEYMAN,
@@ -67,16 +67,16 @@ late/datum/job/roguetown/slave
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/soap/bath
-		)
+	)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/massage)
 	H.set_blindness(0)
 
-// Labor Slave
-/datum/advclass/slave/slave_sentry
-	name = "House Slave"
+/datum/advclass/slave/labor_slave
+	parent_type = /datum/advclass
+	name = "Labor Slave"
 	tutorial = "You are trained as a laborer, \
-	Toil for the Master's needs, serve them."	
-	outfit = /datum/outfit/job/roguetown/slave/slave_sentry
+	Toil for the Master's needs, serve them."
+	outfit = /datum/outfit/job/roguetown/slave/labor_slave
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -86,15 +86,15 @@ late/datum/job/roguetown/slave
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT)
 	subclass_skills = list(
 		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
-		/datum/skill/labor/woodcutting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/smithing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/masonry = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/slave/slave_sentry/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/slave/labor_slave/pre_equip(mob/living/carbon/human/H)
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/allwrappings
 	head = /obj/item/clothing/head/roguetown/headband
@@ -103,14 +103,14 @@ late/datum/job/roguetown/slave
 	backr = /obj/item/storage/hip/orestore/bronze
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern
-		)
+	)
 	H.set_blindness(0)
 
-// Slave Sentry
 /datum/advclass/slave/slave_sentry
+	parent_type = /datum/advclass
 	name = "Slave Sentry"
 	tutorial = "You are trained as a fighter, \
-	Protect your Master's interests, serve them."	
+	Protect your Master's interests, serve them."
 	outfit = /datum/outfit/job/roguetown/slave/slave_sentry
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
