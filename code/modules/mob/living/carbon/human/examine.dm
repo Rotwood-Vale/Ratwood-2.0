@@ -300,7 +300,7 @@
 		if(HAS_TRAIT(src, TRAIT_OWNED_SLAVE))
 			var/list/ownership_info = src.get_active_ownership_brand_info()
 			if(!length(ownership_info["name"]))
-				ownership_info["name"] = "an unknown owner"
+				ownership_info["name"] = "the Slaver"
 			if(user == src)
 				. += span_greentext("<b>I have a branding marking me as owned by [ownership_info["name"]].</b>")
 			else if(ownership_info["owner"] && user == ownership_info["owner"])
@@ -1131,9 +1131,9 @@
 			if(length(branded_bodypart.branded_writing))
 				brand_text = branded_bodypart.branded_writing
 				if(branded_bodypart.enslavement_mark)
-					brand_text = "[brand_text], a mark of slavery"
+					brand_text = "[brand_text], a mark of ownership"
 			else if(branded_bodypart.enslavement_mark)
-				brand_text = "a mark of slavery"
+				brand_text = "a mark of ownership"
 			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
 				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
@@ -1142,18 +1142,18 @@
 				if(length(chest.branded_writing_on_buttocks))
 					chest_brand_text = chest.branded_writing_on_buttocks
 					if(chest.enslavement_mark)
-						chest_brand_text = "[chest_brand_text], a mark of slavery"
+						chest_brand_text = "[chest_brand_text], a mark of ownership"
 				else if(chest.enslavement_mark)
-					chest_brand_text = "a mark of slavery"
+					chest_brand_text = "a mark of ownership"
 				if(length(chest_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
 					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest_brand_text)]."
 				var/stomach_brand_text = ""
 				if(length(chest.branded_writing_on_stomach))
 					stomach_brand_text = chest.branded_writing_on_stomach
 					if(chest.enslavement_mark)
-						stomach_brand_text = "[stomach_brand_text], a mark of slavery"
+						stomach_brand_text = "[stomach_brand_text], a mark of ownership"
 				else if(chest.enslavement_mark)
-					stomach_brand_text = "a mark of slavery"
+					stomach_brand_text = "a mark of ownership"
 				if(length(stomach_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
 					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(stomach_brand_text)]."
 			else if(istype(branded_bodypart, /obj/item/bodypart/head))
@@ -1162,9 +1162,9 @@
 				if(length(neck.branded_writing_on_neck))
 					neck_brand_text = neck.branded_writing_on_neck
 					if(neck.enslavement_mark)
-						neck_brand_text = "[neck_brand_text], a mark of slavery"
+						neck_brand_text = "[neck_brand_text], a mark of ownership"
 				else if(neck.enslavement_mark)
-					neck_brand_text = "a mark of slavery"
+					neck_brand_text = "a mark of ownership"
 				if(length(neck_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
 					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck_brand_text)]."
 

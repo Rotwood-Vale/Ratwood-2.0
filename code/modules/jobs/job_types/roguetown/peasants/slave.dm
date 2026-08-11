@@ -5,6 +5,13 @@
 	total_positions = 4
 	spawn_positions = 4
 
+/datum/job/roguetown/slave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(H))
+		return
+	var/mob/living/carbon/human/human_target = H
+	human_target.apply_ownership_mark(null, "")
+
 	allowed_races = ACCEPTED_RACES
 	tutorial = "Traded around like common goods you are deprived of your freedom and been trained into an obedient implement of your masters. Whether it be making them rich or making them comfortable you serve at their leisure with your continued well being entirely dependent on your owner's good will."
 

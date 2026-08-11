@@ -81,9 +81,9 @@
 	if(length(penis.branded_writing))
 		brand_text = penis.branded_writing
 		if(penis.enslavement_mark)
-			brand_text = "[brand_text], a mark of slavery"
+			brand_text = "[brand_text], a mark of ownership"
 	else if(penis.enslavement_mark)
-		brand_text = "a mark of slavery"
+		brand_text = "a mark of ownership"
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:150%;'>[span_boldwarning(brand_text)]</span>"
 	return "[used_name][branded]"
@@ -128,9 +128,9 @@
 	if(length(testes.branded_writing))
 		brand_text = testes.branded_writing
 		if(testes.enslavement_mark)
-			brand_text = "[brand_text], a mark of slavery"
+			brand_text = "[brand_text], a mark of ownership"
 	else if(testes.enslavement_mark)
-		brand_text = "a mark of slavery"
+		brand_text = "a mark of ownership"
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	return "[adjective] pair of balls[branded]"
@@ -188,9 +188,9 @@
 	if(length(vagina.branded_writing))
 		brand_text = vagina.branded_writing
 		if(vagina.enslavement_mark)
-			brand_text = "[brand_text], a mark of slavery"
+			brand_text = "[brand_text], a mark of ownership"
 	else if(vagina.enslavement_mark)
-		brand_text = "a mark of slavery"
+		brand_text = "a mark of ownership"
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	return "a [vagina_type][arousal_modifier][branded]"
@@ -250,9 +250,9 @@
 	if(length(breasts.branded_writing))
 		brand_text = breasts.branded_writing
 		if(breasts.enslavement_mark)
-			brand_text = "[brand_text], a mark of slavery"
+			brand_text = "[brand_text], a mark of ownership"
 	else if(breasts.enslavement_mark)
-		brand_text = "a mark of slavery"
+		brand_text = "a mark of ownership"
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	if(breasts.breast_size == 0)

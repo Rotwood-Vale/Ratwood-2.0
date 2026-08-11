@@ -2,6 +2,13 @@
 	title = "Slaver"
 	department_flag = YEOMEN
 	faction = "Station"
+
+/datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(H))
+		return
+	var/mob/living/carbon/human/human_target = H
+	human_target.update_ownership_marks_for_slaver(human_target)
 	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
 	total_positions = 1
 	spawn_positions = 1

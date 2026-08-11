@@ -61,15 +61,72 @@
 			return TRUE
 	return FALSE
 
+// For adding roundstart slavery mark
+/mob/living/carbon/human/proc/update_owned_slave_trait()
+	if(has_active_ownership_mark())
+		ADD_TRAIT(src, TRAIT_OWNED_SLAVE, "[type]")
+	else
+		REMOVE_TRAIT(src, TRAIT_OWNED_SLAVE, "[type]")
+
+/proc/get_current_slaver_owner()
+	for(var/mob/living/carbon/human/slaver in GLOB.human_list)
+		if(slaver.mind?.assigned_role == "Slaver")
+			return slaver
+	return null
+
+/proc/is_slaver_owner(mob/living/owner)
+	return istype(owner) && owner.mind?.assigned_role == "Slaver"
+
+/mob/living/carbon/human/proc/apply_ownership_mark(mob/living/owner, branding_text = "", owner_name = null)
+	var/obj/item/bodypart/head/neck_bodypart = get_bodypart(BODY_ZONE_HEAD)
+	if(!neck_bodypart)
+		return FALSE
+
+	var/mob/living/owner_to_use = owner || get_current_slaver_owner()
+	var/owner_display_name = owner_name
+	if(!length(owner_display_name))
+		owner_display_name = owner_to_use ? (owner_to_use.real_name || owner_to_use.name) : "the Slaver"
+
+	neck_bodypart.branded_writing_on_neck = branding_text
+	neck_bodypart.enslavement_mark = TRUE
+	neck_bodypart.brand_owner_name = owner_display_name
+	neck_bodypart.brand_owner = owner_to_use
+
+	branded = TRUE
+	update_owned_slave_trait()
+	return TRUE
+
+/mob/living/carbon/human/proc/update_ownership_marks_for_slaver(mob/living/owner)
+	var/mob/living/owner_to_use = owner || get_current_slaver_owner()
+	var/owner_display_name = owner_to_use ? (owner_to_use.real_name || owner_to_use.name) : "the Slaver"
+	for(var/mob/living/carbon/human/slave in GLOB.human_list)
+		if(slave == owner_to_use)
+			continue
+		for(var/obj/item/bodypart/bodypart as anything in slave.bodyparts)
+			if(bodypart.enslavement_mark && (!bodypart.brand_owner || is_slaver_owner(bodypart.brand_owner) || bodypart.brand_owner_name == "the Slaver" || !length(bodypart.brand_owner_name)))
+				bodypart.brand_owner_name = owner_display_name
+				bodypart.brand_owner = owner_to_use
+		for(var/obj/item/organ/organ as anything in slave.internal_organs)
+			if(organ.enslavement_mark && (!organ.brand_owner || is_slaver_owner(organ.brand_owner) || organ.brand_owner_name == "the Slaver" || !length(organ.brand_owner_name)))
+				organ.brand_owner_name = owner_display_name
+				organ.brand_owner = owner_to_use
+
+	return TRUE
+
 /mob/living/carbon/human/proc/get_active_ownership_brand_info()
 	var/list/info = list("name" = "", "owner" = null)
+	var/mob/living/current_slaver = get_current_slaver_owner()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(bodypart.enslavement_mark && length(bodypart.brand_owner_name))
+			if(bodypart.brand_owner && !is_slaver_owner(bodypart.brand_owner) && bodypart.brand_owner != current_slaver)
+				return info
 			info["name"] = bodypart.brand_owner_name
 			info["owner"] = bodypart.brand_owner
 			return info
 	for(var/obj/item/organ/organ as anything in internal_organs)
 		if(organ.enslavement_mark && length(organ.brand_owner_name))
+			if(organ.brand_owner && !is_slaver_owner(organ.brand_owner) && organ.brand_owner != current_slaver)
+				return info
 			info["name"] = organ.brand_owner_name
 			info["owner"] = organ.brand_owner
 			return info
