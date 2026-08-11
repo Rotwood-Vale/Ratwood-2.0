@@ -2,8 +2,8 @@
 	title = "Prisoner (Town)"
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 6
+	spawn_positions = 6
 
 /datum/job/roguetown/slave/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	. = ..()
@@ -116,6 +116,7 @@
 /datum/advclass/slave/slave_sentry
 	parent_type = /datum/advclass
 	name = "Slave Sentry"
+	maximum_possible_slots = 2
 	tutorial = "You are trained as a fighter, \
 	Protect your Master's interests, serve them."
 	outfit = /datum/outfit/job/roguetown/slave/slave_sentry

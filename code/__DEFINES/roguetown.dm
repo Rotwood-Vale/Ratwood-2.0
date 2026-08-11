@@ -353,6 +353,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector
 #define CTAG_HEIR			"CAT_HEIR"			// Prince(cess) class - Handles Heir class selector
 #define CTAG_LORD			"CAT_LORD"			// Lord class - Handles Lord class selector
+#define CTAG_BARON			"CAT_BARON"			// Baron class - Handles Baron class selector
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
 #define CTAG_ROOKIE			"CAT_ROOKIE"		// Rookie class - Handles Rookie class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
