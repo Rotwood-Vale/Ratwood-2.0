@@ -112,11 +112,11 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg))
 		if(process_step != 1)
 			return
-		to_chat(user, span_notice("Cracking an egg over the nitzel."))
+		to_chat(user, span_notice("Cracking an egg over the frybird."))
 		if(do_after(user, short_cooktime, target = src))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/eggbreak.ogg', 100, TRUE, -1)
 			name = "tender frybird with egg"
-			desc = "A frybard with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
+			desc = "A frybird with an egg cracked over it. It awaits toastcrumbs and a hot oil bath."
 			icon_state = "chickentender_step2"
 			process_step = 2
 			update_icon()
@@ -125,13 +125,13 @@
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs))
 		if(process_step != 2)
 			return
-		to_chat(user, span_notice("Coating the nitzel with toastcrumbs."))
+		to_chat(user, span_notice("Coating the frybird with toastcrumbs."))
 		if(do_after(user, short_cooktime, target = src))
 			name = "tender frybird with toastcrumbs"
 			desc = "A frybird coated in toastcrumbs. It awaits a hot oil bath."
 			icon_state = "chickentender_step3"
 			process_step = 3
-			deep_fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/nitzel
+			deep_fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/chickentender
 			update_icon()
 			qdel(I)
 			return
