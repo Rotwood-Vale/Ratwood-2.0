@@ -48,7 +48,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	if(H.mind)
-		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Shortsword")
+		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Flanged Mace", "Psydonic Shortsword")
 		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Blessed Psydonic Dagger")
@@ -57,6 +57,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
 			if("Psydonic Handmace")
 				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			if("Psydonic Flanged Mace")
+				l_hand = /obj/item/rogueweapon/mace/cudgel/flanged/psy
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 			if("Psydonic Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/psy

@@ -88,7 +88,7 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate, SLOT_ARMOR, TRUE)
 
 	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
-		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
+		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Grand Maul + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
 		"Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
 	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 	switch(weapon_choice)
@@ -113,6 +113,12 @@
 		//Polearms and the like.
 		if("Psydonic Grand Mace + Shortsword")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/psy(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+		if("Psydonic Grand Maul + Shortsword")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/psy(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)

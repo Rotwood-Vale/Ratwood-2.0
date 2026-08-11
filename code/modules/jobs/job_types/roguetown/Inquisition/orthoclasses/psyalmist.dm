@@ -99,7 +99,7 @@
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
-		var/weapons = list("Psydonic Whip", "Psydonic Rapier")
+		var/weapons = list("Psydonic Whip", "Psydonic Rapier", "Psydonic Cudgel", "Psydonic Flanged Mace")
 		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
 		switch(weapon_choice)
 			if("Psydonic Whip")
@@ -109,6 +109,12 @@
 				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			if("Psydonic Cudgel")
+				H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy(get_turf(H)), forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			if("Psydonic Flanged Mace")
+				H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/flanged/psy(get_turf(H)), forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)	
 
 /datum/outfit/job/roguetown/psyaltrist
 	job_bitflag = BITFLAG_HOLY_WARRIOR
