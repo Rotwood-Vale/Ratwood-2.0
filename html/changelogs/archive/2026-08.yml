@@ -234,3 +234,21 @@
   - balance: Powders take just as long as a potion to be force inhaled.
   - bugfix: Fixes the bug that causes rolled assassins to not properly take up the
       slot or leave a slot open.
+2026-08-11:
+  Ephemeralis:
+  - balance: Churchlings can now use T2 miracles, up from T1.
+  - rscadd: Added the 'Neophyte' churchling advclass, essentially a medium-armored
+      templar squire with journeyman weapons. Starts with awful gear and T1 miracles.
+  RadiantFlash7:
+  - bugfix: embedded surgery tools no longer damage on tick
+  - bugfix: miracle heals no longer have a fortify 1.5x buff apply twice if healing
+      someone who's been fortified
+  SillyMoff:
+  - rscadd: ear flicks emote for elfs
+  UntoldTactics:
+  - bugfix: Heirophant's kandys now has a proper integrity value, equivilient to a
+      padded gambeson.
+  Xander3359:
+  - balance: Axians and Abyssorites no longer freeze when swimming in cold water
+  kimesik:
+  - balance: Adventurer-Monk get 1 less WIL and CON.
