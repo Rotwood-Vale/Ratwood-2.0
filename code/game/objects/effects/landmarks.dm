@@ -469,6 +469,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/sapprentice
 	name = "Smithy Apprentice"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/rockhillslaver
+	name = "Rockhill Slaver"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/rockhillslave
+	name = "Rockhill Slave"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/baron
+	name = "Baron"
+	icon_state = "arrow"
 	
 /obj/effect/landmark/start/lich
 	name = "lich"

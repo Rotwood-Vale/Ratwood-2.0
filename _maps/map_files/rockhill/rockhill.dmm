@@ -1855,16 +1855,8 @@
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /obj/item/clothing/neck/roguetown/collar/cowbell,
 /obj/item/clothing/neck/roguetown/collar/leather,
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaverHome";
-	name = "Slaver's Keys"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaverHome";
-	name = "Slaver's Keys"
-	},
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverhouse,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "atb" = (
@@ -7830,8 +7822,9 @@
 /obj/item/clothing/cloak/raincloak/furcloak/crafted,
 /obj/item/rogueweapon/whip,
 /obj/structure/fluff/railing/border,
-/obj/item/storage/keyring,
 /obj/item/clothing/head/roguetown/helmet/sallet/zyb,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "bIt" = (
@@ -12730,7 +12723,8 @@
 /area/rogue/indoors/town/manor/rockhill)
 "cHK" = (
 /obj/structure/mineral_door/bars{
-	lockid = "DTManorCells"
+	lockid = "DTManorCells";
+	name = "Slave Auctions"
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -13504,12 +13498,14 @@
 /obj/structure/lever/wall{
 	dir = 8;
 	redstone_id = "SlavePen1";
-	pixel_y = 7
+	pixel_y = 7;
+	name = "Slave Pen 1"
 	},
 /obj/structure/lever/wall{
 	dir = 8;
 	redstone_id = "SlavePen2";
-	pixel_y = -9
+	pixel_y = -9;
+	name = "Slave Pen 2"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -37007,13 +37003,6 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaveAuction";
-	name = "Auction Pillory Key";
-	pixel_x = -10;
-	pixel_y = 1
-	},
 /obj/item/natural/feather,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
@@ -40679,7 +40668,8 @@
 "iEC" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/structure/mineral_door/bars{
-	lockid = "DTManorCells"
+	lockid = "DTManorCells";
+	name = "Slave Auctions"
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -41561,7 +41551,8 @@
 /area/rogue/indoors/shelter/bog)
 "iOS" = (
 /obj/structure/mineral_door/bars{
-	lockid = "DTManorCells"
+	lockid = "DTManorCells";
+	name = "Slave Auctions"
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -58719,6 +58710,10 @@
 /obj/item/rogueweapon/stoneaxe/woodcut{
 	pixel_y = -5
 	},
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "mua" = (
@@ -60313,7 +60308,8 @@
 	},
 /obj/structure/mineral_door/bars{
 	lockid = s;
-	locked = 1
+	locked = 1;
+	name = "Holding Cell Access"
 	},
 /turf/open/floor/rogue/concrete{
 	dir = 1
@@ -64907,7 +64903,8 @@
 /area/rogue/outdoors/town/grove)
 "nLT" = (
 /obj/structure/mineral_door/bars{
-	lockid = "DTManorCells"
+	lockid = "DTManorCells";
+	name = "Slave Auctions"
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -69777,12 +69774,6 @@
 /obj/item/rogueweapon/mace/woodclub,
 /obj/item/rogueweapon/whip,
 /obj/machinery/light/rogue/candle/red/l,
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "DTManorCells";
-	name = "old key";
-	pixel_x = 8
-	},
 /obj/item/natural/cloth{
 	pixel_x = -7;
 	pixel_y = 4
@@ -71991,6 +71982,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
+/obj/item/roguebin/water,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "plg" = (
@@ -74277,7 +74269,8 @@
 /area/rogue/under/cavewet)
 "pKL" = (
 /obj/structure/mineral_door/bars{
-	lockid = "DTManorCells"
+	lockid = "DTManorCells";
+	name = "Slave Auctions"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -81189,38 +81182,16 @@
 /area/rogue/indoors/town/manor/rockhill)
 "rna" = (
 /obj/structure/closet/crate/drawer/drawer3,
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "DTManorCells";
-	name = "old key"
-	},
-/obj/item/roguekey{
-	icon_state = "spikekey";
-	lockid = "DTManorCells";
-	name = "old key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaverHome";
-	name = "Slaver's Keys"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaverHome";
-	name = "Slaver's Keys"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaveAuction";
-	name = "Auction Pillory Key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "SlaveAuction";
-	name = "Auction Pillory Key"
-	},
 /obj/structure/fluff/railing/border/west,
 /obj/structure/curtain/red,
+/obj/item/roguekey/slaverdungeon,
+/obj/item/roguekey/slaverdungeon,
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverpillory,
+/obj/item/roguekey/slaverpillory,
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverhouse,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "rnf" = (
@@ -108311,7 +108282,6 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cave)
 "xhA" = (
-/obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/twig{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},

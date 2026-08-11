@@ -405,3 +405,6 @@
 
 /obj/item/storage/keyring/tribalchief
 	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)
+
+/obj/item/storage/keyring/rockhillslaver
+	keys = list(/obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
