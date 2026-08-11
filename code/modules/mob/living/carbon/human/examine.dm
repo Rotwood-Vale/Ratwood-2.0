@@ -297,6 +297,9 @@
 					. += span_syndradio("[m3] a bounty on [m2] head of [b.amount] mammon for [b.reason], issued by [b.employer].")
 					break
 
+		if(HAS_TRAIT(src, TRAIT_OWNED_SLAVE))
+			. += span_greentext("<b>[m1] I can see their brandings, this is an owned slave.</b>")
+
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)

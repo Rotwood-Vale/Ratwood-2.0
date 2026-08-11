@@ -1467,6 +1467,7 @@
 /area/rogue/indoors/town/tavern)
 "aoN" = (
 /obj/item/cushion/desert2,
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "aoT" = (
@@ -1769,6 +1770,9 @@
 /area/rogue/outdoors/town/grove)
 "asx" = (
 /obj/machinery/light/rogue/candle/r,
+/obj/effect/landmark/start/rockhillslave{
+	dir = 8
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "asz" = (
@@ -3905,6 +3909,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
+"aQk" = (
+/obj/effect/landmark/start/baron,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "aQp" = (
 /turf/open/water/swamp,
 /area/rogue/outdoors/mountains/decap/rockhill)
@@ -14734,6 +14742,7 @@
 	pixel_y = 2
 	},
 /obj/structure/fluff/wallclock/l,
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "ddc" = (
@@ -25045,6 +25054,7 @@
 /obj/structure/drape/zybantine{
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "fkK" = (
@@ -32099,6 +32109,7 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "gMd" = (
@@ -43343,7 +43354,7 @@
 /area/rogue/under/cave/goblinfort)
 "jif" = (
 /obj/structure/chair/stool/rogue,
-/obj/effect/landmark/start/dt/slave{
+/obj/effect/landmark/start/rockhillslave{
 	dir = 1
 	},
 /turf/open/floor/rogue/twig{
@@ -43565,7 +43576,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/rogue/candle/l,
-/obj/effect/landmark/start/dt/slavemaster,
+/obj/effect/landmark/start/rockhillslaver,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "jkq" = (
@@ -44079,9 +44090,6 @@
 	dir = 1
 	},
 /obj/machinery/light/rogue/candle/l,
-/obj/effect/landmark/start/dt/slave{
-	dir = 4
-	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "jpO" = (
@@ -44533,6 +44541,7 @@
 /obj/item/cushion/desert2{
 	pixel_y = 6
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "jtP" = (
@@ -48879,7 +48888,7 @@
 	dir = 1
 	},
 /obj/structure/fluff/railing/border,
-/obj/effect/landmark/start/dt/slavemaster{
+/obj/effect/landmark/start/rockhillslaver{
 	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -49686,7 +49695,7 @@
 /area/rogue/indoors/town/academy)
 "kyo" = (
 /obj/structure/chair/stool/rogue,
-/obj/effect/landmark/start/dt/slave,
+/obj/effect/landmark/start/rockhillslave,
 /turf/open/floor/rogue/twig{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -50923,13 +50932,11 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "kMM" = (
-/obj/structure/bed/rogue/inn/wool,
-/obj/item/bedsheet/rogue/wool,
-/obj/effect/landmark/start/dt/slave{
-	dir = 8
+/obj/effect/landmark/start/rockhillslavelate,
+/turf/open/floor/rogue/deserttile{
+	icon_state = "tiledrab2"
 	},
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/under/town/basement)
+/area/rogue/indoors)
 "kMT" = (
 /obj/structure/bed/rogue/inn/double{
 	dir = 1
@@ -74522,6 +74529,7 @@
 /area/rogue/outdoors/bograt/north)
 "pNz" = (
 /obj/structure/fluff/railing/corner/south_east,
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/rogue/deserttile{
 	icon_state = "tiledrab2"
 	},
@@ -76474,7 +76482,7 @@
 /area/rogue/outdoors/town/roofs/keep)
 "qkv" = (
 /obj/item/cushion/desert2,
-/obj/effect/landmark/start/dt/slave{
+/obj/effect/landmark/start/rockhillslave{
 	dir = 1
 	},
 /turf/open/floor/rogue/tile/harem1,
@@ -82702,6 +82710,7 @@
 /obj/structure/drape/zybantine{
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "rDO" = (
@@ -95399,6 +95408,7 @@
 /obj/item/cushion/desert2{
 	pixel_x = 4
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "usI" = (
@@ -103450,9 +103460,6 @@
 	pixel_y = -11
 	},
 /obj/structure/mirror,
-/obj/effect/landmark/start/dt/slave{
-	dir = 1
-	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "wge" = (
@@ -110919,6 +110926,7 @@
 /obj/item/cushion/zybantine{
 	pixel_x = -6
 	},
+/obj/effect/landmark/start/rockhillslavelate,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "xJO" = (
@@ -182666,7 +182674,7 @@ cTA
 bkV
 fsS
 xMn
-kMM
+fsS
 xyB
 cTA
 gSg
@@ -296285,7 +296293,7 @@ dBb
 oXY
 gMc
 vYW
-lWy
+kMM
 pNz
 nYa
 pOX
@@ -492429,7 +492437,7 @@ nqU
 xrv
 pOX
 nzG
-nZV
+aQk
 jHm
 tmR
 pQr

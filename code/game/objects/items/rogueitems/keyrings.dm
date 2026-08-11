@@ -408,3 +408,6 @@
 
 /obj/item/storage/keyring/rockhillslaver
 	keys = list(/obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+
+/obj/item/storage/keyring/rockhillslaves
+	keys = list(/obj/item/roguekey/slaverhouse)

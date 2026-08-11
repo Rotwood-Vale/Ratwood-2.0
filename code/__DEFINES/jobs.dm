@@ -310,6 +310,7 @@
 #define JDO_SOILSON 28
 
 #define JDO_SLAVER 29
+#define JDO_SLAVE 29.1
 
 #define JDO_VILLAGER 30
 #define JDO_ADVENTURER 30.1

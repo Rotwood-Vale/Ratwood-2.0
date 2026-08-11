@@ -412,6 +412,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_LUNATIC		"CAT_LUNATIC"
 
 #define CTAG_SLAVER			"CAT_SLAVER"
+#define CTAG_SLAVE			"CAT_SLAVE"
 
 /*
 	Defines for the triumph buy datum categories

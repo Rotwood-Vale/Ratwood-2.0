@@ -474,6 +474,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Rockhill Slaver"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/rockhillslavelate
+	name = "Rockhill Slaver Late"
+	jobspawn_override = list("Slaver", "Slave")
+	delete_after_roundstart = FALSE
+
 /obj/effect/landmark/start/rockhillslave
 	name = "Rockhill Slave"
 	icon_state = "arrow"

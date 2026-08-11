@@ -2005,6 +2005,7 @@
 #include "code\modules\jobs\job_types\roguetown\peasants\knavewench.dm"
 #include "code\modules\jobs\job_types\roguetown\peasants\lunatic.dm"
 #include "code\modules\jobs\job_types\roguetown\peasants\prisoner.dm"
+#include "code\modules\jobs\job_types\roguetown\peasants\slave.dm"
 #include "code\modules\jobs\job_types\roguetown\peasants\soilson.dm"
 #include "code\modules\jobs\job_types\roguetown\trader\brewer.dm"
 #include "code\modules\jobs\job_types\roguetown\trader\cuisiner.dm"
