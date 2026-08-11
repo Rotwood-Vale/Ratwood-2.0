@@ -238,21 +238,33 @@
 				else
 					to_chat(user, span_info("I set the iron to leave a simple brand only."))
 	..()
+// Stops someone being marked as owned if they already are. Needs to be removed before it can proceed (does not affect normal branding)
+/obj/item/rogueweapon/surgery/cautery/branding/proc/target_has_active_ownership_mark(mob/living/carbon/human/target)
+	if(!istype(target))
+		return FALSE
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
+		if(bodypart.enslavement_mark)
+			return TRUE
+	for(var/obj/item/organ/organ as anything in target.internal_organs)
+		if(organ.enslavement_mark)
+			return TRUE
+	return FALSE
+
+/obj/item/rogueweapon/surgery/cautery/branding/proc/get_active_ownership_brand_info(mob/living/carbon/human/target)
+	if(!istype(target))
+		return list("name" = "", "owner" = null)
+	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
+		if(bodypart.enslavement_mark && length(bodypart.brand_owner_name))
+			return list("name" = bodypart.brand_owner_name, "owner" = bodypart.brand_owner)
+	for(var/obj/item/organ/organ as anything in target.internal_organs)
+		if(organ.enslavement_mark && length(organ.brand_owner_name))
+			return list("name" = organ.brand_owner_name, "owner" = organ.brand_owner)
+	return list("name" = "", "owner" = null)
 
 /obj/item/rogueweapon/surgery/cautery/branding/proc/update_slave_mark_trait(mob/living/carbon/human/target)
 	if(!istype(target))
 		return
-	var/has_slavery_mark = FALSE
-	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
-		if(bodypart.enslavement_mark)
-			has_slavery_mark = TRUE
-			break
-	if(!has_slavery_mark)
-		for(var/obj/item/organ/organ as anything in target.internal_organs)
-			if(organ.enslavement_mark)
-				has_slavery_mark = TRUE
-				break
-	if(has_slavery_mark)
+	if(target_has_active_ownership_mark(target))
 		ADD_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
 	else
 		REMOVE_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
@@ -394,6 +406,10 @@
 					log_combat(user, target, "Branding prefblocked: \"[branding_text]\" on [final_answer]")
 					return TRUE
 
+	if(enslave && target_has_active_ownership_mark(target))
+		to_chat(user, span_warning("I cannot mark them as owned, they already have a mark of ownership! I need to burn that away first..."))
+		return TRUE
+
 	// A part has been selected, now we start printing messages to chat and showing the do_after
 	var/branding_delay = HAS_TRAIT(user, TRAIT_DUNGEONMASTER) ? 7 SECONDS : (HAS_TRAIT(user, TRAIT_KNOWNCRIMINAL) ? 9 SECONDS : 14 SECONDS) // criminals/dungeoneer burn faster, while non-criminals and towners take the longest time
 	if(!branding_self) 
@@ -409,18 +425,19 @@
 			branding_delay -= 4 SECONDS // quicker to brand yourself using a good tool
 		user.visible_message(span_warning("[user] slowly wields [src] onto [user.p_their()] [LOWER_TEXT(final_answer)]."))
 
-	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s), slave mark: [enslave]")
+	var/ownership_state_before = target_has_active_ownership_mark(target) ? "owned" : "not owned"
+	log_combat(user, target, "Branding attempt: \"[branding_text]\" on [final_answer] ([branding_delay]s), requested slave mark: [enslave], ownership before: [ownership_state_before]")
 
 	if(!do_after(user, branding_delay, target = target))
 		if(!QDELETED(target))
-			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
+			log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], ownership at abort: [ownership_state_before]")
 		return TRUE
 	if(!user.Adjacent(target) || user.stat >= UNCONSCIOUS)
-		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
+		log_combat(user, target, "Branding aborted: \"[branding_text]\" on [final_answer], ownership at abort: [ownership_state_before]")
 		return TRUE
 
 	if(QDELETED(branding_part))
-		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer], slave mark: [enslave]")
+		log_combat(user, target, "Branding part destroyed: \"[branding_text]\" on [final_answer], ownership at abort: [ownership_state_before]")
 		return TRUE
 
 	// Attempt to re-get the part and place the brand
@@ -542,6 +559,7 @@
 
 	target.branded = TRUE // makes examine check for branding marks
 	update_slave_mark_trait(target)
+	var/ownership_state_after = target_has_active_ownership_mark(target) ? "owned" : "not owned"
 	target.apply_damage(branding_damage, BURN, branding_part)
 	if(!branding_self && apply_knockdown)
 		target.Knockdown(1 SECONDS)
@@ -556,7 +574,7 @@
 	update_heated(FALSE)
 	if(cool_timer)
 		deltimer(cool_timer)
-	log_combat(user, target, "Branded successful: \"[branding_text]\" on [final_answer]")
+	log_combat(user, target, "Branded successful: \"[branding_text]\" on [final_answer], ownership after: [ownership_state_after]")
 	if(branding_count > 0)
 		branding_count--
 		if(branding_count == 0)

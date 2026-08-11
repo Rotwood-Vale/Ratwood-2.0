@@ -52,6 +52,29 @@
 		return descriptor_name
 	return "Unknown"
 
+/mob/living/carbon/human/proc/has_active_ownership_mark()
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(bodypart.enslavement_mark)
+			return TRUE
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(organ.enslavement_mark)
+			return TRUE
+	return FALSE
+
+/mob/living/carbon/human/proc/get_active_ownership_brand_info()
+	var/list/info = list("name" = "", "owner" = null)
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(bodypart.enslavement_mark && length(bodypart.brand_owner_name))
+			info["name"] = bodypart.brand_owner_name
+			info["owner"] = bodypart.brand_owner
+			return info
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(organ.enslavement_mark && length(organ.brand_owner_name))
+			info["name"] = organ.brand_owner_name
+			info["owner"] = organ.brand_owner
+			return info
+	return info
+
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
