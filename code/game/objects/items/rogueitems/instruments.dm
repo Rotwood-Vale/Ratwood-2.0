@@ -751,6 +751,34 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"The Bloody Throne" = 'sound/music/instruments/hurdy (5).ogg',
 	"We Shall Sail Together" = 'sound/music/instruments/hurdy (6).ogg')
 
+/obj/item/rogue/instrument/ztratocaster
+	name = "ztratocaster"
+	desc = "A strange guitar-like instrument with two necks, and a body sharp enough to shred."
+	icon_state = "ztratocaster"
+	force = 15
+	force_wielded = 35
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, SPEAR_BASH)
+	associated_skill = /datum/skill/combat/axes
+	song_list = list("Laid To Rest" = 'sound/music/instruments/ztrato (1).ogg',
+	"Fulmen" = 'sound/music/instruments/ztrato (2).ogg',
+	"Painkiller" = 'sound/music/instruments/ztrato (3).ogg',
+	"Abyssor's Bane" = 'sound/music/instruments/ztrato (4).ogg')
+	blade_dulling = DULLING_BASHCHOP
+	w_class = WEIGHT_CLASS_HUGE
+	minstr = 8
+	max_blade_int = 300
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	obj_flags = CAN_BE_HIT
+	smeltresult = null
+	wdefense = 6
+	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
+	. = ..()
+	soundloop.extra_range = 5 //stop blowing up my ears ser
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
+
 /obj/item/rogue/instrument/lute
 	name = "lute"
 	desc = "Its graceful curves were designed to weave joyful melodies."
