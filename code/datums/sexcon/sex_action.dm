@@ -109,7 +109,8 @@
 	if((parts_to_check & SEX_PART_GROIN))
 		if(user == actor && !is_part_self_accessible(user, SEX_PART_GROIN))
 			return FALSE
-		if(needs_chastity && !actor.sexcon.target_has_front_chastity())
+		// cage checks for either part
+		if(needs_chastity && !actor.sexcon.has_chastity_cage())
 			return FALSE
 		// doesn't allow grabs to give access
 		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_GROIN))
