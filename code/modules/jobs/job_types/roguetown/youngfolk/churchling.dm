@@ -139,7 +139,7 @@
 /datum/outfit/job/roguetown/churchling/neophyte/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/neck/roguetown/chaincoif/iron
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -148,6 +148,8 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
+	wrists = /obj/item/clothing/neck/roguetown/psicross
 	backpack_contents = list(
 		/obj/item/rogueweapon/hammer/wood = 1,
 		/obj/item/needle = 1
@@ -184,7 +186,7 @@
 		if (/datum/patron/divine/pestra)
 			cloak = /obj/item/clothing/cloak/templar/pestra
 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-	
+
 	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
 	switch(weapon_choice)
