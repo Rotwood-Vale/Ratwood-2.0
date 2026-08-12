@@ -25,7 +25,7 @@
 
 /datum/supply_pack/rogue/Knave/leather/plhood
 	name = "Padded Leather Hood"
-	cost = 30
+	cost = 25
 	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/armorhood)
 
 //////////
