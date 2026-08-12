@@ -43,7 +43,7 @@
 /obj/item/clothing/cloak/raincloak/blue,
 /obj/item/clothing/gloves/roguetown/leather/black,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient,
 /mob/living/carbon/human/species/skeleton/npc/hard/noequip,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/tomb/cave)

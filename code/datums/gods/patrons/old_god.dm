@@ -26,12 +26,14 @@
 /obj/effect/proc_holder/spell/self/check_boot
 	name = "BOOT-CHECK"
 	desc = "Checks your boot for variety of items."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "BOOTCHECK"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
 	chargedloop = null
 	sound = null
-	overlay_state = "BOOTCHECK"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 10 MINUTES
@@ -138,6 +140,8 @@
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
 	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ENDURE"
 	releasedrain = 20
 	chargedrain = 0
@@ -174,7 +178,7 @@
 
 		// Bonuses! Flavour! SOVL!
 		for(var/obj/item/clothing/neck/current_item in target.get_equipped_items(TRUE))
-			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
+			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
 					target.visible_message(span_danger("[target]'s many psycrosses reverberate with a strange, ephemeral sound..."), span_userdanger("HE must be waking up! I can hear it! I'm ENDURING so much!"))
@@ -195,7 +199,7 @@
 				switch(current_item.type) // Target-based worn Psicross Piety bonus. For fun.
 					if(/obj/item/clothing/neck/roguetown/psicross/wood)
 						psicross_bonus = 0.1
-					if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+					if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 						psicross_bonus = 0.2
 					if(/obj/item/clothing/neck/roguetown/psicross)
 						psicross_bonus = 0.3
@@ -203,7 +207,7 @@
 						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.4
-					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 						zcross_trigger = TRUE
 
 		if(damtotal >= 300) // ARE THEY ENDURING MUCH, IN ONE WAY OR ANOTHER?
@@ -229,7 +233,7 @@
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
-		user.blood_volume = max(user.blood_volume-30, 0)//We don't care about scaling, for this one.
+		user.set_blood_volume(max(user.get_blood_volume()-30, 0))//We don't care about scaling, for this one.
 		return TRUE
 
 	revert_cast()

@@ -16,6 +16,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+	dropshrink = 0.8
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -27,7 +28,7 @@
 /obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
 	var/trait_given = user?.patron?.type == /datum/patron/divine/eora ? TRAIT_EORAN_CONTENTED : TRAIT_PACIFISM
 	REMOVE_TRAIT(user, trait_given, "peaceflower_[REF(src)]")
-	if(istype(user) && user?.head == src)
+	if(istype(user) && (user?.head == src || user?.wear_mask == src))
 		user.remove_status_effect(/datum/status_effect/buff/peaceflower)
 	return ..()
 
@@ -68,7 +69,7 @@
 	sound = list('sound/magic/magnet.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	releasedrain = 40
-	chargetime = 60
+	chargetime = 30
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	charging_slowdown = 1
@@ -400,6 +401,7 @@
 	else
 		recharge_time = base_recharge_time
 
+	last_process_time = world.time
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
@@ -507,7 +509,7 @@
 			)
 			if(!do_after(sacrifice, 15 SECONDS))
 				return
-			sacrifice.blood_volume = max(0, sacrifice.blood_volume - ((BLOOD_VOLUME_NORMAL * 0.03) + (sacrifice.blood_volume * 0.06)))
+			sacrifice.set_blood_volume(max(0, sacrifice.get_blood_volume() - ((BLOOD_VOLUME_NORMAL * 0.03) + (sacrifice.get_blood_volume() * 0.06))))
 			obj_integrity = min(max_integrity, obj_integrity + max_integrity / 4)
 			qdel(I)
 			update_icon()
@@ -532,12 +534,12 @@
 		update_icon()
 		return TRUE
 
-	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors))
-		if(prune_count >= 4)
+	if(istype(I, /obj/item/rogueweapon/huntingknife/scissors) || (istype(I, /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr) && user.used_intent.type == /datum/intent/snip))
+		if(prune_count >= 1)
 			to_chat(user, span_warning("The tree has been fully pruned already!"))
 			return TRUE
 		var/skill = get_farming_skill(user)
-		var/prune_time = 15 SECONDS - (skill * 2.5 SECONDS)
+		var/prune_time = 10 SECONDS - (skill * 2.5 SECONDS)
 
 		to_chat(user, span_notice("You begin pruning the tree..."))
 
@@ -548,33 +550,32 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
-			
+
 			to_chat(user, span_notice("You prune some branches."))
 			update_icon()
 			return TRUE
 
 	if(istype(I, /obj/item/reagent_containers) && !istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/container = I
-		if(water_happiness >= 25)
+		if(water_happiness >= 40)
 			to_chat(user, span_warning("The tree can't absorb any more water right now!"))
 			return TRUE
 
-		var/has_water = FALSE
-		if(container.reagents.has_reagent(/datum/reagent/water, 1))
-			has_water = TRUE
+		var/water_type = null
+		if(container.reagents.has_reagent(/datum/reagent/water, 20))
+			water_type = /datum/reagent/water
+		else if(container.reagents.has_reagent(/datum/reagent/water/blessed, 20))
+			water_type = /datum/reagent/water/blessed
 
-		if(!has_water)
-			to_chat(user, span_warning("The tree accepts only fresh, clean water."))
+		if(!water_type)
+			to_chat(user, span_warning("The tree accepts only fresh, clean or blessed water."))
 			return
 
-		var/remaining_cap = 25 - water_happiness
-		var/skill = get_farming_skill(user)
-		var/potential_gain = 5 + (skill * 4)  // 5 at skill 0, 25 at skill 5+
-		var/actual_gain = min(potential_gain, remaining_cap)
-		var/action_time = 5 SECONDS - (skill * 0.5 SECONDS)
+		var/remaining_cap = 40 - water_happiness
+		var/actual_gain = remaining_cap
 
-		if(do_after(user, action_time, target = src))
-			container.reagents.remove_reagent(/datum/reagent/water, 1)
+		if(do_after(user, 1 SECONDS, target = src))
+			container.reagents.remove_reagent(water_type, 20)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				add_sleep_experience(user, /datum/skill/labor/farming, C.STAINT * 0.5)
@@ -588,6 +589,9 @@
 			return TRUE
 
 	if(istype(I, /obj/item/compost) || istype(I, /obj/item/fertilizer))
+		if(istype(I, /obj/item/fertilizer) && growth_stage != FRUITING)
+			to_chat(user, span_warning("The tree won't absorb the fertilizer properly until it is maturing or fully grown."))
+			return TRUE
 
 		if(fertilizer_happiness >= 25)
 			to_chat(user, span_warning("The tree can't absorb any more nutrients right now!"))
@@ -595,11 +599,10 @@
 
 		var/remaining_cap = 25 - fertilizer_happiness
 		var/skill = get_farming_skill(user)
-		var/potential_gain = 5 + (skill * 4)
+		var/potential_gain = max(5 + (skill * 4), 13)  // A maximum of 13 ensures at most 2 applications of compost
 		var/actual_gain = min(potential_gain, remaining_cap)
-		var/action_time = 5 SECONDS - (skill * 0.5 SECONDS)
 
-		if(do_after(user, action_time, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			qdel(I)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
@@ -625,7 +628,7 @@
 
 		qdel(I)
 		tree_offerings += I.type
-		
+
 		happiness = min(happiness + 10, 100)
 		update_happiness_tier()
 
@@ -667,7 +670,7 @@
 		. += span_warning("The leaves are ashen and dampened, emitting no aura. Perhaps more ash can fix this somehow.")
 
 	if(happiness_tier == 1)
-		. += span_warning("The tree seems neglected. Branches are wilted.")
+		. += span_warning("The tree seems neglected.")
 	else if(happiness_tier == 2)
 		. += span_info("The tree appears content and healthy.")
 	else if(happiness_tier == 3)
@@ -675,7 +678,7 @@
 	else if(happiness_tier == 4)
 		. += span_good("The tree bustles with an incandescent light. You feel... perfection.")
 
-	if(water_happiness < 25)
+	if(water_happiness < 40)
 		. += span_info("It could use more water.")
 	else
 		. += span_info("It is fully slaked.")
@@ -685,13 +688,25 @@
 	else
 		. += span_info("It is fully sated.")
 
-	if(prune_count < 4)
-		. += span_info("The branches look messy. Perhaps a scissor can right this mess.")
+	if(prune_count < 1)
+		. += span_info("The branches look messy. Perhaps something to snip them can right this mess.")
 	else
 		. += span_info("The branches are elaborately pruned.")
 
 	if(length(tree_offerings) < 3)
 		. += span_info("The tree yearns for an offering. Whispers enter your mind. A red crystal that shimmers... Something that sculpts one's form... A glittering seed...")
+
+	if(growth_stage == FRUITING && user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_JOURNEYMAN)
+		if(fruit_ready)
+			. += span_good("The fruit is ripe and ready to harvest.")
+		else if(fruit)
+			. += span_info("The fruit is almost ripe.")
+		else
+			var/effective_fruit_time = (fertilizer_happiness > 0) ? time_to_grow_fruit / 2 : time_to_grow_fruit
+			var/remaining_seconds = round(((growth_threshold - growth_progress) / (growth_threshold * 0.25)) * effective_fruit_time / 10)
+			var/minutes = round(remaining_seconds / 60)
+			var/secs = remaining_seconds % 60
+			. += span_info("My farming experience tells me the fruit will start to bear in roughly [minutes > 0 ? "[minutes] minute\s" : ""][minutes > 0 && secs > 0 ? " and " : ""][secs > 0 ? "[secs] second\s" : ""].")
 
 /obj/structure/eoran_pomegranate_tree/proc/reset_care()
 	//The benefit of rare offerings are kept through harvests.
@@ -751,9 +766,10 @@
 	if (growth_stage == FRUITING && !fruit)
 		// We need to grow from 75% to 100% in time_to_grow_fruit
 		var/progress_needed_in_fruiting = growth_threshold * 0.25
+		var/effective_fruit_time = (fertilizer_happiness > 0) ? time_to_grow_fruit / 2 : time_to_grow_fruit
 
-		if (time_to_grow_fruit > 0)
-			target_growth_rate_per_second = progress_needed_in_fruiting / (time_to_grow_fruit / 10)
+		if (effective_fruit_time > 0)
+			target_growth_rate_per_second = progress_needed_in_fruiting / (effective_fruit_time / 10)
 		else
 			target_growth_rate_per_second = growth_threshold // Grow instantly if time is 0
 	else
@@ -767,7 +783,8 @@
 	check_growth_stage()
 
 /obj/structure/eoran_pomegranate_tree/proc/apply_effects(mob/living/target)
-	target.apply_status_effect(/datum/status_effect/debuff/pomegranate_aura, src)
+	if(!HAS_TRAIT(target, TRAIT_EORAN_CALM))
+		target.apply_status_effect(/datum/status_effect/debuff/pomegranate_aura, src)
 
 /obj/structure/eoran_pomegranate_tree/proc/remove_effects(mob/living/target)
 	target.remove_status_effect(/datum/status_effect/debuff/pomegranate_aura)
@@ -1061,11 +1078,11 @@
 	var/list/wCount = eater.get_wounds()
 	if(!eater.construct && !(eater.mob_biotypes & MOB_UNDEAD))
 		var/current_brute_loss = eater.getBruteLoss()
-		blood_loss += (eater.blood_volume * 0.06)
+		blood_loss += (eater.get_blood_volume() * 0.06)
 		if(wCount.len > 0)
 			eater.heal_wounds(heal_amount + (current_brute_loss * 0.12))
 			eater.update_damage_overlays()
-		eater.blood_volume = max(0, eater.blood_volume - blood_loss)
+		eater.set_blood_volume(max(0, eater.get_blood_volume() - blood_loss))
 		eater.adjustBruteLoss(-(heal_amount + (current_brute_loss * 0.12)), 0)
 		eater.adjustFireLoss(-(heal_amount + (eater.getFireLoss() * 0.12)), 0)
 		eater.adjustToxLoss(-(heal_amount + (eater.getToxLoss() * 0.12)), 0)
@@ -1089,11 +1106,11 @@
 	var/list/wCount = eater.get_wounds()
 	if(!eater.construct && !(eater.mob_biotypes & MOB_UNDEAD))
 		var/current_brute_loss = eater.getBruteLoss()
-		blood_loss += (user.blood_volume * 0.08)
+		blood_loss += (user.get_blood_volume() * 0.08)
 		if(wCount.len > 0)
 			eater.heal_wounds(heal_amount + (current_brute_loss * 0.12))
 			eater.update_damage_overlays()
-		user.blood_volume = max(0, user.blood_volume - blood_loss)
+		user.set_blood_volume(max(0, user.get_blood_volume() - blood_loss))
 		eater.adjustBruteLoss(-(heal_amount + (current_brute_loss * 0.12)), 0)
 		eater.adjustFireLoss(-(heal_amount + (eater.getFireLoss() * 0.12)), 0)
 		eater.adjustToxLoss(-(heal_amount + (eater.getToxLoss() * 0.12)), 0)
@@ -1142,7 +1159,7 @@
 	desc = "An iridescent seed that shifts colors in the light."
 	icon_state = "opalescent"
 	effect_desc = "Transforms held gems into rubies."
-	
+
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent/apply_effects(mob/living/eater)
 	for(var/obj/item/roguegem/G in eater.held_items)
 		var/obj/item/roguegem/ruby/new_gem = new(eater.loc)
@@ -1391,7 +1408,7 @@
 					H.nutrition = NUTRITION_LEVEL_STARVING + 50
 				if(SKILL_LEVEL_NOVICE to SKILL_LEVEL_JOURNEYMAN)
 					H.nutrition = NUTRITION_LEVEL_HUNGRY + 50
-				else	
+				else
 					H.nutrition = NUTRITION_LEVEL_WELL_FED
 	switch(hydrohomiecheck)
 		if(0 to HYDRATION_LEVEL_SMALLTHIRST)
@@ -1400,7 +1417,7 @@
 					H.hydration = HYDRATION_LEVEL_DEHYDRATED + 50
 				if(SKILL_LEVEL_NOVICE to SKILL_LEVEL_JOURNEYMAN)
 					H.hydration = HYDRATION_LEVEL_THIRSTY + 50
-				else	
+				else
 					H.hydration = HYDRATION_LEVEL_HYDRATED
 	if(assocskill > SKILL_LEVEL_APPRENTICE)
 		H.add_stress(/datum/stressevent/eoran_blessing_greater)

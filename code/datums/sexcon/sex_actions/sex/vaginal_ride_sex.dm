@@ -48,8 +48,10 @@
 	target.sexcon.perform_sex_action(target, 2, 0, TRUE)
 	if(target.sexcon.check_active_ejaculation())
 		target.visible_message(span_love("[target] cums into [user]'s cunt!"))
-		target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_CUNT)
-		target.try_impregnate(user)
+		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
+			sleep(10)
+			target.sexcon.cum_into(splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
+			target.try_impregnate(user)
 		target.virginity = FALSE
 		user.virginity = FALSE
 

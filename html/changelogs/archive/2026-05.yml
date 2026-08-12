@@ -539,3 +539,140 @@
 2026-05-23:
   CVSthePharmacy:
   - bugfix: fix the valaska axe sprite
+2026-05-24:
+  YakiAttaki:
+  - rscadd: Added some new, colourable tailmaw variants.
+2026-05-25:
+  EvenInDeathIStillServe:
+  - rscadd: Your voice descriptor will prefix your voice identity on speaking when
+      masked or out of view.
+  SneakySlinky:
+  - bugfix: fixed player-made books being blank
+  - rscdel: Deleted old code referencing an improper component initialization for
+      a dummy item path
+  - rscdel: Removed redundant code from soap/bath item that was copied from soap itself
+  - balance: Adding a sprinting check to soap to slip people
+  - balance: Also by extension nerfs Xylixian miracles + rituals and the associated
+      slip-granting sources
+  Wadelicious:
+  - bugfix: Avantyne is no longer cucked (The proper antag armor tags were given)
+  ophaq:
+  - rscadd: Xylixians with holy skill have an incredibly small chance of creating
+      cumfetti. Drag your local Xylixian today to the bath house today!
+  petwir1:
+  - rscadd: Made mage resource gathering automated
+  wikimody:
+  - refactor: removed double declarations of smokes
+  - rscadd: Bandits and garnison can talk into their rings with mask on again
+2026-05-27:
+  EvenInDeathIStillServe:
+  - rscadd: Creampies will have extra spurts based on semen volume.
+  - balance: Minimum load count restored to 3 with normal size balls. Load count is
+      now modified by ball size, too.
+  IronDragoon:
+  - bugfix: boring AI proc stuff, should help with TDI
+  - bugfix: Hostile mobs should now ignore ghost mobs in target logic, and players
+      will need to choose to spectate as opposed to it being the default on death/fartravel.
+      This will hopefully reduce TDI somewhat (but other changes will be needed too)
+  Jamdrawers:
+  - admin: no longer alerted by puking
+  - balance: scrolls of lich-style raise skeletons mostly replaced in loot pools with
+      scrolls of lesser raise skeletons
+  - rscadd: Adds chaplain role!
+  - bugfix: fixes crafting recipes requiring silver bullion instead of just blessed
+      silver
+  - qol: a great many items given a small amount of dropshrink
+  - refactor: cleaned up a few duplicate definitions for clothing items. Redefined
+      an item spawner used in a singular location to be more normal.
+  Xander3359:
+  - balance: Resisting out of a grab makes you ungrabbable for a short duration
+  ophaq:
+  - bugfix: Potentially fixes music again.
+  tmyqlfpir:
+  - bugfix: Added guardrails for splitting coins logic
+2026-05-29:
+  Jamdrawers:
+  - bugfix: vanguard spawns
+  john-pawson:
+  - rscadd: Added the Remote Passive Import Rate, now the amount of, and which remote
+      resources can be set by the Steward, these imports cost mammon.
+  - rscadd: Merchant now sells rare/imported food and seeds.
+  - balance: The Remote Imports will turn a small profit when bought, but will keep
+      spending mammon when they are not. Remote stockpiles for something that isn't
+      bought enough will likely mean mammon lost.
+  - balance: The Remote Import Rate can only be changed on daylight hours, choose
+      wisely once, and do something else when the sun goes down, there is no need
+      to constantly monitor them as long as there is enough mammon. Do not run out
+      of mammon.
+  - qol: Prices, amounts, total current spending and categorical spending can be seen
+      at the nerve master.
+  yupup123:
+  - rscadd: Added Subtle LOOC
+  - rscdel: Removes all `Toggle` Verbs + `ShowRolls` and `Headshots in Chat`
+  - rscadd: Added a `Toggles` verb that opens a new window. Each toggle now has a
+      mouseover description of what it does.
+  - rscadd: Added a `Hide Unavailable Noises` toggle to hide noises your character
+      cannot do.
+  - rscadd: Added a `Hear Instruments` toggle to mute instruments and boom boxes.
+  - rscdel: Removes the `Memory` tab. Moving everything from there to the `IC` tab.
+  - rscadd: Adds a `Keybindings` verb to the `Options` tab.
+  - qol: 'Changes `Game Preferences` to a better fitting name: `Character Preferences`'
+  - rscdel: Removes all `Volume Power` verbs
+  - rscadd: Adds a `Volume Power` verb that opens a new window.
+  - qol: Separates Combat Music into it's own channel, editable in the new `Volume
+      Power` window. Requested by those that want combat music, but not ambient music.
+  - code_imp: Swaps the `MUSIC` and `AMBIENCE` channel names. They were incorrectly
+      named.
+  - rscdel: 'Removes some deprecated and vestigial verbs that do nothing like: `Recent
+      Changes`, `Link Discord Account`, `Notify Restart`, `Set Credits Mugshot`, and
+      `Wiki`'
+  - qol: '`Report Issue` link fixed to link to Ratwood Github issues tab and moved
+      to `-Admin-` tab'
+  - rscadd: Adds a `Listen` button to the Combat Music picker
+  zeroisthebiggay:
+  - rscadd: ancient armored boots and ancient armored sandals
+  - balance: skeletal legionnaires, skeletal ballistaires, and broken bone sappers
+      have been given ancient armored sandals
+  - balance: decrepit sandals are now decrepit armored sandals, with ever so slight
+      amounts of protection so you can't footstab skeletons to death quite as easily
+  - balance: skeletal legionnaires are given an ancient cuirass instead of studded
+      leather armor to differentiate their armor layout from skeletal balistaires
+  - balance: death bulwarks now have halfplate and plated chausses, now they should
+      actually function better as death bulwarks and less as far worse skeletal legionnaires
+  - balance: death bulwarks have ancient boots instead of decrepit boots
+  - balance: death bulwarks now are given an ancient shield instead of a wooden shield
+      where applicable
+  - balance: ancient bucklers no longer have reduced integrity compared to their regular
+      steel counterparts
+  - balance: ancient bodkin arrows no longer have reduced damage and armor penetration
+      compared to their regular steel counterparts
+  - balance: ancient crossbow bolts no longer have reduced damage and armor penetration
+      compared to their regular steel counterparts
+  - balance: broken bone sappers have smithing skills to toil for their masters and
+      arm their undead legions
+  - bugfix: a few very random items smelting down into ancient alloy ingots instead
+      of ancient slags
+  - bugfix: iron javelins smelting into iron ingots
+  - bugfix: artificed halfplate now has its mode swapped by using tongs, allowing
+      it to actually be repaired
+  - spellcheck: renamed 'buckler shield' to just 'buckler'
+  - spellcheck: renamed 'ancient alloy ingot' to 'gilbranze ingot'
+  - spellcheck: normalized all spellings of 'gilbronze' to 'gilbranze'
+  - spellcheck: instances of 'purified alloy' are now gilbranze in the code
+  - code_imp: nuked paalloy and aalloy from the codebase, making everything that was
+      paalloy before into ancient subtypes of steel, and aalloy into decrepit which
+      are subtypes of ancient whenever applicable, not player facing at all but dramatically
+      improves the appearance and organization of the code
+2026-05-30:
+  2whatever2:
+  - balance: Gnolls can now take statpacks.
+  Jamdrawers:
+  - refactor: cleaned up some area-code for some dungeons
+  - bugfix: rockhill harbor now counts as a 'town' area
+  coffeecoffeecoffee:
+  - rscadd: Added Watchman Blue and Midnight Violet as default colors, added a new
+      Astrata's Yellow, renaming the old.
+  - rscdel: Removed Xylix Pink as a default selectable color.
+  zeroisthebiggay:
+  - balance: significantly reduced the price of emberwine in the wretch camp's copperface
+      vendor for your gooning needs

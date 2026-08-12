@@ -134,8 +134,9 @@
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.2
-	clickcd = 13
+	damfactor = 1.1
+	clickcd = 15
+	swingdelay = 2
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	blunt_chipping = TRUE
@@ -229,6 +230,8 @@
 	reach = 3 // Yep! 3 tiles
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
 
 /datum/intent/lance/onehand
 	chargetime = 5 SECONDS
@@ -340,6 +343,23 @@
 	resistance_flags = FLAMMABLE
 	special = /datum/special_intent/polearm_backstep
 
+/obj/item/rogueweapon/spear/ancient
+	name = "ancient spear"
+	desc = "A gnarled staff, tipped with polished gilbranze. Your breathing hilts, and your knuckles tighten around the staff; you see what is yet to come, yet your mind refuses to retain it. To know what fate this dying world has - it would drive any man inzane."
+	icon_state = "ancient_spear"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/spear/ancient/decrepit
+	name = "decrepit spear"
+	desc = "A rotting staff, tipped with frayed bronze. After the stone, but before the sword; an interlude for the violence that would soon engulf His world."
+	force = 13
+	force_wielded = 22
+	max_integrity = 120
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
 /obj/item/rogueweapon/spear/trident
 	// Better one handed & throwing weapon, flimsier.
 	name = "bronze trident"
@@ -423,26 +443,6 @@
 				else
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			update_icon()
-
-/obj/item/rogueweapon/spear/aalloy
-	name = "decrepit spear"
-	desc = "A rotting staff, tipped with frayed bronze. After the stone, but before the sword; an interlude for the violence that would soon engulf His world."
-	icon_state = "ancient_spear"
-	force = 13
-	force_wielded = 22
-	max_integrity = 120
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/spear/paalloy
-	name = "ancient spear"
-	desc = "A gnarled staff, tipped with polished gilbranze. Your breathing hilts, and your knuckles tighten around the staff; you see what is yet to come, yet your mind refuses to retain it. To know what fate this dying world has - it would drive any man inzane."
-	smeltresult = /obj/item/ingot/aaslag
-	icon_state = "ancient_spear"
-
 
 /obj/item/rogueweapon/spear/psyspear
 	name = "psydonic spear"
@@ -810,25 +810,85 @@
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 200
 
-/obj/item/rogueweapon/halberd/bardiche/aalloy
-	name = "decrepit bardiche"
-	desc = "An imposing poleaxe, wrought from frayed bronze. Whatever noble purpose this weapon held has long since decayed; for it now persists to sunder the chaff that clings to this dying world."
-	max_integrity = 180
-	force = 12
-	force_wielded = 22
-	icon_state = "ancient_bardiche"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-/obj/item/rogueweapon/halberd/bardiche/paalloy
+/obj/item/rogueweapon/halberd/bardiche/ancient
 	name = "ancient bardiche"
 	desc = "A terrifying poleaxe, forged from polished gilbranze. When Her ascension came, these weapons - bereft of their wielders - sunk deep into the earth. Shadowed hands cradled the blades over the centuries, and would eventually create its steel-tipped successor; the glaive."
 	icon_state = "ancient_bardiche"
 	smeltresult = /obj/item/ingot/aaslag
 
+/obj/item/rogueweapon/halberd/bardiche/ancient/decrepit
+	name = "decrepit bardiche"
+	desc = "An imposing poleaxe, wrought from frayed bronze. Whatever noble purpose this weapon held has long since decayed; for it now persists to sunder the chaff that clings to this dying world."
+	force = 12
+	force_wielded = 22
+	max_integrity = 180
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
+/obj/item/rogueweapon/halberd/blacksteel
+	name = "blacksteel halberd"
+	desc = "A magnificent halberd of blacksteel. It is the finest arm-of-war that a sixteenth-century knight could ask for, especially \
+	when it comes to attracting fair maidens in the highest courts. Wrap a length of cloth around the shaft to bear your heraldry."
+	icon_state = "bs_halberd"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	force_wielded = 35
+	max_blade_int = 400
+	wdefense_wbonus = 3 //+3 over the traditional spear, once wielded.
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/axe_swing,
+		/datum/special_intent/greatsword_swing,
+		)
+
+/obj/item/rogueweapon/halberd/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/halberd/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
+/obj/item/rogueweapon/halberd/blacksteel/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/halberd/blacksteel/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/halberd/blacksteel/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
 
 /obj/item/rogueweapon/halberd/bardiche/scythe
 	name = "summer scythe"
@@ -935,6 +995,70 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/eaglebeak/blacksteel
+	name = "blacksteel polehammer"
+	desc = "A magnificent polehammer of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
+	flared macehead; excellent for piercing and shattering alloys, respectively. Wrap a length of cloth around the shaft to bear your heraldry."
+	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak/oneh)
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
+	icon_state = "bs_eaglebeak"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	force_wielded = 35
+	wdefense_wbonus = 3 //+3 over the traditional spear, once wielded.
+	max_integrity = 350 //Basic idea - blacksteel blunt weapons get more integrity, blacksteel edged weapons get more sharpness. Minimal overlap?
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/flail_sweep,
+		/datum/special_intent/ground_smash
+		)
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
 
 /obj/item/rogueweapon/eaglebeak/lucerne
 	name = "lucerne"
@@ -1028,6 +1152,23 @@
 			if("altgrip")
 				return list("shrink" = 0.6,"sx" = 4,"sy" = 0,"nx" = -7,"ny" = 1,"wx" = -8,"wy" = 0,"ex" = 8,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -135,"sturn" = -35,"wturn" = 45,"eturn" = 145,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
 
+/obj/item/rogueweapon/greatsword/ancient
+	name = "ancient greatsword"
+	desc = "A massive blade, forged from polished gilbranze. Your kind will discover your true nature, in wrath and ruin. You will take to the stars and burn them out, one by one. Only when the last star turns to dust, will you finally realize that She was trying to save you from Man's greatest foe; oblivion."
+	icon_state = "ancient_gsw"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/greatsword/ancient/decrepit
+	name = "decrepit greatsword"
+	desc = "A massive blade, wrought in frayed bronze. It is too big to be called a sword; massive, thick, heavy, and far too rough. Indeed, this blade was more like a heap of raw metal."
+	force = 10
+	force_wielded = 25
+	max_integrity = 150
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+	randomize_blade_int_on_init = TRUE
+
 /obj/item/rogueweapon/greatsword/iron
 	name = "iron greatsword"
 	desc = "Wrought in iron. Heftier and less sturdier than its steel equivalent - but it still does the job."
@@ -1037,26 +1178,6 @@
 	wdefense = 4
 	smelt_bar_num = 3
 	smeltresult = /obj/item/ingot/iron
-
-/obj/item/rogueweapon/greatsword/aalloy
-	name = "decrepit greatsword"
-	desc = "A massive blade, wrought in frayed bronze. It is too big to be called a sword; massive, thick, heavy, and far too rough. Indeed, this blade was more like a heap of raw metal."
-	force = 10
-	force_wielded = 25
-	max_integrity = 150
-	icon_state = "ancient_gsw"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-	randomize_blade_int_on_init = TRUE
-
-
-/obj/item/rogueweapon/greatsword/paalloy
-	name = "ancient greatsword"
-	desc = "A massive blade, forged from polished gilbronze. Your kind will discover your true nature, in wrath and ruin. You will take to the stars and burn them out, one by one. Only when the last star turns to dust, will you finally realize that She was trying to save you from Man's greatest foe; oblivion."
-	icon_state = "ancient_gsw"
-	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/greatsword/zwei
 	name = "claymore"
@@ -1241,6 +1362,7 @@
 	)
 	bigboy = TRUE
 	gripsprite = TRUE
+	special = /datum/special_intent/piercing_lunge
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
@@ -1370,7 +1492,6 @@
 	force_wielded = 20
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 150
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/iron
@@ -1380,7 +1501,6 @@
 	force_wielded = 22
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_iron"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/steel
@@ -1390,8 +1510,19 @@
 	force_wielded = 25
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_steel"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 200
+
+/obj/item/rogueweapon/woodstaff/quarterstaff/blacksteel
+	name = "blacksteel quarterstaff"
+	desc = "A quarterstaff reinforced with blacksteel tips. One might imagine that the elegance of such a design hardly befits the people \
+	who'd traditionally wield such a weapon; then again, who are we to judge?"
+	force = 20
+	force_wielded = 30
+	icon_state = "quarterstaff_blacksteel"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	max_integrity = 350
+	smeltresult = /obj/item/ingot/blacksteel
+	wdefense_wbonus = 7	//12 when wielded.
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/silver
 	name = "silver quarterstaff"
@@ -1400,7 +1531,6 @@
 	force_wielded = 27
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 250
 	is_silver = TRUE
 
@@ -1422,7 +1552,6 @@
 	force_wielded = 27
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
-	associated_skill = /datum/skill/combat/staves
 	max_integrity = 250
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -1476,6 +1605,17 @@
 	wdefense = 6 // A little bit extra
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/spear/blacksteel
+	name = "blacksteel spear"
+	desc = "A magnificent winged spear of blacksteel; 'nuff said."
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "blacksteelspear"
+	force_wielded = 35
+	wdefense = 6
+	wdefense_wbonus = 3
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/spear/otava
 	name = "banner of Otava"
@@ -1542,6 +1682,44 @@
 	gripped_intents = list(/datum/intent/spear/thrust/lance, /datum/intent/lance, SPEAR_BASH)
 	resistance_flags = null
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/spear/lance/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/spear/lance/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/spear/lance/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
+
+/obj/item/rogueweapon/spear/lance/blacksteel
+	name = "blacksteel lance"
+	desc = "A magnificent lance of blacksteel, designed to be wielded on saigaback in jousting tournaments. Even so, it isn't uncommon to see it \
+	being handled on foot as a pike by Grenzelhoft's blacksteel-armored knights. Wrap a length of cloth around the shaft to bear your heraldry."
+	icon_state = "bs_lance"
+	force = 20
+	force_wielded = 25
+	wdefense_wbonus = 2 //+1 over the traditional spear, once wielded.
+	max_integrity = 300
+	max_blade_int = 300
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(/datum/intent/spear/thrust, /datum/intent/lance/onehand, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/thrust/lance, /datum/intent/lance, SPEAR_BASH)
 
 /obj/item/rogueweapon/spear/naginata
 	name = "naginata"
@@ -1713,6 +1891,7 @@
 	force = 35
 	force_wielded = 55
 	minstr = 15
+	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 	wdefense = 15
 	max_integrity = 555
 	max_blade_int = 555

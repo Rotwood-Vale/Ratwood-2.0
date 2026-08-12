@@ -66,6 +66,12 @@
 /obj/item/bodypart/proc/add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)
 	if(!wound || !owner || (owner.status_flags & GODMODE))
 		return
+	if(isooze(owner) && wound.severity >= WOUND_SEVERITY_SEVERE) // Handles wounds for murkborne.
+		if(ispath(wound, /datum/wound))
+			wound = new wound()
+		if(is_ooze_wound(wound))
+			handle_ooze_wounds(wound, silent, crit_message)
+			return
 	if(ispath(wound, /datum/wound))
 		var/datum/wound/primordial_wound = GLOB.primordial_wounds[wound]
 		if(!primordial_wound.can_apply_to_bodypart(src))
@@ -130,6 +136,26 @@
 		return min(bleed_rate, 0.5)
 	return bleed_rate
 
+/// Returns the bleed amount that matters for HUD visuals without mutating bandages.
+/obj/item/bodypart/proc/get_hud_bleed_rate()
+	var/hud_bleed_rate = bleeding
+	if(bandage && !HAS_BLOOD_DNA(bandage))
+		var/obj/item/natural/cloth/cloth = bandage
+		if(istype(cloth))
+			hud_bleed_rate *= cloth.bandage_effectiveness
+			if(hud_bleed_rate <= 1)
+				return 0
+			return hud_bleed_rate
+	for(var/obj/item/embedded as anything in embedded_objects)
+		if(!embedded.embedding.embedded_bloodloss)
+			continue
+		hud_bleed_rate += embedded.embedding.embedded_bloodloss
+
+	grabbedby = SANITIZE_LIST(grabbedby)
+	for(var/obj/item/grabbing/grab in grabbedby)
+		hud_bleed_rate *= grab.bleed_suppressing
+	return max(round(hud_bleed_rate, 0.1), 0)
+
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied
 /obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon)
 	RETURN_TYPE(/datum/wound)
@@ -184,23 +210,26 @@
 
 /obj/item/bodypart/proc/manage_dynamic_wound(bclass, dam, armor)
 	var/woundtype
-	switch(bclass)
-		if(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PUNCH, BCLASS_TWIST)
-			woundtype = /datum/wound/dynamic/bruise
-		if(BCLASS_BITE)
-			woundtype = /datum/wound/dynamic/bite
-		if(BCLASS_CHOP, BCLASS_CUT)
-			woundtype = /datum/wound/dynamic/slash
-		if(BCLASS_STAB)
-			woundtype = /datum/wound/dynamic/puncture
-		if(BCLASS_PICK, BCLASS_PIERCE)
-			woundtype = /datum/wound/dynamic/gouge
-		if(BCLASS_LASHING)
-			woundtype = /datum/wound/dynamic/lashing
-		if(BCLASS_PUNISH)
-			woundtype = /datum/wound/dynamic/punish
-		else	//Wrong bclass type for wounds, skip adding this.
-			return
+	if(isooze(owner)) //If the owner is an ooze, gives them a special dynamic wound instead.
+		woundtype = /datum/wound/dynamic/ooze
+	else
+		switch(bclass)
+			if(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PUNCH, BCLASS_TWIST)
+				woundtype = /datum/wound/dynamic/bruise
+			if(BCLASS_BITE)
+				woundtype = /datum/wound/dynamic/bite
+			if(BCLASS_CHOP, BCLASS_CUT)
+				woundtype = /datum/wound/dynamic/slash
+			if(BCLASS_STAB)
+				woundtype = /datum/wound/dynamic/puncture
+			if(BCLASS_PICK, BCLASS_PIERCE)
+				woundtype = /datum/wound/dynamic/gouge
+			if(BCLASS_LASHING)
+				woundtype = /datum/wound/dynamic/lashing
+			if(BCLASS_PUNISH)
+				woundtype = /datum/wound/dynamic/punish
+			else	//Wrong bclass type for wounds, skip adding this.
+				return
 	var/datum/wound/dynwound = has_wound(woundtype)
 	var/exposed = owner.has_status_effect(/datum/status_effect/debuff/exposed)
 	if(!isnull(dynwound))
@@ -548,6 +577,7 @@
 			var/datum/component/silverbless/psyblessed = embedder.GetComponent(/datum/component/silverbless)
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
 			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
+		owner.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Removes an embedded object from this bodypart
@@ -569,6 +599,7 @@
 		if(!owner.has_embedded_objects())
 			owner.clear_alert("embeddedobject")
 		update_disabled()
+		owner.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /obj/item/bodypart/proc/try_bandage(obj/item/new_bandage)
@@ -576,6 +607,7 @@
 		return FALSE
 	bandage = new_bandage
 	new_bandage.forceMove(src)
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /obj/item/bodypart/proc/process_bandage(bleed_rate)
@@ -613,6 +645,7 @@
 		return FALSE
 	if(owner.stat != DEAD)
 		owner.visible_message(span_warning("Blood soaks through the bandage on [owner]'s [name]."), span_warning("Blood soaks through the bandage on my [name]."), vision_distance = 3)
+	owner.mark_zone_selector_hud_dirty()
 	return bandage.add_mob_blood(owner)
 
 /obj/item/bodypart/proc/remove_bandage()
@@ -625,6 +658,7 @@
 		qdel(bandage)
 	bandage = null
 	owner?.update_damage_overlays()
+	owner?.mark_zone_selector_hud_dirty()
 	return TRUE
 
 /// Applies a temporary paralysis effect to this bodypart
@@ -711,3 +745,18 @@
 		var/datum/status_effect/debuff/crit_resistance_cd/crit_resist_tracker_actual = crit_resist_tracker
 		// Iterate stack by 1 and then see if we can crit this hit
 		return !crit_resist_tracker_actual.try_crit()
+
+/obj/item/bodypart/proc/handle_ooze_wounds(datum/wound/wound, silent = FALSE, crit_message = FALSE)
+	if(!wound.handle_ooze_wound(src))
+		return
+	if(!istype(src, /obj/item/bodypart/head/))
+		if(crit_message)
+			var/message = "<span class='crit'><b>Critical hit!</b> The [src] melts apart into goop!</span>"
+			if(message)
+				owner.next_attack_msg += " [message]"
+		src.dismember()
+	else
+		if(has_wound(/datum/wound/slime/knockout))
+			add_wound(/datum/wound/slime/paralyze, silent, crit_message)
+		else
+			add_wound(/datum/wound/slime/knockout, silent, crit_message)

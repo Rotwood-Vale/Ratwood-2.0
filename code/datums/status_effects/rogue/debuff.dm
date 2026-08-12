@@ -177,7 +177,7 @@
 	id = "net"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/netted
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
-	duration = 3 MINUTES
+	duration = 30 SECONDS
 
 /datum/status_effect/debuff/netted/on_apply()
 		. = ..()
@@ -213,9 +213,19 @@
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)	//Slightly punishing.
 	duration = 15 MINUTES	//Punishing, same time as revival, but mildly less punishing than revival itself.
 
+/datum/status_effect/debuff/devitalised/lux_ripped
+	id = "lux_ripped"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	effectedstats = list(STATKEY_STR = -5, STATKEY_WIL = -5, STATKEY_CON = -5, STATKEY_SPD = -5, STATKEY_LCK = -5)	//apparently zizite miraclists killing people is BAD so we have to make the debuff so much worse than death to encourage people to just lacrima rather than remove gorget neck chop. this also prevents necromancers from doing a lacrima circle-jerk to farm lux. have fun.
+	duration = 30 MINUTES
+
 /atom/movable/screen/alert/status_effect/debuff/devitalised
 	name = "Devitalised"
 	desc = "Something has been taken from me, and it will take time to recover."
+
+/atom/movable/screen/alert/status_effect/debuff/devitalised/lux_ripped
+	name = "Lux Ripped"
+	desc = "The very essence of my lyfe was roughly torn from me."
 
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
@@ -273,6 +283,38 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+
+/datum/status_effect/debuff/yield_prompt
+	id = "yieldprompt"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	duration = 20 SECONDS
+
+/datum/status_effect/debuff/yield_prompt/on_apply()
+	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
+		var/mob/living/living_owner = owner
+		living_owner.submit(TRUE)
+		return FALSE
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt
+	name = "Yield?"
+	desc = "I am being told to yield, shall I comply? Or will I continue to fight!"
+	icon_state = "compliance"
+	alert_group = ALERT_DEBUFF
+
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/handle_click(location, control, params)
+	if(!usr || !usr.client)
+		return FALSE
+	var/mob/user = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(user)
+		return FALSE
+	var/mob/living/L = usr
+	if(!istype(L))
+		return
+	L.submit()
+	L.remove_status_effect(attached_effect)
 
 /datum/status_effect/debuff/chilled
 	id = "chilled"
@@ -545,14 +587,14 @@
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
@@ -575,13 +617,13 @@
 
 /datum/status_effect/debuff/deathdoorwilloss/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/process()
 	.=..()
@@ -1117,13 +1159,13 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
-	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/brittle/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_notice("My frame loosens as warmth returns."))
-	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/brittle
 	name = "brittle cold"
@@ -1140,7 +1182,7 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
-	message_admins("debuff applied")
+
 /datum/status_effect/debuff/overheat/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
@@ -1161,3 +1203,33 @@
 	name = "The Kiss"
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
+
+/datum/status_effect/debuff/malodorous_stink
+	id = "malodorous_stink"
+	duration = 999 MINUTES
+	alert_type = null
+
+	mob_effect_icon = 'icons/effects/effects.dmi'
+	mob_effect_icon_state = "mob_smell"
+	mob_effect_layer = ABOVE_MOB_LAYER
+
+/datum/status_effect/debuff/stinky_contact
+	id = "stinky_contact"
+	duration = 15 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
+
+/datum/status_effect/debuff/stinky_contact/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("I reek of someone else's stench now."))
+	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
+		owner.add_stress(/datum/stressevent/stinky_contact)
+
+/datum/status_effect/debuff/stinky_contact/on_remove()
+	to_chat(owner, span_notice("The stink finally fades off me."))
+	owner.remove_stress(/datum/stressevent/stinky_contact)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	name = "Musked"
+	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	icon_state = "debuff"

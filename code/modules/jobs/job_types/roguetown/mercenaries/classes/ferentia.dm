@@ -1,10 +1,10 @@
 /proc/ferentia_locality(mob/living/carbon/human/H)
-	var/is_local = input(H, "Are you a local?", "Ferentia Kingdom") as anything in list("I am from the Vale", "I am a foreigner")
+	var/is_local = input(H, "Are you a local?", "Ferentia Kingdom") as anything in list("I am from these lands", "I am a foreigner")
 	switch(is_local)
-		if("I am from the Vale")
+		if("I am from these lands")
 			REMOVE_TRAIT(H, TRAIT_OUTLANDER, JOB_TRAIT)
 		else
-			to_chat(H, span_notice("I have arrived at the Vale's mercenary guild after travelling from a different county within the Ferentian kingdom."))
+			to_chat(H, span_notice("I have arrived at this duchy's mercenary guild after travelling from a different county within the Ferentian kingdom."))
 
 
 /datum/advclass/mercenary/ferentia
@@ -187,7 +187,7 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 	extra_context = "This subclass gains Expert skill in their weapon of choice, be it swords or knives."
 

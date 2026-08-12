@@ -40,14 +40,18 @@
 		/datum/advclass/wretch/necromancer,
 		/datum/advclass/wretch/heretic,
 		/datum/advclass/wretch/heretic/spy,
+		/datum/advclass/wretch/heretic/monk,
 		/datum/advclass/wretch/outlaw,
 		/datum/advclass/wretch/outlaw/marauder,
+		/datum/advclass/wretch/lunacyembracer,
 		/datum/advclass/wretch/poacher,
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
 		/datum/advclass/wretch/vigilante,
+		/datum/advclass/wretch/herald_of_progress,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
+		/datum/advclass/wretch/wretchedtoiler,
 		/datum/advclass/wretch/ancientchampion,
 	)
 
@@ -62,7 +66,7 @@
 
 // Proc for wretch to select a bounty
 /proc/wretch_select_bounty(mob/living/carbon/human/H)
-	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of The Vale", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
+	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
 	// Felinid said we should gate it at 100 or so on at the lowest, so that wretch cannot ezmode it.
 	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe (+1 FOR)", "Horrific atrocities (+1 ALL STATS)")
 	var/race = H.dna.species
@@ -87,7 +91,7 @@
 			H.change_stat("willpower", 1)
 			H.change_stat("speed", 1)
 			H.change_stat("fortune", 1)
-			if(bounty_poster == "The Justiciary of The Vale")
+			if(bounty_poster == "The Justiciary of [SSmapping.map_adjustment.realm_name]")
 				GLOB.outlawed_players += H.real_name
 			else
 				GLOB.excommunicated_players += H.real_name

@@ -76,6 +76,7 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	body_parts_covered = HEAD|HAIR
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/kettle
 	name = "kettle helmet"
@@ -90,6 +91,19 @@
 	icon_state = "ikettle"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_IRON
+
+/obj/item/clothing/head/roguetown/helmet/kettle/ancient
+	name = "ancient kettle helmet"
+	desc = "A polished gilbranze helmet which protects the top and sides of the head. ZIZO's glare musn't be interceded when matters of unholy war are at hand. Undead ballistaemen practice a curious method of tying dyed cloth around its rim; can they, too, think and associate?"
+	icon_state = "ancientkettle"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/head/roguetown/helmet/kettle/ancient/decrepit
+	name = "decrepit kettle helmet"
+	desc = "A frayed, bronze helmet which protects the top and sides of the head. Atop a resurrected levyman's scalp, it's a sign that forces-most-foul are soon to besiege; and atop a fleshless ballistaeman's skull, it's a sign that you should probably duck."
+	max_integrity = ARMOR_INT_HELMET_DECREPIT
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/clothing/head/roguetown/helmet/kettle/wide
 	name = "wide kettle helmet"
@@ -282,6 +296,7 @@
 	dynamic_hair_suffix = ""
 	edelay_type = 1
 	adjustable = CAN_CADJUST
+	resistance_flags = FIRE_PROOF
 	toggle_icon_state = TRUE
 	max_integrity = 200
 
@@ -536,7 +551,7 @@
 // Warden Helmets
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler
 	name = "wardens's helmet"
-	desc = "A beastly snouted armet with the large horns of an elder saiga protruding from it. Residents of the vale know not to fear such a sight in the wilds, for they are exclusively associated with the Rotwood wardens."
+	desc = "A beastly snouted armet with the large horns of an elder saiga protruding from it. Residents of the realm know not to fear such a sight in the wilds, for they are exclusively associated with the Wardens."
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden64.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
@@ -555,6 +570,11 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee
+	name = "forester's antler helm"
+	desc = "A beastly snouted armet with the large horns of an elder saiga, reinforced with additional steel plating for front-line combat."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
 
 /obj/item/clothing/head/roguetown/helmet/sallet/warden
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -582,6 +602,21 @@
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee
+	name = "forester's volfskull helm"
+	desc = "The large, intimidating skull of an elusive white volf, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat/melee
+	name = "forester's ramskull helm"
+	desc = "The large, intimidating horned skull of an elusive vale great ram, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee
+	name = "forester's bearskull helm"
+	desc = "The large, intimidating skull of a common direbear, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
 
 /obj/item/clothing/head/roguetown/roguehood/warden
 	name = "warden's hood"
@@ -622,6 +657,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	max_integrity = 250
 	smeltresult = /obj/item/ingot/iron
+	dropshrink = null
 
 
 	//----------------- INFAREDBARON/HATS.DM ---------------------
@@ -637,3 +673,4 @@
 	flags_inv = HIDEHAIR
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
+	dropshrink = null

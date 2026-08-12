@@ -92,12 +92,6 @@
 		worn_thing.hit_response(src, user) //checks if clothing has hit response. Refer to Items.dm
 	return I.attack(src, user)
 
-/mob/living
-	var/tempatarget = null
-	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
-	var/construct = 0
-	var/burialrited = FALSE
-
 #define ATTACK_OVERRIDE_NODEFENSE 2
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
@@ -138,6 +132,8 @@
 			if(!user.used_intent.noaa)
 				playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			if(user.used_intent.no_attack) //BYE!!!
+				log_combat(user, M, "used a non-damaging intent on", src.name, "(INTENT: [uppertext(user.used_intent.name)])", log_seen = FALSE)
+				add_fingerprint(user)
 				return
 	else
 		return
@@ -448,7 +444,10 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = (get_complex_damage(I, user, blade_dulling) * I.demolition_mod)
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
+		newforce = min(newforce, 5)
+	newforce *= I.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0

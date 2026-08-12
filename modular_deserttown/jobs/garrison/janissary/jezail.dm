@@ -13,8 +13,8 @@
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
-		traits_applied = list(TRAIT_DODGEEXPERT)
-		)
+	)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_FUSILIER)
 
 	subclass_skills = list(
 		/datum/skill/combat/firearms = 5,//Your entire point is GUN.
@@ -41,7 +41,7 @@
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 	beltr = /obj/item/quiver/bullet/lead//nice to have variety but blunderbus might not fit the vibe
@@ -65,17 +65,17 @@
 		// 	if("Long Rifle")
 		// 		beltr = /obj/item/quiver/bullet/lead
 		// 		r_hand = /obj/item/gun/ballistic/firearm/arquebus
-		// 	if("Blunderbuss") 
+		// 	if("Blunderbuss")
 		// 		beltr = /obj/item/quiver/bullet/grapeshot
 		// 		r_hand = /obj/item/gun/ballistic/firearm/blunderbuss
-				
+
 		var/weapons2 = list("Scimitar","Whip","Club")
 		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
 		switch(weapon_choice2)
 			if("Scimitar")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/iron
-			if("Whip") 
+			if("Whip")
 				beltl = /obj/item/rogueweapon/whip
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel

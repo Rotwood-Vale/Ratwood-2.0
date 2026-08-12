@@ -42,6 +42,7 @@
 
 /mob/living/carbon/proc/rollfrenzy()
 	if(client)
+		beast_heartbeat_pulse()
 		if(clan)
 			clan.frenzy_message(src)
 		var/check = dice_roll(max(1, round(humanity/2)), min(frenzy_chance_boost, frenzy_hardness), src)
@@ -68,7 +69,7 @@
 		return
 	ADD_TRAIT(src, TRAIT_IN_FRENZY, MAGIC_TRAIT)
 	log_combat(src, src, "enters frenzy!")
-	add_client_colour(/datum/client_colour/glass_colour/red)
+	beast_take_over()
 	GLOB.frenzy_list += src
 
 /mob/living/carbon/proc/exit_frenzymod()
@@ -76,7 +77,7 @@
 		return
 
 	REMOVE_TRAIT(src, TRAIT_IN_FRENZY, MAGIC_TRAIT)
-	remove_client_colour(/datum/client_colour/glass_colour/red)
+	beast_release()
 	log_combat(src, src, "exits frenzy!")
 	GLOB.frenzy_list -= src
 	clear_frenzy_cache()
@@ -126,7 +127,7 @@
 					var/obj/item/grabbing/bite/bite = H.mouth
 					if(istype(bite))
 						qdel(bite)
-					if(L.bloodpool && L.stat != DEAD && last_drinkblood_use + 9.5 SECONDS <= world.time)
+					if(can_frenzy_feed_on(L) && last_drinkblood_use + 9.5 SECONDS <= world.time)
 						if(!H.mouth) // Only bite if mouth is free
 							if(L.pulledby != src)
 								L.grabbedby(src)
@@ -156,20 +157,30 @@
 	// Continue the frenzy loop
 	addtimer(CALLBACK(src, PROC_REF(frenzystep)), total_multiplicative_slowdown())
 
+/mob/living/carbon/proc/can_frenzy_feed_on(atom/prey)
+	if(prey == src || !ishuman(prey))
+		return FALSE
+	var/mob/living/carbon/human/victim = prey
+	if(victim.stat == DEAD)
+		return FALSE
+	return victim.get_blood_volume() > 0 && victim.get_bloodpool() > 0
+
 /mob/living/carbon/proc/get_frenzy_targets()
 	var/list/targets = list()
 	if(clan)
-		for(var/mob/living/L in oviewers(7, src))
-			if(L.bloodpool > 50 && L.stat != DEAD)
-				targets += L
-				if(L == frenzy_target)
-					return L
+		for(var/mob/living/carbon/human/H in oviewers(7, src))
+			if(!can_frenzy_feed_on(H))
+				continue
+			targets += H
+			if(H == frenzy_target)
+				return H
 	else
 		for(var/mob/living/L in oviewers(7, src))
-			if(L.stat != DEAD)
-				targets += L
-				if(L == frenzy_target)
-					return L
+			if(L == src || L.stat == DEAD)
+				continue
+			targets += L
+			if(L == frenzy_target)
+				return L
 	if(length(targets) > 0)
 		return pick(targets)
 	else

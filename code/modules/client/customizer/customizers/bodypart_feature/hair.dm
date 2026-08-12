@@ -393,7 +393,9 @@
 		/datum/sprite_accessory/hair/head/ponytail6,
 		/datum/sprite_accessory/hair/head/ponytail7,
 		/datum/sprite_accessory/hair/head/ponytail8,
+		/datum/sprite_accessory/hair/head/bob_mane,
 		/datum/sprite_accessory/hair/head/ponytailwitcher,
+		/datum/sprite_accessory/hair/head/ponytailwitcheralt,
 		/datum/sprite_accessory/hair/head/poofy,
 		/datum/sprite_accessory/hair/head/princely,
 		/datum/sprite_accessory/hair/head/protagonist,
@@ -534,6 +536,12 @@
 		/datum/sprite_accessory/hair/head/nest,
 		/datum/sprite_accessory/hair/head/strand,
 		/datum/sprite_accessory/hair/head/sodden,
+		/datum/sprite_accessory/hair/head/indigozap,
+		/datum/sprite_accessory/hair/head/rainbowdash,
+		/datum/sprite_accessory/hair/head/renard,
+		/datum/sprite_accessory/hair/head/willowtree,
+		/datum/sprite_accessory/hair/head/nimue,
+		/datum/sprite_accessory/hair/head/willow,
 		)
 
 /datum/customizer_choice/bodypart_feature/hair/head/humanoid/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
@@ -753,6 +761,7 @@
 		/datum/sprite_accessory/hair/head/ponytail6,
 		/datum/sprite_accessory/hair/head/ponytail7,
 		/datum/sprite_accessory/hair/head/ponytail8,
+		/datum/sprite_accessory/hair/head/bob_mane,
 		/datum/sprite_accessory/hair/head/highponytail,
 		/datum/sprite_accessory/hair/head/longponytail,
 		/datum/sprite_accessory/hair/head/stail,

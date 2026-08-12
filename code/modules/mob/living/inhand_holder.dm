@@ -63,7 +63,7 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/user)
+/obj/item/clothing/head/mob_holder/relaymove(mob/user, direction)
 	release()
 
 /obj/item/clothing/head/mob_holder/container_resist()

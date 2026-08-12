@@ -55,16 +55,24 @@
 			return
 	..()
 
-/obj/item/rogueweapon/thresher/aalloy
+/obj/item/rogueweapon/thresher/decrepit
 	name = "decrepit thresher"
 	desc = "A thresher of wrought bronze; from when the wheat was plentiful, and when Man wasn't burdened with the weight of sin."
 	force = 5
 	force_wielded = 7
 	icon_state = "athresh"
-	smeltresult = /obj/item/ingot/aalloy
+	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
 
+/obj/item/rogueweapon/thresher/blacksteel
+	name = "blacksteel thresher"
+	desc = "Hard work is only 'hard work' if you don't have the right tool for the job."
+	force = 20
+	force_wielded = 25
+	icon_state = "blacksteelthresh"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /obj/item/rogueweapon/sickle
 	force = 10
@@ -96,7 +104,7 @@
 			if("gen") return list("shrink" = 0.6,"sx" = -9,"sy" = 1,"nx" = 12,"ny" = 1,"wx" = -5,"wy" = 1,"ex" = 4,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt") return list("shrink" = 0.5,"sx" = -2,"sy" = -3,"nx" = 3,"ny" = -3,"wx" = -2,"wy" = -3,"ex" = 3,"ey" = -2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/sickle/aalloy
+/obj/item/rogueweapon/sickle/decrepit
 	name = "decrepit sickle"
 	desc = "Her thought was simple; to separate the wheat from the chaff. By removing the limitations set upon one's spirit by lyfe, only then could divinity be obtained. She was correct - yet Her ascension had gone terribly awry, all-the-same."
 	icon_state = "asickle"
@@ -108,6 +116,15 @@
 	name = "copper sickle"
 	icon_state = "csickle"
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/rogueweapon/sickle/blacksteel
+	name = "blacksteel sickle"
+	desc = "The burden of a dae's farmstead, accomplished in mere seconds. Why don't they make more of these?"
+	force = 20
+	icon_state = "blacksteelsickle"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 450
+	max_blade_int = 450
 
 /obj/item/rogueweapon/hoe
 	force = 10
@@ -130,11 +147,11 @@
 	var/hoe_damage = null //the durability damage recieved for every work cycle
 	var/work_time = 3 SECONDS // the time it takes to make new soil or till soil
 
-/obj/item/rogueweapon/hoe/aalloy
+/obj/item/rogueweapon/hoe/decrepit
 	name = "decrepit hoe"
 	desc = "Food is what cultivates lyfe; and without lyfe, there would be nothing left. At least, that is what His children would want you to believe."
 	icon_state = "ahoe"
-	smeltresult = /obj/item/ingot/aalloy
+	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
 
@@ -142,6 +159,15 @@
 	name = "copper hoe"
 	icon_state = "choe"
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/rogueweapon/hoe/blacksteel
+	force = 20
+	force_wielded = 25
+	name = "blacksteel hoe"
+	desc = "Wasting such valuable alloys on a dirty hoe? Shame, shame, shame! At least it can till the soil like a dagger-through-butter."
+	icon_state = "blacksteelhoe"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /obj/item/rogueweapon/hoe/stone
 	force = 7
@@ -328,11 +354,11 @@
 			if("wielded") return list("shrink" = 0.8,"sx" = 7,"sy" = -3,"nx" = -6,"ny" = -2,"wx" = -3,"wy" = -2,"ex" = 7,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 39,"wturn" = -35,"eturn" = 27,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onback") return list("shrink" = 0.7,"sx" = 1,"sy" = 3,"nx" = -1,"ny" = 3,"wx" = 4,"wy" = 3,"ex" = -3,"ey" = 3,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 8,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/pitchfork/aalloy
+/obj/item/rogueweapon/pitchfork/decrepit
 	name = "decrepit pitchfork"
 	desc = "Do not fault the layman for fearing Her disciples, nor for driving them out of the villages with pitchforks-and-torches. They, too, will come to see the blessings of Zizo, all in due tyme."
 	icon_state = "apitchfork"
-	smeltresult = /obj/item/ingot/aalloy
+	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
 
@@ -345,6 +371,15 @@
 	inhand_y_dimension = 64
 	icon_state = "cfork"
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/rogueweapon/pitchfork/blacksteel
+	force = 20
+	force_wielded = 25
+	name = "blacksteel pitchfork"
+	desc = "You're either the richest peasant in all of Psydonia, or the poorest noble."
+	icon_state = "blacksteelpitchfork"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /datum/intent/pforkdump
 	name = "scoop"

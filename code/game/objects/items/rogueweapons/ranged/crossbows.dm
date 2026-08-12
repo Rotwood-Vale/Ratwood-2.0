@@ -164,8 +164,12 @@
 		BB.damage *= damfactor
 
 		if(damage_from_perception)
-			if(user.STAPER > 10)
-				BB.damage *= (user.STAPER / 10)
+			var/perception_modifier = user.STAPER
+			if(perception_modifier > 15) // crossbow damage hardcapped at 15 PER
+				perception_modifier = 15
+			else if(perception_modifier < 10)
+				perception_modifier = 10
+			BB.damage *= (perception_modifier / 10)
 
 	cocked = FALSE
 	..()

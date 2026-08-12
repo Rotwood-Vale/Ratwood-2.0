@@ -6,11 +6,13 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Retribution. Spend blood to empower your strikes.
 //It's just refluffed divine strike. But worse.
 /obj/effect/proc_holder/spell/self/psydonic_retribution
-	name = "Retribution"
+	name = "RETRIBUTION"
 	desc = "You siphon a portion of your blood, in exchange for empowering your next strike. \
 	Those struck will find their actions tiring and cumbersome. \
 	<small><span class='bloody'>A greater miracle.</span></small>"
-	overlay_state = "psy_retrib"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "RETRIBUTION"
 	recharge_time = 1 MINUTES
 	movement_interrupt = FALSE
 	chargedrain = 0
@@ -104,11 +106,13 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Inspire. Meant to rally, at the cost of yourself.
 //Ravoxian CtA, with blood cost and weaker. Kind of. As above.
 /obj/effect/proc_holder/spell/self/psydonic_inspire
-	name = "Inspire"
+	name = "INSPIRE"
 	desc = "At the cost of your own lyfe giving blood, you can inspire your fellow Psydonites. \
 	Such grants them constitution and willpower. \
 	<small><span class='bloody'>A greater miracle.</span></small>"
-	overlay_state = "psy_inspire"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "INSPIRE"
 	recharge_time = 4 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	invocations = list("For the One!!")
@@ -147,10 +151,12 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 //Sacrosanctity. Odd name, but you take damage in exchange to regain blood.
 //Avoid bleedouts by breaking your limbs or something. I 'unno. Follows the flagellant theme.
 /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity
-	name = "Sacrosanctity"
+	name = "SACROSANCTITY"
 	desc = "In exchange for your flesh, you may replenish your lyfe giving blood. \
 	<small><span class='bloody'>A greater miracle.</span></small>"
-	overlay_state = "psy_sacro"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "SACROSANCTITY"
 	recharge_time = 1 MINUTES
 	movement_interrupt = FALSE
 	chargedrain = 0
@@ -169,18 +175,20 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume+200, 0)
+	user.set_blood_volume(max(user.get_blood_volume()+200, 0))
 	user.handle_blood()
 	user.apply_damage(100, BRUTE, spread_damage = TRUE)//The idea was good, but changing value of damage taken from -200 to -100 due to how inefficient and practically useless this is.
 	return TRUE
 
 //Inviolability. A shield around the user, harming any undead who strike them.
 /obj/effect/proc_holder/spell/self/psydonic_inviolability
-	name = "Inviolability"
+	name = "INVIOLABILITY"
 	desc = "In exchange for your flesh and lyfe giving blood, you are protected from Her puppets. \
 	Any undead striking you are harmed in turn. \
 	<small><span class='bloody'>A greater miracle.</span></small>"
-	overlay_state = "psy_invio"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "INVIOLABILITY"
 	recharge_time = 6 MINUTES
 	movement_interrupt = FALSE
 	chargedrain = 0
@@ -199,7 +207,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_inviolability/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume-300, 0)//RAAAA!!!!
+	user.set_blood_volume(max(user.get_blood_volume()-300, 0))//RAAAA!!!!
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_damage(200, BRUTE, spread_damage = TRUE) //300 damage is a lot and enough to cripple one limb instantly, lowering to 200.
@@ -240,7 +248,9 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	desc = "A miracle of an ancient order, allowing one to form portions of their lux into suitable implements. \
 	In your case, projectiles, for your beloved sauterelle. The effects of such are only felt shortly after use, so be swift. \
 	<small><span class='bloody'>A greater miracle.</span></small>"
-	overlay_state = "psy_syonacrum"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "SYONACRUM"
 	recharge_time = 6 MINUTES
 	movement_interrupt = FALSE
 	chargedrain = 0
@@ -279,7 +289,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		target.visible_message(span_notice("[user] places a palm around the [silver], leaving it awash with crimson."), \
 			span_userdanger("The bolt is suffused with my own spark. It shall strike harder than before..."))
 		qdel(silver)
-		user.blood_volume = max(user.blood_volume-300, 0)
+		user.set_blood_volume(max(user.get_blood_volume()-300, 0))
 		user.handle_blood()
 		new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 		user.apply_damage(50, BRUTE, spread_damage = TRUE)

@@ -193,14 +193,14 @@
 
 /datum/reagent/consumable/ethanol/butterhairs
 	name = "Butterhairs"
-	boozepwr = 30
+	boozepwr = 40
 	taste_description = "buttery richness"
-	color = "#5D8A8A"
+	color = "#D4A020"
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/ethanol/stonebeards
 	name = "Stonebeard Reserve"
-	boozepwr = 40
+	boozepwr = 60
 	taste_description = "potent oatlike liquor"
 	color = "#5D8A8A"
 	quality = DRINK_GOOD
@@ -568,7 +568,7 @@
 
 /datum/reagent/consumable/ethanol/whipwine // dont ask
 	name = "Magickal Whip Wine"
-	description = "A recipe recently floated into the vale. Magickal Whip Wine is said to increase one's potence and stamina sevenfold."
+	description = "A recipe recently floated into these lands. Magickal Whip Wine is said to increase one's potence and stamina sevenfold."
 	boozepwr = 10 // it's a whip. it's an actual whip.
 	taste_description = "leather, bitter herbs, and regret" // what did you expect
 	color = "#3a1d18"

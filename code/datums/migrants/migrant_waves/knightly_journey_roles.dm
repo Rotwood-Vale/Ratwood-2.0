@@ -27,7 +27,7 @@
 
 /datum/advclass/kj_knight
 	name = "Knight"
-	tutorial = "You are a knight from a distant land, a scion of a noble house visiting Rockwood Vale for one reason or another."
+	tutorial = "You are a knight from a distant land, a scion of a noble house visiting these lands for one reason or another."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte_expert
@@ -114,7 +114,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/sword/long
-			r_hand = /obj/item/rogueweapon/scabbard/sword
+			r_hand = /obj/item/rogueweapon/scabbard/sword/noble
 			backr = /obj/item/rogueweapon/shield/tower/metal
 		if("Mace + Shield")
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)

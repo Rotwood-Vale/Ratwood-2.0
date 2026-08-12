@@ -161,7 +161,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 			GLOB.musicboxes_last_play = world.time
 			playing = TRUE
 			soundloop.channel = new_channel
-			soundloop.mid_sounds = list(curfile)
+			soundloop.set_mid_sounds(list(curfile))
 			soundloop.cursound = null
 			soundloop.start()
 			user.log_message("played jukebox song: [curfile]", LOG_GAME)

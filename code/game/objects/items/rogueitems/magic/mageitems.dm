@@ -199,7 +199,7 @@
 		playsound(loc, get_sfx("genslash"), 100, TRUE)
 		user.visible_message(span_warning("[user] cuts open [user.p_their()] palm!"), \
 			span_cult("I slice open my palm!"))
-		if(user.blood_volume)
+		if(user.get_blood_volume())
 			var/obj/effect/decal/cleanable/roguerune/rune = rune_to_scribe
 			user.apply_damage(initial(rune.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		is_bled = TRUE
@@ -256,6 +256,7 @@
 	desc = "A small mimic, imbued with the arcane to make it docile. It can transform into most things it touchs. "
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "mimic_trinket"
+	dropshrink = 0.6
 	possible_item_intents = list(/datum/intent/use)
 	var/duration = 10 MINUTES
 	var/oldicon

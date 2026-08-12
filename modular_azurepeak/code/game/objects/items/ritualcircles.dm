@@ -56,7 +56,7 @@
 							playsound(loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
 							user.adjust_fire_stacks(10)
 							user.ignite_mob()
-							user.flash_fullscreen("redflash3")
+							user.fullscreen_redflash("redflash3")
 							user.emote("firescream")
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
@@ -233,7 +233,7 @@
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
-		target.flash_fullscreen("redflash3")
+		target.fullscreen_redflash("redflash3")
 		target.emote("agony")
 		target.Stun(200)
 		target.Knockdown(200)
@@ -324,7 +324,7 @@
 			to_chat(target, span_warning("The ritual's power does not recognize me..."))
 			continue
 		to_chat(target, span_userdanger("Do you like hurting other people?"))
-		target.flash_fullscreen("redflash3")
+		target.fullscreen_redflash("redflash3")
 		target.emote("agony")
 		target.Unconscious(200)
 		target.Knockdown(200)
@@ -345,7 +345,7 @@
 			to_chat(target, span_warning("The ritual's power does not recognize me..."))
 			continue
 		to_chat(target, span_userdanger("The webs of madness and nature whisper to me. The webs are eternal. Long live the Nest!"))
-		target.flash_fullscreen("redflash3")
+		target.fullscreen_redflash("redflash3")
 		target.emote("agony")
 		target.Unconscious(100)
 		target.Knockdown(200)
@@ -411,7 +411,7 @@
 /obj/structure/ritualcircle/malum/proc/holyreforge(src)
 	var/ritualtargets = view(7, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.flash_fullscreen("whiteflash") //Cool effect!
+		target.fullscreen_redflash("whiteflash") //Cool effect!
 	for (var/obj/item/ingot/silver/I in loc)
 		qdel(I)
 		new /obj/item/ingot/silverblessed(loc)
@@ -1257,8 +1257,8 @@
 
 
 /obj/structure/ritualcircle/zizo
-	name = "Rune of Progress"
-	desc = "A Holy Rune of ZIZO. Progress at any cost."
+	name = "Rune of Ambition"
+	desc = "A Holy Rune of ZIZO. Ambition at any cost."
 	icon_state = "zizo_chalky"
 	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
 
@@ -1274,7 +1274,7 @@
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
-	var/riteselection = input(user, "Rituals of Progress", src) as null|anything in zizorites
+	var/riteselection = input(user, "Rituals of Ambition", src) as null|anything in zizorites
 	switch(riteselection)
 		if("Rite of Armaments")
 			var/onrune = view(1, loc)
@@ -1287,7 +1287,7 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1304,7 +1304,7 @@
 		if("Rite of the Dark Crystal")
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! GRANT THE CABAL THEIR RELIC!!")
@@ -1336,7 +1336,7 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1423,7 +1423,7 @@
 			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 			spawn(40)
 				playsound(loc, 'sound/misc/boatleave.ogg', 100)
-				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Progress."))
+				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
 				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
 					target.set_patron(new /datum/patron/inhumen/zizo)
 					target.already_converted_once = TRUE
@@ -2339,7 +2339,7 @@
 			I.Jitter(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			target.fullscreen_redflash("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! IT BURNS ME TO MY CORE!"))
 			Were.on_removal()
@@ -2365,7 +2365,7 @@
 			target.Knockdown(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			target.fullscreen_redflash("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! MY STILL HEART QUICKENS ONCE MORE!"))
 			Vamp.on_removal()

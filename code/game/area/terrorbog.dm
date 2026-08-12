@@ -1,7 +1,6 @@
 /area/rogue/outdoors/bog
 	name = "The Terrorbog"
 	icon_state = "bog"
-	warden_area = TRUE
 	ambientsounds = AMB_BOGDAY
 	ambientnight = AMB_BOGNIGHT
 	spookysounds = SPOOKY_FROG

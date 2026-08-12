@@ -373,13 +373,18 @@
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
-/obj/item/clothing/mask/rogue/facemask/aalloy
+/obj/item/clothing/mask/rogue/facemask/ancient
+	name = "ancient mask"
+	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	max_integrity = 200
+	icon_state = "ancientmask"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
 	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
-	icon_state = "ancientmask"
 	max_integrity = 75
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
@@ -477,13 +482,6 @@
 	icon_state = "smask"
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
-
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
-	icon_state = "ancientmask"
-	smeltresult = /obj/item/ingot/aaslag
-
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
 	name = "steel hound mask"
@@ -651,6 +649,18 @@
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "A golden mask, gnarled by the sustained agonies of djinnic corruption; yet as long as its Naledian hexes endure, so too will its wearer. Hand-fitted shingles flank the sides to repel incoming strikes. </br>'..Clad with the stereotype of abruptly disappearing without any forewarning, the typical Sojourner is in constant pursuit of diversifying their erudition. One might arrive to learn the local witch's recipe of sanctifying atropa extract and spend yils in the community trying to master it, while another might work alongside the region's Orthodoxic chapter to slay a lycker lord in exchange for his archive, only to vanish the very next day..'"
+	max_integrity = 150
+	armor = ARMOR_PLATE
+	flags_inv = HIDEFACE|HIDESNOUT
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	sellprice = 0
+
+/obj/item/clothing/mask/rogue/lordmask/zizite
+	name = "fateful visage"
+	item_state = "zizomask"
+	icon_state = "zizomask"
+	desc = "To advance, at any cost."
+	alternate_worn_layer = HOOD_LAYER
 	max_integrity = 150
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
@@ -845,12 +855,12 @@
 	apply_mask_style(choice, user)
 
 /obj/item/clothing/mask/rogue/xylixmask/AltRightClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	open_style_menu(user)
 
 /obj/item/clothing/mask/rogue/xylixmask/ShiftRightClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(findtext(icon_state, "_snout"))
 		var/snout_index = xylixmask_snout_states.Find(icon_state)
@@ -883,7 +893,7 @@
 		H.update_fov_angles()
 		H.update_vision_cone()
 /obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])

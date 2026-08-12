@@ -9,6 +9,7 @@
 
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.9
 
 /obj/item/bouquet/rosa
 	name = "rosa bouquet"
@@ -45,6 +46,7 @@
 	icon_state = ""
 	item_state = ""
 	experimental_inhand = FALSE
+	dropshrink = 0.9
 
 	grid_width = 64
 	grid_height = 32

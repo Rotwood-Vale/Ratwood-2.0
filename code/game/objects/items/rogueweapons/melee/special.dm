@@ -604,7 +604,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user = usr, params)
 	if(!istype(target))
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/hunted)) // Check to see if the dagger will do 20 damage or 14
+	if(target.has_flaw(/datum/charflaw/assassintarget)) // Check to see if the dagger will do 20 damage or 14
 		force = 20 * 2	//vs trait havers, 2x damage over a steel knife
 	else
 		force = 20 + 4	//vs non-trait havers, 4 more damage over a steel knife
@@ -659,7 +659,7 @@
 
 			return
 
-		if(target.has_flaw(/datum/charflaw/hunted)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(target.has_flaw(/datum/charflaw/assassintarget)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
 			if(target.client == null) //See if the target's soul has left their body
 				to_chat(user, "<span class='danger'>Your target's soul has already escaped its corpse...you try to call it back!</span>")
 				get_profane_ghost(target,user) //Proc to capture a soul that has left the body.
@@ -765,6 +765,7 @@
 
 //This is awful and I apologise.
 /obj/item/rogueweapon/spear/keep_standard/attack_self(mob/living/user)
+	..()
 	if(secondary_tag)
 		if(wielded)
 			detail_tag = "_det1"
@@ -774,7 +775,6 @@
 			detail_tag = "_det"
 			update_icon()
 			user.update_inv_hands()
-	..()
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()
@@ -784,9 +784,10 @@
 	if(active_item)
 		return
 	active_item = TRUE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
 		user.change_stat(STATKEY_LCK, 3)
+		user.change_stat(STATKEY_PER, 2)
 		user.add_stress(/datum/stressevent/keep_standard)
 		ADD_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)//KEEP AT IT!!
 		ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)//AND KEEP UP!!!
@@ -806,9 +807,10 @@
 	if(!active_item)
 		return
 	active_item = FALSE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
 		user.change_stat(STATKEY_LCK, -3)
+		user.change_stat(STATKEY_PER, -2)
 		user.remove_stress(/datum/stressevent/keep_standard)
 		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
 		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

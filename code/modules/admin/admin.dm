@@ -248,8 +248,8 @@
 		body += "<p>Current: [initial(living.patron.name)]</p>"
 		body += "<ul>"
 		for(var/patron_type in GLOB.patronlist)
-			// Skip Undivided and Science patrons
-			if(patron_type == /datum/patron/divine/undivided || patron_type == /datum/patron/godless)
+			// Skip Science patrons
+			if(patron_type == /datum/patron/godless)
 				continue
 			var/datum/patron/P = GLOB.patronlist[patron_type]
 			// Skip if patron is null or has no name
@@ -308,7 +308,7 @@
 		var/mob/living/carbon/human/H = M
 		
 		// Blood Volume
-		body += "<b>Blood Volume:</b> [H.blood_volume] / [BLOOD_VOLUME_NORMAL] units<br>"
+		body += "<b>Blood Volume:</b> [H.get_blood_volume()] / [BLOOD_VOLUME_NORMAL] units<br>"
 		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_add100=[REF(M)]'>+100</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_add50=[REF(M)]'>+50</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];heal_blood_sub50=[REF(M)]'>-50</A> | "
@@ -403,7 +403,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/amount = text2num(href_list["amount"])
-				H.blood_volume = min(H.blood_volume + amount, BLOOD_VOLUME_MAXIMUM)
+				H.set_blood_volume(min(H.get_blood_volume() + amount, BLOOD_VOLUME_MAXIMUM))
 				message_admins("[key_name_admin(usr)] added [amount] blood to [key_name_admin(target)].")
 				log_admin("[key_name(usr)] added [amount] blood to [key_name(target)].")
 				show_heal_panel(target)
@@ -412,7 +412,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/amount = text2num(href_list["amount"])
-				H.blood_volume = max(H.blood_volume - amount, 0)
+				H.set_blood_volume(max(H.get_blood_volume() - amount, 0))
 				message_admins("[key_name_admin(usr)] removed [amount] blood from [key_name_admin(target)].")
 				log_admin("[key_name(usr)] removed [amount] blood from [key_name(target)].")
 				show_heal_panel(target)
@@ -421,7 +421,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/amount = text2num(href_list["amount"])
-				H.blood_volume = amount
+				H.set_blood_volume(amount)
 				message_admins("[key_name_admin(usr)] set [key_name_admin(target)]'s blood to [amount].")
 				log_admin("[key_name(usr)] set [key_name(target)]'s blood to [amount].")
 				show_heal_panel(target)
@@ -876,7 +876,7 @@
 	if(!fexists("data/player_saves/[copytext(ckey,1,2)]/[ckey]/preferences.sav"))
 		to_chat(src, span_boldwarning("User does not exist."))
 		return
-	var/amt2change = input("How much to modify the PQ by? (20 to -20, or 0 to just add a note)") as null|num
+	var/amt2change = input("How much to modify the PQ by? ([!check_rights(R_ADMIN,0) ? "-20 to 20, or " : ""]0 to just add a note)") as null|num
 	if(!check_rights(R_ADMIN,0))
 		amt2change = CLAMP(amt2change, -20, 20)
 	var/raisin = stripped_input("State a short reason for this change", "Game Master", "", null)

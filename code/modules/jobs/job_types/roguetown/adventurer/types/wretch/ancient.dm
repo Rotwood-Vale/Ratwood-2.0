@@ -54,7 +54,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	belt = /obj/item/storage/belt/rogue/leather/black
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	backr = /obj/item/rogueweapon/shield/tower/metal
 	backl = /obj/item/storage/backpack/rogue/satchel
 	r_hand = /obj/item/rogueweapon/sword/long/zizo
@@ -105,7 +105,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_deadite)
 				var/extraspell = list("Bolt of Lightning", "Ensnare")
-				var/spell_choice = input(H,"Choose your offensive spell.", "INEVITABILITY OF PROGRESS") as anything in extraspell
+				var/spell_choice = input(H,"Choose your offensive spell.", "INEVITABILITY OF AMBITION") as anything in extraspell
 				switch(spell_choice)
 					if("Bolt of Lightning")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt)

@@ -30,6 +30,13 @@
 	clotting_rate = 0.60		// Normally it's only 0.02, this is huge compared to that.
 	bypass_bloody_wound_check = TRUE	//We bypass this proc-checkfor fractures.
 
+//Ooze stuff start
+/datum/wound/fracture/can_apply_to_bodypart(obj/item/bodypart/affected)
+	if(isooze(affected.owner))
+		return FALSE
+	return ..()
+//Ooze stuff end
+
 /datum/wound/fracture/get_visible_name(mob/user)
 	. = ..()
 	if(passive_healing)
@@ -74,6 +81,8 @@
 	mortal = TRUE
 	/// Some head fractures will knock your lights out, if not flat-out paralyze you.
 	var/knockout = 10	//10 tick knockout (1 sec)
+	/// All forms of skullcrack will instantly kill skeletons
+	shatter_wound = TRUE
 
 /datum/wound/fracture/head/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -235,6 +244,9 @@
 	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
 		affected.emote("deathgurgle", forced = TRUE)
 		affected.death()
+	if(shatter_wound && HAS_TRAIT(affected, TRAIT_SHATTER_WEAKNESS))
+		affected.emote("scream", forced = TRUE)
+		affected.death()
 
 /datum/wound/fracture/neck/on_mob_loss(mob/living/affected)
 	. = ..()
@@ -257,6 +269,7 @@
 	bleed_rate = 25				//Higher than artery
 	clotting_threshold = 1		//Will always bleed bad
 	clotting_rate = 1			//Good clotting rate; within 24 ticks (~3 seconds) will lower heavily.
+	shatter_wound = TRUE
 
 /datum/wound/fracture/chest/on_mob_gain(mob/living/affected)
 	. = ..()

@@ -641,8 +641,8 @@
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
@@ -659,6 +659,7 @@
 		owner.adjustToxLoss(-healing_on_tick, 0)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
 		owner.adjustCloneLoss(-healing_on_tick, 0)
+		owner.updatehealth()
 // Lesser miracle effect end
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
@@ -729,8 +730,8 @@
 		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
 	H.color = "#c7aa5c"
-	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		owner.blood_volume = min(owner.blood_volume+healing_on_tick, BLOOD_VOLUME_OKAY)
+	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
+		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_OKAY))
 	var/list/wCount = owner.get_wounds()
 	if(length(wCount))
 		owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation))
@@ -803,8 +804,8 @@
 	H.color = "#FFD700" // Golden healing particles
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+(healing_on_tick * 0.5), BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+(healing_on_tick * 0.5), BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
@@ -865,10 +866,10 @@
 	H.color = "#FF0000"
 	if(!owner.construct)
 		if(skill_level >= SKILL_LEVEL_JOURNEYMAN)
-			if(owner.blood_volume < BLOOD_VOLUME_SURVIVE)
-				owner.blood_volume = BLOOD_VOLUME_SURVIVE
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_on_tick, BLOOD_VOLUME_NORMAL)
+			if(owner.get_blood_volume() < BLOOD_VOLUME_SURVIVE)
+				owner.set_blood_volume(BLOOD_VOLUME_SURVIVE)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_on_tick, BLOOD_VOLUME_NORMAL))
 
 #undef BLOODHEAL_DUR_SCALE_PER_LEVEL
 #undef BLOODHEAL_RESTORE_DEFAULT
@@ -893,8 +894,8 @@
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + (healing_on_tick + 10), BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + (healing_on_tick + 10), BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise))
 			owner.update_damage_overlays()
@@ -1053,8 +1054,8 @@
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+4, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+4, BLOOD_VOLUME_NORMAL))
 
 /atom/movable/screen/alert/status_effect/buff/rockmuncher_lesser
 	name = "Sated"
@@ -1276,12 +1277,12 @@
 
 /datum/status_effect/buff/flylordstriage/tick()
 	playsound(owner, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
-	owner.flash_fullscreen("redflash3")
+	owner.fullscreen_redflash("redflash3")
 	owner.emote("agony")
 	new /obj/effect/temp_visual/flies(get_turf(owner))
 	var/list/wCount = owner.get_wounds()
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = min(owner.blood_volume+100, BLOOD_VOLUME_NORMAL)
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume()+100, BLOOD_VOLUME_NORMAL))
 	if(wCount.len > 0)
 		owner.heal_wounds(healing_on_tick)
 		owner.update_damage_overlays()
@@ -1364,8 +1365,8 @@
 
 /datum/status_effect/buff/undermaidenbargainheal/tick()
 	var/list/wCount = owner.get_wounds()
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = min(owner.blood_volume+60, BLOOD_VOLUME_NORMAL)
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume()+60, BLOOD_VOLUME_NORMAL))
 	if(wCount.len > 0)
 		owner.heal_wounds(100) // we're gonna try really hard to heal someone's arterials and also stabilize their blood, so they don't instantly bleed out again. Ideally they should be 'just' alive.
 		owner.update_damage_overlays()
@@ -1520,7 +1521,7 @@
 	to_chat(owner, span_warning("My footsteps feel lighter and quieter. What is that droning sound in my head...?"))
 	// inspired by matthiosmuffle
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, "xylixboon")
-	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon") 
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, "xylixboon")
 
 /datum/status_effect/buff/stagehands_silence/on_remove()
 	. = ..()
@@ -1803,15 +1804,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
 
-/datum/status_effect/buff/psydonic_endurance/on_apply()
-	. = ..()
-	if(HAS_TRAIT(owner, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(owner, TRAIT_HEAVYARMOR))
-		ADD_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
-/datum/status_effect/buff/psydonic_endurance/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_HEAVYARMOR, TRAIT_STATUS_EFFECT)
-
 /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
 	name = "Psydonic Endurance"
 	desc = "I am protected by blessed Psydonian plate armor."
@@ -1834,10 +1826,6 @@
 
 	owner.visible_message(span_userdanger("A tide of Eoran light surges from [owner], it fills you with peace and hope!"))
 
-	var/filter = owner.get_filter(EORANAURA_FILTER)
-	if(!filter)
-		owner.add_filter(EORANAURA_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 2))
-
 	var/mutable_appearance/effect = mutable_appearance('icons/effects/effects.dmi', "curse", -JOYBRINGER_LAYER, alpha = 128)
 	effect.appearance_flags = RESET_COLOR
 	effect.blend_mode = BLEND_ADD
@@ -1851,7 +1839,6 @@
 /datum/status_effect/eoranaura/on_remove()
 	. = ..()
 
-	owner.remove_filter(EORANAURA_FILTER)
 	owner.remove_overlay(EORANAURA_FILTER)
 
 	UnregisterSignal(owner, COMSIG_LIVING_LIFE)
@@ -1925,12 +1912,12 @@
 /datum/status_effect/buff/griefflower/on_apply()
 	. = ..()
 	to_chat(owner, span_notice("The Rosa’s ring draws blood, but it’s the memories that truly wound. Failure after failure surging through you like thorns blooming inward."))
-	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/griefflower/on_remove()
 	. = ..()
 	to_chat(owner, span_notice("You part from the Rosa’s touch. The ache retreats..."))
-	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT)
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/buff/griefflower
 	name = "Rosa Ring"
@@ -1960,7 +1947,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.playsound_local(get_turf(H), 'sound/misc/adrenaline_rush.ogg', 100, TRUE)
-		H.blood_volume = min((H.blood_volume + blood_restore), BLOOD_VOLUME_NORMAL)
+		H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 		H.stamina -= max((H.stamina - (H.max_stamina / 2)), 0)
 
 /datum/status_effect/buff/adrenaline_rush/on_remove()

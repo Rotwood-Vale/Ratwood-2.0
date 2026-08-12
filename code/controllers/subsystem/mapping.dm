@@ -6,14 +6,16 @@ SUBSYSTEM_DEF(mapping)
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
 
-	var/datum/map_config/config
-	var/datum/map_config/next_map_config
-	var/datum/map_adjustment/map_adjustment
+	/// The current map config the server loaded at round start.
+	var/datum/map_config/current_map
 
-	var/map_voted = FALSE
+	var/datum/map_adjustment/map_adjustment	//all the tweaks and changes for roles across various maps
 
 	var/list/map_templates = list()
 	var/list/map_load_marks = list() //The game scans thru the map and looks for marks, then adds them to this list for caching
+
+	/// trait signature -> list of /datum/shared_z_stack, see LoadOtherZ
+	var/list/shared_z_stacks = list()
 
 	var/list/ruins_templates = list()
 	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
@@ -51,23 +53,23 @@ SUBSYSTEM_DEF(mapping)
 
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
-	if(!config)
+	if(!current_map)
 #ifdef FORCE_MAP
-		config = load_map_config(FORCE_MAP)
+		current_map = load_map_config(FORCE_MAP)
 #else
-		config = load_map_config(error_if_missing = FALSE)
+		current_map = load_map_config(error_if_missing = FALSE)
 #endif
 
 /datum/controller/subsystem/mapping/PreInit()
 	HACK_LoadMapConfig()
 	// After assigning a config datum to var/config, we check which map ajudstment fits the current config
-	if(islist(config.map_file) && length(config.map_file))
-		config.map_file = config.map_file[1]
+	if(islist(current_map.map_file) && length(current_map.map_file))
+		current_map.map_file = current_map.map_file[1]
 	for(var/datum/map_adjustment/each_adjust as anything in subtypesof(/datum/map_adjustment))
-		if(config.map_file && initial(each_adjust.map_file_name) != config.map_file)
+		if(current_map.map_file && initial(each_adjust.map_file_name) != current_map.map_file)
 			continue
 		map_adjustment = new each_adjust() // map_adjustment has multiple procs that'll be called from needed places (i.e. job_change)
-		log_world("Loaded '[config.map_file]' map adjustment.")
+		log_world("Loaded '[current_map.map_file]' map adjustment.")
 		break
 	return ..()
 
@@ -75,12 +77,12 @@ SUBSYSTEM_DEF(mapping)
 	retainer = new
 	if(initialized)
 		return
-	if(config.defaulted)
-		var/old_config = config
-		config = global.config.defaultmap
-		if(!config || config.defaulted)
-			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Vanderlin</span>")
-			config = old_config
+	if(current_map.defaulted)
+		var/datum/map_config/old_config = current_map
+		current_map = global.config.defaultmap
+		if(!current_map || current_map.defaulted)
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to [old_config.map_name] </span>")
+			current_map = old_config
 	if(map_adjustment)
 		map_adjustment.on_mapping_init()
 		SSregionthreat?.on_map_ready()
@@ -126,8 +128,7 @@ SUBSYSTEM_DEF(mapping)
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
 
-	config = SSmapping.config
-	next_map_config = SSmapping.next_map_config
+	current_map = SSmapping.current_map
 
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
 
@@ -141,6 +142,8 @@ SUBSYSTEM_DEF(mapping)
 	if (!islist(files))  // handle single-level maps
 		files = list(files)
 
+	var/track_memory = !CONFIG_GET(flag/disable_memory_stats)
+
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
 	var/list/parsed_maps = list()
@@ -148,7 +151,11 @@ SUBSYSTEM_DEF(mapping)
 		var/full_path = "[map_folder]/[path]/[file]"
 		if(path == "custom")
 			full_path = "data/custom_maps/[file]"
+		var/parse_start = REALTIMEOFDAY
+		var/parse_rss = track_memory ? get_process_rss_bytes() : null
 		var/datum/parsed_map/pm = new(file(full_path))
+		if(track_memory)
+			log_map_memory("parse", full_path, parse_rss, parse_start)
 		var/bounds = pm?.bounds
 		if (!bounds)
 			errorList |= full_path
@@ -176,12 +183,124 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
+		var/load_start = REALTIMEOFDAY
+		var/load_rss = track_memory ? get_process_rss_bytes() : null
 		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
 			errorList |= pm.original_path
+		if(track_memory)
+			log_map_memory("load", pm.original_path, load_rss, load_start)
 
 	log_game("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 
 	return parsed_maps
+
+/// Distance kept between templates sharing a z-level, must exceed client view range
+#define ZSTACK_PACK_MARGIN 20
+
+/datum/shared_z_stack
+	var/start_z
+	var/z_count
+	var/cursor_x = 1
+	var/cursor_y = 1
+	var/shelf_height = 0
+
+/// Reserves a width x height footprint on this stack, returns list(x, y) or null if it cannot fit
+/datum/shared_z_stack/proc/try_place(width, height)
+	if (cursor_x + width - 1 > world.maxx)
+		cursor_x = 1
+		cursor_y += shelf_height + ZSTACK_PACK_MARGIN
+		shelf_height = 0
+	if (cursor_y + height - 1 > world.maxy || cursor_x + width - 1 > world.maxx)
+		return null
+	. = list(cursor_x, cursor_y)
+	cursor_x += width + ZSTACK_PACK_MARGIN
+	shelf_height = max(shelf_height, height)
+
+/// Builds the compatibility key deciding which maps may share a z-stack:
+/// z-count plus every per-level trait except the cosmetic Name
+/datum/controller/subsystem/mapping/proc/z_stack_signature(list/traits)
+	var/list/parts = list()
+	for (var/list/level in traits)
+		var/list/keys = list()
+		for (var/key in level)
+			if (key == "Name")
+				continue
+			keys += "[key]=[level[key]]"
+		sortTim(keys, GLOBAL_PROC_REF(cmp_text_asc))
+		parts += keys.Join(",")
+	return "[length(traits)]z|[parts.Join("|")]"
+
+/// Loads other_z map configs, automatically packing compatible templates onto shared
+/// z-stacks by their parsed size instead of giving each its own full z-levels
+/datum/controller/subsystem/mapping/proc/LoadOtherZ(list/errorList, list/configs)
+	for (var/datum/map_config/conf in configs)
+		if (islist(conf.map_file))  // multi-file configs use the classic loader untouched
+			LoadGroup(errorList, conf.map_name, conf.map_path, conf.map_file, conf.map_folder, conf.traits, ZTRAITS_STATION)
+			continue
+
+		var/track_memory = !CONFIG_GET(flag/disable_memory_stats)
+		var/start_time = REALTIMEOFDAY
+		var/full_path = "[conf.map_folder]/[conf.map_path]/[conf.map_file]"
+		var/parse_rss = track_memory ? get_process_rss_bytes() : null
+		var/datum/parsed_map/pm = new(file(full_path))
+		if (track_memory)
+			log_map_memory("parse", full_path, parse_rss, start_time)
+		var/list/bounds = pm?.bounds
+		if (!bounds)
+			errorList |= full_path
+			continue
+		var/width = bounds[MAP_MAXX] - bounds[MAP_MINX] + 1
+		var/height = bounds[MAP_MAXY] - bounds[MAP_MINY] + 1
+		var/z_count = bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
+
+		var/list/traits = conf.traits
+		if (!islist(traits) || !length(traits))
+			traits = list()
+			for (var/i in 1 to z_count)
+				traits += list(ZTRAITS_STATION)
+		else if (z_count != traits.len)
+			INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [z_count] z-levels in [conf.map_path]!")
+			if (z_count < traits.len)
+				traits.Cut(z_count + 1)
+			while (z_count > traits.len)
+				traits += list(ZTRAITS_STATION)
+
+		var/list/pos
+		var/datum/shared_z_stack/stack
+		var/signature = conf.no_z_sharing ? null : z_stack_signature(traits)
+		if (signature)
+			var/list/candidates = shared_z_stacks[signature]
+			for (var/datum/shared_z_stack/candidate as anything in candidates)
+				pos = candidate.try_place(width, height)
+				if (pos)
+					stack = candidate
+					break
+
+		if (!pos)
+			stack = new
+			stack.start_z = world.maxz + 1
+			stack.z_count = z_count
+			var/i = 0
+			for (var/level in traits)
+				add_new_zlevel("[conf.map_name][i ? " [i + 1]" : ""]", level)
+				++i
+			if (signature)
+				var/list/candidates = shared_z_stacks[signature]
+				if (!candidates)
+					shared_z_stacks[signature] = candidates = list()
+				candidates += stack
+			pos = stack.try_place(width, height) || list(1, 1)
+
+		var/load_start = REALTIMEOFDAY
+		var/load_rss = track_memory ? get_process_rss_bytes() : null
+		if (!pm.load(pos[1], pos[2], stack.start_z, no_changeturf = TRUE))
+			errorList |= pm.original_path
+		if (track_memory)
+			log_map_memory("load", pm.original_path, load_rss, load_start)
+
+		log_game("Loaded [conf.map_name] at [pos[1]],[pos[2]] z[stack.start_z] in [(REALTIMEOFDAY - start_time)/10]s!")
+
+#undef ZSTACK_PACK_MARGIN
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
@@ -193,10 +312,10 @@ SUBSYSTEM_DEF(mapping)
 	// load the station
 	station_start = world.maxz + 1
 	#ifdef TESTING
-	INIT_ANNOUNCE("Loading [config.map_name]...")
+	INIT_ANNOUNCE("Loading [current_map.map_name]...")
 	#endif
 
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.map_folder, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.map_folder, current_map.traits, ZTRAITS_STATION)
 
 	var/list/otherZ = list()
 
@@ -204,24 +323,24 @@ SUBSYSTEM_DEF(mapping)
 	otherZ += load_map_config("_maps/map_files/otherz/dungeon.json")
 	#endif
 
-	for(var/map_json in config.other_z)
+	for(var/map_json in current_map.other_z)
 		otherZ += load_map_config(map_json)
-		log_world("Loaded '[config.other_z]' ")
+		log_world("Loaded '[current_map.other_z]' ")
 
 	if(otherZ.len)
 		for(var/datum/map_config/OtherZ in otherZ)
-			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.map_folder, OtherZ.traits, ZTRAITS_STATION)
+		LoadOtherZ(FailedZs, otherZ)
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
-		"}, list("map_name" = config.map_name, "round_id" = GLOB.round_id))
+		"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
 	#ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
+	while (world.maxz < (5 - 1) && space_levels_so_far < current_map.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
@@ -237,74 +356,11 @@ SUBSYSTEM_DEF(mapping)
 #undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == "custom")
-		fdel("data/custom_maps/[config.map_file]")
-		// And as the file is now removed set the next map to default.
-		next_map_config = load_map_config(default_to_box = TRUE)
+	if(current_map.map_path == "custom")
+		fdel("data/custom_maps/[current_map.map_file]")
 
 
-/datum/controller/subsystem/mapping/proc/maprotate()
-	if(map_voted)
-		map_voted = FALSE
-		return
 
-	var/players = GLOB.clients.len
-	var/list/mapvotes = list()
-	//count votes
-	var/pmv = CONFIG_GET(flag/preference_map_voting)
-	if(pmv)
-		for (var/client/c in GLOB.clients)
-			var/vote = c.prefs.preferred_map
-			if (!vote)
-				if (global.config.defaultmap)
-					mapvotes[global.config.defaultmap.map_name] += 1
-				continue
-			mapvotes[vote] += 1
-	else
-		for(var/M in global.config.maplist)
-			mapvotes[M] = 1
-
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in global.config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/map_config/VM = global.config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_min_users > 0 && players < VM.config_min_users)
-			mapvotes.Remove(map)
-			continue
-		if (VM.config_max_users > 0 && players > VM.config_max_users)
-			mapvotes.Remove(map)
-			continue
-
-		if(pmv)
-			mapvotes[map] = mapvotes[map]*VM.voteweight
-
-	var/pickedmap = pickweight(mapvotes)
-	if (!pickedmap)
-		return
-	var/datum/map_config/VM = global.config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.map_name]")
-	. = changemap(VM)
-	if (. && VM.map_name != config.map_name)
-		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
-
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
-	if(!VM.MakeNextMap())
-		next_map_config = load_map_config(default_to_box = TRUE)
-		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
-		return
-
-	next_map_config = VM
-	return TRUE
 /*
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 

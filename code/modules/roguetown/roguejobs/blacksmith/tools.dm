@@ -255,14 +255,17 @@
 	force = 18
 	max_integrity = 15
 
-/obj/item/rogueweapon/hammer/aalloy
-	name = "decrepit hammer"
-	desc = "A decrepit old hammer."
+/obj/item/rogueweapon/hammer/ancient
+	name = "ancient hammer"
+	desc = "A hammer of polished gilbronze. Remade masterfully upon a smooth handle, it shall make forth the armaments of HER legionnaries and great works..."
 	icon_state = "ahammer"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/hammer/ancient/decrepit
+	name = "decrepit hammer"
+	desc = "A hammer of wrought bronze. It has pounded out the beginning of a thousand legacies; of humble adventurers, of noble legionnaires, and of foolish heroes."
 	force = 12
 	max_integrity = 10
-	smeltresult = /obj/item/ingot/aalloy
-
 
 /obj/item/rogueweapon/hammer/copper
 	name = "copper hammer"
@@ -284,13 +287,14 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/hammer/blacksteel
-	force = 25
+	force = 28
 	name = "blacksteel hammer"
 	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	icon_state = "bs_masterhammer"
 	item_state = "bs_masterhammer"
 	quality = 2
+	max_integrity = 450
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/hammer/blacksteel/getonmobprop(tag)
@@ -426,14 +430,29 @@
 		else
 			icon_state = "stonetongsi0"
 
-/obj/item/rogueweapon/tongs/aalloy
-	name = "decrepit tongs"
+/obj/item/rogueweapon/tongs/ancient
+	name = "ancient tongs"
+	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
 	icon_state = "atongs"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/tongs/ancient/update_icon()
+	. = ..()
+	if(!hingot)
+		icon_state = "atongs"
+	else
+		if(hott)
+			icon_state = "atongsi1"
+		else
+			icon_state = "atongsi0"
+
+/obj/item/rogueweapon/tongs/ancient/decrepit
+	name = "decrepit tongs"
+	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
 	force = 5
-	smeltresult = null
 	max_integrity = 10
 
-/obj/item/rogueweapon/tongs/aalloy/update_icon()
+/obj/item/rogueweapon/tongs/ancient/decrepit/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "atongs"
@@ -445,11 +464,13 @@
 
 /obj/item/rogueweapon/tongs/blacksteel
 	name = "blacksteel tongs"
-	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
+	desc = "A pair of blacksteel jaws, almost certainly used as a sign of prestige."
 	icon_state = "bs_tongs"
 	wdefense = 6
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	max_integrity = 450
 
 /obj/item/rogueweapon/tongs/blacksteel/update_icon()
 	. = ..()

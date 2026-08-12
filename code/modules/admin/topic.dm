@@ -76,7 +76,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 100, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 100, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 100 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 100 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -86,7 +86,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 50, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 50, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 50 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 50 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -96,7 +96,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 50, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 50, 0))
 			message_admins("[key_name_admin(usr)] removed 50 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 50 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -106,7 +106,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 100, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 100, 0))
 			message_admins("[key_name_admin(usr)] removed 100 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 100 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -116,9 +116,9 @@
 		var/mob/living/M = locate(href_list["heal_blood_set"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.blood_volume) as num|null
+			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.get_blood_volume()) as num|null
 			if(new_amount != null)
-				H.blood_volume = clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM)
+				H.set_blood_volume(clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM))
 				message_admins("[key_name_admin(usr)] set [key_name_admin(M)]'s blood volume to [new_amount].")
 				log_admin("[key_name(usr)] set [key_name(M)]'s blood volume to [new_amount].")
 				show_heal_panel(M)
@@ -481,8 +481,6 @@
 				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 				if(posttransformoutfit && istype(newmob))
 					newmob.equipOutfit(posttransformoutfit)
-			if("monkey")
-				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("cat")
 				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
 			if("runtime")
@@ -712,32 +710,6 @@
 		message_admins(span_adminnotice("[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode]."))
 		Game() // updates the main game menu
 		HandleFSecret()
-
-	else if(href_list["monkeyone"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
-			return
-
-		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)]."))
-		H.monkeyize()
-
-	else if(href_list["humanone"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/monkey/Mo = locate(href_list["humanone"])
-		if(!istype(Mo))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/monkey.")
-			return
-
-		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)].")
-		message_admins(span_adminnotice("[key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)]."))
-		Mo.humanize()
 
 	else if(href_list["corgione"])
 		if(!check_rights(R_SPAWN))
@@ -1120,7 +1092,7 @@
 	else if(href_list["remove_language"])
 		var/mob/M = locate(href_list["remove_language"])
 		var/datum/language/lang = text2path(href_list["language"])
-		M.remove_language(lang)
+		M.remove_language(lang, source = LANGUAGE_SOURCE_ALL)
 		message_admins(span_danger("Admin [key_name_admin(usr)] removed [lang] from [key_name_admin(M)]"))
 		log_admin("[usr] removed [lang] to [M].")
 		show_player_panel_next(M, "languages")
@@ -1591,7 +1563,7 @@
 			return
 		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
 		var/client/mob_client = M.client
-		var/amt2change = input("How much to modify the PQ by? (20 to -20, or 0 to just add a note)") as null|num
+		var/amt2change = input("How much to modify the PQ by? ([!check_rights(R_BAN,0) ? "-20 to 20, or " : ""]0 to just add a note)") as null|num
 		if(!check_rights(R_BAN,0))
 			amt2change = CLAMP(amt2change, -20, 20)
 		var/raisin = stripped_input("State a short reason for this change", "Game Master", "", null)

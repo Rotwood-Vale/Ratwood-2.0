@@ -35,6 +35,7 @@
 	icon_state = "tophat"
 	color = CLOTHING_BLACK
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/bardhat
 	name = "bard's hat"
@@ -83,6 +84,17 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
 
+/obj/item/clothing/head/roguetown/loadoutpapakha
+	name = "Soft-sided papakha"
+	icon_state = "papakha"
+	item_state = "papakha"
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
+	nudist_approved = TRUE
+	salvage_result = /obj/item/natural/fur
+	salvage_amount = 1
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+
 /obj/item/clothing/head/roguetown/hatblu
 	name = "fur hat"
 	desc = "A blue hat lined with fur."
@@ -109,6 +121,7 @@
 	nudist_approved = TRUE
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/chaperon
 	name = "chaperon hat"
@@ -205,6 +218,7 @@
 	//dropshrink = 0.75
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/knitcap
 	name = "knit cap"
@@ -340,6 +354,7 @@
 	icon_state = "nun"
 	sellprice = 5
 	nudist_approved = TRUE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/hennin
 	name = "hennin"
@@ -491,6 +506,7 @@
 	nudist_approved = TRUE // this gets an exception for being ARMOR_CLOTHING but why does it prevent crits???
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"
@@ -607,4 +623,5 @@
 	color = "#262927"
 	detail_color = "#FFFFFF"
 	altdetail_color = "#9c2525"
-	
+
+

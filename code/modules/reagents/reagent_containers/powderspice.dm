@@ -9,6 +9,7 @@
 	sellprice = 10
 	grid_width = 32
 	grid_height = 32
+	dropshrink = 0.75
 
 /obj/item/reagent_containers/powder/spice
 	name = "spice"
@@ -60,7 +61,6 @@
 /datum/reagent/druqks/on_mob_metabolize(mob/living/M)
 	M.overlay_fullscreen("druqk", /atom/movable/screen/fullscreen/druqks)
 	M.set_drugginess(30)
-	M.update_body_parts_head_only()
 	if(M.client)
 		ADD_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.area_entered(get_area(M), M.client)
@@ -75,7 +75,6 @@
 	if(M.client)
 		REMOVE_TRAIT(M, TRAIT_DRUQK, "based")
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 //		if(M.client.screen && M.client.screen.len)
 ///			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in M.client.screen
 //			PM.backdrop(M.client.mob)
@@ -107,13 +106,19 @@
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
 			if(!C.can_smell())
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
+			for(var/obj/item/clothing/CL in C.get_equipped_items())
+				if(CL.body_parts_covered & NOSE)
+					to_chat(user, span_warning("[C.p_theyre(TRUE)] has something covering [C.p_their()] nose."))
+					return FALSE
+			
 			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("[user] attempts to force me to inhale [src]!"))
+								span_danger("I attempt to force [C] to inhale [src]!"))
+		
 			if(C.cmode)
 				if(!CH.grabbedby)
 					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
 					return FALSE
-			if(!do_mob(user, M, 10))
+			if(!do_mob(user, M, 5 SECONDS))
 				return FALSE
 
 	playsound(M, 'sound/items/sniff.ogg', 100, FALSE)
@@ -285,7 +290,7 @@
 	. = 1
 
 /datum/reagent/moondust/on_mob_metabolize(mob/living/M)
-	M.flash_fullscreen("whiteflash")
+	M.fullscreen_redflash("whiteflash")
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -300,7 +305,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust)
 	if(prob(10))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 
 /datum/reagent/moondust/overdose_start(mob/living/M)
@@ -333,7 +338,7 @@
 
 /datum/reagent/moondust_purest/on_mob_metabolize(mob/living/M)
 	M.playsound_local(M, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
-	M.flash_fullscreen("whiteflash")
+	M.fullscreen_redflash("whiteflash")
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -349,7 +354,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/moondust_purest)
 	if(prob(20))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 
 /datum/reagent/moondust_purest/overdose_start(mob/living/M)
@@ -380,7 +385,7 @@
 	..()
 	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	L.playsound_local(L, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
-	L.flash_fullscreen("whiteflash")
+	L.fullscreen_redflash("whiteflash")
 	animate(L.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -411,7 +416,7 @@
 		M.sate_addiction(/datum/charflaw/addiction/junkie)
 	M.apply_status_effect(/datum/status_effect/buff/starsugar)
 	if(prob(20))
-		M.flash_fullscreen("whiteflash")
+		M.fullscreen_redflash("whiteflash")
 	..()
 	..()
 	. = 1
@@ -487,7 +492,6 @@
 	M.remove_status_effect(/datum/status_effect/buff/herozium)
 	if(M.client)
 		SSdroning.play_area_sound(get_area(M), M.client)
-	M.update_body_parts_head_only()
 
 /datum/reagent/herozium/overdose_process(mob/living/M)
 	if(prob(30))

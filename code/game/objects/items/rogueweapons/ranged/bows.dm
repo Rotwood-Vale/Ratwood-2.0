@@ -233,9 +233,12 @@
 			BB.damage -= (BB.damage * (user.client.chargedprog / 100))
 			BB.embedchance /= 2
 			BB.accuracy -= 15
-		else
-			BB.damage = BB.damage
-		BB.damage *= damfactor * (user.STAPER > 10 ? user.STAPER / 10 : 1)
+		var/perception_modifier = user.STAPER
+		if(perception_modifier > 15) // Bow damage hardcapped at 15 PER
+			perception_modifier = 15
+		if(perception_modifier < 10)
+			perception_modifier = 10
+		BB.damage *= damfactor * (perception_modifier / 10)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()
@@ -442,7 +445,7 @@
 	name = "blackhorn bow"
 	desc = "When a northern black-horned saiga is old enough, it will shed its two-metre long antlers. As time passes, they harden progressively more but keep a degree of flexibility that can outdo even yew.\
 		Wardens often collect such antlers in the rare occasion they are found and send them to be filed, strung and treated by a master bowyer. Such tradition carries merit even todae, \
-		and thus one can see the vale's wardens carrying their endemic blackhorn bows with pride."
+		and thus one can see the realm's wardens carrying their endemic blackhorn bows with pride."
 	icon_state = "recurve_warden"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden

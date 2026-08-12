@@ -52,9 +52,13 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/kazengunese,
 		/datum/language/draconic,
-		/datum/language/aavnic, // All but beast, which is associated with werewolves.
+		/datum/language/aavnic,
+		/datum/language/canilunzt,
+		/datum/language/merar,
+		/datum/language/thievescant/signlanguage, // All but Beastish, Zizo Chant (unless Zizoist) and true Thieves' Cant (unless Matthiosite or Xylixian).
 	)
 	category_tags = list(CTAG_ARCHIVIST)
 	subclass_stats = list(
@@ -93,7 +97,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	mask = /obj/item/clothing/mask/rogue/spectacles
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		head = /obj/item/clothing/head/roguetown/tagelmust
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	id = /obj/item/scomstone/bad
@@ -112,6 +116,8 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/refocusstudies)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)
+		if(H.patron.type == /datum/patron/inhumen/zizo)
+			H.grant_language(/datum/language/undead)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)

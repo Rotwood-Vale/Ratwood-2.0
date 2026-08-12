@@ -52,3 +52,52 @@
 	req_table = FALSE
 	verbage_simple = "render"
 	verbage = "renders"
+
+/datum/crafting_recipe/roguetown/tallow/hearth_soft_tallow
+	name = "render soft tallow over the hearth (1 tallow, 1 fat)"
+	result = list(
+				/obj/item/reagent_containers/food/snacks/tallow/soft,
+				)
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		/obj/item/reagent_containers/food/snacks/fat = 1,
+	)
+	tools = list(/obj/item/cooking/pan,)
+	structurecraft = /obj/machinery/light/rogue/hearth
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+	craftsound = 'sound/misc/frying.ogg'
+	verbage_simple = "render"
+	verbage = "renders"
+
+/datum/crafting_recipe/roguetown/tallow/campfire_soft_tallow
+	name = "render soft tallow over the campfire (1 tallow, 1 fat)"
+	result = list(
+				/obj/item/reagent_containers/food/snacks/tallow/soft,
+				)
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		/obj/item/reagent_containers/food/snacks/fat = 1,
+	)
+	tools = list(/obj/item/cooking/pan,)
+	structurecraft = /obj/machinery/light/rogue/campfire
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+	craftsound = 'sound/misc/frying.ogg'
+	verbage_simple = "render"
+	verbage = "renders"
+
+/datum/crafting_recipe/roguetown/cooking/mobilestove_soft_tallow
+	name = "render soft tallow over the mobile stove (1 tallow, 1 fat)"
+	result = list(
+				/obj/item/reagent_containers/food/snacks/tallow/soft,
+				)
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		/obj/item/reagent_containers/food/snacks/fat = 1,
+	)
+	tools = list(/obj/item/cooking/pan,)
+	structurecraft = /obj/machinery/light/rogue/hearth/mobilestove
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+	craftsound = 'sound/misc/frying.ogg'
+	req_table = FALSE
+	verbage_simple = "render"
+	verbage = "renders"

@@ -19,6 +19,7 @@
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
 		/datum/job/roguetown/adventurer/courtslave,
+		/datum/job/roguetown/dtchaplain,
 		
 		/datum/job/roguetown/tribalchieftain,
 		/datum/job/roguetown/tribalshaman,
@@ -35,6 +36,7 @@
 		/datum/job/roguetown/warden = 6,
 	)
 	title_adjust = list(
+		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
 	)
 	tutorial_adjust = list(
 		/datum/job/roguetown/rookie = "Odd-jobs, running messages, fixing dents and talking to locals; the Men at Arms can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \

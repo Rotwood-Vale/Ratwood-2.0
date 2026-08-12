@@ -41,6 +41,8 @@
 
 /datum/intent/flail/strike/matthiosflail
 	reach = 2
+	damfactor = 1.3 // More damage than peasant flail, not sure why the gilded one had worse intents before, but here we are!
+
 
 /datum/intent/flail/strikerange
 	name = "ranged strike"
@@ -74,6 +76,7 @@
 
 /datum/intent/mace/smash/flail/matthiosflail
 	reach = 2
+	damfactor = 1.6 // so it's better than the militia counterpart.
 
 /datum/intent/mace/smash/flail/militia
 	damfactor = 0.9
@@ -103,28 +106,26 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/flail/aflail
-	name = "decrepit flail"
-	desc = "A spiked ball of wrought bronze, chained to a rotwooden handle. The chains groan with every twirl, strained by forces it hadn't felt in millennia; swing it a bit too hard, and there's a chance that the flailhead might completely fly off."
-	icon_state = "aflail"
-	force = 22
-	max_integrity = 175
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/rogueweapon/flail/sflail/paflail
-	name = "ancient flail"
-	desc = "A spiked ball of polished gilbranze, chained to a reinforced handle. They say that His children worshipped the flail above all else, for its twirls replicated the Comet Syon's blazing flights."
-	icon_state = "aflail"
-	smeltresult = /obj/item/ingot/aaslag
-
 /obj/item/rogueweapon/flail/sflail
 	force = 30
 	icon_state = "flail"
 	desc = "This is a swift, steel flail. Strikes hard and far."
 	smeltresult = /obj/item/ingot/steel
 	minstr = 5
+
+/obj/item/rogueweapon/flail/sflail/ancient
+	name = "ancient flail"
+	desc = "A spiked ball of polished gilbranze, chained to a reinforced handle. They say that His children worshipped the flail above all else, for its twirls replicated the Comet Syon's blazing flights."
+	icon_state = "aflail"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/flail/sflail/ancient/decrepit
+	name = "decrepit flail"
+	desc = "A spiked ball of wrought bronze, chained to a rotwooden handle. The chains groan with every twirl, strained by forces it hadn't felt in millennia; swing it a bit too hard, and there's a chance that the flailhead might completely fly off."
+	force = 22
+	max_integrity = 175
+	color = "#bb9696"
+	anvilrepair = null
 
 /obj/item/rogueweapon/flail/sflail/silver
 	force = 35
@@ -264,7 +265,7 @@
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
-
+	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
@@ -278,3 +279,14 @@
 	force = 27
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogueweapon/flail/blacksteel
+	name = "blacksteel flail"
+	icon_state = "bs_flail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
+	desc = "An elegant flail of blacksteel. The heftsome weight makes it unmatched for driving back plate-armored opponents, so long as one \
+	has the stamina to swing its alloyed chains around."
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 250
+	minstr = 12
+	force = 35

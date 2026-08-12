@@ -11,7 +11,7 @@
 	Most commonly, Aasimar are similar to Humens, albeit taller, and commonly possess an uncanny beauty. \
 	When compared to the average Humen, they have strangely colored skin and are more physically frail. \
 	Because of their upbringing, they make for natural conduits for godly powers. \
-	The vale's populace holds them with a mixture of uneasy mixture of fear and respect. \
+	The realm's populace holds them with a mixture of uneasy mixture of fear and respect. \
 	Due to their celestial nature, it is widely believed that an Aasimar's death is a bad omen...<br>\
 	(+1 Stat of their choice, Lack of Hunger & Thirst)"
 
@@ -71,6 +71,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks, //Azure > Hearth
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/tonage,
 		/datum/body_marking/womb_tattoo,
 		/datum/body_marking/butterfly,

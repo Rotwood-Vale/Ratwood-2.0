@@ -101,6 +101,10 @@
 	name = "Bobcurl"
 	icon_state = "bobcurl"
 
+/datum/sprite_accessory/hair/head/bob_mane
+	name = "Bob (Mane)"
+	icon_state = "bob_mane"
+
 /datum/sprite_accessory/hair/head/boddicker
 	name = "Boddicker"
 	icon_state = "boddicker"
@@ -573,6 +577,10 @@
 /datum/sprite_accessory/hair/head/ponytailwitcher
 	name = "Ponytail (Witcher)"
 	icon_state = "ponytail_witcher"
+
+/datum/sprite_accessory/hair/head/ponytailwitcheralt
+	name = "Ponytail (Witcher Alt)"
+	icon_state = "ponytail_witcheralt"
 
 /datum/sprite_accessory/hair/head/fringetail
 	name = "Ponytail (Fringe)"
@@ -1713,6 +1721,30 @@
 /datum/sprite_accessory/hair/head/sodden
 	name = "Sodden"
 	icon_state = "sodden"
+
+/datum/sprite_accessory/hair/head/indigozap
+	name = "Reckless"
+	icon_state = "indigo_zap"
+
+/datum/sprite_accessory/hair/head/rainbowdash
+	name = "Loyal"
+	icon_state = "rainbow_dash"
+	
+/datum/sprite_accessory/hair/head/renard
+	name = "Renard"
+	icon_state = "renard"
+
+/datum/sprite_accessory/hair/head/willowtree
+	name = "Willowtree"
+	icon_state = "willowtree"
+
+/datum/sprite_accessory/hair/head/nimue
+	name = "Nimue"
+	icon_state = "nimue"
+
+/datum/sprite_accessory/hair/head/willow
+	name = "Willow"
+	icon_state = "willow"
 
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian
