@@ -48,6 +48,7 @@
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
 		/datum/advclass/wretch/vigilante,
+		/datum/advclass/wretch/herald_of_progress,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
 		/datum/advclass/wretch/wretchedtoiler,

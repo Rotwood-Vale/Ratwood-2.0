@@ -215,3 +215,68 @@
       preference, and returns the exact same thing flash_fullscreen does (or null
       if flashes are disabled). This way your code can check if the prefs blocked
       it.
+2026-08-10:
+  Arturlang:
+  - bugfix: ' blood duping with bloodpool'
+  - bugfix: torpor giving you blood, now uses 2 blood a tick
+  - bugfix: vampire abilities affecting fellow-clan members
+  EvenInDeathIStillServe:
+  - rscadd: Adds a Tall Eyes Outer head marking.
+  SillyMoff:
+  - qol: add info about energy and stamina while examine it
+  Slavica:
+  - rscadd: Added new variant of the Ponytail ( Witcher ) hairstyle
+  UntoldTactics:
+  - balance: Inquisitor ordinator and inspector sub-class have devotion limits raised
+      to 400 (from 250) and cleric regen set to minor (previous weak)
+  yupup123:
+  - balance: Powders can't be force inhaled through masks.
+  - balance: Powders take just as long as a potion to be force inhaled.
+  - bugfix: Fixes the bug that causes rolled assassins to not properly take up the
+      slot or leave a slot open.
+2026-08-11:
+  Ephemeralis:
+  - balance: Churchlings can now use T2 miracles, up from T1.
+  - rscadd: Added the 'Neophyte' churchling advclass, essentially a medium-armored
+      templar squire with journeyman weapons. Starts with awful gear and T1 miracles.
+  RadiantFlash7:
+  - bugfix: embedded surgery tools no longer damage on tick
+  - bugfix: miracle heals no longer have a fortify 1.5x buff apply twice if healing
+      someone who's been fortified
+  SillyMoff:
+  - rscadd: ear flicks emote for elfs
+  UntoldTactics:
+  - bugfix: Heirophant's kandys now has a proper integrity value, equivilient to a
+      padded gambeson.
+  Xander3359:
+  - balance: Axians and Abyssorites no longer freeze when swimming in cold water
+  kimesik:
+  - balance: Adventurer-Monk get 1 less WIL and CON.
+2026-08-12:
+  Heheniy:
+  - bugfix: Migrant's name and job no longer shows twice on examine
+  Kroto-Ker:
+  - rscadd: Aerosol Wave
+  - balance: Reworks Aerosolize.
+  PPooch:
+  - bugfix: Using cure rot surgery to remove rot when you have been bit but not actually
+      infected, will no longer strike you dead
+  Xander3359:
+  - balance: Mounts now experience slowdown when going through water.
+  Yuckuza:
+  - rscadd: Ported all of the blacksteel weapons from Azure Peak, adjusted to work
+      with ratwood combat and balance.
+  - rscadd: Ported all of the blacksteel tools from Azure Peak; also ported Azure's
+      much cleaner hammer and chisel shared procs
+  - rscadd: 'Added the Azure Peak donator skin urumis as a new subtype of whips. More
+      force than whips, but all their intents require
+
+      charge time. Additionally, they have lower integrity and require more to craft.'
+  - rscadd: Gave bronze whip and silver stake knife proper dedicated sprites.
+  - rscadd: As a consequence of the blacksteel variant having it, you can now attach
+      a banner to the steel lance
+  - balance: Lance intent now has blunt chip, at full charge 32 damage chips through.
+  - balance: Blacksteel smelting ratio changed to 2 silver and 2 steel.
+  - balance: You can no longer smelt blessed silver for regular silver.
+  mushy:
+  - rscadd: The Herald of Progress, a wretch bard.

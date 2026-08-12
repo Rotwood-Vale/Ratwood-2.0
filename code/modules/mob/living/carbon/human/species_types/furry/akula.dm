@@ -26,7 +26,7 @@
 	eventually sparked the brutal Ainoan Crusade, splintering the republic into several rump states led by merchant warlords and so-called pirate kings. \
 	However, instead of trying to reclaim the glory of the past, Axians embrace their new lifestyle and thrive in the chaos."
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
-	inherent_traits = list(TRAIT_WATERBREATHING, TRAIT_SEA_DRINKER)
+	inherent_traits = list(TRAIT_WATERBREATHING, TRAIT_SEA_DRINKER, TRAIT_WATERLOVING)
 	possible_ages = ALL_AGES_LIST
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mta.dmi'

@@ -245,11 +245,11 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/userashuman = user
-		userashuman.blood_volume = max(0, userashuman.blood_volume - blood_loss)
+		userashuman.set_blood_volume(max(0, userashuman.get_blood_volume() - blood_loss))
 	for(var/mob/living/carbon/human/H in range(7, origin_turf))
 		if(H.dna?.species?.id == "gnoll" && H != user)
 			gnoll_hitchhikers++
-			H.blood_volume = max(0, H.blood_volume - blood_loss)
+			H.set_blood_volume(max(0, H.get_blood_volume() - blood_loss))
 			do_teleport(H, destination_turf)
 			to_chat(H, span_notice("You are swept along in the wake of the blood abduction!"))
 

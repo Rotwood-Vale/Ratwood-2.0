@@ -39,7 +39,7 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	victim.blood_volume = max(victim.blood_volume - 5, 0)
+	victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
 	victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
@@ -61,8 +61,8 @@
 			H.adjust_hydration(35)
 			if(H.reagents)
 				H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 12)
-			if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-				H.blood_volume = min(H.blood_volume + 35, BLOOD_VOLUME_NORMAL)
+			if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+				H.set_blood_volume(min(H.get_blood_volume() + 35, BLOOD_VOLUME_NORMAL))
 		return
 
 	if(victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
@@ -87,11 +87,11 @@
 
 	clan.handle_bloodsuck(src, blood_handle)
 
-	if(victim.bloodpool > 0)
+	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		victim.blood_volume = max(victim.blood_volume - 45, 0)
-		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
-			used_vitae = victim.bloodpool
+		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
+		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
+			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
 		victim.adjust_bloodpool(-used_vitae)
 		victim.adjust_hydration(- used_vitae * 0.1)
@@ -112,13 +112,13 @@
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
 			return
-		else if(victim.blood_volume < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
+		else if(victim.get_blood_volume() < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
 			to_chat(src, span_warning("This sad sacrifice for your own pleasure affects something deep in your mind."))
 			AdjustMasquerade(-1)
 			victim.death()
 			return
 
-	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.blood_volume <= BLOOD_VOLUME_BAD)
+	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.get_blood_volume() <= BLOOD_VOLUME_BAD)
 		if(alert(src, "Would you like to sire a new spawn?", "THE CURSE OF KAIN", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
 			to_chat(src, span_warning("I decide [victim] is unworthy."))
 		else
