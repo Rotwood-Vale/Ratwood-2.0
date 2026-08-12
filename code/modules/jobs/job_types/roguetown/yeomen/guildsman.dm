@@ -103,10 +103,9 @@
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
 /datum/advclass/guildsman/artificer
-	name = "Architech"
-	tutorial = "You are an Architech. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
-	But your true calling is the creation of arcyne machines, alongside feats of engineering, constructing, and creating mechanical and magical wonders whose art of creation has been passed down\
-	from a certain elven Artificer..."
+	name = "Guild Engineer"
+	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
+	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
 	outfit = /datum/outfit/job/roguetown/guildsman/artificer
 
 	category_tags = list(CTAG_GUILDSMEN)
