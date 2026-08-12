@@ -1107,6 +1107,15 @@
 	max_blade_int = 225
 	max_integrity = 155
 
+/obj/item/rogueweapon/spear/bronze/winged
+	name = "bronze winged spear"
+	desc = "An antiquital staff, adorned with a winged bronze spearhead. The flared edges catch errant strikes and keep snarling foes from \
+	further impaling themselves in order to maul its wielder. </br>Scholars believe this particular type of polearm was made to counter Vheslynic \
+	seadaemons, during the now-mythologized Syonic era's collapse."
+	icon_state = "bronzewingedspear"
+	item_state = "bronzewingedspear"
+	wdefense = 6 //Functionally the same, but with +1 DEF.
+
 /obj/item/rogueweapon/greatsword
 	force = 14
 	force_wielded = 35

@@ -126,12 +126,10 @@
 	force = 23
 	force_wielded = 29
 	name = "bronze mace"
-	color = "#f9d690"
+	icon_state = "bronzemace"
 	desc = "An antiquital staff, crested with a studded sphere of bronze. Bludgeons were the first implements made for the explicit purpose of killing another; fittingly, this was the second."
-	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = 250
-	wdefense = 2
 
 /obj/item/rogueweapon/mace/church
 	force = 25
@@ -528,6 +526,26 @@
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
+
+/obj/item/rogueweapon/mace/warhammer/bronze
+	force = 22
+	name = "bronze warclub"
+	desc = "The warhammer's ancestral link, carved from a weightsome log and studded with bronze. Elven natureguards carry it to both honor their forefathers, and as a way to sunder those who'd ravage Dendor's bounties without thought-or-restraint; a toss from afar turns into a sundering hurlbat."
+	icon_state = "bronzeclub"
+	wbalance = WBALANCE_HEAVY
+	throwforce = 30
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 20)//hilarious
+	smeltresult = /obj/item/ingot/bronze
+	wdefense = 3
+	max_integrity = 180
+
+/obj/item/rogueweapon/mace/warhammer/bronze/decorated
+	name = "decorated bronze warclub"
+	desc = "Flowers, silk, and gold caress this carved-and-spiked log; a honored totem who's roots trace back to the daes before Syon's impact. Myths speak of ancient elve-and-humen alike, wielding such bronzen bludgeons against the Archdevil's rampaging hordes."
+	icon_state = "bronzeclubdec"
+	smeltresult = /obj/item/ingot/gold
+	wdefense = 5
+	max_integrity = 250
 
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
