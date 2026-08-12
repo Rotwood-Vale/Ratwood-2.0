@@ -231,8 +231,7 @@
 		force += 2
 		force_wielded += 3
 		update_force_dynamic()
-		if(!GetComponent(/datum/component/metal_glint))
-			AddComponent(/datum/component/metal_glint)
+		AddComponent(/datum/component/metal_glint)
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
 	else if(polished < 4)
