@@ -15,6 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(roguemachine)
 	var/last_death_report
 	var/obj/item/clothing/head/roguetown/crown/serpcrown/crown
 	var/obj/item/key
+	var/obj/structure/roguemachine/ministry_bureau/ministry_bureau
 
 /datum/controller/subsystem/processing/roguemachine/fire(resumed = 0)
 	. = ..()

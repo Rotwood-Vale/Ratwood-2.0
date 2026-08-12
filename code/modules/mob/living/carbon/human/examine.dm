@@ -185,6 +185,9 @@
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
+
+		if(ministry_active?.active)
+			. += span_notice("[m3] the office of [ministry_active.display_title].")
 		// Leashed pet status effect message
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")
