@@ -29,9 +29,6 @@
  *      covering armor tier (null = uncovered, ARMOR_CLASS_NONE through ARMOR_CLASS_HEAVY).
  *    - Route to the appropriate JSON bank based on the returned tier.
  *
- * 6. Blocking sex actions while an accessory is worn (plug blocking anal penetration, etc.):
- *    - Use /datum/component/intimate_action_guard instead — see the /chastity subtype below for the pattern.
- *
  * GENERAL GUIDELINES:
  *    - Keep reaction logic lightweight: prefer cooldowns, early returns, and external string banks over inline
  *      text or repeated visible_message spam. BYOND will thank you.
@@ -164,84 +161,6 @@
 		var/obj/item/clothing/C = equipped_item
 		highest_tier = max(highest_tier, C.armor_class)
 	return highest_tier >= 0 ? highest_tier : null
-
-/// Component for blocking or hiding sex actions based on worn intimate accessories.
-/datum/component/intimate_action_guard
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/mob/living/carbon/human/wearer = null
-
-/// Initializes the component.
-/datum/component/intimate_action_guard/Initialize()
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
-
-/// Destroys the component.
-/datum/component/intimate_action_guard/Destroy(force, silent)
-	if(wearer)
-		unbind_from_wearer(wearer)
-	return ..()
-
-/// Binds the action blocker, hides sex action based on context
-/datum/component/intimate_action_guard/proc/bind_to_wearer(mob/living/carbon/human/H)
-	if(!H)
-		return FALSE
-	if(wearer == H)
-		return TRUE
-	if(wearer)
-		unbind_from_wearer(wearer)
-	wearer = H
-	RegisterSignal(H, COMSIG_CARBON_SEX_ACTION_VALIDATE, PROC_REF(on_wearer_validate_sex_action))
-	return TRUE
-
-/datum/component/intimate_action_guard/proc/unbind_from_wearer(mob/living/carbon/human/H)
-	if(!H)
-		H = wearer
-	if(!H)
-		return FALSE
-	UnregisterSignal(H, COMSIG_CARBON_SEX_ACTION_VALIDATE)
-	if(H == wearer)
-		wearer = null
-	return TRUE
-/datum/component/intimate_action_guard/proc/on_wearer_validate_sex_action(datum/source, datum/sex_action/action, mob/living/carbon/human/other, checked_part, is_user_role, menu_check)
-	SIGNAL_HANDLER
-	if(source != wearer)
-		return FALSE
-	return try_validate_wearer_sex_action(source, action, other, checked_part, is_user_role, menu_check)
-
-/// Validates the sex action for the wearer of the chastity device.
-/datum/component/intimate_action_guard/proc/try_validate_wearer_sex_action(mob/living/carbon/human/source, datum/sex_action/action, mob/living/carbon/human/other, checked_part, is_user_role, menu_check)
-	return FALSE
-
-/datum/component/intimate_action_guard/chastity
-
-/datum/component/intimate_action_guard/chastity/Initialize()
-	. = ..()
-	if(. == COMPONENT_INCOMPATIBLE)
-		return .
-	if(!istype(parent, /obj/item/chastity))
-		return COMPONENT_INCOMPATIBLE
-
-/datum/component/intimate_action_guard/chastity/try_validate_wearer_sex_action(mob/living/carbon/human/source, datum/sex_action/action, mob/living/carbon/human/other, checked_part, is_user_role, menu_check)
-	var/obj/item/chastity/device = parent
-	if(!source || QDELETED(source) || source != wearer)
-		return FALSE
-	if(source.chastity_device != device)
-		return FALSE
-
-	checked_part = checked_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if(!checked_part)
-		return FALSE
-
-	var/datum/sex_controller/wearer_sexcon = source.sexcon
-	if(!wearer_sexcon)
-		return FALSE
-	if((checked_part & SEX_PART_COCK) && wearer_sexcon.has_chastity_penis())
-		return COMPONENT_SEX_ACTION_BLOCK
-	if((checked_part & SEX_PART_CUNT) && wearer_sexcon.has_chastity_vagina())
-		return COMPONENT_SEX_ACTION_BLOCK
-	if((checked_part & SEX_PART_ANUS) && wearer_sexcon.has_chastity_anal())
-		return COMPONENT_SEX_ACTION_BLOCK
-	return FALSE
 
 /// Chastity-specific cooldown state for receive-flavor and arousal reaction channels.
 /// last_movement_message_time and movement_message_cooldown are inherited from the base class.
@@ -502,7 +421,7 @@
 /// action and acting_mob are threaded through to get_receive_flavor_key so the correct context bank (masturbation, outercourse, penetrative) can be selected.
 /datum/component/intimate_reaction/chastity_receive_flavor/proc/try_handle_receive_flavor(mob/living/carbon/human/source, receiver_part, datum/sex_action/action, mob/living/carbon/human/acting_mob, applied_force, applied_speed)
 	var/datum/sex_controller/wearer_sexcon = source?.sexcon
-	if(!wearer_sexcon || !wearer_sexcon.modular_chastity_content_enabled_for(source))
+	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return FALSE
 	if(source.stat != CONSCIOUS)
 		return FALSE
@@ -526,7 +445,7 @@
 /// Handles the arousal message.
 /datum/component/intimate_reaction/chastity_receive_flavor/proc/try_handle_arousal_message(mob/living/carbon/human/source, arousal_amt, applied_force, applied_speed)
 	var/datum/sex_controller/wearer_sexcon = source?.sexcon
-	if(!wearer_sexcon || !wearer_sexcon.modular_chastity_content_enabled_for(source))
+	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return FALSE
 	if(source.stat != CONSCIOUS)
 		return FALSE
@@ -554,7 +473,7 @@
 /// Handles the pain message.
 /datum/component/intimate_reaction/chastity_receive_flavor/proc/try_handle_pain_message(mob/living/carbon/human/source, pain_amt)
 	var/datum/sex_controller/wearer_sexcon = source?.sexcon
-	if(!wearer_sexcon || !wearer_sexcon.modular_chastity_content_enabled_for(source))
+	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return FALSE
 	if(source.stat != CONSCIOUS)
 		return FALSE
@@ -634,7 +553,7 @@
 		playsound(source, device.chastity_move_sound, device.chastity_move_volume, TRUE)
 
 	var/datum/sex_controller/wearer_sexcon = source.sexcon
-	if(!wearer_sexcon || !wearer_sexcon.modular_chastity_content_enabled_for(source))
+	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
 		return TRUE
 	if(source.stat != CONSCIOUS)
 		return TRUE

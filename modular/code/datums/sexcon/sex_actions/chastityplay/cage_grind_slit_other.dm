@@ -6,35 +6,18 @@
 	target_needs_functional = TRUE
 
 /datum/sex_action/chastityplay/cage_grind_slit_other/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.has_chastity_penis())
+	if(!(. = ..()))
 		return FALSE
 	var/obj/item/organ/penis/penis = target.getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis || penis.sheath_type != SHEATH_TYPE_SLIT)
-		return FALSE
-	// Target's slit must be accessible — hide if their own slit is caged.
-	if(target.sexcon.has_chastity_penis())
+	if(penis.sheath_type != SHEATH_TYPE_SLIT)
 		return FALSE
 	return TRUE
 
 /datum/sex_action/chastityplay/cage_grind_slit_other/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.has_chastity_penis())
+	if(!(. = ..()))
 		return FALSE
 	var/obj/item/organ/penis/penis = target.getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis || penis.sheath_type != SHEATH_TYPE_SLIT)
-		return FALSE
-	if(target.sexcon.has_chastity_penis())
-		return FALSE
-	if(!can_reach_target_groin(user, user))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
+	if(penis.sheath_type != SHEATH_TYPE_SLIT)
 		return FALSE
 	return TRUE
 

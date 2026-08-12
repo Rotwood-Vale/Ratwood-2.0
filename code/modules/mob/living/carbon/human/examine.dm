@@ -597,9 +597,9 @@
 			if(belt_with_dildo.attached_toy)
 				. += "[m3] [get_examine_item_name_with_hover(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
 
-	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
-	if(modular_chastity_toy_line)
-		. += modular_chastity_toy_line
+	var/chastity_toy_line = human_chastity_toy_examine_line(user, m2, m3)
+	if(chastity_toy_line)
+		. += chastity_toy_line
 
 
 	//right belt
