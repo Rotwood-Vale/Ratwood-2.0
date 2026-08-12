@@ -3,6 +3,7 @@
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK
 	user_needs_chastity = TRUE
+	solo = TRUE
 
 /datum/sex_action/chastityplay/masturbate_cage_penis/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] wraps [user.p_their()] hand around [user.p_their()] [get_chastity_device_name(user)] and starts working it slow, knuckles pressing into the bars."))

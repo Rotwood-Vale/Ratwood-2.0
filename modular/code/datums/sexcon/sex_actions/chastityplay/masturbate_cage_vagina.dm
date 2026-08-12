@@ -3,6 +3,7 @@
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_CUNT
 	user_needs_chastity = TRUE
+	solo = TRUE
 
 /datum/sex_action/chastityplay/masturbate_cage_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] presses [user.p_their()] fingers flat against [user.p_their()] chastity belt, searching for the gap in the front plate."))

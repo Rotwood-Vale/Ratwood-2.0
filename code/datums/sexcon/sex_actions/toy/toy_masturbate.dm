@@ -1,16 +1,17 @@
 /datum/sex_action/toy_masturbate
 	name = "Jerk toy off"
 	category = SEX_CATEGORY_HANDS
+	solo = TRUE
 
 /datum/sex_action/toy_masturbate/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user) && !get_dildo_on_belt(user))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/toy_masturbate/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user) && !get_dildo_on_belt(user))
 		return FALSE

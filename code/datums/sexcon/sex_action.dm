@@ -36,10 +36,18 @@
 	var/user_needs_chastity = FALSE
 	/// Requires chastity on target_sex_part, if supported by the affected part.
 	var/target_needs_chastity = FALSE
-	/// Requires can_use_penis() to be TRUE for the target in standard sex part checks.
+	/// Requires can_use_penis() or can_use_vagina() to be TRUE for the target in standard sex part checks.
+	/// This is mostly used for either active penetration OR for things that can't be done through chastity.
 	var/target_needs_functional = FALSE
+	/// If solo is TRUE, user must equal target.
+	var/solo = FALSE
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(solo)
+		if(user != target)
+			return FALSE
+	else if(user == target)
+		return FALSE
 	return has_accessible_needed_parts(user, target)
 
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -55,19 +63,36 @@
 	return FALSE
 
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!has_all_needed_parts(user, user_sex_part, user == target))
+	if(solo)
+		if(user != target)
+			return FALSE
+	else if(user == target)
 		return FALSE
-	if(!has_all_needed_parts(target, target_sex_part))
+	if(!has_all_needed_parts(user, null, user_sex_part, user_needs_chastity))
+		return FALSE
+	if(!has_all_needed_parts(target, user, target_sex_part, target_needs_chastity))
 		return FALSE
 	return TRUE
 
-/datum/sex_action/proc/has_all_needed_parts(mob/living/carbon/human/actor, parts_to_check = null, self = FALSE)
+/datum/sex_action/proc/has_all_needed_parts(mob/living/carbon/human/actor, mob/living/carbon/human/user, parts_to_check = null, needs_chastity = FALSE)
 	if(parts_to_check == SEX_PART_NULL) // & doesn't work here because it's 0
 		return TRUE // no further checks
 	// Needs ALL parts, not just one.
 	// Because of that, this only checks ones that can fail
 	// and only ever returns TRUE at the end.
-	if(parts_to_check & SEX_PART_FEET) // ditto, but maybe this should have a limb check?
+	var/self = actor == user
+	if(parts_to_check & SEX_PART_ANUS)
+		if(self && !is_part_self_accessible(actor, SEX_PART_ANUS))
+			return FALSE
+		if(needs_chastity != !!actor.sexcon.has_chastity_anal())
+			return FALSE
+	if(parts_to_check & SEX_PART_GROIN)
+		if(self && !is_part_self_accessible(actor, SEX_PART_GROIN))
+			return FALSE
+		// cage checks for either part
+		if(needs_chastity != !!actor.sexcon.has_chastity_cage())
+			return FALSE
+	if(parts_to_check & SEX_PART_FEET) // but maybe this should have a limb check?
 		if(self && !is_part_self_accessible(actor, SEX_PART_FEET))
 			return FALSE
 	if(parts_to_check & SEX_PART_FOOT) // this was added JUST to support single-foot foot licking actions. ugh
@@ -78,14 +103,21 @@
 	if(parts_to_check & SEX_PART_JAWS)
 		if(self && !is_part_self_accessible(actor, SEX_PART_JAWS))
 			return FALSE
-	if((parts_to_check & SEX_PART_CUNT) && !actor.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
+	if((parts_to_check & SEX_PART_CUNT))
+		if(!actor.getorganslot(ORGAN_SLOT_VAGINA))
+			return FALSE
+		if(needs_chastity != !!actor.sexcon.has_chastity_vagina())
+			return FALSE
 	if((parts_to_check & SEX_PART_BALLS) && !actor.getorganslot(ORGAN_SLOT_TESTICLES))
 		return FALSE
 	var/obj/item/organ/penis/penis = actor.getorganslot(ORGAN_SLOT_PENIS)
 	if((parts_to_check & SEX_PART_SLIT_SHEATH) && penis?.sheath_type != SHEATH_TYPE_SLIT)
+		if(needs_chastity != !!actor.sexcon.has_chastity_penis())
+			return FALSE
 		return FALSE
 	if((parts_to_check & SEX_PART_COCK) && !penis)
+		if(needs_chastity != !!actor.sexcon.has_chastity_penis())
+			return FALSE
 		return FALSE
 	if((parts_to_check & SEX_PART_TAIL) && !actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
 		return FALSE
@@ -99,7 +131,7 @@
 		return TRUE // no further checks
 	var/needs_groin_check = FALSE
 	if((parts_to_check & SEX_PART_ANUS))
-		if(needs_chastity && !actor.sexcon.has_chastity_anal())
+		if(needs_chastity != !!actor.sexcon.has_chastity_anal())
 			return FALSE
 		if(user == actor && !is_part_self_accessible(user, SEX_PART_ANUS))
 			return FALSE
@@ -108,7 +140,7 @@
 		if(user == actor && !is_part_self_accessible(user, SEX_PART_GROIN))
 			return FALSE
 		// cage checks for either part
-		if(needs_chastity && !actor.sexcon.has_chastity_cage())
+		if(needs_chastity != !!actor.sexcon.has_chastity_cage())
 			return FALSE
 		// doesn't allow grabs to give access
 		if(!check_location_accessible(accessor, actor, BODY_ZONE_PRECISE_GROIN))
@@ -116,7 +148,7 @@
 	if((parts_to_check & SEX_PART_CUNT) && actor.getorganslot(ORGAN_SLOT_VAGINA))
 		if(user == actor && !is_part_self_accessible(user, SEX_PART_CUNT))
 			return FALSE
-		if((needs_functional && !actor.sexcon.can_use_vagina()) || (needs_chastity && !actor.sexcon.has_chastity_vagina()))
+		if((needs_functional && !actor.sexcon.can_use_vagina()) || (needs_chastity != !!actor.sexcon.has_chastity_vagina()))
 			return FALSE
 		needs_groin_check = TRUE
 	if((parts_to_check & SEX_PART_TAIL))
@@ -130,7 +162,7 @@
 				return FALSE
 			// I hate chastity code so much
 			// Todo combine *needs_functional and *needs_chastity into one bitflag
-			if((needs_functional && !actor.sexcon.can_use_penis()) || (needs_chastity && !actor.sexcon.has_chastity_penis()))
+			if((needs_functional && !actor.sexcon.can_use_penis()) || (needs_chastity != !!actor.sexcon.has_chastity_penis()))
 				return FALSE
 			needs_groin_check = TRUE
 		if((parts_to_check & SEX_PART_SLIT_SHEATH))

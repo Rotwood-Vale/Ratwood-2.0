@@ -8,20 +8,14 @@
 	knot_on_finish = TRUE
 
 /datum/sex_action/double_penetration_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!(. = ..()))
+	if(!user.sexcon.double_penis_type())
 		return FALSE
-	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis || penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE && penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE_KNOTTED)
-		return FALSE
-	return TRUE
+	return ..()
 
 /datum/sex_action/double_penetration_sex/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!(. = ..()))
+	if(!user.sexcon.double_penis_type())
 		return FALSE
-	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis || penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE && penis.penis_type != PENIS_TYPE_TAPERED_DOUBLE_KNOTTED)
-		return FALSE
-	return TRUE
+	return ..()
 
 /datum/sex_action/double_penetration_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides [user.p_their()] cocks into [target]'s holes!"))

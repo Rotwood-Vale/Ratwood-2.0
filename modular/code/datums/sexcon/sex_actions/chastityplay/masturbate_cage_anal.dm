@@ -3,6 +3,7 @@
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_ANUS
 	user_needs_chastity = TRUE
+	solo = TRUE
 
 /datum/sex_action/chastityplay/masturbate_cage_anal/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] reaches back to press [user.p_their()] fingers against [user.p_their()] belt's rear shield."))

@@ -3,17 +3,8 @@
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_GROIN
 
-/datum/sex_action/tonguebath/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	return TRUE
-
 /datum/sex_action/tonguebath/can_perform(mob/living/user, mob/living/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
+	if(!(. = ..()))
 		return FALSE
 	return TRUE
 
