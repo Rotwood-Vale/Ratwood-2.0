@@ -1753,6 +1753,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
+	lose_polish()//call to remove polish bonus on armor/weaps when broken. lives in /blacksmith/items.dm
 	..()
 
 	update_damaged_state()
