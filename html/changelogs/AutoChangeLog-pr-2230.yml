@@ -1,0 +1,7 @@
+author: "Lezerchil"
+delete-after: True
+changes:
+  - rscadd: "Added 2 new booleans to manage AI behaviour"
+  - rscadd: "NPCs recieve a set of new actions they could take based on their designated behaviour."
+  - balance: "The following NPCs are now considered smart combatants: skeleton liches, skeleton soldiers, skeleton dreadnoughts, bog deserters, highwaymen, deranged knights, dungeon lizardmen, thieves."
+  - balance: "The following NPCs are now considered special attackers: militia, bog deserters, skeleton dreadnoughts, skeleton liches, orcs, sea raiders, dungeon lizardmen, drow, deranged knights.\n:cl:"
