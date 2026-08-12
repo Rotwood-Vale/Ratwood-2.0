@@ -59,8 +59,11 @@
 	sellprice = 1
 	var/naledicolor = FALSE
 
-	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
+	var/adjusted_inv_mask = NONE
+	var/adjusted_inv_value = NONE
+	var/snoutable_for
+	var/snoutable_cached = FALSE
 
 /obj/item
 	var/blocking_behavior
@@ -100,6 +103,66 @@
 			. += span_notice("It has one torn sleeve.")
 		else
 			. += span_notice("Both its sleeves have been torn!")
+
+///Remembers that the wearer set these flags_inv bits by hand, so re-equipping doesn't undo it.
+/obj/item/clothing/proc/persist_inv_flags(flag)
+	adjusted_inv_mask |= flag
+	adjusted_inv_value &= ~flag
+	adjusted_inv_value |= (flags_inv & flag)
+
+///Reapplies any remembered manual toggles on top of a fresh flags_inv value.
+/obj/item/clothing/proc/adjust_inv_flags(base)
+	if(!adjusted_inv_mask)
+		return base
+	return (base & ~adjusted_inv_mask) | (adjusted_inv_value & adjusted_inv_mask)
+
+///The state the _snout suffix hangs off. Override where an item has more than one base look.
+/obj/item/clothing/proc/snout_base_state()
+	return initial(icon_state)
+
+///Runs after the swap, before the wearer is redrawn, so coverage changes land in the same refresh.
+/obj/item/clothing/proc/on_snout_toggled()
+	return
+
+/obj/item/clothing/proc/is_snoutable()
+	var/base = snout_base_state()
+	var/key = "[base]|[mob_overlay_icon]"	//some items swap mob_overlay_icon by slot
+	if(snoutable_for == key)	//building an icon just to read its states is expensive
+		return snoutable_cached
+	snoutable_for = key
+	snoutable_cached = FALSE
+	if(mob_overlay_icon)
+		var/icon/worn = new(mob_overlay_icon)
+		snoutable_cached = ("[base]_snout" in worn.IconStates())
+	return snoutable_cached
+
+/obj/item/clothing/proc/toggle_snout()
+	if(snouting)
+		snouting = FALSE
+		icon_state = snout_base_state()
+	else
+		if(!is_snoutable())
+			return FALSE
+		snouting = TRUE
+		icon_state = "[snout_base_state()]_snout"
+	update_icon()
+	on_snout_toggled()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.rebuild_obscured_flags()
+	return TRUE
+
+/obj/item/clothing/proc/restore_snout()
+	if(!snouting)
+		return
+	if(!is_snoutable())	//base look changed under us and has no snouted cut
+		snouting = FALSE
+		return
+	icon_state = "[snout_base_state()]_snout"
+
+///Maps a worn state back onto the plain state its detail overlays are drawn for.
+/obj/item/proc/get_detail_state(base_state)
+	return base_state
 
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag

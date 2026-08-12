@@ -9,10 +9,12 @@
 	sewrepair = FALSE //most neck items are necklaces or armor
 	var/overarmor
 
-/obj/item/clothing/neck/roguetown/examine()
+/obj/item/clothing/neck/roguetown/examine(mob/user)
 	. = ..()
 	if(bell)
 		. += span_info("It has a <a href='?src=[REF(src)];removebell=1'>bell</a> attached.")
+	if(is_snoutable())
+		. += span_notice("Alt+RMB makes room for a snout.")
 
 /obj/item/clothing/neck/roguetown/Topic(href, href_list)
 	..()
@@ -52,25 +54,31 @@
 
 /obj/item/clothing/neck/roguetown/MiddleClick(mob/user, params)
 	. = ..()
-	if((user.zone_selected == BODY_ZONE_PRECISE_NOSE) && (cansnout == TRUE))
-		if(snouting == TRUE)
-			snouting = FALSE
-			flags_inv += HIDESNOUT
-		else
-			snouting = TRUE
-			flags_inv -= HIDESNOUT
-		to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
-		if(snouting)
-			icon_state = "[initial(icon_state)]_snout"
-		else
-			icon_state = "[initial(icon_state)]"
+	overarmor = !overarmor
+	to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
+	if(overarmor)
+		alternate_worn_layer = NECK_LAYER
 	else
-		overarmor = !overarmor
-		to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
-		if(overarmor)
-			alternate_worn_layer = NECK_LAYER
-		else
-			alternate_worn_layer = UNDER_ARMOR_LAYER
+		alternate_worn_layer = UNDER_ARMOR_LAYER
+	user.update_inv_neck()
+	user.update_inv_cloak()
+	user.update_inv_armor()
+	user.update_inv_shirt()
+
+//unlike the masks, these cuts open up, so the wearer's snout shows through
+/obj/item/clothing/neck/roguetown/on_snout_toggled()
+	if(snouting)
+		flags_inv &= ~HIDESNOUT
+	else
+		flags_inv |= (initial(flags_inv) & HIDESNOUT)
+	persist_inv_flags(HIDESNOUT)
+
+/obj/item/clothing/neck/roguetown/AltRightClick(mob/user)
+	if(!istype(loc, /mob/living/carbon))
+		return
+	if(!toggle_snout())
+		return
+	to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
 	user.update_inv_neck()
 	user.update_inv_cloak()
 	user.update_inv_armor()
@@ -215,7 +223,6 @@
 	body_parts_covered = NECK|MOUTH
 	slot_flags = ITEM_SLOT_NECK
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	cansnout = TRUE
 	dropshrink = 0.8
 
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/ComponentInitialize()
@@ -235,7 +242,6 @@
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = NECK|MOUTH|NOSE|HAIR|EARS|HEAD
 	adjustable = CAN_CADJUST
-	cansnout = TRUE
 
 /obj/item/clothing/neck/roguetown/chaincoif/full/ComponentInitialize()
 	return
@@ -289,7 +295,6 @@
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
 	blocksound = PLATEHIT
-	cansnout = TRUE
 
 /obj/item/clothing/neck/roguetown/bevor/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/items/visor.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK)) // adjustable falling buffe for the bevor
@@ -625,7 +630,7 @@
 	sellprice = 80
 	anvilrepair = /datum/skill/craft/armorsmithing
 
-/obj/item/clothing/neck/roguetown/horus/examine()
+/obj/item/clothing/neck/roguetown/horus/examine(mob/user)
 	. = ..()
 	. += span_info("Click on a turf or an item to see how much it is worth. Avoid tables.")
 

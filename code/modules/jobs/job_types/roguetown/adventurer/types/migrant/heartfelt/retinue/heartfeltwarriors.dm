@@ -84,15 +84,17 @@
 	)
 	H.verbs |= /mob/proc/haltyell
 
-	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
+	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Visored Sallet","Snouted Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
 	var/helmet_choice = input("Choose your Helm.", "TAKE UP HELMS") as anything in helmet
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 		if("Volf Plate Helmet") 
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
+		if("Snouted Visored Sallet")
+			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted
 		if("Slitted Kettle") 
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
 		if("Simple Helmet")		
@@ -190,15 +192,17 @@
 	)
 	H.verbs |= /mob/proc/haltyell
 
-	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
+	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Visored Sallet","Snouted Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
 	var/helmet_choice = input("Choose your Helm.", "TAKE UP HELMS") as anything in helmet
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 		if("Volf Plate Helmet") 
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
+		if("Snouted Visored Sallet")
+			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted
 		if("Slitted Kettle") 
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
 		if("Simple Helmet")		
@@ -306,13 +310,15 @@
 			beltr = /obj/item/rogueweapon/sword
 			backl = /obj/item/rogueweapon/shield/iron
 
-	var/helmet = list("Etruscan Bascinet","Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
+	var/helmet = list("Etruscan Bascinet","Visored Sallet","Snouted Visored Sallet","Slitted Kettle","Simple Helmet","Kettle Helmet","Sallet Helmet","Winged Helmet",)
 	var/helmet_choice = input("Choose your Helm.", "TAKE UP HELMS") as anything in helmet
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
+		if("Snouted Visored Sallet")
+			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted
 		if("Volf Plate Helmet") 
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
 		if("Slitted Kettle") 

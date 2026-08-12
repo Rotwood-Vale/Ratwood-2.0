@@ -32,7 +32,7 @@
 	var/atom/movable/holdingknife = null
 	var/atom/movable/holdinglockpick = null
 
-/obj/item/clothing/shoes/roguetown/boots/examine()
+/obj/item/clothing/shoes/roguetown/boots/examine(mob/user)
 	. = ..()
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
