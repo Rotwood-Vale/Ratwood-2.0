@@ -2025,6 +2025,7 @@
 #include "code\modules\jobs\job_types\roguetown\youngfolk\churchling.dm"
 #include "code\modules\jobs\job_types\roguetown\youngfolk\orphan.dm"
 #include "code\modules\jobs\job_types\roguetown\youngfolk\shophand.dm"
+#include "code\modules\jobs\job_types\roguetown\youngfolk\smith_apprentice.dm"
 #include "code\modules\jobs\job_types\roguetown\youngfolk\vagabond.dm"
 #include "code\modules\jobs\job_types\roguetown\youngfolk\vagabond\beggar.dm"
 #include "code\modules\jobs\job_types\roguetown\youngfolk\vagabond\busker.dm"
