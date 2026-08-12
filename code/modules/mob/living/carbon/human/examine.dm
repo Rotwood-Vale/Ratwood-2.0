@@ -131,10 +131,7 @@
 		var/display_as_lowlife = FALSE
 		if(observer_privilege)
 			used_name = real_name
-		if(migrant_type)
-			used_title = MIGRANT_ROLE(migrant_type)
-			. += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
-		else if(job)
+		if(job)
 			var/datum/job/J = SSjob.GetJob(job)
 			if(!J || J.wanderer_examine)
 				display_as_wanderer = TRUE
@@ -159,7 +156,10 @@
 			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
-		if(display_as_wanderer)
+		if(migrant_type)
+			used_title = MIGRANT_ROLE(migrant_type)
+			display1 += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
+		else if(display_as_wanderer)
 			display1 = span_info("This is <EM>[used_name]</EM>, the wandering [race_name].")
 		else if(display_as_lowlife)
 			display1 = span_info("This is <EM>[used_name]</EM>, the lowlife [race_name].")

@@ -1,5 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - bugfix: "embedded surgery tools no longer damage on tick"
-  - bugfix: "miracle heals no longer have a fortify 1.5x buff apply twice if healing someone who's been fortified"
