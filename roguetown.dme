@@ -1,3 +1,6 @@
+// This should always be the VERY FIRST THING. No exceptions. Read the file for more info, but basically, this needs to be here so that we can ensure specific code is always the very first thing to execute.
+#include "code\genesis_call.dme"
+// Again, DO NOT MOVE IT OR ALLOW ANY OTHER #include TO PRECEDE THE ONE ABOVE.
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
@@ -3178,7 +3181,6 @@
 #include "modular\Neu_Food\code\recipes\stew_recipes.dm"
 #include "modular\Neu_Food\code\recipes\veggies_recipes.dm"
 #include "modular\origins\origins.dm"
-#include "modular\ze_genesis_call\genesis_call.dm"
 #include "modular_azurepeak\_statpacks.dm"
 #include "modular_azurepeak\_virtue.dm"
 #include "modular_azurepeak\code\datums\autopunctuation.dm"

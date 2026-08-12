@@ -16,6 +16,7 @@ GLOBAL_VAR(restart_counter)
 	#endif
 
 	init_debugger()
+	Master = new
 	//Zirok was here
 
 /**
