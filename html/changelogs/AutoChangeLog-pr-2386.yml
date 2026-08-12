@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "Using cure rot surgery to remove rot when you have been bit but not actually infected, will no longer strike you dead"
