@@ -1,0 +1,1334 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/structure/bars,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"aB" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"aJ" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"bt" = (
+/obj/item/natural/bone,
+/obj/effect/decal/cobble/mossy{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"bv" = (
+/obj/item/natural/bone,
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"bK" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"bP" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 10;
+	pixel_x = 7
+	},
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"bY" = (
+/obj/item/natural/bone,
+/obj/effect/decal/cobble/mossy{
+	dir = 9
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"cX" = (
+/obj/structure/closet/crate/chest,
+/obj/item/leash/chain,
+/obj/item/leash/chain,
+/obj/item/clothing/neck/roguetown/collar/leather,
+/obj/item/clothing/neck/roguetown/collar/leather,
+/obj/item/rogueweapon/surgery/cautery/branding/slave,
+/obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/chastity/cursed,
+/obj/item/chastity/cursed,
+/obj/item/chastity/chastity_cage/flat,
+/obj/item/chastity/chastity_cage,
+/obj/item/chastity/chastity_cage/flat/spiked,
+/obj/item/chastity/chastity_cage/anal,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"dU" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/flora/roguegrass,
+/obj/effect/wisp/prestidigitation{
+	color = "#ffff00";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	light_color = "#33ff00";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"eV" = (
+/obj/structure/rack/rogue,
+/obj/item/rope,
+/obj/item/rope,
+/obj/item/rope,
+/obj/item/rope,
+/obj/item/rope,
+/obj/item/rope,
+/obj/item/rope,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"fl" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"fw" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"fz" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/area/rogue)
+"fI" = (
+/obj/structure/closet/crate/chest,
+/obj/item/leash/chain,
+/obj/item/leash/chain,
+/obj/item/clothing/neck/roguetown/collar/leather,
+/obj/item/clothing/neck/roguetown/collar/leather,
+/obj/item/rogueweapon/surgery/cautery/branding/slave,
+/obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/clothing/neck/roguetown/cursed_collar,
+/obj/item/chastity/cursed,
+/obj/item/chastity/cursed,
+/obj/item/chastity/chastity_cage/flat,
+/obj/item/chastity/chastity_cage,
+/obj/item/chastity/chastity_cage/flat/spiked,
+/obj/item/chastity/chastity_cage/anal,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"fS" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/water/bloody,
+/area/rogue)
+"fX" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"ge" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 9
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"gN" = (
+/obj/item/roguebin/crackers,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"gR" = (
+/obj/structure/curtain/brown,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"hh" = (
+/obj/structure/bed/rogue/shit,
+/obj/effect/decal/cobble/mossy{
+	dir = 6
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"hZ" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"id" = (
+/obj/structure/pillory{
+	lockid = "inhumen"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"iu" = (
+/obj/structure/flora/roguegrass/thorn_bush,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"ix" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"iz" = (
+/obj/effect/decal/remains/bigrat,
+/turf/open/water/bloody,
+/area/rogue)
+"iI" = (
+/obj/effect/landmark/start/gnoll,
+/obj/effect/decal/cobble/mossy{
+	dir = 9
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"jh" = (
+/obj/structure/fluff/customsign{
+	icon_state = "signwrote";
+	name = "DANGER!! GNOLLS!!"
+	},
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"ju" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 4
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"jv" = (
+/obj/structure/flora/roguegrass/bush/wall,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"jJ" = (
+/obj/structure/table/wood/poor/alt,
+/obj/item/candle/skull/lit{
+	pixel_y = 11
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"ky" = (
+/obj/machinery/light/rogue/firebowl,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"lo" = (
+/obj/structure/fermentation_keg/water{
+	pixel_y = 4
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"lS" = (
+/obj/machinery/light/rogue/oven/south,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"mi" = (
+/obj/effect/decal/cleanable/blood/splatter/walls,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"mJ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cobble/mossy{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"nj" = (
+/obj/effect/landmark/start/gnoll,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"oH" = (
+/obj/machinery/light/rogue/campfire/densefire,
+/obj/effect/decal/cobble/mossy{
+	dir = 10;
+	pixel_x = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"ph" = (
+/obj/item/natural/bone,
+/obj/effect/decal/cobble/mossy{
+	dir = 6
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"pK" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 6
+	},
+/obj/structure/fluff/walldeco/chains,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"qs" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/cand,
+/area/rogue)
+"qB" = (
+/obj/structure/bed/rogue/shit,
+/obj/effect/landmark/start/gnoll,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"qW" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/structure/fluff/walldeco/chains,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"rd" = (
+/obj/structure/ritualcircle/graggar{
+	icon_state = "graggar_active_mortosasye_author"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"re" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/landmark/start/gnoll,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"sY" = (
+/obj/structure/fluff/statue/myth,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"tg" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/area/rogue)
+"tB" = (
+/obj/item/natural/bone,
+/obj/effect/landmark/start/gnolllate,
+/obj/effect/decal/cobble/mossy{
+	dir = 5
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"ue" = (
+/obj/effect/landmark/start/gnolllate,
+/obj/effect/decal/cobble/mossy{
+	dir = 8;
+	pixel_x = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"uA" = (
+/obj/structure/flora/roguegrass/thorn_bush,
+/turf/open/water/bloody,
+/area/rogue)
+"vJ" = (
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"vS" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"wb" = (
+/obj/effect/decal/cleanable/debris/stony,
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"wX" = (
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"xt" = (
+/obj/item/natural/bone,
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/water/bloody,
+/area/rogue)
+"xV" = (
+/obj/structure/ritualcircle/graggar{
+	icon_state = "graggar_active_mortosasye_author"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"yn" = (
+/obj/structure/closet/crate/chest/crate,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"yq" = (
+/obj/effect/decal/remains/fox,
+/turf/open/water/bloody,
+/area/rogue)
+"yT" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"zd" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"zg" = (
+/obj/structure/flora/roguegrass/bush/wall,
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"zs" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"zy" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/bars,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"zC" = (
+/obj/structure/fluff/walldeco/chains,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"Ag" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"AM" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/obj/effect/decal/cobble/mossy,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"AW" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"BA" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
+	dir = 4
+	},
+/area/rogue)
+"Cq" = (
+/obj/structure/flora/roguegrass/thorn_bush,
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"CK" = (
+/obj/structure/table/church,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/organ/heart{
+	pixel_y = 3
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"CP" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/obj/structure/roguewindow/stained/zizo,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red,
+/area/rogue)
+"DJ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/effect/decal/cobble/mossy{
+	dir = 5
+	},
+/obj/structure/curtain/brown,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"DW" = (
+/obj/structure/bed/rogue/shit,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"DZ" = (
+/obj/effect/decal/remains/saiga,
+/turf/open/water/bloody,
+/area/rogue)
+"Eo" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"EM" = (
+/obj/effect/wisp/prestidigitation{
+	color = "#ffff00";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	light_color = "#33ff00";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"FA" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"FB" = (
+/turf/closed/mineral/random/rogue/coppertin/med,
+/area/rogue)
+"FD" = (
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"FM" = (
+/obj/structure/fluff/traveltile/gnoll{
+	aportalgoesto = "gnollout1";
+	aportalid = "gnollin1"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue)
+"FR" = (
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"FT" = (
+/obj/item/natural/bone,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Ge" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"Gi" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/light/rogue/campfire/densefire,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"GK" = (
+/obj/item/natural/bone,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"GL" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 6
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"GO" = (
+/obj/item/rope,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"GT" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 10
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"HB" = (
+/obj/machinery/light/rogue/firebowl/standing/red,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"HC" = (
+/obj/structure/curtain/brown,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Ib" = (
+/obj/structure/table/church/end,
+/obj/item/organ/heart{
+	pixel_y = 3
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"Ip" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cobble/mossy{
+	dir = 5
+	},
+/obj/structure/fluff/walldeco/chains,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Iy" = (
+/obj/structure/flora/roguetree/burnt,
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grass,
+/area/rogue)
+"IL" = (
+/obj/structure/closet/crate/chest/crate,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"IT" = (
+/obj/structure/flora/roguegrass/bush/wall,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"JD" = (
+/obj/item/natural/bone,
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"Kh" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"KD" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"Lf" = (
+/obj/machinery/light/rogue/campfire/densefire,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Li" = (
+/obj/structure/fluff/traveltile/gnoll{
+	aportalgoesto = "gnollout2";
+	aportalid = "gnollin2"
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue)
+"Ll" = (
+/obj/structure/fluff/psycross/zizocross,
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"LD" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/long,
+/area/rogue)
+"LL" = (
+/turf/open/water/bloody,
+/area/rogue)
+"LN" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/turf/open/water/bloody,
+/area/rogue)
+"Mf" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/water/bloody,
+/area/rogue)
+"Mx" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"MY" = (
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"Ns" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cobble/mossy{
+	dir = 10;
+	pixel_x = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Oo" = (
+/obj/structure/flora/roguegrass/bush,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Op" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"OJ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"Pp" = (
+/obj/effect/decal/cleanable/debris/stony,
+/obj/structure/flora/roguegrass/bush/wall,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"PP" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/wisp/prestidigitation{
+	color = "#ffff00";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	light_color = "#33ff00";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"PU" = (
+/obj/structure/table/church/m,
+/obj/item/clothing/neck/roguetown/psicross/inhumen,
+/obj/item/bodypart/head,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"PX" = (
+/obj/structure/flora/roguegrass/water/reeds,
+/obj/effect/wisp/prestidigitation{
+	color = "#ffff00";
+	desc = "A small, fiery ball of light made up of mystical energy.";
+	light_color = "#33ff00";
+	name = "Will-o'-the-wisp";
+	pixel_x = 0
+	},
+/turf/open/water/bloody,
+/area/rogue)
+"Ri" = (
+/obj/structure/flora/roguetree/burnt,
+/obj/item/natural/bone,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Rr" = (
+/obj/effect/decal/cobble/mossy,
+/obj/item/rope,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"RE" = (
+/obj/structure/flora/roguetree/burnt,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"RR" = (
+/obj/structure/fluff/psycross/zizocross,
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"St" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"SK" = (
+/obj/structure/flora/roguegrass/thorn_bush,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Uh" = (
+/obj/structure/giantfur,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"UD" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 1
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"UH" = (
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/dirt,
+/area/rogue)
+"UO" = (
+/turf/open/floor/rogue/blocks,
+/area/rogue)
+"UT" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cobble/mossy{
+	dir = 10;
+	pixel_x = 7
+	},
+/turf/open/water/bloody,
+/area/rogue)
+"UW" = (
+/obj/structure/table/wood/poor/alt,
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Vb" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 8
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Vd" = (
+/obj/machinery/light/rogue/firebowl,
+/obj/effect/decal/cobble/mossy{
+	dir = 10;
+	pixel_x = 7
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Vh" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/obj/item/reagent_containers/glass/cup/skull,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"We" = (
+/obj/effect/decal/cleanable/blood/splatter/walls,
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"Wp" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cobble/mossy{
+	dir = 10
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"WT" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cobble/mossy{
+	dir = 6
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"Yj" = (
+/obj/item/natural/bone,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue)
+"Zt" = (
+/obj/structure/fluff/walldeco/vinez/red,
+/turf/closed/wall/mineral/rogue/decostone/mossy/red/end{
+	dir = 8
+	},
+/area/rogue)
+"ZD" = (
+/obj/effect/landmark/start/gnolllate,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+"ZK" = (
+/obj/effect/decal/cobble/mossy{
+	dir = 5
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue)
+
+(1,1,1) = {"
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+"}
+(2,1,1) = {"
+ix
+tg
+LD
+LD
+LD
+LD
+LD
+LD
+tg
+ix
+ix
+ix
+ix
+zs
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+Li
+Li
+wX
+MY
+RE
+ix
+"}
+(3,1,1) = {"
+ix
+qs
+RR
+yq
+LL
+LL
+DZ
+LL
+Zt
+aJ
+ix
+ix
+ix
+qB
+FD
+qB
+zs
+ix
+ix
+ix
+ix
+ix
+Mf
+Mf
+FD
+wX
+FD
+MY
+ix
+ix
+"}
+(4,1,1) = {"
+ix
+CP
+vJ
+CK
+Op
+zC
+id
+GK
+AW
+GT
+zs
+ix
+DW
+FD
+FD
+Uh
+DW
+ix
+ix
+ix
+ix
+LL
+LL
+LL
+FD
+FD
+MY
+FD
+RE
+ix
+"}
+(5,1,1) = {"
+ix
+tg
+sY
+PU
+xV
+fl
+re
+UO
+UO
+FR
+mJ
+We
+Gi
+FD
+FD
+FD
+Lf
+ix
+ix
+ix
+Mf
+LN
+LL
+JD
+FD
+MY
+MY
+FB
+ix
+ix
+"}
+(6,1,1) = {"
+ix
+CP
+vJ
+Ib
+qW
+GK
+id
+UO
+UO
+FA
+FR
+ix
+DW
+FD
+FD
+FD
+DW
+ix
+ix
+ix
+uA
+dU
+Ge
+MY
+FD
+MY
+FB
+FB
+ix
+ix
+"}
+(7,1,1) = {"
+ix
+qs
+Ll
+LL
+LL
+iz
+LL
+LL
+BA
+FR
+FR
+zs
+zs
+ix
+HC
+HC
+zs
+zs
+zs
+ix
+fS
+rd
+FD
+FD
+MY
+FB
+FB
+FB
+ix
+ix
+"}
+(8,1,1) = {"
+ix
+fz
+LD
+LD
+LD
+LD
+LD
+LD
+qs
+ju
+FR
+FR
+FR
+GT
+ge
+FR
+GT
+LN
+UT
+LN
+MY
+MY
+FD
+SK
+RE
+FB
+FB
+FB
+ix
+ix
+"}
+(9,1,1) = {"
+ix
+zs
+Vb
+FR
+FR
+GT
+UD
+FR
+KD
+zd
+zd
+GT
+FR
+FR
+PP
+FR
+FR
+AM
+LL
+LN
+vS
+MY
+MY
+Ge
+Pp
+Iy
+FB
+FB
+ix
+ix
+"}
+(10,1,1) = {"
+ix
+ix
+gR
+gR
+ix
+zs
+UD
+KD
+FR
+FR
+FR
+ix
+KD
+ph
+ZK
+FR
+ix
+ix
+zs
+ix
+xt
+rd
+OJ
+MY
+Ge
+Kh
+Ri
+jv
+RE
+ix
+"}
+(11,1,1) = {"
+zs
+HB
+ZK
+FD
+fI
+zs
+ix
+DJ
+gR
+ix
+ix
+ix
+FR
+Vb
+FD
+ZK
+ix
+ix
+ix
+ix
+Mf
+PX
+FD
+FD
+MY
+FD
+EM
+MY
+iu
+ix
+"}
+(12,1,1) = {"
+ix
+ao
+ao
+fw
+zy
+mi
+cX
+ju
+St
+bP
+ix
+zs
+WT
+FR
+Wp
+FD
+We
+zs
+ix
+ix
+ix
+IT
+RE
+MY
+MY
+FD
+SK
+UH
+ix
+ix
+"}
+(13,1,1) = {"
+zs
+bY
+FR
+FR
+Eo
+zs
+ao
+fw
+ao
+ao
+zs
+Vh
+ZD
+FA
+bt
+ue
+gN
+ix
+ix
+ix
+ix
+ky
+SK
+Ge
+MY
+FD
+MY
+MY
+ix
+ix
+"}
+(14,1,1) = {"
+ix
+Rr
+Ip
+FR
+FR
+zs
+FR
+FR
+GL
+FT
+ix
+UW
+iI
+FR
+FR
+nj
+eV
+zs
+ix
+ix
+ix
+ix
+Ag
+Cq
+bv
+FD
+wb
+Mx
+ix
+ix
+"}
+(15,1,1) = {"
+zs
+UW
+FT
+bK
+hh
+ix
+Yj
+pK
+FD
+GO
+zs
+lS
+ju
+KD
+oH
+hZ
+FD
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+zg
+aB
+FD
+jh
+ix
+ix
+"}
+(16,1,1) = {"
+ix
+ix
+zs
+ix
+zs
+ix
+yT
+fX
+Ns
+UW
+ix
+Vd
+tB
+FR
+FR
+ZD
+yn
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+Ag
+FD
+Oo
+UH
+ix
+ix
+"}
+(17,1,1) = {"
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+zs
+jJ
+IL
+FD
+lo
+zs
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+FM
+FM
+ix
+ix
+ix
+"}
+(18,1,1) = {"
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+ix
+"}

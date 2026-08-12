@@ -5,7 +5,7 @@
 	allowed_races = list(/datum/species/gnoll)
 	outfit = /datum/outfit/job/roguetown/gnoll/shaman
 	applies_post_equipment = FALSE
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_GNOLL)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,

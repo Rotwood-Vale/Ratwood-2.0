@@ -1,0 +1,6 @@
+{
+	"map_name": "Gnoll Caverns",
+	"map_path": "map_files/otherz",
+	"map_file": "gnollcave.dmm",
+	"traits": [{"Name": "Gnoll Caverns"}]
+}

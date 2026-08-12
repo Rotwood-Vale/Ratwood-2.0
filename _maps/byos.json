@@ -4,7 +4,7 @@
 	"map_file": ["byos.dmm"],
 	"traits": [{"Up": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Down": true}],
 	"other_z": [
-		"_maps/map_files/otherz/wretchfort.json",
+		"_maps/map_files/otherz/gnollcave.json",
 		"_maps/map_files/otherz/inqboat.json"
 	],
 	"minetype": null,

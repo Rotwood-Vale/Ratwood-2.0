@@ -51,7 +51,6 @@
 		/datum/advclass/wretch/herald_of_progress,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
-		/datum/advclass/wretch/wretchedtoiler,
 		/datum/advclass/wretch/ancientchampion,
 	)
 

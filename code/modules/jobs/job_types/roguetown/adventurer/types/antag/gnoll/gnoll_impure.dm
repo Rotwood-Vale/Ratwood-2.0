@@ -7,7 +7,7 @@
 
 	category_tags = list(CTAG_GNOLL_IMPURE)
 	outfit = /datum/outfit/job/roguetown/gnoll_impure
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_UNLYCKERABLE)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_UNLYCKERABLE, TRAIT_GNOLL)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_CON = 5,
