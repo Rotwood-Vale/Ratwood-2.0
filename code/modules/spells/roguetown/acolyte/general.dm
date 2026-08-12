@@ -269,7 +269,7 @@
 			revert_cast()
 			return FALSE
 
-		if(target.blood_volume >= BLOOD_VOLUME_NORMAL)
+		if(target.get_blood_volume() >= BLOOD_VOLUME_NORMAL)
 			to_chat(UH, span_warning("Their lyfeblood is at capacity. There is no need."))
 			revert_cast()
 			return FALSE
@@ -297,14 +297,14 @@
 				blood_price = 1.25
 		if(user_skill > SKILL_LEVEL_NOVICE)
 			blood_vol_restore += vol_per_skill * user_skill
-		var/max_loops = round(UH.blood_volume / blood_price, 1) * 2	// x2 just in case the user is trying to fill themselves up while using it.
+		var/max_loops = round(UH.get_blood_volume() / blood_price, 1) * 2	// x2 just in case the user is trying to fill themselves up while using it.
 		var/datum/beam/bloodbeam = user.Beam(target,icon_state="blood",time=(max_loops * 5))
 		for(var/i in 1 to max_loops)
-			if(UH.blood_volume > (BLOOD_VOLUME_SURVIVE / 2))
+			if(UH.get_blood_volume() > (BLOOD_VOLUME_SURVIVE / 2))
 				if(do_after(UH, delay))
-					target.blood_volume = min((target.blood_volume + blood_vol_restore), BLOOD_VOLUME_NORMAL)
-					UH.blood_volume = max((UH.blood_volume - blood_price), 0)
-					if(target.blood_volume >= BLOOD_VOLUME_NORMAL && !user_informed)
+					target.set_blood_volume(min((target.get_blood_volume() + blood_vol_restore), BLOOD_VOLUME_NORMAL))
+					UH.set_blood_volume(max((UH.get_blood_volume() - blood_price), 0))
+					if(target.get_blood_volume() >= BLOOD_VOLUME_NORMAL && !user_informed)
 						to_chat(UH, span_info("They're at a healthy blood level, but I can keep going."))
 						user_informed = TRUE
 				else
