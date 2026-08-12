@@ -225,7 +225,7 @@
 			to_chat(user, span_warning("It is too hot to change the symbols!"))
 			return
 		var/list/options = list("Set symbol", "Toggle permanent slave mark", "Toggle remove existing brand", "Cancel")
-		var/choice = tgui_alert(user, "What would you like to do with the branding iron?", "Branding Iron", options, 10 SECONDS)
+		var/choice = tgui_input_list(user, "What would you like to do with the branding iron?", "Branding Iron", options, null, 10 SECONDS)
 		switch(choice)
 			if("Set symbol")
 				var/inputty = stripped_input(user, "What would you like to set the brand?\nExample: a small drawing of a rous head", "Enter branding description", null, 64)

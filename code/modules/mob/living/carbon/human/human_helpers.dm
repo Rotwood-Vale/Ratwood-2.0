@@ -64,9 +64,10 @@
 // For adding roundstart slavery mark, this has explicit fallbacks to ensure the owner is always the slaver. Does not apply to ownership marks after the fact
 /mob/living/carbon/human/proc/update_owned_slave_trait()
 	if(has_active_ownership_mark())
-		ADD_TRAIT(src, TRAIT_OWNED_SLAVE, "[type]")
+		ADD_TRAIT(src, TRAIT_OWNED_SLAVE, "ownership_mark")
 	else
-		REMOVE_TRAIT(src, TRAIT_OWNED_SLAVE, "[type]")
+		// Clear all non-roundstart sources to avoid stale ownership flags from legacy source keys.
+		REMOVE_TRAIT(src, TRAIT_OWNED_SLAVE, null)
 
 /proc/get_current_slaver_owner()
 	for(var/mob/living/carbon/human/slaver in GLOB.human_list)
