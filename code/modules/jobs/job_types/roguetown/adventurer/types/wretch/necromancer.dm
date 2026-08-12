@@ -46,7 +46,6 @@
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
-		/obj/item/necro_relics/necro_crystal = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/ritechalk = 1
@@ -93,3 +92,39 @@
 			backr = /obj/item/rogueweapon/woodstaff/amethyst
 		if("toper-focused staff")
 			backr = /obj/item/rogueweapon/woodstaff/toper
+
+/datum/mind
+	var/list/datum/weakref/necro_crystals = list()
+
+/datum/mind/proc/necro_crystal_cap()
+	if(has_necromancer_kit())	//necromancers get a cap of 2
+		return 2
+	if(has_lich_kit())			//proper liches get a cap of six
+		return 6
+	return 1					//nonnecromancer/lich heretics get 1 at a time
+
+/datum/mind/proc/has_necromancer_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
+
+/datum/mind/proc/has_lich_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation)
+
+/datum/mind/proc/necro_crystal_count()
+	for(var/datum/weakref/W in necro_crystals)
+		if(!W.resolve())
+			necro_crystals -= W
+	return length(necro_crystals)
+
+/datum/mind/proc/necro_register_crystal(obj/item/necro_relics/necro_crystal/C)
+	necro_crystals += WEAKREF(C)
+
+/datum/mind/proc/necro_retire_oldest_crystal()
+	necro_crystal_count() // prunes dead weakrefs first
+	if(!length(necro_crystals))
+		return FALSE
+	var/datum/weakref/oldest = necro_crystals[1] // list order = insertion order
+	var/obj/item/necro_relics/necro_crystal/C = oldest.resolve()
+	necro_crystals -= oldest
+	if(C && !QDELETED(C))
+		C.unbind_and_destroy()
+	return TRUE
