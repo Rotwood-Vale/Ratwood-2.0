@@ -338,7 +338,7 @@ GLOBAL_VAR(restart_counter)
 
 	var/new_status = ""
 	var/hostedby
-	if(config)
+	if(config?.entries_by_type)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> &#8212; "
