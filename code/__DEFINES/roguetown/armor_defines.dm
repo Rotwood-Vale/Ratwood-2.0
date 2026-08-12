@@ -72,6 +72,7 @@
 #define ARMOR_INT_SIDE_LEATHER 200 // Integrity for leather / copper pieces
 #define ARMOR_INT_SIDE_DECREPIT 150 // Integrity for decrepit pieces
 #define ARMOR_INT_SIDE_CLOTH 100 // Integrity for cloth / aesthetic oriented pieces
+#define ARMOR_INT_SIDE_COVERAGE_BONUS 50 //bonus integrity for side pieces lacking coverage, eg. gorgets
 
 //MASKS - Facemasks
 #define ARMOR_INT_MASK_BRONZE 150 //Integrity for bronze facemasks.
@@ -119,7 +120,7 @@
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
 // BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like.
-#define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 60, "piercing" = 50, "fire" = 50, "acid" = 0)
+#define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 70, "piercing" = 40, "fire" = 50, "acid" = 0)
 
 // Medium AC
 #define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)

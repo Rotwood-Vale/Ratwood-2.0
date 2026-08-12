@@ -192,4 +192,3 @@
 	            /obj/item/clothing/under/roguetown/chainlegs/hose = 1)
 	craftdiff = 0 //Straight-forward. Note that this is a copy of Draganfrukt's helmet-and-hat combination system, which also has the slight caveat..
 	req_table = TRUE //..of resetting the durability of both items, when crafted and uncrafted. This check helps to reduce a lot of potential cheese, but should be tweaked later.
-	bypass_dupe_test = TRUE

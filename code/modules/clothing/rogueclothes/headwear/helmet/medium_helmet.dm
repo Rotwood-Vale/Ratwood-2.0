@@ -318,7 +318,6 @@
 	allows for the joint mounting of a plume. Nock a feather into it to show off your alliegence's colors."
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 25 //Close, but no cigar.
-	material_category = ARMOR_MAT_PLATE
 	body_parts_covered = HEAD|HAIR|EARS
 	icon_state = "bronzehelmet"
 	item_state = "bronzehelmet"
@@ -331,8 +330,8 @@
 /obj/item/clothing/head/roguetown/helmet/bronze/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Greatplume") as anything in COLOR_MAP
-		detail_color = COLOR_MAP[choice]
+		var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
@@ -344,7 +343,7 @@
 /obj/item/clothing/head/roguetown/helmet/bronze/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -359,7 +358,6 @@
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 100
 	armor_class = ARMOR_CLASS_LIGHT
-	material_category = ARMOR_MAT_PLATE
 	body_parts_covered = FULL_HEAD
 	icon_state = "bronzemurmillo"
 	item_state = "bronzemurmillo"
@@ -368,12 +366,12 @@
 /obj/item/clothing/head/roguetown/helmet/bronzegladiator/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Orle") as anything in COLOR_MAP + pridelist
+		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
-		detail_color = COLOR_MAP[choice]
+		detail_color = GLOB.colorlist[choice]
 		detail_tag = "_detail"
-		if(choice in pridelist)
+		if(choice in GLOB.pridelist)
 			detail_tag = "_detailp"
 		update_icon()
 		if(loc == user && ishuman(user))
@@ -383,7 +381,7 @@
 /obj/item/clothing/head/roguetown/helmet/bronzegladiator/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()

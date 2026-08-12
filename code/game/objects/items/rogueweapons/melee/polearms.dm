@@ -230,8 +230,6 @@
 	reach = 3 // Yep! 3 tiles
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
 
 /datum/intent/lance/onehand
 	chargetime = 5 SECONDS
@@ -1100,6 +1098,7 @@
 	force = 25
 	force_wielded = 28
 	throwforce = 30
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "bronzespear"
 	smeltresult = /obj/item/ingot/bronze
 	armor_penetration = 22 //In-between a spear and javelin.
