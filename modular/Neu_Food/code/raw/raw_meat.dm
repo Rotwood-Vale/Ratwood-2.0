@@ -371,7 +371,7 @@
 	if(!LAZYLEN(candidates))
 		to_chat(user, span_warning("The meat remains cold. No echoes of violence are hungry enough."))
 		return
-	user.flash_fullscreen("redflash3")
+	user.fullscreen_redflash("redflash3")
 	to_chat(user, span_userdanger("The echoes of millions of screams assault your ears, visions of raining blood, mountains of skulls! THE GORESTAR HEARS YOUR UNHOLY PRAYER!"))
 	user.playsound_local(get_turf(user), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
 	user.emote("agony", forced = TRUE)
@@ -412,7 +412,7 @@
 		to_chat(user, "You need to be a human to test this.")
 		return
 
-	user.flash_fullscreen("redflash3")
+	user.fullscreen_redflash("redflash3")
 	to_chat(user, span_userdanger("The echoes of millions of screams assault your ears, visions of raining blood, mountains of skulls! THE GORESTAR HEARS YOUR UNHOLY PRAYER!"))
 	user.playsound_local(get_turf(user), 'sound/music/wolfintro.ogg', 80, FALSE, pressure_affected = FALSE)
 	user.emote("agony", forced = TRUE)

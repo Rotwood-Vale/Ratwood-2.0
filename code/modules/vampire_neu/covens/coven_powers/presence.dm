@@ -24,8 +24,19 @@
 	cooldown_length = 2 MINUTES
 
 /datum/coven_power/presence/awe/pre_activation_checks(mob/living/target)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!isliving(target))
+		return FALSE
+
+	if(target.is_clanmate(owner))
+		to_chat(owner, span_warning("You will not bend your own Clan to heel like cattle."))
+		return FALSE
+
 	var/mypower = owner.STAINT
-	var/theirpower = owner.STAINT - 5
+	var/theirpower = target.STAINT - 5
 	if((theirpower >= mypower))
 		to_chat(owner, span_warning("[target]'s mind is too powerful to sway!"))
 		return FALSE
@@ -50,9 +61,9 @@
 		owner.say("COME HERE!!")
 
 
-/datum/coven_power/presence/awe/deactivate(mob/living/carbon/human/target)
-	target.remove_overlay(MUTATIONS_LAYER)
+/datum/coven_power/presence/awe/deactivate(mob/living/carbon/human/target, direct = FALSE)
 	. = ..()
+	target?.remove_overlay(MUTATIONS_LAYER)
 
 //DREAD GAZE
 /datum/coven_power/presence/dread_gaze
@@ -85,9 +96,9 @@
 	target.emote("scream")
 	target.do_jitter_animation(2 SECONDS)
 
-/datum/coven_power/presence/dread_gaze/deactivate(mob/living/carbon/human/target)
+/datum/coven_power/presence/dread_gaze/deactivate(mob/living/carbon/human/target, direct = FALSE)
 	. = ..()
-	target.remove_overlay(MUTATIONS_LAYER)
+	target?.remove_overlay(MUTATIONS_LAYER)
 
 /mob/living/carbon/human/proc/step_away_caster(mob/living/step_from)
 	walk(src, 0)
@@ -122,9 +133,9 @@
 	owner.say("KNEEL!!")
 	target.set_resting(TRUE, TRUE)
 
-/datum/coven_power/presence/fall/deactivate(mob/living/carbon/human/target)
+/datum/coven_power/presence/fall/deactivate(mob/living/carbon/human/target, direct = FALSE)
 	. = ..()
-	target.remove_overlay(MUTATIONS_LAYER)
+	target?.remove_overlay(MUTATIONS_LAYER)
 
 //SUMMON
 /datum/coven_power/presence/summon
@@ -167,12 +178,12 @@
 
 		// Announce to nearby clan members
 		for(var/mob/living/carbon/human/observer in view(7, user))
-			if(observer.clan == user.clan && observer != user && observer != target)
+			if(observer.is_clanmate(user) && observer != user && observer != target)
 				to_chat(observer, "<span class='info'>[user.real_name] has summoned [target.real_name].</span>")
 
-/datum/coven_power/presence/summon/deactivate(mob/living/carbon/human/target)
+/datum/coven_power/presence/summon/deactivate(mob/living/carbon/human/target, direct = FALSE)
 	. = ..()
-	target.remove_overlay(MUTATIONS_LAYER)
+	target?.remove_overlay(MUTATIONS_LAYER)
 
 /mob/living/carbon/human/proc/step_toward_caster(mob/living/step_to)
 	walk(src, 0)
@@ -230,7 +241,7 @@
 			remove_majesty_effect(mob)
 			affected_mobs -= mob
 
-/datum/coven_power/presence/majesty/deactivate(mob/living/carbon/human/target)
+/datum/coven_power/presence/majesty/deactivate(mob/living/carbon/human/target, direct = FALSE)
 	. = ..()
 	owner.remove_overlay(MUTATIONS_LAYER)
 	owner.remove_status_effect(/datum/status_effect/majesty_active)
@@ -246,7 +257,7 @@
 		return FALSE
 	if(target.stat == DEAD)
 		return FALSE
-	if(target.clan == owner.clan)
+	if(target.is_clanmate(owner))
 		return FALSE
 	if(target in affected_mobs)
 		return FALSE
@@ -313,9 +324,15 @@
 
 /datum/status_effect/majesty_compulsion/on_apply()
 	. = ..()
+	if(!majesty_user)
+		return FALSE
+
 	RegisterSignal(owner, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_pre_attack))
 	//RegisterSignal(owner, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(on_say))
+
+	//the compulsion has no duration of its own, so it has to die with whoever cast it
+	RegisterSignal(majesty_user, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_majesty_user_gone))
 
 	if(owner.mind)
 		owner.add_stress(/datum/stressevent/majesty_compelled)
@@ -328,8 +345,18 @@
 		COMSIG_MOB_SAY
 	))
 
+	if(majesty_user)
+		UnregisterSignal(majesty_user, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+		majesty_user = null
+
 	if(owner.mind)
 		owner.remove_stress(/datum/stressevent/majesty_compelled)
+
+/datum/status_effect/majesty_compulsion/proc/on_majesty_user_gone()
+	SIGNAL_HANDLER
+
+	to_chat(owner, span_notice("The overwhelming presence releases its grip on you."))
+	qdel(src)
 
 /datum/status_effect/majesty_compulsion/proc/on_pre_attack(obj/item/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
@@ -355,12 +382,15 @@
 /datum/status_effect/majesty_compulsion/proc/on_say(mob/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(!majesty_user)
+		return
+
 	var/message = speech_args[SPEECH_MESSAGE]
 
 	if(findtext(message, majesty_user.name) && (findtext(message, "fuck") || findtext(message, "shit") || findtext(message, "damn") || findtext(message, "kill") || findtext(message, "attack")))
 		if(prob(70))
 			to_chat(source, "<span class='warning'>The words die in your throat. You cannot speak ill of [majesty_user]!</span>")
-			return
+			speech_args[SPEECH_MESSAGE] = ""
 
 /atom/movable/screen/alert/status_effect/majesty_compulsion
 	name = "Overwhelming Presence"

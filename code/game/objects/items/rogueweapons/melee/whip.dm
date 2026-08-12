@@ -117,6 +117,16 @@
 	minstr = 11
 	icon_state = "gwhip"
 
+/obj/item/rogueweapon/whip/blacksteel
+	name = "blacksteel whip"
+	desc = "An elegant whip, corded from besilked leather and tipped with blacksteel. Too refined for torture, too precious for combat; what is one to do with such an enigmatic tool?"
+	icon_state = "bs_whip"
+	force = 25
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
+	minstr = 9
+	wdefense = 1
+	smeltresult = /obj/item/ingot/blacksteel
+
 /obj/item/rogueweapon/whip/antique/psywhip
 	name = "Daybreak"
 	desc = "A chain-linked whip, meticulously assembled from a hundred pieces of blessed silver. Its origins are steeped in mythos: most believe it to originate from an ancient bloodline of vampyre-killers, which once saved Psydonia from a powerful lyckerlorde. Whether it was happenstance or fate itself that eventually led it into your grasp, however, is better left unspoken. </br>'There, upon the Cathedral's ceiling, was painted a scene-most-beautiful: of a robed Psydon standing before the Archdevil, parting the nite's sky with a crack from His fiery whip. Just as He had done prior, so too must you bring daelight to the darkness.'"
@@ -197,11 +207,160 @@
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"
 	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it separates limb-from-trunk with thunderous claps. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
-	icon_state = "silverwhip"
+	icon_state = "bronzewhip"
 	force = 21 //Same damage as the leathers.
-	color = "#f9d690"
 	minstr = 13 //Dodgemasters need-not apply. Intended for the 'Belmont'-esque archetype of Barbarians, and greatly punishes those who would try and take it for the sake of non-thematic cheesing.
 	wdefense = 0
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish) //Able to dismember at range. 'Holy' is a catchall term, in this case.
 	smeltresult = /obj/item/ingot/bronze
 	wbalance = WBALANCE_HEAVY
+
+/datum/intent/whip/lash/urumi
+	name = "urumi lash"
+	blade_class = BCLASS_CUT
+	attack_verb = list("lashes", "slices")
+	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
+	chargetime = 0.5 SECONDS
+	recovery = 7
+	penfactor = 20
+	reach = 3
+	icon_state = "inlash"
+	item_d_type = "slash"
+
+/datum/intent/whip/lash/urumi/heavy
+	name = "heavy urumi lash"//i'm a hack
+	blade_class = BCLASS_CUT
+	attack_verb = list("lashes", "slices")
+	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
+	chargetime = 0.8 SECONDS // longer charge cause heavy balance I guess
+	recovery = 7
+	penfactor = 30
+	reach = 3
+	icon_state = "inlash"
+	item_d_type = "slash"
+
+/datum/intent/whip/crack/urumi/heavy
+	name = "heavy urumi crack"
+	blade_class = BCLASS_CHOP //why not
+	attack_verb = list("cracks", "slashes")
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	chargetime = 0.7 SECONDS
+	recovery = 10
+	damfactor = 1.1
+	penfactor = 25
+	reach = 2
+	icon_state = "incrack"
+	item_d_type = "slash"
+
+/datum/intent/whip/crack/urumi
+	name = "urumi crack"
+	blade_class = BCLASS_CHOP //why not
+	attack_verb = list("cracks", "slashes")
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	chargetime = 0.9 SECONDS
+	recovery = 10
+	damfactor = 1.1
+	penfactor = 15
+	reach = 2
+	icon_state = "incrack"
+	item_d_type = "slash"
+
+/datum/intent/whip/thrust // elden ring nonsense, but cool
+	name = "urumi thrust"
+	blade_class = BCLASS_STAB
+	attack_verb = list("thrusts", "skewers", "shiskebabs", "perforates")
+	animname = "stab"
+	icon_state = "instab"
+	reach = 3
+	chargetime = 1 SECONDS // can't spam
+	clickcd = CLICK_CD_CHARGED
+	warnie = "mobwarning"
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	penfactor = 30
+	item_d_type = "stab"
+	effective_range = 3
+	effective_range_type = EFF_RANGE_EXACT
+
+/datum/intent/whip/thrust/heavy // elden ring nonsense, but cool
+	name = "urumi thrust"
+	blade_class = BCLASS_STAB
+	attack_verb = list("thrusts", "skewers", "shiskebabs", "perforates")
+	animname = "stab"
+	icon_state = "instab"
+	reach = 3
+	chargetime = 1.2 SECONDS // can't spam
+	clickcd = CLICK_CD_CHARGED
+	warnie = "mobwarning"
+	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	penfactor = 40
+	item_d_type = "stab"
+	effective_range = 3
+	effective_range_type = EFF_RANGE_EXACT
+
+/obj/item/rogueweapon/whip/urumi
+	name = "urumi"
+	desc = "Two dazzling lengths of razor sharp steel coiling outwards from a knucklebowed hilt. Somewhere between a sword and a whip, this flexible weapon is as much a danger to the wielder as it is their target."
+	icon_state = "urumi"
+	force = 30//higher force but intents that have less AP and require charging up like flail smash, think spinning the blade before you hit.
+	minstr = 10
+	wdefense = 0//use a shield or dodge
+	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
+	max_integrity = 100
+	max_blade_int = 100//actually have to worry about sharpening them
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	sewrepair = FALSE//cant sew a metal coil dumbdumb
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/whip/urumi/iron
+	name = "iron urumi"
+	desc = "A dazzling length of sharp iron coiling outwards from a knucklebowed hilt. Somewhere between a sword and a whip, this flexible weapon is as much a danger to the wielder as it is their target."
+	icon_state = "i_urumi"
+	force = 28
+	minstr = 8
+	max_integrity = 200
+	max_blade_int = 200 // not sure how else to make this not just the worse version of the steel variant
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/rogueweapon/whip/urumi/bronze
+	name = "bronze urumi"
+	desc = "A dazzling length bronze coiling outwards from a knucklebowed hilt. A heftier and ancient design for a more robustly built fighter."
+	icon_state = "b_urumi"
+	force = 30
+	minstr = 12
+	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
+	wbalance = WBALANCE_HEAVY
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/whip/urumi/silver
+	name = "silver urumi"
+	desc = "Two lengths of shimmering silver coiling outwards from a knucklebowed hilt. These hefty blades demand strength and dexterity from the aspiring sunderer of the unholy."
+	icon_state = "silver_urumi"
+	force = 33
+	minstr = 12
+	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
+	max_integrity = 150
+	max_blade_int = 150
+	is_silver = TRUE
+	wbalance = WBALANCE_HEAVY
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/whip/urumi/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/whip/urumi/blacksteel
+	name = "blacksteel urumi"
+	desc = "Two lengths of precious blacksteel coiling outwards from a finely ornamented hilt. As much an artpiece as it is weapon."
+	icon_state = "bs_urumi"
+	force = 33
+	minstr = 11
+	max_integrity = 280
+	max_blade_int = 280
+	smeltresult = /obj/item/ingot/blacksteel

@@ -656,7 +656,7 @@ Inquisitorial armory down here
 	playsound(src, 'sound/items/indexer_working.ogg', 75, FALSE, 3)
 	if(active && working && !full)
 		if(do_after(user, 20, FALSE, M))
-			M.flash_fullscreen("redflash3")
+			M.fullscreen_redflash("redflash3")
 			subject = M
 			if(!HAS_TRAIT(M, TRAIT_NOPAIN) || !HAS_TRAIT(M, TRAIT_NOPAINSTUN))
 				if(prob(15))
@@ -668,7 +668,7 @@ Inquisitorial armory down here
 			visible_message(span_warning("[src] draws from [M]!"))
 			playsound(M, 'sound/combat/hits/bladed/genstab (1).ogg', 30, FALSE, -1)
 			timestaken++
-			M.blood_volume = max(M.blood_volume-30, 0)
+			M.set_blood_volume(max(M.get_blood_volume()-30, 0))
 			M.handle_blood()
 			icon_state = "indexer_used"
 			if(M.mind)
@@ -1374,9 +1374,9 @@ Inquisitorial armory down here
 			user.visible_message(span_notice("[user] presses upon [src]'s needle."))
 			if(do_after(user, 30))
 				playsound(src, 'sound/items/blackmirror_needle.ogg', 95, FALSE, 3)
-				user.flash_fullscreen("redflash3")
+				user.fullscreen_redflash("redflash3")
 				user.adjustBruteLoss(40)
-				user.blood_volume = max(user.blood_volume-240, 0)
+				user.set_blood_volume(max(user.get_blood_volume()-240, 0))
 				user.handle_blood()
 				whofedme = user
 				openstate = "bloody"
@@ -1387,8 +1387,8 @@ Inquisitorial armory down here
 			user.visible_message(span_notice("[user] goes to press [M] with [src]'s needle."))
 			if(do_after(user, 60, target = M))
 				playsound(M, 'sound/items/blackmirror_needle.ogg', 95, FALSE, 3)
-				M.flash_fullscreen("redflash3")
-				M.blood_volume = max(user.blood_volume-240, 0)
+				M.fullscreen_redflash("redflash3")
+				M.set_blood_volume(max(user.get_blood_volume()-240, 0))
 				M.adjustBruteLoss(40)
 				M.handle_blood()
 				whofedme = M
@@ -1473,7 +1473,7 @@ Inquisitorial armory down here
 	icon_state = "blackeye"
 	var/obj/item/inqarticles/bmirror/source
 
-/atom/movable/screen/alert/blackmirror/Click()
+/atom/movable/screen/alert/blackmirror/handle_click()
 	var/mob/living/L = usr
 	var/lookat = null
 

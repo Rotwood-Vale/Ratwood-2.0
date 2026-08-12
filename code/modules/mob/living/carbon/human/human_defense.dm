@@ -771,6 +771,10 @@
 			examination += span_biginfo("- Stamina recovery takes twice as long")
 			examination += span_danger("- Risk of heatstroke after prolonged exposure")
 
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		examination += span_biginfo("It is warm here. It refreshes and heals me.")
+
 	examination += "ø ------------ ø</span>"
 
 	if(!silent)

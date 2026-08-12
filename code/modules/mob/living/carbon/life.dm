@@ -211,6 +211,10 @@
 /mob/living/carbon/handle_embedded_objects()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
+			if(embedded.item_flags & SURGICAL_TOOL)
+				if(prob(2))
+					to_chat(src, span_danger("[embedded] in my [bodypart.name] hurts!"))
+				continue // surgical tools embedded as part of an ongoing operation shouldn't tick damage, This makes surgery hellish to do.
 			if(embedded.on_embed_life(src, bodypart))
 				continue
 

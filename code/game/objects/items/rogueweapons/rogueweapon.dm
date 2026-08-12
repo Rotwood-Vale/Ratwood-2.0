@@ -42,6 +42,9 @@
 	/// Special datum holder
 	var/datum/special_intent/special
 
+
+	var/cast_time_reduction = null
+
 /obj/item/rogueweapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
