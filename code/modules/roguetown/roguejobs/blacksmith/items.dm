@@ -200,20 +200,20 @@
 	if(!polished)
 		return
 
-	if(polished == 4 && polish_bonus)
+	if(polished == 4 && polish_bonus)//require both so we dont remove force from a masterwork item that has polished == 4 but not a polish bonus
 		force -= 2
 		force_wielded -= 3
 		max_integrity -= polish_bonus
 		obj_integrity = min(obj_integrity, max_integrity)
 		update_force_dynamic()
-	else if(polished >= 1 && polished <= 3)
+	else if(polished >= 1 && polished <= 3)//remove partially polished stages if we break the item and its, for some reason, only halfway polished
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
 	polished = 0
 	polish_bonus = 0
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
-	var/datum/component/glint = GetComponent(/datum/component/metal_glint)
-	qdel(glint)
+	if(!GetComponent(/datum/component/silverbless)?.is_blessed && !GetComponent(/datum/component/psyblessed)?.is_blessed)//dont delete the glint from blessed silvers
+		qdel(GetComponent(/datum/component/metal_glint))
 
 //below adds polish buff but is called remove_polish because it lowers the amount of polishing cream uses. name sucks and i hate it but it is what it is. proc/lose_polish() is what actually removes the polish buffs and glint.
 /obj/item/proc/remove_polish(datum/source, strength) // kill polska
