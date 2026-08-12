@@ -26,6 +26,8 @@
 	if(!ishuman(H))
 		return
 	var/mob/living/carbon/human/human_target = H
+	// Reapplying here because it keeps missing it out otherwise...not sure why
+	ADD_TRAIT(human_target, TRAIT_DUNGEONMASTER, JOB_TRAIT)
 	human_target.update_ownership_marks_for_slaver(human_target)
 
 /datum/outfit/job/roguetown/slaver
@@ -35,6 +37,7 @@
 	tutorial = "You are one of the many fingers part of slavery's long arm, away from the fiercest competition over in the far southeast of the world you have established yourself as the premier slaver in this duchy. Put your slaves to work or auction them off, acquire new ones from the lowtown garrison or through less savory means."
 	outfit = /datum/outfit/job/roguetown/slaver/basic
 	category_tags = list(CTAG_SLAVER)
+	subclass_languages = list(/datum/language/celestial)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_CON = 2,

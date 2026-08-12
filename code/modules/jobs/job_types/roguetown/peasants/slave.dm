@@ -39,8 +39,11 @@
 
 // Slave Subclasses
 
+/datum/advclass/slave
+	subclass_languages = list(/datum/language/celestial)
+
 /datum/advclass/slave/house_slave
-	parent_type = /datum/advclass
+	parent_type = /datum/advclass/slave
 	name = "House Slave"
 	tutorial = "You are trained as a servant, \
 	Keep the Master's abode clean, prepare meals, serve them."
@@ -73,7 +76,7 @@
 	H.set_blindness(0)
 
 /datum/advclass/slave/labor_slave
-	parent_type = /datum/advclass
+	parent_type = /datum/advclass/slave
 	name = "Labor Slave"
 	tutorial = "You are trained as a laborer, \
 	Toil for the Master's needs, serve them."
@@ -108,7 +111,7 @@
 	H.set_blindness(0)
 
 /datum/advclass/slave/slave_sentry
-	parent_type = /datum/advclass
+	parent_type = /datum/advclass/slave
 	name = "Slave Sentry"
 	maximum_possible_slots = 2
 	tutorial = "You are trained as a fighter, \

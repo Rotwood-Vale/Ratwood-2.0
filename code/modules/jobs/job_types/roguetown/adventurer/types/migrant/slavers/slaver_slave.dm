@@ -1,6 +1,7 @@
 /datum/advclass/slaver/slave
 	name = ""
 	category_tags = list()
+	subclass_languages = list(/datum/language/celestial)
 
 /datum/advclass/slaver/slave/service
 	name = "Service Slave"
