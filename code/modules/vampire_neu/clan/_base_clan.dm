@@ -112,7 +112,7 @@ And it also helps for the character set panel
 		RegisterSignal(H, COMSIG_MOB_ORGAN_REMOVED, PROC_REF(on_organ_loss))
 		// Apply vampire-specific changes
 		H.mob_biotypes = MOB_UNDEAD
-		H.maxbloodpool += 2000
+		H.adjust_maxbloodpool(2000)
 
 		if(alt_sprite)
 			if (!alt_sprite_greyscale)
@@ -349,7 +349,7 @@ And it also helps for the character set panel
 		handle_leadership_succession()
 
 	// last, because remove_leader() subtracts its vitae bonus off this and would leave us short
-	vampire.maxbloodpool = initial(vampire.maxbloodpool)
+	vampire.reset_maxbloodpool()
 
 /datum/clan/proc/handle_leadership_succession()
 	// Find someone else with a position to promote
@@ -400,7 +400,7 @@ And it also helps for the character set panel
 
 /datum/clan/proc/adjust_bloodpool_size(adjust)
 	for(var/mob/living/mob as anything in clan_members)
-		mob.maxbloodpool += adjust
+		mob.adjust_maxbloodpool(adjust)
 
 /datum/clan/proc/on_vampire_life(mob/living/carbon/human/H)
 	H.process_vampire_life()

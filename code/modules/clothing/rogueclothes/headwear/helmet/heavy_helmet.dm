@@ -489,6 +489,7 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
+	armor_class = null	//Needs no armor class, unique absolver gear.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 	name = "psydonic bucket helmet"
@@ -732,7 +733,6 @@
 	desc = "A heavy frogmouth helmet, forged from avantyne. A wide slit allows for a practical amount of visibility considered unusual for this style of helmet. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizofrogmouth"
 	item_state = "zizofrogmouth"
-	block2add = FOV_BEHIND
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	armor = ARMOR_ASCENDANT
 

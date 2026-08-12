@@ -1,4 +1,0 @@
-author: "Heheniy"
-delete-after: True
-changes:
-  - bugfix: "% of skill xp after 100% progress shows correctly"
