@@ -2757,6 +2757,7 @@
 #include "code\modules\spells\spell_types\skills\invoked_single_target\engineeranalyze.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\fitclothing.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\learn.dm"
+#include "code\modules\spells\spell_types\skills\invoked_single_target\martial_prowess.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\massage.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\refocusstudies.dm"
 #include "code\modules\spells\spell_types\skills\invoked_single_target\takeapprentice.dm"
