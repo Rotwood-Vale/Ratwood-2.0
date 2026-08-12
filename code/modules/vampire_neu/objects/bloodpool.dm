@@ -230,7 +230,7 @@
 	var/headroom = total_cost - paid_amount
 	if(!lord && (display_name != "Wicked Plate") && (display_name != "World Anchor"))
 		headroom -= 100
-	return min(user.bloodpool, headroom)
+	return min(user.get_bloodpool(), headroom)
 
 /datum/vampire_project/proc/handle_contribution(mob/living/user)
 	var/max_contribution = get_max_contribution(user)
@@ -248,9 +248,8 @@
 		to_chat(user, span_warning("[display_name] is no longer underway."))
 		return
 
-	max_contribution = get_max_contribution(user)
-	if(max_contribution <= 0)
-		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
+	if(user.get_bloodpool() < contribution)
+		to_chat(user, span_warning("I do not have enough vitae."))
 		return
 
 	contribution = clamp(round(contribution), 1, max_contribution)
@@ -305,7 +304,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_2
 			break
@@ -325,7 +324,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_2
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_3
 			break
@@ -345,7 +344,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_3
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_4
 			break
@@ -364,12 +363,12 @@
 			var/mob/living/carbon/human/lord_body = user
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			to_chat(user, span_danger("I AM ANCIENT, I AM THE LAND. EVEN THE SUN BOWS TO ME."))
 			lord.ascended = TRUE
 			var/list/all_subordinates = user.clan_position.get_all_subordinates()
 			for(var/mob/living/carbon/human/subordinate_body  in all_subordinates)
-				subordinate_body.maxbloodpool += 1000
+				subordinate_body.adjust_maxbloodpool(1000)
 				for(var/S in MOBSTATS)
 					subordinate_body.change_stat(S, 2)
 

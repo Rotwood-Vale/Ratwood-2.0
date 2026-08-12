@@ -362,7 +362,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	beat_timer = null
 	if(!active || QDELETED(owner) || isnull(owner.client) || !eyes || !HAS_TRAIT(owner, TRAIT_IN_FRENZY))
 		return
-	var/hunger = clamp((VITAE_LEVEL_HUNGRY - owner.bloodpool) / VITAE_LEVEL_HUNGRY, 0, 1)
+	var/hunger = clamp((VITAE_LEVEL_HUNGRY - owner.get_bloodpool()) / VITAE_LEVEL_HUNGRY, 0, 1)
 	var/beat = max(3, round(LERP(16, 6, hunger)))
 	var/thump = max(1, round(beat * 0.25))
 	var/list/surge = eyes.redboost_matrix(1.4)
@@ -385,7 +385,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	owner.overlay_fullscreen("frenzy", /atom/movable/screen/fullscreen/frenzy, 7)
 
 /datum/vampire_sight/proc/pulse_time_for(mob/living/vamp)
-	var/hunger = clamp(1 - (vamp.bloodpool / max(1, vamp.maxbloodpool)), 0, 1)
+	var/hunger = clamp(1 - (vamp.get_bloodpool() / max(1, vamp.get_maxbloodpool())), 0, 1)
 	var/curve = hunger * hunger * hunger
 	if(HAS_TRAIT(vamp, TRAIT_IN_FRENZY))
 		curve = max(curve, 0.95)
