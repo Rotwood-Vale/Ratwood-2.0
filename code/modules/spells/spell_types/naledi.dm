@@ -378,10 +378,10 @@
 
 /datum/status_effect/buff/accel/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, "naledi_cat_nonsense")
-	ADD_TRAIT(owner, TRAIT_GUIDANCE, "naledi_cat_nonsense")
-	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, "naledi_cat_nonsense")
-	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, "naledi_cat_nonsense")
+	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_GUIDANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
 
 	if(!afterimage_active)
 		owner.AddComponent(/datum/component/after_image)
@@ -391,10 +391,10 @@
 
 /datum/status_effect/buff/accel/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_INFINITE_STAMINA, "naledi_cat_nonsense")
-	REMOVE_TRAIT(owner, TRAIT_GUIDANCE, "naledi_cat_nonsense")
-	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, "naledi_cat_nonsense")
-	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, "naledi_cat_nonsense")
+	REMOVE_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_GUIDANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
 
 	if(afterimage_active)
 		var/datum/component/after_image/after_image_component = owner.GetComponent(/datum/component/after_image)
@@ -426,14 +426,14 @@
 /datum/status_effect/debuff/decel/on_apply()
 	. = ..()
 
-	ADD_TRAIT(owner, TRAIT_NODEF, "naledi_cat_nonsense")
+	ADD_TRAIT(owner, TRAIT_NODEF, TRAIT_STATUS_EFFECT(id))
 	owner.stamina_add(125)
 	to_chat(owner, span_red("Everything feels unbearably slow. I am defenseless!"))
 
 /datum/status_effect/debuff/decel/on_remove()
 	. = ..()
 
-	REMOVE_TRAIT(owner, TRAIT_NODEF, "naledi_cat_nonsense")
+	REMOVE_TRAIT(owner, TRAIT_NODEF, TRAIT_STATUS_EFFECT(id))
 
 	to_chat(owner, span_blue("My timeline stabilizes, finally."))
 
