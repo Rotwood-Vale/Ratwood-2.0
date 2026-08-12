@@ -1,4 +1,0 @@
-author: "Heheniy"
-delete-after: True
-changes:
-  - bugfix: "Migrant's name and job no longer shows twice on examine"

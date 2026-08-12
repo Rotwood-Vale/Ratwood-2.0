@@ -486,8 +486,8 @@
 			return FALSE
 		C.vomit()
 		C.adjustToxLoss(-30)
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume = min(C.blood_volume+30, BLOOD_VOLUME_NORMAL)
+		if(C.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			C.set_blood_volume(min(C.get_blood_volume()+30, BLOOD_VOLUME_NORMAL))
 		C.visible_message(span_warning("[C] expels some leeches out of them!"), span_warning("Something roils within me!"))
 		new /obj/item/natural/worms/leech(get_turf(C))
 		if(prob( (user.get_skill_level(/datum/skill/magic/holy) * 10) ))

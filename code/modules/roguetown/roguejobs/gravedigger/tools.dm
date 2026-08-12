@@ -409,6 +409,15 @@
 		added_def = 2,\
 	)
 
+/obj/item/rogueweapon/shovel/blacksteel
+	force = 27
+	name = "blacksteel shovel"
+	desc = "So much for being served on a silver platter."
+	icon_state = "blacksteelshovel"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_blade_int = 450
+	max_integrity = 450
+
 /obj/item/burial_shroud
 	name = "winding sheet"
 	desc = "A burial veil for the deceased. It makes transporting bodies slightly more tolerable."

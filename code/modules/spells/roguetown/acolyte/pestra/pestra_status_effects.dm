@@ -54,8 +54,8 @@
 	do_sprite_shake(owner, 3, 3, 15, 1)
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
@@ -129,8 +129,8 @@
 	H.color = effect_colour
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
