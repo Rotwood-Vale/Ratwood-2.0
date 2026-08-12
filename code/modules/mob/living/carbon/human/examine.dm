@@ -1132,7 +1132,7 @@
 				brand_text = branded_bodypart.branded_writing
 				if(branded_bodypart.enslavement_mark)
 					brand_text = "[brand_text], a mark of ownership"
-			else if(branded_bodypart.enslavement_mark && !istype(branded_bodypart, /obj/item/bodypart/chest) && !istype(branded_bodypart, /obj/item/bodypart/head))
+			else if(branded_bodypart.enslavement_mark)
 				brand_text = "a mark of ownership"
 			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
 				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."

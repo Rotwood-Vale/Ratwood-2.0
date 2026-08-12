@@ -4,10 +4,6 @@
 	if(!user)
 		return
 	var/obj/item/held_item = user.get_active_held_item()
-	if(istype(held_item, /obj/item/rogueweapon/surgery/cautery/branding))
-		var/obj/item/rogueweapon/surgery/cautery/branding/branding_iron = held_item
-		if(branding_iron.remove_brand_via_middleclick(src, user))
-			return
 	if(held_item && (user.zone_selected == BODY_ZONE_PRECISE_MOUTH))
 		if(held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT)
 			if(has_stubble)

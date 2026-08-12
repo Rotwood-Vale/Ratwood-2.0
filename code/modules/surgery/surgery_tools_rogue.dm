@@ -269,39 +269,35 @@
 	else
 		REMOVE_TRAIT(target, TRAIT_OWNED_SLAVE, "[type]")
 
-/obj/item/rogueweapon/surgery/cautery/branding/proc/target_has_any_brand(mob/living/carbon/human/target)
-	if(!istype(target))
-		return FALSE
-	for(var/obj/item/bodypart/bodypart as anything in target.bodyparts)
-		if(length(bodypart.branded_writing) || bodypart.enslavement_mark)
-			return TRUE
-		if(istype(bodypart, /obj/item/bodypart/chest))
-			var/obj/item/bodypart/chest/chest = bodypart
-			if(length(chest.branded_writing_on_buttocks) || length(chest.branded_writing_on_stomach) || chest.enslavement_mark)
-				return TRUE
-		else if(istype(bodypart, /obj/item/bodypart/head))
-			var/obj/item/bodypart/head/head = bodypart
-			if(length(head.branded_writing_on_neck) || head.enslavement_mark)
-				return TRUE
-	for(var/obj/item/organ/organ as anything in target.internal_organs)
-		if(length(organ.branded_writing) || organ.enslavement_mark)
-			return TRUE
-	return FALSE
-
-/obj/item/rogueweapon/surgery/cautery/branding/proc/get_branding_zone_data(mob/living/carbon/human/target, mob/living/user)
-	if(!istype(target) || !istype(user))
-		return null
-	var/precise_zone = user.zone_selected
-	var/body_zone = check_zone(precise_zone)
+/obj/item/rogueweapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
+	if(!istype(user.a_intent, /datum/intent/use))
+		return ..()
+	if(!heated)
+		return ..()
+	if(!length(setbranding))
+		to_chat(user, span_warning("There is nothing to brand, add some symbols before using again."))
+		return TRUE
+	if(!ishuman(A))
+		to_chat(user, span_warning("I cannot brand [A]."))
+		return TRUE
+	var/mob/living/carbon/human/target = A
+	var/precise_zone = user.zone_selected // We need this up here to stay consistent past the do_after.
+	var/body_zone = check_zone(precise_zone) 
 	var/obj/item/bodypart/branding_part = target.get_bodypart(body_zone)
+	var/branding_self = user == target
 	if(!get_location_accessible(target, user.zone_selected))
 		to_chat(user, span_warning("That part is obstructed by clothing."))
-		return null
+		return TRUE
+
+	// Get the area we want to brand, and then prompt the user for what to brand/whether we should brand that zone.
+	var/list/zone_options = list()
+
 	if(QDELETED(branding_part) || !istype(branding_part))
 		to_chat(user, span_warning("They don't have this part..."))
-		return null
+		return TRUE
 
-	var/list/zone_options = list()
+	// Construct a prompt for zone-specific branding code. If you change any of these strings, make sure they're changed in the switch case later.
+	// Yes, I do want the user to always click the button for the selected part. I don't care if there's only 1 available.
 	var/covered = FALSE
 	var/obj/item/organ/penis/penis
 	var/obj/item/organ/vagina/vagina
@@ -319,7 +315,7 @@
 				if(vagina && vagina.is_visible())
 					zone_options += "Vagina"
 				testes = target.getorganslot(ORGAN_SLOT_TESTICLES)
-				if(testes && testes.is_visible() && testes.ball_size >= DEFAULT_TESTICLES_SIZE)
+				if(testes && testes.is_visible() && testes.ball_size >= DEFAULT_TESTICLES_SIZE) // only allow balls to be branded if average or bigger (slit types have internal balls)
 					zone_options += "Testes"
 		if(BODY_ZONE_PRECISE_STOMACH)
 			if(get_location_accessible(target, BODY_ZONE_PRECISE_STOMACH))
@@ -370,179 +366,12 @@
 
 	if(length(zone_options))
 		zone_options += "Cancel"
-	else
+	else // failsafe
 		if(covered)
 			to_chat(user, span_warning("That part is covered!"))
 		else
 			to_chat(user, span_warning("It doesn't seem like this part can be branded!"))
-		return null
-
-	return list(
-		"zone_options" = zone_options,
-		"branding_part" = branding_part,
-		"penis" = penis,
-		"vagina" = vagina,
-		"testes" = testes,
-		"tits" = tits,
-	)
-
-/obj/item/rogueweapon/surgery/cautery/branding/proc/remove_brand_via_middleclick(mob/living/carbon/human/target, mob/living/user)
-	if(!istype(target) || !istype(user))
-		return FALSE
-	if(!heated)
-		return FALSE
-	var/list/zone_data = get_branding_zone_data(target, user)
-	if(!zone_data)
 		return TRUE
-
-	var/list/zone_options = zone_data["zone_options"]
-	var/final_answer = tgui_alert(user, "What brand do you wish to burn away?", "Please answer in [DisplayTimeText(10 SECONDS)]!", zone_options, 10 SECONDS)
-	if(!final_answer || final_answer == "Cancel")
-		return TRUE
-
-	var/branding_delay = HAS_TRAIT(user, TRAIT_DUNGEONMASTER) ? 7 SECONDS : (HAS_TRAIT(user, TRAIT_KNOWNCRIMINAL) ? 9 SECONDS : 14 SECONDS)
-	if(user != target)
-		if(branding_low_quality)
-			if(!target.compliance)
-				to_chat(user, span_warning("[target]'s moving too much to let me burn away [target.p_their()] brand!"))
-				return TRUE
-			branding_delay += 3 SECONDS
-		user.visible_message(span_warning("[user] slowly wields [src] towards [target]'s [LOWER_TEXT(final_answer)]."))
-		to_chat(target, span_userdanger("[user] is trying to burn away a brand on my [LOWER_TEXT(final_answer)]!"))
-	else
-		if(!branding_low_quality)
-			branding_delay -= 4 SECONDS
-		user.visible_message(span_warning("[user] slowly wields [src] onto [user.p_their()] [LOWER_TEXT(final_answer)]."))
-
-	if(!do_after(user, branding_delay, target = target))
-		return TRUE
-	if(!user.Adjacent(target) || user.stat >= UNCONSCIOUS)
-		return TRUE
-
-	var/obj/item/bodypart/branding_part = zone_data["branding_part"]
-	var/obj/item/organ/penis/penis = zone_data["penis"]
-	var/obj/item/organ/vagina/vagina = zone_data["vagina"]
-	var/obj/item/organ/testicles/testes = zone_data["testes"]
-	var/obj/item/organ/breasts/tits = zone_data["tits"]
-	if(QDELETED(branding_part))
-		return TRUE
-
-	var/had_brand = FALSE
-	var/apply_knockdown = TRUE
-	switch(final_answer)
-		if("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "Tauric Half")
-			had_brand = length(branding_part.branded_writing) || branding_part.enslavement_mark
-			branding_part.branded_writing = ""
-			branding_part.enslavement_mark = FALSE
-			branding_part.brand_owner_name = ""
-			branding_part.brand_owner = null
-			apply_knockdown = FALSE
-		if("Hind")
-			var/obj/item/bodypart/chest/buttocks = branding_part
-			had_brand = length(buttocks.branded_writing_on_buttocks) || buttocks.enslavement_mark
-			buttocks.branded_writing_on_buttocks = ""
-			buttocks.enslavement_mark = FALSE
-			buttocks.brand_owner_name = ""
-			buttocks.brand_owner = null
-			branding_part = buttocks
-		if("Stomach")
-			var/obj/item/bodypart/chest/stomach = branding_part
-			had_brand = length(stomach.branded_writing_on_stomach) || stomach.enslavement_mark
-			stomach.branded_writing_on_stomach = ""
-			stomach.enslavement_mark = FALSE
-			stomach.brand_owner_name = ""
-			stomach.brand_owner = null
-			branding_part = stomach
-		if("Neck")
-			var/obj/item/bodypart/head/neck = branding_part
-			had_brand = length(neck.branded_writing_on_neck) || neck.enslavement_mark
-			neck.branded_writing_on_neck = ""
-			neck.enslavement_mark = FALSE
-			neck.brand_owner_name = ""
-			neck.brand_owner = null
-			branding_part = neck
-		if("Breasts")
-			if(QDELETED(tits))
-				return TRUE
-			had_brand = length(tits.branded_writing) || tits.enslavement_mark
-			tits.branded_writing = ""
-			tits.enslavement_mark = FALSE
-			tits.brand_owner_name = ""
-			tits.brand_owner = null
-		if("Dick")
-			if(QDELETED(penis))
-				return TRUE
-			had_brand = length(penis.branded_writing) || penis.enslavement_mark
-			penis.branded_writing = ""
-			penis.enslavement_mark = FALSE
-			penis.brand_owner_name = ""
-			penis.brand_owner = null
-		if("Vagina")
-			if(QDELETED(vagina))
-				return TRUE
-			had_brand = length(vagina.branded_writing) || vagina.enslavement_mark
-			vagina.branded_writing = ""
-			vagina.enslavement_mark = FALSE
-			vagina.brand_owner_name = ""
-			vagina.brand_owner = null
-		if("Testes")
-			if(QDELETED(testes))
-				return TRUE
-			had_brand = length(testes.branded_writing) || testes.enslavement_mark
-			testes.branded_writing = ""
-			testes.enslavement_mark = FALSE
-			testes.brand_owner_name = ""
-			testes.brand_owner = null
-		if("Mouth")
-			to_chat(user, span_warning("There's no lasting brand there to burn away."))
-			return TRUE
-		else
-			to_chat(user, span_warning("There's a problem with burning away this brand."))
-			return TRUE
-
-	if(!had_brand)
-		to_chat(user, span_warning("There is no brand there to burn away."))
-		return TRUE
-
-	target.branded = target_has_any_brand(target)
-	update_slave_mark_trait(target)
-	target.apply_damage(branding_damage, BURN, branding_part)
-	if(user != target && apply_knockdown)
-		target.Knockdown(1 SECONDS)
-		
-	user.visible_message(span_info("[target] [target.stat < UNCONSCIOUS ? pick("recoils", "writhes", "thrashes", "suffers") : "lays still"] as \the [src] burns away a mark on [target.p_their()] [LOWER_TEXT(final_answer)]!"))
-	to_chat(target, span_userdanger("A brand has been burned away from me!"))
-	target.emote(prob(50) ? "painscream" : "scream", forced = TRUE)
-	target.Stun(40)
-	target.fullscreen_redflash("redflash2")
-	playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
-	update_heated(FALSE)
-	if(cool_timer)
-		deltimer(cool_timer)
-	return TRUE
-
-/obj/item/rogueweapon/surgery/cautery/branding/pre_attack(atom/A, mob/living/user, params)
-	if(!istype(user.a_intent, /datum/intent/use))
-		return ..()
-	if(!heated)
-		return ..()
-	if(!length(setbranding))
-		to_chat(user, span_warning("There is nothing to brand, add some symbols before using again."))
-		return TRUE
-	if(!ishuman(A))
-		to_chat(user, span_warning("I cannot brand [A]."))
-		return TRUE
-	var/mob/living/carbon/human/target = A
-	var/branding_self = user == target
-	var/list/zone_data = get_branding_zone_data(target, user)
-	if(!zone_data)
-		return TRUE
-	var/list/zone_options = zone_data["zone_options"]
-	var/obj/item/bodypart/branding_part = zone_data["branding_part"]
-	var/obj/item/organ/penis/penis = zone_data["penis"]
-	var/obj/item/organ/vagina/vagina = zone_data["vagina"]
-	var/obj/item/organ/testicles/testes = zone_data["testes"]
-	var/obj/item/organ/breasts/tits = zone_data["tits"]
 
 	var/branding_text = setbranding // No switcheroos partway through.
 	var/final_answer // String. The button the user clicks on when prompted which part to brand.
