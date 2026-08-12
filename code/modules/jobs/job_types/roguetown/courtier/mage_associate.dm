@@ -150,6 +150,7 @@
 		switch(weapon_choice)
 			if("Applied Alchemy")
 				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
+				l_hand = /obj/item/clothing/neck/roguetown/skullamulet/alchemist
 			if("Magical Medicine")
 				l_hand = /obj/item/storage/belt/rogue/surgery_bag
 				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
@@ -195,3 +196,30 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+
+/obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet
+
+/obj/item/clothing/neck/roguetown/skullamulet/alchemist
+	name = "sulphur amulet"
+	desc = "This yellow skull is the sigil of alchemists across Ferentia.<br>It reeks with a rotten odor."
+	var/active_item
+
+/obj/item/clothing/neck/roguetown/skullamulet/alchemist/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item || !ishuman(user))
+		return
+	else if(slot == SLOT_NECK)
+		var/mob/living/carbon/human/H = user
+		active_item = TRUE
+		to_chat(user, span_green("'..all the world is a fluid; it takes but one hand to make a ripple..'"))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet)
+	return
+
+/obj/item/clothing/neck/roguetown/skullamulet/alchemist/dropped(mob/living/user)
+	..()
+	if(active_item && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		to_chat(user, span_green("'..the air is clean and still once more.'"))
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet)
+		active_item = FALSE
+	return

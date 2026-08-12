@@ -236,8 +236,8 @@
 		M.adjustFireLoss(1.5*REM)
 	else
 		// Heals internal damage very well like potions
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 		M.adjustToxLoss(-3*REM, 0)
 		M.adjustOxyLoss(-3*REM, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
@@ -275,8 +275,8 @@
 		M_hum = M
 	if((M.mob_biotypes & MOB_UNDEAD) || (M_hum.patron.undead_hater == FALSE))
 		// Heals internal damage very well like potions for undead/dark patrons
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 		M.adjustToxLoss(-3*REM, 0)
 		M.adjustOxyLoss(-3*REM, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
@@ -284,8 +284,8 @@
 		// Does NOT heal brute or fire damage
 	else
 		// Heals less for divine worshippers, but still internal damage only
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_NORMAL)
+		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+5, BLOOD_VOLUME_NORMAL))
 		M.adjustToxLoss(-1.5*REM, 0)
 		M.adjustOxyLoss(-1.5*REM, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5*REM)

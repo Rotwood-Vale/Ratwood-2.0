@@ -419,6 +419,24 @@
 	hammers_per_item = 6
 	skill_level = 2
 
+/datum/artificer_recipe/ammunition/bsbolts//faster way to craft blacksteel ammo, not a cheaper craft
+	name = "Blacksteel Bolts 10x (+1 plank, +1 Silk, +2 Blacksteel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/silk, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel
+					)
+	hammers_per_item = 6
+	skill_level = 5
+
 /datum/artificer_recipe/ammunition/arrows
 	name = "Arrows 20x (+2 Planks, +1 Iron)"
 	required_item = /obj/item/natural/wood/plank
@@ -446,6 +464,24 @@
 					)
 	hammers_per_item = 6
 	skill_level = 2
+
+/datum/artificer_recipe/ammunition/bsarrows//faster way to craft blacksteel ammo, not a cheaper craft
+	name = "Blacksteel Arrows 10x (+1 Planks, +1 Silk, +2 Blacksteel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/silk,  /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
+					)
+	hammers_per_item = 6
+	skill_level = 5
 
 /datum/artificer_recipe/ammunition/pyrobolt_five
 	name = "pyroclastic bolt x5 (+1 iron) (+1 fyritius)"
