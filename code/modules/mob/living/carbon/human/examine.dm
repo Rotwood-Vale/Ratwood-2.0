@@ -306,7 +306,7 @@
 			else if(ownership_info["owner"] && user == ownership_info["owner"])
 				. += span_greentext("<b>They are my property.</b>")
 			else
-				. += span_greentext("<b>[m1] I can see their branding; they are owned by [ownership_info["name"]].</b>")
+				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
 
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
@@ -1128,11 +1128,12 @@
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
 		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
 			var/brand_text = ""
+			var/is_surface_handled_separately = istype(branded_bodypart, /obj/item/bodypart/chest) || istype(branded_bodypart, /obj/item/bodypart/head)
 			if(length(branded_bodypart.branded_writing))
 				brand_text = branded_bodypart.branded_writing
 				if(branded_bodypart.enslavement_mark)
 					brand_text = "[brand_text], a mark of ownership"
-			else if(branded_bodypart.enslavement_mark)
+			else if(branded_bodypart.enslavement_mark && !is_surface_handled_separately)
 				brand_text = "a mark of ownership"
 			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
 				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
@@ -1143,8 +1144,6 @@
 					chest_brand_text = chest.branded_writing_on_buttocks
 					if(chest.enslavement_mark)
 						chest_brand_text = "[chest_brand_text], a mark of ownership"
-				else if(chest.enslavement_mark)
-					chest_brand_text = "a mark of ownership"
 				if(length(chest_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
 					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest_brand_text)]."
 				var/stomach_brand_text = ""
@@ -1152,8 +1151,6 @@
 					stomach_brand_text = chest.branded_writing_on_stomach
 					if(chest.enslavement_mark)
 						stomach_brand_text = "[stomach_brand_text], a mark of ownership"
-				else if(chest.enslavement_mark)
-					stomach_brand_text = "a mark of ownership"
 				if(length(stomach_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
 					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(stomach_brand_text)]."
 			else if(istype(branded_bodypart, /obj/item/bodypart/head))

@@ -82,6 +82,16 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
 		. += span_notice("[tally_text] are etched into the chastity device's metal surface.")
 
+/obj/item/chastity/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the chastity device's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
+
 /obj/item/chastity/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/dildo))
 		return ..()

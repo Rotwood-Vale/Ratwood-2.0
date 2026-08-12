@@ -1,6 +1,6 @@
 /obj/item/clothing/neck/roguetown/cursed_collar
 	name = "cursed collar"
-	always_show_examine_link = TRUE
+	always_show_examine_link = FALSE
 	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy. \nLooks like you'd need someone else's help to take it off."
 	// Credit regarding sprites to Necbro
 	// https://github.com/StoneHedgeSS13/StoneHedge/commit/9ddc09d4cb91903beff6d523c91aef75312d5163
@@ -19,6 +19,19 @@
 	var/applying = FALSE
 	/// Round-persistent counter for non-self ejaculation events received by the current wearer.
 	var/received_cum_count = 0
+
+/obj/item/clothing/neck/roguetown/cursed_collar/show_examine_hover_tooltip()
+	return TRUE
+
+/obj/item/clothing/neck/roguetown/cursed_collar/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the collar's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
 
 /obj/item/clothing/neck/roguetown/cursed_collar/examine(mob/user)
 	. = ..()
