@@ -221,6 +221,14 @@
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
 
+/datum/crafting_recipe/roguetown/engineering/smokepowder
+	name = "Smokepowder Flask"
+	result = /obj/item/powderflask
+	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/alch/firedust = 2, /obj/item/alch/coaldust = 2)
+	craftdiff = 4
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+
 /datum/crafting_recipe/roguetown/structure/pressure_plate
 	name = "pressure plate"
 	result = /obj/structure/pressure_plate
