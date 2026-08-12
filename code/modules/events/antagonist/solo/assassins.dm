@@ -30,6 +30,9 @@
 		"Head Physician",
 		"Town Crier",
 		"Captain",
+		"Knight Captain",
+		"Watch Captain",
+		"Master Warden",
 		"Archivist",
 		"Knight",
 		"Court Magician",
@@ -61,7 +64,10 @@
 		antag_mind.current.unequip_everything()
 		SSjob.AssignRole(antag_mind.current, "Assassin")
 		if(original_job)
-			original_job.current_positions += 1
+			if(original_job.total_positions == 1)
+				original_job.current_positions = max(original_job.current_positions, 1)
+			else
+				original_job.current_positions += 1
 		SSmapping.retainer.assassins |= antag_mind.current
 		antag_mind.add_antag_datum(/datum/antagonist/assassin)
 
@@ -70,6 +76,17 @@
 		antag_mind.current.hud_used?.set_advclass()
 
 	SSrole_class_handler.assassins_in_round = TRUE
+
+/datum/round_event_control/antagonist/solo/assassins/get_candidates()
+	var/list/candidates = ..()
+	for(var/mob/living/candidate as anything in candidates.Copy())
+		if(!candidate.mind?.antag_datums)
+			continue
+		for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
+			if(!(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+				candidates -= candidate
+				break
+	return candidates
 
 /datum/round_event_control/antagonist/solo/assassins/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()
