@@ -26,6 +26,8 @@
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
 		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
 	if(target.getorganslot(ORGAN_SLOT_PENIS) && !target.sexcon.has_chastity_penis())
