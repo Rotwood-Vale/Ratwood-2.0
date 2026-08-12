@@ -57,7 +57,7 @@
 	var/datum/job/assassin_job = SSjob.GetJob("Assassin")
 	assassin_job.total_positions = length(setup_minds)
 	for(var/datum/mind/antag_mind as anything in setup_minds)
-		var/datum/job/original_job = SSjob.GetJob(antag_mind.current?.job)
+		var/datum/job/original_job = SSjob.GetJob(antag_mind.assigned_role)
 		antag_mind.current.unequip_everything()
 		SSjob.AssignRole(antag_mind.current, "Assassin")
 		if(original_job)
