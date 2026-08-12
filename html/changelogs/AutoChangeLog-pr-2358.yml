@@ -1,4 +1,0 @@
-author: "yupup123"
-delete-after: True
-changes:
-  - bugfix: "Fixes the bug that causes rolled assassins to not properly take up the slot or leave a slot open."
