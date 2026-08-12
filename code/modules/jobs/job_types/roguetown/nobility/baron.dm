@@ -6,6 +6,7 @@
 	spawn_positions = 1
 	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
+	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD)
 
 	outfit = /datum/outfit/job/roguetown/baron
 	display_order = JDO_LORD
