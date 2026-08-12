@@ -206,7 +206,7 @@
 		max_integrity -= polish_bonus
 		obj_integrity = min(obj_integrity, max_integrity)
 		update_force_dynamic()
-	else if(polished >= 1 && polished <= 3)//remove partially polished stages if we break the item and its, for some reason, only halfway
+	else if(polished >= 1 && polished <= 3)//remove partially polished stages if we break the item and its, for some reason, only halfway polished
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
 	polished = 0
