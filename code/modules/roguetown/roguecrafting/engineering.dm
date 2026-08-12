@@ -253,7 +253,7 @@
 	craftdiff = 4
 
 
-/*datum/crafting_recipe/roguetown/engineering/infernalengine
+/datum/crafting_recipe/roguetown/engineering/infernalengine
 	name = "infernal engine"
 	req_table = FALSE
 	result = /obj/structure/infernalengine
@@ -263,7 +263,6 @@
 	)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
-*/
 
 /datum/crafting_recipe/roguetown/engineering/autogrinder
 	name = "autogrinder"
