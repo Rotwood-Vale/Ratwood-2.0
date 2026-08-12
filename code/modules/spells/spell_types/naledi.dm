@@ -228,7 +228,7 @@
 		oxy = target.getOxyLoss()
 		toxin = target.getToxLoss()
 		origin = get_turf(target)
-		blood = target.blood_volume
+		blood = target.get_blood_volume()
 		var/datum/status_effect/fire_handler/fire_stacks/fire_status = target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 		firestacks = fire_status?.stacks
 		var/datum/status_effect/fire_handler/fire_stacks/sunder/sunder_status = target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder)
@@ -264,14 +264,14 @@
 			target.adjustOxyLoss(oxynew*-1 + oxy)
 		if(toxinnew>toxin)
 			target.adjustToxLoss(target.getToxLoss()*-1 + toxin)
-		if(target.blood_volume<blood)
-			target.blood_volume = blood
+		if(target.get_blood_volume() <blood)
+			target.set_blood_volume(blood)
 	else
 		target.adjustBruteLoss(brutenew*-1 + brute)
 		target.adjustFireLoss(burnnew*-1 + burn)
 		target.adjustOxyLoss(oxynew*-1 + oxy)
 		target.adjustToxLoss(target.getToxLoss()*-1 + toxin)
-		target.blood_volume = blood
+		target.set_blood_volume(blood)
 	// Remove any wounds gained after the mark
 	for(var/datum/wound/wound as anything in target.get_wounds())
 		if(wound in snapshot_wounds)
