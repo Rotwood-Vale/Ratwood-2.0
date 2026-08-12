@@ -41,7 +41,7 @@
 			burndam = 0
 
 	var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
-	var/fully_turned = was_zombie?.has_turned //Make sure someone isn't hasn't yet turned before we knock them dead
+	var/fully_turned = was_zombie?.has_turned //Make sure someone hasn't yet turned before we knock them dead
 	if(target.infected == FALSE)
 		if(target.stat == DEAD || fully_turned)
 			target.death()	//Kills the target if they are a zombie as a fail-safe.
