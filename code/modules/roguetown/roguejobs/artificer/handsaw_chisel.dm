@@ -55,7 +55,7 @@
 	associated_skill = /datum/skill/combat/knives	//Not a knife but kinda similar to etching so..
 	max_blade_int = 300
 	dropshrink = 0.9
-  is_tool = TRUE
+	is_tool = TRUE
 	var/already_assembled = FALSE
 	var/chisel_prefix = ""
 
