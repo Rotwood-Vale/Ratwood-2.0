@@ -1,8 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - qol: "Gives ranger warden a sheath for their seax. No more unprotected seax on my watch."
-  - qol: "Forester gets a warden seax instead of a hunting knife."
-  - rscadd: "Foresters now get unique armor that is based off the ranger one. It has slightly more durability and plate stats. Can be upgraded to be like a cuirass."
-  - rscadd: "Foresters can choose between an axe or sword now. They get a cool steel messer as their primary weapon with an iron shield if they pick swords. Expert in swords or expert in axes. Your choice."
-  - balance: "Bumped shield skill up from apprentice to journeyman."
