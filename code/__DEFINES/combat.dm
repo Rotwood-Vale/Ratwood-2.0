@@ -394,9 +394,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 // Tempo defines
 ///Interval for checking our tempo lists
 #define TEMPO_CULL_DELAY 12 SECONDS
-#define TEMPO_DELAY_ONE 30 SECONDS
-#define TEMPO_DELAY_TWO	15 SECONDS
-#define TEMPO_DELAY_MAX	8 SECONDS
+#define TEMPO_DELAY_ONE 20 SECONDS
+#define TEMPO_DELAY_TWO	10 SECONDS
+#define TEMPO_DELAY_MAX	6 SECONDS
 #define TEMPO_CAP 7
 #define TEMPO_MAX 4
 #define TEMPO_TWO 3

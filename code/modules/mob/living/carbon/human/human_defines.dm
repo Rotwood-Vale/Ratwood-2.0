@@ -178,8 +178,6 @@
 	/// List of mobs that have attacked us
 	var/list/tempo_attackers = list()
 
-	var/next_tempo_cull
-
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
 

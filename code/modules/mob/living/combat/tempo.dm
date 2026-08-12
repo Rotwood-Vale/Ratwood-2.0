@@ -1,22 +1,33 @@
 /// Adds the attacker to the tracked list for attacker count
 /mob/living/carbon/human/proc/process_tempo_attack(mob/living/carbon/attacker)
-	if(!iscarbon(attacker) || !attacker.mind || attacker == src)
-		return // No self-tempo or PvE tempo
-	if(length(tempo_attackers) >= TEMPO_CAP && !(attacker in tempo_attackers))
-		return //This list auto-culls so we don't need to flood it. If you're fighting 7 dudes at the same time you've got other problems.
+	//if(!iscarbon(attacker) || !attacker.mind || attacker == src)
+	//	return // No self-tempo or PvE tempo
+	var/datum/weakref/attacker_ref = WEAKREF(attacker)
 
+	var/tempo_length = length(tempo_attackers)
 	var/newtime
-	var/att_count = length(tempo_attackers)
-	switch(att_count)
+	switch(tempo_length)
 		if(0 to TEMPO_ONE)
-			newtime = world.time + TEMPO_DELAY_ONE
+			newtime = TEMPO_DELAY_ONE
 		if(TEMPO_TWO)
-			newtime = world.time + TEMPO_DELAY_TWO
+			newtime = TEMPO_DELAY_TWO
 		if(TEMPO_MAX to TEMPO_CAP)
-			newtime = world.time + TEMPO_DELAY_MAX
-	tempo_attackers[attacker] = newtime
-	next_tempo_cull = world.time + TEMPO_CULL_DELAY	//We reset the autocull timer on a hit from a valid person.
+			newtime = TEMPO_DELAY_MAX
+
+	if(length(tempo_attackers) >= TEMPO_CAP && !(attacker_ref in tempo_attackers)) // Lets remove the first attacker from the list to place in our new one
+		deltimer(tempo_attackers[1])
+		popleft(tempo_attackers)
+
+	if(attacker_ref in tempo_attackers) // Refresh our timer
+		deltimer(tempo_attackers[attacker_ref])
+
+	tempo_attackers[attacker_ref] += addtimer(CALLBACK(src, PROC_REF(drop_from_attackers), attacker_ref), newtime, TIMER_STOPPABLE)
 	manage_tempo()
+
+/// Simply removes the attacker from the tempo list
+/mob/living/carbon/human/proc/drop_from_attackers(datum/weakref/old_attacker)
+	list_clear_nulls(tempo_attackers)
+	tempo_attackers -= old_attacker.resolve()
 
 /// Changes your tempo level based on the amount of players attacking you
 /mob/living/carbon/human/proc/manage_tempo()
@@ -39,13 +50,6 @@
 			remove_status_effect(/datum/status_effect/buff/tempo_one)
 			remove_status_effect(/datum/status_effect/buff/tempo_two)
 			remove_status_effect(/datum/status_effect/buff/tempo_three)
-
-/mob/living/carbon/human/proc/cull_tempo_list()
-	list_clear_nulls(tempo_attackers)	//I pray this never returns TRUE
-	for(var/mob in tempo_attackers)
-		if(tempo_attackers[mob] < world.time)
-			tempo_attackers.Remove(mob)
-	manage_tempo()
 
 /mob/living/carbon/human/proc/clear_tempo_all()
 	if(length(tempo_attackers))
