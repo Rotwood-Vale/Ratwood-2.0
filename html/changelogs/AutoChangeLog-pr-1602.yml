@@ -1,0 +1,6 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "veterans can no longer train an infinite number of people"
+  - balance: "veterans have access to a spell will give a chosen individual the ability to train their weapon skills beyond expert and gain a charge to this spell each time they go to sleep"
+  - balance: "combat skills are hardcapped at expert now which in practice doesn't really mean anything but it means you won't be able to level up your weapon skills by fighting a vampire lord in melee combat"
