@@ -17,6 +17,7 @@
 		"Sergeant",
 		"Man at Arms",
 		"Marshal",
+		"Bandit",
 		"Merchant",
 		"Bishop",
 		"Acolyte",
@@ -40,6 +41,14 @@
 		"Orthodoxist",
 		"Absolver",
 		"Warden",
+		"Vampire",
+		"Vampire Lord",
+		"Vampire Servant",
+		"Vampire Guard",
+		"Vampire Spawn",
+		"Werewolf",
+		"Lich",
+		"Wretch",
 		"Squire",
 		"Veteran",
 		"Apothecary"
@@ -76,17 +85,6 @@
 		antag_mind.current.hud_used?.set_advclass()
 
 	SSrole_class_handler.assassins_in_round = TRUE
-
-/datum/round_event_control/antagonist/solo/assassins/get_candidates()
-	var/list/candidates = ..()
-	for(var/mob/living/candidate as anything in candidates.Copy())
-		if(!candidate.mind?.antag_datums)
-			continue
-		for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
-			if(!(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-				candidates -= candidate
-				break
-	return candidates
 
 /datum/round_event_control/antagonist/solo/assassins/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()
