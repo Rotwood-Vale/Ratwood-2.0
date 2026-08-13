@@ -22,7 +22,7 @@
 
 /datum/outfit/job/roguetown/adventurer/refugee/pre_equip(mob/living/carbon/human/H)
 	..()
-	var/list/paths = list("Refugee (Default)", "Conclave Dropout (Hierophant)", "Desert Ascetic (Pontifex)", "Abandoned  Diviner (Vizier)")
+	var/list/paths = list("Refugee (Default)", "Conclave Dropout (Hierophant)", "Desert Ascetic (Pontifex)", "Abandoned Diviner (Vizier)")
 	var/list/hmm = list("I left for a reason... (Default)", "The Djinn could be anywhere! (Naledi Complex)")
 	var/path = input(H, "Choose your past.", "WHAT DID WAR TAKE FROM YOU?") as anything in paths
 	var/complex = input(H, "How tightly bound to traditions you are?", "I HATE DJINNS!") as anything in hmm
@@ -129,7 +129,7 @@
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
 			r_hand = /obj/item/rogueweapon/woodstaff
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
-			cloak = /obj/item/clothing/cloak/raincloak/white
+			cloak = /obj/item/clothing/cloak/hierophant
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 
 
