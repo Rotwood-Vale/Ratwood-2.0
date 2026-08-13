@@ -14,8 +14,10 @@
 
 	var/enhanced_strip = FALSE
 	var/datum/clan/clan
-	var/bloodpool = 1000
-	var/maxbloodpool = 1000
+	/// Vampiric "usable" blood. Use get_bloodpool()/set_bloodpool()/adjust_bloodpool().
+	VAR_PROTECTED/bloodpool = 1000
+	/// Maximum bloodpool. Use get_maxbloodpool()/set_maxbloodpool()/adjust_maxbloodpool().
+	VAR_PROTECTED/maxbloodpool = 1000
 	var/masquerade = 5
 
 	var/last_masquerade_violation = 0
@@ -72,6 +74,26 @@
 
 		var/datum/action/clan_hierarchy/mass_command/mass_action = new()
 		mass_action.Grant(H)
+
+/// Reads bloodpool. bloodpool is VAR_PROTECTED, so non-living code must use this.
+/mob/living/proc/get_bloodpool()
+	return bloodpool
+
+/// Reads maxbloodpool. maxbloodpool is VAR_PROTECTED, so non-living code must use this.
+/mob/living/proc/get_maxbloodpool()
+	return maxbloodpool
+
+/// Sets the bloodpool ceiling. Does not re-clamp current bloodpool (matches prior direct-assignment behavior).
+/mob/living/proc/set_maxbloodpool(value)
+	maxbloodpool = value
+
+/// Adjusts the bloodpool ceiling by a delta.
+/mob/living/proc/adjust_maxbloodpool(adjust)
+	maxbloodpool += adjust
+
+/// Resets the bloodpool ceiling to its compile-time default.
+/mob/living/proc/reset_maxbloodpool()
+	maxbloodpool = initial(maxbloodpool)
 
 /mob/living/proc/set_bloodpool(newblood)
 	bloodpool = CLAMP(newblood, 0, maxbloodpool)

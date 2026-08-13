@@ -82,5 +82,5 @@
 		span_notice("[user] forces blood out [target]'s vein in [parse_zone(target_zone)]!"),
 		span_notice("[user] forces blood out [target]'s vein in [parse_zone(target_zone)]!"))
 	target.adjustToxLoss (-25, 0)
-	target.blood_volume -=50
+	target.adjust_blood_volume(-(50))
 	return TRUE
