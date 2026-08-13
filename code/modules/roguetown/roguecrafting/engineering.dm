@@ -302,9 +302,13 @@
 
 //rotational and minecart parts
 /datum/crafting_recipe/roguetown/engineering/shaft
-	name = "wooden shaft(4x)"
+	name = "wooden shaft(8x)"
 	category = "Rotational"
 	result = list(/obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft)
@@ -318,7 +322,8 @@
 /datum/crafting_recipe/roguetown/engineering/stickshaft
 	name = "wooden shaft"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/shaft)
+	result = list(/obj/item/rotation_contraption/shaft
+				  /obj/item/rotation_contraption/shaft)
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -327,9 +332,9 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/cog
-	name = "wooden cogwheel(x4)"
+	name = "wooden cogwheel(x6)"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog)
+	result = list(/obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog)
 	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/roguegear/wood/basic = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -350,9 +355,9 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/large_cog
-	name = "large wooden cogwheel (x2)"
+	name = "large wooden cogwheel (3x)"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/large_cog, /obj/item/rotation_contraption/large_cog)
+	result = list(/obj/item/rotation_contraption/large_cog, /obj/item/rotation_contraption/large_cog, /obj/item/rotation_contraption/large_cog)
 	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/roguegear/wood/basic = 2, /obj/item/natural/wood/plank = 4)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -361,9 +366,9 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/gearbox
-	name = "gearbox"
+	name = "gearbox (2x)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/horizontal
+	result = list(/obj/item/rotation_contraption/horizontal, /obj/item/rotation_contraption/horizontal)
 	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -371,9 +376,9 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/vertical_gearbox
-	name = "vertical gearbox"
+	name = "vertical gearbox (2x)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/vertical
+	result = list(/obj/item/rotation_contraption/vertical, /obj/item/rotation_contraption/vertical)
 	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
