@@ -16,10 +16,11 @@
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_RACISMISBAD, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2)
 	//lower-than-avg stats for wretch but their traits are insanely good
 	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_SPD = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = -1
+		STATKEY_INT = 1,
+		STATKEY_PER = 1,
+		STATKEY_SPD = 2, // 7 weight instead of 9 full weight
+		STATKEY_CON = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_spellpoints = 10
 	subclass_skills = list(
@@ -53,10 +54,9 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/elvish
 	beltr = /obj/item/rogueweapon/scabbard/sword
 	r_hand = /obj/item/rogueweapon/halberd/glaive
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -82,4 +82,14 @@
 			if("Elven Curveblade and Shortsword")
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 				l_hand = /obj/item/rogueweapon/sword/short/elf
+
+		var/helmets = list("Woad Elven Barbute", "Elven Barbute", "Winged Elven Barbute")
+			var/helmet_choice = input(H, "Choose your HELMET.", "LEAVES OVER STEEL.") as anything in helmets
+			switch(helmet_choice)
+				if("Woad Elven Barbute")
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light, SLOT_HEAD, TRUE)
+				if("Elven Barbute")
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak, SLOT_HEAD, TRUE)
+				if("Winged Elven Barbute")
+					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak, SLOT_HEAD, TRUE)
 
