@@ -48,6 +48,7 @@
 	switch(path)
 
 		if("Refugee (Default)")
+			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("An asylum-seeker from the war-torn deserts of Naledi, \
 			the ruins of your great city are as unsafe as the deserts being ravaged by the Djinn."))
 			r_hand = /obj/item/rogueweapon/spear/assegai

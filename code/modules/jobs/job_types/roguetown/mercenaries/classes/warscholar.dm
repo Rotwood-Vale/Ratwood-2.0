@@ -246,10 +246,10 @@
 		H.change_stat(STATKEY_PER, 1)
 		H.mind?.adjust_spellpoints(3)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
-
+	//Since we lack unique Vizier clothing, we're mixing hierophant and pontifex for Vizier
 	head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 	cloak = /obj/item/clothing/cloak/hierophant
-	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi

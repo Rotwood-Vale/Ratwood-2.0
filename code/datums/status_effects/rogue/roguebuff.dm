@@ -1209,10 +1209,24 @@
 	duration = 15 MINUTES
 	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1)
 
-/datum/status_effect/buff/convergence //Increases all healing while it lasts.
+#define CONVERGENCE_FILTER "convergence_glow"
+/datum/status_effect/buff/convergence //Increases  duration of Naledi buffs
 	id = "convergence"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/convergence
 	duration = 1 MINUTES
+	var/outline_colour = "#90D5FF"
+
+/datum/status_effect/buff/convergence/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(CONVERGENCE_FILTER)
+	if (!filter)
+		owner.add_filter(CONVERGENCE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+
+/datum/status_effect/buff/convergence/on_remove()
+	. = ..()
+	owner.remove_filter(CONVERGENCE_FILTER)
+
+#undef CONVERGENCE_FILTER
 
 /datum/status_effect/buff/stasis //Increases all healing while it lasts.
 	id = "stasis"
