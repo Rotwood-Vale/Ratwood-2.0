@@ -101,14 +101,14 @@
 /datum/supply_pack/rogue/armor_bronze/skullcap_helmet
 	name = "Helmet, Barbute"
 	cost = 50
-	contains = list(/obj/item/clothing/head/roguetown/helmet/skullcap)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bronze)
 
 /datum/supply_pack/rogue/armor_bronze/horned
 	name = "Helmet, Murmillo-Style"
 	cost = 25
-	contains = list(/obj/item/clothing/head/roguetown/helmet/horned)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronzegladiator)
 
 /datum/supply_pack/rogue/armor_bronze/kettle
 	name = "Helmet, Illyria"
 	cost = 25
-	contains = list(/obj/item/clothing/head/roguetown/helmet/kettlebronze)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronze)

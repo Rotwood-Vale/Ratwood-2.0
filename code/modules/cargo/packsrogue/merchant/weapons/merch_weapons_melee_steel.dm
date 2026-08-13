@@ -12,6 +12,10 @@
 					/obj/item/rogueweapon/huntingknife/idagger/steel,
 				)
 
+/datum/supply_pack/rogue/steel_weapons/combatknife
+	name = "Seax, Steel"
+	cost = 35 // 1 steel ingot
+	contains = list(/obj/item/rogueweapon/huntingknife/combat)
 
 /datum/supply_pack/rogue/steel_weapons/katar
 	name = "Katar"
@@ -78,6 +82,11 @@
 					/obj/item/rogueweapon/flail/sflail,
 				)
 
+/datum/supply_pack/rogue/steel/steel_weapons/urumi
+	name = "Urumi"
+	cost = 70//2 steel ingots
+	contains = list(/obj/item/rogueweapon/whip/urumi)
+
 /datum/supply_pack/rogue/steel_weapons/warhammer
 	name = "Warhammer"
 	cost = 40 // 1 Steel Ingot
@@ -105,6 +114,11 @@
 	contains = list(
 					/obj/item/rogueweapon/sword/long/kriegmesser,
 				)
+
+/datum/supply_pack/rogue/steel_weapons/broadsword
+	name = "Broadsword"
+	cost = 75 // 2 Steel Ingot + 1 Small Log
+	contains = list(/obj/item/rogueweapon/sword/long/broadsword/steel)
 
 /datum/supply_pack/rogue/steel_weapons/battleaxe
 	name = "Battle Axe"
@@ -189,6 +203,11 @@
 	contains = list(
 					/obj/item/rogueweapon/mace/goden/steel,
 				)
+
+/datum/supply_pack/rogue/steel_weapons/grandmaul
+	name = "Grand Maul"
+	cost = 105 // 3 Steel Ingot
+	contains = list(/obj/item/rogueweapon/mace/maul/grand)
 
 /datum/supply_pack/rogue/steel_weapons/partizan
 	name = "Partizan"
