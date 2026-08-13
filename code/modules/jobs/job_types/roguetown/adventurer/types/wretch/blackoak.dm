@@ -54,7 +54,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel/black
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hatanga
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
