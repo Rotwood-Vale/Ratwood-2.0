@@ -239,8 +239,9 @@
 
 /datum/supply_pack/rogue/food/chocolate
 	name = "Chocolate"
-	cost = 40
+	cost = 30
 	contains = list(
+					/obj/item/reagent_containers/food/snacks/chocolate,
 					/obj/item/reagent_containers/food/snacks/chocolate,
 				)
 
