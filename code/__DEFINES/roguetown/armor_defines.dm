@@ -40,6 +40,7 @@
 #define ARMOR_INT_CHEST_MEDIUM_DECREPIT 150
 
 // LIGHT
+#define ARMOR_INT_CHEST_LIGHT_ELITE 350 // Highest tier cloth / leather for some snowflake AP port armor.
 #define ARMOR_INT_CHEST_LIGHT_MASTER 300 // High tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_MEDIUM 250 // Medium tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_BASE 200

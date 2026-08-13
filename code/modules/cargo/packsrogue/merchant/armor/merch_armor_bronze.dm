@@ -1,5 +1,5 @@
 /datum/supply_pack/rogue/armor_bronze
-	group = "Armor (Bronze and Copper)"
+	group = "Armor (Bronze)"
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
