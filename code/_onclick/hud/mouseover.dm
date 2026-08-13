@@ -202,8 +202,7 @@
 		if(H.voice_color && H.name == H.real_name)
 			mousecolor = "#[H.voice_color]"
 		if(viewer?.client?.prefs?.show_mouseover_role)
-			var/is_masked = ((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || (H.wear_neck && (H.wear_neck.flags_inv & HIDEFACE)))
-			if(!is_masked)
+			if(H.get_face_name(""))
 				role_text = H.get_mouseover_role_title()
 	else if(viewer?.client?.prefs?.show_mouseover_role)
 		role_text = get_mouseover_role_title()
