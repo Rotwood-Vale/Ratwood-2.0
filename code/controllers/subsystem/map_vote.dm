@@ -73,26 +73,38 @@ SUBSYSTEM_DEF(map_vote)
 	var/flat = CONFIG_GET(number/map_vote_flat_bonus)
 	previous_cache = map_vote_cache.Copy()
 
-	// apply votes
+	// Tallies earned by this vote. Anything from before last round has already decayed away.
+	var/list/earned_tallies = list()
 	for(var/map_id in map_vote.choices)
 		if(!(map_id in config.maplist))
 			continue
 
 		var/datum/map_config/cfg = config.maplist[map_id]
-		map_vote_cache[map_id] += (map_vote.choices[map_id] * cfg.voteweight) + flat
+		earned_tallies[map_id] = (map_vote.choices[map_id] * cfg.voteweight) + flat
+
+	// The winner is decided from last round's carried over tallies plus what was just earned.
+	var/list/combined_tallies = map_vote_cache.Copy()
+	for(var/map_id in earned_tallies)
+		combined_tallies[map_id] += earned_tallies[map_id]
+
+	// Only this vote's tallies carry into the next round, so nothing persists longer than one round.
+	var/carryover = CONFIG_GET(number/map_vote_tally_carryover_percentage) / 100
+	map_vote_cache = list()
+	for(var/map_id in earned_tallies)
+		map_vote_cache[map_id] = round(earned_tallies[map_id] * carryover, 1)
 
 	sanitize_cache()
 
-	write_cache()
-
-	update_tally_printout()
-
 	if(admin_override)
+		write_cache()
+		update_tally_printout()
 		send_map_vote_notice("Admin override active. Map not changed.")
 		return
 
-	var/list/valid_maps = filter_cache_to_valid_maps()
+	var/list/valid_maps = filter_cache_to_valid_maps(combined_tallies)
 	if(!length(valid_maps))
+		write_cache()
+		update_tally_printout()
 		send_map_vote_notice("No valid maps.")
 		return
 
@@ -101,11 +113,18 @@ SUBSYSTEM_DEF(map_vote)
 	var/winner_amount = -1
 
 	for(var/map_id in valid_maps)
-		var/tally = map_vote_cache[map_id]
+		var/tally = valid_maps[map_id]
 
 		if(tally > winner_amount)
 			winner_id = map_id
 			winner_amount = tally
+
+	// The winner got its map, so it doesn't get to carry anything into the next round.
+	if(length(valid_maps) > 1)
+		map_vote_cache[winner_id] = CONFIG_GET(number/map_vote_minimum_tallies)
+
+	write_cache()
+	update_tally_printout()
 
 	var/datum/map_config/winner_cfg = config.maplist[winner_id]
 	if(!winner_cfg)
@@ -122,19 +141,16 @@ SUBSYSTEM_DEF(map_vote)
 	messages += ""
 	messages += "The next round will be played on [span_bold(next_map_config.map_name)]."
 
-	// decay winner so it doesn't repeat forever
-	if(length(valid_maps) > 1)
-		map_vote_cache[winner_id] = CONFIG_GET(number/map_vote_minimum_tallies)
-		write_cache()
-		update_tally_printout()
-
 	send_map_vote_notice(arglist(messages))
 
-/datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
+/datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps(list/tallies)
+	if(isnull(tallies))
+		tallies = map_vote_cache
+
 	var/connected_players = length(GLOB.player_list)
 	var/list/valid_maps = list()
 
-	for(var/map_id in map_vote_cache)
+	for(var/map_id in tallies)
 		var/datum/map_config/cfg = config.maplist[map_id]
 		if(!cfg)
 			continue
@@ -145,7 +161,7 @@ SUBSYSTEM_DEF(map_vote)
 		if(cfg.config_max_users && connected_players > cfg.config_max_users)
 			continue
 
-		valid_maps[map_id] = map_vote_cache[map_id]
+		valid_maps[map_id] = tallies[map_id]
 
 	return valid_maps
 

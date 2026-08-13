@@ -538,7 +538,7 @@
 	min_val = 0
 	max_val = INFINITY
 
-/// The number of tallies that are carried over between rounds.
+/// The percentage of a vote's tallies that carries into the next round's vote. Tallies decay entirely after that.
 /datum/config_entry/number/map_vote_tally_carryover_percentage
 	default = 100
 	min_val = 0
