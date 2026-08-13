@@ -1931,4 +1931,5 @@
 	name = "elven swordspear"
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"
+	max_blade_int = 180 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60

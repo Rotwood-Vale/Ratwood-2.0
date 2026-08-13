@@ -3,7 +3,7 @@
 	This comes in later, so it wins out against the first in the defines. Thus this file is unticked as I don't know which you people prefer using.
 */
 #ifndef TESTING
-//    #define FASTLOAD
+    #define FASTLOAD
 //    #define DEPLOY_TEST
 //    #define ROGUEWORLD
 #endif

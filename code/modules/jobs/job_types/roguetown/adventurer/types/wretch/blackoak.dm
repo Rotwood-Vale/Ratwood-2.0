@@ -13,7 +13,7 @@
 	class_select_category = CLASS_CAT_RACIAL
 	maximum_possible_slots = 1
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_RACISMISBAD, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_BLACKOAK, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2)
 	//lower-than-avg stats for wretch but their traits are insanely good
 	subclass_stats = list(
 		STATKEY_INT = 1,
@@ -47,11 +47,12 @@
 /datum/outfit/job/roguetown/wretch/blackoak/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.set_blindness(-3)
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
+	shoes = /obj/item/clothing/shoes/roguetown/boots/elven_boots
 	cloak = /obj/item/clothing/cloak/forrestercloak
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
 	belt = /obj/item/storage/belt/rogue/leather/black
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/satchel/black
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
@@ -68,7 +69,7 @@
 
 	if(H.mind)
 		wretch_select_bounty(H)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
@@ -83,13 +84,11 @@
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 				l_hand = /obj/item/rogueweapon/sword/short/elf
 
-		var/helmets = list("Woad Elven Barbute", "Elven Barbute", "Winged Elven Barbute")
-			var/helmet_choice = input(H, "Choose your HELMET.", "LEAVES OVER STEEL.") as anything in helmets
-			switch(helmet_choice)
-				if("Woad Elven Barbute")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light, SLOT_HEAD, TRUE)
-				if("Elven Barbute")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak, SLOT_HEAD, TRUE)
-				if("Winged Elven Barbute")
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak, SLOT_HEAD, TRUE)
+		var/helmets = list(
+			"Woad Elven Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light,
+			"Elven Barbute"	= /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak,
+			"Winged Elven Barbute" = /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak,
+		)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		head = helmets[helmchoice]
 
