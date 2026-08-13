@@ -137,7 +137,7 @@
 
 /datum/supply_pack/rogue/merc_weapons/elfswordspear
 	name = "Elven Swordspear"
-	cost = 130
+	cost = 125
 	contains = list(/obj/item/rogueweapon/spear/naginata/elf)
 
 /datum/supply_pack/rogue/merc_weapons/elfcurveblade
