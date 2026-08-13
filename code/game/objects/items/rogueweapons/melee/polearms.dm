@@ -1932,5 +1932,5 @@
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
-	max_blade_int = 180 // Elven design makes it sharper than Kazengunese stuff
+	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60
