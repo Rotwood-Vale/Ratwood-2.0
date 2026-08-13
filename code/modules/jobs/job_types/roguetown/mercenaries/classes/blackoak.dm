@@ -110,7 +110,6 @@
 	..()
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/full
-	beltr = /obj/item/rogueweapon/scabbard/sword
 	beltl = /obj/item/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/elven_boots
