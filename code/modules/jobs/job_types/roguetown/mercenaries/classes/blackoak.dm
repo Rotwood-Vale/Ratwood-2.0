@@ -133,7 +133,7 @@
 /datum/outfit/job/roguetown/mercenary/blackoak_ranger/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	var/weapons = list("Elvish Dagger", "Elvish Saber", "Elvish Shortsword")
-	var/weapon_choice = input(H, "Choose your WEAPON.", "FOR THE OAKS AND THE PEAKS.") as anything in weapons
+	var/weapon_choice = input(H, "Choose your WEAPON.", "FOR THE OAKS AND THE VALE.") as anything in weapons
 	switch(weapon_choice)
 		if("Elvish Dagger")
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
