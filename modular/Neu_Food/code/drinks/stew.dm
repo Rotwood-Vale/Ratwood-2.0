@@ -6,8 +6,8 @@
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			H.adjust_hydration(hydration)
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(10)
 	..()
 
 /datum/reagent/consumable/soup/porridge
@@ -878,10 +878,9 @@
 
 // Chicken stew functions like a lesser health potion. Why? Well, because what's a better way to nurse away a cold - or life-threatening wound - with some delicious chicken soup?
 /datum/reagent/consumable/soup/stew/chicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+1, BLOOD_VOLUME_MAXIMUM)
+	M.energy_add(1)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(1)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -894,10 +893,9 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/bakedchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+2, BLOOD_VOLUME_MAXIMUM)
+	M.energy_add(1)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(2)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -910,10 +908,9 @@
 	..()
 
 /datum/reagent/consumable/soup/stew/thickchicken/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
-		M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+2, BLOOD_VOLUME_MAXIMUM)
+	M.energy_add(1)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(2)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -927,8 +924,8 @@
 
 /datum/reagent/consumable/soup/stew/bakedthickchicken/on_mob_life(mob/living/carbon/M)
 	M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+3, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(3)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -942,8 +939,8 @@
 
 /datum/reagent/consumable/soup/stew/veggiethickchicken/on_mob_life(mob/living/carbon/M)
 	M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+3, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(3)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -957,8 +954,8 @@
 
 /datum/reagent/consumable/soup/stew/pepperchicken/on_mob_life(mob/living/carbon/M)
 	M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+4, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(4)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -972,8 +969,8 @@
 
 /datum/reagent/consumable/soup/stew/lavishchicken/on_mob_life(mob/living/carbon/M)
 	M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(5)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(2)

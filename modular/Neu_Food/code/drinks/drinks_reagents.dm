@@ -167,8 +167,8 @@
 
 /datum/reagent/consumable/golden_calendula_tea/on_mob_life(mob/living/carbon/M)
 	M.energy_add(5)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(5)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1) //at a metabolism of .5 U a tick this translates to 120WHP healing with 20 U Most wounds are unsewn 15-100. This is powerful on single wounds but rapidly weakens at multi wounds.
@@ -190,8 +190,8 @@
 
 /datum/reagent/consumable/chocolate/on_mob_life(mob/living/carbon/M)
 	M.energy_add(1)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+1, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(1)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)
@@ -213,8 +213,8 @@
 
 /datum/reagent/consumable/spiced_chocolate/on_mob_life(mob/living/carbon/M)
 	M.energy_add(2)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+2, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.adjust_blood_volume(2)
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1)

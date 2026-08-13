@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 30
 	obj_flags = CAN_BE_HIT
+	sellprice = 1
 	drinksounds = list('sound/items/drink_cup (1).ogg','sound/items/drink_cup (2).ogg','sound/items/drink_cup (3).ogg','sound/items/drink_cup (4).ogg','sound/items/drink_cup (5).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 
@@ -30,64 +31,77 @@
 /obj/item/reagent_containers/glass/bowl/iron
 	name = "iron bowl"
 	icon_state = "bowl_iron"
+	sellprice = 20
 
 /obj/item/reagent_containers/glass/bowl/bronze
 	name = "bronze bowl"
 	icon_state = "bowl_bronze"
+	sellprice = 15
 
 /obj/item/reagent_containers/glass/bowl/gold
 	name = "gold bowl"
 	icon_state = "bowl_gold"
+	sellprice = 120
 
 /obj/item/reagent_containers/glass/bowl/silver
 	name = "silver bowl"
 	icon_state = "bowl_silver"
 	is_silver = TRUE
+	sellprice = 96
 
 /obj/item/reagent_containers/glass/bowl/carved
 	name = "carved bowl"
 	desc = "You shouldn't be seeing this."
 	icon_state = "abowl"
+	sellprice = 0
 
 /obj/item/reagent_containers/glass/bowl/carved/jade
 	name = "jade bowl"
 	desc = "A bowl carved out of jade."
 	icon_state = "bowl_jade"
+	sellprice = 55
 
 /obj/item/reagent_containers/glass/bowl/carved/onyxa
 	name = "onyxa bowl"
 	desc = "A bowl carved out of onyxa."
 	icon_state = "bowl_onyxa"
+	sellprice = 33
 
 /obj/item/reagent_containers/glass/bowl/carved/rose
 	name = "rosestone bowl"
 	desc = "A bowl carved out of rosestone."
 	icon_state = "bowl_rose"
+	sellprice = 20
 
 /obj/item/reagent_containers/glass/bowl/carved/amber
 	name = "amber bowl"
 	desc = "A bowl carved out of amber."
 	icon_state = "bowl_amber"
+	sellprice = 55
 
 /obj/item/reagent_containers/glass/bowl/carved/turq
 	name = "cerulite bowl"
 	desc = "A bowl carved out of cerulite."
 	icon_state = "bowl_turq"
+	sellprice = 80
 
 /obj/item/reagent_containers/glass/bowl/carved/shell
 	name = "shell bowl"
 	desc = "A bowl carved out of shell."
 	icon_state = "bowl_shell"
+	sellprice = 15
 
 /obj/item/reagent_containers/glass/bowl/carved/coral
 	name = "heartstone bowl"
 	desc = "A bowl carved out of heartstone."
 	icon_state = "bowl_coral"
+	sellprice = 65
 
 /obj/item/reagent_containers/glass/bowl/carved/opal
 	name = "opal bowl"
 	desc = "A bowl carved out of opal."
 	icon_state = "bowl_opal"
+	sellprice = 85
 
 /obj/item/reagent_containers/glass/bowl/update_icon()
 	cut_overlays()
