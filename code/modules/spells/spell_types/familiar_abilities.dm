@@ -262,8 +262,8 @@
 	heal_effect.color = "#129160"
 	var/list/wound_count = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+2, BLOOD_VOLUME_NORMAL) //Reduced blood replenishment compared to cleric miracle.
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+2, BLOOD_VOLUME_NORMAL)) //Reduced blood replenishment compared to cleric miracle.
 		if(wound_count.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
@@ -311,7 +311,7 @@
 	if (isturf(targets[1]))
 		var/turf/front_turf = get_step(user, user.dir)
 		var/datum/effect_system/spark_spread/spark_spread_effect = new()
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		flick("flintstrike", src)
 		spark_spread_effect.set_up(1, 1, front_turf)
 		spark_spread_effect.start()
@@ -320,7 +320,7 @@
 	else
 		var/atom/target_atom = targets[1]
 		if (user.Adjacent(target_atom))
-			user.flash_fullscreen("whiteflash")
+			user.fullscreen_redflash("whiteflash")
 			flick("flintstrike", src)
 			target_atom.spark_act()
 			user.visible_message(span_notice("[user.name] exhales a directed spark toward [target_atom]!"), span_notice("You release a pinpoint ember toward [target_atom]."))

@@ -655,6 +655,18 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
+/obj/item/clothing/mask/rogue/lordmask/zizite
+	name = "fateful visage"
+	item_state = "zizomask"
+	icon_state = "zizomask"
+	desc = "To advance, at any cost."
+	alternate_worn_layer = HOOD_LAYER
+	max_integrity = 150
+	armor = ARMOR_PLATE
+	flags_inv = HIDEFACE|HIDESNOUT
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	sellprice = 0
+
 /obj/item/clothing/mask/rogue/exoticsilkmask
 	name = "exotic silk mask"
 	icon_state = "exoticsilkmask"

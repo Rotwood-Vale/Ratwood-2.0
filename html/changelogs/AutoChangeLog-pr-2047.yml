@@ -1,9 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - qol: "Makes surgery speeds a bit faster."
-  - qol: "Made surgeries heal a bit more based off skill and base values."
-  - qol: "Adjusted CPR to be a bit more rewarding on success."
-  - qol: "Makes physicians kinda better than miracles now. Surgeries heal a bit more too."
-  - rscadd: "Pestran acolytes get medicine expert trait."
-  - rscadd: "Bumped extract lux surgery to expert requirement."

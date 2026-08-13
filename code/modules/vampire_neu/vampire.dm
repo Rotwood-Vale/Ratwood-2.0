@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	to_chat(vampdude, span_notice("You are now a member of the [custom_clan_name] clan with [length(selected_covens)] coven(s)."))
 
 /datum/antagonist/vampire/proc/after_gain()
-	owner.current.set_bloodpool(owner.current.maxbloodpool / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
+	owner.current.set_bloodpool(owner.current.get_maxbloodpool() / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/vampire/on_removal()

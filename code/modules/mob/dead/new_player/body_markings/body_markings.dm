@@ -70,6 +70,13 @@
 	default_color = "FF0000"
 	affected_bodyparts = HEAD
 
+/datum/body_marking/outer_tall_eyes
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Outer Tall Eyes"
+	icon_state = "outer_eyes"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD
+
 /datum/body_marking/blank_face
 	icon = 'icons/mob/body_markings/other_markings.dmi'
 	name = "Blank Face"
