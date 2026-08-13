@@ -2287,6 +2287,7 @@
 	icon_state = "elfsword"
 	sellprice = 40
 	sheathe_icon = "elfsword"
+	max_blade_int = 250 // 50 more than a shortsword.
 
 /obj/item/rogueweapon/sword/long/elf
 	name = "elven longsword"
@@ -2295,3 +2296,4 @@
 	icon_state = "elflongsword"
 	sellprice = 50
 	sheathe_icon = "elfsword"
+	max_blade_int = 330 // 50 more than a longsword.
