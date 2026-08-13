@@ -1921,9 +1921,10 @@
 	name = "elven curveblade"
 	desc = "The Elven Curveblade is a traditional weapon, its practice as much a dance as a method of death. Flowing like the water's current, let its path lead to your enemy's throat."
 	icon_state = "elfcurveblade"
-	wlength = WLENGTH_LONG//less reach than greatsword!
-	minstr = 7//lighter
-	wdefense = 8//better defence than greatsword
+	wlength = WLENGTH_LONG //less reach than greatsword!
+	minstr = 7 //lighter
+	wdefense = 8 //better defence than greatsword
+	max_blade_int = 400 // Superior sharpness than a greatsword
 	sellprice = 60
 
 
