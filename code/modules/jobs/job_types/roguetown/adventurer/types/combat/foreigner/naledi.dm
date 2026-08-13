@@ -123,7 +123,7 @@
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 
-		if("Wandering Diviner (Vizier)")
+		if("Abandoned Diviner (Vizier)")
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
 			r_hand = /obj/item/rogueweapon/woodstaff
@@ -154,6 +154,7 @@
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
 			C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 			if(H.mind)
+				H.mind?.adjust_spellpoints(6)
 				var/spells = list("Avant Origin (Acceleration)", "Garde Origin (Divergence)")
 				var/mastery = input(H, "Choose your Origin Mastery.", "FORWARD OR BACKWARD?") as anything in spells
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
