@@ -216,7 +216,7 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,
 	)
-	subclass_spellpoints = 6
+	subclass_spellpoints = 9
 
 /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	var/detailcolor

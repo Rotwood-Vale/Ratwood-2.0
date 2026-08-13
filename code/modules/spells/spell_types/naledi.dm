@@ -3,7 +3,7 @@
 	name = "Regression"
 	desc = "Uses Origin Magick to gradually rewind a target's body to a healthier state. The effects happen in order, and only one at a time. Removes embedded objects, stops bleeding, grants health regeneration and energy recovery. The nature of time-based manipulation allows this to work on most targets."
 	overlay_state = "regression"
-	releasedrain = 30
+	releasedrain = 20
 	chargedrain = 0
 	chargetime = 0
 	range = 5
@@ -131,7 +131,7 @@
 	name = "Convergence"
 	desc = "Converges the targets past and present, empowering your Naledi arts to last longer."
 	overlay_state = "convergence"
-	releasedrain = 30
+	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
 	range = 4
@@ -146,7 +146,7 @@
 	antimagic_allowed = TRUE
 	recharge_time = 20 SECONDS
 	miracle = TRUE
-	devotion_cost = 30
+	devotion_cost = 10
 
 /obj/effect/proc_holder/spell/invoked/convergence/cast(list/targets, mob/living/user)
 	. = ..()
@@ -191,7 +191,7 @@
 	var/blood = 0
 	var/list/datum/wound/snapshot_wounds
 	miracle = TRUE
-	devotion_cost = 100
+	devotion_cost = 70
 
 /obj/effect/proc_holder/spell/invoked/stasis/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/self = usr
@@ -382,6 +382,7 @@
 	ADD_TRAIT(owner, TRAIT_GUIDANCE, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_UNCAPPED_SPEED, TRAIT_STATUS_EFFECT(id))
 
 	if(!afterimage_active)
 		owner.AddComponent(/datum/component/after_image)
@@ -395,6 +396,7 @@
 	REMOVE_TRAIT(owner, TRAIT_GUIDANCE, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_UNCAPPED_SPEED, TRAIT_STATUS_EFFECT(id))
 
 	if(afterimage_active)
 		var/datum/component/after_image/after_image_component = owner.GetComponent(/datum/component/after_image)
@@ -402,8 +404,8 @@
 			qdel(after_image_component)
 		afterimage_active = FALSE
 	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
-		owner.apply_status_effect(/datum/status_effect/debuff/decel, 16 SECONDS)
-	owner.apply_status_effect(/datum/status_effect/debuff/decel, 11 SECONDS)
+		owner.apply_status_effect(/datum/status_effect/debuff/decel, 11 SECONDS)
+	owner.apply_status_effect(/datum/status_effect/debuff/decel, 6 SECONDS)
 
 	to_chat(owner, span_red("Time catches up with me, with its toll."))
 
@@ -414,7 +416,7 @@
 	id = "deceleration"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/decel
 	effectedstats = list(STATKEY_SPD = -20)
-	duration = 11 SECONDS
+	duration = 6 SECONDS
 
 
 
@@ -427,7 +429,7 @@
 	. = ..()
 
 	ADD_TRAIT(owner, TRAIT_NODEF, TRAIT_STATUS_EFFECT(id))
-	owner.stamina_add(125)
+	owner.stamina_add(75)
 	to_chat(owner, span_red("Everything feels unbearably slow. I am defenseless!"))
 
 /datum/status_effect/debuff/decel/on_remove()
@@ -473,7 +475,7 @@
 	recharge_time = 60 SECONDS
 	invocations = list("Naf'ir! Diverge, timeline!")
 	miracle = TRUE
-	devotion_cost = 50
+	devotion_cost = 30
 
 /obj/effect/proc_holder/spell/invoked/divergence/cast(list/targets, mob/living/user)
 	. = ..()
