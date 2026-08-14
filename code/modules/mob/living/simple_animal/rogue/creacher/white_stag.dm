@@ -3,7 +3,7 @@
 /datum/species/white_stag
 	name = "White Stag"
 	id = "white_stag"
-	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
+	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES, NOBLOOD)
 	inherent_traits = list(
 		TRAIT_DODGEEXPERT,
 		TRAIT_STEELHEARTED,
@@ -86,9 +86,9 @@
 
 	// Giving them two in an attempt to prevent them from picking up other weapons.
 	for(var/i in 1 to 2)
-		var/obj/item/rogueweapon/stag_antlers/A = new(src)
-		if(!put_in_hands(A, TRUE))
-			qdel(A)
+		var/obj/item/rogueweapon/stag_antlers/antlers = new(src)
+		if(!put_in_hands(antlers, TRUE))
+			qdel(antlers)
 
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/stag_hide
 
@@ -129,9 +129,6 @@
 	real_name = pick(stag_titles)
 	name = real_name
 	AddComponent(/datum/component/white_stag_tracker)
-	// Practically the only way to kill this thing is through decapitating it, good luck!
-	if(dna && dna.species)
-		dna.species.species_traits |= NOBLOOD
 
 /obj/item/clothing/suit/roguetown/armor/skin_armor/stag_hide
 	slot_flags = null
@@ -255,29 +252,29 @@
 	sellprice = 500
 	pixel_x = -16
 
-/obj/item/natural/head/white_stag/attack_turf(turf/T, mob/living/user)
-	if(!isclosedturf(T))
+/obj/item/natural/head/white_stag/attack_turf(turf/target_turf, mob/living/user)
+	if(!isclosedturf(target_turf))
 		return ..()
 
-	var/dir_to_wall = get_dir(user, T)
+	var/dir_to_wall = get_dir(user, target_turf)
 	if(!(dir_to_wall in GLOB.cardinals))
 		return ..()
 
 	to_chat(user, span_notice("You begin mounting [src] to the wall..."))
-	if(do_after(user, 30, target = T))
-		var/obj/structure/fluff/walldeco/mounted_head/S = new(user.loc)
+	if(do_after(user, 30, target = target_turf))
+		var/obj/structure/fluff/walldeco/mounted_head/mounted = new(user.loc)
 
 		switch(dir_to_wall)
 			if(NORTH)
-				S.pixel_y = 32
-				S.pixel_x = -16
+				mounted.pixel_y = 32
+				mounted.pixel_x = -16
 			if(SOUTH)
-				S.pixel_y = -32
-				S.pixel_x = -16
+				mounted.pixel_y = -32
+				mounted.pixel_x = -16
 			if(WEST)
-				S.pixel_x = -48
+				mounted.pixel_x = -48
 			if(EAST)
-				S.pixel_x = 16
+				mounted.pixel_x = 16
 
 		to_chat(user, span_notice("You mount [src] firmly."))
 		qdel(src)
@@ -298,8 +295,8 @@
 /obj/structure/fluff/walldeco/mounted_head/attack_hand(mob/user)
 	if(do_after(user, 50, target = src)) // Heavier than a painting
 		to_chat(user, span_notice("You carefully pry [src] off the wall."))
-		var/obj/item/I = new stolen_item(user.loc)
-		user.put_in_hands(I)
+		var/obj/item/stolen = new stolen_item(user.loc)
+		user.put_in_hands(stolen)
 		qdel(src)
 		return
 	..()
@@ -318,22 +315,22 @@
 	SIGNAL_HANDLER
 	if(damage <= 5)
 		return
-	var/mob/living/carbon/human/H = parent
-	H.apply_status_effect(/datum/status_effect/buff/white_rush)
+	var/mob/living/carbon/human/human = parent
+	human.apply_status_effect(/datum/status_effect/buff/white_rush)
 
 /datum/component/white_stag_tracker/proc/on_death()
 	SIGNAL_HANDLER
 	if(death_processed)
 		return
 	death_processed = TRUE
-	var/mob/living/carbon/human/H = parent
-	var/turf/T = get_turf(H)
-	var/mob/living/simple_animal/hostile/retaliate/rogue/white_stag_corpse/C = new(T)
-	C.name = H.real_name
+	var/mob/living/carbon/human/human = parent
+	var/turf/corpse_turf = get_turf(human)
+	var/mob/living/simple_animal/hostile/retaliate/rogue/white_stag_corpse/corpse = new(corpse_turf)
+	corpse.name = human.real_name
 	spawn(1)
-		C.death() // Immediately kill it so it's just a corpse
-	H.visible_message(span_userdanger("[H] lets out a final, haunting bell as its spirit departs, leaving a heavy carcass behind."))
-	qdel(H)
+		corpse.death() // Immediately kill it so it's just a corpse
+	human.visible_message(span_userdanger("[human] lets out a final, haunting bell as its spirit departs, leaving a heavy carcass behind."))
+	qdel(human)
 
 // WHITE RUSH - the stag's combat adrenaline
 #define MOVESPEED_ID_WHITE_RUSH "White Rush"
@@ -356,11 +353,11 @@
 	owner.add_movespeed_modifier(MOVESPEED_ID_WHITE_RUSH, update=TRUE, priority=15, multiplicative_slowdown=-2)
 
 /datum/status_effect/buff/white_rush/tick()
-	var/mob/living/carbon/human/H = owner
-	H.adjustBruteLoss(-healing_per_tick)
-	H.heal_wounds(healing_per_tick)
-	var/obj/effect/temp_visual/heal/E = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	E.color = "#FF0000"
+	var/mob/living/carbon/human/human = owner
+	human.adjustBruteLoss(-healing_per_tick)
+	human.heal_wounds(healing_per_tick)
+	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	heal_effect.color = "#FF0000"
 
 /datum/status_effect/buff/white_rush/on_remove()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_WHITE_RUSH)

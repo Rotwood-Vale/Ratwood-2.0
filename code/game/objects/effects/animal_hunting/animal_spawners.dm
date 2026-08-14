@@ -17,7 +17,8 @@
 	return ..()
 
 /obj/effect/landmark/hunting_spawner/proc/respawn_trail()
-	if(locate(/obj/effect/hunting_track) in get_turf(src))
+	var/turf/spawn_turf = get_turf(src)
+	if(locate(/obj/effect/hunting_track) in spawn_turf)
 		return FALSE
-	new /obj/effect/hunting_track(src.loc)
+	new /obj/effect/hunting_track(spawn_turf)
 	return TRUE

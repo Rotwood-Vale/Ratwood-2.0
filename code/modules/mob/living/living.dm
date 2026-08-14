@@ -2102,36 +2102,40 @@
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
 		// Hunting Tracks Logic
-		var/obj/effect/hunting_track/closest_track
-		var/min_dist = 8
-		for(var/obj/effect/hunting_track/HT in range(7, src))
-			// Check if we are part of the party that can see this track
-			var/can_see_ht = FALSE
-			for(var/datum/weakref/W in HT.party_refs)
-				if(W.resolve() == src)
-					can_see_ht = TRUE
-					break
-			if(!can_see_ht)
-				continue
-			found_ping(get_turf(HT), client, "paws")
-			var/dist = get_dist(src, HT)
-			if(dist < min_dist)
-				min_dist = dist
-				closest_track = HT
-		if(closest_track)
-			var/dir_text = dir2text(get_dir(src, closest_track))
-			var/dist_text = ""
-			switch(min_dist)
-				if(0 to 1)
-					dist_text = "right beneath your feet"
-				if(2 to 3)
-					dist_text = "very close by"
-				if(4 to 5)
-					dist_text = "a few paces away"
-				else
-					dist_text = "in the distance"
-			to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
