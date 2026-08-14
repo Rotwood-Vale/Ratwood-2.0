@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "blood UI should sync up better now"
-  - bugfix: "pain not updating sometimes"
