@@ -89,7 +89,7 @@
 
 /datum/advclass/retainer/ronin
 	name = "Ronin"
-	tutorial = "Trained in the ways of Kazengun's warrior philosophers, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him."
+	tutorial = "Trained in the ways of Kazengun's warrior philosophers, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
 	outfit = /datum/outfit/job/roguetown/retainer/ronin
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_DUALWIELDER)
