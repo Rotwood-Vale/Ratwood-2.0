@@ -607,7 +607,7 @@ SUBSYSTEM_DEF(gamemode)
 				to_chat(world, span_boldwarning("The round will end in 15 minutes."))
 			else
 				reb_end_time = INITIAL_ROUND_TIMER
-				to_chat(world, span_boldwarning("The round will end at the 2:30 hour mark."))
+				to_chat(world, span_boldwarning("The round will end at the 2:45 hour mark."))
 		if(ttime >= reb_end_time)
 			return TRUE
 

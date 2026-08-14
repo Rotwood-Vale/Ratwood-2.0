@@ -2,7 +2,8 @@
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
 	var/zone_selector_hud_dirty = FALSE
-	var/zone_selector_hud_update_queued = FALSE
+	var/pain_hud_dirty = FALSE
+	var/injury_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
@@ -94,17 +95,29 @@
 	if(!hud_used?.zone_select)
 		return
 	zone_selector_hud_dirty = TRUE
-	if(zone_selector_hud_update_queued)
-		return
-	zone_selector_hud_update_queued = TRUE
-	addtimer(CALLBACK(src, PROC_REF(flush_zone_selector_hud)), 0)
+	queue_injury_hud_flush()
 
-/mob/living/proc/flush_zone_selector_hud()
-	zone_selector_hud_update_queued = FALSE
-	if(!zone_selector_hud_dirty)
+/mob/living/proc/mark_pain_hud_dirty()
+	if(!hud_used)
 		return
-	zone_selector_hud_dirty = FALSE
-	update_zone_selector_hud()
+	pain_hud_dirty = TRUE
+	queue_injury_hud_flush()
+
+/mob/living/proc/queue_injury_hud_flush()
+	if(injury_hud_update_queued)
+		return
+	injury_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_injury_huds)), 0)
+
+/mob/living/proc/flush_injury_huds()
+	injury_hud_update_queued = FALSE
+	if(zone_selector_hud_dirty)
+		zone_selector_hud_dirty = FALSE
+		update_zone_selector_hud()
+	if(pain_hud_dirty)
+		pain_hud_dirty = FALSE
+		update_damage_hud()
+		update_health_hud()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -1083,6 +1096,9 @@
 	set hidden = 1
 	if(!can_resist() || surrendering)
 		return
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		to_chat(src, span_info("I can't resist right now."))
+		return
 
 	changeNext_move(CLICK_CD_RESIST)
 
@@ -1174,12 +1190,12 @@
 		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
 			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
 			return
-		src.compliance = 0
+		compliance = FALSE
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will struggle against grabs as usual."))
 	else
-		src.compliance = 1
+		compliance = TRUE
 		apply_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will allow all grabs and resistance attempts by others."))
@@ -1954,6 +1970,18 @@
 	switch(var_name)
 		if (NAMEOF(src, wallpressed))
 			set_wallpressed(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, blood_volume))
+			set_blood_volume(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, bloodpool))
+			set_bloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, maxbloodpool))
+			set_maxbloodpool(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 		if ("maxHealth")

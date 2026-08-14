@@ -1074,7 +1074,7 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 	var/charges = H.quest_reroll_charges
 	var/next_left_ds = max(0, QUEST_COOLDOWN_DS - (world.time - H.quest_reroll_last_ds))
 	var/left_s = round(next_left_ds / 10)
-	var/mins = left_s / 60
+	var/mins = floor(left_s / 60)
 	var/secs = left_s % 60
 	var/secs_str = (secs < 10) ? "0[secs]" : "[secs]"
 
@@ -1692,8 +1692,8 @@ var/global/list/NOC_SECRET_MIRACLES = list(
 		to_chat(user, span_notice("Reagents detected: none."))
 
 	var/blood_amt = 0
-	if(isnum(H.blood_volume) && H.blood_volume > 0)
-		blood_amt = H.blood_volume
+	if(isnum(H.get_blood_volume()) && H.get_blood_volume() > 0)
+		blood_amt = H.get_blood_volume()
 	else if(H.reagents && hascall(H.reagents, "get_reagent_amount"))
 		blood_amt = H.reagents.get_reagent_amount(/datum/reagent/blood)
 

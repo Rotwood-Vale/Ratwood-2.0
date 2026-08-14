@@ -1,5 +1,5 @@
 //The guild. /The/ guild. Underdark explorers. Not as packed as other merc groups, but get explosives, the skills to make more off the bat and a funny hat.
-/datum/advclass/mercenary/underdweller
+/datum/advclass/foreigner/underdweller
 	name = "Underdweller"
 	tutorial = "A member of the Underdwellers, you've taken many of the deadliest contracts known to man in literal underground circles. \
 	Drow or Dwarf, you've put your differences aside for coin and adventure."
@@ -12,15 +12,14 @@
 		/datum/species/goblinp,				//Might be a little weird but goblins do reside in caves, and they could use a unique merc class type.
 		/datum/species/anthromorphsmall,	//Basically all under-ground races. Perfect for cave-clearing.
 	)
-	outfit = /datum/outfit/job/roguetown/mercenary/underdweller
+	outfit = /datum/outfit/job/roguetown/adventurer/underdweller
 	class_select_category = CLASS_CAT_RACIAL
-	category_tags = list(CTAG_MERCENARY)
+	category_tags = list(CTAG_ADVENTURER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK)
 	subclass_stats = list(
-		STATKEY_CON = 2,
+		STATKEY_CON = 1,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_STR = 1,
+		STATKEY_STR = 2,
 		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
@@ -42,31 +41,28 @@
 	)
 	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Goblins & Verminvolk."
 
-/datum/outfit/job/roguetown/mercenary/underdweller/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/adventurer/underdweller/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	gloves = /obj/item/clothing/gloves/roguetown/chain
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/iron
+	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	mask = /obj/item/clothing/mask/rogue/ragmask
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/black
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/pick
 	beltr = /obj/item/storage/detpack
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/shield/wood
 	backpack_contents = list(
-		/obj/item/roguekey/mercenary,
-		/obj/item/storage/belt/rogue/pouch/coins/poor,
-		/obj/item/flint,
-		/obj/item/rogueweapon/huntingknife,
-		/obj/item/rogueweapon/scabbard/sheath = 1
-		)
-	H.merctype = 12
-
+			/obj/item/storage/belt/rogue/pouch/coins/poor,
+			/obj/item/flint,
+			/obj/item/rogueweapon/huntingknife,
+			/obj/item/rogueweapon/scabbard/sheath = 1
+			)
 
 //Clothing here to avoid overcrowding the hats.dm with snowflake gear. It's just a kettle with a light.
 /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
