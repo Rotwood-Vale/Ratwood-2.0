@@ -65,6 +65,9 @@
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, retreat_health)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/headless/AttackingTarget()
+	// No biting what we're already digesting, so it can attack other mobs.
+	if(swallowed_mob && target == swallowed_mob)
+		return FALSE
 	//If its a carbon, your cooldown is up, and your above 30% health you can eat them
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -79,8 +82,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/headless/Life()
 	if(isliving(swallowed_mob))
+		// If someone pulls them out, stop treating them as swallowed
+		if(swallowed_mob.loc != src)
+			LoseCaptive()
 		//Vomit your captive if you take 40 damage since swallowing them
-		if(health < health_at_swallow - 40)
+		else if(health < health_at_swallow - 40)
 			SpitUp()
 		if(swallowed_mob)
 			if(stomach_burn_cooldown < world.time)
@@ -160,6 +166,20 @@
 	SpitUp()
 	return ..()
 
+/mob/living/simple_animal/hostile/retaliate/rogue/headless/Destroy()
+	SpitUp()
+	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/headless/Exited(atom/movable/gone, atom/newLoc)
+	. = ..()
+	if(gone == swallowed_mob)
+		LoseCaptive()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/headless/handle_atom_del(atom/A)
+	if(A == swallowed_mob)
+		LoseCaptive()
+	return ..()
+
 /mob/living/simple_animal/hostile/retaliate/rogue/headless/proc/SwallowEnemy(mob/living/L)
 	if(swallowed_mob)
 		return
@@ -171,8 +191,15 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/headless/proc/SpitUp()
 	if(swallowed_mob)
-		visible_message(span_notice("[src] vomits a disheveled [swallowed_mob]."))
-		playsound(loc, 'sound/vo/vomit.ogg', 25, TRUE)
-		swallowed_mob.forceMove(get_turf(src))
+		// Only vomit them if they're actually still in there, and we have somewhere to put them
+		var/turf/spit_turf = get_turf(src)
+		if(spit_turf && swallowed_mob.loc == src)
+			visible_message(span_notice("[src] vomits a disheveled [swallowed_mob]."))
+			playsound(loc, 'sound/vo/vomit.ogg', 25, TRUE)
+			swallowed_mob.forceMove(spit_turf)
 		swallowed_mob = null
+	swallow_cooldown = world.time + swallow_cooldown_delay
+
+/mob/living/simple_animal/hostile/retaliate/rogue/headless/proc/LoseCaptive()
+	swallowed_mob = null
 	swallow_cooldown = world.time + swallow_cooldown_delay
