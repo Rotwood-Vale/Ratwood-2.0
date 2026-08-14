@@ -59,14 +59,12 @@
 		budget -= M.cost
 		active_modifiers += M
 
-	var/list/slots = list("Wretch" = 9, "Bandit" = 0, "Gnoll" = 0, "Adventurer" = 20)
+	var/list/slots = list()
 	var/datum/forecast/forecast = SSParticleWeather?.selected_forecast
 
 	for(var/datum/round_modifier/M in active_modifiers)
-		slots["Wretch"] += M.wretch_slots
-		slots["Bandit"] += M.bandit_slots
-		slots["Gnoll"] += M.gnoll_slots
-		slots["Adventurer"] += M.adventurer_slots
+		for(var/job_title in M.job_slots)
+			slots[job_title] += M.job_slots[job_title]
 		for(var/event_type in M.villain_events)
 			var/datum/round_event_control/event = locate(event_type) in control
 			if(event)
@@ -81,8 +79,8 @@
 		var/datum/job/J = SSjob.GetJob(job_title)
 		if(!J)
 			continue
-		J.total_positions = slots[job_title]
-		J.spawn_positions = slots[job_title]
+		J.total_positions += slots[job_title]
+		J.spawn_positions += slots[job_title]
 
 	if(!length(active_modifiers))
 		to_chat(world, span_notice("<b>Nothing.</b>"))

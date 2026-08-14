@@ -81,3 +81,84 @@
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE)
+
+// this menu allows players 2 boost their stats to wretch tier (+12 weight) & choose between DE / Heavy Armor
+/mob/living/carbon/human/var/datum/antag_setup/antag_setup
+
+/datum/antag_setup
+	var/mob/living/carbon/human/user
+	var/list/stats = list()
+	var/list/defaults = list()
+	var/chosen_trait
+	var/budget = 12
+	var/static/list/stat_keys = list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD)
+
+/datum/antag_setup/New(mob/living/carbon/human/H)
+	user = H
+	H.antag_setup = src
+	for(var/key in stat_keys)
+		stats[key] = H.get_stat_level(key)
+		defaults[key] = stats[key]
+	open_menu()
+
+/datum/antag_setup/proc/statweight(key)
+	if(key == STATKEY_STR || key == STATKEY_SPD)
+		return 2
+	return 1
+
+/datum/antag_setup/proc/statspent()
+	. = 0
+	for(var/key in stat_keys)
+		. += (stats[key] - 10) * statweight(key)
+
+/datum/antag_setup/proc/open_menu()
+	var/contents = "<center><b>TAKE UP ARMS</b><BR>"
+	contents += "Points remaining: [budget - statspent()]</center><BR>"
+	contents += "--------------<BR>"
+	for(var/key in stat_keys)
+		contents += "<b>[capitalize(key)]</b> ([statweight(key)]x): [stats[key]] "
+		contents += "<a href='?src=[REF(src)];raise=[key]'>\[+\]</a> "
+		contents += "<a href='?src=[REF(src)];lower=[key]'>\[-\]</a><BR>"
+	contents += "--------------<BR>"
+	contents += "<b>Choose a trait:</b><BR>"
+	contents += "<a href='?src=[REF(src)];trait=dodge'>Dodge Expert</a><BR>"
+	contents += "<a href='?src=[REF(src)];trait=heavy'>Heavy Armor</a><BR>"
+	contents += "Chosen: [chosen_trait]<BR>"
+	contents += "--------------<BR>"
+	contents += "<center><a href='?src=[REF(src)];confirm=1'>\[CONFIRM\]</a></center>"
+	var/datum/browser/popup = new(user, "antagsetup", "Take Up Arms", 300, 420)
+	popup.set_content(contents)
+	popup.open(FALSE)
+
+/datum/antag_setup/Topic(href, href_list)
+	if(usr != user)
+		return
+	if(href_list["raise"])
+		var/key = href_list["raise"]
+		if(stats[key] < 20 && (budget - statspent()) >= statweight(key))
+			stats[key] += 1
+		open_menu()
+	if(href_list["lower"])
+		var/key = href_list["lower"]
+		if(stats[key] > defaults[key])
+			stats[key] -= 1
+		open_menu()
+	if(href_list["trait"])
+		if(href_list["trait"] == "dodge")
+			chosen_trait = TRAIT_DODGEEXPERT
+		if(href_list["trait"] == "heavy")
+			chosen_trait = TRAIT_HEAVYARMOR
+		open_menu()
+	if(href_list["confirm"])
+		if(!chosen_trait)
+			to_chat(user, span_warning("Choose a trait."))
+			return
+		for(var/key in stat_keys)
+			var/diff = stats[key] - defaults[key]
+			if(diff)
+				user.change_stat(key, diff)
+		ADD_TRAIT(user, chosen_trait, TRAIT_GENERIC)
+		user.antag_setup = null
+		user << browse(null, "window=antagsetup")
+		qdel(src)
+

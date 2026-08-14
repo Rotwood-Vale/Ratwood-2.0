@@ -3,7 +3,7 @@
 	desc = "Some free men have come."
 	cost = 1
 	min_chaos = 1
-	bandit_slots = 4
+	job_slots = list("Bandit" = 4)
 
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"
@@ -12,14 +12,14 @@
 	weight = 30
 	min_chaos = 2
 	incompatible = list(/datum/round_modifier/low_bandits)
-	bandit_slots = 7
+	job_slots = list("Bandit" = 7)
 
 /datum/round_modifier/low_gnolls
 	name = "Low Gnolls"
 	desc = "The dregs of a bloodbeast pack."
 	cost = 1
 	weight = 20
-	gnoll_slots = 2
+	job_slots = list("Gnoll" = 2)
 
 /datum/round_modifier/medium_gnolls
 	name = "Medium Gnolls"
@@ -27,7 +27,7 @@
 	cost = 2
 	min_chaos = 1
 	incompatible = list(/datum/round_modifier/low_gnolls)
-	gnoll_slots = 4
+	job_slots = list("Gnoll" = 4)
 
 /datum/round_modifier/high_gnolls
 	name = "High Gnolls"
@@ -35,14 +35,14 @@
 	cost = 4
 	min_chaos = 2
 	incompatible = list(/datum/round_modifier/low_gnolls, /datum/round_modifier/medium_gnolls)
-	gnoll_slots = 6
+	job_slots = list("Gnoll" = 6)
 
 /datum/round_modifier/high_wretches
 	name = "High Wretches"
 	desc = "Heresy spreads like a plague in the hearts of men!"
 	cost = 4
 	min_chaos = 3
-	wretch_slots = 5
+	job_slots = list("Wretch" = 5)
 
 /datum/round_modifier/high_bandits
 	name = "High Bandits"
@@ -51,7 +51,7 @@
 	weight = 15
 	min_chaos = 3
 	incompatible = list(/datum/round_modifier/medium_bandits, /datum/round_modifier/low_bandits)
-	bandit_slots = 10
+	job_slots = list("Bandit" = 10)
 
 /*
 /datum/round_modifier/werewolf

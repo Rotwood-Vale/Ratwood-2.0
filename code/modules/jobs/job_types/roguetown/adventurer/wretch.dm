@@ -4,8 +4,8 @@
 	flag = WRETCH
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 0
-	spawn_positions = 0
+	total_positions = 9
+	spawn_positions = 9
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Somewhere in your lyfe, you fell to the wrong side of civilization. Hounded by the consequences of your actions, you spend your daes prowling the roads for easy marks and loose purses, scraping to get by."
 	outfit = null
@@ -14,6 +14,7 @@
 	show_in_credits = FALSE
 	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
 	max_pq = null
+	vice_restrictions = list(/datum/charflaw/assassintarget)
 
 	obsfuscated_job = TRUE
 	class_categories = TRUE

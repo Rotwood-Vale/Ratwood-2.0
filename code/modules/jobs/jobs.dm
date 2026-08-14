@@ -172,7 +172,6 @@ GLOBAL_LIST_INIT(youngfolk_positions, list(
 GLOBAL_LIST_INIT(wanderer_positions, list(
 	"Mercenary",
 	"Adventurer",
-	"Assassin",
 	"Court Agent",
 	"Enslaved Adventurer",
 ))
@@ -181,6 +180,7 @@ GLOBAL_LIST_INIT(villain_positions, list(
 	"Bandit",
 	"Wretch",
 	"Gnoll",
+	"Assassin",
 ))
 
 GLOBAL_LIST_INIT(tribal_positions, list(
