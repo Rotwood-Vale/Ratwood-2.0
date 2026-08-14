@@ -1067,6 +1067,7 @@
 #include "code\game\objects\effects\effect_system\effects_water.dm"
 #include "code\game\objects\effects\effect_system\particle_defines.dm"
 #include "code\game\objects\effects\gods\unassuming_fluff.dm"
+#include "code\game\objects\effects\particles\tempo.dm"
 #include "code\game\objects\effects\particles\weather.dm"
 #include "code\game\objects\effects\spawners\clutter_spawner.dm"
 #include "code\game\objects\effects\spawners\equipment_spawners.dm"

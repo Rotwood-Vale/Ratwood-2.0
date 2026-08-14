@@ -340,24 +340,40 @@
 	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/tempo_one
+	/// Holds the particle effects for tempo
+	var/obj/effect/abstract/particle_holder/tempo_particle
 
 /datum/status_effect/buff/tempo_one/on_apply()
 	. = ..()
 	if(owner)
 		owner.stamina = max((owner.stamina - owner.max_stamina / 3), 0)
 		to_chat(owner, span_info("Tempo!"))
+		tempo_particle = new(owner, /particles/tempo/tempo_one, PARTICLE_ATTACH_MOB)
+
+/datum/status_effect/buff/tempo_one/on_remove()
+	. = ..()
+	if(tempo_particle)
+		QDEL_NULL(tempo_particle)
 
 /datum/status_effect/buff/tempo_two
 	id = "tempo_2"
 	duration = 30 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/tempo_two
+	/// Holds the particle effects for tempo
+	var/obj/effect/abstract/particle_holder/tempo_particle
 
 /datum/status_effect/buff/tempo_two/on_apply()
 	. = ..()
 	if(owner)
 		owner.stamina = max((owner.stamina - owner.max_stamina / 2), 0)
 		to_chat(owner, span_notice("Tempo!!"))
+		tempo_particle = new(owner, /particles/tempo/tempo_two, PARTICLE_ATTACH_MOB)
+
+/datum/status_effect/buff/tempo_two/on_remove()
+	. = ..()
+	if(tempo_particle)
+		QDEL_NULL(tempo_particle)
 
 #define TEMPO_MAX_FILTER "tempo_max_glow"
 
@@ -367,6 +383,8 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/tempo_three
 	var/outline_color = "#d3aa25"
+	/// Holds the particle effects for tempo
+	var/obj/effect/abstract/particle_holder/tempo_particle
 
 /datum/status_effect/buff/tempo_three/on_apply()
 	. = ..()
@@ -379,9 +397,12 @@
 		owner.stamina = max((owner.stamina - owner.max_stamina / 2), 0)
 		ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT)
 		ADD_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT)
+		tempo_particle = new(owner, /particles/tempo/tempo_three, PARTICLE_ATTACH_MOB)
 
 /datum/status_effect/buff/tempo_three/on_remove()
 	. = ..()
 	owner.remove_filter(TEMPO_MAX_FILTER)
 	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE,  TRAIT_STATUS_EFFECT)
 	REMOVE_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT)
+	if(tempo_particle)
+		QDEL_NULL(tempo_particle)
