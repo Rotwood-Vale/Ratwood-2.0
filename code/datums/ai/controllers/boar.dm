@@ -37,7 +37,6 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/boar_charge
-	//action_cooldown = 20 SECONDS
 
 /datum/ai_behavior/boar_charge/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/simple_animal/boar = controller.pawn
@@ -76,9 +75,9 @@
 		turfs_to_check += get_step(impact_turf, turn(charge_dir, -90))
 
 	var/swing_sfx = pick('sound/combat/ground_smash_start.ogg', 'sound/combat/flail_sweep_hit_minor.ogg')
-	for(var/turf/T in turfs_to_check)
+	for(var/turf/swing_turf in turfs_to_check)
 		var/delay = 0.5 SECONDS
-		var/obj/effect/temp_visual/special_intent/fx = new (T, delay)
+		var/obj/effect/temp_visual/special_intent/fx = new (swing_turf, delay)
 		fx.icon = 'icons/effects/effects.dmi'
 		fx.icon_state = "sweep_fx"
 	playsound(impact_turf, swing_sfx, 80, TRUE)
@@ -93,8 +92,8 @@
 		did_hit = TRUE
 		victim.visible_message(span_userdanger("[boar] gores [victim]!"))
 		if(iscarbon(victim))
-			var/mob/living/carbon/C = victim
-			var/obj/item/bodypart/chest = C.get_bodypart(BODY_ZONE_CHEST)
+			var/mob/living/carbon/victim_carbon = victim
+			var/obj/item/bodypart/chest = victim_carbon.get_bodypart(BODY_ZONE_CHEST)
 			if(chest)
 				chest.add_wound(/datum/wound/slash/boar_gore)
 		victim.Stun(2 SECONDS)
@@ -108,18 +107,18 @@
 		boar.visible_message("<span class='danger'>[boar] slams into [impact_turf] with bone-shattering force!</span>")
 		playsound(boar, 'sound/combat/hits/onwood/fence_hit3.ogg', 100, TRUE)
 		boar.Stun(3 SECONDS)
-		for(var/turf/T in range(1, impact_turf))
-			var/obj/effect/temp_visual/special_intent/smash = new (T, 0.5 SECONDS)
+		for(var/turf/smash_turf in range(1, impact_turf))
+			var/obj/effect/temp_visual/special_intent/smash = new (smash_turf, 0.5 SECONDS)
 			smash.icon = 'icons/effects/effects.dmi'
 			smash.icon_state = "strike"
 		// Anyone within 1 tile of the point of impact gets knocked down and dazed.
-		for(var/mob/living/L in range(1, impact_turf))
-			if(L == boar)
+		for(var/mob/living/nearby_mob in range(1, impact_turf))
+			if(nearby_mob == boar)
 				continue
-			L.visible_message("<span class='warning'>The shockwave from [boar]'s impact knocks [L] off their feet!</span>")
-			L.Knockdown(3 SECONDS)
-			L.apply_status_effect(/datum/status_effect/debuff/dazed)
-			L.adjustBruteLoss(20)
+			nearby_mob.visible_message("<span class='warning'>The shockwave from [boar]'s impact knocks [nearby_mob] off their feet!</span>")
+			nearby_mob.Knockdown(3 SECONDS)
+			nearby_mob.apply_status_effect(/datum/status_effect/debuff/dazed)
+			nearby_mob.adjustBruteLoss(20)
 	if(!did_hit)
 		var/attempts = controller.blackboard[BB_BOAR_CHARGE_ATTEMPTS]
 		if(attempts < 1)

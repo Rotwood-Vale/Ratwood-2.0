@@ -97,13 +97,13 @@ SUBSYSTEM_DEF(hunting)
 	var/amount_to_respawn = max(1, round(active_spawners.len * 0.25))
 
 	for(var/i in 1 to amount_to_respawn)
-		var/obj/effect/landmark/hunting_spawner/JS = pick(active_spawners)
-		if(!JS || QDELETED(JS))
-			active_spawners -= JS
+		var/obj/effect/landmark/hunting_spawner/spawner = pick(active_spawners)
+		if(!spawner || QDELETED(spawner))
+			active_spawners -= spawner
 			continue
 
-		//to_chat(world, span_alert("SSHunting: Spawning new trail at [JS.x], [JS.y]."))
-		JS.respawn_trail()
+		//to_chat(world, span_alert("SSHunting: Spawning new trail at [spawner.x], [spawner.y]."))
+		spawner.respawn_trail()
 
 /datum/controller/subsystem/hunting/Initialize()
 	. = ..()

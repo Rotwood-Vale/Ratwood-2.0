@@ -12,13 +12,17 @@
 	var/max_search_attempts = 9
 	/// List of area types this trail is allowed to move into
 	var/list/linked_areas = list()
+	/// Visual style pool for undiscovered tracks
 	var/static/list/track_types = list("cervine", "small", "ursine", "canine", "suidae")
+	/// Icon state locked in once the track's animal is decided
 	var/locked_track_icon = null
+	/// Whether this track has already been uncovered
 	var/track_revealed = FALSE
 	/// Hunt leader or solo hunter
 	var/datum/weakref/hunter_ref
 	/// For group hunts
 	var/list/datum/weakref/party_refs = list()
+	/// Per-client images shown to party members when this track is hidden from everyone else
 	var/list/image/party_images = list()
 
 	/// The specific animal that will spawn at the end
@@ -31,7 +35,9 @@
 	var/datum/hunting_category/preferred_hunt
 	/// Hunting map influences
 	var/datum/hunting_category/secret_map_influence
+	/// Whether the secret map influence has already been rolled for this chain
 	var/influence_attempted = FALSE
+	/// Direction the trail continues towards, once revealed
 	var/track_dir
 
 /obj/effect/hunting_track/examine(mob/user)
@@ -54,11 +60,11 @@
 
 	// Skill 5+ shows area efficiency
 	if(skill >= 5)
-		var/area/A = get_area(src)
-		var/bonus = hunt_category?.preferred_areas[A.type]
+		var/area/current_area = get_area(src)
+		var/bonus = hunt_category?.preferred_areas[current_area.type]
 		if(bonus)
 			. += "<br><details><summary><span class='nicegreen'>Environmental Analysis</span></summary>"
-			. += span_info("The local terrain ([A.name]) increases discovery chances by <b>[bonus]%</b>.")
+			. += span_info("The local terrain ([current_area.name]) increases discovery chances by <b>[bonus]%</b>.")
 			. += "</details>"
 
 /obj/effect/hunting_track/attack_right(mob/user)
@@ -70,14 +76,14 @@
 		to_chat(user, span_warning("You aren't skilled enough to influence the trail."))
 		return
 
-	var/area/A = get_area(src)
+	var/area/current_area = get_area(src)
 	var/list/valid_cats = list()
 
 	// Find categories that actually like this specific area
 	for(var/cat_type in subtypesof(/datum/hunting_category))
-		var/datum/hunting_category/C = new cat_type()
-		if(C.preferred_areas[A.type] > 0)
-			valid_cats[C.name] = C
+		var/datum/hunting_category/category = new cat_type()
+		if(category.preferred_areas[current_area.type] > 0)
+			valid_cats[category.name] = category
 
 	if(!valid_cats.len)
 		to_chat(user, span_warning("The local environment doesn't favor any specific prey enough to track."))
@@ -107,35 +113,29 @@
 	// Make the physical object invisible to everyone else
 	invisibility = INVISIBILITY_MAXIMUM
 
-	for(var/datum/weakref/W in party_refs)
-		var/mob/living/L = W.resolve()
-		if(!L?.client)
+	for(var/datum/weakref/party_weakref in party_refs)
+		var/mob/living/party_member = party_weakref.resolve()
+		if(!party_member?.client)
 			continue
-		var/image/I = image(icon, src, icon_state, layer)
-		I.color = src.color
-		I.pixel_x = src.pixel_x
-		I.pixel_y = src.pixel_y
-		I.transform = src.transform
+		var/image/track_image = image(icon, src, icon_state, layer)
+		track_image.color = color
+		track_image.pixel_x = pixel_x
+		track_image.pixel_y = pixel_y
+		track_image.transform = transform
 		// Add to client and our local tracker
-		L.client.images += I
-		party_images += I
+		party_member.client.images += track_image
+		party_images += track_image
 
 /obj/effect/hunting_track/attack_hand(mob/living/user)
 	if(track_revealed)
 		return
 
 	if(trail_depth == 0)
-		var/datum/component/hunting_blocker/B = user.GetComponent(/datum/component/hunting_blocker)
-		if(!B)
-			B = user.AddComponent(/datum/component/hunting_blocker)
-		if(!B.can_start_hunt())
+		var/datum/component/hunting_blocker/blocker = user.GetComponent(/datum/component/hunting_blocker)
+		if(!blocker)
+			blocker = user.AddComponent(/datum/component/hunting_blocker)
+		if(!blocker.can_start_hunt())
 			return
-
-	// var/mob/living/H = hunter_ref?.resolve()
-
-	// // Just in case anyone finds an invisible track somehow, this way they can't mess up someone's trail.
-	// if(H && user != H)
-	// 	return
 
 	if(get_dist(user, src) < 1)
 		to_chat(user, span_warning("You are standing too close to see where the trail leads. Step back."))
@@ -156,18 +156,17 @@
 		distribute_party_exp(6)
 		track_revealed = TRUE
 		fade_and_die(user)
-		//qdel(src)
 		if(trail_depth == 0)
-			var/datum/component/hunting_blocker/B = user.GetComponent(/datum/component/hunting_blocker)
-			B?.register_hunt()
+			var/datum/component/hunting_blocker/blocker = user.GetComponent(/datum/component/hunting_blocker)
+			blocker?.register_hunt()
 	else
 		to_chat(user, span_warning("The trail seems to disappear into the brush here."))
 
 /obj/effect/hunting_track/proc/uncover_trail(mob/living/user)
 	var/skill = process_party_and_get_skill()
 
-	var/base_dx = clamp(src.x - user.x, -1, 1)
-	var/base_dy = clamp(src.y - user.y, -1, 1)
+	var/base_dx = clamp(x - user.x, -1, 1)
+	var/base_dy = clamp(y - user.y, -1, 1)
 
 	if(!base_dx && !base_dy)
 		base_dy = 1
@@ -195,18 +194,18 @@
 		var/p_dy = pattern[2]
 		for(var/i in 1 to max_search_attempts)
 			var/target_dist = base_dist + rand(0, 2)
-			var/target_x = src.x + (p_dx * target_dist) + rand(-deviation, deviation)
-			var/target_y = src.y + (p_dy * target_dist) + rand(-deviation, deviation)
-			var/turf/T = locate(target_x, target_y, src.z)
+			var/target_x = x + (p_dx * target_dist) + rand(-deviation, deviation)
+			var/target_y = y + (p_dy * target_dist) + rand(-deviation, deviation)
+			var/turf/next_turf = locate(target_x, target_y, z)
 
-			if(!T)
+			if(!next_turf)
 				continue
 
-			for(var/turf/step in get_line(src, T))
+			for(var/turf/step in get_line(src, next_turf))
 				if(step.density)
 					continue
 
-			if(validate_turf(T))
+			if(validate_turf(next_turf))
 				// Let's make sure tracks replenish themselves eventually.
 				if(trail_depth == 0 && !(locate(/obj/effect/landmark/hunting_spawner) in get_turf(src)))
 					new /obj/effect/landmark/hunting_spawner(get_turf(src))
@@ -216,33 +215,32 @@
 					initialize_hunt_group(user)
 					initialize_hunt_chain(user)
 				//Reveal THIS track before moving on
-				reveal_track(T)
+				reveal_track(next_turf)
 
 				// Spawn Animal if depth reached
 				if(trail_depth >= max_trail_depth)
 					to_chat(user, span_boldwarning("You see your quarry in the distance faintly!"))
-					var/mob/living/L = target_animal_type
-					var/chosen_rot = initial(L.rot_type) ? /datum/component/rot/simple : null
-					new /obj/effect/temp_visual/hunting_phantom(T, target_animal_type, chosen_rot)
-					var/bonus_spawned = spawn_group_bonus_animals(T, target_animal_type)
+					var/mob/living/example_animal = target_animal_type
+					var/chosen_rot = initial(example_animal.rot_type) ? /datum/component/rot/simple : null
+					new /obj/effect/temp_visual/hunting_phantom(next_turf, target_animal_type, chosen_rot)
+					var/bonus_spawned = spawn_group_bonus_animals(next_turf, target_animal_type)
 					if(bonus_spawned)
 						visible_message(span_boldwarning("There seems to be a herd in the distance!"))
 					distribute_party_exp(35 + (15 * bonus_spawned))
 					return TRUE
 
 				//Spawn the NEXT hidden mound
-				var/obj/effect/hunting_track/next_trail = new(T)
-				next_trail.party_refs = src.party_refs.Copy()
-				next_trail.hunter_ref = src.hunter_ref
-				next_trail.trail_depth = src.trail_depth + 1
-				next_trail.max_trail_depth = src.max_trail_depth
-				next_trail.target_animal_type = src.target_animal_type
-				next_trail.hunt_category = src.hunt_category
-				next_trail.locked_track_icon = src.locked_track_icon
-				next_trail.linked_areas = src.linked_areas
+				var/obj/effect/hunting_track/next_trail = new(next_turf)
+				next_trail.party_refs = party_refs.Copy()
+				next_trail.hunter_ref = hunter_ref
+				next_trail.trail_depth = trail_depth + 1
+				next_trail.max_trail_depth = max_trail_depth
+				next_trail.target_animal_type = target_animal_type
+				next_trail.hunt_category = hunt_category
+				next_trail.locked_track_icon = locked_track_icon
+				next_trail.linked_areas = linked_areas
 				next_trail.color = "#ff9100"
 
-				next_trail.linked_areas = src.linked_areas
 				next_trail.plane = GAME_PLANE_HIGHEST
 				next_trail.setup_hunter_visibility()
 				return TRUE
@@ -250,22 +248,22 @@
 
 /obj/effect/hunting_track/proc/initialize_hunt_group(mob/living/revealer)
 	var/list/potential_party = list(revealer)
-	for(var/mob/living/L in range(5, src))
-		if(L.stat == DEAD || !L.mind)
+	for(var/mob/living/nearby_mob in range(5, src))
+		if(nearby_mob.stat == DEAD || !nearby_mob.mind)
 			continue
-		potential_party |= L
+		potential_party |= nearby_mob
 
 	var/mob/living/best_hunter
 	var/highest_skill = -1
 
 	// 2. Determine leader and store all as weakrefs
-	for(var/mob/living/L in potential_party)
-		var/L_skill = L.get_skill_level(/datum/skill/misc/hunting)
-		if(L_skill > highest_skill)
-			highest_skill = L_skill
-			best_hunter = L
+	for(var/mob/living/party_member in potential_party)
+		var/member_skill = party_member.get_skill_level(/datum/skill/misc/hunting)
+		if(member_skill > highest_skill)
+			highest_skill = member_skill
+			best_hunter = party_member
 
-		party_refs |= WEAKREF(L)
+		party_refs |= WEAKREF(party_member)
 
 	hunter_ref = WEAKREF(best_hunter)
 
@@ -277,19 +275,19 @@
 	var/mob/living/current_leader
 	var/list/valid_party = list()
 
-	for(var/datum/weakref/W in party_refs)
-		var/mob/living/L = W.resolve()
+	for(var/datum/weakref/party_weakref in party_refs)
+		var/mob/living/party_member = party_weakref.resolve()
 		// Cleanup: Remove if deleted, dead, or further than 9 tiles from THIS track
-		if(!L || L.stat == DEAD || get_dist(src, L) > 9)
+		if(!party_member || party_member.stat == DEAD || get_dist(src, party_member) > 9)
 			continue
 
-		valid_party |= W
+		valid_party |= party_weakref
 
 		// Determine who the best hunter CURRENTLY at the track is
-		var/L_skill = L.get_skill_level(/datum/skill/misc/hunting)
-		if(L_skill >= highest_skill)
-			highest_skill = L_skill
-			current_leader = L
+		var/member_skill = party_member.get_skill_level(/datum/skill/misc/hunting)
+		if(member_skill >= highest_skill)
+			highest_skill = member_skill
+			current_leader = party_member
 
 	// Update the track's state
 	party_refs = valid_party
@@ -300,18 +298,18 @@
 /obj/effect/hunting_track/proc/distribute_party_exp(base_amount)
 	var/mob/living/leader = hunter_ref?.resolve()
 
-	for(var/datum/weakref/W in party_refs)
-		var/mob/living/L = W.resolve()
-		if(!L || L.stat == DEAD || !L.mind)
+	for(var/datum/weakref/party_weakref in party_refs)
+		var/mob/living/party_member = party_weakref.resolve()
+		if(!party_member || party_member.stat == DEAD || !party_member.mind)
 			continue
 
-		var/hunting_exp_modifier = max(1 + ((L.STAINT - 10) / 10), 0.1)
+		var/hunting_exp_modifier = max(1 + ((party_member.STAINT - 10) / 10), 0.1)
 		var/final_amount = base_amount
 
 		// If they aren't the leader, they get less
-		if(L != leader)
+		if(party_member != leader)
 			final_amount *= 0.7
-		L.mind.add_sleep_experience(/datum/skill/misc/hunting, final_amount * hunting_exp_modifier)
+		party_member.mind.add_sleep_experience(/datum/skill/misc/hunting, final_amount * hunting_exp_modifier)
 
 /obj/effect/hunting_track/proc/reveal_track(turf/target_turf)
 	// Pick a random visual style
@@ -329,30 +327,30 @@
 
 	// Calculate rotation
 	var/direction = get_dir(src, target_turf)
-	src.track_dir = direction
+	track_dir = direction
 	var/angle = dir2angle(direction)
 
 	// Apply rotation via matrix (assumes tracks point North/Up by default)
-	var/matrix/M = matrix()
-	M.Turn(angle)
-	transform = M
+	var/matrix/rotation_matrix = matrix()
+	rotation_matrix.Turn(angle)
+	transform = rotation_matrix
 
-/obj/effect/hunting_track/proc/validate_turf(turf/T)
-	if(!T || T.density)
+/obj/effect/hunting_track/proc/validate_turf(turf/check_turf)
+	if(!check_turf || check_turf.density)
 		return FALSE
-	if(istransparentturf(T))
+	if(istransparentturf(check_turf))
 		return FALSE
-	for(var/turf/nearby in range(1, T))
+	for(var/turf/nearby in range(1, check_turf))
 		if(istype(nearby, /turf/open/water))
 			return FALSE
 	// Check for wall-like objects
-	if(T.is_blocked_turf())
+	if(check_turf.is_blocked_turf())
 		return FALSE
 	// Area persistence check
-	var/area/A = get_area(src)
-	var/area/target_A = get_area(T)
+	var/area/current_area = get_area(src)
+	var/area/target_area = get_area(check_turf)
 
-	if(target_A == A || (target_A.type in linked_areas))
+	if(target_area == current_area || (target_area.type in linked_areas))
 		return TRUE
 	return FALSE
 
@@ -367,8 +365,8 @@
 
 /obj/effect/hunting_track/proc/initialize_hunt_chain(mob/living/user)
 	var/skill = user.get_skill_level(/datum/skill/misc/hunting)
-	var/area/A = get_area(src)
-	src.linked_areas = SShunting.get_linked_areas(A.type)
+	var/area/current_area = get_area(src)
+	linked_areas = SShunting.get_linked_areas(current_area.type)
 
 	// Calculate total tracks needed: 10 base, minus 1 for each level above 3
 	max_trail_depth = clamp(max_trail_depth - (max(0, skill - 3)), 5, max_trail_depth)
@@ -378,16 +376,16 @@
 		hunt_category = new secret_map_influence()
 	else
 		for(var/cat_type in subtypesof(/datum/hunting_category))
-			var/datum/hunting_category/C = new cat_type()
-			var/weight = C.skill_weights[skill + 1]
+			var/datum/hunting_category/category = new cat_type()
+			var/weight = category.skill_weights[skill + 1]
 
 			// Exact type matching for area bonus to avoid using subtypes
-			var/area_bonus = C.preferred_areas[A.type]
+			var/area_bonus = category.preferred_areas[current_area.type]
 			if(area_bonus)
 				weight *= (1 + (area_bonus / 100))
 
 			// Right-click preference boost
-			if(preferred_hunt && C.type == preferred_hunt.type)
+			if(preferred_hunt && category.type == preferred_hunt.type)
 				var/boost = 1.0
 				switch(skill)
 					if(4)
@@ -398,7 +396,7 @@
 						boost = 2.0
 				weight *= boost
 			if(weight > 0)
-				cat_weights[C] = weight
+				cat_weights[category] = weight
 
 	if(!cat_weights.len && !hunt_category) // Emergency fallback
 		hunt_category = new /datum/hunting_category/low_tier()
@@ -413,25 +411,25 @@
 	else
 		locked_track_icon = pick(track_types)
 
-/obj/effect/hunting_track/proc/spawn_group_bonus_animals(turf/T, target_path)
+/obj/effect/hunting_track/proc/spawn_group_bonus_animals(turf/origin_turf, target_path)
 	if(!hunt_category || !target_path)
 		return
 
 	var/mob/living/leader = hunter_ref?.resolve()
 	var/spawned_count = 0
 	var/list/valid_hunters = list()
-	for(var/datum/weakref/W in party_refs)
-		var/mob/living/L = W.resolve()
-		if(!L || L.stat == DEAD || L == leader)
+	for(var/datum/weakref/party_weakref in party_refs)
+		var/mob/living/party_member = party_weakref.resolve()
+		if(!party_member || party_member.stat == DEAD || party_member == leader)
 			continue
-		valid_hunters += L
+		valid_hunters += party_member
 	if(!valid_hunters.len)
 		return 0
 
 	var/group_bonus = valid_hunters.len * 10 // Flat 10% per person
 	var/list/nearby_turfs = list()
 	for(var/dir in GLOB.alldirs)
-		var/turf/neighbor = get_step(T, dir)
+		var/turf/neighbor = get_step(origin_turf, dir)
 		if(validate_turf(neighbor))
 			nearby_turfs += neighbor
 
@@ -441,7 +439,7 @@
 		var/skill = hunter.get_skill_level(/datum/skill/misc/hunting)
 		var/success_chance = clamp(((skill + 1) * 20) + group_bonus, 0, 100)
 		if(prob(success_chance))
-			var/turf/spawn_turf = (nearby_turfs.len) ? pick(nearby_turfs) : T
+			var/turf/spawn_turf = (nearby_turfs.len) ? pick(nearby_turfs) : origin_turf
 			var/bonus_type = pickweight(hunt_category.animals)
 			var/mob/living/example_mob = bonus_type
 			var/chosen_rot = initial(example_mob.rot_type) ? /datum/component/rot/simple : null
@@ -455,17 +453,17 @@
 
 	// Iterate backwards through the image list for safety while deleting
 	for(var/i in party_images.len to 1 step -1)
-		var/image/I = party_images[i]
-		if(!I)
+		var/image/party_image = party_images[i]
+		if(!party_image)
 			continue
 
 		// Remove from every client in the party
-		for(var/datum/weakref/W in party_refs)
-			var/mob/living/L = W.resolve()
-			if(L?.client)
-				L.client.images -= I
+		for(var/datum/weakref/party_weakref in party_refs)
+			var/mob/living/party_member = party_weakref.resolve()
+			if(party_member?.client)
+				party_member.client.images -= party_image
 
 		// Explicitly qdel the image object to avoid hard deletes
-		qdel(I)
+		qdel(party_image)
 
 	party_images.Cut()

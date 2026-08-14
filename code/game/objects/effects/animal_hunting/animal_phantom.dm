@@ -6,12 +6,12 @@
 	plane = GAME_PLANE
 	alpha = 50
 	anchored = TRUE
+	duration = 20 SECONDS
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/mob_type_to_spawn
 	var/spawn_delay = 15 SECONDS
 	var/rot_path
 	var/list/target_factions
-	duration = 20 SECONDS
-	mouse_opacity = MOUSE_OPACITY_ICON
 
 /obj/effect/temp_visual/hunting_phantom/Initialize(mapload, target_mob_path, target_rot)
 	. = ..()
@@ -21,11 +21,11 @@
 	mob_type_to_spawn = target_mob_path
 	rot_path = target_rot
 	var/mob/living/path_cast = target_mob_path
-	src.icon = initial(path_cast.icon)
-	src.icon_state = initial(path_cast.icon_state)
-	src.pixel_x = initial(path_cast.pixel_x)
-	src.pixel_y = initial(path_cast.pixel_y)
-	src.color = "#777777"
+	icon = initial(path_cast.icon)
+	icon_state = initial(path_cast.icon_state)
+	pixel_x = initial(path_cast.pixel_x)
+	pixel_y = initial(path_cast.pixel_y)
+	color = "#777777"
 	appear_and_wait()
 
 /obj/effect/temp_visual/hunting_phantom/proc/appear_and_wait()
@@ -34,13 +34,13 @@
 	addtimer(CALLBACK(src, PROC_REF(finalize_spawn)), spawn_delay)
 
 /obj/effect/temp_visual/hunting_phantom/proc/finalize_spawn()
-	var/turf/T = get_turf(src)
-	if(T)
-		var/mob/living/real_mob = new mob_type_to_spawn(T)
+	var/turf/spawn_turf = get_turf(src)
+	if(spawn_turf)
+		var/mob/living/real_mob = new mob_type_to_spawn(spawn_turf)
 		if(rot_path)
 			real_mob.rot_type = rot_path
 		real_mob.faction |= "hunting_ambush"
 
-		T.visible_message(span_boldwarning("The [real_mob.name] lunges out from the shadows!"))
-		playsound(T, 'sound/items/seedextract.ogg', 100, TRUE)
+		spawn_turf.visible_message(span_boldwarning("The [real_mob.name] lunges out from the shadows!"))
+		playsound(spawn_turf, 'sound/items/seedextract.ogg', 100, TRUE)
 	qdel(src)
