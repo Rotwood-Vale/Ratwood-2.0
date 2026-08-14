@@ -46,7 +46,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-	backr = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	r_hand = /obj/item/storage/meatbag
 	backpack_contents = list(
@@ -59,7 +60,7 @@
 				/obj/item/hunting_map/boars = 1,
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
@@ -155,7 +156,7 @@
 				/obj/item/rogueweapon/stoneaxe/handaxe = 1,
 				)
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey

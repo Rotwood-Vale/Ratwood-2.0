@@ -68,6 +68,20 @@
 
 /datum/config_entry/flag/log_attack	// log attack messages
 
+/datum/config_entry/flag/disable_memory_stats	// disables periodic memory usage logging (SSmemory_stats) and the statpanel memory readouts. Absent = enabled.
+
+/datum/config_entry/flag/memory_stats_sorted_init	// sorts mapload atom init by type so per-type memory attribution is exact. Changes atom init order - profiling runs only.
+
+/datum/config_entry/flag/disable_memory_stats/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		SSmemory_stats?.can_fire = !config_entry_value
+
+/datum/config_entry/flag/disable_memory_stats/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && var_name == NAMEOF(src, config_entry_value))
+		SSmemory_stats?.can_fire = !config_entry_value
+
 /datum/config_entry/flag/log_emote	// log emotes
 
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
@@ -506,3 +520,26 @@
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
+/// The minimum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_minimum_tallies
+	default = 1
+	min_val = 0
+	max_val = 50
+
+/// The flat amount all maps get by default
+/datum/config_entry/number/map_vote_flat_bonus
+	default = 5
+	min_val = 0
+	max_val = INFINITY
+
+/// The maximum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_maximum_tallies
+	default = 200
+	min_val = 0
+	max_val = INFINITY
+
+/// The number of tallies that are carried over between rounds.
+/datum/config_entry/number/map_vote_tally_carryover_percentage
+	default = 100
+	min_val = 0
+	max_val = 100

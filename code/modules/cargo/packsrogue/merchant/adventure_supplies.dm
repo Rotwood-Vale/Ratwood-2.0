@@ -140,7 +140,7 @@
 					/obj/item/ration,
 				)
 
-/datum/supply_pack/rogue/adventure_supplies/rationpaper
+/datum/supply_pack/rogue/adventure_supplies/rollofbandages
 	name = "Roll of bandages"
 	cost = 25
 	contains = list(/obj/item/natural/bundle/cloth/bandage/full)

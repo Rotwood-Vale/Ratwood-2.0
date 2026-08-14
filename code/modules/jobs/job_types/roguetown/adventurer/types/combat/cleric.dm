@@ -10,8 +10,8 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(
-		STATKEY_WIL = 3,
-		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -62,7 +62,7 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
-	
+
 	// Ascendant symbols go into the backpack, so you don't get insta-found out.
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -71,7 +71,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -244,7 +244,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
@@ -494,7 +494,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)

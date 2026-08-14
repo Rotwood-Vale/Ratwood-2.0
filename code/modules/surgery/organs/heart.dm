@@ -174,7 +174,7 @@
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = max(H.blood_volume - blood_loss, 0)
+				H.set_blood_volume(max(H.get_blood_volume() - blood_loss, 0))
 				to_chat(H, span_danger("I have to keep pumping my blood!"))
 				if(add_colour)
 					H.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
@@ -211,7 +211,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				H.set_blood_volume(min(H.get_blood_volume() + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM))
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				H.adjustBruteLoss(-cursed_heart.heal_brute)

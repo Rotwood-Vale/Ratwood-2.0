@@ -45,7 +45,7 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/clothing/ring/silver
 	beltl = /obj/item/rogueweapon/sword/sabre/dec
-	l_hand = /obj/item/rogueweapon/scabbard/sword
+	l_hand = /obj/item/rogueweapon/scabbard/sword/noble
 	if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/half/red
 		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/red
@@ -146,7 +146,7 @@
 			if("Longsword")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/long
-				r_hand = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/rogueweapon/scabbard/sword/noble
 			if("Mace + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -220,7 +220,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/huntingknife = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/armor_brush = 1, /obj/item/polishing_cream = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/huntingknife = 1, /obj/item/rogueweapon/scabbard/sheath/noble = 1)
 	if(H.mind)
 		var/armors = list("Light Armor","Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "HOW WILL YOU LOOK WHEN YOU DIE") as anything in armors
@@ -241,10 +241,10 @@
 		var/weapon_choice = input(H, "Choose your weapon.", "WHAT WILL YOU SWING BEFORE DEATH") as anything in weapons
 		switch(weapon_choice)
 			if("Arming Sword")
-				backl = /obj/item/rogueweapon/scabbard/sword
+				backl = /obj/item/rogueweapon/scabbard/sword/noble
 				r_hand = /obj/item/rogueweapon/sword/iron
 			if("Shortsword + Shield")
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/rogueweapon/scabbard/sword/noble
 				backl = /obj/item/rogueweapon/shield/wood
 				r_hand = /obj/item/rogueweapon/sword/short/iron
 			if("Bow & Arrow")
