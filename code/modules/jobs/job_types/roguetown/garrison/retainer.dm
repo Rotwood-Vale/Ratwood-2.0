@@ -1,4 +1,4 @@
-/datum/job/roguetown/retainer
+/datum/job/roguetown/baron_retainer
 	title = "Retainer"
 	department_flag = GARRISON
 	faction = "Station"
@@ -11,25 +11,25 @@
 	tutorial = "You hold the trust and responsibility of being the baron's closest confidant. You are tasked with protecting the baron and advising him on any matter he deems necessary. You enjoy the benefits of living in relative luxury and the status that comes with your position, although the higher nobility of the keep look down on you as a minor functionary."
 	display_order = JDO_RETAINER
 	whitelist_req = TRUE
-	outfit = /datum/outfit/job/roguetown/retainer
+	outfit = /datum/outfit/job/roguetown/baron_retainer
 	advclass_cat_rolls = list(CTAG_RETAINER = 20)
 	give_bank_account = 30
 	min_pq = 6
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_subclasses = list(/datum/advclass/retainer/henchman, /datum/advclass/retainer/ronin, /datum/advclass/retainer/greyleaf)
+	job_subclasses = list(/datum/advclass/baron_retainer/henchman, /datum/advclass/baron_retainer/ronin, /datum/advclass/baron_retainer/greyleaf)
 
-/datum/outfit/job/roguetown/retainer
+/datum/outfit/job/roguetown/baron_retainer
 	job_bitflag = BITFLAG_GARRISON
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
 
-/datum/advclass/retainer/henchman
+/datum/advclass/baron_retainer/henchman
 	name = "Henchman"
 	tutorial = "A brute to back up the baron whenever needed, actions speak louder than words and you are the embodiment of this saying."
-	outfit = /datum/outfit/job/roguetown/retainer/henchman
+	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 2)
@@ -50,7 +50,7 @@
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/retainer/henchman/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/baron_retainer/henchman/pre_equip(mob/living/carbon/human/H)
 	..()
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
@@ -87,10 +87,10 @@
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 
-/datum/advclass/retainer/ronin
+/datum/advclass/baron_retainer/ronin
 	name = "Ronin"
 	tutorial = "Trained in the ways of Kazengun's warrior philosophers, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
-	outfit = /datum/outfit/job/roguetown/retainer/ronin
+	outfit = /datum/outfit/job/roguetown/baron_retainer/ronin
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_DUALWIELDER)
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4)
@@ -104,12 +104,12 @@
 	)
 
 // Ronin subclass requires the character to be from Kazengun
-/datum/advclass/retainer/ronin/check_requirements(mob/living/carbon/human/H)
+/datum/advclass/baron_retainer/ronin/check_requirements(mob/living/carbon/human/H)
 	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
 		return FALSE
 	return ..()
 
-/datum/outfit/job/roguetown/retainer/ronin/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/baron_retainer/ronin/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
@@ -125,10 +125,10 @@
 	backl = /obj/item/rogueweapon/scabbard/sword/kazengun
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath/kazengun = 1)
 
-/datum/advclass/retainer/greyleaf
+/datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
 	tutorial = "Honorably discharged from the warden corps, you have found new purpose in protecting the baron from the shadows and advising him on matters of Lowtown as someone who has shed blood to protect it."
-	outfit = /datum/outfit/job/roguetown/retainer/greyleaf
+	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 2, STATKEY_PER = 3)
@@ -146,7 +146,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
 
-/datum/outfit/job/roguetown/retainer/greyleaf/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/baron_retainer/greyleaf/pre_equip(mob/living/carbon/human/H)
 	..()
 	mask = /obj/item/clothing/head/roguetown/roguehood/warden/antler
 	cloak = /obj/item/clothing/cloak/wardencloak
