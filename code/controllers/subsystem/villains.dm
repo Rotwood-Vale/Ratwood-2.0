@@ -119,8 +119,7 @@
 		. += (stats[key] - 10) * statweight(key)
 
 /datum/antag_setup/proc/open_menu()
-	var/contents = "<center><b>TAKE UP ARMS</b><BR>"
-	contents += "Points remaining: [budget - statspent()]</center><BR>"
+	var/contents = "Points remaining: [budget - statspent()]</center><BR>"
 	contents += "--------------<BR>"
 	for(var/key in stat_keys)
 		contents += "<b>[capitalize(key)]</b> ([statweight(key)]x): [stats[key]] "
