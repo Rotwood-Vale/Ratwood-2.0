@@ -12089,7 +12089,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "mage"
+	lockid = "tower"
 	},
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "horzw"
@@ -24883,11 +24883,6 @@
 "frw" = (
 /turf/closed/wall/mineral/rogue/pipe/joint,
 /area/rogue/indoors/inq)
-"frx" = (
-/obj/structure/fluff/walldeco/mageguild2,
-/obj/structure/arcyne_wall,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/magician/rockhill)
 "fry" = (
 /obj/structure/fluff/walldeco/innsign{
 	alpha = 200;
@@ -70919,6 +70914,10 @@
 /obj/structure/curtain/blue{
 	color = "#415e96"
 	},
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "mage"
+	},
 /turf/open/floor/rogue/greenstone/runed,
 /area/rogue/indoors/town/magician/rockhill)
 "pCJ" = (
@@ -93856,7 +93855,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wcv";
 	locked = 1;
-	lockid = "mage"
+	lockid = "tower"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/magician/rockhill)
@@ -97433,6 +97432,10 @@
 "vCc" = (
 /obj/structure/curtain/blue{
 	color = "#415e96"
+	},
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "mage"
 	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/magician/rockhill)
@@ -608982,7 +608985,7 @@ mRr
 mRr
 bFA
 bFA
-frx
+lGu
 uNQ
 ibP
 ibP
