@@ -765,6 +765,7 @@
 
 //This is awful and I apologise.
 /obj/item/rogueweapon/spear/keep_standard/attack_self(mob/living/user)
+	..()
 	if(secondary_tag)
 		if(wielded)
 			detail_tag = "_det1"
@@ -774,7 +775,6 @@
 			detail_tag = "_det"
 			update_icon()
 			user.update_inv_hands()
-	..()
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()
@@ -784,9 +784,10 @@
 	if(active_item)
 		return
 	active_item = TRUE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
 		user.change_stat(STATKEY_LCK, 3)
+		user.change_stat(STATKEY_PER, 2)
 		user.add_stress(/datum/stressevent/keep_standard)
 		ADD_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)//KEEP AT IT!!
 		ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)//AND KEEP UP!!!
@@ -806,9 +807,10 @@
 	if(!active_item)
 		return
 	active_item = FALSE
-	if(user.job == "Man at Arms")
+	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
 		user.change_stat(STATKEY_LCK, -3)
+		user.change_stat(STATKEY_PER, -2)
 		user.remove_stress(/datum/stressevent/keep_standard)
 		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
 		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

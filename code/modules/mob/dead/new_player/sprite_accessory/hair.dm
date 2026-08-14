@@ -578,6 +578,10 @@
 	name = "Ponytail (Witcher)"
 	icon_state = "ponytail_witcher"
 
+/datum/sprite_accessory/hair/head/ponytailwitcheralt
+	name = "Ponytail (Witcher Alt)"
+	icon_state = "ponytail_witcheralt"
+
 /datum/sprite_accessory/hair/head/fringetail
 	name = "Ponytail (Fringe)"
 	icon_state = "fringetail"
@@ -1718,6 +1722,14 @@
 	name = "Sodden"
 	icon_state = "sodden"
 
+/datum/sprite_accessory/hair/head/indigozap
+	name = "Reckless"
+	icon_state = "indigo_zap"
+
+/datum/sprite_accessory/hair/head/rainbowdash
+	name = "Loyal"
+	icon_state = "rainbow_dash"
+	
 /datum/sprite_accessory/hair/head/renard
 	name = "Renard"
 	icon_state = "renard"

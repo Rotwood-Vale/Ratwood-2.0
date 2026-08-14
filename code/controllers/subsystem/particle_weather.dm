@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(ParticleWeather)
 		if (prob(probability) && (target_trait in GLOB.vanderlin_weather)) //TODO VANDERLIN: Map trait this.
 			LAZYINITLIST(elligble_weather)
 			elligble_weather[W] = probability
-	switch(SSmapping.config.map_name)
+	switch(SSmapping.current_map.map_name)
 		if("Rockhill")
 			selected_forecast = new /datum/forecast/rockhill()
 		if("Dun World")

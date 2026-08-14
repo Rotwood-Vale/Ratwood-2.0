@@ -153,6 +153,7 @@
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armor_penetration))
 			P.on_hit(src, 100, def_zone)
+			P.handle_drop()
 			return BULLET_ACT_HIT
 
 	retaliate(P.firer)
@@ -659,7 +660,18 @@
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG,
 	)
-	for(var/body_zone in body_zones)
+	// this is done to avoid showing the taur part twice since there's two legs
+	var/static/list/taur_zones = list(
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_TAUR
+	)
+	var/list/zones_to_check = body_zones
+	if(get_taur_tail())
+		zones_to_check = taur_zones
+	for(var/body_zone in zones_to_check)
 		var/obj/item/bodypart/bodypart = get_bodypart(body_zone)
 		if(!bodypart)
 			examination += span_info("☼ [capitalize(parse_zone(body_zone))]: <span class='deadsay'><b>MISSING</b></span>")
@@ -758,6 +770,10 @@
 			examination += span_biginfo("- Actions take more stamina")
 			examination += span_biginfo("- Stamina recovery takes twice as long")
 			examination += span_danger("- Risk of heatstroke after prolonged exposure")
+
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		examination += span_biginfo("It is warm here. It refreshes and heals me.")
 
 	examination += "ø ------------ ø</span>"
 

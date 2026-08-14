@@ -43,12 +43,13 @@
 	flag = "magic"
 	light_color = "#ffffff"
 	light_outer_range = 7
+	var/bypass_antimagic = FALSE
 
 /obj/projectile/magic/lightning/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(!bypass_antimagic && M.anti_magic_check())
 			visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
 			qdel(src)
@@ -56,7 +57,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			L.Immobilize(0.5 SECONDS)
-			L.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
+			L.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			L.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 			L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
 	qdel(src)

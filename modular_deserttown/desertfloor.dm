@@ -3,10 +3,10 @@
 	desc = "Its course and rough, and it gets everywhere."
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
 	icon_state = "dune1"
-	footstep = FOOTSTEP_SAND
-	//barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	footstep = FOOTSTEP_CARPET
+	barefootstep = FOOTSTEP_SOFT_BAREFOOT
+	clawfootstep = FOOTSTEP_SOFT_BAREFOOT
+	heavyfootstep = FOOTSTEP_SOFT_BAREFOOT
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(

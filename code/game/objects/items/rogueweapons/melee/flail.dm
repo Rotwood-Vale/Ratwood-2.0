@@ -41,6 +41,8 @@
 
 /datum/intent/flail/strike/matthiosflail
 	reach = 2
+	damfactor = 1.3 // More damage than peasant flail, not sure why the gilded one had worse intents before, but here we are!
+
 
 /datum/intent/flail/strikerange
 	name = "ranged strike"
@@ -74,6 +76,7 @@
 
 /datum/intent/mace/smash/flail/matthiosflail
 	reach = 2
+	damfactor = 1.6 // so it's better than the militia counterpart.
 
 /datum/intent/mace/smash/flail/militia
 	damfactor = 0.9
@@ -262,7 +265,7 @@
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
-
+	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
@@ -276,3 +279,14 @@
 	force = 27
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogueweapon/flail/blacksteel
+	name = "blacksteel flail"
+	icon_state = "bs_flail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
+	desc = "An elegant flail of blacksteel. The heftsome weight makes it unmatched for driving back plate-armored opponents, so long as one \
+	has the stamina to swing its alloyed chains around."
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 250
+	minstr = 12
+	force = 35

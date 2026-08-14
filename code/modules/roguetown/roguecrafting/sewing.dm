@@ -981,6 +981,15 @@
 	craftdiff = 3
 	sellprice = 5
 
+/datum/crafting_recipe/roguetown/sewing/sailorshirt_colored
+	name = "striped shirt (colorable)"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored)
+	reqs = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+	sellprice = 5
+
 /datum/crafting_recipe/roguetown/sewing/grenzelpants
 	name = "grenzelhoftian paumpers"
 	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants)

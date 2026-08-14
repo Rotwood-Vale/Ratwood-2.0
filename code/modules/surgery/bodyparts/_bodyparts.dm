@@ -181,6 +181,7 @@
 /obj/item/bodypart/Destroy()
 	if(owner)
 		owner.bodyparts -= src
+		owner.bodyparts_by_zone -= body_zone
 		owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
@@ -381,11 +382,11 @@
 
 	if(owner)
 		if((brute + burn) < 10)
-			owner.flash_fullscreen("redflash1")
+			owner.fullscreen_redflash("redflash1")
 		else if((brute + burn) < 20)
-			owner.flash_fullscreen("redflash2")
+			owner.fullscreen_redflash("redflash2")
 		else if((brute + burn) >= 20)
-			owner.flash_fullscreen("redflash3")
+			owner.fullscreen_redflash("redflash3")
 
 	if(owner && updating_health)
 		owner.updatehealth()
@@ -755,8 +756,8 @@
 	offset_f = OFFSET_ARMOR_F
 	dismemberable = FALSE
 
-	/// Branded writing unique for chest so it can be applied to buttocks
 	var/branded_writing_on_buttocks = ""
+	var/branded_writing_on_stomach = ""
 
 	grid_width = 64
 	grid_height = 96

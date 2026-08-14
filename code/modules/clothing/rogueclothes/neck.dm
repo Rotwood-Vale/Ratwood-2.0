@@ -87,6 +87,7 @@
 	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	armor = ARMOR_PADDED_BAD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
@@ -102,6 +103,7 @@
 	color = "#ad977d"
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	armor = ARMOR_PADDED //gambeson for head
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
@@ -114,6 +116,8 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
 	body_parts_covered = NECK|HAIR|EARS|HEAD|MOUTH
 	armor = ARMOR_PADDED_GOOD //full padded gambeson basically
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return
@@ -415,13 +419,6 @@
 /obj/item/clothing/neck/roguetown/gorget/cursed_collar/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SELF_UNEQUIP, CURSED_ITEM_TRAIT)
-/*
-/obj/item/clothing/neck/roguetown/gorget/cursed_collar/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
-*/
 
 /obj/item/clothing/neck/roguetown/psicross
 	name = "psycross"
@@ -551,6 +548,16 @@
 	item_state = "psycross_s"
 	sellprice = 50
 	is_silver = TRUE
+
+/obj/item/clothing/neck/roguetown/psicross/silver/equipped(mob/user, slot)
+	. = ..()
+	if(isliving(user) && (slot_flags & slotdefine2slotbit(slot))) //worn in a slot this cross actually goes in
+		ADD_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
+
+/obj/item/clothing/neck/roguetown/psicross/silver/dropped(mob/user)
+	. = ..()
+	if(isliving(user))
+		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
 
 /obj/item/clothing/neck/roguetown/psicross/g
 	name = "golden psycross"

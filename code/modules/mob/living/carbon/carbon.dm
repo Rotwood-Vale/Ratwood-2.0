@@ -10,6 +10,8 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	if(GLOB.blood_sight_viewers)
+		AddComponent(/datum/component/blood_glow)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -251,6 +253,9 @@
 
 
 	if(thrown_thing)
+		if(src in thrown_thing.buckled_mobs) //Buckling to a chair and then grab-throwing the chair
+			to_chat(src, span_notice("I am not tricky enough to throw [thrown_thing] while I am buckled to it."))
+			return
 		// Admin alert for coin throws
 		if(istype(thrown_thing, /obj/item/roguecoin))
 			var/obj/item/roguecoin/coin = thrown_thing
@@ -765,11 +770,12 @@
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 	)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts) //hardcoded to streamline things a bit
-		if(!(bodypart.body_zone in lethal_zones))
+	for(var/lethal_zone in lethal_zones)
+		var/obj/item/bodypart/lethal_part = get_bodypart(lethal_zone)
+		if(!lethal_part)
 			continue
 		var/hardcrit_divisor = !mind ? FIRE_HARDCRIT_DIVISOR_MINDLESS : FIRE_HARDCRIT_DIVISOR
-		var/my_burn = abs((bodypart.burn_dam / bodypart.max_damage) * hardcrit_divisor)
+		var/my_burn = abs((lethal_part.burn_dam / lethal_part.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
 		used_damage = max(used_damage, my_burn)
 	if(used_damage < total_tox)
@@ -1004,52 +1010,39 @@
 		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
-/*
-	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
-		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 15)
-				severity = 1
-			if(15 to 30)
-				severity = 2
-			if(30 to 45)
-				severity = 3
-			if(45 to 70)
-				severity = 4
-			if(70 to 85)
-				severity = 5
-			if(85 to INFINITY)
-				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")*/
 
+	var/flash_pain = FALSE
 	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
-	if(hurtdamage > 5) //float
-		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 20)
-				severity = 1
-			if(20 to 40)
-				severity = 2
-			if(40 to 60)
-				severity = 3
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(60 to 80)
-				severity = 4
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(80 to 99)
-				severity = 5
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(99 to INFINITY)
-				severity = 6
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+	var/severity = 0
+	switch(hurtdamage)
+		if(-INFINITY to 5)
+			clear_fullscreen("brute")
+			clear_fullscreen("brute_alt")
+			clear_fullscreen("painflash")
+		if(5 to 20)
+			severity = 1
+			clear_fullscreen("painflash")
+		if(20 to 40)
+			severity = 2
+			clear_fullscreen("painflash")
+		if(40 to 60)
+			severity = 3
+			flash_pain = TRUE
+		if(60 to 80)
+			severity = 4
+			flash_pain = TRUE
+		if(80 to 99)
+			severity = 5
+			flash_pain = TRUE
+		if(99 to INFINITY)
+			severity = 6
+			flash_pain = TRUE
+	if(no_redflash)
+		overlay_fullscreen("brute_alt", /atom/movable/screen/fullscreen/brute_alt, severity)
 	else
-		clear_fullscreen("brute")
-		clear_fullscreen("painflash")
+		if(flash_pain)
+			overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
 	if(!hud_used)
@@ -1212,6 +1205,7 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
+		bodyparts_by_zone[O.body_zone] = O
 		if(O.body_part == ARM_LEFT)
 			l_arm_index_next += 2
 			O.held_index = l_arm_index_next //1, 3, 5, 7...

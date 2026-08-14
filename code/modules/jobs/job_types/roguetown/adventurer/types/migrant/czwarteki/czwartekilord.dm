@@ -49,10 +49,10 @@
 	cloak = /obj/item/clothing/cloak/lepoardcloak
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/hussar
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	l_hand = /obj/item/rogueweapon/sword/long/marlin
 	r_hand = /obj/item/rogueweapon/huntingknife
-	beltr = /obj/item/rogueweapon/scabbard/sheath
+	beltr = /obj/item/rogueweapon/scabbard/sheath/noble
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	backl = /obj/item/storage/backpack/rogue/satchel

@@ -90,7 +90,7 @@
 		to_chat(user, span_warning("The machine bites my finger."))
 		if(!drilled)
 			icon_state = "atm-b"
-		H.flash_fullscreen("redflash3")
+		H.fullscreen_redflash("redflash3")
 		playsound(H, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
 		SStreasury.create_bank_account(H)
 		if(H.mind)
@@ -167,8 +167,22 @@
 
 /obj/structure/roguemachine/atm/examine(mob/user)
 	. += ..()
-	. += span_info("The current tax rate on deposits is [SStreasury.tax_value * 100] percent. Nobles exempt.")
+	var/tax_rate = SStreasury.get_tax_value_for(user) * 100 // proc returns a decimal, multiply by 100 for percentage
+	var/job_text // what tax bracket the user falls into, for examine text purpose
+	var/fine_exempt_status = SStreasury.check_fine_exemption(user) ? "Exempt from fines." : "Not exempt from fines." // returns TRUE/FALSE
 
+	if(HAS_TRAIT(user, TRAIT_OUTLANDER))
+		job_text = "Outlanders"
+	else if(HAS_TRAIT(user, TRAIT_NOBLE))
+		job_text = "Nobles"
+	else if(HAS_TRAIT(user, TRAIT_RESIDENT) || (user.job in GLOB.yeoman_positions))
+		job_text = "Yeomen"
+	else if(user.job in GLOB.church_positions)
+		job_text = "Clergymen"
+	else
+		job_text = "Peasants"
+
+	. += span_info("For [job_text], the current tax rate on deposits is [tax_rate] percent. [fine_exempt_status]")
 
 /obj/structure/roguemachine/atm/proc/drill(obj/structure/roguemachine/atm)
 	if(!drilling)

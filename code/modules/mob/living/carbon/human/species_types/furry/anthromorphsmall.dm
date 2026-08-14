@@ -17,9 +17,9 @@
 	race_titles = list(
 	"Catvolk", "Dogvolk", "Volfvolk", "Lionvolk", "Venardvolk", "Tigervolk", "Sheepvolk",
 	"Goatvolk", "Rousvolk", "Possumvolk", "Pigvolk", "Boarvolk", "Rabbitvolk", "Cabbitvolk", "Harevolk", "Horsevolk",
-	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk",
+	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk", "Rakunvolk",
 	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
-	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Monstervolk", "Chimeravolk"
+	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Drakianvolk", "Dragonvolk", "Monstervolk", "Chimeravolk"
 	)
 
 	species_traits = list(
@@ -104,6 +104,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/small/plain,
 		/datum/body_marking/small/sock,
 		/datum/body_marking/small/socklonger,

@@ -59,7 +59,7 @@ GLOBAL_VAR(test_log)
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")

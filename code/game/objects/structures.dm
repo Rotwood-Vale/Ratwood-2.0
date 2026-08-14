@@ -111,6 +111,10 @@
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(!climbable)
+		if(can_wallpress() && user == O && isliving(O))
+			var/mob/living/presser = O
+			if(presser.mobility_flags & MOBILITY_MOVE)
+				wallpress(presser)
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -134,7 +138,7 @@
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
-		
+
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	if(QDELETED(src))
 		return

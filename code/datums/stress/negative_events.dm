@@ -54,6 +54,11 @@
 	stressadd = 2
 	desc = span_red("Something nearby reeks.")
 
+/datum/stressevent/herald_progress_music
+	timer = 2 MINUTES
+	stressadd = 5
+	desc = span_boldred("This music makes me feel hollow. Something is terribly wrong.")
+
 /datum/stressevent/peckish
 	timer = 10 MINUTES
 	stressadd = 1
@@ -545,3 +550,8 @@
 	timer = 30 SECONDS
 	stressadd = 4
 	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")
+
+/datum/stressevent/stinky_contact
+	timer = 15 MINUTES
+	stressadd = 2
+	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")

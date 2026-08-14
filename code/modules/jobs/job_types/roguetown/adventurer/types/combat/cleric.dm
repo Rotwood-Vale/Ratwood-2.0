@@ -10,8 +10,8 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(
-		STATKEY_WIL = 3,
-		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -62,7 +62,7 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
-	
+
 	// Ascendant symbols go into the backpack, so you don't get insta-found out.
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -71,7 +71,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -149,8 +149,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -246,7 +244,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
@@ -266,7 +264,16 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
+			if(H.mind)
+				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
+				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
+				switch(helmet_choice)
+					if("Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
+					if("Visored Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+					if("Buckethelm")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
 			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/noc)
 			cloak = /obj/item/clothing/cloak/templar/noc
@@ -393,8 +400,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			wrists = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -489,7 +494,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
@@ -563,8 +568,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'

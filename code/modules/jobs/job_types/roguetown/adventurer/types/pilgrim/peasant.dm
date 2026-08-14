@@ -24,7 +24,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
-
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_EXPERT,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
@@ -63,7 +63,7 @@
 						)
 	beltl = /obj/item/rogueweapon/sickle
 	backr = /obj/item/rogueweapon/hoe
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		shoes = /obj/item/clothing/shoes/roguetown/sandals

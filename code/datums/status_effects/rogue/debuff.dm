@@ -302,7 +302,7 @@
 	icon_state = "compliance"
 	alert_group = ALERT_DEBUFF
 
-/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/handle_click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
 	var/mob/user = usr
@@ -587,14 +587,14 @@
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
@@ -617,13 +617,13 @@
 
 /datum/status_effect/debuff/deathdoorwilloss/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/process()
 	.=..()
@@ -1159,13 +1159,13 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
-	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/brittle/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_notice("My frame loosens as warmth returns."))
-	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/brittle
 	name = "brittle cold"
@@ -1203,3 +1203,33 @@
 	name = "The Kiss"
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
+
+/datum/status_effect/debuff/malodorous_stink
+	id = "malodorous_stink"
+	duration = 999 MINUTES
+	alert_type = null
+
+	mob_effect_icon = 'icons/effects/effects.dmi'
+	mob_effect_icon_state = "mob_smell"
+	mob_effect_layer = ABOVE_MOB_LAYER
+
+/datum/status_effect/debuff/stinky_contact
+	id = "stinky_contact"
+	duration = 15 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
+
+/datum/status_effect/debuff/stinky_contact/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("I reek of someone else's stench now."))
+	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
+		owner.add_stress(/datum/stressevent/stinky_contact)
+
+/datum/status_effect/debuff/stinky_contact/on_remove()
+	to_chat(owner, span_notice("The stink finally fades off me."))
+	owner.remove_stress(/datum/stressevent/stinky_contact)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	name = "Musked"
+	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	icon_state = "debuff"
