@@ -977,6 +977,9 @@
 	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
 	// would show as literal text
 	var/list/entry_value = list("msg" = message, "time" = world.time)
+	// every writer registers itself, and either party of a fielded line writes a line of their own soon enough.
+	// src.key over the directory, so an SSD party still resolves
+	pov_remember_key(ckey, key)
 	if(color)
 		entry_value["color"] = color
 	if(event)

@@ -13,6 +13,8 @@
 	3. Only receipts pull, and only when their victim was clearly in the subject's view around that moment.
 	   Fights the subject never saw stay out entirely.
 	4. Reads go through the accessors below, so a stray string degrades to text instead of erroring.
+	5. The subject's own seen entries are never rows. They are read for the witness rosters their written lines lack,
+	   and for presence. Rendering them as well doubles every line the subject ever spoke.
 */
 #define POV_LOG_PAGE_LEN 2000
 #define POV_FOCUS_PAGE_LEN 10
@@ -31,24 +33,32 @@
 
 /client/var/last_pov_log_generation = 0
 
+/// ckey to BYOND key for everyone who ever entered a log, so hide ckeys can find names in prose after they disconnect
+GLOBAL_LIST_EMPTY(pov_player_keys)
+
+/proc/pov_remember_key(reg_ckey, reg_key)
+	if(reg_ckey && reg_key && !GLOB.pov_player_keys[reg_ckey])
+		GLOB.pov_player_keys[reg_ckey] = reg_key
+
 /// Stored text is mixed: player text arrives html_encoded at input, system text (names, places) arrives raw.
 /// Decode then encode lands both at exactly one encoding, so text shows as typed instead of as markup.
 /proc/log_normalize_html(text)
 	return html_encode(html_decode(text))
 
-/// Accessors, not direct indexing: a value written before the dict format degrades to plain text instead of erroring
-/proc/log_entry_text(value)
-	if(!islist(value))
-		return log_normalize_html(value)
-	var/list/entry = value
-	var/text = log_normalize_html(entry["msg"])
-	var/color = entry["color"]
+/// Accessors, not direct indexing: a value written before the dict format degrades to plain text instead of erroring.
+/// An override replaces the stored colour rather than wrapping outside it, where the inner tag would win
+/proc/log_entry_text(value, color_override)
+	return log_entry_colored(log_entry_raw_text(value), color_override || log_entry_field(value, "color"))
+
+/// The stored message with nothing round it, for callers that add their own text before the colour goes on
+/proc/log_entry_raw_text(value)
+	return log_normalize_html(islist(value) ? value["msg"] : value)
+
+/proc/log_entry_colored(text, color)
 	if(!color)
 		return text
 	// unquoted hex, quoted named colour: the IE control wants both forms
-	if(color[1] == "#")
-		return "<font color=[color]>[text]</font>"
-	return "<font color='[color]'>[text]</font>"
+	return (color[1] == "#") ? "<font color=[color]>[text]</font>" : "<font color='[color]'>[text]</font>"
 
 /proc/log_entry_field(value, field)
 	return islist(value) ? value[field] : null
@@ -96,8 +106,8 @@
 			log_source = details.logging
 	var/list/concatenated_logs = list()
 	var/list/pov_actor_labels = list()
-	var/list/saved_highlights
-	var/saved_filters
+	// the render's one bag: this request's parameters, grown with derived state on the way down
+	var/list/pov_ctx
 	if(ntype & INDIVIDUAL_POV_LOG)
 		// href input: anything but the two real modes is dropped rather than reaching the cache key or the page's javascript
 		if(pov_mode && pov_mode != "players" && pov_mode != "all")
@@ -113,8 +123,12 @@
 				pov_mode = null
 		if(pov_mode)
 			concatenated_logs = get_pov_timeline(admin, M, log_source, source, pov_mode, pov_paging, pov_actor_labels, pov_fresh)
-			saved_highlights = LAZYACCESS(admin?.pov_log_highlights, cache_key)
-			saved_filters = LAZYACCESS(admin?.pov_log_filters, cache_key)
+			pov_ctx = list(
+				"subject" = M, "ntype" = ntype, "source" = source, "mode" = pov_mode, "labels" = pov_actor_labels,
+				"page" = page, "page_len" = page_len, "tail" = pov_tail, "at" = pov_at, "focused" = pov_focus,
+				"highlights" = LAZYACCESS(admin?.pov_log_highlights, cache_key),
+				"filters" = LAZYACCESS(admin?.pov_log_filters, cache_key),
+			)
 			// re-read: a fresh build just replaced the entry
 			var/list/cache_entry = LAZYACCESS(admin?.pov_log_cache, cache_key)
 			var/built = LAZYACCESS(cache_entry, "built")
@@ -130,7 +144,7 @@
 
 	if(length(concatenated_logs))
 		if(ntype & INDIVIDUAL_POV_LOG)
-			dat += render_pov_log(M, concatenated_logs, pov_actor_labels, ntype, source, pov_mode, page, page_len, pov_tail, pov_focus, saved_highlights, pov_at, saved_filters)
+			dat += render_pov_log(concatenated_logs, pov_ctx)
 		else
 			dat += "<font size=2px>"
 			dat += concatenated_logs.Join("<br>")
@@ -268,7 +282,11 @@
 	// marked event ids, so a watched hit is not pulled again as its receipt
 	var/list/included_events = list()
 	var/list/subject_receipts = list()
-	add_pov_own_entries(., log_source, included_events, subject_receipts)
+	// "[actor]@[bucket]" keys, when each person was in view
+	var/list/presence = list()
+	// fills presence as it goes, so this must run before anything reads it
+	var/list/own_witnesses = pov_read_own_seen(log_source, presence)
+	add_pov_own_entries(., log_source, own_witnesses, included_events, subject_receipts)
 
 	if(!M.key)
 		return
@@ -278,9 +296,6 @@
 	var/seen_key = num2text(LOG_SEEN)
 	var/attack_key = num2text(LOG_ATTACK)
 	var/list/already_added = list()
-	// "[actor]@[bucket]" keys, when each person was in view
-	var/list/presence = list()
-	pov_harvest_own_rosters(log_source, presence)
 
 	// must complete first: it marks the ids and sightings the pull trusts
 	for(var/actor_id in actor_logs)
@@ -317,48 +332,69 @@
 	var/bucket = POV_PRESENCE_BUCKET(time)
 	return presence["[actor_id]@[bucket]"] || presence["[actor_id]@[bucket - 1]"] || presence["[actor_id]@[bucket + 1]"]
 
-/// Marks presence for everyone who witnessed the subject's own actions
-/proc/pov_harvest_own_rosters(list/log_source, list/presence)
-	var/list/seen_entries = log_source[num2text(LOG_SEEN)]
-	for(var/entry in seen_entries)
-		CHECK_TICK
-		var/value = seen_entries[entry]
-		var/list/witnesses = log_entry_field(value, "witnesses")
-		if(!witnesses)
-			continue
-		var/entry_time = log_entry_field(value, "time")
-		for(var/witness_ckey in witnesses)
-			// eavesdropped, another floor, or past the screen edge, none of which is "in view"
-			if(!witness_tag(witnesses[witness_ckey]))
-				pov_mark_presence(presence, witness_ckey, entry_time)
-
 /// "time" is precomputed so the sort never digs into the stored value or throws on a malformed one
 /proc/pov_timeline_row(entry_key, value, actor_id = null)
 	. = list("key" = entry_key, "entry" = value, "time" = log_entry_field(value, "time") || 0)
 	if(actor_id)
 		.["actor"] = actor_id
 
+/// Pairs a row with the seen copy written beside it. Combat shares an event id, which is exact. Speech mints none,
+/// so the pairing falls back to the tick both were written in, narrowed by log_seen's colour: a say and an emote
+/// logged in the same tick cannot take each other's roster
+/proc/pov_seen_pair_key(event_id, color, time)
+	return event_id || "[color]@[time]"
+
+/// One walk of the subject's seen log: rosters out, keyed for the pairing above, presence marked in place.
+/// An empty roster is kept, nobody saw it being an answer worth printing
+/proc/pov_read_own_seen(list/log_source, list/presence)
+	. = list()
+	var/list/seen_entries = log_source[num2text(LOG_SEEN)]
+	for(var/entry in seen_entries)
+		CHECK_TICK
+		var/value = seen_entries[entry]
+		var/list/witnesses = log_entry_field(value, "witnesses")
+		if(isnull(witnesses))
+			continue
+		var/entry_time = log_entry_field(value, "time")
+		for(var/witness_ckey in witnesses)
+			// eavesdropped, another floor, or past the screen edge, none of which is "in view"
+			if(!witness_tag(witnesses[witness_ckey]))
+				pov_mark_presence(presence, witness_ckey, entry_time)
+		// nothing to pair on, and a malformed row defaults to time 0: indexing this would hand it a roster
+		var/event_id = log_entry_field(value, "event")
+		if(!event_id && isnull(entry_time))
+			continue
+		.[pov_seen_pair_key(event_id, log_entry_field(value, "color"), entry_time)] = witnesses
+
 /// The subject's own rows. Their forward attacks mark included_events; their receipts do NOT, because a hit on them is
 /// meant to show in both their thread and the attacker's block. Receipts are indexed instead, for the distance handoff.
-/proc/add_pov_own_entries(list/output, list/log_source, list/included_events, list/subject_receipts)
+/proc/add_pov_own_entries(list/output, list/log_source, list/own_witnesses, list/included_events, list/subject_receipts)
 	var/static/list/own_types = list(LOG_ATTACK, LOG_SAY, LOG_WHISPER, LOG_EMOTE)
-	// log_talk writes no colour, so own rows would render plain against everyone else's log_seen scheme
+	// log_talk writes no colour, so own rows would render plain against everyone else's log_seen scheme.
+	// These are log_seen's own colours, which is also what pairs a speech row with its seen copy
 	var/static/list/own_colors = list("[LOG_SAY]" = "orange", "[LOG_WHISPER]" = "orange", "[LOG_EMOTE]" = "grey")
 	for(var/type in own_types)
 		var/list/entries = log_source[num2text(type)]
 		for(var/entry in entries)
 			CHECK_TICK
 			var/value = entries[entry]
+			var/is_receipt = log_entry_field(value, "receipt")
+			var/event_id = log_entry_field(value, "event")
 			var/list/wrapper = pov_timeline_row(entry, value)
 			wrapper["kind"] = type
 			wrapper["tint"] = own_colors["[type]"]
+			// log_combat stores a receipt orange, the say colour. Severe keeps its own
+			if(is_receipt && log_entry_field(value, "color") != LOG_COLOR_SEVERE)
+				wrapper["tint"] = "#ffcccc"
+			// a receipt's witnesses belong to whoever landed the hit and arrive via the handoff in the witnessed
+			// pass. A row with no stored time has no moment to pair on either, the wrapper's being a sort default
+			var/pair_time = log_entry_field(value, "time")
+			if(!is_receipt && (event_id || !isnull(pair_time)))
+				wrapper["witnesses"] = own_witnesses[pov_seen_pair_key(event_id, own_colors["[type]"], pair_time)]
 			output += list(wrapper)
-			if(type != LOG_ATTACK)
+			if(type != LOG_ATTACK || !event_id)
 				continue
-			var/event_id = log_entry_field(value, "event")
-			if(!event_id)
-				continue
-			if(log_entry_field(value, "receipt"))
+			if(is_receipt)
 				subject_receipts[event_id] = wrapper
 			else
 				included_events[event_id] = TRUE
@@ -402,6 +438,8 @@
 			var/list/receipt_wrapper = hit_id ? LAZYACCESS(subject_receipts, hit_id) : null
 			if(receipt_wrapper)
 				receipt_wrapper["dist"] = witness_distance(witnesses[subject_ckey])
+				// the attacker's roster, subject included. Shared not copied, so one hit cannot show two counts
+				receipt_wrapper["witnesses"] = witnesses
 		if(!witnesses[subject_ckey])
 			continue
 		if(!witness_tag(witnesses[subject_ckey]))
@@ -434,26 +472,44 @@
 // Rendering a POV timeline: the page frame, then each row styled into its actor's block
 
 /// One page of the timeline. Paged because the renderer chokes on multi-thousand-line pages.
-/proc/render_pov_log(mob/M, list/entries, list/actor_labels, ntype, source, pov_mode, page, page_len, pov_tail, focused = FALSE, list/saved_highlights, pov_at = null, saved_filters = null)
+/// Works out where the page starts and writes that back into ctx, which is what everything below reads
+/proc/render_pov_log(list/entries, list/ctx)
 	. = list()
+	var/mob/M = ctx["subject"]
+	var/ntype = ctx["ntype"]
+	var/source = ctx["source"]
+	var/pov_mode = ctx["mode"]
+	var/focused = ctx["focused"]
+	var/page = ctx["page"]
+	var/pov_tail = ctx["tail"]
 	// href input: unclamped, a huge value renders the whole timeline at once and a negative one inverts the maths below
-	var/entries_per_page = clamp(page_len || POV_LOG_PAGE_LEN, POV_FOCUS_PAGE_LEN, POV_LOG_PAGE_LEN)
+	var/entries_per_page = clamp(ctx["page_len"] || POV_LOG_PAGE_LEN, POV_FOCUS_PAGE_LEN, POV_LOG_PAGE_LEN)
 	var/total = length(entries)
 	var/pages = ROUND_UP(total / entries_per_page)
 	// a pivot carries the moment it was clicked from, not a position, this timeline being someone else's
-	if(isnull(pov_tail) && !isnull(pov_at))
-		pov_tail = total - pov_entry_index_at(entries, pov_at)
+	if(isnull(pov_tail) && !isnull(ctx["at"]))
+		pov_tail = total - pov_entry_index_at(entries, ctx["at"])
 	if(!isnull(pov_tail)) // counting back from the end survives anything logged since the link was made
 		page = ROUND_UP((total - pov_tail) / entries_per_page)
 	page = clamp(page, 1, pages)
 	var/first = (page - 1) * entries_per_page + 1
 	var/last = min(page * entries_per_page, total)
+
 	// a copy: the cached timeline has to stay whole for the next page
 	var/list/page_entries = (pages > 1) ? entries.Copy(first, last + 1) : entries
 	var/base_href = "?_src_=holder;[HrefToken()];individuallog=[REF(M)];log_type=[ntype];log_src=[source];pov_mode=[pov_mode];pov_paging=1"
 	var/page_href = focused ? "[base_href];pov_focus=1" : base_href
 	var/subject_class = "a[M.ckey || "subject"]"
-	var/subject_label = pov_actor_label(M, key_name(M))
+
+	ctx["subject_ckey"] = M.ckey
+	ctx["subject_class"] = subject_class
+	ctx["subject_label"] = pov_actor_label(M, key_name(M))
+	ctx["start"] = first
+	ctx["total"] = total
+
+	// null in the focused view, no point linking to where you already are.
+	// It's fucking annoying when you accidentally scroll away
+	ctx["focus_href"] = focused ? null : base_href
 
 	if(pages > 1)
 		. += pov_page_nav(page, pages, first, last, total, page_href, entries_per_page)
@@ -464,21 +520,23 @@
 
 	// explicit size: the panel's <font size=2px> is not a valid attribute and gets coerced
 	. += "<div style='font-size:14px;'>"
-	// null focus_href in the focused view, no point linking to where you already are.
-	// It's fucking annoying when you accidentally scroll away
-	. += style_pov_entries(page_entries, actor_labels, subject_label, focused ? null : base_href, first, total, subject_class, M.ckey, pov_mode)
+	. += style_pov_entries(page_entries, ctx)
 	. += "</div>"
 	// must come after the rows, it paints divs that have to exist first
-	. += pov_restore_script(saved_highlights, saved_filters, subject_class, subject_label, actor_labels)
+	. += pov_restore_script(ctx)
 
 /// Puts back highlights and filters after a page turn, from the server's copy the page cannot keep itself.
-/proc/pov_restore_script(list/saved_highlights, saved_filters, subject_class, subject_label, list/actor_labels)
+/proc/pov_restore_script(list/ctx)
+	var/list/saved_highlights = ctx["highlights"]
+	var/saved_filters = ctx["filters"]
 	if(!length(saved_highlights) && !saved_filters)
 		return ""
+	var/subject_class = ctx["subject_class"]
+	var/list/actor_labels = ctx["labels"]
 	var/list/restore = list("<script type='text/javascript'>")
 	for(var/hl in saved_highlights)
 		// a ckey typed into the box may never have acted, so fall back to the ckey inside the class
-		var/label = (hl == subject_class) ? subject_label : (actor_labels[hl] || copytext(hl, 2))
+		var/label = (hl == subject_class) ? ctx["subject_label"] : (actor_labels[hl] || copytext(hl, 2))
 		restore += "povSet('[hl]', '[pov_safe_label(label)]');"
 	if(saved_filters)
 		restore += "povRestoreFilters('[saved_filters]');"
@@ -503,7 +561,7 @@
 		<br><b>Rows.</b> Grey lines show where the action moved. Hover any row for its full entry. &#8644; beside a name opens their own POV at this moment.[focus_hint]\
 		<br><b>Witnesses.</b> The count on a row opens the list of who was close enough to perceive it, which is not proof that they did.\
 		<br><b>Names.</b> Click a name to follow them like a second subject, up to [POV_HIGHLIGHT_MAX], and again to clear. <b>Their own blocks box bright, and every hit they took stripes dull inside the block of whoever landed it.</b> [M] is the exception: hits taken are full rows in their own thread instead.\
-		<br><b>Filters.</b> The boxes above hide chatter, faded rows, or anyone not highlighted. Headers always stay, so you can still see who else was there."
+		<br><b>Filters.</b> Each box hides one thing: attacks, speech and emotes, everyone not highlighted, faded rows, or ckeys. Hiding ckeys leaves a * so players still read apart from mobs, handy before a screenshot. Headers always stay, so you can still see who else was there."
 	var/all_mobs_caveat = "All Mobs: a mob's log dies with it, so gibbed or deleted NPCs are missing here, which can shift where a \" &raquo; \" link lands."
 
 	// bruh, ya'll better read this
@@ -524,17 +582,23 @@
 		. += "<center><font color='#ffc957'><i>[all_mobs_caveat]</i></font></center>"
 
 /// Wraps entries in blocks headed by whoever acted. Subject on black under gold, everyone else grey under blue.
-/proc/style_pov_entries(list/entries, list/actor_labels, subject_label, focus_href, start_index = 1, total_entries = 0, subject_class = "asubject", subject_ckey = null, pov_mode = null)
+/proc/style_pov_entries(list/entries, list/ctx)
 	. = list()
 	// deliberately smaller than the rows: the rows are what gets read
-	var/header_style = "font-size:12px; padding:2px 5px 1px 5px;"
+	var/header_style = "font-size:13px; padding:2px 5px 1px 5px;"
 	var/subject_header_style = "font-size:14px; padding:2px 5px 1px 5px;"
-	var/static/list/kind_prefixes = list("[LOG_WHISPER]" = "(whisper) ", "[LOG_EMOTE]" = "(emote) ")
+	var/list/actor_labels = ctx["labels"]
+	var/subject_class = ctx["subject_class"]
+	var/subject_ckey = ctx["subject_ckey"]
+	var/subject_label = ctx["subject_label"]
+	var/pov_mode = ctx["mode"]
+	var/focus_href = ctx["focus_href"]
+	var/total_entries = ctx["total"]
 	var/focused = isnull(focus_href)
 	var/last_actor
 	var/last_place
 	var/have_block = FALSE
-	var/index = start_index
+	var/index = ctx["start"]
 	var/prev_time
 	for(var/list/wrapper as anything in entries)
 		CHECK_TICK
@@ -555,14 +619,22 @@
 		var/row_style = actor ? "background:#1e1e1e; border-left:4px solid #5a5a5a;" : "background:#000000; border-left:4px solid #eac0b9;"
 		var/header_colour = actor ? "#7fb2d9" : "#ffc957"
 
-		var/list/witnesses = log_entry_field(stored, "witnesses")
+		// own rows carry a borrowed roster. isnull, not a truth test: an empty one is a real answer and
+		// must not fall through to the stored field
+		var/list/witnesses = wrapper["witnesses"]
+		if(isnull(witnesses))
+			witnesses = log_entry_field(stored, "witnesses")
 		var/subject_witness = subject_ckey ? LAZYACCESS(witnesses, subject_ckey) : null
 		var/glyph = pov_perception_glyph(subject_witness)
 		var/subject_dist = witness_distance(subject_witness)
 		if(isnull(subject_dist)) // a hit they took: their range came from the attacker's roster at build time
 			subject_dist = wrapper["dist"]
 		var/is_receipt = log_entry_field(stored, "receipt")
-		var/event_id = log_entry_field(stored, "event")
+		// an id or a receipt flag is what separates a hit from speech, a death or a typing line
+		var/is_attack = log_entry_field(stored, "event") || is_receipt
+		var/row_target = log_entry_field(stored, "target")
+		// the other party: whose ckey sits in the prose, and whose highlight should stripe this row
+		var/row_other = row_target || log_entry_field(stored, "attacker")
 
 		var/row_marks = glyph
 		if(!isnull(subject_dist))
@@ -575,39 +647,23 @@
 
 		// raw key shape: "\[YYYY-MM-DD hh:mm:ss\] who where (LOG #n)", built in log_message()
 		var/full_key = log_normalize_html(raw_key)
-		var/message = log_entry_text(stored)
-		var/kind_prefix = kind_prefixes["[wrapper["kind"]]"]
-		if(kind_prefix)
-			message = "[kind_prefix][message]"
-		var/tint = wrapper["tint"]
-		if(tint)
-			message = "<font color='[tint]'>[message]</font>"
-		if(is_receipt)
-			message = "<i>[message]</i>"
+		var/message = pov_row_message(wrapper, is_receipt, row_other)
 		var/line
 		var/place_line = ""
 		if(focused)
-			line = "<b>[full_key]</b><br>[row_marks][message]"
+			line = "<b>[pov_key_with_ckey_spans(raw_key)]</b><br>[row_marks][message]"
 		else
 			var/place = pov_entry_place(raw_key)
 			if(place != last_place)
 				last_place = place
-				place_line = "<div class='[block_class] row' style='[row_style] color:#8a8a8a; font-size:12px; padding:1px 5px;'>[place]</div>"
+				place_line = "<div class='[block_class] row plc' style='[row_style] color:#8a8a8a; font-size:12px; padding:1px 5px;'>[place]</div>"
 			line = "<font color='#8a8a8a'>[copytext(raw_key, 13, 21)]</font> [row_marks][message]"
 		if(!isnull(witnesses))
 			line += pov_witness_html(witnesses, "pov[index]")
 
-		// an id or a receipt flag is what separates a hit from speech, a death or a typing line
-		var/is_attack = event_id || is_receipt
-		// two fade tiers: barely perceived, and someone else's fight
-		var/row_dim = glyph ? "opacity:0.5;filter:alpha(opacity=50); " : ""
-		if(!row_dim && actor && subject_ckey && is_attack && log_entry_field(stored, "target") != subject_ckey)
-			row_dim = "opacity:0.6;filter:alpha(opacity=60); "
-		// the other party, so highlighting a name stripes rows they were in
-		var/recipient = ""
-		var/row_other = log_entry_field(stored, "target") || log_entry_field(stored, "attacker")
-		if(row_other && row_other != subject_ckey && "a[row_other]" != block_class)
-			recipient = " t[row_other]"
+		var/kind_token = pov_row_kind_token(wrapper, is_attack)
+		var/row_dim = pov_row_fade(glyph, actor, is_attack, subject_ckey, row_target)
+		var/recipient = (row_other && row_other != subject_ckey && "a[row_other]" != block_class) ? " t[row_other]" : ""
 		var/focus = (focus_href && !((index - 1) % POV_FOCUS_LINK_EVERY)) ? " <a href='[focus_href];pov_focus=1;page_len=[POV_FOCUS_PAGE_LEN];pov_tail=[total_entries - index]'>&raquo;</a>" : ""
 		index++
 
@@ -621,10 +677,78 @@
 			. += "<div class='[block_class] hdr' style='[row_style] [actor ? header_style : subject_header_style]'>[pov_highlight_link(block_class, label, header_colour)][actor ? pov_pivot_link(actor, cur_time, pov_mode) : ""]</div>"
 		if(place_line)
 			. += place_line
-		// class tokens drive the browser side: blk/row/hdr for what to touch, a/t for who, dim/atk for the filters
-		. += "<div class='[block_class] row[recipient][row_dim ? " dim" : ""][is_attack ? " atk" : ""]' style='[row_style] [row_dim][actor ? "" : "font-size:15px; "]padding:1px 5px;' title='[pov_safe_label(full_key)]'>[line][focus]</div>"
+		// class tokens drive the browser side, see the contract in pov_highlight_script
+		. += "<div class='[block_class] row[recipient][row_dim ? " dim" : ""][kind_token]' style='[row_style] [row_dim][actor ? "" : "font-size:15px; "]padding:1px 5px;' title='[pov_safe_label(full_key)]'>[line][focus]</div>"
 	if(have_block)
 		. += "</div>"
+
+/// A row's text: kind prefix, then tint, then receipt italics, then the ckey mask over the lot
+/proc/pov_row_message(list/wrapper, is_receipt, prose_ckey)
+	var/static/list/kind_prefixes = list("[LOG_WHISPER]" = "(whisper) ", "[LOG_EMOTE]" = "(emote) ")
+	var/stored = wrapper["entry"]
+	// one colour over the lot, prefix included. A tint outranks the stored colour
+	var/color = wrapper["tint"] || log_entry_field(stored, "color")
+	var/message = log_entry_colored("[kind_prefixes["[wrapper["kind"]]"]][log_entry_raw_text(stored)]", color)
+	if(is_receipt)
+		message = "<i>[message]</i>"
+	return pov_mask_prose_ckey(message, prose_ckey)
+
+/// Which kind filter may hide a row. Harm is claimed first, so hiding chatter can never hide a hit.
+/// Deaths, typing and steal lines answer neither and are hidden by no kind filter at all
+/proc/pov_row_kind_token(list/wrapper, is_attack)
+	if(is_attack)
+		return " atk"
+	var/kind = wrapper["kind"]
+	if(kind == LOG_SAY || kind == LOG_WHISPER || kind == LOG_EMOTE)
+		return " cht"
+	if(kind)
+		return ""
+	// witnessed rows carry no kind of their own, so log_seen's colours are what tell speech from harm
+	var/stored_color = log_entry_field(wrapper["entry"], "color")
+	return (stored_color == "orange" || stored_color == "grey") ? " cht" : ""
+
+/// Two fade tiers: barely perceived, and someone else's fight.
+/// row_target, not the attacker: a receipt has no target, and a hit taken off screen is exactly the faded case
+/proc/pov_row_fade(glyph, actor, is_attack, subject_ckey, row_target)
+	if(glyph)
+		return "opacity:0.5;filter:alpha(opacity=50); "
+	if(actor && is_attack && subject_ckey && row_target != subject_ckey)
+		return "opacity:0.6;filter:alpha(opacity=60); "
+	return ""
+
+/// Combat prose embeds one key_name, and the row already stores whose ckey it is. Exact match, no guessing
+/proc/pov_mask_prose_ckey(message, prose_ckey)
+	var/prose_key = prose_ckey ? GLOB.pov_player_keys[prose_ckey] : null
+	if(!prose_key)
+		return message
+	// a DC suffix can sit between the key and the slash
+	var/key_pos = findtextEx(message, "[prose_key]/(") || findtextEx(message, "[prose_key]\[DC\]/(")
+	if(!key_pos)
+		return message
+	var/slash_pos = findtext(message, "/(", key_pos)
+	return copytext(message, 1, key_pos) + pov_ckey_spans(copytext(message, key_pos, slash_pos + 1)) + copytext(message, slash_pos + 1)
+
+/// The two halves of the hide ckeys toggle: the "key/" shown normally, a * player marker in its place when hidden
+/proc/pov_ckey_spans(key_part)
+	return "<span class='ck'>[log_normalize_html(key_part)]</span><span class='ckh' style='display:none'>*</span>"
+
+/// Splits key_name output at the first "/(", which is exact because a BYOND key cannot contain a slash.
+/// The * marker means player, so key_name's keyless placeholders must never earn one
+/proc/pov_name_with_ckey_spans(name_text)
+	var/split = findtext(name_text, "/(")
+	if(!split || copytext(name_text, 1, split) == "*no key*" || copytext(name_text, 1, split) == "*null*")
+		return log_normalize_html(name_text)
+	return "[pov_ckey_spans(copytext(name_text, 1, split + 1))][log_normalize_html(copytext(name_text, split + 1))]"
+
+/// Entry keys carry "\[stamp\] key/(Name) place". Spans the key only, the stamp is not a name
+/proc/pov_key_with_ckey_spans(raw_key)
+	var/split = findtext(raw_key, "/(")
+	if(!split || split < 23)
+		return log_normalize_html(raw_key)
+	var/key_part = copytext(raw_key, 23, split)
+	if(key_part == "*no key*" || key_part == "*null*")
+		return log_normalize_html(raw_key)
+	return "[log_normalize_html(copytext(raw_key, 1, 23))][pov_ckey_spans(copytext(raw_key, 23, split + 1))][log_normalize_html(copytext(raw_key, split + 1))]"
 
 /// Z arrows are flipped, a witness above means it happened below them. Direction digits already point at the event
 /proc/pov_perception_glyph(witness_entry)
@@ -635,9 +759,12 @@
 	return glyphs[tag] || pov_numpad_arrow(tag) || ""
 
 /// Everything in the key but the time and log number. Cut at fixed text log_message writes, no guessing.
+/// key_name's "(Character Name)" closes before loc_name opens and names cannot hold parens, so the
+/// first ") " is where the who ends and the where begins. The header already names them
 /proc/pov_entry_place(raw_key)
 	var/log_pos = findlasttext(raw_key, " (LOG #")
-	return copytext(raw_key, 23, log_pos || 0)
+	var/name_end = findtext(raw_key, ") ", 23)
+	return copytext(raw_key, name_end ? name_end + 2 : 23, log_pos || 0)
 
 /// "a" plus a ckey-flattened id. Rows, highlights, label lookups and the page's javascript all key off this.
 /proc/pov_row_class(actor_id)
@@ -673,18 +800,21 @@
 /// The ckey box, the filter checkboxes and the chip row. Script first: every handler below is defined in it.
 /proc/pov_highlight_controls(subject_class, base_href)
 	. = pov_highlight_script(subject_class, base_href)
-	. += "<center>Highlight a CKEY: <input type='text' id='povkey' style='width:130px;'> <span style='color:#7fb2d9; text-decoration:underline;' onclick='povHLKey()'>Highlight</span> \
-		&nbsp; <label><input type='checkbox' id='povatk' onclick='povFilterSet()'> attacks only</label> \
-		&nbsp; <label><input type='checkbox' id='povlit' onclick='povFilterSet()'> highlighted only</label> \
-		&nbsp; <label><input type='checkbox' id='povdim' onclick='povFilterSet()'> hide faded rows</label><span id='povmsg' style='color:#ff6b6b;'></span></center>"
+	. += "<center>Highlight a CKEY: <input type='text' id='povkey' style='width:130px;'> <span style='color:#7fb2d9; text-decoration:underline;' onclick='povHLKey()'>Highlight</span></center>"
+	. += "<center>Hide: <label><input type='checkbox' id='povhatk' onclick='povFilterSet()'> attacks</label> \
+		&nbsp; <label><input type='checkbox' id='povhcht' onclick='povFilterSet()'> say/emote</label> \
+		&nbsp; <label><input type='checkbox' id='povhlit' onclick='povFilterSet()'> non-highlighted</label> \
+		&nbsp; <label><input type='checkbox' id='povhdim' onclick='povFilterSet()'> faded</label> \
+		&nbsp; <label><input type='checkbox' id='povhck' onclick='povFilterSet()'> ckeys</label><span id='povmsg' style='color:#ff6b6b;'></span></center>"
 	. += "<div id='povchips' style='text-align:center;'></div>"
 
 /// Highlighting and filtering, done in the browser so nothing rebuilds. Hooray for technology.
 /// Toggles ping the server so they survive page turns.
 /proc/pov_highlight_script(subject_class, base_href)
 	return {"<script type='text/javascript'>
-	// class contract, emitted by style_pov_entries: "blk" on block containers, "row" on rows, "a"+ckey for who acted,
-	// "t"+ckey for who it was done to, dim/atk for the filters. povLit maps a class to its label; being in it means lit
+	// class contract, emitted by style_pov_entries: "blk" on block containers, "row" on rows, "plc" on place lines,
+	// "a"+ckey for who acted, "t"+ckey for who it was done to, dim/atk/cht for the filters, ck/ckh for the two ckey
+	// halves. povLit maps a class to its label; being in it means lit
 	var povLit = {};
 	var povMax = [POV_HIGHLIGHT_MAX];
 	var povSubject = '[subject_class]';
@@ -710,10 +840,13 @@
 		for(var row_class in povLit){
 			patterns.push({acting: ' ' + row_class + ' ', receiving: ' t' + row_class.substring(1) + ' ', row_class: row_class});
 		}
-		var attacks_only = document.getElementById('povatk').checked;
-		var hide_dim = document.getElementById('povdim').checked;
+		var hide_atk = document.getElementById('povhatk').checked;
+		var hide_cht = document.getElementById('povhcht').checked;
+		var hide_dim = document.getElementById('povhdim').checked;
 		// nothing lit would blank the page, so the box does nothing instead
-		var lit_only = document.getElementById('povlit').checked && patterns.length > 0;
+		var lit_only = document.getElementById('povhlit').checked && patterns.length > 0;
+		var hide_ck = document.getElementById('povhck').checked;
+		var visible_rows = 0;
 		// live collection, so cache the length rather than re-reading it every iteration
 		var cells = document.getElementsByTagName('div');
 		var cell_count = cells.length;
@@ -745,13 +878,31 @@
 			var want_bg = match ? povBg(match, acting) : (is_subject_row ? '#000000' : '#1e1e1e');
 			if(cell.style.backgroundColor != want_bg){ cell.style.backgroundColor = want_bg; }
 			if(!is_row) continue;
-			// headers are never hidden: they stay as proof of who else was there, with their name and pivot still live.
-			// Nor is the subject, whatever is filtered
+			// headers are never hidden: they stay as proof of who else was there, with their name and pivot still live
 			var hide = (hide_dim && classes.indexOf(' dim ') >= 0)
-				|| (attacks_only && classes.indexOf(' atk ') < 0)
+				|| (hide_atk && classes.indexOf(' atk ') >= 0)
+				|| (hide_cht && classes.indexOf(' cht ') >= 0)
 				|| (lit_only && !match && classes.indexOf(' ' + povSubject + ' ') < 0);
+			// place lines are scenery, not content: counting them would stop the guard firing on an emptied page
+			if(!hide && classes.indexOf(' plc ') < 0){ visible_rows++; }
 			var want_display = hide ? 'none' : '';
 			if(cell.style.display != want_display){ cell.style.display = want_display; }
+		}
+		// the two ckey halves, class-tagged spans of our own making. One shows while the other hides
+		var spans = document.getElementsByTagName('span');
+		var span_count = spans.length;
+		for(var span_index = 0; span_index < span_count; span_index++){
+			var span = spans\[span_index\];
+			var span_class = span.className;
+			var span_display = null;
+			if(span_class == 'ck'){ span_display = hide_ck ? 'none' : ''; }
+			else if(span_class == 'ckh'){ span_display = hide_ck ? '' : 'none'; }
+			if(span_display != null && span.style.display != span_display){ span.style.display = span_display; }
+		}
+		var msg = document.getElementById('povmsg');
+		if(msg){
+			var warn = visible_rows == 0 ? ' every row on this page is filtered out' : '';
+			if(msg.innerHTML != warn){ msg.innerHTML = warn; }
 		}
 	}
 	function povChips(){
@@ -789,7 +940,8 @@
 	}
 	// fixed order, so the state string and the restore cannot disagree about which box is which
 	function povBoxes(){
-		return \[document.getElementById('povatk'), document.getElementById('povlit'), document.getElementById('povdim')\];
+		return \[document.getElementById('povhatk'), document.getElementById('povhcht'), document.getElementById('povhlit'),
+			document.getElementById('povhdim'), document.getElementById('povhck')\];
 	}
 	// only a click pings. The restore pass and highlight changes call povApply directly, or they would ping back on load
 	function povFilterSet(){
@@ -842,10 +994,10 @@
 /client/proc/set_pov_filters(mob/M, source, pov_mode, state)
 	if(!M || !pov_mode)
 		return
-	// href input: the page only ever sends three characters, each 0 or 1
-	if(length(state) != 3)
+	// href input: the page only ever sends five characters, each 0 or 1
+	if(length(state) != 5)
 		return
-	for(var/position in 1 to 3)
+	for(var/position in 1 to 5)
 		var/digit = copytext(state, position, position + 1)
 		if(digit != "0" && digit != "1")
 			return
@@ -856,7 +1008,7 @@
 
 /// A header's name doubles as the highlight control, so there is no second widget for it
 /proc/pov_highlight_link(actor_class, label, colour)
-	return "<b><font color='[colour]'><span style='text-decoration:underline;' onclick=\"povHL('[actor_class]', '[pov_safe_label(label)]')\">[log_normalize_html(label)]</span></font></b>"
+	return "<b><font color='[colour]'><span style='text-decoration:underline;' onclick=\"povHL('[actor_class]', '[pov_safe_label(label)]')\">[pov_name_with_ckey_spans(label)]</span></font></b>"
 
 /// Labels end up inside the page's javascript, so quotes, tags and backslashes cannot survive the trip
 /proc/pov_safe_label(text)
@@ -887,7 +1039,7 @@
 	var/list/shown = list()
 	for(var/witness_key in witnesses)
 		var/witness_entry = witnesses[witness_key]
-		var/shown_name = log_normalize_html(witness_display_name(witness_entry))
+		var/shown_name = pov_name_with_ckey_spans(witness_display_name(witness_entry))
 		var/tag = witness_tag(witness_entry)
 		var/code = text2num(tag)
 		var/mark = tag ? (marks[tag] || (code ? pov_numpad_arrow(num2text(10 - code)) : null)) : null

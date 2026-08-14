@@ -1710,7 +1710,7 @@
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, target = spread_to.ckey)
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
