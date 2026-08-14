@@ -109,6 +109,7 @@
 #define SUITOR		(1<<8)
 #define PRINCE		(1<<9)
 #define CLERK 		(1<<10)
+#define BARON		(1<<11)
 
 #define GARRISON		(1<<1)
 
@@ -122,6 +123,7 @@
 #define SHERIFF		(1<<7)
 #define VETERAN		(1<<8)
 #define BOGMASTER	(1<<9)
+#define RETAINER	(1<<10)
 
 #define CHURCHMEN		(1<<2)
 

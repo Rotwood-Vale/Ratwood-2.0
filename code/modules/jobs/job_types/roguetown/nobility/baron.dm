@@ -1,5 +1,6 @@
 /datum/job/roguetown/baron
 	title = "Baron"
+	flag = BARON
 	department_flag = NOBLEMEN
 	faction = "Station"
 	total_positions = 1

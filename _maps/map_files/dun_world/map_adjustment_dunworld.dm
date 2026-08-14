@@ -20,6 +20,7 @@
 		/datum/job/roguetown/slaver,
 		/datum/job/roguetown/rockhillslave,
 		/datum/job/roguetown/baron,
+		/datum/job/roguetown/baron_retainer,
 		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
