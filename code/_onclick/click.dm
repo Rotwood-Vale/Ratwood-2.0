@@ -368,6 +368,10 @@
 			changeNext_move(adf)
 		UnarmedAttack(A,1,params)
 
+	break_invisibility()
+
+///Drops any active invisibility spell. Call from anything that should give away a hidden mob.
+/mob/proc/break_invisibility()
 	var/invis_timer = mob_timers[MT_INVISIBILITY]
 	if(invis_timer > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
