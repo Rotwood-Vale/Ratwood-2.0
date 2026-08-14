@@ -249,7 +249,7 @@
 		oxy = target.getOxyLoss()
 		toxin = target.getToxLoss()
 		origin = get_turf(target)
-		blood = target.blood_volume
+		blood = target.get_blood_volume()
 		var/datum/status_effect/fire_handler/fire_stacks/fire_status = target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 		firestacks = fire_status?.stacks
 		var/datum/status_effect/fire_handler/fire_stacks/sunder/sunder_status = target.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder)
@@ -280,14 +280,14 @@
 			target.adjustOxyLoss(oxynew*-1 + oxy)
 		if(toxinnew>toxin)
 			target.adjustToxLoss(target.getToxLoss()*-1 + toxin)
-		if(target.blood_volume<blood)
-			target.blood_volume = blood
+		if(target.get_blood_volume()<blood)
+			target.set_blood_volume(blood)
 	else
 		target.adjustBruteLoss(brutenew*-1 + brute)
 		target.adjustFireLoss(burnnew*-1 + burn)
 		target.adjustOxyLoss(oxynew*-1 + oxy)
 		target.adjustToxLoss(target.getToxLoss()*-1 + toxin)
-		target.blood_volume = blood
+		target.set_blood_volume(blood)
 	playsound(target.loc, 'sound/magic/timereverse.ogg', 100, FALSE)
 
 /obj/effect/proc_holder/spell/invoked/stasis/proc/play_indicator(mob/living/carbon/target, icon_path, overlay_name, clear_time, overlay_layer)
@@ -442,7 +442,7 @@
 			revert_cast()
 			return FALSE
 
-		if(target.blood_volume >= BLOOD_VOLUME_NORMAL)
+		if(target.get_blood_volume() >= BLOOD_VOLUME_NORMAL)
 			to_chat(UH, span_warning("Their lyfeblood is at capacity. There is no need."))
 			revert_cast()
 			return FALSE
@@ -470,14 +470,14 @@
 				blood_price = 1.25
 		if(user_skill > SKILL_LEVEL_NOVICE)
 			blood_vol_restore += vol_per_skill * user_skill
-		var/max_loops = round(UH.blood_volume / blood_price, 1) * 2	// x2 just in case the user is trying to fill themselves up while using it.
+		var/max_loops = round(UH.get_blood_volume() / blood_price, 1) * 2	// x2 just in case the user is trying to fill themselves up while using it.
 		var/datum/beam/bloodbeam = user.Beam(target,icon_state="blood",time=(max_loops * 5))
 		for(var/i in 1 to max_loops)
-			if(UH.blood_volume > (BLOOD_VOLUME_SURVIVE / 2))
+			if(UH.get_blood_volume() > (BLOOD_VOLUME_SURVIVE / 2))
 				if(do_after(UH, delay))
-					target.blood_volume = min((target.blood_volume + blood_vol_restore), BLOOD_VOLUME_NORMAL)
-					UH.blood_volume = max((UH.blood_volume - blood_price), 0)
-					if(target.blood_volume >= BLOOD_VOLUME_NORMAL && !user_informed)
+					target.set_blood_volume(min((target.get_blood_volume() + blood_vol_restore), BLOOD_VOLUME_NORMAL))
+					UH.set_blood_volume(max((UH.get_blood_volume() - blood_price), 0))
+					if(target.get_blood_volume() >= BLOOD_VOLUME_NORMAL && !user_informed)
 						to_chat(UH, span_info("They're at a healthy blood level, but I can keep going."))
 						user_informed = TRUE
 				else

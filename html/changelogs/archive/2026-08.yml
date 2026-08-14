@@ -252,3 +252,59 @@
   - balance: Axians and Abyssorites no longer freeze when swimming in cold water
   kimesik:
   - balance: Adventurer-Monk get 1 less WIL and CON.
+2026-08-12:
+  Heheniy:
+  - bugfix: Migrant's name and job no longer shows twice on examine
+  Kroto-Ker:
+  - rscadd: Aerosol Wave
+  - balance: Reworks Aerosolize.
+  PPooch:
+  - bugfix: Using cure rot surgery to remove rot when you have been bit but not actually
+      infected, will no longer strike you dead
+  Xander3359:
+  - balance: Mounts now experience slowdown when going through water.
+  Yuckuza:
+  - rscadd: Ported all of the blacksteel weapons from Azure Peak, adjusted to work
+      with ratwood combat and balance.
+  - rscadd: Ported all of the blacksteel tools from Azure Peak; also ported Azure's
+      much cleaner hammer and chisel shared procs
+  - rscadd: 'Added the Azure Peak donator skin urumis as a new subtype of whips. More
+      force than whips, but all their intents require
+
+      charge time. Additionally, they have lower integrity and require more to craft.'
+  - rscadd: Gave bronze whip and silver stake knife proper dedicated sprites.
+  - rscadd: As a consequence of the blacksteel variant having it, you can now attach
+      a banner to the steel lance
+  - balance: Lance intent now has blunt chip, at full charge 32 damage chips through.
+  - balance: Blacksteel smelting ratio changed to 2 silver and 2 steel.
+  - balance: You can no longer smelt blessed silver for regular silver.
+  mushy:
+  - rscadd: The Herald of Progress, a wretch bard.
+2026-08-13:
+  Arturlang:
+  - bugfix: blood UI should sync up better now
+  - bugfix: pain not updating sometimes
+  - bugfix: talk overlay should no longer get stuck and point in hand shouldn't stay
+      red anymore
+  Lezerchil:
+  - rscadd: Added 2 new booleans to manage AI behaviour
+  - rscadd: NPCs recieve a set of new actions they could take based on their designated
+      behaviour.
+  - balance: 'The following NPCs are now considered smart combatants: skeleton liches,
+      skeleton soldiers, skeleton dreadnoughts, bog deserters, highwaymen, deranged
+      knights, dungeon lizardmen, thieves.'
+  - balance: 'The following NPCs are now considered special attackers: militia, bog
+      deserters, skeleton dreadnoughts, skeleton liches, orcs, sea raiders, dungeon
+      lizardmen, drow, deranged knights.
+
+      :cl:'
+  RadiantFlash7:
+  - rscadd: Re-adds smithy apprentice in the form of guild apprentice
+  zeroisthebiggay:
+  - balance: veterans can no longer train an infinite number of people
+  - balance: veterans have access to a spell will give a chosen individual the ability
+      to train their weapon skills beyond expert and gain a charge to this spell each
+      time they go to sleep
+  - balance: combat skills are hardcapped at expert now which in practice doesn't
+      really mean anything but it means you won't be able to level up your weapon
+      skills by fighting a vampire lord in melee combat
