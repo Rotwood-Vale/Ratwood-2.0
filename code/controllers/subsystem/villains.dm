@@ -96,6 +96,13 @@
 /datum/antag_setup/New(mob/living/carbon/human/H)
 	user = H
 	H.antag_setup = src
+	var/waited = 0
+	while(!H.advjob)
+		sleep(1 SECONDS)
+		waited += 1 SECONDS
+		if(QDELETED(H) || waited > 60 SECONDS)
+			qdel(src)
+			return
 	for(var/key in stat_keys)
 		stats[key] = H.get_stat_level(key)
 		defaults[key] = stats[key]
