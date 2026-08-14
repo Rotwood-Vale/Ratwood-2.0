@@ -322,7 +322,7 @@
 /datum/crafting_recipe/roguetown/engineering/stickshaft
 	name = "wooden shaft"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/shaft
+	result = list(/obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft)
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	verbage_simple = "engineer"
