@@ -5,7 +5,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/refugee
 	subclass_languages = list(/datum/language/celestial)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_NALEDI)
+	traits_applied = list(TRAIT_STEELHEARTED)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_PER = 1,
@@ -27,7 +27,7 @@
 	var/path = input(H, "Choose your past.", "WHAT DID WAR TAKE FROM YOU?") as anything in paths
 	var/complex = input(H, "How tightly bound to traditions you are?", "I HATE DJINNS!") as anything in hmm
 
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/neck/roguetown/psicross/naledi
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
@@ -55,6 +55,7 @@
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)
 
 		if("Conclave Dropout (Hierophant)")
 			H.set_patron(/datum/patron/old_god)
@@ -62,9 +63,7 @@
 			r_hand = /obj/item/rogueweapon/woodstaff
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 			cloak = /obj/item/clothing/cloak/hierophant
-			backpack_contents += list(/obj/item/book/spellbook = 1)
-			backpack_contents += list(/obj/item/chalk = 1)
-
+			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -89,8 +88,7 @@
 			to_chat(H, span_warning("You were being being taught the ways of a Pontifex, training in body and will. The Fall of Naledi a hundred yils ago left whatever your training incomplete, whatever it's source. Shunned for your survival and left without a master, you wandered the deserts with unfinished discipline."))
 			r_hand = /obj/item/rogueweapon/katar
 			armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-			backpack_contents += list(/obj/item/chalk = 1)
-			backpack_contents += list(/obj/item/book/spellbook = 1)
+			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/rogueweapon/huntingknife = 1)
 
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
@@ -113,7 +111,7 @@
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 			if(H.mind)
-				var/weapons = list("Path of War","Path of Control","Path of Shadows","Path of Survival")
+				var/weapons = list("Path of War","Path of Control","Path of Shadows", "Path of Survival")
 				var/weapon_choice = input(H, "Choose your path.", "WHAT UNFINISHED PATH DO YOU WALK?") as anything in weapons
 				switch(weapon_choice)
 					if("Path of War")//Weak combat stuff only
@@ -122,8 +120,16 @@
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
 					if("Path of Shadows")//Sneaky trickster punchmage
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
+					if("Path of Survival")//Trade magic for skills
+						H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_JOURNEYMAN, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_APPRENTICE, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_APPRENTICE, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
 
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
+				H.mind?.adjust_spellpoints(2)
 		if("Abandoned Diviner (Vizier)")
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
@@ -131,7 +137,7 @@
 			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 			cloak = /obj/item/clothing/cloak/hierophant
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
-
+			backpack_contents += list(/obj/item/rogueweapon/huntingknife = 1)
 
 			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)

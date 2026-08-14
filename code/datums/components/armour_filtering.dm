@@ -51,12 +51,14 @@
 
 	return
 
-/datum/component/armour_filtering/proc/on_drop()
+/datum/component/armour_filtering/proc/on_drop(datum/source, mob/dropper)
 	SIGNAL_HANDLER
 	var/obj/item/I = parent
 	var/mob/living/carbon/human/user
 
-	if(ishuman(I.loc))
+	if(ishuman(dropper))
+		user = dropper
+	else if(ishuman(I.loc))
 		user = I.loc
 
 	if(!user)
@@ -68,14 +70,14 @@
 
 	for(var/thing in user.contents)
 		if(!isclothing(thing))
-			return
+			continue
 		var/obj/item/clothing/worn_thing = thing
 		if(worn_thing == I)
 			continue
 		if(!(worn_thing.item_flags & IN_INVENTORY))
-			return
+			continue
 		if(worn_thing.item_flags & IN_STORAGE)
-			return
+			continue
 		var/list/datum/component/armour_filtering/comps = worn_thing.GetComponents(/datum/component/armour_filtering)
 		if(!comps)
 			continue

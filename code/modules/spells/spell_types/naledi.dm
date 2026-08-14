@@ -220,6 +220,9 @@
 						target.apply_status_effect(/datum/status_effect/debuff/revived)
 						target.visible_message(span_blue("[user]'s Lux is forcefully torn away as [target]'s soul is rewound back into their body!"),	span_blue("A distant darkness releases its grip on me. I wake once more, feeling the remnants of a dying light..."))
 					return TRUE
+				else
+					revert_cast()
+					return FALSE
 	if(isliving(target))
 		var/mob/living/carbon/C = target
 		C.apply_status_effect(/datum/status_effect/buff/stasis)
@@ -252,9 +255,9 @@
 	var/burnnew = target.getFireLoss()
 	var/oxynew = target.getOxyLoss()
 	var/toxinnew = target.getToxLoss()
-	target.adjust_fire_stacks(firestacks)
-	target.adjust_fire_stacks(sunderfirestacks, /datum/status_effect/fire_handler/fire_stacks/sunder)
-	target.adjust_fire_stacks(divinefirestacks, /datum/status_effect/fire_handler/fire_stacks/divine)
+	target.set_fire_stacks(firestacks || 0)
+	target.set_fire_stacks(sunderfirestacks || 0, /datum/status_effect/fire_handler/fire_stacks/sunder)
+	target.set_fire_stacks(divinefirestacks || 0, /datum/status_effect/fire_handler/fire_stacks/divine)
 	if(target.has_status_effect(/datum/status_effect/buff/convergence))
 		if(brutenew>brute)
 			target.adjustBruteLoss(brutenew*-1 + brute)
@@ -337,8 +340,10 @@
 	var/obj/effect/temp_visual/origin_restoration/V = new
 	target.vis_contents += V
 	if(target.has_status_effect(/datum/status_effect/buff/accel))
+		revert_cast()
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/buff/haste))
+		revert_cast()
 		return FALSE
 	var/turf/user_turf = get_turf(owner)
 	new /obj/effect/temp_visual/origin_restoration_burst(user_turf, NORTHEAST)
@@ -405,7 +410,8 @@
 		afterimage_active = FALSE
 	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
 		owner.apply_status_effect(/datum/status_effect/debuff/decel, 8 SECONDS)
-	owner.apply_status_effect(/datum/status_effect/debuff/decel, 6 SECONDS)
+	else
+		owner.apply_status_effect(/datum/status_effect/debuff/decel, 6 SECONDS)
 
 	to_chat(owner, span_red("Time catches up with me, with its toll."))
 
@@ -532,8 +538,7 @@
 
 /datum/status_effect/debuff/divergence/on_creation(mob/living/new_owner, mob/living/new_caster)
 	. = ..()
-	caster = new_caster
-	if(caster.has_status_effect(/datum/status_effect/buff/convergence))
+	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
 		heal_per_fragment = 19
 		damage_per_fragment = 27
 
@@ -698,6 +703,8 @@
 
 /obj/effect/divergence_fragment/Crossed(atom/movable/AM)
 	. = ..()
+	if(!isliving(AM))
+		return
 	var/mob/living/L = AM
 	if(L.cmode)
 		to_chat(L, span_warning("I need a calm mind to properly match the simulacrum's frequency. Turn Combat Mode off!"))
@@ -706,6 +713,8 @@
 
 /obj/effect/divergence_fragment/Bumped(atom/movable/AM)
 	. = ..()
+	if(!isliving(AM))
+		return
 	var/mob/living/L = AM
 	if(L.cmode)
 		to_chat(L, span_warning("I need a calm mind to properly match the simulacrum's frequency. Turn Combat Mode off!"))
@@ -722,9 +731,9 @@
 	var/mob/living/M = master.owner
 
 	if(M)
-		M.adjustBruteLoss(-master.damage_per_fragment)
-		M.adjustFireLoss(-master.damage_per_fragment)
-		M.adjustOxyLoss(-master.damage_per_fragment)
+		M.adjustBruteLoss(-master.heal_per_fragment)
+		M.adjustFireLoss(-master.heal_per_fragment)
+		M.adjustOxyLoss(-master.heal_per_fragment)
 		M.visible_message(span_blue("[src] rejoins [M]'s timeline."), span_blue("A lost possibility settles back into place, restoring you."))
 	master.fragments -= src
 
@@ -996,11 +1005,13 @@
 		return
 	if(get_turf(owner) == get_turf(src))
 		if(owner.cmode)
+			owner.remove_status_effect(/datum/status_effect/buff/invigoration)
 			if(!owner.has_status_effect(/datum/status_effect/buff/circle_of_power))
 				var/datum/status_effect/buff/circle_of_power/B = owner.apply_status_effect(/datum/status_effect/buff/circle_of_power)
 				if(B)
 					B.source_circle = src
 		else
+			owner.remove_status_effect(/datum/status_effect/buff/circle_of_power)
 			owner.apply_status_effect(/datum/status_effect/buff/invigoration, 5 SECONDS, 25, 15)
 		if(!length(active_beams))
 			create_beams()

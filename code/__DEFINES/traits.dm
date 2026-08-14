@@ -269,7 +269,6 @@
 #define TRAIT_GOODWRITER "Great Writer"
 #define TRAIT_NODEF "Recklessness"
 #define TRAIT_LEYLINE_HASTE "Leyline's Clarity"
-#define TRAIT_SWIFTCAST "Spell Acceleration"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
 /// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
@@ -526,7 +525,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
 	TRAIT_NODEF = span_warning("I expose myself in battle completely."),
 	TRAIT_LEYLINE_HASTE = span_warning("I can fully see and use the threads which bind the world together! Spell casting time and cooldowns are 25% faster now."),
-	TRAIT_SWIFTCAST = span_warning("I am magically accelerating my words of power and evocations! I can instantly cast a spell."),
 	TRAIT_PONYGIRL_RIDEABLE = span_notice("Willing or not, I've been trained to carry other people's burdens."),
 	TRAIT_VENOMOUS = span_necrosis("I am venomous. When chewing someone I've bitten, I will inject venom."),
 	TRAIT_COMBAT_AWARE = span_notice("My honed senses and intuition allow me to spot notable things in the midst of battle with ease."),
