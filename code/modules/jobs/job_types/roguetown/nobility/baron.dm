@@ -44,6 +44,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(/obj/item/roguekey/baron = 1)
 
 // Baron subclasses
 

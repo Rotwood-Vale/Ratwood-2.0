@@ -486,6 +486,20 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/baron
 	name = "Baron"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/baronlate
+	name = "Baron Late"
+	jobspawn_override = list("Baron")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/retainer
+	name = "Retainer"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/retainerlate
+	name = "Retainer Late"
+	jobspawn_override = list("Retainer")
+	delete_after_roundstart = FALSE
 	
 /obj/effect/landmark/start/lich
 	name = "lich"

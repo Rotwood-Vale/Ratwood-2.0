@@ -61,7 +61,7 @@
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/angle
-	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
 		var/weapons = list("Polearm", "Bludgeon", "Sword & Shield", "Flail & Shield", "Greatsword")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -123,7 +123,7 @@
 	r_hand = /obj/item/rogueweapon/sword/short/kazengun
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	backl = /obj/item/rogueweapon/scabbard/sword/kazengun
-	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath/kazengun = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath/kazengun = 1)
 
 /datum/advclass/retainer/greyleaf
 	name = "Greyleaf"
@@ -157,7 +157,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
-	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
 		var/helmets = list("Bear", "Goat", "Wolf")
 		var/helmet_choice = input(H, "Choose your warden skull helm.", "HELMET SELECTION") as anything in helmets

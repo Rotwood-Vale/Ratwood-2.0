@@ -800,6 +800,12 @@
 	icon_state = "brownkey"
 	lockid = "BaronManor"
 
+/obj/item/roguekey/baronguest
+	name = "Lowtown Manor Guest Key"
+	desc = "A key to the guest rooms of the Lowtown Manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorGuest"
+
 /obj/item/roguekey/slaverhouse
 	name = "Slaver's Office Key"
 	desc = "A key to the Slaver Office in Lowtown"
