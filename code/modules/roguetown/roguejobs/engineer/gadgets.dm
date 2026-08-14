@@ -73,4 +73,4 @@
 	created_item = /obj/item/construct_skill_core
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
-	craftdiff = 3
+	craftdiff = 2
