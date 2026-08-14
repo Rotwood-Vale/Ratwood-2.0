@@ -33258,6 +33258,17 @@
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woodsrat/south)
+"hlb" = (
+/obj/structure/mineral_door/bars,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/magician/rockhill)
 "hld" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/winch{
@@ -384761,7 +384772,7 @@ bVb
 vUs
 bVb
 bVb
-aoK
+hlb
 bVb
 bVb
 fDu
