@@ -417,6 +417,9 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
 		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+	for(var/obj/effect/proc_holder/spell/self/martial_prowess/martialspell in mind.spell_list)
+		to_chat(mind.current, span_nicegreen("My old body feels rested and renewed. I can take on another protegé."))
+		martialspell.charges++
 	close_ui()
 
 /datum/sleep_adv/Topic(href, list/href_list)

@@ -99,3 +99,212 @@
       down.
   skippymcspeederton-dot:
   - balance: Added Dark Vision to Dark Elves
+2026-08-07:
+  Arturlang:
+  - bugfix: ghosts can no longer make you close your eyes while looking through your
+      eyes
+  Heheniy:
+  - bugfix: you can no longer blood transfer miracle yourself
+  ariaworld:
+  - bugfix: Werewolf chewing now rolls infection attempts, just like biting.
+  - rscadd: Werewolf successful infection will now be told to the biter.
+  ophaq:
+  - qol: Makes surgery speeds a bit faster.
+  - qol: Made surgeries heal a bit more based off skill and base values.
+  - qol: Adjusted CPR to be a bit more rewarding on success.
+  - qol: Makes physicians kinda better than miracles now. Surgeries heal a bit more
+      too.
+  - rscadd: Pestran acolytes get medicine expert trait.
+  - rscadd: Bumped extract lux surgery to expert requirement.
+  - qol: Implemented a partial port and expanded a bit upon AP's pick bumping. Basically,
+      you can just walk into a rock wall to initiate auto dig on it. Requires apprentice
+      mining.
+  - qol: Added in auto woodcutting.
+  - rscadd: Added toggles for both these features in the new fancy toggles menu. Pick
+      bumping is bundled in with auto digging.
+  - qol: Chiseling stones will now repeat for each stone on the turf.
+  - qol: Boulders now inherit the same do_after rock walls get when mining them.
+  - rscadd: Removed mason set and carpenter set for commoner. Now it the craftsman
+      set. It gives you the traits that let you get the most out of wood and chiseling
+      and a slightly nicer axe + hammer.
+2026-08-08:
+  UntoldTactics:
+  - balance: Psydonic Grand Mace now has the same wielded defense bonus as
+  Yuckuza:
+  - bugfix: Hooksword disarm intent now properly grants bonus success chance when
+      dual-wielded.
+  wikimody:
+  - bugfix: gragar net is no longer considered secular, seer doesn't instantly forget
+      heretics he sees
+2026-08-09:
+  AllCorruptingWyrm:
+  - rscadd: Ports Wretched Toilers from Scarlet Reach. Rejoice, minions! For you are
+      WRETCHED! And you must TOIL!!
+  Ephemeralis:
+  - qol: Bards now always benefit from their own beneficial melodies as if they were
+      a member of the audience without needing to spend a slot on themselves.
+  - qol: Bards with inspiration that are holding an instrument in-hand (and with no
+      MMB intents active) can MMB on other people to quickly add or remove them from
+      their inspiration audience list.
+  - qol: T3 bards can now use Rhythm without needing an instrument in their off-hand,
+      but only if they're able to sing. Mouthgrabs, muzzles, silences and muting effects
+      will prevent this as expected.
+  Heheniy:
+  - bugfix: church quests reroll cooldown no longer shows decimals of minutes
+  IronDragoon:
+  - rscadd: Feral Appetite lets you eat organs as well now
+  RadiantFlash7:
+  - rscadd: Fire Cascade/firewalker spells
+  - rscadd: telegraphing penalties for wearing armor without traits
+  - rscadd: visible times for spell cooldowns
+  - rscdel: Aersolize removed
+  - bugfix: A host of fixes related to charge time/clickdelay for spells
+  - bugfix: light effects properly removed from mobs from spells
+  UntoldTactics:
+  - balance: Inquisitor's Ordinator and Inspector sub-class now have journeyman miracle
+      skill.
+  Yuckuza:
+  - balance: Avantyne Froggemund now has the same narrow vision cone as the steel
+      froggemund.
+  kimesik:
+  - rscadd: Heretic Monk wretch class, 1 slot.
+  ophaq:
+  - rscadd: Adds stonebeard reserve and butterhairs to brewing recipes. Dwarves only.
+      They require a mix of grains. Butterhairs requires butter (who would've guessed)
+      while stonebeard requires some potato cuts. Increased their booze powers too.
+      Butterhairs is also buttery colored now.
+  - qol: Adjusts dwarven drunken healing from 0.2 -> 0.6!
+  - rscadd: Adds in dwarven armor and weapon recipes for smithing. They are EXPENSIVE!
+      Dwarf only, no books. You gotta be a dwarf to make them (and wear them, I'm
+      pretty sure).
+  - bugfix: Fixes several loadout issues with dwarven mercenaries and gave them a
+      great weapon strap if they choose grand mace. Both classes have increased smithing
+      levels to account for recent changes. Dwarven smith is more of an actual smith
+      now than some subpar one.
+  - bugfix: Fixes onmob dwarven gauntlets to actually show. Adjusted dwarven smith
+      helmet a pixel.
+  - rscadd: Removes underdweller from mercenary classes and moved it to race exclusive
+      class for adventurers. Adjusted their loadout accordingly so they are not a
+      mercenary anymore.
+  - qol: Gives ranger warden a sheath for their seax. No more unprotected seax on
+      my watch.
+  - qol: Forester gets a warden seax instead of a hunting knife.
+  - rscadd: Foresters now get unique armor that is based off the ranger one. It has
+      slightly more durability and plate stats. Can be upgraded to be like a cuirass.
+  - rscadd: Foresters can choose between an axe or sword now. They get a cool steel
+      messer as their primary weapon with an iron shield if they pick swords. Expert
+      in swords or expert in axes. Your choice.
+  - balance: Bumped shield skill up from apprentice to journeyman.
+  yupup123:
+  - bugfix: Fixes the subclass preview menu for some classes missing theirs (like
+      suitor and refugee).
+  zoktiik:
+  - qol: Added a new "Disable Red Flashes" toggle that prevents the game from showing
+      you red or white "flash" overlays, i.e. from pain, combat, sparks. This is not
+      foolproof, but should affect the vast majority of cases.
+  - qol: 'Pain overlay for "Disable Red Flashes" ON: The flashes of pain you get on-screen
+      are replaced with a more "static" red-tinted overlay. This may get replaced
+      in the future.'
+  - qol: '"Disable Red Flashes" ON: Prolonged bright flashing effects, such as those
+      from explosions and miracles, are changed to be fade-from-black instead. You
+      will receive a small chat message indicating the momentary blindness.'
+  - bugfix: 'Fix for when "Disable Red Flashes" is OFF: The small blinking painflash
+      that used to begin >40% pain, and persisted until you fully healed (<5% pain)
+      now appropriately clears when below 40% pain.'
+  - code_imp: Added a new wrapper proc fullscreen_redflash that checks the new no_redflash
+      preference, and returns the exact same thing flash_fullscreen does (or null
+      if flashes are disabled). This way your code can check if the prefs blocked
+      it.
+2026-08-10:
+  Arturlang:
+  - bugfix: ' blood duping with bloodpool'
+  - bugfix: torpor giving you blood, now uses 2 blood a tick
+  - bugfix: vampire abilities affecting fellow-clan members
+  EvenInDeathIStillServe:
+  - rscadd: Adds a Tall Eyes Outer head marking.
+  SillyMoff:
+  - qol: add info about energy and stamina while examine it
+  Slavica:
+  - rscadd: Added new variant of the Ponytail ( Witcher ) hairstyle
+  UntoldTactics:
+  - balance: Inquisitor ordinator and inspector sub-class have devotion limits raised
+      to 400 (from 250) and cleric regen set to minor (previous weak)
+  yupup123:
+  - balance: Powders can't be force inhaled through masks.
+  - balance: Powders take just as long as a potion to be force inhaled.
+  - bugfix: Fixes the bug that causes rolled assassins to not properly take up the
+      slot or leave a slot open.
+2026-08-11:
+  Ephemeralis:
+  - balance: Churchlings can now use T2 miracles, up from T1.
+  - rscadd: Added the 'Neophyte' churchling advclass, essentially a medium-armored
+      templar squire with journeyman weapons. Starts with awful gear and T1 miracles.
+  RadiantFlash7:
+  - bugfix: embedded surgery tools no longer damage on tick
+  - bugfix: miracle heals no longer have a fortify 1.5x buff apply twice if healing
+      someone who's been fortified
+  SillyMoff:
+  - rscadd: ear flicks emote for elfs
+  UntoldTactics:
+  - bugfix: Heirophant's kandys now has a proper integrity value, equivilient to a
+      padded gambeson.
+  Xander3359:
+  - balance: Axians and Abyssorites no longer freeze when swimming in cold water
+  kimesik:
+  - balance: Adventurer-Monk get 1 less WIL and CON.
+2026-08-12:
+  Heheniy:
+  - bugfix: Migrant's name and job no longer shows twice on examine
+  Kroto-Ker:
+  - rscadd: Aerosol Wave
+  - balance: Reworks Aerosolize.
+  PPooch:
+  - bugfix: Using cure rot surgery to remove rot when you have been bit but not actually
+      infected, will no longer strike you dead
+  Xander3359:
+  - balance: Mounts now experience slowdown when going through water.
+  Yuckuza:
+  - rscadd: Ported all of the blacksteel weapons from Azure Peak, adjusted to work
+      with ratwood combat and balance.
+  - rscadd: Ported all of the blacksteel tools from Azure Peak; also ported Azure's
+      much cleaner hammer and chisel shared procs
+  - rscadd: 'Added the Azure Peak donator skin urumis as a new subtype of whips. More
+      force than whips, but all their intents require
+
+      charge time. Additionally, they have lower integrity and require more to craft.'
+  - rscadd: Gave bronze whip and silver stake knife proper dedicated sprites.
+  - rscadd: As a consequence of the blacksteel variant having it, you can now attach
+      a banner to the steel lance
+  - balance: Lance intent now has blunt chip, at full charge 32 damage chips through.
+  - balance: Blacksteel smelting ratio changed to 2 silver and 2 steel.
+  - balance: You can no longer smelt blessed silver for regular silver.
+  mushy:
+  - rscadd: The Herald of Progress, a wretch bard.
+2026-08-13:
+  Arturlang:
+  - bugfix: blood UI should sync up better now
+  - bugfix: pain not updating sometimes
+  - bugfix: talk overlay should no longer get stuck and point in hand shouldn't stay
+      red anymore
+  Lezerchil:
+  - rscadd: Added 2 new booleans to manage AI behaviour
+  - rscadd: NPCs recieve a set of new actions they could take based on their designated
+      behaviour.
+  - balance: 'The following NPCs are now considered smart combatants: skeleton liches,
+      skeleton soldiers, skeleton dreadnoughts, bog deserters, highwaymen, deranged
+      knights, dungeon lizardmen, thieves.'
+  - balance: 'The following NPCs are now considered special attackers: militia, bog
+      deserters, skeleton dreadnoughts, skeleton liches, orcs, sea raiders, dungeon
+      lizardmen, drow, deranged knights.
+
+      :cl:'
+  RadiantFlash7:
+  - rscadd: Re-adds smithy apprentice in the form of guild apprentice
+  zeroisthebiggay:
+  - balance: veterans can no longer train an infinite number of people
+  - balance: veterans have access to a spell will give a chosen individual the ability
+      to train their weapon skills beyond expert and gain a charge to this spell each
+      time they go to sleep
+  - balance: combat skills are hardcapped at expert now which in practice doesn't
+      really mean anything but it means you won't be able to level up your weapon
+      skills by fighting a vampire lord in melee combat

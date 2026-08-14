@@ -204,6 +204,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(disabling)
 		affected.update_disabled()
 	affected.owner?.mark_zone_selector_hud_dirty()
+	affected.owner?.mark_pain_hud_dirty()
 
 /// Removes this wound from a given bodypart
 /datum/wound/proc/remove_from_bodypart(force = FALSE)
@@ -227,6 +228,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(disabling)
 		affected.update_disabled()
 	affected.owner?.mark_zone_selector_hud_dirty()
+	affected.owner?.mark_pain_hud_dirty()
 
 /// Returns whether or not this wound can be applied to a given mob
 /datum/wound/proc/can_apply_to_mob(mob/living/affected)
@@ -280,6 +282,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		affected.emote("scream", forced = TRUE)
 		affected.death()
 	affected.mark_zone_selector_hud_dirty()
+	affected.mark_pain_hud_dirty()
 
 /// Removes this wound from a given, simpler than adding to a bodypart - No extra effects
 /datum/wound/proc/remove_from_mob()
@@ -296,6 +299,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(mob_overlay)
 		affected.update_damage_overlays()
 	affected.mark_zone_selector_hud_dirty()
+	affected.mark_pain_hud_dirty()
 
 /// Called on handle_wounds(), on the life() proc
 /datum/wound/proc/on_life()
@@ -341,6 +345,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/pain_healed = min(woundpain, round(heal_amount / 2, DAMAGE_PRECISION))
 	whp -= amount_healed
 	woundpain -= pain_healed
+	if(pain_healed)
+		owner?.mark_pain_hud_dirty() //before removal, which nulls owner
 	if(whp <= 0)
 		if(!should_persist())
 			if(bodypart_owner)
@@ -370,6 +376,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		owner?.update_damage_overlays()
 	record_round_statistic(STATS_WOUNDS_SEWED)
 	owner?.mark_zone_selector_hud_dirty()
+	owner?.mark_pain_hud_dirty()
 	return TRUE
 
 /// Checks if this wound has a special infection (zombie or werewolf)
@@ -410,6 +417,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /// Upgrades a wound's stats based on damage dealt. Used mainly by dynamic wounds.
 /datum/wound/proc/upgrade(dam as num)
 	SHOULD_CALL_PARENT(TRUE)	//Don't skip this if you're making new dynamic wounds.
+	owner?.mark_pain_hud_dirty() //subtypes raise woundpain before calling parent
 	return
 
 /datum/wound/proc/update_name()

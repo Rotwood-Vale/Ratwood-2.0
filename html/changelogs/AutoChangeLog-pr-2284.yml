@@ -1,5 +1,0 @@
-author: "ariaworld"
-delete-after: True
-changes:
-  - bugfix: "Werewolf chewing now rolls infection attempts, just like biting."
-  - rscadd: "Werewolf successful infection will now be told to the biter."

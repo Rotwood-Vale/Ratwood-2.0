@@ -40,6 +40,7 @@
 		/datum/advclass/wretch/necromancer,
 		/datum/advclass/wretch/heretic,
 		/datum/advclass/wretch/heretic/spy,
+		/datum/advclass/wretch/heretic/monk,
 		/datum/advclass/wretch/outlaw,
 		/datum/advclass/wretch/outlaw/marauder,
 		/datum/advclass/wretch/lunacyembracer,
@@ -47,8 +48,10 @@
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
 		/datum/advclass/wretch/vigilante,
+		/datum/advclass/wretch/herald_of_progress,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
+		/datum/advclass/wretch/wretchedtoiler,
 		/datum/advclass/wretch/ancientchampion,
 	)
 

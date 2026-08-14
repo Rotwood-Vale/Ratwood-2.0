@@ -157,8 +157,8 @@
 
 /datum/virtue/utility/feral_appetite
 	name = "Feral Appetite"
-	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
-	added_traits = list(TRAIT_NASTY_EATER)
+	desc = "I can eat just about ANYTHING, rotten or poisonous food and tainted water, even entrails..."
+	added_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER)
 
 /datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
 	..()
@@ -194,6 +194,8 @@
 	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
 		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
 			continue //Skip the donator personal item harp.
+		else if(instrument_type == /obj/item/rogue/instrument/ztratocaster)
+			continue // there can only be one.
 		var/obj/item/rogue/instrument/instr = new instrument_type()
 		instruments[instr.name] = instrument_type
 		qdel(instr)  // Clean up the temporary instance
@@ -413,4 +415,3 @@
 		list(/datum/skill/craft/cooking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2)
 	)
-

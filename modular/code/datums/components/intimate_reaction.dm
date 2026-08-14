@@ -581,7 +581,7 @@
 		to_chat(source, span_boldwarning(message))
 
 	if(pain_amt >= PAIN_HIGH_EFFECT)
-		source.flash_fullscreen("redflash3")
+		source.fullscreen_redflash("redflash3")
 		if(prob(70))
 			if(devout_spiked)
 				source.visible_message(span_notice("[source] goes very still, jaw set, as the chastity spikes bite deep — enduring it with deliberate composure."))
@@ -592,7 +592,7 @@
 		return TRUE
 
 	if(pain_amt >= PAIN_MED_EFFECT)
-		source.flash_fullscreen("redflash2")
+		source.fullscreen_redflash("redflash2")
 		if(prob(50))
 			if(devout_spiked)
 				source.visible_message(span_notice("[source] breathes carefully through the bite of the chastity spikes, expression drawn but steady."))
@@ -602,7 +602,7 @@
 				source.visible_message(span_warning("[source] shudders in pain as the chastity spikes dig into their flesh!"))
 		return TRUE
 
-	source.flash_fullscreen("redflash1")
+	source.fullscreen_redflash("redflash1")
 	if(prob(30))
 		if(devout_spiked)
 			source.visible_message(span_notice("[source] shifts slightly as the chastity spikes catch, then stills themselves with quiet deliberateness."))

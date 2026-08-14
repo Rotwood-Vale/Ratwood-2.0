@@ -24,16 +24,21 @@
 
 /datum/coven_power/fae_trickery/darkling_trickery/activate(mob/living/target)
 	. = ..()
-	target.visible_message(span_suicide("[target] is disarmed!"), 
+	if(!.)
+		return
+
+	var/generation = max(owner.get_vampire_generation() || GENERATION_THINBLOOD, GENERATION_THINBLOOD)
+	target.visible_message(span_suicide("[target] is disarmed!"),
 					span_boldwarning("I'm disarmed!"))
 	playsound(get_turf(target), 'sound/magic/mockery.ogg', 40, FALSE)
 	var/turnangle = (prob(50) ? 270 : 90)
 	var/turndir = turn(target.dir, turnangle)
-	var/dist = rand(1, owner.get_vampire_generation())
+	var/dist = rand(1, generation)
 	var/current_turf = get_turf(target)
 	var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
 	target.throw_item(target_turf, FALSE)
-	target.apply_status_effect(/datum/status_effect/debuff/clickcd, (owner.get_vampire_generation() - 1) SECONDS)
+	if(generation > GENERATION_THINBLOOD)
+		target.apply_status_effect(/datum/status_effect/debuff/clickcd, (generation - 1) SECONDS)
 
 //GOBLINISM
 /datum/coven_power/fae_trickery/goblinism
@@ -238,20 +243,20 @@
 	icon_state = "rune1"
 	color = "#4182ad"
 	var/unique = FALSE
-	var/mob/owner
+	var/mob/living/owner
 
 /obj/fae_trickery_trap/Crossed(atom/movable/AM, oldloc)
 	..()
 	if(isliving(AM) && owner)
-		if(AM != owner)
+		var/mob/living/crosser = AM
+		if(AM != owner && !crosser.is_clanmate(owner))
 			if(!unique)
-				var/mob/living/L = AM
 				var/atom/throw_target
 				if(!oldloc)
 					throw_target = get_edge_target_turf(AM, pick(GLOB.cardinals))
 				else
 					throw_target = get_edge_target_turf(AM, get_dir(AM, oldloc))
-				L.apply_damage(20, BRUTE)
+				crosser.apply_damage(20, BRUTE)
 				AM.throw_at(throw_target, rand(8,10), 4, owner, spin = TRUE)
 				qdel(src)
 
@@ -266,8 +271,8 @@
 /obj/fae_trickery_trap/disorient/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && owner)
-		if(AM != owner)
-			var/mob/living/L = AM
+		var/mob/living/L = AM
+		if(AM != owner && !L.is_clanmate(owner))
 			var/rotation = 50
 			for(var/screen_type in L.hud_used?.plane_masters)
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
@@ -290,10 +295,10 @@
 /obj/fae_trickery_trap/drop/Crossed(mob/living/carbon/AM)
 	..()
 	if(iscarbon(AM) && owner)
-		if(AM != owner)
+		if(AM != owner && !AM.is_clanmate(owner))
 			AM.adjustBruteLoss(35)
 			AM.Knockdown(5)
-			AM.visible_message(span_suicide("[AM] is disarmed!"), 
+			AM.visible_message(span_suicide("[AM] is disarmed!"),
 							span_boldwarning("I'm disarmed!"))
 			playsound(get_turf(AM), 'sound/magic/mockery.ogg', 40, FALSE)
 			var/target_turf = get_ranged_target_turf(get_turf(AM), pick(GLOB.cardinals), rand(2, 5))
@@ -369,7 +374,9 @@
 				if(RIDDLE)
 					if(RIDDLE.riddle_text == try_riddle)
 						actual_riddle = RIDDLE
-			target.add_movespeed_modifier("riddle", 5)
+			if(!actual_riddle)
+				to_chat(owner, span_warning("That riddle has slipped your mind."))
+				return
 			actual_riddle.ask(target)
 			owner.say(actual_riddle.riddle_text)
 	else
@@ -490,7 +497,7 @@
 	var/turf/initial = get_turf(owner)
 	INVOKE_ASYNC(src, PROC_REF(aftervisual), initial)
 	for(var/mob/living/carbon/human/viewer in oviewers(range, owner))
-		if(viewer.clan == owner.clan)
+		if(viewer.is_clanmate(owner))
 			continue
 
 		var/turf/T = get_step(viewer, GLOB.flip_dir[viewer.dir])

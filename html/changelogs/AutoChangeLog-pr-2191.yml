@@ -1,0 +1,7 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - balance: "stealing from belts and stealing keys themselves both separately make it 25% harder to be stolen, which can stack"
+  - balance: "a lot more semi-failure states for pickpocketing that show the victim that something was stolen"
+  - balance: "pickpocketing scales now with the speed stat as well for it's success chances, but the victim now also contests their speed in addition to their perception"
+  - rscadd: "new UI for stealing from containers that shows your chances"

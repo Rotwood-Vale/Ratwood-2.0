@@ -1,9 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - qol: "Implemented a partial port and expanded a bit upon AP's pick bumping. Basically, you can just walk into a rock wall to initiate auto dig on it. Requires apprentice mining."
-  - qol: "Added in auto woodcutting."
-  - rscadd: "Added toggles for both these features in the new fancy toggles menu. Pick bumping is bundled in with auto digging."
-  - qol: "Chiseling stones will now repeat for each stone on the turf."
-  - qol: "Boulders now inherit the same do_after rock walls get when mining them."
-  - rscadd: "Removed mason set and carpenter set for commoner. Now it the craftsman set. It gives you the traits that let you get the most out of wood and chiseling and a slightly nicer axe + hammer."

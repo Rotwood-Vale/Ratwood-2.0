@@ -32,7 +32,6 @@
 	)
 
 /datum/outfit/job/roguetown/warden
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	cloak = /obj/item/clothing/cloak/wardencloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
@@ -76,6 +75,7 @@
 
 /datum/outfit/job/roguetown/warden/ranger/pre_equip(mob/living/carbon/human/H)
 	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	neck = /obj/item/clothing/neck/roguetown/coif
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
@@ -127,9 +127,10 @@
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
@@ -152,6 +153,7 @@
 
 /datum/outfit/job/roguetown/warden/forester/pre_equip(mob/living/carbon/human/H)
 	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
@@ -170,11 +172,29 @@
 	H.set_blindness(0)
 
 	if(H.mind)
+		var/weapons = list("Axe", "Sword & Shield")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Axe")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+			if("Sword & Shield")
+				backl = /obj/item/rogueweapon/shield/iron
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/rogueweapon/sword/short/messer
+				backpack_contents = list(
+					/obj/item/storage/keyring/guard = 1,
+					/obj/item/flashlight/flare/torch/lantern = 1,
+					/obj/item/rogueweapon/scabbard/sheath = 1,
+					/obj/item/rogueweapon/huntingknife/idagger/warden_machete = 1,
+					/obj/item/signal_horn = 1
+					)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+
 		var/helmets = list(
-			"Antlers of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
-			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
-			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
-			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"Antlers of the Antelope"   = /obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee,
+			"Skull of the Volf"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee,
+			"Skull of the Ram"          = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat/melee,
+			"Skull of the Bear"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
