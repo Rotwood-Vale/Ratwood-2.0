@@ -18,9 +18,9 @@
 	subclass_stats = list(
 		STATKEY_INT = 1,
 		STATKEY_PER = 1,
-		STATKEY_SPD = 2, // 8 weight instead of 9 full weight
+		STATKEY_SPD = 2, // 7 weight instead of 9 full weight
 		STATKEY_CON = 1,
-		STATKEY_WIL = 2, // Magic + dodge class = Very tiring
+		STATKEY_WIL = 1,
 	)
 	subclass_spellpoints = 10
 	subclass_skills = list(
