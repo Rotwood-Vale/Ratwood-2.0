@@ -245,7 +245,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			continue
 		if(!nearby.can_smell())
 			continue
-		if(!HAS_TRAIT(nearby, TRAIT_NOSTINK))
+		if(HAS_TRAIT(nearby, TRAIT_NOSTINK))
+			continue
+		if(HAS_TRAIT(nearby, TRAIT_NOBREATH))
 			continue
 		if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
 			to_chat(nearby, span_warning("Something nearby reeks."))
@@ -612,7 +614,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(user.advsetup)
 		addtimer(CALLBACK(src, PROC_REF(unintelligible_apply), user), 5 SECONDS)
 		return
-	user.remove_language(/datum/language/common)
+	user.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL)
 	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
 	user.adjust_triumphs(1)
 

@@ -102,6 +102,7 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "no_redflash", "label" = "Anti-Eyestrain Mode", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
@@ -112,6 +113,8 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
+		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
 		list("id" = "combat_strip", "label" = "Combat Mode Stripping", "enabled" = !!(owner.prefs.toggles & CMODE_STRIPPING), "desc" = "Allow opening strip menu while in combat mode."),
 		list("id" = "hide_unavailable_emotes", "label" = "Hide Unavailable Noises", "enabled" = !!owner.prefs.hide_unavailable_emotes, "desc" = "Hide anatomy-specific noise verbs your current body cannot use."),
@@ -122,6 +125,8 @@
 		list("id" = "deadchat", "label" = "Show Deadchat", "enabled" = !!(owner.prefs.chat_toggles & CHAT_DSAY), "desc" = "Receive deadchat messages."),
 		list("id" = "legacy_craft", "label" = "Enable Legacy Craft", "enabled" = !!owner.legacycraft, "desc" = "Use legacy crafting UI/behavior."),
 		list("id" = "roleplay_ads", "label" = "Receive Roleplay Ads", "enabled" = !!(owner.prefs.toggles & ROLEPLAY_ADS), "desc" = "Receive notifications for new roleplay ads."),
+		list("id" = "voting_popup", "label" = "Enable Voting UI Popup", "enabled" = !!owner.prefs.voting_popup, "desc" = "Allow a popup of the voting-ui."),
+	
 	)
 
 	var/list/audio_entries = list(
@@ -136,6 +141,8 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
+		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 	)
 
@@ -169,6 +176,8 @@
 				owner.mob?.toggle_tgui_multiline()
 			if("screen_shake")
 				owner.toggle_screenshake()
+			if("no_redflash")
+				owner.toggle_redflash()
 			if("chat_headshot")
 				owner.set_picinchat()
 			if("masked_examine")
@@ -189,6 +198,10 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autowoodcut")
+				owner.toggle_autowoodcut()
+			if("autopicking")
+				owner.toggle_autopicking()
 			if("show_rolls")
 				owner.show_rolls()
 			if("combat_strip")
@@ -230,8 +243,14 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("facial_branding")
+				owner.toggle_facial_brands()
+			if("sensitive_branding")
+				owner.toggle_sensitive_brands()
 			if("cursed_collars")
 				owner.toggle_cursed_collars()
+			if("voting_popup")
+				owner.toggle_voting_popup()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -269,6 +288,19 @@
 			to_chat(src, "Screen shake enabled.")
 		else
 			to_chat(src, "Screen shake disabled.")
+
+/client/verb/toggle_redflash()
+	set category = "Options"
+	set name = "Toggle Anti-Eyestrain"
+	set hidden = 1
+	if(prefs)
+		prefs.no_redflash = !prefs.no_redflash
+		prefs.save_preferences()
+		if(prefs.no_redflash)
+			to_chat(src, "Your screen will no longer flash red or white from pain or other events.")
+		else
+			to_chat(src, "Your screen will now flash red or white from pain or other events.")
+	mob.update_redflash_pref(prefs.no_redflash)
 
 /client/verb/masked_examine()
 	set category = "Options"
@@ -317,6 +349,30 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autowoodcut()
+	set category = "Options"
+	set name = "Toggle AutoWoodcut"
+	set hidden = 1
+	if(prefs)
+		prefs.autowoodcut = !prefs.autowoodcut
+		prefs.save_preferences()
+		if(prefs.autowoodcut)
+			to_chat(src, "You will now automatically continue chopping trees.")
+		else
+			to_chat(src, "You will no longer automatically continue chopping trees.")
+
+/client/verb/toggle_autopicking()
+	set category = "Options"
+	set name = "Toggle AutoPicking"
+	set hidden = 1
+	if(prefs)
+		prefs.autopicking = !prefs.autopicking
+		prefs.save_preferences()
+		if(prefs.autopicking)
+			to_chat(src, "You will now automatically continue mining rock walls.")
+		else
+			to_chat(src, "You will no longer automatically continue mining rock walls.")
 
 /client/verb/toggle_hide_unavailable_emotes()
 	set category = "Options"
@@ -442,6 +498,30 @@
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
 
+/client/verb/toggle_facial_brands()
+	set category = "Options"
+	set name = "Toggle Facial Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.facial_brands = !prefs.facial_brands
+		prefs.save_preferences()
+		if(prefs.facial_brands)
+			to_chat(src, "Your head area can now be branded by others.")
+		else
+			to_chat(src, "Your head area can no longer be branded by others.")
+
+/client/verb/toggle_sensitive_brands()
+	set category = "Options"
+	set name = "Toggle Sensitive Branding"
+	set hidden = 1
+	if(prefs)
+		prefs.sensitive_brands = !prefs.sensitive_brands
+		prefs.save_preferences()
+		if(prefs.sensitive_brands)
+			to_chat(src, "Your genital and breast organs can now be branded by others.")
+		else
+			to_chat(src, "Your genital and breast organs can no longer be branded by others.")
+
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"
 	set name = "Toggle Edging Content"
@@ -454,6 +534,21 @@
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
 
+/client/verb/toggle_voting_popup()
+	set category = "Options"
+	set name = "Toggle Voting Popup"
+	set hidden = 1
+	if(!prefs)
+		return
+
+	prefs.voting_popup = !prefs.voting_popup
+	prefs.save_preferences()
+	if(prefs.voting_popup)
+		to_chat(src, "You will see a popup of the voting ui as a vote is called.")
+	else
+		to_chat(src, "You will no longer see a popup of the voting ui as a vote is called.")
+
+	
 /client/verb/toggle_cursed_collars() // Toggles cursed collars. Will drop existing collars if toggled off while wearing one
 	set category = "Options"
 	set name = "Toggle Cursed Collars"

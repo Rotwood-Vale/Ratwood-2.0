@@ -578,6 +578,10 @@
 	name = "Ponytail (Witcher)"
 	icon_state = "ponytail_witcher"
 
+/datum/sprite_accessory/hair/head/ponytailwitcheralt
+	name = "Ponytail (Witcher Alt)"
+	icon_state = "ponytail_witcheralt"
+
 /datum/sprite_accessory/hair/head/fringetail
 	name = "Ponytail (Fringe)"
 	icon_state = "fringetail"

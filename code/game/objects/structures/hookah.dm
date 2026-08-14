@@ -160,14 +160,23 @@
 			return
 
 		if(!(shisha.reagents?.total_volume))
-			return
+			return	
 
 		var/smoke_amount = shisha.reagents.maximum_volume / shisha.reagents.total_volume
-		shisha.reagents.reaction(user, INGEST, min(REAGENTS_METABOLISM / smoke_amount, 1))
-		if(!shisha.reagents.trans_to(user, smoke_amount))
+
+		var/mob/living/carbon/human/smoker = M
+
+		if(smoker != user)
+			user.visible_message(span_danger("[user] attempts to force [smoker] to take a puff from \the [src]."), \
+								span_danger("I attempt to force [smoker] to puff \the [src]."))
+		else
+			to_chat(smoker, span_notice("You take a pleasant puff from \the [src]."))	
+
+		shisha.reagents.reaction(smoker, INGEST, min(REAGENTS_METABOLISM / smoke_amount, 1))
+		if(!shisha.reagents.trans_to(smoker, smoke_amount))
 			shisha.reagents.remove_any(smoke_amount)
 
-		var/turf/my_turf = get_turf(user)
+		var/turf/my_turf = get_turf(smoker)
 		my_turf.pollute_turf(/datum/pollutant/smoke, 5)
 		return FALSE
 
@@ -263,24 +272,33 @@
 		playsound(get_turf(src), 'sound/foley/shisha_gurgle.ogg', rand(50, 70), FALSE, -1)
 		
 		if(!do_after(user, 2 SECONDS, target = user) || QDELETED(src) || !lit)
+
 			return
 
 		if(!reagents?.total_volume)
 			return
 
+		var/mob/living/carbon/human/smoker = M 
 		var/smoke_amount = reagents.maximum_volume / reagents.total_volume
+
+		if(smoker != user)
+			user.visible_message(span_danger("[user] attempts to force [smoker] to take a puff from \the [src]."), \
+								span_danger("I attempt to force [smoker] to puff \the [src]."))
+		else
+			to_chat(smoker, span_notice("You take a pleasant puff from \the [src]."))		
+
 		reagents.reaction(user, INGEST, min(REAGENTS_METABOLISM / smoke_amount, 1))
-		if(!reagents.trans_to(user, smoke_amount))
+		if(!reagents.trans_to(smoker, smoke_amount))
 			reagents.remove_any(smoke_amount)
 
-		var/turf/my_turf = get_turf(user)
-		if(my_turf)
+		var/turf/my_turf = get_turf(smoker)
+		if(my_turf)	
 			my_turf.pollute_turf(/datum/pollutant/smoke, 3)
 
-		to_chat(user, span_notice("You take a pleasant puff from \the [src]."))
+
 
 		if(!reagents.total_volume)
-			to_chat(user, span_warning("\The [src] goes out as the smoking mix burns out."))
+			to_chat(smoker, span_warning("\The [src] goes out as the smoking mix burns out."))
 			extinguish()
 
 	else

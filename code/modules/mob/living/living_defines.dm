@@ -103,7 +103,8 @@
 
 	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
-	var/blood_volume = BLOOD_VOLUME_NORMAL //how much blood the mob has
+	/// How much blood the mob has. Use get_blood_volume()/set_blood_volume()/adjust_blood_volume().
+	VAR_PROTECTED/blood_volume = BLOOD_VOLUME_NORMAL
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 
@@ -192,6 +193,10 @@
 	 * All it does is track when a mob is sneaking so we don't have to constantly reset alpha values as this fucks with how things are intended to be.
 	 * if you really need to cancel someone who is sneaking, call update_sneak_invis(TRUE).*/
 	var/rogue_sneaking = FALSE
+	/**
+	 * are we currently sneaking and thus invisible due to it
+	 */
+	var/sneak_faded = FALSE
 	/* Can be used to change the lighting threshholds at which players can sneak.*/
 	var/rogue_sneaking_light_threshhold = 0.15
 
@@ -218,3 +223,6 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
+	var/no_redflash = FALSE

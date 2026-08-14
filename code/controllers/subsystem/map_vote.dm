@@ -96,10 +96,18 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("No valid maps.")
 		return
 
-	// winner is now DIRECTLY a map_id
-	var/winner_id = pick_weight(valid_maps)
-	var/datum/map_config/winner_cfg = config.maplist[winner_id]
+	// Pick the map with the highest tally
+	var/winner_id
+	var/winner_amount = -1
 
+	for(var/map_id in valid_maps)
+		var/tally = map_vote_cache[map_id]
+
+		if(tally > winner_amount)
+			winner_id = map_id
+			winner_amount = tally
+
+	var/datum/map_config/winner_cfg = config.maplist[winner_id]
 	if(!winner_cfg)
 		send_map_vote_notice("Winner map could not be resolved (bad map_id: [winner_id]).")
 		return
@@ -108,13 +116,19 @@ SUBSYSTEM_DEF(map_vote)
 		send_map_vote_notice("Failed to set next map.")
 		return
 
-	send_map_vote_notice("Map Selected - [span_bold(winner_cfg.map_name)]")
+	var/list/messages = list()
+
+	messages += "Map Selected - [span_bold(next_map_config.map_name)]"
+	messages += ""
+	messages += "The next round will be played on [span_bold(next_map_config.map_name)]."
 
 	// decay winner so it doesn't repeat forever
 	if(length(valid_maps) > 1)
 		map_vote_cache[winner_id] = CONFIG_GET(number/map_vote_minimum_tallies)
 		write_cache()
 		update_tally_printout()
+
+	send_map_vote_notice(arglist(messages))
 
 /datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
 	var/connected_players = length(GLOB.player_list)

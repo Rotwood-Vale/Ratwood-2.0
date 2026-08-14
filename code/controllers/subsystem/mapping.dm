@@ -14,6 +14,9 @@ SUBSYSTEM_DEF(mapping)
 	var/list/map_templates = list()
 	var/list/map_load_marks = list() //The game scans thru the map and looks for marks, then adds them to this list for caching
 
+	/// trait signature -> list of /datum/shared_z_stack, see LoadOtherZ
+	var/list/shared_z_stacks = list()
+
 	var/list/ruins_templates = list()
 	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
@@ -139,6 +142,8 @@ SUBSYSTEM_DEF(mapping)
 	if (!islist(files))  // handle single-level maps
 		files = list(files)
 
+	var/track_memory = !CONFIG_GET(flag/disable_memory_stats)
+
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
 	var/list/parsed_maps = list()
@@ -146,7 +151,11 @@ SUBSYSTEM_DEF(mapping)
 		var/full_path = "[map_folder]/[path]/[file]"
 		if(path == "custom")
 			full_path = "data/custom_maps/[file]"
+		var/parse_start = REALTIMEOFDAY
+		var/parse_rss = track_memory ? get_process_rss_bytes() : null
 		var/datum/parsed_map/pm = new(file(full_path))
+		if(track_memory)
+			log_map_memory("parse", full_path, parse_rss, parse_start)
 		var/bounds = pm?.bounds
 		if (!bounds)
 			errorList |= full_path
@@ -174,12 +183,124 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
+		var/load_start = REALTIMEOFDAY
+		var/load_rss = track_memory ? get_process_rss_bytes() : null
 		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
 			errorList |= pm.original_path
+		if(track_memory)
+			log_map_memory("load", pm.original_path, load_rss, load_start)
 
 	log_game("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 
 	return parsed_maps
+
+/// Distance kept between templates sharing a z-level, must exceed client view range
+#define ZSTACK_PACK_MARGIN 20
+
+/datum/shared_z_stack
+	var/start_z
+	var/z_count
+	var/cursor_x = 1
+	var/cursor_y = 1
+	var/shelf_height = 0
+
+/// Reserves a width x height footprint on this stack, returns list(x, y) or null if it cannot fit
+/datum/shared_z_stack/proc/try_place(width, height)
+	if (cursor_x + width - 1 > world.maxx)
+		cursor_x = 1
+		cursor_y += shelf_height + ZSTACK_PACK_MARGIN
+		shelf_height = 0
+	if (cursor_y + height - 1 > world.maxy || cursor_x + width - 1 > world.maxx)
+		return null
+	. = list(cursor_x, cursor_y)
+	cursor_x += width + ZSTACK_PACK_MARGIN
+	shelf_height = max(shelf_height, height)
+
+/// Builds the compatibility key deciding which maps may share a z-stack:
+/// z-count plus every per-level trait except the cosmetic Name
+/datum/controller/subsystem/mapping/proc/z_stack_signature(list/traits)
+	var/list/parts = list()
+	for (var/list/level in traits)
+		var/list/keys = list()
+		for (var/key in level)
+			if (key == "Name")
+				continue
+			keys += "[key]=[level[key]]"
+		sortTim(keys, GLOBAL_PROC_REF(cmp_text_asc))
+		parts += keys.Join(",")
+	return "[length(traits)]z|[parts.Join("|")]"
+
+/// Loads other_z map configs, automatically packing compatible templates onto shared
+/// z-stacks by their parsed size instead of giving each its own full z-levels
+/datum/controller/subsystem/mapping/proc/LoadOtherZ(list/errorList, list/configs)
+	for (var/datum/map_config/conf in configs)
+		if (islist(conf.map_file))  // multi-file configs use the classic loader untouched
+			LoadGroup(errorList, conf.map_name, conf.map_path, conf.map_file, conf.map_folder, conf.traits, ZTRAITS_STATION)
+			continue
+
+		var/track_memory = !CONFIG_GET(flag/disable_memory_stats)
+		var/start_time = REALTIMEOFDAY
+		var/full_path = "[conf.map_folder]/[conf.map_path]/[conf.map_file]"
+		var/parse_rss = track_memory ? get_process_rss_bytes() : null
+		var/datum/parsed_map/pm = new(file(full_path))
+		if (track_memory)
+			log_map_memory("parse", full_path, parse_rss, start_time)
+		var/list/bounds = pm?.bounds
+		if (!bounds)
+			errorList |= full_path
+			continue
+		var/width = bounds[MAP_MAXX] - bounds[MAP_MINX] + 1
+		var/height = bounds[MAP_MAXY] - bounds[MAP_MINY] + 1
+		var/z_count = bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
+
+		var/list/traits = conf.traits
+		if (!islist(traits) || !length(traits))
+			traits = list()
+			for (var/i in 1 to z_count)
+				traits += list(ZTRAITS_STATION)
+		else if (z_count != traits.len)
+			INIT_ANNOUNCE("WARNING: [traits.len] trait sets specified for [z_count] z-levels in [conf.map_path]!")
+			if (z_count < traits.len)
+				traits.Cut(z_count + 1)
+			while (z_count > traits.len)
+				traits += list(ZTRAITS_STATION)
+
+		var/list/pos
+		var/datum/shared_z_stack/stack
+		var/signature = conf.no_z_sharing ? null : z_stack_signature(traits)
+		if (signature)
+			var/list/candidates = shared_z_stacks[signature]
+			for (var/datum/shared_z_stack/candidate as anything in candidates)
+				pos = candidate.try_place(width, height)
+				if (pos)
+					stack = candidate
+					break
+
+		if (!pos)
+			stack = new
+			stack.start_z = world.maxz + 1
+			stack.z_count = z_count
+			var/i = 0
+			for (var/level in traits)
+				add_new_zlevel("[conf.map_name][i ? " [i + 1]" : ""]", level)
+				++i
+			if (signature)
+				var/list/candidates = shared_z_stacks[signature]
+				if (!candidates)
+					shared_z_stacks[signature] = candidates = list()
+				candidates += stack
+			pos = stack.try_place(width, height) || list(1, 1)
+
+		var/load_start = REALTIMEOFDAY
+		var/load_rss = track_memory ? get_process_rss_bytes() : null
+		if (!pm.load(pos[1], pos[2], stack.start_z, no_changeturf = TRUE))
+			errorList |= pm.original_path
+		if (track_memory)
+			log_map_memory("load", pm.original_path, load_rss, load_start)
+
+		log_game("Loaded [conf.map_name] at [pos[1]],[pos[2]] z[stack.start_z] in [(REALTIMEOFDAY - start_time)/10]s!")
+
+#undef ZSTACK_PACK_MARGIN
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
@@ -208,7 +329,7 @@ SUBSYSTEM_DEF(mapping)
 
 	if(otherZ.len)
 		for(var/datum/map_config/OtherZ in otherZ)
-			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.map_folder, OtherZ.traits, ZTRAITS_STATION)
+		LoadOtherZ(FailedZs, otherZ)
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery({"

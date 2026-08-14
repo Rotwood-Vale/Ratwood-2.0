@@ -82,6 +82,12 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/houndgem
+	name = "houndstone gem"
+	icon_state = "topaz_cut"
+	sellprice = 0
+	desc = "A component to make a Houndstone, it looks like a topaz."
+
 /obj/item/roguegem/yellow
 	name = "toper"
 	icon_state = "topaz_cut"

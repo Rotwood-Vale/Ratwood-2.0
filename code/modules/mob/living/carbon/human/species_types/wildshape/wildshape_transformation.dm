@@ -74,7 +74,7 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
+	W.set_blood_volume(blood_volume)
 	W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
@@ -152,7 +152,7 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
+	W.set_blood_volume(blood_volume)
 	W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 

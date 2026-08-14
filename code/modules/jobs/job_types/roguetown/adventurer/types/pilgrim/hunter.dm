@@ -45,8 +45,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/arrows
 	r_hand = /obj/item/storage/meatbag
