@@ -59,6 +59,7 @@
 /datum/outfit/job/roguetown/slaver/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
+	id = /obj/item/scomstone
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	belt = /obj/item/storage/belt/rogue/leather/shalal

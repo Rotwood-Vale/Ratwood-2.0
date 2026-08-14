@@ -2,8 +2,8 @@
 	title = "Slave"
 	department_flag = PEASANTS
 	faction = "Station"
-	total_positions = 6
-	spawn_positions = 6
+	total_positions = 4
+	spawn_positions = 4
 	allowed_races = ACCEPTED_RACES
 	tutorial = "Traded around like common goods you are deprived of your freedom and been trained into an obedient implement of your masters. Whether it be making them rich or making them comfortable you serve at their leisure with your continued well being entirely dependent on your owner's good will."
 	outfit = /datum/outfit/job/roguetown/slave

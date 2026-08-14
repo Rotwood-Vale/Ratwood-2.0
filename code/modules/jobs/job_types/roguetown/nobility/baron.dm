@@ -34,6 +34,7 @@
 
 /datum/outfit/job/roguetown/baron
 	neck = /obj/item/roguekey/manor
+	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 	pants = /obj/item/clothing/under/roguetown/trou/formal
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak
