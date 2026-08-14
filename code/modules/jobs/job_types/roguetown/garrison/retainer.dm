@@ -1,0 +1,183 @@
+/datum/job/roguetown/retainer
+	title = "Retainer"
+	department_flag = GARRISON
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = JCOLOR_SOLDIER
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = ACCEPTED_RACES
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	tutorial = "You hold the trust and responsibility of being the baron's closest confidant. You are tasked with protecting the baron and advising him on any matter he deems necessary. You enjoy the benefits of living in relative luxury and the status that comes with your position, although the higher nobility of the keep look down on you as a minor functionary."
+	display_order = JDO_RETAINER
+	whitelist_req = TRUE
+	outfit = /datum/outfit/job/roguetown/retainer
+	advclass_cat_rolls = list(CTAG_RETAINER = 20)
+	give_bank_account = 30
+	min_pq = 6
+	round_contrib_points = 3
+	cmode_music = 'sound/music/combat_ManAtArms.ogg'
+	social_rank = SOCIAL_RANK_YEOMAN
+	job_subclasses = list(/datum/advclass/retainer/henchman, /datum/advclass/retainer/ronin, /datum/advclass/retainer/greyleaf)
+
+/datum/outfit/job/roguetown/retainer
+	job_bitflag = BITFLAG_GARRISON
+	belt = /obj/item/storage/belt/rogue/leather/black
+	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/scomstone/bad/garrison
+
+/datum/advclass/retainer/henchman
+	name = "Henchman"
+	tutorial = "A brute to back up the baron whenever needed, actions speak louder than words and you are the embodiment of this saying."
+	outfit = /datum/outfit/job/roguetown/retainer/henchman
+	category_tags = list(CTAG_RETAINER)
+	traits_applied = list(TRAIT_MEDIUMARMOR)
+	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 2)
+	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/retainer/henchman/pre_equip(mob/living/carbon/human/H)
+	..()
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	neck = /obj/item/clothing/neck/roguetown/coif/padded
+	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
+	mask = /obj/item/clothing/mask/rogue/facemask/steel
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	if(H.mind)
+		var/weapons = list("Polearm", "Bludgeon", "Sword & Shield", "Flail & Shield", "Greatsword")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Polearm")
+				r_hand = /obj/item/rogueweapon/halberd
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+			if("Bludgeon")
+				r_hand = /obj/item/rogueweapon/mace/maul
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			if("Sword & Shield")
+				r_hand = /obj/item/rogueweapon/sword
+				l_hand = /obj/item/rogueweapon/shield/iron
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			if("Flail & Shield")
+				r_hand = /obj/item/rogueweapon/flail/sflail
+				l_hand = /obj/item/rogueweapon/shield/iron
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+			if("Greatsword")
+				r_hand = /obj/item/rogueweapon/greatsword/grenz
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+
+/datum/advclass/retainer/ronin
+	name = "Ronin"
+	tutorial = "Trained in the ways of Kazengun's warrior philosophers, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him."
+	outfit = /datum/outfit/job/roguetown/retainer/ronin
+	category_tags = list(CTAG_RETAINER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_DUALWIELDER)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4)
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+	)
+
+// Ronin subclass requires the character to be from Kazengun
+/datum/advclass/retainer/ronin/check_requirements(mob/living/carbon/human/H)
+	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
+		return FALSE
+	return ..()
+
+/datum/outfit/job/roguetown/retainer/ronin/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth
+	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
+	r_hand = /obj/item/rogueweapon/sword/short/kazengun
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	backl = /obj/item/rogueweapon/scabbard/sword/kazengun
+	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath/kazengun = 1)
+
+/datum/advclass/retainer/greyleaf
+	name = "Greyleaf"
+	tutorial = "Honorably discharged from the warden corps, you have found new purpose in protecting the baron from the shadows and advising him on matters of Lowtown as someone who has shed blood to protect it."
+	outfit = /datum/outfit/job/roguetown/retainer/greyleaf
+	category_tags = list(CTAG_RETAINER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 2, STATKEY_PER = 3)
+	subclass_skills = list(
+		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/retainer/greyleaf/pre_equip(mob/living/carbon/human/H)
+	..()
+	mask = /obj/item/clothing/head/roguetown/roguehood/warden/antler
+	cloak = /obj/item/clothing/cloak/wardencloak
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
+	backpack_contents = list(/obj/item/roguekey/manor = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	if(H.mind)
+		var/helmets = list("Bear", "Goat", "Wolf")
+		var/helmet_choice = input(H, "Choose your warden skull helm.", "HELMET SELECTION") as anything in helmets
+		switch(helmet_choice)
+			if("Bear")
+				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear
+			if("Goat")
+				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
+			if("Wolf")
+				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
+		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Crossbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltr = /obj/item/quiver/poisonarrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
+			if("Blackhorn Longbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
+				beltr = /obj/item/quiver/poisonarrows
+			if("Recurve Bow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
+				beltr = /obj/item/quiver/poisonarrows

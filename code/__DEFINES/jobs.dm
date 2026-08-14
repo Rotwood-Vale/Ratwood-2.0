@@ -272,6 +272,7 @@
 #define JDO_KNIGHT 8.1
 #define JDO_SQUIRE 8.2
 #define JDO_SERGEANT 8.3
+#define JDO_RETAINER 8.35
 #define JDO_CASTLEGUARD 8.4
 #define JDO_GATEMASTER 8.5
 #define JDO_SHERIFF 8.6

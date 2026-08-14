@@ -93,6 +93,7 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Rookie",
 	"Warden",
 	"Sergeant",
+	"Retainer",
 	"Veteran",
 	"Man at Arms",
 	"Squire",
