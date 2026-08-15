@@ -94,6 +94,8 @@
 			riding_xp_move_counter = 0 //reset counter if not running
 	handle_vehicle_offsets(rider)
 	handle_vehicle_layer()
+	if(driver && driver.IsImmobilized())
+		force_dismount(driver)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
