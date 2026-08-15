@@ -30916,6 +30916,7 @@
 	name = "Lowtown Manor Guest Key";
 	pixel_y = 3
 	},
+/obj/item/storage/belt/rogue/pouch/coins/poor,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "gxM" = (
