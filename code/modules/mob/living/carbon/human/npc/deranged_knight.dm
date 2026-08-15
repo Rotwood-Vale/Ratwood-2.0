@@ -30,6 +30,10 @@ GLOBAL_LIST_INIT(hedgeknight_aggro, world.file2list("strings/rt/hedgeknightaggro
 	var/forced_preset = "" // If set, force a specific preset instead of randomizing.
 	var/never_goon = FALSE // If TRUE, this DK will not spawn goons on creation.
 
+	//We are the biggest and baddest for boss fights... We're smart, and well trained.
+	smart_combatant = TRUE
+	special_attacker = TRUE
+
 /mob/living/carbon/human/species/human/northern/deranged_knight/retaliate(mob/living/L)
 	var/newtarg = target
 	.=..()

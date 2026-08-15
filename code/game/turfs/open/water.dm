@@ -504,7 +504,7 @@
 				chance = 1
 			if(!prob(chance))
 				return
-			if(C.blood_volume <= 0)
+			if(C.get_blood_volume() <= 0)
 				return
 			var/list/zonee = list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, BODY_ZONE_CHEST)
 			for(var/i = 0, i <= zonee.len, i++)
@@ -544,7 +544,7 @@
 				chance = 2
 			if(!prob(chance))
 				return
-			if(C.blood_volume <= 0)
+			if(C.get_blood_volume() <= 0)
 				return
 			var/list/zonee = list(BODY_ZONE_CHEST,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_R_ARM,BODY_ZONE_L_ARM)
 			for(var/i = 0, i <= zonee.len, i++)

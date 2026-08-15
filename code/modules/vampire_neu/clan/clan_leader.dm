@@ -37,7 +37,7 @@
 
 	// Update vampire datum if they have one
 	var/datum/antagonist/vampire/vamp_datum = H.mind?.has_antag_datum(/datum/antagonist/vampire)
-	H.maxbloodpool += vitae_bonus
+	H.adjust_maxbloodpool(vitae_bonus)
 	if(vamp_datum)
 		vamp_datum.name = "[lord_title]"
 		vamp_datum.antag_hud_name = "Vlord"
@@ -52,4 +52,4 @@
 
 	for(var/trait in lord_traits)
 		REMOVE_TRAIT(H, trait, "lord_component")
-	H.maxbloodpool -= vitae_bonus
+	H.adjust_maxbloodpool(-(vitae_bonus))

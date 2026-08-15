@@ -261,6 +261,7 @@
 
 	for(var/atom/movable/AM in buckled_mobs)
 		AM.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -609,6 +610,12 @@
 	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
 
+	var/bonus_throwforce = 0
+	if(isitem(src) && thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM))
+		range += 1
+		speed += 0.5
+		bonus_throwforce = 2
+
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
 
@@ -651,6 +658,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.force = force
+	TT.bonus_throwforce = bonus_throwforce
 	TT.callback = callback
 	TT.extra = extra
 	if(!QDELETED(thrower))
@@ -1299,4 +1307,3 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
-

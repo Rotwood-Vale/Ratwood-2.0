@@ -290,8 +290,13 @@
 			attempted_wounds += /datum/wound/artery
 	if(bclass in GLOB.whipping_bclasses)
 		used = round(damage_dividend * 20 + (dam / 3))
-		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
-			dam += 10
+		if(user)
+			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			attempted_wounds += /datum/wound/artery		//basically does sword-tier wounds.
 		if(prob(used))
@@ -380,6 +385,10 @@
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(prob(used))
 			if(HAS_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS))
 				attempted_wounds += /datum/wound/artery/chest

@@ -37,6 +37,7 @@
 	id = /obj/item/scomstone/bad/garrison
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	backr = /obj/item/storage/backpack/rogue/satchel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 
 	job_bitflag = BITFLAG_GARRISON		//Move this role to garrison section later. Shouldn't be under youngroles for transparancy they are garrison.
 

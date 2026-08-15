@@ -220,7 +220,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/examine_effects = list()
 
 	///played when an item that is equipped blocks a hit
-	var/list/blocksound
+	var/blocksound
 
 	var/thrown_damage_flag = "blunt"
 
