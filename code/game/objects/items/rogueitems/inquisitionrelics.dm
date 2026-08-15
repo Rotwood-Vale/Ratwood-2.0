@@ -347,7 +347,7 @@ Inquisitorial armory down here
 			user.update_a_intents()
 		else
 			playsound(src.loc, 'sound/items/censer_on.ogg', 100)
-			possible_item_intents = list(/datum/intent/mace/smash/flail/golgotha, /datum/intent/bless)
+			possible_item_intents = list(/datum/intent/bless, /datum/intent/mace/smash/flail/golgotha)
 			user.update_a_intents()
 			on = TRUE
 			update_brightness()
