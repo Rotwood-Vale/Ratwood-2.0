@@ -513,7 +513,7 @@
 	max_blade_int = 140
 	max_integrity = 400
 	slot_flags = ITEM_SLOT_HIP
-	associated_skill = /datum/skill/labor/mining
+	associated_skill = /datum/skill/combat/axes
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 2
