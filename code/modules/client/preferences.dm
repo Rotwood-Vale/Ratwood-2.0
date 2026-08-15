@@ -1005,6 +1005,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(PLAYER_READY_TO_PLAY)
 					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
 					log_game("([user || "NO KEY"]) readied as ([real_name])")
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 		else
 			if(!is_active_migrant())
 				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
@@ -1013,6 +1014,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
 			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
 			dat += " - <a href='?_src_=prefs;preference=observe'>SPECTATE</a>"
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 
@@ -1020,6 +1022,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	dat += "<td width='33%' align='right'>"
 	dat += "<b>Be voice:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "Enabled":"Disabled"]</a>"
 	dat += "<br><b>Toggle Admin Sounds:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a>"
+	dat += "<br><a href='?_src_=prefs;preference=close_prefs'><b>CLOSE</b></a>"
 	dat += "</td>"
 	dat += "</tr>"
 	dat += "</table>"
@@ -1109,6 +1112,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		var/datum/job/lastJob
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 			if(!job.spawn_positions)
+				continue
+			if(job.title in GLOB.villain_positions)
 				continue
 
 			index += 1
@@ -2978,6 +2983,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 										Good voices will be rewarded with PQ for answering meditations, while bad ones are punished at the discretion of The Management.</span>")
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
+
+				if("close_prefs")
+					winshow(user, "preferencess_window", FALSE)
+					user << browse(null, "window=preferences_browser")
+					return
 
 				if("migrants")
 					migrant.show_ui()
