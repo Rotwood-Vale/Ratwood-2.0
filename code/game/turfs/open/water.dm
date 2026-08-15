@@ -90,19 +90,20 @@
 		if(isliving(user) && !user.is_floor_hazard_immune())
 			if(platform_atom_count > 0)
 				return
-			if(water_overlay)
-				if((get_dir(src, newloc) == SOUTH))
-					water_overlay.layer = BELOW_MOB_LAYER
-					water_overlay.plane = GAME_PLANE
-				else
-					spawn(6)
-						if(!locate(/mob/living) in src)
-							water_overlay.layer = BELOW_MOB_LAYER
-							water_overlay.plane = GAME_PLANE
-			var/drained = get_stamina_drain(user, get_dir(src, newloc))
-			if(drained && !user.stamina_add(drained))
-				user.Immobilize(30)
-				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
+			if(!(user.movement_type & FLYING) && !HAS_TRAIT(user, TRAIT_ON_BOAT))
+				if(water_overlay)
+					if((get_dir(src, newloc) == SOUTH))
+						water_overlay.layer = BELOW_MOB_LAYER
+						water_overlay.plane = GAME_PLANE
+					else
+						spawn(6)
+							if(!locate(/mob/living) in src)
+								water_overlay.layer = BELOW_MOB_LAYER
+								water_overlay.plane = GAME_PLANE
+				var/drained = get_stamina_drain(user, get_dir(src, newloc))
+				if(drained && !user.stamina_add(drained))
+					user.Immobilize(30)
+					addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
 
 /turf/open/water/proc/get_stamina_drain(mob/living/swimmer, travel_dir)
 	var/const/BASE_STAM_DRAIN = 15
