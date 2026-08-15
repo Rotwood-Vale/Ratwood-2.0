@@ -25,9 +25,9 @@
 	manage_tempo()
 
 /// Simply removes the attacker from the tempo list
-/mob/living/carbon/human/proc/drop_from_attackers(datum/weakref/old_attacker)
+/mob/living/carbon/human/proc/drop_from_attackers(datum/weakref/old_attacker_ref)
 	list_clear_nulls(tempo_attackers)
-	tempo_attackers -= old_attacker.resolve()
+	tempo_attackers -= old_attacker_ref
 	manage_tempo()
 
 /// Changes your tempo level based on the amount of players attacking you
