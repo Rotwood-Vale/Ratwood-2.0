@@ -95,7 +95,7 @@
 	if(living_user.is_floor_hazard_immune())
 		return
 
-	if(!(user.movement_type & FLYING) && !HAS_TRAIT(user, TRAIT_ON_BOAT))
+	if(!(living_user.movement_type & FLYING) && !HAS_TRAIT(living_user, TRAIT_ON_BOAT))
 		if(water_overlay)
 			if((get_dir(src, newloc) == SOUTH))
 				water_overlay.layer = BELOW_MOB_LAYER
@@ -105,10 +105,10 @@
 					if(!locate(/mob/living) in src)
 						water_overlay.layer = BELOW_MOB_LAYER
 						water_overlay.plane = GAME_PLANE
-		var/drained = get_stamina_drain(user, get_dir(src, newloc))
-		if(drained && !user.stamina_add(drained))
-			user.Immobilize(30)
-			addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
+		var/drained = get_stamina_drain(living_user, get_dir(src, newloc))
+		if(drained && !living_user.stamina_add(drained))
+			living_user.Immobilize(30)
+			addtimer(CALLBACK(living_user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
 
 /turf/open/water/proc/get_stamina_drain(mob/living/swimmer, travel_dir)
 	var/const/BASE_STAM_DRAIN = 15
@@ -222,7 +222,7 @@
 		return
 	if (istype(src,/turf/open/water/bloody))
 		living_movable.add_mob_blood(living_movable)
-	if(!(L.movement_type & FLYING) && !HAS_TRAIT(L, TRAIT_ON_BOAT))
+	if(!(living_movable.movement_type & FLYING) && !HAS_TRAIT(living_movable, TRAIT_ON_BOAT))
 		if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
 			living_movable.SoakMob(FULL_BODY)
 		else
