@@ -194,30 +194,28 @@
 	return TRUE
 
 /mob/proc/get_mouseover_data(mob/viewer)
-	var/mousecolor = "#c1aaaa"
-	var/role_text
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.voice_color && H.name == H.real_name)
-			mousecolor = "#[H.voice_color]"
-		if(viewer?.client?.prefs?.show_mouseover_role)
-			if(H.get_face_name(""))
-				role_text = H.get_mouseover_role_title()
-	else if(viewer?.client?.prefs?.show_mouseover_role)
-		role_text = get_mouseover_role_title()
-
-	if(role_text)
-		return list(
-			"height" = 44,
-			"y_shift" = 3,
-			"text" = "<span style='font-size:8pt;font-family:\"Pterra\";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;display:block;text-align:center;' class='center maptext '>[name]</span><span style='font-size:6pt;font-family:\"Pterra\";color:#c1aaaa;text-shadow:0 0 10px #000,0 0 10px #000,0 0 10px #000;display:block;text-align:center;'>[role_text]</span>",
-		)
-
 	return list(
 		"height" = 32,
-		"text" = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"},
+		"text" = {"<span style='font-size:8pt;font-family:"Pterra";color:#c1aaaa;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"},
 	)
+
+/mob/living/carbon/human/get_mouseover_data(mob/viewer)
+	var/mousecolor = "#c1aaaa"
+	if(voice_color && name == real_name)
+		mousecolor = "#[voice_color]"
+
+	if(viewer?.client?.prefs?.show_mouseover_role && get_face_name(""))
+		var/role_text = get_mouseover_role_title()
+		if(role_text)
+			return list(
+				"height" = 44,
+				"y_shift" = 3,
+				"text" = "<span style='font-size:8pt;font-family:\"Pterra\";color:[mousecolor];text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #e60073,0 0 40px #e60073,0 0 50px #e60073,0 0 60px #e60073,0 0 70px #e60073;display:block;text-align:center;' class='center maptext '>[name]</span><span style='font-size:6pt;font-family:\"Pterra\";color:#c1aaaa;text-shadow:0 0 10px #000,0 0 10px #000,0 0 10px #000;display:block;text-align:center;'>[role_text]</span>",
+			)
+
+	var/list/mouseover_data = ..()
+	mouseover_data["text"] = replacetext(mouseover_data["text"], "color:#c1aaaa", "color:[mousecolor]")
+	return mouseover_data
 
 /mob/proc/get_mouseover_role_title()
 	var/used_title = get_role_title()
