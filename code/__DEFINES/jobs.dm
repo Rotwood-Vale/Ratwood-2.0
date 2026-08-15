@@ -258,7 +258,8 @@
 #define JDO_STEWARD 3
 #define JDO_CLERK 3.1
 #define JDO_MARSHAL 4
-#define JDO_COUNCILLOR 4.1
+#define JDO_BARON 4.1
+#define JDO_COUNCILLOR 4.2
 
 // Courtiers
 #define JDO_MAGICIAN 5
