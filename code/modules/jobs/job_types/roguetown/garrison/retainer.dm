@@ -116,17 +116,28 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
+	cloak = /obj/item/clothing/cloak/eastcloak1
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth
-	gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
-	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
-	r_hand = /obj/item/rogueweapon/sword/short/kazengun
+	r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
-	backl = /obj/item/rogueweapon/scabbard/sword/kazengun
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath/kazengun = 1)
+	beltr = /obj/item/rogueweapon/scabbard/sheath/kazengun
+	backl = /obj/item/rogueweapon/scabbard/sword/kazengun/gold
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1)
+
+/datum/outfit/job/roguetown/baron_retainer/ronin/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+	var/masks = list("Full Mask","Half-Mask")
+	var/mask_choice = input(H, "Choose your mask.", "GREET THE SUN?") as anything in masks
+	switch(mask_choice)
+		if("Full Mask")
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full, SLOT_WEAR_MASK, TRUE)
+		if("Half-Mask")
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun, SLOT_WEAR_MASK, TRUE)
 
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
