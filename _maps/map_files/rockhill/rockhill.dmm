@@ -18371,6 +18371,14 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"dUO" = (
+/obj/structure/fluff/railing/wood{
+	dir = 8;
+	pixel_x = -4
+	},
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "dUQ" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/water/bath,
@@ -19627,6 +19635,10 @@
 /area/rogue/indoors)
 "ehz" = (
 /obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
 /obj/structure/bars/passage/shutter{
 	name = "Artificer";
 	redstone_id = "artificer_shutter"
@@ -45780,6 +45792,18 @@
 /obj/structure/toilet,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell)
+"jWZ" = (
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/obj/structure/bars/passage/shutter{
+	name = "Artificer";
+	redstone_id = "artificer_shutter"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "jXb" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -406461,7 +406485,7 @@ wbg
 wbg
 bcC
 bcC
-jkq
+dUO
 wbg
 wbg
 aOv
@@ -407319,7 +407343,7 @@ aOv
 wbg
 fCu
 tJv
-blq
+jWZ
 blq
 sco
 sco
