@@ -2328,18 +2328,6 @@
 	dir = 8
 	},
 /area/rogue/indoors/town/manor/rockhill)
-"ayW" = (
-/obj/machinery/light/rogue/candle/green{
-	pixel_y = -32
-	},
-/obj/structure/bars/pipe{
-	dir = 5;
-	layer = 2;
-	pixel_x = -15;
-	pixel_y = -8
-	},
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "ayX" = (
 /obj/structure/table/wood,
 /obj/item/paper/scroll,
@@ -3960,6 +3948,12 @@
 /obj/structure/fluff/railing/border,
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/beach/harbor)
+"aRx" = (
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "aRA" = (
 /obj/structure/flora/newleaf,
 /obj/structure/vine,
@@ -4331,10 +4325,13 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement)
 "aVh" = (
-/obj/structure/fluff/railing/border{
-	dir = 1
+/obj/structure/flora/roguegrass/reedbush,
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2.05;
+	pixel_y = -8
 	},
-/turf/open/floor/rogue/AzureSand,
+/turf/open/water/cleanshallow,
 /area/rogue/outdoors/beach/harbor)
 "aVi" = (
 /obj/structure/rack/rogue/shelf/biggest{
@@ -7869,10 +7866,6 @@
 /obj/structure/roguemachine/vendor{
 	keycontrol = "crafterguild"
 	},
-/obj/structure/bell_common{
-	pixel_x = -10;
-	pixel_y = -10
-	},
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "bLn" = (
@@ -8692,12 +8685,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/north)
-"bTH" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/turf/open/floor/rogue/AzureSand,
-/area/rogue/outdoors/beach/harbor)
 "bTI" = (
 /obj/structure/stairs/stone{
 	dir = 8
@@ -10748,6 +10735,18 @@
 /obj/effect/landmark/quest_spawner/easy,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
+"cpD" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -32
+	},
+/obj/structure/bars/pipe{
+	dir = 5;
+	layer = 2;
+	pixel_x = -15;
+	pixel_y = -8
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "cpE" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/natural/cloth,
@@ -20776,20 +20775,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement)
-"exz" = (
-/obj/structure/bars/pipe{
-	dir = 1;
-	layer = 2.05;
-	pixel_y = -8
-	},
-/obj/structure/bars/pipe{
-	dir = 1;
-	layer = 2;
-	pixel_x = -10;
-	pixel_y = -10
-	},
-/turf/open/water/cleanshallow,
-/area/rogue/outdoors/beach/harbor)
 "exA" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -33966,14 +33951,17 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/magician/rockhill)
 "hrp" = (
-/obj/structure/flora/roguegrass/reedbush,
 /obj/structure/bars/pipe{
-	dir = 1;
+	dir = 9;
 	layer = 2.05;
-	pixel_y = -8
+	pixel_x = 10;
+	pixel_y = 22
 	},
-/turf/open/water/cleanshallow,
-/area/rogue/outdoors/beach/harbor)
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 4;
+	icon_state = "iron_line"
+	},
+/area/rogue/indoors/town/dwarfin/rockhill)
 "hrt" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -40491,12 +40479,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
-"iQG" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/turf/open/floor/rogue/AzureSand,
-/area/rogue/outdoors/beach/harbor)
 "iQJ" = (
 /obj/item/rogueweapon/thresher/decrepit{
 	pixel_x = -9;
@@ -52040,6 +52022,12 @@
 /obj/structure/deadbody/peasant,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
+"luX" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "luY" = (
 /obj/structure/roguewindow/openclose/reinforced{
 	dir = 4
@@ -65043,6 +65031,20 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
+"ooy" = (
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2.05;
+	pixel_y = -8
+	},
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2;
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/beach/harbor)
 "ooB" = (
 /obj/machinery/light/rogue/firebowl,
 /turf/open/floor/rogue/blocks,
@@ -74559,13 +74561,6 @@
 "qsx" = (
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/town/roofs/keep)
-"qsC" = (
-/obj/structure/bars/pipe{
-	dir = 4;
-	pixel_x = -9
-	},
-/turf/open/water/cleanshallow,
-/area/rogue/outdoors/beach/harbor)
 "qsE" = (
 /obj/structure/giantfur,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -77257,18 +77252,6 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/dwarfin/rockhill)
-"qZi" = (
-/obj/structure/bars/pipe{
-	dir = 9;
-	layer = 2.05;
-	pixel_x = 10;
-	pixel_y = 22
-	},
-/turf/closed/wall/mineral/rogue/pipe{
-	dir = 4;
-	icon_state = "iron_line"
-	},
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qZn" = (
 /obj/structure/fluff/railing/border{
@@ -87233,6 +87216,12 @@
 /obj/item/paper,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement/keep)
+"tpD" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "tpI" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -102710,6 +102699,13 @@
 /obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/church/chapel)
+"wKD" = (
+/obj/structure/bars/pipe{
+	dir = 4;
+	pixel_x = -9
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/beach/harbor)
 "wKL" = (
 /turf/closed/mineral/rogue,
 /area/rogue/indoors/town/cell)
@@ -186969,7 +186965,7 @@ vPr
 vuO
 vPr
 vPr
-ayW
+cpD
 aCH
 whb
 whb
@@ -189130,7 +189126,7 @@ vPr
 vPr
 vPr
 vPr
-qZi
+hrp
 whb
 oXa
 oxC
@@ -192153,7 +192149,7 @@ tGr
 tGr
 nFR
 jPA
-exz
+ooy
 whb
 whb
 whb
@@ -192585,7 +192581,7 @@ tGr
 iWm
 gRj
 uHA
-hrp
+aVh
 jPA
 whb
 whb
@@ -193880,7 +193876,7 @@ wvi
 aFe
 aFe
 pNk
-qsC
+wKD
 tGT
 tGT
 tGT
@@ -195175,7 +195171,7 @@ tGr
 tGr
 mKC
 tGr
-aVh
+luX
 jPA
 uHA
 rdE
@@ -195607,7 +195603,7 @@ tGr
 tGr
 jdj
 tGr
-aVh
+luX
 uHA
 uHA
 jPA
@@ -196038,8 +196034,8 @@ tGr
 tGr
 jWC
 gRj
-iQG
-bTH
+aRx
+tpD
 bER
 uHA
 tGT
