@@ -1,0 +1,4 @@
+author: "PPooch"
+delete-after: True
+changes:
+  - bugfix: "fixed cure rot surgery (again, but this time for real)"
