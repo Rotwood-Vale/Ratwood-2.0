@@ -250,6 +250,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
 	S["autoconsume"]		>> autoconsume
+	S["autowoodcut"]		>> autowoodcut
+	S["autopicking"]		>> autopicking
 	S["no_examine_blocks"]	>> no_examine_blocks
 	S["no_autopunctuate"]	>> no_autopunctuate
 	S["no_language_fonts"]	>> no_language_fonts
@@ -266,6 +268,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["sensitive_brands"] 	>> sensitive_brands
 	S["facial_brands"] 		>> facial_brands
 	S["shake"]				>> shake
+	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
@@ -419,6 +422,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
 	WRITE_FILE(S["autoconsume"], autoconsume)
+	WRITE_FILE(S["autowoodcut"], autowoodcut)
+	WRITE_FILE(S["autopicking"], autopicking)
 	WRITE_FILE(S["no_examine_blocks"], no_examine_blocks)
 	WRITE_FILE(S["no_autopunctuate"], no_autopunctuate)
 	WRITE_FILE(S["no_language_fonts"], no_language_fonts)
@@ -434,6 +439,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
 	WRITE_FILE(S["facial_brands"], facial_brands)
 	WRITE_FILE(S["shake"], shake)
+	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)

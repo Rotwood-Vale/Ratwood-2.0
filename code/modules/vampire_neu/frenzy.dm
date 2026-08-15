@@ -163,7 +163,7 @@
 	var/mob/living/carbon/human/victim = prey
 	if(victim.stat == DEAD)
 		return FALSE
-	return victim.blood_volume > 0 && victim.bloodpool > 0
+	return victim.get_blood_volume() > 0 && victim.get_bloodpool() > 0
 
 /mob/living/carbon/proc/get_frenzy_targets()
 	var/list/targets = list()
