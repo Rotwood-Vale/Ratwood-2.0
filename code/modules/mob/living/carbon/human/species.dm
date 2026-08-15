@@ -1079,7 +1079,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/get_vitae_stage(mob/living/carbon/human/H)
-	switch(H.bloodpool)
+	switch(H.get_bloodpool())
 		if(VITAE_LEVEL_HUNGRY to VITAE_LEVEL_FED)
 			return 1
 		if(VITAE_LEVEL_STARVING to VITAE_LEVEL_HUNGRY)
