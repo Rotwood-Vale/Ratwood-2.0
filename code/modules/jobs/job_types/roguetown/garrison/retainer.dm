@@ -95,8 +95,8 @@
 	tutorial = "A blooded member of the infamous Ruma Clan, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
 	outfit = /datum/outfit/job/roguetown/baron_retainer/ronin
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
-	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4)
+	traits_applied = list(TRAIT_MEDIUMARMOR)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4, STATKEY_WIL = 2)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
