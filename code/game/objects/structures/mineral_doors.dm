@@ -233,6 +233,8 @@
 	if(ismob(AM))
 		var/mob/user = AM
 		if(HAS_TRAIT(user, TRAIT_BASHDOORS))
+			// Throwing your weight through a door is not a subtle act, so it should break invisibility
+			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
 				take_damage(200, "brute", "blunt", 1)

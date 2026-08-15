@@ -308,3 +308,31 @@
   - balance: combat skills are hardcapped at expert now which in practice doesn't
       really mean anything but it means you won't be able to level up your weapon
       skills by fighting a vampire lord in melee combat
+2026-08-15:
+  Arturlang:
+  - balance: stealing from belts and stealing keys themselves both separately make
+      it 25% harder to be stolen, which can stack
+  - balance: a lot more semi-failure states for pickpocketing that show the victim
+      that something was stolen
+  - balance: pickpocketing scales now with the speed stat as well for it's success
+      chances, but the victim now also contests their speed in addition to their perception
+  - rscadd: new UI for stealing from containers that shows your chances
+  PPooch:
+  - bugfix: fixed cure rot surgery (again, but this time for real)
+  PatapoIIIa:
+  - rscadd: Added new hair
+  Yuckuza:
+  - balance: Hedge Knight blacksteel now costs a total of 3500 favor for the full
+      set.
+  hugmeorelse:
+  - bugfix: The headless no longer burns or teleports players it isn't actually holding.
+  - bugfix: Players swallowed by a headless are no longer deleted if it despawns.
+  - bugfix: A headless no longer chews on whoever is in its stomach, and will go after
+      other targets instead.
+  - balance: Being swallowed by a headless is much more survivable, but the headless
+      will now turn on whoever is trying to rescue you.
+  - bugfix: Biting, chewing and drinking blood now break invisibility.
+  - bugfix: Charging through a door now breaks invisibility.
+  - code_imp: Removed a duplicate bite grab definition that SEEMS to be overshadowing
+      the old one.
+  - refactor: Invisibility breaking is now handled in one place.
