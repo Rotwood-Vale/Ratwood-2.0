@@ -578,6 +578,10 @@
 	name = "Ponytail (Witcher)"
 	icon_state = "ponytail_witcher"
 
+/datum/sprite_accessory/hair/head/ponytailwitcheralt
+	name = "Ponytail (Witcher Alt)"
+	icon_state = "ponytail_witcheralt"
+
 /datum/sprite_accessory/hair/head/fringetail
 	name = "Ponytail (Fringe)"
 	icon_state = "fringetail"
@@ -1741,6 +1745,10 @@
 /datum/sprite_accessory/hair/head/willow
 	name = "Willow"
 	icon_state = "willow"
+
+/datum/sprite_accessory/hair/head/aki
+	name = "Aki"
+	icon_state = "aki"
 
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian

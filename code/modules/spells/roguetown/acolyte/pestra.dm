@@ -43,7 +43,7 @@
 				to_chat(user, span_warning("The body is wracked by toxicity."))
 			if(150 to INFINITY)
 				to_chat(user, span_necrosis("The body is devastated by toxicity."))
-		
+
 		return TRUE
 	revert_cast()
 	return FALSE
@@ -128,7 +128,7 @@
 			// Try to attach the limb
 			if(limb.attach_limb(human_target))
 				human_target.visible_message(
-					span_info("\The [limb] attaches itself to [human_target]!"), 
+					span_info("\The [limb] attaches itself to [human_target]!"),
 					span_notice("\The [limb] attaches itself to me!")
 				)
 				attached_count++
@@ -183,7 +183,7 @@
 			// Try to insert the organ
 			if(organ.Insert(human_target))
 				human_target.visible_message(
-					span_info("\The [organ] attaches itself to [human_target]!"), 
+					span_info("\The [organ] attaches itself to [human_target]!"),
 					span_notice("\The [organ] attaches itself to me!")
 				)
 				attached_count++
@@ -425,7 +425,8 @@
 			S.AOE_flash(user, range = 8)
 
 		var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
-		if(target.stat == DEAD || was_zombie)	//Checks if the target is a dead rotted corpse.
+		var/fully_turned = was_zombie?.has_turned //Don't stink up someone who hasn't yet turned
+		if(target.stat == DEAD || fully_turned)	//Checks if the target is a dead rotted corpse.
 			var/datum/component/rot/rot = target.GetComponent(/datum/component/rot)
 			if(rot && rot.amount && rot.amount >= 5 MINUTES)	//Fail-safe to make sure the dead person has at least rotted for ~5 min.
 				stinky = TRUE
@@ -444,7 +445,7 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/cure_rot/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/cure_rot/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		return FALSE
 	var/found = null
@@ -486,8 +487,8 @@
 			return FALSE
 		C.vomit()
 		C.adjustToxLoss(-30)
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume = min(C.blood_volume+30, BLOOD_VOLUME_NORMAL)
+		if(C.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			C.set_blood_volume(min(C.get_blood_volume()+30, BLOOD_VOLUME_NORMAL))
 		C.visible_message(span_warning("[C] expels some leeches out of them!"), span_warning("Something roils within me!"))
 		new /obj/item/natural/worms/leech(get_turf(C))
 		if(prob( (user.get_skill_level(/datum/skill/magic/holy) * 10) ))
@@ -520,7 +521,7 @@
 	devotion_cost = 45
 	var/datum/component/infestation_charges/charge_component
 
-/obj/effect/proc_holder/spell/invoked/pestra_heal/cast_check(skipcharge = 0, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/pestra_heal/cast_check(skipcharge, mob/user = usr)
 	if(!..())
 		return FALSE
 	if(!charge_component)
@@ -635,7 +636,7 @@
 	devotion_cost = 25
 	var/datum/component/infestation_charges/charge_component
 
-/obj/effect/proc_holder/spell/invoked/pestilent_blade/cast_check(skipcharge = 0, mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/pestilent_blade/cast_check(skipcharge, mob/user = usr)
 	if(!..())
 		return FALSE
 

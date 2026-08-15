@@ -103,7 +103,8 @@
 
 	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
-	var/blood_volume = BLOOD_VOLUME_NORMAL //how much blood the mob has
+	/// How much blood the mob has. Use get_blood_volume()/set_blood_volume()/adjust_blood_volume().
+	VAR_PROTECTED/blood_volume = BLOOD_VOLUME_NORMAL
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 
@@ -222,6 +223,9 @@
 	var/pegleg = 0
 	var/construct = 0
 	var/burialrited = FALSE
+
+	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
+	var/no_redflash = FALSE
 
 	/// Fixes to the hunger/thirst nonsense, stuffing them in species rather than mob. Ported from AP by IronDragoon
 	var/hunger_stage

@@ -491,10 +491,12 @@
 				message_param = "kisses %t deeply."
 			else if(H.zone_selected == BODY_ZONE_PRECISE_EARS)
 				message_param = "kisses %t on the ear."
-				var/mob/living/carbon/human/E = target
-				if(iself(E) || ishalfelf(E) || isdarkelf(E))
-					if(!E.cmode)
-						to_chat(target, span_love("It tickles..."))
+				if(!HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && !HAS_TRAIT(target, TRAIT_NOMOOD))
+					var/mob/living/carbon/human/E = target
+					if(iself(E) || ishalfelf(E) || isdarkelf(E))
+						if(!E.cmode)
+							to_chat(target, span_love("It tickles..."))
+							E.emote("eflick", intentional = TRUE)
 			else if(H.zone_selected == BODY_ZONE_PRECISE_R_EYE || H.zone_selected == BODY_ZONE_PRECISE_L_EYE)
 				message_param = "kisses %t on the brow."
 			else if(H.zone_selected == BODY_ZONE_PRECISE_SKULL)
@@ -547,10 +549,12 @@
 				message_param = "licks %t lips."
 			else if(J.zone_selected == BODY_ZONE_PRECISE_EARS)
 				message_param = "licks the ear of %t."
-				var/mob/living/carbon/human/O = target
-				if(iself(O) || ishalfelf(O) || isdarkelf(O))
-					if(!O.cmode)
-						to_chat(target, span_love("It tickles..."))
+				if(!HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && !HAS_TRAIT(target, TRAIT_NOMOOD))
+					var/mob/living/carbon/human/O = target
+					if(iself(O) || ishalfelf(O) || isdarkelf(O))
+						if(!O.cmode)
+							to_chat(target, span_love("It tickles..."))
+							O.emote("eflick", intentional = TRUE)
 			else if(J.zone_selected == BODY_ZONE_PRECISE_GROIN)
 				message_param = "licks %t between the legs."
 				var/mob/living/carbon/human/M = target
@@ -742,7 +746,7 @@
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.flash_fullscreen("redflash3")
+		H.fullscreen_redflash("redflash3")
 		H.AdjustSleeping(-50)
 		playsound(target.loc, 'sound/foley/slap.ogg', 100, TRUE, -1)
 
@@ -760,7 +764,7 @@
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.flash_fullscreen("redflash1")
+		H.fullscreen_redflash("redflash1")
 
 /mob/living/carbon/human/verb/emote_pinch()
 	set name = "Pinch"
@@ -2321,6 +2325,35 @@
 	set category = "Noises"
 
 	emote("salute", intentional = TRUE)
+
+/datum/emote/living/carbon/human/eflick
+	key = "eflick"
+	key_third_person = "flicks"
+	message = "flicks their ears."
+	emote_type = EMOTE_VISIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/carbon/human/eflick/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = user
+	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_flick_ears(H))
+		return
+	if(!H.dna.species.is_flicking_ears(H))
+		H.dna.species.perform_flick_ears(H)
+
+/datum/emote/living/carbon/human/eflick/can_run_emote(mob/user, status_check = TRUE , intentional)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	return H.dna && H.dna.species && H.dna.species.can_flick_ears(user)
+
+/mob/living/carbon/human/verb/emote_eflick()
+	set name = "Ear Flick"
+	set category = "Emotes"
+
+	emote("eflick", intentional = TRUE)
 
 /datum/emote/living/sniff
 	key = "sniff"

@@ -33,9 +33,9 @@
 	H.color = "#4e4c4c00"
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			//Keeps the user alive
-			owner.blood_volume = min(owner.blood_volume+blood_healing_on_tick, BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+blood_healing_on_tick, BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()

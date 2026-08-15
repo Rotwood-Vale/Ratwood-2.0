@@ -135,7 +135,7 @@
 					if(final_chance >= roll(1, 100))
 						new bonus_output(get_turf(user))
 			if(istype(to_grind,/obj/item/rogueore) || istype(to_grind,/obj/item/ingot))
-				user.flash_fullscreen("whiteflash")
+				user.fullscreen_redflash("whiteflash")
 				var/datum/effect_system/spark_spread/S = new()
 				var/turf/front = get_turf(src)
 				S.set_up(1, 1, front)
