@@ -2328,6 +2328,18 @@
 	dir = 8
 	},
 /area/rogue/indoors/town/manor/rockhill)
+"ayW" = (
+/obj/machinery/light/rogue/candle/green{
+	pixel_y = -32
+	},
+/obj/structure/bars/pipe{
+	dir = 5;
+	layer = 2;
+	pixel_x = -15;
+	pixel_y = -8
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "ayX" = (
 /obj/structure/table/wood,
 /obj/item/paper/scroll,
@@ -4320,10 +4332,10 @@
 /area/rogue/under/town/basement)
 "aVh" = (
 /obj/structure/fluff/railing/border{
-	pixel_y = -7
+	dir = 1
 	},
-/turf/open/floor/rogue/metal,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "aVi" = (
 /obj/structure/rack/rogue/shelf/biggest{
 	pixel_y = 15
@@ -8680,6 +8692,12 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/north)
+"bTH" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "bTI" = (
 /obj/structure/stairs/stone{
 	dir = 8
@@ -20758,6 +20776,20 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement)
+"exz" = (
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2.05;
+	pixel_y = -8
+	},
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2;
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/beach/harbor)
 "exA" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -33934,15 +33966,14 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/magician/rockhill)
 "hrp" = (
-/obj/structure/fluff/railing/border{
-	pixel_y = -7
+/obj/structure/flora/roguegrass/reedbush,
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2.05;
+	pixel_y = -8
 	},
-/obj/structure/fluff/railing/border{
-	dir = 8;
-	pixel_x = 32
-	},
-/turf/open/floor/rogue/metal,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/beach/harbor)
 "hrt" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -40460,6 +40491,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/bath)
+"iQG" = (
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/AzureSand,
+/area/rogue/outdoors/beach/harbor)
 "iQJ" = (
 /obj/item/rogueweapon/thresher/decrepit{
 	pixel_x = -9;
@@ -74522,6 +74559,13 @@
 "qsx" = (
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/town/roofs/keep)
+"qsC" = (
+/obj/structure/bars/pipe{
+	dir = 4;
+	pixel_x = -9
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/outdoors/beach/harbor)
 "qsE" = (
 /obj/structure/giantfur,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -77213,6 +77257,18 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/dwarfin/rockhill)
+"qZi" = (
+/obj/structure/bars/pipe{
+	dir = 9;
+	layer = 2.05;
+	pixel_x = 10;
+	pixel_y = 22
+	},
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 4;
+	icon_state = "iron_line"
+	},
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qZn" = (
 /obj/structure/fluff/railing/border{
@@ -186913,7 +186969,7 @@ vPr
 vuO
 vPr
 vPr
-qti
+ayW
 aCH
 whb
 whb
@@ -189074,7 +189130,7 @@ vPr
 vPr
 vPr
 vPr
-aCH
+qZi
 whb
 oXa
 oxC
@@ -191665,7 +191721,7 @@ cJN
 cJN
 gRj
 sEv
-wmF
+gSN
 whb
 whb
 whb
@@ -192096,8 +192152,8 @@ oOT
 tGr
 tGr
 nFR
-uHA
-uHA
+jPA
+exz
 whb
 whb
 whb
@@ -192527,10 +192583,10 @@ nYm
 oOT
 tGr
 iWm
-aCH
+gRj
 uHA
-tGT
-uHA
+hrp
+jPA
 whb
 whb
 whb
@@ -192961,8 +193017,8 @@ tGr
 tGr
 nFR
 uHA
-tGT
-uHA
+wDi
+jPA
 uHA
 whb
 whb
@@ -193823,9 +193879,9 @@ rTV
 wvi
 aFe
 aFe
-wmF
-uHA
-wDi
+pNk
+qsC
+tGT
 tGT
 tGT
 whb
@@ -195118,8 +195174,8 @@ tGr
 tGr
 tGr
 mKC
+tGr
 aVh
-uHA
 jPA
 uHA
 rdE
@@ -195550,8 +195606,8 @@ fcQ
 tGr
 tGr
 jdj
-hrp
-uHA
+tGr
+aVh
 uHA
 uHA
 jPA
@@ -195982,8 +196038,8 @@ tGr
 tGr
 jWC
 gRj
-uHA
-tGT
+iQG
+bTH
 bER
 uHA
 tGT
@@ -196413,7 +196469,7 @@ aCH
 tGr
 aeB
 aCH
-whb
+gQh
 gQh
 jPA
 uHA
@@ -198569,7 +198625,7 @@ mNZ
 tCN
 dlt
 aad
-aad
+gQh
 bER
 uHA
 gQh
@@ -199000,8 +199056,8 @@ dBP
 oHX
 tFo
 tFo
-aad
-aad
+xks
+gQh
 uHA
 veO
 jjg
@@ -199432,7 +199488,7 @@ dEf
 ekG
 dBP
 idK
-aad
+gQh
 uHA
 jPA
 uHA
