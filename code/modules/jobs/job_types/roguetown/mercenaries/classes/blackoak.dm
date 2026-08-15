@@ -139,7 +139,7 @@
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/elvish)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_R, TRUE)
 		if("Elvish Saber")
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE) //I think it will be fair for the silver and high defense
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/elf)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 		if("Elvish Shortsword")
