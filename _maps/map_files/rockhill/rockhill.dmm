@@ -82051,6 +82051,10 @@
 	dir = 8;
 	pixel_x = 32
 	},
+/obj/structure/fluff/railing/border{
+	dir = 8;
+	pixel_x = -4
+	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors)
 "seS" = (
@@ -82398,20 +82402,6 @@
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdark/rockhill)
-"sjq" = (
-/obj/structure/roguewindow/openclose{
-	dir = 8
-	},
-/obj/structure/curtain/directional/black{
-	dir = 8
-	},
-/obj/structure/fluff/railing/border{
-	dir = 8;
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/indoors)
 "sju" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/concrete,
@@ -387537,7 +387527,7 @@ xlA
 gvX
 sfb
 ryI
-sjq
+sGH
 nqU
 nqU
 ryI
