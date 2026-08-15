@@ -11920,7 +11920,8 @@
 /obj/structure/broadcast_horn/paid{
 	broadcaster_tag = "Lowtown Baron";
 	pixel_y = 13;
-	pixel_x = -9
+	pixel_x = -9;
+	dir = 4
 	},
 /obj/item/reagent_containers/glass/cup/golden/small{
 	pixel_y = 5;
@@ -30916,10 +30917,7 @@
 	name = "Lowtown Manor Guest Key";
 	pixel_y = 3
 	},
-/obj/item/storage/belt/rogue/pouch/coins/veryrich{
-	pixel_x = 9;
-	pixel_y = 2
-	},
+/obj/item/storage/belt/rogue/pouch/coins/poor,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "gxM" = (
@@ -45758,11 +45756,11 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church)
 "jGC" = (
+/obj/structure/stairs/cwdown{
+	dir = 8
+	},
 /obj/structure/fluff/railing/corner/south_west,
 /obj/machinery/light/rogue/candle/l,
-/obj/structure/stairs/cw{
-	dir = 1
-	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
 "jGE" = (
@@ -101595,7 +101593,10 @@
 /obj/item/natural/feather{
 	pixel_y = 5
 	},
-/obj/item/storage/belt/rogue/pouch/coins/poor,
+/obj/item/storage/belt/rogue/pouch/coins/veryrich{
+	pixel_x = 9;
+	pixel_y = 2
+	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "vMd" = (
@@ -104756,7 +104757,6 @@
 	pixel_x = 8;
 	pixel_y = 15
 	},
-/obj/item/storage/belt/rogue/pouch/coins/poor,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "wwR" = (
