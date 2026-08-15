@@ -47,7 +47,7 @@
 
 	switch(path)
 
-		if("Refugee (Default)")
+		if("Refugee (Default)")//dodgeexpert, quarter staff standard refugee
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("An asylum-seeker from the war-torn deserts of Naledi, \
 			the ruins of your great city are as unsafe as the deserts being ravaged by the Djinn."))
@@ -57,7 +57,7 @@
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)
 
-		if("Conclave Dropout (Hierophant)")
+		if("Conclave Dropout (Hierophant)")//on par with sorcerer mage, but worse stats and skills. given leylines however
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A would be promising Magos in the Hierophant halls, during a better era. The Fall of Naledi a hundred yils ago leaves whatever arcyne teachings of the hireophants you have managed to gather incomplete."))
 			r_hand = /obj/item/rogueweapon/woodstaff
@@ -83,7 +83,7 @@
 				H.mind?.adjust_spellpoints(20)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
 
-		if("Desert Ascetic (Pontifex)")
+		if("Desert Ascetic (Pontifex)")//reduced spellpoints, stats, no dodge expert. Toughened up refugee.
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("You were being being taught the ways of a Pontifex, training in body and will. The Fall of Naledi a hundred yils ago left whatever your training incomplete, whatever it's source. Shunned for your survival and left without a master, you wandered the deserts with unfinished discipline."))
 			r_hand = /obj/item/rogueweapon/katar
@@ -130,11 +130,10 @@
 
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
 				H.mind?.adjust_spellpoints(2)
-		if("Abandoned Diviner (Vizier)")
+		if("Abandoned Diviner (Vizier)")	//reduced stats/skills/spellpoints from Vizier, Not given Stasis
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
 			r_hand = /obj/item/rogueweapon/woodstaff
-			shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 			cloak = /obj/item/clothing/cloak/hierophant
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 			backpack_contents += list(/obj/item/rogueweapon/huntingknife = 1)
@@ -162,18 +161,14 @@
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
 			C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 			if(H.mind)
-				H.mind?.adjust_spellpoints(6)
-				var/spells = list("Avant Origin (Acceleration)", "Garde Origin (Divergence)")
-				var/mastery = input(H, "Choose your Origin Mastery.", "FORWARD OR BACKWARD?") as anything in spells
+				H.mind?.adjust_spellpoints(6)	//reduced from 9 the merc gets
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
-				switch(mastery)
-					if("Garde Origin (Divergence)")
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)
-					if("Avant Origin (Acceleration)")
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)

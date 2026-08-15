@@ -219,10 +219,14 @@
 							target.mind.remove_antag_datum(/datum/antagonist/zombie)
 						target.apply_status_effect(/datum/status_effect/debuff/revived)
 						target.visible_message(span_blue("[user]'s Lux is forcefully torn away as [target]'s soul is rewound back into their body!"),	span_blue("A distant darkness releases its grip on me. I wake once more, feeling the remnants of a dying light..."))
-					return TRUE
+						return TRUE
+					else
+						revert_cast()
+						return FALSE
 				else
 					revert_cast()
 					return FALSE
+
 	if(isliving(target))
 		var/mob/living/carbon/C = target
 		C.apply_status_effect(/datum/status_effect/buff/stasis)
@@ -1012,7 +1016,7 @@
 					B.source_circle = src
 		else
 			owner.remove_status_effect(/datum/status_effect/buff/circle_of_power)
-			owner.apply_status_effect(/datum/status_effect/buff/invigoration, 5 SECONDS, 25, 15)
+			owner.apply_status_effect(/datum/status_effect/buff/invigoration, 5 SECONDS)
 		if(!length(active_beams))
 			create_beams()
 	else
