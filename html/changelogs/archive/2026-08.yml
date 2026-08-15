@@ -280,3 +280,59 @@
   - balance: You can no longer smelt blessed silver for regular silver.
   mushy:
   - rscadd: The Herald of Progress, a wretch bard.
+2026-08-13:
+  Arturlang:
+  - bugfix: blood UI should sync up better now
+  - bugfix: pain not updating sometimes
+  - bugfix: talk overlay should no longer get stuck and point in hand shouldn't stay
+      red anymore
+  Lezerchil:
+  - rscadd: Added 2 new booleans to manage AI behaviour
+  - rscadd: NPCs recieve a set of new actions they could take based on their designated
+      behaviour.
+  - balance: 'The following NPCs are now considered smart combatants: skeleton liches,
+      skeleton soldiers, skeleton dreadnoughts, bog deserters, highwaymen, deranged
+      knights, dungeon lizardmen, thieves.'
+  - balance: 'The following NPCs are now considered special attackers: militia, bog
+      deserters, skeleton dreadnoughts, skeleton liches, orcs, sea raiders, dungeon
+      lizardmen, drow, deranged knights.
+
+      :cl:'
+  RadiantFlash7:
+  - rscadd: Re-adds smithy apprentice in the form of guild apprentice
+  zeroisthebiggay:
+  - balance: veterans can no longer train an infinite number of people
+  - balance: veterans have access to a spell will give a chosen individual the ability
+      to train their weapon skills beyond expert and gain a charge to this spell each
+      time they go to sleep
+  - balance: combat skills are hardcapped at expert now which in practice doesn't
+      really mean anything but it means you won't be able to level up your weapon
+      skills by fighting a vampire lord in melee combat
+2026-08-15:
+  Arturlang:
+  - balance: stealing from belts and stealing keys themselves both separately make
+      it 25% harder to be stolen, which can stack
+  - balance: a lot more semi-failure states for pickpocketing that show the victim
+      that something was stolen
+  - balance: pickpocketing scales now with the speed stat as well for it's success
+      chances, but the victim now also contests their speed in addition to their perception
+  - rscadd: new UI for stealing from containers that shows your chances
+  PPooch:
+  - bugfix: fixed cure rot surgery (again, but this time for real)
+  PatapoIIIa:
+  - rscadd: Added new hair
+  Yuckuza:
+  - balance: Hedge Knight blacksteel now costs a total of 3500 favor for the full
+      set.
+  hugmeorelse:
+  - bugfix: The headless no longer burns or teleports players it isn't actually holding.
+  - bugfix: Players swallowed by a headless are no longer deleted if it despawns.
+  - bugfix: A headless no longer chews on whoever is in its stomach, and will go after
+      other targets instead.
+  - balance: Being swallowed by a headless is much more survivable, but the headless
+      will now turn on whoever is trying to rescue you.
+  - bugfix: Biting, chewing and drinking blood now break invisibility.
+  - bugfix: Charging through a door now breaks invisibility.
+  - code_imp: Removed a duplicate bite grab definition that SEEMS to be overshadowing
+      the old one.
+  - refactor: Invisibility breaking is now handled in one place.
