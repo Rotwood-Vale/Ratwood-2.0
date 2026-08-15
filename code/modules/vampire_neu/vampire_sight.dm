@@ -176,6 +176,14 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		carrier.cut_overlay(ma)
 		ma = null
 	var/mutable_appearance/glow = new(carrier)
+	// UI/effect overlays (typing bubble on FULLSCREEN_PLANE, KEEP_APART point bubbles/anims) don't flatten
+	// into the glow and would leak red onto their own plane, so drop them from the copy
+	var/list/leaky_overlays
+	for(var/mutable_appearance/overlay as anything in glow.overlays)
+		if((overlay.appearance_flags & KEEP_APART) || overlay.plane == FULLSCREEN_PLANE)
+			LAZYADD(leaky_overlays, overlay)
+	if(leaky_overlays)
+		glow.overlays -= leaky_overlays
 	glow.plane = BLOOD_GLOW_PLANE
 	glow.transform = matrix()
 	glow.pixel_x = 0
