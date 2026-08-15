@@ -4256,6 +4256,12 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"aUm" = (
+/obj/structure/bed/rogue/inn/wool,
+/obj/item/bedsheet/rogue/pelt,
+/obj/machinery/light/rogue/candle,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "aUo" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -70759,6 +70765,12 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
 	},
+/obj/structure/lever/wall{
+	pixel_y = 0;
+	redstone_id = "artificer_shutter";
+	name = "shutters";
+	pixel_x = 32
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "pzl" = (
@@ -75844,12 +75856,11 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog)
 "qDh" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "crafterguild";
-	name = "Smith's room"
+/obj/machinery/light/rogue/candle/l{
+	pixel_x = 0;
+	pixel_y = -32
 	},
-/turf/closed/void,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qDi" = (
 /obj/structure/roguewindow/openclose{
@@ -96893,8 +96904,6 @@
 /obj/item/roguegear/wood/basic,
 /obj/item/roguegear/wood/basic,
 /obj/item/roguegear/wood/basic,
-/obj/item/roguegear,
-/obj/item/roguegear,
 /obj/item/rotation_contraption/shaft,
 /obj/item/rotation_contraption/shaft,
 /obj/item/rotation_contraption/shaft,
@@ -96926,6 +96935,8 @@
 /obj/item/rotation_contraption/vertical,
 /obj/item/rotation_contraption/vertical,
 /obj/item/rotation_contraption/vertical,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vsS" = (
@@ -97903,6 +97914,10 @@
 /obj/item/rogueweapon/hammer/iron,
 /obj/item/rogueweapon/tongs,
 /obj/item/rogueweapon/tongs,
+/obj/machinery/light/rogue/candle{
+	pixel_y = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vDa" = (
@@ -522222,7 +522237,7 @@ rVR
 ndL
 vtK
 qTW
-qDh
+rqb
 dMk
 dMk
 hMM
@@ -631956,7 +631971,7 @@ dMk
 xhE
 dMk
 dMk
-dMk
+qDh
 sco
 eNY
 lHE
@@ -632386,7 +632401,7 @@ col
 bbR
 bqI
 sco
-ngN
+aUm
 vCZ
 ngN
 sco
@@ -632811,9 +632826,9 @@ fZJ
 fZJ
 fZJ
 fZJ
-ptX
-xZa
-izz
+fjX
+cuS
+fIM
 col
 mza
 dMk
@@ -633243,9 +633258,9 @@ fZJ
 fZJ
 fZJ
 fZJ
-fZJ
-fZJ
 fjX
+cuS
+fIM
 col
 vJm
 dMk
@@ -633675,9 +633690,9 @@ fZJ
 fZJ
 fZJ
 fZJ
-fZJ
-fZJ
 fjX
+cuS
+fIM
 col
 uwZ
 dMk
@@ -634107,9 +634122,9 @@ fZJ
 fZJ
 fZJ
 fZJ
-fZJ
-fZJ
-fjX
+ptX
+xZa
+izz
 col
 vML
 omw
