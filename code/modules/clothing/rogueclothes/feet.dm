@@ -283,7 +283,7 @@
 	name = "blessed druid boots"
 	desc = "Boots shaped from consecrated root-wood, still pulsing with the Treefather's vigour. They offer firm footing and resist both thrust and cut slightly better than common elven craft."
 	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
-	max_integrity = 200
+	max_integrity = ARMOR_INT_SIDE_IRON
 
 /obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic/Initialize(mapload)
 	. = ..()
