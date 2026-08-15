@@ -280,3 +280,31 @@
   - balance: You can no longer smelt blessed silver for regular silver.
   mushy:
   - rscadd: The Herald of Progress, a wretch bard.
+2026-08-13:
+  Arturlang:
+  - bugfix: blood UI should sync up better now
+  - bugfix: pain not updating sometimes
+  - bugfix: talk overlay should no longer get stuck and point in hand shouldn't stay
+      red anymore
+  Lezerchil:
+  - rscadd: Added 2 new booleans to manage AI behaviour
+  - rscadd: NPCs recieve a set of new actions they could take based on their designated
+      behaviour.
+  - balance: 'The following NPCs are now considered smart combatants: skeleton liches,
+      skeleton soldiers, skeleton dreadnoughts, bog deserters, highwaymen, deranged
+      knights, dungeon lizardmen, thieves.'
+  - balance: 'The following NPCs are now considered special attackers: militia, bog
+      deserters, skeleton dreadnoughts, skeleton liches, orcs, sea raiders, dungeon
+      lizardmen, drow, deranged knights.
+
+      :cl:'
+  RadiantFlash7:
+  - rscadd: Re-adds smithy apprentice in the form of guild apprentice
+  zeroisthebiggay:
+  - balance: veterans can no longer train an infinite number of people
+  - balance: veterans have access to a spell will give a chosen individual the ability
+      to train their weapon skills beyond expert and gain a charge to this spell each
+      time they go to sleep
+  - balance: combat skills are hardcapped at expert now which in practice doesn't
+      really mean anything but it means you won't be able to level up your weapon
+      skills by fighting a vampire lord in melee combat
