@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "TRAIT_DUNGEONMASTER, possessed by the dungeoneer and slave master, doubles the probability of whip scarring wounds on targets, the same way TRAIT_NUTCRACKER does for CBT wounds."
+  - balance: "Aimed intent now grants a 10% bonus to the probability of whip scarring wounds."
