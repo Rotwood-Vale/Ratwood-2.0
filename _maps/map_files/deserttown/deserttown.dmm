@@ -2746,7 +2746,7 @@
 /area/rogue/under/dungeon)
 "aMC" = (
 /obj/structure/closet/crate/roguecloset/lord{
-	lockid = "courtphysician"
+	lockid = "cphysician"
 	},
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
 /obj/effect/spawner/lootdrop/potion_ingredient/herb,
@@ -8531,12 +8531,6 @@
 /turf/open/floor/rogue/lightpath,
 /area/rogue/under/town/basement/desert)
 "cpp" = (
-/obj/structure/closet/crate/chest/neu{
-	locked = 1;
-	lockhash = 0;
-	name = "Revivification Supplies";
-	pixel_y = 2
-	},
 /obj/item/rogueweapon/mace/woodclub,
 /obj/item/reagent_containers/glass/bottle/frankenbrew{
 	pixel_x = 4;
@@ -8548,6 +8542,13 @@
 	},
 /obj/structure/fluff/walldeco/med5{
 	pixel_y = 32
+	},
+/obj/structure/closet/crate/chest/neu{
+	locked = 1;
+	lockhash = 0;
+	lockid = "physician";
+	name = "Revivification Supplies";
+	pixel_y = 2
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/manor/desert)
@@ -26202,10 +26203,6 @@
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/bath/desert)
-"hpH" = (
-/mob/living/carbon/human/species/human/northern/bum/ambush,
-/turf/open/floor/rogue/darkpath,
-/area/rogue/indoors/town/garrison/desert/cell)
 "hpI" = (
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/twig{
@@ -54287,6 +54284,10 @@
 /obj/item/roguestatue/iron,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/dungeon/oldgoblincamp)
+"pon" = (
+/obj/structure/apiary/starter,
+/turf/open/floor/rogue/dirt/road/desert,
+/area/rogue/outdoors/desert)
 "pop" = (
 /obj/structure/fluff/pillow/magenta{
 	dir = 8;
@@ -78136,10 +78137,6 @@
 /obj/machinery/light/rogue/candle/red,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/cave)
-"vYb" = (
-/mob/living/carbon/human/species/human/northern/bum/ambush,
-/turf/open/floor/rogue/citybrick/citybrick1,
-/area/rogue/indoors/inq/basement)
 "vYd" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -313667,7 +313664,7 @@ kvr
 ioY
 obK
 wLm
-hpH
+wLm
 flP
 wLm
 oiw
@@ -427023,7 +427020,7 @@ sDa
 kCh
 sDa
 sDa
-knt
+pon
 sDa
 sDa
 kCh
@@ -428271,7 +428268,7 @@ jrl
 jrl
 jrl
 jrl
-kCh
+knt
 kCh
 jrl
 jrl
@@ -429519,7 +429516,7 @@ jrl
 jrl
 jrl
 jrl
-kCh
+knt
 kCh
 jrl
 jrl
@@ -430455,7 +430452,7 @@ qYv
 kCh
 kCh
 kCh
-kCh
+pon
 kCh
 jrl
 jrl
@@ -435638,7 +435635,7 @@ kvr
 kvr
 pfb
 rPt
-vYb
+rPt
 rPt
 pfb
 lUl
@@ -669666,7 +669663,7 @@ kdC
 kdC
 kdC
 kdC
-ykl
+fzI
 kdC
 kOu
 vBS
@@ -670602,7 +670599,7 @@ kdC
 kdC
 kdC
 kdC
-ykl
+fzI
 kdC
 kOu
 vBS
@@ -671535,10 +671532,10 @@ kdC
 kdC
 kdC
 kdC
-ykl
+fzI
 kdC
 kdC
-ykl
+fzI
 kdC
 kOu
 kOu
@@ -672159,7 +672156,7 @@ kdC
 kdC
 kdC
 kdC
-ykl
+fzI
 kdC
 kdC
 kdC
@@ -673095,7 +673092,7 @@ kdC
 kdC
 kdC
 kdC
-ykl
+fzI
 kdC
 kdC
 kdC
@@ -673719,10 +673716,10 @@ kdC
 kdC
 kdC
 kdC
+fzI
 kdC
 kdC
-kdC
-kdC
+fzI
 kdC
 kdC
 cvq
