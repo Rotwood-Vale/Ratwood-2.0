@@ -92,14 +92,14 @@
 
 /datum/advclass/baron_retainer/ronin
 	name = "Ronin"
-	tutorial = "Trained in the ways of Kazengun's warrior philosophers, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
+	tutorial = "A blooded member of the infamous Ruma Clan, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
 	outfit = /datum/outfit/job/roguetown/baron_retainer/ronin
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_DUALWIELDER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
@@ -114,9 +114,10 @@
 
 /datum/outfit/job/roguetown/baron_retainer/ronin/pre_equip(mob/living/carbon/human/H)
 	..()
+	has_loadout = TRUE
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
 	cloak = /obj/item/clothing/cloak/eastcloak1
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
