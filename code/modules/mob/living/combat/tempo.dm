@@ -1,7 +1,7 @@
 /// Adds the attacker to the tracked list for attacker count
 /mob/living/carbon/human/proc/process_tempo_attack(mob/living/carbon/attacker)
-	//if(!iscarbon(attacker) || !attacker.mind || attacker == src)
-	//	return // No self-tempo or PvE tempo
+	if(!iscarbon(attacker) || !attacker.mind || attacker == src)
+		return // No self-tempo or PvE tempo
 	var/datum/weakref/attacker_ref = WEAKREF(attacker)
 
 	var/tempo_length = length(tempo_attackers)
