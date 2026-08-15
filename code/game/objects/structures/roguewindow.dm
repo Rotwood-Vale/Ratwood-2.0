@@ -412,7 +412,6 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
 		src.take_damage(15)
-		user.break_invisibility()
 		return
 	src.visible_message(span_info("[user] knocks on [src]."))
 	add_fingerprint(user)

@@ -238,7 +238,6 @@
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
 				take_damage(200, "brute", "blunt", 1)
-				user.break_invisibility() //Cheeky gnolls
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 				force_open()
