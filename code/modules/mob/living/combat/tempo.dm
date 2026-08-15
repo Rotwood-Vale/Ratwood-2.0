@@ -28,6 +28,7 @@
 /mob/living/carbon/human/proc/drop_from_attackers(datum/weakref/old_attacker)
 	list_clear_nulls(tempo_attackers)
 	tempo_attackers -= old_attacker.resolve()
+	manage_tempo()
 
 /// Changes your tempo level based on the amount of players attacking you
 /mob/living/carbon/human/proc/manage_tempo()

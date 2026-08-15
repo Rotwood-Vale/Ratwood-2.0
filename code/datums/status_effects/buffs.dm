@@ -337,7 +337,7 @@
 
 /datum/status_effect/buff/tempo_one
 	id = "tempo_1"
-	duration = 30 SECONDS
+	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/tempo_one
 	/// Holds the particle effects for tempo
@@ -379,7 +379,7 @@
 
 /datum/status_effect/buff/tempo_three
 	id = "tempo_3"
-	duration = 30 SECONDS
+	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/tempo_three
 	var/outline_color = "#d3aa25"
