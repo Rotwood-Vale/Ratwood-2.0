@@ -63,7 +63,7 @@
 	user.changeNext_move(user.used_intent.clickcd)
 
 	if(user.used_intent.type == /datum/intent/shovelscoop)
-		if(istype(T, /turf/open/floor/rogue/dirt))
+		if(istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
 			var/turf/open/floor/rogue/dirt/D = T
 
 			if(!heldclod && user && istype(user.rmb_intent, /datum/rmb_intent/strong) && HAS_TRAIT(user, TRAIT_GRAVEROBBER))
@@ -176,10 +176,6 @@
 			heldclod = null
 			playsound(T, 'sound/items/empty_shovel.ogg', 100, TRUE)
 			update_icon()
-			return
-
-		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
-			to_chat(user, span_warning("There is grass in the way."))
 			return
 
 		if(istype(T, /turf/open/floor/rogue/snow) || istype(T, /turf/open/floor/rogue/snowrough) || istype(T, /turf/open/floor/rogue/snowpatchy))
@@ -412,6 +408,15 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/shovel/blacksteel
+	force = 27
+	name = "blacksteel shovel"
+	desc = "So much for being served on a silver platter."
+	icon_state = "blacksteelshovel"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_blade_int = 450
+	max_integrity = 450
 
 /obj/item/burial_shroud
 	name = "winding sheet"

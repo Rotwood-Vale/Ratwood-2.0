@@ -210,6 +210,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
 	armor_class = ARMOR_CLASS_LIGHT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	icon_state = "desertgown"
 	item_state = "desertgown"
 	heat_protection = CHEST | GROIN

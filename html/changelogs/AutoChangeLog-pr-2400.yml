@@ -1,0 +1,4 @@
+author: "mushy"
+delete-after: True
+changes:
+  - balance: "Ztratocaster can now no longer be broken on the ground."

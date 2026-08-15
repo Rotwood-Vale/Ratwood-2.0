@@ -169,9 +169,6 @@
  * We instead just transform at the end
  */
 /mob/living/carbon/human/proc/zombie_infect_attempt()
-	var/datum/antagonist/zombie/zombie_antag = zombie_check()
-	if(!zombie_antag)
-		return
 	if(stat >= DEAD) //do shit the natural way i guess
 		return
 	var/datum/status_effect/zombie_infection/infection = has_status_effect(/datum/status_effect/zombie_infection)
@@ -180,6 +177,9 @@
 		infection.transformation_time = world.time + (time_remaining * 0.8)
 		return
 	if(!prob(ZOMBIE_INFECTION_PROBABILITY))	//Failed the probability of infection
+		return
+	var/datum/antagonist/zombie/zombie_antag = zombie_check()	//Only grant the antag datum once the infection roll actually succeeds.
+	if(!zombie_antag)
 		return
 	to_chat(src, span_danger("I feel horrible... REALLY horrible..."))
 	mob_timers["puke"] = world.time
@@ -192,7 +192,7 @@
 	var/datum/antagonist/zombie/zombie_antag = mind?.has_antag_datum(/datum/antagonist/zombie)
 	if(!zombie_antag || zombie_antag.has_turned)
 		return FALSE
-	flash_fullscreen("redflash3")
+	fullscreen_redflash("redflash3")
 	to_chat(src, span_danger("It hurts... Is this really the end for me?"))
 	emote("scream") // heres your warning to others bro
 	Knockdown(1)

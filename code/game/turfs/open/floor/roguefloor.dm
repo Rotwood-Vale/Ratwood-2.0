@@ -348,6 +348,8 @@
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_coldedge"
 	temperature = 160
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grasscold/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -375,6 +377,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_purpleedge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grasspurple/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -402,6 +406,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_greyedge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassgrey/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -429,6 +435,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_rededge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassred/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -454,6 +462,8 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grass_yeledge"
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grassyel/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
@@ -485,9 +495,10 @@
 						/turf/open/floor/rogue/snow,
 						/turf/open/floor/rogue/snowrough,)
 	neighborlay = "grassedge"
-
 	spread_chance = 15
 	burn_power = 6
+	var/obj/structure/closet/dirthole/holie
+	var/dirt_amt = 3
 
 /turf/open/floor/rogue/grass/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
