@@ -30917,7 +30917,10 @@
 	name = "Lowtown Manor Guest Key";
 	pixel_y = 3
 	},
-/obj/item/storage/belt/rogue/pouch/coins/poor,
+/obj/item/storage/belt/rogue/pouch/coins/veryrich{
+	pixel_x = 9;
+	pixel_y = 2
+	},
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "gxM" = (
@@ -42520,6 +42523,10 @@
 /obj/item/clothing/head/roguetown/helmet/sallet/zyb,
 /obj/item/rope/chain,
 /obj/item/rope/chain,
+/obj/item/storage/belt/rogue/pouch/coins/rich{
+	pixel_y = 16;
+	pixel_x = 3
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "iYt" = (
@@ -45756,11 +45763,11 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church)
 "jGC" = (
-/obj/structure/stairs/cwdown{
-	dir = 8
-	},
 /obj/structure/fluff/railing/corner/south_west,
 /obj/machinery/light/rogue/candle/l,
+/obj/structure/stairs/cw{
+	dir = 1
+	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
 "jGE" = (
@@ -101593,10 +101600,7 @@
 /obj/item/natural/feather{
 	pixel_y = 5
 	},
-/obj/item/storage/belt/rogue/pouch/coins/veryrich{
-	pixel_x = 9;
-	pixel_y = 2
-	},
+/obj/item/storage/belt/rogue/pouch/coins/poor,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
 "vMd" = (
@@ -103570,10 +103574,6 @@
 	pixel_x = -3;
 	pixel_y = -1
 	},
-/obj/item/storage/belt/rogue/pouch/coins/rich{
-	pixel_y = 16;
-	pixel_x = 3
-	},
 /obj/item/reagent_containers/glass/cup/golden/small{
 	pixel_x = 8;
 	pixel_y = 6
@@ -103582,6 +103582,7 @@
 /obj/structure/roguemachine/scomm/receive_only/r{
 	scom_tag = "Lowtown Slaver House - Slaver's Quarters"
 	},
+/obj/item/storage/belt/rogue/pouch/coins/poor,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "wjG" = (
