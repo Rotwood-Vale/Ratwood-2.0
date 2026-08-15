@@ -17,6 +17,7 @@
 		"Sergeant",
 		"Man at Arms",
 		"Marshal",
+		"Bandit",
 		"Merchant",
 		"Bishop",
 		"Acolyte",
@@ -30,6 +31,9 @@
 		"Head Physician",
 		"Town Crier",
 		"Captain",
+		"Knight Captain",
+		"Watch Captain",
+		"Master Warden",
 		"Archivist",
 		"Knight",
 		"Court Magician",
@@ -37,6 +41,14 @@
 		"Orthodoxist",
 		"Absolver",
 		"Warden",
+		"Vampire",
+		"Vampire Lord",
+		"Vampire Servant",
+		"Vampire Guard",
+		"Vampire Spawn",
+		"Werewolf",
+		"Lich",
+		"Wretch",
 		"Squire",
 		"Veteran",
 		"Apothecary",
@@ -58,6 +70,14 @@
 
 /datum/round_event/antagonist/solo/assassins/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
+		var/datum/job/original_job = SSjob.GetJob(antag_mind.assigned_role)
+		antag_mind.current.unequip_everything()
+		SSjob.AssignRole(antag_mind.current, "Assassin")
+		if(original_job)
+			if(original_job.total_positions == 1)
+				original_job.current_positions = max(original_job.current_positions, 1)
+			else
+				original_job.current_positions += 1
 		SSmapping.retainer.assassins |= antag_mind.current
 		antag_mind.add_antag_datum(/datum/antagonist/assassin)
 	SSrole_class_handler.assassins_in_round = TRUE

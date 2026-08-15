@@ -55,12 +55,12 @@
 
 /datum/supply_pack/rogue/Knight/mblkstelarmet
 	name = "Blacksteel Armet"
-	cost = 300
+	cost = 500
 	contains = list(/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet)
 
 /datum/supply_pack/rogue/Knight/blkstelbuckhelm
 	name = "Ancient Blacksteel Bucket Helm"
-	cost = 300
+	cost = 500
 	contains = list(/obj/item/clothing/head/roguetown/helmet/blacksteel/bucket)
 
 /datum/supply_pack/rogue/Knight/vsallet
@@ -133,12 +133,12 @@
 
 /datum/supply_pack/rogue/Knight/mblacksteelfullplate
 	name = "Blacksteel Full plate"
-	cost = 500
+	cost = 1500
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate)
 
 /datum/supply_pack/rogue/Knight/blacksteelfullplate
 	name = "Ancient Blacksteel Full plate"
-	cost = 500
+	cost = 1500
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/blacksteel_full_plate)
 
 ///////////////////
@@ -157,12 +157,12 @@
 
 /datum/supply_pack/rogue/Knight/mblkplategaunt
 	name = "Blacksteel Plate Gauntlets"
-	cost = 200
+	cost = 500
 	contains = list(/obj/item/clothing/gloves/roguetown/blacksteel/modern/plategloves)
 
 /datum/supply_pack/rogue/Knight/blkplategaunt
 	name = "Ancient Blacksteel Plate Gauntlets"
-	cost = 200
+	cost = 500
 	contains = list(/obj/item/clothing/gloves/roguetown/blacksteel/plategloves)
 
 ///////////////
@@ -181,12 +181,12 @@
 
 /datum/supply_pack/rogue/Knight/mblkplatechausses
 	name = "Blacksteel Plate Chausses"
-	cost = 300
+	cost = 500
 	contains = list(/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern)
 
 /datum/supply_pack/rogue/Knight/blkplatechausses
 	name = "Ancient Blacksteel Plate Chausses"
-	cost = 300
+	cost = 500
 	contains = list(/obj/item/clothing/under/roguetown/platelegs/blacksteel)
 
 /datum/supply_pack/rogue/Knight/plateboots
@@ -196,12 +196,12 @@
 
 /datum/supply_pack/rogue/Knight/mblkplateboots
 	name = "Blacksteel Plated boots"
-	cost = 200
+	cost = 500
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots)
 
 /datum/supply_pack/rogue/Knight/blkplateboots
 	name = "Ancient Blacksteel Plated boots"
-	cost = 200
+	cost = 500
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots)
 
 /////////////
