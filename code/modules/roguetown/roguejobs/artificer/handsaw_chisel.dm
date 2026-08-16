@@ -21,7 +21,6 @@
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/axes		//Not an axe but fuck it - you're logging anyway.
 	max_blade_int = 300
-	is_tool = TRUE
 
 /obj/item/rogueweapon/handsaw/bronze
 	name = "bronze handsaw"
@@ -64,7 +63,6 @@
 	dropshrink = 0.9
 	var/already_assembled = FALSE
 	var/chisel_prefix = ""
-	is_tool = TRUE
 
 /obj/item/rogueweapon/chisel/bronze
 	name = "bronze chisel"
@@ -132,7 +130,6 @@
 	grid_width = 64
 	grid_height = 64
 	already_assembled = TRUE
-	is_tool = TRUE
 
 	possible_item_intents = list(/datum/intent/hit)
 	gripped_intents = list(/datum/intent/chisel)

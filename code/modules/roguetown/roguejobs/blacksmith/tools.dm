@@ -15,7 +15,6 @@
 	smeltresult = /obj/item/ash
 	grid_width = 32
 	grid_height = 64
-	is_tool = TRUE
 	var/quality = 1
 
 /obj/item/rogueweapon/hammer/getonmobprop(tag)
@@ -364,7 +363,6 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 32
 	grid_height = 64
-	is_tool = TRUE
 
 /obj/item/rogueweapon/tongs/examine(mob/user)
 	. = ..()
