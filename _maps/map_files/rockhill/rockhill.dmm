@@ -74675,6 +74675,13 @@
 "qux" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bograt/west)
+"quy" = (
+/obj/structure/roguemachine/mail{
+	mailtag = "The Fort";
+	ournum = 21
+	},
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/cavewet)
 "quA" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab,
 /turf/open/water/ocean,
@@ -165019,7 +165026,7 @@ whb
 whb
 whb
 gQh
-aaf
+quy
 gBA
 aaf
 gQh
