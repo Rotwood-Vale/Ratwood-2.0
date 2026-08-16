@@ -2,7 +2,6 @@
 #define TAB_BANK 2
 #define TAB_STOCK 3
 #define TAB_IMPORT 4
-#define TAB_BOUNTIES 5
 #define TAB_LOG 6
 #define TAB_STATISTICS 7
 #define TAB_PAYDAY 8
@@ -163,32 +162,6 @@
 		if(!SStreasury.do_export(D))
 			say("Insufficient stock.")
 			return
-	if(href_list["setbounty"])
-		var/datum/roguestock/D = locate(href_list["setbounty"]) in SStreasury.stockpile_datums
-		if(!D)
-			return
-		if(!D.percent_bounty)
-			var/newtax = input(usr, "Set a new price for [D.name]", src, D.payout_price) as null|num
-			if(newtax)
-				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-					return
-				if(findtext(num2text(newtax), "."))
-					return
-				newtax = CLAMP(newtax, 0, 999)
-				if(newtax > D.payout_price)
-					scom_announce("The bounty for [D.name] was increased.")
-				D.payout_price = newtax
-		else
-			var/newtax = input(usr, "Set a new percent for [D.name]", src, D.payout_price) as null|num
-			if(newtax)
-				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-					return
-				if(findtext(num2text(newtax), "."))
-					return
-				newtax = CLAMP(newtax, 1, 99)
-				if(newtax > D.payout_price)
-					scom_announce("The bounty for [D.name] was increased.")
-				D.payout_price = newtax
 	// Step 15: stockpile price/limit/withdraw management moved to the StewardTrade TGUI
 	// (setprice/setlimit/togglewithdraw Topic handlers removed). Ratwood keeps the passive
 	// import rate handler; that system is not covered by the TGUI.
@@ -651,7 +624,6 @@
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_BANK]'>\[Bank\]</a><BR>"
 			contents += "<a href='?src=\ref[src];trade_tgui=1'>\[Trade & Stockpile\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[Import\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_BOUNTIES]'>\[Bounties\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
@@ -721,20 +693,6 @@
 					var/blockade_tag_full = A.is_blockaded() ? " <font color='#c44'>(BLOCKADED - 2x COST)</font>" : ""
 					contents += "<b>[A.name][blockade_tag_full]</b> - <i>[A.desc]</i> "
 					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.import_amt] ([A.get_import_price()])\]</a><BR>"
-		if(TAB_BOUNTIES)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += "<center>Bounties<BR>"
-			contents += "--------------<BR>"
-			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-			contents += "Lord's Tax: [SStreasury.tax_value*100]%</center><BR>"
-			for(var/datum/roguestock/bounty/A in SStreasury.stockpile_datums)
-				contents += "[A.name]<BR>"
-				contents += "[A.desc]<BR>"
-				contents += "Total Collected: [SStreasury.minted]<BR>"
-				if(A.percent_bounty)
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]%</a><BR><BR>"
-				else
-					contents += "Bounty Price: <a href='?src=\ref[src];setbounty=\ref[A]'>[A.payout_price]</a><BR><BR>"
 		if(TAB_LOG)
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Log<BR>"
@@ -792,7 +750,7 @@
 						var/interest = stockpile.salt_accounts_interest_max[name] * 100
 						if(salt == 0 && stockpile.salt_ticket_win[name] > 0) // don't show ticket winners who have left the mines
 							continue
-						contents += "<tr><td>[name]</td><td>[salt] salt / [salt_max] max</td><td>[interest]%</a></td>"
+						contents += "<tr><td>[name]</td><td>[salt] salt / [salt_max] max</td><td>[interest]%</td></tr>"
 					contents += "</table>"
 
 	if(!canread)
@@ -819,7 +777,6 @@
 #undef TAB_BANK
 #undef TAB_STOCK
 #undef TAB_IMPORT
-#undef TAB_BOUNTIES
 #undef TAB_LOG
 #undef TAB_STATISTICS
 #undef TAB_PAYDAY
