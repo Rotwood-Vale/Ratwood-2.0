@@ -1599,6 +1599,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/shelter/woods)
 "apY" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap)
@@ -4608,6 +4609,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "aVA" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/fluff/signage,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap)
@@ -9937,7 +9939,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/rtfield)
 "cbE" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "cbI" = (
@@ -23461,7 +23463,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church/chapel)
 "eUf" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "eUi" = (
@@ -26865,7 +26867,7 @@
 /area/rogue/outdoors/town)
 "fED" = (
 /mob/living/carbon/human/species/human/northern/bog_deserters/better_gear,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "fEJ" = (
@@ -31058,7 +31060,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/inq)
 "gyf" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/north)
 "gyh" = (
@@ -52196,7 +52198,7 @@
 "kSM" = (
 /obj/structure/flora/roguegrass/maneater/real,
 /obj/effect/spawner/roguemap/treeorbush,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/southwest)
 "kSN" = (
@@ -104571,7 +104573,7 @@
 /area/rogue/indoors/town/bath)
 "vIb" = (
 /obj/structure/flora/roguegrass/jungle/sparse,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods/southwest)
 "vIf" = (
@@ -115393,7 +115395,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
 "xVd" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/northwest)
 "xVf" = (
