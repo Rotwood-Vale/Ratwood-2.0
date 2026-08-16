@@ -122,12 +122,12 @@
 //// Elven Weapons
 /datum/supply_pack/rogue/merc_weapons/elfsteeldagger
 	name = "Elvish Dirk"
-	cost = 45
+	cost = 40
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/elvish)
 
 /datum/supply_pack/rogue/merc_weapons/elfsword
 	name = "Elven Shortsword"
-	cost = 65
+	cost = 75
 	contains = list(/obj/item/rogueweapon/sword/short/elf)
 	
 /datum/supply_pack/rogue/merc_weapons/elflongsword
