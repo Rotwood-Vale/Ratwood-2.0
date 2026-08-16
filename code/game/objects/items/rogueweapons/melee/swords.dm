@@ -2287,7 +2287,7 @@
 	icon_state = "elfsword"
 	wdefense = 9 // Better defense than the elven saber.
 	max_integrity = 200 
-	max_blade_int = 275 // High integrity and higher sharpness than a shortsword to parry longer without significant damage decay.
+	max_blade_int = 300 // High integrity and higher sharpness than a shortsword to parry longer without significant damage decay.
 	sellprice = 40
 	sheathe_icon = "elfsword"
 
