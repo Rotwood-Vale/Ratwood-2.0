@@ -59,8 +59,6 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/elvish
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	r_hand = /obj/item/rogueweapon/halberd/glaive
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	backpack_contents = list(
 				/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -74,16 +72,31 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
-		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("Elven Swordspear", "Elven Curveblade",)
+		var/weapon_choice = input(H, "Choose your weapon.", "THE VISIBLE THREAT") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Elven Swordspear and Longsword")
+			if("Elven Swordspear")
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
-				l_hand = /obj/item/rogueweapon/sword/long/elf
-			if("Elven Curveblade and Shortsword")
+			if("Elven Curveblade")
 				r_hand = /obj/item/rogueweapon/greatsword/elf
+
+		var/sidearm = list("Elvish Longsword", "Elvish Shortsword", "Elvish Saber", "Elvish Dagger")
+		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
+		switch(sidearm_choice)
+			if("Elvish Longsword")
+				l_hand = /obj/item/rogueweapon/sword/long/elf
+				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+			if("Elvish Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/elf
+				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+			if("Elvish Saber")
+				l_hand = /obj/item/rogueweapon/sword/sabre/elf
+				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+			if("Elvish Dagger") // Doesn't function as silver unless blessed. Shouldn't be too bad to give 'em.
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
+				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_R, TRUE)
 
 		var/helmets = list(
 			"Woad Elven Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light,

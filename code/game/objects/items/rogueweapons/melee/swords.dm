@@ -1202,6 +1202,7 @@
 	force_wielded = 25
 	minstr = 7
 	wdefense = 9
+	max_blade_int = 250 // 50 more than default.
 	last_used = 0
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/gold

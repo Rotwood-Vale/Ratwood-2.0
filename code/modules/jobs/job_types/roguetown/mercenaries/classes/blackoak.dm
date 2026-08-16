@@ -64,15 +64,21 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Elven Swordspear and Longsword","Elven Curveblade and Shortsword",)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapons = list("Elven Swordspear", "Elven Curveblade",)
+		var/weapon_choice = input(H, "Choose your weapon.", "THE VISIBLE THREAT") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Elven Swordspear and Longsword")
+			if("Elven Swordspear")
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
-				l_hand = /obj/item/rogueweapon/sword/long/elf
-			if("Elven Curveblade and Shortsword")
+			if("Elven Curveblade")
 				r_hand = /obj/item/rogueweapon/greatsword/elf
+
+		var/sidearm = list("Elvish Longsword", "Elvish Shortsword")
+		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
+		switch(sidearm_choice)
+			if("Elvish Longsword")
+				l_hand = /obj/item/rogueweapon/sword/long/elf
+			if("Elvish Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/elf
 
 	H.merctype = 2
@@ -131,7 +137,7 @@
 
 /datum/outfit/job/roguetown/mercenary/blackoak_ranger/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Elvish Dagger", "Elvish Saber", "Elvish Shortsword")
+	var/weapons = list("Elvish Dagger", "Elvish Saber")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "FOR THE OAKS AND THE VALE.") as anything in weapons
 	switch(weapon_choice)
 		if("Elvish Dagger")
@@ -142,10 +148,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/elf)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
-		if("Elvish Shortsword")
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE) //Still 4 defence, fair enough
-			H.put_in_hands(new /obj/item/rogueweapon/sword/short/elf)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+
 	var/armors = list("Woad Elven Maille", "Fur-Lined Trophy Robes")
 	var/armor_choice = input(H, "Choose your ARMOR.", "THE FOREST CLOAKS YOU.") as anything in armors
 	switch(armor_choice)
