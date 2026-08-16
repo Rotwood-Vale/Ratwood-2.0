@@ -1756,7 +1756,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
-	lose_polish()//just like in 89'
 	..()
 
 	update_damaged_state()
