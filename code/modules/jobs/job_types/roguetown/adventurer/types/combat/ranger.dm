@@ -117,7 +117,7 @@
 	H.set_blindness(0)
 
 /datum/advclass/ranger/bombadier
-	name = "Bombadier"
+	name = "Bombardier"
 	tutorial = "Bombs? You've got them. Plenty of them - and the skills to make more. You've spent years training under skilled alchemists and have found the perfect mix to create some chaos - now go blow something up!"
 	outfit = /datum/outfit/job/roguetown/adventurer/bombadier
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
@@ -152,11 +152,11 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/bmbstrap/firebomb
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
-		/obj/item/bomb = 4,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
