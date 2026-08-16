@@ -91,7 +91,7 @@
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
 
-/obj/item/clothing/under/roguetown/tights/hose/Initialize()
+/obj/item/clothing/under/roguetown/tights/hose/Initialize(mapload)
 	. = ..()
 	update_icon()
 

@@ -164,7 +164,7 @@
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
 
-/obj/item/clothing/under/roguetown/chainlegs/hose/dyeable/Initialize()
+/obj/item/clothing/under/roguetown/chainlegs/hose/dyeable/Initialize(mapload)
 	. = ..()
 	update_icon()
 
