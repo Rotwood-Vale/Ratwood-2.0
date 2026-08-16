@@ -1027,7 +1027,7 @@
 	name = "Fencer Cuirass, Decorated (+1 Steel Cuirass, +1 Steel, +2 Silk)"
 	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fencer, /obj/item/ingot/steel, /obj/item/natural/silk, /obj/item/natural/silk)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/decorated
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_cuirass
 	name = "Cuirass, Decorated (+1 Steel Cuirass, +1 Steel)"
