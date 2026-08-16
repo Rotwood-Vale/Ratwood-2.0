@@ -1,6 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - rscadd: "Added the symbol of avarice, a rare drop from mimics that grants 5 fortune in exchange for -5 constitution."
-  - rscadd: "Added the jar helm, a pottery craftable helmet that grants the throwing arm trait when worn."
-  - rscadd: "Added the throwing arm trait, granting +0.5 throw speed, +1 throw range, and +2 throw force to any thrown item."
