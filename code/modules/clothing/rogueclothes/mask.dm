@@ -939,7 +939,6 @@
 	toggle_icon_state = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ash
-	stack_fovs = TRUE
 
 /obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask

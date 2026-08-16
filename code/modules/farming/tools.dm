@@ -17,7 +17,6 @@
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
-	is_tool = TRUE
 
 /datum/intent/flailthresh
 	name = "thresh"
@@ -102,7 +101,6 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_height = 64
 	grid_width = 32
-	is_tool = TRUE
 
 /obj/item/rogueweapon/sickle/examine(mob/user)
 	. = ..()
@@ -165,7 +163,6 @@
 	smeltresult = /obj/item/ingot/iron
 	var/hoe_damage = null //the durability damage recieved for every work cycle
 	var/work_time = 3 SECONDS // the time it takes to make new soil or till soil
-	is_tool = TRUE
 
 /obj/item/rogueweapon/hoe/decrepit
 	name = "decrepit hoe"
@@ -370,7 +367,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
-	is_tool = TRUE
 
 /obj/item/rogueweapon/pitchfork/examine(mob/user)
 	. = ..()
