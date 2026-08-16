@@ -46795,6 +46795,12 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/rockhill)
 "kiq" = (
+/obj/structure/lever/wall{
+	name = "door lockdown";
+	dir = 8;
+	redstone_id = "guild_back";
+	pixel_x = -20
+	},
 /obj/item/roguebin/water/gross,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -89138,6 +89144,10 @@
 	locked = 1;
 	lockid = "crafterguild";
 	name = "Smithing Guild"
+	},
+/obj/structure/bars/passage/shutter/open{
+	name = "Guild Backdoor";
+	redstone_id = "guild_back"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
