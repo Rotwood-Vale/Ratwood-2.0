@@ -71496,16 +71496,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/church)
-"pGt" = (
-/obj/structure/curtain/directional/orange{
-	dir = 8
-	},
-/obj/structure/bars{
-	color = "#b0a497";
-	layer = 2
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "pGy" = (
 /obj/machinery/light/rogue/torchholder{
 	pixel_x = -1;
@@ -524863,7 +524853,7 @@ rZi
 rZi
 pkE
 sco
-pGt
+sJI
 sco
 sJI
 sco
