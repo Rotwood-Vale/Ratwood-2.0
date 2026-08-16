@@ -1364,6 +1364,7 @@
 	},
 /area/rogue/indoors/town/shop)
 "aoJ" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -2651,6 +2652,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "aDE" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/west)
@@ -2962,6 +2964,7 @@
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/harbor)
 "aHE" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/newtree,
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/grass,
@@ -6238,6 +6241,7 @@
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/beach/harbor)
 "btC" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/north)
@@ -8045,6 +8049,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/church)
 "bNB" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -13480,6 +13485,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/rtfield/rockhill)
 "cUP" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/woodsrat/north)
@@ -22055,6 +22061,7 @@
 	},
 /area/rogue/indoors/town/manor/rockhill)
 "eMT" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bograt/west)
@@ -23213,6 +23220,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "fak" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/swampweed,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/north)
@@ -39295,6 +39303,7 @@
 	},
 /area/rogue/indoors/town/magician/rockhill)
 "iHx" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/flora/roguetree/burnt,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/south)
@@ -45675,6 +45684,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/sewer)
 "kce" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/flora/roguetree/burnt,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bograt/north)
@@ -45914,6 +45924,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/bath)
 "keL" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/deadbodyrandom/med,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/south)
@@ -99341,6 +99352,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/woodsrat/safe)
 "wfc" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/bograt/west)

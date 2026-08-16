@@ -80,18 +80,18 @@
 	trade_region_swaps = list(
 		TRADE_REGION_ROCKHILL = /datum/economic_region/vespermill,
 	)
-	// Blockade routes: only Woods South, Bog North and Sunkmire have hard quest
-	// spawners mapped, so every trade road runs through one of those three. Tiers
-	// mirror dun_world's: grove-tier roads (no travel fee) through the woods,
-	// coast-tier (75) through the bog, mountain-tier (150) through Sunkmire.
+	// Blockade routes. Tiers mirror dun_world's: grove-tier roads (no travel fee)
+	// through the woods, coast-tier (75) through the outer bogs, mountain-tier (150)
+	// through Sunkmire. Every target region carries hard quest spawners - a road
+	// mapped to a region without one can never host its defense.
 	blockade_route_map = list(
 		TRADE_REGION_KINGSFIELD = THREAT_REGION_ROCKHILL_WOODS_SOUTH,
-		TRADE_REGION_ROSAWOOD = THREAT_REGION_ROCKHILL_WOODS_SOUTH,
+		TRADE_REGION_ROSAWOOD = THREAT_REGION_ROCKHILL_WOODS_NORTH,
 		TRADE_REGION_BLACKHOLT = THREAT_REGION_ROCKHILL_WOODS_SOUTH,
-		TRADE_REGION_HEARTFELT = THREAT_REGION_ROCKHILL_WOODS_SOUTH,
+		TRADE_REGION_HEARTFELT = THREAT_REGION_ROCKHILL_WOODS_NORTH,
 		TRADE_REGION_ROCKHILL = THREAT_REGION_ROCKHILL_BOG_NORTH,
-		TRADE_REGION_SALTWICK = THREAT_REGION_ROCKHILL_BOG_NORTH,
-		TRADE_REGION_BLEAKCOAST = THREAT_REGION_ROCKHILL_BOG_NORTH,
+		TRADE_REGION_SALTWICK = THREAT_REGION_ROCKHILL_BOG_WEST,
+		TRADE_REGION_BLEAKCOAST = THREAT_REGION_ROCKHILL_BOG_SOUTH,
 		TRADE_REGION_NORTHFORT = THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
 		TRADE_REGION_HAGENWALD = THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
 		TRADE_REGION_DAFTSMARCH = THREAT_REGION_ROCKHILL_BOG_SUNKMIRE,
