@@ -137,10 +137,10 @@
 
 /datum/outfit/job/roguetown/mercenary/blackoak_ranger/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Elvish Dagger", "Elvish Saber")
+	var/weapons = list("Elvish Dagger", "Elvish Saber", "Elvish Shortsword")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "FOR THE OAKS AND THE VALE.") as anything in weapons
 	switch(weapon_choice)
-		if("Elvish Dagger") // Sneaky dagger option.
+		if("Elvish Dagger") // The classic dagger option.
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/elvish)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_R, TRUE)
