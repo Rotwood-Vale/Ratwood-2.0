@@ -37958,6 +37958,9 @@
 	icon_state = "borderfall";
 	pixel_y = -9
 	},
+/obj/structure/fluff/railing/border/east{
+	dir = 1
+	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "ijR" = (
