@@ -139,7 +139,7 @@
 	var/obj/item/thing = O
 	if(!thing.anvilrepair)
 		return ..()
-	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && (!thing.polished || (thing.polished == 4 && !thing.polish_bonus)) && obj_integrity <= max_integrity)//split polish 4 and polish_bonus so we can polish masterworks
+	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && thing.polished == 0 && obj_integrity <= max_integrity)
 		to_chat(user, span_info("I start applying some compound to \the [thing]..."))
 		if(do_after(user, 50 - user.STASPD*2, target = O))
 			thing.polished = 1
