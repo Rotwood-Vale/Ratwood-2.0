@@ -741,14 +741,14 @@
 	sellprice = 400
 	unenchantable = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/decorated
-	name = "decorated chestplate"
+/obj/item/clothing/suit/roguetown/armor/plate/half/fencer/decorated
+	name = "decorated fencer's cuirass"
 	icon_state = "gildedchestplate"
 	smeltresult = /obj/item/ingot/gold
 	desc = "An ornate steel chestplate, decorated with golden fluting. For when you need to bring a little bit of regal style to that upcoming duel with your lyfe's greatest adversary."
 	smelt_bar_num = 1
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/decorated
+/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
 	name = "decorated cuirass"
 	icon_state = "gildedcuirass"
 	smeltresult = /obj/item/ingot/gold

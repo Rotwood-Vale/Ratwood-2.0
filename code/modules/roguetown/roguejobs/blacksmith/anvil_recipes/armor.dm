@@ -1024,87 +1024,104 @@
 	created_item = /obj/item/clothing/mask/rogue/facemask/goldmask
 
 /datum/anvil_recipe/armor/decorated/gilded_chestplate
-	name = "Chestplate, Decorated (+1 Steel Cuirass, +1 Steel, +2 Silk)"
-	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer, /obj/item/ingot/steel, /obj/item/natural/silk, /obj/item/natural/silk)
+	name = "Fencer Cuirass, Decorated (+1 Steel Cuirass, +1 Steel, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fencer, /obj/item/ingot/steel, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_cuirass
 	name = "Cuirass, Decorated (+1 Steel Cuirass, +1 Steel)"
-	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass, /obj/item/ingot/steel)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/decorated
+	req_bar = /obj/item/ingot/gold
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_halfplate
 	name = "Halfplate, Decorated (+1 Steel Halfplate, +1 Steel)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate, /obj/item/ingot/steel)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/fluted/decorated
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_fullplate
 	name = "Plate Armor, Decorated (+1 Steel Plate Armor, +1 Steel)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/full, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_chestplatefluted
 	name = "Fluted Chestplate, Decorated (+1 Fencer's Cuirass)"
-	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/decorated
+	req_bar = /obj/item/ingot/gold
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fencer)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_cuirassfluted
 	name = "Fluted Cuirass, Decorated (+1 Fluted Cuirass)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/decorated
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_halfplatefluted
 	name = "Fluted Halfplate, Decorated (+1 Fluted Halfplate)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/fluted/decorated
 
 /datum/anvil_recipe/armor/decorated/gilded_fullplatefluted
 	name = "Fluted Plate Armor, Decorated (+1 Fluted Plate Armor)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/full/fluted)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/decorated
 
 /datum/anvil_recipe/armor/gold/armet
 	name = "Golden Knight's Armet (+1 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
 
 /datum/anvil_recipe/armor/gold/armetcrown
 	name = "Golden Knight's Armet, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/king
 
 /datum/anvil_recipe/armor/gold/helmet
 	name = "Golden Barbute (+1 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
 
 /datum/anvil_recipe/armor/gold/helmetcrown
 	name = "Golden Barbute, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
 
 /datum/anvil_recipe/armor/gold/gorget
 	name = "Golden Gorget (+1 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/neck/roguetown/gorget/gold
 
 /datum/anvil_recipe/armor/gold/cuirass
 	name = "Golden Cuirass (+2 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold
 
 /datum/anvil_recipe/armor/gold/cuirasshero
 	name = "Golden Cuirass, Heroic (+2 Gold, +2 Silk, +1 Tallow)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/reagent_containers/food/snacks/tallow)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/heroic
 
 /datum/anvil_recipe/armor/gold/bracers
 	name = "Golden Bracers (+1 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/gold
 
 /datum/anvil_recipe/armor/gold/greaves
 	name = "Golden Greaves (+1 Gold, +2 Silk)"
+	req_bar = /obj/item/ingot/gold
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/gold
 
