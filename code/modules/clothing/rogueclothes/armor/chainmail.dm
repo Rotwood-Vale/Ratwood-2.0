@@ -171,7 +171,7 @@
 /datum/crafting_recipe/roguetown/blacksmith/mailledhauberk
 	name = "layer a steel cuirass atop hauberk"
 	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy)
-	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass = 1,
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half = 1,
 				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
 	craftdiff = 0 //Straight-forward. Note that this is a copy of Draganfrukt's helmet-and-hat combination system, which also has the slight caveat..
 	req_table = TRUE //..of resetting the durability of both items, when crafted and uncrafted. This check helps to reduce a lot of potential cheese, but should be tweaked later.
@@ -187,7 +187,7 @@
 /datum/crafting_recipe/roguetown/survival/flutedmailledhauberk
 	name = "layer a fluted cuirass atop hauberk"
 	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/fluted)
-	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted = 1,
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted = 1,
 				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
 	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
 	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.

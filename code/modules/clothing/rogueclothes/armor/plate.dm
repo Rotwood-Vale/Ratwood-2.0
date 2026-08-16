@@ -713,7 +713,7 @@
 	body_parts_covered = CHEST | VITALS | LEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold
+/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/gold
 	name = "golden cuirass"
 	icon_state = "goldcuirass"
 	desc = "A resplendant cuirass of pure gold, fitted with tassets for additional coverage. It is dressed atop a besilked arming \
@@ -728,14 +728,14 @@
 	grid_width = 96
 	unenchantable = TRUE//no unbreaking scrolls
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/heroic
+/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/gold/heroic
 	name = "golden heroic cuirass"
 	icon_state = "heroiccuirass"
 	desc = "A resplendant cuirass of pure gold, fitted with tassets for additional coverage. It has been meticulously waxed-and-assembled \
 	from dozens of smaller golden plates, in order to replicate the statuesque physique of Psydonia's legendary heroes."
 	unenchantable = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/king
+/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/gold/king
 	name = "golden heroic cuirass"
 	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
 	sellprice = 400
@@ -749,21 +749,21 @@
 	smelt_bar_num = 1
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
-	name = "decorated cuirass"
+	name = "decorated fluted cuirass"
 	icon_state = "gildedcuirass"
 	smeltresult = /obj/item/ingot/gold
 	desc = "An ornate steel cuirass, decorated with golden fluting. For when you need to ensure that you look dapper, during your mustering for the latest crusade into some gods-forsaken land."
 	smelt_bar_num = 1
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/decorated
-	name = "decorated half-plate"
+	name = "decorated fluted half-plate"
 	icon_state = "gildedhalfplate"
 	smeltresult = /obj/item/ingot/gold
 	desc = "An ornate set of steel armor, decorated with golden fluting. For when you need to remind those of lesser stations about whose authority reigns supreme, in lieu of a King's command."
 	smelt_bar_num = 1
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/decorated
-	name = "decorated plate armor"
+	name = "decorated fluted plate armor"
 	icon_state = "gildedplate"
 	smeltresult = /obj/item/ingot/gold
 	desc = "An ornate set of steel plate armor, decorated with golden fluting. For when you need to do something with all of that precious, precious wealth gathering dust in a fief's ducal treasury."
