@@ -11380,6 +11380,13 @@
 "cxJ" = (
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/indoors/town/church/chapel)
+"cxL" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/structure/well,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/magician/rockhill)
 "cxO" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/border/north,
@@ -66155,6 +66162,11 @@
 /turf/closed/wall/mineral/rogue/stone/window/moss,
 /area/rogue/outdoors/bograt/sunken)
 "ozD" = (
+/obj/structure/fluff/walldeco/rpainting/forest{
+	pixel_y = -33;
+	name = "Picture of the Funniest Thing Ever";
+	desc = "A painting of a... What?"
+	},
 /turf/open/floor/rogue/tile,
 /area/rogue/under/cave)
 "ozG" = (
@@ -76369,10 +76381,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/dungeon/inferno)
-"qNa" = (
-/obj/structure/well,
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/exposed/town/keep)
 "qNc" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
@@ -387400,7 +387408,7 @@ eFQ
 pKR
 sQK
 myL
-gFS
+cxL
 bVb
 fNi
 bVb
@@ -387830,7 +387838,7 @@ dYd
 wAO
 mSq
 mSq
-oXf
+ljL
 pAT
 htq
 gCU
@@ -388258,7 +388266,7 @@ vRu
 vRu
 pKR
 mSq
-qNa
+dYd
 eWr
 htw
 htw
