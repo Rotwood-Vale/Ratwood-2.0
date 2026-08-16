@@ -10,7 +10,6 @@
 	// Legacy demand-based pricing (still used by stockpile types without trade_good_id)
 	var/demand = 100
 	// If the type of item is a mint item it will be reminted into coins
-	var/mint_item = FALSE
 	// Legacy: used by old export price calculation
 	var/export_price = 1
 	var/stockpile_limit = 100
@@ -19,7 +18,6 @@
 	var/export_only = FALSE
 	// Legacy demand stability flag; replaced by automatic_price when trade_good_id is set
 	var/stable_price = FALSE
-	var/percent_bounty = FALSE
 	/// How much to generate in the remote section each firing of the treasury system.
 	var/passive_generation = 0
 	/// How much does it cost us to generate this item passively

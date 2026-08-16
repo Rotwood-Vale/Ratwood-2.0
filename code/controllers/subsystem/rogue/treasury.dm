@@ -44,8 +44,6 @@ SUBSYSTEM_DEF(treasury)
 	var/tax_value = 0.11
 	var/queens_tax = 0.10
 	var/treasury_value = 0
-	var/mint_multiplier = 0.8 // 1x is meant to leave a margin after standard 80% collectable. Less than Bathmatron.
-	var/minted = 0
 	var/autoexport_percentage = 0.6 // Percentage above which stockpiles will automatically export
 	var/list/bank_accounts = list()
 	var/list/noble_incomes = list()
@@ -77,13 +75,9 @@ SUBSYSTEM_DEF(treasury)
 	force_set_round_statistic(STATS_STARTING_TREASURY, discretionary_fund.balance)
 	record_round_statistic(STATS_PLEDGE_GENERATED, burgher_pledge_fund.balance)
 
-	// Stockpile datums seed the sell/trade catalogue. NOTE: the /bounty/treasure catch-all was
-	// retired (see bounties.dm) to match #6849, so subtypesof(/datum/roguestock/bounty) is now
-	// empty - the second loop is a harmless no-op kept in case a bounty subtype is added later.
+	// Stockpile datums seed the sell/trade catalogue. The /datum/roguestock/bounty family is
+	// fully retired with stockpile minting (AP 50d6434899); nothing seeds it anymore.
 	for(var/path in subtypesof(/datum/roguestock/stockpile))
-		var/datum/D = new path
-		stockpile_datums += D
-	for(var/path in subtypesof(/datum/roguestock/bounty))
 		var/datum/D = new path
 		stockpile_datums += D
 	// Step 15: legacy /datum/roguestock/import entries replaced by GLOB.crown_imports.
@@ -110,7 +104,7 @@ SUBSYSTEM_DEF(treasury)
 				distribute_daily_payments()
 			// Legacy demand drift - still used by stockpile entries without a trade_good_id.
 			for(var/datum/roguestock/X in stockpile_datums)
-				if(!X.stable_price && !X.mint_item)
+				if(!X.stable_price)
 					if(X.demand < initial(X.demand))
 						X.demand += rand(5,15)
 					if(X.demand > initial(X.demand))

@@ -2831,7 +2831,6 @@
 #include "code\modules\roguetown\roguestock\stockpile_alchemy.dm"
 #include "code\modules\roguetown\roguestock\stockpile_animal.dm"
 #include "code\modules\roguetown\roguestock\stockpile_fruit.dm"
-#include "code\modules\roguetown\roguestock\stockpile_gem.dm"
 #include "code\modules\roguetown\roguestock\stockpile_intermediary.dm"
 #include "code\modules\roguetown\roguestock\stockpile_rawmat.dm"
 #include "code\modules\roguetown\roguestock\stockpile_seafood.dm"

@@ -822,7 +822,6 @@
 			contents += "Total Noble Estate Income: [SStreasury.total_noble_income]m<BR>"
 			contents += "Total Import: [SStreasury.total_import]m<BR>"
 			contents += "Total Export: [SStreasury.total_export]m<BR>"
-			contents += "Total Mammons Minted: [SStreasury.minted]m<BR>"
 			contents += "Trade Balance: [SStreasury.total_export - SStreasury.total_import]m<BR>"
 			contents  += "</center><BR>"
 		if(TAB_PAYDAY)

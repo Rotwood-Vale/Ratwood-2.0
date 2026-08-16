@@ -16,7 +16,7 @@
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
 	var/current_category = "Raw Materials"
-	var/list/categories = list("Raw Materials", "Refined", "Alchemy", "Fruit", "Vegetable", "Animal", "Seafood", "Precious")
+	var/list/categories = list("Raw Materials", "Refined", "Alchemy", "Fruit", "Vegetable", "Animal", "Seafood")
 	var/datum/withdraw_tab/withdraw_tab = null
 
 /obj/structure/roguemachine/stockpile/get_mechanics_examine(mob/user)
@@ -25,7 +25,6 @@
 	. += span_info("Left-clicking the machine with an item will load it into the stockpile, rewarding you coinage in turn. Make sure to register an account with the NERVELOCK, first, or you won't receive any coinage.")
 	. += span_info("Right-clicking the machine will automatically load all adjacent items into the stockpile at once.")
 	. += span_info("The vomitorium's stockpile naturally refills over time. Loaded items are added to the stockpile's quantities, which can then be vended by others or exported by the Steward for profit.")
-	. += span_info("The vomitorium can also accept treasures, gemstones, and many other valuables that're particularly expensive; a portion of it is always taxed and returned to the Steward's treasury.")
 
 /obj/structure/roguemachine/stockpile/Initialize(mapload)
 	. = ..()
@@ -115,14 +114,9 @@
 		))
 	data["stocks"] = rows
 
-	var/list/bounties = list()
-	for(var/datum/roguestock/bounty/B in SStreasury.stockpile_datums)
-		bounties += list(list(
-			"name" = B.name,
-			"payout_price" = B.payout_price,
-			"percent" = B.percent_bounty ? TRUE : FALSE,
-		))
-	data["bounties"] = bounties
+	// The treasure-mint bounty was removed; no bounty datums remain. Keep the key so the
+	// Stockpile TGUI's bounty section simply stays hidden (it gates on bounties.length).
+	data["bounties"] = list()
 	return data
 
 /obj/structure/roguemachine/stockpile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -250,18 +244,17 @@
 					if(message)
 						say("The Crown has no interest in [R.name] at this time.")
 					return
-				if(below_floor && !R.mint_item)
+				if(below_floor)
 					if(message)
 						say("The Crown's ledger is thin. No purchases today.")
 					return
 				// Refuse outright if the purse cannot cover the payout - the goods must never be
 				// consumed without compensation (give_money_account is burn-backed now).
-				if(!R.mint_item)
-					var/projected = round((R.payout_price * B.amount) * (1 - SStreasury.get_tax_value_for(H)))
-					if(projected > treasury_balance)
-						if(message)
-							say("The Crown's Purse cannot cover a load of this size. Try smaller bundles or return when the Crown is solvent.")
-						return
+				var/projected = round((R.payout_price * B.amount) * (1 - SStreasury.get_tax_value_for(H)))
+				if(projected > treasury_balance)
+					if(message)
+						say("The Crown's Purse cannot cover a load of this size. Try smaller bundles or return when the Crown is solvent.")
+					return
 				var/bundle_amt = B.amount
 				var/full_on_arrival = (R.stockpile_amount >= R.stockpile_limit)
 				R.stockpile_amount += bundle_amt
@@ -296,43 +289,15 @@
 		else if(istype(I,R.item_type))
 			if(!R.check_item(I))
 				continue
-			if(R.mint_item && I.unmintable)
-				if(message)
-					say("This is town property, it cannot be minted here.")
-				return
-			if(R.mint_item && I.atc_sealed)
-				if(message)
-					say("This bears an Azurian Trading Company seal. The Crown will not mint Company stock.")
-				return
 			// Steward-controlled accept toggle: refuses with a message; the item stays in hand.
-			// (The old mint_eligible fall-through to the retired /bounty/treasure catch-all is gone,
-			//  so gems the Steward has toggled off now bounce back like any other refused good. Gem
-			//  OVERFLOW minting below is unaffected - it uses the trade-good mint path directly.)
 			if(!R.accept_toggle_enabled)
 				if(message)
 					say("The Crown has no interest in [R.name] at this time.")
 				return
-			// Treasure / mint items bypass the purchase floor - they generate mammon rather than spending it.
-			if(below_floor && !R.mint_item)
+			if(below_floor)
 				if(message)
 					say("The Crown's ledger is thin. No purchases today.")
 				return
-			// Trade-good overflow mint branch. If this entry is linked to a mint_eligible
-			// trade good (gems) and the stockpile is at limit, overflow mints to Crown's Purse
-			// using the existing treasure-mint path. Takes precedence over no-pay overflow.
-			if(R.trade_good_id && !R.mint_item && R.stockpile_amount >= R.stockpile_limit)
-				var/datum/trade_good/tg_overflow = GLOB.trade_goods[R.trade_good_id]
-				if(tg_overflow && tg_overflow.mint_eligible)
-					var/mint_amt = round(tg_overflow.base_price * SStreasury.mint_multiplier)
-					SStreasury.minted += mint_amt
-					SStreasury.mint(SStreasury.discretionary_fund, mint_amt, "Gem overflow mint: [tg_overflow.name]")
-					record_round_statistic(STATS_MINTED_TREASURE_GROSS, mint_amt)
-					qdel(I)
-					if(sound == TRUE)
-						playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-					say("[tg_overflow.name] overflow - minted to Crown's Purse.")
-					return
 			// Settlement is computed up front so the solvency check below can refuse the
 			// deposit before any stock is credited or the item consumed - give_money_account
 			// is burn-backed now, and the machine must never eat goods it cannot pay for.
@@ -341,8 +306,7 @@
 			var/crown_delta = settlement["crown_delta"]
 			var/quality_baseline = settlement["baseline"]
 			var/true_value = I.get_real_price()
-			var/mint_amt = 0
-			if(!R.mint_item && amt)
+			if(amt)
 				var/projected_balance = (SStreasury.discretionary_fund?.balance || 0) + max(crown_delta, 0)
 				var/post_tax = round(amt * (1 - SStreasury.get_tax_value_for(H)))
 				if(post_tax > projected_balance)
@@ -350,7 +314,7 @@
 						say("The Crown's Purse cannot cover this purchase. Return when the Crown is solvent.")
 					return
 			var/auto_exported = FALSE
-			var/full_on_arrival = (!R.mint_item && R.stockpile_amount >= R.stockpile_limit)
+			var/full_on_arrival = (R.stockpile_amount >= R.stockpile_limit)
 			if(full_on_arrival)
 				R.stockpile_amount += 1
 				if(try_auto_export_units(R, 1) <= 0)
@@ -369,29 +333,16 @@
 				SStreasury.mint(SStreasury.discretionary_fund, crown_delta, "Quality premium: [I.name] (+[crown_delta]m)")
 			else if(crown_delta < 0)
 				SStreasury.burn(SStreasury.discretionary_fund, -crown_delta, "Quality penalty: [I.name] ([crown_delta]m)")
-			if(!R.mint_item)
-				// ES deviation: AP double-increments here (+2 per item); the full_on_arrival
-				// path already added its unit before the auto-export attempt above
-				if(!full_on_arrival)
-					R.stockpile_amount += 1
-				SStreasury.dirty_market_view()
-				qdel(I)
-				if(message == TRUE)
-					stock_announce("[R.name] has been stockpiled.")
-				if(sound == TRUE)
-					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			else
-				var/pool = round(SStreasury.mint_multiplier * true_value)
-				mint_amt = max(0, pool - amt)
-				if(pool > 0)
-					SStreasury.minted += pool
-					SStreasury.mint(SStreasury.discretionary_fund, pool, "Minting - [I.name]")
-				record_round_statistic(STATS_MINTED_TREASURE_GROSS, pool)
-				record_round_statistic(STATS_MINTED_TREASURE_NET, mint_amt)
-				qdel(I)
-				if(sound == TRUE)
-					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+			// ES deviation: AP double-increments here (+2 per item); the full_on_arrival
+			// path already added its unit before the auto-export attempt above
+			if(!full_on_arrival)
+				R.stockpile_amount += 1
+			SStreasury.dirty_market_view()
+			qdel(I)
+			if(message == TRUE)
+				stock_announce("[R.name] has been stockpiled.")
+			if(sound == TRUE)
+				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 			if(amt)
 				SStreasury.economic_output += true_value
 				// Ratwood per-category deposit tax, same as the bundle branch: the Crown
@@ -401,16 +352,11 @@
 				var/seller_delta = amt - quality_baseline
 				amt -= taxed
 				var/bounty_msg = "+[amt] from [R.name] bounty. [taxed]m taxed"
-				if(R.mint_item)
-					bounty_msg = "+[amt] from [R.name] bounty (Crown's share: +[mint_amt]m). [taxed]m taxed"
 				if(crown_delta != 0)
 					var/seller_sign = seller_delta > 0 ? "+" : ""
 					var/crown_sign = crown_delta > 0 ? "+" : ""
 					bounty_msg = "+[amt] from [R.name] bounty (quality: you [seller_sign][seller_delta]m, Crown [crown_sign][crown_delta]m vs. [quality_baseline]m baseline). [taxed]m taxed"
-				if(!SStreasury.give_money_account(amt, H, bounty_msg) && R.mint_item)
-					// Treasure payouts are minted money by nature - never let the machine eat a
-					// treasure unpaid because the purse ran low mid-settlement.
-					SStreasury.give_money_account(amt, H, bounty_msg, mint_new = TRUE)
+				SStreasury.give_money_account(amt, H, bounty_msg)
 				if(auto_exported && message)
 					say("Crown's [R.name] stockpile is full - shipped regionally on your behalf.")
 			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
