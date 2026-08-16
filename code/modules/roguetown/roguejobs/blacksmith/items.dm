@@ -76,6 +76,16 @@
 	. = ..()
 	icon_state = "istatue[pick(1,2)]"
 
+/obj/item/roguestatue/bronze
+	name = "bronze statue"
+	desc = "A statue of sculpted bronze, forged in the visage of an ancient hero."
+	icon_state = "bronzestatue1"
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/roguestatue/bronze/Initialize(mapload)
+	. = ..()
+	icon_state = "bronzestatue[pick(1,2,3)]"
+
 /obj/item/roguestatue/blacksteel
 	name = "blacksteel statue"
 	desc = "A dark statue of glimmering, resilient blacksteel."
@@ -129,7 +139,7 @@
 	var/obj/item/thing = O
 	if(!thing.anvilrepair)
 		return ..()
-	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && thing.polished == 0 && obj_integrity <= max_integrity)
+	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && (!thing.polished || (thing.polished == 4 && !thing.polish_bonus)) && obj_integrity <= max_integrity)//split polish 4 and polish_bonus so we can polish masterworks
 		to_chat(user, span_info("I start applying some compound to \the [thing]..."))
 		if(do_after(user, 50 - user.STASPD*2, target = O))
 			thing.polished = 1
@@ -196,21 +206,24 @@
 				thing.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 				thing.add_atom_colour("#cccccc", FIXED_COLOUR_PRIORITY)
 
-/obj/item/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
-	. = ..()
-	if(obj_integrity <= max_integrity * 0.25)
-		if(polished == 4)
-			polished = 0
-			force -= 2
-			force_wielded -= 3
-			max_integrity -= polish_bonus
-			polish_bonus = 0
-			obj_integrity = min(obj_integrity, max_integrity)
-			var/datum/component/glint = GetComponent(/datum/component/metal_glint)
-			qdel(glint)
-		else if(polished >= 1 && polished <= 3)
-			remove_atom_colour(FIXED_COLOUR_PRIORITY)
-			UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
+/obj/item/proc/lose_polish()//called when item's break, if said item is polished, it proceeds.
+	if(!polished)
+		return
+
+	if(polished == 4 && polish_bonus)
+		force -= 2
+		force_wielded -= 3
+		max_integrity -= polish_bonus
+		obj_integrity = min(obj_integrity, max_integrity)
+		update_force_dynamic()
+	else if(polished >= 1 && polished <= 3)
+		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
+
+	polished = 0//only called when polished item breaks, so it's fine to have these always run on lose_polish()
+	polish_bonus = 0
+	remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	if(!GetComponent(/datum/component/silverbless)?.is_blessed && !GetComponent(/datum/component/psyblessed)?.is_blessed)//dont delete the glint from blessed silvers
+		qdel(GetComponent(/datum/component/metal_glint))
 
 /obj/item/proc/remove_polish(datum/source, strength) // kill polska
 	if(polished == 3 && obj_integrity >= max_integrity)
@@ -222,7 +235,9 @@
 		obj_integrity += polish_bonus
 		force += 2
 		force_wielded += 3
-		AddComponent(/datum/component/metal_glint)
+		update_force_dynamic()
+		if(!GetComponent(/datum/component/metal_glint))
+			AddComponent(/datum/component/metal_glint)
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
 	else if(polished < 4)

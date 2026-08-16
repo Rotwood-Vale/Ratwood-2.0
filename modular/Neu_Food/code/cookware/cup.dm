@@ -182,6 +182,22 @@
 	force = 10
 	throwforce = 15
 
+/obj/item/reagent_containers/glass/cup/bronzemug
+	name = "bronze mug"
+	desc = "Froth spills over the rim, and a clinking amongst other tankards causes its fizzling tithe to splash across the table. Oh, such a nite of revelry!"
+	icon_state = "bronzemug"
+	sellprice = 15
+	force = 7
+	throwforce = 13
+
+/obj/item/reagent_containers/glass/cup/bronzegob
+	name = "bronze goblet"
+	desc = "Drink deeply, my champion."
+	icon_state = "bronzegoblet"
+	sellprice = 18
+	force = 13
+	throwforce = 17
+
 /obj/item/reagent_containers/glass/cup/silver
 	name = "silver goblet"
 	desc = "A silver goblet, its surface carefully polished."

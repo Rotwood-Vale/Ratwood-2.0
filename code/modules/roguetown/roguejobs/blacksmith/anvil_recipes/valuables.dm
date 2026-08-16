@@ -26,6 +26,11 @@
 	req_bar = /obj/item/ingot/decrepit
 	created_item = /obj/item/roguestatue/decrepit
 
+/datum/anvil_recipe/valuables/statuebronze
+	name = "Statue, Bronze"
+	req_bar = /obj/item/ingot/bronze
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
 /datum/anvil_recipe/valuables/steel
 	name = "Statue, Steel"
 	req_bar = /obj/item/ingot/steel
@@ -64,6 +69,19 @@
 	req_bar = /obj/item/ingot/decrepit
 	created_item = /obj/item/clothing/ring/decrepit
 	createditem_num = 3
+
+/datum/anvil_recipe/valuables/ringb
+	name = "Rings, Bronze (x2)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/clothing/ring/bronze
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+	createditem_num = 2
+
+/datum/anvil_recipe/valuables/weddingringb
+	name = "Weddingbands, Bronze (x2)"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/clothing/ring/band/bronze
+	createditem_num = 2
 
 /datum/anvil_recipe/valuables/rings
 	name = "Rings, Silver (x3)"

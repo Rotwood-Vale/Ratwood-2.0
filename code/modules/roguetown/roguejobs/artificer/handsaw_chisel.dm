@@ -21,6 +21,14 @@
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/axes		//Not an axe but fuck it - you're logging anyway.
 	max_blade_int = 300
+	is_tool = TRUE
+
+/obj/item/rogueweapon/handsaw/bronze
+	name = "bronze handsaw"
+	desc = "The serrated half of a bronzen pair, keen to saw away at its problems."
+	icon_state = "bronzehandsaw"
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/rogueweapon/handsaw/blacksteel
 	name = "blacksteel handsaw"
@@ -56,6 +64,15 @@
 	dropshrink = 0.9
 	var/already_assembled = FALSE
 	var/chisel_prefix = ""
+	is_tool = TRUE
+
+/obj/item/rogueweapon/chisel/bronze
+	name = "bronze chisel"
+	desc = "The blunted half of a bronzen pair, for issues requiring a steady trepanning. Add something to strike it with before doing stonework, like a mallet or a stone."
+	icon_state = "bronzechisel"
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
+	chisel_prefix = "bronze"
 
 /obj/item/rogueweapon/chisel/blacksteel
 	name = "blacksteel chisel"
@@ -79,6 +96,7 @@
 		/obj/item/rogueweapon/hammer/iron     = "h",
 		/obj/item/rogueweapon/hammer/wood     = "m",
 		/obj/item/rogueweapon/hammer/blacksteel = "bh",
+		/obj/item/rogueweapon/hammer/bronze	= "bronzeh",
 		/obj/item/rogueweapon/hammer/ancient   = "a"
 	)
 
@@ -114,6 +132,7 @@
 	grid_width = 64
 	grid_height = 64
 	already_assembled = TRUE
+	is_tool = TRUE
 
 	possible_item_intents = list(/datum/intent/hit)
 	gripped_intents = list(/datum/intent/chisel)

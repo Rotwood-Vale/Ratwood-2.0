@@ -17,6 +17,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 64
 	grid_height = 64
+	is_tool = TRUE
 
 /obj/item/rogueweapon/pick/getonmobprop(tag)
 	. = ..()
@@ -47,9 +48,10 @@
 	force_wielded = 25
 	icon_state = "bronzepick"
 	possible_item_intents = list(/datum/intent/pick/bad, /datum/intent/axe/chop, /datum/intent/axe/cut, MACE_STRIKE)
-	gripped_intents = list(/datum/intent/pick, /datum/intent/axe/chop, /datum/intent/till, /datum/intent/flail/thresh)
+	gripped_intents = list(/datum/intent/pick, /datum/intent/axe/chop, /datum/intent/till, /datum/intent/flailthresh)
 	max_integrity = 500
 	max_blade_int = 225
+	is_tool = TRUE
 	sharpness = IS_SHARP
 	smeltresult = /obj/item/ingot/bronze
 

@@ -33,3 +33,11 @@
 	icon_state = "apan"
 	color = "#bb9696"
 	sellprice = 25
+
+/obj/item/cooking/pan/bronze
+	name = "bronze pan"
+	desc = "Psydonia's greatest mystery isn't the meaning of lyfe, but how these pans are able to perfectly fry a nite's meal without needing even a single drop of oil."
+	icon_state = "bronzepan"
+	throwforce = 30 //We both know why.
+	max_integrity = 200
+	sellprice = 28

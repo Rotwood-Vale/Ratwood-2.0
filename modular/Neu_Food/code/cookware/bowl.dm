@@ -28,6 +28,11 @@
 	icon_state = "bowl_iron"
 	sellprice = 20
 
+/obj/item/reagent_containers/glass/bowl/bronze
+	name = "bronze bowl"
+	icon_state = "bowl_bronze"
+	sellprice = 25
+
 /obj/item/reagent_containers/glass/bowl/gold
 	name = "gold bowl"
 	icon_state = "bowl_gold"

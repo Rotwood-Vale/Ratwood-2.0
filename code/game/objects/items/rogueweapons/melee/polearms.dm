@@ -1115,6 +1115,26 @@
 	item_state = "bronzewingedspear"
 	wdefense = 6 //Functionally the same, but with +1 DEF.
 
+/obj/item/rogueweapon/spear/bronze/strapless
+	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented \
+	the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes \
+	it perfect for one-handed thrusts and throws. </br>This particular spear has a thin strap running along its grain, allowing it to be stowed \
+	without the need for a greatweapon strap."
+	slot_flags = ITEM_SLOT_BACK //Option-unique, uncraftable. Ensures the loadout doesn't implode on itself.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
+
+/obj/item/rogueweapon/spear/bronze/winged/strapless
+	desc = "An antiquital staff, adorned with a winged bronze spearhead. The flared edges catch errant strikes and keep snarling foes from further \
+	impaling themselves in order to maul its wielder. </br>Scholars believe this particular type of polearm was made to counter Vheslynic seadaemons, \
+	during the now-mythologized Syonic era's collapse. </br>This particular spear has a thin strap running along its grain, allowing it to be stowed \
+	without the need for a greatweapon strap."
+	slot_flags = ITEM_SLOT_BACK //Ditto.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
+
 /obj/item/rogueweapon/greatsword
 	force = 14
 	force_wielded = 35

@@ -21,6 +21,7 @@
 	max_blade_int = 300
 	grid_width = 32
 	grid_height = 96
+	is_tool = TRUE
 
 /obj/item/rogueweapon/shovel/Destroy()
 	if(heldclod)
@@ -63,7 +64,7 @@
 	user.changeNext_move(user.used_intent.clickcd)
 
 	if(user.used_intent.type == /datum/intent/shovelscoop)
-		if(istype(T, /turf/open/floor/rogue/dirt) || istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
+		if(istype(T, /turf/open/floor/rogue/dirt))
 			var/turf/open/floor/rogue/dirt/D = T
 
 			if(!heldclod && user && istype(user.rmb_intent, /datum/rmb_intent/strong) && HAS_TRAIT(user, TRAIT_GRAVEROBBER))
@@ -176,6 +177,10 @@
 			heldclod = null
 			playsound(T, 'sound/items/empty_shovel.ogg', 100, TRUE)
 			update_icon()
+			return
+
+		if(istype(T, /turf/open/floor/rogue/grass) || istype(T, /turf/open/floor/rogue/grassred) || istype(T, /turf/open/floor/rogue/grassyel) || istype(T, /turf/open/floor/rogue/grasscold) || istype(T, /turf/open/floor/rogue/grasspurple) || istype(T, /turf/open/floor/rogue/grassgrey))
+			to_chat(user, span_warning("There is grass in the way."))
 			return
 
 		if(istype(T, /turf/open/floor/rogue/snow) || istype(T, /turf/open/floor/rogue/snowrough) || istype(T, /turf/open/floor/rogue/snowpatchy))
@@ -377,6 +382,14 @@
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
+
+/obj/item/rogueweapon/shovel/bronze
+	force = 23
+	name = "bronze shovel"
+	desc = "Dig the mound, so that water may flow into a thirsting crop. Puncture the earth, so that its depths may be catered to your whim. Leaven the soil, so that the buried may know peace from this world's evils."
+	icon_state = "bronzeshovel"
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 300
 
 /obj/item/rogueweapon/shovel/silver
 	force = 25
