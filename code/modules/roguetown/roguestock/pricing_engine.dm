@@ -97,6 +97,32 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 	GLOB.material_baseline_prices[/obj/item/natural/wood/plank] = round(SELLPRICE_WOOD * MATERIAL_PLANK_FROM_WOOD)
 	GLOB.material_baseline_prices[/obj/item/natural/glass] = SELLPRICE_GLASS_BATCH
 	GLOB.material_baseline_prices[/obj/item/roguegear] = round(SELLPRICE_STEEL_INGOT * MATERIAL_ROGUEGEAR_FROM_STEEL)
+	// Ratwood mixed-recipe materials. These appear in recipes alongside priced ingredients,
+	// where an unpriced input silently deflates the derived price (an all-unpriced recipe is
+	// skipped and keeps its hand-tuned sellprice, so pure loot lines like decrepit gear are
+	// deliberately NOT anchored - a crafting-cost model doesn't fit mob-farmed supply).
+	// Anchors follow the item's own tuned sellprice or the nearest SELLPRICE define.
+	GLOB.material_baseline_prices[/obj/item/natural/stoneblock] = 2
+	GLOB.material_baseline_prices[/obj/item/natural/brick] = SELLPRICE_CLAY
+	GLOB.material_baseline_prices[/obj/item/natural/bone] = SELLPRICE_BONE
+	GLOB.material_baseline_prices[/obj/item/natural/whetstone] = SELLPRICE_STONE
+	GLOB.material_baseline_prices[/obj/item/natural/glass_shard] = round(SELLPRICE_GLASS_BATCH * 0.5)
+	GLOB.material_baseline_prices[/obj/item/natural/dirtclod] = 1
+	GLOB.material_baseline_prices[/obj/item/natural/bowstring] = SELLPRICE_SINEW + 1
+	GLOB.material_baseline_prices[/obj/item/construction/nail] = 1
+	GLOB.material_baseline_prices[/obj/item/grown/log/tree] = SELLPRICE_WOOD * 2
+	GLOB.material_baseline_prices[/obj/item/grown/log/tree/stake] = 1
+	GLOB.material_baseline_prices[/obj/item/ash] = 1
+	GLOB.material_baseline_prices[/obj/item/alch/coaldust] = SELLPRICE_COAL
+	GLOB.material_baseline_prices[/obj/item/alch/irondust] = round(SELLPRICE_IRON_INGOT * SELLPRICE_DUST_FROM_INGOT_MULT)
+	GLOB.material_baseline_prices[/obj/item/alch/firedust] = SELLPRICE_ARCANE_DUST_LOW
+	GLOB.material_baseline_prices[/obj/item/alch/airdust] = SELLPRICE_ARCANE_DUST_LOW
+	GLOB.material_baseline_prices[/obj/item/alch/bonemeal] = SELLPRICE_BONE
+	GLOB.material_baseline_prices[/obj/item/fertilizer] = 2
+	GLOB.material_baseline_prices[/obj/item/compost] = 1
+	GLOB.material_baseline_prices[/obj/item/roguegem/ruby] = 100
+	GLOB.material_baseline_prices[/obj/item/roguegem/amethyst] = 1
+	GLOB.material_baseline_prices[/obj/item/carvedgem/chitin/rawchitin] = 10
 
 /proc/init_derived_sellprices(force_audits = FALSE)
 	GLOB.derived_sellprices = list()
