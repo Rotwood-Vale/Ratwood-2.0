@@ -56,6 +56,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/tgui_theme = "azure_default"
+	var/parchment_skin = "leatherbound"
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/floating_text_toggles = TOGGLES_TEXT_DEFAULT
@@ -505,6 +506,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "Legacy"]</a>"
 			dat += "<br>"
 			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [get_tgui_theme_display_name()]</a>"
+			dat += "<br>"
+			dat += "<a href='?_src_=prefs;preference=parchment_skin'>Parchment: [get_parchment_skin_display_name()]</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
@@ -2868,6 +2871,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					tgui_lock = !tgui_lock
 				if("tgui_theme")
 					setTguiStyle()
+				if("parchment_skin")
+					cycle_parchment_skin()
 				if("winflash")
 					windowflashing = !windowflashing
 
