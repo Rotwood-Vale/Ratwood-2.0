@@ -36,6 +36,14 @@
 	/// region_id and be flagged map_swap_only.
 	var/list/trade_region_swaps
 
+	/// QUEST_TOWNER_* -> list of THREAT_REGION_* names hosting that towner posting. The
+	/// GLOB defaults (towner_smith_caravan_regions / towner_orevein_regions) are dun_world's;
+	/// on any other map a posting whose type isn't remapped here fails at preview and
+	/// refunds, so every map with towner-capable regions should set both. Target regions
+	/// must allow the towner types in allowed_quest_types and carry hard spawners; the
+	/// caravan additionally needs a bandit-family faction in the region's weights.
+	var/list/towner_quest_regions
+
 	/// TRADE_REGION_* -> THREAT_REGION_* remap for blockades. The /datum/economic_region
 	/// defaults point at dun_world's wilderness; a map with its own threat_regions list must
 	/// remap every trade road here or those roads can never be blockaded (roll_blockade

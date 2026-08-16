@@ -80,6 +80,13 @@
 	trade_region_swaps = list(
 		TRADE_REGION_ROCKHILL = /datum/economic_region/vespermill,
 	)
+	// Towner postings: the caravan runs the wooded roads (highwaymen in the faction
+	// tables), the miner's lead strikes the deep bogs. Both target regions carry hard
+	// spawners and allow the towner types.
+	towner_quest_regions = list(
+		QUEST_TOWNER_SMITH_CARAVAN = list(THREAT_REGION_ROCKHILL_WOODS_NORTH, THREAT_REGION_ROCKHILL_WOODS_SOUTH),
+		QUEST_TOWNER_MINER_OREVEIN = list(THREAT_REGION_ROCKHILL_BOG_SUNKMIRE, THREAT_REGION_ROCKHILL_BOG_WEST),
+	)
 	// Blockade routes. Tiers mirror dun_world's: grove-tier roads (no travel fee)
 	// through the woods, coast-tier (75) through the outer bogs, mountain-tier (150)
 	// through Sunkmire. Every target region carries hard quest spawners - a road

@@ -82,6 +82,9 @@
 	)
 
 /datum/threat_region/rockhill_woods_north
+	// Default kill/evergreen set plus the smith caravan - the towner posting rides the
+	// wooded roads here, and pick_region_for_quest only offers regions that allow it.
+	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN)
 	kill_target_floor = 4
 	evergreen_target = 2
 	delivery_reward_multiplier = 1.5
@@ -93,6 +96,7 @@
 	)
 
 /datum/threat_region/rockhill_woods_south
+	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN)
 	kill_target_floor = 4
 	evergreen_target = 2
 	delivery_reward_multiplier = 1.5

@@ -131,6 +131,16 @@ SUBSYSTEM_DEF(regionthreat)
 				continue
 			GLOB.economic_regions[trade_id] = swapped
 
+	// Re-point the towner postings' host regions at this map's wilderness; the GLOB
+	// defaults are dun_world region names and preview() rejects everything else.
+	if(map.towner_quest_regions)
+		var/list/caravan_regions = map.towner_quest_regions[QUEST_TOWNER_SMITH_CARAVAN]
+		if(length(caravan_regions))
+			GLOB.towner_smith_caravan_regions = caravan_regions
+		var/list/orevein_regions = map.towner_quest_regions[QUEST_TOWNER_MINER_OREVEIN]
+		if(length(orevein_regions))
+			GLOB.towner_orevein_regions = orevein_regions
+
 	// Re-point the trade roads' blockade regions at this map's wilderness. Runs here rather
 	// than in SSeconomy so the remap is in place before anything reads threat_region_id.
 	if(map.blockade_route_map)
