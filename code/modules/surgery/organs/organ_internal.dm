@@ -345,7 +345,8 @@
 	if(!isnull(colors))
 		accessory_colors = colors
 	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-	accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
+	if(accessory) //a null type is valid, it just means there's no accessory left to colour
+		accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
 	update_accessory_colors()
 
 /obj/item/organ/proc/build_colors_for_accessory(list/source_key_list)

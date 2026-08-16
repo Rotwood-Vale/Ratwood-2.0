@@ -117,7 +117,7 @@
 
 
 /datum/job/roguetown/lord/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		spells = list( /obj/effect/proc_holder/spell/self/convertrole/slave,
 		/obj/effect/proc_holder/spell/self/convertrole/azeb,
 		/obj/effect/proc_holder/spell/self/grant_title,
@@ -128,48 +128,48 @@
 	..()
 
 /datum/job/roguetown/prince/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/job/roguetown/prince/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/job/roguetown/magician/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/job/roguetown/prince/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
-	
+
 /datum/job/roguetown/prince/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
-	
+
 /datum/job/roguetown/councillor/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/job/roguetown/hand/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/job/roguetown/squire/after_spawn(mob/living/L, mob/M, latejoin = TRUE)//
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cmode_music = 'sound/music/combat_desert2.ogg'
 	..()
 
 /datum/outfit/job/roguetown/squire/pre_equip(mob/living/carbon/human/H)
 	. = ..()
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/citywatch/janissary
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb

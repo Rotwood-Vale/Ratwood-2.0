@@ -742,7 +742,7 @@
 	color = "#d4c7bf"
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
-	max_integrity = 100			//Half that of iron boots
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 
 	
 /obj/item/clothing/shoes/roguetown/boots/armor/shalal

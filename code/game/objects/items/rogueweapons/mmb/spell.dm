@@ -7,10 +7,9 @@
 	warnoffset = 0
 
 /datum/intent/spell/can_charge()
-	if(mastermob?.next_move > world.time)
-		if(mastermob.client.last_cooldown_warn + 10 < world.time)
-			to_chat(mastermob, span_warning("I'm not ready to do that yet!"))
-			mastermob.client.last_cooldown_warn = world.time
+	var/obj/effect/proc_holder/spell/spell_ability = mastermob.ranged_ability
+	if(istype(spell_ability) && !spell_ability.charge_check(mastermob, TRUE))
+		to_chat(mastermob, span_warning("This spell needs time to recharge!"))
 		return FALSE
 	return TRUE
 
@@ -19,5 +18,3 @@
 		user.stop_attack()
 		return
 	user.changeNext_move(clickcd)
-	if(releasedrain)
-		user.stamina_add(releasedrain)

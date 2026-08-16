@@ -59,4 +59,4 @@
 	*message_self = span_notice("I'm sewn back together by sacred medicine!")
 
 	target.adjustToxLoss(-*situational_bonus)
-	target.blood_volume += BLOOD_VOLUME_SURVIVE / 3
+	target.adjust_blood_volume(BLOOD_VOLUME_SURVIVE / 3)

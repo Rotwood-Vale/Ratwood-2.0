@@ -539,7 +539,7 @@
 	desc = "You were forcefully withdrawn from. Warmth runs freely down your thighs..."
 
 
-/atom/movable/screen/alert/status_effect/knot_tied/Click()
+/atom/movable/screen/alert/status_effect/knot_tied/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
@@ -562,7 +562,7 @@
 	desc = "I have to be careful where I step..."
 	icon_state = "knotted"
 
-/atom/movable/screen/alert/status_effect/knotted/Click()
+/atom/movable/screen/alert/status_effect/knotted/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)

@@ -199,7 +199,7 @@
 		playsound(loc, get_sfx("genslash"), 100, TRUE)
 		user.visible_message(span_warning("[user] cuts open [user.p_their()] palm!"), \
 			span_cult("I slice open my palm!"))
-		if(user.blood_volume)
+		if(user.get_blood_volume())
 			var/obj/effect/decal/cleanable/roguerune/rune = rune_to_scribe
 			user.apply_damage(initial(rune.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		is_bled = TRUE

@@ -57,8 +57,15 @@
 	///XP gain for critical successes
 	var/critical_success_xp = 20
 
+/// Orders power typepaths by their level, so all_powers can be indexed by rank.
+/proc/cmp_coven_power_level_asc(a, b)
+	var/datum/coven_power/power_a = a
+	var/datum/coven_power/power_b = b
+	return initial(power_a.level) - initial(power_b.level)
+
 /datum/coven/New(level)
-	all_powers = subtypesof(power_type)
+	//subtypesof() hands them back in alphabetical path order, not rank order
+	all_powers = sortTim(subtypesof(power_type), GLOBAL_PROC_REF(cmp_coven_power_level_asc))
 
 	if (!level)
 		return
@@ -442,13 +449,13 @@
 		if(has_power(power_type))
 			continue
 
-		var/datum/coven_power/temp_power = new power_type
+		//read off the typepath - instancing a power without a parent Coven CRASHes
+		var/datum/coven_power/candidate = power_type
+		var/candidate_level = initial(candidate.level)
 
 		// Can discover powers up to current level + 1
-		if(temp_power.level <= level + 1 && temp_power.level <= max_level)
+		if(candidate_level <= level + 1 && candidate_level <= max_level)
 			discoverable_powers += power_type
-
-		qdel(temp_power)
 
 	if(!length(discoverable_powers))
 		return FALSE

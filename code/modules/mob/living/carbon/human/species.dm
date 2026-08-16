@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/punchstunthreshold = 0
 	///base electrocution coefficient
-	var/siemens_coeff = 1 
+	var/siemens_coeff = 1
 	///what kind of damage overlays (if any) appear on our species when wounded?
 	var/damage_overlay_type = "human"
 	///to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///the actual flying ability given to flying species
 	var/datum/action/innate/flight/fly
 	///the icon used for the wings
-	var/wings_icon = "Angel" 
+	var/wings_icon = "Angel"
 
 	///species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		pref_load.apply_descriptors(C)
 
 	for(var/language_type in languages)
-		C.grant_language(language_type)
+		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	for(var/language_type in languages)
-		C.remove_language(language_type)
+		C.remove_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	// Clear organ DNA since it wont match as we're changing the species
 	C.dna.organ_dna = list()
@@ -988,7 +988,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_blood)
-		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.set_blood_volume(min(H.get_blood_volume() + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 
@@ -1281,6 +1281,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return
 
 		var/damage = user.get_punch_dmg()
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			damage += (damage * STRONG_STANCE_DMG_BONUS)
 		if(target.has_status_effect(/datum/status_effect/buff/clash) && target.get_active_held_item() && ishuman(user))
 			var/obj/item/IM = target.get_active_held_item()
 			target.process_clash(user, IM)
@@ -2033,7 +2035,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
-	damage = max(damage-blocked+armor,0)
+	damage = max((damage - blocked) * (1 - armor / 100), 0)
 //	var/hit_percent =  (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	var/atom/movable/screen/zone_sel/zone_sel
@@ -2076,11 +2078,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.Slowdown(clamp(damage_amount/10, 1, 5))
 					shake_camera(H, 1, 1)
 				if(damage_amount < 10)
-					H.flash_fullscreen("redflash1")
+					H.fullscreen_redflash("redflash1")
 				else if(damage_amount < 20)
-					H.flash_fullscreen("redflash2")
+					H.fullscreen_redflash("redflash2")
 				else if(damage_amount >= 20)
-					H.flash_fullscreen("redflash3")
+					H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2094,11 +2096,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(damage_amount > 10 && prob(damage_amount))
 				H.emote("pain")
 			if(damage_amount < 10)
-				H.flash_fullscreen("redflash1")
+				H.fullscreen_redflash("redflash1")
 			else if(damage_amount < 20)
-				H.flash_fullscreen("redflash2")
+				H.fullscreen_redflash("redflash2")
 			else if(damage_amount >= 20)
-				H.flash_fullscreen("redflash3")
+				H.fullscreen_redflash("redflash3")
 			if(BP)
 				if(zone_sel)
 					zone_sel.flash_limb(BP.body_zone, "#FF0000")
@@ -2219,6 +2221,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 		if(env_adjust)
 			H.adjust_bodytemperature(env_adjust)
+
+		if(isfloorturf(cur_turf) && H.bodytemperature < BODYTEMP_NORMAL_MAX)
+			var/turf/open/floor/F = cur_turf
+			if(F.heat)
+				var/warmth = F.heat * 4
+				if(H.bodytemperature + warmth > BODYTEMP_NORMAL_MAX)
+					warmth = BODYTEMP_NORMAL_MAX - H.bodytemperature
+				H.adjust_bodytemperature(warmth)
 	if(H.on_fire && !HAS_TRAIT(H, TRAIT_RESISTHEAT))	//fire damage
 		var/burn_damage = 0
 
@@ -2324,9 +2334,9 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		return
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		H.adjust_bodytemperature(11)
+		H.adjust_bodytemperature(1)
 	else
-		H.adjust_bodytemperature(20)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes
+		H.adjust_bodytemperature(5)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 30 seconds of being on fire to heatstroke
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))

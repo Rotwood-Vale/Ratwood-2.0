@@ -1,5 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - balance: "Capped direct attacks on dropped rougeweapons and rogueclothes at 5 x demolition mod. Layman's terms, you can't instantly drop a concheck-dropped silver weapon to 0 integrity."
-  - balance: "Weapons and clothing/armor can NOT be deleted/destroyed by direct attacks when in a broken state (i.e. 0 integrity). Lava, fire, acid, and always_delete still work to break things."

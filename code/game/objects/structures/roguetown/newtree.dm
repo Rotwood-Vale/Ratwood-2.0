@@ -108,6 +108,23 @@
 			if(L.mind) // idk just following whats going on above
 				L.mind.add_sleep_experience(/datum/skill/misc/climbing, exp_to_gain, FALSE)
 
+/obj/structure/flora/newtree/attackby(obj/item/I, mob/living/user, params)
+	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)
+		return ..()
+	var/mob/living/living_user = user
+	if(living_user.client && !living_user.client.prefs?.autowoodcut)
+		return ..()
+	if(user.doing)
+		return ..()
+	user.doing = FALSE
+	while(!QDELETED(src) && user.Adjacent(src))
+		if((living_user.energy > 0) && do_after(user, 1.5 SECONDS, TRUE, src))
+			if(QDELETED(src))
+				break
+			..()
+		else
+			break
+
 /obj/structure/flora/newtree/attacked_by(obj/item/I, mob/living/user)
 	var/was_destroyed = obj_destroyed
 	. = ..()

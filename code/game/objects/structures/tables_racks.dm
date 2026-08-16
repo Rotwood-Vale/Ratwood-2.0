@@ -171,8 +171,12 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/dumped = list()
+			for(var/obj/item/dumped_item in T.contents)
+				dumped += "[dumped_item]"
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message(span_notice("[user] empties [I] on [src]."))
+			user.log_message("emptied [I] onto [src] (CONTENTS: [english_list(dumped)])", LOG_GAME)
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 

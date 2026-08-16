@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(treasury)
 
 /datum/controller/subsystem/treasury/Initialize()
 	treasury_value = rand(1000, 2000)
-	if(SSmapping && SSmapping.config && SSmapping.config.map_name == "Build Your Own Settlement")
+	if(SSmapping && SSmapping.current_map && SSmapping.current_map.map_name == "Build Your Own Settlement")
 		treasury_value = rand(200,400)
 	force_set_round_statistic(STATS_STARTING_TREASURY, treasury_value)
 

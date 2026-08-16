@@ -90,8 +90,8 @@
 /datum/reagent/consumable/golden_calendula_tea/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(5)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_MAXIMUM)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.set_blood_volume(min(M.get_blood_volume()+5, BLOOD_VOLUME_MAXIMUM))
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(1) //at a metabolism of .5 U a tick this translates to 120WHP healing with 20 U Most wounds are unsewn 15-100. This is powerful on single wounds but rapidly weakens at multi wounds.

@@ -662,5 +662,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	to_chat(src, span_notice("Ghost protection is now [prefs.ghost_protection ? "ENABLED (Ghosts can no longer see or orbit you)" : "DISABLED (Ghosts can now see and orbit you)"]."))
 
 // Currently ghost sprite not displaying
-// Can't return to afterlife or use for teleporting 
+// Can't return to afterlife or use for teleporting
 // Need to add hide emotes, etc
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "OOC"
+	to_chat(mob, SSmap_vote.tally_printout)

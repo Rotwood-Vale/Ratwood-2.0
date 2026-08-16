@@ -14,7 +14,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_INT = 1,
 	)
-	traits_applied = list(TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_FUSILIER)
 
 	subclass_skills = list(
 		/datum/skill/combat/firearms = 5,//Your entire point is GUN.
@@ -41,7 +41,7 @@
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 	beltr = /obj/item/quiver/bullet/lead//nice to have variety but blunderbus might not fit the vibe

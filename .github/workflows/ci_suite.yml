@@ -35,6 +35,15 @@ jobs:
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
+      - name: Read Python version
+        id: python-version
+        run: |
+          . ./dependencies.sh
+          echo "version=${PYTHON_VERSION%.*}" >> "$GITHUB_OUTPUT"
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ steps.python-version.outputs.version }}
       - name: Install Tools
         run: |
           pip3 install setuptools

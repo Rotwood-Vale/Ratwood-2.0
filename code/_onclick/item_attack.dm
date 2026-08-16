@@ -132,6 +132,8 @@
 			if(!user.used_intent.noaa)
 				playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			if(user.used_intent.no_attack) //BYE!!!
+				log_combat(user, M, "used a non-damaging intent on", src.name, "(INTENT: [uppertext(user.used_intent.name)])", log_seen = FALSE)
+				add_fingerprint(user)
 				return
 	else
 		return

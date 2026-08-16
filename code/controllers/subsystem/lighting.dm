@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(lighting)
 	queue = objects_queue
 	while(current_index < length(queue))
 		current_index += 1
-		var/atom/movable/lighting_object/lighting_object = queue[current_index]
+		var/datum/lighting_object/lighting_object = queue[current_index]
 		// these can't delete themselves in update() and so nothing in this should be qdeleted
 		ASSERT(!QDELETED(lighting_object))
 		lighting_object.update()

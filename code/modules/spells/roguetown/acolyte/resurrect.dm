@@ -27,7 +27,11 @@
 	priest_excluded = TRUE
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
+	var/old_recharge = recharge_time
 	recharge_time = initial(recharge_time) * SSchimeric_tech.get_resurrection_multiplier()
+	// If the spell was fully charged, keep it fully charged after adjusting recharge_time
+	if(charge_counter >= old_recharge && old_recharge > 0)
+		charge_counter = recharge_time
 	. = ..()
 
 /obj/effect/proc_holder/spell/invoked/resurrect/proc/get_current_required_items()
@@ -112,7 +116,7 @@
 	revert_cast()
 	return FALSE
 
-/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/resurrect/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		to_chat(user, span_warning("The miracle fizzles."))
 		return FALSE
@@ -314,7 +318,7 @@
 		// For those without hunger, drain blood instead. CONSEQUENCES FOR MY TRAIT CHOICES?!
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.blood_volume = max(H.blood_volume - 100, BLOOD_VOLUME_SURVIVE)
+			H.set_blood_volume(max(H.get_blood_volume() - 100, BLOOD_VOLUME_SURVIVE))
 	else
 		// For normal humans, drain nutrition
 		owner.adjust_nutrition(-100)

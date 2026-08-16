@@ -30,9 +30,15 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
+	/// Can we flick our ears?
+	var/can_flick = TRUE
+
+	/// Bool for ear flicking -- are we currently in the flick animation?
+	var/is_flicking = FALSE
+
 /obj/item/organ/ears/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
-	for(var/datum/wound/facial/ears/ear_wound as anything in M.get_wounds())
+	for(var/datum/wound/facial/ears/ear_wound in M.get_wounds())
 		qdel(ear_wound)
 
 /obj/item/organ/ears/on_life()

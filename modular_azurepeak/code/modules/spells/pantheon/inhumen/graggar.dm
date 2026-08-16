@@ -45,6 +45,7 @@
 	chargedrain = 0
 	chargetime = 15
 	recharge_time = 10 SECONDS
+	miracle = TRUE
 
 /obj/effect/proc_holder/spell/invoked/projectile/blood_net/cast(list/targets, mob/user = usr)
 	var/obj/item/I = user.get_active_held_item()

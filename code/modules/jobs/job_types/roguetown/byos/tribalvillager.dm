@@ -48,7 +48,7 @@
 	H.faction += list("orcs", "tribe")
 	if(!H.has_language(/datum/language/draconic))
 		H.grant_language(/datum/language/draconic)
-	if(SSmapping.config.map_name == "Build Your Own Settlement")
+	if(SSmapping.current_map.map_name == "Build Your Own Settlement")
 		head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 		cloak = /obj/item/clothing/cloak/tribal
 		armor = null

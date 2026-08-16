@@ -95,7 +95,9 @@
 		"Obsidian" = SKIN_COLOR_OBSIDIAN,
 		"Brimstone" = SKIN_COLOR_BRIMSTONE,
 		"Jade" = SKIN_COLOR_JADE,
-		"Ceragyrite" = SKIN_COLOR_CERAGYRITE
+		"Ceragyrite" = SKIN_COLOR_CERAGYRITE,
+		"Tuscan Red" = SKIN_COLOR_TUSCAN,
+		"Smoky Quartz" = SKIN_COLOR_SMOKY_QUARTZ
 	)
 
 /datum/species/dwarf/mountain/get_hairc_list()

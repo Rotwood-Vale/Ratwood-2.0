@@ -21,6 +21,7 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	var/window_lock_strength
+	var/wallpress = TRUE
 	var/list/repair_costs = list(/obj/item/grown/log/tree/small, /obj/item/natural/glass)
 	var/repair_skill = /datum/skill/craft/carpentry
 	var/repair_started = FALSE
@@ -28,6 +29,9 @@
 /obj/structure/roguewindow/Initialize(mapload)
 	update_icon()
 	..()
+
+/obj/structure/roguewindow/can_wallpress()
+	return wallpress && !climbable && density
 
 /obj/structure/roguewindow/obj_destruction(damage_flag)
 	..()
@@ -192,7 +196,7 @@
 	icon_state = "harem3-solid"
 	base_state = "harem3-solid"
 	repair_costs = list(/obj/item/natural/glass, /obj/item/natural/glass)
-	
+
 /obj/structure/roguewindow/harem3/frosted
 	name = "frosted glass window"
 	desc = "A frosted glass window, it obscures the view but focuses the mind on just what could be hiding behind it."

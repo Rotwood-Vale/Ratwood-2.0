@@ -400,3 +400,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
 #define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
 #define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.
+
+//Cast time reduction
+#define TOPER_CAST_TIME_REDUCTION 0.1
+#define EMERALD_CAST_TIME_REDUCTION 0.15
+#define SAPPHIRE_CAST_TIME_REDUCTION 0.2
+#define QUARTZ_CAST_TIME_REDUCTION 0.25
+#define RUBY_CAST_TIME_REDUCTION 0.3
+#define DIAMOND_CAST_TIME_REDUCTION 0.35
+#define RIDDLE_OF_STEEL_CAST_TIME_REDUCTION 0.4

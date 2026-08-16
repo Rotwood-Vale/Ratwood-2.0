@@ -18,6 +18,8 @@
 
 /datum/coven_power/celerity/activate(atom/target)
 	. = ..()
+	if(!.)
+		return
 	owner.add_movespeed_modifier(MOVESPEED_ID_CELERITY, multiplicative_slowdown = src.multiplicative_slowdown)
 	owner.apply_status_effect(/datum/status_effect/buff/celerity, level)
 	owner.AddComponent(/datum/component/after_image)

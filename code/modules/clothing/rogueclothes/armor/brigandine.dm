@@ -124,6 +124,7 @@
 	desc = "A thick boiled leather surcoat with enough plates concealed within the folds to offer superior protection. It weighs a ton and takes a great man to wear."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 	var/picked = FALSE
 	sleeved_detail = TRUE
 	boobed_detail = TRUE
@@ -218,7 +219,8 @@
 	blocksound = SOFTHIT
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
+	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // Makes the armor equivilient w/ darkened steel plate.
 	sellprice = 363 // On par w/ judgement and ichor fang cuz why not
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY

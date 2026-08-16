@@ -415,6 +415,9 @@
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
+		if(no_redflash) // if we actually use the "type" variable here for some other flash, might want to make this check that.
+			type = /atom/movable/screen/fullscreen/blind
+			to_chat(src, span_warning("I'm momentarily blinded by the flash!"))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
 		return TRUE

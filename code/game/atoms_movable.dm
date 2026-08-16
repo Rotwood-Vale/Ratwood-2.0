@@ -261,6 +261,7 @@
 
 	for(var/atom/movable/AM in buckled_mobs)
 		AM.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -1047,25 +1048,25 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/grant_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.grant_language(dt, body)
+	H.grant_language(dt, body, source)
 
-/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+/atom/movable/proc/grant_all_languages(omnitongue = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder()
-	H.grant_all_languages(omnitongue)
+	H.grant_all_languages(omnitongue, source)
 
 /atom/movable/proc/get_random_understood_language()
 	var/datum/language_holder/H = get_language_holder()
 	. = H.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/remove_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.remove_language(dt, body)
+	H.remove_language(dt, body, source)
 
-/atom/movable/proc/remove_all_languages()
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_SOURCE_ALL)
 	var/datum/language_holder/H = get_language_holder()
-	H.remove_all_languages()
+	H.remove_all_languages(source)
 
 /atom/movable/proc/has_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()

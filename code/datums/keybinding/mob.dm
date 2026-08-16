@@ -190,25 +190,29 @@
 			if(C.canZMove(UP, turf_above))
 				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 				var/stamina_cost_final = round((10 - athletics_skill), 1)
-				var/mob/living/carbon/human/pulling = C.pulling
+				var/atom/movable/pulling = C.pulling
 				var/time_taken = 1.5 SECONDS
 				if(ismob(pulling))
 					stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
 					time_taken *= 2
 				if(do_after(C, time_taken))
-					if(ismob(C.pulling))
-						ADD_TRAIT(C.pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
-						C.pulling.forceMove(turf_above)
+					if(QDELETED(pulling) || C.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
+						pulling = null
+					if(ismob(pulling))
+						ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
+						pulling.forceMove(turf_above)
 					C.forceMove(turf_above)
 					for(var/mob/buckled_living as anything in C.buckled_mobs)
 						buckled_living.forceMove(turf_above)
-					C.start_pulling(pulling, state = 1, supress_message = TRUE)
-					if(C.pulling)
-						C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
-						var/obj/item/grabbing/I = C.get_inactive_held_item()
-						if(istype(I, /obj/item/grabbing/))
-							I.icon_state = null
-						REMOVE_TRAIT(C.pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
+					if(pulling)
+						C.start_pulling(pulling, state = 1, supress_message = TRUE)
+						if(C.pulling == pulling)
+							C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+							var/obj/item/grabbing/I = C.get_inactive_held_item()
+							if(istype(I, /obj/item/grabbing/))
+								I.icon_state = null
+						if(ismob(pulling))
+							REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
 					C.stamina_add(stamina_cost_final)
 					to_chat(C, span_notice("I fly upwards."))
 			else
@@ -245,25 +249,29 @@
 			if(C.canZMove(DOWN, turf_below))
 				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
 				var/stamina_cost_final = round((10 - athletics_skill), 1)
-				var/mob/living/carbon/human/pulling = C.pulling
+				var/atom/movable/pulling = C.pulling
 				var/time_taken = 1.5 SECONDS
 				if(ismob(pulling))
 					stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
 					time_taken *= 2
 				if(do_after(C, time_taken))
-					if(ismob(C.pulling))
-						ADD_TRAIT(C.pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
-						C.pulling.forceMove(turf_below)
+					if(QDELETED(pulling) || C.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
+						pulling = null
+					if(ismob(pulling))
+						ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
+						pulling.forceMove(turf_below)
 					C.forceMove(turf_below)
 					for(var/mob/buckled_living as anything in C.buckled_mobs)
 						buckled_living.forceMove(turf_below)
-					C.start_pulling(pulling, state = 1, supress_message = TRUE)
-					if(C.pulling)
-						C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
-						var/obj/item/grabbing/I = C.get_inactive_held_item()
-						if(istype(I, /obj/item/grabbing/))
-							I.icon_state = null
-						REMOVE_TRAIT(C.pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
+					if(pulling)
+						C.start_pulling(pulling, state = 1, supress_message = TRUE)
+						if(C.pulling == pulling)
+							C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+							var/obj/item/grabbing/I = C.get_inactive_held_item()
+							if(istype(I, /obj/item/grabbing/))
+								I.icon_state = null
+						if(ismob(pulling))
+							REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
 					C.stamina_add(stamina_cost_final)
 					to_chat(C, span_notice("I fly downwards."))
 			else

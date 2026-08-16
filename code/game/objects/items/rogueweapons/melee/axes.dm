@@ -106,6 +106,17 @@
 	minstr = 9
 	wdefense = 4
 
+/obj/item/rogueweapon/stoneaxe/battle/blacksteel
+	name = "blacksteel axe"
+	desc = "A magnificent battle axe of blacksteel, fitted to counter both unarmored assailants and heavy infantry. The edge might be fluted with nobler alloys, but it is no less wicked when introduced to maille-and-bone."
+	icon_state = "bs_axe"
+	force = 30
+	force_wielded = 35
+	smeltresult = /obj/item/ingot/blacksteel
+	wdefense_wbonus = 2 //Increased defense when wielded.
+	max_blade_int = 500 //Sharper than sharp.
+	resistance_flags = FIRE_PROOF
+
 /obj/item/rogueweapon/stoneaxe/oath
 	force = 30
 	force_wielded = 40
@@ -184,6 +195,19 @@
 				return list("shrink" = 0.5,"sx" = -10,"sy" = -6,"nx" = 11,"ny" = -3,"wx" = -4,"wy" = -3,"ex" = 5,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/rogueweapon/stoneaxe/hurlbat/blacksteel
+	name = "blacksteel hurlbat"
+	desc = "A magnificent throwing axe of blacksteel, weighted to penetrate most cuirasses with a single well-aimed toss."
+	smeltresult = /obj/item/ingot/blacksteel
+	icon_state = "bs_hurlbat"
+	armor_penetration = 60 //this kills the platebeast
+	possible_item_intents = list(/datum/intent/axe/chop)
+	force = 24
+	throwforce = 40
+	max_integrity = 80 //A little less fragile!
+	max_blade_int = 150 //Sharp!
+	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/stoneaxe/battle/abyssoraxe
 	name = "Tidecleaver"
@@ -471,6 +495,20 @@
 	minstr = 11
 	max_blade_int = 250
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/greataxe/blacksteel
+	name = "blacksteel greataxe"
+	desc = "A magnificent greataxe of blacksteel, tipped with spikes to keep the horrors at bay. No one's quite sure as to whether it's meant \
+	to be called a 'poleaxe' or 'greataxe'; at this point, however, the terms might as well be interchangeable amongst the laymen."
+	icon_state = "bs_greataxe"
+	force = 20
+	force_wielded = 40//on par with blacksteel flamberg
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust, /datum/intent/spear/bash/poleaxe)
+	max_blade_int = 500
+	wdefense_wbonus = 3 //Increased defense when wielded.
+	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/greataxe/steel/necran
 	name = "Respite"

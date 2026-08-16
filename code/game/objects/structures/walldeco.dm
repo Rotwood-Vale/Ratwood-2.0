@@ -230,12 +230,12 @@
 
 /obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		name = "Rockhill flag"
-	else if(SSmapping.config.map_name == "Desert Town")
+	else if(SSmapping.current_map.map_name == "Desert Town")
 		name = "Al-Ashur flag"
 		desc = "A banner flutters in the breeze in the proud heraldic colors of the Sultanate."
-	else if(SSmapping.config.map_name == "Build Your Own Settlement")
+	else if(SSmapping.current_map.map_name == "Build Your Own Settlement")
 		name = "New-Kingsfield flag"
 		desc = "A banner flutters in the breeze in the proud heraldic colors of the Colony."
 	else

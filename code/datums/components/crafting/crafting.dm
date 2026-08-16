@@ -408,6 +408,7 @@
 							I.add_fingerprint(user)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
+					user.log_message("crafted [result_name] ([R.type])", LOG_GAME)
 					if(user.mind && R.skillcraft)
 						if(isliving(user))
 							var/mob/living/L = user

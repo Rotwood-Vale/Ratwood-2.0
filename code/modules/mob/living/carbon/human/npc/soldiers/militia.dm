@@ -11,6 +11,9 @@
 	possible_rmb_intents = list()
 	var/is_silent = TRUE /// Determines whether or not we will scream our funny lines at people.
 
+	//They'll try and use special attacks but more than likely fail in using them. These are peasants, after all. Unlike Highwaymen, which are more organized and can at least try smart attacks.
+	special_attacker = TRUE
+
 /* /mob/living/carbon/human/species/human/northern/militia/retaliate(mob/living/L)
 	var/newtarg = target
 	.=..()

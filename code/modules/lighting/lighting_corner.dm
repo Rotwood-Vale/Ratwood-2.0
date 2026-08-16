@@ -112,10 +112,14 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	for (var/TT in masters)
 		var/turf/T = TT
-		if (T.lighting_object)
-			if (!T.lighting_object.needs_update)
-				T.lighting_object.needs_update = TRUE
-				SSlighting.objects_queue += T.lighting_object
+		var/datum/lighting_object/lighting_object = T.lighting_object
+		if (!lighting_object)
+			if (SSlighting.initialized && T.has_dynamic_lighting())
+				new /datum/lighting_object(T)
+			continue
+		if (!lighting_object.needs_update)
+			lighting_object.needs_update = TRUE
+			SSlighting.objects_queue += lighting_object
 
 /datum/lighting_corner/proc/vis_update()
 	for (var/datum/light_source/light_source as anything in affecting)

@@ -129,7 +129,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
 "dB" = (
-/turf/closed,
+/turf/closed/void,
 /area)
 "dC" = (
 /obj/effect/decal/cobbleedge{

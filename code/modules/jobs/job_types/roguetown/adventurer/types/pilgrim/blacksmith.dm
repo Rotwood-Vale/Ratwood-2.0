@@ -83,7 +83,7 @@
 	else
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals

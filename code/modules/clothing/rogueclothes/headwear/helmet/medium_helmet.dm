@@ -571,6 +571,11 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
+/obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee
+	name = "forester's antler helm"
+	desc = "A beastly snouted armet with the large horns of an elder saiga, reinforced with additional steel plating for front-line combat."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
 /obj/item/clothing/head/roguetown/helmet/sallet/warden
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FULL_HEAD
@@ -597,6 +602,21 @@
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee
+	name = "forester's volfskull helm"
+	desc = "The large, intimidating skull of an elusive white volf, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat/melee
+	name = "forester's ramskull helm"
+	desc = "The large, intimidating horned skull of an elusive vale great ram, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee
+	name = "forester's bearskull helm"
+	desc = "The large, intimidating skull of a common direbear, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
 
 /obj/item/clothing/head/roguetown/roguehood/warden
 	name = "warden's hood"

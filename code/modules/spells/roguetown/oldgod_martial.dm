@@ -31,7 +31,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_retribution/cast(mob/living/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume-100, 0)
+	user.set_blood_volume(max(user.get_blood_volume()-100, 0))
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_status_effect(/datum/status_effect/psydonic_retribution, user.get_active_held_item())
@@ -123,7 +123,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	devotion_cost = 60
 
 /obj/effect/proc_holder/spell/self/psydonic_inspire/cast(list/targets,mob/living/user = usr)
-	user.blood_volume = max(user.blood_volume-200, 0)//It's a mass AoE for an already powerful faction.
+	user.set_blood_volume(max(user.get_blood_volume()-200, 0))//It's a mass AoE for an already powerful faction.
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	for(var/mob/living/carbon/target in view(6, get_turf(user)))
@@ -175,7 +175,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume+200, 0)
+	user.set_blood_volume(max(user.get_blood_volume()+200, 0))
 	user.handle_blood()
 	user.apply_damage(200, BRUTE, spread_damage = TRUE)//Try to beat a bleedout? A point of damage for each point of blood.
 	return TRUE
@@ -207,7 +207,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_inviolability/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
 		return FALSE
-	user.blood_volume = max(user.blood_volume-300, 0)//RAAAA!!!!
+	user.set_blood_volume(max(user.get_blood_volume()-300, 0))//RAAAA!!!!
 	user.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 	user.apply_damage(300, BRUTE, spread_damage = TRUE)
@@ -289,7 +289,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		target.visible_message(span_notice("[user] places a palm around the [silver], leaving it awash with crimson."), \
 			span_userdanger("The bolt is suffused with my own spark. It shall strike harder than before..."))
 		qdel(silver)
-		user.blood_volume = max(user.blood_volume-300, 0)
+		user.set_blood_volume(max(user.get_blood_volume()-300, 0))
 		user.handle_blood()
 		new /obj/effect/decal/cleanable/blood/puddle(user.loc)
 		user.apply_damage(50, BRUTE, spread_damage = TRUE)
@@ -300,7 +300,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/proc/lux_punish(mob/living/carbon/target)
 	target.visible_message(span_notice("[target] shimmers, as if they're to fade away entirely, before snapping back to reality."), \
 		span_userdanger("My own spark, my <b>lyfe</b>, flashes afore me. What have I done?"))
-	target.blood_volume = max(target.blood_volume-400, 0)//Take a guess.
+	target.set_blood_volume(max(target.get_blood_volume()-400, 0))//Take a guess.
 	target.handle_blood()
 	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
 	target.apply_damage(300, BRUTE, spread_damage = TRUE)

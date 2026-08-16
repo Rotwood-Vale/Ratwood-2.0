@@ -120,19 +120,23 @@
 		Process_Incorpmove(direct)
 		return FALSE
 
-	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+	if(mob.remote_control) //we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
+	var/add_delay = mob.cached_multiplicative_slowdown
 	// Mounted movement should be relayed before grab logic, otherwise pull checks can block riding.
 	if(mob.buckled)
 		var/mob/buckled_mob = mob
 		if(buckled_mob.get_buckled_animal_mount())
+			var/turf/open/water/water_turf = get_turf(mob)
+			if(istype(water_turf))
+				move_delay += add_delay
 			return mob.buckled.relaymove(mob, direct)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+	if(mob.buckled) //if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!(L.mobility_flags & MOBILITY_MOVE))
@@ -143,7 +147,6 @@
 		return O.relaymove(mob, direct)
 
 	//We are now going to move
-	var/add_delay = mob.cached_multiplicative_slowdown
 	if(old_move_delay + world.tick_lag > world.time)
 		move_delay = old_move_delay
 	else
@@ -218,6 +221,7 @@
 	//		popup.close()
 			mob << browse(null, "window=[X]")
 			open_popups -= X
+
 /**
  * Checks to see if you're being grabbed and if so attempts to break it
  *
@@ -584,10 +588,12 @@
 		rogue_sneaking = TRUE
 		return
 
-	if (stat == DEAD) // we're dead, so be visible if sneaking, and end it there. needed because DeadLife calls this constantly on every dead mob that exists
-		if (rogue_sneaking)
-			animate(src, alpha = initial(alpha), time = 25)
-			spawn(25) regenerate_icons()
+	if(stat == DEAD) // we're dead, so be visible if sneaking, and end it there. needed because DeadLife calls this constantly on every dead mob that exists
+		if(rogue_sneaking)
+			if(sneak_faded)
+				animate(src, alpha = initial(alpha), time = 25)
+				spawn(25) regenerate_icons()
+				sneak_faded = FALSE
 			rogue_sneaking = FALSE
 		return
 
@@ -605,7 +611,7 @@
 		used_time = max(used_time - (get_skill_level(/datum/skill/misc/sneaking) * 8), 0)
 		light_threshold += (get_skill_level(/datum/skill/misc/sneaking) / 20)
 
-	if(!reset && m_intent != MOVE_INTENT_SNEAK && alpha != initial(alpha)) // prevents funny bugs with getting stuck transparent
+	if(!reset && m_intent != MOVE_INTENT_SNEAK && sneak_faded) // prevents funny bugs with getting stuck transparent
 		if(!wallpressed)
 			animate(src, alpha = initial(alpha), time = 10)
 			spawn(10) regenerate_icons()
@@ -614,6 +620,7 @@
 			animate(src, alpha = 255, time = 10)
 			invisibility = initial(invisibility) //fucking lol lmao
 
+		sneak_faded = FALSE
 		rogue_sneaking = FALSE
 		return
 
@@ -631,14 +638,17 @@
 
 		if (should_reveal)
 			used_time = round(clamp((50 - (used_time*1.75)), 5, 50),1)
-			if(!wallpressed) // so we can stay partially invisible if wallpressed
-				invisibility = initial(invisibility) //Prevents a super rare edge case where you would stay super invisible and evil forever. Why does this happen? SPAWN() is the beast of satan
-				animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
-				spawn(used_time) regenerate_icons()
-			else
-				if(alpha != 255)
-					invisibility = initial(invisibility) //Ensure to set this back to type default (Always 0 for mobs). Execute BEFORE the animate so you can see them fade in.
-					animate(src, alpha = 255, time = used_time)
+			// a reset is somebody forcibly revealing us, so it puts our alpha back whether we faded it or not
+			if(sneak_faded || reset)
+				if(!wallpressed) // so we can stay partially invisible if wallpressed
+					invisibility = initial(invisibility) //Prevents a super rare edge case where you would stay super invisible and evil forever. Why does this happen? SPAWN() is the beast of satan
+					animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
+					spawn(used_time) regenerate_icons()
+				else
+					if(alpha != 255)
+						invisibility = initial(invisibility) //Ensure to set this back to type default (Always 0 for mobs). Execute BEFORE the animate so you can see them fade in.
+						animate(src, alpha = 255, time = used_time)
+				sneak_faded = FALSE
 			rogue_sneaking = FALSE
 			return
 
@@ -653,11 +663,13 @@
 				if(!wallpressed)
 					animate(src, alpha = target_alpha, time = used_time) //Use regular ass sneakcode here so it isn't ungodly overpowered
 					spawn(used_time + 5) regenerate_icons()
+					sneak_faded = TRUE
 			light_amount = T.get_lumcount()  // as above, this is moderately expensive, so only check it if we need to.
 			if(light_amount < light_threshold)
 				animate(src, alpha = get_lying_alpha(), time = used_time) //THIS PART CONTROLS REGULAR SNEAKING. USE INVIS HERE.
 				spawn(used_time + 5) regenerate_icons()
 				invisibility = held_invis_value //At 5 sneak, you get a total of ~24 invis - 3.75 bonus
+				sneak_faded = TRUE
 				rogue_sneaking = TRUE
 	return
 

@@ -67,10 +67,10 @@
 
 	// Transfer blood
 	var/blood_transfer = 0
-	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-		blood_transfer = BLOOD_VOLUME_NORMAL - H.blood_volume
-		H.blood_volume = BLOOD_VOLUME_NORMAL
-		user.blood_volume -= blood_transfer
+	if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
+		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
+		user.adjust_blood_volume(-(blood_transfer))
 		to_chat(user, span_warning("You feel your blood drain into [H]!"))
 		to_chat(H, span_notice("You feel your blood replenish!"))
 
@@ -184,7 +184,7 @@
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#e4e4e4")
 		H.adjustBruteLoss(bruthealval)
 		H.adjustFireLoss(burnhealval)
-		H.blood_volume = max(H.blood_volume-6, 0)//Don't sit here and heal all day. Thanks.
+		H.set_blood_volume(max(H.get_blood_volume()-6, 0))//Don't sit here and heal all day. Thanks.
 		if (conditional_buff)
 			to_chat(user, span_info("My pain gives way to a sense of furthered clarity before returning again, dulled."))
 		user.devotion?.update_devotion(-20)

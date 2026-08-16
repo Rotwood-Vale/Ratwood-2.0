@@ -342,7 +342,7 @@
 	else
 		owner?.visible_message(span_smallred("The musculature around <b>[owner]</b>'s [bodypart_owner.name] relaxes its agonal seizing..."))
 
-/datum/wound/grievous/remove_from_bodypart()
+/datum/wound/grievous/remove_from_bodypart(force = FALSE)
 	bodypart_owner?.grievously_wounded = FALSE
 	. = ..()
 
@@ -457,7 +457,7 @@
 
 #undef OOZE_UPG_WHPRATE
 #undef OOZE_UPG_PAINRATE
-#undef OOZE_UPG_SELFHEAL 
+#undef OOZE_UPG_SELFHEAL
 
 /datum/wound/sunder
 	name = "sundered"
@@ -836,5 +836,5 @@
 		if(BP)
 			to_chat(C, span_userdanger("I feel pins and needles in [BP]!"))
 			BP.add_wound(/datum/wound/frostbite)
-			C.clear_fullscreen("hypothermia") 
+			C.clear_fullscreen("hypothermia")
 		qdel(src)

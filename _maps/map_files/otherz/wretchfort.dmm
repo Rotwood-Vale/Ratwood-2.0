@@ -788,7 +788,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/wretch)
 "iy" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue)
 "iz" = (
 /obj/structure/mirror,

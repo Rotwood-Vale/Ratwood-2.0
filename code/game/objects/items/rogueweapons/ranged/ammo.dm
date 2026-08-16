@@ -95,6 +95,23 @@
 	icon_state = "bolt_blunt_proj"
 	speed = 0.25
 
+/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel
+	name = "blacksteel bolt"
+	desc = "A magnificent bolt of blacksteel, sharp enough to pierce straight through plate armor."
+	projectile_type = /obj/projectile/bullet/reusable/bolt/blacksteel
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	caliber = "regbolt"
+	icon_state = "blacksteelbolt"
+
+/obj/projectile/bullet/reusable/bolt/blacksteel
+	name = "blacksteel bolt"
+	damage = 70
+	armor_penetration = 80
+	icon_state = "blacksteelbolt_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/blacksteel
+	embedchance = 80
+	npc_simple_damage_mult = 6 //..or 420 damage against a mindless mob.
+
 /obj/projectile/bullet/reusable/bolt/on_hit(atom/target)
 	. = ..()
 
@@ -247,6 +264,23 @@
 /obj/projectile/bullet/reusable/arrow/steel/ancient
 	name = "ancient bodkin arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient
+
+/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
+	name = "blacksteel arrow"
+	icon_state = "blacksteelarrow"
+	desc = "A magnificent arrow of blacksteel. It shreds flesh, pierces armor, and \
+	always lands where one aims; perfect, yet marred by a prohibitively high cost."
+	projectile_type = /obj/projectile/bullet/reusable/arrow/blacksteel
+
+/obj/projectile/bullet/reusable/arrow/blacksteel
+	name = "blacksteel arrow"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
+	damage = 50
+	armor_penetration = 45
+	icon_state = "blacksteelarrow_proj"
+	embedchance = 80
+	npc_simple_damage_mult = 7 //..or 350 damage against a mindless mob.
+	accuracy = 100
 
 // POISON AMMO
 
@@ -658,6 +692,18 @@
 	if(!iscarbon(hit_atom))
 		return//abort
 
+/obj/item/ammo_casing/caseless/rogue/javelin/blacksteel
+	name = "blacksteel javelin"
+	desc = "A tool used for centuries, as early as recorded history. This one is tipped with a blacksteel head; unstoppable by even the finest plate armor!"
+	icon_state = "bs_javelin"
+	max_integrity = 50						//In-line with other stabbing weapons.
+	force = 18
+	throwforce = 36
+	armor_penetration = 80 //heart crits are funny
+	thrown_bclass = BCLASS_PICK				
+	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 10)
+	smeltresult = null
+
 //sling bullets
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet //parent of sling ammo and the temporary sling bullet for stones. shouldn't ever be seen
@@ -814,6 +860,19 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/iron
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
+	name = "blacksteel sling bullet"
+	desc = "An elegant sphere of blacksteel. This bullet bores through plate and meat like a comet. Once it's reached terminal velocity, you might want to duck."
+	projectile_type = /obj/projectile/bullet/sling_bullet/blacksteel
+	icon_state = "bs_sling_bullet"
+
+/obj/projectile/bullet/sling_bullet/blacksteel
+	name = "blacksteel sling bullet"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "blacksteelslingbullet_proj"
+	damage = 50
+	armor_penetration = 35
 
 /obj/item/ammo_casing/caseless/rogue/bolt/holy
 	name = "sunderbolt"

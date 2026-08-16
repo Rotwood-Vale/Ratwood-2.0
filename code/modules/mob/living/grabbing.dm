@@ -1,3 +1,19 @@
+/// Applies a pin's hold, returning how far it actually pushed the stun and immobilise timers out.
+/mob/living/proc/apply_pin_hold(stun_amount, immobilize_amount)
+	var/stun_before = AmountStun()
+	var/immobilize_before = AmountImmobilized()
+	Stun(stun_amount)
+	Immobilize(immobilize_amount)
+	return list(AmountStun() - stun_before, AmountImmobilized() - immobilize_before)
+
+/mob/living/proc/release_pin_hold(list/held)
+	if(!held)
+		return
+	if(held[1] > 0)
+		SetStun(max(0, AmountStun() - held[1]))
+	if(held[2] > 0)
+		SetImmobilized(max(0, AmountImmobilized() - held[2]))
+
 ///////////OFFHAND///////////////
 /obj/item/grabbing
 	name = "pulling"
@@ -347,29 +363,24 @@
 					return
 				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
 				var/pincount = 0
+				var/list/pin_hold
 				user.stamina_add(rand(1,3))
 				while(M == grabbed && !(M.mobility_flags & MOBILITY_STAND) && (src in M.grabbedby))
 					if(M.IsStun())
-						if(!do_after(user, stun_dur + 1, needhand = 0, target = M))
-							pincount = 0
+						if(!do_after(user, stun_dur + 1, needhand = 0, target = M) || !(src in M.grabbedby))
 							qdel(src)
 							break
-						if(!(src in M.grabbedby))
-							pincount = 0
-							qdel(src)
-							break
-						M.Stun(stun_dur - pincount * 2)
-						M.Immobilize(stun_dur)	//Made immobile for the whole do_after duration, though
+						pin_hold = M.apply_pin_hold(stun_dur - pincount * 2, stun_dur)	//Made immobile for the whole do_after duration, though
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						M.visible_message(span_danger("[user] keeps [M] pinned to the ground!"))
 						pincount += 2
 					else if(src in M.grabbedby)
-						M.Stun(stun_dur - 10)
-						M.Immobilize(stun_dur)
+						pin_hold = M.apply_pin_hold(stun_dur - 10, stun_dur)
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						pincount += 2
 						M.visible_message(span_danger("[user] pins [M] to the ground!"), \
 							span_userdanger("[user] pins me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+				M.release_pin_hold(pin_hold)
 			else
 				if(user.badluck(4))
 					badluckmessage(user)
@@ -445,11 +456,11 @@
 			return
 	playsound(C.loc, "genblunt", 100, FALSE, -1)
 	C.next_attack_msg.Cut()
-	if(isdoll(C)) 
+	if(isdoll(C))
 		armor_block = C.getarmor(sublimb_grabbed, "blunt")
 		if(armor_block > 1)
 			C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
-	else 
+	else
 		armor_block = C.run_armor_check(limb_grabbed, "blunt")
 		C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
@@ -471,7 +482,7 @@
 	if(limb_grabbed.body_zone == sublimb_grabbed && isdoll(C))
 		var/mob/living/carbon/human/target = C
 		armor_block = target.getarmor(sublimb_grabbed, "slash")
-		
+
 		if(armor_block >= 1)
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] fails to be twisted off!"), \
 				span_danger("[user] tries to twist my [parse_zone(sublimb_grabbed)] out of it's socket but the armor keeps it in place!"))
@@ -483,7 +494,7 @@
 		to_chat(user, span_warning("I begin popping [target]'s [parse_zone(sublimb_grabbed)] out of socket."))
 
 		var/delay = (sublimb_grabbed == BODY_ZONE_HEAD) ? 100 : 6
-		
+
 		if(do_after(user, delay, target = target))
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] has been popped out of socket!"), \
 				span_userdanger("My [parse_zone(sublimb_grabbed)] has been popped out of socket!"))

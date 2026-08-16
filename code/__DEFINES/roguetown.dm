@@ -363,6 +363,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_WASSOCIATE		"CTAG_WASSOCIATE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
 #define CTAG_GUILDSMASTER 	"CAT_GUILDSMASTER"	// Guildsmaster class - Handles Guildsmaster class selector
 #define CTAG_GUILDSMEN 		"CAT_GUILDSMEN"		// Guildsmen class - Handles Guildsmen class selector
+#define CTAG_GUILDAPPRENTICE "CAT_GUILDAPPRENTICE"	// Guild apprentice class - baby guildsmen, meant to support them.
 #define CTAG_NIGHTMAIDEN	"CAT_NIGHTMAIDEN"	// Bathhouse Attendant's aesthetic choices.
 #define CTAG_PRISONER 		"CAT_PRISONER"
 

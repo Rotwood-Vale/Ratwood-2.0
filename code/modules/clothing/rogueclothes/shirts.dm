@@ -326,6 +326,14 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
 	icon_state = "sailorblues"
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored
+	name = "striped shirt"
+	icon_state = "sailorcolorable"
+	item_state = "sailorcolorable"
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+	boobed_detail = FALSE
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
 	icon_state = "sailorreds"
 

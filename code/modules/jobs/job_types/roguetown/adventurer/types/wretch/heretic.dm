@@ -7,7 +7,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
-	maximum_possible_slots = 2 //Ppl dont like heavy armor antags.
+	maximum_possible_slots = 2
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -227,7 +227,7 @@
 	tutorial = "Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."
 	outfit = /datum/outfit/job/roguetown/wretch/hereticspy
 	class_select_category = CLASS_CAT_ROGUE
-	maximum_possible_slots = 2 //Ppl dont like rogue antags.
+	maximum_possible_slots = 2
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
 	//Slower than outlaw, but a bit more PER and INT
 	subclass_stats = list(
@@ -410,12 +410,240 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/cloak/raincloak/mortus, SLOT_CLOAK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/ragmask/black, SLOT_WEAR_MASK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants, SLOT_PANTS, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat, SLOT_ARMOR, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson, SLOT_SHIRT, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/fingerless_leather, SLOT_GLOVES, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced, SLOT_SHOES, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers/leather/heavy, SLOT_WRISTS, TRUE)
+
+/datum/advclass/wretch/heretic/monk
+	name = "Heretic Monk"
+	tutorial = "Strong in body and spirit, you spread the truth through violence and word in equal measures. You eschew burdening armor in favor of physical prowess."
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = RACES_ALL_KINDS
+	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
+	class_select_category = CLASS_CAT_CLERIC
+	category_tags = list(CTAG_WRETCH)
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE)
+	maximum_possible_slots = 1
+	//+9 weighted stat total. Atgervi Shaman's stats 1:1.
+	subclass_stats = list(
+		STATKEY_STR = 3,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 1,
+		STATKEY_SPD = 1,
+		STATKEY_INT = -1,
+		STATKEY_PER = -1
+	)
+	subclass_skills = list(
+		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE, //As a treat.
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/farming = SKILL_LEVEL_APPRENTICE,
+	)//Similar-ish to Church Acolyte's. You get a bunch of utility skills because you are, THEORETICALLY, less of a turbo fragger class than your speedy and tanky cousins.
+	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
+
+/datum/outfit/job/roguetown/wretch/hereticmonk
+	has_loadout = TRUE
+
+/datum/outfit/job/roguetown/wretch/hereticmonk/pre_equip(mob/living/carbon/human/H)
+	..()
+	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/rogueweapon/huntingknife
+	if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+		backl = /obj/item/storage/backpack/rogue/satchel/otavan
+	else
+		backl = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/ritechalk = 1,
+		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+		/obj/item/rope/chain = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		)
+	H.set_blindness(0)
+	if(H.mind)
+		if(H.mind.current)
+			H.mind.current.faction += "[H.name]_faction"
+		var/monkstyles = list("Itinerant Monk")
+		if(H.dna.species.type in NON_DWARVEN_RACE_TYPES) //No sprites for diminutive people.
+			monkstyles += list("Eastern Custodian")
+		if(istype(H.patron, /datum/patron/inhumen))
+			monkstyles += list("Atgervi Shaman")
+		if(istype(H.patron, /datum/patron/old_god))
+			monkstyles += list("Disgraced Disciple (Natural Armor)")
+		var/style_choice = input(H, "Choose your equipment.", "YOU MIGHT JUST BE A PRETENDER") as anything in monkstyles
+		switch(style_choice)
+			if("Itinerant Monk") //Generic fashion.
+				to_chat(H, span_warning("Leaving wealth and titles behind, you travel endlessly, bringing the truth to the most ignorant corners of the world."))
+				head = /obj/item/clothing/head/roguetown/headband/monk //Can somebody explain why Adventurer-Monk gets this?
+				neck = /obj/item/clothing/neck/roguetown/leather
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+				armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				pants =  /obj/item/clothing/under/roguetown/heavy_leather_pants
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+			if("Eastern Custodian") //Kazengunite fashion. The worst set mechanically, but it's drip or drown in here.
+				to_chat(H, span_warning("The divine tasked you with caring for and protecting a shrine. You failed in your duties, but not your faith. Thus you wander, seeking to appease the gods in a different way."))
+				head = /obj/item/clothing/head/roguetown/mentorhat
+				gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
+				armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+			if("Atgervi Shaman") //Pick this and Unarmed. Now you are a true Atgervi Shaman.
+				to_chat(H, span_warning("Unlike your more opportunistic fellows who bend their knees and betray their beast-gods for a coin, you haven't strayed from your path. Why grovel, when you can take what you want with unrestrained brutality?"))
+				head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
+				gloves = /obj/item/clothing/gloves/roguetown/angle/gronnfur
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
+				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+				pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
+			if("Disgraced Disciple (Natural Armor)") //Orthodoxist Disciple. You get Disciple's Natural Armor.
+				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
+				head = /obj/item/clothing/head/roguetown/roguehood/psydon
+				mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+				wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
+				shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
+				cloak = /obj/item/clothing/cloak/psydontabard/alt
+		var/monkweapons = list("Unarmed", "Glaive", "Quarterstaff", "Sword", "Faith")
+		var/monkweapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in monkweapons
+		switch(monkweapon_choice)
+			if("Unarmed")
+				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+				switch(style_choice)
+					if("Atgervi Shaman")
+						beltr = /obj/item/rogueweapon/handclaw/gronn
+					if("Disgraced Disciple (Natural Armor)")
+						beltr = /obj/item/rogueweapon/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
+					else
+						beltr = /obj/item/rogueweapon/knuckles
+			if("Glaive")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				switch(style_choice)
+					if("Eastern Custodian")
+						l_hand = /obj/item/rogueweapon/spear/naginata
+					else
+						l_hand = /obj/item/rogueweapon/halberd/glaive
+			if("Quarterstaff")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				backr = /obj/item/rogueweapon/woodstaff/quarterstaff/steel
+			if("Sword") //Gimmicky choice. Heretic Spy called, they want their sword back.
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				switch(style_choice)
+					if("Eastern Custodian")
+						beltr = /obj/item/rogueweapon/scabbard/sword/kazengun
+						l_hand = /obj/item/rogueweapon/sword/sabre/mulyeog
+					if("Disgraced Disciple (Natural Armor)")
+						beltr = /obj/item/rogueweapon/scabbard/sword
+						l_hand = /obj/item/rogueweapon/sword/long/oldpsysword
+					else
+						beltr = /obj/item/rogueweapon/scabbard/sword
+						l_hand = /obj/item/rogueweapon/sword/short/messer //4 def LOL
+			if("Faith") //Even more gimmicky. Supportbot.
+				ADD_TRAIT(H, TRAIT_HOMESTEAD_EXPERT, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
+				if(istype(H.patron, /datum/patron/divine))
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
+				if(istype(H.patron, /datum/patron/inhumen))
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
+				if(istype(H.patron, /datum/patron/old_god)) //Honestly, why not?
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity) //To get your blood back.
+
+
+		var/datum/devotion/C = new /datum/devotion(H, H.patron)
+		C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1, start_maxed = TRUE) //Minor regen, starts maxed out.
+		wretch_select_bounty(H)
+
+	// You can convert those the church has shunned.
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
+	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+	if(istype (H.patron, /datum/patron/inhumen/zizo))
+		if(H.mind)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+			H.mind.current.faction += "[H.name]_faction"
+		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+
+/datum/outfit/job/roguetown/wretch/hereticmonk/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/zizo)
+			H.cmode_music = 'sound/music/combat_heretic.ogg'
+		if(/datum/patron/inhumen/matthios)
+			H.cmode_music = 'sound/music/combat_matthios.ogg'
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/combat_baotha.ogg'
+		if(/datum/patron/inhumen/graggar)
+			H.cmode_music = 'sound/music/combat_graggar.ogg'
+		if(/datum/patron/divine/astrata)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+		if(/datum/patron/divine/abyssor)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/abyssor, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
+			ADD_TRAIT(H, TRAIT_WATERBREATHING, TRAIT_GENERIC)
+		if(/datum/patron/divine/xylix)
+			H.cmode_music = 'sound/music/combat_jester.ogg'
+			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
+		if(/datum/patron/divine/dendor)
+			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg'
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/dendor, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+		if(/datum/patron/divine/necra)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/necra, SLOT_RING, TRUE)
+			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
+		if(/datum/patron/divine/pestra)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/pestra, SLOT_RING, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 3, TRUE)
+			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
+		if(/datum/patron/divine/eora)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/eora, SLOT_RING, TRUE)
+			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
+		if(/datum/patron/divine/noc)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+		if(/datum/patron/divine/ravox)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+		if(/datum/patron/divine/malum)
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_RING, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
+			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
+		if(/datum/patron/old_god)
+			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/silver, SLOT_RING, TRUE)
 
 /obj/effect/proc_holder/spell/invoked/convert_heretic
 	name = "Convert The Downtrodden"

@@ -34,6 +34,7 @@
 		/datum/job/roguetown/warden = 4,//split with vanguard
 	)
 	title_adjust = list(
+		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
 		/datum/job/roguetown/physician = list(display_title = "Court Physician"),
 		/datum/job/roguetown/niteman = list(display_title = "Nightmaster", f_title = "Nightmistress"),
 		/datum/job/roguetown/nightmaiden = list(display_title = "Nightswain", f_title = "Nightmaiden"),

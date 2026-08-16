@@ -63,6 +63,7 @@
 			playsound(src, 'sound/foley/breaksound.ogg', 100, TRUE)
 			playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
 			user.visible_message(span_warning("[user] emerges from [src]!"),span_alert("I emerge from [src]!"))
+			user.log_message("clawed their way out of [src]", LOG_ATTACK)
 
 /obj/structure/closet/dirthole/closed/loot/Initialize(mapload)
 	. = ..()
@@ -124,6 +125,21 @@
 					corpse.burialrited = TRUE
 					record_round_statistic(STATS_GRAVES_CONSECRATED)
 
+/// Every mob interred in this hole, including any sealed inside a coffin or shroud.
+/obj/structure/closet/dirthole/proc/get_interred_mobs()
+	. = list()
+	for(var/mob/living/M in contents)
+		. += M
+	for(var/obj/structure/closet/C in contents)
+		for(var/mob/living/M in C.contents)
+			. += M
+
+/// Log-friendly manifest of who is in this hole.
+/obj/structure/closet/dirthole/proc/get_interment_manifest()
+	. = list()
+	for(var/mob/living/M as anything in get_interred_mobs())
+		. += "[key_name(M)] ([M.stat == DEAD ? "DEAD" : "ALIVE"])"
+
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
 	if(!istype(attacking_item, /obj/item/rogueweapon/shovel))
 		return ..()
@@ -138,7 +154,7 @@
 			stage = 4
 			climb_offset = 10
 			locked = TRUE
-			close()
+			close(user)
 			var/founds
 			for(var/atom/A in contents)
 				founds = TRUE
@@ -148,11 +164,14 @@
 				climb_offset = 0
 				locked = FALSE
 				open()
+			else
+				user.log_message("sealed a grave with [attacking_shovel] (INTERRED: [english_list(get_interment_manifest(), "nobody")]) (CONTENTS: [english_list(contents)])", LOG_GAME)
 			update_icon()
 		else if(stage < 4)
 			stage--
 			climb_offset = 0
 			update_icon()
+			user.log_message("filled in [src] with [attacking_shovel] (STAGE: [stage])", LOG_GAME)
 			if(stage == 0)
 				qdel(src)
 		attacking_shovel.update_icon()
@@ -166,6 +185,7 @@
 					attacking_shovel.heldclod = new(attacking_shovel)
 					attacking_shovel.update_icon()
 					playsound(mastert,'sound/items/dig_shovel.ogg', 100, TRUE)
+					user.log_message("dug [src] through the floor into the z-level below with [attacking_shovel]", LOG_GAME)
 					mastert.ChangeTurf(/turf/open/transparent/openspace)
 					return
 //					for(var/D in GLOB.cardinals)
@@ -197,8 +217,11 @@
 			stage = 3
 			climb_offset = 0
 			locked = FALSE
+			var/list/manifest = get_interment_manifest()
 			open()
+			user.log_message("exhumed a grave with [attacking_shovel] (INTERRED: [english_list(manifest, "nobody")])", LOG_GAME)
 			for(var/obj/structure/gravemarker/G in loc)
+				user.log_message("robbed a marked grave (destroying [G])", LOG_ATTACK)
 				record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 				record_round_statistic(STATS_GRAVES_ROBBED)
 				qdel(G)
@@ -259,6 +282,8 @@
 				span_notice("I stuff [O] into [src]."),
 				span_hear("I hear a loud bang.")
 			)
+			var/mob/living/stuffed = O
+			log_combat(user, stuffed, "stuffed into [src]", addition = "(STAGE: [stage]) ([stuffed.stat == DEAD ? "DEAD" : "ALIVE"])")
 			O.forceMove(T)
 			user_buckle_mob(O, user)
 	else
@@ -284,6 +309,11 @@
 	for(var/obj/structure/closet/crate/coffin/C in contents)
 		for(var/mob/living/carbon/human/D in C.contents)
 			D.buried = TRUE
+	for(var/mob/living/M as anything in get_interred_mobs())
+		if(user)
+			log_combat(user, M, "buried", src, "([M.stat == DEAD ? "DEAD" : "ALIVE"])", log_seen = FALSE)
+		else
+			M.log_message("was buried in [src] ([M.stat == DEAD ? "DEAD" : "ALIVE"])", LOG_ATTACK)
 	opened = FALSE
 //	update_icon()
 	return TRUE

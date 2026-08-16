@@ -409,5 +409,5 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 
 	if(chastity_flat)
 		var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-		if(penis?.penis_size >= DEFAULT_PENIS_SIZE)
+		if(penis?.penis_size >= DEFAULT_PENIS_SIZE && penis?.sheath_type == SHEATH_TYPE_NONE)
 			H.add_stress(/datum/stressevent/chastity_flat_cramped)

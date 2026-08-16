@@ -145,7 +145,10 @@
 			reset_accessory_colors(prefs, entry)
 
 /datum/customizer/organ/wings/anthro
-	customizer_choices = list(/datum/customizer_choice/organ/wings/anthro)
+	customizer_choices = list(
+		/datum/customizer_choice/organ/wings/anthro,
+		/datum/customizer_choice/organ/wings/moth,
+		)
 	allows_disabling = TRUE
 	default_disabled = TRUE
 

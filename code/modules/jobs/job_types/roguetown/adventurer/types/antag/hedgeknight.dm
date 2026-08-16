@@ -51,7 +51,7 @@
 	backpack_contents = list(
 					/obj/item/rogueweapon/huntingknife/idagger = 1,
 					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1
+					/obj/item/rogueweapon/scabbard/sheath/noble = 1
 					)
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -61,7 +61,7 @@
 		switch(weapon_choice)
 			if("Master Swordsman")
 				beltr = /obj/item/rogueweapon/sword/long/death
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)

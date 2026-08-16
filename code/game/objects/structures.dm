@@ -111,6 +111,10 @@
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(!climbable)
+		if(can_wallpress() && user == O && isliving(O))
+			var/mob/living/presser = O
+			if(presser.mobility_flags & MOBILITY_MOVE)
+				wallpress(presser)
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O

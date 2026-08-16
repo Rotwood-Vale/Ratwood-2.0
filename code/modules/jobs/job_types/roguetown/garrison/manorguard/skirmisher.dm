@@ -39,7 +39,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Crossbow","Bow","Sling")

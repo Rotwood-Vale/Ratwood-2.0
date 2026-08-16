@@ -377,11 +377,11 @@
 		/obj/item/reagent_containers/food/snacks/rogue/cheddar = 1,
 		/obj/item/reagent_containers/food/snacks/rogue/cheddarwedge = 4,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
-		
+
 	)
 	lootcount = 2
 
-	
+
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells
 	icon_state = "spells"
@@ -392,7 +392,6 @@
 		/obj/item/book/granter/spell/blackstone/bonechill = 5,
 		/obj/item/book/granter/spell/blackstone/featherfall = 5,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 5,
-		/obj/item/book/granter/spell/blackstone/aerosolize = 5,
 		/obj/item/book/granter/spell/blackstone/frostbolt = 5,
 		/obj/item/book/granter/spell/blackstone/forcewall_weak = 4,
 		/obj/item/book/granter/spell/blackstone/guidance = 4,

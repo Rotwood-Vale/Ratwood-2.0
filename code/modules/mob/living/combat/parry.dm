@@ -118,6 +118,11 @@
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
 
+	if(ishuman(H))
+		var/mob/living/carbon/human/oldie = H
+		if(oldie.age == AGE_OLD && !HAS_TRAIT(oldie, TRAIT_MAGEARMOR))//Old martial characters get a bonus to parry. Mages do not, they get unique bonuses already for being old.
+			prob2defend += 20
+
 	// parrying while knocked down sucks ass
 	if(!(mobility_flags & MOBILITY_STAND))
 		prob2defend *= 0.65
@@ -226,8 +231,8 @@
 
 			if(prob(66) && AB)
 				if((used_weapon.flags_1 & CONDUCT_1) && (AB.flags_1 & CONDUCT_1))
-					flash_fullscreen("whiteflash")
-					user.flash_fullscreen("whiteflash")
+					fullscreen_redflash("whiteflash")
+					user.fullscreen_redflash("whiteflash")
 					var/datum/effect_system/spark_spread/S = new()
 					var/turf/front = get_step(src,src.dir)
 					S.set_up(1, 1, front)

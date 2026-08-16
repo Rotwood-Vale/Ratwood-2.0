@@ -612,3 +612,10 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Ancient"
 	credits = "Carlos Viola - Cante de los Muertos"
 	musicpath = list('sound/music/combat_ancient.ogg')
+
+/datum/combat_music/herald
+	name = "Herad of Progress"
+	desc = "You cannot stop change."
+	shortname = "Ancient"
+	credits = "Bathory - Call from the Grave"
+	musicpath = list('sound/music/combatheraldprogress.ogg')

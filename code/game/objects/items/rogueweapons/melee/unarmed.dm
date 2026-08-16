@@ -277,6 +277,15 @@
 	force = 24
 	icon_state = "eoraknuckle"
 
+/obj/item/rogueweapon/knuckles/blacksteel
+	name = "blacksteel knuckles"
+	desc = "Take that, taste the pain!"
+	icon_state = "bsknuckledusters"
+	force = 30
+	max_integrity = 300
+	wdefense = 7
+	smeltresult = /obj/item/ingot/blacksteel
+
 //Claws. God, I hate these.
 /obj/item/rogueweapon/handclaw
 	slot_flags = ITEM_SLOT_HIP
@@ -343,6 +352,22 @@
 				return list("shrink" = 0.4,"sx" = -7,"sy" = -4,"nx" = 7,"ny" = -4,"wx" = -3,"wy" = -4,"ex" = 1,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 110,"sturn" = -110,"wturn" = -110,"eturn" = 110,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/rogueweapon/handclaw/blacksteel
+	name = "blacksteel eagle claws"
+	desc = "A magnificent pair of blacksteel claws. While the Northern Empty is unfamiliar with blacksteel, they are familiar with an alloy of \
+			startingly similar repute; blacker-than-black, impossibly strong, and purported to've been the remains of divine matter. Such were wielded by \
+			a legendary champion of the Fjall - one whose valor, though forgotten by tyme, still echoes throughout the world they saved. \
+			</br>'Here in the wake, I know when the noose was set, but the truth is that I regret what I have left!'"
+	icon_state = "bskatarclaw"
+	icon = 'icons/roguetown/weapons/unarmed32.dmi'
+	wdefense = 8
+	force = 35
+	possible_item_intents = list(/datum/intent/claw/cut/gronn, /datum/intent/claw/lunge/gronn, /datum/intent/claw/rend)
+	wbalance = WBALANCE_HEAVY
+	max_blade_int = 350
+	smeltresult = /obj/item/ingot/blacksteel
+	sharpness_mod = 2
 
 /datum/intent/claw/lunge
 	name = "lunge"

@@ -58,7 +58,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/digclay)
 
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		shoes = /obj/item/clothing/shoes/roguetown/sandals

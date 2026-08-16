@@ -43,7 +43,7 @@
 	retreat_health = null
 	var/obj/structure/bonepile/slavepile
 
-	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)	
+	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/haunt
@@ -140,6 +140,7 @@
 		return
 	if(!spawning)
 		return
+
 	spawning = FALSE
 	var/mob/living/simple_animal/hostile/rogue/haunt/H = new (get_turf(src))
 	H.slavepile = src

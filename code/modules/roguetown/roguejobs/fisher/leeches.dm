@@ -70,20 +70,20 @@
 	host.adjustToxLoss(toxin_healing)
 	var/obj/item/bodypart/bp = loc
 	if(giving)
-		var/blood_given = min(BLOOD_VOLUME_MAXIMUM - host.blood_volume, blood_storage, blood_sucking)
-		host.blood_volume += blood_given
+		var/blood_given = min(BLOOD_VOLUME_MAXIMUM - host.get_blood_volume(), blood_storage, blood_sucking)
+		host.adjust_blood_volume(blood_given)
 		blood_storage = max(blood_storage - blood_given, 0)
-		if((blood_storage <= 0) || (host.blood_volume >= BLOOD_VOLUME_MAXIMUM))
+		if((blood_storage <= 0) || (host.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM))
 			if(bp)
 				bp.remove_embedded_object(src)
 			else
 				host.simple_remove_embedded_object(src)
 			return TRUE
 	else
-		var/blood_extracted = min(blood_maximum - blood_storage, host.blood_volume, blood_sucking)
-		host.blood_volume = max(host.blood_volume - blood_extracted, 0)
+		var/blood_extracted = min(blood_maximum - blood_storage, host.get_blood_volume(), blood_sucking)
+		host.set_blood_volume(max(host.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted
-		if((blood_storage >= blood_maximum) || (host.blood_volume <= 0))
+		if((blood_storage >= blood_maximum) || (host.get_blood_volume() <= 0))
 			if(bp)
 				bp.remove_embedded_object(src)
 			else
@@ -96,20 +96,20 @@
 		return
 	user.adjustToxLoss(toxin_healing)
 	if(giving)
-		var/blood_given = min(BLOOD_VOLUME_MAXIMUM - user.blood_volume, blood_storage, blood_sucking)
-		user.blood_volume += blood_given
+		var/blood_given = min(BLOOD_VOLUME_MAXIMUM - user.get_blood_volume(), blood_storage, blood_sucking)
+		user.adjust_blood_volume(blood_given)
 		blood_storage = max(blood_storage - blood_given, 0)
-		if((blood_storage <= 0) || (user.blood_volume >= BLOOD_VOLUME_MAXIMUM))
+		if((blood_storage <= 0) || (user.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM))
 			if(bodypart)
 				bodypart.remove_embedded_object(src)
 			else
 				user.simple_remove_embedded_object(src)
 			return TRUE
 	else
-		var/blood_extracted = min(blood_maximum - blood_storage, user.blood_volume, blood_sucking)
-		user.blood_volume = max(user.blood_volume - blood_extracted, 0)
+		var/blood_extracted = min(blood_maximum - blood_storage, user.get_blood_volume(), blood_sucking)
+		user.set_blood_volume(max(user.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted * blood_multiplier
-		if((blood_storage >= blood_maximum) || (user.blood_volume <= 0))
+		if((blood_storage >= blood_maximum) || (user.get_blood_volume() <= 0))
 			if(bodypart)
 				bodypart.remove_embedded_object(src)
 			else

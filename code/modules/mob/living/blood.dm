@@ -2,6 +2,28 @@
 				BLOOD SYSTEM
 ****************************************************/
 
+/// Gives you the blood_volume of the mob, do not use the var itself
+/mob/living/proc/get_blood_volume()
+	return blood_volume
+
+/// Sets blood volume (clamped 0..BLOOD_VOLUME_MAXIMUM). Fires a change signal and refreshes the blood HUD. Do not set the blood_volume var directly
+/mob/living/proc/set_blood_volume(amount)
+	amount = clamp(amount, 0, BLOOD_VOLUME_MAXIMUM)
+	if(amount == blood_volume)
+		return blood_volume
+	blood_volume = amount
+	SEND_SIGNAL(src, COMSIG_LIVING_BLOOD_VOLUME_CHANGED, blood_volume)
+	update_blood_hud()
+	return blood_volume
+
+/// Adjusts blood volume by a delta, clamped. Convenience wrapper over set_blood_volume(). Do not set the blood_volume var directly
+/mob/living/proc/adjust_blood_volume(amount)
+	return set_blood_volume(blood_volume + amount)
+
+/// Refreshes the blood/heart indicator. Overridden by mobs that have one.
+/mob/living/proc/update_blood_hud()
+	return
+
 /mob/living/proc/suppress_bloodloss(amount)
 	if(bleedsuppress)
 		return
@@ -61,7 +83,7 @@
 	if(bleed_rate)
 		bleed(bleed_rate)
 	else if(blood_volume < BLOOD_VOLUME_NORMAL)
-		blood_volume = min(blood_volume + 1, BLOOD_VOLUME_NORMAL)
+		set_blood_volume(min(blood_volume + 1, BLOOD_VOLUME_NORMAL))
 
 	// Non-vampiric bloodpool regen.
 	// We assume that in non-vampires bloodpool represents "usable" blood that is regenerated slower than blood_volume
@@ -106,7 +128,7 @@
 //			if(satiety > 80)
 //				nutrition_ratio *= 1.25
 //			adjust_hydration(-nutrition_ratio * HUNGER_FACTOR) //get thirsty twice as fast when regenning blood
-		blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
+		set_blood_volume(min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio))
 
 	//Effects of bloodloss - only if we're actually alive, though
 	if (stat != DEAD)
@@ -222,7 +244,7 @@
 	if(surrendering)
 		amt = amt / 4 // Helps yield condition not be a bloodloss failure state. Approx to grabbing all of your bodyparts at once
 	var/old_volume = blood_volume
-	blood_volume = max(blood_volume - amt, 0)
+	set_blood_volume(blood_volume - amt)
 	if (old_volume > 0 && !blood_volume) // it looks like we've just bled out. bummer.
 		to_chat(src, span_userdanger("The last of your lyfeblood ebbs from your ravaged body and soaks the cold earth below..."))
 	record_round_statistic(STATS_BLOOD_SPILT, amt)
@@ -249,7 +271,7 @@
 	return FALSE
 
 /mob/living/proc/restore_blood()
-	blood_volume = initial(blood_volume)
+	set_blood_volume(initial(blood_volume))
 	bleed_rate = 0
 
 /mob/living/carbon/human/restore_blood()
@@ -274,7 +296,7 @@
 	if(!blood_id)
 		return 0
 
-	blood_volume -= amount
+	set_blood_volume(blood_volume - amount)
 
 	var/list/blood_data = get_blood_data(blood_id)
 
@@ -286,7 +308,7 @@
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return 1
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
+			C.set_blood_volume(min(C.get_blood_volume() + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM))
 			return 1
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)

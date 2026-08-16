@@ -11,6 +11,9 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 	possible_rmb_intents = list()
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.
 
+	//Trained, but like Drow, only utilize special attacks. They're VIKING! POWER IS THEIR STRONGSUIT!
+	special_attacker = TRUE
+
 
 /mob/living/carbon/human/species/human/northern/searaider/ambush
 	aggressive=1

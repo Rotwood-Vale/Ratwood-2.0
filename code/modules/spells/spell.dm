@@ -7,6 +7,9 @@
 #define COOLDOWN_REDUCTION_PER_INT 0.05 // The amount of cooldown reduction per point of intelligence above / below threshold
 #define CHARGE_REDUCTION_PER_SKILL 0.05 // The amount of charge reduction per skill level.
 #define FATIGUE_REDUCTION_PER_SKILL 0.05 // The amount of fatigue reduction per skill level.
+#define MEDIUM_ARMOR_STAM_PENALTY 0.15 // Multiplier on base stamina cost for wearing medium armor
+#define HEAVY_ARMOR_STAM_PENALTY 0.3 // Multiplier on base stamina cost for wearing heavy armor
+#define UNTRAINED_ARMOR_STAM_PENALTY 80 // Flat stamina penalty for wearing armor you're not trained in
 
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
@@ -20,7 +23,6 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
-	var/mmb = TRUE
 	var/releasedrain = 0
 	var/chargedrain = 0
 	var/chargetime = 0
@@ -44,6 +46,8 @@
 
 	/// This "spell" (miracle) is excluded from Priest's round-start selection.
 	var/priest_excluded = FALSE
+
+	var/skipcharge = FALSE
 
 /obj/effect/proc_holder/Initialize(mapload)
 	. = ..()
@@ -90,6 +94,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return ..()
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+	var/list/modifiers = params2list(params)
+	if(!modifiers["middle"])
+		return TRUE
+
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
 		to_chat(caller, span_info("<b>[caller.ranged_ability.name]</b> has been disabled."))
 		caller.ranged_ability.remove_ranged_ability()
@@ -112,11 +120,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return
 	user.ranged_ability = src
 	ranged_ability_user = user
-	if(!mmb)
-		user.click_intercept = src
-		user.update_mouse_pointer()
-	else
-		user.mmb_intent_change(QINTENT_SPELL)
+	user.click_intercept = src
+	user.update_mouse_pointer()
+	user.mmb_intent_change(QINTENT_SPELL)
+
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	update_icon()
@@ -125,11 +132,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	ranged_ability_user.ranged_ability = null
-	if(!mmb)
-		ranged_ability_user.click_intercept = null
-		ranged_ability_user.update_mouse_pointer()
-	else
-		ranged_ability_user.mmb_intent_change(null)
+
+	ranged_ability_user.click_intercept = null
+	ranged_ability_user.update_mouse_pointer()
+	ranged_ability_user.mmb_intent_change(null)
+
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	ranged_ability_user = null
@@ -154,7 +161,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/recharge_time = 50 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
-	var/still_recharging_msg = span_notice("The spell is still recharging.")
+	var/last_process_time = 0 //tracks world.time of last process() call for delta-time cooldown
+	var/still_recharging_msg = span_info("The spell is still recharging.")
 
 	var/cast_without_targets = FALSE
 	var/breaks_invisibility = TRUE
@@ -208,45 +216,166 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/get_chargetime()
 	if(ranged_ability_user && chargetime)
-		var/newtime = chargetime
-		//skill block
-		newtime = newtime - (chargetime * (ranged_ability_user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
-		//spellbook cdr
-		var/obj/item/book/spellbook/sbook = ranged_ability_user.is_holding_item_of_type(/obj/item/book/spellbook)
-		if(sbook && sbook?.open)
-			newtime = newtime - (chargetime * (sbook.get_cdr()))
-		//staff cast time reduction
-		var/obj/item/rogueweapon/woodstaff/staff = ranged_ability_user.is_holding_item_of_type(/obj/item/rogueweapon/woodstaff/)
-		if(staff)
-			newtime = newtime - (chargetime * (staff.cast_time_reduction))
-		if(newtime > 0)
-			return newtime
-		else
-			return 0.1
+		return calculate_chargetime(ranged_ability_user)
 	return chargetime
 
 /obj/effect/proc_holder/spell/get_fatigue_drain()
 	if(ranged_ability_user && releasedrain)
-		var/newdrain = releasedrain
-		//skill block
-		newdrain = newdrain - (releasedrain * (ranged_ability_user.get_skill_level(associated_skill) * FATIGUE_REDUCTION_PER_SKILL))
-		//int block
-		if(ranged_ability_user.STAINT > SPELL_SCALING_THRESHOLD)
-			var/diff = min(ranged_ability_user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
-			newdrain = newdrain - (releasedrain * diff * FATIGUE_REDUCTION_PER_INT)
-		else if(ranged_ability_user.STAINT < 10)
-			var/diffy = SPELL_SCALING_THRESHOLD - ranged_ability_user.STAINT
-			newdrain = newdrain + (releasedrain * (diffy * FATIGUE_REDUCTION_PER_INT))
-		if(!ranged_ability_user.check_armor_skill())
-			newdrain += 80
-		if(newdrain > 0)
-			return newdrain
-		else
-			return 0.1
+		return calculate_fatigue_drain(ranged_ability_user)
 	return releasedrain
 
+/obj/effect/proc_holder/spell/proc/calculate_chargetime(mob/living/user)
+	if(!user || !chargetime || miracle)
+		return chargetime
+	var/newtime = chargetime
+	//skill block
+	newtime = newtime - (chargetime * (user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
+	//spellbook cast time reduction
+	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
+	if(sbook && sbook?.open)
+		newtime = newtime - (chargetime * (sbook.get_cdr()))
+	//staff cast time reduction
+	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
+	if(staff && staff.cast_time_reduction)
+		newtime = newtime - (chargetime * (staff.cast_time_reduction))
+	if(newtime > 0)
+		return newtime
+	return 0.1
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/proc/calculate_fatigue_drain(mob/living/user)
+	if(!user || !releasedrain || miracle)
+		return releasedrain
+	var/newdrain = releasedrain
+	//skill block
+	newdrain = newdrain - (releasedrain * (user.get_skill_level(associated_skill) * FATIGUE_REDUCTION_PER_SKILL))
+	//int block
+	if(user.STAINT > SPELL_SCALING_THRESHOLD)
+		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+		newdrain = newdrain - (releasedrain * diff * FATIGUE_REDUCTION_PER_INT)
+	else if(user.STAINT < 10)
+		var/diffy = SPELL_SCALING_THRESHOLD - user.STAINT
+		newdrain = newdrain + (releasedrain * (diffy * FATIGUE_REDUCTION_PER_INT))
+	if(!user.check_armor_skill())
+		newdrain += UNTRAINED_ARMOR_STAM_PENALTY
+	// Armor weight penalty. Trained wearers
+	// still get a bit of a soft penalty
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/ac = H.highest_ac_worn()
+		if(ac == ARMOR_CLASS_HEAVY)
+			newdrain += releasedrain * HEAVY_ARMOR_STAM_PENALTY
+		else if(ac == ARMOR_CLASS_MEDIUM)
+			newdrain += releasedrain * MEDIUM_ARMOR_STAM_PENALTY
+	if(newdrain > 0)
+		return newdrain
+	return 0.1
+
+/obj/effect/proc_holder/spell/proc/get_chargetime_breakdown(mob/living/user)
+	var/list/breakdown = list()
+	var/skill_level = user.get_skill_level(associated_skill)
+	if(skill_level > 0)
+		var/skill_mod = chargetime * skill_level * CHARGE_REDUCTION_PER_SKILL
+		if(skill_mod > 0)
+			breakdown += span_smallgreen("  Skill: -[DisplayTimeText(skill_mod)]")
+	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
+	if(sbook && sbook?.open)
+		var/book_mod = chargetime * sbook.get_cdr()
+		if(book_mod > 0)
+			breakdown += span_smallgreen("  Spellbook: -[DisplayTimeText(book_mod)]")
+	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
+	if(staff && staff.cast_time_reduction)
+		var/staff_mod = chargetime * staff.cast_time_reduction
+		if(staff_mod > 0)
+			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
+	return breakdown
+
+/obj/effect/proc_holder/spell/proc/get_cooldown_breakdown(mob/living/user)
+	var/list/breakdown = list()
+	if(user.STAINT > SPELL_SCALING_THRESHOLD)
+		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+		var/int_mod = initial(recharge_time) * diff * COOLDOWN_REDUCTION_PER_INT
+		breakdown += span_smallgreen("  Intelligence: -[DisplayTimeText(int_mod)]")
+	else if(user.STAINT < SPELL_SCALING_THRESHOLD)
+		var/diffy = SPELL_SCALING_THRESHOLD - user.STAINT
+		var/int_mod = initial(recharge_time) * diffy * COOLDOWN_REDUCTION_PER_INT
+		breakdown += span_smallred("  Intelligence: +[DisplayTimeText(int_mod)]")
+	return breakdown
+
+/obj/effect/proc_holder/spell/proc/get_fatigue_breakdown(mob/living/user)
+	var/list/breakdown = list()
+	var/skill_level = user.get_skill_level(associated_skill)
+	if(skill_level > 0)
+		var/skill_mod = releasedrain * skill_level * FATIGUE_REDUCTION_PER_SKILL
+		breakdown += span_smallgreen("  Skill: -[skill_mod]")
+	if(user.STAINT > SPELL_SCALING_THRESHOLD)
+		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+		var/int_mod = releasedrain * diff * FATIGUE_REDUCTION_PER_INT
+		breakdown += span_smallgreen("  Intelligence: -[int_mod]")
+	else if(user.STAINT < SPELL_SCALING_THRESHOLD)
+		var/diffy = SPELL_SCALING_THRESHOLD - user.STAINT
+		var/int_mod = releasedrain * diffy * FATIGUE_REDUCTION_PER_INT
+		breakdown += span_smallred("  Intelligence: +[int_mod]")
+	if(!user.check_armor_skill())
+		breakdown += span_smallred("  Untrained armor: +[UNTRAINED_ARMOR_STAM_PENALTY]")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/ac = H.highest_ac_worn()
+		if(ac == ARMOR_CLASS_HEAVY)
+			var/armor_mod = releasedrain * HEAVY_ARMOR_STAM_PENALTY
+			breakdown += span_smallred("  Armor weight: +[armor_mod]")
+		else if(ac == ARMOR_CLASS_MEDIUM)
+			var/armor_mod = releasedrain * MEDIUM_ARMOR_STAM_PENALTY
+			breakdown += span_smallred("  Armor weight: +[armor_mod]")
+	return breakdown
+
+/obj/effect/proc_holder/spell/proc/calculate_cooldown(mob/living/user)
+	if(!user || is_cdr_exempt || miracle)
+		return initial(recharge_time)
+	var/base = initial(recharge_time)
+	if(user.STAINT > SPELL_SCALING_THRESHOLD)
+		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+		return base - (base * diff * COOLDOWN_REDUCTION_PER_INT)
+	else if(user.STAINT < SPELL_SCALING_THRESHOLD)
+		var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
+		return base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
+	return base
+
+/obj/effect/proc_holder/spell/proc/get_spell_statistics(mob/living/user)
+	var/list/stats = list()
+	if(range)
+		stats += span_info("Range: [range] tiles")
+	var/base_ct = chargetime
+	if(base_ct > 0)
+		var/dynamic_ct = user ? calculate_chargetime(user) : base_ct
+		if(dynamic_ct != base_ct)
+			stats += span_info("Charge time: [DisplayTimeText(base_ct)] (current: [DisplayTimeText(dynamic_ct)])")
+			if(user)
+				stats += get_chargetime_breakdown(user)
+		else
+			stats += span_info("Charge time: [DisplayTimeText(base_ct)]")
+	else
+		stats += span_info("Charge time: None")
+	var/base_cd = initial(recharge_time)
+	if(base_cd)
+		var/dynamic_cd = user ? calculate_cooldown(user) : base_cd
+		if(dynamic_cd != base_cd)
+			stats += span_info("Cooldown: [DisplayTimeText(base_cd)] (current: [DisplayTimeText(dynamic_cd)])")
+			if(user)
+				stats += get_cooldown_breakdown(user)
+		else
+			stats += span_info("Cooldown: [DisplayTimeText(base_cd)]")
+	var/base_fd = releasedrain
+	if(base_fd > 0)
+		var/dynamic_fd = user ? calculate_fatigue_drain(user) : base_fd
+		if(dynamic_fd != base_fd)
+			stats += span_info("Stamina cost: [base_fd] (current: [dynamic_fd])")
+			if(user)
+				stats += get_fatigue_breakdown(user)
+		else
+			stats += span_info("Stamina cost: [base_fd]")
+	return stats
+
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, span_warning("I shouldn't have this spell! Something's wrong..."))
@@ -261,10 +390,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("I can't cast this spell here!"))
 		return FALSE
 
-	if(!skipcharge)
-		if(!charge_check(user))
-			testing("cast2")
-			return FALSE
+	if(!charge_check(user))
+		return FALSE
 
 	if(user.stat && !stat_allowed)
 		to_chat(user, span_warning("Not when I am incapacitated!"))
@@ -282,7 +409,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
 		if(antimagic && !HAS_TRAIT(user, TRAIT_SPELL_DISPERSION))
 			if(isatom(antimagic))
-				to_chat(user, span_notice("[antimagic] is interfering with my magic."))
+				to_chat(user, span_info("[antimagic] is interfering with my magic."))
 			else
 				to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
 			return FALSE
@@ -353,6 +480,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		switch(charge_type)
 			if("recharge")
 				charge_counter = 0 //doesn't start recharging until the targets selecting ends
+				last_process_time = world.time
 			if("charges")
 				charge_counter-- //returns the charge if the targets selecting fails
 			if("holdervar")
@@ -363,17 +491,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user)
+	if(skipcharge)
+		return TRUE
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < recharge_time)
-				if(!silent)
-					to_chat(user, still_recharging_msg)
+				to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
 			if(!charge_counter)
-				if(!silent)
-					to_chat(user, span_warning("[name] has no charges left!"))
+				to_chat(user, span_warning("[name] has no charges left!"))
 				return FALSE
 	return TRUE
 
@@ -408,6 +536,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	still_recharging_msg = span_warning("[name] is still recharging!")
 	charge_counter = recharge_time
+	last_process_time = world.time
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -415,9 +544,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return ..()
 
 /obj/effect/proc_holder/spell/Click()
-	if(cast_check())
-		choose_targets()
-	return 1
+	if(!cast_check())
+		revert_cast()
+		return FALSE
+	choose_targets()
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
@@ -425,24 +556,44 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
 	return TRUE
 
+/obj/effect/proc_holder/spell/proc/finish_recharge()
+	charge_counter = recharge_time
+
+	if(action)
+		action.UpdateButtonIcon()
+
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	if(ranged_ability_user && !is_cdr_exempt)
-		if(ranged_ability_user.STAINT > SPELL_SCALING_THRESHOLD)
-			var/diff = min(ranged_ability_user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
+	var/old_recharge = recharge_time
+	var/mob/living/user = ranged_ability_user || action?.owner
+
+	if(user && !is_cdr_exempt)
+		if(user.STAINT > SPELL_SCALING_THRESHOLD)
+			var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
 			recharge_time = initial(recharge_time) - (initial(recharge_time) * diff * COOLDOWN_REDUCTION_PER_INT)
-		else if(ranged_ability_user.STAINT < SPELL_SCALING_THRESHOLD)
-			var/diff2 = SPELL_SCALING_THRESHOLD - ranged_ability_user.STAINT
+		else if(user.STAINT < SPELL_SCALING_THRESHOLD)
+			var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
 
+	// If the spell was fully charged before recalculation, keep it fully charged
+	if(charge_counter >= old_recharge && old_recharge > 0)
+		charge_counter = recharge_time
+	last_process_time = world.time
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/proc_holder/spell/process()
+	var/delta = world.time - last_process_time
+	last_process_time = world.time
 	if(charge_counter <= recharge_time) // Edge case when charge counter is set
-		charge_counter += 2	//processes 5 times per second instead of 10.
+		charge_counter += delta
 		if(charge_counter >= recharge_time)
-			action.UpdateButtonIcon()
 			charge_counter = recharge_time
+			if(action?.button)
+				action.button.update_maptext(0)
+			action?.UpdateButtonIcon()
 			STOP_PROCESSING(SSfastprocess, src)
+			return
+		if(action?.button)
+			action.button.update_maptext(recharge_time - charge_counter)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	if(!ignore_los)
@@ -486,6 +637,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		after_cast(targets, user = user)
 		if(isliving(user))
 			var/mob/living/L = user
+			// Apply stamina drain — the on_mmb path is never reached due to check_click_intercept consuming the click first
+			if(releasedrain > 0)
+				var/fatigue = calculate_fatigue_drain(L)
+				if(fatigue > 0)
+					L.stamina_add(fatigue)
 			if(L.has_status_effect(/datum/status_effect/buff/clash))
 				var/mob/living/carbon/human/H = user
 				H.bad_guard(span_warning("I can't focus while casting spells!"), cheesy = TRUE)
@@ -544,10 +700,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/mob/living/carbon/human/devotee = user
 		devotee.devotion?.update_devotion(-devotion_cost)
 		to_chat(devotee, "<font color='purple'>I [devotion_cost > 0 ? "lost" : "gained"] [abs(devotion_cost)] devotion.</font>")
-	//Add xp based on the fatigue used -- AZURE EDIT: REMOVED!! THIS SHIT WAS TINY AND SUUUUCKED
-	/* if(xp_gain)
-		adjust_experience(usr, associated_skill, round(get_fatigue_drain() * MAGIC_XP_MULTIPLIER)) */
 
+	if(user.mmb_intent && user.mmb_intent.mob_light)
+		QDEL_NULL(user.mmb_intent.mob_light)
 	START_PROCESSING(SSfastprocess, src) // ensure we always end up reprocessing after casting
 
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
@@ -568,8 +723,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	START_PROCESSING(SSfastprocess, src)
-	if(action)
+	if(action?.button)
+		action.button.update_maptext(0)
 		action.UpdateButtonIcon()
+	if(user.mmb_intent && user.mmb_intent.mob_light)
+		QDEL_NULL(user.mmb_intent.mob_light)
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	if (!istype(target))
@@ -713,7 +871,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
-	if(!charge_check(user,TRUE))
+	if(!charge_check(user))
 		return FALSE
 
 	if(user.stat && !stat_allowed)
@@ -773,7 +931,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
-	user.visible_message(span_warning("A wreath of gentle light passes over [user]!"), span_notice("I wreath myself in healing light!"))
+	user.visible_message(span_warning("A wreath of gentle light passes over [user]!"), span_info("I wreath myself in healing light!"))
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
 
@@ -785,3 +943,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 #undef FATIGUE_REDUCTION_PER_INT
 #undef COOLDOWN_REDUCTION_PER_INT
 #undef CHARGE_REDUCTION_PER_SKILL
+#undef MEDIUM_ARMOR_STAM_PENALTY
+#undef HEAVY_ARMOR_STAM_PENALTY
+#undef UNTRAINED_ARMOR_STAM_PENALTY

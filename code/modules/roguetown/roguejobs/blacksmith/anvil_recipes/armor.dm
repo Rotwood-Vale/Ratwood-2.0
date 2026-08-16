@@ -293,6 +293,12 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
 	i_type = "Armor"
 
+/datum/anvil_recipe/armor/steel/wardenmeleehauberk
+	name = "Forester's Hauberk (+1 Forester's Cuirass, +1 Essence of Wilderness, +1 Steel)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee, /obj/item/natural/cured/essence, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee/upgraded
+	i_type = "Armor"
+
 /datum/anvil_recipe/armor/iron/halfplate
 	name = "Half-Plate, Iron (+1 Iron Breastplate, +2 Cured Leather)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/iron, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)

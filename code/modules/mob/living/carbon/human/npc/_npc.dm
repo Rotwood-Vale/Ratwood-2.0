@@ -56,6 +56,12 @@
 	///our current cell grid
 	var/datum/cell_tracker/our_cells
 
+	//If we utilize special attacks or not; All is handled within do_best_melee_attack() chain.
+	var/special_attacker = FALSE
+
+	//If we utilize our intents further outside of strong intent.
+	var/smart_combatant = FALSE
+
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
 	our_cells = new(interesting_dist, interesting_dist, 1)
@@ -830,6 +836,15 @@
 	Weapon = get_active_held_item()
 	OffWeapon = get_inactive_held_item()
 
+	//Feint Riposte check before we do any further attacks to teach our enemy a lesson.
+	if(smart_combatant && istype(Weapon, /obj/item/rogueweapon)) //Make sure we have a proper weapon in hand. No feinting with a stick or some shit.
+		if(!has_status_effect(/datum/status_effect/debuff/feintcd) && target.has_status_effect(/datum/status_effect/buff/clash))
+			if(possible_rmb_intents & /datum/rmb_intent/feint)
+				swap_rmb_intent(/datum/rmb_intent/feint)
+				if(Adjacent(target))
+					try_special_attack(target)
+					return TRUE //Attempt to feint and ruin their clash...
+
 	// What is the chance we try to grab with our offhand?
 	var/make_grab_chance = Weapon ? 5 : 20 // If unarmed, 20% chance; otherwise 5%
 	var/use_grab_chance = 30 // 30% chance to use a grab if we already have one
@@ -859,7 +874,46 @@
 			// todo: decide to drop the offhand maybe?
 			if(!OffWeapon) // wield it!
 				Weapon.attack_self(src)
-		rog_intent_change(1)
+
+		//Lets spice things up.
+		var/did_we_change_intent = FALSE
+		if(istype(Weapon, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/actual_weapon = Weapon
+			var/weapon_intents = actual_weapon.possible_item_intents
+			var/weapon_special_intents = actual_weapon.special
+			
+			if(length(weapon_intents) > 1 && !has_status_effect(/datum/status_effect/debuff/swapped_intent_npc))
+				did_we_change_intent = TRUE
+				rog_intent_change(rand(1, length(weapon_intents))) 
+				apply_status_effect(/datum/status_effect/debuff/swapped_intent_npc) //45 seconds before we swap to a new weapon intent entirely.
+
+			if(special_attacker && prob(50) && !has_status_effect(/datum/status_effect/debuff/specialcd)) //Only if we use specials...
+				if(weapon_special_intents)
+					if(possible_rmb_intents & /datum/rmb_intent/strong)
+						swap_rmb_intent(/datum/rmb_intent/strong)
+						try_special_attack(target)
+						return TRUE //We used our special intent on the target as soon as we could.
+
+			if(smart_combatant && prob(50)) // Only if we use rmb intents...
+				if(possible_rmb_intents)
+					if(!has_status_effect(/datum/status_effect/debuff/feintcd))
+						if(possible_rmb_intents & /datum/rmb_intent/feint && rmb_intent != /datum/rmb_intent/feint && prob(50))
+							swap_rmb_intent(/datum/rmb_intent/feint)
+							try_special_attack(target)
+							return TRUE
+					else if(!has_status_effect(/datum/status_effect/debuff/clashcd))
+						if(possible_rmb_intents & /datum/rmb_intent/riposte && rmb_intent != /datum/rmb_intent/riposte && prob(50))
+							swap_rmb_intent(/datum/rmb_intent/riposte)
+							try_special_attack(target)
+							return TRUE
+					else if(!has_status_effect(/datum/status_effect/debuff/baitcd)) //May work sometimes; more than likely it wont however.
+						if(possible_rmb_intents & /datum/rmb_intent/aimed && rmb_intent != /datum/rmb_intent/aimed) //Default to aimed as the final choice to attempt baiting.
+							swap_rmb_intent(/datum/rmb_intent/aimed)
+							try_special_attack(target)
+							return TRUE
+
+		if(!did_we_change_intent) //Always default regardless.
+			rog_intent_change(1)
 		used_intent = a_intent
 		Weapon.melee_attack_chain(src, victim)
 		// attackby and attack_obj handles cooldowns already
@@ -910,6 +964,8 @@
 /mob/living/carbon/human/proc/monkey_attack(mob/living/L)
 	if(next_move > world.time)
 		return FALSE // no time to attack this turn!
+	if(has_status_effect(/datum/status_effect/buff/clash))
+		return FALSE //We're clashing right now! Don't fuck us up! Also give the player a chance to respond with a feint.
 
 	npc_choose_attack_zone(L)
 	NPC_THINK("Aiming for \the [zone_selected]!")
@@ -1042,3 +1098,15 @@
 	. = ..()
 	if(mode != NPC_AI_OFF)
 		update_grid()
+
+//NPC SPECIFIC DEBUFF FOR INTENT HANDLING, DO NOT USE ANYWHERE ELSE.
+/datum/status_effect/debuff/swapped_intent_npc
+	id = "swapped_intent_npc"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/swapped_intent_npc
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+
+/atom/movable/screen/alert/status_effect/debuff/swapped_intent_npc
+	name = "Swapped Intent Cooldown (NPC)"
+	desc = "I swapped my weapon intent, I must wait before I can do it again."
+	icon_state = "strikecd"

@@ -50,7 +50,7 @@
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		pants = /obj/item/clothing/under/roguetown/sirwal/fancy/random
 		shoes = /obj/item/clothing/shoes/roguetown/shalal

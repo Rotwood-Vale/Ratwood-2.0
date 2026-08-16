@@ -205,7 +205,7 @@
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/strandling/handle_click(location, control, params)
 	. = ..()
 	to_chat(mob_viewer, "<span class='notice'>I attempt to remove the durathread strand from around my neck.</span>")
 	if(do_after(mob_viewer, 35, null, mob_viewer))
@@ -632,6 +632,8 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/mishap_langloss
 	var/datum/language/removed_language
+	/// Sources that had granted the language before we took it, restored identically on expiry.
+	var/list/removed_sources
 
 /datum/status_effect/debuff/mishap_langloss/on_apply()
 	. = ..()
@@ -652,13 +654,16 @@
 
 		// If we haven't selected a language by this point there's probably no language to select
 		if (removed_language)
-			owner.remove_language(removed_language)
+			var/list/sources = holder.languages[removed_language]
+			removed_sources = sources?.Copy()
+			owner.remove_language(removed_language, source = LANGUAGE_SOURCE_ALL)
 
 
 /datum/status_effect/debuff/mishap_langloss/on_remove()
 	..()
 	if (removed_language)
-		owner.grant_language(removed_language)
+		for (var/source in (removed_sources || list(LANGUAGE_SOURCE_GENERIC)))
+			owner.grant_language(removed_language, source = source)
 
 
 // Reduces intelligence by 20 (!!) and removes all languages except Aphasia for the duration.

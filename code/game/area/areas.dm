@@ -217,6 +217,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sets machine power levels in the area
  */
 /area/LateInitialize()
+	update_areasize()
 	update_beauty()
 
 /**
@@ -228,7 +229,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!length(contents))
 		return
 	var/list/areas_in_z = SSmapping.areas_in_z
-	update_areasize()
 	if(!z)
 		WARNING("No z found for [src]")
 		return
@@ -508,6 +508,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	areasize = 0
 	for(var/turf/open/T in contents)
 		areasize++
+		CHECK_TICK
 
 /**
  * Causes a runtime error
@@ -565,7 +566,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	icon_state = "start"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	
+
 /area/space
 	icon_state = "space"
 	requires_power = TRUE
