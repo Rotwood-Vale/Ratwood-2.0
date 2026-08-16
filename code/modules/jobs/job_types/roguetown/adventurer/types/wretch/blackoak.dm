@@ -84,13 +84,13 @@
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword", "Elvish Saber", "Elvish Dagger")
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
 		switch(sidearm_choice)
-			if("Elvish Longsword")
+			if("Elvish Longsword") // It's a sharper longsword.
 				l_hand = /obj/item/rogueweapon/sword/long/elf
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
-			if("Elvish Shortsword")
+			if("Elvish Shortsword") // Lower damage but better at parrying than saber. High sharpness & integrity for parrying without as much damage decay.
 				l_hand = /obj/item/rogueweapon/sword/short/elf
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
-			if("Elvish Saber")
+			if("Elvish Saber") // The damage & dodge option.
 				l_hand = /obj/item/rogueweapon/sword/sabre/elf
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 			if("Elvish Dagger") // Doesn't function as silver unless blessed. Shouldn't be too bad to give 'em.

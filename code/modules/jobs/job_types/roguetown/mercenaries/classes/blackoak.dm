@@ -76,7 +76,7 @@
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword")
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
 		switch(sidearm_choice)
-			if("Elvish Longsword")
+			if("Elvish Longsword") // Longsword but sharper.
 				l_hand = /obj/item/rogueweapon/sword/long/elf
 			if("Elvish Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/elf
@@ -140,13 +140,17 @@
 	var/weapons = list("Elvish Dagger", "Elvish Saber")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "FOR THE OAKS AND THE VALE.") as anything in weapons
 	switch(weapon_choice)
-		if("Elvish Dagger")
+		if("Elvish Dagger") // Sneaky dagger option.
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/silver/elvish)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sheath, SLOT_BELT_R, TRUE)
-		if("Elvish Saber")
+		if("Elvish Saber") // Dodge option for doing good damage at the cost of your poor stamina.
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/elf)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
+		if("Elvish Shortsword") // Parry option for regular shortsword damage but high sharpness & integrity equals less damage decay.
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/elf)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
 
 	var/armors = list("Woad Elven Maille", "Fur-Lined Trophy Robes")
