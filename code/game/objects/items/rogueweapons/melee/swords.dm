@@ -71,6 +71,13 @@
 	penfactor = 30 // 2h Longsword already have 30 damage. This let it pierce light armor easily
 	// Their cut is actually pretty decent when 2handed and should be inferior to zwei.
 
+/datum/intent/sword/thrust/long/deep
+	name = "deep lunge"
+	icon_state = "inlunge"
+	penfactor = 50
+	damfactor = 1.2
+	swingdelay = 0.6 SECONDS
+
 /datum/intent/sword/thrust/krieg
 	damfactor = 0.9
 
