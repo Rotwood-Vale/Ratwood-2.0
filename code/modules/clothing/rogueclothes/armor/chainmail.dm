@@ -203,7 +203,7 @@
 /datum/crafting_recipe/roguetown/survival/decoratedmailledhauberk
 	name = "layer a decorated cuirass atop hauberk"
 	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/decorated)
-	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/decorated = 1,
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated = 1,
 				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk = 1)
 	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.
 	req_table = TRUE //If someone wants to add that in post, hwoever, I don't mind. You can easily do so by copy-pasting the format, here.
