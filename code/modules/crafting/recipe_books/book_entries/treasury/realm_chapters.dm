@@ -108,9 +108,16 @@
 	name = "04. Regional Trade"
 
 /datum/book_entry/treasury_realm/trade/inner_book_html(mob/user)
+	// Built from the live table so a map that swaps a region out doesn't advertise a county
+	// it has no road to.
+	var/list/region_names = list()
+	for(var/region_id in GLOB.economic_regions)
+		var/datum/economic_region/ER = GLOB.economic_regions[region_id]
+		if(ER?.name)
+			region_names += ER.name
 	return {"
 		<div>
-		<p>The Crown trades with nine regions: Kingsfield, Rosawood, Rockhill, Daftsmarch, Blackholt, Saltwick, Bleakcoast, Northfort, Heartfelt. Trade and Stockpile interfaces are accessed through the Nerve Master.</p>
+		<p>The Crown trades with [length(region_names)] regions: [english_list(region_names)]. Trade and Stockpile interfaces are accessed through the Nerve Master.</p>
 
 		<h3>Trade Pricing</h3>
 		<ul>

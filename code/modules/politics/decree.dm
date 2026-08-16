@@ -32,17 +32,29 @@
 /datum/decree/proc/get_display_name()
 	return "[name] of [year]"
 
+/// Fills %RULER% / %RULER_NAME% and any %REGION_<ID>% token. The region tokens read the live
+/// table, so a map that swaps a trade region out (map_adjustment.trade_region_swaps) gets the
+/// replacement's name in the Ruler's style instead of a county that doesn't exist there.
+/proc/fill_decree_tokens(template)
+	if(!template)
+		return null
+	var/ruler_type = SSticker?.rulertype || "Lord"
+	var/mob/living/ruler_mob = SSticker?.rulermob
+	var/ruler_name = (ruler_mob && !QDELETED(ruler_mob)) ? ruler_mob.real_name : "the Lord"
+	var/text = replacetext(template, "%RULER%", ruler_type)
+	text = replacetext(text, "%RULER_NAME%", ruler_name)
+	for(var/region_id in GLOB.economic_regions)
+		var/datum/economic_region/ER = GLOB.economic_regions[region_id]
+		if(ER?.name)
+			text = replacetext(text, "%REGION_[uppertext(region_id)]%", ER.name)
+	return text
+
 /// flavor_text with %RULER% / %RULER_NAME% filled in. Safe for all decrees - if the
 /// template has no placeholders, the replacetext calls are no-ops.
 /datum/decree/proc/get_display_flavor_text()
 	if(!flavor_text)
 		return null
-	var/ruler_type = SSticker?.rulertype || "Lord"
-	var/mob/living/ruler_mob = SSticker?.rulermob
-	var/ruler_name = (ruler_mob && !QDELETED(ruler_mob)) ? ruler_mob.real_name : "the Lord"
-	var/text = replacetext(flavor_text, "%RULER%", ruler_type)
-	text = replacetext(text, "%RULER_NAME%", ruler_name)
-	return text
+	return fill_decree_tokens(flavor_text)
 
 /datum/decree/proc/apply_exemption(mob/living/payer, tax_category)
 	return FALSE
@@ -96,10 +108,6 @@
 	var/template = active ? restore_text : revoke_text
 	if(!template)
 		return
-	var/ruler_type = SSticker?.rulertype || "Lord"
-	var/mob/living/ruler_mob = SSticker?.rulermob
-	var/ruler_name = (ruler_mob && !QDELETED(ruler_mob)) ? ruler_mob.real_name : "the Lord"
-	var/body = replacetext(template, "%RULER%", ruler_type)
-	body = replacetext(body, "%RULER_NAME%", ruler_name)
+	var/body = fill_decree_tokens(template)
 	var/title = active ? "BY LORDLY MERCY" : "BY LORDLY DECREE"
 	priority_announce(body, title, pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")

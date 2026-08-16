@@ -117,6 +117,20 @@ SUBSYSTEM_DEF(regionthreat)
 
 	log_world("RegionThreat: Loaded [threat_regions.len] threat regions for [map.realm_name]")
 
+	// Swap any trade region whose default identity clashes with this map. Must run before the
+	// route map below, which writes threat_region_id onto the instance being replaced.
+	if(map.trade_region_swaps)
+		for(var/trade_id in map.trade_region_swaps)
+			var/datum/economic_region/replacement = map.trade_region_swaps[trade_id]
+			if(!ispath(replacement, /datum/economic_region))
+				stack_trace("RegionThreat: trade_region_swaps entry for [trade_id] is not an economic_region path")
+				continue
+			var/datum/economic_region/swapped = new replacement()
+			if(swapped.region_id != trade_id)
+				stack_trace("RegionThreat: swap for [trade_id] declares region_id [swapped.region_id]")
+				continue
+			GLOB.economic_regions[trade_id] = swapped
+
 	// Re-point the trade roads' blockade regions at this map's wilderness. Runs here rather
 	// than in SSeconomy so the remap is in place before anything reads threat_region_id.
 	if(map.blockade_route_map)

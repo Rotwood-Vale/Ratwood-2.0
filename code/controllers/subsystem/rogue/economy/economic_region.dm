@@ -6,6 +6,8 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 		var/datum/economic_region/instance = new er()
 		if(!instance.region_id)
 			continue
+		if(instance.map_swap_only)
+			continue
 		result[instance.region_id] = instance
 	return result
 
@@ -23,6 +25,10 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	var/is_region_blockaded = FALSE
 	/// Null = this region cannot be blockaded.
 	var/threat_region_id
+	/// Alternate that exists only to take another region's slot on a specific map, via
+	/// map_adjustment.trade_region_swaps. Skipped by init_economic_regions() so it never
+	/// appears alongside the region it replaces.
+	var/map_swap_only = FALSE
 	// Ensure this region won't replenish blockade. Used only for Kingsfield because Kingsfield blockade is devastating and shouldn't repeat mid round.
 	var/blockade_replenish_eligible = TRUE
 
@@ -131,6 +137,34 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Rockhill"
 	subtitle = "The Orchards, Vintners and Herbalists of the Ridge"
 	description = "A cluster of orchards and herb gardens to the north of the Vale, sheltered by a ridge that makes the climate there milder than it has any right to be. The many rolling hills of the county make for poor grain land but excellent orchard land. Rockhill wine and liquor are renowned throughout the Vale, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates. Rockhill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manor, with perhaps three quarter of the noble houses of the realm owning at least one in Rockhill."
+	threat_region_id = THREAT_REGION_AZUREAN_COAST
+	produces = list(
+		TRADE_GOOD_APPLE = TG_SUPPLY_LOCAL_FRUIT,
+		TRADE_GOOD_PEAR = TG_SUPPLY_LOCAL_FRUIT,
+		TRADE_GOOD_JACKSBERRY = TG_SUPPLY_LOCAL_FRUIT,
+		TRADE_GOOD_CALENDULA = TG_SUPPLY_SPECIALTY_HERB,
+		TRADE_GOOD_POPPY = TG_SUPPLY_SPECIALTY_HERB,
+	)
+	demands = list(
+		TRADE_GOOD_GLASS_BATCH = TG_DEMAND_GLASS,
+		TRADE_GOOD_CLOTH = TG_DEMAND_CLOTH,
+		TRADE_GOOD_SILK = TG_DEMAND_SILK,
+		TRADE_GOOD_GRAIN = TG_DEMAND_LOCAL_GRAIN,
+		TRADE_GOOD_CLAY = TG_DEMAND_CHEAP_RAW_MAT,
+	)
+
+// Swapped in for Rockhill on the Rockhill map, where the realm is itself called Rockhill and
+// a trade road to a county of the same name reads as nonsense. Vespermill was already the
+// region's noble seat in standing_order.dm ("Lord Hadrius Vespermill", the midsummer tourney,
+// the master-of-hounds), so promoting it to the county name costs no new lore. Keeps
+// TRADE_REGION_ROCKHILL and the orchard profile so trade goods, crown imports and every
+// standing order keyed to the region continue to resolve.
+/datum/economic_region/vespermill
+	map_swap_only = TRUE
+	region_id = TRADE_REGION_ROCKHILL
+	name = "Vespermill"
+	subtitle = "The Orchards, Vintners and Herbalists of the Wold"
+	description = "A cluster of orchards and herb gardens across the rolling wold, sheltered by a long ridge that makes the climate there milder than it has any right to be. The hills make for poor grain land but excellent orchard land, and the county has leaned into it for six generations. Vespermill wine and liquor are renowned throughout the Vale, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates and named for the mill above the vesper-brook that the first Lord Vespermill built his hall around. Vespermill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manors, with perhaps three quarters of the noble houses of the realm owning at least one among the orchards."
 	threat_region_id = THREAT_REGION_AZUREAN_COAST
 	produces = list(
 		TRADE_GOOD_APPLE = TG_SUPPLY_LOCAL_FRUIT,

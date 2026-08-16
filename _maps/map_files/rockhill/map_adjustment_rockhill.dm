@@ -75,6 +75,11 @@
 		THREAT_REGION_ROCKHILL_WOODS_NORTH,
 		THREAT_REGION_ROCKHILL_WOODS_SOUTH
 	)
+	// The realm is Rockhill here, so the Rockhill trade county becomes Vespermill, its
+	// noble seat. Same region_id and goods; only the identity changes.
+	trade_region_swaps = list(
+		TRADE_REGION_ROCKHILL = /datum/economic_region/vespermill,
+	)
 	// Blockade routes: only Woods South, Bog North and Sunkmire have hard quest
 	// spawners mapped, so every trade road runs through one of those three. Tiers
 	// mirror dun_world's: grove-tier roads (no travel fee) through the woods,

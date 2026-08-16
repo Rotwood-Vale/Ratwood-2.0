@@ -30,6 +30,12 @@
 
 	var/list/threat_regions
 
+	/// TRADE_REGION_* -> /datum/economic_region subtype. Replaces a trade region's datum on
+	/// this map, for when the default region collides with the map's own identity (Rockhill
+	/// the realm trading with Rockhill the county). The replacement must carry the same
+	/// region_id and be flagged map_swap_only.
+	var/list/trade_region_swaps
+
 	/// TRADE_REGION_* -> THREAT_REGION_* remap for blockades. The /datum/economic_region
 	/// defaults point at dun_world's wilderness; a map with its own threat_regions list must
 	/// remap every trade road here or those roads can never be blockaded (roll_blockade
