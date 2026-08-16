@@ -257,6 +257,28 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				return
 		LateChoices()
 
+	if(href_list["villains"])
+		VillainChoices()
+		return
+
+	if(href_list["villain_pref"])
+		if(SSticker.current_state > GAME_STATE_PREGAME)
+			return
+		var/datum/job/J = SSjob.GetJob(href_list["villain_pref"])
+		if(!J || !(J.title in GLOB.villain_positions))
+			return
+		var/jpval = null
+		switch(text2num(href_list["level"]))
+			if(1)
+				jpval = JP_HIGH
+			if(2)
+				jpval = JP_MEDIUM
+			if(3)
+				jpval = JP_LOW
+		client.prefs.SetJobPreferenceLevel(J, jpval)
+		VillainChoices()
+		return
+
 	if(href_list["manifest"])
 		ViewManifest()
 
@@ -577,8 +599,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 */
 	GLOB.joined_player_list += character.ckey
-	update_wretch_slots()
-	update_bandit_slots()
 /*
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)

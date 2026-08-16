@@ -51,11 +51,14 @@
 		"Wretch",
 		"Squire",
 		"Veteran",
-		"Apothecary"
+		"Apothecary",
+		"Knight Captain",
+		"Wretch",
+		"Bandit"
 	)
 
-	base_antags = 1
-	maximum_antags = 2
+	base_antags = 2
+	maximum_antags = 4
 
 	earliest_start = 0 SECONDS
 	max_occurrences = 2
@@ -66,8 +69,6 @@
 	antag_datum = /datum/antagonist/assassin
 
 /datum/round_event/antagonist/solo/assassins/start()
-	var/datum/job/assassin_job = SSjob.GetJob("Assassin")
-	assassin_job.total_positions = length(setup_minds)
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		var/datum/job/original_job = SSjob.GetJob(antag_mind.assigned_role)
 		antag_mind.current.unequip_everything()
@@ -79,11 +80,6 @@
 				original_job.current_positions += 1
 		SSmapping.retainer.assassins |= antag_mind.current
 		antag_mind.add_antag_datum(/datum/antagonist/assassin)
-
-		SSrole_class_handler.setup_class_handler(antag_mind.current, list(CTAG_ASSASSIN = 20))
-		antag_mind.current:advsetup = TRUE
-		antag_mind.current.hud_used?.set_advclass()
-
 	SSrole_class_handler.assassins_in_round = TRUE
 
 /datum/round_event_control/antagonist/solo/assassins/canSpawnEvent(players_amt, gamemode, fake_check)
