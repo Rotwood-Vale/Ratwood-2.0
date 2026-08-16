@@ -180,10 +180,16 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	message = treat_message(message, language) // unfortunately we still need this
+	var/swallowed_message = message
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
 	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
 	if(!message)
+		// something on COMSIG_MOB_SAY ate it whole, a slave collar today. Record the attempt: otherwise
+		// anything hooking that signal is a way to speak with no entry anywhere. Nobody heard it, so it
+		// gets no seen copy and no roster
+		if((mind || ckey) && swallowed_message)
+			log_talk(swallowed_message, LOG_SAY, tag = "swallowed")
 		return
 
 	// Allow sign languages and other tongueless speech to bypass the vocal speech check
@@ -201,7 +207,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
 		message_mode = MODE_WHISPER
-		src.log_talk(message, LOG_WHISPER)
+		src.log_talk(message, LOG_WHISPER, forced_by=forced)
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -310,7 +316,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost in listening)
 				listening -= ghost
 				the_dead -= ghost
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY, language = message_language)
 
 	var/eavesdropping
 	var/eavesrendered
@@ -519,7 +525,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost.bypasses_ghost_protection())
 				continue
 			listening -= ghost
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY, language = message_language)
 
 	var/eavesdropping
 	var/eavesrendered

@@ -5,7 +5,10 @@
 	log_combat() mints one "event" id shared by its three writes (attacker line, seen entry, target receipt).
 	Forward lines and seen entries carry the target's ckey as "target"; receipts are flagged "receipt" and carry
 	the attacker's ckey as "attacker", absent when that attacker is keyless. log_seen() stores "witnesses" as
-	ckey to list(name, tiles away, perception tag), the tag ^ v ~ or a direction digit. Disk logs carry none of it.
+	ckey to list(name, tiles away, perception tag, no-language), the tag ^ v ~ or a direction digit, the fourth
+	slot only when that witness could not follow the language. Speech seen copies hold the TREATED message,
+	exactly what listeners read, and its "language". Disk logs carry none of it. Every key named here is a
+	LOG_META_* define, written and read through the same one so a misspelling cannot pass silently.
 
 	Invariants:
 	1. The witnessed pass must finish before the offscreen pass. It marks event ids and clear sightings; the pull trusts both.
@@ -13,8 +16,8 @@
 	3. Only receipts pull, and only when their victim was clearly in the subject's view around that moment.
 	   Fights the subject never saw stay out entirely.
 	4. Reads go through the accessors below, so a stray string degrades to text instead of erroring.
-	5. The subject's own seen entries are never rows. They are read for the witness rosters their written lines lack,
-	   and for presence. Rendering them as well doubles every line the subject ever spoke.
+	5. The subject's own seen entries are never rows. They are read for what their written lines lack, and for
+	   presence. Rendering them as well doubles every line the subject ever spoke.
 */
 #define POV_LOG_PAGE_LEN 2000
 #define POV_FOCUS_PAGE_LEN 10
@@ -73,6 +76,10 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 /// The perception tag, ^ v ~ or a direction digit. Null when they saw it plainly
 /proc/witness_tag(witness_entry)
 	return (islist(witness_entry) && length(witness_entry) >= WITNESS_TAG) ? witness_entry[WITNESS_TAG] : null
+
+/// FALSE only when the slot says they could not follow the language. The short tuple means they could
+/proc/witness_understood(witness_entry)
+	return !(islist(witness_entry) && length(witness_entry) >= WITNESS_NOLANG && witness_entry[WITNESS_NOLANG])
 
 //pov_mode null shows the generate buttons. pov_paging is navigation inside a built POV, neither logged nor limited.
 //pov_tail counts back from the end, so a focus link still lands on its entry after more has been logged
@@ -165,11 +172,11 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		var/list/all_the_entrys = log_source[log_type]
 		for(var/entry in all_the_entrys)
 			var/value = all_the_entrys[entry]
+			seen_entry_number++
 			var/line = log_entry_text(value)
-			var/list/witnesses = log_entry_field(value, "witnesses")
+			var/list/witnesses = log_entry_field(value, LOG_META_WITNESSES)
 			if(!isnull(witnesses))
-				seen_entry_number++
-				line += pov_witness_html(witnesses, "seen[seen_entry_number]")
+				line += pov_witness_html(witnesses, "seen[seen_entry_number]", log_entry_field(value, LOG_META_LANGUAGE))
 			. += "<b>[log_normalize_html(entry)]</b><br>[line]"
 
 // Serving a POV timeline: the generate prompt, the cache, the cooldown and the yielding sort
@@ -285,8 +292,8 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 	// "[actor]@[bucket]" keys, when each person was in view
 	var/list/presence = list()
 	// fills presence as it goes, so this must run before anything reads it
-	var/list/own_witnesses = pov_read_own_seen(log_source, presence)
-	add_pov_own_entries(., log_source, own_witnesses, included_events, subject_receipts)
+	var/list/own_seen = pov_read_own_seen(log_source, presence)
+	add_pov_own_entries(., log_source, own_seen, included_events, subject_receipts)
 
 	if(!M.key)
 		return
@@ -344,7 +351,7 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 /proc/pov_seen_pair_key(event_id, color, time)
 	return event_id || "[color]@[time]"
 
-/// One walk of the subject's seen log: rosters out, keyed for the pairing above, presence marked in place.
+/// One walk of the subject's seen log: entries out keyed for the pairing above, presence marked in place.
 /// An empty roster is kept, nobody saw it being an answer worth printing
 /proc/pov_read_own_seen(list/log_source, list/presence)
 	. = list()
@@ -352,7 +359,7 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 	for(var/entry in seen_entries)
 		CHECK_TICK
 		var/value = seen_entries[entry]
-		var/list/witnesses = log_entry_field(value, "witnesses")
+		var/list/witnesses = log_entry_field(value, LOG_META_WITNESSES)
 		if(isnull(witnesses))
 			continue
 		var/entry_time = log_entry_field(value, "time")
@@ -361,25 +368,25 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 			if(!witness_tag(witnesses[witness_ckey]))
 				pov_mark_presence(presence, witness_ckey, entry_time)
 		// nothing to pair on, and a malformed row defaults to time 0: indexing this would hand it a roster
-		var/event_id = log_entry_field(value, "event")
+		var/event_id = log_entry_field(value, LOG_META_EVENT)
 		if(!event_id && isnull(entry_time))
 			continue
-		.[pov_seen_pair_key(event_id, log_entry_field(value, "color"), entry_time)] = witnesses
+		.[pov_seen_pair_key(event_id, log_entry_field(value, "color"), entry_time)] = value
 
 /// The subject's own rows. Their forward attacks mark included_events; their receipts do NOT, because a hit on them is
 /// meant to show in both their thread and the attacker's block. Receipts are indexed instead, for the distance handoff.
-/proc/add_pov_own_entries(list/output, list/log_source, list/own_witnesses, list/included_events, list/subject_receipts)
+/proc/add_pov_own_entries(list/output, list/log_source, list/own_seen, list/included_events, list/subject_receipts)
 	var/static/list/own_types = list(LOG_ATTACK, LOG_SAY, LOG_WHISPER, LOG_EMOTE)
 	// log_talk writes no colour, so own rows would render plain against everyone else's log_seen scheme.
 	// These are log_seen's own colours, which is also what pairs a speech row with its seen copy
-	var/static/list/own_colors = list("[LOG_SAY]" = "orange", "[LOG_WHISPER]" = "orange", "[LOG_EMOTE]" = "grey")
+	var/static/list/own_colors = list("[LOG_SAY]" = SEEN_COLOR_SAY, "[LOG_WHISPER]" = SEEN_COLOR_SAY, "[LOG_EMOTE]" = SEEN_COLOR_EMOTE)
 	for(var/type in own_types)
 		var/list/entries = log_source[num2text(type)]
 		for(var/entry in entries)
 			CHECK_TICK
 			var/value = entries[entry]
-			var/is_receipt = log_entry_field(value, "receipt")
-			var/event_id = log_entry_field(value, "event")
+			var/is_receipt = log_entry_field(value, LOG_META_RECEIPT)
+			var/event_id = log_entry_field(value, LOG_META_EVENT)
 			var/list/wrapper = pov_timeline_row(entry, value)
 			wrapper["kind"] = type
 			wrapper["tint"] = own_colors["[type]"]
@@ -390,7 +397,10 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 			// pass. A row with no stored time has no moment to pair on either, the wrapper's being a sort default
 			var/pair_time = log_entry_field(value, "time")
 			if(!is_receipt && (event_id || !isnull(pair_time)))
-				wrapper["witnesses"] = own_witnesses[pov_seen_pair_key(event_id, own_colors["[type]"], pair_time)]
+				var/list/seen_copy = own_seen[pov_seen_pair_key(event_id, own_colors["[type]"], pair_time)]
+				if(seen_copy)
+					wrapper[LOG_META_WITNESSES] = log_entry_field(seen_copy, LOG_META_WITNESSES)
+					wrapper[LOG_META_LANGUAGE] = log_entry_field(seen_copy, LOG_META_LANGUAGE)
 			output += list(wrapper)
 			if(type != LOG_ATTACK || !event_id)
 				continue
@@ -428,24 +438,24 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		if(already_added[entry])
 			continue
 		var/value = entries[entry]
-		var/list/witnesses = log_entry_field(value, "witnesses")
+		var/list/witnesses = log_entry_field(value, LOG_META_WITNESSES)
 		if(!witnesses)
 			continue
 		// a hit on the subject: hand their range to the receipt, then let the row render. Do not skip it, this is the
 		// only copy carrying the witness roster
-		if(log_entry_field(value, "target") == subject_ckey)
-			var/hit_id = log_entry_field(value, "event")
+		if(log_entry_field(value, LOG_META_TARGET) == subject_ckey)
+			var/hit_id = log_entry_field(value, LOG_META_EVENT)
 			var/list/receipt_wrapper = hit_id ? LAZYACCESS(subject_receipts, hit_id) : null
 			if(receipt_wrapper)
 				receipt_wrapper["dist"] = witness_distance(witnesses[subject_ckey])
 				// the attacker's roster, subject included. Shared not copied, so one hit cannot show two counts
-				receipt_wrapper["witnesses"] = witnesses
+				receipt_wrapper[LOG_META_WITNESSES] = witnesses
 		if(!witnesses[subject_ckey])
 			continue
 		if(!witness_tag(witnesses[subject_ckey]))
 			pov_mark_presence(presence, actor_id, log_entry_field(value, "time"))
 		already_added[entry] = TRUE
-		var/event_id = log_entry_field(value, "event")
+		var/event_id = log_entry_field(value, LOG_META_EVENT)
 		if(event_id)
 			included_events[event_id] = TRUE
 		output += list(pov_timeline_row(entry, value, actor_id))
@@ -457,9 +467,9 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		if(already_added[entry])
 			continue
 		var/value = attack_entries[entry]
-		if(!log_entry_field(value, "receipt"))
+		if(!log_entry_field(value, LOG_META_RECEIPT))
 			continue
-		var/event_id = log_entry_field(value, "event")
+		var/event_id = log_entry_field(value, LOG_META_EVENT)
 		if(event_id && included_events[event_id]) // the subject watched this hit land, that copy carries the roster
 			continue
 		if(!pov_actor_present(presence, actor_id, log_entry_field(value, "time")))
@@ -566,11 +576,10 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 
 	// bruh, ya'll better read this
 	var/caution ="<b>Absence is not evidence.</b> A great deal of harm records nothing at all, including spells and miracles, traps, explosions, falls, strangling, drowning, fire and poison. A missing line does not mean it did not happen.\
-		<br><b>Witness lists</b> are who stood close enough to perceive something, not who did. Blindness, facing away, and language are not accounted for.\
+		<br><b>Witness lists</b> are who stood close enough to perceive something, not who did. Blindness and facing away are not accounted for. Language is, and shows as a grey &#10007;.\
 		<br><b>Off-screen hits</b> show only when their victim had been clearly in [M]'s view around that moment. A victim who never acted nearby leaves no proof they were visible, so their hit stays out.\
-		<br><b>Speech</b> is stored as typed, not as perceived. Listeners may have heard it slurred by injury, starred at a distance, or in a language they do not know.\
+		<br><b>Speech</b> reads as it came out: accents, slurring and all, which also means what a garbled speaker actually typed is not recorded. A line names its language whenever somebody in earshot could not follow it, and a grey &#10007; after a witness marks who. The same &#10007; among the marks before a line means [M] was the one who did not follow it: they heard it said, not what was said. Distance stars are not reproduced.\
 		<br><b>Typing</b> appears only in [M]'s own rows. It records no witnesses, so nobody else's bubble reaches this page even though it was visible in game.\
-		<br><b>Headless dullahan speech</b> is recorded nowhere at all.\
 		<br><b>This timeline is a snapshot</b> taken when it was generated, and a clientless mob's log dies with the mob."
 
 	// both are read once then in the way, so they sit behind toggles. The All Mobs caveat stays visible
@@ -619,28 +628,20 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		var/row_style = actor ? "background:#1e1e1e; border-left:4px solid #5a5a5a;" : "background:#000000; border-left:4px solid #eac0b9;"
 		var/header_colour = actor ? "#7fb2d9" : "#ffc957"
 
-		// own rows carry a borrowed roster. isnull, not a truth test: an empty one is a real answer and
-		// must not fall through to the stored field
-		var/list/witnesses = wrapper["witnesses"]
-		if(isnull(witnesses))
-			witnesses = log_entry_field(stored, "witnesses")
+		var/list/witnesses = pov_row_borrowed(wrapper, stored, LOG_META_WITNESSES)
 		var/subject_witness = subject_ckey ? LAZYACCESS(witnesses, subject_ckey) : null
 		var/glyph = pov_perception_glyph(subject_witness)
 		var/subject_dist = witness_distance(subject_witness)
 		if(isnull(subject_dist)) // a hit they took: their range came from the attacker's roster at build time
 			subject_dist = wrapper["dist"]
-		var/is_receipt = log_entry_field(stored, "receipt")
+		var/is_receipt = log_entry_field(stored, LOG_META_RECEIPT)
 		// an id or a receipt flag is what separates a hit from speech, a death or a typing line
-		var/is_attack = log_entry_field(stored, "event") || is_receipt
-		var/row_target = log_entry_field(stored, "target")
+		var/is_attack = log_entry_field(stored, LOG_META_EVENT) || is_receipt
+		var/row_target = log_entry_field(stored, LOG_META_TARGET)
 		// the other party: whose ckey sits in the prose, and whose highlight should stripe this row
-		var/row_other = row_target || log_entry_field(stored, "attacker")
+		var/row_other = row_target || log_entry_field(stored, LOG_META_ATTACKER)
 
-		var/row_marks = glyph
-		if(!isnull(subject_dist))
-			row_marks = row_marks ? "[row_marks] ([subject_dist])" : "([subject_dist])"
-		if(row_marks)
-			row_marks = "<font color='#8a8a8a'>[row_marks]</font> "
+		var/row_marks = pov_perception_marks(glyph, subject_witness, subject_dist)
 		// after the marks, not before the time, so the time column stays straight
 		if(is_receipt)
 			row_marks += actor ? "<font color='#ff8f6b'>&#8606;</font> " : "<font color='#ff8f6b'>&#8592;</font> "
@@ -659,7 +660,7 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 				place_line = "<div class='[block_class] row plc' style='[row_style] color:#8a8a8a; font-size:12px; padding:1px 5px;'>[place]</div>"
 			line = "<font color='#8a8a8a'>[copytext(raw_key, 13, 21)]</font> [row_marks][message]"
 		if(!isnull(witnesses))
-			line += pov_witness_html(witnesses, "pov[index]")
+			line += pov_witness_html(witnesses, "pov[index]", pov_row_borrowed(wrapper, stored, LOG_META_LANGUAGE))
 
 		var/kind_token = pov_row_kind_token(wrapper, is_attack)
 		var/row_dim = pov_row_fade(glyph, actor, is_attack, subject_ckey, row_target)
@@ -682,16 +683,51 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 	if(have_block)
 		. += "</div>"
 
-/// A row's text: kind prefix, then tint, then receipt italics, then the ckey mask over the lot
+/// A field the subject's own rows borrow from the seen copy beside them, falling back to the entry itself
+/// for everyone else's. isnull, not a truth test: an empty roster is a real answer, nobody saw it, and
+/// must not fall through to a field that is missing for a different reason
+/// Null wrapper is fine: the plain log tabs read entries directly, with nothing to borrow from
+/proc/pov_row_borrowed(list/wrapper, stored, field)
+	var/borrowed = wrapper ? wrapper[field] : null
+	if(isnull(borrowed))
+		borrowed = log_entry_field(stored, field)
+	return borrowed
+
+/// Grey, and all of it subject-relative: how they perceived it, whether they followed it, how far off it was
+/proc/pov_perception_marks(glyph, subject_witness, subject_dist)
+	var/marks = glyph
+	// a line they could not follow must not read as though they had
+	if(!witness_understood(subject_witness))
+		marks = marks ? "[marks] &#10007;" : "&#10007;"
+	if(!isnull(subject_dist))
+		marks = marks ? "[marks] ([subject_dist])" : "([subject_dist])"
+	return marks ? "<font color='#8a8a8a'>[marks]</font> " : ""
+
+/// A row's text: kind prefix, then tint, then receipt italics, then the ckey mask over the lot.
+/// A seen copy is already treated, so only log_talk's quotes go on here
 /proc/pov_row_message(list/wrapper, is_receipt, prose_ckey)
 	var/static/list/kind_prefixes = list("[LOG_WHISPER]" = "(whisper) ", "[LOG_EMOTE]" = "(emote) ")
 	var/stored = wrapper["entry"]
 	// one colour over the lot, prefix included. A tint outranks the stored colour
 	var/color = wrapper["tint"] || log_entry_field(stored, "color")
-	var/message = log_entry_colored("[kind_prefixes["[wrapper["kind"]]"]][log_entry_raw_text(stored)]", color)
+	var/prefix = kind_prefixes["[wrapper["kind"]]"] || ""
+	var/text = log_entry_raw_text(stored)
+	if(pov_row_is_seen_speech(wrapper, stored))
+		text = "\"[text]\""
+	var/message = log_entry_colored("[prefix][text]", color)
 	if(is_receipt)
 		message = "<i>[message]</i>"
 	return pov_mask_prose_ckey(message, prose_ckey)
+
+/// Witnessed rows carry no kind of their own, so the colour is what names them. Harm is excluded first:
+/// log_combat stamps a receipt the same orange, and the colour alone would put a hit taken off screen in
+/// quotation marks
+/proc/pov_row_is_seen_speech(list/wrapper, stored)
+	if(!isnull(wrapper["kind"]))
+		return FALSE
+	if(log_entry_field(stored, LOG_META_RECEIPT) || log_entry_field(stored, LOG_META_EVENT))
+		return FALSE
+	return log_entry_field(stored, "color") == SEEN_COLOR_SAY
 
 /// Which kind filter may hide a row. Harm is claimed first, so hiding chatter can never hide a hit.
 /// Deaths, typing and steal lines answer neither and are hidden by no kind filter at all
@@ -705,7 +741,7 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		return ""
 	// witnessed rows carry no kind of their own, so log_seen's colours are what tell speech from harm
 	var/stored_color = log_entry_field(wrapper["entry"], "color")
-	return (stored_color == "orange" || stored_color == "grey") ? " cht" : ""
+	return (stored_color == SEEN_COLOR_SAY || stored_color == SEEN_COLOR_EMOTE) ? " cht" : ""
 
 /// Two fade tiers: barely perceived, and someone else's fight.
 /// row_target, not the attacker: a receipt has no target, and a hit taken off screen is exactly the faded case
@@ -1031,12 +1067,16 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 	)
 	return arrows[code]
 
-/// The witness list for a seen row, count up front and names behind a click. element_id must be unique on the page.
-/proc/pov_witness_html(list/witnesses, element_id)
-	if(!length(witnesses))
-		return " (<font color='[SEEN_LOG_WITNESS_COLOR]'>Witnesses: nobody</font>)"
+/// The witness list for a seen row, count up front and names behind a click. element_id must be unique on
+/// the page. The language is named up front only when somebody was left out, and waits inside the list
+/// otherwise: there is no default one to leave unmentioned
+/proc/pov_witness_html(list/witnesses, element_id, language = null)
+	var/language_note = language ? " in [log_normalize_html(language)]" : ""
+	if(!length(witnesses)) // nobody to expand, so it says its piece here or nowhere
+		return " (<font color='[SEEN_LOG_WITNESS_COLOR]'>Witnesses[language_note]: nobody</font>)"
 	var/static/list/marks = list("^" = "&#8648;", "v" = "&#8650;", "~" = "~")
 	var/list/shown = list()
+	var/understood = 0
 	for(var/witness_key in witnesses)
 		var/witness_entry = witnesses[witness_key]
 		var/shown_name = pov_name_with_ckey_spans(witness_display_name(witness_entry))
@@ -1045,10 +1085,18 @@ GLOBAL_LIST_EMPTY(pov_player_keys)
 		var/mark = tag ? (marks[tag] || (code ? pov_numpad_arrow(num2text(10 - code)) : null)) : null
 		if(mark)
 			shown_name += " <font color='#8a8a8a'>[mark]</font>"
-
+		if(witness_understood(witness_entry))
+			understood++
+		else // in earshot without the language: heard something said, not what
+			shown_name += " <font color='#8a8a8a'>&#10007;</font>"
 		shown += shown_name
-	var/toggle = "<span style='color:#7fb2d9; text-decoration:underline;' onclick=\"var e=document.getElementById('[element_id]');e.style.display=(e.style.display=='none')?'inline':'none';\">(+[length(shown)])</span>"
-	return " (<font color='[SEEN_LOG_WITNESS_COLOR]'>Witnesses: [toggle]<span id='[element_id]' style='display:none'> [shown.Join(", ")]</span></font>)"
+	// read off the tuples, not stored, so the rule can change without the log disagreeing
+	var/lost_someone = understood < length(shown)
+	var/count = lost_someone ? "(+[length(shown)], [understood] understood)" : "(+[length(shown)])"
+	var/toggle = "<span style='color:#7fb2d9; text-decoration:underline;' onclick=\"var e=document.getElementById('[element_id]');e.style.display=(e.style.display=='none')?'inline':'none';\">[count]</span>"
+	// the header names it only when somebody was left out, so this is where a private language surfaces
+	var/expanded = (language && !lost_someone) ? " ([log_normalize_html(language)]) [shown.Join(", ")]" : " [shown.Join(", ")]"
+	return " (<font color='[SEEN_LOG_WITNESS_COLOR]'>Witnesses[lost_someone ? language_note : ""]: [toggle]<span id='[element_id]' style='display:none'>[expanded]</span></font>)"
 
 /// One row of log tabs. The mob row omits OOC, which only ever exists on a client record
 /proc/individual_logging_panel_row(mob/M, log_src, source, ntype, include_ooc)

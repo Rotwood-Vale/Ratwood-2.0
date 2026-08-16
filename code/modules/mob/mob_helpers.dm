@@ -958,9 +958,11 @@
 		ClickOn(T)
 
 /// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true.
-/// Values store as dicts, fields below, so readers match instead of parsing prose. The parent writes disk logs from
-/// the raw message argument, so none of the metadata reaches them.
-/mob/log_message(message, message_type, color=null, log_globally = TRUE, event = null, list/witnesses = null, target = null, attacker = null, receipt = FALSE)
+/// Values store as dicts: "msg", "time", "color", then whatever metadata the writer put in meta, copied
+/// key for key so readers match fields instead of parsing prose. Adding a field is a writer-side key and
+/// nothing else; no signature anywhere changes. The parent writes disk logs from the raw message argument,
+/// so none of the metadata reaches them.
+/mob/log_message(message, message_type, color=null, log_globally = TRUE, list/meta = null)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
@@ -983,16 +985,11 @@
 	pov_remember_key(ckey, key)
 	if(color)
 		entry_value["color"] = color
-	if(event)
-		entry_value["event"] = event
-	if(witnesses)
-		entry_value["witnesses"] = witnesses
-	if(target)
-		entry_value["target"] = target
-	if(attacker)
-		entry_value["attacker"] = attacker
-	if(receipt)
-		entry_value["receipt"] = TRUE
+	// isnull, not truthy: an absent party is a null ckey the writer may still name the key of, while an
+	// empty witness roster is a real answer and must survive the copy
+	for(var/field in meta)
+		if(!isnull(meta[field]))
+			entry_value[field] = meta[field]
 
 	//Removed sorting by message type, now sorts by timestamp regardless of message type
 	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = entry_value)

@@ -588,7 +588,9 @@
 			continue
 		listening |= M
 		the_dead[M] = TRUE
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	// the owner, not the head: log_seen keeps no entry for a non-mob, so a headless dullahan spoke with
+	// no roster at all. Reached via my_head.say() in on_say_postprocess, not by any direct call here
+	log_seen(original_owner, null, listening, message, SEEN_LOG_SAY, language = message_language)
 
 	var/eavesdropping
 	var/eavesrendered

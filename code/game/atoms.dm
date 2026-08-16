@@ -989,7 +989,7 @@
 	return SEND_SIGNAL(src, COMSIG_ATOM_ANALYSER_ACT, user, I)
 
 /// Generic logging helper. The metadata params exist so atom typed callers compile; only /mob stores them.
-/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE, event=null, list/witnesses=null, target=null, attacker=null, receipt=FALSE)
+/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE, list/meta=null)
 	if(!log_globally)
 		return
 
@@ -1088,14 +1088,14 @@
 	var/user_ckey = ismob(user) ? user_mob.ckey : null
 	var/target_ckey = ismob(target) ? target_mob.ckey : null
 	// null user: projectiles, falls, the environment. The target's line below is still worth recording
-	user?.log_message(message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : "red", event = event_id, target = target_ckey)
+	user?.log_message(message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : "red", meta = list(LOG_META_EVENT = event_id, LOG_META_TARGET = target_ckey))
 
 	if(log_seen && user)
 		log_seen_viewers(user, target, message, SEEN_LOG_ATTACK, event = event_id)
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target?.log_message(reverse_message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : "orange", log_globally=FALSE, event = event_id, attacker = user_ckey, receipt = TRUE)
+		target?.log_message(reverse_message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : LOG_COLOR_RECEIPT, log_globally=FALSE, meta = list(LOG_META_EVENT = event_id, LOG_META_ATTACKER = user_ckey, LOG_META_RECEIPT = TRUE))
 
 /// Numpad direction from witness to event: 8 north, 6 east, 3 southeast. One char, appended to a name like ^ v ~
 /proc/seen_direction_tag(atom/witness, atom/happening)
@@ -1105,8 +1105,12 @@
 	)
 	return tags["[get_dir(witness, happening)]"] || "~"
 
-/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type, event = null)
-	var/static/list/seen_colors = list("[SEEN_LOG_SAY]" = "orange", "[SEEN_LOG_EMOTE]" = "grey", "[SEEN_LOG_ATTACK]" = "red")
+/// Speech arrives TREATED, exactly as listeners read it
+/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type, event = null, language = null)
+	// only /mob keeps one of these; every other atom discards it unread, so do not build the roster at all
+	if(!ismob(user))
+		return
+	var/static/list/seen_colors = list("[SEEN_LOG_SAY]" = SEEN_COLOR_SAY, "[SEEN_LOG_EMOTE]" = SEEN_COLOR_EMOTE, "[SEEN_LOG_ATTACK]" = SEEN_COLOR_ATTACK)
 	var/color = seen_colors["[seen_type]"]
 	var/mob/target_mob = target
 	var/target_ckey = ismob(target) ? target_mob.ckey : null
@@ -1119,8 +1123,25 @@
 		if(!viewer.client) // clientless mobs are never witnesses
 			continue
 		var/witness_dist = (viewer.z == user.z) ? get_dist(user, viewer) : -1
-		witness_names[viewer.ckey || REF(viewer)] = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
-	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, event = event, witnesses = witness_names, target = target_ckey)
+		var/list/witness_entry = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
+		// the roster is spatial: who stood in earshot, not who followed it. Ask everyone, no language is
+		// universal and a flaw strips even the common one. has_language, not check_language_hear: that one
+		// stresses paranoids, so its talkstone half is inlined instead
+		if(language && !viewer.has_language(language))
+			var/talkstone = FALSE
+			if(ishuman(viewer))
+				var/mob/living/carbon/human/human_viewer = viewer
+				talkstone = istype(human_viewer.wear_neck, /obj/item/clothing/neck/roguetown/talkstone)
+			if(!talkstone)
+				witness_entry += TRUE // WITNESS_NOLANG
+		witness_names[viewer.ckey || REF(viewer)] = witness_entry
+	// stored unjudged, no language is the default one. The name, not the path, so it still reads
+	// after the language datum is gone
+	var/language_name = null
+	if(language)
+		var/datum/language/lang_path = language
+		language_name = initial(lang_path.name)
+	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, meta = list(LOG_META_EVENT = event, LOG_META_WITNESSES = witness_names, LOG_META_TARGET = target_ckey, LOG_META_LANGUAGE = language_name))
 
 /proc/log_seen_viewers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE, event = null)
 	var/list/viewers = get_hearers_in_view(vision_distance, user)
