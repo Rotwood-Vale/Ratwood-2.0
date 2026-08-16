@@ -906,6 +906,7 @@
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods/northwest)
 "ajw" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -12746,6 +12747,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
 "cHb" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flagpole,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -13299,6 +13301,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town)
 "cML" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield)
@@ -14904,6 +14907,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach)
 "dgL" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)

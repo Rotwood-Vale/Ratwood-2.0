@@ -124,11 +124,16 @@ SUBSYSTEM_DEF(questpool)
 	return quest_type == QUEST_COURIER || quest_type == QUEST_RETRIEVAL
 
 /// Returns the region furthest below its kill target by fill ratio, or null if all are at target.
-/datum/controller/subsystem/questpool/proc/pick_neediest_kill_region()
+/// skip_regions: region names generation already failed for this cycle - without this, a region
+/// with a target but no available landmark stays at ratio 0, wins every pick, and burns the
+/// whole regen budget on guaranteed failures while every other region starves.
+/datum/controller/subsystem/questpool/proc/pick_neediest_kill_region(list/skip_regions)
 	var/pop = GLOB.player_list.len
 	var/lowest_ratio = 1
 	var/datum/threat_region/chosen
 	for(var/datum/threat_region/TR as anything in SSregionthreat.threat_regions)
+		if(skip_regions && skip_regions[TR.region_name])
+			continue
 		var/target = TR.get_kill_target(pop)
 		if(!target)
 			continue
@@ -150,14 +155,17 @@ SUBSYSTEM_DEF(questpool)
 	return TR.allows_quest_type(QUEST_COURIER) || TR.allows_quest_type(QUEST_RETRIEVAL)
 
 /datum/controller/subsystem/questpool/proc/regen_kill_targets(count)
+	var/list/failed_regions = list()
 	for(var/i in 1 to count)
-		var/datum/threat_region/TR = pick_neediest_kill_region()
+		var/datum/threat_region/TR = pick_neediest_kill_region(failed_regions)
 		if(!TR)
 			return
 		var/type = pick_kill_type_for(TR)
 		if(!type)
+			failed_regions[TR.region_name] = TRUE
 			continue
-		generate_one(type, TR)
+		if(!generate_one(type, TR))
+			failed_regions[TR.region_name] = TRUE
 
 /datum/controller/subsystem/questpool/proc/regen_fetch_targets()
 	for(var/datum/threat_region/TR as anything in SSregionthreat.threat_regions)
@@ -171,7 +179,10 @@ SUBSYSTEM_DEF(questpool)
 			var/type = pick_evergreen_type_for(TR)
 			if(!type)
 				break
-			generate_one(type, TR)
+			// A region whose landmarks are all taken (or absent) fails identically all
+			// cycle - stop burning attempts on it.
+			if(!generate_one(type, TR))
+				break
 
 /// Weighted pick of a kill quest type the given region allows.
 /datum/controller/subsystem/questpool/proc/pick_kill_type_for(datum/threat_region/TR)
