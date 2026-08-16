@@ -20,7 +20,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
-	job_traits = list(TRAIT_NOBLE)
+	job_traits = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER)
 	job_subclasses = list(
 		/datum/advclass/hand/blademaster,
 		/datum/advclass/hand/spymaster,
@@ -74,6 +74,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/hand/blademaster/pre_equip(mob/living/carbon/human/H)
@@ -132,6 +133,7 @@
 		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER, // not like they're gonna break into the vault.
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 //Spymaster start. More similar to the rogue adventurer - loses heavy armor and sword skills for more sneaky stuff.
@@ -195,6 +197,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 //Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.

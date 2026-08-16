@@ -21,7 +21,8 @@
 							/obj/item/natural/rock = 2,
 							/obj/item/grown/log/tree/stick = 3,
 							/obj/structure/closet/dirthole/closed/loot=3,
-							/obj/structure/flora/roguetree/burnt = 3)
+							/obj/structure/flora/roguetree/burnt = 3,
+							/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5)
 	allowed_areas = list(/area/rogue/outdoors/beach/forest)
 
@@ -33,7 +34,8 @@
 							/obj/structure/flora/roguegrass/maneater = 4,
 							/obj/item/natural/stone = 8,
 							/obj/item/natural/rock = 2,
-							/obj/item/grown/log/tree/stick = 10)
+							/obj/item/grown/log/tree/stick = 10,
+							/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5)
 	allowed_areas = list(/area/rogue/outdoors/beach/forest)
 
@@ -52,5 +54,5 @@
 /datum/mapGeneratorModule/beachsand
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
 	allowed_turfs = list(/turf/open/floor/rogue/AzureSand)
-	spawnableAtoms = list(/obj/item/natural/stone = 15, /obj/item/grown/log/tree/stick = 20)
+	spawnableAtoms = list(/obj/item/natural/stone = 15, /obj/item/grown/log/tree/stick = 20, /obj/effect/landmark/hunting_spawner = 2)
 	allowed_areas = list(/area/rogue/outdoors/beach)

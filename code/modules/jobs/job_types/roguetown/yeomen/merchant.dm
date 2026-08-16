@@ -66,6 +66,8 @@
 		/obj/item/quiver/bullet/lead,
 		/obj/item/powderflask,
 		/obj/item/mini_flagpole/merchant = 1,
+		// For selling
+		/obj/item/hunting_map/white_stag = 1,
 	)
 	neck = /obj/item/clothing/neck/roguetown/horus
 	head = /obj/item/clothing/head/roguetown/chaperon/brown

@@ -257,6 +257,8 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+				ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 				r_hand = /obj/item/rogueweapon/spear/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
@@ -398,7 +400,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/mhunter
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_PURITAN_ADVENTURER, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_PURITAN_ADVENTURER, TRAIT_ALCHEMY_EXPERT, TRAIT_EXPERT_HUNTER)
 	maximum_possible_slots = 5 //Not a Wretch or Towner, but still conditionally lethal for an Adventurer - especially with steel coverage and round-start access to silver weapons. Adjust the amount of available slots as needed.
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -414,6 +416,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 		)
 	extra_context = "This subclass can choose a silver weapon to spawn with, and has three disciplines to pick from: each one provides a different level of armor training, a unique trait, and a minor one-point boon to certain stats. 'Old' characters are more proficient in this subclass."
 

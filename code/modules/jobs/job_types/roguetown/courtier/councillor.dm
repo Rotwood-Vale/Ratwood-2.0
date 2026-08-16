@@ -23,7 +23,8 @@
 	social_rank = SOCIAL_RANK_NOBLE
 	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES_SHITTY)
 	job_subclasses = list(
-		/datum/advclass/councillor
+		/datum/advclass/councillor,
+		/datum/advclass/councillor/huntmaster
 	)
 
 /datum/advclass/councillor
@@ -49,6 +50,34 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 	)
 
+/datum/advclass/councillor/huntmaster
+	name = "Huntmaster"
+	tutorial = "You organize hunts for the crown. You know the woods, the quarry, and how to keep a hunting party alive."
+	outfit = /datum/outfit/job/roguetown/councillor/huntmaster
+	category_tags = list(CTAG_COUNCILLOR)
+	subclass_stats = list(
+		STATKEY_PER = 3,
+		STATKEY_INT = 1,
+		STATKEY_SPD = 1,
+		STATKEY_CON = -1
+	)
+	subclass_skills = list(
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/hunting = SKILL_LEVEL_MASTER,
+	)
+	traits_applied = list(TRAIT_MASTERFUL_HUNTER, TRAIT_SURVIVAL_EXPERT)
+
 /datum/outfit/job/roguetown/councillor
 	job_bitflag = BITFLAG_ROYALTY
 
@@ -73,3 +102,26 @@
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		cloak = null
+
+/datum/outfit/job/roguetown/councillor/huntmaster/pre_equip(mob/living/carbon/human/H)
+	..()
+	neck = /obj/item/storage/belt/rogue/pouch/coins/mid
+	head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/light
+	pants = /obj/item/clothing/under/roguetown/trou/beltpants
+	shoes = /obj/item/clothing/shoes/roguetown/boots
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backr = /obj/item/storage/backpack/rogue/satchel
+	belt = /obj/item/storage/belt/rogue/leather
+	beltl = /obj/item/roguekey/manor
+	beltr = /obj/item/quiver/arrows
+	cloak = /obj/item/clothing/cloak/half/red
+	backpack_contents = list(
+		/obj/item/hunting_map/white_stag = 1,
+		/obj/item/hunting_map/boars = 1,
+		/obj/item/storage/keyring = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
+	)
+	if(SSmapping.config.map_name == "Desert Town")
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		head = /obj/item/clothing/head/roguetown/tagelmust

@@ -105,7 +105,7 @@
 
 /datum/skill/misc/tracking
 	name = "Tracking"
-	desc = "Increases your chance to find tracks. Increases the information you gain from them, alongside your perception stats. \n \
+	desc = "Increases your chance to find humanoid tracks. Increases the information you gain from them, alongside your perception stats. \n \
 	At Expert level or above, you can mark the target of a track to find them. \n \
 	At Master level or above, you can find invisible creatures. \n \ You can track by right-clicking on your eye icon."
 	dreams = list(
@@ -114,3 +114,11 @@
 		"... the blood may have gotten lost in the rain, but the wounded man's boots are as fresh as jackberries, perfectly marked in the sand. You raise your bow, nock an arrow, and carefully trace them towards a cave..."
 	)
 	expert_name = "Tracker"
+
+/datum/skill/misc/hunting
+	name = "Hunting"
+	desc = "Your skill at finding animal trails and following them to their prey."
+	max_untraited_level = SKILL_LEVEL_APPRENTICE
+	expert_name = "Tracker"
+	trait_uncap = list(TRAIT_MASTERFUL_HUNTER = SKILL_LEVEL_LEGENDARY,
+		TRAIT_EXPERT_HUNTER = SKILL_LEVEL_EXPERT)

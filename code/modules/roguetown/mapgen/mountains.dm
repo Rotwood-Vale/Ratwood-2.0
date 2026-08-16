@@ -12,5 +12,5 @@
 /datum/mapGeneratorModule/mtn
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
 	allowed_turfs = list(/turf/open/floor/rogue/dirt/road)
-	spawnableAtoms = list(/obj/structure/roguerock=5,/obj/item/natural/stone = 18,/obj/item/natural/rock = 10)
+	spawnableAtoms = list(/obj/structure/roguerock=5,/obj/item/natural/stone = 18,/obj/item/natural/rock = 10,/obj/effect/landmark/hunting_spawner = 2)
 	allowed_areas = list(/area/rogue/outdoors/mountains)

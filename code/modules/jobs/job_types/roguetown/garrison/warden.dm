@@ -25,7 +25,7 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_blackoak.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
 	job_subclasses = list(
 		/datum/advclass/warden/ranger,
 		/datum/advclass/warden/forester
@@ -71,6 +71,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/warden/ranger/pre_equip(mob/living/carbon/human/H)
@@ -88,7 +89,8 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/signal_horn = 1
+		/obj/item/signal_horn = 1,
+		/obj/item/hunting_map/boars = 1,
 		)
 	H.verbs |= /mob/proc/haltyell
 	H.set_blindness(0)
@@ -149,6 +151,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/warden/forester/pre_equip(mob/living/carbon/human/H)
