@@ -2,6 +2,7 @@
 #define TAB_BANK 2
 #define TAB_STOCK 3
 #define TAB_IMPORT 4
+#define TAB_DEBT 5
 #define TAB_LOG 6
 #define TAB_STATISTICS 7
 #define TAB_PAYDAY 8
@@ -162,6 +163,58 @@
 		if(!SStreasury.do_export(D))
 			say("Insufficient stock.")
 			return
+	if(href_list["clearloandebtor"])
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		var/list/debtors = list()
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(HAS_TRAIT(H, TRAIT_DEBTOR))
+				debtors["[H.real_name]"] = H
+		if(!length(debtors))
+			say("No debtors currently marked.")
+			return
+		var/pick = input(usr, "Clear defaulter mark from which debtor?", src) as null|anything in debtors
+		if(!pick)
+			return
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		var/mob/living/carbon/human/target = debtors[pick]
+		if(!target || !HAS_TRAIT(target, TRAIT_DEBTOR))
+			return
+		REMOVE_TRAIT(target, TRAIT_DEBTOR, TRAIT_GENERIC)
+		var/datum/loan/forgiven = SStreasury.get_loan_for(target)
+		var/loan_amt = forgiven ? forgiven.get_remaining_due() : 0
+		if(forgiven)
+			SStreasury.loans -= forgiven
+			qdel(forgiven)
+		SStreasury.clear_poll_tax_debt(target)
+		say("[target.real_name]'s debtor mark has been cleared; all Crown debts forgiven.")
+		log_game("DEBT FORGIVEN: [key_name(usr)] cleared debtor mark on [key_name(target)][loan_amt ? " (wrote off [loan_amt]m loan)" : ""]")
+		to_chat(target, span_notice("The Stewardry has cleared the defaulter mark from my name. My debts to the Crown are forgiven."))
+	if(href_list["clearpolltax"])
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		var/list/in_arrears = list()
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(SStreasury.poll_tax_owed[H] || SStreasury.poll_tax_debt_days[H] || HAS_TRAIT(H, TRAIT_ARREARS))
+				in_arrears["[H.real_name]"] = H
+		if(!length(in_arrears))
+			say("No poll tax arrears on the ledger.")
+			return
+		var/pick = input(usr, "Clear poll tax arrears for which subject?", src) as null|anything in in_arrears
+		if(!pick)
+			return
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		var/mob/living/carbon/human/target = in_arrears[pick]
+		if(!target)
+			return
+		var/was_owed = SStreasury.poll_tax_owed[target] || 0
+		var/was_overdue = SStreasury.poll_tax_debt_days[target] || 0
+		SStreasury.clear_poll_tax_debt(target)
+		say("[target.real_name]'s poll tax arrears have been cleared.")
+		log_game("POLL TAX CLEARED: [key_name(usr)] cleared [was_owed]m poll tax arrears on [key_name(target)] ([was_overdue] day\s overdue)")
+		to_chat(target, span_notice("The Stewardry has cleared my poll tax arrears. The Crown's ledger on my head is wiped clean."))
 	// Step 15: stockpile price/limit/withdraw management moved to the StewardTrade TGUI
 	// (setprice/setlimit/togglewithdraw Topic handlers removed). Ratwood keeps the passive
 	// import rate handler; that system is not covered by the TGUI.
@@ -625,6 +678,7 @@
 			contents += "<a href='?src=\ref[src];trade_tgui=1'>\[Trade & Stockpile\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[Import\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_DEBT]'>\[Debts &amp; Arrears\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
@@ -693,6 +747,52 @@
 					var/blockade_tag_full = A.is_blockaded() ? " <font color='#c44'>(BLOCKADED - 2x COST)</font>" : ""
 					contents += "<b>[A.name][blockade_tag_full]</b> - <i>[A.desc]</i> "
 					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.import_amt] ([A.get_import_price()])\]</a><BR>"
+		if(TAB_DEBT)
+			// AP parity (their TAB_DEBT), with one fix: AP built the loan-line string but
+			// never appended it and counted every loan as a Crown loan - here the list
+			// renders and the count matches it.
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
+			contents += "<center>Debts &amp; Arrears<BR>"
+			contents += "--------------<BR>"
+			contents += "Treasury: [SStreasury.discretionary_fund.balance]m</center><BR>"
+			var/crown_loans = 0
+			var/crown_loan_content = ""
+			for(var/datum/loan/L in SStreasury.loans)
+				if(L.source_fund != SStreasury.discretionary_fund)
+					continue
+				crown_loans++
+				var/loan_color = L.defaulted ? "#d9534f" : "#e07b39"
+				crown_loan_content += "<font color='[loan_color]'>[L.format()]</font><BR>"
+			if(crown_loans)
+				contents += "<b>Active Crown Loans ([crown_loans]):</b><BR>"
+				contents += crown_loan_content
+				contents += "<BR>"
+			else
+				contents += "<i>No active loans.</i><BR><BR>"
+			var/list/debt_rows = list()
+			for(var/mob/living/carbon/human/A in SStreasury.bank_accounts)
+				var/poll_owed = SStreasury.poll_tax_owed[A] || 0
+				if(poll_owed > 0 || HAS_TRAIT(A, TRAIT_DEBTOR))
+					debt_rows += A
+			if(length(debt_rows))
+				contents += "<b>Poll Tax Debtors / Arrears ([length(debt_rows)]):</b><BR>"
+				for(var/mob/living/carbon/human/A in debt_rows)
+					var/poll_owed = SStreasury.poll_tax_owed[A] || 0
+					var/overdue_days = SStreasury.poll_tax_debt_days[A] || 0
+					var/balance = SStreasury.get_balance(A)
+					if(HAS_TRAIT(A, TRAIT_DEBTOR_CROWN))
+						var/owed_str = poll_owed > 0 ? ", owes [poll_owed]m" : ""
+						contents += "<font color='#d9534f'><b>[A.real_name]</b> \[DEBTOR[owed_str]\]</font> - balance: [balance]m"
+					else
+						contents += "<font color='#e07b39'><b>[A.real_name]</b> \[ARREARS: [poll_owed]m, [overdue_days] day[overdue_days == 1 ? "" : "s"]\]</font> - balance: [balance]m"
+					contents += "<BR>"
+				contents += "<BR>"
+			else
+				contents += "<i>No poll tax arrears.</i><BR><BR>"
+			contents += "<a href='?src=\ref[src];clearloandebtor=1'>\[Clear Defaulter Mark\]</a><BR>"
+			contents += "<font color='gray'><i>(Forgives outstanding loans entirely and lifts the defaulter mark.)</i></font><BR>"
+			contents += "<a href='?src=\ref[src];clearpolltax=1'>\[Clear Poll Tax Obligation\]</a><BR>"
+			contents += "<font color='gray'><i>(Wipes a subject's poll tax arrears.)</i></font><BR>"
 		if(TAB_LOG)
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Log<BR>"
@@ -777,6 +877,7 @@
 #undef TAB_BANK
 #undef TAB_STOCK
 #undef TAB_IMPORT
+#undef TAB_DEBT
 #undef TAB_LOG
 #undef TAB_STATISTICS
 #undef TAB_PAYDAY

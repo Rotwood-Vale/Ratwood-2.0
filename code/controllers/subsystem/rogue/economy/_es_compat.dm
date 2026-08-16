@@ -55,10 +55,6 @@ GLOBAL_LIST_INIT(crown_authority_roles, list(
 
 // tick_burgher_pledge() is real as of item 6 (fund_api.dm) - gated on the Golden Bull.
 
-/// Step 9/10: steward report — filled in when noticeboard/steward tgui is ported.
-/datum/controller/subsystem/economy/proc/print_steward_report(list/diff)
-	return
-
 // ---- Merchant catalog stub (Step 9a follow-up: cultural stock / goldface catalog step) ----
 // AP's merchant_trade.dm Initialize() does subtypesof(/datum/merchant_catalog) and calls
 // init_catalog_stock()/restock_catalogs() (both real procs in AP's
