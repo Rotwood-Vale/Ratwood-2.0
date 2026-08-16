@@ -116,7 +116,7 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/barbute/great
 	name = "great barbute"
@@ -242,6 +242,29 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+	name = "golden helmet"
+	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
+	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
+	icon_state = "goldbarbute"
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1 //Prevents resmelting to easily recreate.
+	grid_height = 96 //Prevents 'armorstacking'. That, and it's like.. carrying a golden watermelon.
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
+	name = "royal golden helmet"
+	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
+	with a besilked arming cap. The dorpeled crown atop its brow invokes authority, be it misbegotten or endowed."
+	icon_state = "goldbarbute_crown"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	unenchantable = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	name = "knight's helmet"
@@ -972,6 +995,65 @@
 	. = ..()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail
+	name = "hounskull with aventail"
+	desc = "A steel hounskull bascinet with a thick maille aventail secured to the inside. Just as a froggemund befits a knight in the tournaments, an \
+	aventailed bascinet befits a knight on the battlefield; unmatched in coverage, durability, and weight."
+	icon_state = "visaventail"
+	item_state = "visaventail"
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD|NECK
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
+	block2add = FOV_RIGHT|FOV_LEFT
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY //Froggemunds, galore!
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY //For the worthy - or in this case, the knightly.
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR|MOUTH|NECK), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist + GLOB.pridelist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+	if(istype(W, /obj/item/natural/cloth) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		if(choicealt in GLOB.pridelist)
+			detail_tag = "_detailp"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron
 	name = "iron bucket helm"
 	desc = "A helmet that covers your entire head, offering good protection while making breathing a difficult ordeal."
@@ -999,3 +1081,60 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/captain/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic
+	name = "Symbol of Avarice"
+	desc = "Monster head resembling a treasure chest. It is said Psydonia's mimics bear this visage as a symbol of shame for the sin of avarice. Every age, it seems, is tainted by the greed of men. Rubbish, to one such as I, devoid of all worldly wants!"
+	icon = 'icons/roguetown/clothing/special/mimichead.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/mimichead.dmi'
+	icon_state = "mimichead"
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)//druid helmet stats, seems fitting cause it's magic wood
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+	blocksound = list('sound/vo/mobs/mimic/mimic_attack1.ogg','sound/vo/mobs/mimic/mimic_attack2.ogg','sound/vo/mobs/mimic/mimic_attack3.ogg')
+	break_sound = 'sound/vo/mobs/mimic/mimic_death.ogg'
+	anvilrepair = /datum/skill/craft/carpentry // is magic mimic chest wood or something
+	smeltresult = /obj/item/rogueore/coal
+	var/active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot != SLOT_HEAD)
+		return
+	active_item = TRUE
+	to_chat(user, span_hypnophrase("Dead mimic flesh envelops your head slippery, cold, and wet. The beast's hunger washes over you, you feel starved and emaciated, as if something has sapped your CONSTITUTION; however, in it's place is left a gnawning, greedy avarice coupled with FORTUNE enough to sate it."))
+	user.change_stat(STATKEY_LCK, 5)
+	user.change_stat(STATKEY_CON, -5)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic/dropped(mob/living/user)
+	. = ..()
+	if(!active_item)
+		return
+	to_chat(user, span_hypnophrase("The vile corpse pulls free with a squelch. Your head is left wet, glossed slick with the creatures mucus... You feel your vigor return!"))
+	user.change_stat(STATKEY_LCK, -5)
+	user.change_stat(STATKEY_CON, 5)
+	active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar
+	name = "jar"
+	desc = "Jar that fits cleanly over the head when upturned. A small hole has been knapped in the side to allow vision, if poorly."
+	icon = 'icons/roguetown/clothing/special/jar.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/jar.dmi'
+	icon_state = "jar"
+	armor = list("blunt" = 10, "slash" = 80, "stab" = 100, "piercing" = 100, "fire" = 100, "acid" = 0)//UNBREAKABLE ALEXANDER
+	blocksound = list('sound/combat/hits/onstone/wallhit.ogg')
+	break_sound = 'sound/foley/glassbreak.ogg'
+	max_integrity = ARMOR_INT_HELMET_CLOTH//actually very breakable
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+	anvilrepair = /datum/skill/craft/ceramics
+	smeltresult = /obj/item/natural/brick//why not
+	block2add = FOV_RIGHT|FOV_LEFT//I CANT SEE SHIT
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_THROWINGARM, REF(src))
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_THROWINGARM, REF(src))

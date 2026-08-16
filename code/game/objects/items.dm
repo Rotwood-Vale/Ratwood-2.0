@@ -203,6 +203,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	///using spit emote spits the item out of our mouth and falls out after some time
 	var/spitoutmouth = TRUE
 
+	/// Makes this item impossible to enchant, for temporary item
+	var/unenchantable = FALSE
+
 	///The appropriate skill to repair this obj/item. If null, our object cannot be placed on an anvil to be repaired
 	var/anvilrepair
 	//this should be true or false
@@ -220,7 +223,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/examine_effects = list()
 
 	///played when an item that is equipped blocks a hit
-	var/list/blocksound
+	var/blocksound
 
 	var/thrown_damage_flag = "blunt"
 
@@ -1753,6 +1756,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
+	lose_polish()//just like in 89'
 	..()
 
 	update_damaged_state()
@@ -1940,4 +1944,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(desc != initial(desc))
 		return TRUE
 	return FALSE
-
