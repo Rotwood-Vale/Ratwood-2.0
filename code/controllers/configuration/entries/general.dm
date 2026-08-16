@@ -226,7 +226,8 @@
 	config_entry_value = ""
 
 /datum/config_entry/string/githuburl
-	config_entry_value = ""
+	default = "https://github.com/Rotwood-Vale/Ratwood-2.0"
+	config_entry_value = "https://github.com/Rotwood-Vale/Ratwood-2.0"
 
 /datum/config_entry/string/roundstatsurl
 

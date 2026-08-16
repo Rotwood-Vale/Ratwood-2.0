@@ -1,0 +1,15 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - rscadd: "Added a Signal Flare Gun"
+  - rscadd: "Signal flare colors mean something different each round; the Garrison and Keep nobility can read the full codes, while every townsfolk recognizes the orange \"take shelter\" signal."
+  - rscadd: "Added an alarm lever that sounds an alarm and calls the Garrison to its location over the SCOM line. This is not yet in the map."
+  - rscadd: "Wardens, the Master Warden, Azebs, and Azeb Aghas now start with a loaded signal flare gun and a spare canister."
+  - sound: "Added an alarm sound."
+  - image: "Added signal flare gun and canister sprites."
+  - bugfix: "Tidied the service bell's role notifications and let it recognize the Warden Fort."
+  - bugfix: "Fixed the signal horn's dead/brain check."
+  - code_imp: "Minor cleanup."
+  - rscadd: "Signal flares can be fired as illumination rounds"
+  - rscadd: "The flare gun has a dial you can set in advance so it fires without asking which signal."
+  - rscadd: "Signal flare canisters can now be crafted at the artificer table."
