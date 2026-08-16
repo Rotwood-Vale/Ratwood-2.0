@@ -163,6 +163,19 @@
 		if(!SStreasury.do_export(D))
 			say("Insufficient stock.")
 			return
+	if(href_list["setpurchasefloor"])
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		var/current_floor = SStreasury.stockpile_purchase_floor
+		var/new_floor = input(usr, "Set the Crown's Purchase Floor. Below this balance the stockpile refuses purchases - goods stay with the seller. (0-10000m)", src, current_floor) as null|num
+		if(isnull(new_floor))
+			return
+		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+			return
+		new_floor = CLAMP(round(new_floor), 0, 10000)
+		SStreasury.stockpile_purchase_floor = new_floor
+		say("Crown's Purchase Floor set to [new_floor]m.")
+		log_game("PURCHASE FLOOR: [key_name(usr)] set stockpile purchase floor to [new_floor]m")
 	if(href_list["clearloandebtor"])
 		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
 			return
@@ -684,6 +697,7 @@
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[Passive Imports\]</a><BR>"
 			contents += "<a href='?src=\ref[src];printresidency=1'>\[Print Letter of Citizenry\]</a><BR>"
+			contents += "<a href='?src=\ref[src];setpurchasefloor=1'>\[Purchase Floor: [SStreasury.stockpile_purchase_floor]m\]</a><BR>"
 			contents += "</center>"
 		if(TAB_BANK)
 			var/total_deposit = 0

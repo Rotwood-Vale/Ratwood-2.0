@@ -244,6 +244,34 @@
 			else
 				. += span_notice("A disgraced noble.")
 
+		// Loan default brands (AP parity): each creditor faction reads its own debtors;
+		// Crown debtors are known to the realm's authority roles. Ratwood has no
+		// retinue_positions list, so the Crown gate is garrison/courtier/noble.
+		if(HAS_TRAIT(src, TRAIT_DEBTOR))
+			if(ishuman(user))
+				var/mob/living/carbon/human/debt_viewer = user
+				var/saw_specific = FALSE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_CHURCH) && (debt_viewer.job in GLOB.church_positions))
+					. += span_userdanger("DEFAULT DEBTOR OF THE CHURCH!")
+					saw_specific = TRUE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_MERCHANT) && (debt_viewer.job == "Merchant" || debt_viewer.job == "Shophand" || HAS_TRAIT(debt_viewer, TRAIT_AGENT_MERCHANT)))
+					. += span_userdanger("DEFAULT DEBTOR OF THE TRADING COMPANY!")
+					saw_specific = TRUE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_BATHHOUSE) && (debt_viewer.job == "Bathmaster" || debt_viewer.job == "Bathhouse Attendant" || HAS_TRAIT(debt_viewer, TRAIT_AGENT_BATHHOUSE)))
+					. += span_userdanger("DEFAULT DEBTOR OF THE BATHHOUSE!")
+					saw_specific = TRUE
+				if(!saw_specific && HAS_TRAIT(src, TRAIT_DEBTOR_CROWN))
+					if((debt_viewer.job in GLOB.garrison_positions) || (debt_viewer.job in GLOB.courtier_positions) || (debt_viewer.job in GLOB.noble_positions))
+						. += span_userdanger("DEFAULT DEBTOR OF THE CROWN!")
+
+		if(HAS_TRAIT(src, TRAIT_ARREARS))
+			// Poll-tax arrears: a soft mark. Authority roles can read it off a subject, but
+			// only as a hint - the amount owed lives with the Steward's ledger.
+			if(ishuman(user))
+				var/mob/living/carbon/human/arrears_viewer = user
+				if((arrears_viewer.job in GLOB.garrison_positions) || (arrears_viewer.job in GLOB.courtier_positions) || (arrears_viewer.job in GLOB.noble_positions))
+					. += span_smallred("Destitute..")
+
 		//For tennite schism god-event
 		if(length(GLOB.tennite_schisms))
 			var/datum/tennite_schism/S = GLOB.tennite_schisms[1]
