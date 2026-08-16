@@ -241,6 +241,10 @@ Balloon Alert / Floating Text defines
 #define SOFTUNDERHIT "softunder" // This is just for the soft underarmors like gambesons and arming jackets so they can be worn with light armors that use the same sound like studded leather
 
 /proc/get_armor_sound(blocksound, blade_dulling)
+	if(islist(blocksound))
+		return pick(blocksound)
+	if(isfile(blocksound))
+		return blocksound
 	switch(blocksound)
 		if(PLATEHIT)
 			if(blade_dulling == BCLASS_CUT||blade_dulling == BCLASS_CHOP)

@@ -831,3 +831,60 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/captain/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic
+	name = "Symbol of Avarice"
+	desc = "Monster head resembling a treasure chest. It is said Psydonia's mimics bear this visage as a symbol of shame for the sin of avarice. Every age, it seems, is tainted by the greed of men. Rubbish, to one such as I, devoid of all worldly wants!"
+	icon = 'icons/roguetown/clothing/special/mimichead.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/mimichead.dmi'
+	icon_state = "mimichead"
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)//druid helmet stats, seems fitting cause it's magic wood
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+	blocksound = list('sound/vo/mobs/mimic/mimic_attack1.ogg','sound/vo/mobs/mimic/mimic_attack2.ogg','sound/vo/mobs/mimic/mimic_attack3.ogg')
+	break_sound = 'sound/vo/mobs/mimic/mimic_death.ogg'
+	anvilrepair = /datum/skill/craft/carpentry // is magic mimic chest wood or something
+	smeltresult = /obj/item/rogueore/coal
+	var/active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot != SLOT_HEAD)
+		return
+	active_item = TRUE
+	to_chat(user, span_hypnophrase("Dead mimic flesh envelops your head slippery, cold, and wet. The beast's hunger washes over you, you feel starved and emaciated, as if something has sapped your CONSTITUTION; however, in it's place is left a gnawning, greedy avarice coupled with FORTUNE enough to sate it."))
+	user.change_stat(STATKEY_LCK, 5)
+	user.change_stat(STATKEY_CON, -5)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/mimic/dropped(mob/living/user)
+	. = ..()
+	if(!active_item)
+		return
+	to_chat(user, span_hypnophrase("The vile corpse pulls free with a squelch. Your head is left wet, glossed slick with the creatures mucus... You feel your vigor return!"))
+	user.change_stat(STATKEY_LCK, -5)
+	user.change_stat(STATKEY_CON, 5)
+	active_item = FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar
+	name = "jar"
+	desc = "Jar that fits cleanly over the head when upturned. A small hole has been knapped in the side to allow vision, if poorly."
+	icon = 'icons/roguetown/clothing/special/jar.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/jar.dmi'
+	icon_state = "jar"
+	armor = list("blunt" = 10, "slash" = 80, "stab" = 100, "piercing" = 100, "fire" = 100, "acid" = 0)//UNBREAKABLE ALEXANDER
+	blocksound = list('sound/combat/hits/onstone/wallhit.ogg')
+	break_sound = 'sound/foley/glassbreak.ogg'
+	max_integrity = ARMOR_INT_HELMET_CLOTH//actually very breakable
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+	anvilrepair = /datum/skill/craft/ceramics
+	smeltresult = /obj/item/natural/brick//why not
+	block2add = FOV_RIGHT|FOV_LEFT//I CANT SEE SHIT
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_THROWINGARM, REF(src))
+
+/obj/item/clothing/head/roguetown/helmet/heavy/jar/dropped(mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_THROWINGARM, REF(src))

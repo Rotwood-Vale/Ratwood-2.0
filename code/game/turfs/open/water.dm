@@ -85,24 +85,29 @@
 
 /turf/open/water/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if(isliving(AM) && !AM.throwing)
-		var/mob/living/user = AM
-		if(isliving(user) && !user.is_floor_hazard_immune())
-			if(platform_atom_count > 0)
-				return
-			if(water_overlay)
-				if((get_dir(src, newloc) == SOUTH))
+	if(!isliving(AM))
+		return
+	if(AM.throwing)
+		return
+	var/mob/living/living_user = AM
+	if(platform_atom_count > 0)
+		return
+	if(living_user.is_floor_hazard_immune())
+		return
+
+	if(water_overlay)
+		if((get_dir(src, newloc) == SOUTH))
+			water_overlay.layer = BELOW_MOB_LAYER
+			water_overlay.plane = GAME_PLANE
+		else
+			spawn(6)
+				if(!locate(/mob/living) in src)
 					water_overlay.layer = BELOW_MOB_LAYER
 					water_overlay.plane = GAME_PLANE
-				else
-					spawn(6)
-						if(!locate(/mob/living) in src)
-							water_overlay.layer = BELOW_MOB_LAYER
-							water_overlay.plane = GAME_PLANE
-			var/drained = get_stamina_drain(user, get_dir(src, newloc))
-			if(drained && !user.stamina_add(drained))
-				user.Immobilize(30)
-				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
+	var/drained = get_stamina_drain(living_user, get_dir(src, newloc))
+	if(drained && !living_user.stamina_add(drained))
+		living_user.Immobilize(30)
+		addtimer(CALLBACK(living_user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
 
 /turf/open/water/proc/get_stamina_drain(mob/living/swimmer, travel_dir)
 	var/const/BASE_STAM_DRAIN = 15
@@ -127,12 +132,12 @@
 		return 0 // floating!
 	if(swimdir && travel_dir && travel_dir == dir)
 		return 0 // going with the flow
-	if(swimmer.buckled)
+	if(ishuman(swimmer.buckled))
 		return 0
 	if(!ishuman(swimmer))
 		return 0
-	var/mob/living/carbon/human/H = swimmer
-	var/ac = H.highest_ac_worn(check_hands = TRUE)
+	var/mob/living/carbon/human/human_swimmer = swimmer
+	var/ac = human_swimmer.highest_ac_worn(check_hands = TRUE)
 	var/xpmod = BASE_XP_GAIN
 	var/base_drain = BASE_STAM_DRAIN
 
@@ -144,13 +149,12 @@
 			xpmod = MEDIUM_XP_GAIN
 			base_drain = MEDIUM_ARMOR_PENALTY
 
-	var/abyssor_swim_bonus = HAS_TRAIT(swimmer, TRAIT_ABYSSOR_SWIM) ? 5 : 0
-	var/swimming_skill_level = swimmer.get_skill_level(/datum/skill/misc/swimming)
+	var/abyssor_swim_bonus = HAS_TRAIT(human_swimmer, TRAIT_ABYSSOR_SWIM) ? 5 : 0
+	var/swimming_skill_level = human_swimmer.get_skill_level(/datum/skill/misc/swimming)
 	. = max(base_drain - (swimming_skill_level * STAM_PER_LEVEL) - abyssor_swim_bonus, MIN_STAM_DRAIN)
-	if(swimmer.mind)
-		swimmer.mind.add_sleep_experience(/datum/skill/misc/swimming, swimmer.STAINT * xpmod)
-//	. += (swimmer.checkwornweight()*2)
-	if(!swimmer.check_armor_skill())
+	if(human_swimmer.mind)
+		human_swimmer.mind.add_sleep_experience(/datum/skill/misc/swimming, human_swimmer.STAINT * xpmod)
+	if(!human_swimmer.check_armor_skill())
 		. += UNSKILLED_ARMOR_PENALTY
 	if(.) // this check is expensive so we only run it if we do expect to use stamina
 		if(platform_atom_count > 0)
@@ -194,55 +198,63 @@
 	. = ..()
 	if(platform_atom_count > 0)
 		return
+
 	if(istype(AM, /obj/item/reagent_containers/food/snacks/fish))
 		var/obj/item/reagent_containers/food/snacks/fish/F = AM
 		if (F.sinkable)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_FISH_RELEASED, F.type, F.rarity_rank)
 			F.visible_message("<span class='warning'>[F] dives into \the [src] and disappears!</span>")
 			qdel(F)
-	if(isliving(AM) && !AM.throwing)
-		var/mob/living/L = AM
-		if(HAS_TRAIT(L, TRAIT_CURSE_ABYSSOR))
-			L.freak_out()
-			L.visible_message(span_warning("[L] spasms violently upon touching the water!"), span_danger("The water... it burns me!"))
-			L.adjustFireLoss(25)
 			return
-		if (istype(src,/turf/open/water/bloody))
-			L.add_mob_blood(L)
 
-		if(!(L.movement_type & FLYING))
-			if(!(L.mobility_flags & MOBILITY_STAND) || water_level == 3)
-				L.SoakMob(FULL_BODY)
-			else
-				if(water_level == 2)
-					L.SoakMob(BELOW_CHEST)
-			if(water_overlay)
-				if(water_level > 1 && !istype(oldLoc, type))
-					playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
-				else
-					playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
-				if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
+	if(!isliving(AM) || AM.throwing)
+		return
+	var/mob/living/living_movable = AM
+
+	if(living_movable.movement_type & FLYING)
+		return
+
+	if(HAS_TRAIT(living_movable, TRAIT_CURSE_ABYSSOR))
+		living_movable.freak_out()
+		living_movable.visible_message(span_warning("[living_movable] spasms violently upon touching the water!"), span_danger("The water... it burns me!"))
+		living_movable.adjustFireLoss(25)
+		return
+	if (istype(src,/turf/open/water/bloody))
+		living_movable.add_mob_blood(living_movable)
+
+	if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
+		living_movable.SoakMob(FULL_BODY)
+	else
+		if(water_level == 2)
+			living_movable.SoakMob(BELOW_CHEST)
+	if(water_overlay)
+		if(water_level > 1 && !istype(oldLoc, type))
+			playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
+		else
+			playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
+		if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
+			water_overlay.layer = ABOVE_MOB_LAYER
+			water_overlay.plane = GAME_PLANE_HIGHEST
+		else
+			spawn(6)
+				if(AM.loc == src)
 					water_overlay.layer = ABOVE_MOB_LAYER
 					water_overlay.plane = GAME_PLANE_HIGHEST
-				else
-					spawn(6)
-						if(AM.loc == src)
-							water_overlay.layer = ABOVE_MOB_LAYER
-							water_overlay.plane = GAME_PLANE_HIGHEST
 
-			if(temperature <= 250 && L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-				if(HAS_TRAIT(L, TRAIT_WATERLOVING))
-					L.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
-				else
-					L.adjust_bodytemperature(-5)
-		if(!istype(L, /mob/living/carbon/human/species/skeleton))
-			return
-		if(!istype(src, /turf/open/water/sewer))
-			return
-		if(!istype(src, /turf/open/water/swamp))
-			return
-		L.apply_damage(30, BRUTE, BODY_ZONE_CHEST, forced = TRUE)
-		to_chat(L, span_warningbig("The water seeps into my pores. I am crumbling!"))
+		if(temperature <= 250 && living_movable.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+			if(HAS_TRAIT(living_movable, TRAIT_WATERLOVING))
+				living_movable.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+			else
+				living_movable.adjust_bodytemperature(-5)
+
+	if(!istype(living_movable, /mob/living/carbon/human/species/skeleton))
+		return
+	if(!istype(src, /turf/open/water/sewer))
+		return
+	if(!istype(src, /turf/open/water/swamp))
+		return
+	living_movable.apply_damage(30, BRUTE, BODY_ZONE_CHEST, forced = TRUE)
+	to_chat(living_movable, span_warningbig("The water seeps into my pores. I am crumbling!"))
 
 /turf/open/water/attackby(obj/item/C, mob/user, params)
 	if(user.used_intent.type == /datum/intent/fill)
