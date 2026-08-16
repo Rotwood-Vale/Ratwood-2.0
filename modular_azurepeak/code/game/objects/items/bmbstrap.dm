@@ -64,6 +64,12 @@
 	if(!selected_name)
 		return
 	var/atom/movable/AM = targets[selected_name]
+	if(!HAS_TRAIT(user, TRAIT_EXPLOSIVE_SUPPLY) && !HAS_TRAIT(user, TRAIT_BOMBER_EXPERT))
+		if(!do_after(user, 20, target = user))
+			return TRUE
+		to_chat(user, span_notice("You fumble to draw a grenade..."))
+	if(!(AM in tweps)) //could've been taken out mid-do_after
+		return TRUE
 	tweps -= AM
 	user.put_in_hands(AM)
 	update_icon()
@@ -71,7 +77,7 @@
 
 /obj/item/bmbstrap/attack_right(mob/user)
 	if(tweps.len)
-		if(HAS_TRAIT(user, TRAIT_EXPLOSIVE_SUPPLY)) //virtue and bomber roles
+		if(HAS_TRAIT(user, TRAIT_EXPLOSIVE_SUPPLY) || HAS_TRAIT(user, TRAIT_BOMBER_EXPERT)) //virtue and bomber roles
 			var/obj/O = tweps[tweps.len]
 			tweps -= O
 			user.put_in_hands(O)

@@ -242,11 +242,11 @@
 
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
 
-	if(HAS_TRAIT(H.mind, TRAIT_EXPLOSIVE_SUPPLY))
+	if(HAS_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY))
 		H.mind.has_bomb = TRUE
 		to_chat(H.mind, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
 
-	if(HAS_TRAIT(H.mind, TRAIT_DRUG_SUPPLY))
+	if(HAS_TRAIT(H, TRAIT_DRUG_SUPPLY))
 		H.mind.has_drug_delivery = TRUE
 		to_chat(H.mind, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
 
