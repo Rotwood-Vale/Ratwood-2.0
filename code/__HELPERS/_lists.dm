@@ -1188,7 +1188,7 @@ GLOBAL_LIST_EMPTY(string_lists)
 /**
  * Returns a newline-separated list that counts equal-ish items, outputting count and item names, optionally with icons. (ported from AP by IronDragoon)
  */
-/proc/counting_english_list(var/list/input, output_icons = TRUE, nothing_text = "nothing", line_prefix = "\t", first_item_prefix = "\n", last_item_suffix = "\n", and_text = "\n", comma_text = "\n", final_comma_text = "")
+/proc/counting_english_list(list/input, output_icons = TRUE, nothing_text = "nothing", line_prefix = "\t", first_item_prefix = "\n", last_item_suffix = "\n", and_text = "\n", comma_text = "\n", final_comma_text = "")
 	// Counted input items.
 	var/list/counts = list()
 	// Actual objects for later reference (for icons and formatting).
