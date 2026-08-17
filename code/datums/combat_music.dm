@@ -613,6 +613,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Carlos Viola - Cante de los Muertos"
 	musicpath = list('sound/music/combat_ancient.ogg')
 
+/datum/combat_music/herald
+	name = "Herad of Progress"
+	desc = "You cannot stop change."
+	shortname = "Ancient"
+	credits = "Bathory - Call from the Grave"
+	musicpath = list('sound/music/combatheraldprogress.ogg')
+
 /datum/combat_music/ready_to_die
 	name = "I'M READY TO DIE, ARE YOU?"
 	desc = "I REMEMBER A TIME NOT THAT LONG AGO, WHEN WE HAD VAMPIRES AND DUNPEALS BOTH AROUND HERE..." // yes it's "dunpeals". ask hunter d not me

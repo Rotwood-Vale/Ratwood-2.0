@@ -42,7 +42,7 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	victim.blood_volume = max(victim.blood_volume - 5, 0)
+	victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
 	victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
@@ -57,6 +57,14 @@
 		if(!HAS_TRAIT(src, TRAIT_HORDE) && !HAS_TRAIT(src, TRAIT_NASTY_EATER))
 			to_chat(src, span_warning("I'm going to puke..."))
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
+		if(HAS_TRAIT(src, TRAIT_HEMOPHAGE) && ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.adjust_nutrition(35)
+			H.adjust_hydration(35)
+			if(H.reagents)
+				H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 12)
+			if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+				H.set_blood_volume(min(H.get_blood_volume() + 35, BLOOD_VOLUME_NORMAL))
 		return
 
 	if(victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
@@ -83,11 +91,11 @@
 
 	clan.handle_bloodsuck(src, blood_handle)
 
-	if(victim.bloodpool > 0)
+	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		victim.blood_volume = max(victim.blood_volume - 45, 0)
-		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
-			used_vitae = victim.bloodpool
+		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
+		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
+			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
 		victim.adjust_bloodpool(-used_vitae)
 		victim.adjust_hydration(- used_vitae * 0.1)
@@ -110,7 +118,7 @@
 			visible_message(span_artery("You drink deeply from their Lux... Another step towards true immortality."))
 			vampire_resurrect_chances++
 			return
-		else if(victim.blood_volume < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
+		else if(victim.get_blood_volume() < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
 			to_chat(src, span_warning("This sad sacrifice for your own pleasure affects something deep in your mind."))
 			AdjustMasquerade(-1)
 			victim.death()
@@ -118,7 +126,7 @@
 			vampire_resurrect_chances++
 			return
 
-	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.blood_volume <= BLOOD_VOLUME_BAD)
+	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.get_blood_volume() <= BLOOD_VOLUME_BAD)
 		var/datum/antagonist/vampire/vdrinker = mind?.has_antag_datum(/datum/antagonist/vampire)
 		if((vdrinker.max_thralls <= 0) || (isnull(vdrinker.max_thralls || VDrinker.generation <= GENERATION_THINBLOOD))) //thin bloods or low level vampires can't make thralls, incase they get past the last check by leveling up off others	to_chat(src, span_warning("I cannot sire thralls, my blood is too weak!"))
 		else

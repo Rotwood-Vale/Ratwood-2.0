@@ -80,6 +80,8 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 /obj/structure/vampire/bloodpool/ui_interact(mob/user, datum/tgui/ui)
 	var/mob/living/living_user = user
 	if(!istype(living_user))
+	var/datum/antagonist/vampire/vampire = user.mind?.has_antag_datum(/datum/antagonist/vampire)
+	if(!vampire)
 		return
 
 	remember_nonvampire_vitae(living_user)
@@ -518,6 +520,30 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		return
 	deposit = clamp(round(deposit), 1, max_deposit)
 	if(deposit < 1)
+	var/lord = FALSE
+	if(user.clan?.clan_leader == user)
+		lord = TRUE
+
+	var/list/available_options_lord = list()
+	var/list/available_options_contributor = list()
+
+	// Add available project types that aren't already active
+	for(var/project_type in available_project_types)
+		var/datum/vampire_project/temp_project = new project_type()
+		if(temp_project.can_start(user, src, TRUE) && !(project_type in active_projects))
+			available_options_lord[temp_project.display_name] = project_type
+		qdel(temp_project)
+
+	// Add option to contribute to existing projects
+	if(active_projects.len)
+		available_options_lord["Contribute to Project"] = "contribute"
+		available_options_contributor["Contribute to Project"] = "contribute"
+	// Add option to view/cancel projects
+	if(active_projects.len)
+		available_options_lord["Manage Projects"] = "manage"
+
+	var/choice = input(user, "What to do?", "VAMPYRE") as null|anything in available_options_lord
+	if(!choice)
 		return
 
 	var/blood_cost = 0
@@ -687,13 +713,18 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		if("View Details")
 			project.show_details(user)
 		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
+			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", "Yes", "No") == "Yes")
 				cancel_project(project_type)
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
 	var/datum/vampire_project/project = active_projects[project_type]
 	if(!project)
 		return
+	if(!project)
+		return
+
+	// Detach before running effects, so a second call can't run them (or a refund) again
+	active_projects.Remove(project_type)
 
 	for(var/mob/living/contributor in project.contributors)
 		to_chat(contributor, span_boldannounce("[project.display_name] has been completed!"))
@@ -701,7 +732,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 
 	project.on_complete(src)
 
-	active_projects.Remove(project_type)
 	qdel(project)
 	SStgui.update_uis(src)
 
@@ -710,9 +740,10 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	if(!project)
 		return
 
+	active_projects.Remove(project_type)
+
 	project.on_cancel()
 
-	active_projects.Remove(project_type)
 	qdel(project)
 	SStgui.update_uis(src)
 
@@ -723,6 +754,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/total_cost = 1000
 	var/paid_amount = 0
 	var/cup_paid_amount = 0
+	/// Assoc list of contributor mob -> vitae they personally paid in, so refunds can't mint blood
 	var/list/contributors = list()
 	var/obj/structure/vampire/bloodpool/bloodpool
 	var/mob/living/initiator
@@ -753,12 +785,18 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
 
-/datum/vampire_project/proc/handle_contribution(mob/living/user)
+/datum/vampire_project/proc/get_max_contribution(mob/living/user)
 	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
-	var/max_contribution = min(user.bloodpool, total_cost - paid_amount)
-	if(!lord)
-		if(display_name != "Wicked Plate" || display_name != "World Anchor")
-			max_contribution = min(user.bloodpool, (total_cost - paid_amount) - 100)
+	var/headroom = total_cost - paid_amount
+	if(!lord && (display_name != "Wicked Plate") && (display_name != "World Anchor"))
+		headroom -= 100
+	return min(user.get_bloodpool(), headroom)
+
+/datum/vampire_project/proc/handle_contribution(mob/living/user)
+	var/max_contribution = get_max_contribution(user)
+	if(max_contribution <= 0)
+		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
+		return
 
 	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
 
@@ -766,18 +804,23 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	if(!contribution || contribution < 1)
 		return
 
+	// Revalidate after the blocking prompt - the project may have finished, been cancelled, or been paid down further
+	if(QDELETED(src) || !bloodpool || !(bloodpool.active_projects[type] == src))
+		to_chat(user, span_warning("[display_name] is no longer underway."))
+		return
+
 	//setting this to 0, when it was at 1 it was just giving free vitae if it was less than 1 but a 
 	contribution = clamp(contribution, 0, max_contribution)
 
-	if(user.bloodpool < contribution)
+	if(user.get_bloodpool() < contribution)
 		to_chat(user, span_warning("I do not have enough vitae."))
 		return
 
+	contribution = clamp(round(contribution), 1, max_contribution)
+
 	user.adjust_bloodpool(-contribution)
 	paid_amount += contribution
-
-	if(!(user in contributors))
-		contributors += user
+	contributors[user] += contribution
 
 	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
 
@@ -806,6 +849,9 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	for(var/mob/living/contributor in contributors)
 		contributor.adjust_bloodpool(refund_amount)
 		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
+
+	contributors.Cut()
+	paid_amount = 0
 
 // Specific project types
 /datum/vampire_project/power_growth
@@ -905,7 +951,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			lord.ascended = TRUE
 			var/list/all_subordinates = user.clan_position.get_all_subordinates()
 			for(var/mob/living/carbon/human/subordinate_body  in all_subordinates)
-				subordinate_body.maxbloodpool += 1000
+				subordinate_body.adjust_maxbloodpool(1000)
 				for(var/S in MOBSTATS)
 					subordinate_body.change_stat(S, 2)
 

@@ -102,7 +102,9 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "no_redflash", "label" = "Anti-Eyestrain Mode", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
+		list("id" = "mouseover_role", "label" = "Show Mouseover Role", "enabled" = !!owner.prefs.show_mouseover_role, "desc" = "Show role text under player names on mouseover."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
 		list("id" = "language_icon", "label" = "Disable Language Icon", "enabled" = !!owner.prefs.no_language_icon, "desc" = "Hide language icon prefixes in chat."),
@@ -112,6 +114,8 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
+		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
 		list("id" = "combat_strip", "label" = "Combat Mode Stripping", "enabled" = !!(owner.prefs.toggles & CMODE_STRIPPING), "desc" = "Allow opening strip menu while in combat mode."),
 		list("id" = "hide_unavailable_emotes", "label" = "Hide Unavailable Noises", "enabled" = !!owner.prefs.hide_unavailable_emotes, "desc" = "Hide anatomy-specific noise verbs your current body cannot use."),
@@ -173,10 +177,14 @@
 				owner.mob?.toggle_tgui_multiline()
 			if("screen_shake")
 				owner.toggle_screenshake()
+			if("no_redflash")
+				owner.toggle_redflash()
 			if("chat_headshot")
 				owner.set_picinchat()
 			if("masked_examine")
 				owner.masked_examine()
+			if("mouseover_role")
+				owner.toggle_mouseover_role()
 			if("nsfw_examine")
 				owner.nsfw_examine_always()
 			if("examine_blocks")
@@ -193,6 +201,10 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autowoodcut")
+				owner.toggle_autowoodcut()
+			if("autopicking")
+				owner.toggle_autopicking()
 			if("show_rolls")
 				owner.show_rolls()
 			if("combat_strip")
@@ -280,6 +292,19 @@
 		else
 			to_chat(src, "Screen shake disabled.")
 
+/client/verb/toggle_redflash()
+	set category = "Options"
+	set name = "Toggle Anti-Eyestrain"
+	set hidden = 1
+	if(prefs)
+		prefs.no_redflash = !prefs.no_redflash
+		prefs.save_preferences()
+		if(prefs.no_redflash)
+			to_chat(src, "Your screen will no longer flash red or white from pain or other events.")
+		else
+			to_chat(src, "Your screen will now flash red or white from pain or other events.")
+	mob.update_redflash_pref(prefs.no_redflash)
+
 /client/verb/masked_examine()
 	set category = "Options"
 	set name = "Toggle Masked Examine"
@@ -291,6 +316,18 @@
 			to_chat(src, "Your character information will be viewable when masked.")
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
+
+/client/verb/toggle_mouseover_role()
+	set category = "Options"
+	set name = "Toggle Mouseover Role"
+	set hidden = 1
+	if(prefs)
+		prefs.show_mouseover_role = !prefs.show_mouseover_role
+		prefs.save_preferences()
+		if(prefs.show_mouseover_role)
+			to_chat(src, "Role text will now be shown under player mouseover names.")
+		else
+			to_chat(src, "Role text will no longer be shown under player mouseover names.")
 
 /client/verb/nsfw_examine_always()
 	set category = "Options"
@@ -327,6 +364,30 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autowoodcut()
+	set category = "Options"
+	set name = "Toggle AutoWoodcut"
+	set hidden = 1
+	if(prefs)
+		prefs.autowoodcut = !prefs.autowoodcut
+		prefs.save_preferences()
+		if(prefs.autowoodcut)
+			to_chat(src, "You will now automatically continue chopping trees.")
+		else
+			to_chat(src, "You will no longer automatically continue chopping trees.")
+
+/client/verb/toggle_autopicking()
+	set category = "Options"
+	set name = "Toggle AutoPicking"
+	set hidden = 1
+	if(prefs)
+		prefs.autopicking = !prefs.autopicking
+		prefs.save_preferences()
+		if(prefs.autopicking)
+			to_chat(src, "You will now automatically continue mining rock walls.")
+		else
+			to_chat(src, "You will no longer automatically continue mining rock walls.")
 
 /client/verb/toggle_hide_unavailable_emotes()
 	set category = "Options"

@@ -205,7 +205,7 @@
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/strandling/handle_click(location, control, params)
 	. = ..()
 	to_chat(mob_viewer, "<span class='notice'>I attempt to remove the durathread strand from around my neck.</span>")
 	if(do_after(mob_viewer, 35, null, mob_viewer))

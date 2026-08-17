@@ -564,11 +564,52 @@
 	embedding = list("embed_chance" = 0) // Embedding the cursed dagger has the potential to cause duping issues. Keep it like this unless you want to do a lot of bug hunting.
 	resistance_flags = INDESTRUCTIBLE
 	stealthy_audio = TRUE
+	var/cooldown = 0
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/profane/attack_self(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(!HAS_TRAIT(H, TRAIT_ASSASSIN))
+		return
+	if(world.time < cooldown)
+		to_chat(H, span_warning("Too soon!"))
+		return
+	var/list/prey_list = list()
+	for(var/mob/living/carbon/human/target in GLOB.human_list)
+		if(target == H || target.stat == DEAD)
+			continue
+		if(target.has_flaw(/datum/charflaw/assassintarget))
+			prey_list += target
+	if(!length(prey_list))
+		to_chat(H, span_warning("Can't find anyone."))
+		return
+	if(!do_after(H, 2 SECONDS, src))
+		return
+	var/mob/living/carbon/human/prey = input("Choose a target.") as null|anything in prey_list
+	if(!prey || !prey.z)
+		return
+	var/dir_text = dir2text(get_dir(H, prey))
+	var/dist = get_dist(H, prey)
+	var/proximity_text = "far away"
+	if(dist <= 5)
+		proximity_text = "very close"
+	else if(dist <= 15)
+		proximity_text = "nearby"
+	var/z_text = ""
+	if(prey.z > H.z)
+		z_text = ", somewhere above"
+	else if(prey.z < H.z)
+		z_text = ", somewhere below"
+	to_chat(H, span_danger("The dagger points toward the [dir_text]. [prey.real_name] feels [proximity_text][z_text]."))
+	cooldown = world.time + 2 MINUTES
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_ASSASSIN))
 		. += "profane dagger whispers, \"[span_danger("Here we are!")]\""
+		. += "(Use the dagger in-hand to seek your targets.)"
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pickup(mob/living/M)
 	. = ..()
@@ -787,6 +828,7 @@
 	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_suppradio("The standard's runes pulse, accepting me as its <b>master</b>."))
 		user.change_stat(STATKEY_LCK, 3)
+		user.change_stat(STATKEY_PER, 2)
 		user.add_stress(/datum/stressevent/keep_standard)
 		ADD_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)//KEEP AT IT!!
 		ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)//AND KEEP UP!!!
@@ -809,6 +851,7 @@
 	if(user.job == "Man at Arms" || user.job == "Janissary")
 		to_chat(user, span_monkeyhive("The standard's runes pulse, rhythmically, as if sad to see you release your control."))
 		user.change_stat(STATKEY_LCK, -3)
+		user.change_stat(STATKEY_PER, -2)
 		user.remove_stress(/datum/stressevent/keep_standard)
 		REMOVE_TRAIT(user, TRAIT_HARDDISMEMBER, TRAIT_GENERIC)
 		REMOVE_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

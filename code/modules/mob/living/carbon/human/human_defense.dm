@@ -209,7 +209,7 @@
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
 		I = AM
-		throwpower = I.throwforce
+		throwpower = throwingdatum ? throwingdatum.get_effective_throwforce() : I.throwforce
 		if(I.thrownby == src) //No throwing stuff at myself to trigger hit reactions
 			return ..()
 		else
@@ -770,6 +770,10 @@
 			examination += span_biginfo("- Actions take more stamina")
 			examination += span_biginfo("- Stamina recovery takes twice as long")
 			examination += span_danger("- Risk of heatstroke after prolonged exposure")
+
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		examination += span_biginfo("It is warm here. It refreshes and heals me.")
 
 	examination += "ø ------------ ø</span>"
 

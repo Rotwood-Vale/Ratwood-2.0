@@ -243,6 +243,10 @@ Balloon Alert / Floating Text defines
 #define SOFTUNDERHIT "softunder" // This is just for the soft underarmors like gambesons and arming jackets so they can be worn with light armors that use the same sound like studded leather
 
 /proc/get_armor_sound(blocksound, blade_dulling)
+	if(islist(blocksound))
+		return pick(blocksound)
+	if(isfile(blocksound))
+		return blocksound
 	switch(blocksound)
 		if(PLATEHIT)
 			if(blade_dulling == BCLASS_CUT||blade_dulling == BCLASS_CHOP)
@@ -368,6 +372,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_WASSOCIATE		"CTAG_WASSOCIATE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
 #define CTAG_GUILDSMASTER 	"CAT_GUILDSMASTER"	// Guildsmaster class - Handles Guildsmaster class selector
 #define CTAG_GUILDSMEN 		"CAT_GUILDSMEN"		// Guildsmen class - Handles Guildsmen class selector
+#define CTAG_GUILDAPPRENTICE "CAT_GUILDAPPRENTICE"	// Guild apprentice class - baby guildsmen, meant to support them.
 #define CTAG_NIGHTMAIDEN	"CAT_NIGHTMAIDEN"	// Bathhouse Attendant's aesthetic choices.
 #define CTAG_PRISONER 		"CAT_PRISONER"
 
