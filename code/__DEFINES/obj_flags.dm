@@ -14,6 +14,7 @@
 #define BLOCK_Z_IN_DOWN			(1<<10) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP			(1<<11) // Should this object block z uprise from below?
 #define IGNORE_SINK				(1<<12)
+#define INDESTRUCTABLE_ITEM		(1<<13) // Item cannot be destroyed, allows for all other interactions
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
