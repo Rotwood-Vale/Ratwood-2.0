@@ -7939,10 +7939,8 @@
 	},
 /area/rogue/indoors/town/warden)
 "bLc" = (
-/obj/structure/mineral_door/wood/fancywood{
-	locked = 1;
-	lockid = "heir";
-	name = "Bath Chamber"
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 4
 	},
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/bath)
@@ -23445,7 +23443,6 @@
 /area/rogue/outdoors/bograt/north)
 "fal" = (
 /obj/item/reagent_containers/glass/cup/golden/psydon{
-	layer = 4;
 	pixel_y = 9
 	},
 /obj/machinery/light/rogue/candle/l{
@@ -64470,10 +64467,8 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/church)
 "ofi" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "knight";
-	name = "Knight's Bath"
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
 	},
 /turf/open/floor/rogue/tile{
 	icon_state = "bfloorz"
@@ -67862,6 +67857,11 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/snacks/rogue/cheddar,
+/obj/item/reagent_containers/food/snacks/rogue/cheddar,
+/obj/item/reagent_containers/food/snacks/rogue/cheddar,
+/obj/item/reagent_containers/food/snacks/rogue/cheddar,
+/obj/item/reagent_containers/food/snacks/rogue/cheddar,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/manor/rockhill)
 "oTV" = (
@@ -69381,10 +69381,6 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/harbor)
-"pkn" = (
-/obj/structure/mineral_door/wood/deadbolt,
-/turf/closed/wall/mineral/rogue/stonebrick,
-/area/rogue/indoors/town/manor/rockhill)
 "pkr" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch,
@@ -501954,7 +501950,7 @@ wtF
 wtF
 mfR
 wtF
-pkn
+wtF
 jTP
 mRr
 mRr
@@ -654946,8 +654942,8 @@ vRu
 vRu
 krH
 jcm
-dYr
-gLB
+vRu
+vRu
 gLB
 fyP
 fyP
@@ -655378,7 +655374,7 @@ jHL
 jcm
 jcm
 xri
-dYr
+bsf
 vRu
 vRu
 vRu
@@ -655809,8 +655805,8 @@ vRu
 mlp
 gLB
 mlp
-xJf
-ujF
+mlp
+gLB
 bGI
 vRu
 vRu
