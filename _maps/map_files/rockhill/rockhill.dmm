@@ -56316,6 +56316,12 @@
 "mnG" = (
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/beach/harbor)
+"mnI" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/town/magician/rockhill)
 "mnJ" = (
 /obj/structure/fluff/canopy,
 /obj/structure/table/wood{
@@ -62084,10 +62090,8 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/harbor)
 "nCi" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wcv";
-	locked = 1;
-	lockid = "tower"
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 8
 	},
 /turf/open/floor/rogue/greenstone/runed,
 /area/rogue/indoors/town/magician/rockhill)
@@ -69377,6 +69381,10 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/harbor)
+"pkn" = (
+/obj/structure/mineral_door/wood/deadbolt,
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/indoors/town/manor/rockhill)
 "pkr" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch,
@@ -108180,6 +108188,12 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
 /turf/open/floor/rogue/tile,
 /area/rogue/outdoors/mountains/decap/rockhill)
+"xVJ" = (
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/town/magician/rockhill)
 "xVL" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grasscold,
@@ -496757,7 +496771,7 @@ kGc
 kzh
 hLa
 hLa
-wed
+xVJ
 hLa
 nCi
 hLa
@@ -497187,14 +497201,14 @@ mRr
 ibP
 jPt
 kzh
-wed
+mnI
 xaV
 alD
 jYS
 kzh
 jYS
 hLa
-wed
+xVJ
 hLa
 bFA
 mRr
@@ -501940,7 +501954,7 @@ wtF
 wtF
 mfR
 wtF
-wtF
+pkn
 jTP
 mRr
 mRr
