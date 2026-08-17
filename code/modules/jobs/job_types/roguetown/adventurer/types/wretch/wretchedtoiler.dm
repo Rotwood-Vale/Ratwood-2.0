@@ -13,8 +13,9 @@
 
 	// balance isn't real i picked these bc they're funny
 	subclass_stats = list(
-		STATKEY_STR = -1, //YOU ARE WRETCHED!!!
-		STATKEY_CON = -2, //AND YOU WILL +TOIL+!!!!!!!!!!!
+		STATKEY_STR = -4, //YOU ARE WRETCHED!!!
+		STATKEY_CON = -4, //AND YOU WILL +TOIL+!!!!!!!!!!!
+		STATKEY_SPD = -2, // YOU ARE WRETCHED x99!!!
 		STATKEY_INT = 2, //4 int so you can be a feintbeast with the master swordskill I'm giving yo-HAHAHAHAHA JUST KIDDING! GRIND EXPERT ALCHEMY, WORMS!!!
 		STATKEY_PER = 1, //i like looking into the distance
 		STATKEY_WIL = 1, //i want this to be lower because i like hearing the stamout sfx but i will allow you ONE point of END
@@ -35,7 +36,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/tanning = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT, //summon monsters? I think?
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, //miracle regen? I think?
@@ -83,8 +84,6 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/brotherhood)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/charge)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/brotherhood)
-			//MINIONS! ATTACK!
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/call_to_slaughter)
 			//evil ass spells
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/eyebite)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
@@ -108,7 +107,7 @@
 			neck = /obj/item/clothing/neck/roguetown/leather // No iron gorget vs necro. They will have to acquire one in round.
 			r_hand = /obj/item/scrying //expert should give you good odds with this? if it breaks in one use, blame xylix, not me
 			//you get some spellpoints. if you really wanna take combat spells you can ig
-			H?.mind.adjust_spellpoints(12)
+			H?.mind.adjust_spellpoints(9)
 			var/staffs = list(
 				"ronts-focused staff",
 				"blortz-focused staff",
