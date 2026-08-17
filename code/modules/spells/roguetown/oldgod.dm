@@ -38,44 +38,53 @@
 		revert_cast()
 		return FALSE
 
+	// To allow the spell if the target needs blood, but has no wounds, we need these.
+	var/has_wounds = FALSE
+	var/needs_blood = FALSE
+
 	// Transfer wounds.
 	if(ishuman(H) && ishuman(user))
 		var/mob/living/carbon/human/C_target = H
 		var/mob/living/carbon/human/C_caster = user
 		var/list/datum/wound/tw_List = C_target.get_wounds()
 
-		if(!tw_List.len)
-			revert_cast()
-			return FALSE
+		if(tw_List.len)
+			has_wounds = TRUE
 
-		//Transfer wounds from each bodypart.
-		for(var/datum/wound/targetwound in tw_List)
-			if (istype(targetwound, /datum/wound/dismemberment))
-				continue
-			if (istype(targetwound, /datum/wound/facial))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/head))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/neck))
-				continue
-			if (istype(targetwound, /datum/wound/cbt/permanent))
-				continue
-			var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
-			c_BP.add_wound(targetwound.type)
-			var/obj/item/bodypart/t_BP = C_target.get_bodypart(targetwound.bodypart_owner.body_zone)
-			t_BP.remove_wound(targetwound.type)
+			//Transfer wounds from each bodypart.
+			for(var/datum/wound/targetwound in tw_List)
+				if (istype(targetwound, /datum/wound/dismemberment))
+					continue
+				if (istype(targetwound, /datum/wound/facial))
+					continue
+				if (istype(targetwound, /datum/wound/fracture/head))
+					continue
+				if (istype(targetwound, /datum/wound/fracture/neck))
+					continue
+				if (istype(targetwound, /datum/wound/cbt/permanent))
+					continue
+				var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
+				c_BP.add_wound(targetwound.type)
+				var/obj/item/bodypart/t_BP = C_target.get_bodypart(targetwound.bodypart_owner.body_zone)
+				t_BP.remove_wound(targetwound.type)
 
 	// Transfer blood
 	var/blood_transfer = 0
 	if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		needs_blood = TRUE
 		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
 		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		user.adjust_blood_volume(-(blood_transfer))
 		to_chat(user, span_warning("You feel your blood drain into [H]!"))
 		to_chat(H, span_notice("You feel your blood replenish!"))
 
+	if(!has_wounds && !needs_blood)
+		to_chat(user, span_warning("[H] has no wounds or blood loss to purify."))
+		revert_cast()
+		return FALSE
+
 	// Visual effects
-	user.visible_message(span_danger("[user] purifies [H]'s wounds!"))
+	user.visible_message(span_danger("[user] purifies [H]'s lux!"))
 	playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
@@ -87,7 +96,7 @@
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))
-	to_chat(H, span_info("You feel a strange stirring sensation pour over your Lux, stealing your wounds."))
+	to_chat(H, span_info("You feel a strange stirring sensation pour over your Lux, purifying it."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonrespite
