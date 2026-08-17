@@ -1,0 +1,7 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "New Martyr weapons from AP with special intents, the weapon can be recalled by the martyr at a pantheon cross"
+  - rscadd: "New parts of Martyr Armor from AP"
+  - balance: "Martyr 2 minute duration's buffs are now frontloaded instead of being given at the last 30 seconds."
+  - balance: "Martyr 2 minute duration no longer has an aheal / revive."

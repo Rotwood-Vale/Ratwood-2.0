@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Marked for Death"=/datum/charflaw/assassintarget,
 	"Marked by Gnolls"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
+	"Caffiend"=/datum/charflaw/addiction/caffiend,
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
