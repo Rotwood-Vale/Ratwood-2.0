@@ -934,6 +934,7 @@
 	break_sound = "garrote_snap"
 	blocksound = PLATEHIT
 	max_integrity = 125 //more durability due to less covered areas in compairson to a mask
+	body_parts_inherent = EYES//no peeling these
 	armor = ARMOR_PLATE
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE

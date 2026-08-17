@@ -758,7 +758,6 @@
 
 /datum/crafting_recipe/roguetown/sewing/paddedchausses
 	name = "padded chausses"
-	category = "Pants"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 1)
@@ -767,7 +766,6 @@
 
 /datum/crafting_recipe/roguetown/sewing/paddedchaussesalt
 	name = "padded chausses, alternate"
-	category = "Pants"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
 	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
 				/obj/item/clothing/under/roguetown/trou/leather = 1,
@@ -775,9 +773,33 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/heavypaddedchausses
+	name = "heavy padded chausses"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
+	reqs = list(/obj/item/natural/cloth = 6,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/heavypaddedchaussesalt
+	name = "heavy padded chausses, alternate"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
+	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
+				/obj/item/clothing/under/roguetown/trou/leather = 1,
+				/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/heavypaddedgloves
+	name = "heavy padded gloves"
+	result = list(/obj/item/clothing/gloves/roguetown/cloth/heavy)
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 4
+
 /datum/crafting_recipe/roguetown/sewing/paddedcap
 	name = "padded arming cap"
-	category = "Hats"
 	result = /obj/item/clothing/head/roguetown/armingcap/padded
 	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 5)
 	tools = list(/obj/item/needle)

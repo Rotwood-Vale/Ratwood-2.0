@@ -101,10 +101,20 @@
 	cost = 18
 	contains = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
 
+/datum/supply_pack/rogue/light_armor/heavypaddedchausses
+	name = "Chausses, Heavy Padded"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
+
 /datum/supply_pack/rogue/light_armor/paddedmittens
 	name = "Mittens, Padded"
 	cost = 15
 	contains = list(/obj/item/clothing/gloves/roguetown/cloth)
+
+/datum/supply_pack/rogue/light_armor/heavypaddedmittens
+	name = "Mittens, Heavy"
+	cost = 30
+	contains = list(/obj/item/clothing/gloves/roguetown/cloth/heavy)
 
 /datum/supply_pack/rogue/light_armor/paddedfootwraps
 	name = "Footwraps, Padded"
