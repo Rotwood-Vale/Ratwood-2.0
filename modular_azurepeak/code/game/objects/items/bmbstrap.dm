@@ -139,20 +139,15 @@
 
 	update_icon()
 
+
 /obj/item/bmbstrap/attack_right(mob/user)
 	if(tweps.len)
-		if(HAS_TRAIT(user, TRAIT_EXPLOSIVE_SUPPLY)) //virtue and bomber roles
+		if(do_after(user, 20, target = user))
+			to_chat(user, span_notice("You fumble to draw a grenade..."))
 			var/obj/O = tweps[tweps.len]
 			tweps -= O
 			user.put_in_hands(O)
 			update_icon()
-		else
-			if(do_after(user, 20, target = user))
-				to_chat(user, span_notice("You fumble to draw a grenade..."))
-				var/obj/O = tweps[tweps.len]
-				tweps -= O
-				user.put_in_hands(O)
-				update_icon()
 		return TRUE
 
 /obj/item/bmbstrap/bomb_and_fire/Initialize()

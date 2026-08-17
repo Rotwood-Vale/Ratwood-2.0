@@ -115,8 +115,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
 
-	var/has_bomb = FALSE
-	var/has_drug_delivery = FALSE
+    
 
 /datum/mind/New(key)
 	src.key = key
