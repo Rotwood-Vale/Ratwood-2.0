@@ -40,6 +40,18 @@
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
 
+/datum/outfit/job/roguetown/warden/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare_gun) in H.belt)
+			return
+		var/obj/item/signal_flare_gun/loaded/gun = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, gun, null, TRUE, TRUE))
+			gun.forceMove(get_turf(H))
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
+
 /datum/advclass/warden/ranger
 	name = "Ranger"
 	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have great experience using bows."
@@ -88,7 +100,7 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/signal_horn = 1
+		/obj/item/signal_horn = 1,
 		)
 	H.verbs |= /mob/proc/haltyell
 	H.set_blindness(0)

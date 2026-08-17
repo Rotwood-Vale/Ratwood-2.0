@@ -139,7 +139,7 @@
 /datum/outfit/job/roguetown/churchling/neophyte/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	H.adjust_blindness(-3)
-	head = /obj/item/clothing/neck/roguetown/chaincoif/iron
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -148,6 +148,7 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/rogueweapon/hammer/wood = 1,
 		/obj/item/needle = 1
@@ -156,35 +157,35 @@
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
-			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 		if(/datum/patron/divine/noc)
 			cloak = /obj/item/clothing/cloak/templar/noc
-			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
 		if(/datum/patron/divine/abyssor)
 			cloak = /obj/item/clothing/cloak/abyssortabard
-			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
 		if(/datum/patron/divine/dendor)
 			cloak = /obj/item/clothing/cloak/templar/dendor
-			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+			wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
 		if(/datum/patron/divine/necra)
 			cloak = /obj/item/clothing/cloak/templar/necra
-			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
 		if (/datum/patron/divine/malum)
 			cloak = /obj/item/clothing/cloak/templar/malum
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
 		if (/datum/patron/divine/eora)
 			cloak = /obj/item/clothing/cloak/templar/eora
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
 		if (/datum/patron/divine/ravox)
 			cloak = /obj/item/clothing/cloak/cleric/ravox
-			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+			wrists = /obj/item/clothing/neck/roguetown/psicross/xylix
 		if (/datum/patron/divine/pestra)
 			cloak = /obj/item/clothing/cloak/templar/pestra
-			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-	
+			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
+
 	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
 	switch(weapon_choice)

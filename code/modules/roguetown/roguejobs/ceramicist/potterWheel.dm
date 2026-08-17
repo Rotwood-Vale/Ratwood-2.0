@@ -365,6 +365,15 @@
 	recipe_icon_state = "claystatueraw5"
 	required_clay_type = /obj/item/natural/clay/kneaded
 
+/datum/pottery_wheel_recipe/basic/jarhelm
+	name = "rather large jar"
+	craftdiff = 5
+	base_time = 55
+	result_type = /obj/item/natural/clay/jarhelm
+	recipe_icon = 'icons/roguetown/clothing/special/jar.dmi'
+	recipe_icon_state = "rawjar"
+	required_clay_type = /obj/item/natural/clay/kneaded
+
 /datum/pottery_wheel_recipe/porcelain
 	abstract_type = /datum/pottery_wheel_recipe/porcelain
 	required_clay_type = /obj/item/natural/clay/refined
