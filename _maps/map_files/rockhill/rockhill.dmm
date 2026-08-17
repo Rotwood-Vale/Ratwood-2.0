@@ -86763,8 +86763,10 @@
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/under/dungeon/drowfort)
 "tin" = (
-/obj/structure/roguewindow/openclose/reinforced,
 /obj/structure/curtain/directional/red{
+	dir = 1
+	},
+/obj/structure/roguewindow/openclose/reinforced{
 	dir = 1
 	},
 /turf/open/floor/rogue/wood,
@@ -88025,7 +88027,6 @@
 	keylock = 1;
 	lockid = "guestroom1"
 	},
-/obj/item/storage/keyring/manor/guestroom/i,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/rockhill)
 "tvU" = (
@@ -90858,7 +90859,6 @@
 	lockid = "guestroom3";
 	pixel_y = 2
 	},
-/obj/item/storage/keyring/manor/guestroom/iii,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
 "ueq" = (
@@ -96910,7 +96910,6 @@
 	keylock = 1;
 	lockid = "guestroom2"
 	},
-/obj/item/storage/keyring/manor/guestroom/ii,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/rockhill)
 "vvp" = (
