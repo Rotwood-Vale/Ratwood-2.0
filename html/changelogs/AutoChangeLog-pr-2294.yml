@@ -1,0 +1,7 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "orison and prestidigitation offer some new mechanical sexcon actions"
+  - rscadd: "A few other new sexcon actions"
+  - qol: "sexcon actions no longer repeat and spam chat, subtle still will though at longer intervals"
+  - bugfix: "cumming while knotted will now roll pregnancy check where appropriate"
