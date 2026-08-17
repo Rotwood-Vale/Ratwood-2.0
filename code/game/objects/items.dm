@@ -1775,6 +1775,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_integrity = max_integrity * 0.6
 
 /obj/item/obj_destruction(damage_flag)
+	if (obj_flags & PREVENTS_DESTRUCTION)
+		return FALSE
 	if (damage_flag == "acid")
 		obj_destroyed = TRUE
 		acid_melt()
