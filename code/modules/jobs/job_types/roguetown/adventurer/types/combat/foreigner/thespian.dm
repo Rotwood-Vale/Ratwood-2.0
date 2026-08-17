@@ -7,10 +7,11 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/bronzeclad
 	cmode_music = 'sound/music/combat_thespian.ogg'
 	allowed_races = RACES_ALL_KINDS
+	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)//vampires aren't allowed to gladiator larp, sire
 	maximum_possible_slots = 3 //Should be categorically rarer to see than Iron- and Steel-clad adventurers. Tickles the powerscale ala the Exorcist, albeit to a wider extent with its potential combinations.
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_CRITICAL_RESISTANCE)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_CRITICAL_RESISTANCE)//may work on a lesser TRAIT_STRONGKICK so the leonidus wannabes can do the spartan kick.
 	subclass_stats = list(
-		STATKEY_STR = 1, //Abbreviated to +1/+3/+2/-2 for short. Seven statpoints weighed against a two- (or rather, four-) point penalty in Speed. This is intentional, as the Thespian has a lot of room to stretch their proverbial wings.
+		STATKEY_STR = 2, //+2(4)/+3/+2/-2(-4)=weighted 5 point total. +2 strength mostly for greatshield requirement. Slightly below other adv weights but they get crit resistnace and limited slots so whatever.
 		STATKEY_WIL = 3,
 		STATKEY_CON = 2,
 		STATKEY_SPD = -2,
@@ -31,7 +32,7 @@
 	..()
 	to_chat(H, span_warning("The curtains part, the shieldline rallies, and the eyes of a thousand shadows fall upon you. Snarling gladiator, enthralled shieldbearer, vestumed actor; ready yourself for another bout."))
 	if(H.mind)
-		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -2 INT")
+		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -1 INT")
 		var/bronzeweapon_choice = input(H, "Choose your WEAPONS.", "PUT ON A SHOW FOR THE CROWD.") as anything in bronzeweapon
 		switch(bronzeweapon_choice)
 			if("Spatha & +1 Unarmed")
@@ -116,14 +117,14 @@
 				r_hand = /obj/item/rogueweapon/katar/bronze/gladiator
 				backr = /obj/item/rogueweapon/scabbard/sword
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
-			if("Nothing - Skilled Pugilist, +I STR/WIL & -2 INT")
+			if("Nothing - Skilled Pugilist, +I STR/WIL & -1 INT")//weighted 7. If disciple weaponless trait gets merged ill add it here to force unarmed only
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_WIL, 1)
-				H.change_stat(STATKEY_INT, -2)
+				H.change_stat(STATKEY_INT, -1)
 
 		var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Gladius & Skills In Dual-Wielding", "Another Makhaira & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
 		var/bronzesidearm_choice = input(H, "Choose your ACCOUTREMENTS.", "PREPARE YOUR OPENING ACT.") as anything in bronzesidearm
@@ -143,7 +144,7 @@
 				l_hand = /obj/item/rogueweapon/sword/short/gladius
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Another Makhaira & Skills In Dual-Wielding")
+			if("Another Makhaira & Skills In Dual-Wielding")//these names may confuse people, but its soulful to display their actual titles rather than "messer"
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				l_hand = /obj/item/rogueweapon/sword/short/messer/bronze
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -156,7 +157,7 @@
 			if("Another Axe & Skills In Dual-Wielding")
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_APPRENTICE, TRUE)
-				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
+				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe//i hate this objs naming path, just terrible
 		var/bronzediscipline = list("Thespian - Dodge Expert, -I CON/STR & +III SPD","Gladiator - Skin-Armored & Immunity To Pain","Shieldbearer - Well-Armored & Maille Training","Bulwark - Fully-Armored & Plate Training")
 		var/bronzediscipline_choice = input(H, "Choose your DISCIPLINE.", "EMBRACE GLORY AND DEATH.") as anything in bronzediscipline
 		switch(bronzediscipline_choice)
