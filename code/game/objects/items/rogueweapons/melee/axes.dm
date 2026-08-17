@@ -286,11 +286,11 @@
 	name = "bronze war axe"
 	icon_state = "bronzebattleaxe"
 	desc = "An antiquital handstaff, fitted with a thrice-wedged bronze axhead. The unique design of its edge, similar to the khopesh, ensures that each \
-	swing properly ferries all of its wielder's strength into its destination."
-	force = 23 // Similar presentation to a battle axe, albeit without the durability or full damage.
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
-	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH)
-	force_wielded = 27
+	swing properly ferries all of its wielder's strength into its destination regardless of grip."
+	force = 25 // Similar presentation to a battle axe, but same force both one and two handed
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, SPEAR_BASH)
+	force_wielded = 25
 	max_blade_int = 500
 	smeltresult = /obj/item/ingot/bronze
 	minstr = 8

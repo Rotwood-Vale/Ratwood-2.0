@@ -169,6 +169,13 @@
 					/obj/item/rogueweapon/greataxe/steel,
 				)
 
+/datum/supply_pack/rogue/steel_weapons/greatflail
+	name = "Greatflail"
+	cost = 75 // 2 Steel Ingot, 1 Small Log
+	contains = list(
+					/obj/item/rogueweapon/flail/peasantwarflail/steel,
+				)
+
 /datum/supply_pack/rogue/steel_weapons/greataxedoublehead
 	name = "Greataxe, Double-Headed"
 	cost = 110 // 3 Steel Ingot, 1 Small Log

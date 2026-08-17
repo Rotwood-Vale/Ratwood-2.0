@@ -31,7 +31,7 @@
 	..()
 	to_chat(H, span_warning("The curtains part, the shieldline rallies, and the eyes of a thousand shadows fall upon you. Snarling gladiator, enthralled shieldbearer, vestumed actor; ready yourself for another bout."))
 	if(H.mind)
-		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Axepick & +1 Unarmed","Winged Spear + Greatshield","Heavy Khopesh + Greatshield","Shortsword + Shield","Falchion + Shield","Messer + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Axegauntlet + Shortsword","Nothing - Skilled Pugilist, +I STR / -I WIL")
+		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -2 INT")
 		var/bronzeweapon_choice = input(H, "Choose your WEAPONS.", "PUT ON A SHOW FOR THE CROWD.") as anything in bronzeweapon
 		switch(bronzeweapon_choice)
 			if("Spatha & +1 Unarmed")
@@ -50,7 +50,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/greataxe/bronze
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Axepick & +1 Unarmed")
+			if("Dolabra & +1 Unarmed")
 				H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/pick/bronze
@@ -59,25 +59,25 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/bronze/winged/strapless
 				backr = /obj/item/rogueweapon/shield/bronze/great
-			if("Heavy Khopesh + Greatshield")
+			if("Apophis + Greatshield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/long/greatkhopesh
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/bronze/great
-			if("Shortsword + Shield")
+			if("Gladius + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/short/gladius
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/bronze
-			if("Messer + Shield")
+			if("Makhaira + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/short/messer/bronze
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/bronze
-			if("Falchion + Shield")
+			if("Kopis + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/falchion/militia/bronze
@@ -92,7 +92,7 @@
 			if("Axe + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronze
+				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
 				backr = /obj/item/rogueweapon/shield/bronze
 			if("Warclub + Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -109,22 +109,23 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backr = /obj/item/rogueweapon/shield/bronze
 				r_hand = /obj/item/rogueweapon/spear/bronze/strapless
-			if("Axegauntlet + Shortsword")
+			if("Arbelos + Gladius")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltr = /obj/item/rogueweapon/sword/short/gladius
 				r_hand = /obj/item/rogueweapon/katar/bronze/gladiator
 				backr = /obj/item/rogueweapon/scabbard/sword
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
-			if("Nothing - Skilled Pugilist, +I STR / -I WIL")
+			if("Nothing - Skilled Pugilist, +I STR/WIL & -2 INT")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, 1)
-				H.change_stat(STATKEY_WIL, -1)
+				H.change_stat(STATKEY_WIL, 1)
+				H.change_stat(STATKEY_INT, -2)
 
-		var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Shortsword & Skills In Dual-Wielding", "Another Messer & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
+		var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Gladius & Skills In Dual-Wielding", "Another Makhaira & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
 		var/bronzesidearm_choice = input(H, "Choose your ACCOUTREMENTS.", "PREPARE YOUR OPENING ACT.") as anything in bronzesidearm
 		switch(bronzesidearm_choice)
 			if("A Javelin's Bag")
@@ -137,12 +138,12 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/classic
 				beltl = /obj/item/quiver/bronzearrows
-			if("Another Shortsword & Skills In Dual-Wielding")
+			if("Another Gladius & Skills In Dual-Wielding")
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				l_hand = /obj/item/rogueweapon/sword/short/gladius
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Another Messer & Skills In Dual-Wielding")
+			if("Another Makhaira & Skills In Dual-Wielding")
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				l_hand = /obj/item/rogueweapon/sword/short/messer/bronze
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -155,15 +156,16 @@
 			if("Another Axe & Skills In Dual-Wielding")
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_APPRENTICE, TRUE)
-				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronze
-		var/bronzediscipline = list("Thespian - Dodge Expert, -III CON / +III SPD","Gladiator - Skin-Armored & Immunity To Pain","Shieldbearer - Well-Armored & Maille Training","Bulwark - Fully-Armored & Plate Training")
+				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
+		var/bronzediscipline = list("Thespian - Dodge Expert, -I CON/STR & +III SPD","Gladiator - Skin-Armored & Immunity To Pain","Shieldbearer - Well-Armored & Maille Training","Bulwark - Fully-Armored & Plate Training")
 		var/bronzediscipline_choice = input(H, "Choose your DISCIPLINE.", "EMBRACE GLORY AND DEATH.") as anything in bronzediscipline
 		switch(bronzediscipline_choice)
-			if("Thespian - Dodge Expert, -III CON / +III SPD")
+			if("Thespian - Dodge Expert, -I CON/STR & +III SPD")
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				H.change_stat(STATKEY_SPD, 3)
 				H.change_stat(STATKEY_INT, 1)
-				H.change_stat(STATKEY_CON, -3)
+				H.change_stat(STATKEY_STR, -1)
+				H.change_stat(STATKEY_CON, -1)
 				head = /obj/item/clothing/head/roguetown/headband/red
 				mask = /obj/item/clothing/mask/rogue/facemask/bronze
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/bronze/light
@@ -202,13 +204,17 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/rogueweapon/huntingknife/bronze = 1,
+		/obj/item/rogueweapon/huntingknife/combat/bronze = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	H.set_blindness(0)
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			id = /obj/item/clothing/neck/roguetown/psicross/bronze
+		if(/datum/patron/inhumen/zizo)
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/bronze
+		if(/datum/patron/inhumen/graggar)
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze
 		if(/datum/patron/divine/ravox)
 			id = /obj/item/clothing/neck/roguetown/psicross/ravox/bronze
 		if(/datum/patron/divine/astrata)

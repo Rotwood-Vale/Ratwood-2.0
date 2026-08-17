@@ -56,7 +56,7 @@
 	cost = 60 // 2 Bronze Ingots + 1 Small Log
 	contains = list(/obj/item/rogueweapon/spear/bronze)
 
-/datum/supply_pack/rogue/bronze_weapons/trait_menu_description(trait, define_name)
+/datum/supply_pack/rogue/bronze_weapons/trident
 	name = "Bronze Trident"
 	cost = 60
 	contains = list(/obj/item/rogueweapon/spear/trident)
@@ -89,7 +89,7 @@
 /datum/supply_pack/rogue/bronze_weapons/knuckles
 	name = "Bronze Knuckledusters"
 	cost = 30 // 1 Bronze Ingot
-	contains = list(/obj/item/clothing/gloves/roguetown/knuckles/bronze)
+	contains = list(/obj/item/rogueweapon/knuckles/bronzeknuckles)
 
 /datum/supply_pack/rogue/bronze_weapons/whip
 	name = "Bronze-Tipped Whip"

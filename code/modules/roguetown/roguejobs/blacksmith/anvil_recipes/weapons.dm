@@ -494,7 +494,7 @@
 	craftdiff = 4
 
 /datum/anvil_recipe/weapons/iron/peasantwarflail
-	name = "War Flail, Iron (+1 Iron, +2 Small Log)"
+	name = "Greatflail, Iron (+1 Iron, +2 Small Log)"
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/flail/peasantwarflail
 
@@ -588,6 +588,11 @@
 	name = "Flail, Steel"
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/flail/sflail
+
+/datum/anvil_recipe/weapons/steel/peasantwarflail
+	name = "Greatflail, Steel (+1 Steel, +2 Small Log)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/flail/peasantwarflail/steel
 
 /datum/anvil_recipe/weapons/steel/longsword
 	name = "Longsword, Steel (+1 Steel)"

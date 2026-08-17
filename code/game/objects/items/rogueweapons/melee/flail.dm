@@ -264,6 +264,16 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
+/obj/item/rogueweapon/flail/peasantwarflail/steel
+	name = "greatflail"
+	desc = "The lucerne's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
+	icon_state = "greatflail"
+	wdefense = 6
+	minstr = 12
+	max_integrity = 300//+50 over iron warflail
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/steel
+
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."

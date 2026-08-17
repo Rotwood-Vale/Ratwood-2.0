@@ -46,6 +46,7 @@
 	name = "padded arming jacket"
 	desc = "A collared jacket, intended to be worn underneath plate armor. The thicker padding ensures that any gaps left within its alloyed shell are thoroughly protected - lest an unforseen bowstrike, landing true, ruptures the vulnerable flesh beneath."
 	icon_state = "dgamb"
+	armor = ARMOR_PADDED_GOOD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE //More integ than a padded gamberson, at the cost of leg protection
 
@@ -54,7 +55,6 @@
 	desc = "A thick robe in royal purple, befitting the hand, while remaining easy for them to slip about in.."
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
-
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/light
 	name = "light gambeson"
