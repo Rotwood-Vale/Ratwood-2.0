@@ -26993,6 +26993,15 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/bograt/above)
+"fOQ" = (
+/obj/structure/mineral_door/wood{
+	icon_state = "wcv";
+	locked = 1;
+	lockid = "tower";
+	name = "Wizard Tower Storage"
+	},
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors/town/magician/rockhill)
 "fOR" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -27473,9 +27482,11 @@
 "fTI" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/roguemachine/atm{
-	location_tag = "Mages Tower"
+	location_tag = "Mages Tower";
+	pixel_y = 26
 	},
 /obj/structure/fluff/clockwork/alloy_shards,
+/obj/machinery/light/roguestreet/orange/walllamp,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "fTJ" = (
@@ -32426,7 +32437,6 @@
 /obj/item/storage/roguebag{
 	pixel_y = 44
 	},
-/obj/machinery/light/roguestreet/orange/walllamp,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "haE" = (
@@ -40394,8 +40404,11 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
 "iOv" = (
-/obj/structure/roguemachine/withdraw,
+/obj/structure/roguemachine/withdraw{
+	pixel_y = 26
+	},
 /obj/structure/fluff/clockwork/alloy_shards,
+/obj/machinery/light/roguestreet/orange/walllamp,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "iOP" = (
@@ -56041,8 +56054,8 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "mkZ" = (
-/obj/structure/fluff/alch,
 /obj/structure/rack/rogue/shelf,
+/obj/machinery/light/rogue/cauldron,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/rockhill)
 "mlb" = (
@@ -105158,6 +105171,7 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
+/obj/structure/fluff/alch,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "xnB" = (
@@ -275146,8 +275160,8 @@ vRu
 vRu
 lPj
 tGQ
-msa
-msa
+fOQ
+fOQ
 tGQ
 bBS
 bEG
