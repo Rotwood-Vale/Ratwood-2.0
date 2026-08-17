@@ -76,8 +76,8 @@
 #define ARMOR_INT_SIDE_LEATHER 200 // Integrity for leather / copper pieces
 #define ARMOR_INT_SIDE_DECREPIT 150 // Integrity for decrepit pieces
 #define ARMOR_INT_SIDE_CLOTH 100 // Integrity for cloth / aesthetic oriented pieces
-#define ARMOR_INT_SIDE_GOLDPLUS 125 // Integrity for royal variants of golden / cermemonial pieces
-#define ARMOR_INT_SIDE_GOLD 75 // Integrity for golden / ceremonial pieces
+#define ARMOR_INT_SIDE_GOLDPLUS 120 // Integrity for royal variants of golden / cermemonial pieces
+#define ARMOR_INT_SIDE_GOLD 60 // Integrity for golden / ceremonial pieces
 #define ARMOR_INT_SIDE_COVERAGE_BONUS 50 //bonus integrity for side pieces lacking coverage, eg. gorgets
 
 //MASKS - Facemasks
