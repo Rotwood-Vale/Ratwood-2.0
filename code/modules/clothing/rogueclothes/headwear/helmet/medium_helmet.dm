@@ -552,25 +552,6 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
-/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface
-	name = "roundface bascinet"
-	desc = "A bascinet with a conical visor, favored by those without snouts and whiskers. Nestle a feather or length of cloth onto the rim to display your allegiance."
-	icon_state = "roundface"
-	item_state = "roundface"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
-	bloody_icon = 'icons/effects/blood64.dmi'
-
-/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/ComponentInitialize()
-	..()
-	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
-
-/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted
-	name = "snouted roundface bascinet"
-	desc = "A bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
-	icon_state = "roundface_s"
-	item_state = "roundface_s"
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	name = "\improper Etruscan bascinet"
