@@ -124,9 +124,10 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
 	body_parts_covered = GROIN|LEGS|FEET
-	cold_protection = 10
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
+	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN | FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/tights/clothlegs/update_icon()
 	cut_overlays()

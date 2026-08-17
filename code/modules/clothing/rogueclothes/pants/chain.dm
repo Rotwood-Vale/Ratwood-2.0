@@ -163,6 +163,8 @@
 	color = null
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
+	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN | FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/chainlegs/hose/dyeable/Initialize(mapload)
 	. = ..()
@@ -219,6 +221,8 @@
 	color = null
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
+	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN | FOOT_LEFT | FOOT_RIGHT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/under/roguetown/chainlegs/tights/dyeable/Initialize(mapload)
 	. = ..()
