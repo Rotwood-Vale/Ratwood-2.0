@@ -3207,6 +3207,7 @@
 #include "modular_deserttown\jobs\garrison\janissary\janissary.dm"
 #include "modular_deserttown\jobs\garrison\janissary\jezail.dm"
 #include "modular_deserttown\jobs\garrison\janissary\zephyr.dm"
+#include "modular_fenysha_events\modular_fenysha_events.dme"
 #include "modular_hearthstone\code\datums\accents.dm"
 #include "modular_hearthstone\code\game\objects\effects\track.dm"
 #include "modular_hearthstone\code\game\objects\items\signal_horn.dm"

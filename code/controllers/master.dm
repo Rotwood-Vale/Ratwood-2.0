@@ -307,11 +307,13 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
 	var/track_init_memory = !CONFIG_GET(flag/disable_memory_stats)
 	var/init_rss_baseline = track_init_memory ? get_process_rss_bytes() : null
+	add_startup_message("Initializing subsystems...")	//FENYSHA EDIT: title screen boot terminal
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
 		var/ss_init_start = REALTIMEOFDAY
 		SS.Initialize(REALTIMEOFDAY)
+		add_startup_message("Initialized [SS.name] in [round((REALTIMEOFDAY - ss_init_start) / 10, 0.1)] seconds!")	//FENYSHA EDIT: title screen boot terminal
 		if(track_init_memory)
 			init_rss_baseline = log_subsystem_init_memory(SS, init_rss_baseline, (REALTIMEOFDAY - ss_init_start) / 10)
 		CHECK_TICK
@@ -319,6 +321,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
+	add_startup_message(msg)	//FENYSHA EDIT: title screen boot terminal
 
 #ifdef TESTING
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")

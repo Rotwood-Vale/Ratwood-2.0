@@ -15,6 +15,7 @@
 	sight |= SEE_TURFS
 
 	addtimer(CALLBACK(src, PROC_REF(do_after_login)), 4 SECONDS)
+	show_title_screen()	//FENYSHA EDIT: HTML title screen
 	new_player_panel()
 
 	if(client)

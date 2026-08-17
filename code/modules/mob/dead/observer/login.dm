@@ -1,4 +1,5 @@
 /mob/dead/observer/Login()
+	hide_title_screen()	//FENYSHA EDIT: HTML title screen
 	..()
 	if(client)
 		client.update_ooc_verb_visibility()
