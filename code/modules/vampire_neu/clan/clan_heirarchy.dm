@@ -132,6 +132,9 @@
 /datum/action/clan_hierarchy/command_subordinate
 	name = "Command Subordinate"
 	desc = "Give a telepathic command to a subordinate."
+	background_icon = 'icons/mob/actions/vampspells.dmi'
+	background_icon_state = "spell"
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "command"
 	cooldown_time = 100
 
@@ -162,8 +165,7 @@
 			valid_targets += sub.assigned_member
 
 	if(!length(valid_targets))
-		to_chat(user, "<span class='warning'>You have no subordinates!</span>")
-		return
+		to_chat(user, "<span class='warning'>You have no subordinates, assign them in the clan menu!</span>")
 
 	var/mob/living/carbon/human/target = input(user, "Choose subordinate to command:", "Command Subordinate") as null|anything in valid_targets
 
@@ -204,6 +206,9 @@
 /datum/action/clan_hierarchy/summon_subordinate
 	name = "Summon Subordinate"
 	desc = "Command a subordinate to come to your location immediately."
+	background_icon = 'icons/mob/actions/vampspells.dmi'
+	background_icon_state = "spell"
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "summon"
 	cooldown_time = 300
 
@@ -274,7 +279,10 @@
 /datum/action/clan_hierarchy/mass_command
 	name = "Mass Command"
 	desc = "Send a telepathic message to all your subordinates."
-	button_icon_state = "mass_command"
+	background_icon = 'icons/mob/actions/vampspells.dmi'
+	background_icon_state = "spell"
+	button_icon = 'icons/mob/actions/vampspells.dmi'
+	button_icon_state = "command"
 	cooldown_time = 600
 
 /datum/action/clan_hierarchy/mass_command/IsAvailable()
@@ -306,7 +314,7 @@
 			valid_targets += sub.assigned_member
 
 	if(!length(valid_targets))
-		to_chat(user, "<span class='warning'>You have no subordinates!</span>")
+		to_chat(user, "<span class='warning'>You have no subordinates, assign them in the clan menu!</span>")
 		return
 
 	var/command = input(user, "What is your mass command?", "Mass Command") as text|null
@@ -328,6 +336,9 @@
 /datum/action/clan_hierarchy/locate_subordinate
 	name = "Locate Subordinate"
 	desc = "Sense the location of your subordinates."
+	background_icon = 'icons/mob/actions/vampspells.dmi'
+	background_icon_state = "spell"
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "locate"
 	cooldown_time = 200
 
