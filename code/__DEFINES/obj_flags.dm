@@ -14,7 +14,7 @@
 #define BLOCK_Z_IN_DOWN			(1<<10) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP			(1<<11) // Should this object block z uprise from below?
 #define IGNORE_SINK				(1<<12)
-#define INDESTRUCTABLE_ITEM		(1<<13) // Item cannot be destroyed, allows for all other interactions
+
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -34,6 +34,7 @@
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define DREAM_ITEM				(1<<13) //Otherworldly items from Abyssor's dream. Tend to have special effects!
 #define FRESH_FOOD_ITEM			(1<<14) // Currently only used for fresh meat from butchering to differentiate it from stockpile magic meat.
+#define INDESTRUCTABLE_ITEM		(1<<13) // Item cannot be destroyed, allows for all other interactions
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
