@@ -230,6 +230,8 @@
 	reach = 3 // Yep! 3 tiles
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
 
 /datum/intent/lance/onehand
 	chargetime = 5 SECONDS
