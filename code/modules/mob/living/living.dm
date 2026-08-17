@@ -1094,6 +1094,9 @@
 	set name = "Resist"
 	set category = "IC"
 	set hidden = 1
+	//giving up on a struggle must not wait on the breakout cooldown that same struggle charged up front
+	if(cancel_restraint_struggle())
+		return
 	if(!can_resist() || surrendering)
 		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
@@ -1340,6 +1343,10 @@
 
 /mob/living/proc/resist_restraints()
 	return
+
+///Routes a resist press to cuff_resist's give-up branch while a struggle is running. TRUE if it handled it
+/mob/living/proc/cancel_restraint_struggle()
+	return FALSE
 
 /mob/living/proc/get_visible_name()
 	return name
