@@ -57,8 +57,6 @@
 #define WITNESS_NAME 1
 #define WITNESS_DIST 2
 #define WITNESS_TAG 3
-/// Present and TRUE only when that witness could not follow the language
-#define WITNESS_NOLANG 4
 
 /// Keys log_message() copies out of its meta list, read back by the POV panel. Named rather than quoted at
 /// both ends: the list takes any key it is handed, so a misspelling would store fine and read null forever
@@ -67,7 +65,6 @@
 #define LOG_META_TARGET "target"
 #define LOG_META_ATTACKER "attacker"
 #define LOG_META_RECEIPT "receipt"
-#define LOG_META_LANGUAGE "language"
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

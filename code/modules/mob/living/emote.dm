@@ -2672,6 +2672,8 @@
 	if(!lastmsg)
 		return FALSE
 	L.whisper(lastmsg)
+	// death() is called straight below rather than through the suicide verb, so nothing else records this
+	L.suicide_log("prayed for death")
 	sleep(50)
 	L.death()
 

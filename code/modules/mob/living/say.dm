@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost in listening)
 				listening -= ghost
 				the_dead -= ghost
-	log_seen(src, null, listening, message, SEEN_LOG_SAY, language = message_language)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered
@@ -525,7 +525,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost.bypasses_ghost_protection())
 				continue
 			listening -= ghost
-	log_seen(src, null, listening, message, SEEN_LOG_SAY, language = message_language)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered

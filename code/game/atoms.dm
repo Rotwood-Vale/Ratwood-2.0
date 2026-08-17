@@ -1106,7 +1106,7 @@
 	return tags["[get_dir(witness, happening)]"] || "~"
 
 /// Speech arrives TREATED, exactly as listeners read it
-/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type, event = null, language = null)
+/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type, event = null)
 	// only /mob keeps one of these; every other atom discards it unread, so do not build the roster at all
 	if(!ismob(user))
 		return
@@ -1123,25 +1123,9 @@
 		if(!viewer.client) // clientless mobs are never witnesses
 			continue
 		var/witness_dist = (viewer.z == user.z) ? get_dist(user, viewer) : -1
-		var/list/witness_entry = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
-		// the roster is spatial: who stood in earshot, not who followed it. Ask everyone, no language is
-		// universal and a flaw strips even the common one. has_language, not check_language_hear: that one
-		// stresses paranoids, so its talkstone half is inlined instead
-		if(language && !viewer.has_language(language))
-			var/talkstone = FALSE
-			if(ishuman(viewer))
-				var/mob/living/carbon/human/human_viewer = viewer
-				talkstone = istype(human_viewer.wear_neck, /obj/item/clothing/neck/roguetown/talkstone)
-			if(!talkstone)
-				witness_entry += TRUE // WITNESS_NOLANG
-		witness_names[viewer.ckey || REF(viewer)] = witness_entry
-	// stored unjudged, no language is the default one. The name, not the path, so it still reads
-	// after the language datum is gone
-	var/language_name = null
-	if(language)
-		var/datum/language/lang_path = language
-		language_name = initial(lang_path.name)
-	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, meta = list(LOG_META_EVENT = event, LOG_META_WITNESSES = witness_names, LOG_META_TARGET = target_ckey, LOG_META_LANGUAGE = language_name))
+		// the roster is spatial: who stood in earshot, not who followed it
+		witness_names[viewer.ckey || REF(viewer)] = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
+	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, meta = list(LOG_META_EVENT = event, LOG_META_WITNESSES = witness_names, LOG_META_TARGET = target_ckey))
 
 /proc/log_seen_viewers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE, event = null)
 	var/list/viewers = get_hearers_in_view(vision_distance, user)

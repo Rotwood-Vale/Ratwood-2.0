@@ -90,7 +90,7 @@
 	C.visible_message(span_warning("[user] ties [C] with [src.name]."), \
 						span_danger("[user] ties me up with [src.name]."))
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-	log_combat(user, C, "handcuffed")
+	log_combat(user, C, "handcuffed", src)
 
 /obj/item/rope/proc/try_cuff_legs(mob/living/carbon/C, mob/living/user)
 	if(C.legcuffed)
@@ -122,7 +122,7 @@
 						span_danger("[user] ties my legs with [src.name]."))
 	SSblackbox.record_feedback("tally", "legcuffs", 1, type)
 
-	log_combat(user, C, "legcuffed", TRUE)
+	log_combat(user, C, "legcuffed", src)
 
 /obj/item/rope/proc/apply_cuffs(mob/living/carbon/target, mob/user, leg = FALSE)
 	if(!leg)
