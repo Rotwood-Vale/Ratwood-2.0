@@ -9,7 +9,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg' //We don't have the original .ogg and I'm lazy. You get thrall music now. Change it if you want.
 	class_select_category = CLASS_CAT_TRADER
 	extra_context = "Choose between 2 options: being an EVIL mastermind or a WRETCHED servant" //choose between master and servant
-	maximum_possible_slots = 1 
+	maximum_possible_slots = 0
 
 	// balance isn't real i picked these bc they're funny
 	subclass_stats = list(
