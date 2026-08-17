@@ -731,6 +731,16 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull
 
+/datum/anvil_recipe/armor/steel/helmetroundface
+	name = "Bascinet, Roundface, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface
+
+/datum/anvil_recipe/armor/steel/helmetroundface_snouted
+	name = "Bascinet, Roundface, Snouted, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted
+
 /datum/anvil_recipe/armor/steel/bascinet
 	name = "Bascinet Helmet, Steel"
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet

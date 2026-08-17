@@ -186,6 +186,11 @@
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
 
+/datum/supply_pack/rogue/armor_steel/helmet_roundface
+	name = "Helmet, Roundface Bascinet"
+	cost = 90 // 2 Steel
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface)
+
 /datum/supply_pack/rogue/armor_steel/helmet_bascinet
 	name = "Helmet, Bascinet"
 	cost = 90 // 2 Steel

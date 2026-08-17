@@ -143,6 +143,16 @@
 
 /obj/item/clothing/head/roguetown/helmet/sallet/attackby(obj/item/W, mob/living/user, params)
 	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist + GLOB.pridelist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detailalt"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
 		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
@@ -210,6 +220,16 @@
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/attackby(obj/item/W, mob/living/user, params)
 	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist + GLOB.pridelist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detailalt"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
 	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
 		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
@@ -531,6 +551,26 @@
 		if(get_altdetail_color())
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface
+	name = "roundface bascinet"
+	desc = "A bascinet with a conical visor, favored by those without snouts and whiskers. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "roundface"
+	item_state = "roundface"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted
+	name = "snouted roundface bascinet"
+	desc = "A bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "roundface_s"
+	item_state = "roundface_s"
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	name = "\improper Etruscan bascinet"
