@@ -97,11 +97,11 @@
 	var/list/datum/weakref/necro_crystals = list()
 
 /datum/mind/proc/necro_crystal_cap()
-	if(has_necromancer_kit())	//necromancers get a cap of 2
-		return 2
-	if(has_lich_kit())			//proper liches get a cap of six
+	if(has_necromancer_kit())	//necromancers get a cap of 1
+		return 1
+	if(has_lich_kit())			//proper liches get a cap of 6
 		return 6
-	return 1					//nonnecromancer/lich heretics get 1 at a time
+	return 0					//nonnecromancer/lich heretics get 0
 
 /datum/mind/proc/has_necromancer_kit()
 	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
