@@ -1,8 +1,7 @@
 // Ported from AP code/__DEFINES/trading.dm (Economy 3 PR #7000 + follow-up commits on apsrc/main).
-// Backs the SSmerchant_trade subsystem, foreign realms/conditions, trade ships, and the ship
-// fulfillment crate. Catalog-specific favor costs (ROSAWOOD_ARSENAL_FAVOR, UNDERDARK_CARAVAN_FAVOR,
-// CATALOG_KIN_BUY_MULT) are included even though the catalog system itself is stubbed in
-// _es_compat.dm (see Step 9a follow-up notes) - they're inert until that step lands.
+// Backs the SSmerchant_trade subsystem, foreign realms/conditions, trade ships, the ship
+// fulfillment crate, and the merchant catalogs (ROSAWOOD_ARSENAL_FAVOR, UNDERDARK_CARAVAN_FAVOR,
+// CATALOG_KIN_BUY_MULT) in merchant/trade/merchant_catalog.dm.
 
 #define REALM_AAVNR "aavnr"
 #define REALM_GRENZELHOFT "grenzelhoft"

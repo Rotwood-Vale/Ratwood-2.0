@@ -55,57 +55,20 @@ GLOBAL_LIST_INIT(crown_authority_roles, list(
 
 // tick_burgher_pledge() is real as of item 6 (fund_api.dm) - gated on the Golden Bull.
 
-// ---- Merchant catalog stub (Step 9a follow-up: cultural stock / goldface catalog step) ----
-// AP's merchant_trade.dm Initialize() does subtypesof(/datum/merchant_catalog) and calls
-// init_catalog_stock()/restock_catalogs() (both real procs in AP's
-// code/modules/roguetown/roguemachine/merchant/trade/merchant_catalog.dm). That file also defines
-// concrete catalogs (Rosawood Arsenal, Anthraxi Armory) built entirely from /datum/supply_pack/rogue/*
-// typepaths that are part of the cultural-stock/goldface catalog system, out of scope for the core
-// subsystem step. Stub the base type + no-op the two procs so subtypesof() finds nothing and
-// merchant_trade.dm's catalog bookkeeping is a harmless no-op until that step lands.
-/datum/merchant_catalog
-	var/id
-	var/name
-	var/desc
-	var/favor_cost = 0
-	var/home_label
-	/// path -> max stock per restock. Always empty until the catalog step lands.
-	var/list/stock = list()
-
-/datum/controller/subsystem/merchant_trade/proc/init_catalog_stock()
-	return
-
-/datum/controller/subsystem/merchant_trade/proc/restock_catalogs()
-	return
-
-/// UI plumbing for Goldface Harbor/Cultural Stock tabs (Step 9a follow-up).
-/// SSmerchant_trade.catalogs is always empty in ES right now, so these are unreachable in practice -
-/// they only exist so _goldface.dm's build_catalog_data()/catalog_buy/unlock_catalog compile cleanly
-/// against the /datum/merchant_catalog stub above.
-/datum/controller/subsystem/merchant_trade/proc/catalog_unlocked(cid)
-	return FALSE
-
-/datum/controller/subsystem/merchant_trade/proc/catalog_origin_access(datum/merchant_catalog/C, mob/living/carbon/human/H)
-	return FALSE
-
-/datum/controller/subsystem/merchant_trade/proc/catalog_stock_remaining(cid, path)
-	return 0
-
-/datum/controller/subsystem/merchant_trade/proc/consume_catalog_stock(cid, path)
-	return FALSE
-
-/datum/controller/subsystem/merchant_trade/proc/unlock_catalog(cid)
-	return FALSE
+// The merchant catalog system (Rosawood Arsenal, Anthraxi Armory) is real as of the wiring-audit
+// fixes: datum, concrete catalogs and subsystem procs live in
+// code/modules/roguetown/roguemachine/merchant/trade/merchant_catalog.dm, with stock packs in
+// code/modules/cargo/packsrogue/merchant/foreign/cultural_rosawood.dm and cultural_underdark.dm.
 
 // Ticker realm name stub not needed: Ratwood's SSticker already carries realm_name,
 // kept in sync with SSmapping.map_adjustment.realm_name.
 
-// ---- Cultural stock stubs (Step 9d follow-up: foreign realm cultural stock / bulk drinks export) ----
+// ---- Cultural stock vars (live) ----
 // trade_ship.dm's roll_cultural_stock()/build_drinks_lines() read these vars off supply packs and
-// brewing recipes to build ship cargo manifests. Neither var exists in ES yet - they're part of AP's
-// cultural-stock/bulk-trade system that ships alongside realm content (Step 9d). Until then,
-// foreign_realm.cultural_stock_pool is empty (no realm subtypes exist), so these stay at their
-// harmless defaults (0/null) and the two procs just produce empty lists.
+// brewing recipes to build ship cargo manifests. These are the real and only definitions; the
+// cultural pack files under code/modules/cargo/packsrogue/merchant/foreign/ set them per pack, and
+// every foreign realm under merchant/trade/realms/ carries a populated cultural_stock_pool. In AP
+// the vars live on the base types directly; here they graft on so the base files stay unforked.
 /datum/supply_pack
 	var/ship_qty_min = 0
 	var/ship_qty_max = 0

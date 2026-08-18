@@ -17,9 +17,9 @@
 //  - Goldface/Silverface: kept close to AP - the Secrets toggle, per-machine tariff tallies,
 //    Harbor tab (hails/dock spots/cultural stock/merchant's levy), and Silverface's flat 50%
 //    surcharge all match code/modules/roguetown/roguemachine/merchant/_goldface.dm exactly.
-//    The "Catalogs" concept (Rosawood Arsenal, Anthraxi Armory) is cut - per
-//    _es_compat.dm, SSmerchant_trade.catalogs is always empty (no /datum/merchant_catalog
-//    subtypes exist), so build_catalog_data() is a harmless dead branch in practice.
+//    The Catalogs (Rosawood Arsenal, Anthraxi Armory) are real as of the wiring audit
+//    (merchant/trade/merchant_catalog.dm); both unlock by merchant favor since neither has a
+//    home kinship realm in this tree.
 //  - Escrow/COMMISSIONER: kept close to AP, but the default percent_margin/flat_margin are
 //    70%/5m in ES (code/modules/roguetown/roguemachine/escrow.dm), not AP's 20%/0.
 //  - Rag Picker/Scrapper: kept. seed_budget defaults to 0 on the base type but both concrete
@@ -39,7 +39,7 @@
 /datum/book_entry/treasury_merchant/navigator/inner_book_html(mob/user)
 	return {"
 		<div>
-		<p><b>NAVIGATOR:</b> The heart of everyday commerce in Azuria. This machine lifts sellable goods up by balloon roughly every two minutes.</p>
+		<p><b>NAVIGATOR:</b> The heart of everyday commerce in [SSmapping.map_adjustment.realm_name]. This machine lifts sellable goods up by balloon roughly every two minutes.</p>
 
 		<h3>How it works</h3>
 		<ul>
@@ -159,6 +159,7 @@
 
 		<h3>Favor spending</h3>
 		<p>Accumulated Favor unlocks Company Gnomes automation for Silverface's margin, an extra pier, and an Auto-Hailer that hails and dismisses ships automatically while you're away. The Favor ledger and current/high-water totals are visible on the Harbor tab.</p>
+		<p>Favor also signs open two exclusive foreign catalogs on the Cultural Stock tab: the <b>Rosawood Arsenal</b> ([ROSAWOOD_ARSENAL_FAVOR] favor), elven arms and the bounty of Eveswood, and the <b>Anthraxi Armory</b> ([UNDERDARK_CARAVAN_FAVOR] favor), drowcraft weapons and spidersilk. Their stock is limited and restocks daily; the import tariff applies as usual.</p>
 		</div>
 	"}
 

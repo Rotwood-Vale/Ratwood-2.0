@@ -33,11 +33,9 @@
 //  - Uses ES's real treasury/stats API (SStreasury.mint/get_tax_rate/apply_concordat_tithe,
 //    record_round_statistic/record_featured_stat, budget2change()) instead of AP's - these already exist
 //    1:1 in ES (see code/modules/banking/fund_api.dm, code/__HELPERS/round_statistics.dm).
-//  - The merchant-catalog system (Rosawood Arsenal etc) is a no-op stub in ES
-//    (code/controllers/subsystem/rogue/economy/_es_compat.dm) - SSmerchant_trade.catalogs is always
-//    empty, so build_catalog_data()/catalog_buy/unlock_catalog are harmless dead branches until that
-//    step lands. Small accessor stubs (catalog_unlocked/catalog_origin_access/catalog_stock_remaining/
-//    consume_catalog_stock) were added to _es_compat.dm so this file compiles against that stub.
+//  - The merchant-catalog system (Rosawood Arsenal, Anthraxi Armory) is real here; the datum and
+//    subsystem procs live in code/modules/roguetown/roguemachine/merchant/trade/merchant_catalog.dm.
+//    Neither catalog has a home kinship realm in this tree, so access is by favor unlock alone.
 
 #define UPGRADE_NOTAX		(1<<0)
 
@@ -657,8 +655,8 @@
 	for(var/cid in SSmerchant_trade.catalogs)
 		var/datum/merchant_catalog/C = SSmerchant_trade.catalogs[cid]
 		var/unlocked = SSmerchant_trade.catalog_unlocked(cid)
-		var/origin_access = SSmerchant_trade.catalog_origin_access(C, viewer)
-		var/accessible = unlocked || origin_access
+		var/kin_access = !isnull(SSmerchant_trade.catalog_access_basis(C, viewer))
+		var/accessible = unlocked || kin_access
 		var/list/entries = list()
 		if(accessible)
 			for(var/path in C.stock)
@@ -666,7 +664,7 @@
 				if(!PA)
 					continue
 				var/pre_kin = PA.cost
-				var/base = origin_access ? max(1, round(PA.cost * CATALOG_KIN_BUY_MULT)) : PA.cost
+				var/base = kin_access ? max(1, round(PA.cost * CATALOG_KIN_BUY_MULT)) : PA.cost
 				var/tariff = tariff_active ? round(tariff_rate * base) : 0
 				entries += list(list(
 					"pack" = "[PA.type]",
@@ -686,7 +684,7 @@
 			"favor_cost" = C.favor_cost,
 			"home_label" = C.home_label,
 			"unlocked" = unlocked,
-			"origin_access" = origin_access,
+			"origin_access" = kin_access,
 			"accessible" = accessible,
 			"discount_pct" = round((1 - CATALOG_KIN_BUY_MULT) * 100),
 			"entries" = entries,
@@ -877,8 +875,8 @@
 			var/datum/merchant_catalog/C = SSmerchant_trade.catalogs[cid]
 			if(!C)
 				return TRUE
-			var/origin_access = SSmerchant_trade.catalog_origin_access(C, H)
-			if(!SSmerchant_trade.catalog_unlocked(cid) && !origin_access)
+			var/kin_access = !isnull(SSmerchant_trade.catalog_access_basis(C, H))
+			if(!SSmerchant_trade.catalog_unlocked(cid) && !kin_access)
 				to_chat(H, span_warning("The [C.name] is not open."))
 				return TRUE
 			var/path = text2path(params["pack"])
@@ -892,7 +890,7 @@
 				return TRUE
 			var/base_cost = PA.cost
 			var/kin_saving = 0
-			if(origin_access)
+			if(kin_access)
 				var/pre_kin = base_cost
 				base_cost = max(1, round(base_cost * CATALOG_KIN_BUY_MULT))
 				kin_saving = pre_kin - base_cost
