@@ -9,10 +9,10 @@ ES deviations from AP:
   noticeboard32.dmi is dropped for now (minor optional feature; the freestanding board is
   the only kind ES has ever had). The /boardbarrier subtype from ES's old flat file is kept
   as-is (still referenced by _maps/map_files/dun_world/dun_world.dmm).
-- attackby() no longer pins Steward's blockade writs to the board: that entire feature
-  (/obj/item/quest_writ/blockade, BLOCKADE_FELLOWSHIP_REQUIREMENT, promote_to_board_gated())
-  depends on the blockade writ/scroll system, which _es_compat.dm already flags as
-  "to be ported with blockade content". Left out here rather than invented.
+- Blockade writs never physically pin to this board: AP tip dropped its old
+  promote_to_board_gated() attackby flow in favour of the Avisa scout rows simply showing
+  blockade_writ_out via blockade.has_active_scroll(), which build_scout_regions() below
+  already mirrors. The writ item itself posts at the contract ledger.
 - ES's OLD mercenary-hiring system (silver/gold roguecoin gate, merc_message/merc_broadcast/
   change_merc_status/edit_merc_post, direct_response Topic hrefs, MERC_STATUS_*, the
   Sellswords board category) has been superseded by the ported dedicated mercenary statue

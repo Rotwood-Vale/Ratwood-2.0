@@ -1,4 +1,5 @@
 /datum/advclass/sfighter
+	townie_contract_gate_exempt = TRUE
 	name = "Battlemaster"
 	tutorial = "You are a seasoned weapon specialist, clad in maille, with years of experience in warfare and battle under your belt."
 	allowed_sexes = list(MALE, FEMALE)

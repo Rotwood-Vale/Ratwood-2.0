@@ -23,6 +23,14 @@
 		play_reject_sound()
 		return
 
+	if(!is_townie_contract_gate_exempt(user))
+		var/elapsed = world.time - SSticker.round_start_time
+		if(elapsed < CONTRACT_TOWNIE_GATE_TIME)
+			var/remaining_min = round((CONTRACT_TOWNIE_GATE_TIME - elapsed) / (1 MINUTES))
+			say("This contract is reserved for sellswords and the like. Members of the town may sign after [remaining_min]m.")
+			play_reject_sound()
+			return
+
 	var/active_cap = get_active_quest_cap(user)
 	if(count_user_active_contracts(user) >= active_cap)
 		say("You are already committed to [active_cap] contracts. Complete one before signing another.")

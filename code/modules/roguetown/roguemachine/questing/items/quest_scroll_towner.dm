@@ -14,7 +14,7 @@
 			to_chat(user, span_warning("You cannot take a contract you yourself issued. Put it in another's hands."))
 			return
 		if(!SStreasury.has_account(user))
-			to_chat(user, span_warning("No account on record - register with a Meister before taking a contract."))
+			to_chat(user, span_warning("No account on record - register with a Nervelock before taking a contract."))
 			return
 		if(!Q.can_claim(user))
 			to_chat(user, span_warning(Q.claim_failure_reason(user)))
