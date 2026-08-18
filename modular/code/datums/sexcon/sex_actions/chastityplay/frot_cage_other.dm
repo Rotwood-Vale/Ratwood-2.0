@@ -40,7 +40,7 @@
         user.sexcon.try_pelvis_crush(target)
 
     if(HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] draws [target.p_their()] cock across the spiked outer surface of [user.p_their()] [get_chastity_device_name(user)], each drag leaving a new sting..."))
+        user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] draws [target.p_their()] cock across the spiked outer surface of [user.p_their()] [get_chastity_device_name(user)], each drag leaving a new sting..."))
         user.sexcon.outercourse_noise(target, TRUE)
 
         user.sexcon.perform_sex_action(user, 0.8, 2.0, TRUE)
@@ -50,7 +50,7 @@
         user.sexcon.handle_passive_ejaculation(target)
         target.sexcon.handle_passive_ejaculation(user)
         return
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [target.p_their()] cock along the bars of [user.p_their()] [get_chastity_device_name(user)], each pass earning a faint rasp of metal..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [target.p_their()] cock along the bars of [user.p_their()] [get_chastity_device_name(user)], each pass earning a faint rasp of metal..."))
     user.sexcon.outercourse_noise(target, TRUE)
 
     user.sexcon.perform_sex_action(user, 1.1, 1, TRUE)

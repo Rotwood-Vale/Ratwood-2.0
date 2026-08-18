@@ -1,5 +1,0 @@
-author: "mushy"
-delete-after: True
-changes:
-  - bugfix: "Fixes the ztratocaster being able to be broken (for real this time)"
-  - bugfix: "Fixes the ztratocaster not being able to be repaired"

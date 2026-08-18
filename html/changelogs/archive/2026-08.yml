@@ -384,3 +384,59 @@
   - rscadd: The flare gun has a dial you can set in advance so it fires without asking
       which signal.
   - rscadd: Signal flare canisters can now be crafted at the artificer table.
+2026-08-18:
+  AllCorruptingWyrm:
+  - rscadd: The Keep has reinforced (NOT barred) windows
+  - rscadd: Expanded the mage section of the Keep.
+  - rscadd: Counsillors/Guestroom keys to the stewardry.
+  - rscadd: Expanded the Maid hallway.
+  - rscadd: Teapot sets to the maid area.
+  - rscadd: Left and right vomitorium in the maid section
+  - rscadd: Ammenities to the Keeper Sanctum.
+  - rscadd: Antechamber to the Inquisition Embassy
+  - rscadd: Secret exit ways to the [REDACTED]
+  - rscadd: Adjusted the feasthall a little.
+  - rscadd: Church Vault on Z level 4
+  - rscdel: KC balcony
+  - rscdel: Merchant balcony
+  - rscadd: Stone walls to the upper floor of the Merchantry.
+  Arturlang:
+  - bugfix: a lag issue related to timer datums being created
+  IronDragoon:
+  - rscadd: New Martyr weapons from AP with special intents, the weapon can be recalled
+      by the martyr at a pantheon cross
+  - rscadd: New parts of Martyr Armor from AP
+  - balance: Martyr 2 minute duration's buffs are now frontloaded instead of being
+      given at the last 30 seconds.
+  - balance: Martyr 2 minute duration no longer has an aheal / revive.
+  - rscadd: orison and prestidigitation offer some new mechanical sexcon actions
+  - rscadd: A few other new sexcon actions
+  - qol: sexcon actions no longer repeat and spam chat, subtle still will though at
+      longer intervals
+  - bugfix: cumming while knotted will now roll pregnancy check where appropriate
+  NPC1314:
+  - rscadd: Adds leather corslet and padded leather hood to Knave store for bandits.
+  - rscadd: Adds bandit hood to  Clothing tab in bandit store
+  - rscadd: Adds blue hat to loadouts
+  Shadow-Quill:
+  - qol: ABSOLVE now has "NO" as the default response when used on a dead person,
+      for revival.
+  Teragenic:
+  - rscadd: Adds a whole lot of Neufood Code from AP. Lots of pies. Deserts. Etc
+  - balance: Tried to rebalance AP values to RW values and
+  - bugfix: FIND ME ANY MENTIONS ABOUT THE AZUREAN PEAK PLEASE
+  - image: Adds a lot of Neufood Icons
+  - code_imp: Ports the entirety of AP's neufood code
+  mushy:
+  - bugfix: Fixes the ztratocaster being able to be broken (for real this time)
+  - bugfix: Fixes the ztratocaster not being able to be repaired
+  ophaq:
+  - rscadd: Centaurs and people who are interested rejoice! Sexcon menu now lets you
+      hide your genitals.
+  - rscadd: Two new pintles. Sheathless equine ones of both variants.
+  - bugfix: Fixes mirror magic genital swapping. It now updates the sexcon menu so
+      you actually use the verbs of the pintle / etc you switched too, plus you can
+      knot. It should also no longer make your pintle look flat and update properly.
+  yupup123:
+  - rscadd: Adds a new toggle for seeing a character's role under their name in the
+      options.

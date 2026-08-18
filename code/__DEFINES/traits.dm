@@ -276,6 +276,10 @@
 #define TRAIT_GANG_B "Gang Blortz Volves"
 #define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
+#define TRAIT_ON_BOAT "on_boat"
+#define TRAIT_OAR "oar"
+#define TRAIT_OAR_PROPELLED "oar_propelled"
+#define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
