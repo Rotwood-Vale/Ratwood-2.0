@@ -26,6 +26,7 @@
 #define ARMOR_INT_CHEST_PLATE_BLACKSTEEL 600
 #define ARMOR_INT_CHEST_PLATE_STEEL 500
 #define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER 100 //Deducted from Light AC brigandine parts, added to Heavy AC brigandine parts.
 #define ARMOR_INT_CHEST_PLATE_PSYDON 500
 #define ARMOR_INT_CHEST_PLATE_IRON 375
 #define ARMOR_INT_CHEST_PLATE_DECREPIT 250
@@ -99,6 +100,8 @@
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
+// BRIGANDINE — All brigandine parts. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!
+#define ARMOR_BRIGANDINE list("blunt" = 60, "slash" = 90, "stab" = 50, "piercing" = 60, "fire" = 0, "acid" = 0)
 
 // Medium AC
 #define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)

@@ -39,6 +39,7 @@
 	name = "Chapeau a Naled"
 	desc = "A leather cap, armored with layers of especially crafted armored coins each baring wards against supernatural forces. The heavy closeable, face-obscuring flaps are both practical, to protect from sand and dust and frigid nights--and to ensure the Otavan aids were not violating Naledi customs with their uncovered faces.</br>They are heavily associated with the Poet-Historian Aalis Petit and her writings and songs about the campaign into Naledi and through her, adventurous bards of Otava. "
 	icon_state = "chapnaled"
+	armor = ARMOR_LEATHER_STUDDED//description refrences armored coins, sounds like studded armor to me
 	var/open_wear = TRUE
 	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|HAIR|EARS
