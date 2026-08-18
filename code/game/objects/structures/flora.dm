@@ -124,6 +124,7 @@
 	desc = ""
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
+	plane = FLOOR_PLANE
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"

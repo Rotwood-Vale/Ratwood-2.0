@@ -297,13 +297,21 @@
 			playsound(src.loc, "burn", 100, TRUE)
 
 /obj/structure/vine/Crossed(mob/crosser)
+	var/mob/living/M = crosser
 	if(isliving(crosser))
 		for(var/datum/vine_mutation/SM in mutations)
 			SM.on_cross(src, crosser)
 	if(prob(23) && istype(crosser) && !isvineimmune(crosser))
-		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+	if(istype(crosser))
+		if(HAS_TRAIT(crosser, TRAIT_CURSE_DENDOR))// cursed by Dendor means longer tangle. Sucks.
+			M.Immobilize((36)-M.STASTR)
+			M.adjustBruteLoss(5)
+			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+		else if(!isvineimmune(crosser))
+			M.Immobilize((18)-M.STASTR)
+	
 
 /datum/vine_mutation/earthy
 	name = "earthy"

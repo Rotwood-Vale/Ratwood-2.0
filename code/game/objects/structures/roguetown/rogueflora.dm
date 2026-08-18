@@ -390,6 +390,7 @@
 	max_integrity = 2
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
+	plane = FLOOR_PLANE
 
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
@@ -418,6 +419,7 @@
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "reedbush_1"
 	max_integrity = 1
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 
 /obj/structure/flora/roguegrass/reedbush/Initialize(mapload)
 	. = ..()
@@ -437,9 +439,13 @@
 	max_integrity = 10
 	layer = 4.1
 	blade_dulling = DULLING_CUT
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 
 /obj/structure/flora/roguegrass/water/update_icon()
 	dir = pick(GLOB.cardinals)
+
+/obj/structure/flora/roguegrass/water/reeds/update_icon()
+	dir = pick(GLOB.alldirs)
 
 /datum/component/roguegrass/Initialize()
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Crossed))
@@ -453,7 +459,7 @@
 			return
 		else
 			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(A.loc, "plantcross", 100, FALSE, -1)
+				playsound(A.loc, "plantcross", 80, FALSE, -1)
 			var/oldx = A.pixel_x
 			animate(A, pixel_x = oldx+1, time = 0.5)
 			animate(pixel_x = oldx-1, time = 0.5)
@@ -472,8 +478,9 @@
 	max_integrity = 100
 	destroy_sound = "plantcross"
 	climbable = FALSE
-	dir = SOUTH
+	dir = NONE // Impassable in this direciton
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 2)
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 	var/list/looty = list()
 	var/bushtype
 
@@ -504,6 +511,8 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
+		if(L.mobility_flags & MOBILITY_STAND)
+			L.Immobilize((36)-L.STASTR*2)
 		if(L.m_intent == MOVE_INTENT_RUN && (L.mobility_flags & MOBILITY_STAND))
 			if(!ishuman(L))
 				to_chat(L, span_warning("I'm cut on a thorn!"))
@@ -565,8 +574,8 @@
 /obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return 1
-	if(get_dir(loc, target) == dir)
-		return 0
+//	if(get_dir(loc, target) == dir)	disabled to allow movement of mobs through bushes
+//		return 0
 	return 1
 
 /obj/structure/flora/roguegrass/bush/westleach
@@ -763,7 +772,38 @@
 
 /obj/structure/flora/roguegrass/thorn_bush/update_icon()
 	icon_state = "thornbush"
-//WIP
+
+/obj/structure/flora/roguegrass/thorn_bush/Crossed(atom/movable/AM)
+	..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.Immobilize((36)-L.STASTR*2) // these bushes are dense and thorny, can´t avoid effects by crawling
+		if(HAS_TRAIT(L, TRAIT_KNEESTINGER_IMMUNITY)) //Dendor kneestinger immunity also protects against damage part
+			if(!HAS_TRAIT(src, TRAIT_CURSE_DENDOR))
+				return TRUE
+		if(!ishuman(L))
+			to_chat(L, span_warning("I'm cut on a thorn!"))
+			L.apply_damage(5, BRUTE)
+		else
+			var/mob/living/carbon/human/H = L
+			if(HAS_TRAIT(src, TRAIT_CURSE_DENDOR))	// cursed by Dendor means 100% thorn impale. Sucks.
+				var/obj/item/bodypart/BP = pick(H.bodyparts)
+				var/obj/item/natural/thorn/TH = new(src.loc)
+				BP.add_embedded_object(TH, silent = TRUE)
+				BP.receive_damage(10)
+				to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))				
+			else if(prob(10))
+				if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
+					var/obj/item/bodypart/BP = pick(H.bodyparts)
+					var/obj/item/natural/thorn/TH = new(src.loc)
+					BP.add_embedded_object(TH, silent = TRUE)
+					BP.receive_damage(10)
+					to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+			else
+				var/obj/item/bodypart/BP = pick(H.bodyparts)
+				to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
+				BP.receive_damage(10)
+
 
 // fyrituis bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/pyroclasticflowers
