@@ -101,7 +101,7 @@
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
 // BRIGANDINE — All brigandine parts. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!
-#define ARMOR_BRIGANDINE list("blunt" = 60, "slash" = 90, "stab" = 50, "piercing" = 60, "fire" = 0, "acid" = 0)
+#define ARMOR_BRIGANDINE list("blunt" = 70, "slash" = 90, "stab" = 40, "piercing" = 70, "fire" = 0, "acid" = 0)
 
 // Medium AC
 #define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
