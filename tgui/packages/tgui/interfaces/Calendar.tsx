@@ -85,7 +85,7 @@ export const Calendar = () => {
     <Window width={620} height={680} title="Calendar" theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
-          <div style={titleStyle}>The Azurian Calendar</div>
+          <div style={titleStyle}>The Realm's Calendar</div>
           <div style={subtitleStyle}>Year {view_year} AP</div>
           <hr style={rulerStyle} />
 

@@ -5,7 +5,7 @@
 			"My liege, I'll have to hire three smiths to remake that.",
 			"I'd write a complaint tablet about you.",
 			"Bold of you to think this machine does not have a touchstone in it.",
-			"The quality of your goods could fell kingdoms, starting with Azuria.",
+			"The quality of your goods could fell kingdoms.",
 		)
 	if(quality > ITEM_QUALITY_STANDARD)
 		return pick(
@@ -31,7 +31,7 @@
 			"Mermaids are leaping out of the water for this cargo!",
 			"Surely, Psydon will return to observe the quality of your cargo.",
 			"The Captain is most pleased.",
-			"Tis was worth the trip to Azuria.",
+			"Tis was worth the crossing of half the world.",
 			"The Company appreciates your efforts.",
 		)
 	return null

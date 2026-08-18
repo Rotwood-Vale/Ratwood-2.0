@@ -97,7 +97,7 @@
 		/datum/supply_pack/rogue/alcohol/beer,
 	)
 	hail_lines = list(
-		"Ah, the Azurian shore at last! Por favor, have my tariff men ready - I am not a patient man when the sun is high.",
+		"Ah, this fabled shore at last! Por favor, have my tariff men ready - I am not a patient man when the sun is high.",
 		"By Abissoro, we have crossed two storms to reach this pier. I trust your purse is as wide as my hold.",
 		"Greetings, signore. My wine is the best in Psydonia, and my crew has been told not to spit on your stones. See that you give them no reason.",
 		"My chaplain has held sermon every sunsdae since we cleared Porto del Re. Ravox watches over honest weights at this gangway - bear that in mind.",

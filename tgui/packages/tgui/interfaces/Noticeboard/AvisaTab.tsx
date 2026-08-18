@@ -89,7 +89,7 @@ export const AvisaTab = ({ data, act }: TabProps) => {
           marginTop: 6,
         }}
       >
-        The Azurian Avisa
+        The Realm's Avisa
       </div>
       <div style={subtitleStyle}>
         Tidings, edicts, and trade of the realm

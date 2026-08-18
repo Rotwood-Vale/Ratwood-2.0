@@ -101,7 +101,7 @@
 		"Peace upon the Company. Naledi greets the factor, in Psydon's name, with the respect owed between honest houses.",
 		"I bring glass from the Dunes, gold from Veranda, the finest coffee and tea in Psydonia. A thirst for iron that no caravan can slake.",
 		"Every time we sell you coffee and tea, the finest in Psydonia, one of your stevedores would offer us wines and drinks. Know that us in Naledi do not indulge in such spirits nor bring them to court. We follow that very strictly. Now - do you happen to have some Kazengunese plum wine on hand?",
-		"We know in Azuria you tolerate Tieflings and Goblins amongst your people, yet fight and slay them by the hundreds every dae. Do not bring them near the dock - my crew might suddenly remember their Warscholar heritage.",
+		"We know in these lands you tolerate Tieflings and Goblins amongst your people, yet fight and slay them by the hundreds every dae. Do not bring them near the dock - my crew might suddenly remember their Warscholar heritage.",
 		"Do not point at my crew when you address them, factor. To do so is rude - and rudeness is how Djinn slip into a man's manners first, before all else.",
 		"Bring me no gifts of gold; we mine more than the daimyos can swallow. Bring exotic spice, ore foreign to my dunes, or do not bring me anything at all.",
 		"My weights are true under the gaze of Astrata - whom you call goddess and we call merely one of His aspects. Inspect them. Inspect them again if it pleases you.",

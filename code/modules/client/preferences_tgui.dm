@@ -3,7 +3,7 @@
 	var/static/list/theme_names = list(
 		"azure_default" = "Ascendant",
 		"azure_green" = "Undivided",
-		"azure_lane" = "Azuria",
+		"azure_lane" = "Cerulean",
 		// "azure_gold" = "Lirvas",
 		"azure_purple" = "Zybantium",
 		// "azure_gilbranze" = "Gilbranze", - Coming soon :tm:

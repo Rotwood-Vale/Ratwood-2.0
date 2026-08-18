@@ -70,7 +70,7 @@
 	if(!length(options))
 		return
 
-	var/picked = input(user, "Which chapter would I like to read?", "The Comprehensive Guide to the Azurian Economy") as null|anything in options
+	var/picked = input(user, "Which chapter would I like to read?", "The Comprehensive Guide to the [SSmapping.map_adjustment.realm_name] Economy") as null|anything in options
 	if(!picked)
 		return
 	var/picked_type = label_to_type[picked]

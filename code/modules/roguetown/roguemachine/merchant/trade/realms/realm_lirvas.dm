@@ -97,5 +97,5 @@
 		"The figurehead of my ship is gold leafed over an older carving. The crew swears the under carving smiles when the lamps go out. I have stopped asking what it smiles at.",
 		"You burn coin for warmth in your hearths. We do not. Sell us your grain and you will learn why.",
 		"A Tithecaster of the Inner Ring rides with me, weighing souls in coin as her line has done for three generations. For one gold sovereign she will tell you the weight your sins would fetch at the Hoard's scales upon your death. She has not been wrong yet. Most of her clients do not ask twice - but those who heed her have died well, and the Hoard remembers a settled debt before it remembers any other thing.",
-		"Rumors says that Lord Zarvlor does not eat proper food and only eat gold. Do not let that deters you, the people of the Inner Ring are quite fond of Azurian seafood. Send me anything and everything you have that is quality and worth the space of runic chests home."
+		"Rumors says that Lord Zarvlor does not eat proper food and only eat gold. Do not let that deters you, the people of the Inner Ring are quite fond of your seafood. Send me anything and everything you have that is quality and worth the space of runic chests home."
 	)
