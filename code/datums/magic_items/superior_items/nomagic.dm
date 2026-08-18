@@ -1,4 +1,4 @@
-/datum/magic_item/mundane/nomagicmdips his head
+/datum/magic_item/mundane/nomagic
 	name = "no magic"
 	description = "It has red gemstones embedded."
 
