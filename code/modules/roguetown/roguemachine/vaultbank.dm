@@ -707,9 +707,16 @@
 	var/datum/fund/F = get_linked_fund()
 	if(!F)
 		return FALSE
+	// AP parity: a charity reserve floor stays in the fund, less whatever principal is
+	// already out in loans.
+	var/outstanding = SStreasury.get_outstanding_principal_from_fund(F)
+	var/withdrawable = max(0, F.balance - max(0, CHURCH_RESERVE_FLOOR - outstanding))
 	if(isnull(amount))
-		return F.balance > 0
-	return amount <= F.balance
+		return withdrawable > 0
+	return amount <= withdrawable
+
+/obj/structure/roguemachine/vaultbank/church/get_withdraw_rule_text()
+	return "The Church mandates that loans is to be given to the poor, downtrodden, and malumites. [CHURCH_RESERVE_FLOOR]m must remain reserved for charity, less the principal currently in circulation."
 
 /obj/structure/roguemachine/vaultbank/church/enforce_placement()
 	return
