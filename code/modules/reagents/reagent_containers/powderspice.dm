@@ -265,6 +265,18 @@
 	M.playsound_local(M, 'sound/misc/heroin_rush.ogg', 100, FALSE)
 	M.visible_message(span_warning("Blood runs from [M]'s nose."))
 
+/datum/reagent/allspice
+	name = "allspice"
+	description = "A blend of toasted spices, temptingly aromatic to the senses." 
+	color = "#CE8C33"
+	overdose_threshold = 0
+	metabolization_rate = 1
+	taste_description = "fragrant spiciness"
+
+/datum/reagent/allspice/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/buff/greatmealbuff)
+	return ..()
+
 /obj/item/reagent_containers/powder/moondust
 	name = "moondust"
 	desc = "a mound of iridescent white powder with an acrid, potent scent that numbs your nostrils"

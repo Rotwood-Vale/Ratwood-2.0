@@ -25,7 +25,7 @@
 	user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s butt..."))
 
 /datum/sex_action/toy_other_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s butt..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s butt..."))
 	user.sexcon.outercourse_noise(target)
 
 	user.sexcon.perform_sex_action(target, 2, 6, TRUE)
@@ -49,7 +49,7 @@
 	pegging = TRUE
 
 /datum/sex_action/toy_other_anal/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s ass."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s ass."))
 	user.sexcon.intercourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 

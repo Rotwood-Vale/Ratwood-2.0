@@ -51,6 +51,18 @@
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
 
+/datum/outfit/job/roguetown/azeb/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare_gun) in H.belt)
+			return
+		var/obj/item/signal_flare_gun/loaded/gun = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, gun, null, TRUE, TRUE))
+			gun.forceMove(get_turf(H))
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
+
 /datum/advclass/azeb/ranger
 	name = "Ranger"
 	tutorial = "You are well versed in the ways of handling a bow. \

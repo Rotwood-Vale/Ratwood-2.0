@@ -50,6 +50,8 @@ SUBSYSTEM_DEF(throwing)
 	var/mob/thrower
 	var/diagonals_first
 	var/dist_travelled = 0
+	/// right now just used by the throwingarm trait, adds extra damage on hit, go figure
+	var/bonus_throwforce = 0
 	var/start_time
 	var/dist_x
 	var/dist_y
@@ -89,6 +91,9 @@ SUBSYSTEM_DEF(throwing)
 	if(callback)
 		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
 	return ..()
+
+/datum/thrownthing/proc/get_effective_throwforce()//total our throwface including trait bonuses
+	return thrownthing.throwforce + bonus_throwforce
 
 ///Defines the datum behavior on the thrownthing's qdeletion event.
 /datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
