@@ -17,7 +17,7 @@
 	STASTR = 16
 	STASPD = 2
 
-/mob/living/simple_animal/hostile/retaliate/blood/Initialize()
+/mob/living/simple_animal/hostile/retaliate/blood/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
 
@@ -45,7 +45,7 @@
 	STASPD = 66
 	move_resist = MOVE_FORCE_OVERPOWERING
 
-/mob/living/simple_animal/hostile/retaliate/blood/ascended/Initialize()
+/mob/living/simple_animal/hostile/retaliate/blood/ascended/Initialize(mapload)
 	. = ..()
 	set_light(5, 5, 5, l_color = LIGHT_COLOR_RED)
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
