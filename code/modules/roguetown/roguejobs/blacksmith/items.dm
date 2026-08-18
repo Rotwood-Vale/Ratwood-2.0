@@ -248,7 +248,7 @@
 /datum/component/metal_glint/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(stop_process))
+	RegisterSignal(parent, list(COMSIG_QDELETING), PROC_REF(stop_process))
 	START_PROCESSING(SSobj, src)
 
 /datum/component/metal_glint/process()
