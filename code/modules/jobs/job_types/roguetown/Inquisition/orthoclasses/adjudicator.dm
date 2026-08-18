@@ -87,7 +87,7 @@
 		if("Cuirass")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate, SLOT_ARMOR, TRUE)
 
-	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
+	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield", "Psydonic Urumi + Shield",
 		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
 		"Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
 	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
@@ -104,6 +104,10 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 		if("Psydonic Whip + Shield")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
+		if("Psydonic Urumi + Shield")
+			H.put_in_hands(new /obj/item/rogueweapon/whip/urumi/silver/psydonic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Flail + Shield")
