@@ -388,10 +388,6 @@ export const TradeModal = (props: TradeModalProps) => {
           </button>
         </div>
 
-<<<<<<< HEAD
-        <div style={{ ...lineStyle, fontSize: FONT_BODY, color: INK_FAINT, justifyContent: 'center' }}>
-          (max {maxUnits} units per trade)
-=======
         <div
           style={{
             ...lineStyle,
@@ -402,7 +398,6 @@ export const TradeModal = (props: TradeModalProps) => {
         >
           (max {maxUnits} units per trade
           {!isImport && stockpile < bulkMax ? ' - limited by stockpile' : ''})
->>>>>>> aad1195da4 (Improve Import / Export Interface a little)
         </div>
 
         <div
@@ -418,25 +413,15 @@ export const TradeModal = (props: TradeModalProps) => {
           {quote ? (
             isImport ? (
               <>
-<<<<<<< HEAD
-                {quote.capacity_today} unit{quote.capacity_today === 1 ? '' : 's'} available
-                at base price today.
-=======
                 {batchCapacity} unit{batchCapacity === 1 ? '' : 's'} available
                 at base price in one shipment.
->>>>>>> aad1195da4 (Improve Import / Export Interface a little)
                 <br />
                 Buying past that drives the price up the more you take.
               </>
             ) : (
               <>
-<<<<<<< HEAD
-                {quote.capacity_today} unit{quote.capacity_today === 1 ? '' : 's'} of demand
-                left today.
-=======
                 {batchCapacity} unit{batchCapacity === 1 ? '' : 's'} of demand
                 left in one shipment.
->>>>>>> aad1195da4 (Improve Import / Export Interface a little)
                 <br />
                 Selling past that floods the market and the price drops.
               </>
