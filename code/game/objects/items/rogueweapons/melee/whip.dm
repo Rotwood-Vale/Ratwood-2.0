@@ -360,7 +360,7 @@
 	desc = "Three lengths of shimmering silver coiling outwards from psycross wrapped handle of boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
 	icon_state = "psy_urumi"
 	force = 30//less force than tennite silver cause swift balance
-	minstr = 11//taut can reasonably reach this + make us of the swift balance
+	minstr = 11//taut can reasonably reach this + make use of the swift balance
 	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
 	max_integrity = 125//more blades equals less overall integ, i guess
 	max_blade_int = 200//3 blades, more blade for your buck!
