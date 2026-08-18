@@ -15194,6 +15194,9 @@
 /area/rogue/indoors)
 "dkr" = (
 /obj/structure/chair/bench/couchablack,
+/obj/structure/fluff/walldeco/bigpainting{
+	pixel_x = 0
+	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/manor/rockhill)
 "dkv" = (
@@ -81110,6 +81113,9 @@
 "rJf" = (
 /obj/structure/chair/bench/couch{
 	pixel_y = 5
+	},
+/obj/structure/fluff/walldeco/bigpainting{
+	pixel_x = 0
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
