@@ -334,6 +334,8 @@
 		if (!(direct & (direct - 1))) //Cardinal move
 			lastcardinal = direct
 			. = ..()
+		else if(istype(src, /obj/vehicle)) //Vehicles retain true diagonal movement
+			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			if (direct & NORTH)
 				if (direct & EAST)
@@ -740,7 +742,7 @@
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
 	return
 
-/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item. 
+/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /// If the mob putting the atom in storage is known, it is passed on as M.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S, mob/M)
 	return
