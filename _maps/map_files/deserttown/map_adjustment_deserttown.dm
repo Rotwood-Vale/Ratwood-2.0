@@ -143,3 +143,24 @@
 		THREAT_REGION_DESERT_NEAR,
 		THREAT_REGION_DESERT_DEEP,
 	)
+	// Blockade routes: gentle roads (no travel fee) through the near dunes, everything
+	// far or dangerous through the deep desert at the mountain-tier fee; Al-Ashur's
+	// far roads are brutal. Both regions carry hard quest spawners.
+	blockade_route_map = list(
+		TRADE_REGION_KINGSFIELD = THREAT_REGION_DESERT_NEAR,
+		TRADE_REGION_ROSAWOOD = THREAT_REGION_DESERT_NEAR,
+		TRADE_REGION_BLACKHOLT = THREAT_REGION_DESERT_NEAR,
+		TRADE_REGION_HEARTFELT = THREAT_REGION_DESERT_NEAR,
+		TRADE_REGION_ROCKHILL = THREAT_REGION_DESERT_DEEP,
+		TRADE_REGION_SALTWICK = THREAT_REGION_DESERT_DEEP,
+		TRADE_REGION_BLEAKCOAST = THREAT_REGION_DESERT_DEEP,
+		TRADE_REGION_NORTHFORT = THREAT_REGION_DESERT_DEEP,
+		TRADE_REGION_HAGENWALD = THREAT_REGION_DESERT_DEEP,
+		TRADE_REGION_DAFTSMARCH = THREAT_REGION_DESERT_DEEP,
+	)
+	// Towner postings: the caravan rides the near roads (highwaymen in the faction
+	// table), the miner's lead strikes the deep dunes (elemental guardians).
+	towner_quest_regions = list(
+		QUEST_TOWNER_SMITH_CARAVAN = list(THREAT_REGION_DESERT_NEAR),
+		QUEST_TOWNER_MINER_OREVEIN = list(THREAT_REGION_DESERT_DEEP),
+	)

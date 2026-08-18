@@ -6,6 +6,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/desert/above)
 "aah" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/sandrock/sandrock4,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/outdoors/desert)
@@ -36,6 +37,7 @@
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desert)
 "aaG" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/effect/decal/cleanable/debris/woody,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
@@ -71,6 +73,7 @@
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "abm" = (
+/obj/item/roguemachine/zadcote/merchant,
 /obj/structure/fluff/clock,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop/desert)
@@ -98,6 +101,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "ace" = (
+/obj/item/roguemachine/zadcote/bathhouse,
 /obj/machinery/light/rogue/candle/blue,
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/rogue/tile/harem2,
@@ -905,6 +909,7 @@
 	},
 /area/rogue/under/dungeon/bizbaz)
 "ani" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/vine,
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/dunes,
@@ -2311,7 +2316,6 @@
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	inertia_move_delay = 0;
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13
 	},
@@ -3391,6 +3395,7 @@
 	},
 /area/rogue/under/underdesert)
 "aVm" = (
+/obj/structure/roguemachine/escrow,
 /obj/machinery/light/rogue/candle/blue/r,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop/desert)
@@ -3469,6 +3474,7 @@
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/desertdeep)
 "aXs" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
 /obj/structure/fluff/walldeco/sign/trophy,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern/desert)
@@ -3559,6 +3565,7 @@
 	},
 /area/rogue/under/town/basement/desert)
 "aYL" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desert)
@@ -4148,6 +4155,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church/chapel)
 "bhl" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
@@ -4251,6 +4259,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/manor/desert)
 "biI" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
@@ -6074,6 +6083,7 @@
 	},
 /area/rogue/indoors/town/desert)
 "bJv" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/effect/decal/remains/human,
 /obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
 /turf/open/floor/rogue/dunes,
@@ -6241,6 +6251,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/dungeon/sunkenchurch)
 "bLR" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
@@ -7047,6 +7058,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/steward)
 "bVN" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/bush/jungle,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/desert)
@@ -7579,6 +7591,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church/chapel)
 "cdW" = (
+/obj/item/roguemachine/zadcote/steward,
 /obj/structure/fluff/walldeco/customflag,
 /turf/closed/wall/mineral/rogue/sandstone,
 /area/rogue/indoors/town/steward)
@@ -9632,6 +9645,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/dungeon/sunkenchurch)
 "cJw" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/effect/decal/remains/wolf,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/outdoors/desertdeep)
@@ -9919,6 +9933,7 @@
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath/desert)
 "cNI" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/roguegrass/desertgrass,
 /turf/open/floor/rogue/desert_grass,
@@ -9996,6 +10011,7 @@
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/desert)
 "cOI" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/roguetree/stump/palm,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -11899,6 +11915,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/desert)
 "dpI" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/machinery/light/rogue/firebowl,
 /obj/structure/flora/roguetree/palm,
 /turf/open/floor/rogue/sandbrick,
@@ -13163,6 +13180,7 @@
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician/desert)
 "dHJ" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/roguetent,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -17212,6 +17230,7 @@
 	},
 /area/rogue/under/town/basement/desert)
 "eQK" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/verdant,
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/outdoors/desert)
@@ -18533,6 +18552,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdesert)
 "fkx" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -18945,6 +18965,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/dungeon)
 "frS" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/hay,
 /area/rogue/outdoors/desert)
@@ -19259,6 +19280,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/shelter/desertdeep)
 "fxN" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/effect/decal/duneedge,
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/outdoors/desert)
@@ -22482,6 +22504,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/dungeon)
 "gxF" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desert)
@@ -22625,7 +22648,6 @@
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	inertia_move_delay = 0;
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13
 	},
@@ -30651,7 +30673,6 @@
 "iYW" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -40284,7 +40305,6 @@
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	inertia_move_delay = 0;
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13
 	},
@@ -67840,6 +67860,14 @@
 "tHh" = (
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/warehouse)
+"tHy" = (
+/obj/structure/roguemachine/scrapper,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/indoors/town/warehouse)
+"tHz" = (
+/obj/structure/roguemachine/steward_export,
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/indoors/town/warehouse)
 "tHk" = (
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/cell/warden)
@@ -76577,7 +76605,6 @@
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	inertia_move_delay = 0;
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13
 	},
@@ -83420,7 +83447,6 @@
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	inertia_move_delay = 0;
 	STACON = 13;
-	STAEND = 13;
 	STASPD = 13;
 	STASTR = 13
 	},
@@ -408070,7 +408096,7 @@ bep
 cqQ
 iVL
 iVL
-tHh
+tHz
 tHh
 iiI
 pyG
@@ -408382,7 +408408,7 @@ bep
 cqQ
 iVL
 msV
-tHh
+tHy
 tHh
 iiI
 wVw
