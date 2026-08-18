@@ -104,7 +104,6 @@
 	pain_hud_dirty = TRUE
 	queue_injury_hud_flush()
 
-/// Marks the blood/heart indicator for a deferred refresh. Cheaper than refreshing on every single blood or damage tick.
 /mob/living/proc/mark_blood_hud_dirty()
 	if(!hud_used)
 		return
@@ -126,7 +125,7 @@
 	blood_hud_dirty = FALSE
 	if(pain_hud_dirty)
 		pain_hud_dirty = FALSE
-		refresh_blood = FALSE //update_health_hud() already refreshes the blood indicator
+		refresh_blood = FALSE
 		update_damage_hud()
 		update_health_hud()
 	if(refresh_blood)
@@ -847,7 +846,7 @@
 			health = 0
 	staminaloss = getStaminaLoss()
 	update_stat()
-	mark_blood_hud_dirty() //tox/oxy feed the heart indicator, so it has to follow damage changes
+	mark_blood_hud_dirty()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/proc/check_revive(mob/living/user)

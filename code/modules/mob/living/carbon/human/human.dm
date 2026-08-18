@@ -605,7 +605,6 @@
 	hud_used.energy.set_meter_fill(ratio, "energy100", "energy20", "energy10")
 	return TRUE
 
-/// Maps a 0-100 severity value onto the heart indicator's five steps. cutoff40/cutoff60 are the lower bounds of those two steps.
 /proc/get_heart_indicator_state(value, prefix, cutoff40, cutoff60)
 	if(value <= 0)
 		return null
@@ -634,7 +633,6 @@
 		else
 			hud_used.bloods.icon_state = "damelse"
 
-	// Poison, suffocation and pain stack on top of the bloodloss state instead of replacing it, so a bleeding mob still sees them.
 	var/toxoverlay = get_heart_indicator_state(getToxLoss(), "toxloss", 21, 50)
 	var/oxyoverlay = get_heart_indicator_state(getOxyLoss(), "oxyloss", 21, 50)
 	var/painoverlay = pain_threshold ? get_heart_indicator_state((get_complex_pain() / pain_threshold) * 100, "painloss", 30, 60) : null
