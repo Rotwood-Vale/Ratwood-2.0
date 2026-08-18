@@ -13,7 +13,7 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT) // Heavy Armor MAA footman W/O Guardsman Trait
 	subclass_stats = list(
-		STATKEY_STR = 2, 
+		STATKEY_STR = 2,
 		STATKEY_INT = 1,
 		STATKEY_CON = 3,
 		STATKEY_WIL = 2,
@@ -89,19 +89,19 @@
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
-		if("Volf Plate Helmet") 
+		if("Volf Plate Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
-		if("Slitted Kettle") 
+		if("Slitted Kettle")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
-		if("Simple Helmet")		
+		if("Simple Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet
-		if("Kettle Helmet")		
+		if("Kettle Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/kettle
-		if("Sallet Helmet")		
+		if("Sallet Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet
-		if("Winged Helmet") 
+		if("Winged Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/winged
 		else //In case they DC or don't choose close the panel, etc
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
@@ -123,7 +123,7 @@
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1,				
+		STATKEY_CON = 1,
 	)
 
 	subclass_skills = list(
@@ -154,7 +154,7 @@
 	l_hand = /obj/item/rogueweapon/sword
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backr = /obj/item/storage/backpack/rogue/satchel/black
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy		
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
@@ -195,19 +195,19 @@
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
-		if("Volf Plate Helmet") 
+		if("Volf Plate Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
-		if("Slitted Kettle") 
+		if("Slitted Kettle")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
-		if("Simple Helmet")		
+		if("Simple Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet
-		if("Kettle Helmet")		
+		if("Kettle Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/kettle
-		if("Sallet Helmet")		
+		if("Sallet Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet
-		if("Winged Helmet") 
+		if("Winged Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/winged
 		else //In case they DC or don't choose close the panel, etc
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
@@ -223,13 +223,13 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/heartfelt/retinue/squire
-	maximum_possible_slots = 2 // Knight and Hand/Lord. 
+	maximum_possible_slots = 2 // Knight and Hand/Lord.
 	pickprob = 100
 	category_tags = list(CTAG_HFT_RETINUE)
 	class_select_category = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SQUIRE_REPAIR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT)
 	subclass_stats = list( // Made 9 points due to lack of Guardsman Trait
-		STATKEY_STR = 1, 
+		STATKEY_STR = 1,
 		STATKEY_INT = 1,
 		STATKEY_PER = 1,
 		STATKEY_CON = 2,
@@ -239,10 +239,10 @@
 	cmode_music = 'sound/music/combat_squire.ogg'
 
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,		
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,		
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,		//Only effects draw and reload time.
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,			//Only effects draw times.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -272,15 +272,16 @@
 	cloak = /obj/item/clothing/cloak/tabard/knight/guard
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	backr = /obj/item/storage/backpack/rogue/satchel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger = 1,  
+		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/rogueweapon/hammer/iron = 1, // Failed Squire Virtue Items
 		/obj/item/polishing_cream = 1,
 		/obj/item/armor_brush = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
-	) 
+	)
 
 	var/weapons = list("Sword & Shield","Mace & Shield","Spear & Shield","Crossbow", "Bow")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -311,19 +312,19 @@
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
-		if("Volf Plate Helmet") 
+		if("Volf Plate Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-		if("Slitted Kettle") 
+		if("Slitted Kettle")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
-		if("Simple Helmet")		
+		if("Simple Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet
-		if("Kettle Helmet")		
+		if("Kettle Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/kettle
-		if("Sallet Helmet")		
+		if("Sallet Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet
-		if("Winged Helmet") 
+		if("Winged Helmet")
 			head = /obj/item/clothing/head/roguetown/helmet/winged
 		else //In case they DC or don't choose close the panel, etc
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan

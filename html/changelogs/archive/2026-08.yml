@@ -336,3 +336,51 @@
   - code_imp: Removed a duplicate bite grab definition that SEEMS to be overshadowing
       the old one.
   - refactor: Invisibility breaking is now handled in one place.
+2026-08-16:
+  CameronWoof:
+  - balance: Adds leather hoods to several classes
+  Kroto-Ker:
+  - rscadd: Round modifiers & villains menu.
+  Shadow-Quill:
+  - qol: Golgatha smash intent is now no longer the default - bless is, instead.
+  Xander3359:
+  - balance: Riding a saiga in deep water will now cost the same stamina as swimming
+      normally would.
+  Yuckuza:
+  - rscadd: Added the symbol of avarice, a rare drop from mimics that grants 5 fortune
+      in exchange for -5 constitution.
+  - rscadd: Added the jar helm, a pottery craftable helmet that grants the throwing
+      arm trait when worn.
+  - rscadd: Added the throwing arm trait, granting +0.5 throw speed, +1 throw range,
+      and +2 throw force to any thrown item.
+  - balance: TRAIT_DUNGEONMASTER, possessed by the dungeoneer and slave master, doubles
+      the probability of whip scarring wounds on targets, the same way TRAIT_NUTCRACKER
+      does for CBT wounds.
+  - balance: Aimed intent now grants a 10% bonus to the probability of whip scarring
+      wounds.
+  mushy:
+  - balance: Ztratocaster can now no longer be broken on the ground.
+  yupup123:
+  - bugfix: Another fix to asssassins causing slots to not be taken up properly.
+  - rscdel: Removes Antags, Knight Captain, Watch Captain, and Master Warden from
+      being able to roll assassin.
+2026-08-17:
+  hugmeorelse:
+  - rscadd: Added a Signal Flare Gun
+  - rscadd: Signal flare colors mean something different each round; the Garrison
+      and Keep nobility can read the full codes, while every townsfolk recognizes
+      the orange "take shelter" signal.
+  - rscadd: Added an alarm lever that sounds an alarm and calls the Garrison to its
+      location over the SCOM line. This is not yet in the map.
+  - rscadd: Wardens, the Master Warden, Azebs, and Azeb Aghas now start with a loaded
+      signal flare gun and a spare canister.
+  - sound: Added an alarm sound.
+  - image: Added signal flare gun and canister sprites.
+  - bugfix: Tidied the service bell's role notifications and let it recognize the
+      Warden Fort.
+  - bugfix: Fixed the signal horn's dead/brain check.
+  - code_imp: Minor cleanup.
+  - rscadd: Signal flares can be fired as illumination rounds
+  - rscadd: The flare gun has a dial you can set in advance so it fires without asking
+      which signal.
+  - rscadd: Signal flare canisters can now be crafted at the artificer table.

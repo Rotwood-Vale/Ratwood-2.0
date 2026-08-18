@@ -209,7 +209,7 @@
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
 		I = AM
-		throwpower = I.throwforce
+		throwpower = throwingdatum ? throwingdatum.get_effective_throwforce() : I.throwforce
 		if(I.thrownby == src) //No throwing stuff at myself to trigger hit reactions
 			return ..()
 		else
