@@ -33,6 +33,7 @@
 	#endif
 	. += span_notice("This machine attracts trading balloons every [DisplayTimeText(export_time)]. Goods are sucked into the air and mammons are dropped after tax has been collected.")
 
+// Note: this is AP's navigator/smuggler under the path our maps already place.
 /obj/item/roguemachine/navigator/blackmarket
 	name = "suspicious navigator"
 	desc = "Freedom has a price."
@@ -45,6 +46,53 @@
 	grants_passive_favor = FALSE
 	accepts_unmintable = TRUE
 	is_bm_export = TRUE
+
+/obj/item/roguemachine/navigator/private
+	name = "private navigator"
+	desc = "A navigator kept under the Merchant's own roof."
+	motto = "NAVIGATOR - Proprietor's berth."
+	pay_taxes = TRUE
+	pay_merchant_share = FALSE
+
+/obj/item/roguemachine/navigator/blackmarket/examine(mob/user)
+	. = ..()
+	. += span_notice("The rates here are disastrous. Having a facilitator from the bathhouse nearby might improve them to 100%.")
+	. += span_notice("The handler asks no questions about provenance. Goods the legitimate market refuses to mint move through here all the same.")
+	if(fixed_tax <= 0)
+		. += span_notice("A facilitator is present. Current handler's fee: [fixed_tax * 100]%.")
+	else
+		. += span_warning("No facilitator present. Current handler's fee: [fixed_tax * 100]%.")
+
+/obj/item/roguemachine/navigator/blackmarket/process()
+	if(!anchored)
+		return TRUE
+	if(world.time > next_airlift)
+		var/bath_nearby = FALSE
+		for(var/mob/living/carbon/human/H in range(7, src))
+			var/is_bath_person = (H.job in GLOB.bathhouse_positions) || HAS_TRAIT(H, TRAIT_AGENT_BATHHOUSE)
+			if(H.stat != DEAD && is_bath_person)
+				bath_nearby = TRUE
+				break
+		fixed_tax = bath_nearby ? 0.0 : 0.5
+	return ..()
+
+// The blackmarket runs on its own saturation pools so smuggling and the honest market
+// deplete separately.
+/obj/item/roguemachine/navigator/blackmarket/get_market_saturation(category)
+	if(!SSmerchant_trade || !category)
+		return 1
+	return SSmerchant_trade.get_bm_saturation_factor(category)
+
+/obj/item/roguemachine/navigator/blackmarket/get_market_demand(category)
+	if(!SSmerchant_trade || !category)
+		return 1
+	return SSmerchant_trade.get_bm_demand_multiplier(category)
+
+/obj/item/roguemachine/navigator/blackmarket/credit_pool(category, base_price)
+	if(!SSmerchant_trade || !category || base_price <= 0)
+		return
+	SSmerchant_trade.bm_pool_consumed[category] = (SSmerchant_trade.bm_pool_consumed[category] || 0) + base_price
+	SSmerchant_trade.lifetime_bm_pool_credited[category] = (SSmerchant_trade.lifetime_bm_pool_credited[category] || 0) + base_price
 
 /obj/structure/roguemachine/balloon_pad
 	name = ""
