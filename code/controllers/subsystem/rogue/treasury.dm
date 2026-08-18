@@ -41,7 +41,6 @@ SUBSYSTEM_DEF(treasury)
 		TAX_CAT_PEASANTS = list("taxAmount" = 12, "fineExemption" = FALSE),
 		TAX_CAT_OUTLANDER = list("taxAmount" = 25, "fineExemption" = FALSE)
 	)
-	var/tax_value = 0.11
 	var/queens_tax = 0.10
 	var/treasury_value = 0
 	var/autoexport_percentage = 0.6 // Percentage above which stockpiles will automatically export

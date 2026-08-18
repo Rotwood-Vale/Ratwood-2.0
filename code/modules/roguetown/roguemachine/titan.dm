@@ -318,24 +318,12 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 /obj/structure/roguemachine/titan/proc/give_tax_popup(mob/living/carbon/human/user)
 	if(!Adjacent(user))
 		return
-	// The legacy flat sales tax (SStreasury.tax_value) still drives transaction taxes, so the
-	// Lord keeps direct control of it alongside the new Taxation 2 panel (category levies +
-	// per-class poll tax). TODO: migrate tax_value consumers onto tax_rates categories, then
-	// drop the legacy branch.
-	var/choice = input(user, "Which levies shall you adjust?", "Crown Taxation") as null|anything in list("Sales Tax", "Deposit Taxes & Fines", "Levies & Poll Tax")
+	// Sales/transaction taxes are all category levies now (import tariff, contract levy, etc.),
+	// set through the Taxation 2 panel; the legacy flat tax_value lever is gone.
+	var/choice = input(user, "Which levies shall you adjust?", "Crown Taxation") as null|anything in list("Deposit Taxes & Fines", "Levies & Poll Tax")
 	if(!choice || !Adjacent(user))
 		return
 	switch(choice)
-		if("Sales Tax")
-			var/newtax = input(user, "Set a new tax percentage (1-99)", src, SStreasury.tax_value*100) as null|num
-			if(newtax)
-				if(!Adjacent(user))
-					return
-				if(findtext(num2text(newtax), "."))
-					return
-				newtax = CLAMP(newtax, 1, 99)
-				SStreasury.tax_value = newtax / 100
-				priority_announce("The new tax in [SSmapping.map_adjustment.realm_name] shall be [newtax] percent.", "The Generous Lord Decrees", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 		if("Deposit Taxes & Fines")
 			// Ratwood per-category deposit taxation and fine exemptions
 			// (SStreasury.taxation_cat_settings). The upstream TaxSetter TGUI only drives

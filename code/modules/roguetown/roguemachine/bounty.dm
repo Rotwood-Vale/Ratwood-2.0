@@ -178,11 +178,14 @@
 	// Deduct money from user
 	budget -= round(amount)
 
-	//Deduct royal tax from amount, pulls from the kingdom's current tax setting.
-	var/royal_tax = round(amount * SStreasury.tax_value)
+	//Deduct royal tax from amount. A bounty posting is a contract, so the Contract Levy rate applies.
+	var/royal_tax = round(amount * SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY))
 	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
-	SStreasury.mint(SStreasury.discretionary_fund, royal_tax, "Bounty tax")
-	SStreasury.log_entries += "+[royal_tax] to treasury (bounty tax)"
+	SStreasury.mint(SStreasury.discretionary_fund, royal_tax, "Bounty levy")
+	SStreasury.log_to_steward("+[royal_tax] to treasury (bounty levy)")
+	record_round_statistic(STATS_TAXES_COLLECTED, royal_tax)
+	record_round_statistic(STATS_REVENUE_CONTRACT_LEVY, royal_tax)
+	record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, royal_tax)
 
 	amount -= royal_tax
 
@@ -358,7 +361,7 @@
 	budget -= cost
 	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
 	SStreasury.mint(SStreasury.discretionary_fund, cost, "Bounty scroll fee")
-	SStreasury.log_entries += "+[cost] to treasury (bounty scroll fee)"
+	SStreasury.log_to_steward("+[cost] to treasury (bounty scroll fee)")
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()
