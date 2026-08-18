@@ -15,6 +15,12 @@
 // ---- Tavern positions: the load-bearing hook that opens the innkeeper rumor tab ----
 GLOBAL_LIST_INIT(tavern_positions, list("Innkeeper", "Tapster", "Cook"))
 
+// ---- Bathhouse positions (AP jobs.dm): facilitator checks for the blackmarket navigator ----
+GLOBAL_LIST_INIT(bathhouse_positions, list(
+	"Bathmaster",
+	"Bathhouse Attendant",
+))
+
 // ---- Contract-claim gates (AP _job.dm:182/188) ----
 /proc/is_quest_claim_barred(mob/user)
 	if(!user?.mind)

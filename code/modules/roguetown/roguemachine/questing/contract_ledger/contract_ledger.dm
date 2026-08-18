@@ -186,6 +186,16 @@
 // crown_authority_roles lives in _es_compat.dm (ES 3-role roster: Steward/Clerk/Grand Duke).
 // AP's 7-role court list is intentionally NOT ported here (would duplicate-define the global).
 
+GLOBAL_LIST_INIT(crown_authority_roles, list(
+	"Steward",
+	"Grand Duke",
+	"Hand",
+	"Clerk",
+	"Marshal",
+	"Councillor",
+	"Prince",
+))
+
 GLOBAL_LIST_INIT(contract_proxy_officials, list(
 	"Steward",
 	"Clerk",

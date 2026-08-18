@@ -20,8 +20,8 @@
 //    The Catalogs (Rosawood Arsenal, Anthraxi Armory) are real as of the wiring audit
 //    (merchant/trade/merchant_catalog.dm); both unlock by merchant favor since neither has a
 //    home kinship realm in this tree.
-//  - Escrow/COMMISSIONER: kept close to AP, but the default percent_margin/flat_margin are
-//    70%/5m in ES (code/modules/roguetown/roguemachine/escrow.dm), not AP's 20%/0.
+//  - Escrow/COMMISSIONER: matches AP tip - default percent_margin/flat_margin are 70%/5m on
+//    both sides (code/modules/roguetown/roguemachine/escrow.dm).
 //  - Rag Picker/Scrapper: kept. seed_budget defaults to 0 on the base type but both concrete
 //    subtypes (scrapper.dm) set it to 50, matching AP's "50m starting budget" claim.
 //  - Avisa Market Tab: AP describes a standalone Avisa newspaper interface. In ES, the
