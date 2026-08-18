@@ -4,7 +4,7 @@
 //  - icon: AP's 'icons/roguetown/items/paper.dmi' ("paper_altprep") doesn't exist in ES;
 //    uses ES's stock parchment art from misc.dmi instead.
 //  - No CALENDAR_EPOCH_YEAR calendar system in ES; unsigned writs are undated.
-//  - Faction labels follow ES conventions ("Ferentian Trading Company", "the Church").
+//  - Faction labels follow this tree's conventions ("Ferentian Trading Company", "the Church").
 
 /obj/item/patronage_writ
 	name = "patronage writ"

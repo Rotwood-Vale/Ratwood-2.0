@@ -6,8 +6,9 @@
 	It consists of 12 months, each with exactly 28 days dividing into 4 weeks. And it starts from Monday and ends on Sunday with a 7 days week.
 	Each week = 1 round IC (regardless of how much time actually passed in game)
 	The first month of a year begins in Spring - Gregorian March, like most sane agricultural calendars that begins in February / March.
-	Ratwood deviation: weekday names keep Emerald Summit's existing set (Tiw's/Thule's/Freyja's/Saturn's)
-	rather than AP's secular renames (Truce's/Thunder's/Feast's/Psydon's), matching do_time_change().
+	Ratwood deviation: weekday names keep this tree's pre-port set (Tiw's/Thule's/Freyja's/Saturn's,
+	shared fork heritage) rather than AP's secular renames (Truce's/Thunder's/Feast's/Psydon's),
+	matching do_time_change().
 */
 
 
