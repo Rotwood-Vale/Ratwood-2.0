@@ -70,7 +70,6 @@
 
 /obj/item/rogueweapon/sword/long/martyr/proc/anti_stall()
 	src.visible_message(span_danger("The Martyr's sword dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
-	SSroguemachine.martyrweapon = null
 	qdel(src)
 
 /obj/item/rogueweapon/sword/long/martyr/attack_hand(mob/user)
@@ -102,6 +101,7 @@
 		return FALSE
 
 /obj/item/rogueweapon/sword/long/martyr/Destroy()
+	SSroguemachine.martyrweapon = null
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()
@@ -185,7 +185,6 @@
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/martyr/proc/anti_stall()
 	src.visible_message(span_danger("The Martyr's axe dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
-	SSroguemachine.martyrweapon = null
 	qdel(src)
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/martyr/attack_hand(mob/user)
@@ -217,6 +216,7 @@
 		return FALSE
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/martyr/Destroy()
+	SSroguemachine.martyrweapon = null
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()
@@ -287,7 +287,6 @@
 
 /obj/item/rogueweapon/mace/goden/martyr/proc/anti_stall()
 	src.visible_message(span_danger("The Martyr's mace dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
-	SSroguemachine.martyrweapon = null
 	qdel(src)
 
 /obj/item/rogueweapon/mace/goden/martyr/attack_hand(mob/user)
@@ -319,6 +318,7 @@
 		return FALSE
 
 /obj/item/rogueweapon/mace/goden/martyr/Destroy()
+	SSroguemachine.martyrweapon = null
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()
@@ -390,7 +390,6 @@
 
 /obj/item/rogueweapon/spear/partizan/martyr/proc/anti_stall()
 	src.visible_message(span_danger("The Martyr's spear dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
-	SSroguemachine.martyrweapon = null
 	qdel(src)
 
 /obj/item/rogueweapon/spear/partizan/martyr/attack_hand(mob/user)
@@ -422,6 +421,7 @@
 		return FALSE
 
 /obj/item/rogueweapon/spear/partizan/martyr/Destroy()
+	SSroguemachine.martyrweapon = null
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()

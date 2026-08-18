@@ -1620,7 +1620,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/sword/long/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr sword appears in your hand."))
@@ -1636,7 +1635,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/greataxe/steel/doublehead/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr axe appears in your hand."))
@@ -1652,7 +1650,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/mace/goden/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr mace appears in your hand."))
@@ -1668,7 +1665,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/spear/partizan/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr trident appears in your hand."))
