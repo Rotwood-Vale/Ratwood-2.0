@@ -12,6 +12,7 @@
 #define ROLE_NBEAST				"Vampire Lord"
 #define ROLE_BANDIT				"Bandit"
 #define ROLE_ASSASSIN			"Assassin"
+#define ROLE_ZIZOIDCULTIST		"Zizoid Cultist"
 #define ROLE_DELF				"Dark Elf"
 #define ROLE_PREBEL				"Peasant Rebel"
 #define ROLE_ASPIRANT			"Aspirant"
@@ -69,6 +70,7 @@ GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_GNOLL = /datum/antagonist/gnoll,
 	ROLE_THIEVESGUILD = /datum/antagonist/thievesguild,
 	ROLE_ASSASSIN = /datum/antagonist/assassin,
+	ROLE_ZIZOIDCULTIST = /datum/antagonist/zizocultist,
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
