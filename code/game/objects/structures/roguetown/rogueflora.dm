@@ -792,7 +792,7 @@
 				BP.add_embedded_object(TH, silent = TRUE)
 				BP.receive_damage(10)
 				to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))				
-			else if(prob(10))
+			else if(prob((20)-L.STALUC))
 				if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					var/obj/item/bodypart/BP = pick(H.bodyparts)
 					var/obj/item/natural/thorn/TH = new(src.loc)
