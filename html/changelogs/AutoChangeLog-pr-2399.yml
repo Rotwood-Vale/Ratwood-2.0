@@ -1,4 +1,0 @@
-author: "yupup123"
-delete-after: True
-changes:
-  - rscadd: "Adds a new toggle for seeing a character's role under their name in the options."
