@@ -36,6 +36,13 @@
 	/// region_id and be flagged map_swap_only.
 	var/list/trade_region_swaps
 
+	/// /datum/decree typepath -> list("name" = ..., "flavor_text" = ..., "revoke_text" = ...,
+	/// "restore_text" = ...) applied when SStreasury builds its decrees. Reskins the LOCAL
+	/// identity charters (the realm's writ, its golden bull, its garrison compacts) to the
+	/// map's culture; shared realm lore (Otava, the gods, Zenitstadt) keeps its names.
+	/// Only the keys present are overridden.
+	var/list/decree_reskins
+
 	/// QUEST_TOWNER_* -> list of THREAT_REGION_* names hosting that towner posting. The
 	/// GLOB defaults (towner_smith_caravan_regions / towner_orevein_regions) are dun_world's;
 	/// on any other map a posting whose type isn't remapped here fails at preview and

@@ -1,6 +1,18 @@
 /datum/controller/subsystem/treasury/proc/init_decrees()
+	var/list/reskins = SSmapping?.map_adjustment?.decree_reskins
 	for(var/path in subtypesof(/datum/decree))
 		var/datum/decree/D = new path()
+		// Per-map cultural reskin: the mechanics never change, only the parchment.
+		var/list/reskin = reskins?[path]
+		if(reskin)
+			if(reskin["name"])
+				D.name = reskin["name"]
+			if(reskin["flavor_text"])
+				D.flavor_text = reskin["flavor_text"]
+			if(reskin["revoke_text"])
+				D.revoke_text = reskin["revoke_text"]
+			if(reskin["restore_text"])
+				D.restore_text = reskin["restore_text"]
 		decrees[D.id] = D
 	steward_machine?.enforce_wage_floors()
 

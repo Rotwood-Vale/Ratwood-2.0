@@ -649,26 +649,6 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 // ============================================================================
 /datum/standing_order/demand_birthday_gift
 	roll_weight = 1 // was 2 - it's in 7 of 9 regions, so its always-silk+jacksberries mix dominated the pool
-	var/list/celebrants_by_region = list(
-		TRADE_REGION_KINGSFIELD = list(
-			"Lady Marisol of Cherrybrook",
-			"Lord Berenger the Younger",
-			"Dame Vesalia Sundermark",
-			"Sir Aldwin of Aubergrove",
-		),
-		TRADE_REGION_ROCKHILL = list(
-			"Lord Hadrius Vespermill",
-			"Lady Aurinde Greengable",
-		),
-		TRADE_REGION_HEARTFELT = list(
-			"Count Eduard Harlause",
-			"Sir Ardent of the March",
-		),
-		TRADE_REGION_ROSAWOOD = list("Lady Sylvarine Briarmoss"),
-		TRADE_REGION_DAFTSMARCH = list("Lord Korgrad of Pickleridge"),
-		TRADE_REGION_BLEAKCOAST = list("Lord Captain Vesarion of Saltreef"),
-		TRADE_REGION_BLACKHOLT = list("Huntsmarshal Ostran"),
-	)
 	var/list/jewelry_pool = list(
 		TRADE_GOOD_AMBER_RING,
 		TRADE_GOOD_GOLD_RING,
@@ -705,7 +685,7 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 	return "[uppertext(region.name)] - BIRTHDAY TRIBUTE"
 
 /datum/standing_order/demand_birthday_gift/generate_description(datum/economic_region/region)
-	var/list/celebrants = celebrants_by_region[region.region_id]
+	var/list/celebrants = region.order_celebrants
 	if(length(celebrants))
 		return "A name-day approaches for [pick(celebrants)] of [region.name]. Their household commissions a fitting tribute."
 	return "A noble of [region.name] keeps a name-day. Their household commissions a fitting tribute."
@@ -1011,7 +991,7 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 	roll_weight = 2
 	var/list/project_by_region = list(
 		TRADE_REGION_KINGSFIELD = list("a court curio collector", "a guildhall's display commission", "a merchant prince's parlor"),
-		TRADE_REGION_ROCKHILL = list("a viscount's trophy room", "a country estate's parlor", "an oddly pale-skinned aristocrat's gallery"),
+		TRADE_REGION_ROCKHILL = list("a grandee's trophy room", "a country estate's parlor", "an oddly pale-skinned aristocrat's gallery"),
 		TRADE_REGION_HEARTFELT = list("the count's manor hall", "a temple reliquary's commission", "a wedding-bound house"),
 		TRADE_REGION_ROSAWOOD = list("a woodland shrine's offering", "a reclusive collector's agent"),
 	)
@@ -1116,7 +1096,7 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 	var/list/project_by_region = list(
 		TRADE_REGION_KINGSFIELD = list("the Tournament of the Three Hills", "the lists at Cherrybrook", "a knight-errants' convocation"),
 		TRADE_REGION_HEARTFELT = list("the March Tourney", "the count's lists at Heartfelt"),
-		TRADE_REGION_ROCKHILL = list("the Orchard Lists", "a midsummer tourney at Vespermill"),
+		TRADE_REGION_ROCKHILL = list("the Orchard Lists", "a midsummer tourney at the county seat"),
 	)
 	var/list/weapon_pool = list(
 		TRADE_GOOD_STEEL_ARMING_SWORD,
@@ -1177,7 +1157,7 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 	roll_weight = 2
 	var/list/project_by_region = list(
 		TRADE_REGION_HEARTFELT = list("a temple's bookbinder", "a knightly house outfitting", "a hospitaller buying for the road"),
-		TRADE_REGION_ROCKHILL = list("a viscount's library", "a country estate's curio collector", "an oddly pale-skinned aristocrat with academic interests"),
+		TRADE_REGION_ROCKHILL = list("a grandee's library", "a country estate's curio collector", "an oddly pale-skinned aristocrat with academic interests"),
 		TRADE_REGION_KINGSFIELD = list("a knight-errant outfitting for the road", "a guild's bulk order", "a market wand-seller"),
 		TRADE_REGION_NORTHFORT = list("a frontier scout-captain", "a band of border irregulars", "a local adventuring fellowship"),
 	)
@@ -1225,7 +1205,7 @@ GLOBAL_LIST_EMPTY(standing_order_pool)
 	roll_weight = 1
 	var/list/project_by_region = list(
 		TRADE_REGION_HEARTFELT = list("the count's manor hall", "a marcher lord's gallery", "a heralds' lodge"),
-		TRADE_REGION_ROCKHILL = list("a hunt-master's trophy hall", "the master-of-hounds at Vespermill", "a viscount's trophy room"),
+		TRADE_REGION_ROCKHILL = list("a hunt-master's trophy hall", "the master of hounds at the great lodge", "a grandee's trophy room"),
 	)
 	var/rolled_variant = "minotaur"
 
