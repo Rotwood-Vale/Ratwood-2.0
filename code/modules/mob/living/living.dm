@@ -3,6 +3,7 @@
 	var/melee_cooldown = CLICK_CD_MELEE
 	var/zone_selector_hud_dirty = FALSE
 	var/pain_hud_dirty = FALSE
+	var/blood_hud_dirty = FALSE
 	var/injury_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
@@ -103,6 +104,13 @@
 	pain_hud_dirty = TRUE
 	queue_injury_hud_flush()
 
+/// Marks the blood/heart indicator for a deferred refresh. Cheaper than refreshing on every single blood or damage tick.
+/mob/living/proc/mark_blood_hud_dirty()
+	if(!hud_used)
+		return
+	blood_hud_dirty = TRUE
+	queue_injury_hud_flush()
+
 /mob/living/proc/queue_injury_hud_flush()
 	if(injury_hud_update_queued)
 		return
@@ -114,10 +122,15 @@
 	if(zone_selector_hud_dirty)
 		zone_selector_hud_dirty = FALSE
 		update_zone_selector_hud()
+	var/refresh_blood = blood_hud_dirty
+	blood_hud_dirty = FALSE
 	if(pain_hud_dirty)
 		pain_hud_dirty = FALSE
+		refresh_blood = FALSE //update_health_hud() already refreshes the blood indicator
 		update_damage_hud()
 		update_health_hud()
+	if(refresh_blood)
+		update_blood_hud()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -834,6 +847,7 @@
 			health = 0
 	staminaloss = getStaminaLoss()
 	update_stat()
+	mark_blood_hud_dirty() //tox/oxy feed the heart indicator, so it has to follow damage changes
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/proc/check_revive(mob/living/user)
@@ -1057,7 +1071,7 @@
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				adjust_blood_volume(-max(1, brute_ratio * 2)) 					//that depends on our brute damage.
 				var/newdir = get_dir(target_turf, start)
 				if(newdir != direction)
 					newdir = newdir | direction
