@@ -16033,9 +16033,8 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/red/cand,
 /area/rogue/under/dungeon/inferno)
 "dvm" = (
-/obj/effect/landmark/start/guildmaster,
-/obj/structure/chair/wood/rogue/fancy,
-/turf/open/floor/carpet/royalblack,
+/obj/effect/landmark/start/sapprentice,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "dvu" = (
 /obj/structure/fluff/railing/border{
@@ -19675,7 +19674,6 @@
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/indoors/town/cell/warden)
 "eie" = (
-/obj/effect/landmark/start/sapprentice,
 /obj/structure/chair/wood/rogue/fancy,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -30708,7 +30706,6 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
 	},
-/obj/effect/landmark/start/guildsman,
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 4;
 	pixel_x = 5
@@ -36396,12 +36393,8 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor/rockhill)
 "hRw" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "craftermaster";
-	name = "Guildmaster's Office"
-	},
-/turf/closed/void,
+/obj/effect/landmark/start/guildsman,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hRz" = (
 /obj/item/natural/stone{
@@ -54786,7 +54779,6 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
 "lUI" = (
-/obj/effect/landmark/start/guildmaster,
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 1
 	},
@@ -66287,6 +66279,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/sapprentice,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "osI" = (
@@ -77541,10 +77534,7 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/shop)
 "qRX" = (
-/obj/effect/landmark/start/sapprentice,
-/obj/structure/chair/wood/rogue/fancy{
-	pixel_y = -8
-	},
+/obj/effect/landmark/start/guildsman,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qSa" = (
@@ -82098,6 +82088,7 @@
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/guildmaster,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rVb" = (
@@ -96350,7 +96341,6 @@
 	},
 /area/rogue/indoors/town/tavern)
 "veu" = (
-/obj/effect/landmark/start/guildsman,
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 4;
 	pixel_x = 5
@@ -105933,7 +105923,6 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "xke" = (
-/obj/effect/landmark/start/guildsman,
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 8
 	},
@@ -519165,7 +519154,7 @@ dMk
 eie
 haz
 lRl
-qRX
+gtr
 sco
 vnZ
 dMk
@@ -520026,7 +520015,7 @@ sco
 sco
 gAm
 hTf
-dvm
+eie
 hNH
 fpo
 gtr
@@ -520452,7 +520441,7 @@ fZJ
 fjX
 rZi
 srk
-suK
+qRX
 gBf
 vla
 sco
@@ -520464,7 +520453,7 @@ xke
 aba
 sco
 sco
-hRw
+tDJ
 sco
 sco
 sco
@@ -521748,7 +521737,7 @@ fZJ
 fZJ
 fjX
 mKC
-suK
+qRX
 tLF
 dMk
 rqb
@@ -523909,7 +523898,7 @@ fjX
 rZi
 mKC
 nYU
-dMk
+hRw
 sco
 iee
 sIQ
@@ -523917,7 +523906,7 @@ tBf
 cAv
 sco
 dMk
-dMk
+hRw
 nMh
 sco
 xZg
@@ -632779,7 +632768,7 @@ col
 eJf
 dMk
 tcj
-dMk
+dvm
 dMk
 osH
 sco
