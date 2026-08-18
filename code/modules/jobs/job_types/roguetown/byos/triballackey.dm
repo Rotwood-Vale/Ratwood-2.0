@@ -47,7 +47,10 @@
 
 /datum/advclass/tribalrabble/rabble
 	name = "Hunter"
-	tutorial = "Ooga Chacka Sneaka-Chacka."
+	tutorial = "A gremlin among many other gremlins. You worship the chief as the representation of The Dragon, his chosen as the biggest and the strongest. \
+	There's little to say about you, aside from your proclivity for skullduggery over outright skull smashing, much to your chief's disappointment. Obey when called upon. \
+	This is The Dragon's island, and there's rumor of newcomers, which means more gold for him. \
+	Perhaps if you brought a fresh slave or mammons... The Dragon would finally notice you."
 	outfit = /datum/outfit/job/roguetown/tribalrabble/rabble
 	category_tags = list(CTAG_TRIBALRABBLE)
 	traits_applied = list(TRAIT_DODGEEXPERT)

@@ -17,7 +17,7 @@
 
 /obj/item/clothing/head/roguetown/crown/byos
 	name = "ancient crown"
-	desc = "ooga chacka..."
+	desc = ""
 	color = "#ffe6db"
 	icon_state = "serpcrowno"
 	sellprice = 100

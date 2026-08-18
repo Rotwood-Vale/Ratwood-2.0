@@ -10,7 +10,6 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	// tutorial = "Ooga Chacka Guard-a-Chacka."
 	tutorial = "You're the hand of the Chief, and the iron claw of The Dragon. He's of higher power than any mortal. At least, that's what you've been taught. He is the biggest and strongest afterall. \
 	Do what the Chief insists, while keeping order in the fort. Try not to venture out without the Chief's say-so. \
 	'Tend' to captives when possible, instead of outright killing them."
@@ -44,7 +43,7 @@
 
 /datum/advclass/tribalguard/hunter
 	name = "Hunter"
-	tutorial = "Ooga Chacka Shoota-Chacka."
+	tutorial = "Fast and cunning, you are the Chief's eyes and ears. You are the first to spot intruders, and the first to strike them down. You are a master of stealth, tracking, and ranged combat."
 	outfit = /datum/outfit/job/roguetown/tribalguard/hunter
 	category_tags = list(CTAG_TRIBALGUARD)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -121,7 +120,7 @@
 
 /datum/advclass/tribalguard/warrior
 	name = "Warrior"
-	tutorial = "Ooga Chacka WHACKah-chacka!."
+	tutorial = "You're one of the Chief's trusted guards, though many just know you to be a brute. Strong, perhaps too strong, for your size. You've experience with all kinds of weapons, and unarmed combat."
 	// tutorial = "You're one of the Chief's trusted guards, though many just know you to be a brute. Strong, perhaps too strong, for your size. You've experience with all kinds of weapons, and unarmed combat."
 	outfit = /datum/outfit/job/roguetown/tribalguard/warrior
 	category_tags = list(CTAG_TRIBALGUARD)
@@ -203,7 +202,7 @@
 
 /datum/advclass/tribalguard/savage
 	name = "Savage"
-	tutorial = "Ooga Chacka WHACKah-chacka!."
+	tutorial = "You might not be the smartest, but you are the strongest. You are a brute, and you know it. You are the Chief's trusted guard, and you will do whatever he asks of you. You are a master of unarmed combat, and can wield most weapons with ease."
 	// tutorial = "You're one of the Chief's trusted guards, though many just know you to be a brute. Strong, perhaps too strong, for your size. You've experience with all kinds of weapons, and unarmed combat."
 	outfit = /datum/outfit/job/roguetown/tribalguard/savage
 	category_tags = list(CTAG_TRIBALGUARD)

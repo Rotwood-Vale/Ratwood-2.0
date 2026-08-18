@@ -10,7 +10,6 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	// tutorial = "Ooga Chacka WORK-a chacka."
 	tutorial = "You are the lowest of the low in the tribe. You're the camp's laborer, in service to the Chief before all others. \
 	They've chosen you, as the weakest of them all, to prepare and service the camp in whatever fashion they see fit. \
 	Make sure everyone is fed, healthy, and satisfied, all while hoping maybe one day you'll be something more."
@@ -18,7 +17,7 @@
 	whitelist_req = TRUE
 
 	outfit = /datum/outfit/job/roguetown/tribalvillager
-	advclass_cat_rolls = list(CTAG_PILGRIM = 20)
+	advclass_cat_rolls = list(CTAG_TOWNER = 20)
 
 	min_pq = 0
 	max_pq = null
