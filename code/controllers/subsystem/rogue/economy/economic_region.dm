@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	var/region_id
 	var/name
 	/// Italicized one-liner shown beneath the region name in the Lore Primer's
-	/// AZURIA'S REGIONS section. The steward UI ignores it; only `description` shows there.
+	/// realm regions section. The steward UI ignores it; only `description` shows there.
 	var/subtitle = ""
 	var/description = ""
 	var/list/produces = list()
@@ -411,12 +411,12 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 		TRADE_GOOD_SILK = TG_DEMAND_SILK,
 	)
 
-/// Builds the AZURIA'S REGIONS section of the Lore Primer from the economic_region datums,
+/// Builds the realm regions section of the Lore Primer from the economic_region datums,
 /// so steward UI prose and primer prose stay in sync from a single source.
 /proc/build_regions_primer_html()
 	var/list/parts = list()
 	parts += "<details>"
-	parts += "<summary><strong><span style='font-size:130%'> REGIONS OF AZURIA </span></strong></summary>"
+	parts += "<summary><strong><span style='font-size:130%'> REGIONS OF [uppertext(SSmapping.map_adjustment.realm_name)] </span></strong></summary>"
 	parts += "<strong><span style='font-size:115%'> THE INTERNAL VASSALS AND DEMESNES </span></strong>"
 	parts += "<br><br>"
 	for(var/region_id in GLOB.economic_regions)
