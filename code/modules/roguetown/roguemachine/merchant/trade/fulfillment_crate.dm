@@ -5,12 +5,12 @@
 //    Crown's-Purse-backed) but not mint_label; calls below pass mint_new, drop mint_label.
 //  - I.atc_sealed (declared on /obj/item in code/game/objects/items.dm, next to the quality vars)
 //    and the Merchant help-guide (open_economy_guidebook / book_entry/treasury_merchant) are not
-//    wired up - the Azurian Trading Company seal system and the economy guidebook TGUI are both
+//    wired up - the Ferentian Trading Company seal system and the economy guidebook TGUI are both
 //    out of scope for this step.
 
 /obj/structure/roguemachine/ship_fulfillment
 	name = "ship fulfillment crate"
-	desc = "A wide crate stamped with the seal of the Azurian Trading Company. Goods deposited here are accepted against the demands of foreign vessels in port - the depositor is paid in mammon to their account, less the Crown's export duty and the Merchant's middleman cut."
+	desc = "A wide crate stamped with the seal of the Ferentian Trading Company. Goods deposited here are accepted against the demands of foreign vessels in port - the depositor is paid in mammon to their account, less the Crown's export duty and the Merchant's middleman cut."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "streetvendor1"
 	density = TRUE
@@ -249,7 +249,7 @@
 		return
 	if(I.atc_sealed)
 		if(message)
-			to_chat(user, span_warning("[I] bears an Azurian Trading Company seal - foreign captains will not buy Company stock back."))
+			to_chat(user, span_warning("[I] bears an Ferentian Trading Company seal - foreign captains will not buy Company stock back."))
 		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/F = I

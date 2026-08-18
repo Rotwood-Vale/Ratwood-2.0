@@ -1,7 +1,7 @@
 // Treasury solvency state machine: NORMAL -> IN_ARREARS -> BANKRUPTCY (and back).
 // ES adaptation: wage suspension tracked via suspended_wage_mobs list (integer ledger).
 // Charter suspension/concession-restore is live as of item 6 (code/modules/politics/).
-// "Azurian Trading Company" renamed to "Emerald Trading Company" throughout.
+// "Ferentian Trading Company" renamed to "Ferentian Trading Company" throughout.
 
 /datum/controller/subsystem/treasury/proc/is_in_receivership()
 	return treasury_state == TREASURY_BANKRUPTCY
@@ -46,7 +46,7 @@
 	// Direct credit so the loan isn't immediately skimmed against the debt we just registered.
 	discretionary_fund.balance += loan_amount
 	treasury_value = discretionary_fund.balance
-	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, loan_amount, "Arrears advance from the Emerald Trading Company"))
+	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, loan_amount, "Arrears advance from the Ferentian Trading Company"))
 	priority_announce(
 		"The Crown's coffers ran dry at payroll. The Burghers of Rotwood Vale, by their standing pledge, advance [loan_amount]m at no interest to cover the day's wages. Should the Crown fail again on the morrow, the realm enters sequestration.",
 		"THE BURGHERS LEND",
@@ -70,7 +70,7 @@
 	else if(discretionary_fund.balance < BANKRUPTCY_OPERATING_FLOOR)
 		var/topup = BANKRUPTCY_OPERATING_FLOOR - discretionary_fund.balance
 		discretionary_fund.balance = BANKRUPTCY_OPERATING_FLOOR
-		log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, topup, "Sequestration: operating reserve from the Emerald Trading Company"))
+		log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, topup, "Sequestration: operating reserve from the Ferentian Trading Company"))
 	treasury_value = discretionary_fund.balance
 
 	var/new_debt = BANKRUPTCY_DEBT_FLAT
@@ -83,7 +83,7 @@
 	suspend_wages_for_bankruptcy()
 
 	priority_announce(
-		"Following seizure of [atc_seizure_blurb()] against the Crown's outstanding obligations, the Emerald Trading Company - most blessed servant of Malum the Worker - has graciously advanced an interest-free reserve of [BANKRUPTCY_OPERATING_FLOOR]m in exchange for a debt of [new_debt]m to the Company. Until the debt is repaid in full, the Company holds the sequestered revenues of the realm; the stockpile and trade-engine pass to its hand. Salaries stand suspended.",
+		"Following seizure of [atc_seizure_blurb()] against the Crown's outstanding obligations, the Ferentian Trading Company - most blessed servant of Malum the Worker - has graciously advanced an interest-free reserve of [BANKRUPTCY_OPERATING_FLOOR]m in exchange for a debt of [new_debt]m to the Company. Until the debt is repaid in full, the Company holds the sequestered revenues of the realm; the stockpile and trade-engine pass to its hand. Salaries stand suspended.",
 		"SEQUESTRATION DECLARED",
 		'sound/misc/royal_decree.ogg',
 		"Captain",
@@ -123,7 +123,7 @@
 			if(atc_loan_arrears_consumed)
 				atc_loan_arrears_consumed = FALSE
 				priority_announce(
-					"The Crown's debt to the Emerald Trading Company is settled. The Burghers' grace stands restored.",
+					"The Crown's debt to the Ferentian Trading Company is settled. The Burghers' grace stands restored.",
 					"ETC LOAN SETTLED",
 					'sound/misc/royal_decree2.ogg',
 					"Captain",
@@ -162,7 +162,7 @@
 	force_set_round_statistic(STATS_TREASURY_DEBT_OUTSTANDING, 0)
 
 	priority_announce(
-		"The Emerald Trading Company releases the Crown's commerce. Wages resume on the morrow. The Lord may, by ancient prerogative, restore up to [BANKRUPTCY_CONCESSION_PICKS] of the suspended Charters at once; all others must wait the customary span between proclamations.",
+		"The Ferentian Trading Company releases the Crown's commerce. Wages resume on the morrow. The Lord may, by ancient prerogative, restore up to [BANKRUPTCY_CONCESSION_PICKS] of the suspended Charters at once; all others must wait the customary span between proclamations.",
 		"SEQUESTRATION LIFTED",
 		'sound/misc/royal_decree.ogg',
 		"Captain",
@@ -237,7 +237,7 @@
 			return "Sequestered"
 	return "Unknown"
 
-/// ATC (Emerald Trading Company) emergency loan — early-round cashflow tool.
+/// ATC (Ferentian Trading Company) emergency loan — early-round cashflow tool.
 /// Adds debt repaid via future inflow; consumes arrears grace (next missed payroll → sequestration).
 /// Disabled from ATC_LOAN_CLOSED_DAY onward so it can't free-ride a round-end wipe.
 /datum/controller/subsystem/treasury/proc/atc_loan_available()
@@ -273,12 +273,12 @@
 	treasury_value = discretionary_fund.balance
 	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, amount, "ETC emergency loan (principal)"))
 	priority_announce(
-		"The Crown takes an advance of [amount]m from the Emerald Trading Company at the customary one-quarter interest, registering a debt of [debt_owed]m. The arrears grace stands forfeit; should the Crown miss its next payroll, the realm enters sequestration without warning.",
+		"The Crown takes an advance of [amount]m from the Ferentian Trading Company at the customary one-quarter interest, registering a debt of [debt_owed]m. The arrears grace stands forfeit; should the Crown miss its next payroll, the realm enters sequestration without warning.",
 		"THE CROWN BORROWS",
 		'sound/misc/royal_decree.ogg',
 		"Captain",
 	)
-	log_game("ATC LOAN: [applicant ? key_name(applicant) : "system"] drew [amount]m principal from the Emerald Trading Company; debt of [debt_owed]m registered")
+	log_game("FTC LOAN: [applicant ? key_name(applicant) : "system"] drew [amount]m principal from the Ferentian Trading Company; debt of [debt_owed]m registered")
 	return TRUE
 
 GLOBAL_LIST_INIT(atc_seizure_inventory, list(

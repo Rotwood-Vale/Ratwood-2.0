@@ -4,7 +4,7 @@
 //  - icon: AP's 'icons/roguetown/items/paper.dmi' ("paper_altprep") doesn't exist in ES;
 //    uses ES's stock parchment art from misc.dmi instead.
 //  - No CALENDAR_EPOCH_YEAR calendar system in ES; unsigned writs are undated.
-//  - Faction labels follow ES conventions ("Emerald Trading Company", "the Church").
+//  - Faction labels follow ES conventions ("Ferentian Trading Company", "the Church").
 
 /obj/item/patronage_writ
 	name = "patronage writ"
@@ -73,9 +73,9 @@
 
 /obj/item/patronage_writ/charter
 	name = "writ of charter"
-	desc = "A writ of the Emerald Trading Company. Claim it for chartered agency."
+	desc = "A writ of the Ferentian Trading Company. Claim it for chartered agency."
 	granted_trait = TRAIT_AGENT_MERCHANT
-	faction_label = "the Emerald Trading Company"
+	faction_label = "the Ferentian Trading Company"
 
 /obj/item/patronage_writ/charter/get_roster()
 	return SStreasury?.merchant_agents

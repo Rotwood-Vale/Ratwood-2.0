@@ -720,7 +720,7 @@
 
 /obj/structure/roguemachine/vaultbank/merchant
 	name = "\improper MERCHANT JAWBANK"
-	desc = "A biomechanical obelisk that secures the coffers of the Emerald Trading Company. Throttle it with a strike to spill that which is rightfully yours."
+	desc = "A biomechanical obelisk that secures the coffers of the Ferentian Trading Company. Throttle it with a strike to spill that which is rightfully yours."
 	alert_jobs = list("Merchant", "Shophand")
 	alert_location = "the Merchant's quarter"
 	bash_floor = 500
@@ -730,7 +730,7 @@
 	return "merchant"
 
 /obj/structure/roguemachine/vaultbank/merchant/get_faction_label()
-	return "the Emerald Trading Company"
+	return "the Ferentian Trading Company"
 
 /obj/structure/roguemachine/vaultbank/merchant/can_issue_loan(mob/user)
 	if(!user)
@@ -744,13 +744,13 @@
 	return /obj/item/patronage_writ/charter
 
 /obj/structure/roguemachine/vaultbank/merchant/get_patron_explanation()
-	return "Granting a person the status of Agent of the Emerald Trading Company confers Burgher standing and residency upon them. They may read the names of those who owe debt to the Company, browse and buy GOLDFACE's Harbor stock, hail ships and manage purchases on your behalf, and their kin from their own realm will recognise them for kinship prices. Go forth, in Malum's name, and let them collect what is rightfully owed. - the Office of the Stewardry"
+	return "Granting a person the status of Agent of the Ferentian Trading Company confers Burgher standing and residency upon them. They may read the names of those who owe debt to the Company, browse and buy GOLDFACE's Harbor stock, hail ships and manage purchases on your behalf, and their kin from their own realm will recognise them for kinship prices. Go forth, in Malum's name, and let them collect what is rightfully owed. - the Office of the Stewardry"
 
 /obj/structure/roguemachine/vaultbank/merchant/get_patron_roster()
 	return SStreasury?.merchant_agents
 
 /obj/structure/roguemachine/vaultbank/merchant/get_patron_label()
-	return "the Emerald Trading Company"
+	return "the Ferentian Trading Company"
 
 /obj/structure/roguemachine/vaultbank/merchant/get_patron_cap()
 	return PATRON_CAP_MERCHANT

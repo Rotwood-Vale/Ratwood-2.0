@@ -46,7 +46,7 @@ export const ATCLoanBanner = (props: { atc_loan: AtcLoanState }) => {
           color: accent,
         }}
       >
-        Emerald Trading Company - Company Clerk's Bench
+        Ferentian Trading Company - Company Clerk's Bench
       </div>
       <div style={{ color: INK, marginBottom: '6px' }}>
         {atc_loan.available ? (

@@ -105,8 +105,8 @@
 		<ul>
 			<li>Locked and unlocked with the Merchant's key (or a keyring holding it).</li>
 			<li>Coin is manually loaded and then spent to buy goods.</li>
-			<li>ATC members (Merchant, Shophand) can toggle the Secrets menu to "Stop Paying Taxes", skipping the import tariff.</li>
-			<li>Tariff paid and tariff evaded are tracked per machine, visible only to ATC members.</li>
+			<li>FTC members (Merchant, Shophand) can toggle the Secrets menu to "Stop Paying Taxes", skipping the import tariff.</li>
+			<li>Tariff paid and tariff evaded are tracked per machine, visible only to FTC members.</li>
 			<li>Bought items are spawned ATC-sealed and cannot be re-exported via the Navigator or the Ship Fulfillment Crate.</li>
 		</ul>
 

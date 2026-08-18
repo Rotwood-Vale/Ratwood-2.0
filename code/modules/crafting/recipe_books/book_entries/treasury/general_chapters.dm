@@ -120,7 +120,7 @@
 		<p>Three factions extend patronage. The faction's authority (the Merchant, the Nightmaster, or the Bishop/Martyr) drafts a writ from the <b>Patronage tab of any NERVELOCK</b> and hands it to a chosen bearer, who claims it by using it in hand. The same tab shows the current roll and lets the authority revoke a name.</p>
 
 		<ul>
-			<li><b>Writ of Charter</b> (Emerald Trading Company, up to [PATRON_CAP_MERCHANT] Agents) - the Agent gains Burgher residency, is recognised at GOLDFACE even if their day job is something else: they may browse and buy the Harbor tab's cultural stock, and may hail and send away ships on the Merchant's behalf. An Agent personally recognises ships from their own character origin as kin for buying purposes (see <i>The Kinship Bonus</i>). An Agent is locked out of the Market, Management, and Ledger controls.</li>
+			<li><b>Writ of Charter</b> (Ferentian Trading Company, up to [PATRON_CAP_MERCHANT] Agents) - the Agent gains Burgher residency, is recognised at GOLDFACE even if their day job is something else: they may browse and buy the Harbor tab's cultural stock, and may hail and send away ships on the Merchant's behalf. An Agent personally recognises ships from their own character origin as kin for buying purposes (see <i>The Kinship Bonus</i>). An Agent is locked out of the Market, Management, and Ledger controls.</li>
 			<li><b>Token of the Bathhouse</b> (up to [PATRON_CAP_BATHHOUSE] Agents) - the Agent may operate the bathhouse zadcote.</li>
 			<li><b>Letter of Benefaction</b> (the Church, up to [PATRON_CAP_CHURCH] Benefactors) - marks the bearer a friend of the faith.</li>
 		</ul>
@@ -160,7 +160,7 @@
 		<p>Two legitimate dodge switches exist, both risk-bearing:</p>
 
 		<ul>
-			<li><b>GOLDFACE's Secrets menu</b> - ATC members (Merchant, Shophand) can toggle "Stop Paying Taxes" to skip the import tariff on purchases. The machine tracks tariff paid and tariff evaded per-machine, visible to ATC members only.</li>
+			<li><b>GOLDFACE's Secrets menu</b> - FTC members (Merchant, Shophand) can toggle "Stop Paying Taxes" to skip the import tariff on purchases. The machine tracks tariff paid and tariff evaded per-machine, visible to FTC members only.</li>
 			<li><b>The Ship Fulfillment Crate's underledger toggle</b> - Merchant/Shophand can toggle Crown export duty between PAID and DODGED on that crate. Evaded duty is tallied per-machine.</li>
 		</ul>
 
@@ -194,7 +194,7 @@
 /datum/book_entry/treasury_general/zadcote/inner_book_html(mob/user)
 	return {"
 		<div>
-		<p>The Zadcote is used to send messages, parcels, and for the nefarious - bottlebombs to linked zadcages. Each Zadcote is bound to a single faction - the Crown, the Azurian Trading Company, or the Bathhouse and accepts orders only from its faction.</p>
+		<p>The Zadcote is used to send messages, parcels, and for the nefarious - bottlebombs to linked zadcages. Each Zadcote is bound to a single faction - the Crown, the Ferentian Trading Company, or the Bathhouse and accepts orders only from its faction.</p>
 
 		<p>A Zadcage can ride in a pack, on a person, or be set down, and the zad will route to it reliably. Each zadcote spawns with its linked zadcages automatically..</p>
 

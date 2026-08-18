@@ -633,7 +633,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			if(!isnum(amount))
 				return TRUE
 			if(SStreasury.take_atc_loan(amount, usr))
-				admin_log_fiscal("drew an ATC emergency loan of [amount]m", "ATC Loan")
+				admin_log_fiscal("drew an FTC emergency loan of [amount]m", "FTC Loan")
 			return TRUE
 		if("bulk_clear_debt")
 			var/list/matches = SStreasury.compute_filtered_players(filter_category, filter_status, filter_search)

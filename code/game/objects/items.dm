@@ -175,7 +175,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/item_quality = ITEM_QUALITY_STANDARD
 	var/has_item_quality = FALSE
-	/// Azurian Trading Company seal - foreign vessels refuse to buy back Company-sealed stock.
+	/// Ferentian Trading Company seal - foreign vessels refuse to buy back Company-sealed stock.
 	/// Not wired up anywhere yet (goldface/silverface catalog step).
 	var/atc_sealed = FALSE
 	/// If TRUE, the stockpile refuses to mint this item as treasure. AP sets this on mapload for

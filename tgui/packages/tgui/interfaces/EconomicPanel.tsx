@@ -447,7 +447,7 @@ export const EconomicPanel = () => {
                     <LabeledList.Item label="Sequestration Auto-Export">
                       {bankruptcy.autoexport_override}%
                     </LabeledList.Item>
-                    <LabeledList.Item label="ATC Loans This Round">
+                    <LabeledList.Item label="FTC Loans This Round">
                       {bankruptcy.atc_loans_drawn}
                       {!!bankruptcy.atc_loan_arrears_consumed && (
                         <span style={{ color: '#e07b39', marginLeft: '6px' }}>

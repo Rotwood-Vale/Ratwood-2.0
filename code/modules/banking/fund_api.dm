@@ -1,6 +1,6 @@
 // Fund API — mint/burn/transfer and related helpers.
 // ES adaptation: no decree/concordat/bathhouse-ordinance system; tax exemption always FALSE.
-// "Azurian Trading Company" references renamed to "Emerald Trading Company".
+// "Ferentian Trading Company" references renamed to "Ferentian Trading Company".
 
 /datum/controller/subsystem/treasury/proc/log_fund_entry(datum/treasury_entry/entry)
 	ledger += entry
@@ -106,7 +106,7 @@
 	record_round_statistic(STATS_TREASURY_DEBT_REPAID, skim)
 	var/reason
 	if(treasury_state == TREASURY_BANKRUPTCY)
-		reason = "Sequestration debt - Emerald Trading Company"
+		reason = "Sequestration debt - Ferentian Trading Company"
 	else if(treasury_state == TREASURY_IN_ARREARS)
 		reason = "Arrears repayment - Burghers of Rotwood Vale"
 	else

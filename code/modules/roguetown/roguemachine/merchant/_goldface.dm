@@ -1019,14 +1019,14 @@
 		if("unlock_gnomes")
 			if(try_favor_unlock(H, SSmerchant_trade?.gnome_automation_unlocked, GNOME_AUTOMATION_FAVOR, "The Company Gnomes are already on the books.", "Not enough favor with the Company to call in the gnomes."))
 				if(SSmerchant_trade.unlock_gnome_automation())
-					scom_announce("The Azurian Trading Company has dispatched a gnomish crew to staff the public stalls.")
+					scom_announce("The Ferentian Trading Company has dispatched a gnomish crew to staff the public stalls.")
 					to_chat(H, span_notice("The Company Gnomes are now staffing every Silverface. Their margin flows to your fund."))
 					playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
 			return TRUE
 		if("rent_pier")
 			if(try_favor_unlock(H, SSmerchant_trade?.extra_pier_rented, ADDITIONAL_PIER_FAVOR, "The extra pier is already paid up for the week.", "Not enough favor with the Company to lean on the dockmaster."))
 				if(SSmerchant_trade.rent_extra_pier())
-					scom_announce("Word travels along the wharf - the fishermen's pier has been let to the Azurian Trading Company for the week.")
+					scom_announce("Word travels along the wharf - the fishermen's pier has been let to the Ferentian Trading Company for the week.")
 					to_chat(H, span_notice("The extra pier is yours. The harbor can now hold one more vessel at a time."))
 					playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
 			return TRUE
@@ -1045,7 +1045,7 @@
 				return TRUE
 			if(try_favor_unlock(H, SSmerchant_trade.catalog_unlocked(cid), C.favor_cost, "The [C.name] is already open to the company.", "Not enough favor with the Company to open the [C.name]."))
 				if(SSmerchant_trade.unlock_catalog(cid))
-					scom_announce("The Azurian Trading Company has secured a trade agreement with the [C.name].")
+					scom_announce("The Ferentian Trading Company has secured a trade agreement with the [C.name].")
 					to_chat(H, span_notice("The [C.name] is now open to the company."))
 					playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
 			return TRUE
