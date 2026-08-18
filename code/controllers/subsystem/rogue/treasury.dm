@@ -346,6 +346,26 @@ SUBSYSTEM_DEF(treasury)
 	log_entries += log
 	return
 
+// AP parity: an estate income's first payment lands at spawn, sweetened by ESTATE_STARTER_BONUS,
+// rather than waiting for the first distribution tick. ES deviation: integer player ledger, so the
+// credit goes through give_money_account(mint_new = TRUE) instead of minting into a fund account.
+/datum/controller/subsystem/treasury/proc/grant_estate_income(mob/living/recipient, amount, is_starter = FALSE)
+	if(!recipient || amount <= 0)
+		return FALSE
+	if(HAS_TRAIT(recipient, TRAIT_OUTLAW))
+		return FALSE
+	if(!(recipient in bank_accounts))
+		create_bank_account(recipient)
+	if(!(recipient in bank_accounts))
+		return FALSE
+	var/source = recipient.job == "Merchant" ? "The Guild" : "Noble Estate"
+	var/payout = is_starter ? amount + ESTATE_STARTER_BONUS : amount
+	give_money_account(payout, recipient, source, mint_new = TRUE)
+	record_round_statistic(STATS_NOBLE_INCOME_TOTAL, payout)
+	total_noble_income += payout
+	send_ooc_note("<b>NERVELOCK:</b> You received [payout]m. ([source])", name = recipient.real_name)
+	return TRUE
+
 /datum/controller/subsystem/treasury/proc/distribute_estate_incomes()
 	for(var/mob/living/welfare_dependant in noble_incomes)
 		var/how_much = noble_incomes[welfare_dependant]

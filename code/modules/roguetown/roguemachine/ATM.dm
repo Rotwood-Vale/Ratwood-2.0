@@ -55,7 +55,9 @@
 		if(H.mind)
 			var/datum/job/target_job = SSjob.GetJob(H.mind.assigned_role)
 			if(target_job && target_job.noble_income)
+				var/already_has_income = (H in SStreasury.noble_incomes)
 				SStreasury.noble_incomes[H] = target_job.noble_income
+				SStreasury.grant_estate_income(H, target_job.noble_income, !already_has_income)
 		spawn(5)
 			say("New account created.")
 			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
