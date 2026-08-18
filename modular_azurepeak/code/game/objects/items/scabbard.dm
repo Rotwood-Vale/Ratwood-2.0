@@ -34,6 +34,21 @@
 	/// Specific weapons that are not allowed. Bypassed valid_blade
 	var/list/obj/item/rogueweapon/invalid_blades
 
+	// Canonical Kazengun weapon groups for scabbard restrictions
+	var/list/obj/item/rogueweapon/KAZENGUN_DAGGERS = list(
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	)
+	var/list/obj/item/rogueweapon/KAZENGUN_SWORDS = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook
+	)
+	var/list/obj/item/rogueweapon/KAZENGUN_LONGSWORDS = list(
+		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+	)
+
 	/// Stores weapon
 	var/obj/item/rogueweapon/sheathed
 
@@ -683,7 +698,8 @@
 	desc = "A piece of steel lined with wood. Great for batting away blows."
 	icon_state = "kazscab"
 	item_state = "kazscab"
-	valid_blade = /obj/item/rogueweapon/sword
+	// Only accept Kazengun swords
+	valid_blades = KAZENGUN_SWORDS
 
 	associated_skill = /datum/skill/combat/shields
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
@@ -695,27 +711,31 @@
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry
 	name = "ceremonial kazengun scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
-	valid_blade = /obj/item/rogueweapon/sword
+	// Accept Kazengun short/sabre swords and longswords
+	valid_blades = KAZENGUN_SWORDS + KAZENGUN_LONGSWORDS
 	can_parry = FALSE
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
 	name = "ceremonial scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
-	valid_blade = /obj/item/rogueweapon/sword
+	// Accept Kazengun short/sabre swords and longswords
+	valid_blades = KAZENGUN_SWORDS + KAZENGUN_LONGSWORDS
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/steel
 	name = "hwang scabbard"
 	desc = "A cloud-patterned scabbard with a cloth sash. Used for blocking."
 	icon_state = "kazscab_steel"
 	item_state = "kazscab_steel"
-	valid_blade = /obj/item/rogueweapon/sword
+	// Only accept Kazengun swords
+	valid_blades = KAZENGUN_SWORDS
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/gold
 	name = "gold-stained Xinyi scabbard"
 	desc = "An ornate, wooden scabbard with a sash. Great for parrying."
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
-	valid_blade = /obj/item/rogueweapon/sword
+	// Only accept Kazengun swords
+	valid_blades = KAZENGUN_SWORDS
 	max_integrity = 220
 	sellprice = 50
 
@@ -724,7 +744,8 @@
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
-	valid_blade = /obj/item/rogueweapon/sword
+	// Only accept Kazengun swords (kodachi variant)
+	valid_blades = KAZENGUN_SWORDS
 	wdefense = 4
 
 /obj/item/rogueweapon/scabbard/sheath/kazengun
@@ -732,7 +753,8 @@
 	desc = "A simple lacquered sheath, for shorter eastern-styled blades."
 	icon_state = "kazscabdagger"
 	item_state = "kazscabdagger"
-	valid_blade = /obj/item/rogueweapon/huntingknife
+	// Only accept Kazengun daggers
+	valid_blades = KAZENGUN_DAGGERS
 	associated_skill = /datum/skill/combat/shields
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
