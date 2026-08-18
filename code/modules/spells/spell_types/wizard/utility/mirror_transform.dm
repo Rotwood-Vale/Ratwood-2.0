@@ -446,9 +446,19 @@
 
 		if("penis")
 			var/list/valid_penis_types = list("none")
-			for(var/penis_path in subtypesof(/datum/sprite_accessory/penis))
-				var/datum/sprite_accessory/penis/penis = new penis_path()
-				valid_penis_types[penis.name] = penis_path
+			for(var/choice_path in subtypesof(/datum/customizer_choice/organ/penis))
+				var/datum/customizer_choice/organ/penis/choice = new choice_path()
+				if(!choice?.organ_type)
+					continue
+				if(valid_penis_types[choice.name])
+					continue
+				var/accessory_type = null
+				if(length(choice.sprite_accessories))
+					accessory_type = choice.sprite_accessories[1]
+				valid_penis_types[choice.name] = list(
+					"organ_type" = choice.organ_type,
+					"accessory_type" = accessory_type,
+				)
 
 			var/new_style = input(H, "Choose your penis type", "Penis Customization") as null|anything in valid_penis_types
 			if(new_style)
@@ -460,13 +470,30 @@
 						H.update_body()
 						should_update = TRUE
 				else
-					var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-					if(!penis)
-						penis = new()
-						penis.Insert(H, TRUE, FALSE)
-					penis.accessory_type = valid_penis_types[new_style]
-					// Use build_colors_for_accessory to properly set colors from character
-					penis.build_colors_for_accessory(null)
+					var/list/selection = valid_penis_types[new_style]
+					var/new_organ_type = selection?["organ_type"] || /obj/item/organ/penis
+					var/new_accessory_type = selection?["accessory_type"]
+
+					var/obj/item/organ/penis/old_penis = H.getorganslot(ORGAN_SLOT_PENIS)
+					var/new_size = old_penis?.penis_size || DEFAULT_PENIS_SIZE
+					var/new_functional = isnull(old_penis) ? TRUE : old_penis.functional
+					var/new_colors = old_penis?.accessory_colors
+
+					if(old_penis)
+						old_penis.Remove(H)
+						qdel(old_penis)
+
+					var/obj/item/organ/penis/penis = new new_organ_type()
+					penis.penis_size = new_size
+					penis.functional = new_functional
+					if(new_accessory_type)
+						penis.accessory_type = new_accessory_type
+					if(new_colors)
+						penis.accessory_colors = new_colors
+					else
+						// Use build_colors_for_accessory to properly set colors from character
+						penis.build_colors_for_accessory(null)
+					penis.Insert(H, TRUE, FALSE)
 					H.update_body()
 					should_update = TRUE
 
@@ -1342,4 +1369,5 @@
 		H.update_hair()
 		H.update_body()
 		H.update_body_parts()
-
+		if(H.sexcon)
+			H.sexcon.update_erect_state()
