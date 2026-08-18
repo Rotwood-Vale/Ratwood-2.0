@@ -1,3 +1,5 @@
+#define GARRISON_SCOM_COLOR "#FF4242"
+#define NORMAL_SCOM_TRANSMISSION_DELAY 15 SECONDS
 
 // Sound seems to be capped due to sound falloff formula. Might be something to bring up later.
 /datum/looping_sound/rat_alarm
@@ -110,3 +112,6 @@
 /obj/structure/lever/wall/rat_alarm/proc/reset_cooldown()
 	alarm_cooldown = FALSE
 	QDEL_NULL(soundloop)
+
+#undef GARRISON_SCOM_COLOR
+#undef NORMAL_SCOM_TRANSMISSION_DELAY

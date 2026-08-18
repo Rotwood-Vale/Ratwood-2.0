@@ -49,6 +49,11 @@
 	is_silver = TRUE
 	sellprice = 96
 
+/obj/item/reagent_containers/glass/bowl/tin
+	name = "tin bowl"
+	icon_state = "bowl_tin"
+	sellprice = 20
+
 /obj/item/reagent_containers/glass/bowl/carved
 	name = "carved bowl"
 	desc = "You shouldn't be seeing this."
