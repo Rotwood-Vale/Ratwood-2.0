@@ -4854,12 +4854,6 @@
 /obj/structure/fluff/clock,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
-"baW" = (
-/obj/structure/fluff/walldeco/bigpainting{
-	pixel_x = 2
-	},
-/turf/open/transparent/openspace,
-/area/rogue/outdoors/town/roofs)
 "baY" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -515712,7 +515706,7 @@ oVr
 hxh
 fZJ
 fZJ
-baW
+fZJ
 mWX
 fsx
 kMC
