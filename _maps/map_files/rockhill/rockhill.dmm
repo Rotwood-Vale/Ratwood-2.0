@@ -78735,7 +78735,7 @@
 /obj/structure/mineral_door/wood/deadbolt{
 	lockid = "blacksmith"
 	},
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rhm" = (
 /obj/structure/flora/roguetree,
