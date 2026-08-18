@@ -71,7 +71,7 @@
 	Q.quest_scroll_ref = WEAKREF(spawned_scroll)
 	spawned_scroll.update_quest_text()
 
-	// ES deviation: integer ledger, so the deposit is debited straight off the bearer's balance.
+	// Ratwood deviation: integer ledger, so the deposit is debited straight off the bearer's balance.
 	// It is minted back as part of gross_reward on completion, or forfeited (never returned) on abandon.
 	SStreasury.bank_accounts[user] -= deposit
 
@@ -103,7 +103,7 @@
 
 	var/datum/quest/completed_quest = scroll.assigned_quest
 	var/holder_name = completed_quest.quest_receiver_name
-	// ES deviation: integer ledger, so the beneficiary is a mob on the ledger rather than
+	// Ratwood deviation: integer ledger, so the beneficiary is a mob on the ledger rather than
 	// an AP fund account. An official's proxy turn-in credits the holder; everyone else
 	// (self or fellowship) credits whoever hands the scroll over.
 	var/mob/beneficiary = (mode == QUEST_TURNIN_OFFICIAL) ? holder : user
@@ -124,13 +124,13 @@
 	qdel(scroll.assigned_quest)
 	qdel(scroll)
 
-	// ES deviation: integer ledger, so the gross is credited straight onto the
+	// Ratwood deviation: integer ledger, so the gross is credited straight onto the
 	// beneficiary's balance.
 	SStreasury.bank_accounts[beneficiary] += gross_reward
 
 	// Levy applies only to the base reward, not the returned deposit. The deposit is the
 	// bearer's own money being given back; taxing it would be a hidden levy on principal.
-	// ES deviation: AP's apply_tax() fund path is inlined here, mirroring headeater.dm - the
+	// Ratwood deviation: AP's apply_tax() fund path is inlined here, mirroring headeater.dm - the
 	// levy is debited from the ledger and minted into the Crown's Purse, honouring charter
 	// exemptions and rate caps.
 	var/tax_amt = 0

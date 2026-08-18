@@ -10,7 +10,7 @@ import { MammonRow } from './Goldface/MammonRow';
 import { MarketTab } from './Goldface/Market/MarketTab';
 import type { VendingData } from './Goldface/types';
 
-// ES deviation: AP's Goldface.tsx also has 'management' and 'ledger' tabs (ManagementTab/LedgerTab),
+// Ratwood deviation: AP's Goldface.tsx also has 'management' and 'ledger' tabs (ManagementTab/LedgerTab),
 // which belong to a MeisterPanel/steward-trade ecosystem not yet scoped for this port step. They're
 // omitted here rather than stubbed - the backend (_goldface.dm) still computes their data
 // (build_favor_data/build_ledger_data) so a later port step can add the tabs without backend changes.

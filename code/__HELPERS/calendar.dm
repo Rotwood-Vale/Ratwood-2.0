@@ -6,7 +6,7 @@
 	It consists of 12 months, each with exactly 28 days dividing into 4 weeks. And it starts from Monday and ends on Sunday with a 7 days week.
 	Each week = 1 round IC (regardless of how much time actually passed in game)
 	The first month of a year begins in Spring - Gregorian March, like most sane agricultural calendars that begins in February / March.
-	ES deviation: weekday names keep Emerald Summit's existing set (Tiw's/Thule's/Freyja's/Saturn's)
+	Ratwood deviation: weekday names keep Emerald Summit's existing set (Tiw's/Thule's/Freyja's/Saturn's)
 	rather than AP's secular renames (Truce's/Thunder's/Feast's/Psydon's), matching do_time_change().
 */
 
@@ -53,7 +53,7 @@
 
 // Returns the current IC time as a string in the format [DAYS] ᛉ HH:MM ([Time Of Day])
 /proc/get_current_ic_time_as_string()
-	// ES deviation: Emerald Summit keeps its long-standing weekday names (Tiw's/Thule's/Freyja's/
+	// Ratwood deviation: Emerald Summit keeps its long-standing weekday names (Tiw's/Thule's/Freyja's/
 	// Saturn's Dae) instead of AP's secular renames - see get_current_day_of_week_name() below.
 	var/weekday = get_current_day_of_week_name()
 	return  "[weekday] ᛉ [capitalize(GLOB.tod)] ᛉ [station_time_timestamp("hh:mm")]"

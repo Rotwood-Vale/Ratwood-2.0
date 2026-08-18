@@ -6,7 +6,7 @@
 	faction_tag = FACTION_BANDITS
 	can_blockade = TRUE
 	category = FACTION_CAT_HUMANOID
-	// ES deviation: AP's /highwayman/mount_reaver (mounted elite) has no ES equivalent; the raiding
+	// Ratwood deviation: AP's /highwayman/mount_reaver (mounted elite) has no ES equivalent; the raiding
 	// core is stood in by searaiders so the warband keeps two distinct types instead of collapsing.
 	mob_types = list(
 		/mob/living/carbon/human/species/human/northern/searaider/ambush = 70,

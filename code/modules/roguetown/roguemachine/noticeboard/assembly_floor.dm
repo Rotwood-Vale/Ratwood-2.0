@@ -171,7 +171,7 @@
 				SScity_assembly.notify_alderman_lost_ref(resign_name, resign_job, "resigned")
 			return TRUE
 		if("back_to_noticeboard")
-			// ES deviation: the Assembly panel is reached from the Noticeboard TGUI, so give the
+			// Ratwood deviation: the Assembly panel is reached from the Noticeboard TGUI, so give the
 			// user a way back. Capture the board before closing - ui_close() qdels us and nulls host.
 			var/obj/structure/roguemachine/noticeboard/board = host
 			var/mob/user = usr

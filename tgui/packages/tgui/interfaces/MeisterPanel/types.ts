@@ -105,8 +105,7 @@ export type Data = {
   patron_rosters: Record<string, PatronRoster>;
   patron_rosters_static: Record<string, PatronRosterStatic>;
   personal_log: LogEntry[];
-  // ES deviation: the Bathhouse Ordinance system is not ported; the backend sends FALSE
-  // so the ordinance section stays hidden. TODO(ES): flip when the ordinance lands.
+  // The Bathhouse Ordinance is live; the backend gates the section via the availability flag.
   bathhouse_ordinance_available: boolean;
   bathhouse_ordinance_active: boolean;
   bathhouse_tithe_round_total: number;

@@ -1,13 +1,13 @@
 // MeisterPanel TGUI backend - ported from Azure-Peak PR #7000 (economy port Step 16,
 // AP source: code/modules/roguetown/roguemachine/atm_tgui.dm).
-// ES deviations:
+// Ratwood deviations:
 //  - Poll tax runtime is live (Taxation 2, treasury_poll_tax.dm): the tab gets real
 //    category/rate/advance data and the advance_poll_tax action works.
 //  - Bathhouse Ordinance is live as of the wiring audit: real active/tithe/cooldown data and
 //    the toggle_bathhouse_ordinance action (Bishop or Bathmaster, cooldown-gated).
-//  - Personal ledger: ES player accounts are integer balances, not named /datum/fund accounts,
-//    so treasury_entry rows are never recorded under a player's real_name. The personal Tally
-//    will stay empty until ES logs player-named entries. TODO(ES).
+//  - Personal ledger: this tree's player accounts are integer balances, not named /datum/fund
+//    accounts, so treasury_entry rows are never recorded under a player's real_name and the
+//    personal Tally stays empty by design.
 
 /obj/structure/roguemachine/atm/proc/build_log_entries(account_name)
 	var/list/out = list()
@@ -180,8 +180,8 @@
 	data["institutional_loans"] = institutional_loans
 	data["institutional_logs"] = institutional_logs
 
-	// TODO(ES): player-named ledger entries aren't recorded in ES's integer-account model,
-	// so this stays empty for now (see file header).
+	// Player-named ledger entries aren't recorded in the integer-account model, so this stays
+	// empty by design (see file header).
 	data["personal_log"] = build_log_entries(H.real_name)
 	data["bathhouse_ordinance_available"] = TRUE
 	data["bathhouse_ordinance_active"] = SStreasury.bathhouse_ordinance_active ? TRUE : FALSE

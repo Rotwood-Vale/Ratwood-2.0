@@ -4,7 +4,7 @@
 // on the ES mob roster, mirroring AP's tier values. A kill quest spends a tp_budget composing its
 // warband; each mob's threat_point is its price. Subtypes inherit unless overridden below.
 //
-// ES deviation: several AP mobs have no ES equivalent - the quest factions substitute those, so we
+// Ratwood deviation: several AP mobs have no ES equivalent - the quest factions substitute those, so we
 // only need TP on the ES paths the (substituted) factions actually reference. See threat_points
 // tier ladder in code/__DEFINES/economy/regional_threat.dm.
 

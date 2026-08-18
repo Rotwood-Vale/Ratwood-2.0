@@ -354,7 +354,7 @@
 	var/payout = round(reward_amount * reward_turnout_mult())
 	if(payout > 0)
 		if(lead && SStreasury.has_account(lead))
-			SStreasury.bank_accounts[lead] += payout // ES deviation: integer player ledger (no per-player fund/get_account)
+			SStreasury.bank_accounts[lead] += payout // Ratwood deviation: integer player ledger (no per-player fund/get_account)
 			record_round_statistic(STATS_BLOCKADE_REWARDS_PAID, payout)
 			announce_to_bearer("The final wave breaks. The rewards have been transferred to your account.")
 		else

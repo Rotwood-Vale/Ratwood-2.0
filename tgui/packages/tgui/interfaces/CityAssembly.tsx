@@ -253,7 +253,7 @@ export const CityAssembly = () => {
     <Window title="The City Assembly" width={780} height={740} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
-          {/* ES deviation: the Assembly is reached from the Noticeboard TGUI - give a way back. */}
+          {/* Ratwood deviation: the Assembly is reached from the Noticeboard TGUI - give a way back. */}
           <button
             type="button"
             style={inkButtonStyle({ color: INK })}

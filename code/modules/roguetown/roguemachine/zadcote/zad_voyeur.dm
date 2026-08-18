@@ -1,6 +1,6 @@
 // Zadcote scrying ("voyeur") - ported from Azure-Peak PR #7000
 // (code/modules/roguetown/roguemachine/zadcote/zad_voyeur.dm).
-// ES deviations:
+// Ratwood deviations:
 //  - /atom/movable/screen/alert/scryingeye does not exist in ES (AP defines it in
 //    inquisitionrelics.dm alongside the blackmirror alert, which ES *does* have) - it is
 //    defined at the bottom of this file instead. Its icon_state "scryingeye" may need to be
@@ -77,7 +77,7 @@
 		holder.throw_alert("scryingeye", /atom/movable/screen/alert/scryingeye, override = TRUE)
 		to_chat(holder, span_warning("The zad in your zadcage stirs - you feel a pair of eyes peering through it."))
 		holder.balloon_alert_to_viewers("<font color='#b388ff'>scried!</font>")
-		holder.playsound_local(holder, 'sound/magic/marked.ogg', 75, TRUE) // ES deviation: AP plays 'sound/magic/scryed_on.ogg', which ES lacks
+		holder.playsound_local(holder, 'sound/magic/marked.ogg', 75, TRUE) // Ratwood deviation: AP plays 'sound/magic/scryed_on.ogg', which ES lacks
 	voyeur_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_voyeur)), ZAD_VOYEUR_DURATION, TIMER_STOPPABLE)
 
 /obj/item/zadcage/proc/finish_voyeur()
@@ -120,7 +120,7 @@
 
 /mob/dead/observer/screye/zadcote_voyeur/Initialize()
 	. = ..()
-	verbs += /mob/dead/observer/screye/zadcote_voyeur/proc/end_zad_voyeur // ES deviation: AP uses add_verb(), which ES lacks
+	verbs += /mob/dead/observer/screye/zadcote_voyeur/proc/end_zad_voyeur // Ratwood deviation: AP uses add_verb(), which ES lacks
 
 /mob/dead/observer/screye/zadcote_voyeur/proc/end_zad_voyeur()
 	set category = "IC"
@@ -132,7 +132,7 @@
 	else
 		reenter_corpse()
 
-// ES deviation: ported here from AP's inquisitionrelics.dm (ES's copy of that file only has
+// Ratwood deviation: ported here from AP's inquisitionrelics.dm (ES's copy of that file only has
 // the blackmirror alert). Icon state "scryingeye" must exist in the screen-alert DMI - flag
 // for the user to confirm/add in Dream Maker.
 /atom/movable/screen/alert/scryingeye

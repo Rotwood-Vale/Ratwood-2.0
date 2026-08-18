@@ -44,7 +44,7 @@ Yeven under the seal of the Crown."}
 		return FALSE
 	if(HAS_TRAIT(payer, TRAIT_RESIDENT))
 		return TRUE
-	// ES deviation: no GLOB.wanderer_positions - use the poll-tax adventurer roster.
+	// Ratwood deviation: no GLOB.wanderer_positions - use the poll-tax adventurer roster.
 	if(payer.job in list("Adventurer", "Court Agent", "Pilgrim"))
 		return FALSE
 	if(payer.job in GLOB.mercenary_positions)

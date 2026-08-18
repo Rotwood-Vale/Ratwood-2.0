@@ -4,7 +4,7 @@
 	var/datum/calendar_ui/ui = new(src)
 	ui.ui_interact(mob)
 
-// ES deviation: AP opens the calendar from a clickable IC DATE line in its statbrowser panel.
+// Ratwood deviation: AP opens the calendar from a clickable IC DATE line in its statbrowser panel.
 // Emerald Summit still uses the legacy stat panel (no clickable rows), so expose a verb instead.
 /client/verb/view_ic_calendar()
 	set category = "IC"

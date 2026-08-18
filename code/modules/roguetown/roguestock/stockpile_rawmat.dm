@@ -33,7 +33,7 @@
 	importexport_amt = 10
 	stockpile_limit = 50 // Allow a small amount of stones to be sold for chiselling
 
-// ES deviation from AP: ES's glass batch is /obj/item/natural/clay/glassbatch, a SUBTYPE of
+// Ratwood deviation from AP: ES's glass batch is /obj/item/natural/clay/glassbatch, a SUBTYPE of
 // clay - so the glass entry must be defined BEFORE the clay entry for the istype() stockpile
 // match to hit glass batches first (same reason hide/cured precedes hide below).
 /datum/roguestock/stockpile/glass

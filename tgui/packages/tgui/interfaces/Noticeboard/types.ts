@@ -20,7 +20,7 @@ export type Posting = {
   can_authority_remove: boolean;
 };
 
-// ES deviation: AP's ScoutRegion carries an `ic_descriptions` field sourced from
+// Ratwood deviation: AP's ScoutRegion carries an `ic_descriptions` field sourced from
 // /datum/threat_region/get_ic_description(), which does not exist in ES's threat_region
 // datum. Dropped here to match noticeboard.dm's build_scout_regions() reality - see
 // ScoutsSection.tsx, which no longer renders a "Wardens' Word" column.

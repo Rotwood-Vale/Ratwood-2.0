@@ -1,5 +1,5 @@
 // StewardTrade TGUI backend - ported from Azure-Peak PR #7000 (economy port Step 15).
-// ES deviations are commented inline.
+// Ratwood deviations are commented inline.
 #define LEDGER_PAGE_SIZE 50
 
 /obj/structure/roguemachine/steward/ui_state(mob/user)
@@ -297,7 +297,7 @@
 	petition_state["is_steward_role"] = (user.job in GLOB.crown_authority_roles) ? TRUE : FALSE
 	petition_state["is_alderman_acting"] = SScity_assembly?.is_alderman(user) ? TRUE : FALSE
 	var/list/eligibility = list()
-	// ES deviation: AP builds the blocker matrix inline; ES's Step 8 petition port landed
+	// Ratwood deviation: AP builds the blocker matrix inline; ES's Step 8 petition port landed
 	// SSeconomy.petition_blocker() as the single source of truth, so reuse it here.
 	for(var/cat_id in GLOB.petition_categories)
 		var/list/per_region = list()
@@ -696,7 +696,7 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 						var/datum/economic_region/region = GLOB.economic_regions[region_id]
 						total_demand += region.demands[D.trade_good_id] || 0
 					if(total_demand > 0)
-						// ES deviation: CEILING(x, 1) — ES's BYOND target has no ceil() builtin
+						// Ratwood deviation: CEILING(x, 1) — ES's BYOND target has no ceil() builtin
 						D.stockpile_limit = max(STOCKPILE_LIMIT_MIN, CEILING(total_demand * pop_mult * STOCKPILE_AUTO_LIMIT_DAYS, 1))
 					else
 						D.stockpile_limit = max(STOCKPILE_LIMIT_MIN, D.stockpile_limit)
@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(steward_trade_sequestration_locked_actions, list(
 			var/datum/roguestock/D = SSeconomy.find_stockpile_by_trade_good(params["good_id"])
 			if(!D)
 				return TRUE
-			// ES deviation: numeric entry via the standard input() prompt instead of AP's window.prompt()
+			// Ratwood deviation: numeric entry via the standard input() prompt instead of AP's window.prompt()
 			var/price = text2num("[params["price"]]")
 			if(isnull(price))
 				price = input(usr, "Set buy price for [D.name]", src, D.payout_price) as null|num

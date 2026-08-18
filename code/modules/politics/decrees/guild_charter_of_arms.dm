@@ -22,7 +22,7 @@ Yeven under the seal of the Crown and the mark of the Guild."}
 		return FALSE
 	if(HAS_TRAIT(payer, TRAIT_OUTLAW))
 		return FALSE
-	// ES deviation: match the poll-tax mercenary roster, not a single title.
+	// Ratwood deviation: match the poll-tax mercenary roster, not a single title.
 	return (payer.job in GLOB.mercenary_positions)
 
 /datum/decree/guild_charter_of_arms/apply_poll_tax_cap(mob/living/payer, poll_category, current_rate)

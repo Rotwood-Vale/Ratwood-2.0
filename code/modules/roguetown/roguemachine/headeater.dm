@@ -1,7 +1,7 @@
 // Taxation 2 rework (ported from AP #6849/#7000): bounties credit the bearer's meister account
 // at full sellprice, less the Lord-adjustable Crown's Headeater Levy (TAX_CATEGORY_HEADEATER_LEVY).
 // Replaces the old flat 60% house cut that paid in loose coins.
-// ES deviations: player accounts are integer ledger balances (bank_accounts), so the gross is
+// Ratwood deviations: player accounts are integer ledger balances (bank_accounts), so the gross is
 // minted straight onto the ledger (new money, mirroring AP's mint-to-account) and the levy is a
 // ledger debit minted into the Crown's Purse. AP's no_head_bounty flag is not ported - ES heads
 // carry their own sellprice semantics unchanged.
@@ -38,7 +38,7 @@
 	if(!SStreasury.has_account(user))
 		return 0
 	SStreasury.bank_accounts[user] += gross
-	// Item 6 decrees: charter exemptions and rate caps apply to the levy (ES deviation:
+	// Item 6 decrees: charter exemptions and rate caps apply to the levy (Ratwood deviation:
 	// integer ledger, so the AP apply_tax() fund path is inlined here).
 	var/base_rate = SStreasury.get_tax_rate(TAX_CATEGORY_HEADEATER_LEVY)
 	if(isliving(user) && SStreasury.is_tax_exempt(user, TAX_CATEGORY_HEADEATER_LEVY))

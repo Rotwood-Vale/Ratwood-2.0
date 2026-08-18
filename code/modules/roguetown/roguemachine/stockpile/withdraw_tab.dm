@@ -50,7 +50,7 @@
 		parent_structure.say("Insufficient stock.")
 		return FALSE
 	if(total_price > budget)
-		// ES deviation: AP lets the stipend buy ANY category on the treasury's coin;
+		// Ratwood deviation: AP lets the stipend buy ANY category on the treasury's coin;
 		// gate it to actual food so royal servants can't drain the Crown's Purse on ore/gems
 		if(ishuman(user) && HAS_TRAIT(user, TRAIT_FOOD_STIPEND) && (D.category in list("Fruit", "Vegetable", "Animal", "Seafood")))
 			if(SStreasury.burn(SStreasury.discretionary_fund, total_price, "food stipend - vomitorium"))

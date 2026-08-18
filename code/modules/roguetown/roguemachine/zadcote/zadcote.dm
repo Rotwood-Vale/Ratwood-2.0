@@ -1,6 +1,6 @@
 // Zadcote (crow-post) - ported from Azure-Peak PR #7000 "Economy 3"
 // (apsrc/main, code/modules/roguetown/roguemachine/zadcote/zadcote.dm).
-// ES deviations:
+// Ratwood deviations:
 //  - withdraw_voyeur(): AP calls a global budget2change(); in ES budget2change() is a member
 //    proc of /obj/structure/roguemachine (code/modules/roguetown/roguemachine/money.dm) and
 //    zadcotes are /obj/item/roguemachine, so payout_coins() below spawns the coin stacks
@@ -348,7 +348,7 @@
 			withdraw_voyeur(H)
 			return TRUE
 
-// ES deviation: coin payout helper replacing AP's global budget2change() call - see file header.
+// Ratwood deviation: coin payout helper replacing AP's global budget2change() call - see file header.
 /obj/item/roguemachine/zadcote/proc/payout_coins(amount, mob/living/user)
 	if(amount <= 0)
 		return

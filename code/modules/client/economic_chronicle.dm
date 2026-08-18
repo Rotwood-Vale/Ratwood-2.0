@@ -5,7 +5,7 @@ GLOBAL_DATUM(economic_chronicle, /datum/economic_chronicle)
 		GLOB.economic_chronicle = new /datum/economic_chronicle()
 	return GLOB.economic_chronicle
 
-// ES deviation: AP reaches this via round-end panel hrefs; give ES players a live OOC verb too.
+// Ratwood deviation: AP reaches this via round-end panel hrefs; give ES players a live OOC verb too.
 /client/verb/view_realm_economics()
 	set category = "Options"
 	set name = "Realm Economics"

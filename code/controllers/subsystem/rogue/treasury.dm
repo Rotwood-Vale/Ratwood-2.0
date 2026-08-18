@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(treasury)
 /datum/controller/subsystem/treasury/proc/has_account(target)
 	return !isnull(bank_accounts[target])
 
-// AP parity helper (Step 16 Meister Panel). ES deviation: player accounts are integer
+// AP parity helper (Step 16 Meister Panel). Ratwood deviation: player accounts are integer
 // balances keyed by mob in bank_accounts, not /datum/fund accounts.
 /datum/controller/subsystem/treasury/proc/get_balance(target)
 	return bank_accounts[target] || 0
@@ -189,7 +189,7 @@ SUBSYSTEM_DEF(treasury)
 	for(var/X in bank_accounts)
 		if(X == target)
 			if(amt > 0)
-				// ES deviation from legacy (AP parity): account credits are drawn from the
+				// Ratwood deviation from legacy (AP parity): account credits are drawn from the
 				// Crown's Purse, not printed - otherwise selling to the stockpile duplicated
 				// money forever since the treasury never actually paid anything out
 				if(!mint_new && !burn(discretionary_fund, amt, source || "treasury payment to [target_name]"))
@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(treasury)
 					send_ooc_note("<b>NERVELOCK:</b> Error: The round is ending. No further fines may be levied.", name = target_name)
 					return FALSE
 				// Item 6 decrees: charter exemptions (Great Writ) and caps (Golden Bull,
-				// one-fine-per-day) bound the Crown's fines. ES deviation: integer ledger,
+				// one-fine-per-day) bound the Crown's fines. Ratwood deviation: integer ledger,
 				// so the cap math runs on bank_accounts rather than a fund balance.
 				var/mob/living/fine_owner = istype(target, /mob/living) ? target : null
 				var/fine_amt = abs(amt)
@@ -347,7 +347,7 @@ SUBSYSTEM_DEF(treasury)
 	return
 
 // AP parity: an estate income's first payment lands at spawn, sweetened by ESTATE_STARTER_BONUS,
-// rather than waiting for the first distribution tick. ES deviation: integer player ledger, so the
+// rather than waiting for the first distribution tick. Ratwood deviation: integer player ledger, so the
 // credit goes through give_money_account(mint_new = TRUE) instead of minting into a fund account.
 /datum/controller/subsystem/treasury/proc/grant_estate_income(mob/living/recipient, amount, is_starter = FALSE)
 	if(!recipient || amount <= 0)

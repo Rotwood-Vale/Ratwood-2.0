@@ -589,7 +589,7 @@
 		to_chat(user, span_warning("This jawbank cannot extend patronage."))
 		return
 	if(!COOLDOWN_FINISHED(src, patronage_writ_cooldown))
-		// ES deviation: CEILING(x, 1) instead of AP's ceil() builtin.
+		// Ratwood deviation: CEILING(x, 1) instead of AP's ceil() builtin.
 		var/wait_seconds = CEILING(COOLDOWN_TIMELEFT(src, patronage_writ_cooldown) / 10, 1)
 		to_chat(user, span_warning("The seal is still warm. Wait [wait_seconds]s before drafting another."))
 		return
@@ -772,7 +772,7 @@
 /obj/structure/roguemachine/vaultbank/bathhouse
 	name = "\improper BATHHOUSE JAWBANK"
 	desc = "A biomechanical obelisk that secures the takings of the Bathhouse. Throttle it with a strike to spill that which is rightfully yours."
-	// ES deviation: AP's "Bathmaster"/"Bathhouse Attendant" -> ES job titles are
+	// Ratwood deviation: AP's "Bathmaster"/"Bathhouse Attendant" -> ES job titles are
 	// Ratwood keeps AP job titles: "Bathmaster"/"Bathhouse Attendant".
 	alert_jobs = list("Bathmaster", "Bathhouse Attendant")
 	alert_location = "the Bathhouse"

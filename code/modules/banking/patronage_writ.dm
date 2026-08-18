@@ -1,6 +1,6 @@
 // Patronage writs - ported from Azure-Peak PR #7000 (economy port Step 16,
 // AP source: code/modules/politics/items/patronage_writ.dm).
-// ES deviations:
+// Ratwood deviations:
 //  - icon: AP's 'icons/roguetown/items/paper.dmi' ("paper_altprep") doesn't exist in ES;
 //    uses ES's stock parchment art from misc.dmi instead.
 //  - No CALENDAR_EPOCH_YEAR calendar system in ES; unsigned writs are undated.

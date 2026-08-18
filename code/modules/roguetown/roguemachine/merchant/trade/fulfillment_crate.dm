@@ -1,4 +1,4 @@
-// ES deviations from AP's fulfillment_crate.dm:
+// Ratwood deviations from AP's fulfillment_crate.dm:
 //  - SStreasury.has_account(user) doesn't exist in ES's treasury API; the established ES pattern
 //    (see code/modules/roguetown/roguemachine/ATM.dm) is `(user in SStreasury.bank_accounts)`.
 //  - ES's give_money_account now supports mint_new (2026-07-02, added when payouts became
@@ -151,7 +151,7 @@
 /obj/structure/roguemachine/ship_fulfillment/MouseDrop_T(atom/dropped, mob/living/user)
 	if(!ishuman(user))
 		return
-	// ES deviation: dragging a handcart onto the crate unloads it - the examine text
+	// Ratwood deviation: dragging a handcart onto the crate unloads it - the examine text
 	// promised this but no interaction path ever routed a cart into attempt_deposit()
 	if(istype(dropped, /obj/structure/handcart))
 		if(!user.Adjacent(src) || !user.Adjacent(dropped))
@@ -175,7 +175,7 @@
 	var/list/tally = list("total_producer" = 0, "total_gross" = 0, "total_duty" = 0, "total_cut" = 0, "total_kin_bonus" = 0, "total_quality_delta" = 0, "lines" = list())
 	for(var/obj/item/I in get_turf(user))
 		attempt_deposit(I, user, FALSE, FALSE, tally)
-	for(var/obj/structure/handcart/cart in get_turf(user)) // ES deviation: bulk-unload carts too
+	for(var/obj/structure/handcart/cart in get_turf(user)) // Ratwood deviation: bulk-unload carts too
 		attempt_deposit(cart, user, FALSE, FALSE, tally)
 	for(var/obj/structure/fermentation_keg/keg in get_turf(user))
 		attempt_deposit_keg(keg, user)
@@ -210,7 +210,7 @@
 	if(!SSmerchant_trade)
 		return
 	if(istype(I, /obj/structure/handcart))
-		// ES deviation: AP's handcart tracks contents in contained_items with a remove_from()
+		// Ratwood deviation: AP's handcart tracks contents in contained_items with a remove_from()
 		// proc; ES's handcart (code/game/objects/structures/roguetown/handcart.dm) uses stuff_shit
 		// instead and has no remove_from() - forceMove() out + manually clearing stuff_shit/
 		// current_capacity mirrors what ES's own dump_contents() does.

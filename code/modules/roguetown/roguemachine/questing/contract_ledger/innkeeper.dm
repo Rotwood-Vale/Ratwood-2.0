@@ -107,7 +107,7 @@
 	var/guild_paid = 0
 	if(completed_quest.source != QUEST_SOURCE_DEFENSE && !completed_quest.guild_cut_exempt)
 		var/guild_fee = round(gross_reward * GUILD_REFERRAL_FEE_PCT)
-		// ES deviation: integer ledger, so the guild cut is debited off the bearer and minted into the tavern fund.
+		// Ratwood deviation: integer ledger, so the guild cut is debited off the bearer and minted into the tavern fund.
 		if(guild_fee > 0 && tavern_fund && SStreasury.bank_accounts[user] >= guild_fee)
 			SStreasury.bank_accounts[user] -= guild_fee
 			SStreasury.mint(tavern_fund, guild_fee, "Guild Cut - [completed_quest.quest_type]")

@@ -1,5 +1,5 @@
 /// Goblin goon pool used when the goblin warlord variant fires on a bounty quest.
-/// ES deviation: no goblin bomber in ES - the 4th slot is a moon goblin (the elite variant).
+/// Ratwood deviation: no goblin bomber in ES - the 4th slot is a moon goblin (the elite variant).
 GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 	/mob/living/carbon/human/species/goblin/npc,
 	/mob/living/carbon/human/species/goblin/npc,
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(quest_bounty_goblin_goons, list(
 	// 20% chance: goblin warlord variant overrides boss type and goon pool.
 	if(prob(20))
 		goblin_warlord_variant = TRUE
-		// ES deviation: no /goblin/npc/large - the moon goblin (elite variant) stands in as the warchief.
+		// Ratwood deviation: no /goblin/npc/large - the moon goblin (elite variant) stands in as the warchief.
 		target_mob_type = /mob/living/carbon/human/species/goblin/npc/ambush/moon
 		var/datum/quest_faction/goblin_faction = get_quest_faction(QUEST_FACTION_FOREST_GOBLIN)
 		boss_name = goblin_faction ? goblin_faction.generate_boss_name() : "the Goblin Warchief"

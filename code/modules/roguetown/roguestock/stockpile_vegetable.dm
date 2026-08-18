@@ -4,7 +4,7 @@
 // Theoretically this does create a perverse incentive to export food instead of selling it locally
 // But I live for the consequences of stewards deciding to neglect their local economy.
 //
-// ES deviation from AP: AP's Mushroom stockpile
+// Ratwood deviation from AP: AP's Mushroom stockpile
 // (/obj/item/reagent_containers/food/snacks/rogue/mushroom) is dropped - ES has no edible
 // mushroom food item.
 /datum/roguestock/stockpile/grain

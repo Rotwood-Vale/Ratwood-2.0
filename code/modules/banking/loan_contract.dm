@@ -1,6 +1,6 @@
 // Loan contracts and indenture writs - ported from Azure-Peak PR #7000 (economy port Step 16,
 // AP source: code/modules/politics/items/loan_contract.dm).
-// ES deviations:
+// Ratwood deviations:
 //  - Player accounts are integer balances in SStreasury.bank_accounts (keyed by mob), not
 //    /datum/fund accounts. Disbursement burns the issuing fund and credits the ledger directly
 //    (exact inverse of the landed repay_loan() pattern in code/modules/banking/loan.dm).
@@ -97,7 +97,7 @@
 	if(issuing_fund.balance < principal)
 		to_chat(user, span_warning("[issuing_fund.name]'s coffers are too thin to honor this writ."))
 		return
-	// ES deviation: burn from the issuing fund and credit the integer ledger directly
+	// Ratwood deviation: burn from the issuing fund and credit the integer ledger directly
 	// (inverse of repay_loan(), which debits the ledger and mints the destination fund).
 	if(!SStreasury.burn(issuing_fund, principal, "Loan principal - [user.real_name]"))
 		to_chat(user, span_warning("The meister refuses the transfer."))

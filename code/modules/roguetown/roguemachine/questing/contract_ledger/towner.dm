@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(towner_posting_descriptors, list(
 /proc/get_user_advclass_path(mob/user)
 	if(!ishuman(user))
 		return null
-	// ES deviation: ES has no mind.picked_advclass; the chosen advclass NAME is stored on H.advjob.
+	// Ratwood deviation: ES has no mind.picked_advclass; the chosen advclass NAME is stored on H.advjob.
 	var/mob/living/carbon/human/H = user
 	if(!H.advjob)
 		return null
@@ -221,7 +221,7 @@ GLOBAL_LIST_INIT(towner_posting_descriptors, list(
 		if(SStreasury.get_balance(poster) < cost)
 			to_chat(poster, span_warning("Insufficient balance. This posting requires [cost] mammon."))
 			return
-		// ES deviation: integer player ledger, not AP's fund accounts. Debit the poster
+		// Ratwood deviation: integer player ledger, not AP's fund accounts. Debit the poster
 		// and mint the fee into the Crown's Purse; the refund below mirrors this.
 		SStreasury.bank_accounts[poster] -= cost
 		SStreasury.mint(SStreasury.discretionary_fund, cost, "towner contract posting ([chosen_type])")

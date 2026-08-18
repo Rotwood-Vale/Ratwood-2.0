@@ -1,4 +1,4 @@
-// ES deviation: AP uses /datum/virtue/origin/O with an origin_name var; ES keeps origin virtues
+// Ratwood deviation: AP uses /datum/virtue/origin/O with an origin_name var; ES keeps origin virtues
 // as flat /datum/virtue/<subtype> and exposes the display name via the base .name var instead.
 // See code/modules/client/preferences.dm (virtue_origin) and modular_azurepeak/_virtue.dm.
 

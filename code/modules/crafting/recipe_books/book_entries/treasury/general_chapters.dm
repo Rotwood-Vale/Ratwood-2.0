@@ -16,11 +16,11 @@
 //
 // Reworked vs AP (ES has a real but different implementation):
 //  - Charters of the Realm: real as of the item 6 decree port (code/modules/politics/,
-//    SStreasury.decrees) - chapter 00 below documents it. ES renames: Great Writ of the
-//    Summit, Church of the Summit, ES job rosters in the Covenant/Guild Charter.
+//    SStreasury.decrees) - chapter 00 below documents it. Decree names are localized to this
+//    realm (Great Writ of the Vale etc.) and reskinned per map via decree_reskins.
 //  - Taxation and Levies: per-category rates are set from the throne's "Set Taxes" TaxSetter
-//    panel (Taxation 2 port); the legacy single-rate "Adjust Taxes" steward verb still drives
-//    the old flat Sales Tax alongside. Charter exemptions/caps are live as of item 6.
+//    panel (Taxation 2 port); the Steward's "Adjust Taxes" verb opens the same panel when the
+//    ruler is absent. The old flat Sales Tax is gone. Charter exemptions/caps are live.
 //  - Fines: Golden Bull per-stroke cap + daily ceiling and the one-fine-per-day rule are real
 //    as of item 6, on top of the general fine cap (GENERIC_RATE_CAP).
 //  - Patronage: all three writs are real as of the Step 16 Meister Panel port
@@ -89,7 +89,7 @@
 			<li><b>Fine</b> - a one-off penalty struck against a subject's account.</li>
 		</ul>
 
-		<p>Per-category rates (levies and poll taxes) are set from the throne by speaking <b>"Set Taxes"</b>, which opens the Ruler's tax panel; levies and poll rates each carry an independent one-day cooldown. The legacy <b>"Adjust Taxes"</b> steward verb still exists alongside and drives the old flat Sales Tax percentage. While the Zenitstadt Concordat stands, no levy may be set below the Church's tithe rate.</p>
+		<p>Per-category rates (levies and poll taxes) are set from the throne by speaking <b>"Set Taxes"</b>, which opens the Ruler's tax panel; levies and poll rates each carry an independent one-day cooldown. Should the ruler be absent from the realm, the Steward's <b>"Adjust Taxes"</b> verb opens the same panel. While the Zenitstadt Concordat stands, no levy may be set below the Church's tithe rate.</p>
 
 		<h3>Poll Tax</h3>
 		<p>Poll tax is levied daily against every subject with a bank account, drained automatically. Categories exist per social station (noble, clergy, inquisition, courtier, garrison, guilds, merchant, burgher, adventurer, mercenary, peasant). Poll taxes are hardcapped at <b>[POLL_TAX_MAX_RATE]m/day</b>, and can be set as low as a subsidy of <b>-[POLL_TAX_MAX_SUBSIDY]m/day</b> (a negative rate pays subjects from the Crown's Purse instead).</p>

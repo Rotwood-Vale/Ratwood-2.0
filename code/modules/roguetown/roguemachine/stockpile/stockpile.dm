@@ -1,4 +1,4 @@
-// ES deviations from AP's stockpile.dm:
+// Ratwood deviations from AP's stockpile.dm:
 //  - Handcart branch: AP's handcart tracks contents in contained_items with a remove_from()
 //    proc; ES's handcart (code/game/objects/structures/roguetown/handcart.dm) uses stuff_shit
 //    instead and has no remove_from() - forceMove() out + manually clearing stuff_shit/
@@ -187,7 +187,7 @@
 	return SSeconomy.manual_export(null, best["region_id"], D.trade_good_id, units)
 
 /obj/structure/roguemachine/stockpile/proc/attemptsell(obj/item/I, mob/H, message = TRUE, sound = TRUE)
-	// ES deviation: never treat coinage as sellable treasure - attackby routes held coins to
+	// Ratwood deviation: never treat coinage as sellable treasure - attackby routes held coins to
 	// the coin slot, but the bulk-sell turf scans (and cart contents) would mint them away
 	if(istype(I, /obj/item/roguecoin))
 		return
@@ -342,7 +342,7 @@
 				SStreasury.mint(SStreasury.discretionary_fund, crown_delta, "Quality premium: [I.name] (+[crown_delta]m)")
 			else if(crown_delta < 0)
 				SStreasury.burn(SStreasury.discretionary_fund, -crown_delta, "Quality penalty: [I.name] ([crown_delta]m)")
-			// ES deviation: AP double-increments here (+2 per item); the full_on_arrival
+			// Ratwood deviation: AP double-increments here (+2 per item); the full_on_arrival
 			// path already added its unit before the auto-export attempt above
 			if(!full_on_arrival)
 				R.stockpile_amount += 1
@@ -390,7 +390,7 @@
 	else if (ishuman(user))
 		attemptsell(P, user, TRUE, TRUE)
 
-// ES deviation: dragging a handcart onto the machine sells its contents - without this
+// Ratwood deviation: dragging a handcart onto the machine sells its contents - without this
 // (and the user-tile scan below) nothing ever routes a cart into attemptsell()'s cart branch
 /obj/structure/roguemachine/stockpile/MouseDrop_T(atom/dropped, mob/living/user)
 	if(!ishuman(user))
@@ -403,7 +403,7 @@
 
 /obj/structure/roguemachine/stockpile/attack_right(mob/user)
 	if(ishuman(user))
-		// ES deviation: AP only scans the machine's own tile; scan the user's tile too so
+		// Ratwood deviation: AP only scans the machine's own tile; scan the user's tile too so
 		// a cart (or goods) parked underfoot sells without shoving it onto the machine
 		var/list/scan_turfs = list(get_turf(src))
 		var/turf/user_turf = get_turf(user)

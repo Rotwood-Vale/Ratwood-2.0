@@ -1,5 +1,5 @@
 // Taxation 2 poll-tax engine, ported from AP #6849 (source: AP treasury.dm poll-tax region).
-// ES deviations, mirrored from the bridge architecture (_treasury_bridge.dm):
+// Ratwood deviations, mirrored from the bridge architecture (_treasury_bridge.dm):
 //  - Player accounts are integer balances keyed by mob in SStreasury.bank_accounts, not
 //    /datum/fund. Collection therefore decrements the ledger and mints into the Crown's
 //    Purse; subsidies burn from the Purse first, then credit the ledger.
@@ -157,7 +157,7 @@
 			return "Fine"
 	return capitalize(category)
 
-/// ES deviation: rebuilt from Emerald Summit's job roster. Priority order mirrors AP's
+/// Ratwood deviation: rebuilt from Emerald Summit's job roster. Priority order mirrors AP's
 /// civic stack (noble > inquisition > clergy > courtier > garrison > guilds > merchant >
 /// burgher > adventurer > mercenary > peasant). Unmatched jobs are untaxed (null).
 /datum/controller/subsystem/treasury/proc/get_poll_tax_category(mob/living/H)
@@ -370,7 +370,7 @@
 	if(get_balance(H) < total_cost)
 		to_chat(H, span_warning("Insufficient balance. Need [total_cost]m for [days] days."))
 		return FALSE
-	// ES deviation: integer ledger debit + mint into the Crown's Purse (AP: fund transfer).
+	// Ratwood deviation: integer ledger debit + mint into the Crown's Purse (AP: fund transfer).
 	bank_accounts[H] -= total_cost
 	mint(discretionary_fund, total_cost, "Poll Tax advance ([days] days)")
 	record_poll_tax_by_category(category, total_cost)

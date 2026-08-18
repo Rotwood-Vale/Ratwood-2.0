@@ -219,7 +219,7 @@
 /obj/item/zadcage/ui_state(mob/user)
 	return GLOB.hands_state
 
-// ES deviation: same observer guard as the zadcote — base ui_status would grant ghosts a
+// Ratwood deviation: same observer guard as the zadcote — base ui_status would grant ghosts a
 // read-only window via /obj/attack_ghost -> ui_interact despite hands_state.
 /obj/item/zadcage/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))

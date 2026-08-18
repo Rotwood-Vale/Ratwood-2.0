@@ -2,6 +2,9 @@
 	abstract_type = /datum/brewing_recipe
 	var/name = "Alcohols"
 	var/category = "Other"
+	/// Foreign trade bulk drinks: bottle type shipped when this recipe is drawn for a ship's
+	/// drinks manifest (trade_ship.dm's build_drinks_lines).
+	var/output_bottle_type
 	///the type path of the reagent
 	var/reagent_to_brew = /datum/reagent/consumable/ethanol
 	///pre-reqs: Essentially do we need past recipes made of this, uses the reagent_to_brew var to know if this has been done

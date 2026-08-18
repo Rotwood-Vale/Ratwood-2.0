@@ -11,7 +11,7 @@
 // Merchant provides the primary source of money sinks in the economy, an alternative to producer roles
 //
 // Ported from Azure-Peak PR #7000 "Economy 3" (apsrc/main, code/modules/roguetown/roguemachine/merchant/_goldface.dm).
-// ES deviations from AP's version:
+// Ratwood deviations from AP's version:
 //  - Category lists rebuilt from ES's actual /datum/supply_pack group = "..." strings (see below).
 //    AP's "Cosmetics" -> ES "Perfumes" (never renamed here), AP's "Weapons (Bronze)" dropped (no such
 //    group exists in any ES pack). "Zadpacks" was dropped when this file first landed (Zadcote not yet
@@ -66,7 +66,7 @@
 	var/value_record_key = STATS_GOLDFACE_VALUE_SPENT
 	// True to make sure it bypass all taxes no matter what
 	var/bypass_tax = FALSE
-	// ES deviation note: class-kit groups (Brigand/Sellsword/Sawbones/Knight/Mage/Knave/Iconoclast/
+	// Ratwood deviation note: class-kit groups (Brigand/Sellsword/Sawbones/Knight/Mage/Knave/Iconoclast/
 	// Pioneer) and "Things" are the bandit Hoardmaster's stock, job-gated there - the legacy goldface
 	// never sold them, so they are deliberately NOT listed here.
 	var/list/categories = list(

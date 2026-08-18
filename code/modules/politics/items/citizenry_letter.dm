@@ -1,7 +1,7 @@
 // Letter of Citizenry - ported from Azure-Peak #6849 (code/modules/politics/items/citizenry_letter.dm).
 // Printed by the Nerve Master (steward.dm "printresidency"); claiming it grants TRAIT_RESIDENT,
 // which places the bearer under the Golden Bull's protections and the Burgher poll category.
-// ES deviations: "Citizen of Azuria" -> "Citizen of the Vale"; AP's paper.dmi doesn't exist
+// Ratwood deviations: "Citizen of Azuria" -> "Citizen of the Vale"; AP's paper.dmi doesn't exist
 // in ES, so this uses ES's stock parchment art from misc.dmi (same as patronage_writ.dm).
 
 #define TRAIT_CITIZENRY_LETTER "citizenry_letter"

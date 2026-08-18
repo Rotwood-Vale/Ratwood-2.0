@@ -2,7 +2,7 @@
 Economy 3 noticeboard. Ported from Azure-Peak's split noticeboard/ folder
 (noticeboard.dm + posting.dm + assembly_floor.dm).
 
-ES deviations from AP:
+Ratwood deviations from AP:
 - Icon/desc kept as ES's existing "icons/roguetown/misc/64x64.dmi" sprite sheet and
   "Emerald Summit" flavor text - AP's noticeboard64.dmi/noticeboard32.dmi don't exist in
   this repo's icons folder, so the /wall (craftable, wall-mounted) variant that depends on

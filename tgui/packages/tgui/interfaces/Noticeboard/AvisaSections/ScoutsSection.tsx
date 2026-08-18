@@ -45,7 +45,7 @@ const cellWithDivider: React.CSSProperties = {
   borderLeft: `1px dashed ${PARCHMENT_SHADOW}`,
 };
 
-// ES deviation: AP's version has a fourth "Wardens' Word" column sourced from
+// Ratwood deviation: AP's version has a fourth "Wardens' Word" column sourced from
 // ScoutRegion.ic_descriptions, which noticeboard.dm's build_scout_regions() does not
 // supply (ES's /datum/threat_region has no get_ic_description() proc - see types.ts).
 // That column is dropped entirely rather than rendered against missing data.

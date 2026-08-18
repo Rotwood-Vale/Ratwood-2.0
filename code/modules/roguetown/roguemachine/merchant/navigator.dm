@@ -237,7 +237,7 @@
 			visible_message(span_notice("The balloon reports eager buyers - prices on [english_list(boost_categories)] were lifted higher."))
 
 // AP parity export settlement: Crown export duty and the Merchant's levy come out of the gross,
-// with the producer's net paid in change at the balloon pad. ES deviation: payout goes through
+// with the producer's net paid in change at the balloon pad. Ratwood deviation: payout goes through
 // the pad's budget2change rather than AP's custom_turf coin drop.
 /obj/item/roguemachine/navigator/proc/settle_export(gross, obj/structure/roguemachine/balloon_pad/pad)
 	var/duty_rate = SStreasury.get_tax_rate(TAX_CATEGORY_EXPORT_DUTY)

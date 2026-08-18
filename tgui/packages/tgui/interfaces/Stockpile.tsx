@@ -107,7 +107,7 @@ const StockRowView = (props: {
 }) => {
   const { row, data, act, compact } = props;
   const noDeposit = !!data.no_deposit;
-  // ES deviation: the food stipend only covers food categories (backend-gated too)
+  // Ratwood deviation: the food stipend only covers food categories (backend-gated too)
   const stipendCovers =
     !!data.food_stipend &&
     ['Fruit', 'Vegetable', 'Animal', 'Seafood'].includes(row.category);

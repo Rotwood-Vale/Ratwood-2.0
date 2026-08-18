@@ -308,7 +308,7 @@ const ManifestSection = (props: {
   );
 };
 
-// ES deviation: AP's Underledger passes `inkButtonStyle({ danger: !!duty_suspended })`,
+// Ratwood deviation: AP's Underledger passes `inkButtonStyle({ danger: !!duty_suspended })`,
 // but ES's (and AP's own) parchment.tsx `inkButtonStyle` only accepts `{ color, disabled }`
 // - there is no `danger` option. Swapped for an explicit `color` (red while dodging duty,
 // green while paying it) to get the same "this is a toggle with a warning state" affordance

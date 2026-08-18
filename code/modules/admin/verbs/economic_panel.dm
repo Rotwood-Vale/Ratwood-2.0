@@ -173,7 +173,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			if(!istype(o) || !payments[o.job])
 				continue
 			head_by_job[o.job] = (head_by_job[o.job] || 0) + 1
-			// ES deviation: wage suspension is a trait, not an account flag.
+			// Ratwood deviation: wage suspension is a trait, not an account flag.
 			if(HAS_TRAIT(o, TRAIT_WAGES_SUSPENDED))
 				suspended_by_job[o.job] = (suspended_by_job[o.job] || 0) + 1
 		for(var/job_name in payments)
@@ -309,7 +309,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			SStreasury.distribute_estate_incomes()
 			SStreasury.distribute_daily_payments()
 			for(var/mob/living/carbon/human/H in GLOB.human_list)
-				// ES deviation: ES humans carry a single charflaw var, not a charflaws list.
+				// Ratwood deviation: ES humans carry a single charflaw var, not a charflaws list.
 				if(!istype(H.charflaw, /datum/charflaw/indebted))
 					continue
 				var/datum/charflaw/indebted/I = H.charflaw
@@ -480,7 +480,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			var/amt = text2num(params["amount"])
 			if(!isnum(amt) || amt <= 0)
 				return TRUE
-			// ES deviation: player accounts are integer ledger balances, not funds.
+			// Ratwood deviation: player accounts are integer ledger balances, not funds.
 			if(!SStreasury.has_account(target))
 				return TRUE
 			SStreasury.bank_accounts[target] += amt
@@ -493,7 +493,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			var/amt = text2num(params["amount"])
 			if(!isnum(amt) || amt <= 0)
 				return TRUE
-			// ES deviation: player accounts are integer ledger balances, not funds.
+			// Ratwood deviation: player accounts are integer ledger balances, not funds.
 			if(!SStreasury.has_account(target))
 				return TRUE
 			SStreasury.bank_accounts[target] = max(0, SStreasury.bank_accounts[target] - amt)
@@ -503,7 +503,7 @@ GLOBAL_DATUM_INIT(economic_panel, /datum/economic_panel, new)
 			var/mob/living/carbon/human/target = locate(params["ref"])
 			if(!istype(target))
 				return TRUE
-			// ES deviation: ES humans carry a single charflaw var, not a charflaws list.
+			// Ratwood deviation: ES humans carry a single charflaw var, not a charflaws list.
 			var/datum/charflaw/indebted/I = istype(target.charflaw, /datum/charflaw/indebted) ? target.charflaw : null
 			if(!I)
 				to_chat(usr, span_warning("[target.real_name] does not have the Indebted flaw."))

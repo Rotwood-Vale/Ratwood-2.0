@@ -29,7 +29,7 @@ type OnTrade = (req: {
   goodId: string;
 }) => void;
 
-// ES deviation: numeric entry goes through the standard BYOND input() prompt
+// Ratwood deviation: numeric entry goes through the standard BYOND input() prompt
 // server-side (steward_trade_tgui.dm ui_act) instead of AP's window.prompt().
 export const MarketView = (props: { data: Data; onTrade: OnTrade }) => {
   const { act } = useBackend<Data>();

@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(bathhouse_positions, list(
 	var/datum/job/J = user.job ? SSjob.GetJob(user.job) : null
 	if(J?.townie_contract_gate_exempt)
 		return TRUE
-	// ES deviation: the picked adventurer class is retained as a name string in mob.advjob
+	// Ratwood deviation: the picked adventurer class is retained as a name string in mob.advjob
 	// (not a /datum on the mind as in AP); resolve it the way ES's own merc code does.
 	if(user.advjob)
 		var/datum/advclass/AC = SSrole_class_handler.get_advclass_by_name(user.advjob)

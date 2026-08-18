@@ -1,4 +1,4 @@
-// ES deviation from AP: AP's exotic meats are sibling types (meat/rat, meat/wolf, meat/bear).
+// Ratwood deviation from AP: AP's exotic meats are sibling types (meat/rat, meat/wolf, meat/bear).
 // In ES they are SUBTYPES of steak (meat/steak/rat, meat/steak/wolf, meat/steak/bear), so they
 // must be defined BEFORE the plain steak "Meat" entry - stockpile matching walks
 // SStreasury.stockpile_datums in definition order with istype(), same reason hide/cured

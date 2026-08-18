@@ -1,6 +1,6 @@
 // Fiscal snapshot data layer, ported from AP #6849 treasury_snapshot.dm. Feeds the admin
 // Economic Panel (and, later, steward fiscal displays).
-// ES deviations: player accounts are integer balances keyed by mob in bank_accounts (no
+// Ratwood deviations: player accounts are integer balances keyed by mob in bank_accounts (no
 // /datum/fund per player, no per-account currency - every personal account is mammons).
 // compute_charter_states() reads the item 6 decree system (code/modules/politics/).
 
