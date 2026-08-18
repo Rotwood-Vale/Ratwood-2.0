@@ -6,7 +6,7 @@
 //
 // ES deviation: several AP mobs have no ES equivalent - the quest factions substitute those, so we
 // only need TP on the ES paths the (substituted) factions actually reference. See threat_points
-// tier ladder in regional_threat/__define.dm.
+// tier ladder in code/__DEFINES/economy/regional_threat.dm.
 
 /mob/living/var/threat_point = 0
 

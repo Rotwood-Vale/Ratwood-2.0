@@ -28,6 +28,9 @@
 	var/treasury_state = TREASURY_NORMAL
 	/// Total sequestration events this round.
 	var/bankruptcy_count = 0
+	/// Decree ids force-suspended by sequestration (bankruptcy charter-suspension wiring;
+	/// the decree module itself lives in code/modules/politics/).
+	var/list/bankruptcy_suspended_decree_ids = list()
 	/// Remaining concession slots after sequestration lift.
 	var/bankruptcy_concession_picks = 0
 	/// TRUE once the ETC arrears advance has been consumed (no second loan until repaid).

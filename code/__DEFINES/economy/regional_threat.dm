@@ -20,6 +20,8 @@
 #define THREAT_REGION_AZUREAN_COAST "Rotwood Vale Coast"
 #define THREAT_REGION_MOUNT_DECAP "Mount Decapitation"
 #define THREAT_REGION_TERRORBOG "Terrorbog"
+// AP-only naming kept for economic_region.dm; the Underdark's role is played by the Terrorbog here.
+#define THREAT_REGION_UNDERDARK THREAT_REGION_TERRORBOG
 //Rockhill versions
 #define THREAT_REGION_ROCKHILL_BASIN "Rockhill Basin"
 #define THREAT_REGION_ROCKHILL_BOG_NORTH "Northern Terrorbog"

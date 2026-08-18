@@ -1,38 +1,14 @@
-// ES Economy 3 compatibility layer.
-// Stubs and bridges for AP systems not yet ported to Emerald Summit.
+// Economy 3 compatibility layer, inherited from the Emerald Summit port vehicle.
+// Bridges between AP naming and what this tree actually has. "ES deviation" notes
+// throughout the port mark choices that are really this fork's, not Emerald's.
+//
+// The THREAT_REGION_* and DANGER_LEVEL_* defines that used to be duplicated here as a
+// dme-ordering hack now live canonically in code/__DEFINES/economy/regional_threat.dm.
+// The duplicate set had drifted (Emerald's "Black Basin"/"Scarlet Grove" strings against
+// this tree's "Rotwood Vale" names), silently breaking economy-side region joins.
 
-// ---- THREAT_REGION aliases: AP economy region names -> ES threat region strings ----
-// ES uses "Scarlet/Black" naming; AP uses "Azure". These aliases let economic_region.dm
-// compile against ES's existing SSregionthreat without modification.
-#define THREAT_REGION_AZURE_BASIN   "Black Basin"
-#define THREAT_REGION_AZURE_GROVE   "Scarlet Grove"
-#define THREAT_REGION_AZUREAN_COAST "Scarlet Coast"
-#define THREAT_REGION_UNDERDARK     "Terrorbog"
-// THREAT_REGION_MOUNT_DECAP is defined in regional_threat.dm (same value in ES and AP),
-// but that file sorts after this one. Duplicate the define here so economic_region.dm compiles.
-#define THREAT_REGION_MOUNT_DECAP   "Mount Decapitation"
-
-// ---- DANGER_LEVEL forward defines ----
-// regional_threat.dm (which owns these) sorts after the economy files in the DME.
-// Duplicate here so banditry_drain.dm and economic_events.dm compile without error.
-#define DANGER_LEVEL_SAFE      "Safe"
-#define DANGER_LEVEL_LOW       "Low"
-#define DANGER_LEVEL_MODERATE  "Moderate"
-#define DANGER_LEVEL_DANGEROUS "Dangerous"
-#define DANGER_LEVEL_BLEAK     "Bleak"
-
-
-// ---- Crown authority roles (Step 15 dependency) ----
-// AP defines this in questing/contract_ledger/contract_ledger.dm (contract-ledger step, not yet
-// ported) with AP's court roster (Steward/Grand Duke/Hand/Clerk/Marshal/Councillor/Prince).
-// ES deviation: use Emerald Summit's fiscal-authority roster (matches steward.dm's
-// Steward/Clerk/Grand Duke convention). Move this into the contract ledger file when that
-// system lands.
-GLOBAL_LIST_INIT(crown_authority_roles, list(
-	"Steward",
-	"Clerk",
-	"Grand Duke",
-))
+// Crown authority roles moved to questing/contract_ledger/contract_ledger.dm (AP's home for
+// it) with AP's full court roster - every title on it exists in this tree.
 
 // ---- SS13 economy compat stubs ----
 // secrets.dm, datacore.dm, and account.dm still reference vars/procs from the old
@@ -47,11 +23,6 @@ GLOBAL_LIST_INIT(crown_authority_roles, list(
 	return null
 
 // ---- Stubs for procs defined in later port steps ----
-
-/// Decree ids force-suspended by sequestration. Populated by the bankruptcy charter-suspension
-/// wiring (item 6 chunk B); the decree module itself lives in code/modules/politics/.
-/datum/controller/subsystem/treasury
-	var/list/bankruptcy_suspended_decree_ids = list()
 
 // tick_burgher_pledge() is real as of item 6 (fund_api.dm) - gated on the Golden Bull.
 
