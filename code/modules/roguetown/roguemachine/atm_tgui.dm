@@ -1,13 +1,10 @@
 // MeisterPanel TGUI backend - ported from Azure-Peak PR #7000 (economy port Step 16,
 // AP source: code/modules/roguetown/roguemachine/atm_tgui.dm).
 // ES deviations:
-//  - Poll tax runtime (get_poll_tax_category / poll_tax_advance_days / poll_tax_pay_advance)
-//    is not ported to ES (only the POLL_TAX_* defines landed). The Poll Tax tab is fed inert
-//    data - it renders "No taxable class" and hides the advance controls. TODO(ES): wire the
-//    real values when/if the poll tax system is ported.
-//  - Bathhouse Ordinance is out of the port's scope ("Church/Bathhouse ordinance only" is
-//    scoped out). The ordinance section is hidden via bathhouse_ordinance_available = FALSE
-//    and the toggle action is not ported. TODO(ES): restore if the ordinance system lands.
+//  - Poll tax runtime is live (Taxation 2, treasury_poll_tax.dm): the tab gets real
+//    category/rate/advance data and the advance_poll_tax action works.
+//  - Bathhouse Ordinance is live as of the wiring audit: real active/tithe/cooldown data and
+//    the toggle_bathhouse_ordinance action (Bishop or Bathmaster, cooldown-gated).
 //  - Personal ledger: ES player accounts are integer balances, not named /datum/fund accounts,
 //    so treasury_entry rows are never recorded under a player's real_name. The personal Tally
 //    will stay empty until ES logs player-named entries. TODO(ES).
@@ -186,11 +183,11 @@
 	// TODO(ES): player-named ledger entries aren't recorded in ES's integer-account model,
 	// so this stays empty for now (see file header).
 	data["personal_log"] = build_log_entries(H.real_name)
-	// TODO(ES): Bathhouse Ordinance system is scoped out of the port - section stays hidden.
-	data["bathhouse_ordinance_available"] = FALSE
-	data["bathhouse_ordinance_active"] = FALSE
-	data["bathhouse_tithe_round_total"] = 0
-	data["bathhouse_ordinance_cooldown_seconds"] = 0
+	data["bathhouse_ordinance_available"] = TRUE
+	data["bathhouse_ordinance_active"] = SStreasury.bathhouse_ordinance_active ? TRUE : FALSE
+	data["bathhouse_tithe_round_total"] = SStreasury.round_bathhouse_tithe_total
+	var/bh_cooldown_left_ds = max(0, SStreasury.bathhouse_ordinance_next_toggle_time - world.time)
+	data["bathhouse_ordinance_cooldown_seconds"] = round(bh_cooldown_left_ds / 10)
 
 	var/list/patron_rosters = list()
 	if(has_any_patronage_authority)
@@ -260,8 +257,39 @@
 			handle_revoke_patronage_for_fund(H, params)
 			SStgui.update_uis(src)
 			return TRUE
-		// TODO(ES): AP's "toggle_bathhouse_ordinance" action is scoped out with the
-		// ordinance system; the frontend section that sends it is hidden.
+		if("toggle_bathhouse_ordinance")
+			handle_toggle_bathhouse_ordinance(H)
+			SStgui.update_uis(src)
+			return TRUE
+
+/obj/structure/roguemachine/atm/proc/handle_toggle_bathhouse_ordinance(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	if(H.job != "Bishop" && H.job != "Bathmaster")
+		to_chat(H, span_warning("Only the Bishop or the Bathmaster may set the terms of the Ordinance of the Baths."))
+		return
+	if(world.time < SStreasury.bathhouse_ordinance_next_toggle_time)
+		var/remaining_minutes = CEILING((SStreasury.bathhouse_ordinance_next_toggle_time - world.time) / (1 MINUTES), 1)
+		to_chat(H, span_warning("The seal is still warm upon the wax. The Ordinance may be reconsidered in [remaining_minutes] minute\s."))
+		return
+	SStreasury.bathhouse_ordinance_active = !SStreasury.bathhouse_ordinance_active
+	SStreasury.bathhouse_ordinance_next_toggle_time = world.time + BATHHOUSE_ORDINANCE_TOGGLE_COOLDOWN
+	var/now_active = SStreasury.bathhouse_ordinance_active
+	var/title = now_active ? "Ordinance of the Baths Restored" : "Ordinance of the Baths Broken"
+	var/msg
+	if(now_active)
+		if(H.job == "Bishop")
+			msg = "By Eora's grace, the Bishop, [H.real_name], hath set anew the seal upon the Ordinance of the Baths. The See extends its sanction over the stews once more, and the tithe shall render unto the Church."
+		else
+			msg = "By Eora's grace, the Bathmaster, [H.real_name], hath knelt beneath the Ordinance of the Baths. The stews accept the Church's sanction anew, and the tithe shall render unto the Church."
+	else
+		if(H.job == "Bishop")
+			msg = "The Bishop, [H.real_name], hath broken the seal upon the Ordinance of the Baths. The See renounces its sanction; the stews fall again beneath the Crown's tariff."
+		else
+			msg = "The Bathmaster, [H.real_name], hath broken the seal upon the Ordinance of the Baths. The stews cast off the Church's sanction; their farm returns unto the Crown."
+	priority_announce(msg, title, pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain", strip_html = FALSE)
+	log_admin("ORDINANCE OF THE BATHS: [key_name(H)] toggled to [now_active ? "IN FORCE" : "BROKEN"].")
+	message_admins("[key_name_admin(H)] toggled the Ordinance of the Baths to [now_active ? "IN FORCE" : "BROKEN"].")
 
 /obj/structure/roguemachine/atm/proc/handle_withdraw_personal(mob/living/carbon/human/H, list/params)
 	var/coin_amt = round(text2num("[params["amount"]]"))

@@ -2,11 +2,12 @@
 // (apsrc/main, code/modules/crafting/recipe_books/book_entries/treasury/underground_chapters.dm)
 // with content adjusted to what Emerald Summit actually implements.
 //
-// AP describes two separate machines (BRASSFACE the bathhouse-only vendor, and PURITY as its
-// public reflavor). ES only has PURITY (code/modules/roguetown/roguemachine/drugmachine.dm) -
-// a single nightman-keyed vendor, pre-existing in ES before this port and not renamed. There is
-// no "Ordinance" (Church/Bathhouse non-interference agreement) system anywhere in ES - cut that
-// section rather than invent lore for an agreement that isn't implemented.
+// Ratwood has both bathhouse machines, though split differently from AP: BRASSFACE is the
+// bathhouse goods vendor (merchant/bathmaster.dm) and PURITY the vice vendor (drugmachine.dm),
+// each its own machine rather than AP's public-reflavor subtype. The Ordinance of the Baths is
+// live as of the wiring audit: while in force, both machines' tariffs divert to the Church as a
+// tithe, and the Bathhouse Vault's income is tithed as well; Bishop or Bathmaster toggles it at
+// a Nervelock.
 
 /datum/book_entry/treasury_underground
 	abstract_type = /datum/book_entry/treasury_underground
@@ -24,6 +25,12 @@
 		<ul>
 			<li>A contraband vendor, roundstart-locked by the <code>nightman</code> key. Anyone else needs the key or a successful lockpick.</li>
 			<li>Sells vice goods (drugs, smokes, and similar) not carried on the ordinary GOLDFACE/SILVERFACE category list.</li>
+			<li>Its sibling, BRASSFACE, is the bathhouse goods vendor under the same key, selling alcohols, apparel, instruments and other comforts.</li>
+		</ul>
+
+		<h3>The Ordinance of the Baths</h3>
+		<ul>
+			<p>The Church and the Bathhouse hold an agreement: the Bathhouse trades under the Church's sanction and protection, and in exchange a tithe of the stews' commerce renders unto the Church. While the Ordinance is in force, the Crown's import tariff on BRASSFACE and PURITY sales is diverted to the Church, and a share of the Bathhouse Vault's income follows it. Either the Bishop or the Bathmaster may break or restore the seal at a Nervelock, for any reason or none; broken, the stews fall back beneath the Crown's tariff.</p>
 		</ul>
 		</div>
 	"}

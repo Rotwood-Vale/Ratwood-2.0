@@ -1,6 +1,8 @@
 // Fund API — mint/burn/transfer and related helpers.
-// ES adaptation: no decree/concordat/bathhouse-ordinance system; tax exemption always FALSE.
-// "Ferentian Trading Company" references renamed to "Ferentian Trading Company".
+// Decrees, the Concordat tithe and the Ordinance of the Baths are all live: is_tax_exempt
+// walks the decree list, apply_concordat_tithe skims for the Church, and
+// compute_bathhouse_tithe diverts bathhouse tariffs while the Ordinance holds.
+// "Azurian Trading Company" references renamed to "Ferentian Trading Company".
 
 /datum/controller/subsystem/treasury/proc/log_fund_entry(datum/treasury_entry/entry)
 	ledger += entry
@@ -302,7 +304,19 @@
 			record_round_statistic(STATS_EXEMPTED_FINE, amount)
 
 /datum/controller/subsystem/treasury/proc/compute_bathhouse_tithe(base_amount, rate)
-	return 0
+	if(base_amount <= 0 || rate <= 0)
+		return 0
+	if(!bathhouse_ordinance_active)
+		return 0
+	if(!church_fund)
+		return 0
+	bathhouse_tithe_debt += base_amount * rate
+	var/skim = FLOOR(bathhouse_tithe_debt, 1)
+	if(skim <= 0)
+		return 0
+	bathhouse_tithe_debt -= skim
+	round_bathhouse_tithe_total += skim
+	return skim
 
 /datum/controller/subsystem/treasury/proc/indenture_faction_label(datum/fund/F)
 	if(istype(F, /datum/fund/church))

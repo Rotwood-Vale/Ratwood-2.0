@@ -49,8 +49,7 @@ export const FundView = ({
       {!!can_issue_loan && (
         <IssueLoanSection fund={fund} data={data} act={act} />
       )}
-      {/* ES deviation: gated on bathhouse_ordinance_available (always FALSE until the
-          ordinance system is ported; see atm_tgui.dm). */}
+      {/* Gated on bathhouse_ordinance_available from atm_tgui.dm; the ordinance system is live. */}
       {!!data.bathhouse_ordinance_available &&
         (fund.id === 'bathhouse' || fund.id === 'church') &&
         fund.can_issue && <BathhouseOrdinanceSection data={data} act={act} />}

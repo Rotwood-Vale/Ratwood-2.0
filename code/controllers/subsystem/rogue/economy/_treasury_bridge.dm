@@ -13,6 +13,13 @@
 	var/datum/fund/burgher_pledge_fund
 	/// Maps fund_id (string) -> obj/structure/roguemachine/vaultbank.
 	var/list/jawbanks_by_fund_id = list()
+	/// Ordinance of the Baths: while in force, bathhouse machine tariffs divert to the
+	/// Church as a tithe instead of the Crown. Bishop or Bathmaster toggles it at a Nervelock.
+	var/bathhouse_ordinance_active = TRUE
+	var/bathhouse_ordinance_next_toggle_time = 0
+	/// Fractional tithe accumulator so sub-mammon skims are not lost between purchases.
+	var/bathhouse_tithe_debt = 0
+	var/round_bathhouse_tithe_total = 0
 	/// Banditry damage accumulated this round; skimmed from incoming Crown mint.
 	var/banditry_debt = 0
 	/// ETC/burgher loan outstanding; skimmed from incoming Crown mint above the operating floor.
