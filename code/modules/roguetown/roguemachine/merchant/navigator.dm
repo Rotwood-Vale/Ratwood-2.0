@@ -12,8 +12,16 @@
 	max_integrity = 0
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_GIGANTIC
-	/// A fixed tax on all items sold through the balloon that overrides queens tax. Used for blackmarket
+	/// A fixed handler's fee lost to the void before any Crown duty. Used for blackmarket
 	var/fixed_tax = 0
+	var/grants_passive_favor = TRUE
+	var/accepts_unmintable = FALSE
+	var/pay_taxes = TRUE
+	var/pay_merchant_share = TRUE
+	var/duty_collected_here = 0
+	var/duty_evaded_here = 0
+	var/levy_collected_here = 0
+	var/is_bm_export = FALSE
 	/// Motto displayed at the top of the vendor interface
 	var/motto = "NAVIGATOR - Your goods, airborne."
 
@@ -30,6 +38,13 @@
 	desc = "Freedom has a price."
 	motto = "NA?!G@#OR - ████ ██████ █████████ - FREEDOM OF TRANSACTION."
 	fixed_tax = 0.5 // 50% taxation and rip off to encourage people to risk it with merchant / others
+	// Smuggler-grade: dodges the Crown's export duty (recorded as evaded), pays no Guild levy,
+	// earns the Company no favor, and takes unmintable goods.
+	pay_taxes = FALSE
+	pay_merchant_share = FALSE
+	grants_passive_favor = FALSE
+	accepts_unmintable = TRUE
+	is_bm_export = TRUE
 
 /obj/structure/roguemachine/balloon_pad
 	name = ""
@@ -97,6 +112,10 @@
 	if(world.time > next_airlift)
 		next_airlift = world.time + export_time
 		var/play_sound = FALSE
+		var/refused_announced = FALSE
+		var/quality_announced = FALSE
+		var/list/penalty_categories = list()
+		var/list/boost_categories = list()
 		for(var/D in GLOB.alldirs)
 			var/budgie = 0
 			var/turf/T = get_step(src, D)
@@ -108,28 +127,120 @@
 			for(var/obj/I in T)
 				if(I.anchored || !isturf(I.loc) || istype(I, /obj/item/roguecoin)|| istype(I, /obj/structure/handcart))
 					continue
-				var/prize = I.get_real_price() * (1 - fixed_tax)
+				if(isitem(I))
+					var/obj/item/IT = I
+					if(IT.is_important)
+						continue
+					if(IT.atc_sealed)
+						continue
+					if(IT.unmintable && !accepts_unmintable)
+						continue
+				var/base_price = I.get_real_price()
+				var/category = (GLOB.derived_categories && GLOB.derived_categories[I.type]) || ITEM_CAT_MISCELLANEOUS
+				var/bucket = get_navigator_bucket_for_item(I, category)
+				if(bucket == NAVIGATOR_BUCKET_MISCELLANEOUS)
+					if(GLOB.bulk_trade_item_types && GLOB.bulk_trade_item_types[I.type])
+						if(!refused_announced)
+							refused_announced = TRUE
+							I.visible_message(span_warning("The balloon refuses [I] - bulk goods belong in the ship hold, not the navigator."))
+						continue
+					log_admin("[src] (navigator) exported [I] ([I.type]) categorized as Miscellaneous at [AREACOORD(src)] for [base_price] base price.")
+				var/refusal_msg = get_navigator_refusal_message(bucket)
+				if(refusal_msg)
+					if(!refused_announced)
+						refused_announced = TRUE
+						I.visible_message(span_warning(refusal_msg))
+					continue
+				var/saturation_mult = get_market_saturation(bucket)
+				var/demand_mult = get_market_demand(bucket)
+				var/prize = round(base_price * saturation_mult * demand_mult * (1 - fixed_tax))
 				if(prize >= 1)
 					play_sound=TRUE
 					budgie += prize
+					credit_pool(bucket, base_price)
 					I.visible_message(span_warning("[I] is sucked into the air!"))
+					if(bucket)
+						if(saturation_mult < 0.6 && !(bucket in penalty_categories))
+							penalty_categories += bucket
+						if(demand_mult > 1.15 && !(bucket in boost_categories))
+							boost_categories += bucket
+					if(!quality_announced && isitem(I))
+						var/obj/item/QI = I
+						if(QI.has_item_quality && QI.item_quality != ITEM_QUALITY_STANDARD)
+							var/jab = navigator_quality_jab(QI.item_quality)
+							if(jab)
+								quality_announced = TRUE
+								visible_message(span_info("[src] says, \"[jab]\""))
 					qdel(I)
+				else if(base_price > 0)
+					if(!refused_announced)
+						refused_announced = TRUE
+						I.visible_message(span_warning("[I] is refused by the balloon - the market is choked."))
 			budgie = round(budgie)
-			record_round_statistic(STATS_TRADE_VALUE_EXPORTED, budgie)
+			record_round_statistic(is_bm_export ? STATS_TRADE_VALUE_EXPORTED_BM : STATS_TRADE_VALUE_EXPORTED, budgie)
 			if(budgie > 0)
-				play_sound=TRUE
-				E.budget2change(budgie)
-				budgie = 0
+				play_sound = TRUE
+				settle_export(budgie, E)
 		if(play_sound)
 			playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+		if(length(penalty_categories))
+			visible_message(span_warning("The balloon reports a glut - prices on [english_list(penalty_categories)] have been cut short."))
+		if(length(boost_categories))
+			visible_message(span_notice("The balloon reports eager buyers - prices on [english_list(boost_categories)] were lifted higher."))
+
+// AP parity export settlement: Crown export duty and the Merchant's levy come out of the gross,
+// with the producer's net paid in change at the balloon pad. ES deviation: payout goes through
+// the pad's budget2change rather than AP's custom_turf coin drop.
+/obj/item/roguemachine/navigator/proc/settle_export(gross, obj/structure/roguemachine/balloon_pad/pad)
+	var/duty_rate = SStreasury.get_tax_rate(TAX_CATEGORY_EXPORT_DUTY)
+	var/levy_pct = SSmerchant_trade ? SSmerchant_trade.merchant_levy_percent : 0
+	var/levy = pay_merchant_share ? round(gross * levy_pct / 100) : 0
+	var/duty_on_gross = round(gross * duty_rate)
+	var/duty_on_levy = round(levy * duty_rate)
+	var/total_duty = duty_on_gross + duty_on_levy
+	var/producer_net = gross - levy - (pay_taxes ? duty_on_gross : 0)
+	if(producer_net < 0)
+		producer_net = 0
+	var/merchant_net = levy - (pay_taxes ? duty_on_levy : 0)
+	if(merchant_net < 0)
+		merchant_net = 0
+	if(pay_taxes)
+		if(duty_on_gross > 0)
+			SStreasury.mint(SStreasury.discretionary_fund, duty_on_gross, "[TAX_CATEGORY_EXPORT_DUTY] ([src.name])")
+			SStreasury.apply_concordat_tithe(gross, TAX_CATEGORY_EXPORT_DUTY, "[src.name]")
+		if(duty_on_levy > 0)
+			SStreasury.mint(SStreasury.discretionary_fund, duty_on_levy, "[TAX_CATEGORY_EXPORT_DUTY] (levy income, [src.name])")
+			SStreasury.apply_concordat_tithe(levy, TAX_CATEGORY_EXPORT_DUTY, "levy income ([src.name])")
+		if(total_duty > 0)
+			record_round_statistic(STATS_TAXES_COLLECTED, total_duty)
+			record_round_statistic(STATS_REVENUE_EXPORT_DUTY, total_duty)
+			duty_collected_here += total_duty
+			if(SSmerchant_trade)
+				SSmerchant_trade.merchant_levy_taxed += duty_on_levy
+	else
+		if(total_duty > 0)
+			record_round_statistic(STATS_TAXES_EVADED, total_duty)
+			duty_evaded_here += total_duty
+	if(merchant_net > 0)
+		SStreasury.mint(SStreasury.merchant_fund, merchant_net, "Merchant's levy ([src.name])")
+		levy_collected_here += merchant_net
+		if(SSmerchant_trade)
+			SSmerchant_trade.merchant_levy_collected += merchant_net
+			SSmerchant_trade.log_fund_movement("Navigator levy ([src.name])", merchant_net)
+	if(gross > 0 && SSmerchant_trade && grants_passive_favor)
+		var/passive = round(gross * FAVOR_PASSIVE_TRADE_FRACTION)
+		SSmerchant_trade.adjust_merchant_favor(passive)
+		SSmerchant_trade.favor_from_navigator += passive
+	if(producer_net > 0 && pad)
+		pad.budget2change(producer_net)
 
 // ---- Economy 3 (merchant_trade) market pool bucket helpers ----
 // Ported from AP code/controllers/subsystem/rogue/market_pools.dm (Economy 3 PR #7000).
-// Only the subset needed by SSmerchant_trade's Initialize()/pool bookkeeping is included here;
-// get_navigator_bucket_for_item(), get_market_pool_tier_for_category(), get_market_theme_for_category(),
-// all_market_pool_categories(), compute_market_pool_capacity(), and get_navigator_refusal_message()
-// were left out because they depend on /obj/item vars (is_carved, was_crafted) that ES has not
-// ported yet - they belong to the goldface/silverface TGUI rework, not the core subsystem.
+// The pool bookkeeping subset plus, as of the wiring audit, the navigator sell-side:
+// get_navigator_bucket_for_item() (minus the is_carved/was_crafted refinements, those item vars
+// are not in this tree) and get_navigator_refusal_message(), feeding the saturation/demand
+// export loop below. get_market_pool_tier_for_category()/compute_market_pool_capacity() stay
+// unported: dead code in AP too (no callers there).
 
 /proc/get_navigator_bucket_for_category(category)
 	switch(category)
@@ -262,6 +373,47 @@
 
 /proc/compute_pop_count_for_pools()
 	return length(GLOB.clients)
+
+/proc/get_navigator_bucket_for_item(obj/O, category)
+	if(!isitem(O))
+		return NAVIGATOR_BUCKET_MISCELLANEOUS
+	// Ratwood deviation: no is_carved/was_crafted item vars in this tree, so AP's carved and
+	// crafted-valuables bucket refinements are dropped; armor still splits by class.
+	var/bucket = get_navigator_bucket_for_category(category)
+	if(bucket == NAVIGATOR_BUCKET_ARMOR_HEAVY && isclothing(O))
+		var/obj/item/clothing/C = O
+		if(C.armor_class <= ARMOR_CLASS_LIGHT)
+			bucket = NAVIGATOR_BUCKET_ARMOR_LIGHT
+	return bucket
+
+/proc/get_navigator_refusal_message(bucket)
+	switch(bucket)
+		if(NAVIGATOR_BUCKET_REFUSED_FOOD)
+			return NAVIGATOR_REFUSAL_MSG_FOOD
+		if(NAVIGATOR_BUCKET_REFUSED_BULK)
+			return NAVIGATOR_REFUSAL_MSG_BULK
+	return null
+
+/obj/item/roguemachine/navigator/proc/get_market_saturation(category)
+	if(!SSmerchant_trade || !category)
+		return 1
+	return SSmerchant_trade.get_saturation_factor(category)
+
+/obj/item/roguemachine/navigator/proc/get_market_demand(category)
+	if(!SSmerchant_trade || !category)
+		return 1
+	return SSmerchant_trade.get_demand_multiplier(category)
+
+/obj/item/roguemachine/navigator/proc/credit_pool(category, base_price)
+	if(!SSmerchant_trade || !category || base_price <= 0)
+		return
+	SSmerchant_trade.pool_consumed[category] = (SSmerchant_trade.pool_consumed[category] || 0) + base_price
+	SSmerchant_trade.lifetime_pool_credited[category] = (SSmerchant_trade.lifetime_pool_credited[category] || 0) + base_price
+	var/demand = SSmerchant_trade.pending_ship_demand[category] || 0
+	var/drain = min(demand, base_price)
+	if(drain > 0)
+		SSmerchant_trade.pending_ship_demand[category] = demand - drain
+		SSmerchant_trade.pending_ship_demand_satisfied[category] = (SSmerchant_trade.pending_ship_demand_satisfied[category] || 0) + drain
 
 /proc/market_theme_label(theme)
 	switch(theme)
