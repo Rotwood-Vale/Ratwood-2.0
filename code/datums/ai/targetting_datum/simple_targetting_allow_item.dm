@@ -6,3 +6,11 @@
 	if(isitem(the_target))
 		// trust fall exercise
 		return TRUE
+
+/// Subtype that ignores anything held inside, such as the consumed victim.
+/// Going after somebody else.
+/datum/targetting_datum/basic/allow_items/not_own_contents
+/datum/targetting_datum/basic/allow_items/not_own_contents/can_attack(mob/living/living_mob, atom/the_target)
+	if(the_target?.loc == living_mob)
+		return FALSE
+	return ..()

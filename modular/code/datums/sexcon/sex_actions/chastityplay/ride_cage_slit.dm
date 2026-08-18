@@ -37,7 +37,7 @@
     user.visible_message(span_warning("[user] straddles [target] and rolls forward until [user.p_their()] genital slit settles flush against [target.p_their()] [get_chastity_device_name(target)]."))
 
 /datum/sex_action/chastityplay/ride_cage_slit/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] slit along the length of [target]'s [get_chastity_device_name(target)], each pass dragging metal across sensitive flesh..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] slit along the length of [target]'s [get_chastity_device_name(target)], each pass dragging metal across sensitive flesh..."))
     user.sexcon.outercourse_noise(target, TRUE)
 
     if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU))

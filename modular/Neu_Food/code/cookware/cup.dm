@@ -4,16 +4,15 @@
 	icon = 'modular/Neu_Food/icons/cookware/cup.dmi'
 	icon_state = "iron"
 	force = 5
-	lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
-	righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'
-	experimental_inhand = FALSE
+	//lefthand_file = 'modular/Neu_Food/icons/food_lefthand.dmi'
+	//righthand_file = 'modular/Neu_Food/icons/food_righthand.dmi'
 	throwforce = 10
 	reagent_flags = OPENCONTAINER
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
-	dropshrink = 0.85
+	dropshrink = 0.8
 	w_class = WEIGHT_CLASS_NORMAL
-	experimental_inhand = FALSE
+	experimental_inhand = TRUE
 	volume = 25
 	obj_flags = CAN_BE_HIT
 	sellprice = 7
@@ -25,14 +24,15 @@
 	force = 5
 	throwforce = 10
 
+/obj/item/reagent_containers/glass/cup/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Left-click an appropriate source of liquids while the 'FILL' intent is selected to fill the cup.")
+	. += span_info("Some containers have to be manually poured into the cup, instead. This can be done by left-clicking the cup while the container's 'FEED' intent is selected.")
+
 /obj/item/reagent_containers/glass/cup/update_icon(dont_fill=FALSE)
-	testing("cupupdate")
-
 	cut_overlays()
-
-	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance(icon, "[icon_state]filling")
-
+	if(reagents.total_volume > 0)
+		var/mutable_appearance/filling = mutable_appearance(icon, "[icon_state]_filling")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
@@ -42,7 +42,7 @@
 			dice_count++
 		if(dice_count)
 			dice_count = min(3, dice_count)
-		add_overlay(mutable_appearance(icon, "[icon_state]dice[dice_count]"))
+		add_overlay(mutable_appearance(icon, "[icon_state]_dice[dice_count]"))
 
 /obj/item/reagent_containers/glass/cup/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/dice) && max_dice)
@@ -76,7 +76,7 @@
 
 	if(!dice_in_cup.len)
 		return
-
+	
 	playsound(src, 'sound/items/cup_dice_roll.ogg', 100, TRUE)
 	if(do_after(user, 1.5 SECONDS))
 		rolling = TRUE
@@ -150,15 +150,15 @@
 	resistance_flags = FLAMMABLE
 	icon_state = "wooden"
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
-	anvilrepair = null
 	sellprice = 0
 	metalizer_result = /obj/item/reagent_containers/glass/cup
+	anvilrepair = null
 	force = 5
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/steel
 	name = "goblet"
-	desc = "A steel goblet, its surface adorned with studs."
+	desc = "A steel goblet, its surface adorned with intricate carvings."
 	icon_state = "steel"
 	sellprice = 10
 	force = 10
@@ -182,9 +182,23 @@
 	force = 10
 	throwforce = 15
 
+/obj/item/reagent_containers/glass/cup/bronzemug
+	name = "bronze mug"
+	desc = "Froth spills over the rim, and a clinking amongst other tankards causes its fizzling tithe to splash across the table. Oh, such a nite of revelry!"
+	icon_state = "bronzemug"
+	force = 7
+	throwforce = 13
+
+/obj/item/reagent_containers/glass/cup/bronzegob
+	name = "bronze goblet"
+	desc = "Drink deeply, my champion."
+	icon_state = "bronzegoblet"
+	force = 13
+	throwforce = 17
+
 /obj/item/reagent_containers/glass/cup/silver
 	name = "silver goblet"
-	desc = "A silver goblet, its surface carefully polished."
+	desc = "A silver goblet, its surface adorned with intricate carvings and runes."
 	icon_state = "silver"
 	sellprice = 48
 	last_used = 0
@@ -192,9 +206,15 @@
 	force = 10
 	throwforce = 15
 
+/obj/item/reagent_containers/glass/cup/silver/pewter //ugly but better than the alternatives
+	name = "pewter goblet"
+	desc = "A pewter goblet, blessed with an alluring shine. Though tin with a sprinkling of silver isn't \
+	particularly valuable on its own, most peasants and foreign noblemen tend to be none-the-wiser."
+	is_silver = FALSE
+
 /obj/item/reagent_containers/glass/cup/silver/small
 	name = "silver cup"
-	desc = "A silver cup, its surface carefully polished."
+	desc = "A silver cup, its surface adorned with intricate carvings and runes."
 	icon_state = "scup"
 	sellprice = 20
 	is_silver = TRUE
@@ -203,7 +223,7 @@
 
 /obj/item/reagent_containers/glass/cup/golden
 	name = "golden goblet"
-	desc = "This goblet radiates opulence and grandeur."
+	desc = "Adorned with gemstones, this goblet radiates opulence and grandeur."
 	icon_state = "golden"
 	sellprice = 50
 	force = 10
@@ -211,13 +231,16 @@
 
 /obj/item/reagent_containers/glass/cup/golden/small
 	name = "golden cup"
-	desc = "This cup radiates opulence and grandeur."
+	desc = "Adorned with gemstones, this cup glimmers with lesser opulence and grandeur."
 	icon_state = "gcup"
 	sellprice = 40
 	force = 5
 	throwforce = 10
 
 /obj/item/reagent_containers/glass/cup/golden/poison
+	name = "golden goblet"
+	desc = "Adorned with gemstones, this goblet radiates opulence and grandeur."
+	icon_state = "golden"
 	list_reagents = list(/datum/reagent/toxin/killersice = 1, /datum/reagent/consumable/ethanol/elfred = 20)
 	force = 10
 	throwforce = 15
@@ -237,7 +260,6 @@
 /obj/item/reagent_containers/glass/cup/skull
 	name = "skull goblet"
 	desc = "The hollow eye sockets tell me of forgotten, dark rituals."
-	dropshrink = 1
 	icon_state = "skull"
 	force = 5
 	throwforce = 10
@@ -245,10 +267,10 @@
 /obj/item/reagent_containers/glass/cup/ceramic
 	name = "teacup"
 	desc = "A tea cup made out of ceramic. Used to serve tea."
-	dropshrink = 0.7
-	icon_state = "cup"
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	sellprice = 10
+	dropshrink = 0.7
+	icon_state = "cup"
 	force = 5
 	throwforce = 10
 
@@ -281,7 +303,8 @@
 	desc = "You shouldn't be seeing this."
 	dropshrink = 1
 	icon_state = "agoblet"
-	sellprice = 0
+	force = 7
+	throwforce = 12
 
 /obj/item/reagent_containers/glass/cup/carved/jade
 	name = "jade cup"

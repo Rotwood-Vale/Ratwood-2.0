@@ -115,6 +115,7 @@
 #define TRAIT_CHASTITY_LOCKED "Locked Chastity Device" // Prevents removal of the chastity device.
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
+#define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
 
 //travel zone traits
 #define TRAIT_BANDITCAMP "banditcamp"
@@ -252,6 +253,7 @@
 #define TRAIT_ARCYNE_T3 "Arcyne Training (Expert)"
 #define TRAIT_ARCYNE_T4 "Arcyne Training (Master)"
 #define TRAIT_BITERHELM "Helmetbiter" // just use this to get helmets which are bitey.
+#define TRAIT_THROWINGARM "Throwing Arm"
 #define TRAIT_STRENGTH_UNCAPPED "Strength Unbound"	//ignores the STR softcap.
 /// Allows you to move faster than the speed softcap
 #define TRAIT_UNCAPPED_SPEED "Speed Unbound"
@@ -274,6 +276,10 @@
 #define TRAIT_GANG_B "Gang Blortz Volves"
 #define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
+#define TRAIT_ON_BOAT "on_boat"
+#define TRAIT_OAR "oar"
+#define TRAIT_OAR_PROPELLED "oar_propelled"
+#define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
@@ -283,6 +289,7 @@
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
+#define TRAIT_WHITE_STAG "Stag Protection"
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -346,6 +353,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STRONGBITE = span_info("Stronger bites, critical bite attacks."),
 	TRAIT_VAMPBITE = span_info("Your bite's victims going to feel very, VERY good."),
 	TRAIT_STRONGKICK = span_info("My kicks knock people down and back a step, consistently. There's no need for obstacles."),
+	TRAIT_THROWINGARM = span_info("I throw items slightly faster, farther, and harder."),
 	TRAIT_IGNORESLOWDOWN = span_info("Nothing stops this carriage!"),
 	TRAIT_IGNOREDAMAGESLOWDOWN = span_info("Hits slow me down no longer."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
@@ -509,6 +517,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SURVIVAL_EXPERT = span_greentext("I'm experienced with the arts of survival in the wild. Cooking, Fishing, Butchering and Skincrafting can progress to Legendary levels. Sewing can progress to Journeyman levels."),
 	TRAIT_HOMESTEAD_EXPERT = span_greentext("I'm experienced with the arts of homesteading. Farming, Mining, Cooking, Fishing, Butchering, Lumberjacking, Masonry and Pottery can progress to Legendary levels. Sewing and Skincrafting can progress to Journeyman levels. I am also quite savvy at repairing damaged equipment."),
 	TRAIT_SELF_SUSTENANCE = span_greentext("Yils of experience running from the law and living off the land have made me a jack of all trades. All crafting and labor skills can progress to Journeyman levels."),
+	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_RACISMISBAD = span_warning("The Black Oaks can spot ANY Foreigners and Outsiders, no matter how long they've lived in the realm. This is an easy skill to master, as it is simply identifying who isn't an elf."),
@@ -540,6 +549,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WAGES_SUSPENDED = span_warning("The Stewardry has halted my daily wages!"),
 	TRAIT_SCALEARMOR = span_info("My scales can protect me from harm every so often."),
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
+	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
@@ -783,89 +793,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_GRABWEAKNESS		"grab_weakness"
 #define TRAIT_SNOB				"snob"
-
-// common trait sources
-#define TRAIT_GENERIC "generic"
-#define TRAIT_STATUS_EFFECT	"status_effect"
-#define TRAIT_VIRTUE "virtue"
-#define TRAIT_MIRACLE "miracle"
-#define UNCONSCIOUS_BLIND "unconscious_blind"
-#define EYE_DAMAGE "eye_damage"
-#define GENETIC_MUTATION "genetic"
-#define OBESITY "obesity"
-#define MAGIC_TRAIT "magic"
-#define TRAUMA_TRAIT "trauma"
-#define DISEASE_TRAIT "disease"
-#define SPECIES_TRAIT "species"
-#define ORGAN_TRAIT "organ"
-#define BODYPART_TRAIT "bodypart"
-#define CRIT_TRAIT "crit"
-#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
-#define JOB_TRAIT "job"
-#define CYBORG_ITEM_TRAIT "cyborg-item"
-#define ADMIN_TRAIT "admin" // (B)admins only.
-#define CHANGELING_TRAIT "changeling"
-#define CULT_TRAIT "cult"
-#define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
-#define ABSTRACT_ITEM_TRAIT "abstract-item"
-#define STATUS_EFFECT_TRAIT "status-effect"
-#define CLOTHING_TRAIT "clothing"
-#define HELMET_TRAIT "helmet"
-#define GLASSES_TRAIT "glasses"
-#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
-#define INNATE_TRAIT "innate"
-#define XYLIX_LUCK_TRAIT "xylixluck"
-#define POULTICE_TRAIT "poultice"
-#define TRAIT_SOURCE_CHASTITY "chastity" //source for chastity device traits
-
-// unique trait sources, still defines
-#define TRAIT_GUIDANCE "Guidance"
-#define TRAIT_FORTITUDE "Fortitude"
-#define CLONING_POD_TRAIT "cloning-pod"
-#define STATUE_MUTE "statue"
-#define CHANGELING_DRAIN "drain"
-#define CHANGELING_HIVEMIND_MUTE "ling_mute"
-#define ABYSSAL_GAZE_BLIND "abyssal_gaze"
-#define HIGHLANDER "highlander"
-#define TRAIT_HULK "hulk"
-#define STASIS_MUTE "stasis"
-#define GENETICS_SPELL "genetics_spell"
-#define EYES_COVERED "eyes_covered"
-#define CULT_EYES "cult_eyes"
-#define TRAIT_SANTA "santa"
-#define SCRYING_ORB "scrying-orb"
-#define ABDUCTOR_ANTAGONIST "abductor-antagonist"
-#define NUKEOP_TRAIT "nuke-op"
-#define DEATHSQUAD_TRAIT "deathsquad"
-#define MEGAFAUNA_TRAIT "megafauna"
-#define CLOWN_NUKE_TRAIT "clown-nuke"
-#define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
-#define CHAINSAW_FRENZY_TRAIT "chainsaw-frenzy"
-#define CHRONO_GUN_TRAIT "chrono-gun"
-#define REVERSE_BEAR_TRAP_TRAIT "reverse-bear-trap"
-#define CURSED_MASK_TRAIT "cursed-mask"
-#define HIS_GRACE_TRAIT "his-grace"
-#define HAND_REPLACEMENT_TRAIT "magic-hand"
-#define HOT_POTATO_TRAIT "hot-potato"
-#define SABRE_SUICIDE_TRAIT "sabre-suicide"
-#define ABDUCTOR_VEST_TRAIT "abductor-vest"
-#define CAPTURE_THE_FLAG_TRAIT "capture-the-flag"
-#define EYE_OF_GOD_TRAIT "eye-of-god"
-#define SHAMEBRERO_TRAIT "shamebrero"
-#define CHRONOSUIT_TRAIT "chronosuit"
-#define LOCKED_HELMET_TRAIT "locked-helmet"
-#define NINJA_SUIT_TRAIT "ninja-suit"
-#define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
-#define SLEEPING_CARP_TRAIT "sleeping_carp"
-#define MADE_UNCLONEABLE "made-uncloneable"
-#define TIMESTOP_TRAIT "timestop"
-#define HUGBOX_TRAIT "hugbox"
-#define ADVENTURER_TRAIT "adventurer"
-#define TRAIT_I_AM_INVISIBLE_ON_A_BOAT "invisible_on_tram"
-#define TRAIT_LOVESTRUCK "lovestruck"
-
-//for ai
-#define TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM "element-required"
 
 /*/mob/living/proc/on_trait_gain(trait, source)
 	SEND_SIGNAL(src, COMSIG_TRAIT_GAIN, trait, source)
