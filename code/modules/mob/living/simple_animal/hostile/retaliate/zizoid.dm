@@ -36,10 +36,10 @@
 	base_intents = list(/datum/intent/simple/claw/ascended)
 	faction = list("hostile")
 	attack_sound = 'sound/blank.ogg'
-	melee_damage_lower = 250
-	melee_damage_upper = 550
-	health = 666666
-	maxHealth = 666666
+	melee_damage_lower = 100
+	melee_damage_upper = 150
+	health = 3333
+	maxHealth = 3333
 	STACON = 66
 	STASTR = 66
 	STASPD = 66
@@ -51,6 +51,10 @@
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
+	// these spells are a temporary solution ! ideally we do something more interesting.
+	AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater)
+	AddSpell(new /obj/effect/proc_holder/spell/invoked/meteor_storm)
+	AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning)
 
 /mob/living/simple_animal/hostile/retaliate/blood/ascended/examine(mob/user)
 	. = ..()
