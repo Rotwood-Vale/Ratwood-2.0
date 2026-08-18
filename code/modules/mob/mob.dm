@@ -63,7 +63,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 	// spell/action removal must go after ghostize, so we only delete the ones not transferred by a mind
 	// remove innate spells before we remove any potentially-associated actions
 	RemoveAllSpells()
-	// remove any actions not transferred in ghostize
+	// avoid deleting client-managed actions, just remove them to avoid hung references
+	if(client?.player_details?.player_actions)
+		for(var/datum/action/action in client.player_details.player_actions)
+			action.Remove(src)
+	// remove any actions not transferred in ghostize or removed above
 	QDEL_LIST(actions)
 	..()
 	return QDEL_HINT_QUEUE
