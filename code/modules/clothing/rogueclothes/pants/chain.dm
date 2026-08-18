@@ -185,6 +185,7 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
+//more coverage but more expensive craft
 /obj/item/clothing/under/roguetown/chainlegs/tights
 	name = "steel chain tights"
 	icon_state = "chaintights"
