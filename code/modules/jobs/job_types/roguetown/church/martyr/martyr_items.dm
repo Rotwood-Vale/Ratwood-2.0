@@ -4,7 +4,7 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike,  /datum/intent/sword/peel)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust,  /datum/intent/sword/peel, /datum/intent/sword/chop)
 	icon_state = "martyrsword"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/swords64.dmi'
 	item_state = "martyrsword"
 	lefthand_file = 'icons/mob/inhands/weapons/roguemartyr_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/roguemartyr_righthand.dmi'
@@ -30,6 +30,7 @@
 	is_silver = TRUE
 	toggle_state = null
 	is_important = TRUE
+	special = /datum/special_intent/martyr_blazing_sweep_sword
 
 /obj/item/rogueweapon/sword/long/martyr/ComponentInitialize()
 	AddComponent(\
@@ -56,8 +57,22 @@
 		blade_class = BCLASS_CHOP
 
 /obj/item/rogueweapon/sword/long/martyr/Initialize(mapload)
-	AddComponent(/datum/component/martyrweapon)
-	..()
+	. = ..(mapload)
+	if(SSroguemachine.martyrweapon)
+		qdel(src)
+	else
+		SSroguemachine.martyrweapon = src
+	if(!gc_destroyed)
+		var/list/active_intents = list(/datum/intent/sword/cut/martyr, /datum/intent/sword/thrust/martyr, /datum/intent/sword/strike/martyr)
+		var/list/active_intents_wielded = list(/datum/intent/sword/cut/martyr, /datum/intent/sword/thrust/martyr, /datum/intent/sword/strike/martyr, /datum/intent/sword/chop/martyr)
+		var/safe_damage = 20
+		var/safe_damage_wielded = 25
+		AddComponent(/datum/component/martyrweapon, active_intents, active_intents_wielded, safe_damage, safe_damage_wielded)
+
+/obj/item/rogueweapon/sword/long/martyr/proc/anti_stall()
+	src.visible_message(span_danger("The Martyr's sword dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
+	SSroguemachine.martyrweapon = null
+	qdel(src)
 
 /obj/item/rogueweapon/sword/long/martyr/attack_hand(mob/user)
 	if(ishuman(user))
@@ -102,6 +117,317 @@
 			if("wielded") return list("shrink" = 0.7,"sx" = 6,"sy" = -2,"nx" = -4,"ny" = 2,"wx" = -8,"wy" = -1,"ex" = 7,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 15,"sturn" = -200,"wturn" = -160,"eturn" = -25,"nflip" = 8,"sflip" = 8,"wflip" = 0,"eflip" = 0)
 			if("onbelt") return list("shrink" = 0.6,"sx" = -2,"sy" = -5,"nx" = 0,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = -3,"ey" = -5,"nturn" = 180,"sturn" = 180,"wturn" = 0,"eturn" = 90,"nflip" = 0,"sflip" = 0,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr
+	force = 20
+	force_wielded = 35
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/axe/bash)
+	icon_state = "martyraxe"
+	icon = 'icons/roguetown/weapons/axes64.dmi'
+	item_state = "martyraxe"
+	name = "martyr axe"
+	desc = "A relic from the Holy See's own vaults. It simmers with godly energies, and will only yield to the hands of those who have taken the Oath."
+	max_blade_int = 250
+	max_integrity = 9999
+	bigboy = 1
+	wlength = WLENGTH_LONG
+	associated_skill = /datum/skill/combat/axes
+	smeltresult = null
+	is_silver = TRUE
+	toggle_state = null
+	is_important = TRUE
+	special = /datum/special_intent/martyr_blazing_sweep
+
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 0,\
+		added_def = 0,\
+	)
+
+/datum/intent/axe/cut/battle/greataxe/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_CUT
+
+/datum/intent/axe/cut/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_CUT
+
+/datum/intent/axe/chop/battle/greataxe/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_CHOP
+		swingdelay = 5
+
+/datum/intent/axe/chop/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_CHOP
+		swingdelay = 5
+
+/datum/intent/axe/bash/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_SMASH
+
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/Initialize(mapload)
+	. = ..(mapload)
+	if(SSroguemachine.martyrweapon)
+		qdel(src)
+	else
+		SSroguemachine.martyrweapon = src
+	if(!gc_destroyed)
+		var/list/active_intents = list(/datum/intent/axe/cut/martyr, /datum/intent/axe/chop/martyr, /datum/intent/axe/bash/martyr)
+		var/list/active_intents_wielded = list(/datum/intent/axe/cut/battle/greataxe/martyr, /datum/intent/axe/chop/battle/greataxe/martyr, /datum/intent/axe/bash/martyr)
+		var/safe_damage = 15
+		var/safe_damage_wielded = 35
+		AddComponent(/datum/component/martyrweapon, active_intents, active_intents_wielded, safe_damage, safe_damage_wielded)
+
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/proc/anti_stall()
+	src.visible_message(span_danger("The Martyr's axe dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
+	SSroguemachine.martyrweapon = null
+	qdel(src)
+
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title == "Bishop" || J.title == "Martyr")
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the axe slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the axe lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
+
+/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/Destroy()
+	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
+	if(martyr)
+		martyr.ClearFromParent()
+	return ..()
+
+/obj/item/rogueweapon/mace/goden/martyr
+	force = 20
+	force_wielded = 30
+	wdefense = 6
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze, /datum/intent/effect/hobble)
+	icon_state = "martyrmace"
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	item_state = "martyrmace"
+	name = "martyr mace"
+	desc = "A relic from the Holy See's own vaults. It simmers with godly energies, and will only yield to the hands of those who have taken the Oath."
+	max_integrity = 9999
+	bigboy = 1
+	wlength = WLENGTH_LONG
+	associated_skill = /datum/skill/combat/maces
+	smeltresult = null
+	is_silver = TRUE
+	toggle_state = null
+	is_important = TRUE
+	special = /datum/special_intent/martyr_volcano_slam
+
+/obj/item/rogueweapon/mace/goden/martyr/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 0,\
+		added_def = 0,\
+	)
+
+/datum/intent/mace/strike/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_BLUNT
+
+/datum/intent/mace/smash/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_SMASH
+
+/datum/intent/effect/daze/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_EFFECT
+		swingdelay = 2
+
+/datum/intent/effect/hobble/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_EFFECT
+		swingdelay = 2
+
+/obj/item/rogueweapon/mace/goden/martyr/Initialize(mapload)
+	. = ..(mapload)
+	if(SSroguemachine.martyrweapon)
+		qdel(src)
+	else
+		SSroguemachine.martyrweapon = src
+	if(!gc_destroyed)
+		var/list/active_intents = list(/datum/intent/mace/strike/martyr)
+		var/list/active_intents_wielded = list(/datum/intent/mace/strike/martyr, /datum/intent/mace/smash/martyr, /datum/intent/effect/daze/martyr, /datum/intent/effect/hobble/martyr)
+		var/safe_damage = 20
+		var/safe_damage_wielded = 30
+		AddComponent(/datum/component/martyrweapon, active_intents, active_intents_wielded, safe_damage, safe_damage_wielded)
+
+/obj/item/rogueweapon/mace/goden/martyr/proc/anti_stall()
+	src.visible_message(span_danger("The Martyr's mace dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
+	SSroguemachine.martyrweapon = null
+	qdel(src)
+
+/obj/item/rogueweapon/mace/goden/martyr/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title == "Bishop" || J.title == "Martyr")
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the mace slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the mace lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
+
+/obj/item/rogueweapon/mace/goden/martyr/Destroy()
+	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
+	if(martyr)
+		martyr.ClearFromParent()
+	return ..()
+
+/obj/item/rogueweapon/spear/partizan/martyr
+	force = 25
+	force_wielded = 35
+	max_blade_int = 250
+	possible_item_intents = list(SPEAR_THRUST_1H, /datum/intent/spear/bash)
+	gripped_intents = list(/datum/intent/spear/thrust, /datum/intent/rend/reach/partizan, /datum/intent/partizan/peel, /datum/intent/spear/bash)
+	icon_state = "martyrtrident"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	item_state = "martyrtrident"
+	name = "martyr trident"
+	desc = "A relic from the Holy See's own vaults. It simmers with godly energies, and will only yield to the hands of those who have taken the Oath."
+	max_integrity = 9999
+	bigboy = 1
+	wlength = WLENGTH_LONG
+	associated_skill = /datum/skill/combat/polearms
+	smeltresult = null
+	is_silver = TRUE
+	toggle_state = null
+	is_important = TRUE
+	throwforce = 40
+	special = /datum/special_intent/martyr_blazing_trident
+
+/obj/item/rogueweapon/spear/partizan/martyr/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_TENNITE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 0,\
+		added_def = 0,\
+	)
+
+/datum/intent/spear/thrust/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_PICK
+
+/datum/intent/spear/thrust/oneh/martyr
+		item_d_type = "fire"
+		blade_class = BCLASS_PICK
+
+/datum/intent/spear/bash/martyr
+		item_d_type = "fire"
+
+/datum/intent/rend/reach/partizan/martyr
+		item_d_type = "fire"
+
+/datum/intent/partizan/peel/martyr
+		item_d_type = "fire"
+
+
+/obj/item/rogueweapon/spear/partizan/martyr/Initialize(mapload)
+	. = ..(mapload)
+	if(SSroguemachine.martyrweapon)
+		qdel(src)
+	else
+		SSroguemachine.martyrweapon = src
+	if(!gc_destroyed)
+		var/list/active_intents = list(/datum/intent/spear/thrust/oneh/martyr, /datum/intent/spear/bash/martyr)
+		var/list/active_intents_wielded = list(/datum/intent/spear/thrust/martyr, /datum/intent/rend/reach/partizan/martyr, /datum/intent/partizan/peel/martyr, /datum/intent/spear/bash/martyr)
+		var/safe_damage = 20
+		var/safe_damage_wielded = 25
+		AddComponent(/datum/component/martyrweapon, active_intents, active_intents_wielded, safe_damage, safe_damage_wielded)
+
+/obj/item/rogueweapon/spear/partizan/martyr/proc/anti_stall()
+	src.visible_message(span_danger("The Martyr's spear dissolved into sparkling dust, which instantly rose up and was carried away by the wind."))
+	SSroguemachine.martyrweapon = null
+	qdel(src)
+
+/obj/item/rogueweapon/spear/partizan/martyr/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title == "Bishop" || J.title == "Martyr")
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the spear slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the spear lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
+
+/obj/item/rogueweapon/spear/partizan/martyr/Destroy()
+	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
+	if(martyr)
+		martyr.ClearFromParent()
+	return ..()
+
 /obj/item/clothing/cloak/martyr
 	name = "martyr cloak"
 	desc = "An elegant cloak in the colors of Astrata. Looks like it can only fit Humen-sized people."
@@ -126,8 +452,134 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
 	armor = ARMOR_PLATE
 	sellprice = 1000
-	smeltresult = /obj/item/ingot/silver
-	smelt_bar_num = 4
+	smeltresult = null
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(ishuman(M) && M.mind)
+		var/mob/living/carbon/human/H = M
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title != "Martyr")
+			return FALSE
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/holysee/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((H.job in GLOB.church_positions))
+			return ..()
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the plate lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
+
+/obj/item/clothing/gloves/roguetown/plate/holysee
+	name = "holy silver plate gauntlets"
+	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the Ten."
+	icon = 'icons/roguetown/clothing/special/martyr.dmi'
+	icon_state = "silvergloves"
+	item_state = "silvergloves"
+	sleeved = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	sleevetype = "silvergloves"
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	armor = ARMOR_PLATE
+	smeltresult = null
+
+/obj/item/clothing/gloves/roguetown/plate/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(ishuman(M) && M.mind)
+		var/mob/living/carbon/human/H = M
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title != "Martyr")
+			return FALSE
+
+/obj/item/clothing/gloves/roguetown/plate/holysee/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((H.job in GLOB.church_positions))
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the gloves slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the gloves lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
+
+/obj/item/clothing/shoes/roguetown/boots/armor/holysee
+	name = "holy silver plated boots"
+	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the Ten."
+	icon = 'icons/roguetown/clothing/special/martyr.dmi'
+	icon_state = "silverboots"
+	item_state = "silverboots"
+	sleeved = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	sleevetype = "silverboots"
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
+	armor = ARMOR_PLATE
+	smeltresult = null
+
+/obj/item/clothing/shoes/roguetown/boots/armor/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(ishuman(M) && M.mind)
+		var/mob/living/carbon/human/H = M
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title != "Martyr")
+			return FALSE
+	return TRUE
+
+/obj/item/clothing/shoes/roguetown/boots/armor/holysee/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((H.job in GLOB.church_positions))
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the boots slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the boots lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
 
 /obj/item/clothing/under/roguetown/platelegs/holysee
 	name = "holy silver chausses"
@@ -140,14 +592,48 @@
 	item_state = "silverlegs"
 	armor = ARMOR_PLATE
 	sellprice = 1000
-	smeltresult = /obj/item/ingot/silver
-	smelt_bar_num = 3
+	smeltresult = null
+
+/obj/item/clothing/under/roguetown/platelegs/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(ishuman(M) && M.mind)
+		var/mob/living/carbon/human/H = M
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title != "Martyr")
+			return FALSE
+
+/obj/item/clothing/under/roguetown/platelegs/holysee/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((H.job in GLOB.church_positions))
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the chausses slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the chausess lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	name = "holy silver bascinet"
 	desc = "Branded by the Holy See, these helms are worn by it's chosen warriors. A bastion of hope in the dark nite."
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyrbascinet.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyrhelmets.dmi'
 	bloody_icon = 'icons/effects/blood64.dmi'
 	adjustable = CAN_CADJUST
 	emote_environment = 3
@@ -158,11 +644,61 @@
 	icon_state = "silverbascinet"
 	item_state = "silverbascinet"
 	sellprice = 1000
-	smeltresult = /obj/item/ingot/silver
-	smelt_bar_num = 3
+	smeltresult = null
+
+/obj/item/clothing/head/roguetown/helmet/heavy/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	. = ..()
+	if(ishuman(M) && M.mind)
+		var/mob/living/carbon/human/H = M
+		var/datum/job/J = SSjob.GetJob(H.mind?.assigned_role)
+		if(J.title != "Martyr")
+			return FALSE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/holysee/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((H.job in GLOB.church_positions))
+			return ..()
+		else if (H.job in GLOB.church_positions)
+			to_chat(user, span_warning("You feel a jolt of holy energies just for a split second, and then the helmet slips from your grasp! You are not devout enough."))
+			return FALSE
+		else if(istype(H.patron, /datum/patron/inhumen))
+			var/datum/component/martyrweapon/marty = GetComponent(/datum/component/martyrweapon)
+			to_chat(user, span_warning("YOU FOOL! IT IS ANATHEMA TO YOU! GET AWAY!"))
+			H.Stun(40)
+			H.Knockdown(40)
+			if(marty.is_active) //Inhumens are touching this while it's active, very fucking stupid of them
+				visible_message(span_warning("[H] lets out a painful shriek as the helmet lashes out at them!"))
+				H.emote("agony")
+				H.adjust_fire_stacks(5)
+				H.ignite_mob()
+			return FALSE
+		else	//Everyone else
+			to_chat(user, span_warning("A painful jolt across your entire body sends you to the ground. You cannot touch this thing."))
+			H.emote("groan")
+			H.Stun(10)
+			return FALSE
+	else
+		return FALSE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/holysee/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/holysee/alt
+	name = "holy silver armet"
+	desc = "Branded by the Holy See, these helms are worn by it's chosen warriors. A bastion of hope in the dark nite."
+	icon = 'icons/roguetown/clothing/special/martyr.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyrhelmets.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	icon_state = "silverarmet"
+	item_state = "silverarmet"
+	smeltresult = null
 
 /obj/item/clothing/cloak/holysee
 	name = "holy silver vestments"

@@ -1,0 +1,6 @@
+author: "NPC1314"
+delete-after: True
+changes:
+  - rscadd: "Adds leather corslet and padded leather hood to Knave store for bandits."
+  - rscadd: "Adds bandit hood to  Clothing tab in bandit store"
+  - rscadd: "Adds blue hat to loadouts"

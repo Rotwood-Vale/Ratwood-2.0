@@ -341,7 +341,7 @@
 		if(!H.check_revive(user))
 			revert_cast()
 			return FALSE
-		if(alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "YES", "NO") != "YES")
+		if(alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "NO", "YES") != "YES")
 			revert_cast()
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))

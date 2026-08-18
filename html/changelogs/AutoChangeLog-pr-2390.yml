@@ -1,5 +1,0 @@
-author: "yupup123"
-delete-after: True
-changes:
-  - bugfix: "Another fix to asssassins causing slots to not be taken up properly."
-  - rscdel: "Removes Antags, Knight Captain, Watch Captain, and Master Warden from being able to roll assassin."

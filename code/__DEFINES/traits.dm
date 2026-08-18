@@ -254,6 +254,7 @@
 #define TRAIT_ARCYNE_T3 "Arcyne Training (Expert)"
 #define TRAIT_ARCYNE_T4 "Arcyne Training (Master)"
 #define TRAIT_BITERHELM "Helmetbiter" // just use this to get helmets which are bitey.
+#define TRAIT_THROWINGARM "Throwing Arm"
 #define TRAIT_STRENGTH_UNCAPPED "Strength Unbound"	//ignores the STR softcap.
 /// Allows you to move faster than the speed softcap
 #define TRAIT_UNCAPPED_SPEED "Speed Unbound"
@@ -285,6 +286,7 @@
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
+#define TRAIT_WHITE_STAG "Stag Protection"
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -349,6 +351,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STRONGBITE = span_info("Stronger bites, critical bite attacks."),
 	TRAIT_VAMPBITE = span_info("Your bite's victims going to feel very, VERY good."),
 	TRAIT_STRONGKICK = span_info("My kicks knock people down and back a step, consistently. There's no need for obstacles."),
+	TRAIT_THROWINGARM = span_info("I throw items slightly faster, farther, and harder."),
 	TRAIT_IGNORESLOWDOWN = span_info("Nothing stops this carriage!"),
 	TRAIT_IGNOREDAMAGESLOWDOWN = span_info("Hits slow me down no longer."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
@@ -544,6 +547,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WAGES_SUSPENDED = span_warning("The Stewardry has halted my daily wages!"),
 	TRAIT_SCALEARMOR = span_info("My scales can protect me from harm every so often."),
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
+	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
