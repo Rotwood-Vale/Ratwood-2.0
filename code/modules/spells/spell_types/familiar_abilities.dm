@@ -17,7 +17,7 @@
 		revert_cast()
 		return FALSE
 
-	var/message = input(user, "You make a connection. What are you trying to say?")
+	var/message = sanitize(input(user, "You make a connection. What are you trying to say?"))
 	if(!message)
 		revert_cast()
 		return FALSE
