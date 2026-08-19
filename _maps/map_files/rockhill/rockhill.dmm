@@ -92197,7 +92197,7 @@
 /obj/item/ingot/iron,
 /obj/item/ingot/iron,
 /obj/item/ingot/iron,
-/turf/closed/void,
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "uiW" = (
 /obj/structure/roguewindow/openclose{
