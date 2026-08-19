@@ -11725,6 +11725,9 @@
 /obj/structure/roguemachine/scomm/r{
 	scom_tag = "Guild - 2nd Floor"
 	},
+/obj/structure/fluff/walldeco/rpainting/forest{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cAx" = (
@@ -25181,10 +25184,6 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
-"fsP" = (
-/obj/machinery/light/rogue/candle/l,
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "fsT" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -61739,9 +61738,6 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church)
 "nqK" = (
-/obj/machinery/light/rogue/torchholder{
-	pixel_y = 26
-	},
 /obj/structure/table/wood,
 /obj/item/carvedgem/porcelain/fish{
 	pixel_x = 7
@@ -85940,6 +85936,10 @@
 "sOB" = (
 /obj/effect/decal/carpet{
 	pixel_x = 16
+	},
+/obj/machinery/light/rogue/candle{
+	pixel_y = 0;
+	pixel_x = -32
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/roofs)
@@ -524037,7 +524037,7 @@ tBf
 dMk
 cAv
 sco
-dMk
+jma
 hRw
 nMh
 sco
@@ -524900,7 +524900,7 @@ xbo
 vDT
 dMk
 sco
-fsP
+sco
 sco
 sco
 fZJ
