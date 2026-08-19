@@ -40,7 +40,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,	//Accompanies mining; they know how to smelt, not make armor though.
 	)
-	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Goblins & Verminvolk."
+	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Fluvians, Goblins & Verminvolk."
 
 /datum/outfit/job/roguetown/adventurer/underdweller/pre_equip(mob/living/carbon/human/H)
 	..()
