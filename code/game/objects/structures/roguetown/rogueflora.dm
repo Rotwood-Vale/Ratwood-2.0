@@ -574,8 +574,6 @@
 /obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return 1
-//	if(get_dir(loc, target) == dir)	disabled to allow movement of mobs through bushes
-//		return 0
 	return 1
 
 /obj/structure/flora/roguegrass/bush/westleach
