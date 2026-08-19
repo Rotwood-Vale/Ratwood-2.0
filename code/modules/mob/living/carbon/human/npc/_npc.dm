@@ -62,6 +62,9 @@
 	//If we utilize our intents further outside of strong intent.
 	var/smart_combatant = FALSE
 
+	//If we utilize straight-up unfair tactics.
+	var/unfair_tactician = FALSE
+
 /mob/living/carbon/human/Initialize(mapload)
 	. = ..()
 	our_cells = new(interesting_dist, interesting_dist, 1)
@@ -578,7 +581,7 @@
 		return retaliator.aggressive
 	else if(istype(L, /mob/living/simple_animal/hostile))
 		return TRUE
-	
+
 	return FALSE
 
 /mob/living/carbon/human/proc/npc_try_backstep()
@@ -837,7 +840,7 @@
 	OffWeapon = get_inactive_held_item()
 
 	//Feint Riposte check before we do any further attacks to teach our enemy a lesson.
-	if(smart_combatant && istype(Weapon, /obj/item/rogueweapon)) //Make sure we have a proper weapon in hand. No feinting with a stick or some shit.
+	if(unfair_tactician && istype(Weapon, /obj/item/rogueweapon)) //Make sure we have a proper weapon in hand. No feinting with a stick or some shit.
 		if(!has_status_effect(/datum/status_effect/debuff/feintcd) && target.has_status_effect(/datum/status_effect/buff/clash))
 			if(possible_rmb_intents & /datum/rmb_intent/feint)
 				swap_rmb_intent(/datum/rmb_intent/feint)
@@ -881,20 +884,20 @@
 			var/obj/item/rogueweapon/actual_weapon = Weapon
 			var/weapon_intents = actual_weapon.possible_item_intents
 			var/weapon_special_intents = actual_weapon.special
-			
+
 			if(length(weapon_intents) > 1 && !has_status_effect(/datum/status_effect/debuff/swapped_intent_npc))
 				did_we_change_intent = TRUE
-				rog_intent_change(rand(1, length(weapon_intents))) 
+				rog_intent_change(rand(1, length(weapon_intents)))
 				apply_status_effect(/datum/status_effect/debuff/swapped_intent_npc) //45 seconds before we swap to a new weapon intent entirely.
 
-			if(special_attacker && prob(50) && !has_status_effect(/datum/status_effect/debuff/specialcd)) //Only if we use specials...
+			if(special_attacker && prob(10) && !has_status_effect(/datum/status_effect/debuff/specialcd)) //Only if we use specials...
 				if(weapon_special_intents)
 					if(possible_rmb_intents & /datum/rmb_intent/strong)
 						swap_rmb_intent(/datum/rmb_intent/strong)
 						try_special_attack(target)
 						return TRUE //We used our special intent on the target as soon as we could.
 
-			if(smart_combatant && prob(50)) // Only if we use rmb intents...
+			if(smart_combatant && prob(10)) // Only if we use rmb intents...
 				if(possible_rmb_intents)
 					if(!has_status_effect(/datum/status_effect/debuff/feintcd))
 						if(possible_rmb_intents & /datum/rmb_intent/feint && rmb_intent != /datum/rmb_intent/feint && prob(50))
@@ -907,7 +910,7 @@
 							try_special_attack(target)
 							return TRUE
 					else if(!has_status_effect(/datum/status_effect/debuff/baitcd)) //May work sometimes; more than likely it wont however.
-						if(possible_rmb_intents & /datum/rmb_intent/aimed && rmb_intent != /datum/rmb_intent/aimed) //Default to aimed as the final choice to attempt baiting.
+						if(unfair_tactician && possible_rmb_intents & /datum/rmb_intent/aimed && rmb_intent != /datum/rmb_intent/aimed) //Default to aimed as the final choice to attempt baiting.
 							swap_rmb_intent(/datum/rmb_intent/aimed)
 							try_special_attack(target)
 							return TRUE
