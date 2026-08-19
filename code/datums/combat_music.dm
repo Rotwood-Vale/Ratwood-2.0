@@ -606,13 +606,6 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "
 	musicpath = list('sound/music/combat_czwarteki.ogg')
 
-/datum/combat_music/thespian
-	name = "Thespian-Errant"
-	desc = "Witness us! We, who are about to die, salute thee!"
-	shortname = "Thespian"
-	credits = "Swords And Sandals, Spartacus - Title Theme"
-	musicpath = list('sound/music/combat_thespian.ogg')
-
 /datum/combat_music/ancient
 	name = "Ancient Champion"
 	desc = "What is dead shall march again. In Her name."

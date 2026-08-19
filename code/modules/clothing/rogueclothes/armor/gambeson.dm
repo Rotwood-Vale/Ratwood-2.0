@@ -26,35 +26,18 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	name = "arming jacket"
-	desc = "A collared jacket, purpose-woven for warfare. The flared collar and sleeves keep the wearer's dexterity from being mitigated, while its tighter presentation helps to ward off killing blows from afar."
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	color = null
 	allowed_sex = list(MALE, FEMALE)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //More integ than a gamberson, at the cost of leg protection
 	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT 
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-
-/obj/item/clothing/suit/roguetown/armor/gambeson/lord/light
-	name = "light arming jacket"
-	desc = "A lightweight collared jacket, purpose-woven for skirmishes and battle. The modest weight and streamlined form make it ideal for wearing under a cuirass or elegant halfplate."
-	icon_state = "dgamb"
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //More integrity and superior protection vs a light gamberson, and cheaper than a proper gamberson with the same integrity.
-
-/obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
-	name = "padded arming jacket"
-	desc = "A collared jacket, intended to be worn underneath plate armor. The thicker padding ensures that any gaps left within its alloyed shell are thoroughly protected - lest an unforseen bowstrike, landing true, ruptures the vulnerable flesh beneath."
-	icon_state = "dgamb"
-	armor = ARMOR_PADDED_GOOD
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE //More integ than a padded gamberson, at the cost of leg protection
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
 	name = "stalker robe"
 	desc = "A thick robe in royal purple, befitting the hand, while remaining easy for them to slip about in.."
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
+
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/light
 	name = "light gambeson"

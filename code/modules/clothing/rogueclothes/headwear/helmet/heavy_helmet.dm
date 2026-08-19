@@ -13,45 +13,6 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 	armor_class = ARMOR_CLASS_MEDIUM	//Heavy helmets require at least medium armor training. Stops no-armor training plate-headgear users.
 
-/obj/item/clothing/head/roguetown/helmet/heavy/bronze
-	name = "bronze barbute"
-	desc = "A greathelm of bronze, who's nasalguard and mandibles leave the wearer's face cloaked in darkness. The heroes of yore have long since \
-	passed, yet their blood still courses through the veins of Psydonia's children; you are no different. Quiff a feather to its skullcap to bear \
-	your allegience with pride."
-	body_parts_covered = FULL_HEAD
-	icon_state = "bronzebarbute"
-	item_state = "bronzebarbute"
-	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	armor = ARMOR_BRONZE
-	block2add = FOV_BEHIND
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE
-	armor_class = ARMOR_CLASS_MEDIUM
-	smelt_bar_num = 1
-
-/obj/item/clothing/head/roguetown/helmet/heavy/bronze/attackby(obj/item/W, mob/living/user, params)
-	..()
-	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist
-		detail_color = GLOB.colorlist[choice]
-		detail_tag = "_detail"
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
-		user.transferItemToLoc(W, src, FALSE, FALSE)
-		update_icon()
-		if(loc == user && ishuman(user))
-			var/mob/living/carbon/H = user
-			H.update_inv_head()
-
-/obj/item/clothing/head/roguetown/helmet/heavy/bronze/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
 /obj/item/clothing/head/roguetown/helmet/heavy/barbute
 	name = "barbute"
 	desc = "A steel helmet that provides excellent coverage, while uniquely keeping its wearer's field-of-view almost entirely unrestricted. The cruciformic visor is \
@@ -242,29 +203,6 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
-
-/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
-	name = "golden helmet"
-	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
-	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
-	icon_state = "goldbarbute"
-	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
-	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
-	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
-	anvilrepair = null
-	smeltresult = /obj/item/ingot/gold
-	smelt_bar_num = 1 //Prevents resmelting to easily recreate.
-	grid_height = 96 //Prevents 'armorstacking'. That, and it's like.. carrying a golden watermelon.
-	grid_width = 96
-	unenchantable = TRUE
-
-/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
-	name = "royal golden helmet"
-	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
-	with a besilked arming cap. The dorpeled crown atop its brow invokes authority, be it misbegotten or endowed."
-	icon_state = "goldbarbute_crown"
-	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
-	unenchantable = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	name = "knight's helmet"
@@ -458,55 +396,6 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
-
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
-	name = "golden knight's armet"
-	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
-	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
-	icon_state = "goldknight"
-	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
-	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
-	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
-	anvilrepair = null
-	smeltresult = /obj/item/ingot/gold
-	smelt_bar_num = 1 //Prevents resmelting to easily recreate.
-	grid_height = 96 //Prevents 'armorstacking'. That, and it's like.. carrying a golden watermelon.
-	grid_width = 96
-	unenchantable = TRUE
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
-	bloody_icon = 'icons/effects/blood64.dmi'
-
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/attackby(obj/item/W, mob/living/user, params)
-	..()
-	if(istype(W, /obj/item/natural/feather) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
-		detail_color = GLOB.colorlist[choice]
-		detail_tag = "_detail"
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
-		user.transferItemToLoc(W, src, FALSE, FALSE)
-		update_icon()
-		if(loc == user && ishuman(user))
-			var/mob/living/carbon/H = user
-			H.update_inv_head()
-
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/king
-	name = "royal golden armet"
-	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
-	with a besilked arming cap. The dorpeled crown atop its brow invokes authority, be it misbegotten or endowed."
-	icon_state = "goldknight_crown"
-	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
-	unenchantable = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm
 	name = "xylixian helmet"

@@ -40,19 +40,6 @@
 	max_integrity = 600
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/rogueweapon/pick/bronze
-	name = "dolabra"
-	desc = "A so-called 'legionnaire's tool'; antiquated, but nevertheless beloved by many for its versatility. It offers an answer for labors both above-and-below, courtesy of its bronze axhead-and-picktip."
-	force = 20
-	force_wielded = 25
-	icon_state = "bronzepick"
-	possible_item_intents = list(/datum/intent/pick/bad, /datum/intent/axe/chop, /datum/intent/axe/cut, MACE_STRIKE)
-	gripped_intents = list(/datum/intent/pick, /datum/intent/axe/chop, /datum/intent/till, /datum/intent/flailthresh)
-	max_integrity = 500
-	max_blade_int = 225
-	sharpness = IS_SHARP
-	smeltresult = /obj/item/ingot/bronze
-
 /obj/item/rogueweapon/pick/blacksteel
 	name = "blacksteel pick"
 	desc = "Glimmering with silvered blackness, this is a pretigious tool for miners delving into the darkness. It looks like it will strike hard enough to shatter any boulders within a rocky surface instantly."
@@ -64,6 +51,7 @@
 	item_state = "blacksteelpick1"
 	max_integrity = 800
 	smeltresult = /obj/item/ingot/blacksteel
+
 
 /obj/item/rogueweapon/pick/stone
 	name = "stone pick"

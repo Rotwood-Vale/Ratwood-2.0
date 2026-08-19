@@ -88,16 +88,6 @@
 					/obj/item/rogueweapon/greatsword/zwei,
 				)
 
-/datum/supply_pack/rogue/iron_weapons/broadswordiron
-	name = "Broadsword"
-	cost = 45 // 2 Iron Ingots + 1 Small Log
-	contains = list(/obj/item/rogueweapon/sword/long/broadsword)
-
-/datum/supply_pack/rogue/iron_weapons/executioner
-	name = "Executioner's Sword"
-	cost = 60 // 3 Iron Ingots
-	contains = list(/obj/item/rogueweapon/sword/long/exe)
-
 /datum/supply_pack/rogue/iron_weapons/greataxe
 	name = "Greataxe"
 	cost = 45 // 2 Iron Ingot, 1 Small Log
@@ -133,11 +123,6 @@
 	contains = list(
 					/obj/item/rogueweapon/whip,
 				)
-
-/datum/supply_pack/rogue/iron_weapons/urumi
-	name = "Iron Urumi"
-	cost = 40
-	contains = list(/obj/item/rogueweapon/whip/urumi/iron)
 
 /datum/supply_pack/rogue/iron_weapons/shield
 	name = "Shield, Wooden"

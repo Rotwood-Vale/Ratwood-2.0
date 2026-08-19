@@ -228,15 +228,6 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
-/obj/item/clothing/neck/roguetown/chaincoif/bronze
-	name = "bronze chain coif"
-	desc = "A maille-hood, fashioned from interlinked bronze rings. As preached by the Pantheon, these maille-hoods were originally made in mimicry of what was worn by the earliest priests."
-	icon_state = "bchaincoif"
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = ARMOR_INT_SIDE_BRONZE
-	armor = ARMOR_BRONZE
-
 /obj/item/clothing/neck/roguetown/chaincoif/full
 	name = "full chain coif"
 	icon_state = "fchaincoif"
@@ -310,14 +301,6 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
-/obj/item/clothing/neck/roguetown/bevor/bronze
-	name = "bronze gorgette"
-	desc = "A jutting slab of bronze, traditionally mounted atop a panoplic assembly to veil the neck from precise strikes. </br>To tip the chin up while grounded is an ancient gesture; one which willingly beckons for the 'gift of mercy'."
-	icon_state = "bbevor"
-	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_SIDE_BRONZE
-	smeltresult = /obj/item/ingot/bronze
-	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/gorget
 	name = "gorget"
@@ -368,14 +351,6 @@
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
-
-/obj/item/clothing/neck/roguetown/gorget/bronze
-	name = "bronze neckguard"
-	desc = "An interlinked veil of bronze plates, shielding the throat from terrible wounds since the dawn of tyme. Piercing blows may sunder the plate, but - as long as the alloy persists - so shall you."
-	icon_state = "bronzegorget"
-	armor = ARMOR_BRONZE
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = ARMOR_INT_SIDE_BRONZE + ARMOR_INT_SIDE_COVERAGE_BONUS
 
 /obj/item/clothing/neck/roguetown/gorget/copper
 	name = "neck protector"
@@ -434,26 +409,6 @@
 	name = "vreccale"
 	desc = "Nature knows not of mercy."
 	icon_state = "iwolfcollaralt"
-
-/obj/item/clothing/neck/roguetown/gorget/gold
-	name = "golden gorget"
-	desc = "A series of resplendant golden plates designed to protect the neck, traditionally worn atop a jacket or cuirass. The holy sigil between its buckled halves promises to carry the flame of its wearer, no matter what strike's poised its way."
-	icon_state = "goldgorget"
-	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
-	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
-	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
-	anvilrepair = null
-	smeltresult = /obj/item/ingot/gold
-	smelt_bar_num = 1
-	grid_height = 96
-	grid_width = 96
-	unenchantable = TRUE
-
-/obj/item/clothing/neck/roguetown/gorget/gold/king
-	name = "royal golden gorget"
-	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
-	sellprice = 300
-	unenchantable = TRUE
 
 /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
 	name = "kazengunite gorget"

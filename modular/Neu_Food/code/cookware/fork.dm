@@ -33,11 +33,6 @@
 	icon_state = "fork_iron"
 	sellprice = 6
 
-/obj/item/kitchen/fork/bronze
-	name = "bronze fork"
-	icon_state = "fork_bronze"
-	sellprice = 8
-
 /obj/item/kitchen/fork/tin
 	name = "tin fork"
 	icon_state = "fork_tin"

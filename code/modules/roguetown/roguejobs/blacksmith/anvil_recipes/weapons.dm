@@ -233,11 +233,6 @@
 	name = "Katar, Bronze"
 	created_item = /obj/item/rogueweapon/katar/bronze
 
-/datum/anvil_recipe/weapons/bronze/axegauntlet
-	name = "Arbelos, Bronze"
-	created_item = /obj/item/rogueweapon/katar/bronze/gladiator
-	craftdiff = 2
-
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckledusters, Bronze"
 	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
@@ -247,12 +242,8 @@
 	created_item = /obj/item/rogueweapon/sword/short/gladius
 
 /datum/anvil_recipe/weapons/bronze/sword
-	name = "Arming Sword, Bronze"
+	name = "Sword, Bronze"
 	created_item = /obj/item/rogueweapon/sword/bronze
-
-/datum/anvil_recipe/weapons/bronze/sabre
-	name = "Khopesh, Bronze"
-	created_item = /obj/item/rogueweapon/sword/sabre/bronzekhopesh
 
 /datum/anvil_recipe/weapons/bronze/axe
 	name = "Axe, Bronze"
@@ -262,38 +253,9 @@
 	name = "Mace, Bronze"
 	created_item = /obj/item/rogueweapon/mace/bronze
 
-/datum/anvil_recipe/weapons/bronze/flail
-	name = "Flail, Bronze"
-	created_item = /obj/item/rogueweapon/flail/bronze
-
 /datum/anvil_recipe/weapons/bronze/dagger
-	name = "Knife, Bronze"
+	name = "Dagger, Bronze"
 	created_item = /obj/item/rogueweapon/huntingknife/bronze
-
-/datum/anvil_recipe/weapons/bronze/combatknife
-	name = "Sydearmme, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/huntingknife/combat/bronze
-
-/datum/anvil_recipe/weapons/bronze/falchion
-	name = "Kopis, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/sword/falchion/militia/bronze
-
-/datum/anvil_recipe/weapons/bronze/messer
-	name = "Makhaira, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/sword/short/messer/bronze
-
-/datum/anvil_recipe/weapons/bronze/battleaxe
-	name = "War Axe, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
-
-/datum/anvil_recipe/weapons/bronze/battlemace
-	name = "Warclub, Bronze (+1 Bronze)"
-	additional_items = list(/obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/mace/warhammer/bronze
 
 /datum/anvil_recipe/weapons/bronze/whip
 	name = "Whip, Bronze-Tipped (+3 Cured Leather)"
@@ -305,43 +267,15 @@
 	additional_items = list(/obj/item/ingot/bronze)
 	created_item = /obj/item/rogueweapon/whip/urumi/bronze
 
-/datum/anvil_recipe/weapons/bronze/broadsword
-	name = "Spatha, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/broadsword/bronze
-
-/datum/anvil_recipe/weapons/bronze/greatkhopesh
-	name = "Apophis, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/greatkhopesh
-	craftdiff = 2
-
 /datum/anvil_recipe/weapons/bronze/spear
 	name = "Spear, Bronze (+1 Bronze, +1 Small Log)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/spear/bronze
 
-/datum/anvil_recipe/weapons/bronze/spearwinged
-	name = "Winged Spear, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/bronze/winged
-	craftdiff = 2
-
-/datum/anvil_recipe/weapons/bronze/greataxe
-	name = "Greataxe, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/greataxe/bronze
-	craftdiff = 2
-
-/datum/anvil_recipe/weapons/bronze/javelin
-	name = "Javelin, Bronze (+1 Small Log) (x2)"
-	additional_items = list(/obj/item/grown/log/tree/small)
-	created_item =  /obj/item/ammo_casing/caseless/rogue/javelin/bronze
-	createditem_num = 2
-
 /datum/anvil_recipe/weapons/bronze/trident
-	name = "Trident, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
+	name = "Trident, Bronze (+1 Steel, +1 Iron, +1 Small Log)"
+	req_blade = /obj/item/blade/steel_polearm
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/spear/trident
 
 // IRON
@@ -360,11 +294,6 @@
 	name = "Messer, Iron"
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
-
-/datum/anvil_recipe/weapons/iron/broadsword
-	name = "Broadsword, Iron (+1 Iron, 1 Small Log)"
-	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/broadsword
 
 /datum/anvil_recipe/weapons/iron/shotel
 	name = "Shotel, Iron (+1 Iron)"
@@ -494,7 +423,7 @@
 	craftdiff = 4
 
 /datum/anvil_recipe/weapons/iron/peasantwarflail
-	name = "Greatflail, Iron (+1 Iron, +2 Small Log)"
+	name = "War Flail, Iron (+1 Iron, +2 Small Log)"
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/flail/peasantwarflail
 
@@ -589,11 +518,6 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/flail/sflail
 
-/datum/anvil_recipe/weapons/steel/peasantwarflail
-	name = "Greatflail, Steel (+1 Steel, +2 Small Log)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/flail/peasantwarflail/steel
-
 /datum/anvil_recipe/weapons/steel/longsword
 	name = "Longsword, Steel (+1 Steel)"
 	req_blade = /obj/item/blade/steel_sword
@@ -611,11 +535,6 @@
 	req_blade = /obj/item/blade/steel_sword
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/sword/long/etruscan
-
-/datum/anvil_recipe/weapons/steel/broadsword
-	name = "Broadsword, Steel (+1 Steel, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/sword/long/broadsword/steel
 
 /datum/anvil_recipe/weapons/steel/shalal
 	name = "Shalal Saber, Steel (+1 Steel)"
@@ -830,16 +749,6 @@
 	additional_items = list(/obj/item/rogueweapon/sword/long)
 	created_item = /obj/item/rogueweapon/sword/long/dec
 
-/datum/anvil_recipe/weapons/decorated/gladius
-	name = "Gladius, Decorated (+1 Bronze Gladius)"
-	additional_items = list(/obj/item/rogueweapon/sword/short/gladius)
-	created_item = /obj/item/rogueweapon/sword/short/gladius/decorated
-
-/datum/anvil_recipe/weapons/decorated/warclub
-	name = "Warclub, Decorated (+1 Bronze Warclub)"
-	additional_items = list(/obj/item/rogueweapon/mace/warhammer/bronze)
-	created_item = /obj/item/rogueweapon/mace/warhammer/bronze/decorated
-
 
 // SILVER
 
@@ -1024,17 +933,6 @@
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/rogueweapon/shield/iron
 
-/datum/anvil_recipe/weapons/bronze/bronzeshield
-	name = "Shield, Bronze (+1 Bronze, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/bronze
-
-/datum/anvil_recipe/weapons/bronze/bronzegreatshield
-	name = "Greatshield, Bronze (+2 Bronze, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
-	created_item = /obj/item/rogueweapon/shield/bronze/great
-	craftdiff = 2
-
 // CROSSBOW
 
 /datum/anvil_recipe/weapons/steel/xbow
@@ -1078,13 +976,6 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
-/datum/anvil_recipe/weapons/bronze/bolts
-	name = "Hastequilled Bolts, Bronze (+2 Stick) (x10)"
-	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/bolt/bronze
-	createditem_num = 10
-	i_type = "Ammo"
-
 // BOW
 
 /datum/anvil_recipe/weapons/iron/arrows
@@ -1112,13 +1003,6 @@
 	name = "Broadhead Arrows, Decrepit (+2 Stick) (x10)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
 	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/iron/decrepit
-	createditem_num = 10
-	i_type = "Ammo"
-
-/datum/anvil_recipe/weapons/bronze/arrows
-	name = "Hastequilled Arrows, Bronze (+2 Stick) (x10)"
-	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/ammo_casing/caseless/rogue/arrow/bronze
 	createditem_num = 10
 	i_type = "Ammo"
 

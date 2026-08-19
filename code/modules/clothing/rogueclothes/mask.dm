@@ -395,32 +395,6 @@
 	armor = ARMOR_BRONZE
 	smeltresult = /obj/item/ingot/copper
 
-/obj/item/clothing/mask/rogue/facemask/bronze
-	name = "bronze mask"
-	desc = "Glimmering bronze, curved to veil its wearer's face from both judgement and harm."
-	armor = ARMOR_BRONZE
-	armor_class = ARMOR_CLASS_LIGHT
-	icon_state = "bronzemask"
-	item_state = "bronzemask"
-	max_integrity = ARMOR_INT_MASK_BRONZE
-	smeltresult = /obj/item/ingot/bronze
-
-/obj/item/clothing/mask/rogue/facemask/bronze/classic
-	name = "bronze death mask"
-	icon_state = "bronzemask_legacy"
-	item_state = "bronzemask_legacy"
-	desc = "Glimmering bronze, meticuliusly shaped to mimic the guise of another. One of civilization's oldest superstitions is the belief that donning such masks would impart a sliver of the mimicked facebearer's power unto its wearer."
-
-/obj/item/clothing/mask/rogue/facemask/bronze/anthro
-	name = "bronze mask"
-	icon_state = "bronzemask_snout"
-	item_state = "bronzemask_snout"
-
-/obj/item/clothing/mask/rogue/facemask/bronze/classic/anthro
-	name = "bronze death mask"
-	icon_state = "bronzemask_legacy_snout"
-	item_state = "bronzemask_legacy_snout"
-
 /obj/item/clothing/mask/rogue/facemask/hound
 	name = "hound mask"
 	icon_state = "imask_snout"
@@ -924,37 +898,6 @@
 	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
 	. += span_notice("Shift+MMB toggles identity concealment.")
 	. += span_notice("When using the harlequin styles: Right-click to honk.")
-
-// Duelist Goggles = New invention that protects your eyes against critical hits +  doesn't hide your identity
-
-/obj/item/clothing/mask/rogue/spectacles/duelist
-	name = "iron duelist goggles"
-	desc = "A rigid pair of protective goggles made for fencing bouts, shielding the eyes without concealing the face."
-	icon_state = "iduelist"
-	break_sound = "garrote_snap"
-	blocksound = PLATEHIT
-	max_integrity = 125 //more durability due to less covered areas in compairson to a mask
-	body_parts_inherent = EYES//no peeling these
-	armor = ARMOR_PLATE
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ash
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/steel
-	name = "steel duelist goggles"
-	desc = "Steel duelist goggles forged for the most punishing exchanges. They guard the eyes while leaving pride and identity uncovered."
-	icon_state = "sduelist"
-	max_integrity = 150
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/bronze
-	name = "bronze duelist goggles"
-	desc = "Bronze duelist goggles offering modest protection without obscuring one's features. Every victory deserves a witness."
-	icon_state = "bduelist"
-	max_integrity = 125
 
 // PADDED MASKS, pretty much like the sack mask except is looking PRETTIER + has a state that's rolled down to show your identity.
 
