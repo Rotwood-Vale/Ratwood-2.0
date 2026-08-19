@@ -53,7 +53,7 @@
 			L.visible_message(span_info("[user] starts to warm their hands."), span_info("You warm your hands."))
 			if(do_after(L, 4 SECONDS, target = src))
 				if(L.bodytemperature < BODYTEMP_NORMAL_MIN)
-					L.adjust_bodytemperature(50)
+					L.adjust_bodytemperature(35)
 		return
 
 
