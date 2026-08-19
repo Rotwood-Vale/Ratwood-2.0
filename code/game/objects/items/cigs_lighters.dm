@@ -456,13 +456,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/rollie/chocolate
 	name = "chocolate zig"
 	desc = "Dried westleach carefully wrapped in fine paper. It has a particularly bittersweet taste of cocoa."
-	list_reagents = list(/datum/reagent/drug/nicotine = 30, /datum/reagent/drug/chocolate = 12, /obj/item/reagent_containers/food/snacks/chocolate = 3)
+	list_reagents = list(/datum/reagent/drug/nicotine = 30, /datum/reagent/drug/chocolate = 12)
 
 /obj/item/clothing/mask/cigarette/rollie/chocolate/cheroot
 	name = "chocolate cheroot"
 	desc = "A rewrapped westleach zig with some alchemically extracted chocolate essence."
 	smoketime = 240
-	list_reagents = list(/datum/reagent/drug/nicotine = 45, /datum/reagent/drug/chocolate = 12, /obj/item/reagent_containers/food/snacks/chocolate = 3)
+	list_reagents = list(/datum/reagent/drug/nicotine = 45, /datum/reagent/drug/chocolate = 12)
 
 /obj/item/clothing/mask/cigarette/rollie/strawberry
 	name = "strawberry zig"

@@ -1,8 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - rscadd: "Crafting oars/dinghys from crafting menu"
-  - rscadd: "Dinghy's fit two people now"
-  - rscadd: "Dinghy's have a slot for an oar, and can go upriver as long as one person is holding an oar."
-  - bugfix: "No longer get cold from riding in a dinghy on water"
-  - bugfix: "dinghy's now move diagonally without breaking terribly, similar to mounts"
