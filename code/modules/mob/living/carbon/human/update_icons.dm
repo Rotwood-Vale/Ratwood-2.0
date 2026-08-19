@@ -57,22 +57,13 @@ There are several things that need to be remembered:
 			jazz += 2
 	return jazz
 
-//HAIR OVERLAY
-/mob/living/carbon/human/update_hair()
-	rebuild_obscured_flags()
-	update_body_parts(TRUE)
-	return
-
 /mob/living/carbon/human/update_body()
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
-
-	if(body_overlay_cache_key == new_cache_key)
-		return
-	body_overlay_cache_key = new_cache_key
-
-	dna.species.handle_body(src)
-	..()
+	if(body_overlay_cache_key != new_cache_key)
+		dna.species.handle_body(src)
+		body_overlay_cache_key = new_cache_key
+	..() // always do update_body_parts when we call this
 
 #define SUNDER_FILTER "sunder_filter"
 
@@ -701,6 +692,11 @@ There are several things that need to be remembered:
 	apply_overlay(BELT_LAYER)*/
 	return
 
+//HAIR OVERLAY
+// NOTE Q2 2026 - REMOVE AND REPLACE WITH UPDATE_BODY EVENTUALLY
+/mob/living/carbon/human/update_hair()
+	rebuild_obscured_flags()
+	update_body()
 
 /mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	update_inv_head_real(hide_nonstandard)
@@ -926,7 +922,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_suit()
 	rebuild_obscured_flags()
-	update_body_parts(TRUE)
+	update_body()
 	return
 /*
 	remove_overlay(ARMOR_LAYER)
@@ -979,7 +975,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_wear_mask()
 	defer_overlay_vision_updates()
 	..()
-	update_body_parts(TRUE)
 	var/mutable_appearance/mask_overlay = overlays_standing[MASK_LAYER]
 	if(mask_overlay)
 		rebuild_obscured_flags()
@@ -995,6 +990,7 @@ There are several things that need to be remembered:
 		overlays_standing[MASK_LAYER] = mask_overlay
 		apply_overlay(MASK_LAYER)
 	resume_overlay_vision_updates()
+	update_body()
 
 /mob/living/carbon/human/update_inv_back(hide_experimental = FALSE)
 	queue_icon_update(PENDING_UPDATE_INV_BACK)
@@ -1282,7 +1278,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_shirt_real()
 	remove_overlay(SHIRT_LAYER)
 	remove_overlay(SHIRTSLEEVE_LAYER)
-	update_body_parts(TRUE)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
@@ -1370,10 +1365,7 @@ There are several things that need to be remembered:
 				overlays_standing[SHIRTSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	if(gender == FEMALE && dna?.species)
-		update_body_parts(redraw = TRUE)
-		dna.species.handle_body(src)
-	update_hair()
+	update_body() // handles dna.species.handle_body() and update_body_parts() for us
 	// Note: wrists will update gloves in its own update
 
 	apply_overlay(SHIRT_LAYER)
@@ -1480,10 +1472,7 @@ There are several things that need to be remembered:
 				overlays_standing[ARMORSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	if(gender == FEMALE && dna?.species)
-		update_body_parts(redraw = TRUE)
-		dna.species.handle_body(src)
-	update_hair()
+	update_body()
 	update_inv_shirt() // fix boob
 
 	apply_overlay(ARMOR_LAYER)
@@ -1559,7 +1548,7 @@ There are several things that need to be remembered:
 				overlays_standing[LEGSLEEVE_LAYER] = sleeves
 
 	rebuild_obscured_flags()
-	update_hair()
+	update_body()
 	apply_overlay(PANTS_LAYER)
 	apply_overlay(LEGSLEEVE_LAYER)
 
@@ -2016,31 +2005,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 	. += gender
 	. += age
+	. += obscured_flags
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		. += BP.body_zone
-		. += (BP.status == BODYPART_ORGANIC) ? "organic" : "robotic"
-		switch(BP.use_digitigrade)
-			if(FULL_DIGITIGRADE)
-				. += "digitigrade_full"
-			if(SQUISHED_DIGITIGRADE)
-				. += "digitigrade_squashed"
-		if(BP.rotted)
-			. += "rotted"
-		if(BP.skeletonized)
-			. += "skeletonized"
-		if(BP.dmg_overlay_type)
-			. += BP.dmg_overlay_type
+		. += BP.generate_limb_cache_key()
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"
 	return jointext(., "-")
-
-/mob/living/carbon/human/load_limb_from_cache()
-	..()
-	update_hair()
-
-
 
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)
