@@ -103,5 +103,5 @@
 	desc = "Vile heretics steal the power of gods!"
 	cost = 5
 	min_chaos = 2
-	weight = 50
+	weight = 100
 	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
