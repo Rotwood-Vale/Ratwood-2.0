@@ -25184,6 +25184,19 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
+"fsP" = (
+/obj/structure/table/wood,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/obj/structure/lever{
+	name = "Armorer Shutters";
+	redstone_id = "smith_shutter01";
+	pixel_y = 11;
+	pixel_x = 5
+	},
+/turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "fsT" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -35368,12 +35381,13 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/dungeon/wizarddungeon)
 "hFt" = (
-/obj/structure/fluff/wallclock,
-/obj/structure/table/wood,
-/obj/item/candle/gold/lit{
-	pixel_y = 5
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
 	},
-/turf/open/floor/rogue/blocks/newstone/alt,
+/obj/structure/curtain/directional/orange,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hFv" = (
 /obj/structure/mineral_door/wood/donjon/stone{
@@ -52411,6 +52425,17 @@
 /obj/structure/flora/rogueshroom/happy/random,
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/under/underdark/rockhill)
+"lqD" = (
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/obj/structure/curtain/directional/orange{
+	dir = 8
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "lqE" = (
 /obj/structure/mirror{
 	layer = 3;
@@ -79856,17 +79881,12 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bograt/north)
 "rtA" = (
-/obj/structure/table/wood,
-/obj/structure/lever{
-	name = "Armorer Shutters";
-	redstone_id = "smith_shutter01";
-	pixel_y = 20;
-	pixel_x = -5
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
 	},
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/blocks/stonered/tiny,
+/turf/closed/void,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rtB" = (
 /obj/structure/fluff/railing/border{
@@ -85348,11 +85368,15 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors)
 "sHh" = (
-/obj/machinery/anvil,
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
 	},
-/turf/open/floor/rogue/blocks/stonered/tiny,
+/obj/structure/curtain/directional/orange{
+	dir = 4
+	},
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "sHi" = (
 /obj/item/reagent_containers/food/snacks/crow{
@@ -408256,10 +408280,10 @@ sco
 sco
 jgf
 sco
-gMo
+sHh
 sco
 sco
-gMo
+sHh
 sco
 sco
 wbg
@@ -412146,8 +412170,8 @@ msq
 uVS
 gfj
 kLO
-qqj
 xuh
+qqj
 xuh
 ejQ
 gfj
@@ -413004,7 +413028,7 @@ aOv
 tGr
 tGr
 iXA
-gMo
+lqD
 sco
 kNm
 gfj
@@ -413437,7 +413461,7 @@ fDk
 mmH
 mmH
 nIQ
-gMo
+hFt
 cOs
 gfj
 gfj
@@ -413869,7 +413893,7 @@ uRo
 fIw
 fIw
 avH
-gMo
+hFt
 mmr
 gfj
 gfj
@@ -414302,7 +414326,7 @@ xvx
 xvx
 aVC
 sco
-hFt
+sco
 gfj
 gfj
 sco
@@ -414732,9 +414756,9 @@ wbg
 lhn
 tyZ
 tyZ
-rtA
-sco
-fRo
+tyZ
+tyZ
+ejQ
 gfj
 dmM
 sco
@@ -415165,8 +415189,8 @@ nBa
 tyZ
 tyZ
 tyZ
-ejQ
-geK
+tyZ
+rtA
 awW
 fSM
 rWA
@@ -415596,8 +415620,8 @@ fZm
 lhn
 qBK
 iSq
-sHh
-sco
+jeU
+fsP
 sco
 ukO
 pqE
