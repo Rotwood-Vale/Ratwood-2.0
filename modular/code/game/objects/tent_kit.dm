@@ -254,7 +254,7 @@
         wall.dir = get_wall_dir(center_turf, wall_turf)
         wall.invisibility = 0
         wall.alpha = 255
-        RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+        RegisterSignal(wall, COMSIG_QDELETING, PROC_REF(part_destroyed))
 
     // --- ROOF TILES (The Flooring) ---
     for(var/turf/roof_floor_turf in roof_floor_coords)
@@ -274,7 +274,7 @@
         wall.name = "tent roof wall"
         wall.invisibility = 0
         wall.alpha = 255
-        RegisterSignal(wall, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+        RegisterSignal(wall, COMSIG_QDELETING, PROC_REF(part_destroyed))
 
     // --- DOORS ---
     for(var/turf/door_turf in door_coords)
@@ -286,7 +286,7 @@
         door.alpha = 255
         door.density = TRUE
         door.update_icon()
-        RegisterSignal(door, COMSIG_PARENT_QDELETING, PROC_REF(part_destroyed))
+        RegisterSignal(door, COMSIG_QDELETING, PROC_REF(part_destroyed))
 
     // --- INTERNAL ROOF LOGIC ---
     var/list/internal_coords = get_tent_coordinates(center_turf, assembly_dir)
@@ -308,12 +308,12 @@
         if(!do_after(user, 8 SECONDS, target = src)) return
 
     for(var/obj/structure/tent_wall/wall in tent_walls)
-        UnregisterSignal(wall, COMSIG_PARENT_QDELETING)
+        UnregisterSignal(wall, COMSIG_QDELETING)
         wall.forceMove(src)
         wall.name = initial(wall.name)
         wall.alpha = initial(wall.alpha)
     for(var/obj/structure/roguetent/door in tent_doors)
-        UnregisterSignal(door, COMSIG_PARENT_QDELETING)
+        UnregisterSignal(door, COMSIG_QDELETING)
         door.forceMove(src)
     for(var/turf/T in roof_tiles)
         T.pseudo_roof = FALSE
