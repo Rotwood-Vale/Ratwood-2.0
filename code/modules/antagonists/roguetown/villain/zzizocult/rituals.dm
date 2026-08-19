@@ -310,6 +310,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	if(target.stat == DEAD)
 		target.gib(FALSE, FALSE, FALSE)
+	ADD_TRAIT(target, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
@@ -322,10 +323,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/transmutation/summonweapon
 	name = "Summon Weapons"
-	center_requirement = /obj/item/ingot/steel
+	center_requirement = /mob/living/carbon/human
+	n_req = /obj/item/ingot/steel
 	is_cultist_ritual = TRUE
 
 /datum/ritual/transmutation/summonweapon/invoke(mob/living/user, turf/center)
+	var/mob/living/carbon/human/target = locate() in center.contents
+	if(!target)
+		return
+	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
