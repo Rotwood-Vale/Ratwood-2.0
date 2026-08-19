@@ -578,7 +578,7 @@
 		return retaliator.aggressive
 	else if(istype(L, /mob/living/simple_animal/hostile))
 		return TRUE
-	
+
 	return FALSE
 
 /mob/living/carbon/human/proc/npc_try_backstep()
@@ -836,15 +836,6 @@
 	Weapon = get_active_held_item()
 	OffWeapon = get_inactive_held_item()
 
-	//Feint Riposte check before we do any further attacks to teach our enemy a lesson.
-	if(smart_combatant && istype(Weapon, /obj/item/rogueweapon)) //Make sure we have a proper weapon in hand. No feinting with a stick or some shit.
-		if(!has_status_effect(/datum/status_effect/debuff/feintcd) && target.has_status_effect(/datum/status_effect/buff/clash))
-			if(possible_rmb_intents & /datum/rmb_intent/feint)
-				swap_rmb_intent(/datum/rmb_intent/feint)
-				if(Adjacent(target))
-					try_special_attack(target)
-					return TRUE //Attempt to feint and ruin their clash...
-
 	// What is the chance we try to grab with our offhand?
 	var/make_grab_chance = Weapon ? 5 : 20 // If unarmed, 20% chance; otherwise 5%
 	var/use_grab_chance = 30 // 30% chance to use a grab if we already have one
@@ -881,10 +872,10 @@
 			var/obj/item/rogueweapon/actual_weapon = Weapon
 			var/weapon_intents = actual_weapon.possible_item_intents
 			var/weapon_special_intents = actual_weapon.special
-			
+
 			if(length(weapon_intents) > 1 && !has_status_effect(/datum/status_effect/debuff/swapped_intent_npc))
 				did_we_change_intent = TRUE
-				rog_intent_change(rand(1, length(weapon_intents))) 
+				rog_intent_change(rand(1, length(weapon_intents)))
 				apply_status_effect(/datum/status_effect/debuff/swapped_intent_npc) //45 seconds before we swap to a new weapon intent entirely.
 
 			if(special_attacker && prob(50) && !has_status_effect(/datum/status_effect/debuff/specialcd)) //Only if we use specials...
@@ -904,11 +895,6 @@
 					else if(!has_status_effect(/datum/status_effect/debuff/clashcd))
 						if(possible_rmb_intents & /datum/rmb_intent/riposte && rmb_intent != /datum/rmb_intent/riposte && prob(50))
 							swap_rmb_intent(/datum/rmb_intent/riposte)
-							try_special_attack(target)
-							return TRUE
-					else if(!has_status_effect(/datum/status_effect/debuff/baitcd)) //May work sometimes; more than likely it wont however.
-						if(possible_rmb_intents & /datum/rmb_intent/aimed && rmb_intent != /datum/rmb_intent/aimed) //Default to aimed as the final choice to attempt baiting.
-							swap_rmb_intent(/datum/rmb_intent/aimed)
 							try_special_attack(target)
 							return TRUE
 
