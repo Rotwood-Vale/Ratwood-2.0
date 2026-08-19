@@ -10,9 +10,6 @@
 	var/obj/item/stored_neck = wear_neck
 	var/obj/item/stored_ring = wear_ring
 
-	//for(var/obj/item/I in src)
-	//	if (I != underwear && I != cloak && I != backr && I != backl && I != legwear_socks) // keep underwear, socks, back and cloak on, even if said cloak or back clothing remains inaccessible.
-	//		dropItemToGround(I) we have witch forms and etc, in dnd druids also not drop items
 	regenerate_icons()
 	icon = null
 	var/oldinv = invisibility
