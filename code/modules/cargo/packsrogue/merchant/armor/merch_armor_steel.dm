@@ -96,16 +96,6 @@
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/under/roguetown/chainlegs)
 
-/datum/supply_pack/rogue/armor_steel/chainhose_steel
-	name = "Hosen, Chain"
-	cost = 50 // 1 Steel
-	contains = list(/obj/item/clothing/under/roguetown/chainlegs/hose)
-
-/datum/supply_pack/rogue/armor_steel/chaintights_steel
-	name = "Tights, Chain"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/under/roguetown/chainlegs/tights)
-
 /datum/supply_pack/rogue/armor_steel/platelegs
 	name = "Chausses, Plate"
 	cost = 90 // 2 Steel
@@ -125,11 +115,6 @@
 	name = "Bracers, Plate"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
-
-/datum/supply_pack/rogue/armor_steel/bracers_chain
-	name = "Bracers, Chainmaille"
-	cost = 50 // 1 Steel
-	contains = list(/obj/item/clothing/wrists/roguetown/bracers/chain)
 
 /datum/supply_pack/rogue/armor_steel/helmet_nasal
 	name = "Helmet, Nasal"
@@ -160,21 +145,6 @@
 	name = "Helmet, Bucket"
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket)
-
-/datum/supply_pack/rogue/armor_steel/helmet_barbute
-	name = "Helmet, Barbute"
-	cost = 50 // 1 Steel
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/barbute)
-
-/datum/supply_pack/rogue/armor_steel/helmet_barbute_visor
-	name = "Helmet, Barbute with Visor"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor)
-
-/datum/supply_pack/rogue/armor_steel/helmet_barbute_great
-	name = "Helmet, Barbute, Great"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/barbute/great)
 
 /datum/supply_pack/rogue/armor_steel/helmet_pigface
 	name = "Helmet, Pigface"
@@ -226,36 +196,6 @@
 	cost = 90 // 2 Steel
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/beakhelm)
 
-/datum/supply_pack/rogue/armor_steel/elvenbarbute
-	name = "Helmet, Elven, Barbute"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/head/roguetown/helmet/elvenbarbute)
-
-/datum/supply_pack/rogue/armor_steel/elvenbarbutewinged
-	name = "Helmet, Elven, Barbute, Winged"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged)
-
-/datum/supply_pack/rogue/armor_steel/helmet_aventailbascinet
-	name = "Helmet, Bascinet, Aventailed"
-	cost = 90 
-	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/aventail)
-
-/datum/supply_pack/rogue/armor_steel/helmet_heavyaventailbascinet
-	name = "Helmet, Visored Bascinet, Aventailed"
-	cost = 140
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/aventail)
-
-/datum/supply_pack/rogue/armor_steel/helmet_frogmouth
-	name = "Helmet, Froggemund"
-	cost = 140
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth)
-
-/datum/supply_pack/rogue/armor_steel/helmet_frogmouth
-	name = "Helmet, Plumed Froggemund"
-	cost = 145//you will pay extra for drip
-	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume)
-
 /datum/supply_pack/rogue/armor_steel/bevor
 	name = "Bevor"
 	cost = 50 // 1 Steel
@@ -266,20 +206,10 @@
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/neck/roguetown/gorget/steel)
 
-/datum/supply_pack/rogue/armor_steel/aventail_steel
-	name = "Aventail"
-	cost = 90 // 2 Steel
-	contains = list(/obj/item/clothing/neck/roguetown/gorget/aventail)
-
 /datum/supply_pack/rogue/armor_steel/boots_steel
 	name = "Plated Boots"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
-
-/datum/supply_pack/rogue/armor_iron/mailleboots_steel
-	name = "Maille Boots"
-	cost = 50
-	contains = list(/obj/item/clothing/shoes/roguetown/boots/maille)
 
 /datum/supply_pack/rogue/armor_steel/mask_steel
 	name = "Mask"

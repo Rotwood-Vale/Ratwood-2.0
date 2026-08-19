@@ -122,21 +122,4 @@
 	body_parts_inherent = FULL_BODY
 	combat_taggable = TRUE
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
-	name = "pit-hardened chest"
-	desc = "Are you not entertained?!"
-	body_parts_covered = COVERAGE_VEST
-	body_parts_inherent = COVERAGE_VEST
-	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
-	name = "pit-hardened skin"
-	desc = "Are you not entertained?!"
-	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-
 #undef COMBAT_TAG_DURATION

@@ -55,37 +55,6 @@
 	color = "#bb9696"
 	anvilrepair = null
 
-/obj/item/clothing/wrists/roguetown/bracers/gold
-	name = "golden bracers"
-	desc = "A resplendant pair of golden vambraces, further padded with besilked sleeves. Each halve is marked with a holy sigil, sloped upwards to help catch-and-reflect sunlight into the eyes of unsuspecting assailants."
-	icon_state = "goldbracers"
-	item_state = "goldbracers"
-	body_parts_covered = ARMS | HANDS //Experimental, but should compliment the cost. Let all handhitters fear your presence.. for exactly five strikes.
-	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
-	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
-	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
-	anvilrepair = null
-	smeltresult = /obj/item/ingot/gold
-	smelt_bar_num = 1
-	grid_height = 96
-	grid_width = 96
-	unenchantable = TRUE
-
-/obj/item/clothing/wrists/roguetown/bracers/gold/king
-	name = "royal golden bracers"
-	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
-	sellprice = 300
-	unenchantable = TRUE
-
-/obj/item/clothing/wrists/roguetown/bracers/bronze
-	name = "bronze wristguards"
-	desc = "Padded with hide and cuffed to comfort the joints, these bronze plates fit perfectly around both forearms. Your fingers tingle with an unspoken purpose, as the bracers clasp into place; primordial, yet everclear."
-	icon_state = "bronzebracers"
-	body_parts_covered = ARMS | HANDS //Experimental, but should play well with the increased durability.
-	smeltresult = /obj/item/ingot/bronze
-	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_SIDE_BRONZE
-
 /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	name = "psydonic thorns"
 	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be wrapped around the wrists."
@@ -163,8 +132,7 @@
 	icon_state = "copperarm"
 	item_state = "copperarm"
 	smeltresult = /obj/item/ingot/copper
-	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_SIDE_BRONZE
+	armor = ARMOR_PLATE_BAD
 
 /obj/item/clothing/wrists/roguetown/wrappings
 	name = "solar wrappings"
@@ -215,11 +183,6 @@
 	desc = "Sheared burlap and cloth, meticulously fashioned around the forearms. Naledian-trained monks rarely share the same fatalistic mindset as their Otavan cousins, and - consequency - tend to be averse with binding their wrists in jagged thorns. Unbloodied fingers tend to work far better with the arcyne, too. </br>'..And so, the great tears that they wept when it took it's last breath, the rain of the Weeper, is what marked this era of silence. Fools would tell you that Psydon has died, that they splintered into ‘ten smaller fragments', but that does not make sense. They are everything within and without, they are beyond size and shape. How can everything become something? No, they have merely turned their ear from us. They mourn, for their greatest child and their worst..'"
 	color = "#48443B"
 	nudist_approved = TRUE
-
-/obj/item/clothing/wrists/roguetown/bracers/cloth/gladiator
-	name = "padded wrappings"
-	desc = "Sheared burlap and cloth, meticulously fashioned around the forearms. Taut fibers turn weeping gashes into mere tears along the cloth. </br>"
-	color = "#BFB8A9"
 
 //Queensleeves
 /obj/item/clothing/wrists/roguetown/royalsleeves
@@ -366,140 +329,3 @@
 	desc = "A set of bracelets carved out of opal."
 	icon_state = "br_opal"
 	sellprice = 95
-
-/obj/item/clothing/wrists/roguetown/bracers/aalloy/chain
-	name = "decrepit chain sleeves"
-	desc = "Coverings of frayed bronze maille, fashioned from hundreds of interlinked rings. An aura of decaying harlotry eminates from these sleeves. \
-	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
-	icon_state = "ancientchainsleevesalt"
-	item_state = "ancientchainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_MAILLE
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/aalloy/chain/attack_right(mob/user)
-	. = ..()
-	if(!wrapped)
-		icon_state = "ancientchainsleeves"
-		item_state = "ancientchainsleeves"
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = TRUE
-	else
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/paalloy/chain
-	name = "ancient chain sleeves"
-	desc = "Coverings of polished gilbranze-maille, fashioned from hundreds of interlinked rings. An aura of undying harlotry eminates from these sleeves. \
-	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
-	icon_state = "ancientchainsleevesalt"
-	item_state = "ancientchainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_MAILLE
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/paalloy/chain/attack_right(mob/user)
-	. = ..()
-	if(!wrapped)
-		icon_state = "ancientchainsleeves"
-		item_state = "ancientchainsleeves"
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = TRUE
-	else
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/bronze/chain
-	name = "bronze chain sleeves"
-	desc = "Coverings of bronze maille, fashioned from hundreds of interlinked rings. An aura of antiqual harlotry eminates from these sleeves. \
-	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
-	icon_state = "bchainsleevesalt"
-	item_state = "bchainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_BRONZE
-	body_parts_covered = ARMS
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/bronze/chain/attack_right(mob/user)
-	. = ..()
-	if(!wrapped)
-		icon_state = "bchainsleeves"
-		item_state = "bchainsleeves"
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = TRUE
-	else
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/chain
-	name = "chain sleeves"
-	desc = "Coverings of steel maille, fashioned from hundreds of interlinked rings. An aura of inexplicable harlotry eminates from these sleeves. \
-	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
-	icon_state = "chainsleevesalt"
-	item_state = "chainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_MAILLE
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
-
-/obj/item/clothing/wrists/roguetown/bracers/chain/attack_right(mob/user)
-	. = ..()
-	if(!wrapped)
-		icon_state = "chainsleeves"
-		item_state = "chainsleeves"
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = TRUE
-	else
-		icon_state = initial(icon_state)
-		item_state = initial(item_state)
-		user.update_inv_wrists()
-		user.update_inv_gloves()
-		user.update_inv_armor()
-		user.update_inv_shirt()
-		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
-		wrapped = FALSE

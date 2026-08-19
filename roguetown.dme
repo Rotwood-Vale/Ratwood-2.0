@@ -1853,7 +1853,6 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\naledi.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\otava.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\slavers.dm"
-#include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\thespian.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\underdweller.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\zybantu.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\rare\heartfelt.dm"
