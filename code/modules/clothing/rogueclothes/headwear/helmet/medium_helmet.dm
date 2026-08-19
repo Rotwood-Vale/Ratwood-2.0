@@ -452,16 +452,6 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 
-/obj/item/clothing/head/roguetown/helmet/bascinet/aventail
-	name = "bascinet with aventail"
-	desc = "A steel bascinet helmet, further protected with a thick maille aventail. Burdensome on the shoulders of those not trained to carry \
-	maille, yet excellent in both coverage and durability."
-	icon_state = "aventail"
-	item_state = "aventail"
-	body_parts_covered = HEAD|HAIR|EARS|MOUTH|NECK
-	block2add = FOV_BEHIND
-	armor_class = ARMOR_CLASS_MEDIUM
-
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
 	desc = "A steel bascinet helmet with a pigface visor that protects the entire head and face. Add a feather to show the colors of your family or allegiance."

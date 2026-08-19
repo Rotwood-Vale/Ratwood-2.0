@@ -387,28 +387,6 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 
-/obj/item/clothing/shoes/roguetown/boots/armor/gold
-	name = "golden greaves"
-	desc = "Resplendant sabatons of pure gold, adorned with angled greaves that proudly bear the holy sigil. Its besilked cuffs have remained surprisingly bereft of debris - not even a sprig of lint remains to be criticized."
-	icon_state = "goldgreaves"
-	item_state = "goldgreaves"
-	body_parts_covered = FEET | LEGS
-	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
-	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
-	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
-	anvilrepair = null
-	smeltresult = /obj/item/ingot/gold
-	smelt_bar_num = 1
-	grid_height = 96
-	grid_width = 96
-	unenchantable = TRUE
-
-/obj/item/clothing/shoes/roguetown/boots/armor/gold/king
-	name = "royal golden greaves"
-	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
-	sellprice = 300
-	unenchantable = TRUE
-
 /obj/item/clothing/shoes/roguetown/boots/armor/bronze
 	name = "bronze greaves"
 	desc = "Padded sabatons of bronze, tightly strapped together and padded with hide from a fearsome beaste. The sandals clack about, yet they do not feel obstructive; if anything, you've never felt more agile while beplated."
@@ -648,52 +626,3 @@
 	item_state = "hlegs"
 	body_parts_covered = LEGS|FEET
 	color = null
-
-/obj/item/clothing/shoes/roguetown/footwraps
-	name = "cloth footwraps"
-	desc = "Thickly-woven bandages that've been wrapped around the ankles to protect from any unwanted shattered teeth from sticking in your precious legs."
-	gender = PLURAL
-	icon_state = "footwraps"
-	sewrepair = TRUE
-	salvage_result = /obj/item/natural/cloth
-	var/atom/movable/holdingknife = null
-
-/obj/item/clothing/shoes/roguetown/footwraps/examine(mob/user)
-	. = ..()
-	if(holdingknife)
-		. += span_notice("There is a knife tucked into the side of the footwraps.")
-
-/obj/item/clothing/shoes/roguetown/footwraps/attackby(obj/item/W, mob/living/carbon/user, params)
-	if(istype(W, /obj/item/rogueweapon/huntingknife/throwingknife))
-		if(holdingknife == null)
-			for(var/obj/item/clothing/shoes/roguetown/footwraps/B in user.get_equipped_items(TRUE))
-				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))
-				user.transferItemToLoc(W, holdingknife)
-				holdingknife = W
-				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
-		else
-			to_chat(loc, span_warning("My boot already holds a knife."))
-		return
-	. = ..()
-
-/obj/item/clothing/shoes/roguetown/footwraps/attack_right(mob/user)
-	if(holdingknife != null)
-		if(!user.get_active_held_item())
-			user.put_in_active_hand(holdingknife, user.active_hand_index)
-			holdingknife = null
-			playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
-			return TRUE
-
-/obj/item/clothing/shoes/roguetown/footwraps/padded
-	name = "padded cloth footwraps"
-	desc = "Thickly-woven padded bandages wrapped about one's ankles to maintain mobility for climbing and kicking."
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-
-/obj/item/clothing/shoes/roguetown/footwraps/hleather
-	name = "hardened leather footwraps"
-	desc = "A cut down pair of boots maintaining most of the cover they'd normally offer with added comfort for those with inhumen anatomy."
-	icon_state = "footwraps_hleather"
-	salvage_result = /obj/item/natural/hide/cured
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_SIDE_HARDLEATHER

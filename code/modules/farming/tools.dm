@@ -65,15 +65,6 @@
 	color = "#bb9696"
 	sellprice = 15
 
-/obj/item/rogueweapon/thresher/bronze
-	name = "bronze thresher"
-	desc = "Threshed stalks beget grains to eat, and stricken grains beget seeds to grow. This cycle, humble as it is, is the sole reason why Psydonia's many inhabitants still lyve todae."
-	force = 15
-	force_wielded = 20
-	icon_state = "bronzethresh"
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = 300
-
 /obj/item/rogueweapon/thresher/blacksteel
 	name = "blacksteel thresher"
 	desc = "Hard work is only 'hard work' if you don't have the right tool for the job."
@@ -121,14 +112,6 @@
 	sellprice = 15
 	smeltresult = /obj/item/ingot/aaslag
 
-/obj/item/rogueweapon/sickle/bronze
-	name = "bronze sickle"
-	desc = "Wheat from the chaff, flesh from the bone. Carve a meal from the stalks, and cultivate your own kingdom upon the soil."
-	force = 15
-	icon_state = "bronzesickle"
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = 300
-
 /obj/item/rogueweapon/sickle/copper
 	name = "copper sickle"
 	icon_state = "csickle"
@@ -171,15 +154,6 @@
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
-
-/obj/item/rogueweapon/hoe/bronze
-	force = 15
-	force_wielded = 20
-	name = "bronze hoe"
-	desc = "Till the soil, so that it may receive your seed. Alongside the sickle and thresher, it forms the holy trinity of agriculturality. Don't ask about the pitchfork."
-	icon_state = "bronzehoe"
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = 300
 
 /obj/item/rogueweapon/hoe/copper
 	name = "copper hoe"
@@ -387,15 +361,6 @@
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 15
-
-/obj/item/rogueweapon/pitchfork/bronze
-	force = 15
-	force_wielded = 20
-	name = "bronze pitchfork"
-	desc = "'Ah, there you are! I tell you, the others simply do not appreciate the labors I pull to keep their hands clean. I'd like to see a hoe try to scoop a whole cart's worth of wheat on its own - see how that fares!'"
-	icon_state = "bronzepitchfork"
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = 300
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"

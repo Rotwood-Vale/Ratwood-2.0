@@ -66,7 +66,6 @@
 		"Potions",
 		"Weapons (Ranged)",
 		"Weapons (Iron and Shields)",
-		"Weapons (Bronze)",
 		"Weapons (Steel)",
 		"Weapons (Exotic)",
 	)

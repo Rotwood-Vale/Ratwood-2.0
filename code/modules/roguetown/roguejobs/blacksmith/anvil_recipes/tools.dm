@@ -13,11 +13,6 @@
 	req_bar = /obj/item/ingot/copper
 	craftdiff = SKILL_LEVEL_NOVICE
 
-/datum/anvil_recipe/tools/bronze
-	abstract_type = /datum/anvil_recipe/tools/bronze
-	req_bar = /obj/item/ingot/bronze
-	craftdiff = SKILL_LEVEL_NOVICE
-
 /datum/anvil_recipe/tools/iron
 	abstract_type = /datum/anvil_recipe/tools/iron
 	req_bar = /obj/item/ingot/iron
@@ -169,113 +164,6 @@
 	created_item = /obj/item/kitchen/spoon/decrepit
 	createditem_num = 3
 
-// ------- BRONZE -----------
-/datum/anvil_recipe/tools/bronze/thresher
-	name = "Thresher, Bronze (+1 Stick)"
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/thresher/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/hoe
-	name = "Hoe, Bronze (+2 Sticks)"
-	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hoe/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/pitchfork
-	name = "Pitchfork, Bronze (+2 Sticks)"
-	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/pitchfork/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/hammer
-	name = "Hammer, Bronze (+1 Stick)"
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/hammer/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/sickle
-	name = "Sickle, Bronze (+1 Stick)"
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/sickle/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/tongs
-	name = "Tongs, Bronze"
-	created_item = /obj/item/rogueweapon/tongs/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/pick
-	name = "Axepick, Bronze (+1 Stick, +1 Bronze)"
-	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/ingot/bronze)
-	created_item = /obj/item/rogueweapon/pick/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/shovel
-	name = "Shovel, Bronze (+2 Sticks)"
-	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/shovel/bronze
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/bronze/sewingneedle
-	name = "Needle, Bronze (x2)"
-	created_item = /obj/item/needle/bronze
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/pan
-	name = "Frypan, Bronze"
-	created_item = /obj/item/cooking/pan/bronze
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/pot
-	name = "Cooking Pot, Bronze"
-	created_item = /obj/item/reagent_containers/glass/bucket/pot/bronze
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/handsaw
-	name = "Handsaw, Bronze (+1 Stick)"
-	req_bar = /obj/item/ingot/bronze
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/rogueweapon/handsaw/bronze
-
-/datum/anvil_recipe/tools/bronze/chisel
-	name = "Chisel, Bronze"
-	created_item = /obj/item/rogueweapon/chisel/bronze
-
-/datum/anvil_recipe/tools/bronze/gobs
-	name = "Goblet, Bronze (x2)"
-	created_item = /obj/item/reagent_containers/glass/cup/bronzegob
-	createditem_num = 2
-
-/datum/anvil_recipe/tools/bronze/amugs
-	name = "Mug, Bronze (x2)"
-	created_item = /obj/item/reagent_containers/glass/cup/bronzemug
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/platter
-	name = "Platter, Bronze (x2)"
-	created_item = /obj/item/cooking/platter/bronze
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/bowl
-	name = "Bowl, Bronze"
-	created_item = /obj/item/reagent_containers/glass/bowl/bronze
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/fork
-	name = "Fork, Bronze (x2)"
-	created_item = /obj/item/kitchen/fork/bronze
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/bronze/spoon
-	name = "Spoon, Bronze (x2)"
-	created_item = /obj/item/kitchen/spoon/bronze
-	createditem_num = 2
-	craftdiff = 0
 
 // --------- IRON -----------
 

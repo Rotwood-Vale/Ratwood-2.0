@@ -6,31 +6,6 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
-/datum/supply_pack/rogue/light_armor/rough_headband
-	name = "Headband, Roughspun"
-	cost = 25 // 2 cloth + 5 fiber, added 7 for SF pricing
-	contains = list(/obj/item/clothing/head/roguetown/headband/monk/barbarian)
-
-/datum/supply_pack/rogue/light_armor/padded_headband
-	name = "Headband, Padded"
-	cost = 35 // 4 cloth + 4 fiber, added 10 for SF pricing
-	contains = list(/obj/item/clothing/head/roguetown/headband/monk)
-
-/datum/supply_pack/rogue/light_armor/padded_wrappings
-	name = "Arm Wrappings, Padded"
-	cost = 35 // 4 cloth + 4 fiber, same recipe cost as the padded headband
-	contains = list(/obj/item/clothing/wrists/roguetown/bracers/cloth/monk)
-
-/datum/supply_pack/rogue/light_armor/arming_cap
-	name = "Arming Cap"
-	cost = 20 // 1 cloth + 3 fiber, ditto
-	contains = list(/obj/item/clothing/head/roguetown/armingcap)
-
-/datum/supply_pack/rogue/light_armor/padded_arming_cap
-	name = "Arming Cap, Padded"
-	cost = 28 // 2 cloth + 5 fiber, ditto
-	contains = list(/obj/item/clothing/head/roguetown/armingcap/padded)
-
 /datum/supply_pack/rogue/light_armor/padded_gambeson
 	name = "Padded Gambeson"
 	cost = 40 // Base sellprice of 25
@@ -85,71 +60,6 @@
 	name = "Heavy Padded Coif"
 	cost = 35 // Equivalent to a padded gambeson on the head, so pricier
 	contains = list(/obj/item/clothing/neck/roguetown/coif/heavypadding)
-
-/datum/supply_pack/rogue/light_armor/paddedcoif
-	name = "Padded Coif"
-	cost = 26 // ditto
-	contains = list(/obj/item/clothing/neck/roguetown/coif/padded)
-
-/datum/supply_pack/rogue/light_armor/lightgambeson
-	name = "Gambeson, Light"
-	cost = 20 // these are actually really easy to make, and have far worse protection and integ than other gambersons.
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/light)
-
-/datum/supply_pack/rogue/light_armor/paddedchausses
-	name = "Chausses, Padded"
-	cost = 18
-	contains = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
-
-/datum/supply_pack/rogue/light_armor/heavypaddedchausses
-	name = "Chausses, Heavy Padded"
-	cost = 40
-	contains = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
-
-/datum/supply_pack/rogue/light_armor/paddedmittens
-	name = "Mittens, Padded"
-	cost = 15
-	contains = list(/obj/item/clothing/gloves/roguetown/cloth)
-
-/datum/supply_pack/rogue/light_armor/heavypaddedmittens
-	name = "Mittens, Heavy"
-	cost = 30
-	contains = list(/obj/item/clothing/gloves/roguetown/cloth/heavy)
-
-/datum/supply_pack/rogue/light_armor/paddedfootwraps
-	name = "Footwraps, Padded"
-	cost = 15 // 2 cloth + 1 fiber, same recipe cost as the padded mittens
-	contains = list(/obj/item/clothing/shoes/roguetown/footwraps/padded)
-
-/datum/supply_pack/rogue/light_armor/hleatherfootwraps
-	name = "Footwraps, Hardened Leather"
-	cost = 20 //same as hardened leather boots
-	contains = list(/obj/item/clothing/shoes/roguetown/footwraps/hleather)
-
-/datum/supply_pack/rogue/light_armor/light_arming_jacket
-	name = "Arming Jacket, Light"
-	cost = 28 // gamberson equiv that trades leg protection to be cheaper.
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/lord/light)
-
-/datum/supply_pack/rogue/light_armor/gambeson
-	name = "Gambeson"
-	cost = 32 // more expensive than clothes but not by a whole lot
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson)
-
-/datum/supply_pack/rogue/light_armor/arming_jacket
-	name = "Arming Jacket"
-	cost = 40 // gamberson equiv that trades leg protection and a third more price for 50 more integ (300 vs 250). Or padded gamberson that trades leg protection for being a third cheaper, to look at it another way.
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/lord)
-
-/datum/supply_pack/rogue/light_armor/padded_gambeson
-	name = "Gambeson, Padded"
-	cost = 60 // Base sellprice of 25
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
-
-/datum/supply_pack/rogue/light_armor/padded_arming_jacket
-	name = "Arming Jacket, Padded"
-	cost = 75 // padded gambeson equiv. that trades leg protection for 75 more integ (375 vs 300), touch pricier.
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy)
 
 /datum/supply_pack/rogue/light_armor/reinforced_hood
 	name = "Reinforced Hood"

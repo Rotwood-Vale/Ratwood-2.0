@@ -25,19 +25,11 @@
 	clickcd = 9
 	damfactor = 1
 
-/datum/intent/sword/cut/light
-	damfactor = 0.9
-
 /datum/intent/sword/chop/militia
 	penfactor = 50
 	chargetime = 0.5
 	swingdelay = 0
 	damfactor = 1.0
-
-/datum/intent/sword/chop/heavy
-	penfactor = 50
-	swingdelay = 6
-	damfactor = 1.3
 
 /datum/intent/sword/thrust
 	name = "stab"
@@ -60,23 +52,9 @@
 	clickcd = 10 // Less than rapier
 	penfactor = 35 // 22 + 35 = 57. Beats light leather slightly more than rapier per strike, but less strike
 
-/datum/intent/sword/thrust/heavy
-	name = "heavy thrust"
-	icon_state = "inlunge"
-	penfactor = 60
-	damfactor = 1.3
-	swingdelay = 0.9 SECONDS
-
 /datum/intent/sword/thrust/long
 	penfactor = 30 // 2h Longsword already have 30 damage. This let it pierce light armor easily
 	// Their cut is actually pretty decent when 2handed and should be inferior to zwei.
-
-/datum/intent/sword/thrust/long/deep
-	name = "deep lunge"
-	icon_state = "inlunge"
-	penfactor = 50
-	damfactor = 1.2
-	swingdelay = 0.6 SECONDS
 
 /datum/intent/sword/thrust/krieg
 	damfactor = 0.9
@@ -161,10 +139,6 @@
 	damfactor = 1.2
 	clickcd = 10
 
-/datum/intent/sword/chop/sabre
-	damfactor = 1.15
-	penfactor = 40
-
 /datum/intent/sword/thrust/krieg
 	damfactor = 0.8
 
@@ -175,10 +149,6 @@
 /datum/intent/rend/krieg/short
 	damfactor = 1.8
 	swingdelay = 2
-
-/datum/intent/rend/apophis
-	damfactor = 2.2
-	intent_intdamage_factor = 0.2
 
 //sword objs ฅ^•ﻌ•^ฅ
 
@@ -247,14 +217,15 @@
 /obj/item/rogueweapon/sword/bronze
 	name = "bronze arming sword"
 	desc = "A long bronze blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations - and this implement is the grandfather of them all. Though it lacks the gladii's girth, this arming sword still feels well-balanced for one-handed use."
-	icon_state = "bronzesword"
+	icon_state = "sword3"
 	force = 23 //Iron- and steel arming swords have the same force. +2 to mimic the one-handed nature of bronze swords.
 	force_wielded = 25
+	color = "#f9d690"
 	minstr = 5
 	smeltresult = /obj/item/ingot/bronze
 	max_blade_int = 250
 	max_integrity = 125
-	sheathe_icon = "bronzesword" //Placeholder. Close enough.
+	sheathe_icon = "decsword1" //Placeholder. Close enough.
 
 /obj/item/rogueweapon/sword/falx
 	name = "falx"
@@ -338,44 +309,6 @@
 	wdefense_wbonus = 4
 	smeltresult = /obj/item/ingot/steel
 	special = /datum/special_intent/side_sweep
-
-/obj/item/rogueweapon/sword/long/broadsword
-	name = "broadsword"
-	desc = "A lethal and well-balanced weapon. The broadsword - better known as a 'hand-and-a-halfer' - has dutifully served the \
-	swordsmen of Psydonia in their clashes against man-and-monster alike since time immemmorial. It is one of Rockhill's greatest \
-	cultural hallmarks, just behind the concepts of 'zenny-a-mug' happy hours and 'killing people over minor disagreements.'"
-	icon_state = "broadsword"
-	sheathe_icon = "broadsword"
-	swingsound = BLADEWOOSH_HUGE
-	max_blade_int = 230 //Less of an edge than the longsword..
-	max_integrity = 180 //..but tougher.
-	wdefense_wbonus = 3 // Same defense when one-handed, but slightly reduced wielded defense compared to the longsword.
-	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
-	smeltresult = /obj/item/ingot/iron //Sidegrade of the longswords and battle axes - non-blunt attacks hit harder, but are always telegraphed and swing-delayed.
-
-/obj/item/rogueweapon/sword/long/broadsword/bronze
-	name = "spatha"
-	desc = "A hero needn't speak - for when they are gone, the world will speak for them."
-	icon_state = "spatha"
-	sheathe_icon = "gladius"
-	wdefense = 3 //On par with the Gladius, as the Spatha is.. essentially.. a longer Gladius. Lowest WDEF of all longswords.
-	wdefense_wbonus = 3
-	max_blade_int = 295 //Inverse. Sharper..
-	max_integrity = 125 //..but weaker.
-	smeltresult = /obj/item/ingot/bronze //Like before, it falls under the unofficial 'broadsword' category with one-handed chops. Best to pack a shield!
-
-/obj/item/rogueweapon/sword/long/broadsword/steel
-	name = "steel broadsword"
-	desc = "A lethal and well-balanced weapon. The broadsword - better known as a 'hand-and-a-halfer' - has dutifully served the \
-	swordsmen of Psydonia in their clashes against man-and-monster alike since time immemmorial. Valoria's watchmen are renowned for \
-	their use of these steel-bladed iterations: an expensive necessity, in order to lay their undying besiegers to rest for good."
-	icon_state = "sbroadsword"
-	sheathe_icon = "sbroadsword"
-	max_blade_int = 330 //Sharper than a longsword, but with reduced defense. The use of steel balances its integrity out with a slight +10 bonus.
-	max_integrity = 160 
-	wdefense_wbonus = 3
-	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/sword/long/training
 	name = "training sword"
@@ -978,39 +911,6 @@
 		added_def = 2,\
 	)
 
-/obj/item/rogueweapon/sword/long/greatkhopesh
-	name = "apophis" //Kriegmesser analogue.
-	desc = "The Khopesh's older brother. One would be mistaken for thinking it was designed to be wielded in both hands; for the strength of these \
-	ancient legionnaires, prodigious as it were, allowed them to effortlessly wield it alongside their towering greatshields."
-	wdefense = 3
-	wdefense_wbonus = 2
-	force = 22
-	force_wielded = 25
-	possible_item_intents = list(/datum/intent/sword/chop/sabre, /datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre)
-	gripped_intents = list(/datum/intent/rend/apophis, /datum/intent/sword/chop/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
-	max_integrity = 150
-	max_blade_int = 300
-	wbalance = WBALANCE_NORMAL
-	minstr = 11
-	sheathe_icon = "decgladius"
-	icon_state = "bronzegreatkhopesh"
-	item_state = "bronzegreatkhopesh"
-	smeltresult = /obj/item/ingot/bronze
-
-/obj/item/rogueweapon/sword/long/greatkhopesh/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.5,"sx" = -14,"sy" = -8,"nx" = 15,"ny" = -7,"wx" = -10,"wy" = -5,"ex" = 7,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -13,"sturn" = 110,"wturn" = -60,"eturn" = -30,"nflip" = 1,"sflip" = 1,"wflip" = 8,"eflip" = 1)
-			if("onback")
-				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 5,"sy" = -2,"nx" = -6,"ny" = -2,"wx" = -6,"wy" = -2,"ex" = 7,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -28,"sturn" = 29,"wturn" = -35,"eturn" = 32,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-
 /obj/item/rogueweapon/sword/short
 	name = "steel shortsword"
 	desc = "The arming sword's shorter and much older brother. Despite being centuries older than the swords of todae, it remains in use as a cheap sidearm for shieldbearers and archers."
@@ -1076,13 +976,10 @@
 
 /obj/item/rogueweapon/sword/short/gladius
 	name = "gladius"
-	desc = "A hefty blade of bronze, sharp enough to disembowel and decapitate with-but a lone hand's force. Psydonia's ancient champions drove back the \
-	Archdevil's hordes with these shortswords, a thousand years ago; yet now, the end has crept forth to threaten lyfe once more. Move with the grace of \
-	your ancestors - spread your feet, brace your grasp, and make them bleed for every step they take."
+	desc = "A bronze short sword with a slightly wider end, and no guard. Best used together with a shield, thrusted directly into your enemy's guts."
 	icon_state = "gladius"
 	sheathe_icon = "gladius"
-	max_integrity = 250
-	max_blade_int = 300
+	max_integrity = 200
 	smeltresult = /obj/item/ingot/bronze
 	wdefense = 3
 
@@ -1091,27 +988,6 @@
 	desc = "A polished shortsword, forged from gilbranze. Favored by ZIZO's undying legionnaires, this antiquated tool serves a simple purpose; to spill the innards of unenlightened fools."
 	icon_state = "agladius"
 	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/rogueweapon/sword/short/gladius/decorated
-	name = "decorated gladius"
-	desc = "A beautiful depiction of justice, beflowered and besilked. The crimson engravings along its blade pay tribute to the ancient epics of Ravox's \
-	ascent to godlihood; for it was His wounding of the Sinistar's tentacled heart that forced the Archdevil to pause - first in disbelief, then in fascination."
-	icon_state = "gladiusdec"
-	sheathe_icon = "decgladius"
-	max_integrity = 300
-	smeltresult = /obj/item/ingot/gold
-	wdefense = 5
-
-/obj/item/rogueweapon/sword/sabre/bronzekhopesh
-	name = "khopesh"
-	desc = "A sickle-shaped sword of Naledi origin that owes its design to a type of battle axe its ancient settlers once used - it represents a symbol \
-	of power and conquest. The glint along its bronzen edge shifts with every passing glance, yearning to be dulled-wet with the blood of long-extinct villains."
-	icon_state = "bronzekhopesh"
-	force = 22
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/chop/falx)
-	max_integrity = 175
-	max_blade_int = 300
-	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/rogueweapon/sword/short/gladius/ancient/decrepit
 	name = "decrepit gladius"
@@ -1232,20 +1108,6 @@
 	minstr = 4
 	wdefense = 2
 	smeltresult = /obj/item/ingot/copper
-
-/obj/item/rogueweapon/sword/short/messer/bronze
-	name = "makhaira"
-	desc = "A heavy shortsword of similar design to the Kopis, fit for cleaving through both foliage and flesh. </br>Infamous for its \
-	presence amongst the gladitorial arenas of Lirvas and Raneshen, where gashes provide the kind of crimson spectacle that liqour-addled \
-	crowds adore the most."
-	icon_state = "makhaira"
-	minstr = 6
-	wdefense = 3
-	wlength = WLENGTH_NORMAL
-	w_class = WEIGHT_CLASS_NORMAL
-	smeltresult = /obj/item/ingot/bronze
-	max_integrity = 150
-	sheathe_icon = "kopis"
 
 /obj/item/rogueweapon/sword/short/messer/blacksteel
 	name = "blacksteel messer"

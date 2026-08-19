@@ -131,26 +131,3 @@
 	body_parts_covered = HANDS|ARMS
 	// sleeved = FALSE
 	color = null
-
-/obj/item/clothing/gloves/roguetown/cloth
-	name = "padded mittens"
-	desc = "A pair of gloves, quilted from cloth. Warmth for the pilgrim, reassurance for the laborer, and protection for the militiaman."
-	icon_state = "paddedmitts"
-	armor = ARMOR_PADDED
-	max_integrity = ARMOR_INT_LEG_LEATHER
-	blocksound = SOFTUNDERHIT
-	break_sound = 'sound/foley/cloth_rip.ogg'
-	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
-	unarmed_bonus = 1.1
-	salvage_result = /obj/item/natural/cloth
-	cold_protection = HAND_LEFT | HAND_RIGHT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-
-/obj/item/clothing/gloves/roguetown/cloth/heavy
-	name = "heavy padded mittens"
-	desc = "A pair of heavy gloves, quilted from cloth. Warmth for the pilgrim, reassurance for the laborer, and protection for the militiaman."
-	icon_state = "paddedmitts"
-	armor = ARMOR_PADDED_GOOD
-	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
