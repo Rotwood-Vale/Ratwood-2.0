@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		return
-	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
+	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
@@ -341,6 +341,26 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 // FLESH CRAFTING
 /datum/ritual/fleshcrafting
 	abstract_type = /datum/ritual/fleshcrafting
+
+/datum/ritual/fleshcrafting/gutted
+	name = "Gutted Fish"
+	center_requirement = /mob/living/carbon/human // One to be gutted.human
+
+/datum/ritual/fleshcrafting/gutted/invoke(mob/living/user, turf/center)
+	var/mob/living/carbon/human/target = locate() in center.contents
+	if(!target)
+		return
+	if(target.stat != DEAD)
+		return
+	if(target.mind)
+		return
+	center.visible_message(span_danger("[target] is lifted up into the air and multiple scratches, incisions and deep cuts start etching themselves into their skin as all of their internal organs spill on the floor below!"))
+	var/atom/drop_location = target.drop_location()
+	for(var/obj/item/organ/organ as anything in target.internal_organs)
+		organ.Remove(target)
+		organ.forceMove(drop_location)
+	for(var/obj/item/bodypart/part as anything in target.bodyparts)
+		part.drop_limb()
 
 /datum/ritual/fleshcrafting/bunnylegs
 	name = "Saliendo Pedes"
