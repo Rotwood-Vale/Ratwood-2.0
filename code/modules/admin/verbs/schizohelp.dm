@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 	. = ..()
 	if(owner)
 		src.owner = owner
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_qdeleted))
+		RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(owner_qdeleted))
 	GLOB.schizohelps += src
 	if(timeout)
 		QDEL_IN(src, timeout)
@@ -116,5 +116,5 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 /datum/schizohelp/proc/owner_qdeleted(mob/source)
 	if(QDELETED(src))
 		return
-	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(owner, COMSIG_QDELETING)
 	qdel(src)
