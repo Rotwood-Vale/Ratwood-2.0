@@ -907,9 +907,9 @@ There are several things that need to be remembered:
 						mbeltoverlaydildo.pixel_y = mbeltoverlay.pixel_y
 						standing_front += mbeltoverlaydildo
 
-	var/mutable_appearance/modular_chastity_overlay = modular_chastity_attached_toy_overlay()
-	if(modular_chastity_overlay)
-		standing_front += modular_chastity_overlay
+	var/mutable_appearance/chastity_overlay = chastity_attached_toy_overlay()
+	if(chastity_overlay)
+		standing_front += chastity_overlay
 
 	overlays_standing[BELT_LAYER] = standing_front
 	overlays_standing[BELT_BEHIND_LAYER] = standing_behind

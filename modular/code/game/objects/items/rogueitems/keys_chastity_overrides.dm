@@ -17,7 +17,7 @@
  *   It still benefits from the user's lockpicking skill and can shatter on a failed attempt.
  *   Skill XP is awarded the same way — the arcyne merely shapes the tool, the hand still works it.
  */
-/obj/item/roguekey/lord/proc/modular_chastity_attack(mob/M, mob/user, def_zone)
+/obj/item/roguekey/lord/proc/chastity_attack(mob/M, mob/user, def_zone)
 	if(!ishuman(M))
 		return null
 
@@ -54,7 +54,7 @@
 
 	return TRUE
 
-/obj/item/lockpick/proc/modular_chastity_attack(mob/M, mob/user, def_zone)
+/obj/item/lockpick/proc/chastity_attack(mob/M, mob/user, def_zone)
 	if(!ishuman(M))
 		return null
 	if(!ishuman(user))
@@ -128,7 +128,7 @@
 
 /**
  * Chastity picking logic for the spectral lockpick created by the Lesser Knock spell.
- * Behaves identically to /obj/item/lockpick/proc/modular_chastity_attack:
+ * Behaves identically to /obj/item/lockpick/proc/chastity_attack:
  * - Skill and perception govern pick time and success chance, scaled by picklvl (0.99).
  * - A failed attempt can shatter the spectral pick (take_damage → destroy via max_integrity).
  * - Hard mode is blocked upfront and re-validated post-do_after.
@@ -136,7 +136,7 @@
  * The attack() hook in keys.dm routes here before falling through to the touch_attack dispel logic,
  * so targeting a chastity-device wearer picks the lock; targeting anything else dispels the spell.
  */
-/obj/item/melee/touch_attack/lesserknock/proc/modular_chastity_attack(mob/M, mob/user, def_zone)
+/obj/item/melee/touch_attack/lesserknock/proc/chastity_attack(mob/M, mob/user, def_zone)
 	if(!ishuman(M))
 		return null
 	if(!ishuman(user))

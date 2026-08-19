@@ -2,8 +2,8 @@
 /// Checks both user and action_target for a chastity device — whichever has one produces the sound.
 /// Probability scales with action speed. Volume scales with sex force tier (MID→HIGH→EXTREME).
 /// Returns TRUE always (used as a callback hook, not a gate).
-/datum/sex_controller/proc/modular_chastitycourse_noise(mob/living/carbon/human/action_target)
-	if(!user || QDELETED(user) || !istype(user))
+/datum/sex_controller/proc/chastitycourse_noise(mob/living/carbon/human/action_target)// for actions that involve moving a chastity device. Chance increases with force and speed.
+	if(!istype(user) || QDELING(user))
 		return TRUE
 	if(force < SEX_FORCE_MID)
 		return TRUE
@@ -41,24 +41,6 @@
 	if(!HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
 		return FALSE
 	if(!user.has_flaw(/datum/charflaw/addiction/masochist))
-		return FALSE
-	return TRUE
-
-/// Returns TRUE if chastity content (flavor text, noise, arousal messages) is enabled for mob H.
-/// Offline/NPC mobs (no client/prefs) default to TRUE so automated procs don't silently break.
-/datum/sex_controller/proc/modular_chastity_content_enabled_for(mob/living/carbon/human/H)
-	if(!H)
-		return FALSE
-	if(!H.client?.prefs)
-		return TRUE
-	return !!H.client.prefs.chastenable
-
-/// Returns TRUE if chastity content is enabled for BOTH user and target in this sex controller.
-/// Short-circuits on first failure — call before any chastity flavor dispatch that involves both parties.
-/datum/sex_controller/proc/modular_chastity_content_enabled_for_pair()
-	if(!modular_chastity_content_enabled_for(user))
-		return FALSE
-	if(target && target != user && !modular_chastity_content_enabled_for(target))
 		return FALSE
 	return TRUE
 
@@ -228,7 +210,7 @@
 	return TRUE
 
 /// Returns TRUE if at least one party (user or action_target) has an active chastity device.
-/// Used by sex action procs to decide whether to call modular_chastitycourse_noise()
+/// Used by sex action procs to decide whether to call chastitycourse_noise()
 /// rather than unconditionally playing a metal-rattle sound for non-chastity participants.
 /datum/sex_controller/proc/modular_should_play_chastitycourse_noise(mob/living/carbon/human/action_target)
 	if(user?.chastity_device || action_target?.chastity_device)
