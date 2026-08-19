@@ -33,6 +33,8 @@
 		"Absolver",
 		"Archivist",
 		"Court Magician",
+		"Wretch",
+		"Bandit",
 	)
 
 	typepath = /datum/round_event/antagonist/solo/zizo_cult
