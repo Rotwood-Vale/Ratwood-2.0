@@ -709,11 +709,6 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 
-/datum/anvil_recipe/armor/steel/heavyaventailbascinet
-	name = "Visored Bascinet, Aventailed, Steel (+2 Steel, +1 Cured Leather)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/hide/cured)
-	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/aventail
-
 /datum/anvil_recipe/armor/steel/helmetknight
 	name = "Knight's Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
