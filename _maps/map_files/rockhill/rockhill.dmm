@@ -88574,7 +88574,7 @@
 "tsl" = (
 /obj/structure/lever{
 	name = "Harbor Entrance";
-	redstone_id = "smith_harbor";
+	redstone_id = "guild_harbor";
 	pixel_y = 20;
 	pixel_x = 5
 	},
