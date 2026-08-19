@@ -61,7 +61,6 @@
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	nudist_approved = TRUE
-	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
 //	block2add = FOV_BEHIND
@@ -234,7 +233,7 @@
 	blocksound = SOFTHIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	max_integrity = ARMOR_INT_MASK_CLOTH
+	max_integrity = 200
 	prevent_crits = list(BCLASS_BLUNT)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEEARS
@@ -255,7 +254,7 @@
 	name = "strange mask"
 	desc = "It is said that the original version of this mask was used for obscure rituals prior to the fall of the Empire of the Holy Celestia, and now it has been repurposed as a veil for the cunning hand of the Otavan Orthodoxy.<br> <br>Others say it is a piece of heresy, a necessary evil, capable of keeping its user safe from left-handed magicks. You can taste copper whenever you draw breath."
 	icon_state = "confessormask"
-	max_integrity = ARMOR_INT_MASK_STEEL
+	max_integrity = 200
 	equip_sound = 'sound/items/confessormaskon.ogg'
 	smeltresult = /obj/item/ingot/steel
 	var/worn = FALSE
@@ -326,7 +325,7 @@
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	max_integrity = ARMOR_INT_MASK_IRON
+	max_integrity = 100
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -341,7 +340,7 @@
 /obj/item/clothing/mask/rogue/facemask
 	name = "iron mask"
 	icon_state = "imask"
-	max_integrity = ARMOR_INT_MASK_IRON
+	max_integrity = 100
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -392,34 +391,8 @@
 	name = "copper mask"
 	icon_state = "cmask"
 	desc = "A heavy copper mask that conceals and protects the face, though not very effectively."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE_BAD
 	smeltresult = /obj/item/ingot/copper
-
-/obj/item/clothing/mask/rogue/facemask/bronze
-	name = "bronze mask"
-	desc = "Glimmering bronze, curved to veil its wearer's face from both judgement and harm."
-	armor = ARMOR_BRONZE
-	armor_class = ARMOR_CLASS_LIGHT
-	icon_state = "bronzemask"
-	item_state = "bronzemask"
-	max_integrity = ARMOR_INT_MASK_BRONZE
-	smeltresult = /obj/item/ingot/bronze
-
-/obj/item/clothing/mask/rogue/facemask/bronze/classic
-	name = "bronze death mask"
-	icon_state = "bronzemask_legacy"
-	item_state = "bronzemask_legacy"
-	desc = "Glimmering bronze, meticuliusly shaped to mimic the guise of another. One of civilization's oldest superstitions is the belief that donning such masks would impart a sliver of the mimicked facebearer's power unto its wearer."
-
-/obj/item/clothing/mask/rogue/facemask/bronze/anthro
-	name = "bronze mask"
-	icon_state = "bronzemask_snout"
-	item_state = "bronzemask_snout"
-
-/obj/item/clothing/mask/rogue/facemask/bronze/classic/anthro
-	name = "bronze death mask"
-	icon_state = "bronzemask_legacy_snout"
-	item_state = "bronzemask_legacy_snout"
 
 /obj/item/clothing/mask/rogue/facemask/hound
 	name = "hound mask"
@@ -507,7 +480,7 @@
 /obj/item/clothing/mask/rogue/facemask/steel
 	name = "steel mask"
 	icon_state = "smask"
-	max_integrity = ARMOR_INT_MASK_STEEL
+	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
@@ -518,7 +491,7 @@
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman
 	name = "steppesman war mask"
 	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
-	max_integrity = ARMOR_INT_MASK_STEEL + 50
+	max_integrity = 250
 	icon_state = "steppemask"
 	layer = HEAD_LAYER
 
@@ -527,10 +500,22 @@
 	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
 	icon_state = "steppemask_snout"
 
+/obj/item/clothing/mask/rogue/facemask/steel/steppesman
+	name = "steppesman war mask"
+	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	max_integrity = 250
+	icon_state = "steppemask"
+	layer = HEAD_LAYER
+
+/obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro
+	name = "steppesman beast mask"
+	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
+	icon_state = "steppebeast"
+
 /obj/item/clothing/mask/rogue/facemask/goldmask
 	name = "Gold Mask"
 	icon_state = "goldmask"
-	max_integrity = ARMOR_INT_MASK_GOLD
+	max_integrity = 150
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
 
@@ -548,15 +533,13 @@
 	name = "soldier's half-mask"
 	desc = "\"The first lesson of war is that it would be better to live in peace.\""
 	block2add = null
-	armor = ARMOR_PLATE
-	max_integrity = ARMOR_INT_MASK_IRON
+	armor = ARMOR_PLATE_BAD // because it's only half
 	icon_state = "kazengunmouthguard"
 	item_state = "kazengunmouthguard"
 
 /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
 	name = "ogre mask"
 	desc = "\"The second lesson: Rich men have dreams. Poor men die to make them come true.\""
-	max_integrity = ARMOR_INT_MASK_IRON
 	icon_state = "kazengunfaceguard"
 	item_state = "kazengunfaceguard"
 
@@ -608,7 +591,7 @@
 	name = "skull mask"
 	desc = "A mask in the shape of a skull, designed to terrify."
 	icon_state = "skullmask"
-	max_integrity = ARMOR_INT_MASK_BONE
+	max_integrity = 100
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
@@ -655,7 +638,7 @@
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Armored to protect the wearer's face."
-	max_integrity = ARMOR_INT_MASK_IRON
+	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -666,7 +649,7 @@
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "A golden mask, gnarled by the sustained agonies of djinnic corruption; yet as long as its Naledian hexes endure, so too will its wearer. Hand-fitted shingles flank the sides to repel incoming strikes. </br>'..Clad with the stereotype of abruptly disappearing without any forewarning, the typical Sojourner is in constant pursuit of diversifying their erudition. One might arrive to learn the local witch's recipe of sanctifying atropa extract and spend yils in the community trying to master it, while another might work alongside the region's Orthodoxic chapter to slay a lycker lord in exchange for his archive, only to vanish the very next day..'"
-	max_integrity = ARMOR_INT_MASK_IRON + 50
+	max_integrity = 150
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -678,7 +661,7 @@
 	icon_state = "zizomask"
 	desc = "To advance, at any cost."
 	alternate_worn_layer = HOOD_LAYER
-	max_integrity = ARMOR_INT_MASK_IRON + 50
+	max_integrity = 150
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -742,7 +725,7 @@
 	name = "carved mask"
 	icon_state = "ancientmask"
 	desc = "You shouldn't be seeing this."
-	max_integrity = ARMOR_INT_MASK_STONE
+	max_integrity = 50
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -817,7 +800,7 @@
 	item_state = "xylixmask"
 	icon_state = "xylixmask"
 	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
-	max_integrity = ARMOR_INT_MASK_STONE
+	max_integrity = 50
 	armor = null
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
@@ -924,122 +907,3 @@
 	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
 	. += span_notice("Shift+MMB toggles identity concealment.")
 	. += span_notice("When using the harlequin styles: Right-click to honk.")
-
-// Duelist Goggles = New invention that protects your eyes against critical hits +  doesn't hide your identity
-
-/obj/item/clothing/mask/rogue/spectacles/duelist
-	name = "iron duelist goggles"
-	desc = "A rigid pair of protective goggles made for fencing bouts, shielding the eyes without concealing the face."
-	icon_state = "iduelist"
-	break_sound = "garrote_snap"
-	blocksound = PLATEHIT
-	max_integrity = 125 //more durability due to less covered areas in compairson to a mask
-	body_parts_inherent = EYES//no peeling these
-	armor = ARMOR_PLATE
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ash
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/steel
-	name = "steel duelist goggles"
-	desc = "Steel duelist goggles forged for the most punishing exchanges. They guard the eyes while leaving pride and identity uncovered."
-	icon_state = "sduelist"
-	max_integrity = 150
-
-/obj/item/clothing/mask/rogue/spectacles/duelist/bronze
-	name = "bronze duelist goggles"
-	desc = "Bronze duelist goggles offering modest protection without obscuring one's features. Every victory deserves a witness."
-	icon_state = "bduelist"
-	max_integrity = 125
-
-// PADDED MASKS, pretty much like the sack mask except is looking PRETTIER + has a state that's rolled down to show your identity.
-
-/obj/item/clothing/mask/rogue/facemask/padded
-	name = "padded mask"
-	desc = "A padded cloth mask with a visor, it will prevent bad smells more than damage."
-	icon_state = "gambesonmask"
-	blocksound = SOFTHIT
-	break_sound = 'sound/foley/cloth_rip.ogg'
-	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	max_integrity = ARMOR_INT_MASK_CLOTH
-	armor = ARMOR_PADDED
-	adjustable = CAN_CADJUST
-	sewrepair = TRUE
-	salvage_result = /obj/item/natural/fibers
-	salvage_amount = 1
-	smeltresult = /obj/item/ash
-
-/obj/item/clothing/mask/rogue/facemask/padded/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/facemask/leather
-	name = "padded leather mask"
-	desc = "A padded leather mask with a visor, it will prevent bad smells and some damage."
-	icon_state = "leathermask"
-	blocksound = SOFTHIT
-	break_sound = 'sound/foley/cloth_rip.ogg'
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	max_integrity = ARMOR_INT_MASK_LEATHER //slightly more durable than the padded mask
-	armor = ARMOR_LEATHER
-	adjustable = CAN_CADJUST
-	sewrepair = TRUE
-	salvage_result = /obj/item/natural/hide/cured
-	salvage_amount = 1
-	smeltresult = /obj/item/ash
-
-/obj/item/clothing/mask/rogue/facemask/leather/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-//chainmaille masks = pretty much like a normal mask except is made to protect against cutting damage instead of blunt damage.
-
-/obj/item/clothing/mask/rogue/facemask/maille
-	name = "iron chainmaille mask"
-	desc = "A padded chainmaille mask that will protect against some damage and can be rolled down to show your identity."
-	icon_state = "imaillemask"
-	blocksound = CHAINHIT
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	max_integrity = ARMOR_INT_MASK_IRON_MAILLE
-	armor = ARMOR_MAILLE
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-
-/obj/item/clothing/mask/rogue/facemask/maille/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/facemask/steel/maille
-	name = "steel chainmaille mask"
-	desc = "A padded chainmaille mask that will protect against some damage and can be rolled down to show your identity."
-	icon_state = "smaillemask"
-	blocksound = CHAINHIT
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	max_integrity = ARMOR_INT_MASK_STEEL_MAILLE //maille's get less defense but more durability than fullplate masks
-	armor = ARMOR_MAILLE
-	adjustable = CAN_CADJUST
-	toggle_icon_state = TRUE
-
-/obj/item/clothing/mask/rogue/facemask/steel/maille/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/facemask/steel/maille/fluted
-	name = "steel fluted chainmaille mask"
-	desc = "A padded chainmaille mask that will protect against some damage and can be rolled down to show your identity. The fluted design is meant to deflect blows and increase durability."
-	icon_state = "sflutedmask"
-
-/obj/item/clothing/mask/rogue/facemask/steel/maille/fluted/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
-
-/obj/item/clothing/mask/rogue/facemask/maille/fluted
-	name = "iron fluted chainmaille mask"
-	desc = "A padded chainmaille mask that will protect against some damage and can be rolled down to show your identity. The fluted design is meant to deflect blows and increase durability."
-	icon_state = "iflutedmask"
-
-/obj/item/clothing/mask/rogue/facemask/maille/fluted/ComponentInitialize()
-	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask

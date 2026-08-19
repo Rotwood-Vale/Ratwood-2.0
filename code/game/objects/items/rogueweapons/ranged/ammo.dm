@@ -23,13 +23,6 @@
 	max_integrity = 10
 	force = 10
 
-/obj/item/ammo_casing/caseless/rogue/bolt/bronze
-	name = "bronze bolt"
-	desc = "Bronze and wood, fitted by-hand to fashion a bolt's fuselage. The \
-	design, perfected over a millennium of trial-and-error, sails with tremendous haste."
-	icon_state = "bronzebolt"
-	projectile_type = /obj/projectile/bullet/reusable/bolt/bronze
-
 /obj/item/ammo_casing/caseless/rogue/bolt/ancient
 	name = "ancient bolt"
 	desc = "An ancient bolt, tipped with polished gilbranze. The razor-thin tip resembles a sabot more than an arrowhead; something that most alloys cannot reliably withstand."
@@ -74,14 +67,6 @@
 	flag = "piercing"
 	speed = 0.5
 	npc_simple_damage_mult = 2
-
-/obj/projectile/bullet/reusable/bolt/bronze
-	damage = 70
-	armor_penetration = 40
-	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/bronze
-	icon_state = "bronzebolt_proj"
-	npc_simple_damage_mult = 3
-	speed = 0.15
 
 /obj/projectile/bullet/reusable/bolt/decrepit
 	damage = 40
@@ -175,13 +160,6 @@
 	on impact with armor."
 	max_integrity = 5
 	projectile_type = /obj/projectile/bullet/reusable/arrow/stone
-
-/obj/item/ammo_casing/caseless/rogue/arrow/bronze
-	name = "bronze flight arrow"
-	icon_state = "bronzearrow"
-	desc = "Bronze, quenched and batonned onto a feathered stick. The stories scribed along its imperfect edge could fill a hundred tomes; lost to antiquity, but remembered through sheer generational instinct."
-	max_integrity = 8
-	projectile_type = /obj/projectile/bullet/reusable/arrow/bronze
 
 /obj/item/ammo_casing/caseless/rogue/arrow/iron
 	name = "iron broadhead arrow"
@@ -286,16 +264,6 @@
 /obj/projectile/bullet/reusable/arrow/steel/ancient
 	name = "ancient bodkin arrow"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient
-
-/obj/projectile/bullet/reusable/arrow/bronze
-	name = "bronze flight arrow"
-	ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow/bronze
-	icon_state = "bronzearrow_proj"
-	damage = 50
-	armor_penetration = 0
-	embedchance = 70
-	npc_simple_damage_mult = 3 //More damage over simplemobs!
-	speed = 0.15 // Faster!
 
 /obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
 	name = "blacksteel arrow"
@@ -696,17 +664,6 @@
 	color = "#bb9696"
 	anvilrepair = null
 
-/obj/item/ammo_casing/caseless/rogue/javelin/bronze
-	name = "bronze javelin"
-	desc = "A tool used for centuries, as early as recorded history. This one is tipped with a bronze head, wide and serrated - a death knell to the unarmored, and a staggering wound to the beplated."
-	icon_state = "bjavelin"
-	force = 20
-	throwforce = 36	//Devastating against unarmored foes, but with nearly halved armor penetration.
-	armor_penetration = 20
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 80, "embedded_fall_chance" = 5)
-	thrown_bclass = BCLASS_PICK
-	smeltresult = null // 1 Ingot = 2 Javelins
-
 /obj/item/ammo_casing/caseless/rogue/javelin/silver
 	name = "silver javelin"
 	desc = "A tool used for centuries, as early as recorded history. This one appears to be tipped with a silver head. Decorative, perhaps.. or for some sort of specialized hunter."
@@ -773,7 +730,9 @@
 	name = "bronze sling bullet"
 	desc = "A small bronze sphere. It feels deceptively heavy in the palm of your hand."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/bronze
-	icon_state = "bronze_sling_bullet"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "stone_sling_bullet"
+	color = "#f9d690"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/decrepit
 	name = "decrepit sling bullet"
@@ -876,7 +835,7 @@
 	armor_penetration = 20 //Slightly more damage, but with -33% AP.
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "bronzeslingbullet_proj"
+	icon_state = "musketball_proj"
 
 /obj/projectile/bullet/reusable/sling_bullet/decrepit
 	name = "decrepit sling bullet"
