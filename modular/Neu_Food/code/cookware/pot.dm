@@ -60,12 +60,6 @@
 	volume = 120
 	color = "#bb9696"
 
-/obj/item/reagent_containers/glass/bucket/pot/bronze
-	name = "bronze pot"
-	desc = "A cauldron of bronze, aching to churn water and chopmealings into a champion's broth. It can hold a lot of liquid."
-	icon_state = "bronzepot"
-	sellprice = 30
-
 /obj/item/reagent_containers/glass/bucket/pot/stone
 	name = "stone pot"
 	desc = "A pot made out of stone. It can hold less than a metal pot."

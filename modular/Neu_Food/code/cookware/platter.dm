@@ -124,12 +124,6 @@ What it does:
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	sellprice = 8
 
-/obj/item/cooking/platter/bronze
-	name = "bronze platter"
-	desc = "A shined bronze platter that hasn't lost its charm, even after a thousand yils."
-	icon_state = "platter_bronze"
-	sellprice = 15
-
 /obj/item/cooking/platter/pewter
 	name = "pewter platter"
 	desc = "A tin plate that contains just a tinge of lead."
