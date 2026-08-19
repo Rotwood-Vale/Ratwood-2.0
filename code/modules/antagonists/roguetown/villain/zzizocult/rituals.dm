@@ -354,12 +354,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	name = "Fleshmend"
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
-	var/heal_tick = 3
+	var/heal_tick = 30
 
 /datum/ritual/fleshcrafting/fleshmend/greater
 	name = "Greater Fleshmend"
 	is_cultist_ritual = TRUE
-	heal_tick = 10
+	heal_tick = 70
 
 /datum/ritual/fleshcrafting/fleshmend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
