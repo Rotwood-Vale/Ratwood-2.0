@@ -478,7 +478,7 @@
 	max_integrity = 100
 	destroy_sound = "plantcross"
 	climbable = FALSE
-	dir = NONE // Impassable in this direciton
+	dir = SOUTH
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 2)
 	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 	var/list/looty = list()
@@ -775,35 +775,56 @@
 
 /obj/structure/flora/roguegrass/thorn_bush/Crossed(atom/movable/AM)
 	..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.Immobilize((36)-L.STASTR*2) // these bushes are dense and thorny, can´t avoid effects by crawling
-		if(HAS_TRAIT(L, TRAIT_KNEESTINGER_IMMUNITY)) //Dendor kneestinger immunity also protects against damage part
-			if(!HAS_TRAIT(src, TRAIT_CURSE_DENDOR))
-				return TRUE
-		if(!ishuman(L))
-			to_chat(L, span_warning("I'm cut on a thorn!"))
-			L.apply_damage(5, BRUTE)
-		else
-			var/mob/living/carbon/human/H = L
-			if(HAS_TRAIT(src, TRAIT_CURSE_DENDOR))	// cursed by Dendor means 100% thorn impale. Sucks.
-				var/obj/item/bodypart/BP = pick(H.bodyparts)
-				var/obj/item/natural/thorn/TH = new(src.loc)
-				BP.add_embedded_object(TH, silent = TRUE)
-				BP.receive_damage(10)
-				to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))				
-			else if(prob((20)-L.STALUC))
-				if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-					var/obj/item/bodypart/BP = pick(H.bodyparts)
-					var/obj/item/natural/thorn/TH = new(src.loc)
-					BP.add_embedded_object(TH, silent = TRUE)
-					BP.receive_damage(10)
-					to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
-			else
-				var/obj/item/bodypart/BP = pick(H.bodyparts)
-				to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
-				BP.receive_damage(10)
 
+	if(!isliving(AM))
+		return
+
+	var/mob/living/L = AM
+
+	// Small critters can zoom past.
+	if(L.mob_size <= MOB_SIZE_HUMAN)
+		return
+
+	// Dense thorn bushes briefly tangle anything large enough to trigger them.
+	L.Immobilize(36 - L.STASTR * 2)
+
+	// Non-carbon mobs just take basic thorn damage. Another size check since the previous doesnt catch damage for some reason.
+	if(!iscarbon(L))
+		to_chat(L, span_warning("I'm cut on a thorn!"))
+		L.apply_damage(5, BRUTE)
+		return
+
+	var/mob/living/carbon/human/H = L
+
+	// Dendor curse causes a guaranteed thorn embedding.
+	if(HAS_TRAIT(H, TRAIT_CURSE_DENDOR))
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		var/obj/item/natural/thorn/TH = new(src.loc)
+		BP.add_embedded_object(TH, silent = TRUE)
+		BP.receive_damage(10)
+		to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+		return
+
+	// Kneestinger immunity prevents the thorn effects unless cursed.
+	if(HAS_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY))
+		return
+
+	// Chance to embed a thorn, reduced by LUCK.
+	if(prob(25 - H.STALUC))
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
+			return
+
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		var/obj/item/natural/thorn/TH = new(src.loc)
+		BP.add_embedded_object(TH, silent = TRUE)
+		BP.receive_damage(10)
+		to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+		return
+
+	// Otherwise, just take a normal cut.
+	var/obj/item/bodypart/BP = pick(H.bodyparts)
+	to_chat(H, span_warning("A thorn [pick("slices", "cuts", "nicks")] my [BP.name]."))
+	BP.receive_damage(10)
 
 // fyrituis bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/pyroclasticflowers

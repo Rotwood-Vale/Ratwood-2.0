@@ -298,20 +298,25 @@
 
 /obj/structure/vine/Crossed(mob/crosser)
 	var/mob/living/M = crosser
+	if(!isliving(crosser))
+		return
 	if(isliving(crosser))
 		for(var/datum/vine_mutation/SM in mutations)
 			SM.on_cross(src, crosser)
-	if(prob(23) && istype(crosser) && !isvineimmune(crosser))
-		M.adjustBruteLoss(5)
-		to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
 	if(istype(crosser))
-		if(HAS_TRAIT(crosser, TRAIT_CURSE_DENDOR))// cursed by Dendor means longer tangle. Sucks.
+		if(HAS_TRAIT(crosser, TRAIT_CURSE_DENDOR))// cursed by Dendor means longer tangle and autocut. Sucks.
 			M.Immobilize((36)-M.STASTR)
 			M.adjustBruteLoss(5)
 			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
-		else if(!isvineimmune(crosser))
-			M.Immobilize((18)-M.STASTR)
-	
+			return
+		if(isvineimmune(crosser))
+			return
+		if(M.mob_size <= MOB_SIZE_SMALL) // tiny critters get to slip past
+			return
+		M.Immobilize((18)-M.STASTR)
+		if(prob(23))
+			M.adjustBruteLoss(5)
+			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
 
 /datum/vine_mutation/earthy
 	name = "earthy"

@@ -156,6 +156,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
+	max_integrity = 30
 
 /obj/structure/flora/bush/Initialize(mapload)
 	icon_state = "snowbush[rand(1, 6)]"
