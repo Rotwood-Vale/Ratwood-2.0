@@ -1,5 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - bugfix: "blessed silver and masterwork weapons that have a metal glint are now able to be polished with cream for the associated force and integrity buffs. No more avoiding making masterworks because it denies your squire from buffing the weapon."
-  - balance: "polish and glint loss now occurs when an item breaks rather than when below 25% integrity."
