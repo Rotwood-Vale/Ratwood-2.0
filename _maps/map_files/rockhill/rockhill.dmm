@@ -25516,6 +25516,13 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
+"fwX" = (
+/obj/structure/bars/passage/shutter/open{
+	name = "Harbor Entrance";
+	redstone_id = "guild_harbor"
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/under/town/sewer)
 "fxd" = (
 /obj/item/roguebin/trash,
 /turf/open/floor/rogue/cobble/mossy,
@@ -27674,6 +27681,17 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/rtfield/rockhill)
+"fTC" = (
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/obj/structure/roguemachine/atm{
+	location_tag = "Guild Engineer's Workshop";
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "fTE" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -32392,9 +32410,9 @@
 	lockid = "crafterguild";
 	name = "Smithing Guild"
 	},
-/obj/structure/bars/passage/shutter{
+/obj/structure/bars/passage/shutter/open{
 	name = "Harbor Entrance";
-	redstone_id = "smith_harbor"
+	redstone_id = "guild_harbor"
 	},
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -193435,7 +193453,7 @@ boa
 fjs
 boa
 hjA
-fDk
+fTC
 mmH
 mmH
 nIQ
@@ -307928,7 +307946,7 @@ euP
 euP
 euP
 crg
-gMO
+fwX
 lEn
 kdN
 kdN
@@ -413331,7 +413349,7 @@ nIQ
 gMo
 cOs
 gfj
-mhM
+cXr
 rTQ
 qqj
 teb
