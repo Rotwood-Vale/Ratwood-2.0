@@ -136,12 +136,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	center_requirement = /obj/item/rogueweapon/huntingknife/idagger
 
 /datum/ritual/servantry/darksunmark/invoke(mob/living/user, turf/center)
-	var/obj/item/paper/P = locate() in center.contents
-	if(!P)
-		to_chat(user, span_warning("The ritual requires a parchment with a name."))
-		return
-	var/paper_name = strip_html(P.info, MAX_NAME_LEN)
-	if(!user.mind || !user.mind.do_i_know(name = paper_name))
+	var/target_name = input(user, "Who do you wish to die?", "GRAGGAR")
+	if(!user.mind || !user.mind.do_i_know(name = target_name))
 		to_chat(user, span_warning("I don't know anyone by that name."))
 		return
 	var/mob/living/carbon/human/target
@@ -149,21 +145,20 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	for(var/mob/living/carbon/human/HL as anything in GLOB.human_list)
 		if(HL.stat == DEAD)
 			continue
-		if(HL.real_name == paper_name)
+		if(HL.real_name == target_name)
 			target = HL
 			continue
 		if(HAS_TRAIT(HL, TRAIT_ASSASSIN))
 			assassin_found = TRUE
 			var/obj/item/rogueweapon/huntingknife/idagger/steel/profane/dagger = locate() in HL.get_all_gear()
 			if(dagger)
-				to_chat(HL, "profane dagger whispers, <span class='danger'>\"The terrible Zizo has called for our aid. Hunt and strike down our common foe, [paper_name]!\"</span>")
+				to_chat(HL, "profane dagger whispers, <span class='danger'>\"The terrible Zizo has called for our aid. Hunt and strike down our common foe, [target_name]!\"</span>")
 	if(!target || !assassin_found)
 		to_chat(user, span_warning("There has been no answer to your call to the Dark Sun. It seems his servants are far from here..."))
 		return
 	target.charflaw = new /datum/charflaw/assassintarget()
 	to_chat(user, span_warning("Your target has been marked, your profane call answered by the Dark Sun. [target.real_name] will surely perish!"))
 	to_chat(target, span_warningbig("My hair stands on end. Has someone just said my name? I should watch my back."))
-	qdel(P)
 	target.playsound_local(target, 'sound/magic/marked.ogg', 100)
 
 // TRANSMUTATION
@@ -172,6 +167,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/transmutation/allseeingeye
 	name = "All-seeing Eye"
+	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/organ/eyes
 
 /datum/ritual/transmutation/allseeingeye/invoke(mob/living/user, turf/center)
@@ -258,17 +254,13 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	center_requirement = /obj/item/natural/feather
 
 /datum/ritual/transmutation/invademind/invoke(mob/living/user, turf/center)
-	var/obj/item/paper/P = locate() in center.contents
-	if(!P)
-		return
-	var/info = strip_html(P.info, MAX_NAME_LEN)
+	var/info = input(user, "What shall the message be?", "ZIZO")
 	var/target_name = input(user, "To whom do we send this message?", "ZIZO") as null|text
 	if(!target_name)
 		return
 	for(var/mob/living/carbon/human/HL in GLOB.human_list)
 		if(HL.real_name == target_name)
 			to_chat(HL, "<i>You hear a voice in your head... <b>[info]</i></b>")
-		qdel(P)
 
 /datum/ritual/transmutation/summonoutfit
 	name = "Summon Cult Outfit"
@@ -503,7 +495,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 			V.add_stress(/datum/stressevent/lovezizo)
 		else
 			V.add_stress(/datum/stressevent/hatezizo)
-	SSgamemode.roundvoteend = TRUE
 
 /obj/effect/decal/cleanable/sigil
 	name = "sigils"
