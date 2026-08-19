@@ -357,11 +357,6 @@
 	name = "Fluted Maille Mask, Iron"
 	created_item = /obj/item/clothing/mask/rogue/facemask/maille/fluted
 
-/datum/anvil_recipe/armor/iron/duelist
-	name = "Duelist Goggles, Iron"
-	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist
-	createditem_num = 2
-
 /datum/anvil_recipe/armor/iron/splintarms
 	name = "Splinted Bracers (+1 Leather Bracers)" //you modify the bracers to have splints and cover the arm way more
 	additional_items = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
