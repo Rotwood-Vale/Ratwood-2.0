@@ -336,8 +336,6 @@ GLOBAL_LIST_INIT(vampire_clan_selection_i18n, build_vampire_clan_selection_i18n(
 			return list("name" = "Moodless", "desc" = "You feel nothing, through an ancient curse in your bloodlyne.")
 		if(TRAIT_DETACHED)
 			return list("name" = "Detached", "desc" = "Nothing could move me. Any emotion I show is a facade.")
-		if(TRAIT_BATTLEMASTER)
-			return list("name" = "Battlemaster", "desc" = "A supernatural, uncanny ability to do specials with weaponry with little to no training.")
 		if(TRAIT_GOODLOVER) //I REFUSE TO ELABORATE.
 			return list("name" = "Fabled lover", "desc" = "Its a lucky thing to share a bed with another.")
 		if(TRAIT_CICERONE)

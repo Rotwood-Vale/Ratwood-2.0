@@ -36,6 +36,7 @@
 	if(H.get_vampire_generation() == GENERATION_THINNERBLOOD) //vagabonds "lords" have no place. You don't even run a clan you vagrant.
 		return
 	if(H.get_vampire_generation() == GENERATION_THINBLOOD) //stray thrall "lords" have no place. You don't even run a clan you vagrant.
+		return
 	// Add lord spells
 	for(var/spell_type in lord_spells)
 		H.mind?.AddSpell(new spell_type(H.mind))

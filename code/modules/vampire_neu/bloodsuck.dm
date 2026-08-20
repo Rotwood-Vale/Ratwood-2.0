@@ -22,7 +22,7 @@
 	if(victim.dna?.species && (NOBLOOD in victim.dna.species.species_traits))
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
-	if(victim.blood_volume <= 0)
+	if(victim.get_blood_volume() <= 0)
 		to_chat(src, span_warning("Sigh. No blood."))
 		return
 

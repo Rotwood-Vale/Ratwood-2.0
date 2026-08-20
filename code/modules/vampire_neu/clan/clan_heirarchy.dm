@@ -132,8 +132,6 @@
 /datum/action/clan_hierarchy/command_subordinate
 	name = "Command Subordinate"
 	desc = "Give a telepathic command to a subordinate."
-	background_icon = 'icons/mob/actions/vampspells.dmi'
-	background_icon_state = "spell"
 	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "command"
 	cooldown_time = 100
@@ -206,8 +204,6 @@
 /datum/action/clan_hierarchy/summon_subordinate
 	name = "Summon Subordinate"
 	desc = "Command a subordinate to come to your location immediately."
-	background_icon = 'icons/mob/actions/vampspells.dmi'
-	background_icon_state = "spell"
 	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "summon"
 	cooldown_time = 300
@@ -279,8 +275,6 @@
 /datum/action/clan_hierarchy/mass_command
 	name = "Mass Command"
 	desc = "Send a telepathic message to all your subordinates."
-	background_icon = 'icons/mob/actions/vampspells.dmi'
-	background_icon_state = "spell"
 	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "command"
 	cooldown_time = 600
@@ -336,8 +330,6 @@
 /datum/action/clan_hierarchy/locate_subordinate
 	name = "Locate Subordinate"
 	desc = "Sense the location of your subordinates."
-	background_icon = 'icons/mob/actions/vampspells.dmi'
-	background_icon_state = "spell"
 	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "locate"
 	cooldown_time = 200

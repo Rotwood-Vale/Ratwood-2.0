@@ -267,7 +267,7 @@ And it also helps for the character set panel
 		REMOVE_TRAIT(vampire, trait, "clan")
 
 	vampire.update_body()
-	vampire.maxbloodpool = initial(vampire.maxbloodpool)
+	vampire.reset_maxbloodpool()
 
 	var/datum/component/sunlight_vulnerability/sun_comp = vampire.GetComponent(/datum/component/sunlight_vulnerability)
 	if(sun_comp)
@@ -277,9 +277,8 @@ And it also helps for the character set panel
 	if(disguise_comp)
 		qdel(disguise_comp)
 
-	// Not sure how we remove verbs currently, need to check this. It may happen anyway but if not need to figure a workaround
-	// remove_verb(vampire, /mob/living/carbon/human/proc/disguise_verb)
-	// remove_verb(vampire, /mob/living/carbon/human/proc/vampire_telepathy)
+	vampire.verbs -= /mob/living/carbon/human/proc/disguise_verb
+	vampire.verbs -= /mob/living/carbon/human/proc/vampire_telepathy
 
 
 	// Restore normal eyes
@@ -572,7 +571,6 @@ And it also helps for the character set panel
 /datum/action/clan_menu
 	name = "Clan Menu"
 	desc = "Open your clan's power management interface"
-	background_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "clan_menu"
 

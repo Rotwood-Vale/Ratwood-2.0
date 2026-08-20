@@ -1,6 +1,7 @@
-#define VAMPCOST_ONE 5000 //intended we avoid grind. -> Champions + Grab Immunity
+#define VAMPCOST_ONE 5000 //heavily chopped down, you're a server-wide antagonist that should be doing stuff, just slightly above your ability to buy roundstart.
 #define VAMPCOST_TWO 6000 //Earlygame finish point, most vlords will end up here less than 30 mins into a round if they're good, 1hr if not.
-#define VAMPCOST_THREE 7500 //Sunkill, leave moderately high. This is where they become a major threat.
+#define VAMPCOST_THREE 7500 //Grab immunity, leave moderately high. This is where they become a major threat.
+#define VAMPCOST_FOUR 14000 //Intended to be rather high as its hyperwar mode with sunkill, has to be moderately expensive but affordable so vlord can afford it and upgrade their personal powers through using them passively, for the war to come.
 #define ARMOR_COST 5000 //Fairly cheap cause it comes behind a rite cost. We want this mid-early game. One-Time only ritual. Unlocks at Second Upgrade.
 #define SUN_STEAL_COST 8000 //Server wide war declaration, mostly useless for Vitabella. Risk/Reward but we want it to be less earlygame but midgame instead of lategame. //MOVED TO AUTOMATIC ON FULLPOWER UPGRADE//
 #define SERVANT_COST 800 //Keep these low, so people can play as vampires. We want to scoop up observers/lobby joiners before they get bored.
@@ -79,8 +80,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 /obj/structure/vampire/bloodpool/ui_interact(mob/user, datum/tgui/ui)
 	var/mob/living/living_user = user
 	if(!istype(living_user))
-	var/datum/antagonist/vampire/vampire = user.mind?.has_antag_datum(/datum/antagonist/vampire)
-	if(!vampire)
 		return
 
 	remember_nonvampire_vitae(living_user)
@@ -252,7 +251,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 /obj/structure/vampire/bloodpool/proc/get_nonvampire_crucible_bloodpool(mob/living/user, bloodpool_amount)
 	if(!istype(user))
 		return 0
-	return max(min(bloodpool_amount, user.maxbloodpool), 0)
+	return max(min(bloodpool_amount, user.get_maxbloodpool()), 0)
 
 /obj/structure/vampire/bloodpool/proc/get_nonvampire_vitae_from_bloodpool(mob/living/user, bloodpool_amount)
 	return get_nonvampire_crucible_bloodpool(user, bloodpool_amount) * CLIENT_VITAE_MULTIPLIER
@@ -268,13 +267,13 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	if(!nonvampire_vitae_snapshots)
 		nonvampire_vitae_snapshots = list()
 
-	var/current_bloodpool = get_nonvampire_crucible_bloodpool(user, user.bloodpool)
+	var/current_bloodpool = get_nonvampire_crucible_bloodpool(user, user.get_bloodpool())
 	var/user_ref = REF(user)
 	var/list/vitae_snapshot = nonvampire_vitae_snapshots[user_ref]
 	if(!islist(vitae_snapshot))
 		vitae_snapshot = list(
 			"bloodpool" = current_bloodpool,
-			"blood_volume" = user.blood_volume,
+			"blood_volume" = user.get_blood_volume(),
 		)
 		nonvampire_vitae_snapshots[user_ref] = vitae_snapshot
 		return
@@ -282,9 +281,9 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/snapshotted_blood_volume = vitae_snapshot["blood_volume"]
 	if(!snapshotted_blood_volume)
 		snapshotted_blood_volume = 0
-	if(user.blood_volume < snapshotted_blood_volume)
+	if(user.get_blood_volume() < snapshotted_blood_volume)
 		vitae_snapshot["bloodpool"] = current_bloodpool
-		vitae_snapshot["blood_volume"] = user.blood_volume
+		vitae_snapshot["blood_volume"] = user.get_blood_volume()
 		return
 
 	var/snapshotted_bloodpool = vitae_snapshot["bloodpool"]
@@ -292,7 +291,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		snapshotted_bloodpool = 0
 	if(current_bloodpool > snapshotted_bloodpool)
 		vitae_snapshot["bloodpool"] = current_bloodpool
-		vitae_snapshot["blood_volume"] = user.blood_volume
+		vitae_snapshot["blood_volume"] = user.get_blood_volume()
 
 /obj/structure/vampire/bloodpool/proc/clear_nonvampire_vitae_snapshot(mob/living/user)
 	if(!istype(user) || !nonvampire_vitae_snapshots)
@@ -310,9 +309,9 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/snapshotted_blood_volume = vitae_snapshot["blood_volume"]
 	if(!snapshotted_blood_volume)
 		snapshotted_blood_volume = 0
-	if(user.blood_volume < snapshotted_blood_volume)
+	if(user.get_blood_volume() < snapshotted_blood_volume)
 		clear_nonvampire_vitae_snapshot(user)
-		return get_nonvampire_vitae_from_bloodpool(user, user.bloodpool)
+		return get_nonvampire_vitae_from_bloodpool(user, user.get_bloodpool())
 
 	var/snapshotted_bloodpool = vitae_snapshot["bloodpool"]
 	if(!snapshotted_bloodpool)
@@ -330,12 +329,12 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		return available_vitae
 
 	var/snapshotted_vitae = get_nonvampire_snapshotted_vitae(user)
-	return max(get_nonvampire_vitae_from_bloodpool(user, user.bloodpool), snapshotted_vitae)
+	return max(get_nonvampire_vitae_from_bloodpool(user, user.get_bloodpool()), snapshotted_vitae)
 
 /obj/structure/vampire/bloodpool/proc/get_vampire_personal_vitae_for_crucible(mob/living/user)
 	if(!istype(user))
 		return 0
-	return max(user.bloodpool - CRUCIBLE_VAMPIRE_BLOODPOOL_RESERVE, 0)
+	return max(user.get_bloodpool() - CRUCIBLE_VAMPIRE_BLOODPOOL_RESERVE, 0)
 
 /obj/structure/vampire/bloodpool/proc/get_cup_space()
 	return max(CRUCIBLE_MAX_BLOOD - current, 0)
@@ -456,7 +455,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	if(!istype(user))
 		return 0
 
-	var/available_blood = max(user.blood_volume - CRUCIBLE_MIN_DONOR_BLOOD, 0)
+	var/available_blood = max(user.get_blood_volume() - CRUCIBLE_MIN_DONOR_BLOOD, 0)
 	return max(FLOOR((available_blood * CRUCIBLE_DONATION_VITAE) / CRUCIBLE_DONATION_BLOOD, 1), 0)
 
 /obj/structure/vampire/bloodpool/proc/get_blood_cost_for_vitae(vitae_amount)
@@ -519,30 +518,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		return
 	deposit = clamp(round(deposit), 1, max_deposit)
 	if(deposit < 1)
-	var/lord = FALSE
-	if(user.clan?.clan_leader == user)
-		lord = TRUE
-
-	var/list/available_options_lord = list()
-	var/list/available_options_contributor = list()
-
-	// Add available project types that aren't already active
-	for(var/project_type in available_project_types)
-		var/datum/vampire_project/temp_project = new project_type()
-		if(temp_project.can_start(user, src, TRUE) && !(project_type in active_projects))
-			available_options_lord[temp_project.display_name] = project_type
-		qdel(temp_project)
-
-	// Add option to contribute to existing projects
-	if(active_projects.len)
-		available_options_lord["Contribute to Project"] = "contribute"
-		available_options_contributor["Contribute to Project"] = "contribute"
-	// Add option to view/cancel projects
-	if(active_projects.len)
-		available_options_lord["Manage Projects"] = "manage"
-
-	var/choice = input(user, "What to do?", "VAMPYRE") as null|anything in available_options_lord
-	if(!choice)
 		return
 
 	var/blood_cost = 0
@@ -550,12 +525,12 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		user.adjust_bloodpool(-deposit)
 	else
 		blood_cost = get_blood_cost_for_vitae(deposit)
-		if(user.blood_volume - blood_cost < CRUCIBLE_MIN_DONOR_BLOOD)
+		if(user.get_blood_volume() - blood_cost < CRUCIBLE_MIN_DONOR_BLOOD)
 			to_chat(user, span_warning("The crucible will not take that much blood. I must remain with at least [CRUCIBLE_MIN_DONOR_BLOOD]."))
 			return
 		var/bloodpool_cost = get_nonvampire_bloodpool_cost_for_vitae(deposit)
-		user.bloodpool = max(get_nonvampire_crucible_bloodpool(user, user.bloodpool) - bloodpool_cost, 0)
-		user.blood_volume = max(user.blood_volume - blood_cost, CRUCIBLE_MIN_DONOR_BLOOD)
+		user.set_bloodpool(max(get_nonvampire_crucible_bloodpool(user, user.get_bloodpool()) - bloodpool_cost, 0))
+		user.set_blood_volume(max(user.get_blood_volume() - blood_cost, CRUCIBLE_MIN_DONOR_BLOOD))
 		clear_nonvampire_vitae_snapshot(user)
 
 	current = min(current + deposit, CRUCIBLE_MAX_BLOOD)
@@ -575,7 +550,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/is_vampire = is_crucible_vampire(user)
 	if(!can_accept_vitae_contribution(project, max_contribution, is_vampire))
 		if(is_vampire)
-			if(user.bloodpool <= CRUCIBLE_VAMPIRE_BLOODPOOL_RESERVE)
+			if(user.get_bloodpool() <= CRUCIBLE_VAMPIRE_BLOODPOOL_RESERVE)
 				to_chat(user, span_warning("The last [CRUCIBLE_VAMPIRE_BLOODPOOL_RESERVE] vitae cannot be given to the crucible."))
 			else
 				to_chat(user, span_warning("I have nothing to give to that ritual."))
@@ -599,7 +574,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/blood_cost = 0
 	if(!is_vampire)
 		blood_cost = get_blood_cost_for_vitae(contribution)
-		if(user.blood_volume - blood_cost < CRUCIBLE_MIN_DONOR_BLOOD)
+		if(user.get_blood_volume() - blood_cost < CRUCIBLE_MIN_DONOR_BLOOD)
 			to_chat(user, span_warning("The crucible will not take that much blood. I must remain with at least [CRUCIBLE_MIN_DONOR_BLOOD]."))
 			return
 
@@ -622,9 +597,9 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			user.adjust_bloodpool(-personal_contribution)
 	else
 		var/bloodpool_cost = get_nonvampire_bloodpool_cost_for_vitae(contribution)
-		user.bloodpool = max(get_nonvampire_crucible_bloodpool(user, user.bloodpool) - bloodpool_cost, 0)
+		user.set_bloodpool(max(get_nonvampire_crucible_bloodpool(user, user.get_bloodpool()) - bloodpool_cost, 0))
 	if(!is_vampire)
-		user.blood_volume = max(user.blood_volume - blood_cost, CRUCIBLE_MIN_DONOR_BLOOD)
+		user.set_blood_volume(max(user.get_blood_volume() - blood_cost, CRUCIBLE_MIN_DONOR_BLOOD))
 		clear_nonvampire_vitae_snapshot(user)
 	project.paid_amount += contribution
 	project.cup_paid_amount += cup_contribution
@@ -712,18 +687,13 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		if("View Details")
 			project.show_details(user)
 		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", "Yes", "No") == "Yes")
+			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
 				cancel_project(project_type)
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
 	var/datum/vampire_project/project = active_projects[project_type]
 	if(!project)
 		return
-	if(!project)
-		return
-
-	// Detach before running effects, so a second call can't run them (or a refund) again
-	active_projects.Remove(project_type)
 
 	for(var/mob/living/contributor in project.contributors)
 		to_chat(contributor, span_boldannounce("[project.display_name] has been completed!"))
@@ -731,6 +701,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 
 	project.on_complete(src)
 
+	active_projects.Remove(project_type)
 	qdel(project)
 	SStgui.update_uis(src)
 
@@ -739,10 +710,9 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	if(!project)
 		return
 
-	active_projects.Remove(project_type)
-
 	project.on_cancel()
 
+	active_projects.Remove(project_type)
 	qdel(project)
 	SStgui.update_uis(src)
 
@@ -753,7 +723,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 	var/total_cost = 1000
 	var/paid_amount = 0
 	var/cup_paid_amount = 0
-	/// Assoc list of contributor mob -> vitae they personally paid in, so refunds can't mint blood
 	var/list/contributors = list()
 	var/obj/structure/vampire/bloodpool/bloodpool
 	var/mob/living/initiator
@@ -784,28 +753,17 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
 
-/datum/vampire_project/proc/get_max_contribution(mob/living/user)
-	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
-	var/headroom = total_cost - paid_amount
-	if(!lord && (display_name != "Wicked Plate") && (display_name != "World Anchor"))
-		headroom -= 100
-	return min(user.get_bloodpool(), headroom)
-
 /datum/vampire_project/proc/handle_contribution(mob/living/user)
-	var/max_contribution = get_max_contribution(user)
-	if(max_contribution <= 0)
-		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
-		return
+	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+	var/max_contribution = min(user.get_bloodpool(), total_cost - paid_amount)
+	if(!lord)
+		if(display_name != "Wicked Plate" || display_name != "World Anchor")
+			max_contribution = min(user.get_bloodpool(), (total_cost - paid_amount) - 100)
 
 	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
 
 	//setting this to 1, since you don't want fractions below 1
 	if(!contribution || contribution < 1)
-		return
-
-	// Revalidate after the blocking prompt - the project may have finished, been cancelled, or been paid down further
-	if(QDELETED(src) || !bloodpool || !(bloodpool.active_projects[type] == src))
-		to_chat(user, span_warning("[display_name] is no longer underway."))
 		return
 
 	//setting this to 0, when it was at 1 it was just giving free vitae if it was less than 1 but a 
@@ -815,11 +773,11 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		to_chat(user, span_warning("I do not have enough vitae."))
 		return
 
-	contribution = clamp(round(contribution), 1, max_contribution)
-
 	user.adjust_bloodpool(-contribution)
 	paid_amount += contribution
-	contributors[user] += contribution
+
+	if(!(user in contributors))
+		contributors += user
 
 	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
 
@@ -849,9 +807,6 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 		contributor.adjust_bloodpool(refund_amount)
 		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
 
-	contributors.Cut()
-	paid_amount = 0
-
 // Specific project types
 /datum/vampire_project/power_growth
 	display_name = "Rite of Stirring"
@@ -874,7 +829,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			to_chat(user, span_warning("I should grow my dominion, so that I shall gain more power through collective sacrifice.")) //Subtle Que for Newer players, to convert/buy servants
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types += /datum/vampire_project/servant/servant_t3 //Stronger commander roles, cheapened so they're locked behind first upgrade rite as to encourage sending them out to thrall people.
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_2
@@ -897,7 +852,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			to_chat(user, span_warning("I should further develop my vampiric potencies and regain my ancient set of armor.")) //Subtle Que for Newer players, that despite the next upgrade seeming quite close, you should invest into potencies + armor for later.
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types += /datum/vampire_project/armor_crafting
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_2
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_3
@@ -921,7 +876,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
 			ADD_TRAIT(lord_body, TRAIT_GRABIMMUNE, TRAIT_GENERIC) //You're reaching solo-antagonist levels of godhood here.
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_3
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_4
 			break
@@ -944,7 +899,7 @@ GLOBAL_LIST_INIT(crimson_crucible_i18n, build_crimson_crucible_i18n())
 			ADD_TRAIT(lord_body, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC) //I mean, you worked for it. You're now the OG vlord once more, go nuts! The lorde of mass-fragging once more.
 			ADD_TRAIT(lord_body, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC) //Kneestinger + other shock sources resistance. Far less hardstuns at this point will stop them.
 			SSticker.sunsteal(initiator_clan?.clan_leader) //Universally ensures the town knows a literal calamity is about to show up.
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			to_chat(user, span_userdanger("I AM ANCIENT, I AM THE LAND. EVEN THE SUN BOWS TO ME.")) //SEND WORD. THE END IS HERE.
 			to_chat(user, span_warning("I will no longer tire nor feel, stamina will no longer affect me, shocks will no longer affect me.")) //Trait hints
 			lord.ascended = TRUE
