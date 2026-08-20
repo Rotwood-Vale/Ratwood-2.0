@@ -118,6 +118,10 @@
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
 
+	var/datum/status_effect/debuff/magical_blindness/magic_blind = user.has_status_effect(/datum/status_effect/debuff/magical_blindness)
+	if (magic_blind)
+		prob2defend -= magic_blind.effect_strength * 5 // 5% parry chance loss per level
+
 	if(ishuman(H))
 		var/mob/living/carbon/human/oldie = H
 		if(oldie.age == AGE_OLD && !HAS_TRAIT(oldie, TRAIT_MAGEARMOR))//Old martial characters get a bonus to parry. Mages do not, they get unique bonuses already for being old.
