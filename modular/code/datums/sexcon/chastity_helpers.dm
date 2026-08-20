@@ -1,3 +1,23 @@
+/// Returns TRUE if the observing mob has the "Enable Chastity Content" preference toggle on.
+/// Gates whether an observer can always see/hear someone else's chastity device regardless of clothing coverage.
+/// Mobs with no client (NPCs, etc.) never bypass the coverage check via this proc.
+/proc/modular_chastity_observer_on(mob/user)
+	return !!(user?.client?.prefs?.chastenable)
+
+/// Plays a chastity movement sound to nearby mobs, gated by each individual listener's chastity preference.
+/// The wearer always hears their own device. Other listeners within range only hear it if they have
+/// chastity content enabled — this keeps the ambient jingle from broadcasting to players who opted out.
+/proc/modular_chastity_sounds_on(mob/living/carbon/human/wearer, soundin, volume, range = 5)
+	if(!wearer || !soundin)
+		return
+	var/turf/source_turf = get_turf(wearer)
+	if(!source_turf)
+		return
+	for(var/mob/M as anything in get_hearers_in_range(range, source_turf))
+		if(M != wearer && !modular_chastity_observer_on(M))
+			continue
+		M.playsound_local(source_turf, soundin, volume, TRUE)
+
 /// Plays a chastity movement sound (jingle, rattle, etc.) when a sex action involves a wearer.
 /// Checks both user and action_target for a chastity device — whichever has one produces the sound.
 /// Probability scales with action speed. Volume scales with sex force tier (MID→HIGH→EXTREME).

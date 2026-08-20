@@ -615,7 +615,7 @@
 		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
 		var/cage_exposed = get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
 		var/do_we_know_chat = (user == src)
-		if(cage_exposed)
+		if(cage_exposed || modular_chastity_observer_on(user))
 			. += "[m1] secured in [chastity_name]. "
 		else if(do_we_know_chat)
 			. += span_italics("[m1] covertly secured in [chastity_name]. ")
