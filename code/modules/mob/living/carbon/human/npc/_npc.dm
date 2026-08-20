@@ -62,7 +62,7 @@
 	//If we utilize our intents further outside of strong intent.
 	var/smart_combatant = FALSE
 
-	//If we utilize straight-up unfair tactics.
+	/// If TRUE, the NPC uses straight-up unfair tactics like baiting and aggressive feinting.
 	var/unfair_tactician = FALSE
 
 /mob/living/carbon/human/Initialize(mapload)
