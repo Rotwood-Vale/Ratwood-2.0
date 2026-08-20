@@ -95,19 +95,20 @@
 	if(living_user.is_floor_hazard_immune())
 		return
 
-	if(water_overlay)
-		if((get_dir(src, newloc) == SOUTH))
-			water_overlay.layer = BELOW_MOB_LAYER
-			water_overlay.plane = GAME_PLANE
-		else
-			spawn(6)
-				if(!locate(/mob/living) in src)
-					water_overlay.layer = BELOW_MOB_LAYER
-					water_overlay.plane = GAME_PLANE
-	var/drained = get_stamina_drain(living_user, get_dir(src, newloc))
-	if(drained && !living_user.stamina_add(drained))
-		living_user.Immobilize(30)
-		addtimer(CALLBACK(living_user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
+	if(!(living_user.movement_type & FLYING) && !HAS_TRAIT(living_user, TRAIT_ON_BOAT))
+		if(water_overlay)
+			if((get_dir(src, newloc) == SOUTH))
+				water_overlay.layer = BELOW_MOB_LAYER
+				water_overlay.plane = GAME_PLANE
+			else
+				spawn(6)
+					if(!locate(/mob/living) in src)
+						water_overlay.layer = BELOW_MOB_LAYER
+						water_overlay.plane = GAME_PLANE
+		var/drained = get_stamina_drain(living_user, get_dir(src, newloc))
+		if(drained && !living_user.stamina_add(drained))
+			living_user.Immobilize(30)
+			addtimer(CALLBACK(living_user, TYPE_PROC_REF(/mob/living, Knockdown), 30), 1 SECONDS)
 
 /turf/open/water/proc/get_stamina_drain(mob/living/swimmer, travel_dir)
 	var/const/BASE_STAM_DRAIN = 15
@@ -221,31 +222,31 @@
 		return
 	if (istype(src,/turf/open/water/bloody))
 		living_movable.add_mob_blood(living_movable)
-
-	if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
-		living_movable.SoakMob(FULL_BODY)
-	else
-		if(water_level == 2)
-			living_movable.SoakMob(BELOW_CHEST)
-	if(water_overlay)
-		if(water_level > 1 && !istype(oldLoc, type))
-			playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
+	if(!(living_movable.movement_type & FLYING) && !HAS_TRAIT(living_movable, TRAIT_ON_BOAT))
+		if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
+			living_movable.SoakMob(FULL_BODY)
 		else
-			playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
-		if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
-			water_overlay.layer = ABOVE_MOB_LAYER
-			water_overlay.plane = GAME_PLANE_HIGHEST
-		else
-			spawn(6)
-				if(AM.loc == src)
-					water_overlay.layer = ABOVE_MOB_LAYER
-					water_overlay.plane = GAME_PLANE_HIGHEST
-
-		if(temperature <= 250 && living_movable.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
-			if(HAS_TRAIT(living_movable, TRAIT_WATERLOVING))
-				living_movable.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+			if(water_level == 2)
+				living_movable.SoakMob(BELOW_CHEST)
+		if(water_overlay)
+			if(water_level > 1 && !istype(oldLoc, type))
+				playsound(AM, 'sound/foley/waterenter.ogg', 100, FALSE)
 			else
-				living_movable.adjust_bodytemperature(-5)
+				playsound(AM, pick('sound/foley/watermove (1).ogg','sound/foley/watermove (2).ogg'), 100, FALSE)
+			if(istype(oldLoc, type) && (get_dir(src, oldLoc) != SOUTH))
+				water_overlay.layer = ABOVE_MOB_LAYER
+				water_overlay.plane = GAME_PLANE_HIGHEST
+			else
+				spawn(6)
+					if(AM.loc == src)
+						water_overlay.layer = ABOVE_MOB_LAYER
+						water_overlay.plane = GAME_PLANE_HIGHEST
+
+			if(temperature <= 250 && living_movable.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 10)	//swimming in cold water will cool you down and chill you.
+				if(HAS_TRAIT(living_movable, TRAIT_WATERLOVING))
+					living_movable.adjust_bodytemperature(-5, BODYTEMP_NORMAL)
+				else
+					living_movable.adjust_bodytemperature(-5)
 
 	if(!istype(living_movable, /mob/living/carbon/human/species/skeleton))
 		return
@@ -647,7 +648,7 @@
 		. += DOWNSTREAM_BONUS // faster!
 	else if(travel_dir == GLOB.reverse_dir[dir]) // upriver
 		. += UPSTREAM_PENALTY // slower
-	else 
+	else
 		. += SIDESTREAM_PENALTY // sidestream walking isn't free, bro
 
 /turf/open/water/river/proc/process_river()
@@ -656,12 +657,18 @@
 		return
 	var/found_movable = FALSE
 	for(var/atom/movable/A in contents)
+		if(istype(A, /obj/vehicle/ridden) && HAS_TRAIT(A, TRAIT_OAR_PROPELLED))
+			var/obj/vehicle/ridden/Vehicle = A
+			if(Vehicle.is_resisting_current())
+				continue
+		if(isliving(A))
+			var/mob/living/Living = A
+			if(istype(Living.buckled, /obj/vehicle/ridden))
+				continue
 		if(!A.anchored)
 			found_movable = TRUE
-			if((A.loc == src))
+			if(A.loc == src)
 				A.ConveyorMove(dir)
-
-	// stop processing once there's nothing left to move
 	if(!found_movable)
 		STOP_PROCESSING(SSrivers, src)
 		return
