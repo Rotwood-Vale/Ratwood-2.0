@@ -1,6 +1,6 @@
 /datum/coven/siren
 	name = "Siren Blessing"
-	desc = "Typically found in vampires who frequent the seas of Enigma, they've developed the ability to adapt much like sirens."
+	desc = "Typically found in vampires who frequent the seas of Enigma, they've developed the ability to adapt much like sirens. Use your voice to INCAPACITATE your foes."
 	icon_state = "melpominee"
 	power_type = /datum/coven_power/siren
 
@@ -35,7 +35,7 @@
 
 	if (CHAT_FILTER_CHECK(new_say))
 		to_chat(owner, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[new_say]\"</span>"))
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
 	target.say(message = new_say, forced = "melpominee 1")
@@ -74,7 +74,7 @@
 
 	level = 2
 	research_cost = 1
-	vitae_cost = 100
+	vitae_cost = 50
 	check_flags = COVEN_CHECK_CONSCIOUS | COVEN_CHECK_SPEAK
 
 	cooldown_length = 10 SECONDS
@@ -93,14 +93,29 @@
 	input_message = trim(copytext_char(sanitize(input_message), 1, MAX_MESSAGE_LEN))
 	if(CHAT_FILTER_CHECK(input_message))
 		to_chat(owner, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[input_message]\"</span>"))
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
+		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
-	var/language = owner.get_random_understood_language()
+	var/list/available_languages = list()
+	var/datum/language_holder/H = owner.get_language_holder()
+
+	for(var/L in H.languages)
+		var/datum/language/lang = L
+		if(owner.can_speak_in_language(lang))
+			available_languages[initial(lang.name)] = lang
+
+	if(!length(available_languages))
+		return
+
+	var/choice = input(owner, "Choose language for projected voice") as null|anything in available_languages
+	if(!choice)
+		return
+
+	var/datum/language/language = available_languages[choice]
 	var/message = owner.compose_message(owner, language, input_message, , list())
 	to_chat(target, "<span class='purple'><i>You hear someone's voice in your head...</i></span>")
 	target.Hear(message, target, language, input_message, , , )
-	to_chat(owner, span_notice("You project your voice to [target]'s ears."))
+	to_chat(owner, span_notice("You project your voice to [target]'s ears in [initial(language.name)]."))
 
 //MADRIGAL
 /datum/coven_power/siren/madrigal
@@ -118,11 +133,11 @@
 	. = ..()
 	var/list/mobs_in_view = oviewers(4, owner)
 	if(!LAZYLEN(mobs_in_view))
-		try_deactivate(direct = TRUE)
+		deactivate()
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.is_clanmate(owner))
+		if(listener.clan == owner.clan)
 			continue
 
 		listener.create_walk_to(2 SECONDS, owner)
@@ -153,11 +168,11 @@
 	. = ..()
 	var/list/mobs_in_view = oviewers(4, owner)
 	if(!LAZYLEN(mobs_in_view))
-		try_deactivate(direct = TRUE)
+		deactivate()
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.is_clanmate(owner))
+		if(listener.clan == owner.clan)
 			continue
 
 		listener.Stun(duration_length)
@@ -179,23 +194,21 @@
 
 	level = 5
 	research_cost = 4
+	vitae_cost = 250
 	minimal_generation = GENERATION_ANCILLAE
 	check_flags = COVEN_CHECK_CONSCIOUS | COVEN_CHECK_CAPABLE | COVEN_CHECK_IMMOBILE | COVEN_CHECK_SPEAK
 	duration_length = 3 SECONDS
-	cooldown_length = 30 SECONDS
-
-	hostile = TRUE
-	violates_masquerade = TRUE
+	cooldown_length = 60 SECONDS
 
 /datum/coven_power/siren/shattering_crescendo/activate()
 	. = ..()
 	var/list/mobs_in_view = oviewers(7, owner)
 	if(!LAZYLEN(mobs_in_view))
-		try_deactivate(direct = TRUE)
+		deactivate()
 		return
 
 	for(var/mob/living/carbon/human/listener in mobs_in_view)
-		if(listener.is_clanmate(owner))
+		if(listener.clan == owner.clan)
 			continue
 
 		listener.Stun(duration_length)
