@@ -590,7 +590,7 @@
 				needed--
 				qdel(I)
 
-/mob/living/carbon/human/proc/zizo_vampire_rejection()
+/mob/living/carbon/proc/zizo_vampire_rejection()
 	visible_message(span_userdanger("[src]'s body suddenly convulses as the Lesser Work reaches completion!<br>"), span_userdanger("The Work rejects my cursed blood!<br>"))
 	to_chat(src, span_artery("<br><br>OH. WONDERFUL. I KNOW WHAT YOU ARE ATTEMPTING.<br><br>"))
 	sleep(40)
