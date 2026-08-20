@@ -440,3 +440,26 @@
   yupup123:
   - rscadd: Adds a new toggle for seeing a character's role under their name in the
       options.
+2026-08-19:
+  RadiantFlash7:
+  - bugfix: fixes missing tin sprites in cookware
+  - rscadd: Crafting oars/dinghys from crafting menu
+  - rscadd: Dinghy's fit two people now
+  - rscadd: Dinghy's have a slot for an oar, and can go upriver as long as one person
+      is holding an oar.
+  - bugfix: No longer get cold from riding in a dinghy on water
+  - bugfix: dinghy's now move diagonally without breaking terribly, similar to mounts
+  Yuckuza:
+  - bugfix: blessed silver and masterwork weapons that have a metal glint are now
+      able to be polished with cream for the associated force and integrity buffs.
+      No more avoiding making masterworks because it denies your squire from buffing
+      the weapon.
+  - balance: polish and glint loss now occurs when an item breaks rather than when
+      below 25% integrity.
+2026-08-20:
+  Pidgey-chan:
+  - rscadd: Fluvians can now be Underdwllers.
+  RadiantFlash7:
+  - bugfix: fixed dodging/feinting simple mobs
+  Xander3359:
+  - rscadd: Adds a few more tools to Malum's Conjure tool
