@@ -24,24 +24,6 @@
 			lines += span_warning("A profane, feral scent clings to them.")
 		else
 			lines += span_warning("They have a strange scent about them...")
-	var/perception_level = 15
-	if(isliving(user))
-		var/mob/living/L = user
-		perception_level = L.STAPER
-
-	var/obj/item/chastity/worn_chastity = chastity_device
-	if(worn_chastity)
-		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
-		var/cage_exposed = observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
-		if(cage_exposed)
-			if(perception_level >= 15)
-				lines += span_aiprivradio("[m1] secured in [chastity_name].")
-			else if(perception_level >= 8)
-				lines += span_aiprivradio("[m1] wearing [chastity_name].")
-			else
-				lines += span_warning("[m1] wearing some kind of intimate restraint.")
-		else if(perception_level >= 15)
-			lines += span_aiprivradio("[m1] wearing a chastity device under [m2] clothes.")
 
 	return lines
 

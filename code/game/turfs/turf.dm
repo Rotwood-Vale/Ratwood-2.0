@@ -51,7 +51,7 @@
 	var/break_message = null
 
 	var/neighborlay
-	var/neighborlay_list = list()
+	var/list/neighborlay_list
 	var/neighborlay_override
 	var/teleport_restricted = FALSE //whether turf teleport spells are forbidden from teleporting to this turf
 
