@@ -23,6 +23,11 @@
 	cost = 20
 	contains = list(/obj/item/clothing/head/roguetown/roguehood/reinforced)
 
+/datum/supply_pack/rogue/Clothing/bandithood
+	name = "Bandit Hood"
+	cost = 5
+	contains = list(/obj/item/clothing/head/roguetown/menacing/bandit)
+
 /datum/supply_pack/rogue/Clothing/keffiyeh
 	name = "Keffiyeh"
 	cost = 5

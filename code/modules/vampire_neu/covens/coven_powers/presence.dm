@@ -332,7 +332,7 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(on_say))
 
 	//the compulsion has no duration of its own, so it has to die with whoever cast it
-	RegisterSignal(majesty_user, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_majesty_user_gone))
+	RegisterSignal(majesty_user, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_majesty_user_gone))
 
 	if(owner.mind)
 		owner.add_stress(/datum/stressevent/majesty_compelled)
@@ -346,7 +346,7 @@
 	))
 
 	if(majesty_user)
-		UnregisterSignal(majesty_user, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+		UnregisterSignal(majesty_user, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 		majesty_user = null
 
 	if(owner.mind)
