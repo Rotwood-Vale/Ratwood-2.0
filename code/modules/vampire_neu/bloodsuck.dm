@@ -22,7 +22,7 @@
 	if(victim.dna?.species && (NOBLOOD in victim.dna.species.species_traits))
 		to_chat(src, span_warning("They have no blood."))
 		return
-	if(victim.blood_volume <= 0)
+	if(victim.get_blood_volume() <= 0)
 		to_chat(src, span_warning("Sigh. No blood left."))
 		return
 
@@ -36,7 +36,7 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	victim.blood_volume = max(victim.blood_volume - 5, 0)
+	victim.adjust_blood_volume(-5)
 	victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', vol = 50, vary = FALSE, extrarange = -4, ignore_walls = FALSE, quiet = TRUE)
@@ -61,11 +61,6 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(1 SECONDS, 2 SECONDS))
 		return
 
-	if(HAS_TRAIT(victim, TRAIT_BLACKBLOOD) || victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
-		to_chat(src, span_danger("I'm going to puke..."))
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
-		return
-
 	src.adjust_hydration(10) // da sippy
 
 	if(VVictim)
@@ -87,11 +82,11 @@
 
 	clan.handle_bloodsuck(src, blood_handle)
 
-	if(victim.bloodpool > 0)
+	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		victim.blood_volume = max(victim.blood_volume - 45, 0)
-		if(victim.bloodpool < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
-			used_vitae = victim.bloodpool
+		victim.adjust_blood_volume(-45)
+		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
+			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
 		victim.adjust_bloodpool(-used_vitae)
 		victim.adjust_hydration(- used_vitae * 0.1)
@@ -112,13 +107,13 @@
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
 			return
-		else if(victim.blood_volume < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
+		else if(victim.get_blood_volume() < BLOOD_VOLUME_SURVIVE && victim.stat != DEAD)
 			to_chat(src, span_warning("This sad sacrifice for your own pleasure affects something deep in your mind."))
 			AdjustMasquerade(-1)
 			victim.death()
 			return
 
-	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.blood_volume <= BLOOD_VOLUME_BAD)
+	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.get_blood_volume() <= BLOOD_VOLUME_BAD)
 		var/datum/antagonist/vampire/vdrinker = mind?.has_antag_datum(/datum/antagonist/vampire)
 		if((vdrinker.max_thralls <= 0) || (isnull(vdrinker.max_thralls || VDrinker.generation <= GENERATION_THINBLOOD))) //thin bloods or low level vampires can't make thralls, incase they get past the last check by leveling up off others
 			to_chat(src, span_warning("I cannot sire thralls, my blood is too weak!"))
@@ -219,9 +214,6 @@
 	remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
 	mind?.remove_antag_datum(/datum/antagonist/zombie)
 
-	if(client)
-		remove_verb(client, GLOB.ghost_verbs)
-		client.init_verbs()
 
 	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
