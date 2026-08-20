@@ -1,4 +1,4 @@
-/obj/structure/vampire/scryingorb
+/obj/structure/vampire/scryingorb // Method of spying on the town
 	name = "Eye of Night"
 	icon_state = "scrying"
 	desc = "An unholy creation of impossible design, floats before you. Upon its surface flashes countless images and shapes beyond your understanding, places that shouldn't exist. Merely being in its vicinity sends a shiver down your spine."
@@ -6,7 +6,7 @@
 	if(user?.mind.has_antag_datum(/datum/antagonist/vampire/lord))
 		user.visible_message("<font color='red'>[user]'s eyes turn dark red, as they channel the [src]</font>", "<font color='red'>I begin to channel my consciousness into a Predator's Eye.</font>")
 		if(do_after(user, 6 SECONDS, src))
-			user.scry_ghost(/mob/dead/observer/rogue/arcaneeye)
+			user.scry(can_reenter_corpse = 1, force_respawn = FALSE)
 	else
 		to_chat(user, span_warning("I don't have the power to use this!"))
 
@@ -16,12 +16,19 @@
 		. += span_bloody("Your scrying eye; spy upon the mortal or immortal realms alyke, peer through all languages and places. Just be careful whom walks past your eye. Your presence is powerful enough to be noticed even lyke this.")
 
 /mob/dead/observer/rogue/arcaneeye
-	icon_state = "arcaneeye"
+	sight = 0
 	see_in_dark = 2
+	invisibility = INVISIBILITY_OBSERVER
+	see_invisible = SEE_INVISIBLE_OBSERVER
+
+	misting = 0
+	var/mob/living/carbon/human/vampirelord = null
+	icon_state = "arcaneeye"
+	draw_icon = FALSE
 	hud_type = /datum/hud/eye
 
 /mob/dead/observer/rogue/arcaneeye/proc/scry_tele()
-	set category = "RoleUnique.Arcane Eye"
+	set category = "Arcane Eye"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
 	set hidden = 0
@@ -62,12 +69,15 @@
 	grant_all_languages()
 
 /mob/dead/observer/rogue/arcaneeye/proc/cancel_scry()
-	set category = "RoleUnique.Arcane Eye"
+	set category = "Arcane Eye"
 	set name = "Cancel Eye"
 	set desc= "Return to Body"
 
-	if(reenter_corpse())
+	if(vampirelord)
+		vampirelord.ckey = ckey
 		qdel(src)
+	else
+		to_chat(src, "My body has been destroyed! I'm trapped!")
 
 /mob/dead/observer/rogue/arcaneeye/Crossed(mob/living/L)
 	if(istype(L, /mob/living/carbon/human))
@@ -86,9 +96,9 @@
 
 /mob/dead/observer/rogue/arcaneeye/proc/vampire_telepathy()
 	set name = "Telepathy"
-	set category = "RoleUnique.Arcane Eye"
+	set category = "Arcane Eye"
 
-	var/msg = sanitize(input("Send a message.", "Command") as text|null)
+	var/msg = input("Send a message.", "Command") as text|null
 	if(!msg)
 		return
 	for(var/datum/mind/V in SSmapping.retainer.vampires)
@@ -99,15 +109,41 @@
 		to_chat(A, span_boldnotice("A message from [src.real_name]:[msg]"))
 
 /mob/dead/observer/rogue/arcaneeye/proc/eye_up()
-	set category = "RoleUnique.Arcane Eye"
+	set category = "Arcane Eye"
 	set name = "Move Up"
 
 	if(zMove(UP, TRUE))
 		to_chat(src, span_notice("I move upwards."))
 
 /mob/dead/observer/rogue/arcaneeye/proc/eye_down()
-	set category = "RoleUnique.Arcane Eye"
+	set category = "Arcane Eye"
 	set name = "Move Down"
 
 	if(zMove(DOWN, TRUE))
 		to_chat(src, span_notice("I move down."))
+
+/mob/dead/observer/rogue/arcaneeye/Move(NewLoc, direct)
+	if(updatedir)
+		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+	if(NewLoc)
+		var/turf/target_turf = get_turf(NewLoc)
+		if(target_turf)
+			return forceMove(target_turf)
+		return FALSE
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return FALSE
+	var/turf/step_turf = get_step(current_turf, direct)
+	if(step_turf)
+		return forceMove(step_turf)
+	return FALSE
+
+/mob/proc/scry(can_reenter_corpse = 1, force_respawn = FALSE, drawskip)
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/rogue/arcaneeye/eye = new(src)	// Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, eye) // Transfer NanoUIs.
+	eye.can_reenter_corpse = can_reenter_corpse
+	eye.vampirelord = src
+	eye.ghostize_time = world.time
+	eye.key = key
+	return eye
