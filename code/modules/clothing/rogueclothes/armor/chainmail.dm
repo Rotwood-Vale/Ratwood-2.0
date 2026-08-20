@@ -33,6 +33,7 @@
 	desc = "A maille shirt fashioned from hundreds of interlinked bronze rings. The value of flexible protection, especially in \
 	the centuries before plate, made any form of chainmail a rather valuable commodity; enough-so that it was worth its own weight \
 	in gold."
+	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
 	smeltresult = /obj/item/ingot/bronze
 
@@ -77,6 +78,7 @@
 	in every facet; light enough to leave a well-trained warrior unfettered, yet still capable of turning away both arrow-and-blade."
 	icon_state = "bhauberk"
 	item_state = "bhauberk"
+	armor = ARMOR_BRONZE
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
 
