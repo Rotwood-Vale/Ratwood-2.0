@@ -638,6 +638,7 @@
 #include "code\datums\components\baothajoyride.dm"
 #include "code\datums\components\beauty.dm"
 #include "code\datums\components\beetlejuice.dm"
+#include "code\datums\components\bloodblade.dm"
 #include "code\datums\components\butchering.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\construction.dm"
