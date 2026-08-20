@@ -631,7 +631,7 @@
 		return FALSE
 
 	if(device.chastity_move_sound)
-		modular_chastity_sounds_on(source, device.chastity_move_sound, device.chastity_move_volume)
+		playsound(source, device.chastity_move_sound, device.chastity_move_volume, TRUE)
 
 	var/datum/sex_controller/wearer_sexcon = source.sexcon
 	if(!wearer_sexcon || !wearer_sexcon.modular_chastity_content_enabled_for(source))
