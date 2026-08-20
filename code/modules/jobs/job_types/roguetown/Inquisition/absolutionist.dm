@@ -57,7 +57,7 @@
 		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, // Psydon's Holiest Guy
+		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, // Psydon's Holiest Guy
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
