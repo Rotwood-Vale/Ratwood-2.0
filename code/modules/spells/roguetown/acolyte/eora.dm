@@ -165,7 +165,7 @@
 	// Correct signal name
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_damage))
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
 	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
@@ -229,7 +229,7 @@
 		UnregisterSignal(L, list(
 			COMSIG_MOB_APPLY_DAMGE,
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)

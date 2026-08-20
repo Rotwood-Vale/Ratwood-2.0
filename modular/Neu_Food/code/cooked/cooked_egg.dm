@@ -1,8 +1,8 @@
 /obj/item/reagent_containers/food/snacks/rogue/friedegg
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	tastes = list("fried egg" = 1)
-	name = "fried egg"
-	desc = "Some Astratans enjoy their eggs sunny-side up."
+	name = "base fried egg"
+	desc = "you shouldn't be seeing this."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "friedegg"
 	portable = FALSE
@@ -11,32 +11,13 @@
 	warming = 5 MINUTES
 	rotprocess = SHELFLIFE_DECENT
 
-/obj/item/reagent_containers/food/snacks/rogue/friedegg/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/friedegg))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/two(loc)
-				qdel(I)
-				qdel(src)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage(loc)
-				qdel(I)
-				qdel(src)
-	else
-		return ..()
-
+/obj/item/reagent_containers/food/snacks/rogue/friedegg/fried //so fried-egg specific shit stops getting inherited
+	name = "fried egg"
+	desc = "Some Astratans enjoy their eggs sunny-side up."
 
 /*	.............   Twin fried eggs   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/two
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FULL_MEAL)
 	tastes = list("fried egg" = 1)
 	name = "twin fried egg"
 	faretype = FARE_NEUTRAL
@@ -45,28 +26,6 @@
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "seggs"
 	eat_effect = /datum/status_effect/buff/snackbuff
-
-/obj/item/reagent_containers/food/snacks/rogue/friedegg/two/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/cheddarwedge))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,long_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/tiberian(loc)
-				qdel(I)
-				qdel(src)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/bacon/fried))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,long_cooktime, target = src))
-				user.adjust_experience(/datum/skill/craft/cooking, user.STAINT * 0.8)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/bacon(loc)
-				qdel(I)
-				qdel(src)
-	else
-		return ..()
 
 /*	.............   Deviled Eggs   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/stuffedegg
@@ -83,7 +42,7 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/stuffedegg/cooked
 	tastes = list("creamy cheese" = 1, "egg" = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	name = "stuffed egg"
 	desc = "Egg stuffed with a creamy cheese filling."
 	icon_state = "deviledegg"
@@ -97,7 +56,7 @@
 	icon_state = "tartar"
 	foodtype = MEAT
 	rotprocess = SHELFLIFE_DECENT
-	faretype = FARE_NEUTRAL
+	faretype = FARE_POOR //It's raw meat and egg... come now now
 
 /* * * * * * * * * * * **
  *						*
@@ -108,11 +67,10 @@
 
 /*	.................   Valerian Omelette   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/tiberian
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF)
 	tastes = list("fried egg" = 1, "cheese" = 1)
 	name = "valerian omelette"
 	desc = "Fried eggs on a bed of half-melted cheese. A dish from distant lands."
-	bitesize = 4
 	faretype = FARE_FINE
 	portable = FALSE
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
@@ -122,78 +80,47 @@
 
 /*	.................   Bacon & Eggs   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/bacon
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF)
 	tastes = list("fried egg" = 1, "bacon" = 1)
 	name = "bacon and egg"
 	desc = "Fried eggs with bacon. The bacon's savory salty crunch is a perfect complement to the eggs' more mellow flavors."
-	bitesize = 4
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "baconegg"
 	eat_effect = /datum/status_effect/buff/mealbuff
-	rotprocess = SHELFLIFE_DECENT
 	faretype = FARE_NEUTRAL
+	rotprocess = SHELFLIFE_DECENT
 
 /*	.................   Hammerholdian Breakfast   ................... */
 //This is an extremely convoluded recipe probably not even worth it but yknow what, why not.
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF)
 	tastes = list("fried egg" = 1, "sausage" = 1)
 	name = "wiener egg"
 	desc = "Fried egg with sausage on the side. A good start to a perfect morning."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "wieneregg"
-	eat_effect = /datum/status_effect/buff/snackbuff
+	eat_effect = /datum/status_effect/buff/mealbuff
 	faretype = FARE_NEUTRAL
 	rotprocess = SHELFLIFE_DECENT
 
-/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausage/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/bacon/fried))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,long_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon(loc)
-				qdel(I)
-				qdel(src)
-	else
-		return ..()
-
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF)
 	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1)
 	name = "wiener egg with bacon"
 	desc = "Fried egg with sausage and bacon on the side. Mere step away from greatness."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
-	bitesize = 4
 	icon_state = "wienereggbacon"
-	eat_effect = /datum/status_effect/buff/snackbuff
-	rotprocess = SHELFLIFE_DECENT
+	eat_effect = /datum/status_effect/buff/mealbuff
 	faretype = FARE_FINE
-
-/obj/item/reagent_containers/food/snacks/rogue/friedegg/sausagebacon/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast))
-		if(isturf(loc)&& (found_table))
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user,long_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold(loc)
-				qdel(I)
-				qdel(src)
-	else
-		return ..()
+	rotprocess = SHELFLIFE_DECENT
 
 /obj/item/reagent_containers/food/snacks/rogue/friedegg/hammerhold
-	list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF)
 	tastes = list("fried egg" = 1, "sausage" = 1, "bacon" = 1, "toast" = 1)
 	name = "Hammerholdian breakfast"
-	desc = "A classic of the northern fortresses, peeled of it's more exotic ingredients for Vale kitchens, a true staple of Dwarven diet."
+	desc = "A classic of the northern fortresses, peeled of its more exotic ingredients for Azurean kitchens, a true staple of Dwarven diet."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_egg.dmi'
 	icon_state = "hammerbreak"
-	bitesize = 5
 	eat_effect = /datum/status_effect/buff/greatmealbuff
-	rotprocess = SHELFLIFE_DECENT
 	faretype = FARE_LAVISH
+	rotprocess = SHELFLIFE_DECENT

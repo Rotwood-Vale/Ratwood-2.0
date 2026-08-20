@@ -91,17 +91,17 @@
 		return
 	build_odds_labels()
 	RegisterSignal(thief, COMSIG_MOB_CLICKON, PROC_REF(on_click))
-	RegisterSignal(thief, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
-	RegisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
+	RegisterSignal(thief, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_disturbed))
+	RegisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_disturbed))
 
 /datum/pickpocket_session/Destroy()
 	clear_odds_labels()
 	if(thief)
-		UnregisterSignal(thief, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(thief, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if(STR && thief.active_storage == STR)
 			STR.hide_from(thief)
 	if(victim)
-		UnregisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	thief = null
 	victim = null
 	container = null

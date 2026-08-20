@@ -769,6 +769,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	minstr = 8
 	max_blade_int = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
+	obj_flags = CAN_BE_HIT | PREVENTS_DESTRUCTION
+	integrity_failure = 0.2
 	smeltresult = null
 	wdefense = 6
 	wbalance = WBALANCE_HEAVY
