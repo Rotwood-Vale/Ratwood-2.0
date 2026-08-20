@@ -61,6 +61,24 @@
 	if(clip_mask_legs_state)
 		clip_mask_legs = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_legs_state)
 
+/obj/item/bodypart/taur/generate_limb_cache_key(dropped, hideaux)
+	. = ..()
+	. += jointext(list(
+		taur_icon_state,
+		taur_markings_state,
+		taur_tertiary_state,
+		has_taur_color,
+		color_blend_mode,
+		taur_color,
+		taur_markings,
+		taur_tertiary,
+		taur_clothing_category,
+		tasset1_color,
+		tasset2_color,
+		clip_mask_icon,
+		clip_mask_state,
+		clip_mask_legs_state), "-")
+
 /obj/item/bodypart/taur/get_limb_icon(dropped, hideaux = FALSE)
 	// List of overlays
 	. = list()

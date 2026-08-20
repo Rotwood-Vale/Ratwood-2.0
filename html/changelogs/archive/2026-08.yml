@@ -456,3 +456,10 @@
       the weapon.
   - balance: polish and glint loss now occurs when an item breaks rather than when
       below 25% integrity.
+2026-08-20:
+  Pidgey-chan:
+  - rscadd: Fluvians can now be Underdwllers.
+  RadiantFlash7:
+  - bugfix: fixed dodging/feinting simple mobs
+  Xander3359:
+  - rscadd: Adds a few more tools to Malum's Conjure tool
