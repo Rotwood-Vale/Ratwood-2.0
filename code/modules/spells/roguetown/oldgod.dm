@@ -61,7 +61,6 @@
 				continue
 			if (istype(targetwound, /datum/wound/cbt/permanent))
 				continue
-			//p[]
 			if (move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
 				if (!targetwound) // it's possible they might've healed on or advanced
 					continue
