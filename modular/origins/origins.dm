@@ -50,8 +50,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/underdark
 	name = "The Underdark"
-	desc = "Said to be an immense network of caves and tunnels located all throughout the crust of Grimoria, the Underdark is home to the Dark Elves and the Kobolds, as well \
-	as the elusive Fluvian city-state of Mercuriam. The caverns of the Underdark are filled with many threats from rivers of acid to man-eating spiders; and even exaggerated \
+	desc = "Said to be an immense network of caves and tunnels located all throughout the crust of Grimoria, the Underdark is home to the Dark Elves and the Kobolds. \
+	The caverns of the Underdark are filled with many threats from rivers of acid to man-eating spiders; and even exaggerated \
 	reports of dragons beneath."
 	origin_title = "the Underdark"
 	map_x = 120
