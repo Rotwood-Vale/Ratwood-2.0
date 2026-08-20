@@ -79880,14 +79880,6 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/swamp,
 /area/rogue/outdoors/bograt/north)
-"rtA" = (
-/obj/structure/roguewindow,
-/obj/structure/bars{
-	color = "#b0a497";
-	layer = 2
-	},
-/turf/closed/void,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "rtB" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -415190,7 +415182,7 @@ tyZ
 tyZ
 tyZ
 tyZ
-rtA
+gMo
 awW
 fSM
 rWA
