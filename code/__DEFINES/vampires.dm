@@ -49,9 +49,9 @@ GLOBAL_LIST_INIT(vampire_sight_capture_planes, list(
 #define SHAPESHIFT_MOVEAFTER 5
 
 /// Vitae drained from mobs **with client** is multiplied by this define
-#define CLIENT_VITAE_MULTIPLIER 3
+#define CLIENT_VITAE_MULTIPLIER 5 //5000 vitae per-player, intended to be high to incentivise not-grinding NPCs.
 /// Given to the vampire in case their victim refuses to be converted. Given only once per unique vamp victim.
-#define VITAE_PER_UNIQUE_CONVERSION_REJECT 500
+#define VITAE_PER_UNIQUE_CONVERSION_REJECT 1000
 
 GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 	"Thin Blood",

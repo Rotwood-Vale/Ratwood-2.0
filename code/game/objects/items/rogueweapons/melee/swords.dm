@@ -688,8 +688,8 @@
 	desc = "An unholy longsword, who's crystalline blade radiates with insurmountable sharpness. It has been brought forth unto this world for a singular purpose; not to bring peace, but to dominate all who'd dare to oppose the coming darkness.</br> </br>'And I looked, and beheld a pale horse - the name that sat upon Her was Death, and Hell followed with them.'"
 	force = 40
 	force_wielded = 55
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/cut/rend, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/cut/exe/sweep, /datum/intent/sword/thrust, /datum/intent/sword/chop/cleave) //Antag superweapon
 	icon_state = "vlord"
 	item_state = "vlord"
 	wbalance = WBALANCE_NORMAL
@@ -698,7 +698,8 @@
 	static_price = TRUE
 	equip_delay_self = 0
 	unequip_delay_self = 0
-	unenchantable = TRUE //Its a 55 force, antag-only-holdable, glowing weapon as-is. Also you would be wasting your enchantments cause it qdel's the blade anyway on recalling it.
+	alt_grips = null //It breaks the sprite directions so badly.
+	unenchantable = TRUE //Its a 55 force, antag-only-holdable, glowing superweapon as-is. Also you would be wasting your enchantments cause it qdel's the blade anyway on recalling it.
 
 /obj/item/rogueweapon/sword/long/judgement/vlord/Initialize(mapload)
 	. = ..()
@@ -723,7 +724,7 @@
 
 /obj/item/rogueweapon/sword/long/judgement/vlord/pickup(mob/living/user)
 	if(!(user.mind?.has_antag_datum(/datum/antagonist/vampire))) //All vamps can pick it up. If a wretch vamp decides to larp as vander's daywalker. Man I don't care anymore, that's pure Aura.
-		to_chat(user, "<font color='red'>My hands twist unnaturally before the blade falls out of my grip.</font>")
+		visible_message(span_warning("[user] recoils as their hands twist and the [src] slips out of their grip!"))
 		user.Stun(20) //Shorter than most cursed weaponry, because you can't break it with its 9999 integ. Also why it doesn't set you on fire.
 	..()
 
