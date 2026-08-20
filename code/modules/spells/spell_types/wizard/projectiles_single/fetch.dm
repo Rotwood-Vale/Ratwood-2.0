@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fetch
 	name = "Fetch"
-	desc = "Shoot out a magical bolt that draws in the target struck towards the caster."
+	desc = "Shoot out a magical bolt that draws in the target struck towards the caster. Only skilled practitioners can use this spell while being grabbed."
 	clothes_req = FALSE
 	range = 15
 	projectile_type = /obj/projectile/magic/fetch
@@ -22,6 +22,14 @@
 	associated_skill = /datum/skill/magic/arcane
 	cost = 2 // Combat spell, but of slighlty less obvious use
 	xp_gain = TRUE
+
+/obj/effect/proc_holder/spell/invoked/projectile/fetch/cast_check(skipcharge, mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if (human_user && human_user.pulledby != null && human_user.get_skill_level(associated_skill) < 5)
+			to_chat(human_user, span_warning("You can't make the proper hand movements while being grabbed! Woe!"))
+			return FALSE
 
 /obj/projectile/magic/fetch/on_hit(target)
 	. = ..()
