@@ -63,6 +63,8 @@
 				continue
 			//p[]
 			if (move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
+				if (!targetwound) // it's possible they might've healed on or advanced
+					continue
 				var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
 				// instead of recreating a new wound of the same type as the victims, we can just transfer theirs (includes any existing healing/clotting) over to us
 				var/pre_bleeding = targetwound.bleed_rate
