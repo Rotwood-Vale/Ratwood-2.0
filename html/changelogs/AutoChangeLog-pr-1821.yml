@@ -1,8 +1,0 @@
-author: "Teragenic"
-delete-after: True
-changes:
-  - rscadd: "Adds a whole lot of Neufood Code from AP. Lots of pies. Deserts. Etc"
-  - balance: "Tried to rebalance AP values to RW values and"
-  - bugfix: "FIND ME ANY MENTIONS ABOUT THE AZUREAN PEAK PLEASE"
-  - image: "Adds a lot of Neufood Icons"
-  - code_imp: "Ports the entirety of AP's neufood code"

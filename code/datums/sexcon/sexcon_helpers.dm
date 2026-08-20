@@ -224,6 +224,23 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+//Used only for the rub ears action currently, changes messaging/arousal if target has nonhuman ears
+/mob/living/carbon/human/proc/has_nonhuman_ears()
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		return TRUE
+
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	if(!ears)
+		return FALSE
+
+	if(!ears.accessory_type)
+		return iself(src) || ishalfelf(src) || isdarkelf(src) || iswoodelf(src) || isgoblinp(src) || istabaxi(src) || iskobold(src) || isvulp(src) || islupian(src)
+
+	if(!ispath(ears.accessory_type, /datum/sprite_accessory/ears))
+		return FALSE
+
+	return TRUE
+
 /datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
 	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
 		return user.loc == neighbor.loc

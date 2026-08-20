@@ -36,6 +36,16 @@
 		"Hammer" = /obj/item/rogueweapon/hammer/iron,
 		"Shovel" = /obj/item/rogueweapon/shovel,
 		"Fishing Rod" = /obj/item/fishingrod,
+		"Frying Pan" = /obj/item/cooking/pan,
+		"Pickaxe" = /obj/item/rogueweapon/pick/decrepit,
+		"Axe" = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient/decrepit,
+		"Scissors" = /obj/item/rogueweapon/huntingknife/scissors,
+		"Chisel" = /obj/item/rogueweapon/chisel,
+		"Hand Saw" = /obj/item/rogueweapon/handsaw,
+		"Blowing Pipe" = /obj/item/rogueweapon/blowrod,
+		"Pot" = /obj/item/reagent_containers/glass/bucket/pot,
+		"Flint Sparker" = /obj/item/flint,
+		"Pipe" = /obj/item/clothing/mask/cigarette/pipe,
 	)
 
 /obj/effect/proc_holder/spell/invoked/conjure_tool/cast(list/targets, mob/living/user = usr)
