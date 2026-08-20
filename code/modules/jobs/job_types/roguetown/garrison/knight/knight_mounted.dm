@@ -47,7 +47,7 @@
 		var/weapons = list(
 			"Longsword + Crossbow",
 			"Billhook + Recurve Bow",
-			"Grand Mace + Longbow",
+			"Steel Mace + Longbow",
 			"Sabre + Recurve Bow",
 			"Lance + Kite Shield"
 		)
