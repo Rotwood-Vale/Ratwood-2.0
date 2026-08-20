@@ -179,7 +179,7 @@
 
 /datum/anvil_recipe/armor/bronze/maillebracers
 	name = "Chainsleeves, Bronze"
-	created_item = /obj/item/clothing/wrists/roguetown/bracers/bronze/chain
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/bronze
 
 /datum/anvil_recipe/armor/bronze/maillegloves
 	name = "Chain Gauntlets, Bronze"
@@ -311,6 +311,14 @@
 /datum/anvil_recipe/armor/decrepit/bracers
 	name = "Bracers, Decrepit"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
+
+/datum/anvil_recipe/armor/ancient/maillebracers
+	name = "Chainsleeves, Ancient"
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/ancient
+
+/datum/anvil_recipe/armor/decrepit/maillebracers
+	name = "Chainsleeves, Decrepit"
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/ancient/decrepit
 
 /datum/anvil_recipe/armor/ancient/chaingaunts
 	name = "Chain Gauntlets, Ancient"
@@ -647,6 +655,10 @@
 /datum/anvil_recipe/armor/steel/platebracer
 	name = "Plate Bracers, Steel"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers
+
+/datum/anvil_recipe/armor/steel/maillebracers
+	name = "Chainsleeves, Steel"
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain
 
 /datum/anvil_recipe/armor/steel/helmetnasal
 	name = "Nasal Helmet, Steel"

@@ -933,7 +933,7 @@
 	icon_state = "iduelist"
 	break_sound = "garrote_snap"
 	blocksound = PLATEHIT
-	max_integrity = 125 //more durability due to less covered areas in compairson to a mask
+	max_integrity = ARMOR_INT_MASK_IRON_MAILLE
 	body_parts_inherent = EYES//no peeling these
 	armor = ARMOR_PLATE
 	adjustable = CAN_CADJUST
@@ -948,10 +948,11 @@
 	name = "steel duelist goggles"
 	desc = "Steel duelist goggles forged for the most punishing exchanges. They guard the eyes while leaving pride and identity uncovered."
 	icon_state = "sduelist"
-	max_integrity = 150
+	max_integrity = ARMOR_INT_MASK_STEEL_MAILLE
 
 /obj/item/clothing/mask/rogue/spectacles/duelist/bronze
 	name = "bronze duelist goggles"
 	desc = "Bronze duelist goggles offering modest protection without obscuring one's features. Every victory deserves a witness."
 	icon_state = "bduelist"
-	max_integrity = 125
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_MASK_BRONZE + 50//worse protection than iron goggles so it gets a slight buff

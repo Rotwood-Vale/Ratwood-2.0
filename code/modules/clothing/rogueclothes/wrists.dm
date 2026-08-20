@@ -340,20 +340,15 @@
 	icon_state = "br_opal"
 	sellprice = 95
 
-/obj/item/clothing/wrists/roguetown/bracers/aalloy/chain
+/obj/item/clothing/wrists/roguetown/bracers/chain/ancient/decrepit
 	name = "decrepit chain sleeves"
 	desc = "Coverings of frayed bronze maille, fashioned from hundreds of interlinked rings. An aura of decaying harlotry eminates from these sleeves. \
 	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
 	icon_state = "ancientchainsleevesalt"
 	item_state = "ancientchainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_MAILLE
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
+	max_integrity = ARMOR_INT_SIDE_DECREPIT
 
-/obj/item/clothing/wrists/roguetown/bracers/aalloy/chain/attack_right(mob/user)
+/obj/item/clothing/wrists/roguetown/bracers/chain/ancient/decrepit/attack_right(mob/user)
 	. = ..()
 	if(!wrapped)
 		icon_state = "ancientchainsleeves"
@@ -374,20 +369,14 @@
 		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
 		wrapped = FALSE
 
-/obj/item/clothing/wrists/roguetown/bracers/paalloy/chain
+/obj/item/clothing/wrists/roguetown/bracers/chain/ancient
 	name = "ancient chain sleeves"
 	desc = "Coverings of polished gilbranze-maille, fashioned from hundreds of interlinked rings. An aura of undying harlotry eminates from these sleeves. \
 	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
 	icon_state = "ancientchainsleevesalt"
 	item_state = "ancientchainsleevesalt"
-	blocksound = CHAINHIT
-	armor = ARMOR_MAILLE
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
 
-/obj/item/clothing/wrists/roguetown/bracers/paalloy/chain/attack_right(mob/user)
+/obj/item/clothing/wrists/roguetown/bracers/chain/ancient/attack_right(mob/user)
 	. = ..()
 	if(!wrapped)
 		icon_state = "ancientchainsleeves"
@@ -408,7 +397,7 @@
 		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
 		wrapped = FALSE
 
-/obj/item/clothing/wrists/roguetown/bracers/bronze/chain
+/obj/item/clothing/wrists/roguetown/bracers/chain/bronze
 	name = "bronze chain sleeves"
 	desc = "Coverings of bronze maille, fashioned from hundreds of interlinked rings. An aura of antiqual harlotry eminates from these sleeves. \
 	</br>I can adjust these sleeves to hang further down, rather than simply hugging my wrists."
@@ -416,13 +405,8 @@
 	item_state = "bchainsleevesalt"
 	blocksound = CHAINHIT
 	armor = ARMOR_BRONZE
-	body_parts_covered = ARMS
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	var/wrapped = FALSE
 
-/obj/item/clothing/wrists/roguetown/bracers/bronze/chain/attack_right(mob/user)
+/obj/item/clothing/wrists/roguetown/bracers/chain/bronze/attack_right(mob/user)
 	. = ..()
 	if(!wrapped)
 		icon_state = "bchainsleeves"

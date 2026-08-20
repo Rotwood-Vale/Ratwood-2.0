@@ -61,7 +61,7 @@
 /datum/supply_pack/rogue/armor_bronze/jackchains
 	name = "Bracers, Chainsleeves"
 	cost = 20
-	contains = list(/obj/item/clothing/wrists/roguetown/bracers/bronze/chain)
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/chain/bronze)
 
 /datum/supply_pack/rogue/armor_bronze/chainglovesbronze
 	name = "Gauntlets, Chain"

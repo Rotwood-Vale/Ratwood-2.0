@@ -116,6 +116,8 @@
 	icon_state = "bchainkilt"
 	item_state = "bchainkilt"
 	sleevetype = "bchainkilt"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE + 25//275, slight big extra cause medium
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
 	smeltresult = /obj/item/ingot/bronze

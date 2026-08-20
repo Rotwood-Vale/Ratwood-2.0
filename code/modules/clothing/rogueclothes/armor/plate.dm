@@ -574,6 +574,7 @@
 	desc = "A coat of small bronze plates, segmented together in a manner not unlike chainmail. Divorced from the \
 	romanticized images of bare-chested legionnaires banishing nightmares from a pre-Syonic world, but venerable nevertheless."
 	icon_state = "blamellar"
+	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
 	smeltresult = /obj/item/ingot/bronze
 	armor_class = ARMOR_CLASS_MEDIUM
