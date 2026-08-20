@@ -13,7 +13,9 @@
 	var/turf/source_turf = get_turf(wearer)
 	if(!source_turf)
 		return
-	for(var/mob/M as anything in get_hearers_in_range(range, source_turf))
+	// Must scope to client mobs only — the default hearing-sensitive contents list also includes
+	// non-mob atoms (bells, scomm devices, etc.), which have no playsound_local() to call.
+	for(var/mob/M as anything in get_hearers_in_range(range, source_turf, RECURSIVE_CONTENTS_CLIENT_MOBS))
 		if(M != wearer && !modular_chastity_observer_on(M))
 			continue
 		M.playsound_local(source_turf, soundin, volume, TRUE)
