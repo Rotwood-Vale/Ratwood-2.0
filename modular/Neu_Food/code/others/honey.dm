@@ -7,7 +7,7 @@
 	dropshrink = 0.75
 	bitesize = 3
 	possible_transfer_amounts = list()
-	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = SNACK_DECENT)
+	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	grind_results = list()
 	disease_amount = 0
 	volume = 10
@@ -21,7 +21,7 @@
 
 	var/honey_color = ""
 
-/obj/item/reagent_containers/food/snacks/rogue/honey/Initialize(mapload)
+/obj/item/reagent_containers/food/snacks/rogue/honey/Initialize()
 	. = ..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)

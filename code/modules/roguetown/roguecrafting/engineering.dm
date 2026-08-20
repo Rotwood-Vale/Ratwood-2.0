@@ -426,6 +426,18 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
+/datum/crafting_recipe/roguetown/engineering/signalflare
+	name = "signal flare canister (x4)"
+	category = "Ranged"
+	result = list(/obj/item/signal_flare,
+				  /obj/item/signal_flare,
+				  /obj/item/signal_flare,
+				  /obj/item/signal_flare)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/engineering/impactsmoke
 	name = "smoke grenades (x3)"
 	category = "Explosives"

@@ -65,7 +65,7 @@
 			arousal_amt = 0.0
 			pain_amt = 11
 
-	user.visible_message(user.sexcon.spanify_force(msg))
+	user.sexcon_action_message(user.sexcon.spanify_force(msg))
 	if(force >= SEX_FORCE_EXTREME)
 		play_chastity_impact_sound(target, 'sound/combat/hits/kick/stomp.ogg', 65, 100, TRUE, -1)
 	else

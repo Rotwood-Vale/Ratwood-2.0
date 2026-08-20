@@ -7,6 +7,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	sellprice = 0
 
+/obj/item/kitchen/spoon/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Left-click a bowl with the spoon to drink from its contents.")
+	. += span_info("Nobler appetites prefer utensils over simply eating and drinking with one's bare hands.")
+
 /obj/item/kitchen/spoon/decrepit
 	name = "decrepit spoon"
 	icon_state = "aspoon"

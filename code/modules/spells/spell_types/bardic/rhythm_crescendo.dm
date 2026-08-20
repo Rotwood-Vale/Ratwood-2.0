@@ -135,6 +135,13 @@
 	prime_rhythm(user)
 	return TRUE
 
+/obj/effect/proc_holder/spell/self/rhythm/playMagSound() // override so herald can play cool metal sounds
+	var/mob/living/carbon/human/H = usr
+	if(istype(H) && H.advjob == "Herald of Progress")
+		playsound(get_turf(H), 'sound/magic/buffrollelectric.ogg', 100, FALSE)
+		return
+	return ..()
+
 /obj/effect/proc_holder/spell/self/rhythm/proc/has_instrument(mob/living/carbon/human/user)
 	for(var/obj/item/held in user.held_items)
 		if(istype(held, /obj/item/rogue/instrument))

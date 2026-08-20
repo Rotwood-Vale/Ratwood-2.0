@@ -120,19 +120,23 @@
 		Process_Incorpmove(direct)
 		return FALSE
 
-	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
+	if(mob.remote_control) //we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
+	var/add_delay = mob.cached_multiplicative_slowdown
 	// Mounted movement should be relayed before grab logic, otherwise pull checks can block riding.
 	if(mob.buckled)
 		var/mob/buckled_mob = mob
 		if(buckled_mob.get_buckled_animal_mount())
+			var/turf/open/water/water_turf = get_turf(mob)
+			if(istype(water_turf))
+				move_delay += add_delay
 			return mob.buckled.relaymove(mob, direct)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
-	if(mob.buckled)							//if we're buckled to something, tell it we moved.
+	if(mob.buckled) //if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!(L.mobility_flags & MOBILITY_MOVE))
@@ -143,7 +147,6 @@
 		return O.relaymove(mob, direct)
 
 	//We are now going to move
-	var/add_delay = mob.cached_multiplicative_slowdown
 	if(old_move_delay + world.tick_lag > world.time)
 		move_delay = old_move_delay
 	else
@@ -218,6 +221,7 @@
 	//		popup.close()
 			mob << browse(null, "window=[X]")
 			open_popups -= X
+
 /**
  * Checks to see if you're being grabbed and if so attempts to break it
  *
