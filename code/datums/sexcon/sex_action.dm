@@ -39,6 +39,8 @@
 	/// Requires can_use_penis() or can_use_vagina() to be TRUE for the target in standard sex part checks.
 	/// This is mostly used for either active penetration OR for things that can't be done through chastity.
 	var/target_needs_functional = FALSE
+	/// Set what spell the user needs to know, ie orison or presdigitation
+	var/obj/effect/proc_holder/spell/user_required_spell_type
 	/// If solo is TRUE, user must equal target.
 	var/solo = FALSE
 
@@ -47,6 +49,8 @@
 		if(user != target)
 			return FALSE
 	else if(user == target)
+		return FALSE
+	if(!user_knows_required_spell(user))
 		return FALSE
 	return has_accessible_needed_parts(user, target)
 
@@ -62,11 +66,18 @@
 /datum/sex_action/proc/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return FALSE
 
+/datum/sex_action/proc/user_knows_required_spell(mob/living/carbon/human/user)
+	if(!user_required_spell_type)
+		return TRUE
+	return user.mind?.has_spell(user_required_spell_type)
+
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(solo)
 		if(user != target)
 			return FALSE
 	else if(user == target)
+		return FALSE
+	if(!user_knows_required_spell(user))
 		return FALSE
 	if(!has_all_needed_parts(user, null, user_sex_part, user_needs_chastity))
 		return FALSE
@@ -111,14 +122,16 @@
 	if((parts_to_check & SEX_PART_BALLS) && !actor.getorganslot(ORGAN_SLOT_TESTICLES))
 		return FALSE
 	var/obj/item/organ/penis/penis = actor.getorganslot(ORGAN_SLOT_PENIS)
-	if((parts_to_check & SEX_PART_SLIT_SHEATH) && penis?.sheath_type != SHEATH_TYPE_SLIT)
+	if(parts_to_check & SEX_PART_SLIT_SHEATH)
+		if(penis?.sheath_type != SHEATH_TYPE_SLIT)
+			return FALSE
 		if(needs_chastity != !!actor.sexcon.has_chastity_penis())
 			return FALSE
-		return FALSE
-	if((parts_to_check & SEX_PART_COCK) && !penis)
+	if(parts_to_check & SEX_PART_COCK)
+		if(!penis)
+			return FALSE
 		if(needs_chastity != !!actor.sexcon.has_chastity_penis())
 			return FALSE
-		return FALSE
 	if((parts_to_check & SEX_PART_TAIL) && !actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
 		return FALSE
 	return TRUE
