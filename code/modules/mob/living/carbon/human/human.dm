@@ -680,6 +680,7 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
+	sunder_stacks = 0
 	. = ..()
 	mark_zone_selector_hud_dirty()
 
