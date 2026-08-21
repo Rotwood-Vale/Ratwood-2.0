@@ -105,6 +105,10 @@
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/ritechalk = 1,
 		)
+	
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
+	
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_ABSOLVER, start_maxed = TRUE) // PSYDONIAN MIRACLE-WORKER. LUX-MERGING FREEK.
 	if(H.mind)//The below was above, improperly, but is now properly removed.
