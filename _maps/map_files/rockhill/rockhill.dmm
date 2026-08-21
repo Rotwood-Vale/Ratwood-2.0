@@ -21242,12 +21242,6 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat_rotten,
 /turf/open/water/swamp/deep,
 /area/rogue/under/cavewet)
-"eAC" = (
-/obj/structure/stairs{
-	dir = 1
-	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "eAE" = (
 /obj/structure/flora/roguegrass/bush,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -26329,12 +26323,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
-"fFD" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "fFE" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -41559,9 +41547,6 @@
 "iXj" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle/dir1,
 /area/rogue/indoors/shelter/bog)
-"iXl" = (
-/turf/open/floor/rogue/tile/brownbrick,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "iXn" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/hexstone,
@@ -58897,6 +58882,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/sunkenchurch)
+"mJj" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "mJk" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/dirt,
@@ -62656,17 +62647,7 @@
 	},
 /area/rogue/outdoors/town/roofs/keep)
 "nBa" = (
-/obj/structure/roguewindow,
-/obj/structure/roguewindow,
-/obj/structure/bars/passage/shutter{
-	name = "Armorer";
-	redstone_id = "smith_shutter01"
-	},
-/obj/structure/bars{
-	color = "#b0a497";
-	layer = 2
-	},
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nBc" = (
 /obj/structure/chair/wood{
@@ -99182,20 +99163,10 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "vIo" = (
-/obj/structure/roguewindow,
-/obj/structure/bars/passage/shutter{
-	name = "Armorer";
-	redstone_id = "smith_shutter01"
+/obj/structure/fluff/railing/border{
+	dir = 8
 	},
-/obj/structure/bars/passage/shutter{
-	name = "Armorer";
-	redstone_id = "smith_shutter01"
-	},
-/obj/structure/bars{
-	color = "#b0a497";
-	layer = 2
-	},
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vIy" = (
 /obj/structure/fluff/railing/border,
@@ -409143,19 +409114,19 @@ wbg
 wbg
 fcQ
 cMD
-iXl
-iXl
-iXl
+nBa
+nBa
+nBa
 sju
 cXr
 qqj
 sco
 mDf
-iXl
+nBa
 fWL
 sco
 kzV
-iXl
+nBa
 kiq
 sco
 fnA
@@ -409575,19 +409546,19 @@ wbg
 meI
 aVC
 cMD
-iXl
-iXl
-iXl
+nBa
+nBa
+nBa
 sju
 pxy
 qqj
 ejQ
 rnW
-iXl
+nBa
 miK
 sco
 eLe
-iXl
+nBa
 nIV
 sco
 aOv
@@ -410015,11 +409986,11 @@ cXr
 qqj
 sco
 jXA
-iXl
+nBa
 cvA
 gAm
 pJY
-iXl
+nBa
 jbr
 sco
 wbg
@@ -410451,7 +410422,7 @@ nLb
 mSr
 sco
 hpz
-iXl
+nBa
 ixP
 sco
 fnA
@@ -410883,7 +410854,7 @@ cXr
 cXr
 sco
 wOa
-iXl
+nBa
 hFo
 sco
 fnA
@@ -411315,7 +411286,7 @@ tjm
 gSS
 sco
 ejv
-iXl
+nBa
 kdM
 sco
 aOv
@@ -411742,12 +411713,12 @@ qBK
 apS
 qqj
 rnW
-iXl
-iXl
-iXl
+nBa
+nBa
+nBa
 ejQ
-iXl
-iXl
+nBa
+nBa
 vdl
 sco
 fnA
@@ -412170,17 +412141,17 @@ vlU
 aVC
 uxF
 nFR
-fFD
+vIo
 uVS
 qqj
 kLO
 xuh
-iXl
+nBa
 xuh
 ejQ
-iXl
-iXl
-iXl
+nBa
+nBa
+nBa
 sco
 aOv
 wVI
@@ -413039,7 +413010,7 @@ qqj
 qqj
 cXr
 hqw
-iXl
+nBa
 eBZ
 sco
 sco
@@ -413471,7 +413442,7 @@ qqj
 qqj
 cXr
 fVb
-iXl
+nBa
 teb
 sco
 qdU
@@ -413903,7 +413874,7 @@ qqj
 qqj
 cXr
 fVb
-iXl
+nBa
 gTg
 sco
 aOv
@@ -414335,7 +414306,7 @@ qqj
 qqj
 sco
 prP
-iXl
+nBa
 qVw
 sco
 aOv
@@ -415189,7 +415160,7 @@ ldr
 bux
 ter
 vLS
-nBa
+lhn
 tyZ
 tyZ
 tyZ
@@ -415627,7 +415598,7 @@ iSq
 jeU
 fsP
 sco
-eAC
+mJj
 pqE
 rWA
 pXU
@@ -416056,7 +416027,7 @@ hji
 sco
 lhn
 lhn
-vIo
+lhn
 sco
 sco
 teE
