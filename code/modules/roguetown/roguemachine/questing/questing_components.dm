@@ -127,7 +127,7 @@
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
 
 /datum/component/quest_object/kill/on_target_death(mob/living/dead_mob, gibbed)
 	dead_mob?.remove_filter("quest_item_outline")

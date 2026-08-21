@@ -75,7 +75,7 @@
 	members += WEAKREF(user)
 	user.current_fellowship = src
 	user.faction |= faction_tag
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(on_member_qdel), override = TRUE)
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_member_qdel), override = TRUE)
 	remove_pending_invite(user.real_name)
 	to_chat(user, span_notice("You have joined the fellowship '[name]'."))
 	notify_members("[user.real_name] has joined the fellowship.", exclude = user)
@@ -106,7 +106,7 @@
 /datum/fellowship/proc/strip_fellowship_from(mob/living/user)
 	if(!user)
 		return
-	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(user, COMSIG_QDELETING)
 	user.faction -= faction_tag
 	if(user.current_fellowship == src)
 		user.current_fellowship = null

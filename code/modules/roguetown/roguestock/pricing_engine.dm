@@ -4,9 +4,6 @@
 /datum/anvil_recipe
 	var/display_category
 
-/datum/crafting_recipe
-	var/display_category
-
 GLOBAL_LIST_EMPTY(material_baseline_prices)
 GLOBAL_LIST_EMPTY(derived_sellprices)
 GLOBAL_LIST_EMPTY(derived_categories)
