@@ -101,111 +101,75 @@
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "arcyne_affinity"
-	desc = "Allows you to learn a spell or two of a certain type once every cycle."
+	desc = "Allows you to learn new spells over time through divine insight."
 	miracle = TRUE
 	devotion_cost = 250
-	recharge_time = 40 MINUTES
+	recharge_time = 30 MINUTES
 	chargetime = 0
 	chargedrain = 0
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
-	var/list/chosen_bundles = list() // Tracks which categories have already been granted
-	var/list/utility_bundle = list(	//Utility means exactly that. Nothing offensive and nothing that can affect another person negatively, 11 spellpoints total. (Barring Fetch, and technically Create Campfire)
-		/obj/effect/proc_holder/spell/self/message,
-		/obj/effect/proc_holder/spell/invoked/leap,
-		/obj/effect/proc_holder/spell/invoked/mending,
-		/obj/effect/proc_holder/spell/invoked/create_campfire,
-		/obj/effect/proc_holder/spell/invoked/projectile/fetch,
-		/obj/effect/proc_holder/spell/invoked/blink,
-	)
-	var/list/offensive_bundle = list(	//This is not meant to make them combat-capable. A weak offensive, and mostly defensive option. 9 spellpoints total.
-		/obj/effect/proc_holder/spell/invoked/wither/miracle,
-		/obj/effect/proc_holder/spell/self/conjure_armor/miracle,
-		/obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle,
-		/obj/effect/proc_holder/spell/invoked/enchant_weapon, // Should be fine since Enchant Weapon has been nerfed over time, and Burning Blade is (sadly) no longer a thing. Some T4 clerics also don't get Arcane skill naturally, so they have to manually refresh this.
-	)
-	var/list/buff_bundle = list(	//Buffs! An Acolyte being a supportive caster is 100% what they already are, so this fits neatly. No debuffs -- every patron already has a plethora of those.
-		/obj/effect/proc_holder/spell/invoked/hawks_eyes::name 			= /obj/effect/proc_holder/spell/invoked/hawks_eyes,
-		/obj/effect/proc_holder/spell/invoked/giants_strength::name 	= /obj/effect/proc_holder/spell/invoked/giants_strength,
-		/obj/effect/proc_holder/spell/invoked/longstrider::name 		= /obj/effect/proc_holder/spell/invoked/longstrider,
-		/obj/effect/proc_holder/spell/invoked/guidance::name 			= /obj/effect/proc_holder/spell/invoked/guidance,
-		/obj/effect/proc_holder/spell/invoked/haste::name 				= /obj/effect/proc_holder/spell/invoked/haste,
-		/obj/effect/proc_holder/spell/invoked/stoneskin::name 			= /obj/effect/proc_holder/spell/invoked/stoneskin,
-		/obj/effect/proc_holder/spell/invoked/fortitude::name 			= /obj/effect/proc_holder/spell/invoked/fortitude, // Picking the most expensive options adds up to 12 points
+	var/spells_granted = 0
+	var/list/all_spells = list( //A limited list of spells no greater than T2. You cannot get more than 15 spells by round end if you are consistent in learning them
+		/obj/effect/proc_holder/spell/invoked/diagnose/secular::name = /obj/effect/proc_holder/spell/invoked/diagnose/secular,
+		/obj/effect/proc_holder/spell/self/message::name = /obj/effect/proc_holder/spell/self/message,
+		/obj/effect/proc_holder/spell/invoked/leap::name = /obj/effect/proc_holder/spell/invoked/leap,
+		/obj/effect/proc_holder/spell/targeted/touch/lesserknock::name = /obj/effect/proc_holder/spell/targeted/touch/lesserknock,
+		/obj/effect/proc_holder/spell/self/light::name = /obj/effect/proc_holder/spell/self/light,
+		/obj/effect/proc_holder/spell/invoked/mirror_transform::name = /obj/effect/proc_holder/spell/invoked/mirror_transform,
+		/obj/effect/proc_holder/spell/invoked/mending::name = /obj/effect/proc_holder/spell/invoked/mending,
+		/obj/effect/proc_holder/spell/invoked/projectile/fetch::name = /obj/effect/proc_holder/spell/invoked/projectile/fetch,
+		/obj/effect/proc_holder/spell/invoked/projectile/repel::name = /obj/effect/proc_holder/spell/invoked/projectile/repel,
+		/obj/effect/proc_holder/spell/invoked/create_campfire::name = /obj/effect/proc_holder/spell/invoked/create_campfire,
+		/obj/effect/proc_holder/spell/invoked/blink::name = /obj/effect/proc_holder/spell/invoked/blink,
+		/obj/effect/proc_holder/spell/invoked/projectile/arcynebolt::name = /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt, //Relatively weak compared to all other spells like their holy bolt
+		/obj/effect/proc_holder/spell/invoked/projectile/frostbolt::name = /obj/effect/proc_holder/spell/invoked/projectile/frostbolt, //Also weak but it also gives an edge against undead NPCs
+		/obj/effect/proc_holder/spell/self/conjure_armor/miracle::name = /obj/effect/proc_holder/spell/self/conjure_armor/miracle,
+		/obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle::name = /obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle,
+		/obj/effect/proc_holder/spell/invoked/wither/miracle::name = /obj/effect/proc_holder/spell/invoked/wither/miracle,
+		/obj/effect/proc_holder/spell/invoked/hawks_eyes::name = /obj/effect/proc_holder/spell/invoked/hawks_eyes,
+		/obj/effect/proc_holder/spell/invoked/giants_strength::name = /obj/effect/proc_holder/spell/invoked/giants_strength,
+		/obj/effect/proc_holder/spell/invoked/longstrider::name = /obj/effect/proc_holder/spell/invoked/longstrider,
+		/obj/effect/proc_holder/spell/invoked/guidance::name = /obj/effect/proc_holder/spell/invoked/guidance,
+		/obj/effect/proc_holder/spell/invoked/haste::name = /obj/effect/proc_holder/spell/invoked/haste,
+		/obj/effect/proc_holder/spell/invoked/fortitude::name = /obj/effect/proc_holder/spell/invoked/fortitude
 	)
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/cast(list/targets, mob/user)
-	if(!..())
-		return FALSE
-	if(!user || !user.mind)
+	if(!user?.mind)
 		revert_cast()
 		return FALSE
-	var/list/available_choices = list("Utility", "Offense", "Buffs")
-	for(var/already in chosen_bundles)
-		available_choices.Remove(already)
-	if(!available_choices.len)
+	if(spells_granted >= 15)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
-		return TRUE
-	var/choice = input(user, "What type of spells has Noc blessed you with?", "CHOOSE PATH") as null|anything in available_choices
-	if(!choice)
-		revert_cast()
 		return FALSE
-	chosen_bundles += choice
-	switch(choice)
-		if("Utility")
-			if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/diagnose/secular))
-				var/secular_diagnose = new /obj/effect/proc_holder/spell/invoked/diagnose/secular
-				user.mind?.AddSpell(secular_diagnose)
-			add_spells(user, utility_bundle, grant_all = TRUE)
-		if("Offense")
-			add_spells(user, offensive_bundle, grant_all = TRUE)
-			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
-		if("Buffs")
-			add_spells(user, buff_bundle, choice_count = 4)
-			ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
-	if(chosen_bundles.len >= 3)
+	var/remaining = add_spells(user, all_spells, choice_count = min(3, 15 - spells_granted))
+	if(!remaining || spells_granted >= 15)
 		user.mind.RemoveSpell(src)
-		to_chat(user, span_notice("The arcyne knowledge granted by Noc has been fully bestowed."))
+		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/noc_spell_bundle/proc/add_spells(mob/user, list/spells, choice_count = 1, grant_all = FALSE)
-	if(!user || !user.mind || !islist(spells))
-		return
-	var/list/available = spells.Copy()
-	for(var/spell_type in available)
-		var/spell_path = available[spell_type]
-		if(!spell_path)
-			spell_path = spell_type
-		if(!ispath(spell_path, /obj/effect/proc_holder/spell))
-			available.Remove(spell_type)
-			continue
-		if(user.mind.has_spell(spell_path))
-			available.Remove(spell_type)
-	if(!available.len)
-		return
-	if(!grant_all)
-		var/choice_count_visual = choice_count
-		for(var/i in 1 to choice_count)
-			if(!available.len)
-				break
-			var/choice = input(user, "Choose a spell! Choices remaining: [choice_count_visual]") as null|anything in available
-			if(isnull(choice))
-				break
-			var/picked_spell = available[choice]
-			if(ispath(picked_spell, /obj/effect/proc_holder/spell) && !user.mind.has_spell(picked_spell))
-				var/obj/effect/proc_holder/spell/new_spell = new picked_spell
-				user.mind.AddSpell(new_spell)
-			choice_count_visual--
-			available.Remove(choice)
-	else
-		for(var/spell_type in available)
-			var/spell_path = available[spell_type]
-			if(!spell_path)
-				spell_path = spell_type
-			if(ispath(spell_path, /obj/effect/proc_holder/spell) && !user.mind.has_spell(spell_path))
-				var/obj/effect/proc_holder/spell/new_spell = new spell_path
-				user.mind.AddSpell(new_spell)
+/obj/effect/proc_holder/spell/self/noc_spell_bundle/proc/add_spells(mob/user, list/spells, choice_count = 1)
+	var/list/available_spells = spells.Copy()
+	for(var/spell_name in available_spells.Copy())
+		if(user.mind.has_spell(available_spells[spell_name]))
+			available_spells.Remove(spell_name)
+	var/choice_count_visual = choice_count
+	for(var/spell_picker in 1 to choice_count)
+		if(!length(available_spells))
+			break
+		var/choice = input(user, "Choose a spell! Choices remaining: [choice_count_visual]") as null|anything in available_spells
+		if(isnull(choice))
+			break
+		var/picked_spell = available_spells[choice]
+		if(!user.mind.has_spell(picked_spell))
+			var/obj/effect/proc_holder/spell/new_spell = new picked_spell
+			user.mind.AddSpell(new_spell, user)
+			spells_granted++
+			if(istype(new_spell, /obj/effect/proc_holder/spell/self/conjure_armor/miracle))
+				ADD_TRAIT(user, TRAIT_MAGEARMOR, TRAIT_MIRACLE)
+		available_spells.Remove(choice)
+		choice_count_visual--
+	return length(available_spells)
 
 //15 PER peer-ahead.
 /obj/effect/proc_holder/spell/invoked/noc_sight
