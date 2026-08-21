@@ -50,9 +50,9 @@
 /datum/particle_weather/snow_gentle/weather_act(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.apply_weather_temperature(-rand(0.5,1.5))
+		H.apply_weather_temperature(-rand(1,1.5))
 	else
-		L.adjust_bodytemperature(-rand(0.5,1.5))
+		L.adjust_bodytemperature(-rand(1,1.5))
 
 
 /datum/particle_weather/snow_storm
