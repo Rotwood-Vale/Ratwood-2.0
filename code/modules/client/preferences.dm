@@ -634,11 +634,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 //			dat += "<b><a href='?_src_=prefs;preference=name;task=random'>Random Name</A></b><BR>"
 			if(length(pref_species.restricted_virtues))
 				if(virtue.type in pref_species.restricted_virtues)
-					virtue = GLOB.virtues[/datum/virtue/none]
+					virtue = new /datum/virtue/none()
 				if(virtuetwo.type in pref_species.restricted_virtues)
-					virtuetwo = GLOB.virtues[/datum/virtue/none]
+					virtuetwo = new /datum/virtue/none()
+			if(!virtue.can_be_picked_by(pref_species))
+				virtue = new /datum/virtue/none()
+			if(!virtuetwo.can_be_picked_by(pref_species))
+				virtuetwo = new /datum/virtue/none()
 			if(statpack.name != "Virtuous")
-				virtuetwo = GLOB.virtues[/datum/virtue/none]
+				if(virtuetwo.type != /datum/virtue/none)
+					virtuetwo = new /datum/virtue/none()
 			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 			dat += "<b>Faith:</b> <a href='?_src_=prefs;preference=faith;task=input'>[selected_faith?.name || "FUCK!"]</a><BR>"

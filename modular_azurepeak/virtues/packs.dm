@@ -8,8 +8,11 @@
 	. = ..()
 	// Apply all virtues in the pack
 	for(var/virtue_path in granted_virtues)
-		var/datum/virtue/V = GLOB.virtues[virtue_path]
+		// Fresh instance: some virtues mutate themselves on apply, and the GLOB copies are shared globally.
+		var/datum/virtue/V = new virtue_path()
 		if(V)
+			if(V.max_choices)
+				stack_trace("[type] grants [virtue_path], which has sub-choices the player can never pick.")
 			// Apply the virtue's effects without checking triumphs (pack already cost triumphs)
 			V.apply_to_human(recipient)
 			V.handle_traits(recipient)

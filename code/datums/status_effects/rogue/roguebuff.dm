@@ -651,10 +651,12 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
-	if(!owner.construct)
+	if(!owner.construct || HAS_TRAIT(owner, TRAIT_BLACKBLOOD))
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
@@ -675,6 +677,89 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 		owner.updatehealth()
 // Lesser miracle effect end
+
+//lasts shorter than magic, one chomp every 3 seconds is good enough, let's not forget food can have multiple slices. This does not heal wounds, wounds are healed automatically like psydonitian trait, but it consumes 1% hunger a tick.
+#define CONSUME_AURA "consumehealing"
+
+/datum/status_effect/buff/foodhealing
+	id = "consumehealing"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
+	duration = 3 SECONDS
+	examine_text = "<font color='#b3b3b3'>SUBJECTPRONOUN is healing unnaturally fast!</font>"
+	var/fare_power = 0
+	var/healing_on_tick = 1
+	var/outline_colour = "#8a8a8a"
+
+/datum/status_effect/buff/foodhealing/on_creation(mob/living/new_owner, new_healing_on_tick, new_fare_power)
+	if(!isnull(new_healing_on_tick))
+		healing_on_tick = new_healing_on_tick
+	if(!isnull(new_fare_power))
+		fare_power = new_fare_power
+	return ..()
+
+/datum/status_effect/buff/foodhealing/on_apply()
+	var/filter = owner.get_filter(CONSUME_AURA)
+	if(!filter)
+		owner.add_filter(CONSUME_AURA, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	return TRUE
+
+/datum/status_effect/buff/foodhealing/on_remove()
+	. = ..()
+	owner.remove_filter(CONSUME_AURA)
+
+/datum/status_effect/buff/foodhealing/tick()
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
+	H.color = "#bdbdbd"
+
+	// Hunger-based healing multiplier.
+	var/effective_nutrition = clamp(owner.nutrition, 0, NUTRITION_LEVEL_FULL)
+	var/missing_nutrition = NUTRITION_LEVEL_FULL - effective_nutrition
+	var/hunger_ratio = missing_nutrition / NUTRITION_LEVEL_FULL
+
+	// 0.25x healing while full, 2.0x while starving.
+	var/healing_mult = 0.25 + (hunger_ratio * 1.75)
+
+	var/heal_amount = healing_on_tick * healing_mult
+
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume() + ((BLOOD_VOLUME_NORMAL * 0.005) * healing_mult), BLOOD_VOLUME_NORMAL)) // 0.5% blood restored per tick, for pity's sake
+
+	if(ishuman(owner))
+		var/mob/living/carbon/human/HM = owner
+		var/obj/item/bodypart/most_damaged
+
+		for(var/obj/item/bodypart/BP in HM.bodyparts)
+			if(QDELETED(BP))
+				continue
+
+			if(!most_damaged || (BP.brute_dam + BP.burn_dam) > (most_damaged.brute_dam + most_damaged.burn_dam))
+				most_damaged = BP
+
+		if(most_damaged)
+			var/total_damage = most_damaged.brute_dam + most_damaged.burn_dam
+
+			if(total_damage > 0)
+				var/brute_heal = heal_amount
+				var/burn_heal = heal_amount
+
+				brute_heal += most_damaged.brute_dam * (0.08 * healing_mult)
+				burn_heal += most_damaged.burn_dam * (0.08 * healing_mult)
+
+				most_damaged.heal_damage(brute_heal, burn_heal)
+				HM.update_damage_overlays()
+
+	owner.adjustOxyLoss(-heal_amount, 0)
+	owner.adjustToxLoss(-heal_amount, 0)
+
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
+	owner.adjustCloneLoss(-heal_amount, 0)
+
+	owner.stamina_add(-6)
+	owner.energy_add(9)
+
+#undef CONSUME_AURA
+
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"
@@ -742,6 +827,8 @@
 		return
 	if(owner.construct)
 		return
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
 	H.color = "#c7aa5c"
 	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
@@ -876,6 +963,8 @@
 	owner.remove_filter(MIRACLE_BLOODHEAL_FILTER)
 
 /datum/status_effect/buff/bloodheal/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_blood(get_turf(owner))
 	H.color = "#FF0000"
 	if(!owner.construct)
@@ -904,6 +993,8 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()
@@ -953,6 +1044,8 @@
 	return TRUE
 
 /datum/status_effect/buff/psyhealing/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
 	H.color = "#d3d3d3"
 	var/list/wCount = owner.get_wounds()
@@ -1002,6 +1095,8 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1029,6 +1124,8 @@
 	return ..()
 
 /datum/status_effect/buff/gemmuncher/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1061,6 +1158,8 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher_lesser/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1290,6 +1389,8 @@
 	var/healing_on_tick = 40
 
 /datum/status_effect/buff/flylordstriage/tick()
+	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
+		healing_on_tick /= 2
 	playsound(owner, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
 	owner.fullscreen_redflash("redflash3")
 	owner.emote("agony")
