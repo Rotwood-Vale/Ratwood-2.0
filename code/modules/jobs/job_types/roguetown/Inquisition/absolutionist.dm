@@ -30,6 +30,9 @@
 		TRAIT_RITUALIST//Handles conversions, too, now.
 	)
 
+	//Someone who survived being turned by an Inquisitor themselves? Not a chance.
+	virtue_restrictions = list(/datum/virtue/combat/second_chance)
+
 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
 	job_subclasses = list(
 		/datum/advclass/absolver
