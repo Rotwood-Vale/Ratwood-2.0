@@ -343,7 +343,7 @@
 	// HE LYYYYYYVES!!!!
 	playsound(src, 'sound/magic/antimagic.ogg', 100, FALSE)
 
-	revive(full_heal = FALSE, admin_revive = TRUE)
+	revive(full_heal = TRUE, admin_revive = TRUE)
 	emote("cackle")
 
 	apply_status_effect(/datum/status_effect/vampire_spawn_protection)
