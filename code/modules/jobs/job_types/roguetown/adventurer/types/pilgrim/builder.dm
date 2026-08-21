@@ -15,7 +15,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
-		STATKEY_SPD = -1
+		STATKEY_SPD = -1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
