@@ -27,13 +27,6 @@
 		/datum/advclass/baron/landed_knight
 	)
 
-/datum/job/roguetown/baron/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
-	. = ..()
-	if(!ishuman(H))
-		return
-	var/mob/living/carbon/human/human_target = H
-	human_target.apply_ownership_mark(null, "")
-
 /datum/outfit/job/roguetown/baron
 	neck = /obj/item/roguekey/manor
 	id = /obj/item/scomstone/bad/garrison
