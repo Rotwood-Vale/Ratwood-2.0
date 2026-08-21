@@ -410,6 +410,34 @@
 		/datum/mob_descriptor/feathers/soft,
 	)
 
+/datum/descriptor_choice/fur_scales
+	name = "Fur/Scales"
+	default_descriptor = /datum/mob_descriptor/scales/plain
+	descriptors = list(
+		/datum/mob_descriptor/scales/plain,
+		/datum/mob_descriptor/scales/rough,
+		/datum/mob_descriptor/scales/smooth,
+		/datum/mob_descriptor/scales/plated,
+		/datum/mob_descriptor/scales/peeling,
+		/datum/mob_descriptor/fur/plain,
+		/datum/mob_descriptor/fur/short,
+		/datum/mob_descriptor/fur/coarse,
+		/datum/mob_descriptor/fur/bristly,
+		/datum/mob_descriptor/fur/fluffy,
+		/datum/mob_descriptor/fur/shaggy,
+		/datum/mob_descriptor/fur/silky,
+		/datum/mob_descriptor/fur/lank,
+		/datum/mob_descriptor/fur/mangy,
+		/datum/mob_descriptor/fur/velvety,
+		/datum/mob_descriptor/fur/dense,
+		/datum/mob_descriptor/fur/matted,
+		/datum/mob_descriptor/feathers/fine,
+		/datum/mob_descriptor/feathers/stiff,
+		/datum/mob_descriptor/feathers/frayed,
+		/datum/mob_descriptor/feathers/delicate,
+		/datum/mob_descriptor/feathers/soft,
+	)
+
 /datum/descriptor_choice/skin_lamia
 	name = "Skin & Scales"
 	default_descriptor = /datum/mob_descriptor/fur/plain
