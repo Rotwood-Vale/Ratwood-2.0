@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes:
+  - bugfix: "Noticeboards will now only alert that they have a new listing if there's _actually_ a posting, and the alert text will appear in the examine box."
