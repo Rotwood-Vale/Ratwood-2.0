@@ -673,3 +673,19 @@
 
 	revert_cast()
 	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/aerosolize/miracle
+	name = "Pestras Smoke"
+	miracle = TRUE
+	devotion_cost = 50
+	invocations = list("Pestra, spread my work!")
+	associated_skill = /datum/skill/magic/holy
+
+
+/obj/effect/proc_holder/spell/invoked/aerosolize/wave/miracle
+	name = "Pestras Wave"
+	miracle = TRUE
+	devotion_cost = 75
+	invocations = list("Godes of medicine and disease, spread your gifts and banes!")
+	associated_skill = /datum/skill/magic/holy

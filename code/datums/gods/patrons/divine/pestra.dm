@@ -15,8 +15,10 @@
 					/obj/effect/proc_holder/spell/invoked/pestilent_blade		= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/pestra_heal			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/attach_bodypart		= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/aerosolize/miracle	= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/heal					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/cure_rot				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/aerosolize/wave/miracle = CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/pestra		= CLERIC_T4,
 	)
 	confess_lines = list(
