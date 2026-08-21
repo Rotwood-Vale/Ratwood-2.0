@@ -647,13 +647,12 @@
 /obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
-		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
 	user.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
 	..()
-	if(HAS_TRAIT(user, TRAIT_SANDSTORM_GOGGLES))
-		REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, "generic")
+	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
 	user.update_fov_angles()
 
 
