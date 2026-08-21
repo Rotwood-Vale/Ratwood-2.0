@@ -52,7 +52,7 @@
 			the ruins of your great city are as unsafe as the deserts being ravaged by the Djinn."))
 			r_hand = /obj/item/rogueweapon/spear/assegai
 			backl = /obj/item/rogueweapon/scabbard/gwstrap
-			armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
+			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			backpack_contents = list(/obj/item/rogueweapon/huntingknife = 1)
@@ -63,7 +63,7 @@
 			r_hand = /obj/item/rogueweapon/woodstaff
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 			cloak = /obj/item/clothing/cloak/hierophant
-			armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
+			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
 			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
@@ -137,7 +137,7 @@
 			r_hand = /obj/item/rogueweapon/woodstaff
 			cloak = /obj/item/clothing/cloak/hierophant
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
-			armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
+			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
 			backpack_contents += list(/obj/item/rogueweapon/huntingknife = 1)
 
 			H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_JOURNEYMAN, TRUE)
