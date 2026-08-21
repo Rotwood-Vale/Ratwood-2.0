@@ -139,7 +139,7 @@
 	if(pregnant)
 		to_chat(owner, span_love("I feel a surge of warmth in my belly again..."))
 		return FALSE
-	to_chat(owner, span_love("I feel a surge of warmth in my belly, I’m definitely pregnant!"))
+	to_chat(owner, span_love("I feel a surge of warmth in my belly, I'm definitely pregnant!"))
 	pregnant = TRUE
 	//TODO add a way to trigger lactating when pregnancy happens
 	return TRUE
