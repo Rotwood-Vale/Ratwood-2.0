@@ -1,4 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - refactor: "Tally Subsystem is no longer global, but per person's individual mapvote."
