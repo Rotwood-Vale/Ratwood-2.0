@@ -1035,13 +1035,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
 							I.original_name = I.name // Store original name before renaming
-							I.name = custom_name
+							I.name = sanitize(custom_name)
 							// Log to game log
 							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
 						// Apply custom description if set
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
-							I.desc = custom_desc
+							I.desc = html_encode(custom_desc)
 
 						user.put_in_hands(I)
 

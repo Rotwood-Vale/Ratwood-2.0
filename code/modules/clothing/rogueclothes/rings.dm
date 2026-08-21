@@ -1,6 +1,7 @@
 
 
 /obj/item/clothing/ring
+	no_loot_taint = TRUE
 	name = "ring"
 	desc = ""
 	w_class = WEIGHT_CLASS_TINY

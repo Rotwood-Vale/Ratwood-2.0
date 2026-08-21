@@ -29,6 +29,12 @@ GLOBAL_VAR_INIT(forecast, FALSE)
 GLOBAL_VAR_INIT(todoverride, FALSE)
 GLOBAL_VAR_INIT(dayspassed, FALSE)
 
+// IC calendar admin override (see __HELPERS/calendar.dm + admin/verbs/set_date.dm)
+GLOBAL_VAR_INIT(date_override_enabled, FALSE)
+GLOBAL_VAR_INIT(date_override_day, 1)
+GLOBAL_VAR_INIT(date_override_month, 1)
+GLOBAL_VAR_INIT(date_override_offset, 0)
+
 /proc/settod()
 	var/time = station_time()
 	var/oldtod = GLOB.tod
@@ -54,8 +60,16 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 			GLOB.dayspassed++
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
+			scom_announce_new_dawn() // IC calendar: announce active feast/holy daes
 			SStreasury.distribute_estate_incomes()
+			SStreasury.evaluate_payroll_solvency() // Crown insolvency ladder: arrears -> sequestration at payroll
 			SStreasury.distribute_daily_payments()
+			SStreasury.tick_burgher_pledge() // Item 6 decrees: burghers' Golden Bull tribute
+			SStreasury.tick_poll_tax() // Taxation 2: collect per-class poll tax / pay subsidies
+			SStreasury.tick_rumor_points() // Quest 2: refill innkeeper rumor points for the day
+			if(SSeconomy)
+				SSeconomy.daily_tick()
+			SScity_assembly?.on_day_tick()
 		for(var/mob/living/player in GLOB.mob_list)
 			if(player.stat != DEAD && player.client)
 				player.do_time_change()
@@ -91,6 +105,12 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 				text_to_show = "DAWN OF THE SEVENTH DAE\nSUN'S DAE"
 		if(!text_to_show)
 			return
+		// IC calendar: stamp the date and any active feast daes onto the dawn splash. Also makes the
+		// dedup key date-unique, so rounds running past a week still get their splash each dawn.
+		text_to_show += "\n[uppertext(get_ic_date_short_as_string())]"
+		var/list/active_titles = get_active_calendar_event_titles()
+		if(length(active_titles))
+			text_to_show += "\n- [uppertext(active_titles.Join(" & "))] -"
 		if(text_to_show in mind.areas_entered)
 			return
 		mind.areas_entered += text_to_show

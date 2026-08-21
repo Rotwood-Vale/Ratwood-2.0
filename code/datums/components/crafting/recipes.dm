@@ -30,9 +30,11 @@
 	var/craftdiff = 1
 	var/sellprice = 0
 	/// Whether this recipe will be hidden from recipe books
-	var/hides_from_books = FALSE 
+	var/hides_from_books = FALSE
 	/// Whether this recipe will be hidden from the generic crafting menu UI.
 	var/hides_from_crafting_menu = FALSE
+	/// Assembly/disassembly recipes: skip the quality roll and inherit the lowest input quality instead.
+	var/skip_quality = FALSE
 	/// Whether this recipe will transmit a message in a 7x7 column around the source.
 	var/loud = FALSE
 	//crafting diff, every diff removes 25% chance to craft

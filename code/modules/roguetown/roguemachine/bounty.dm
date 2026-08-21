@@ -7,7 +7,6 @@
 	blade_dulling = DULLING_BASH
 	anchored = TRUE
 	max_integrity = 999999
-	var/budget = 0
 
 /datum/bounty
 	var/target
@@ -179,10 +178,14 @@
 	// Deduct money from user
 	budget -= round(amount)
 
-	//Deduct royal tax from amount
-	var/royal_tax = round(amount * 0.1)
-	SStreasury.treasury_value += royal_tax
-	SStreasury.log_entries += "+[royal_tax] to treasury (bounty tax)"
+	//Deduct royal tax from amount. A bounty posting is a contract, so the Contract Levy rate applies.
+	var/royal_tax = round(amount * SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY))
+	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
+	SStreasury.mint(SStreasury.discretionary_fund, royal_tax, "Bounty levy")
+	SStreasury.log_to_steward("+[royal_tax] to treasury (bounty levy)")
+	record_round_statistic(STATS_TAXES_COLLECTED, royal_tax)
+	record_round_statistic(STATS_REVENUE_CONTRACT_LEVY, royal_tax)
+	record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, royal_tax)
 
 	amount -= royal_tax
 
@@ -209,7 +212,7 @@
 	new_bounty.amount = amount
 	new_bounty.target = target_realname
 	new_bounty.bandit = bandit_status
-	new_bounty.reason = reason
+	new_bounty.reason = html_encode(reason)
 	new_bounty.employer = employer_name
 	new_bounty.target_race = race
 	new_bounty.target_height = LOWER_TEXT(descriptor_height)
@@ -356,8 +359,9 @@
 		return
 
 	budget -= cost
-	SStreasury.treasury_value += cost
-	SStreasury.log_entries += "+[cost] to treasury (bounty scroll fee)"
+	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
+	SStreasury.mint(SStreasury.discretionary_fund, cost, "Bounty scroll fee")
+	SStreasury.log_to_steward("+[cost] to treasury (bounty scroll fee)")
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()

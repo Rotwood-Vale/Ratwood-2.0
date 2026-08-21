@@ -11,7 +11,6 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
 	locked = TRUE
-	var/budget = 0
 	var/wgain = 0
 	var/keycontrol = "merchant"
 	var/next_hawk = 0
@@ -184,7 +183,7 @@
 			return
 
 		var/prename = held_items[matches[1]]["NAME"]
-		var/newname = input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename)
+		var/newname = sanitize(input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename))
 		// explicit null check: input returns null on cancel; empty string allowed? we block empty.
 		if(newname != null && newname != "")
 			for(var/obj/item/I in matches)

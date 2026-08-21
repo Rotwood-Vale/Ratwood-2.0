@@ -906,6 +906,7 @@
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods/northwest)
 "ajw" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -1599,6 +1600,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/shelter/woods)
 "apY" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap)
@@ -1967,7 +1969,7 @@
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/rtfield)
 "aub" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/hamlet)
 "auc" = (
@@ -4608,6 +4610,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "aVA" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/structure/fluff/signage,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap)
@@ -9611,6 +9614,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "bXP" = (
+/obj/effect/landmark/quest_spawner/hard,
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains/decap)
@@ -9821,6 +9825,10 @@
 "bZZ" = (
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"aaf" = (
+/obj/item/roguemachine/zadcote/steward,
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors/town)
 "caa" = (
 /obj/machinery/light/rogue/candle/blue{
 	pixel_y = -32
@@ -9933,7 +9941,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/rtfield)
 "cbE" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "cbI" = (
@@ -12740,6 +12748,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
 "cHb" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flagpole,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -13293,6 +13302,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town)
 "cML" = (
+/obj/effect/landmark/quest_spawner/easy,
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield)
@@ -14898,6 +14908,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach)
 "dgL" = (
+/obj/effect/landmark/quest_spawner/medium,
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -21604,7 +21615,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/town/grove)
 "eyW" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/hamlet)
 "ezb" = (
@@ -23457,7 +23468,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church/chapel)
 "eUf" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "eUi" = (
@@ -26861,7 +26872,7 @@
 /area/rogue/outdoors/town)
 "fED" = (
 /mob/living/carbon/human/species/human/northern/bog_deserters/better_gear,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "fEJ" = (
@@ -31054,7 +31065,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/inq)
 "gyf" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/north)
 "gyh" = (
@@ -35465,7 +35476,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "hrO" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/south)
 "hrQ" = (
@@ -50857,6 +50868,10 @@
 "kDS" = (
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/town)
+"aad" = (
+/obj/structure/roguemachine/escrow,
+/turf/open/floor/rogue/ruinedwood,
+/area/rogue/outdoors/town)
 "kDU" = (
 /obj/structure/table/wood,
 /obj/item/candle/gold/lit{
@@ -51191,7 +51206,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "kHV" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/south)
 "kHX" = (
@@ -52188,7 +52203,7 @@
 "kSM" = (
 /obj/structure/flora/roguegrass/maneater/real,
 /obj/effect/spawner/roguemap/treeorbush,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/southwest)
 "kSN" = (
@@ -59573,7 +59588,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/mountains/decap)
 "mrE" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/north)
 "mrF" = (
@@ -62545,6 +62560,10 @@
 "mXZ" = (
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/physician)
+"aag" = (
+/obj/item/roguemachine/zadcote/merchant,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/physician)
 "mYa" = (
 /obj/structure/flora/mushroomcluster,
 /turf/open/floor/rogue/cobble,
@@ -63028,6 +63047,10 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/dwarfin)
 "neg" = (
+/turf/open/floor/rogue/blocks/newstone/alt,
+/area/rogue/indoors/town/warehouse)
+"nzz" = (
+/obj/structure/roguemachine/steward_export,
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/warehouse)
 "nej" = (
@@ -64239,7 +64262,7 @@
 /turf/open/water/bloody,
 /area/rogue/under/cave/orcdungeon)
 "nrD" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/hamlet)
 "nrI" = (
@@ -67689,7 +67712,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/woods/south)
 "odo" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/medium,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/north)
 "odq" = (
@@ -90355,6 +90378,10 @@
 "sNZ" = (
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield)
+"aae" = (
+/obj/structure/roguemachine/scrapper,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield)
 "sOd" = (
 /obj/structure/chair/bench/ultimacouch/r,
 /obj/structure/fluff/railing/border/east,
@@ -90434,6 +90461,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/underdarker/dunsouth)
 "sPj" = (
+/turf/open/floor/rogue/naturalstone,
+/area/rogue/under/underdark)
+"aab" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark)
 "sPu" = (
@@ -91193,7 +91224,7 @@
 	},
 /area/rogue/indoors/town/church/basement)
 "sWW" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/beach/forest/south)
 "sWX" = (
@@ -104551,7 +104582,7 @@
 /area/rogue/indoors/town/bath)
 "vIb" = (
 /obj/structure/flora/roguegrass/jungle/sparse,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods/southwest)
 "vIf" = (
@@ -106160,7 +106191,7 @@
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
 "vYx" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/beach/forest/north)
 "vYz" = (
@@ -115373,7 +115404,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
 "xVd" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/northwest)
 "xVf" = (
@@ -117028,6 +117059,10 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/scarymaze)
 "ylh" = (
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
+"aai" = (
+/obj/item/roguemachine/zadcote/bathhouse,
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "ylo" = (
@@ -129045,7 +129080,7 @@ mnN
 mnN
 mnN
 mnN
-sPj
+aab
 sPj
 sPj
 nOh
@@ -186467,7 +186502,7 @@ cqm
 xNL
 mMx
 ylh
-ylh
+aai
 cqm
 bVe
 wSO
@@ -297159,7 +297194,7 @@ sNZ
 sNZ
 sNZ
 jFA
-sNZ
+aae
 kTT
 ibp
 ibp
@@ -306243,7 +306278,7 @@ vAb
 mhG
 nbL
 mXZ
-mXZ
+aag
 vRV
 dkS
 rCj
@@ -307600,7 +307635,7 @@ dkS
 kDS
 kDS
 kDS
-kDS
+aad
 dVt
 cCB
 mYC
@@ -312583,7 +312618,7 @@ sns
 sns
 eKH
 fSt
-bZZ
+aaf
 jfV
 dra
 goW
@@ -315749,7 +315784,7 @@ eKH
 uLU
 puO
 neg
-neg
+nzz
 neg
 puO
 sMl

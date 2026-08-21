@@ -479,7 +479,7 @@
 		user.visible_message("<span class='info'>[user] Carves a name into the passage.</span>")
 		if(do_after(user, 10))
 			var/passagename
-			passagename = input("What name would you like to carve into the passage?")
+			passagename = sanitize(input("What name would you like to carve into the passage?"))
 			if (passagename)
 				name = passagename + "(passage)"
 				desc = "a passage with a name carved into it"
@@ -546,7 +546,7 @@
 		user.visible_message("<span class='info'>[user] Carves a name into the grille.</span>")
 		if(do_after(user, 10))
 			var/grillename
-			grillename = input("What name would you like to carve into the grille?")
+			grillename = sanitize(input("What name would you like to carve into the grille?"))
 			if (grillename)
 				name = grillename + "(grille)"
 				desc = "a grille with a name carved into it"

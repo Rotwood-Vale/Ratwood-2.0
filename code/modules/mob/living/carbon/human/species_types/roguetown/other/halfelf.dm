@@ -103,13 +103,13 @@
 /datum/species/human/halfelf/get_skin_list()
 	return list(
 		"Timber-Gronn" = SKIN_COLOR_TIMBER_GRONN,
-		"Giza-Azure" = SKIN_COLOR_GIZA_AZURE,
+		"Giza-Vale" = SKIN_COLOR_GIZA_AZURE,
 		"Walnut-Stine" = SKIN_COLOR_WALNUT_STINE,
 		"Etrustcan-Dandelion" = SKIN_COLOR_ETRUSTCAN_DANDELION,
 		"Naledi-Born" = SKIN_COLOR_NALEDI_BORN,
 		"Naledi-Southerner" = SKIN_COLOR_NALEDI_LIGHT,
 		"Kaze-Lotus" = SKIN_COLOR_KAZE_LOTUS,
-		"Grenzel-Azuria" = SKIN_COLOR_GRENZEL_WOODS,
+		"Grenzel-Vale" = SKIN_COLOR_GRENZEL_WOODS,
 		"Etrusca-Lirvas" = SKIN_COLOR_ETRUSCA_LIRVAS,
 		"Free Roamers" = SKIN_COLOR_FREE_FOLK,
 		"Avar Borne"	= SKIN_COLOR_AVAR_BORNE,

@@ -22,7 +22,6 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
 	locked = FALSE
-	var/budget = 0
 	var/upgrade_flags
 	var/current_cat = "1"
 	var/list/categories = list(
@@ -73,6 +72,7 @@
 		var/cost = PA.cost
 		if(budget >= cost)
 			budget -= cost
+			record_round_statistic(STATS_COPPERFACE_VALUE_SPENT, cost)
 		else
 			say("Not enough!")
 			return

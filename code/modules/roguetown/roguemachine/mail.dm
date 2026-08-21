@@ -91,10 +91,10 @@
 	if(inqcoins)
 		to_chat(user, span_warning("The machine doesn't respond."))
 		return
-	var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+	var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
 	if(!send2place)
 		return
-	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
+	var/sentfrom = sanitize(input(user, "Who is this letter from?", "ROGUETOWN", null))
 	if(!sentfrom)
 		sentfrom = "Anonymous"
 	var/t = stripped_multiline_input("Write Your Letter", "ROGUETOWN", no_trim=TRUE)
@@ -491,8 +491,8 @@
 			to_chat(user, span_warning("The machine doesn't respond."))
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
-			var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
-			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
+			var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
+			var/sentfrom = sanitize(input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null))
 			if(!sentfrom)
 				sentfrom = "Anonymous"
 			if(findtext(send2place, "#"))
@@ -607,15 +607,6 @@
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
 	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag]"
-
-/obj/structure/roguemachine/mail/Topic(href, href_list)
-	..()
-
-	if(!usr)
-		return
-
-	if(href_list["directory"])
-		view_directory(usr)
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
@@ -775,6 +766,9 @@
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
 	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+	if(href_list["directory"])
+		view_directory(usr)
 		return
 	if(href_list["eject"])
 		if(inqcoins <= 0)

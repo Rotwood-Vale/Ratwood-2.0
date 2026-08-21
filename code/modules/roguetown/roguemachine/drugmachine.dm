@@ -20,7 +20,6 @@
 	var/list/held_items = list()
 	locked = FALSE
 	lockid = "nightman"
-	var/budget = 0
 	var/secret_budget = 0
 	var/recent_payments = 0
 	var/last_payout = 0
@@ -84,7 +83,7 @@
 			return
 		var/O = text2path(href_list["buy"])
 		if(held_items[O]["PRICE"])
-			var/tax_amt = FLOOR(SStreasury.tax_value * held_items[O]["PRICE"], 1)
+			var/tax_amt = FLOOR(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * held_items[O]["PRICE"], 1)
 			var/full_price = held_items[O]["PRICE"] + tax_amt
 			if(drugrade_flags & DRUGRADE_NOTAX)
 				full_price = held_items[O]["PRICE"]
@@ -92,12 +91,19 @@
 				budget -= full_price
 				record_round_statistic(STATS_PURITY_VALUE_SPENT, full_price)
 				recent_payments += held_items[O]["PRICE"]
-				if(!(drugrade_flags & DRUGRADE_NOTAX))
-					SStreasury.give_money_treasury(tax_amt, "purity import tax")
+				// AP tariff routing: PURITY is a bathhouse stew machine, so the Ordinance of
+				// the Baths diverts its tariff to the Church the same as the BRASSFACE.
+				if(drugrade_flags & DRUGRADE_NOTAX)
+					record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+				else if(SStreasury.bathhouse_ordinance_active)
+					var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(held_items[O]["PRICE"], BATHHOUSE_BRASSFACE_TITHE_RATE)
+					if(bathhouse_tithe > 0)
+						SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+				else
+					SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
 					record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
 					record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
-				else
-					record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+					record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
 			else
 				say("Not enough!")
 				return
@@ -212,7 +218,7 @@
 	contents += "</center>"
 
 	for(var/I in held_items)
-		var/price = FLOOR(held_items[I]["PRICE"] + (SStreasury.tax_value * held_items[I]["PRICE"]), 1)
+		var/price = FLOOR(held_items[I]["PRICE"] + (SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * held_items[I]["PRICE"]), 1)
 		var/namer = held_items[I]["NAME"]
 		if(!price)
 			price = "0"

@@ -29,6 +29,8 @@
 	var/sellprice = 0 //sanitize this somewhere so it cant be decimals
 	var/static_price = FALSE
 	var/loadout_item = FALSE // TRUE if this item was spawned from the loadout system
+	var/looted = FALSE
+	var/no_loot_taint = FALSE
 
 /atom/movable/proc/randomize_price()
 	if(sellprice)
@@ -47,6 +49,8 @@
 	else // if its not a container, run the original code.
 		if(sellprice == initial(sellprice))
 			randomize_price()
+		if(looted)
+			return max(1, round(sellprice * LOOTED_SELL_MULT))
 		return sellprice
 
 // For appraisal purposes only - calculates total value including contents

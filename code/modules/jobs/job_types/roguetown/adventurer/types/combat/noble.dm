@@ -1,4 +1,5 @@
 /datum/advclass/noble
+	townie_contract_gate_exempt = TRUE
 	name = "Aristocrat"
 	tutorial = "You are a traveling noble visiting foreign lands. With wealth, come the poor, ready to pilfer you of your hard earned (inherited) coin, so tread lightly unless you want to meet a grizzly end."
 	allowed_sexes = list(MALE, FEMALE)

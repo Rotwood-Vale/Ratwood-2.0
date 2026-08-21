@@ -54,6 +54,33 @@ SUBSYSTEM_DEF(regionthreat)
 			return TR
 	return null
 
+/// Weighted pick of a region that allows the given quest type, weighted by fill ratio
+/// (latent_ambush / max_ambush). Regions with more relative threat are picked more often, so
+/// as adventurers clear a region its quest share naturally drops. Returns null if no region
+/// allows the type.
+/datum/controller/subsystem/regionthreat/proc/pick_region_for_quest(quest_type)
+	var/list/weights = list()
+	for(var/T in threat_regions)
+		var/datum/threat_region/TR = T
+		if(!TR.allows_quest_type(quest_type))
+			continue
+		var/weight = TR.get_threat_weight()
+		if(weight <= 0)
+			continue
+		// get_threat_weight() is a fractional 0-1 fill ratio; scale to a positive integer so the
+		// summed weight is always >= 1 (stock pickweight() does rand(1, total) and returns null when
+		// the total is < 1). max(1, ...) keeps every eligible region selectable after the floor.
+		weights[TR] = max(1, round(weight * 1000))
+	if(!length(weights))
+		// Fall back: any region that allows the type, ignoring fill ratio.
+		for(var/T in threat_regions)
+			var/datum/threat_region/TR = T
+			if(TR.allows_quest_type(quest_type))
+				weights[TR] = 1
+		if(!length(weights))
+			return null
+	return pickweight(weights)
+
 /datum/threat_region_display
 	var/region_name
 	var/danger_level
@@ -89,3 +116,37 @@ SUBSYSTEM_DEF(regionthreat)
 		threat_regions += new path()
 
 	log_world("RegionThreat: Loaded [threat_regions.len] threat regions for [map.realm_name]")
+
+	// Swap any trade region whose default identity clashes with this map. Must run before the
+	// route map below, which writes threat_region_id onto the instance being replaced.
+	if(map.trade_region_swaps)
+		for(var/trade_id in map.trade_region_swaps)
+			var/datum/economic_region/replacement = map.trade_region_swaps[trade_id]
+			if(!ispath(replacement, /datum/economic_region))
+				stack_trace("RegionThreat: trade_region_swaps entry for [trade_id] is not an economic_region path")
+				continue
+			var/datum/economic_region/swapped = new replacement()
+			if(swapped.region_id != trade_id)
+				stack_trace("RegionThreat: swap for [trade_id] declares region_id [swapped.region_id]")
+				continue
+			GLOB.economic_regions[trade_id] = swapped
+
+	// Re-point the towner postings' host regions at this map's wilderness; the GLOB
+	// defaults are dun_world region names and preview() rejects everything else.
+	if(map.towner_quest_regions)
+		var/list/caravan_regions = map.towner_quest_regions[QUEST_TOWNER_SMITH_CARAVAN]
+		if(length(caravan_regions))
+			GLOB.towner_smith_caravan_regions = caravan_regions
+		var/list/orevein_regions = map.towner_quest_regions[QUEST_TOWNER_MINER_OREVEIN]
+		if(length(orevein_regions))
+			GLOB.towner_orevein_regions = orevein_regions
+
+	// Re-point the trade roads' blockade regions at this map's wilderness. Runs here rather
+	// than in SSeconomy so the remap is in place before anything reads threat_region_id.
+	if(map.blockade_route_map)
+		for(var/trade_id in map.blockade_route_map)
+			var/datum/economic_region/ER = GLOB.economic_regions[trade_id]
+			if(!ER)
+				stack_trace("RegionThreat: blockade_route_map names unknown trade region [trade_id]")
+				continue
+			ER.threat_region_id = map.blockade_route_map[trade_id]

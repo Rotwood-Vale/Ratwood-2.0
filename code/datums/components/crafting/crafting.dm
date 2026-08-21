@@ -376,7 +376,9 @@
 							continue
 						to_chat(user, span_danger("I've failed to craft \the [result_name]."))
 						continue
-					var/list/parts = del_reqs(R, user)
+					var/list/quality_capture = R.skip_quality ? list() : null
+					var/list/parts = del_reqs(R, user, quality_capture)
+					var/inherited_quality = quality_capture?["min_quality"]
 					if(islist(R.result))
 						var/list/L = R.result
 						for(var/IT in L)
@@ -386,6 +388,14 @@
 								apply_pottery_quality_to_item(I, user.get_skill_level(R.skillcraft))
 							I.CheckParts(parts, R)
 							I.OnCrafted(user.dir, user)
+							if(isitem(I))
+								var/obj/item/CI = I
+								if(CI.has_item_quality)
+									if(R.skip_quality)
+										if(inherited_quality != null)
+											CI.apply_quality(null, null, inherited_quality)
+									else
+										CI.apply_quality(user, R.skillcraft)
 							I.add_fingerprint(user)
 					else
 						if(ispath(R.result, /turf))
@@ -405,6 +415,14 @@
 								I.OnCrafted(I.SelectDiagDirection(), user)
 							else
 								I.OnCrafted(user.dir, user)
+							if(isitem(I))
+								var/obj/item/CI = I
+								if(CI.has_item_quality)
+									if(R.skip_quality)
+										if(inherited_quality != null)
+											CI.apply_quality(null, null, inherited_quality)
+									else
+										CI.apply_quality(user, R.skillcraft)
 							I.add_fingerprint(user)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
@@ -464,7 +482,7 @@
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
-/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
+/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user, list/quality_out = null)
 	var/list/surroundings
 	var/list/Deletion = list()
 	. = list()
@@ -577,6 +595,25 @@
 				. += AM
 				Deletion -= AM
 				partlist[A] -= 1
+	if(quality_out)
+		var/min_q = null
+		for(var/atom/movable/AM in Deletion)
+			if(!isitem(AM))
+				continue
+			var/obj/item/IT = AM
+			if(!IT.has_item_quality)
+				continue
+			if(min_q == null || IT.item_quality < min_q)
+				min_q = IT.item_quality
+		for(var/atom/movable/AM in .)
+			if(!isitem(AM))
+				continue
+			var/obj/item/IT = AM
+			if(!IT.has_item_quality)
+				continue
+			if(min_q == null || IT.item_quality < min_q)
+				min_q = IT.item_quality
+		quality_out["min_quality"] = min_q
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
@@ -668,6 +705,53 @@
 			usr.mind.lastrecipe = recipe
 		if("checkboxonlycraftable")
 			showonlycraftable = params["state"]
+
+
+/datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
+	var/list/data = list()
+	data["name"] = R.name
+	data["ref"] = "[REF(R)]"
+	data["path"] = R.type
+	data["sellprice"] = R.sellprice
+	var/result_path
+	if(islist(R.result))
+		var/list/result_list = R.result
+		if(result_list.len)
+			result_path = result_list[1]
+	else if(ispath(R.result, /atom/movable))
+		result_path = R.result
+	data["has_item_quality"] = result_path && ispath(result_path, /obj/item) ? initial(result_path:has_item_quality) : FALSE
+	var/req_text = ""
+	var/tool_text = ""
+	var/catalyst_text = ""
+
+	for(var/a in R.reqs)
+		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
+		//Also these are typepaths so sadly we can't just do "[a]"
+		var/atom/A = a
+		req_text += " [R.reqs[A]] [initial(A.name)],"
+	req_text = replacetext(req_text,",","",-1)
+	data["req_text"] = req_text
+
+	for(var/a in R.chem_catalysts)
+		var/atom/A = a //cheat-typecast
+		catalyst_text += " [R.chem_catalysts[A]] [initial(A.name)],"
+	catalyst_text = replacetext(catalyst_text,",","",-1)
+	data["catalyst_text"] = catalyst_text
+
+	for(var/a in R.tools)
+		if(ispath(a, /obj/item))
+			var/obj/item/b = a
+			tool_text += " [initial(b.name)],"
+		else
+			tool_text += " [a],"
+	tool_text = replacetext(tool_text,",","",-1)
+	data["tool_text"] = tool_text
+
+	data["craftingdifficulty"] = skill_to_string(R.craftdiff)
+
+
+	return data
 
 //Mind helpers
 

@@ -226,3 +226,6 @@
 
 	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
 	var/no_redflash = FALSE
+	// --- Fellowship (AP Quest 2 port) ---
+	var/datum/fellowship/current_fellowship
+	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites

@@ -173,6 +173,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// %-age of our raw damage that is dealt to armor or weapon on hit / parry / clip.
 	var/intdamage_factor = 1
 
+	var/item_quality = ITEM_QUALITY_STANDARD
+	var/has_item_quality = FALSE
+	/// Ferentian Trading Company seal - foreign vessels refuse to buy back Company-sealed stock.
+	/// Not wired up anywhere yet (goldface/silverface catalog step).
+	var/atc_sealed = FALSE
+	/// If TRUE, the stockpile refuses to mint this item as treasure. AP sets this on mapload for
+	/// items spawned inside town areas ("town property"); that marking is not yet wired up in ES,
+	/// so this is declared but currently always FALSE.
+	var/unmintable = FALSE
+
 	var/sleeved = null
 	var/sleevetype = null
 	var/nodismemsleeves = FALSE
@@ -263,7 +273,59 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/nudist_approved = FALSE
 
 /obj/item/Initialize(mapload)
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
+	if(experimental_inhand)
+		var/props2gen = list("gen")
+		var/list/prop
+		if(gripped_intents)
+			props2gen += "wielded"
+		for(var/i in props2gen)
+			prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onhip)
+		if(slot_flags & ITEM_SLOT_BELT)
+			var/i = "onbelt"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onback)
+		if(slot_flags & ITEM_SLOT_BACK)
+			var/i = "onback"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	wdefense_dynamic = wdefense
+	update_force_dynamic()
+
 	. = ..()
+
+	// Town-property marking (AP parity): items placed inside a town area at mapload are
+	// stamped unmintable, so residents can't strip the town's furnishings and mint them for
+	// coin. Read by the stockpile deposit / mint guard (stockpile.dm).
+	if(mapload)
+		var/area/A = get_area(src)
+		if(A && is_type_in_typecache(A, GLOB.roguetown_areas_typecache))
+			unmintable = TRUE
+
+	for(var/path in actions_types)
+		new path(src)
+	actions_types = null
+
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
 		pixel_y = rand(-5,5)
@@ -323,50 +385,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (obj_broken)
 				update_damaged_state()
 
-/obj/item/Initialize(mapload)
-	if (attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
-
-	if(experimental_inhand)
-		var/props2gen = list("gen")
-		var/list/prop
-		if(gripped_intents)
-			props2gen += "wielded"
-		for(var/i in props2gen)
-			prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onhip)
-		if(slot_flags & ITEM_SLOT_BELT)
-			var/i = "onbelt"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onback)
-		if(slot_flags & ITEM_SLOT_BACK)
-			var/i = "onback"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	wdefense_dynamic = wdefense
-	update_force_dynamic()
-
-	. = ..()
-	for(var/path in actions_types)
-		new path(src)
-	actions_types = null
 
 
 	if(!hitsound)
@@ -1931,6 +1949,93 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			str += "<b>Sewing</b> and a needle."
 		str = span_info(str)
 		. += str
+
+/obj/item/proc/step_action() //this was made to rewrite clown shoes squeaking, moved here to avoid throwing runtimes with non-/clothing wearables
+	SEND_SIGNAL(src, COMSIG_CLOTHING_STEP_ACTION)
+
+/obj/item/proc/apply_quality(mob/crafter, skill_path, forced_tier = null)
+	var/tier
+	if(forced_tier != null)
+		tier = forced_tier
+	else
+		var/skill_level = 0
+		if(crafter && skill_path)
+			skill_level = crafter.get_skill_level(skill_path)
+		var/roll = rand(1, 100)
+		switch(skill_level)
+			if(SKILL_LEVEL_NONE, SKILL_LEVEL_NOVICE)
+				if(roll <= 60)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_APPRENTICE)
+				if(roll <= 20)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 75)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_JOURNEYMAN)
+				tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_EXPERT)
+				if(roll <= 70)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			if(SKILL_LEVEL_MASTER)
+				if(roll <= 30)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 80)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			else
+				if(roll <= 40)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+	item_quality = tier
+	var/prefix
+	switch(tier)
+		if(ITEM_QUALITY_LOOTED)
+			prefix = ITEM_QUALITY_PREFIX_LOOTED
+		if(ITEM_QUALITY_RUINED)
+			prefix = ITEM_QUALITY_PREFIX_RUINED
+		if(ITEM_QUALITY_AWFUL)
+			prefix = ITEM_QUALITY_PREFIX_AWFUL
+		if(ITEM_QUALITY_CRUDE)
+			prefix = ITEM_QUALITY_PREFIX_CRUDE
+		if(ITEM_QUALITY_ROUGH)
+			prefix = ITEM_QUALITY_PREFIX_ROUGH
+		if(ITEM_QUALITY_FINE)
+			prefix = ITEM_QUALITY_PREFIX_FINE
+		if(ITEM_QUALITY_FLAWLESS)
+			prefix = ITEM_QUALITY_PREFIX_FLAWLESS
+		if(ITEM_QUALITY_MASTERWORK)
+			prefix = ITEM_QUALITY_PREFIX_MASTERWORK
+	if(prefix)
+		name = "[prefix] [name]"
+	if(initial(sellprice) > 0)
+		sellprice = max(1, round(sellprice * ITEM_QUALITY_MULT(tier)))
+	return tier
+
+/obj/item/proc/mark_as_looted()
+	if(looted)
+		return
+	looted = TRUE
+	item_quality = ITEM_QUALITY_LOOTED
+	name = "[ITEM_QUALITY_PREFIX_LOOTED] [name]"
+
+/obj/item/proc/unmark_as_looted()
+	if(!looted)
+		return
+	looted = FALSE
+	item_quality = ITEM_QUALITY_STANDARD
+	name = replacetext(name, "[ITEM_QUALITY_PREFIX_LOOTED] ", "")
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)

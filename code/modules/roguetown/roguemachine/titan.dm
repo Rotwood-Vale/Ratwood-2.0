@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	switch(mode)
 		if(0)
 			if(findtext(message, "secrets of the throat"))
-				say("My commands are: Make Decree, Make Announcement, Set Taxes, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
+				say("My commands are: Make Decree, Make Announcement, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 			if(findtext(message, "make announcement"))
 				if(nocrown)
@@ -186,6 +186,15 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				say("All decrees shall be purged!")
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				purge_decrees()
+				return
+			if(findtext(message, "revise charter"))
+				if(notlord || nocrown)
+					say("You are not my master!")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				say("The charters of the realm lay before thee...")
+				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+				give_decree_popup(H)
 				return
 			if(findtext(message, "make law"))
 				if(!SScommunications.can_announce(H))
@@ -309,8 +318,33 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 /obj/structure/roguemachine/titan/proc/give_tax_popup(mob/living/carbon/human/user)
 	if(!Adjacent(user))
 		return
-	var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
-	taxsetter.ui_interact(user)
+	// Sales/transaction taxes are all category levies now (import tariff, contract levy, etc.),
+	// set through the Taxation 2 panel; the legacy flat tax_value lever is gone.
+	var/choice = input(user, "Which levies shall you adjust?", "Crown Taxation") as null|anything in list("Deposit Taxes & Fines", "Levies & Poll Tax")
+	if(!choice || !Adjacent(user))
+		return
+	switch(choice)
+		if("Deposit Taxes & Fines")
+			// Ratwood per-category deposit taxation and fine exemptions
+			// (SStreasury.taxation_cat_settings). The upstream TaxSetter TGUI only drives
+			// the new levy/poll rates, so the categories are adjusted here.
+			var/list/new_settings = list()
+			for(var/category in SStreasury.taxation_cat_settings)
+				var/cur_amount = SStreasury.taxation_cat_settings[category]["taxAmount"]
+				var/cur_exempt = SStreasury.taxation_cat_settings[category]["fineExemption"]
+				var/newamt = input(user, "[category]: deposit tax percent (0-99). Currently [cur_amount]%.", src, cur_amount) as null|num
+				if(isnull(newamt) || !Adjacent(user))
+					return
+				newamt = CLAMP(round(newamt), 0, 99)
+				var/exempt_choice = alert(user, "[category]: exempt from fines? Currently [cur_exempt ? "exempt" : "not exempt"].", "Fine Exemption", "Exempt", "Not Exempt")
+				if(!Adjacent(user))
+					return
+				new_settings[category] = list("taxAmount" = newamt, "fineExemption" = (exempt_choice == "Exempt"))
+			SStreasury.set_taxes(new_settings, "The Generous Lord Decrees", "The Tyrannical Lord Dictates")
+		if("Levies & Poll Tax")
+			var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
+			taxsetter.ui_interact(user)
+
 
 /obj/structure/roguemachine/titan/proc/make_announcement(mob/living/user, raw_message)
 	if(!SScommunications.can_announce(user))
@@ -375,6 +409,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	return TRUE
 
 /proc/make_law(raw_message)
+	raw_message = html_encode(raw_message)
 	GLOB.laws_of_the_land += raw_message
 	priority_announce("[length(GLOB.laws_of_the_land)]. [raw_message]", "A LAW IS DECLARED", pick('sound/misc/new_law.ogg', 'sound/misc/new_law2.ogg'), "Captain")
 	record_round_statistic(STATS_LAWS_AND_DECREES_MADE)
@@ -399,3 +434,10 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	priority_announce("[H.name], the [H.get_role_title()], sits as the regent of the realm.", "A New Regent Resides", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 	SSticker.regentmob = H
 	SSticker.regentday = GLOB.dayspassed
+
+// Item 6 (decrees): the Lord's charter panel - revoke/restore the realm's ancient compacts.
+/obj/structure/roguemachine/titan/proc/give_decree_popup(mob/living/carbon/human/user)
+	if(!Adjacent(user))
+		return
+	var/datum/decree_setter/panel = new
+	panel.ui_interact(user)

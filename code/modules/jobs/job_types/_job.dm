@@ -251,11 +251,11 @@
 	if(give_bank_account)
 		if(give_bank_account > 1)
 			SStreasury.create_bank_account(H, give_bank_account)
-			if(noble_income)
-				SStreasury.noble_incomes[H] = noble_income
-
 		else
 			SStreasury.create_bank_account(H)
+		if(noble_income)
+			SStreasury.noble_incomes[H] = noble_income
+			SStreasury.grant_estate_income(H, noble_income, TRUE)
 
 	if(show_in_credits)
 		SScrediticons.processing += H
@@ -338,11 +338,6 @@
 		if((H.dna.species.id != "human") && (H.dna.species.id != "humen"))
 			H.set_species(/datum/species/human)
 			H.apply_pref_name("human", preference_source)
-	if(!visualsOnly)
-		var/datum/bank_account/bank_account = new(H.real_name, src)
-		bank_account.payday(STARTING_PAYCHECKS, TRUE)
-		H.account_id = bank_account.account_id
-
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 	H.apply_organ_stuff() // apply super special sauce organ stuff when we spawn in, and therefore have MIND
