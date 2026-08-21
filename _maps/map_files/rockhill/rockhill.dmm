@@ -2042,10 +2042,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/bath)
 "avH" = (
-/obj/machinery/light/rogue/candle{
-	pixel_y = -32
+/obj/structure/fluff/railing/border{
+	dir = 1
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "avJ" = (
 /obj/structure/fluff/railing/wood{
@@ -4695,8 +4695,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq/basement)
 "aYW" = (
-/obj/structure/roguemachine/goldface/public/tailor,
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "aZp" = (
 /obj/structure/hotspring/border,
@@ -4850,14 +4849,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "bbh" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 4
-	},
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/wood,
+/area/rogue/outdoors/town/roofs)
 "bbi" = (
 /obj/structure/roguewindow/stained/silver,
 /turf/open/floor/rogue/woodturned,
@@ -5628,9 +5621,10 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/outdoors/beach/harbor)
 "bju" = (
-/obj/structure/bed/rogue/inn/wooldouble,
-/obj/item/bedsheet/rogue/double_pelt,
-/turf/open/floor/carpet/royalblack,
+/obj/machinery/light/rogue/candle/l,
+/obj/structure/table/wood/poor,
+/obj/effect/spawner/lootdrop/valuable_candle_spawner,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "bjv" = (
 /obj/structure/flora/hotspring_rocks,
@@ -10703,12 +10697,16 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/manor/rockhill)
 "cok" = (
-/obj/structure/lever/wall{
-	dir = 8;
-	name = "front shutters";
-	redstone_id = "tailor_shutter"
+/obj/structure/closet/crate/drawer{
+	pixel_y = 6
 	},
-/turf/open/floor/carpet/red,
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+/obj/item/needle,
+/obj/item/roguekey/tailor,
+/obj/item/roguekey/tailor,
+/turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "col" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
@@ -13156,16 +13154,8 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cavewet/river)
 "cOs" = (
-/obj/structure/table/wood,
-/obj/structure/bars{
-	icon_state = "barsbent";
-	layer = 2.81
-	},
-/obj/structure/bars/passage/shutter{
-	name = "Armorer";
-	redstone_id = "smith_shutter01"
-	},
-/turf/open/floor/rogue/blocks/stonered,
+/obj/structure/roguemachine/goldface/public/tailor,
+/turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cOu" = (
 /obj/structure/fluff/nest,
@@ -13321,8 +13311,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town)
 "cPV" = (
-/obj/structure/stairs/ccwdown,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/closed/wall/mineral/rogue/roofwall/innercorner/dir1,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cQb" = (
 /obj/structure/stairs/stone{
@@ -15105,8 +15094,13 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/south)
 "djT" = (
-/turf/open/floor/rogue/wood,
-/area/rogue/outdoors/town/roofs)
+/obj/structure/fluff/railing/border{
+	dir = 9;
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dkk" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/rogue/grass,
@@ -15153,6 +15147,15 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/manor/rockhill)
+"dku" = (
+/obj/machinery/tanningrack{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/structure/table/wood/poor,
+/obj/machinery/loom,
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dkv" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
@@ -15460,13 +15463,10 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/bograt/above)
 "dop" = (
-/obj/machinery/tanningrack{
-	pixel_x = 2;
-	pixel_y = 8
+/obj/structure/fluff/railing/border/east{
+	dir = 9
 	},
-/obj/structure/table/wood/poor,
-/obj/machinery/loom,
-/turf/open/floor/rogue/woodturned,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "dov" = (
 /obj/structure/stairs/stone{
@@ -15794,12 +15794,12 @@
 /turf/closed/wall/mineral/rogue/decowood/vert,
 /area/rogue/indoors/town)
 "dsT" = (
-/obj/structure/bars{
-	color = "#b0a497";
-	layer = 2
+/obj/structure/lever/wall{
+	dir = 8;
+	name = "front shutters";
+	redstone_id = "tailor_shutter"
 	},
-/obj/structure/roguewindow,
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/carpet/red,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "dsW" = (
 /turf/open/floor/rogue/churchmarble,
@@ -16945,9 +16945,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/woodsrat/south)
 "dGl" = (
-/obj/structure/fluff/railing/corner/south_east,
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/town/rockhill)
+/obj/structure/roguemachine/vendor{
+	keycontrol = "tailor"
+	},
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dGm" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/item/roguegem/violet,
@@ -19395,14 +19397,11 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "efj" = (
-/obj/structure/fluff/railing/border{
-	dir = 5
+/obj/structure/roguemachine/scomm{
+	pixel_y = -32;
+	scom_tag = "Tailor's Shop - Desk"
 	},
-/obj/structure/bell_common{
-	pixel_x = 11;
-	pixel_y = -10
-	},
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "efn" = (
 /obj/item/clothing/under/roguetown/tights/black,
@@ -21639,12 +21638,11 @@
 /area/rogue/indoors/shelter/bog)
 "eFf" = (
 /obj/structure/fluff/railing/border,
-/obj/item/clothing/suit/roguetown/shirt/dress/velvet,
-/obj/structure/mannequin/male/female{
-	density = 0
+/obj/structure/stairs{
+	dir = 4
 	},
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "eFg" = (
 /turf/closed/wall/mineral/rogue/decowood,
 /area/rogue/indoors/town/magician/rockhill)
@@ -24956,11 +24954,14 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "fqH" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	dir = 8
+/obj/structure/table/wood,
+/obj/structure/lever{
+	name = "Armorer Shutters";
+	redstone_id = "smith_shutter01";
+	pixel_y = 11;
+	pixel_x = 5
 	},
-/obj/structure/curtain/red,
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fqJ" = (
 /obj/structure/table/wood{
@@ -25146,7 +25147,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "fsP" = (
-/turf/open/floor/rogue/cobble,
+/turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fsT" = (
 /obj/structure/fluff/railing/border{
@@ -26558,7 +26559,9 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/garrison)
 "fHP" = (
-/turf/open/floor/carpet/red,
+/turf/closed/wall/mineral/rogue/roofwall/outercorner{
+	dir = 4
+	},
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fHR" = (
 /obj/structure/fluff/railing/border,
@@ -29202,25 +29205,14 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/tavern)
 "gmW" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	locked = 1;
-	lockid = "tailor";
-	pixel_y = 0
+/obj/structure/fluff/railing/border{
+	dir = 6
 	},
-/obj/structure/fluff/railing/border/east{
-	dir = 1
+/obj/structure/mannequin/male{
+	density = 0
 	},
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/kitchen/spoon/iron,
-/obj/item/kitchen/spoon/iron,
-/obj/item/kitchen/fork/iron,
-/obj/item/kitchen/fork/iron,
-/obj/item/millstone,
-/obj/item/cooking/platter,
-/obj/item/cooking/platter,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "gna" = (
 /obj/structure/bars{
@@ -30571,7 +30563,10 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/dungeon/oldgoblincamp)
 "gCD" = (
-/turf/closed/wall/mineral/rogue/wooddark,
+/obj/structure/chair/wood/rogue{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "gCH" = (
 /obj/structure/closet/dirthole/closed/loot,
@@ -35256,9 +35251,11 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/bath)
 "hEF" = (
-/turf/closed/wall/mineral/rogue/roofwall/outercorner{
-	dir = 4
+/obj/effect/decal/carpet/kover_darkred{
+	pixel_x = 16;
+	pixel_y = 10
 	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hEG" = (
 /obj/structure/closet/crate/roguecloset,
@@ -35334,8 +35331,12 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/dungeon/wizarddungeon)
 "hFt" = (
-/obj/machinery/gear_painter,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hFv" = (
 /obj/structure/mineral_door/wood/donjon/stone{
@@ -37230,15 +37231,12 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cavewet)
 "hZF" = (
-/obj/structure/fluff/railing/border{
-	dir = 10
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "tailor";
+	name = "Tailor"
 	},
-/obj/structure/bell_common{
-	dir = 1;
-	pixel_x = 12;
-	pixel_y = 13
-	},
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hZG" = (
 /obj/structure/flora/rogueshroom{
@@ -44769,8 +44767,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "jGS" = (
-/obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/closed/wall/mineral/rogue/roofwall/middle,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jHa" = (
 /obj/machinery/light/rogue/candle/r,
@@ -45223,12 +45220,12 @@
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/indoors/town/church/chapel)
 "jMO" = (
-/obj/structure/fluff/railing/border,
-/obj/structure/mannequin/male/female{
-	density = 0
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "tailor";
+	name = "Tailors Quarters"
 	},
-/obj/item/clothing/suit/roguetown/shirt/dress/royal/princess,
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jMR" = (
 /obj/structure/fluff/railing/border{
@@ -46708,57 +46705,13 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "kek" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	locked = 1;
-	lockid = "tailor"
+/obj/structure/bars/pipe{
+	dir = 1;
+	layer = 2.05;
+	pixel_y = -8
 	},
-/obj/item/natural/bundle/curred_hide{
-	amount = 10;
-	icon_state = "leatherroll2";
-	pixel_y = 10
-	},
-/obj/item/natural/bundle/curred_hide{
-	amount = 10;
-	icon_state = "leatherroll2";
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/snacks/tallow{
-	layer = 2.9;
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/food/snacks/tallow{
-	layer = 2.9;
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/food/snacks/tallow{
-	layer = 2.9;
-	pixel_x = 6
-	},
-/obj/item/natural/bundle/silk{
-	amount = 6;
-	pixel_x = -8
-	},
-/obj/item/natural/bundle/silk{
-	amount = 6;
-	pixel_x = -8
-	},
-/obj/item/natural/bundle/silk{
-	amount = 6;
-	pixel_x = -8
-	},
-/obj/item/natural/bundle/silk{
-	amount = 6;
-	pixel_x = -8
-	},
-/obj/item/natural/bundle/silk{
-	amount = 6;
-	pixel_x = -8
-	},
-/obj/item/natural/bundle/fibers/full,
-/obj/item/natural/cloth,
-/turf/open/floor/rogue/woodturned,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/town/roofs)
 "kep" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -50627,9 +50580,7 @@
 /turf/open/floor/carpet/purple,
 /area/rogue/under/dungeon/oldgoblincamp)
 "kWv" = (
-/obj/structure/chair/wood/rogue{
-	dir = 8
-	},
+/obj/structure/stairs/ccwdown,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "kWw" = (
@@ -51331,6 +51282,13 @@
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/inq/basement)
+"lfa" = (
+/obj/structure/roguewindow/openclose/reinforced{
+	dir = 8
+	},
+/obj/structure/curtain/red,
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "lfc" = (
 /obj/structure/mineral_door/wood{
 	lockid = "rd1";
@@ -51542,13 +51500,15 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/cave)
 "lhm" = (
-/obj/structure/fluff/railing/border{
-	dir = 1
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "tailor";
+	name = "Tailor"
 	},
-/turf/open/floor/rogue/blocks,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "lhn" = (
-/turf/closed/wall/mineral/rogue/roofwall/middle,
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "lhr" = (
 /obj/structure/rack/rogue/shelf/biggest,
@@ -54565,19 +54525,16 @@
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/under/town/basement/tavern)
 "lRz" = (
-/obj/item/recipe_book/leatherworking{
-	pixel_x = 12;
-	pixel_y = 9
+/obj/structure/table/wood,
+/obj/structure/bars{
+	icon_state = "barsbent";
+	layer = 2.81
 	},
-/obj/item/needle{
-	pixel_x = -4;
-	pixel_y = 6
+/obj/structure/bars/passage/shutter{
+	name = "Armorer";
+	redstone_id = "smith_shutter01"
 	},
-/obj/structure/table/wood/poor,
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/woodturned,
+/turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "lRD" = (
 /turf/open/floor/rogue/grassgrey,
@@ -55412,15 +55369,9 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/shelter/bog)
 "lZz" = (
-/obj/structure/table/wood,
-/obj/structure/lever{
-	name = "Armorer Shutters";
-	redstone_id = "smith_shutter01";
-	pixel_y = 11;
-	pixel_x = 5
-	},
-/turf/open/floor/rogue/blocks/stonered/tiny,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/town/rockhill)
 "lZA" = (
 /obj/structure/bars/passage/shutter{
 	redstone_id = "pitbeast2"
@@ -55617,16 +55568,12 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/magician/rockhill)
 "maR" = (
-/obj/structure/table/wood,
-/obj/structure/bars{
-	icon_state = "barsbent";
-	layer = 2.81
+/obj/structure/fluff/railing/border,
+/obj/item/clothing/suit/roguetown/shirt/dress/velvet,
+/obj/structure/mannequin/male/female{
+	density = 0
 	},
-/obj/structure/bars/passage/shutter{
-	name = "Tailor";
-	redstone_id = "tailor_shutter"
-	},
-/turf/open/floor/rogue/ruinedwood,
+/turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "maT" = (
 /obj/item/reagent_containers/powder/ozium,
@@ -56752,11 +56699,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/shelter/bog)
 "mmr" = (
-/obj/structure/closet/crate/chest/old_crate,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/turf/open/floor/rogue/concrete,
+/turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mmt" = (
 /obj/machinery/light/rogue/candle,
@@ -59370,13 +59313,9 @@
 /area/rogue/under/cave)
 "mOJ" = (
 /obj/structure/fluff/railing/border{
-	dir = 6
+	dir = 5
 	},
-/obj/structure/mannequin/male{
-	density = 0
-	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
-/turf/open/floor/rogue/tile/harem1,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mOX" = (
 /obj/effect/decal/cobbleedge{
@@ -63322,14 +63261,8 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
 "nJR" = (
-/obj/structure/mannequin/male/female{
-	density = 0
-	},
-/obj/structure/fluff/railing/border{
-	dir = 4
-	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/silktunic,
-/turf/open/floor/rogue/tile/harem1,
+/obj/machinery/gear_painter,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nJZ" = (
 /obj/item/ammo_casing/caseless/rogue/arrow/iron/decrepit,
@@ -64341,10 +64274,14 @@
 /turf/open/water/swamp,
 /area/rogue/under/cavewet)
 "nWi" = (
-/obj/effect/decal/carpet/kover_darkred{
-	pixel_x = 16;
-	pixel_y = 10
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	lockid = "tailor"
 	},
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nWl" = (
@@ -64362,8 +64299,7 @@
 "nWv" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
-	lockid = "tailor";
-	name = "Tailor"
+	lockid = "tailor"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -68193,9 +68129,7 @@
 	},
 /area/rogue/under/town/basement/tavern)
 "oPE" = (
-/obj/machinery/light/rogue/candle/l,
-/obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/valuable_candle_spawner,
+/obj/structure/chair/wood/rogue,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "oPQ" = (
@@ -68696,12 +68630,13 @@
 	},
 /area/rogue/indoors/town/church/chapel)
 "oVa" = (
-/obj/structure/roguewindow,
-/obj/structure/bars/passage/shutter{
-	name = "Armorer";
-	redstone_id = "smith_shutter01"
+/obj/structure/fluff/railing/border{
+	dir = 6
 	},
-/turf/open/floor/rogue/blocks,
+/obj/structure/roguemachine/atm{
+	location_tag = "Tailor Front"
+	},
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "oVb" = (
 /obj/effect/decal/mossy,
@@ -69028,10 +68963,13 @@
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/town/grove)
 "oYj" = (
-/obj/structure/fluff/railing/border/east{
-	dir = 8
+/obj/structure/fluff/railing/border{
+	dir = 6
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "oYk" = (
 /obj/structure/fluff/railing/border,
@@ -70238,11 +70176,10 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church/chapel)
 "plU" = (
-/obj/structure/chair/bench/couch{
-	pixel_y = 8;
-	pixel_x = 5
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/machinery/light/rogue/hearth,
+/obj/machinery/light/rogue/oven/east,
+/obj/item/cooking/pan,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "plV" = (
 /obj/structure/roguemachine/withdraw{
@@ -75113,10 +75050,8 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/rockhill)
 "qpO" = (
-/obj/structure/fluff/railing/border{
-	dir = 5
-	},
-/turf/open/floor/rogue/blocks,
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qpQ" = (
 /obj/structure/flora/roguegrass,
@@ -76057,10 +75992,9 @@
 	},
 /area/rogue/indoors/town/magician/rockhill)
 "qAp" = (
-/obj/structure/roguemachine/vendor{
-	keycontrol = "tailor"
-	},
-/turf/closed/wall/mineral/rogue/craftstone,
+/obj/structure/bed/rogue/inn/wooldouble,
+/obj/item/bedsheet/rogue/double_pelt,
+/turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qAr" = (
 /obj/structure/closet/crate/roguecloset,
@@ -77515,14 +77449,6 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
-"qQX" = (
-/obj/structure/roguemachine/mail{
-	mailtag = "Tailor";
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "qQZ" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/dirt,
@@ -77659,12 +77585,15 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/beach/harbor)
 "qSR" = (
-/obj/structure/fluff/railing/border,
-/obj/structure/stairs{
+/obj/structure/mannequin/male/female{
+	density = 0
+	},
+/obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/rockhill)
+/obj/item/clothing/suit/roguetown/shirt/tunic/silktunic,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "qSZ" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
@@ -77906,6 +77835,27 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark/rockhill/west)
+"qVL" = (
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "tailor";
+	pixel_y = 0
+	},
+/obj/structure/fluff/railing/border/east{
+	dir = 1
+	},
+/obj/item/reagent_containers/glass/cup/wooden,
+/obj/item/reagent_containers/glass/cup/wooden,
+/obj/item/kitchen/spoon/iron,
+/obj/item/kitchen/spoon/iron,
+/obj/item/kitchen/fork/iron,
+/obj/item/kitchen/fork/iron,
+/obj/item/millstone,
+/obj/item/cooking/platter,
+/obj/item/cooking/platter,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "qVP" = (
 /obj/structure/fluff/walldeco/med2{
 	pixel_y = 32
@@ -78572,13 +78522,56 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/tavern)
 "rfu" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/item/rogueweapon/mace/parasol,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "tailor"
+	},
+/obj/item/natural/bundle/curred_hide{
+	amount = 10;
+	icon_state = "leatherroll2";
+	pixel_y = 10
+	},
+/obj/item/natural/bundle/curred_hide{
+	amount = 10;
+	icon_state = "leatherroll2";
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/tallow{
+	layer = 2.9;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/snacks/tallow{
+	layer = 2.9;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/snacks/tallow{
+	layer = 2.9;
+	pixel_x = 6
+	},
+/obj/item/natural/bundle/silk{
+	amount = 6;
+	pixel_x = -8
+	},
+/obj/item/natural/bundle/silk{
+	amount = 6;
+	pixel_x = -8
+	},
+/obj/item/natural/bundle/silk{
+	amount = 6;
+	pixel_x = -8
+	},
+/obj/item/natural/bundle/silk{
+	amount = 6;
+	pixel_x = -8
+	},
+/obj/item/natural/bundle/silk{
+	amount = 6;
+	pixel_x = -8
+	},
+/obj/item/natural/bundle/fibers/full,
+/obj/item/natural/cloth,
+/turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rfv" = (
 /obj/item/paper/scroll,
@@ -81297,10 +81290,12 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "rKE" = (
-/obj/machinery/light/rogue/hearth,
-/obj/machinery/light/rogue/oven/east,
-/obj/item/cooking/pan,
-/turf/open/floor/rogue/concrete,
+/obj/structure/roguewindow,
+/obj/structure/bars/passage/shutter{
+	name = "Armorer";
+	redstone_id = "smith_shutter01"
+	},
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rKI" = (
 /obj/structure/bearpelt,
@@ -81541,7 +81536,10 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/under/cave)
 "rNk" = (
-/turf/closed/wall/mineral/rogue/roofwall/innercorner/dir1,
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rNn" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
@@ -81727,10 +81725,13 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "rPg" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/turf/open/floor/rogue/cobble,
+/obj/structure/table/wood/poor,
+/obj/item/natural/bundle/fibers/full,
+/obj/item/natural/bundle/fibers/full,
+/obj/item/natural/bundle/fibers/full,
+/obj/item/natural/bundle/fibers/full,
+/obj/item/natural/bundle/fibers/full,
+/turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rPp" = (
 /turf/closed/wall/mineral/rogue/stone/window,
@@ -82308,8 +82309,13 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors)
 "rWM" = (
-/obj/structure/roguewindow,
-/turf/open/floor/rogue/wood,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/item/rogueweapon/mace/parasol,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rWO" = (
 /obj/machinery/light/rogue/lanternpost{
@@ -82482,8 +82488,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/dungeon/sunkenchurch)
 "rZs" = (
-/obj/structure/chair/wood/rogue,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rZt" = (
 /obj/structure/hotspring/border,
@@ -89130,12 +89138,19 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/goblinfort)
 "tyF" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "tailor";
-	name = "Tailors Quarters"
+/obj/item/recipe_book/leatherworking{
+	pixel_x = 12;
+	pixel_y = 9
 	},
-/turf/open/floor/rogue/concrete,
+/obj/item/needle{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/structure/table/wood/poor,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "tyH" = (
 /turf/closed/wall/mineral/rogue/stone/window,
@@ -90947,11 +90962,16 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog)
 "tTI" = (
-/obj/structure/roguemachine/scomm{
-	pixel_y = -32;
-	scom_tag = "Tailor's Shop - Desk"
+/obj/structure/table/wood,
+/obj/structure/bars{
+	icon_state = "barsbent";
+	layer = 2.81
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/bars/passage/shutter{
+	name = "Tailor";
+	redstone_id = "tailor_shutter"
+	},
+/turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "tTN" = (
 /obj/effect/decal/cleanable/dirt/cobweb{
@@ -91592,15 +91612,14 @@
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/harbor)
 "ubl" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	lockid = "tailor"
+/obj/structure/fluff/railing/border{
+	dir = 5
 	},
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/structure/bell_common{
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ubq" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -92345,8 +92364,9 @@
 	},
 /area/rogue/indoors/town/cell)
 "ukS" = (
-/obj/structure/fluff/railing/border/east{
-	dir = 9
+/obj/structure/chair/bench/couch{
+	pixel_y = 8;
+	pixel_x = 5
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -93225,11 +93245,12 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave/goblinfort)
 "uuq" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "tailor"
+/obj/structure/fluff/railing/border,
+/obj/structure/mannequin/male/female{
+	density = 0
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/obj/item/clothing/suit/roguetown/shirt/dress/royal/princess,
+/turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "uur" = (
 /obj/structure/flora/roguegrass/herb/manabloom,
@@ -95083,13 +95104,12 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/bath)
 "uQP" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
+/obj/structure/roguemachine/mail{
+	mailtag = "Tailor";
+	pixel_x = 32;
+	pixel_y = 0
 	},
-/obj/structure/roguemachine/atm{
-	location_tag = "Tailor Front"
-	},
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "uQQ" = (
 /obj/structure/flora/newleaf,
@@ -95172,12 +95192,8 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/rockhill)
 "uRo" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "tailor";
-	name = "Tailor"
-	},
-/turf/open/floor/rogue/woodturned,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "uRp" = (
 /obj/structure/fluff/walldeco/maidendrape{
@@ -96171,12 +96187,6 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement)
-"vcN" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/turf/open/floor/rogue/metal,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "vcP" = (
 /obj/structure/rack/rogue,
 /obj/item/roguekey{
@@ -98043,7 +98053,15 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "vvr" = (
-/turf/open/floor/rogue/wood,
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/obj/structure/bell_common{
+	dir = 1;
+	pixel_x = 12;
+	pixel_y = 13
+	},
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vvx" = (
 /obj/structure/fluff/railing/border{
@@ -99113,12 +99131,11 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
 "vIo" = (
-/obj/structure/fluff/railing/border{
-	dir = 9;
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/turf/open/floor/rogue/cobble,
+/obj/structure/closet/crate/chest/old_crate,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "vIy" = (
 /obj/structure/fluff/railing/border,
@@ -102533,13 +102550,10 @@
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "wxy" = (
-/obj/structure/table/wood/poor,
-/obj/item/natural/bundle/fibers/full,
-/obj/item/natural/bundle/fibers/full,
-/obj/item/natural/bundle/fibers/full,
-/obj/item/natural/bundle/fibers/full,
-/obj/item/natural/bundle/fibers/full,
-/turf/open/floor/rogue/woodturned,
+/obj/structure/fluff/railing/border/east{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wxB" = (
 /turf/open/floor/rogue/carpet/lord/center,
@@ -105029,15 +105043,9 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
 "wXY" = (
-/obj/structure/closet/crate/drawer{
-	pixel_y = 6
+/obj/machinery/light/rogue/candle{
+	pixel_y = -32
 	},
-/obj/structure/mirror{
-	pixel_y = 28
-	},
-/obj/item/needle,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/tailor,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wYd" = (
@@ -409073,7 +409081,7 @@ vPr
 vPr
 sju
 cXr
-fsP
+lhn
 sco
 mDf
 qqj
@@ -409505,7 +409513,7 @@ vPr
 vPr
 sju
 pxy
-fsP
+lhn
 ejQ
 rnW
 qqj
@@ -409937,7 +409945,7 @@ gnI
 iWm
 rpA
 cXr
-fsP
+lhn
 sco
 jXA
 qqj
@@ -410801,7 +410809,7 @@ hLp
 tyZ
 jeU
 xvd
-fsP
+lhn
 sco
 cXr
 cXr
@@ -411665,7 +411673,7 @@ tyZ
 tyZ
 qBK
 apS
-fsP
+lhn
 rnW
 qqj
 qqj
@@ -412095,9 +412103,9 @@ vlU
 aVC
 uxF
 nFR
-rPg
+rZs
 uVS
-fsP
+lhn
 kLO
 xuh
 qqj
@@ -412513,22 +412521,22 @@ wbg
 wbg
 aOv
 teE
-rWM
-rWM
+qpO
+qpO
 sco
 sco
 sco
 sco
-aYW
+cOs
 tGr
 tGr
 tGr
 tGr
 bRG
-fsP
-fsP
-fsP
-fsP
+lhn
+lhn
+lhn
+lhn
 dmM
 sco
 sco
@@ -412945,23 +412953,23 @@ evo
 vbM
 aOv
 hrO
-mOJ
-nJR
+gmW
+qSR
 sco
-kek
-cok
-fHP
+rfu
+dsT
+aYW
 sco
-uQP
+oVa
 nIQ
 fDk
-efj
+ubl
 aVC
 lqD
-bbh
+oYj
 kNm
-qpO
-fsP
+mOJ
+lhn
 cXr
 hqw
 qqj
@@ -413377,18 +413385,18 @@ oEe
 bux
 fnA
 hrO
-eFf
-fHP
-sco
-dop
-fHP
-fHP
 maR
+aYW
+sco
+dku
+aYW
+aYW
+tTI
 iJd
 hbQ
 iJd
 hbQ
-cOs
+lRz
 tyZ
 tyZ
 jeU
@@ -413809,23 +413817,23 @@ pXY
 xFN
 aOv
 hrO
-jMO
-fHP
+uuq
+aYW
 sco
+tyF
+aYW
+aYW
+tTI
+iJd
+hbQ
+iJd
+hbQ
 lRz
-fHP
-fHP
-maR
-iJd
-hbQ
-iJd
-hbQ
-cOs
 tyZ
 tyZ
 iSq
 apS
-fsP
+lhn
 cXr
 fVb
 qqj
@@ -414244,20 +414252,20 @@ teE
 sco
 ejQ
 sco
-wxy
-fHP
-fHP
-qAp
-hZF
-vcN
+rPg
+aYW
+aYW
+dGl
+vvr
+rNk
 evw
 xvx
 sco
-lZz
+fqH
 tyZ
 qBK
-lhm
-fsP
+avH
+lhn
 sco
 prP
 qqj
@@ -414673,22 +414681,22 @@ evo
 wQD
 wbg
 hrO
-rfu
+rWM
 dMk
 plV
 dMk
 dMk
-tTI
+efj
 teE
 sco
 gMo
 gMo
 sco
 teE
-oVa
-oVa
+rKE
+rKE
 sco
-vIo
+djT
 dmM
 sco
 sco
@@ -415105,20 +415113,20 @@ bux
 ter
 vLS
 hrO
-rfu
+rWM
 lbI
 dMk
 dMk
 dMk
-nWi
-uRo
-fsP
+hEF
+hZF
+lhn
 nBa
 nBa
-fsP
-fsP
+lhn
+lhn
 nBa
-fsP
+lhn
 ejQ
 awW
 fSM
@@ -415540,17 +415548,17 @@ sco
 sco
 ehw
 rbf
-hFt
+nJR
 dMk
-qQX
-uRo
+uQP
+hZF
 nBa
-fsP
-fsP
+lhn
+lhn
 nBa
-fsP
-fsP
-fsP
+lhn
+lhn
+lhn
 sco
 ukO
 pqE
@@ -415961,7 +415969,7 @@ tNj
 tNj
 dZU
 twN
-dGl
+lZz
 evo
 evo
 hsC
@@ -415973,7 +415981,7 @@ sco
 sco
 hrO
 sco
-nWv
+lhm
 sco
 teE
 sco
@@ -415986,7 +415994,7 @@ sco
 sco
 teE
 sco
-dsT
+hFt
 gMo
 dMn
 wVI
@@ -416393,7 +416401,7 @@ hpj
 lxk
 tNj
 pwz
-qSR
+eFf
 vdS
 esR
 wbg
@@ -522673,14 +522681,14 @@ fZJ
 fZJ
 fZJ
 fZJ
-gCD
+fsP
 lAu
 jBF
 lAu
-gCD
+fsP
 jBF
 lAu
-gCD
+fsP
 feh
 rZi
 rZi
@@ -523106,12 +523114,12 @@ vbM
 xaT
 lVX
 edI
-rKE
-mmr
-gmW
+plU
+vIo
+qVL
 lAu
-rZs
 oPE
+bju
 lAu
 fjX
 rZi
@@ -523538,12 +523546,12 @@ evo
 rZi
 jqs
 lAu
-oYj
-oYj
-ukS
+wxy
+wxy
+dop
 dMk
-nWi
-kWv
+hEF
+gCD
 lAu
 fjX
 rZi
@@ -523970,9 +523978,9 @@ xFN
 rZi
 jqs
 jBF
-plU
+ukS
 dMk
-jGS
+uRo
 dMk
 dMk
 dMk
@@ -524404,11 +524412,11 @@ jqs
 lAu
 suh
 dMk
-gCD
-tyF
+fsP
+jMO
 lAu
 lAu
-gCD
+fsP
 lAu
 lAu
 fjX
@@ -524837,11 +524845,11 @@ gAm
 hTf
 dMk
 lAu
-vvr
-vvr
-vvr
-uuq
-ubl
+mmr
+mmr
+mmr
+nWv
+nWi
 lAu
 fjX
 rZi
@@ -525271,7 +525279,7 @@ qXX
 lAu
 suK
 azu
-avH
+wXY
 edI
 lAu
 lAu
@@ -525698,11 +525706,11 @@ evo
 rZi
 jqs
 lAu
-cPV
+kWv
 pXU
 lAu
-wXY
-bju
+cok
+qAp
 suK
 edI
 hox
@@ -526129,14 +526137,14 @@ evo
 vbM
 rZi
 jqs
-gCD
+fsP
 lAu
 lAu
-gCD
+fsP
 lAu
-fqH
+lfa
 lAu
-gCD
+fsP
 ptX
 vdf
 vdf
@@ -632401,8 +632409,8 @@ fZJ
 fZJ
 fZJ
 fZJ
-uJY
 fZJ
+kek
 fZJ
 fZJ
 fZJ
@@ -632834,12 +632842,12 @@ azA
 lDN
 fZJ
 fZJ
-fZJ
+hox
 xaT
 xaT
 xaT
 lVX
-uJY
+fZJ
 fZJ
 fZJ
 fZJ
@@ -633266,9 +633274,9 @@ nNJ
 eWn
 fZJ
 fZJ
-fZJ
+fjX
 xxf
-hEF
+fHP
 rZi
 hKm
 xaT
@@ -633696,15 +633704,15 @@ emM
 akN
 wOq
 mTT
-fZJ
-fZJ
-fZJ
+uHa
+uHa
+fjX
 rVR
-rNk
+cPV
 dOk
 dOk
 dOk
-hEF
+fHP
 rZi
 jqs
 fZJ
@@ -634130,13 +634138,13 @@ wOq
 eWn
 fZJ
 fZJ
-fZJ
+fjX
 rVR
 dMk
 dMk
 dMk
 dMk
-lhn
+jGS
 rZi
 jqs
 fZJ
@@ -634562,13 +634570,13 @@ fGv
 eWn
 fZJ
 fZJ
-fZJ
+fjX
 rVR
 dMk
 dMk
 dMk
 dMk
-lhn
+jGS
 rZi
 jqs
 fZJ
@@ -634994,13 +635002,13 @@ nNJ
 eWn
 fZJ
 fZJ
-fZJ
+fjX
 rVR
 dMk
 dMk
 dMk
 dMk
-lhn
+jGS
 rZi
 jqs
 fZJ
@@ -635420,24 +635428,24 @@ lHE
 jqs
 fZJ
 cbg
-djT
+bbh
 cbg
 nNJ
 iVY
-fZJ
-fZJ
-fZJ
+uHa
+uHa
+fjX
 rVR
 dMk
 dMk
 dMk
 dMk
-lhn
+jGS
 kNH
 rpr
-fZJ
-fZJ
-fZJ
+uHa
+uHa
+uHa
 ptX
 feh
 rZi
@@ -635858,7 +635866,7 @@ rls
 eWn
 fZJ
 fZJ
-fZJ
+fjX
 pkE
 wsF
 wsF
@@ -636290,7 +636298,7 @@ mPW
 cGv
 fZJ
 fZJ
-fZJ
+ptX
 vdf
 vdf
 vdf
@@ -636722,13 +636730,13 @@ fZJ
 fZJ
 fZJ
 fZJ
+kek
 fZJ
 fZJ
 fZJ
 fZJ
 fZJ
-fZJ
-fZJ
+kek
 fZJ
 fZJ
 fZJ
@@ -637154,13 +637162,13 @@ fZJ
 fZJ
 fZJ
 fZJ
+kek
 fZJ
 fZJ
 fZJ
 fZJ
 fZJ
-fZJ
-fZJ
+kek
 fZJ
 fZJ
 fZJ
@@ -638011,8 +638019,8 @@ eNY
 lHE
 rZi
 jqs
-fZJ
-fZJ
+uHa
+uHa
 hox
 xaT
 xaT
