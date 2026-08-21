@@ -463,3 +463,16 @@
   - bugfix: fixed dodging/feinting simple mobs
   Xander3359:
   - rscadd: Adds a few more tools to Malum's Conjure tool
+2026-08-21:
+  Mysterious Benefactor:
+  - qol: Chastity messaging is now significantly more subtle, appears more logically
+      on your examine and ghosts or other individuals with exceptional perception
+      are no longer flashbanged into knowing the exact model and make of chastity
+      device you're wearing from 12 tiles away.
+  PPooch:
+  - balance: Bashdoors trait was removed from towner thug and ferentia mercenary,
+      replaced by bigguy.
+  RadiantFlash7:
+  - refactor: Tally Subsystem is no longer global, but per person's individual mapvote.
+  wikimody:
+  - bugfix: Moondust is no longer outside of Baotha control
