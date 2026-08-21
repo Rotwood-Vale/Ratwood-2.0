@@ -105,6 +105,7 @@
 	armor = ARMOR_PADDED //gambeson for head
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
@@ -118,6 +119,7 @@
 	armor = ARMOR_PADDED_GOOD //full padded gambeson basically
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/roguetown/coif/heavypadding/ComponentInitialize()
 	return
@@ -169,6 +171,7 @@
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/roguetown/chaincoif
 	name = "chain coif"
@@ -1142,7 +1145,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	sellprice = 20
 
-// AP port. 
+// AP port.
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/g
 	name = "golden inverted psycross"

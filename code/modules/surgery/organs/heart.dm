@@ -232,7 +232,7 @@
 /obj/item/organ/heart/t2
 	name = "blessed heart"
 	icon_state = "heart"
-	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it's not…"
 	sellprice = 200
 
 /obj/item/organ/heart/t3

@@ -135,7 +135,7 @@
 /obj/item/organ/stomach/t2
 	name = "blessed stomach"
 	icon_state = "stomach"
-	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it's not…"
 	sellprice = 200
 
 /obj/item/organ/stomach/t3

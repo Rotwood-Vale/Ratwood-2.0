@@ -28,11 +28,13 @@
 	. = ..()
 	if(!ishuman(user))
 		return
+	if(!length(GLOB.noticeboard_posts) && !length(GLOB.premium_noticeboardposts))
+		return // No need to exclaim there are new posts if there are no posts.
 	if(user in GLOB.board_viewers)
 		return
 	else
 		GLOB.board_viewers += user
-		to_chat(user, span_smallred("A new posting has been made since I last checked!"))
+		. += span_smallred("A new posting has been made since I last checked!")
 
 /obj/structure/roguemachine/noticeboard/update_icon()
 	. = ..()
