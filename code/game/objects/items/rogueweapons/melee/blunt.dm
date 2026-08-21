@@ -679,7 +679,7 @@
 //Malumite maul. Intended for Templars.
 /obj/item/rogueweapon/mace/maul/grand/malum
 	name = "Kargrund Maul"
-	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
+	desc = "Forged from the legacy of dwarven rock-hammers, this maul's holy steel and divine runes grant it immense power. \
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
 	is_silver = TRUE

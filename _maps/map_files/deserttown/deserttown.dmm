@@ -77133,7 +77133,7 @@
 /area/rogue/indoors/inq)
 "wnX" = (
 /obj/machinery/anvil/crafted,
-/obj/item/rogueweapon/hammer,
+/obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/outdoors/desertdeep)
 "wof" = (

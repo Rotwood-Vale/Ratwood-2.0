@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - bugfix: "fixed royal knive sheath being an immovable object (it had 500 hp)"
