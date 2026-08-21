@@ -1,0 +1,4 @@
+author: "Skyglazer"
+delete-after: True
+changes:
+  - rscdel: "Removed the 'Warcaster' wretch Fighter subclass."
