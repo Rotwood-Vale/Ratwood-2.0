@@ -88,7 +88,9 @@
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/roguegem/amethyst/naledi = 1,
+		/obj/item/spellbook_unfinished/pre_arcyne = 1
 		)
 	H.merctype = 14
 

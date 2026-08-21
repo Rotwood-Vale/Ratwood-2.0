@@ -17,7 +17,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
-/obj/item/clothing/head/roguetown/armingcap/padded/ComponentInitialize()
+/obj/item/clothing/head/roguetown/paddedcap/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/leather
