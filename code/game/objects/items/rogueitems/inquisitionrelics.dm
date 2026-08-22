@@ -1674,7 +1674,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	report_html += "<b>LYFEBLOOD-LUX RESONATOR RESULTS</b><br><br>"
 
 	if(H.patron?.type in ALL_DIVINE_PATRONS)
-		report_html += "<font color='#e8da5a'><b><u>Blessed Lux</b></u></font><br><br>"
+		report_html += "<font color='#059400d0'><b><u>Blessed Lux</b></u></font><br><br>"
 		report_html += "<i>Minor hallowed resonance permeates the subject's Lux. The sample bears evidence of covenant with saintly energies consistent with apostate worship and prolonged participation in rites associated with the <b>Ten Saints</b>.</i><br><br>"
 	else if(H.patron?.type in ALL_INHUMEN_PATRONS)
 		report_html += "<font color='#8B1E1E'><b><u>Tainted Lux</b></u></font><br><br>"
@@ -1705,9 +1705,18 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	var/found = FALSE
 	if(H.mind)
 		if(HAS_TRAIT(H, TRAIT_BLACKBLOOD))
-			report_html += "<font color='#3D3D3D'><b>Stabilized Blackblood Tincture</b></font><br><br>"
+			report_html += "<font color='#242222'><b>Stabilized Blackblood Tincture</b></font><br><br>"
 			report_html += "<i>Lethal concentrations of Atra Ferrum, Nigredo Salts, Vitriol Ash, and Coagulated Psyturnine Humours remain suspended throughout the sample. Complete melanization and abnormal viscosity are wholly consistent with recent radical purification treatments for Quicksilver-resistant subjects.</i><br><br>"
 			found = TRUE
+		if(HAS_TRAIT(H, TRAIT_PALLID))
+			report_html += "<font color='#8a3656'><b>Consecrated Pallid Remnant</b></font><br><br>"
+			report_html += "<i>The sample retains faint traces of the Pallid affliction, characterized by diminished pigmentation, weakened sanguine vitality, and persistent cellular pallor. No active curse-resonance is presently detectable; the abnormality is consistent with catastrophic humoral bleaching followed by restorative divine intervention.</i>"
+			found = TRUE
+		if(HAS_TRAIT(H, TRAIT_ROTMAN))
+			report_html += "<font color='#167733'><b>Resolved Necrotic Affliction</b></font><br><br>"
+			report_html += "<i><i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i>"
+			found = TRUE
+		
 		for(var/datum/antagonist/D in H.mind.antag_datums)
 			if(istype(D, /datum/antagonist/vampire))
 				found = TRUE
