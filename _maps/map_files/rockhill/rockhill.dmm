@@ -2359,17 +2359,6 @@
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/rockhill)
-"axX" = (
-/obj/structure/fluff/railing/border{
-	dir = 4
-	},
-/obj/structure/bell_common{
-	dir = 1;
-	pixel_x = -10;
-	pixel_y = 12
-	},
-/turf/open/floor/rogue/metal,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "ayj" = (
 /obj/structure/chair/bench/couchablack{
 	pixel_y = 10
@@ -15552,7 +15541,8 @@
 	},
 /obj/machinery/light/rogue/candle/floorcandle{
 	pixel_x = -1;
-	pixel_y = -1
+	pixel_y = -1;
+	layer = 3.1
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
@@ -42949,7 +42939,6 @@
 /obj/item/reagent_containers/glass/cup/tin,
 /obj/item/reagent_containers/glass/cup/tin/small,
 /obj/item/reagent_containers/glass/cup/tin/small,
-/obj/item/reagent_containers/glass/cup/tin/small,
 /obj/item/kitchen/fork/tin,
 /obj/item/kitchen/fork/tin,
 /obj/item/kitchen/fork/tin,
@@ -46400,6 +46389,17 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/church/basement)
+"jYW" = (
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/obj/structure/bell_common{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "jYZ" = (
 /obj/structure/flora/hotspring_rocks/grassy,
 /turf/open/water/ocean/deep/thermalwater,
@@ -78223,12 +78223,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qXX" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	lockid = "tailor"
-	},
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/structure/closet/crate/roguecloset,
+/obj/structure/closet/crate/roguecloset,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "qXY" = (
@@ -415061,7 +415059,7 @@ fWj
 suK
 tyZ
 efj
-axX
+jYW
 kjQ
 aOv
 pZg
