@@ -279,10 +279,10 @@
 				if(I.signee.name in GLOB.excommunicated_players)
 					correct = TRUE
 				if(I.paired)
-					if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
+					if(I.paired.subject && HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
 						selfreport = TRUE
 						indexed = TRUE
-					if(I.paired.subject && I.paired.full && !selfreport)
+					if(I.paired.subject && I.paired.subject.mind && I.paired.full && !selfreport)
 						if(I.paired.cursedblood)
 							if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
 								stopfarming = TRUE
@@ -387,7 +387,7 @@
 		if(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN))
 			var/obj/item/paper/inqslip/accusation/I = P
 			var/has_signature = !!I.signee
-			var/has_indexer = I.paired && I.paired.full && I.paired.subject
+			var/has_indexer = I.paired && I.paired.full && I.paired.subject && I.paired.subject.mind
 			if(has_signature || has_indexer)
 				var/no
 				var/specialno
@@ -498,6 +498,8 @@
 			else
 				if(I.paired && !I.paired.full)
 					to_chat(user, span_warning("[I.paired] needs to be full of the accused's blood."))
+				else if(I.paired)
+					to_chat(user, span_warning("Whatever [I.paired] holds is worthless to Otava. It should be emptied."))
 				else
 					to_chat(user, span_warning("[I] requires either a signature, or an INDEXER with their blood."))
 				return

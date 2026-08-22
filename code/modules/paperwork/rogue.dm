@@ -489,6 +489,9 @@
 			var/obj/item/inqarticles/indexer/Q = I
 			if(paired)
 				return
+			if(Q.full && (QDELETED(Q.subject) || !Q.subject.mind))
+				to_chat(user, span_warning("Whatever [Q] holds is worthless to Otava. It should be emptied."))
+				return
 			if(!Q.subject)
 				if(signed)
 					to_chat(user, span_warning("I should fill [Q] before pairing it with [src]."))

@@ -630,8 +630,30 @@ Inquisitorial armory down here
 	else
 		return
 
+/// Otava only catalogues the blood of thinking, bleeding folk - anything else can never be filed against an accusation.
+/obj/item/inqarticles/indexer/proc/can_index(mob/living/M, mob/user)
+	if(QDELETED(M) || !ishuman(M))
+		to_chat(user, span_warning("Otava has no use for the blood of beasts."))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+	if(chest?.skeletonized || (H.dna?.species && (NOBLOOD in H.dna.species.species_traits)))
+		to_chat(user, span_warning("I don't think the Inquisition values marrow much these daes."))
+		return FALSE
+	if(HAS_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE) || H.get_blood_volume() <= 0)
+		to_chat(user, span_warning("They don't have any blood to sample."))
+		return FALSE
+	if(!H.mind)
+		to_chat(user, span_warning("There's nothing here for Otava to catalogue."))
+		return FALSE
+	return TRUE
+
 /obj/item/inqarticles/indexer/proc/takeblood(mob/living/M, mob/living/user)
 	if(timestaken >= 8)
+		if(QDELETED(subject) || !subject.mind)
+			visible_message(span_warning("[src] boils its ruined contents away!"))
+			fullreset(user)
+			return
 		playsound(src, 'sound/items/indexer_finished.ogg', 75, FALSE, 3)
 		working = FALSE
 		full = TRUE
@@ -650,6 +672,10 @@ Inquisitorial armory down here
 			return
 		icon_state = "indexer_primed"
 		update_icon()
+		return
+
+	if(!can_index(M, user))
+		working = FALSE
 		return
 
 	working = TRUE
@@ -696,16 +722,10 @@ Inquisitorial armory down here
 		if(subject)
 			if(M != subject)
 				return
-		if(HAS_TRAIT(M, TRAIT_BLOODLOSS_IMMUNE))
-			to_chat(user, span_warning("They don't have any blood to sample."))
-			return
-		if(istype(M, /mob/living/carbon/human/species/skeleton))
-			to_chat(user, span_warning("I don't think the Inquisition values marrow much these daes."))
-			return
-		if(!M.mind)
-			return
 		if(full)
 			to_chat(user, span_warning("It's full."))
+			return
+		if(!can_index(M, user))
 			return
 		visible_message(span_warning("[user] goes to jab [M] with [src]!"))
 		if(do_after(user, 20, FALSE, M))
