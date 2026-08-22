@@ -15537,7 +15537,9 @@
 	},
 /obj/structure/fluff/statue/small{
 	pixel_x = 0;
-	pixel_y = 20
+	pixel_y = 20;
+	layer = 3.2;
+	pass_flags = 1
 	},
 /obj/machinery/light/rogue/candle/floorcandle{
 	pixel_x = -1;
@@ -17026,6 +17028,9 @@
 	dir = 1;
 	pixel_x = -1;
 	pixel_y = 42
+	},
+/obj/structure/fluff/wallclock{
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
@@ -21591,9 +21596,6 @@
 "eDJ" = (
 /obj/structure/closet/crate/drawer{
 	pixel_y = 6
-	},
-/obj/structure/mirror{
-	pixel_y = 28
 	},
 /obj/item/needle,
 /obj/item/roguekey/tailor,
@@ -29722,6 +29724,10 @@
 /obj/structure/fluff/alch,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/town/grove)
+"grw" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors/town)
 "grx" = (
 /obj/structure/fluff/walldeco/med{
 	pixel_y = 32
@@ -42936,7 +42942,6 @@
 "jkk" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/item/reagent_containers/glass/cup/tin,
-/obj/item/reagent_containers/glass/cup/tin,
 /obj/item/reagent_containers/glass/cup/tin/small,
 /obj/item/reagent_containers/glass/cup/tin/small,
 /obj/item/kitchen/fork/tin,
@@ -42948,6 +42953,10 @@
 /obj/item/cooking/platter/copper,
 /obj/item/cooking/platter/copper,
 /obj/item/cooking/platter/copper,
+/obj/item/reagent_containers/glass/bowl/bronze,
+/obj/item/reagent_containers/glass/bowl/decrepit,
+/obj/item/reagent_containers/glass/bowl/decrepit,
+/obj/item/reagent_containers/glass/cup/decrepitgob,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town)
 "jkq" = (
@@ -46896,7 +46905,8 @@
 /area/rogue/under/cave/goblinfort)
 "kek" = (
 /obj/structure/bed/rogue/inn/wool{
-	dir = 1
+	dir = 1;
+	layer = 3.1
 	},
 /obj/item/bedsheet/rogue/fabric{
 	dir = 1
@@ -50198,8 +50208,10 @@
 	density = 0
 	},
 /obj/item/clothing/suit/roguetown/shirt/dress/maid,
-/obj/item/clothing/suit/roguetown/shirt/dress/maid,
-/obj/item/clothing/cloak/apron/maid,
+/obj/item/clothing/cloak/apron/maid{
+	pixel_x = -85;
+	pixel_y = 98
+	},
 /obj/item/clothing/head/roguetown/maidband,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -53312,10 +53324,10 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog)
 "lAu" = (
-/obj/machinery/light/rogue/candle{
-	pixel_y = -32
+/obj/structure/fluff/walldeco/rpainting/forest{
+	pixel_x = -32
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "lAw" = (
 /obj/structure/bed/rogue/inn/wooldouble{
@@ -60760,6 +60772,9 @@
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_y = 32
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "ndL" = (
@@ -77803,6 +77818,13 @@
 /obj/structure/flora/hotspring_rocks/grassy,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"qRx" = (
+/obj/structure/mirror{
+	pixel_x = 31;
+	pixel_y = 2
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "qRz" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -78225,7 +78247,6 @@
 "qXX" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/structure/closet/crate/roguecloset,
 /obj/structure/closet/crate/roguecloset,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
@@ -78806,19 +78827,14 @@
 "rfu" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/reagent_containers/glass/bottle/rogue/wine,
-/obj/item/reagent_containers/glass/bottle/rogue/wine,
-/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,
-/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,
-/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,
 /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,
 /obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry,
 /obj/item/flint,
 /obj/item/clothing/mask/cigarette/pipe/westman,
 /obj/item/clothing/mask/cigarette/pipe/westman,
-/obj/item/clothing/mask/cigarette/pipe/westman,
 /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry,
 /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry,
-/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry,
+/obj/item/reagent_containers/glass/bottle/rogue/whitewine,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "rfv" = (
@@ -89394,14 +89410,13 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave/goblinfort)
 "tyF" = (
-/obj/machinery/light/rogue/campfire/fireplace{
-	pixel_y = 32
+/obj/structure/table/wood/poor,
+/obj/item/reagent_containers/glass/bucket/pot/bronze{
+	pixel_y = 38
 	},
-/obj/structure/table/wood/poor,
-/obj/structure/table/wood/poor,
-/obj/item/reagent_containers/glass/bucket/pot/bronze,
 /obj/item/rogueweapon/huntingknife/chefknife,
 /obj/item/flint,
+/obj/structure/rack/rogue/shelf,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town)
 "tyH" = (
@@ -91863,7 +91878,7 @@
 	dir = 4;
 	name = "Bathroom"
 	},
-/turf/closed/wall/mineral/rogue/craftstone,
+/turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ubq" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -109869,7 +109884,9 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/bath)
 "xWM" = (
-/obj/structure/bed/rogue/inn/wooldouble,
+/obj/structure/bed/rogue/inn/wooldouble{
+	layer = 3.1
+	},
 /obj/item/bedsheet/rogue/double_pelt,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -415033,7 +415050,7 @@ oVa
 oSH
 uGn
 koY
-ryw
+lAu
 ryw
 xFN
 lhm
@@ -525624,7 +525641,7 @@ fZJ
 mPW
 tyF
 guj
-guj
+grw
 xre
 pZg
 kfk
@@ -526059,7 +526076,7 @@ rWM
 kzv
 cNf
 nNJ
-lAu
+reY
 hdl
 pZg
 vbM
@@ -526082,7 +526099,7 @@ sco
 eDJ
 xWM
 dMk
-dMk
+qRx
 rKE
 fZJ
 tMo
