@@ -573,8 +573,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_ROTMAN = span_artery("I am partially undead. My heart does not beat."),
-	TRAIT_PALLID = span_artery("I was once a creature of the night, but cured by divine intervention. The open sky fills me with unease, but my eyes pierce the darkness and my lungs need no air."),
-	TRAIT_BLACKBLOOD = span_artery("I was once a creature of the night, but cured by the Otavan Inquisition at a heavy cost. My blood, tainted with tinctures, rites and concoctions, endures infection and holds an odd regenerative factor to it. Unfortunately, most healing miracles do not affect me at all, and I am sensitive to sunlight, aswell."),	
+	TRAIT_PALLID = span_artery("I was once a nite-creacher, be it lycanthrope or vampyre, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time."),
+	TRAIT_BLACKBLOOD = span_artery("I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darkvision, Leaden Lux, Strong Bite, Inhumen Digestion, and Silver Weakness.)<br><br><font color=white>(Additionally, consuming any food will grant a minor healing buff. You bleed slower and passively recover from wounds (while not hungry). You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition."),
 	TRAIT_HALFHEAL = span_artery("I have some spiritual oddity to my Lux. Healing magic effectiveness is halved.")
 ))
 

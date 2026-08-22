@@ -43,7 +43,7 @@
 		return FALSE
 
 	if(HAS_TRAIT(target, TRAIT_BLACKBLOOD))
-		target.visible_message(span_artery("[target] stirs in discomfort, the miracle dissipates."), span_artery("A dull warmth spreads through your body, only to fade as quickly as it arrived."))
+		target.visible_message(span_artery("[target] stirs in discomfort, the miracle dissipates."), span_artery("A dull aching pain spreads through your body, only to fade as quickly as it arrived."))
 		user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 		playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 		target.emote("pain")
@@ -138,7 +138,7 @@
 			return FALSE
 
 		if(HAS_TRAIT(target, TRAIT_BLACKBLOOD))
-			target.visible_message(span_artery("[target] stirs in pain, the miracle dissipates."), span_artery("You feel a dull pain spreading through your body, only to fade as quickly as it arrived."))
+			target.visible_message(span_artery("[target] stirs in pain, the miracle dissipates."), span_artery("A dull aching pain spreads through your body, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			target.emote("pain")

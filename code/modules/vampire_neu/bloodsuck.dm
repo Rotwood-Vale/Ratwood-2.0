@@ -65,7 +65,7 @@
 				H.set_blood_volume(min(H.get_blood_volume() + 35, BLOOD_VOLUME_NORMAL))
 		return
 
-	if(HAS_TRAIT(victim, TRAIT_BLACKBLOOD) || victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
+	if(HAS_TRAIT(victim, TRAIT_BLACKBLOOD) || HAS_TRAIT(victim, TRAIT_PALLID) || victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
 		to_chat(src, span_danger("I'm going to puke..."))
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 		return
