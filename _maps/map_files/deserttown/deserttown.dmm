@@ -37425,8 +37425,8 @@
 /obj/item/roguekey/warden,
 /obj/item/roguekey/warden,
 /obj/item/roguekey/warden,
-/obj/item/roguekey/sheriff,
 /obj/item/flashlight/flare/torch/lantern,
+/obj/item/roguekey/sergeant,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/desert/warden)
 "kBG" = (
@@ -50156,10 +50156,10 @@
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/outdoors/desert)
 "ohR" = (
-/obj/structure/bed/rogue/inn,
 /obj/structure/fluff/walldeco/med3{
 	pixel_x = 32
 	},
+/obj/structure/table/optable,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/physician/desert)
 "oia" = (
@@ -513127,7 +513127,7 @@ kFh
 cwN
 els
 els
-cCI
+vEG
 cCI
 rxU
 tud
@@ -514390,7 +514390,7 @@ kFh
 kFh
 kFh
 tud
-els
+shX
 cCI
 ryG
 tud
