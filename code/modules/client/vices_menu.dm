@@ -331,9 +331,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
 	if(virtue)
-		virtue.picked_choices = snapshot["virtue_choices"] ? snapshot["virtue_choices"].Copy() : list()
+		var/list/restored_choices = snapshot["virtue_choices"]
+		virtue.picked_choices = restored_choices ? restored_choices.Copy() : list()
 	if(virtuetwo)
-		virtuetwo.picked_choices = snapshot["virtuetwo_choices"] ? snapshot["virtuetwo_choices"].Copy() : list()
+		var/list/restored_choices_two = snapshot["virtuetwo_choices"]
+		virtuetwo.picked_choices = restored_choices_two ? restored_choices_two.Copy() : list()
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
@@ -476,7 +478,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	else
 		virtue = new /datum/virtue/none()
 	if(islist(preset["virtue_choices"]))
-		virtue.picked_choices = preset["virtue_choices"].Copy()
+		var/list/preset_choices = preset["virtue_choices"]
+		virtue.picked_choices = preset_choices.Copy()
 	virtue.sanitize_choices()
 	
 	var/virtuetwo_type = string_to_typepath(preset["virtuetwo"])
@@ -485,7 +488,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	else
 		virtuetwo = new /datum/virtue/none()
 	if(islist(preset["virtuetwo_choices"]))
-		virtuetwo.picked_choices = preset["virtuetwo_choices"].Copy()
+		var/list/preset_choices_two = preset["virtuetwo_choices"]
+		virtuetwo.picked_choices = preset_choices_two.Copy()
 	virtuetwo.sanitize_choices()
 	
 	var/vice1_type = string_to_typepath(preset["vice1"])
