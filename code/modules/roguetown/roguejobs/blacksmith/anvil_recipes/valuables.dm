@@ -265,11 +265,30 @@
 	created_item = /obj/item/clothing/ring/statdorpel
 	craftdiff = SKILL_LEVEL_LEGENDARY
 
+/datum/anvil_recipe/valuables/anointedberserksword
+	name = "Anointed Berserkers Sword (Secret!)"
+	req_bar = /obj/item/ingot/component/glutcrystal
+	hides_from_books = TRUE
+	additional_items = list(/obj/item/rogueweapon/sword/long/exe/berserk)
+	created_item = /obj/item/rogueweapon/sword/long/exe/berserk/gnoll
+	craftdiff = SKILL_LEVEL_LEGENDARY
+
+/obj/item/rogueweapon/sword/long/exe/berserk/gnoll
+	name = "anointed berserkers sword"
+	desc = "A raw heap of iron, hewn into an intimidatingly massive cleaver. Most could never aspire to effectively swing such a laborsome blade about; those few that have the strength, however, can force even the strongest opponents to stagger back. </br>The thrummage of your heart matches the otherworldly aura that has overtaken this blade. Someone's smiling down upon you, but it certainly isn't who you think it is."
+	max_blade_int = 666
+
+/obj/item/rogueweapon/sword/long/exe/berserk/gnoll/Initialize(mapload)
+	..()
+	add_filter("shadow_the_hedgehog", 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 188, "size" = 1))
+
+//
+
 /datum/anvil_recipe/valuables/daemonslayer
 	name = "Daemonslayer (Secret!)"
 	req_bar = /obj/item/ingot/silver
 	hides_from_books = TRUE
-	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/ingot/silver/, /obj/item/ingot/draconic, /obj/item/ingot/weeping, /obj/item/riddleofsteel, /obj/item/grown/log/tree)
-	created_item = /obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+	additional_items = list(/obj/item/rogueweapon/sword/long/exe/berserk/gnoll, /obj/item/rogueweapon/sword/long/exe/silver, /obj/item/ingot/draconic, /obj/item/ingot/weeping, /obj/item/riddleofsteel)
+	created_item = /obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
 	appro_skill = /datum/skill/craft/weaponsmithing
 	craftdiff = SKILL_LEVEL_LEGENDARY

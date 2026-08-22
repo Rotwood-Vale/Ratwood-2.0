@@ -295,9 +295,8 @@
 /obj/item/ingot/weeping
 	name = "enduring ingot"
 	desc = "A slab of metal, aged and bare. You finally know what it is, yet no word can be sired to describe it. </br>'..none will ever know the greatest truths; of Aeon's grasp, of Adonai's presence, of Psydon's fate..' </br>'..but, perhaps, that's for the better. The malaise is gone, but the evils of this world are still very real..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
-	icon_state = "ingotsilv"
+	icon_state = "ingotenduring"
 	smeltresult = /obj/item/ingot/weeping
-	color = "#CECA9C"
 	sellprice = 222
 
 /obj/item/ingot/weeping/Initialize(mapload)
@@ -307,7 +306,54 @@
 /obj/item/ingot/draconic
 	name = "draconic ingot"
 	desc = "A slab of obsidian, crackling with energy. Your fingers blister from the sheer heat, radiating off of its glassy surface. </br>'..no man, be-they a saint or sinner, can truly withstand such power..' </br>'..but, perhaps, you are different..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
-	icon_state = "ingotblacksteel"
+	icon_state = "ingotdraconic"
 	smeltresult = /obj/item/ingot/draconic
-	color = "#70b8ff"
 	sellprice = 333
+
+//Components!
+
+/obj/item/ingot/component //Root. Don't use under most circumstances.
+	name = "substanceless presence"
+	desc = "Something that you were likely never meant to see. Pray to a higher presence for assistance, before rendering it asunder in the forge's flames once more."
+	icon_state = "oreada"
+	smeltresult = /obj/item/ingot/iron
+	sellprice = 1
+
+/obj/item/ingot/component/glutcrystal
+	name = "crystalline glut"
+	desc = "Fractal violence, gleaming with a crimson haze that beckons for its final purpose to be accomplished."
+	icon_state = "component_blood"
+	smeltresult = /obj/item/roguegem/blood_diamond //Ensures that it can be reused for any Glut-specific ritual, should one find this in its crystalline form.
+	sellprice = 33
+
+/obj/item/ingot/component/glutcrystal/examine(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.patron.type == /datum/patron/inhumen/graggar)
+			. += span_danger("You know this gem well. They are born out of great violence, but only if it involves the mightiest of warriors. </br>Fleshcrafting it with the meat of whatever warrior birthed this gem will allow me to summon another of their kind into this world.	</br>Melting away its crystalline shell is ideal, if you wish to ensure no chance for error while conducting such a ritual.")
+
+/obj/item/ingot/component/glutcrystal/Initialize(mapload)
+	..()
+	add_filter("shadow_the_hedgehog", 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 188, "size" = 1))
+
+/obj/item/ingot/component/heapofrawiron
+	name = "heap of raw iron"
+	desc = "A massive hunk, born from the incoherent fusion of molten iron. Chunks of ore-and-ingotry peak out from its jagged surface, yearning to be refined - be it into ingots, or something more purposeful."
+	icon_state = "component_berserkheap"
+	smeltresult = /obj/item/rogueore/iron
+	smelt_bar_num = 4
+
+/obj/item/ingot/component/berserkswordblade
+	name = "blade of the berserkers sword"
+	desc = "A massive blade, forged from a raw heap of iron. The unique spike-styled tang seems to be longer than what'd be seen on most greatswords, stowable only by the innards of a fittingly large handle."
+	icon_state = "component_berserkblade"
+	smeltresult = /obj/item/ingot/iron
+	smelt_bar_num = 3
+
+/obj/item/ingot/component/berserkswordgrip
+	name = "handle of the berserkers sword"
+	desc = "A massive handle, assembled from the double-handed grip of an Executioner's Sword. The unique crescent-styled crossguard seems to have a slot, fittable only by the tang of a fittingly large blade."
+	icon_state = "component_berserkhandle"
+	smeltresult = /obj/item/ingot/iron
+
