@@ -1946,7 +1946,7 @@
 	max_blade_int = 555
 	alt_intents = null
 	is_silver = TRUE
-	smeltresult = /obj/item/rogueweapon/sword/long/kriegmesser/silver //Too thick to completely melt.
+	smeltresult = /obj/item/rogueweapon/sword/long/exe/berserk//Too thick to completely melt.
 
 /obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer/ComponentInitialize()
 	AddComponent(\
