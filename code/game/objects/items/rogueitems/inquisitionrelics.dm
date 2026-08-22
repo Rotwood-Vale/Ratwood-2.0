@@ -706,8 +706,13 @@ Inquisitorial armory down here
 					cursedblood = 2
 				if(M.mind.has_antag_datum(/datum/antagonist/vampire))
 					cursedblood = 3
-				if(HAS_TRAIT (M, TRAIT_BLACKBLOOD))
-					cursedblood = 0.1 // trolling the inquisition newbies
+				if(!cursedblood) // cured survivors still carry traces worth cataloguing, but nowhere near a true nite creacher
+					if(HAS_TRAIT(M, TRAIT_BLACKBLOOD))
+						cursedblood = 1
+					else if(HAS_TRAIT(M, TRAIT_PALLID))
+						cursedblood = 0.75
+					else if(HAS_TRAIT(M, TRAIT_ROTMAN))
+						cursedblood = 0.5
 			update_icon()
 			takeblood(M, user)
 		else
@@ -1606,7 +1611,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	subject = H
 
 	var/list/examiners = list(
-		"Brother Matthieu de Clairmont", "Brother Lucien Beaumont", "Sister Eloise d'Artois", "Brother Gautier Desrosiers", "Sister Amaury de Vienne", "Sister Cecile Montfort", "Brother Renaud Charbonneau", "Brother Bastien Moreau", "Brother Lucard Belmont", "Sister Serena Eclaire", "Sister Artoria d'Dragone", "Brother Adrien de Rochefort", "Brother Thibault de Vaillant", "Sister Marguerite de Chastel", "Brother Etienne Bellamy", "Sister Roseline de Valcourt", "Brother Armand Duplessis", "Sister Genevieve Beaumont", "Brother Roland de Sancerre", "Sister Vivienne Charbonneau", "Brother Olivier de Montreuil", "Sister Ysabeau de Clairvaux", "Brother Philippe d'Aurillac", "Sister Adele de Marquette", "Brother Gaspard Delacroix", "Sister Heloise de Vaugrenier", "Brother Tristan Morel", "Sister Lucienne de Brissac", "Brother Remy de Valois", "Sister Aveline de Rougemont", "Brother Benoît de Couronne", "Brother Amaury de Castelain", "Sister Julienne d'Aubigny", "Brother Corentin de Miremont", "Sister Odette de Vaucelles", "Brother Florent de Charny", "Sister Seraphine Bellanger", "Brother Alaric de Montbard", "Sister Colette de Verrières", "Brother Theodore de Saint-Clair", "Sister Isolde de Beaumont", "Brother Freestein D'Estyler", "Brother Hunsari D'Phorone", "Brother Ryone D'Reensvolfe", "Sister Saphir D'Eriye", "Brother Khet D'Railne"
+		"Brother Matthieu de Clairmont", "Brother Lucien Beaumont", "Sister Eloise d'Artois", "Brother Gautier Desrosiers", "Sister Amaury de Vienne", "Sister Cecile Montfort", "Brother Renaud Charbonneau", "Brother Bastien Moreau", "Brother Lucard Belmont", "Sister Serena Eclaire", "Sister Artoria d'Dragone", "Brother Adrien de Rochefort", "Brother Thibault de Vaillant", "Sister Marguerite de Chastel", "Brother Etienne Bellamy", "Sister Roseline de Valcourt", "Brother Armand Duplessis", "Sister Genevieve Beaumont", "Brother Roland de Sancerre", "Sister Vivienne Charbonneau", "Brother Olivier de Montreuil", "Sister Ysabeau de Clairvaux", "Brother Philippe d'Aurillac", "Sister Adele de Marquette", "Brother Gaspard Delacroix", "Sister Heloise de Vaugrenier", "Brother Tristan Morel", "Sister Lucienne de Brissac", "Brother Remy de Valois", "Sister Aveline de Rougemont", "Brother Benoit de Couronne", "Brother Amaury de Castelain", "Sister Julienne d'Aubigny", "Brother Corentin de Miremont", "Sister Odette de Vaucelles", "Brother Florent de Charny", "Sister Seraphine Bellanger", "Brother Alaric de Montbard", "Sister Colette de Verrieres", "Brother Theodore de Saint-Clair", "Sister Isolde de Beaumont", "Brother Freestein D'Estyler", "Brother Hunsari D'Phorone", "Brother Ryone D'Reensvolfe", "Sister Saphir D'Eriye", "Brother Khet D'Railne"
 	)
 
 	var/examiner = pick(examiners)
@@ -1709,7 +1714,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	for(var/datum/bounty/B in GLOB.head_bounties)
 		if(B.target == H.real_name)
 			total_bounty += B.amount
-			crimes += "> <b>[B.amount] Mammon</b> — [B.reason]"
+			crimes += "> <b>[B.amount] Mammon</b> - [B.reason]"
 	if(!crimes.len)
 		report_html += "<font color=#2D7A42><b>No Crimes on Record</b></font><br><br>"
 		report_html += "<i>No warrant, censure, proclamation of guilt, or writ of Castifico has been entered against this identity, nor within the ledgers of the Holy Otavan Inquisition.</i><br><br>"
@@ -1730,11 +1735,11 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 			found = TRUE
 		if(HAS_TRAIT(H, TRAIT_PALLID))
 			report_html += "<font color='#8a3656'><b>Consecrated Pallid Remnant</b></font><br><br>"
-			report_html += "<i>The sample retains faint traces of the Pallid affliction, characterized by diminished pigmentation, weakened sanguine vitality, and persistent cellular pallor. No active curse-resonance is presently detectable; the abnormality is consistent with catastrophic humoral bleaching followed by restorative divine intervention.</i>"
+			report_html += "<i>The sample retains faint traces of the Pallid affliction, characterized by diminished pigmentation, weakened sanguine vitality, and persistent cellular pallor. No active curse-resonance is presently detectable; the abnormality is consistent with catastrophic humoral bleaching followed by restorative divine intervention.</i><br><br>"
 			found = TRUE
 		if(HAS_TRAIT(H, TRAIT_ROTMAN))
 			report_html += "<font color='#167733'><b>Resolved Necrotic Affliction</b></font><br><br>"
-			report_html += "<i><i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i>"
+			report_html += "<i><i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i><br><br>"
 			found = TRUE
 		
 		for(var/datum/antagonist/D in H.mind.antag_datums)

@@ -445,6 +445,8 @@
 							specialno = TRUE
 
 					if(cursedblood)
+						if(!bonuses) // an unsigned accusation still owes payment for the sample itself
+							bonuses = I.marquevalue
 						bonuses = bonuses + bonuses * I.paired.cursedblood
 						if(I.waxed)
 							bonuses += 4
