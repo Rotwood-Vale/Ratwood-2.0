@@ -83,10 +83,7 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
 		var/turf/T = get_turf(src)
 		if(T.can_see_sky() && GLOB.tod == "day")
-			if(HAS_TRAIT(src, TRAIT_WEATHER_PROTECTED))
-				add_stress(/datum/stressevent/lesser_sun_sensitivity)
-			else
-				add_stress(/datum/stressevent/sun_sensitivity)
+			add_stress(/datum/stressevent/sun_sensitivity)
 		else
 			remove_stress(/datum/stressevent/lesser_sun_sensitivity)
 			remove_stress(/datum/stressevent/sun_sensitivity)
