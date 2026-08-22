@@ -139,7 +139,8 @@
 	return
 
 /mob/living/proc/handle_wounds()
-	for(var/datum/wound/wound as anything in get_wounds())
+	var/list/wounds = get_wounds()
+	for(var/datum/wound/wound as anything in wounds)
 		if(!wound)
 			continue
 
@@ -147,6 +148,15 @@
 			wound.on_life()
 		else
 			wound.on_death()
+
+	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+		if(src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+			return
+		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING)
+			for(var/datum/wound/wound as anything in wounds)
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(1.2)
+					nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.005))
 
 /obj/item/proc/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
 	return

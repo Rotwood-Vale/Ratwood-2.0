@@ -1248,6 +1248,23 @@
 
 	return inquisition_text
 
+//Blackblood Inquisition trauma
+		if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(user, TRAIT_BLACKBLOOD))
+			var/mob/living/carbon/carbs = user
+			if(HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || HAS_TRAIT(user, TRAIT_NOMOOD))
+				return
+			if(!carbs.has_stress_event(/datum/stressevent/inq_trauma))
+				carbs.add_stress(/datum/stressevent/inq_trauma)
+				if(prob(20))
+					carbs.stress_freakout()
+				else if(prob(40))
+					carbs.freak_out()
+				else
+					carbs.emote("gulp")
+			if(!HAS_TRAIT(user, TRAIT_STEELHEARTED))
+				carbs.Jitter(10)
+				carbs.stuttering += 25
+
 /// Returns antagonist-related examine text for the mob, if any. Can return null.
 /mob/living/proc/get_villain_text(mob/examiner)
 	var/villain_text
