@@ -16,7 +16,7 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer
 	advclass_cat_rolls = list(CTAG_RETAINER = 20)
 	give_bank_account = 30
-	min_pq = 25
+	min_pq = 15
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'

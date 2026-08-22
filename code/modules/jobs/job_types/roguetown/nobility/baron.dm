@@ -1,5 +1,6 @@
 /datum/job/roguetown/baron
 	title = "Baron"
+	f_title = "Baroness"
 	flag = BARON
 	department_flag = NOBLEMEN
 	faction = "Station"
@@ -7,7 +8,7 @@
 	spawn_positions = 1
 	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD)
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	always_show_on_latechoices = TRUE
 
 	outfit = /datum/outfit/job/roguetown/baron
@@ -15,7 +16,7 @@
 	tutorial = "Through birthright, favors or intrigue you have landed yourself in the position of being the baron of the outer reaches of the duchy. You answer to the duke but are given significant independence to run lowtown as you see fit, you hold sway in its dealings and in absence of higher authority the local garrison will answer to you. If the Marshall and Knight Captain are absent, the responsibility of managing the lowtown garrison falls to you."
 	whitelist_req = FALSE
 	give_bank_account = 40
-	min_pq = 40
+	min_pq = 20
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_noble.ogg'
