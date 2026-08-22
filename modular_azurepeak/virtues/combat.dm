@@ -225,7 +225,7 @@
 				ADD_TRAIT(recipient, TRAIT_HALFHEAL, TRAIT_VIRTUE)
 				ADD_TRAIT(recipient, TRAIT_STRONGBITE, TRAIT_VIRTUE)
 				ADD_TRAIT(recipient, TRAIT_NASTY_EATER, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NIGHT_VISION, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_DARKVISION, TRAIT_VIRTUE)
 				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
 				to_chat(recipient, span_notice("You are no longer one among the nite creechers, by the ingenuinity of HIS followers."))
 
@@ -238,6 +238,8 @@
 				else
 					to_chat(recipient, span_blue("<i>You recall your horrid experiences with the Inquisition... It is rather traumatic. Best to avoid them.</i>"))
 				to_chat(recipient, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
+
+	recipient.update_sight() // sight was already set when we spawned, so darkvision needs a refresh
 
 #undef SC_ROTCURED
 #undef SC_BLACKBLOOD
