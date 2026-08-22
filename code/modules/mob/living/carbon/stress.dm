@@ -80,6 +80,15 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 	else
 		remove_stress(/datum/stressevent/bleeding)
 
+	// pallid outdoor stress
+	if(HAS_TRAIT(src, TRAIT_PALLID))
+		var/area/A = get_area(src)
+		if(A?.outdoors)
+			add_stress(/datum/stressevent/pallid_outdoors)
+			remove_stress(/datum/stressevent/pallid_outdoors)
+		remove_stress(/datum/stressevent/pallid_outdoors)
+
+	// blackblood sunlight sensitivity
 	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
 		var/turf/T = get_turf(src)
 		if(T.can_see_sky() && GLOB.tod == "day")

@@ -148,7 +148,7 @@
 			wound.on_life()
 		else
 			wound.on_death()
-
+	// Blackblooded chars heal minor wounds passively using nutrition
 	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
 		if(src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 			return

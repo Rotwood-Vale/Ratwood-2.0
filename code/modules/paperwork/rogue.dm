@@ -403,18 +403,27 @@
 		attemptsign(M, user)
 
 /obj/item/paper/inqslip/attack_self(mob/user)
-	if(!signed)
-		to_chat(user, span_warning("It hasn't been signed yet. Why would I seal it?"))
-		return
 	if(waxed)
-		to_chat(user, span_notice("It's been sealed. It's ready to send back to Otava."))
+		to_chat(user, span_notice("It's been sealed. It's ready to send back to Otava through a HERMES."))
 		return
-	else if(!sealed)
-		sealed = TRUE
-		update_icon()
-	else
+
+	if(sealed)
 		sealed = FALSE
 		update_icon()
+		return
+
+	if(sliptype == 0) // ACCUSATION do be this now
+		if(!signed && !paired)
+			to_chat(user, span_warning("It requires either a signature or a filled INDEXER before it can be sealed."))
+			return
+
+	else
+		if(!signed)
+			to_chat(user, span_warning("It hasn't been signed yet. Why would I seal it?"))
+			return
+
+	sealed = TRUE
+	update_icon()
 
 /obj/item/paper/inqslip/attack_right(mob/user)
 	if(paired && !user.get_active_held_item())
