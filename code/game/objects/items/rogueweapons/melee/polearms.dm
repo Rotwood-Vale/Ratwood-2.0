@@ -1864,10 +1864,11 @@
 	icon_state = "inimpale"
 	penfactor = 55
 	attack_verb = list("impales", "runs through")
-	reach = 3
+	reach = 2
 	damfactor = 1.25
 	clickcd = 55
 	swingdelay = 15
+	cleave = /datum/cleave_pattern/lance
 
 /datum/intent/sword/chop/dragonslayer
 	name = "eviscerate"
@@ -1926,6 +1927,16 @@
 	item_d_type = "slash"
 	peel_divisor = 1
 
+/datum/intent/sword/cut/exe/sweep/dragonslayer
+	name = "vorpal sweep"
+	icon_state = "insweep"
+	attack_verb = list("sweeps through", "cuts across")
+	clickcd = CLICK_CD_GLACIAL
+	reach = 2
+	damfactor = 2 // Hits harder but clunkier
+	cleave = /datum/cleave_pattern/frontal_arc
+	desc = "A heavy sweep that cuts through targets to the front."
+
 //
 
 /obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
@@ -1936,7 +1947,7 @@
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
 	possible_item_intents = list(/datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/sucker_punch/dragonslayer, /datum/intent/sword/flay/dragonslayer)
-	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer, /datum/intent/sword/cut/exe/sweep)
+	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer, /datum/intent/sword/cut/exe/sweep/dragonslayer)
 	force = 35
 	force_wielded = 55
 	minstr = 15

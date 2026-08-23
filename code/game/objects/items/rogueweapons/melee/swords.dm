@@ -64,7 +64,7 @@
 /datum/intent/sword/thrust/heavy
 	name = "heavy thrust"
 	icon_state = "inlunge"
-	penfactor = 60
+	penfactor = 50
 	damfactor = 1.3
 	swingdelay = 0.9 SECONDS
 
