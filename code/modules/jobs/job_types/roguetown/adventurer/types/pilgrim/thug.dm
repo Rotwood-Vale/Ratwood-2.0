@@ -111,6 +111,7 @@
 				if("Magic Bricks")
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
+					ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 				if("Lockpicking Equipment")
 					H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_EXPERT, TRUE)
