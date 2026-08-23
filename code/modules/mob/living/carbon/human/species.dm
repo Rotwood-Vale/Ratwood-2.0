@@ -1088,7 +1088,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return 3
 	return 0
 
-/datum/species/proc/set_need_tier(mob/living/carbon/human/H, tier, /datum/status_effect/debuff t1, /datum/status_effect/debuff t2, /datum/status_effect/debuff t3)
+/datum/species/proc/set_need_tier(mob/living/carbon/human/H, tier, datum/status_effect/debuff/t1, datum/status_effect/debuff/t2, datum/status_effect/debuff/t3)
 	if(tier != 1)
 		H.remove_status_effect(t1)
 	if(tier != 2)
