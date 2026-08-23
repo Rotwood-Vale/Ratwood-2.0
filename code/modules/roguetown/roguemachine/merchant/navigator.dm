@@ -18,6 +18,7 @@
 	var/accepts_unmintable = FALSE
 	var/pay_taxes = TRUE
 	var/pay_merchant_share = TRUE
+	var/list/profit_id = list("Merchant", "Shophand")
 	var/duty_collected_here = 0
 	var/duty_evaded_here = 0
 	var/levy_collected_here = 0
@@ -32,6 +33,18 @@
 	export_time = EXPORT_TIME_TESTING
 	#endif
 	. += span_notice("This machine attracts trading balloons every [DisplayTimeText(export_time)]. Goods are sucked into the air and mammons are dropped after tax has been collected.")
+
+/obj/item/roguemachine/navigator/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Drop items on the tiles around the navigator. Trading balloons arrive periodically and lift the goods away, leaving mammon in change on this tile.")
+	if(fixed_tax > 0)
+		. += span_info("This navigator charges a fixed handler's fee of [fixed_tax * 100]% before any Crown duty. Smuggler-grade.")
+	else
+		. += span_info("The Crown's export duty is applied to the payout at the prevailing rate.")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.job in profit_id)
+			. += span_info("Crown duty: <b>[pay_taxes ? "PAYING" : "DODGING"]</b>. Merchant's levy: <b>[pay_merchant_share ? "COLLECTING" : "WAIVED"]</b>.")
 
 // Note: this is AP's navigator/smuggler under the path our maps already place.
 /obj/item/roguemachine/navigator/blackmarket
