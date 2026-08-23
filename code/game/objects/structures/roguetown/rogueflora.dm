@@ -483,6 +483,7 @@
 	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 	var/list/looty = list()
 	var/bushtype
+	var/list/bush_stuck = list()
 
 /obj/structure/flora/roguegrass/bush/Initialize(mapload)
 	AddComponent(/datum/component/hiding_spot)
@@ -509,20 +510,31 @@
 
 /obj/structure/flora/roguegrass/bush/Crossed(atom/movable/AM)
 	..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.mobility_flags & MOBILITY_STAND)
-			L.Immobilize((36)-L.STASTR*2)
-		if(L.m_intent == MOVE_INTENT_RUN && (L.mobility_flags & MOBILITY_STAND))
+
+	if(!isliving(AM))
+		return
+
+	var/mob/living/L = AM
+
+	if(L.mobility_flags & MOBILITY_STAND)
+		var/stuck_time = max(1, 12 - round(L.STASTR * 0.6))
+
+		bush_stuck[L] = TRUE
+		L.mobility_flags &= ~MOBILITY_MOVE
+
+		addtimer(
+			CALLBACK(src, PROC_REF(release_bush_stuck), L),
+			stuck_time
+		)
+
+		if(L.m_intent == MOVE_INTENT_RUN)
 			if(!ishuman(L))
 				to_chat(L, span_warning("I'm cut on a thorn!"))
 				L.apply_damage(5, BRUTE)
-
 			else
 				var/mob/living/carbon/human/H = L
 				if(prob(20))
 					if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-//						H.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 						var/obj/item/bodypart/BP = pick(H.bodyparts)
 						var/obj/item/natural/thorn/TH = new(src.loc)
 						BP.add_embedded_object(TH, silent = TRUE)
@@ -532,6 +544,31 @@
 					var/obj/item/bodypart/BP = pick(H.bodyparts)
 					to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
 					BP.receive_damage(10)
+
+/obj/structure/flora/roguegrass/bush/proc/release_bush_stuck(mob/living/L)
+	if(!L)
+		return
+
+	bush_stuck -= L
+	L.mobility_flags |= MOBILITY_MOVE
+
+/obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		if(mover.pass_flags & PASSGRILLE)
+			return TRUE
+	if(travel_dir == dir)
+		return FALSE // just don't even try, not even if you can climb it
+	return ..()
+
+/obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
+	..()
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+		return 1
+	if(isliving(mover) && bush_stuck[mover])
+		if(get_turf(mover) == loc && target != loc)
+			return FALSE
+	return 1
 
 /obj/structure/flora/roguegrass/bush/attack_hand(mob/user)
 	. = ..()
@@ -562,19 +599,7 @@
 /obj/structure/flora/roguegrass/bush/update_icon()
 	icon_state = "bush[rand(2, 4)]"
 
-/obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		if(mover.pass_flags & PASSGRILLE)
-			return TRUE
-	if(travel_dir == dir)
-		return FALSE // just don't even try, not even if you can climb it
-	return ..()
 
-/obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	return 1
 
 /obj/structure/flora/roguegrass/bush/westleach
 	name = "westleach bush"
