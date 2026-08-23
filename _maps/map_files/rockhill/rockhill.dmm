@@ -179,8 +179,6 @@
 /obj/item/clothing/head/roguetown/helmet/skullcap,
 /obj/item/clothing/head/roguetown/helmet/skullcap,
 /obj/item/clothing/head/roguetown/helmet/skullcap,
-/obj/item/clothing/head/roguetown/helmet/skullcap,
-/obj/item/clothing/head/roguetown/helmet/skullcap,
 /obj/item/clothing/head/roguetown/helmet/kettle/iron{
 	pixel_x = 6;
 	pixel_y = 32
@@ -69929,23 +69927,23 @@
 /obj/item/rogueweapon/spear,
 /obj/item/rogueweapon/spear,
 /obj/item/rogueweapon/spear,
+/obj/item/rogueweapon/scabbard/gwstrap{
+	pixel_x = -12;
+	pixel_y = -21
+	},
+/obj/item/rogueweapon/scabbard/gwstrap{
+	pixel_x = -12;
+	pixel_y = -21
+	},
+/obj/item/rogueweapon/scabbard/gwstrap{
+	pixel_x = -12;
+	pixel_y = -21
+	},
+/obj/item/rogueweapon/scabbard/gwstrap{
+	pixel_x = -12;
+	pixel_y = -21
+	},
 /obj/item/rogueweapon/spear,
-/obj/item/rogueweapon/scabbard/gwstrap{
-	pixel_x = -12;
-	pixel_y = -21
-	},
-/obj/item/rogueweapon/scabbard/gwstrap{
-	pixel_x = -12;
-	pixel_y = -21
-	},
-/obj/item/rogueweapon/scabbard/gwstrap{
-	pixel_x = -12;
-	pixel_y = -21
-	},
-/obj/item/rogueweapon/scabbard/gwstrap{
-	pixel_x = -12;
-	pixel_y = -21
-	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "piA" = (
@@ -91333,8 +91331,8 @@
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
-/obj/item/clothing/suit/roguetown/armor/gambeson,
-/obj/item/clothing/suit/roguetown/armor/gambeson,
+/obj/item/clothing/suit/roguetown/armor/chainmail/iron,
+/obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "tXC" = (
