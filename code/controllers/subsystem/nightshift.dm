@@ -28,10 +28,13 @@ SUBSYSTEM_DEF(nightshift)
 	var/high_security_mode = FALSE
 
 /datum/controller/subsystem/nightshift/Initialize()
-	if(!CONFIG_GET(flag/enable_night_shifts))
-		can_fire = FALSE
+//	if(!CONFIG_GET(flag/enable_night_shifts))
+//		can_fire = FALSE
 	if(SSmapping?.current_map?.map_name == "Desert Town")
 		apply_desert_times()
+		if(!GLOB.mirage_controller)
+			GLOB.mirage_controller = new
+			GLOB.mirage_controller.MoveOasis()
 	if(SSmapping?.current_map?.map_name == "Build Your Own Settlement")
 		apply_desert_times()
 	current_tod = settod()
