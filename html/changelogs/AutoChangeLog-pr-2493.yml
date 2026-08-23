@@ -1,0 +1,4 @@
+author: "Ephemeralis"
+delete-after: True
+changes:
+  - bugfix: "Adjusted the sellprice of some clothing items made with weaving that were massively overpriced compared to their inputs (halfmask, most god robes, etc)."
