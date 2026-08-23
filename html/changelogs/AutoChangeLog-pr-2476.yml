@@ -1,4 +1,0 @@
-author: "MickDick1"
-delete-after: True
-changes:
-  - bugfix: "Retuned Inspector statline/weapon choices so he's able to wield them at all"
