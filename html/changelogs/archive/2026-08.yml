@@ -476,3 +476,28 @@
   - refactor: Tally Subsystem is no longer global, but per person's individual mapvote.
   wikimody:
   - bugfix: Moondust is no longer outside of Baotha control
+2026-08-22:
+  Cameronwoof:
+  - balance: Padded coifs, heavy padded coifs, and leather gorgets are now fireproof.
+  DelineFortune:
+  - rscadd: New pestra's 1 miracle fleshcraft
+  Ephemeralis:
+  - rscadd: Punch daggers, katars, steel knuckles and hound claws are now available
+      as options for the Conjure Weapon spell, as long as you have at least 12 intelligence.
+  Pidgey-chan:
+  - balance: changes the mounted knight's longbow and grand mace option to longbow
+      and steel mace
+  Shadow-Quill:
+  - bugfix: Noticeboards will now only alert that they have a new listing if there's
+      _actually_ a posting, and the alert text will appear in the examine box.
+  Skyglazer:
+  - rscdel: Removed the 'Warcaster' wretch Fighter subclass.
+  Xander3359:
+  - rscadd: Malum's T4 miracle now has a UI when selecting an item to create
+  wikimody:
+  - rscadd: Incresed the ghost/observer sight range in the dark
+  - bugfix: fixed royal knive sheath being an immovable object (it had 500 hp)
+2026-08-23:
+  MickDick1:
+  - bugfix: Retuned Inspector statline/weapon choices so he's able to wield them at
+      all
