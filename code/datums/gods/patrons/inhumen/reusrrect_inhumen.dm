@@ -217,7 +217,7 @@
 /obj/structure/primal_rift/proc/spawn_orcs()
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to max_orcs)
-		var/mob/living/carbon/human/species/orc/npc/O = new(T) 
+		var/mob/living/carbon/human/species/orc/npc/warlord/O = new(T) 
 		O.visible_message(span_danger("[O] step out of the rift, axes drawn!"))
 		O.AddComponent(/datum/component/rift_bound, src)
 		orc_count++
