@@ -670,6 +670,7 @@
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 4
+	max_integrity = 100
 	resistance_flags = null
 	sellprice = 100
 
