@@ -57,6 +57,8 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 
 	if(GLOB.tod != oldtod)
 		if(GLOB.tod == "dawn")
+			if(GLOB.mirage_controller)
+				GLOB.mirage_controller.MoveOasis()
 			GLOB.dayspassed++
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
