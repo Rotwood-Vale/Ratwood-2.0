@@ -1828,7 +1828,6 @@
 /obj/structure/roguesand/dune
 	name = "dune"
 	desc = "A high bank of sand blocks the view beyond it. Reach its top to see across, traveler."
-
 	icon = 'icons/turf/roguefloor.dmi'
 	icon_state = "dune_1"
 
@@ -1838,30 +1837,47 @@
 	mouse_opacity = 0
 	max_integrity = 10
 	layer = 4.1
-
+	plane = FLOOR_PLANE
 	blade_dulling = DULLING_CUT
-	attacked_sound = "plantcross"
-	destroy_sound = "plantcross"
+	climb_offset = 10
 
 
 /obj/structure/roguesand/dune/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/roguegrass) //bro its fine trust me
+	AddComponent(/datum/component/roguedune) //bro its fine trust me
+
+/datum/component/roguedune/Initialize()
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Crossed))
+
+/datum/component/roguedune/proc/Crossed(datum/source, atom/movable/AM)
+	var/atom/Parent = parent
+
+	if(isliving(AM))
+		var/mob/living/Living = AM
+		if(Living.m_intent == MOVE_INTENT_SNEAK)
+			return
+		else
+			if(!(HAS_TRAIT(Living, TRAIT_AZURENATIVE) && Living.m_intent != MOVE_INTENT_RUN))
+				playsound(Parent.loc, 'sound/foley/footsteps/dunewalk2.ogg', 100, FALSE, -1)
+			Living.consider_ambush()
+	return
 
 /obj/structure/roguesand/dune/Crossed(atom/movable/O)
 	. = ..()
 	if(!isliving(O))
 		return
+	var/mob/living/carbon/human/Human = O
 	opacity = FALSE
+	Human.OffBalance(3 SECONDS)
 
 
 /obj/structure/roguesand/dune/Uncrossed(atom/movable/O)
 	. = ..()
 	if(!isliving(O))
 		return
-	var/turf/T = get_turf(src)
-	for(var/mob/living/L in T)
-		if(L != O)
+	var/turf/Turf = get_turf(src)
+	for(var/mob/living/Living in Turf)
+		if(Living != O)
 			return
 	opacity = TRUE
 
