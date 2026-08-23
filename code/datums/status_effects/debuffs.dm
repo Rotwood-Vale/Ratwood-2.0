@@ -192,11 +192,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /atom/movable/screen/alert/status_effect/strandling
@@ -221,11 +221,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -241,11 +241,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -293,16 +293,17 @@
 	alert_type = null
 
 /datum/status_effect/gonbolaPacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_JOLLY, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, "<span class='notice'>I suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 	return ..()
 
 /datum/status_effect/gonbolaPacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	REMOVE_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_JOLLY, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/trance
 	id = "trance"
@@ -327,7 +328,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
-	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel my thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
@@ -340,7 +341,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>I snap out of my trance!</span>")
@@ -688,7 +689,7 @@
 	old_languages = owner_language_holder.copy()
 	owner_language_holder.remove_all_languages()
 	owner.language_holder.grant_language(/datum/language/aphasia)
-	ADD_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, id)
+	ADD_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/mishap_feeblemind/tick()
 	..()
@@ -699,7 +700,7 @@
 	..()
 	owner_language_holder.remove_language(/datum/language/aphasia)
 	owner_language_holder.copy_known_languages_from(old_languages)
-	REMOVE_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, id)
+	REMOVE_TRAIT(owner, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 
 // Functions as Nimrod, but a bit worse, for the duration, and enforces simple speech.
 /atom/movable/screen/alert/status_effect/mishap_dimwitted
@@ -716,11 +717,11 @@
 
 /datum/status_effect/debuff/mishap_dimwitted/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SIMPLESPEECH, id)
+	ADD_TRAIT(owner, TRAIT_SIMPLESPEECH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/mishap_dimwitted/on_remove()
 	..()
-	REMOVE_TRAIT(owner, TRAIT_SIMPLESPEECH, id)
+	REMOVE_TRAIT(owner, TRAIT_SIMPLESPEECH, TRAIT_STATUS_EFFECT(id))
 
 // Reduces some stats, applies a high overlay, increases slurring by 10 and keeps slurring at a minimum of 10.
 /atom/movable/screen/alert/status_effect/mishap_arcane_high
@@ -738,7 +739,7 @@
 /datum/status_effect/debuff/mishap_arcane_high/on_apply()
 	. = ..()
 	owner.slurring += 10
-	ADD_TRAIT(owner, TRAIT_DRUQK, id)
+	ADD_TRAIT(owner, TRAIT_DRUQK, TRAIT_STATUS_EFFECT(id))
 	owner.overlay_fullscreen("arcane_high", /atom/movable/screen/fullscreen/druqks)
 	if (owner.client)
 		SSdroning.area_entered(get_area(owner), owner.client)
@@ -752,7 +753,7 @@
 /datum/status_effect/debuff/mishap_arcane_high/on_remove()
 	..()
 	owner.slurring = max(owner.slurring - 10, 0)
-	REMOVE_TRAIT(owner, TRAIT_DRUQK, id)
+	REMOVE_TRAIT(owner, TRAIT_DRUQK, TRAIT_STATUS_EFFECT(id))
 	owner.clear_fullscreen("arcane_high")
 	if (owner.client)
 		SSdroning.play_area_sound(get_area(owner), owner.client)
@@ -816,19 +817,19 @@
 	// that all limbs have a 50% chance of being paralyzed,
 	// and at least one limb is guaranteed to be paralyzed
 	if (limbs & PARALYZE_L_ARM)
-		ADD_TRAIT(owner, TRAIT_PARALYSIS_L_ARM, id)
+		ADD_TRAIT(owner, TRAIT_PARALYSIS_L_ARM, TRAIT_STATUS_EFFECT(id))
 		traits_added.Add(TRAIT_PARALYSIS_L_ARM)
 		bodyparts_disabled.Add(BODY_ZONE_L_ARM)
 	if (limbs & PARALYZE_R_ARM)
-		ADD_TRAIT(owner, TRAIT_PARALYSIS_R_ARM, id)
+		ADD_TRAIT(owner, TRAIT_PARALYSIS_R_ARM, TRAIT_STATUS_EFFECT(id))
 		traits_added.Add(TRAIT_PARALYSIS_R_ARM)
 		bodyparts_disabled.Add(BODY_ZONE_R_ARM)
 	if (limbs & PARALYZE_L_LEG)
-		ADD_TRAIT(owner, TRAIT_PARALYSIS_L_LEG, id)
+		ADD_TRAIT(owner, TRAIT_PARALYSIS_L_LEG, TRAIT_STATUS_EFFECT(id))
 		traits_added.Add(TRAIT_PARALYSIS_L_LEG)
 		bodyparts_disabled.Add(BODY_ZONE_L_LEG)
 	if (limbs & PARALYZE_R_LEG)
-		ADD_TRAIT(owner, TRAIT_PARALYSIS_R_LEG, id)
+		ADD_TRAIT(owner, TRAIT_PARALYSIS_R_LEG, TRAIT_STATUS_EFFECT(id))
 		traits_added.Add(TRAIT_PARALYSIS_R_LEG)
 		bodyparts_disabled.Add(BODY_ZONE_R_LEG)
 
@@ -840,7 +841,7 @@
 /datum/status_effect/debuff/mishap_arcane_paralysis/on_remove()
 	..()
 	for (var/trait in traits_added)
-		REMOVE_TRAIT(owner, trait, id)
+		REMOVE_TRAIT(owner, trait, TRAIT_STATUS_EFFECT(id))
 
 	for (var/part in bodyparts_disabled)
 		var/obj/item/bodypart/bodypart = owner.get_bodypart(part)
