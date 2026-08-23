@@ -797,12 +797,11 @@
 	desc = "An incredibly unusual executioner's sword clad in gold and brass. Two separate blades protude outwards and join near its intricately \
 	decorated crossguard. This weapon calls for order."
 	icon_state = "astratasword"
-	max_integrity = 200
+	force = 23//Typical +3, for a Templar weapon.
+	force_wielded = 33//As above.
 
 /obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
 	. = ..()
-	if(tag == "altgrip" && .)
-		return .
 	if(tag)
 		switch(tag)
 			if("gen")
