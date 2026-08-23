@@ -85,8 +85,8 @@
 		STATKEY_STR = 1,
 		STATKEY_SPD = 1,
 		STATKEY_INT = 1,
-		STATKEY_PER = 1, 
-		STATKEY_CON = 1, 
+		STATKEY_PER = 1,
+		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
@@ -105,9 +105,9 @@
 		/datum/skill/misc/climbing = 4,
 		/datum/skill/misc/sneaking = 2,
 		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/athletics = 5,	
+		/datum/skill/misc/athletics = 5,
 		/datum/skill/misc/riding = 5,
-		/datum/skill/misc/tracking = 4,	
+		/datum/skill/misc/tracking = 4,
 	)
 
 /datum/outfit/job/roguetown/azebagha/azebagha/pre_equip(mob/living/carbon/human/H)
@@ -126,7 +126,8 @@
 		/obj/item/storage/keyring/guardsergeant = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/signal_horn = 1
+		/obj/item/signal_horn = 1,
+		/obj/item/clothing/mask/rogue/spectacles/goggles = 1
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
@@ -136,22 +137,22 @@
 		var/secondary_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in secondary
 		H.set_blindness(0)
 		switch(primary_choice)
-			if("Scimitar")		
+			if("Scimitar")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-			if("Shotel")		
+			if("Shotel")
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/long/shotel
-			if("Whip")	
+			if("Whip")
 				beltl = /obj/item/rogueweapon/whip/antique
-			if("Warden Axe")	
+			if("Warden Axe")
 				beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 
 		switch(secondary_choice)
-			if("Glaive")			
+			if("Glaive")
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				l_hand = /obj/item/rogueweapon/halberd/glaive
-			if("Javelins and Shield")	
+			if("Javelins and Shield")
 				beltr = /obj/item/quiver/javelin/steel
 				backl = /obj/item/rogueweapon/shield/iron/zybantine
 			if("Blackhorn Longbow")
