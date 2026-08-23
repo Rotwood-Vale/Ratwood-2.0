@@ -1797,7 +1797,7 @@
 
 /obj/item/rogueweapon/halberd/capglaive
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH)
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/spear/cut/glaive/sweep, SPEAR_BASH)
 	name = "'Deliverer'"
 	desc = "As if glaives weren't hard enough to produce, this one in particular is made out of blacksteel. A piece of art made for the captain of the guard, it's a tool to deliver justice and help those weaker than the wielder."
 	force = 17

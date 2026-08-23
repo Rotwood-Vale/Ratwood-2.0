@@ -133,12 +133,21 @@
 		inspec += "\n<b>Drain On Release:</b> [releasedrain]"
 	if(misscost)
 		inspec += "\n<b>Drain On Miss:</b> [misscost]"
-	if(clickcd != CLICK_CD_MELEE)
-		inspec += "\n<b>Recovery Time:</b> "
-		if(clickcd < CLICK_CD_MELEE)
-			inspec += "Quick"
-		if(clickcd > CLICK_CD_MELEE)
-			inspec += "Slow"
+	inspec += "\n<b>Attack Speed:</b> "
+	if(clickcd <= CLICK_CD_FAST)
+		inspec += "<font color='#4af'>Very Quick</font>"
+	else if(clickcd <= CLICK_CD_QUICK)
+		inspec += "<font color='#8f8'>Quick</font>"
+	else if(clickcd <= CLICK_CD_MELEE)
+		inspec += "Normal"
+	else if(clickcd <= CLICK_CD_CHARGED)
+		inspec += "<font color='#fa4'>Sluggish</font>"
+	else if(clickcd <= CLICK_CD_HEAVY)
+		inspec += "<font color='#f44'>Very Sluggish</font>"
+	else if(clickcd <= CLICK_CD_MASSIVE)
+		inspec += "<font color='#f22'>Extremely Sluggish</font>"
+	else
+		inspec += "<font color='#d11'>Glacial</font>"
 	if(blade_class == BCLASS_PEEL)
 		inspec += "\nThis intent will peel the coverage off of your target's armor in non-key areas after [peel_divisor] consecutive hits.\nSome armor may have higher thresholds."
 	if(!allow_offhand)
