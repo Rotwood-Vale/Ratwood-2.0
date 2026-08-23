@@ -12068,7 +12068,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cDA" = (
 /obj/structure/mineral_door/wood/red{
@@ -18003,7 +18003,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "dPH" = (
 /obj/structure/rack/rogue/shelf,
@@ -35393,7 +35393,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hEG" = (
 /obj/structure/closet/crate/roguecloset,
@@ -44948,9 +44948,6 @@
 	},
 /obj/item/natural/cloth,
 /obj/structure/table/wood/poor,
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jHa" = (
@@ -71027,6 +71024,10 @@
 	amount = 6;
 	pixel_x = -8
 	},
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 8;
+	pixel_y = -24
+	},
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "prR" = (
@@ -87500,7 +87501,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/turf/open/floor/rogue/wood,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ted" = (
 /obj/structure/table/wood/large_table/middle_west,
@@ -95989,6 +95990,10 @@
 /obj/item/bedsheet/rogue/cloth,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
+"uXh" = (
+/obj/structure/table/wood,
+/turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "uXn" = (
 /obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/ruinedwood,
@@ -101032,6 +101037,7 @@
 	density = 0
 	},
 /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
+/obj/item/clothing/head/roguetown/fancyhat,
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wbQ" = (
@@ -102863,8 +102869,8 @@
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "wxy" = (
-/obj/structure/curtain/orange,
 /obj/structure/fluff/railing/border,
+/obj/structure/curtain/orange,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wxB" = (
@@ -105391,12 +105397,9 @@
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/tavern)
 "wXY" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
-/obj/structure/closet/crate/chest/wicker,
-/obj/structure/closet/crate/chest/wicker,
-/turf/open/floor/rogue/blocks/stonered/tiny,
+/obj/structure/roguewindow,
+/obj/structure/curtain/orange,
+/turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wYd" = (
 /obj/structure/fluff/railing/border{
@@ -412910,7 +412913,7 @@ qqj
 qqj
 dmM
 sco
-cXr
+wXY
 gTg
 sco
 sco
@@ -414639,10 +414642,10 @@ qqj
 qqj
 hEF
 prP
-wXY
-suK
-suK
 nzD
+suK
+suK
+tyZ
 cPV
 tGr
 aOv
@@ -415074,7 +415077,7 @@ sco
 sco
 fWj
 suK
-tyZ
+uXh
 efj
 jYW
 kjQ
