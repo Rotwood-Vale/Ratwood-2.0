@@ -8905,6 +8905,7 @@
 "bOh" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/structure/fluff/railing/corner/north_east,
+/obj/effect/landmark/start/rockhillslaver,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "bOm" = (
@@ -12210,6 +12211,7 @@
 /area/rogue/outdoors/rtfield/rockhill/above)
 "cxH" = (
 /obj/structure/rack/rogue/shelf,
+/obj/effect/landmark/start/retainerlate,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "cxJ" = (
@@ -15052,6 +15054,7 @@
 	dir = 1
 	},
 /obj/machinery/light/rogue/candle/l,
+/obj/effect/landmark/start/rockhillslave,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "daI" = (
@@ -21020,6 +21023,7 @@
 	dir = 1
 	},
 /obj/machinery/light/rogue/candle/l,
+/obj/effect/landmark/start/rockhillslave,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "ekA" = (
@@ -33556,6 +33560,7 @@
 "gRZ" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/structure/fluff/railing/corner,
+/obj/effect/landmark/start/baron,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "gSc" = (
@@ -47637,6 +47642,7 @@
 	dir = 1
 	},
 /obj/structure/fluff/railing/border,
+/obj/effect/landmark/start/rockhillslaver,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "jTf" = (
@@ -60122,6 +60128,7 @@
 /area/rogue/outdoors/woodsrat/north)
 "mvf" = (
 /obj/effect/decal/carpet/kover_darkred,
+/obj/effect/landmark/start/retainer,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "mvg" = (
@@ -63227,6 +63234,7 @@
 "ndf" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/wool,
+/obj/effect/landmark/start/rockhillslave,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "ndt" = (
@@ -70710,6 +70718,10 @@
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/harbor)
+"oKt" = (
+/obj/effect/landmark/start/rockhillslavelate,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/under/town/basement)
 "oKv" = (
 /obj/structure/bookcase/random/nonfiction,
 /obj/structure/fluff/walldeco/painting/seraphina{
@@ -84550,6 +84562,7 @@
 /area/rogue/indoors/town/church/basement)
 "rId" = (
 /obj/structure/fluff/railing/border,
+/obj/effect/landmark/start/rockhillslave,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "rIj" = (
@@ -97592,6 +97605,13 @@
 "uxQ" = (
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
+"uxT" = (
+/obj/structure/chair/stool/rogue,
+/obj/effect/landmark/start/rockhillslave,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue/under/town/basement)
 "uyg" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /turf/open/floor/rogue/cobble,
@@ -105864,6 +105884,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/shelter/bog)
+"wmk" = (
+/obj/effect/landmark/start/baronlate,
+/turf/open/floor/rogue/ruinedwood/herringbone,
+/area/rogue/indoors)
 "wmo" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/dirt/road,
@@ -173094,10 +173118,10 @@ imV
 dDB
 lSb
 fRP
-lSb
+uxT
 dDB
 teZ
-dDB
+oKt
 nQA
 rId
 nka
@@ -173524,7 +173548,7 @@ fPa
 eOA
 ewE
 dDB
-lSb
+uxT
 cSc
 lSb
 dDB
@@ -173961,7 +173985,7 @@ dKz
 dDB
 uPc
 teZ
-dDB
+oKt
 dDB
 dDB
 wCy
@@ -494494,7 +494518,7 @@ nqU
 xAa
 pOX
 xUo
-nZV
+wmk
 iQi
 xDK
 buC
