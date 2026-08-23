@@ -355,7 +355,7 @@ T1 Enchantments below here*/
 	desc = "A scroll imbued with an enchantment of phoenixguard. Sets those that strike you on fire."
 	component = /datum/magic_item/greater/phoenixguard
 
-/obj/item/enchantmentscroll/greater/phoenixguard/attack_obj(obj/item/O, mob/living/user)
+/obj/item/enchantmentscroll/phoenixguard/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
 	if(istype(O,/obj/item/clothing))
