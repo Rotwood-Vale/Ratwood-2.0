@@ -756,7 +756,7 @@
 	desc = "A heavy broadsword with a terrifyingly sharp edge, purpose-made to part heads from shoulders. Owing to its nature as a weapon of \
 	justice, it lacks the piercing tips that befit most battle-ready broadswords. If you're strong enough to wield such a weapon, however, \
 	then that probably won't stop you from finding a way."
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/exe, /datum/intent/sword/peel)
 	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/cut/exe/cleave, /datum/intent/sword/cut/exe/sweep, /datum/intent/rend)
 	alt_intents = null
 	icon = 'icons/roguetown/weapons/swords64.dmi'
@@ -797,7 +797,6 @@
 	desc = "An incredibly unusual executioner's sword clad in gold and brass. Two separate blades protude outwards and join near its intricately \
 	decorated crossguard. This weapon calls for order."
 	icon_state = "astratasword"
-	force = 23//Typical +3, for a Templar weapon.
 	force_wielded = 33//As above.
 
 /obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
@@ -896,7 +895,7 @@
 	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/chop/cleave, /datum/intent/rend, /datum/intent/sword/cut/exe/sweep, /datum/intent/sword/thrust/heavy)
 	wbalance = WBALANCE_HEAVY //Stronger but sturdier executioner's sword, exchanging its peelage for an armor-piercing variant of Ansari's knockback variable.
-	minstr = 13
+	minstr = 14
 	wdefense = 9
 	minstr_req = TRUE
 	max_blade_int = 400
