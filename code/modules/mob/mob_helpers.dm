@@ -61,9 +61,6 @@
 			return TRUE
 		if(BODY_ZONE_PRECISE_SKULL)
 			return TRUE
-		if(BODY_ZONE_HEAD)
-			if(check_head)
-				return TRUE
 
 	return FALSE
 
