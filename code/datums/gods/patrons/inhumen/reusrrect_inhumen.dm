@@ -1,48 +1,52 @@
 /// SPELL DATUMS
 
 /obj/effect/proc_holder/spell/invoked/resurrect/matthios
-	name = "Life transaction"
-	desc = "Revives the target by arranging a deal with matthios. They will be indebted to him."
+	name = "Rekindled Exchange"
+	desc = "Revives the target by invoking a deal with Matthios. In exchange for their lyfe returned, they will be placed\
+	in a lasting debt to Him. Any coins within their hands will be spent paying off said debt. Blood for gold."
 	debuff_type = /datum/status_effect/debuff/debt_indicator
 	alt_required_items = list()
 	required_items = list()
 	sound = 'sound/magic/slimesquish.ogg'
-	chargedloop = /datum/looping_sound/invokelightning
+	chargedloop = /datum/looping_sound/invokeascendant
 	harms_undead = FALSE
-	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	recharge_time = 2 MINUTES //Anastasis Equivalent
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "revival"
 	action_icon_state = "revival"
-	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	required_structure = /obj/structure/fluff/psycross/matthios
 
 /obj/effect/proc_holder/spell/invoked/resurrect/graggar
-	name = "Blood for graggar"
-	desc = "Revives the target by arranging a deal with graggar. They will be indebted to him."
+	name = "Blood for Graggar"
+	desc = "You cannot dominate the dead. Place GRAGGAR'S EYES upon a fallen mortal, granting them the\
+	chance to fight again... for a price. Their intelligence will be drained for some time, or until\
+	they slay an orcish challenger from His realm."
 	debuff_type = /datum/status_effect/debuff/graggar_challenge
 	alt_required_items = list(/obj/item/organ/heart = 1)
 	required_items = list(/obj/item/organ/heart = 1)
 	sound = 'sound/magic/slimesquish.ogg'
-	chargedloop = /datum/looping_sound/invokelightning
+	chargedloop = /datum/looping_sound/invokeascendant
 	harms_undead = FALSE
-	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "revival"
 	action_icon_state = "revival"
-	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	required_structure = /obj/structure/fluff/psycross/graggar
 
 /obj/effect/proc_holder/spell/invoked/resurrect/baotha
-	name = "Drive the thorns deep"
+	name = "Drive the Thorns Deep"
 	desc = "Revives the target by afflicting them with a lasting addiction."
 	debuff_type = /datum/status_effect/debuff/baotha_addiction
 	alt_required_items = list(/obj/item/natural/thorn = 3)
 	required_items = list(/obj/item/natural/thorn = 7)
 	sound = 'sound/magic/slimesquish.ogg'
-	chargedloop = /datum/looping_sound/invokelightning
+	chargedloop = /datum/looping_sound/invokeascendant
 	harms_undead = FALSE
-	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
 	overlay_state = "revival"
 	action_icon_state = "revival"
-	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
 	required_structure = /obj/structure/fluff/psycross/baotha
 
 /// - MATTHIOS - ///
@@ -63,7 +67,7 @@
 		debt_remaining = start_debt * NOBLE_MULTIPLIER
 	else
 		debt_remaining = start_debt
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(parent, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip))
 
 /datum/component/debt_collector/proc/on_equip(mob/living/carbon/human/H, obj/item/I, slot)
 	SIGNAL_HANDLER
@@ -79,7 +83,7 @@
 
 	// Only interact with standard currency, so no marques or psila
 	if(istype(I, /obj/item/roguecoin/gold) || istype(I, /obj/item/roguecoin/silver) || istype(I, /obj/item/roguecoin/copper))
-		addtimer(CALLBACK(src, .proc/process_payment, H, I), 1)
+		addtimer(CALLBACK(src, PROC_REF(process_payment), H, I), 1)
 
 /datum/component/debt_collector/proc/process_payment(mob/living/carbon/human/H, obj/item/roguecoin/C)
 	var/total_real_value = C.get_real_price()
@@ -193,7 +197,7 @@
 	spawn_orcs()
 
 	// Auto-delete after 15 minutes
-	addtimer(CALLBACK(src, .proc/expire), lifetime)
+	addtimer(CALLBACK(src, PROC_REF(expire)), lifetime)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/primal_rift/process()
@@ -217,7 +221,7 @@
 /obj/structure/primal_rift/proc/spawn_orcs()
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to max_orcs)
-		var/mob/living/carbon/human/species/orc/npc/warlord/O = new(T) 
+		var/mob/living/carbon/human/species/orc/npc/warlord/O = new(T)
 		O.visible_message(span_danger("[O] step out of the rift, axes drawn!"))
 		O.AddComponent(/datum/component/rift_bound, src)
 		orc_count++
@@ -230,7 +234,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	linked_portal = rift
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/component/rift_bound/proc/on_death()
 	SIGNAL_HANDLER
@@ -381,7 +385,7 @@
 	// We apply withdrawals immediately
 	last_sniff_time = world.time - (5 MINUTES)
 	current_cooldown = world.time + message_cooldown
-	RegisterSignal(owner, COMSIG_DRUG_SNIFFED, .proc/on_sniff)
+	RegisterSignal(owner, COMSIG_DRUG_SNIFFED, PROC_REF(on_sniff))
 
 /datum/status_effect/debuff/baotha_addiction/proc/on_sniff()
 	SIGNAL_HANDLER
