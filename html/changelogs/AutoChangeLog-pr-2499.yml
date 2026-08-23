@@ -1,0 +1,4 @@
+author: "Gug1234"
+delete-after: True
+changes:
+  - bugfix: "Fixed an exploit allowing enchantments to be stacked."
