@@ -227,7 +227,7 @@
 	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
 	var/no_redflash = FALSE
 
-	/// Fixes to the hunger/thirst nonsense, stuffing them in species rather than mob. Ported from AP by IronDragoon
+	/// Fixes to the hunger/thirst nonsense, stuffing them in species rather than mob. Ported from AP
 	var/hunger_stage
 	var/thirst_stage
 	var/vitae_stage

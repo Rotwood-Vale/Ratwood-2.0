@@ -2,7 +2,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 ///////////////////////////
-// Hunger/Thirst restructuring from AP - IronDragoon
+// Hunger/Thirst restructuring from AP
 /datum/status_effect/debuff/hungryt1
 	id = "hungryt1"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/hungryt1

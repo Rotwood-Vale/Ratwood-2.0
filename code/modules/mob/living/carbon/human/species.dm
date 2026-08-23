@@ -1008,7 +1008,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 ////////
 //LIFE//
 ////////
-// Hunger/Thirst restructuring from AP - IronDragoon
+// Hunger/Thirst restructuring from AP
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
 	if(H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
@@ -1088,7 +1088,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return 3
 	return 0
 
-/datum/species/proc/set_need_tier(mob/living/carbon/human/H, tier, t1, t2, t3)
+/datum/species/proc/set_need_tier(mob/living/carbon/human/H, tier, /datum/status_effect/debuff t1, /datum/status_effect/debuff t2, /datum/status_effect/debuff t3)
 	if(tier != 1)
 		H.remove_status_effect(t1)
 	if(tier != 2)
@@ -1134,7 +1134,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/new_thirst_stage = get_thirst_stage(H)
 	if(new_thirst_stage != H.thirst_stage)
 		H.thirst_stage = new_thirst_stage
-		set_need_tier(H, new_thirst_stage, /datum/status_effect/debuff/thirstyt1, /datum/status_effect/debuff/thirstyt2,/datum/status_effect/debuff/thirstyt3)
+		set_need_tier(H, new_thirst_stage, /datum/status_effect/debuff/thirstyt1, /datum/status_effect/debuff/thirstyt2, /datum/status_effect/debuff/thirstyt3)
 
 		switch(new_thirst_stage)
 			if(-1)
