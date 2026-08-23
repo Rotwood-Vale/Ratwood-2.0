@@ -97,6 +97,13 @@
 	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
 	if(!sentfrom)
 		sentfrom = "Anonymous"
+	var/sender_ckey = user.ckey
+	var/recipient_ckey = null
+	if(!findtext(send2place, "#"))
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H.real_name == send2place)
+				recipient_ckey = H.ckey
+				break
 	var/t = stripped_multiline_input("Write Your Letter", "ROGUETOWN", no_trim=TRUE)
 	if(t)
 		if(length(t) > 2000)
@@ -120,6 +127,7 @@
 				P.mailer = sentfrom
 				P.mailedto = send2place
 				P.update_icon()
+				GLOB.fax_panel.register_player_letter(sentfrom, send2place, t)
 				P.forceMove(X.loc)
 				X.say("New mail!")
 				playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
@@ -138,9 +146,15 @@
 			return
 		if(SSroguemachine.hermailermaster)
 			var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
+			if(!recipient_ckey)
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.real_name == send2place)
+						recipient_ckey = H.ckey
+						break
 			P.mailer = sentfrom
 			P.mailedto = send2place
 			P.update_icon()
+			GLOB.fax_panel.register_player_letter(sentfrom, send2place, t, sender_ckey, recipient_ckey)
 			P.forceMove(X.loc)
 			var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
 			STR.handle_item_insertion(P, prevent_warning=TRUE)
@@ -495,6 +509,13 @@
 			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
 			if(!sentfrom)
 				sentfrom = "Anonymous"
+			var/sender_ckey = user.ckey
+			var/recipient_ckey = null
+			if(!findtext(send2place, "#"))
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.real_name == send2place)
+						recipient_ckey = H.ckey
+						break
 			if(findtext(send2place, "#"))
 				var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
 				testing("box2find [box2find]")
@@ -505,6 +526,17 @@
 						P.mailer = sentfrom
 						P.mailedto = send2place
 						P.update_icon()
+						var/letter_text = ""
+						var/obj/item/paper/letter_paper = null
+						var/obj/item/smallDelivery/letter_package = null
+						if(istype(P, /obj/item/paper))
+							letter_paper = P
+							letter_text = letter_paper.info
+						else if(istype(P, /obj/item/smallDelivery))
+							letter_package = P
+							if(letter_package.note)
+								letter_text = letter_package.note.info
+						GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
 						P.forceMove(X.loc)
 						X.say("New mail!")
 						playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
@@ -522,6 +554,8 @@
 				for(var/mob/living/carbon/human/H in GLOB.human_list)
 					if(H.real_name == send2place)
 						mailrecipient = H
+						recipient_ckey = H.ckey
+						break
 				if(!mailrecipient && (alert("Could not find recipient [send2place]. Still send the letter?", "", "YES", "NO") == "NO")) // ask player if they still want to send a letter to a non-found character
 					return
 				var/findmaster
@@ -531,6 +565,17 @@
 					P.mailer = sentfrom
 					P.mailedto = send2place
 					P.update_icon()
+					var/letter_text = ""
+					var/obj/item/paper/letter_paper = null
+					var/obj/item/smallDelivery/letter_package = null
+					if(istype(P, /obj/item/paper))
+						letter_paper = P
+						letter_text = letter_paper.info
+					else if(istype(P, /obj/item/smallDelivery))
+						letter_package = P
+						if(letter_package.note)
+							letter_text = letter_package.note.info
+					GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
 					P.forceMove(X.loc)
 					var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
 					STR.handle_item_insertion(P, prevent_warning=TRUE)
