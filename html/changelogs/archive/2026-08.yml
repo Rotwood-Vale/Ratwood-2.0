@@ -497,3 +497,7 @@
   wikimody:
   - rscadd: Incresed the ghost/observer sight range in the dark
   - bugfix: fixed royal knive sheath being an immovable object (it had 500 hp)
+2026-08-23:
+  MickDick1:
+  - bugfix: Retuned Inspector statline/weapon choices so he's able to wield them at
+      all
