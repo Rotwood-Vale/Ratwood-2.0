@@ -1146,13 +1146,13 @@
 /datum/status_effect/buff/eora_grace/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/buff/eora_grace/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent
 	name = "opalescent aril"
@@ -1398,7 +1398,7 @@
 	if(assocskill)
 		duration *= assocskill	//+1 minute per skill level.
 	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)	//Generic origin so other Eorans do not have their innate traits overridden (they use TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	var/hungercheck = H.nutrition
 	var/hydrohomiecheck = H.hydration
 	switch(hungercheck)
@@ -1427,7 +1427,7 @@
 	. = ..()
 
 /datum/status_effect/eora_blessing/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	owner.update_stress()
 	return ..()
 
