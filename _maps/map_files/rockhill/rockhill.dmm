@@ -7581,6 +7581,14 @@
 /obj/structure/fluff/walldeco/rpainting/crown{
 	pixel_y = 32
 	},
+/obj/item/storage/keyring/rockhillslaver,
+/obj/item/storage/keyring/rockhillslaver,
+/obj/item/storage/keyring/rockhillslaver,
+/obj/item/storage/keyring/rockhillslaver,
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverhouse,
+/obj/item/roguekey/slaverdungeon,
+/obj/item/roguekey/slaverdungeon,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "bBo" = (
@@ -18244,6 +18252,8 @@
 /obj/item/clothing/neck/roguetown/collar/catbell,
 /obj/item/clothing/neck/roguetown/collar/cowbell,
 /obj/item/clothing/neck/roguetown/collar/leather,
+/obj/item/storage/keyring/rockhillslaves,
+/obj/item/storage/keyring/rockhillslaves,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/town/basement)
 "dIb" = (
@@ -19683,16 +19693,6 @@
 "dWV" = (
 /obj/structure/closet/crate/drawer/drawer2,
 /obj/machinery/light/rogue/candle/l,
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManor";
-	name = "Lowtown Manor Key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManor";
-	name = "Lowtown Manor Key"
-	},
 /obj/item/lockpick/goldpin,
 /obj/item/clothing/ring/emerald,
 /obj/item/needle{
@@ -19701,16 +19701,16 @@
 	},
 /obj/item/clothing/neck/roguetown/skullamulet,
 /obj/structure/fluff/railing/border/north,
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManorGuest";
-	name = "Lowtown Manor Guest Key";
-	pixel_y = 3
-	},
 /obj/item/storage/belt/rogue/pouch/coins/veryrich{
 	pixel_x = 9;
 	pixel_y = 2
 	},
+/obj/item/roguekey/baronguest,
+/obj/item/roguekey/baronguest,
+/obj/item/roguekey/baron,
+/obj/item/roguekey/baron,
+/obj/item/roguekey/baron,
+/obj/item/roguekey/baron,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "dWY" = (
@@ -32356,13 +32356,6 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManor";
-	name = "Lowtown Manor Key";
-	pixel_x = 9;
-	pixel_y = 3
-	},
 /obj/item/storage/keyring{
 	pixel_x = -3;
 	pixel_y = 2
@@ -32375,6 +32368,8 @@
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = 32
 	},
+/obj/item/roguekey/baronguest,
+/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "gEA" = (
@@ -41859,6 +41854,8 @@
 	},
 /obj/structure/fluff/railing/border/north,
 /obj/structure/curtain/red,
+/obj/item/roguekey/slaverpillory,
+/obj/item/roguekey/slaverpillory,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
 "iGp" = (
@@ -71862,6 +71859,11 @@
 /obj/item/clothing/mask/rogue/sack,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/natural/bundle/cloth/bandage/full,
+/obj/item/roguekey/baron,
+/obj/item/storage/keyring{
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "oWb" = (
@@ -92229,13 +92231,8 @@
 /area/rogue/indoors/town/church/chapel)
 "tqx" = (
 /obj/structure/closet/crate/drawer/random,
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManorGuest";
-	name = "Lowtown Manor Guest Key";
-	pixel_y = 3
-	},
 /obj/item/clothing/neck/roguetown/psicross/pearl,
+/obj/item/roguekey/baronguest,
 /turf/open/floor/rogue/ruinedwood/herringbone_clear,
 /area/rogue/indoors)
 "tqA" = (
@@ -291020,7 +291017,7 @@ vRu
 cWU
 rVM
 rVM
-cdX
+unc
 vRu
 vRu
 vRu
@@ -291884,9 +291881,9 @@ cWU
 cWU
 rVM
 cWU
-cdX
-czk
-czk
+unc
+mir
+mir
 vRu
 tzK
 wSn
@@ -292316,9 +292313,9 @@ rVM
 vRu
 vRu
 vRu
-cdX
 vRu
-czk
+vRu
+mir
 czk
 uaL
 wSn
@@ -292748,7 +292745,7 @@ qvR
 xvN
 vRu
 vRu
-cdX
+vRu
 vRu
 vRu
 bxi
@@ -293180,7 +293177,7 @@ qvR
 xvN
 vRu
 vRu
-cdX
+vRu
 vRu
 vRu
 vRu
@@ -293612,7 +293609,7 @@ sjP
 qvR
 xvN
 vRu
-cdX
+vRu
 vRu
 vRu
 vRu
@@ -294037,14 +294034,14 @@ spp
 xvN
 qvR
 qvR
-qvR
+sjP
 fxx
 fxx
 fxx
 xvN
 qvR
 iNT
-cdX
+vRu
 vRu
 iNT
 xvN
@@ -294470,15 +294467,15 @@ qvR
 qvR
 spp
 qvR
-xvN
-sjP
+fxx
+oXK
 fxx
 fxx
 sjP
 xvN
-wSn
+sjP
 xvN
-qvR
+xvN
 qvR
 gNu
 sjP
@@ -294908,9 +294905,9 @@ fxx
 fxx
 qqN
 fxx
-xrY
-qvR
-qvR
+fxx
+fxx
+fxx
 sjP
 wsK
 fxx
@@ -295335,12 +295332,12 @@ uaL
 qvR
 spp
 qvR
-wSn
+sjP
 sjP
 fxx
 fxx
 fxx
-wSn
+fxx
 wsK
 fxx
 fxx
