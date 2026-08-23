@@ -31,7 +31,6 @@
 	STASTR = 4
 	STASPD = 18	//A little faster than bobcats.
 	mob_size = MOB_SIZE_SMALL
-	density = FALSE
 
 /obj/effect/decal/remains/raccoon
 	name = "remains"
