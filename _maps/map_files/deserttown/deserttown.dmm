@@ -2618,7 +2618,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/garrison/desert/cell)
 "aIV" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/duneedge,
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/outdoors/desert)
@@ -3431,7 +3431,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern/desert)
 "aTN" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguetree/stump/palm,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -5801,7 +5801,7 @@
 /turf/open/floor/rogue/carpet/lord/center/no_teleport,
 /area/rogue/under/cave/licharena/bossroom)
 "bAr" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdesert)
 "bAs" = (
@@ -8003,10 +8003,6 @@
 	},
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
-"cet" = (
-/obj/effect/landmark/quest_spawner/hard,
-/turf/open/floor/rogue/naturalstone/sandstone,
-/area/rogue/under/cave)
 "cey" = (
 /obj/structure/closet/crate/roguecloset,
 /turf/open/floor/rogue/deserttile{
@@ -10081,7 +10077,7 @@
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/manor/desert)
 "cIu" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/tile/brownbrick{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -13069,7 +13065,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/desertdeep/above)
 "dyU" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desert)
@@ -14176,7 +14172,7 @@
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/under/cavewet)
 "dNM" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cavewet/bogcaves)
 "dNR" = (
@@ -14596,10 +14592,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/dungeon/bizbaz)
-"dUc" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/rogue/dunes,
-/area/rogue/outdoors/desertdeep)
 "dUg" = (
 /obj/structure/roguemachine/escrow,
 /turf/closed/wall/mineral/rogue/sandbrick,
@@ -15377,7 +15369,7 @@
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/steward)
 "efe" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/remains/wolf,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/outdoors/desertdeep)
@@ -15884,7 +15876,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/physician/desert)
 "eof" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/hay,
 /area/rogue/outdoors/desert)
@@ -16206,7 +16198,7 @@
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desert)
 "etE" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -19313,7 +19305,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/bath/desert)
 "fnW" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/desert/oasis)
 "fod" = (
@@ -21288,7 +21280,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/desert)
 "fSZ" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/under/town/basement/desert)
 "fTd" = (
@@ -22613,7 +22605,7 @@
 /turf/closed/wall/mineral/rogue/sandstone,
 /area/rogue/under/cave)
 "gnA" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/roguetent,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
@@ -22829,7 +22821,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/under/cave)
 "gqu" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
@@ -24997,7 +24989,7 @@
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/indoors/shelter/desertdeep)
 "gUL" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/machinery/light/rogue/torchholder/l,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desert)
@@ -25265,7 +25257,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/church)
 "gYx" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "gYy" = (
@@ -26167,7 +26159,7 @@
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "hks" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
@@ -26391,7 +26383,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/desert)
 "hnw" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/town/basement/desert)
 "hnO" = (
@@ -27313,7 +27305,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
@@ -30642,7 +30633,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
@@ -31311,7 +31301,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
@@ -35158,7 +35147,7 @@
 /area/rogue/under/underdesert)
 "jQz" = (
 /obj/structure/flora/roguegrass/verdant,
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/town/desert)
 "jQD" = (
@@ -36855,7 +36844,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/cave/licharena)
 "kpp" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/vine,
 /obj/structure/bed/rogue/inn/hay,
 /turf/open/floor/rogue/dunes,
@@ -38341,7 +38330,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/table/wood/large_table,
@@ -41897,7 +41885,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/academy/desert)
 "lKv" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/snowrough{
 	desc = "cracked, dry, poisoned earth";
 	name = "salt flats"
@@ -42589,7 +42577,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave)
 "lUk" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
@@ -42858,7 +42846,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/town/basement/desert/keep)
 "lXI" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/sandrock/sandrock4,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/outdoors/desert)
@@ -43081,7 +43069,7 @@
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert/oasis)
 "mbO" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/cleanable/debris/woody,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
@@ -45194,7 +45182,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/cave/spider)
 "mIL" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desertdeep)
 "mIN" = (
@@ -50752,7 +50740,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/desert)
 "omR" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dunes,
 /area/rogue/under/cave)
 "omT" = (
@@ -53855,7 +53843,7 @@
 	},
 /area/rogue/indoors/town/desert/arenaview)
 "pgm" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/remains/human,
 /obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
 /turf/open/floor/rogue/dunes,
@@ -55885,10 +55873,6 @@
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/town/basement/desert)
-"pJa" = (
-/obj/effect/landmark/quest_spawner/medium,
-/turf/open/floor/rogue/lightpath,
-/area/rogue/under/cave)
 "pJk" = (
 /mob/living/carbon/human/species/human/northern/deranged_knight/zizo,
 /turf/open/floor/rogue/carpet/lord/left,
@@ -58378,7 +58362,7 @@
 /area/rogue/indoors/town/garrison/desert/cell)
 "qvd" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/hyena,
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/outdoors/desertdeep)
 "qvg" = (
@@ -59676,7 +59660,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
@@ -63698,7 +63681,7 @@
 	},
 /area/rogue/under/dungeon/orcfort)
 "rWt" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/underdesert)
 "rWG" = (
@@ -66373,7 +66356,7 @@
 	},
 /area/rogue/under/cave/skeletoncrypt)
 "sHT" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/cleanshallow,
 /area/rogue/under/cavewet)
 "sHY" = (
@@ -66554,7 +66537,6 @@
 /obj/structure/roguemachine/talkstatue/mercenary,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/effect/decal/edge{
@@ -69810,7 +69792,7 @@
 	},
 /area/rogue/outdoors/desertdeep)
 "tDA" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/cleanshallow,
 /area/rogue/under/cavewet/bogcaves)
 "tDJ" = (
@@ -70820,7 +70802,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/cave)
 "tSq" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/under/cave)
 "tSr" = (
@@ -72030,7 +72012,7 @@
 /turf/open/water/river/flow/east,
 /area/rogue/under/dungeon/bizbaz)
 "uic" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet/bogcaves)
 "uih" = (
@@ -72285,7 +72267,7 @@
 	},
 /area/rogue/indoors/town/manor/desert)
 "ulX" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/desert/oasis)
 "ulY" = (
@@ -73556,7 +73538,7 @@
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cave)
 "uFb" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguegrass/bush/jungle,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/desert)
@@ -74210,7 +74192,7 @@
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/physician/desert)
 "uMU" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/roguegrass/desertgrass,
 /turf/open/floor/rogue/desert_grass,
@@ -76484,7 +76466,7 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/tile/brownbrick{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -77222,7 +77204,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "vDR" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
 "vEb" = (
@@ -78075,7 +78057,7 @@
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/indoors/shelter/desertdeep)
 "vPl" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguegrass/verdant,
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/outdoors/desert)
@@ -78150,10 +78132,6 @@
 /obj/item/cushion/desert1,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/desert)
-"vQE" = (
-/obj/effect/landmark/quest_spawner/easy,
-/turf/open/floor/rogue/lightpath,
-/area/rogue/under/cave)
 "vQH" = (
 /obj/item/cushion/desert1,
 /turf/open/floor/rogue/tile/brick,
@@ -80232,7 +80210,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/town/basement/desert)
 "wwV" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/machinery/light/rogue/firebowl,
 /obj/structure/flora/roguetree/palm,
 /turf/open/floor/rogue/sandbrick,
@@ -80631,7 +80609,6 @@
 	},
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
@@ -81182,7 +81159,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church/chapel)
 "wMi" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/underdesert)
 "wMr" = (
@@ -83211,10 +83188,6 @@
 	icon_state = "tiledrab2"
 	},
 /area/rogue/indoors/town/desert)
-"xnS" = (
-/obj/effect/landmark/quest_spawner/easy,
-/turf/open/floor/rogue/dunes,
-/area/rogue/outdoors/desertdeep)
 "xnX" = (
 /obj/item/natural/stone,
 /turf/open/floor/rogue/darkpath,
@@ -228437,7 +228410,7 @@ lbf
 lbf
 lbf
 wPj
-pJa
+tSq
 eBo
 wPj
 wPj
@@ -269214,7 +269187,7 @@ wPj
 wPj
 eBo
 eBo
-vQE
+tSq
 eBo
 eBo
 eBo
@@ -329281,7 +329254,7 @@ mVA
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -331068,7 +331041,7 @@ jJw
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -340126,7 +340099,7 @@ lhb
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 bDY
@@ -345822,7 +345795,7 @@ wPj
 wPj
 wPj
 uBv
-cet
+gYx
 uBv
 wPj
 wPj
@@ -353706,7 +353679,7 @@ sjR
 uBv
 uBv
 uBv
-cet
+gYx
 uBv
 kvr
 kvr
@@ -370445,7 +370418,7 @@ mVA
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -373644,7 +373617,7 @@ mVA
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -378870,7 +378843,7 @@ mVA
 ydN
 mVA
 mVA
-xnS
+mIL
 mVA
 ydN
 mVA
@@ -385793,7 +385766,7 @@ eWR
 eWR
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -393304,7 +393277,7 @@ mVA
 ydN
 mVA
 mVA
-xnS
+mIL
 mVA
 igN
 wPj
@@ -407313,7 +407286,7 @@ mVA
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 mVA
@@ -409216,7 +409189,7 @@ dkT
 oSP
 mVA
 mVA
-dUc
+mIL
 mVA
 mVA
 aKK
@@ -416406,7 +416379,7 @@ mVA
 mVA
 mVA
 mVA
-dUc
+mIL
 mVA
 fow
 mVA

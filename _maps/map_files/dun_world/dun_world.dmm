@@ -930,7 +930,7 @@
 /turf/open/water/river/flow,
 /area/rogue/outdoors/woods/northwest)
 "ajw" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -1624,7 +1624,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/shelter/woods)
 "apY" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/machinery/light/rogue/campfire,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/mountains/decap)
@@ -1717,7 +1717,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
 "ark" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave)
 "arm" = (
@@ -1993,7 +1993,7 @@
 /turf/open/water/ocean/deep,
 /area/rogue/outdoors/rtfield)
 "aub" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/hamlet)
 "auc" = (
@@ -4620,7 +4620,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "aVA" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/fluff/signage,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains/decap)
@@ -5793,7 +5793,7 @@
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/cave/scarymaze)
 "bjh" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods/northwest)
 "bjm" = (
@@ -8657,7 +8657,7 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/tavern)
 "bMV" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet/bogcaves/coastcaves)
 "bMY" = (
@@ -9616,7 +9616,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "bXP" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains/decap)
@@ -9939,7 +9939,7 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/rtfield)
 "cbE" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "cbI" = (
@@ -12743,7 +12743,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bog/south)
 "cHb" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flagpole,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -13297,7 +13297,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town)
 "cML" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield)
@@ -14907,7 +14907,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach)
 "dgL" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
@@ -17098,7 +17098,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault/four)
 "dDb" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bog/north)
 "dDd" = (
@@ -19399,7 +19399,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "ebJ" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/sewer)
 "ebM" = (
@@ -20274,7 +20274,7 @@
 	},
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "ekV" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/swamp,
 /area/rogue/under/cavewet/bogcaves/central)
 "ekX" = (
@@ -20440,7 +20440,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
 "enk" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/north)
 "enm" = (
@@ -21626,7 +21626,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/town/grove)
 "eyW" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/hamlet)
 "ezb" = (
@@ -22943,7 +22943,7 @@
 /turf/closed/wall/mineral/rogue/roofwall/outercorner/dir4,
 /area/rogue/indoors/town/warden)
 "eOl" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/north)
 "eOn" = (
@@ -23488,7 +23488,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church/chapel)
 "eUf" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "eUi" = (
@@ -26271,7 +26271,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/mountains/decap/minotaurfort)
 "fxd" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "fxk" = (
@@ -26712,7 +26712,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/forest/south)
 "fCe" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/underdarker/dunsouth)
 "fCl" = (
@@ -26893,7 +26893,7 @@
 /area/rogue/outdoors/town)
 "fED" = (
 /mob/living/carbon/human/species/human/northern/bog_deserters/better_gear,
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/bog/south)
 "fEJ" = (
@@ -27117,7 +27117,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/inq/office)
 "fHy" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/cavewet/bogcaves/south)
 "fHz" = (
@@ -28412,7 +28412,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
 "fWG" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/northeast)
 "fWI" = (
@@ -31075,7 +31075,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/inq)
 "gyf" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/north)
 "gyh" = (
@@ -31104,7 +31104,7 @@
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
 /area/rogue/indoors/town)
 "gyC" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/cave)
 "gyE" = (
@@ -31287,7 +31287,7 @@
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor)
 "gAY" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods/north)
 "gAZ" = (
@@ -31593,7 +31593,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/scarymaze)
 "gFc" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave/southern)
 "gFf" = (
@@ -33747,10 +33747,6 @@
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/mountains/decap)
-"gZS" = (
-/obj/effect/landmark/quest_spawner/hard,
-/turf/open/floor/rogue/dirt/road,
-/area/rogue/indoors/cave)
 "gZV" = (
 /turf/closed/wall/mineral/rogue/roofwall/innercorner{
 	dir = 4
@@ -35482,7 +35478,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "hrO" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/south)
 "hrQ" = (
@@ -38077,7 +38073,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/inq)
 "hUT" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/southeast)
 "hUV" = (
@@ -38610,7 +38606,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "hZM" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/cave)
 "iac" = (
@@ -39210,7 +39206,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin)
 "igc" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/twig,
 /area/rogue/under/cavewet/bogcaves/west)
 "ige" = (
@@ -42119,7 +42115,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdark/north)
 "iMK" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cavewet/bogcaves/central)
 "iMV" = (
@@ -42428,7 +42424,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "iQV" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/underdarker/dunsouth)
 "iQY" = (
@@ -44189,7 +44185,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/dwarfin)
 "jkb" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/sewer,
 /area/rogue/under/cavewet/bogcaves/west)
 "jkd" = (
@@ -45102,7 +45098,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town)
 "jum" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/bog/south)
 "jur" = (
@@ -47470,7 +47466,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "jVt" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/cave)
 "jVw" = (
@@ -51040,7 +51036,7 @@
 /turf/closed/wall/mineral/rogue/decostone/end/west,
 /area/rogue/under/cave/dukecourt)
 "kFA" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/cave/northern)
 "kFJ" = (
@@ -51201,7 +51197,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
 "kHV" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/south)
 "kHX" = (
@@ -52198,7 +52194,7 @@
 "kSM" = (
 /obj/structure/flora/roguegrass/maneater/real,
 /obj/effect/spawner/roguemap/treeorbush,
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/southwest)
 "kSN" = (
@@ -53707,7 +53703,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "ljA" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/underdark)
 "ljC" = (
@@ -57850,7 +57846,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield)
 "mae" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdark)
 "maf" = (
@@ -59569,7 +59565,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/shelter/mountains/decap)
 "mrE" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/north)
 "mrF" = (
@@ -64241,7 +64237,7 @@
 /turf/open/water/bloody,
 /area/rogue/under/cave/orcdungeon)
 "nrD" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/beach/forest/hamlet)
 "nrI" = (
@@ -65089,7 +65085,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblindungeon)
 "nAT" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave/east)
 "nAU" = (
@@ -67692,7 +67688,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/woods/south)
 "odo" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/forest/north)
 "odq" = (
@@ -68030,7 +68026,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "ogi" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet/bogcaves/camp)
 "ogj" = (
@@ -71764,7 +71760,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/goblindungeon)
 "oSc" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/ocean/deep,
 /area/rogue/under/cavewet/bogcaves/south)
 "oSg" = (
@@ -73057,7 +73053,7 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/exposed/town/keep)
 "pgD" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/sewer,
 /area/rogue/indoors/cave)
 "pgF" = (
@@ -74617,7 +74613,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains)
 "pyO" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/south)
 "pyP" = (
@@ -74817,7 +74813,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "pAS" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/north)
 "pAT" = (
@@ -77252,7 +77248,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors/inq/basement)
 "pZZ" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/cave/west)
@@ -79327,10 +79323,6 @@
 	icon_state = "iron_line"
 	},
 /area/rogue/under/town/sewer)
-"qxb" = (
-/obj/effect/landmark/quest_spawner/easy,
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/woods/northwest)
 "qxc" = (
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/beach/south)
@@ -79573,7 +79565,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town)
 "qzk" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave/underhamlet)
 "qzm" = (
@@ -81168,7 +81160,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/licharena/bossroom)
 "qQi" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave/central)
 "qQj" = (
@@ -81311,10 +81303,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
-"qRg" = (
-/obj/effect/landmark/quest_spawner/hard,
-/turf/open/floor/rogue/dirt,
-/area/rogue/indoors/cave)
 "qRj" = (
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/ruinedwood/chevron,
@@ -91181,7 +91169,7 @@
 	},
 /area/rogue/indoors/town/church/basement)
 "sWW" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/beach/forest/south)
 "sWX" = (
@@ -91437,7 +91425,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/south)
 "tab" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/underdarker/dunsouth)
 "tae" = (
@@ -95308,7 +95296,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/cave/orcdungeon)
 "tNE" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods/northwest)
 "tNI" = (
@@ -96943,7 +96931,7 @@
 /obj/effect/decal/wood/herringbone{
 	dir = 1
 	},
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave/underhamlet)
 "ufh" = (
@@ -97124,7 +97112,7 @@
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/mountains)
 "ugT" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods/northwest)
 "ugX" = (
@@ -97186,7 +97174,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
 "uhD" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/cave/west)
 "uhG" = (
@@ -102240,7 +102228,7 @@
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/church/chapel)
 "vjM" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/cave/southern)
 "vjP" = (
@@ -102932,7 +102920,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "vqP" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "vqR" = (
@@ -102949,7 +102937,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bog/north)
 "vqW" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/underdark)
 "vra" = (
@@ -102985,7 +102973,7 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/scarymaze)
 "vry" = (
-/obj/effect/landmark/quest_spawner/easy,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/water/swamp,
 /area/rogue/under/town/sewer)
 "vrB" = (
@@ -104419,7 +104407,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/woods/northeast)
 "vHl" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/concrete{
 	dir = 8
 	},
@@ -104504,7 +104492,7 @@
 /area/rogue/indoors/town/bath)
 "vIb" = (
 /obj/structure/flora/roguegrass/jungle/sparse,
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/woods/southwest)
 "vIf" = (
@@ -106113,7 +106101,7 @@
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/bath)
 "vYx" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/beach/forest/north)
 "vYz" = (
@@ -106328,7 +106316,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
 "waW" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woods/southwest)
 "waY" = (
@@ -106396,7 +106384,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/dukecourt)
 "wcm" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/under/underdark)
 "wcr" = (
@@ -106410,7 +106398,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave)
 "wct" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave/west)
 "wcu" = (
@@ -107498,10 +107486,6 @@
 /obj/structure/hotspring/border/six,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/mountains)
-"wmw" = (
-/obj/effect/landmark/quest_spawner/hard,
-/turf/open/floor/rogue/dirt,
-/area/rogue/indoors/cave/underhamlet)
 "wmx" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 4;
@@ -110420,7 +110404,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/office)
 "wSd" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/cave)
 "wSf" = (
@@ -110456,7 +110440,7 @@
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
 "wSp" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/cave)
 "wSr" = (
@@ -110720,7 +110704,7 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "wVs" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/cave)
 "wVu" = (
@@ -115326,7 +115310,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
 "xVd" = (
-/obj/effect/landmark/quest_spawner/hard,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/northwest)
 "xVf" = (
@@ -117064,7 +117048,7 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cave/his_vault)
 "yme" = (
-/obj/effect/landmark/quest_spawner/medium,
+/obj/effect/landmark/quest_spawner/generic,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woods/southwest)
 
@@ -167350,7 +167334,7 @@ mZu
 mZu
 nkF
 nkF
-wmw
+qzk
 nkF
 nkF
 nWt
@@ -172801,7 +172785,7 @@ nkF
 nkF
 nkF
 nkF
-wmw
+qzk
 nkF
 cli
 lXu
@@ -175947,7 +175931,7 @@ mZu
 lXu
 nkF
 nkF
-wmw
+qzk
 nkF
 nkF
 nkF
@@ -192536,7 +192520,7 @@ wLb
 wLb
 dGu
 dGu
-bMV
+dGu
 dGu
 dGu
 wLb
@@ -254836,7 +254820,7 @@ pLH
 pLH
 muK
 muK
-qxb
+xVd
 muK
 muK
 muK
@@ -305576,7 +305560,7 @@ acF
 jFf
 jFf
 tIH
-gZS
+wVs
 tIH
 tIH
 tIH
@@ -322799,7 +322783,7 @@ acF
 acF
 tIH
 acF
-qRg
+ark
 ofQ
 acF
 acF
