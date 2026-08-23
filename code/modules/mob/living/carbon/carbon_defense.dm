@@ -139,11 +139,13 @@
 			return parse_zone(zone)
 		return affecting.name
 
-/mob/living/carbon/proc/find_used_grab_limb(mob/living/user) //for finding the exact limb or inhand to grab
+/mob/living/carbon/proc/find_used_grab_limb(mob/living/user, target_zone = null) //for finding the exact limb or inhand to grab
 	var/used_limb = BODY_ZONE_CHEST
 	var/missing_nose = HAS_TRAIT(src, TRAIT_MISSING_NOSE)
 	var/original_zone = user.zone_selected
 	var/obj/item/bodypart/affecting
+	if(target_zone)
+		user.zone_selected = target_zone
 	if(src.get_bodypart(BODY_ZONE_TAUR)) // respect taur bodies
 		if(user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG || user.zone_selected == BODY_ZONE_PRECISE_L_FOOT || user.zone_selected == BODY_ZONE_PRECISE_R_FOOT)
 			user.zone_selected = BODY_ZONE_TAUR
