@@ -3,12 +3,7 @@ Economy 3 noticeboard. Ported from Azure-Peak's split noticeboard/ folder
 (noticeboard.dm + posting.dm + assembly_floor.dm).
 
 Ratwood deviations from AP:
-- Icon/desc kept as ES's existing "icons/roguetown/misc/64x64.dmi" sprite sheet and
-  "Emerald Summit" flavor text - AP's noticeboard64.dmi/noticeboard32.dmi don't exist in
-  this repo's icons folder, so the /wall (craftable, wall-mounted) variant that depends on
-  noticeboard32.dmi is dropped for now (minor optional feature; the freestanding board is
-  the only kind ES has ever had). The /boardbarrier subtype from ES's old flat file is kept
-  as-is (still referenced by _maps/map_files/dun_world/dun_world.dmm).
+
 - Blockade writs never physically pin to this board: AP tip dropped its old
   promote_to_board_gated() attackby flow in favour of the Avisa scout rows simply showing
   blockade_writ_out via blockade.has_active_scroll(), which build_scout_regions() below
@@ -20,8 +15,7 @@ Ratwood deviations from AP:
   a strict functional superset (registration flow, per-merc DM, broadcast, status cycling,
   yae/nae replies) minus the roguecoin cost gate. build_mercenary_roster() below just reads
   that statue's roster for display. See the Step 9e port report for the roguecoin-gate note.
-- ES's board_viewers "a new posting has been made since I last checked" examine flavor is
-  preserved below (adapted to the notice/listing tier system) since AP dropped it silently.
+
 - build_charters() reads the item 6 decree system (SStreasury.decrees, code/modules/politics/);
   never-activated dormant charters stay hidden until the Lord first presses them.
 - build_scout_regions() drops AP's "ic_descriptions" field: ES's /datum/threat_region has no
@@ -33,7 +27,7 @@ Ratwood deviations from AP:
 /obj/structure/roguemachine/noticeboard
 	name = "Notice Board"
 	desc = "A large wooden notice board, carrying postings from all across Rotwood Vale. A ZAD perch sits atop it."
-	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon = 'icons/roguetown/structure/noticeboard64.dmi'
 	icon_state = "noticeboard0"
 	density = TRUE
 	anchored = TRUE
@@ -65,6 +59,26 @@ Ratwood deviations from AP:
 	if(SSmerchant_trade)
 		SSmerchant_trade.unregister_market_watcher(src)
 	return ..()
+
+/obj/structure/roguemachine/noticeboard/wall
+	icon = 'icons/roguetown/structure/noticeboard32.dmi'
+	density = FALSE
+	layer = ABOVE_MOB_LAYER
+	pixel_y = 32
+
+/obj/structure/roguemachine/noticeboard/wall/OnCrafted(dirin, user)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
 
 /obj/structure/roguemachine/noticeboard/examine(mob/living/carbon/human/user)
 	. = ..()
