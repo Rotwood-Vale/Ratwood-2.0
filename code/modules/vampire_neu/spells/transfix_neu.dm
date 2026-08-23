@@ -8,22 +8,7 @@
 	range = 6
 	chargetime = 0
 	releasedrain = 100
-	recharge_time = 20 SECONDS //Do not increase this, allow me to explain:
-
-/* Transfix currently, how it works:
-- You cast the spell, it gives you a list of everyone nearby
-- You transfix someone, after typing sufficent characters (10+ letters)
-- If they/you have cmode on, you full stop cannot use it. Yes, you have to play along with this to start with.
-- They can just walk away, seriously, this is a thing and why I want this short again.
-- Surprisingly, yes. Drowsiness wears off over time so we need to account for that.
-- It builds in stacks, lickers and thinbloods have it as a 3-4 tap move if RNG is nice to you. So-> 60 (1 minute) -> 80 (1 minute, 20 seconds)
-
-- Vampires, are all inherently antagonistic and need a non-frag way to take people out and drink them/turn them potentally.
-- Currently people deathgasp through all Z levels which can be heard afar, this probably isn't intended but yes.
-
-- If you rework transfix to something else entirely or our combat system de-neuters grabs to the point of absolutely useless, then feel free to. Don't touch it for now.
-- Even wretchpires need to being able to take people out before others show up, that's why it's short.
-*/
+	recharge_time = 1 MINUTES
 
 	/// Ignore crosses and give a different message
 	var/powerful = FALSE
