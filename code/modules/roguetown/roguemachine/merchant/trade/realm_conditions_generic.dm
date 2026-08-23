@@ -457,12 +457,12 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_GEMERALD, "qty_min" = BULK_QTY_TINY_MIN, "qty_max" = BULK_QTY_TINY_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
 	)
 
-/datum/realm_condition/raneshen_caravan_raids
-	id = "raneshen_caravan_raids"
+/datum/realm_condition/zybantium_caravan_raids
+	id = "zybantium_caravan_raids"
 	name = "Caravan Raids"
 	description = "Bandits ride the eastern passes between Nshkormh and Vrdaqnan. Sugar and coffee caravans arrive light and late, and the Sheikh of the affected counties pays premium for iron and cured leather to outfit a counter-raid."
 	weight = 8
-	affected_realms = list(REALM_RANESHEN)
+	affected_realms = list(REALM_ZYBANTIUM)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SUGAR, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_COFFEE, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
@@ -472,12 +472,12 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_CURED_LEATHER, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
 	)
 
-/datum/realm_condition/raneshen_silk_boom
-	id = "raneshen_silk_boom"
+/datum/realm_condition/zybantium_silk_boom
+	id = "zybantium_silk_boom"
 	name = "Silk Boom"
 	description = "The Chorodiaki silk houses have brought in a record season. Bolts spill into the markets at low prices, and dyestuffs - cinnabar especially - are demanded by the looms at premium."
 	weight = 8
-	affected_realms = list(REALM_RANESHEN)
+	affected_realms = list(REALM_ZYBANTIUM)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SILK, "price_mod" = CONDITION_PRICE_VERY_CHEAP, "qty_mod" = CONDITION_QTY_HEAVY),
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_CLOTH, "price_mod" = CONDITION_PRICE_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
@@ -487,12 +487,12 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_FIBERS, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_PREMIUM),
 	)
 
-/datum/realm_condition/raneshen_philosopher_gathering
-	id = "raneshen_philosopher_gathering"
+/datum/realm_condition/zybantium_philosopher_gathering
+	id = "zybantium_philosopher_gathering"
 	name = "Philosopher Gathering"
 	description = "The geometers and dervishes of the four members have gathered at Mücevkabher for a season of discourse. Enchscrolls, paper, and the finest teas are demanded for the symposia and their long nights."
 	weight = 5
-	affected_realms = list(REALM_RANESHEN)
+	affected_realms = list(REALM_ZYBANTIUM)
 	demand_modifiers = list(
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_ENCHSCROLL_BASIC, "qty_min" = BULK_QTY_TINY_MIN, "qty_max" = BULK_QTY_TINY_MAX, "price_mod" = BULK_PRICE_DESPERATE),
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_PAPER, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
@@ -568,13 +568,13 @@
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_COAL, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_MODERATE),
 	)
 
-/datum/realm_condition/cross_raneshen_drought
-	id = "cross_raneshen_drought"
-	name = "Ranesheni Drought"
-	description = "The Raneshen continent's harvests have collapsed. The Ranesheni heartlands ship no rice or garlick this season, and Lirvas's tributary fields wither in tandem. Both realms beg for foreign grain and oats."
+/datum/realm_condition/cross_zybantium_drought
+	id = "cross_zybantium_drought"
+	name = "Zybantine Drought"
+	description = "The Zybantine continent's harvests have collapsed. The Zybantine heartlands ship no rice or garlick this season, and Lirvas's tributary fields wither in tandem. Both realms beg for foreign grain and oats."
 	weight = 6
 	cross_realm = TRUE
-	affected_realms = list(REALM_RANESHEN, REALM_LIRVAS)
+	affected_realms = list(REALM_ZYBANTIUM, REALM_LIRVAS)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_RICE),
 		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_GARLICK),
@@ -631,13 +631,13 @@
 		),
 	)
 
-/datum/realm_condition/cross_etrusca_raneshen_war
-	id = "cross_etrusca_raneshen_war"
+/datum/realm_condition/cross_etrusca_zybantium_war
+	id = "cross_etrusca_zybantium_war"
 	name = "Etruscan Offensive"
-	description = "House Zaragoza has answered an old grievance with steel. The Etruscan Armadas sail east; Raneshen's Sheikh of the coastal counties calls for the levies and the dervish houses dim their candles."
+	description = "House Zaragoza has answered an old grievance with steel. The Etruscan Armadas sail east; Zybantium's Sheikh of the coastal counties calls for the levies and the dervish houses dim their candles."
 	weight = 5
 	cross_realm = TRUE
-	affected_realms = list(REALM_ETRUSCA, REALM_RANESHEN)
+	affected_realms = list(REALM_ETRUSCA, REALM_ZYBANTIUM)
 	per_realm_modifiers = list(
 		REALM_ETRUSCA = list(
 			"supply" = list(
@@ -650,7 +650,7 @@
 			),
 			// TODO(cultural stock step): "cultural" deferred - referenced /datum/supply_pack/rogue/etrusca/{condottieri_kit,crossbow} not yet ported.
 		),
-		REALM_RANESHEN = list(
+		REALM_ZYBANTIUM = list(
 			"supply" = list(
 				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SILK, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_COFFEE, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
@@ -663,15 +663,15 @@
 		),
 	)
 
-/datum/realm_condition/cross_raneshen_etrusca_war
-	id = "cross_raneshen_etrusca_war"
-	name = "Ranesheni Offensive"
-	description = "The Autarch has called the levies. Ranesheni galleys cross the Resting Ocean to strike the Navarno coast - and the Vaqueros ride the hills once again. Gran Zafiro pulls every keel to the chain while the Sheikh of Vrdaqnan empties his stores for the campaign."
+/datum/realm_condition/cross_zybantium_etrusca_war
+	id = "cross_zybantium_etrusca_war"
+	name = "Zybantine Offensive"
+	description = "The Autarch has called the levies. Zybantine galleys cross the Resting Ocean to strike the Navarno coast - and the Vaqueros ride the hills once again. Gran Zafiro pulls every keel to the chain while the Sheikh of Vrdaqnan empties his stores for the campaign."
 	weight = 5
 	cross_realm = TRUE
-	affected_realms = list(REALM_RANESHEN, REALM_ETRUSCA)
+	affected_realms = list(REALM_ZYBANTIUM, REALM_ETRUSCA)
 	per_realm_modifiers = list(
-		REALM_RANESHEN = list(
+		REALM_ZYBANTIUM = list(
 			"supply" = list(
 				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SILK, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_COFFEE, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),

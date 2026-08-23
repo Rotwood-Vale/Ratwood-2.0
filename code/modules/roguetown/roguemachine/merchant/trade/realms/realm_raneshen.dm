@@ -1,6 +1,6 @@
-/datum/foreign_realm/raneshen
-	id = REALM_RANESHEN
-	name = "Raneshen"
+/datum/foreign_realm/zybantium
+	id = REALM_ZYBANTIUM
+	name = "Zybantium"
 	roll_weight = TRADE_REALM_WEIGHT_DEFAULT
 	demanded_categories = list(NAVIGATOR_BUCKET_WEAPONS, NAVIGATOR_BUCKET_GARMENT_FINELUX, NAVIGATOR_BUCKET_VALUABLES_CRAFTED, NAVIGATOR_BUCKET_ARMOR_LIGHT, NAVIGATOR_BUCKET_ENCHANTMENTS, NAVIGATOR_BUCKET_INSTRUMENTS, NAVIGATOR_BUCKET_SEAFOOD, NAVIGATOR_BUCKET_MISCELLANEOUS)
 	single_word_base = TRUE
@@ -25,7 +25,7 @@
 		list("name" = "Pamphylos", "tonnage" = 600, "weight" = 20),
 	)
 	city_tags = list(
-		"Raneshan", "Chorodiaki", "Müccevkabher", "Nshkormh", "Vrdaqnan",
+		"Zybantium", "Chorodiaki", "Müccevkabher", "Nshkormh", "Vrdaqnan",
 	)
 	city_tag_chance = 30
 	cultural_goods = list()
@@ -76,38 +76,38 @@
 		/datum/supply_pack/rogue/gems/amber,
 		/datum/supply_pack/rogue/gems/coral,
 		/datum/supply_pack/rogue/food/pepper,
-		/datum/supply_pack/rogue/raneshen/janissary_kit,
-		/datum/supply_pack/rogue/raneshen/desert_rider_kit,
-		/datum/supply_pack/rogue/raneshen/megarmach_coat,
-		/datum/supply_pack/rogue/raneshen/tower_shield,
-		/datum/supply_pack/rogue/raneshen/shamshir,
-		/datum/supply_pack/rogue/raneshen/shalal_saber,
-		/datum/supply_pack/rogue/raneshen/navaja,
-		/datum/supply_pack/rogue/raneshen/grand_mace,
-		/datum/supply_pack/rogue/raneshen/spear,
-		/datum/supply_pack/rogue/raneshen/whip,
-		/datum/supply_pack/rogue/raneshen/recurve_bow,
-		/datum/supply_pack/rogue/raneshen/javelins,
-		/datum/supply_pack/rogue/raneshen/headscarf,
-		/datum/supply_pack/rogue/raneshen/shalal_hood,
-		/datum/supply_pack/rogue/raneshen/shalal_scarf,
-		/datum/supply_pack/rogue/raneshen/copper_gorget,
-		/datum/supply_pack/rogue/raneshen/copper_facemask,
-		/datum/supply_pack/rogue/raneshen/copper_bracers,
-		/datum/supply_pack/rogue/raneshen/pontifex_trou,
-		/datum/supply_pack/rogue/raneshen/shalal_slippers,
-		/datum/supply_pack/rogue/raneshen/shalal_belt,
-		/datum/supply_pack/rogue/raneshen/gladius,
-		/datum/supply_pack/rogue/raneshen/makhaira,
-		/datum/supply_pack/rogue/raneshen/bronzekhopesh,
-		/datum/supply_pack/rogue/raneshen/bronze_axe,
-		/datum/supply_pack/rogue/raneshen/bronze_spear,
-		/datum/supply_pack/rogue/raneshen/bronze_knife,
+		/datum/supply_pack/rogue/zybantine/janissary_kit,
+		/datum/supply_pack/rogue/zybantine/desert_rider_kit,
+		/datum/supply_pack/rogue/zybantine/megarmach_coat,
+		/datum/supply_pack/rogue/zybantine/tower_shield,
+		/datum/supply_pack/rogue/zybantine/shamshir,
+		/datum/supply_pack/rogue/zybantine/shalal_saber,
+		/datum/supply_pack/rogue/zybantine/navaja,
+		/datum/supply_pack/rogue/zybantine/grand_mace,
+		/datum/supply_pack/rogue/zybantine/spear,
+		/datum/supply_pack/rogue/zybantine/whip,
+		/datum/supply_pack/rogue/zybantine/recurve_bow,
+		/datum/supply_pack/rogue/zybantine/javelins,
+		/datum/supply_pack/rogue/zybantine/headscarf,
+		/datum/supply_pack/rogue/zybantine/shalal_hood,
+		/datum/supply_pack/rogue/zybantine/shalal_scarf,
+		/datum/supply_pack/rogue/zybantine/copper_gorget,
+		/datum/supply_pack/rogue/zybantine/copper_facemask,
+		/datum/supply_pack/rogue/zybantine/copper_bracers,
+		/datum/supply_pack/rogue/zybantine/pontifex_trou,
+		/datum/supply_pack/rogue/zybantine/shalal_slippers,
+		/datum/supply_pack/rogue/zybantine/shalal_belt,
+		/datum/supply_pack/rogue/zybantine/gladius,
+		/datum/supply_pack/rogue/zybantine/makhaira,
+		/datum/supply_pack/rogue/zybantine/bronzekhopesh,
+		/datum/supply_pack/rogue/zybantine/bronze_axe,
+		/datum/supply_pack/rogue/zybantine/bronze_spear,
+		/datum/supply_pack/rogue/zybantine/bronze_knife,
 	)
 	hail_lines = list(
-		"In the name of the Autarch, and by leave of the Emir who stamped my charter, Raneshen greets the Factor. My hold is long-travelled; do not make it stand idle.",
+		"In the name of the Autarch, and by leave of the Emir who stamped my charter, Zybantium greets the Factor. My hold is long-travelled; do not make it stand idle.",
 		"Silk from Chorodiaki, sugar and saffira from Mücevkabher, wine from Nshkormh, geometers' work from Vrdaqnan. One empire, four manifests; the Sheikh's clerks were patient with me.",
-		"Sit with me before we tally. In Raneshen no one trades with a stranger - we drink first, eat second, and only then count coin. Your hospitality will be remembered as long as your prices.",
+		"Sit with me before we tally. In Zybantium no one trades with a stranger - we drink first, eat second, and only then count coin. Your hospitality will be remembered as long as your prices.",
 		"Hear that flute from my afterdeck? My mate is from Mücevkabher, and she will not bargain unless the bargaining keeps time. Xylix smiles on her, she says. I find she haggles harder when the song is fast.",
 		"You have fur and timber and iron, and Psydon - bless his memory - put none of these on our continent in quantity. So we sail. The arithmetic is older than either of us.",
 		"My cousin is a Sheikh of his county and reminds me of it at every supper. Yet here I am at your dock, and there he is at his table. Tell me which of us has truly seen the world.",

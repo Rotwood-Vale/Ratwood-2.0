@@ -8,8 +8,8 @@
 	switch(origin_name)
 		if("Avar")
 			return REALM_AAVNR
-		if("Raneshan")
-			return REALM_RANESHEN
+		if("Zybantium")
+			return REALM_ZYBANTIUM
 		if("Grenzelhoft")
 			return REALM_GRENZELHOFT
 		if("Otava")

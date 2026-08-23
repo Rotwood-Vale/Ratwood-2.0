@@ -13,7 +13,7 @@
 #define REALM_LIRVAS "lirvas"
 #define REALM_LINGYUE "lingyue"
 #define REALM_NALEDI "naledi"
-#define REALM_RANESHEN "raneshen"
+#define REALM_ZYBANTIUM "zybantium"
 
 #define TRADE_SHIP_DOCK_DURATION (60 MINUTES)
 #define TRADE_SHIP_SEND_AWAY_GRACE (20 MINUTES)
