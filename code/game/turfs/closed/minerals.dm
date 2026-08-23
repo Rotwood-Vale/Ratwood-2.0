@@ -457,7 +457,8 @@
 
 /turf/closed/mineral/rogue/bedrock/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
-
+/turf/closed/mineral/rogue/bedrock/ex_act(severity, target)//No more explosion issues
+	return
 /turf/closed/mineral/rogue/bedrock/Melt()
 	to_be_destroyed = FALSE
 	return src
