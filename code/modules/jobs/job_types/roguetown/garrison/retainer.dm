@@ -58,7 +58,7 @@
 	..()
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	cloak = /obj/item/clothing/cloak/tabard
+	cloak = /obj/item/clothing/cloak/tabard/retinue/baronycloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
@@ -201,7 +201,7 @@
 			if("Studded Hood and Hound Mask")
 				head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 				mask = /obj/item/clothing/mask/rogue/facemask/steel/hound
-				cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 			
 		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow", "Slurbow")
 		var/weapon_choice = input(H, "Choose your weapon", "TAKE UP ARMS") as anything in weapons

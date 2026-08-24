@@ -443,6 +443,31 @@
 /obj/item/clothing/cloak/tabard/retinue/captain //Because of his other snowflake cloak we can't actually use the naming normally.
 	name = "captain's tabard"
 
+/obj/item/clothing/cloak/tabard/retinue/baronycloak
+	desc = "A tabard with the baron's heraldic colors."
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/Initialize(mapload)
+	. = ..()
+	GLOB.lordcolor -= src
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/lordcolor(primary,secondary)
+	return //ignores the ducal scheme, only the barony one applies
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/baronycolor(primary,secondary)
+	color = primary
+	detail_color = secondary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_cloak()
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
 //////////////////////////
 /// SOLDIER TABARD
 ////////////////////////
