@@ -276,6 +276,10 @@
 #define TRAIT_GANG_B "Gang Blortz Volves"
 #define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
+#define TRAIT_ON_BOAT "on_boat"
+#define TRAIT_OAR "oar"
+#define TRAIT_OAR_PROPELLED "oar_propelled"
+#define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
@@ -285,6 +289,7 @@
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
 #define TRAIT_CONVICTION "Conviction" //Can hear Tennite prayers. Praying heals and provides nutrition.
 #define TRAIT_STANDARD_BEARER "Standard Bearer"//Can use the keep's standard to provide buffs and rally the retinue.
+#define TRAIT_WHITE_STAG "Stag Protection"
 
 // Economic Roles Traits
 // Most of these should NOT be given to any true combat roles (I.E. anything with Dexpert or Miracle / Good Magic) with very few exceptions
@@ -544,6 +549,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WAGES_SUSPENDED = span_warning("The Stewardry has halted my daily wages!"),
 	TRAIT_SCALEARMOR = span_info("My scales can protect me from harm every so often."),
 	TRAIT_STANDARD_BEARER = span_info("The banner is my lifeline. Just as I am to it. The retinue know to rally around me, so long as I keep it safe."),
+	TRAIT_WHITE_STAG = span_info("The power of the white stag lives on inside of me!"),
 	TRAIT_BAOTHA_FERTILITY_BOON = span_info("I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this"),
 	TRAIT_FUSILIER = span_suppradio("I've been trained in the safe use of smokepowder. Additionally, knowledge above <b><u>journeyman</u></b> status is attainable."),
 	TRAIT_HEMOPHAGE = span_bloody("Nothing but lyfeblood will keep me alive..."),
