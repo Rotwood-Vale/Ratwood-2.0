@@ -195,5 +195,35 @@
 			"dependsOn": "dm: reparse",
 			"label": "Build All (unit tests)"
 		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": [
+				"-DUNIT_TESTS",
+				"-DLOCALTEST"
+			],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": [
+					"-DALL_TEMPLATES",
+					"-DALL_MAPS"
+				]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (compile all maps)"
+		},
 	]
 }
