@@ -7342,7 +7342,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/dungeon/drowfort)
 "bzl" = (
-/obj/structure/roguemachine/scomm/receive_only/r{
+/obj/structure/roguemachine/scomm/r{
 	scom_tag = "Lowtown Baron's Manor - Dining Room"
 	},
 /turf/open/floor/rogue/ruinedwood,
@@ -11414,12 +11414,6 @@
 /obj/item/candle/gold/lit{
 	pixel_y = 13;
 	pixel_x = 7
-	},
-/obj/structure/broadcast_horn/paid{
-	broadcaster_tag = "Lowtown Baron";
-	pixel_y = 13;
-	pixel_x = -9;
-	dir = 4
 	},
 /obj/item/reagent_containers/glass/cup/golden/small{
 	pixel_y = 5;
@@ -40951,7 +40945,7 @@
 /area/rogue/indoors/town/church)
 "ivP" = (
 /obj/structure/fluff/railing/corner/south_west,
-/obj/structure/roguemachine/scomm/receive_only{
+/obj/structure/roguemachine/scomm{
 	scom_tag = "Lowtown Baron's Manor - Baron's Quarters"
 	},
 /turf/open/floor/carpet/inn,

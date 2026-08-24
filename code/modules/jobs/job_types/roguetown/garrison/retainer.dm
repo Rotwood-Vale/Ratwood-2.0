@@ -35,7 +35,7 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 2)
+	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 3)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
