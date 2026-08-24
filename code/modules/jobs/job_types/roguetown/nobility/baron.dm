@@ -28,6 +28,11 @@
 		/datum/advclass/baron/landed_knight
 	)
 
+/datum/job/roguetown/baron/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(L)
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, baron_color_choice)), 50)
+
 /datum/outfit/job/roguetown/baron
 	neck = /obj/item/roguekey/manor
 	id = /obj/item/scomstone/bad/garrison

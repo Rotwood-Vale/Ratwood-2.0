@@ -49,6 +49,7 @@
 	Keep the Master's abode clean, prepare meals, serve them."
 	outfit = /datum/outfit/job/roguetown/rockhillslave/house_slave
 	category_tags = list(CTAG_SLAVE)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
@@ -57,7 +58,7 @@
 	subclass_skills = list(
 		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/cooking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/music = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -82,6 +83,7 @@
 	Toil for the Master's needs, serve them."
 	outfit = /datum/outfit/job/roguetown/rockhillslave/labor_slave
 	category_tags = list(CTAG_SLAVE)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
@@ -90,12 +92,12 @@
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT)
 	subclass_skills = list(
 		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/masonry = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/rockhillslave/labor_slave/pre_equip(mob/living/carbon/human/H)
@@ -106,7 +108,8 @@
 	backl = /obj/item/rogueweapon/pick
 	backr = /obj/item/storage/hip/orestore/bronze
 	backpack_contents = list(
-		/obj/item/flashlight/flare/torch/lantern
+		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/rogueweapon/stoneaxe/handaxe = 1,
 	)
 	H.set_blindness(0)
 
@@ -119,7 +122,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhillslave/slave_sentry
 	category_tags = list(CTAG_SLAVE)
 	subclass_stats = list(
-		STATKEY_STR = 1,
+		STATKEY_STR = 2,
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1
 	)

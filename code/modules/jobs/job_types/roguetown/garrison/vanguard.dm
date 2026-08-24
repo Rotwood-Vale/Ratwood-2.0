@@ -29,10 +29,23 @@
 		/datum/advclass/vanguard/archer
 	)
 
+/datum/job/roguetown/vanguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(istype(H.cloak, /obj/item/clothing/cloak/shadowcloak/vanguard))
+			var/obj/item/clothing/S = H.cloak
+			var/index = findtext(H.real_name, " ")
+			if(index)
+				index = copytext(H.real_name, 1,index)
+			if(!index)
+				index = H.real_name
+			S.name = "vanguard cloak ([index])"
+
 /datum/outfit/job/roguetown/vanguard
 	backr = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/helmet/skullcap
-	cloak = /obj/item/clothing/cloak/shadowcloak
+	cloak = /obj/item/clothing/cloak/shadowcloak/vanguard
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather

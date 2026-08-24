@@ -12214,6 +12214,14 @@
 /area/rogue/outdoors/rtfield/rockhill/above)
 "cxH" = (
 /obj/structure/rack/rogue/shelf,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine{
+	pixel_x = -6;
+	pixel_y = 44
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine{
+	pixel_x = 5;
+	pixel_y = 44
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "cxJ" = (
@@ -56956,6 +56964,7 @@
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
 	},
+/obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "lRU" = (
@@ -71877,11 +71886,12 @@
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /obj/item/clothing/mask/rogue/sack,
-/obj/item/flashlight/flare/torch/lantern,
 /obj/item/natural/bundle/cloth/bandage/full,
 /obj/item/storage/keyring,
 /obj/item/roguekey/baron,
 /obj/item/roguekey/baronguest,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/rogueweapon/mace/cudgel,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "oWb" = (
@@ -94114,9 +94124,8 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
 "tLm" = (
-/obj/structure/closet/crate/roguecloset,
-/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine,
-/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine,
+/obj/machinery/anvil,
+/obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "tLo" = (

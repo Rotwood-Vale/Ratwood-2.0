@@ -830,7 +830,7 @@
 
 /obj/item/clothing/cloak/darkcloak/bear/wardenmaster
 	name = "Warden trophy-cloak"
-	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman."
+	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman, it is clasped with a pin of the Lowtown Baron."
 	sellprice = 80
 	color = "#99a39d"
 
@@ -1253,6 +1253,10 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = 600
+
+/obj/item/clothing/cloak/shadowcloak/vanguard
+	name = "vanguard cloak"
+	desc = "A dark cloak, clasped with a pin of the Lowtown Baron. Worn by the Vanguard"
 
 /obj/item/clothing/cloak/thief_cloak
 	name = "rapscallion's shawl"
@@ -1704,7 +1708,7 @@
 
 /obj/item/clothing/cloak/wardencloak
 	name = "warden cloak"
-	desc = "A cloak worn by the Wardens of the realm's Forests"
+	desc = "A cloak worn by the Wardens of the realm's Forests. It is clasped with a pin of the Lowtown Baron."
 	icon_state = "wardencloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
