@@ -10,10 +10,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned to the lowtown bastion. \
-	You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond.\
-	You are subordinate to the aloof Master Warden and his cadre of Wardens above you, and may be called upon as members of the garrison by the Marshal and Crown. \
-	Serve their will as the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day. Maybe you'll make it into the Wardens some day."
+	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned under the lowtown baron. You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond. You are subordinate to the baron, but often are led by the master warden or the retainer and may be called upon as members of the garrison by the Marshal and Crown. Protect lowtown's interests and be the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day. Maybe you'll make it into the Wardens some day."
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 

@@ -13,7 +13,7 @@
 
 	outfit = /datum/outfit/job/roguetown/baron
 	display_order = JDO_BARON
-	tutorial = "Through birthright, favors or intrigue you have landed yourself in the position of being the baron of the outer reaches of the duchy. You answer to the duke but are given significant independence to run lowtown as you see fit, you hold sway in its dealings and in absence of higher authority the local garrison will answer to you. If the Marshall and Knight Captain are absent, the responsibility of managing the lowtown garrison falls to you."
+	tutorial = "Through birthright, favors or intrigue you have landed yourself in the position of being the baron of the outer reaches of the duchy. You swore fealty to the duke and are given significant independence to run lowtown as you see fit, you hold sway in its dealings and in absence of higher authority the local garrison will answer to you. You hold command over the lowtown garrison, although upon request the crown can call upon your men to join their greater army."
 	whitelist_req = FALSE
 	give_bank_account = 40
 	min_pq = 20
