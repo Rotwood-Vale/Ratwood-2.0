@@ -64,8 +64,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 	// remove innate spells before we remove any potentially-associated actions
 	RemoveAllSpells()
 	// avoid deleting client-managed actions, just remove them to avoid hung references
-	if(client?.player_details?.player_actions)
-		for(var/datum/action/action in client.player_details.player_actions)
+	// if the mob is destroyed due to player logout client will be null
+	var/datum/player_details/details = client ? client.player_details : (GLOB.player_details[ckey || ckey(mind?.key)])
+	if(details?.player_actions)
+		for(var/datum/action/action in details.player_actions)
 			action.Remove(src)
 	// remove any actions not transferred in ghostize or removed above
 	QDEL_LIST(actions)
