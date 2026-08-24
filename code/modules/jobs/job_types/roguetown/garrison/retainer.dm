@@ -100,12 +100,13 @@
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4, STATKEY_WIL = 2)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 // Ronin subclass requires the character to be from Kazengun
@@ -148,26 +149,28 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
-	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 2, STATKEY_PER = 3)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 4, STATKEY_PER = 4)
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/swimming = SKILL_EXP_EXPERT
 	)
 
 /datum/outfit/job/roguetown/baron_retainer/greyleaf/pre_equip(mob/living/carbon/human/H)
 	..()
 	mask = /obj/item/clothing/head/roguetown/roguehood/warden/antler
 	cloak = /obj/item/clothing/cloak/wardencloak
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/angle
@@ -185,16 +188,18 @@
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
 			if("Wolf")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
-		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow")
+		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow", "Slurbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Crossbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/poisonarrows
-				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Blackhorn Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
 				beltr = /obj/item/quiver/poisonarrows
 			if("Recurve Bow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
 				beltr = /obj/item/quiver/poisonarrows
+			if("Slurbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+				beltr = /obj/item/quiver/bolts
