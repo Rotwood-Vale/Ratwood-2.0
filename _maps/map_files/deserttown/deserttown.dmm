@@ -2518,6 +2518,10 @@
 	pixel_x = 8
 	},
 /obj/structure/rack/rogue/shelf,
+/obj/structure/roguemachine/vaultbank/bathhouse{
+	density = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/outdoors/exposed/bath/vault)
 "aHk" = (
@@ -5162,16 +5166,6 @@
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/indoors/town/manor/desert)
-"bsc" = (
-/obj/structure/stairs{
-	dir = 1
-	},
-/obj/structure/roguemachine/vaultbank/bathhouse{
-	density = 0;
-	pixel_x = 32
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/bath/desert)
 "bsg" = (
 /obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/ruinedwood/herringbone_clear,
@@ -7313,8 +7307,8 @@
 	icon_state = "chains4"
 	},
 /obj/structure/rack/rogue,
-/obj/item/clothing/neck/roguetown/collar,
 /obj/item/clothing/neck/roguetown/collar/leather/nomagic,
+/obj/item/clothing/neck/roguetown/collar/leather,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/dungeon/bizbaz)
 "bTP" = (
@@ -27303,17 +27297,6 @@
 	STASPD = 13;
 	STASTR = 13
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/mob/living/carbon/human/species/skeleton/npc/ambush{
-	STACON = 13;
-	STAEND = 13;
-	STASPD = 13;
-	STASTR = 13;
-	inertia_move_delay = 0
-	},
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep/above)
 "hCJ" = (
@@ -30631,17 +30614,6 @@
 	STASPD = 13;
 	STASTR = 13
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/mob/living/carbon/human/species/skeleton/npc/ambush{
-	STACON = 13;
-	STAEND = 13;
-	STASPD = 13;
-	STASTR = 13;
-	inertia_move_delay = 0
-	},
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
 "iBA" = (
@@ -31298,17 +31270,6 @@
 	STACON = 13;
 	STASPD = 13;
 	STASTR = 13
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/mob/living/carbon/human/species/skeleton/npc/ambush{
-	STACON = 13;
-	STAEND = 13;
-	STASPD = 13;
-	STASTR = 13;
-	inertia_move_delay = 0
 	},
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cavewet/bogcaves)
@@ -38328,20 +38289,6 @@
 /obj/item/roguemachine/zadcote/bathhouse{
 	pixel_x = 32
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/wood/large_table,
-/obj/structure/rack/rogue/shelf,
-/obj/machinery/light/rogue/candle/blue/r,
-/obj/machinery/light/rogue/candle/floorcandle/alt{
-	pixel_y = 5
-	},
-/obj/item/perfume/random{
-	pixel_x = 5;
-	pixel_y = 32
-	},
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/bath/desert)
 "kIE" = (
@@ -42577,7 +42524,6 @@
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave)
 "lUk" = (
-/obj/effect/landmark/quest_spawner/generic,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
@@ -51112,6 +51058,15 @@
 /obj/item/cushion/desert2,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/desert/warden)
+"osa" = (
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	inertia_move_delay = 0;
+	STACON = 13;
+	STASPD = 13;
+	STASTR = 13
+	},
+/turf/open/floor/rogue/sandbrick,
+/area/rogue/outdoors/desertdeep)
 "osd" = (
 /turf/closed/mineral/rogue/bedrock/sandstone,
 /area/rogue/outdoors/desertdeep)
@@ -51523,6 +51478,10 @@
 	dir = 1;
 	icon_state = "borderfall";
 	pixel_y = 8
+	},
+/obj/structure/roguemachine/vaultbank/merchant{
+	density = 0;
+	pixel_x = 32
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop/desert)
@@ -59653,16 +59612,6 @@
 /area/rogue/under/dungeon/oldgoblincamp)
 "qNU" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
-	inertia_move_delay = 0;
-	STACON = 13;
-	STASPD = 13;
-	STASTR = 13
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
 	STAEND = 13;
 	STASPD = 13;
@@ -66535,13 +66484,6 @@
 	dir = 2
 	},
 /obj/structure/roguemachine/talkstatue/mercenary,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/edge{
-	color = "655653"
-	},
 /turf/open/floor/rogue/darkpath,
 /area/rogue/outdoors/town/manor/desert)
 "sLj" = (
@@ -71013,16 +70955,6 @@
 /obj/effect/decal/cleanable/debris/stony,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert)
-"tVI" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/obj/structure/roguemachine/vaultbank/merchant{
-	pixel_y = -32;
-	density = 0
-	},
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/shop/desert)
 "tVL" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -78354,6 +78286,15 @@
 	},
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/desert)
+"vUD" = (
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	inertia_move_delay = 0;
+	STACON = 13;
+	STASPD = 13;
+	STASTR = 13
+	},
+/turf/open/floor/rogue/dirt/road/desert,
+/area/rogue/under/cavewet/bogcaves)
 "vUR" = (
 /obj/structure/roguesand/dune/three{
 	dir = 8
@@ -80601,16 +80542,6 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician/desert)
 "wCa" = (
-/mob/living/carbon/human/species/skeleton/npc/ambush{
-	inertia_move_delay = 0;
-	STACON = 13;
-	STASPD = 13;
-	STASTR = 13
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
 	STAEND = 13;
@@ -197152,7 +197083,7 @@ eVg
 iVN
 iVN
 mAj
-bsc
+lvU
 gBk
 ubB
 iVN
@@ -307950,7 +307881,7 @@ wRw
 jce
 kVm
 kVm
-wCa
+vUD
 mjE
 mjE
 kVm
@@ -417731,7 +417662,7 @@ icQ
 bep
 iiI
 utj
-tVI
+bET
 iiI
 qat
 qat
@@ -423544,7 +423475,7 @@ ezD
 iwP
 vmB
 vmB
-qNU
+osa
 ezD
 ezD
 ezD
@@ -424774,7 +424705,7 @@ iwP
 iwP
 ezD
 ezD
-qNU
+osa
 iwP
 qBw
 vmB
@@ -425417,7 +425348,7 @@ ezD
 ezD
 ezD
 ezD
-qNU
+osa
 ezD
 ezD
 iwP
@@ -426648,7 +426579,7 @@ ezD
 oAA
 qlG
 ezD
-qNU
+osa
 ezD
 ezD
 ezD
@@ -430081,7 +430012,7 @@ iwP
 ezD
 ezD
 ezD
-qNU
+osa
 vmB
 vmB
 xLP
@@ -430706,7 +430637,7 @@ wLE
 mVA
 mVA
 ezD
-qNU
+osa
 vmB
 vmB
 vmB
@@ -431342,7 +431273,7 @@ ezD
 ezD
 ezD
 ezD
-qNU
+osa
 ezD
 ezD
 ezD
@@ -432282,7 +432213,7 @@ iwP
 iwP
 iwP
 ezD
-qNU
+osa
 ezD
 pco
 iwP
@@ -432578,7 +432509,7 @@ iwP
 ijH
 ezD
 ezD
-qNU
+osa
 ezD
 ezD
 iwP

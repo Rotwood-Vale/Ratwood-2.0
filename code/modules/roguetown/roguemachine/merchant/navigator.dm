@@ -25,6 +25,8 @@
 	var/is_bm_export = FALSE
 	/// Motto displayed at the top of the vendor interface
 	var/motto = "NAVIGATOR - Your goods, airborne."
+	/// Throttle for player-initiated market refresh actions; 5 seconds between refreshes per machine.
+	var/last_market_refresh = 0
 
 /obj/item/roguemachine/navigator/examine()
 	. = ..()
@@ -107,6 +109,44 @@
 	SSmerchant_trade.bm_pool_consumed[category] = (SSmerchant_trade.bm_pool_consumed[category] || 0) + base_price
 	SSmerchant_trade.lifetime_bm_pool_credited[category] = (SSmerchant_trade.lifetime_bm_pool_credited[category] || 0) + base_price
 
+/obj/item/roguemachine/navigator/blackmarket/ui_static_data(mob/user)
+	var/list/data = ..()
+	data["is_smuggler"] = TRUE
+	data["duty_rate"] = 0
+	data["pay_taxes"] = FALSE
+	data["duty_collected_here"] = 0
+	data["duty_evaded_here"] = 0
+	data["facilitator_present"] = (fixed_tax <= 0)
+	return data
+
+/obj/item/roguemachine/navigator/blackmarket/build_navigator_market_data()
+	var/list/data = list(
+		"categories" = list(),
+		"pop_snapshot" = 0,
+		"category_count" = 0,
+	)
+	if(!SSmerchant_trade)
+		return data
+	data["pop_snapshot"] = SSmerchant_trade.pool_pop_snapshot
+	var/list/rows = list()
+	for(var/cat in SSmerchant_trade.bm_pool_capacity)
+		var/cap = SSmerchant_trade.bm_pool_capacity[cat] || 0
+		var/consumed = SSmerchant_trade.bm_pool_consumed[cat] || 0
+		var/fill_ratio = cap > 0 ? min(1, consumed / cap) : 0
+		var/refused = SSmerchant_trade.get_bm_saturation_factor(cat) <= 0
+		rows += list(list(
+			"category" = cat,
+			"capacity" = cap,
+			"consumed" = consumed,
+			"fill_ratio" = fill_ratio,
+			"refused" = refused,
+			"demand_mult" = 1.0,
+		))
+	data["categories"] = rows
+	data["category_count"] = length(rows)
+	data["all_buckets"] = all_navigator_buckets()
+	return data
+
 /obj/structure/roguemachine/balloon_pad
 	name = ""
 	desc = ""
@@ -120,20 +160,117 @@
 	if(!anchored)
 		return ..()
 	user.changeNext_move(CLICK_CD_INTENTCAP)
+	ui_interact(user)
 
-	var/contents
+/obj/item/roguemachine/navigator/attack_right(mob/user)
+	if(!anchored)
+		return ..()
+	ui_interact(user)
 
-	contents += "<center>[motto]<BR>"
-	contents += "--------------<BR>"
-	if(fixed_tax > 0)
-		contents += "HANDLER'S FEE: [fixed_tax * 100] %<BR>"
-	contents += "Next Balloon: [time2text((next_airlift - world.time), "mm:ss")]</center><BR>"
+/obj/item/roguemachine/navigator/ui_state(mob/user)
+	return GLOB.human_adjacent_state
 
-	if(!user.can_read(src, TRUE))
-		contents = stars(contents)
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 300)
-	popup.set_content(contents)
-	popup.open()
+/obj/item/roguemachine/navigator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Navigator")
+		ui.open()
+
+/obj/item/roguemachine/navigator/ui_data(mob/user)
+	return build_navigator_data(user)
+
+/obj/item/roguemachine/navigator/ui_static_data(mob/user)
+	var/list/data = list()
+	data["motto"] = motto
+	data["handler_fee_percent"] = round(fixed_tax * 100)
+	data["duty_rate"] = SStreasury ? SStreasury.get_tax_rate(TAX_CATEGORY_EXPORT_DUTY) : 0
+	data["pay_taxes"] = pay_taxes
+	data["levy_rate"] = SSmerchant_trade ? SSmerchant_trade.merchant_levy_percent : 0
+	data["pay_merchant_share"] = pay_merchant_share
+	data["duty_collected_here"] = duty_collected_here
+	data["duty_evaded_here"] = duty_evaded_here
+	data["levy_collected_here"] = levy_collected_here
+	data["is_smuggler"] = FALSE
+	data["facilitator_present"] = FALSE
+	data["market_data"] = build_navigator_market_data()
+	return data
+
+/obj/item/roguemachine/navigator/proc/build_navigator_data(mob/user)
+	var/list/data = list()
+	var/remaining = max(0, next_airlift - world.time)
+	data["next_airlift_seconds"] = round(remaining / 10)
+	var/is_prop = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		is_prop = (H.job in profit_id)
+	data["is_proprietor"] = is_prop
+	data["is_readable"] = user ? user.can_read(src, TRUE) : TRUE
+	return data
+
+/obj/item/roguemachine/navigator/proc/build_navigator_market_data()
+	var/list/data = list(
+		"categories" = list(),
+		"pop_snapshot" = 0,
+		"category_count" = 0,
+	)
+	if(!SSmerchant_trade)
+		return data
+	data["pop_snapshot"] = SSmerchant_trade.pool_pop_snapshot
+	var/list/rows = list()
+	for(var/cat in SSmerchant_trade.pool_capacity)
+		var/cap = SSmerchant_trade.pool_capacity[cat] || 0
+		var/consumed = SSmerchant_trade.pool_consumed[cat] || 0
+		var/fill_ratio = cap > 0 ? min(1, consumed / cap) : 0
+		var/refused = SSmerchant_trade.get_saturation_factor(cat) <= 0
+		var/demand_mult = SSmerchant_trade.get_demand_multiplier(cat)
+		var/pending = SSmerchant_trade.pending_ship_demand[cat] || 0
+		rows += list(list(
+			"category" = cat,
+			"capacity" = cap,
+			"consumed" = consumed,
+			"fill_ratio" = fill_ratio,
+			"refused" = refused,
+			"demand_mult" = demand_mult,
+			"pending_ship_demand" = pending,
+		))
+	data["categories"] = rows
+	data["category_count"] = length(rows)
+	data["theme_dispatch"] = build_market_theme_dispatch(SSmerchant_trade.pool_theme_jitters)
+	data["realm_demand_matrix"] = SSmerchant_trade.build_realm_demand_matrix()
+	data["all_buckets"] = all_navigator_buckets()
+	return data
+/obj/item/roguemachine/navigator/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
+		return TRUE
+	if(!H.canUseTopic(src, BE_CLOSE))
+		return TRUE
+	if(action == "refresh_market")
+		if(world.time < last_market_refresh + 5 SECONDS)
+			to_chat(H, span_warning("The factors haven't tallied fresh numbers yet. Wait a moment."))
+			return TRUE
+		last_market_refresh = world.time
+		update_static_data(H)
+		return TRUE
+	if(!(H.job in profit_id))
+		to_chat(H, span_warning("Only a Merchant may tamper with the Navigator's toll."))
+		return TRUE
+	switch(action)
+		if("toggle_duty")
+			pay_taxes = !pay_taxes
+			to_chat(H, span_notice("The Navigator's toll clasp clicks. Crown duty: <b>[pay_taxes ? "PAYING" : "DODGING"]</b>."))
+			playsound(loc, 'sound/misc/gold_misc.ogg', 80, FALSE, -1)
+			update_static_data_for_all_viewers()
+			return TRUE
+		if("toggle_levy")
+			pay_merchant_share = !pay_merchant_share
+			to_chat(H, span_notice("The Navigator's toll clasp clicks. Merchant's levy: <b>[pay_merchant_share ? "COLLECTING" : "WAIVED"]</b>."))
+			playsound(loc, 'sound/misc/gold_misc.ogg', 80, FALSE, -1)
+			update_static_data_for_all_viewers()
+			return TRUE
 
 /obj/item/roguemachine/navigator/update_icon()
 	if(!anchored)

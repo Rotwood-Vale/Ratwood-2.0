@@ -807,7 +807,7 @@
 	req_blade = /obj/item/blade/steel_knife
 	created_item = /obj/item/rogueweapon/huntingknife/throwingknife/steel
 	createditem_num = 4
-	display_category = ITEM_CAT_WEAPONS_DAGGER
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
 /datum/anvil_recipe/weapons/steel/javelin
 	name = "Javelin, Steel (+1 Small Log) (x2)"
@@ -841,7 +841,7 @@
 	name = "Handclaws, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/handclaw/steel
-	display_category = ITEM_CAT_WEAPONS_DAGGER
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
 /datum/anvil_recipe/weapons/steel/maul
 	name = "Grand Maul (+2 Steel)"
@@ -891,12 +891,12 @@
 	name = "Dagger, Elvish (+1 Silver)"
 	additional_items = list(/obj/item/ingot/silver)
 	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
-	display_category = ITEM_CAT_WEAPONS_DAGGER
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
 /datum/anvil_recipe/weapons/silver/dagger
 	name = "Dagger, Silver"
 	created_item = /obj/item/rogueweapon/huntingknife/idagger/silver
-	display_category = ITEM_CAT_WEAPONS_DAGGER
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
 /datum/anvil_recipe/weapons/silver/shortsword
 	name = "Shortsword, Silver"

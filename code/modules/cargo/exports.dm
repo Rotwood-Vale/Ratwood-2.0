@@ -53,6 +53,18 @@
 			return max(1, round(sellprice * LOOTED_SELL_MULT))
 		return sellprice
 
+/proc/lookup_derived_subtype_price(typepath)
+	if(!GLOB.derived_sellprices)
+		return 0
+	var/parent_path = typepath
+	while(parent_path)
+		parent_path = type2parent(parent_path)
+		if(!parent_path)
+			return 0
+		var/parent_price = GLOB.derived_sellprices[parent_path]
+		if(parent_price)
+			return parent_price
+
 // For appraisal purposes only - calculates total value including contents
 // Used by SEEPRICES trait for examining containers
 /atom/movable/proc/appraise_price()

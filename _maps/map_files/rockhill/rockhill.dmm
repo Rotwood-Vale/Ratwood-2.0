@@ -7015,6 +7015,10 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/structure/roguemachine/vaultbank/merchant{
+	density = 0;
+	pixel_x = -32
+	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "bzD" = (
@@ -23591,13 +23595,6 @@
 "eXV" = (
 /turf/closed/wall/mineral/rogue/wood,
 /area/rogue/under/town/basement/keep)
-"eXW" = (
-/obj/structure/roguemachine/vaultbank/bathhouse{
-	density = 0;
-	pixel_x = 32
-	},
-/turf/open/floor/carpet/purple,
-/area/rogue/indoors/town/bath)
 "eXY" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/roguegrass/herb/random,
@@ -49178,6 +49175,14 @@
 /obj/structure/mannequin/male/female,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
+"kFs" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 4
+	},
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "weird1"
+	},
+/area/rogue/outdoors/town/rockhill)
 "kFt" = (
 /turf/closed/wall/mineral/rogue/stone/blue_moss,
 /area/rogue/outdoors/bograt/west)
@@ -51049,6 +51054,14 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/closed/wall/mineral/rogue/stone/blue_moss,
 /area/rogue/outdoors/town/church)
+"laV" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 8
+	},
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "weird1"
+	},
+/area/rogue/outdoors/town/rockhill)
 "lbd" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
@@ -81618,6 +81631,10 @@
 	pixel_x = 8
 	},
 /obj/machinery/light/rogue/candle/red,
+/obj/structure/roguemachine/vaultbank/bathhouse{
+	density = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
@@ -104437,13 +104454,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/bog)
-"wQr" = (
-/obj/structure/roguemachine/vaultbank/merchant{
-	pixel_y = -32;
-	density = 0
-	},
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/shop)
 "wQt" = (
 /obj/structure/stairs,
 /turf/open/floor/rogue/cobble/mossy,
@@ -172069,7 +172079,7 @@ vXL
 toD
 nvH
 oMT
-eXW
+asP
 iqD
 asP
 pQc
@@ -403201,7 +403211,7 @@ vjz
 evo
 nYK
 cIL
-cIL
+kFs
 cIL
 nYK
 oAn
@@ -404929,7 +404939,7 @@ wid
 evo
 nYK
 cIL
-cIL
+laV
 cIL
 nYK
 oAn
@@ -405807,7 +405817,7 @@ dhk
 rIU
 aMR
 quJ
-wQr
+usG
 aMR
 xAt
 ftG

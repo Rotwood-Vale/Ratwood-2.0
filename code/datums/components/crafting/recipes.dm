@@ -65,7 +65,20 @@
 	data["name"] = name
 	data["ref"] = "[REF(src)]"
 	data["path"] = type
-	data["sellprice"] = sellprice
+	var/resolved_sellprice = sellprice
+	var/result_path
+	if(islist(result))
+		var/list/result_list = result
+		if(result_list.len)
+			result_path = result_list[1]
+	else if(ispath(result, /atom/movable))
+		result_path = result
+	if(!resolved_sellprice && result_path)
+		resolved_sellprice = initial(result_path:sellprice)
+		if(!resolved_sellprice && GLOB.derived_sellprices)
+			resolved_sellprice = GLOB.derived_sellprices[result_path] || lookup_derived_subtype_price(result_path)
+	data["sellprice"] = resolved_sellprice
+	data["has_item_quality"] = result_path && ispath(result_path, /obj/item) ? initial(result_path:has_item_quality) : FALSE
 	data["craftingdifficulty"] = skill_to_string(craftdiff)
 
 	var/req_text = ""
@@ -135,7 +148,7 @@
 		if(AM.sellprice)
 			uncrafted_sellprice = AM.sellprice
 	var/final_sellprice = sellprice || uncrafted_sellprice
-	var/html 
+	var/html
 	if (!isnull(created_stuff))
 		html = {"
 			<!DOCTYPE html>
@@ -191,7 +204,7 @@
 		html += "Combat Properties<br>"
 		if(bookweapon.minstr)
 			html += "\n<b>MIN.STR:</b> [bookweapon.minstr]<br>"
-		
+
 		if(bookweapon.force)
 			html += "\n<b>FORCE:</b> [bookweapon.force]<br>"
 		if(bookweapon.gripped_intents && !bookweapon.wielded)
@@ -204,7 +217,7 @@
 				html += "Heavy<br>"
 			if(bookweapon.wbalance == WBALANCE_SWIFT)
 				html += "Swift<br>"
-			
+
 
 		if(bookweapon.wlength != WLENGTH_NORMAL)
 			html += "\n<b>LENGTH:</b> "
@@ -231,14 +244,14 @@
 			html += "\n<b>DEFENSE:</b> [bookweapon.wdefense]<br>"
 		if(bookweapon.associated_skill && bookweapon.associated_skill.name)
 			html += "\n<b>SKILL:</b> [bookweapon.associated_skill.name]<br>"
-		
+
 		if(bookweapon.intdamage_factor != 1 && bookweapon.force >= 5)
 			html += "\n<b>INTEGRITY DAMAGE:</b> [bookweapon.intdamage_factor * 100]%<br>"
 
 	if(craftdiff > 0)
 		html += "<h1></h1>For those of [SSskills.level_names_plain[craftdiff]] skills<br>"
 	else
-		html += "<h1></h1>Suitable for all skills<br>"	
+		html += "<h1></h1>Suitable for all skills<br>"
 
 	html += {"<div>
 			  <strong>Requirements</strong>

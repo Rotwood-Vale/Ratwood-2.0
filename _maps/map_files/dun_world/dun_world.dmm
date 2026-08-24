@@ -83853,6 +83853,10 @@
 /obj/item/reagent_containers/powder/moondust,
 /obj/item/reagent_containers/glass/bottle/rogue/poison,
 /obj/item/reagent_containers/glass/bottle/rogue/emberwine,
+/obj/structure/roguemachine/vaultbank/bathhouse{
+	density = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
@@ -83885,13 +83889,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield)
-"rtw" = (
-/obj/structure/roguemachine/vaultbank/bathhouse{
-	density = 0;
-	pixel_x = 32
-	},
-/turf/open/floor/rogue/tile/harem2,
-/area/rogue/indoors/town/bath)
 "rty" = (
 /obj/effect/landmark/mapGenerator/rogue/decap,
 /turf/closed/mineral/rogue/bedrock,
@@ -186865,7 +186862,7 @@ uQv
 eTd
 gNU
 fjS
-rtw
+uIl
 uIl
 uIl
 rqY
