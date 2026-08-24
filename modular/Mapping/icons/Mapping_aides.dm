@@ -62,13 +62,9 @@
 
 /obj/structure/spider/stickyweb/thin
 	opacity = FALSE
-
-/obj/structure/spider/stickyweb/thin/Initialize(mapload)
-	. = ..()
 	alpha = 100
 
-/obj/structure/spider/stickyweb/thick/Initialize(mapload)
-	. = ..()
+/obj/structure/spider/stickyweb/thick
 	alpha = 200
 
 /obj/structure/spider/stickyweb/Initialize(mapload)
@@ -76,7 +72,8 @@
 		if(prob(50))
 			icon_state = "stickyweb2"
 	dir = pick(GLOB.cardinals)
-	alpha = rand(80,109)
+	if(initial(alpha) == 109)
+		alpha = rand(80, 109)
 	switch(pick(1,2))
 		if (1)
 			static_debris = FALSE
