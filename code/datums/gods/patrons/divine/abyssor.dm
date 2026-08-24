@@ -5,7 +5,7 @@
 	worshippers = "Fishermen, Axians, Lamia, Dreamers, Madmen"
 	virtues = "Dreaming, Open-Mindedness, Purity"
 	sins = "Forgetfulness, Deception, Taking Name in Vain"
-	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER)
+	mob_traits = list(TRAIT_ABYSSOR_SWIM, TRAIT_SEA_DRINKER, TRAIT_WATERLOVING)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/aquatic_compulsion	= CLERIC_T0,
 					/obj/effect/proc_holder/spell/self/abyssor_wind				= CLERIC_T0,

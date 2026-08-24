@@ -14,7 +14,7 @@
 	advclass_cat_rolls = list(CTAG_DUNGEONEER = 2)
 
 	tutorial = "Sometimes at night you stare into the vacant room and feel the loneliness of your existence crawl into whatever remains of your loathsome soul. \
-				You will never know hunger, thirst or want for anything with the mammons you make: Just as you’ll never forget the sounds a saw makes cutting through the bone, what a drowning man will gurgle out between the blood and teeth strangling his breath. \
+				You will never know hunger, thirst or want for anything with the mammons you make: Just as you'll never forget the sounds a saw makes cutting through the bone, what a drowning man will gurgle out between the blood and teeth strangling his breath. \
 				You are the monster that is called when civility has run it's course. Everything owed to the current ruler, serve your master well and answer to no other authority in your pursuits far away from Astrata's light. They shall fear."
 
 	announce_latejoin = FALSE

@@ -6,6 +6,7 @@
 #define TAB_LOG 6
 #define TAB_STATISTICS 7
 #define TAB_PAYDAY 8
+#define TAB_SALTMINE 9
 
 /obj/structure/roguemachine/steward
 	name = "nerve master"
@@ -404,6 +405,7 @@
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
 			contents += "</center>"
 		if(TAB_BANK)
 			var/total_deposit = 0
@@ -581,6 +583,27 @@
 					contents += " <a href='?src=\ref[src];removedailypay=[job_name]'>\[Remove\]</a><BR>"
 			else
 				contents += "<center>No daily payments configured.</center><BR>"
+		if(TAB_SALTMINE)
+			var/obj/structure/roguemachine/stockpile_saltcamp/stockpile = null
+			stockpile = locate(/obj/structure/roguemachine/stockpile_saltcamp) in GLOB.saltminestockpilemachines // we're assuming there is only ever one of these machines in the world
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
+			if(!isnull(stockpile))
+				var/gambled_salt = round(stockpile.salt_spent_on_gambling, 1)
+				var/total_accounts = length(stockpile.salt_accounts)
+				contents += "<center>Die Troyt Salt Mine Report:<BR>"
+				contents += "Total Salt Gambled: [gambled_salt] piles of salt</center><BR>"
+				if(total_accounts > 0)
+					contents += "--------------<BR>"
+					contents += "<table><tr><th>Prisoner Name</th><th>Salt Mined</th><th>Interest Rate</th></tr>"
+					for(var/i = 1; i <= total_accounts; i++)
+						var/name = stockpile.salt_accounts[i]
+						var/salt = stockpile.salt_accounts[name]
+						var/salt_max = stockpile.salt_accounts_max[name]
+						var/interest = stockpile.salt_accounts_interest_max[name] * 100
+						if(salt == 0 && stockpile.salt_ticket_win[name] > 0) // don't show ticket winners who have left the mines
+							continue
+						contents += "<tr><td>[name]</td><td>[salt] salt / [salt_max] max</td><td>[interest]%</a></td>"
+					contents += "</table>"
 
 	if(!canread)
 		contents = stars(contents)
@@ -610,3 +633,4 @@
 #undef TAB_LOG
 #undef TAB_STATISTICS
 #undef TAB_PAYDAY
+#undef TAB_SALTMINE

@@ -12,7 +12,7 @@
 	tutorial = "Beholden to the royal family as property, you where raised from birth as a slave soldier. \
 		Sent to guard the border and keep the city safe as your more esteemed counterparts live lavishly within the city\
 		 walls yours is a thankless duty but one that must be upheld."
-	
+
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
@@ -31,7 +31,7 @@
 		/datum/advclass/azeb/footman
 	)
 
-	
+
 /datum/job/roguetown/sergeant/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(ishuman(L))
@@ -50,6 +50,18 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
+
+/datum/outfit/job/roguetown/azeb/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare_gun) in H.belt)
+			return
+		var/obj/item/signal_flare_gun/loaded/gun = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, gun, null, TRUE, TRUE))
+			gun.forceMove(get_turf(H))
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
 
 /datum/advclass/azeb/ranger
 	name = "Ranger"
@@ -108,7 +120,8 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/signal_horn = 1
+		/obj/item/signal_horn = 1,
+		/obj/item/clothing/mask/rogue/spectacles/goggles = 1
 		)
 	H.verbs |= /mob/proc/haltyell
 	H.set_blindness(0)
@@ -175,7 +188,8 @@
 		/obj/item/storage/keyring/guard = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/signal_horn = 1
+		/obj/item/signal_horn = 1,
+		/obj/item/clothing/mask/rogue/spectacles/goggles = 1
 		)
 	H.verbs |= /mob/proc/haltyell
 	H.set_blindness(0)

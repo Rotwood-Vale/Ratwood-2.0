@@ -58,6 +58,9 @@
 	if(sheathed)
 		to_chat(user, span_warning("The sheath is occupied!"))
 		return FALSE
+	if(HAS_TRAIT(A, TRAIT_NODROP))
+		to_chat(user, span_warning("I cannot sheath [A] while it is bound."))
+		return FALSE
 	if(valid_blade && !istype(A, valid_blade))
 		to_chat(user, span_warning("[A] won't fit in there."))
 		return FALSE
@@ -667,6 +670,7 @@
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 4
+	max_integrity = 100
 	resistance_flags = null
 	sellprice = 100
 

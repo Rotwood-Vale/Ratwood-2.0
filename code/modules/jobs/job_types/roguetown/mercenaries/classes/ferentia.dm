@@ -187,7 +187,7 @@
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 	extra_context = "This subclass gains Expert skill in their weapon of choice, be it swords or knives."
 
@@ -232,7 +232,7 @@
 	tutorial = "The mercenary guild is teeming with corn-fed brutes looking to make mammons off the only thing they're good at - while simple-minded describes you best, you possess brute strength and a heavy club. Sometimes that's all you need to solve problems in lyfe."
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_thug
 	subclass_languages = list(/datum/language/thievescant)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BASHDOORS, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BIGGUY, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_CON = 3,

@@ -234,6 +234,23 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/kitchen/fork/decrepit
 	triumph_cost = 2
 
+// TENT KITS
+
+/datum/loadout_item/small_tent
+    name = "Small Tent"
+    path = /obj/item/tent_kit
+    triumph_cost = 4
+
+/datum/loadout_item/ger_kit
+    name = "Ger Tent"
+    path = /obj/item/tent_kit/ger
+    triumph_cost = 6
+
+/datum/loadout_item/yurt_tent
+     name = "Yurt Tent"
+     path = /obj/item/tent_kit/yurt
+     triumph_cost = 8
+
 //HATS
 /datum/loadout_item/shalal
 	name = "Keffiyeh"
@@ -286,6 +303,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/furhat
 	name = "Fur Hat"
 	path = /obj/item/clothing/head/roguetown/hatfur
+
+/datum/loadout_item/bluehat
+	name = "Blue Hat"
+	path = /obj/item/clothing/head/roguetown/hatblu
 
 /datum/loadout_item/smokingcap
 	name = "Smoking Cap"

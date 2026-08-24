@@ -261,6 +261,7 @@
 
 	for(var/atom/movable/AM in buckled_mobs)
 		AM.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -332,6 +333,8 @@
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
 			lastcardinal = direct
+			. = ..()
+		else if(istype(src, /obj/vehicle)) //Vehicles retain true diagonal movement
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			if (direct & NORTH)
@@ -607,6 +610,12 @@
 	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
 
+	var/bonus_throwforce = 0
+	if(isitem(src) && thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM))
+		range += 1
+		speed += 0.5
+		bonus_throwforce = 2
+
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
 
@@ -649,6 +658,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.force = force
+	TT.bonus_throwforce = bonus_throwforce
 	TT.callback = callback
 	TT.extra = extra
 	if(!QDELETED(thrower))
@@ -732,7 +742,7 @@
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
 	return
 
-/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item. 
+/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /// If the mob putting the atom in storage is known, it is passed on as M.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S, mob/M)
 	return
@@ -1047,25 +1057,25 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/grant_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.grant_language(dt, body)
+	H.grant_language(dt, body, source)
 
-/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+/atom/movable/proc/grant_all_languages(omnitongue = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder()
-	H.grant_all_languages(omnitongue)
+	H.grant_all_languages(omnitongue, source)
 
 /atom/movable/proc/get_random_understood_language()
 	var/datum/language_holder/H = get_language_holder()
 	. = H.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
+/atom/movable/proc/remove_language(datum/language/dt, body = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	var/datum/language_holder/H = get_language_holder(!body)
-	H.remove_language(dt, body)
+	H.remove_language(dt, body, source)
 
-/atom/movable/proc/remove_all_languages()
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_SOURCE_ALL)
 	var/datum/language_holder/H = get_language_holder()
-	H.remove_all_languages()
+	H.remove_all_languages(source)
 
 /atom/movable/proc/has_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()
@@ -1297,4 +1307,3 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
-

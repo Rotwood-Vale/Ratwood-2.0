@@ -10,6 +10,8 @@
 	var/list/needed_crops = list()
 	///the type paths of needed reagents in typepath = amount
 	var/list/needed_reagents = list()
+	///if set, only this species can see and select this recipe
+	var/req_species = null
 	///list of items that aren't crops we need
 	var/list/needed_items = list()
 	///our brewing time in deci seconds should use the SECONDS MINUTES HOURS helpers

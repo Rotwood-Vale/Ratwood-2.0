@@ -506,6 +506,7 @@
 	nudist_approved = TRUE // this gets an exception for being ARMOR_CLOTHING but why does it prevent crits???
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"

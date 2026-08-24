@@ -24,6 +24,23 @@
 /obj/structure/flora/roguetree/attack_right(mob/user)
 	handle_special_items_retrieval(user, src)
 
+/obj/structure/flora/roguetree/attackby(obj/item/I, mob/living/user, params)
+	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)
+		return ..()
+	var/mob/living/L = user
+	if(L.client && !L.client.prefs?.autowoodcut)
+		return ..()
+	if(user.doing)
+		return ..()
+	user.doing = FALSE
+	while(!QDELETED(src) && user.Adjacent(src))
+		if((L.energy > 0) && do_after(user, 1.5 SECONDS, TRUE, src))
+			if(QDELETED(src))
+				break
+			..()
+		else
+			break
+
 /obj/structure/flora/roguetree/attacked_by(obj/item/I, mob/living/user)
 	var/was_destroyed = obj_destroyed
 	. = ..()
@@ -447,7 +464,7 @@
 
 /obj/structure/flora/roguegrass/bush
 	name = "bush"
-	desc = "A bush. It's crawling with spiders, but maybe there’s something useful inside..."
+	desc = "A bush. It's crawling with spiders, but maybe there's something useful inside..."
 	icon_state = "bush2"
 	layer = ABOVE_ALL_MOB_LAYER
 	var/res_replenish
@@ -571,7 +588,7 @@
 
 /obj/structure/flora/roguegrass/bush/wall
 	name = "great bush"
-	desc = "A bush. This one’s roots are thick enough to block the way."
+	desc = "A bush. This one's roots are thick enough to block the way."
 	opacity = TRUE
 	density = TRUE
 	climbable = FALSE

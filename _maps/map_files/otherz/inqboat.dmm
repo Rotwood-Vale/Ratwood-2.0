@@ -1061,7 +1061,7 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/inq/boat)
 "tv" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue)
 "ty" = (
 /obj/structure/stairs{

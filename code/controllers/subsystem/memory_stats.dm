@@ -17,7 +17,11 @@ SUBSYSTEM_DEF(memory_stats)
 /datum/controller/subsystem/memory_stats/fire(resumed)
 	log_memory_stats()
 
-/// Returns the process resident set size in bytes, or null if unavailable on this platform
+#define MEMORY_RSS_FILE "data/memory_rss.txt"
+
+/// Returns the process resident set size in bytes, or null if unavailable right now.
+/// On windows a hidden background powershell writer (tools/memory_stats/mem_writer.ps1)
+/// updates MEMORY_RSS_FILE, avoiding a console window flash per sample.
 /proc/get_process_rss_bytes()
 	if(world.system_type == UNIX)
 		var/status = rustg_file_read("/proc/self/status")
@@ -26,10 +30,32 @@ SUBSYSTEM_DEF(memory_stats)
 			if(rss_regex.Find(status))
 				return text2num(rss_regex.group[1]) * 1024
 		return null
-	var/list/seo = world.shelleo("powershell -NoProfile -Command \"(Get-Process dd,dreamdaemon -ErrorAction SilentlyContinue | Measure-Object WorkingSet64 -Sum).Sum\"")
-	if(seo && !seo[1])
-		return text2num(trim(seo[2]))
+	var/static/writer_started = FALSE
+	if(!writer_started)
+		writer_started = TRUE
+		fdel(MEMORY_RSS_FILE) // clear stale data from a previous round
+		shell("wscript //B //nologo \"tools/memory_stats/mem_writer.vbs\"")
+		return null
+	if(fexists(MEMORY_RSS_FILE))
+		var/bytes = text2num(trim(file2text(MEMORY_RSS_FILE) || ""))
+		if(bytes)
+			return bytes
 	return null
+
+/// Logs the RSS delta and init time of one subsystem's Initialize. Returns the new baseline for the next call.
+/proc/log_subsystem_init_memory(datum/controller/subsystem/SS, rss_before, init_time_s)
+	var/rss_after = get_process_rss_bytes()
+	if(isnull(rss_after) || isnull(rss_before))
+		WRITE_LOG(GLOB.world_mem_log, "MEMINIT: [SS.name] rss_mb=unknown delta_mb=unknown init_s=[init_time_s]")
+		return isnull(rss_after) ? rss_before : rss_after
+	WRITE_LOG(GLOB.world_mem_log, "MEMINIT: [SS.name] rss_mb=[round(rss_after / (1024 * 1024), 0.1)] delta_mb=[round((rss_after - rss_before) / (1024 * 1024), 0.1)] init_s=[init_time_s]")
+	return rss_after
+
+/// Logs memory and time cost of parsing/loading one map file from SSmapping
+/proc/log_map_memory(stage, map_path, rss_before, start_time)
+	var/rss_after = get_process_rss_bytes()
+	var/delta = (isnull(rss_after) || isnull(rss_before)) ? "unknown" : round((rss_after - rss_before) / (1024 * 1024), 0.1)
+	WRITE_LOG(GLOB.world_mem_log, "MEMMAP: [stage] [map_path] delta_mb=[delta] time_s=[(REALTIMEOFDAY - start_time) / 10]")
 
 /datum/controller/subsystem/memory_stats/proc/log_memory_stats()
 	var/list/out = list()

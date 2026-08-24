@@ -145,7 +145,7 @@
 
 			switch(option_choice)
 				if("Hands-On")
-					ADD_TRAIT(H, TRAIT_BASHDOORS, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				if("Big Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)

@@ -459,10 +459,7 @@
 	
 	target.emote(prob(50) ? "painscream" : "scream", forced = TRUE)
 	target.Stun(40)
-	if(hascall(target, "fullscreen_redflash"))
-		call(target, "fullscreen_redflash")("redflash2")
-	else
-		target.flash_fullscreen("redflash2")
+	target.fullscreen_redflash("redflash2")
 	playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 5)
 	update_heated(FALSE)
 	if(cool_timer)
@@ -488,12 +485,12 @@
 	desc = "I can't feel my lips!"
 
 /datum/status_effect/mouth_branded/on_apply()
-	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "mouth_branded")
+	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("My mouth... It BURNS!"))
 	return ..()
 
 /datum/status_effect/mouth_branded/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "mouth_branded")
+	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_userdanger("I can barely feel my lips again."))
 

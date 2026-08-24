@@ -94,6 +94,10 @@
 
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
+		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
+			var/heretic_text = get_heretic_text(user)
+			if(heretic_text)
+				. += span_notice(heretic_text)
 	else if(obscure_name)
 		. += span_info("This is an unknown <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
@@ -127,10 +131,7 @@
 		var/display_as_lowlife = FALSE
 		if(observer_privilege)
 			used_name = real_name
-		if(migrant_type)
-			used_title = MIGRANT_ROLE(migrant_type)
-			. += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
-		else if(job)
+		if(job)
 			var/datum/job/J = SSjob.GetJob(job)
 			if(!J || J.wanderer_examine)
 				display_as_wanderer = TRUE
@@ -155,7 +156,10 @@
 			social_strata = "<a href='?src=[REF(src)];social_strata=1'><font color='#[rank_color]'>⛯</font></A>"
 		var/display1
 		var/display2 = "[(!HAS_TRAIT(usr, TRAIT_OUTLANDER) && src.social_rank) ? "[social_strata]" : " "]"
-		if(display_as_wanderer)
+		if(migrant_type)
+			used_title = MIGRANT_ROLE(migrant_type)
+			display1 += span_info("This is <EM>[used_name]</EM>, the wandering [race_name] [used_title].")
+		else if(display_as_wanderer)
 			display1 = span_info("This is <EM>[used_name]</EM>, the wandering [race_name].")
 		else if(display_as_lowlife)
 			display1 = span_info("This is <EM>[used_name]</EM>, the lowlife [race_name].")
@@ -582,7 +586,7 @@
 				. += "[m3] got weird hands! They don't look right!"
 			else
 				. += "[m3][hand_number > 1 ? "" : " a"] <span class='bloody'>blood-stained</span> hand[hand_number > 1 ? "s" : ""]!"
-
+	
 	//belt
 	if(belt && !(SLOT_BELT in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, belt)] about [m2] waist. "
@@ -592,11 +596,6 @@
 			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
 			if(belt_with_dildo.attached_toy)
 				. += "[m3] [get_examine_item_name_with_hover(user, belt_with_dildo.attached_toy)] attached to [m2] belt. "
-
-	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
-	if(modular_chastity_toy_line)
-		. += modular_chastity_toy_line
-
 
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
@@ -609,6 +608,21 @@
 		var/str = "[m3] [get_examine_item_name_with_hover(user, beltl)] on [m2] belt. "
 		str += beltl.integrity_check(is_smart)
 		. += str
+
+	// chastity cages go HERE, where they SHOULD'VE FUCKING GONE.
+	var/obj/item/chastity/worn_chastity = chastity_device
+	if(worn_chastity)
+		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
+		var/cage_exposed = get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
+		var/do_we_know_chat = (user == src)
+		if(cage_exposed)
+			. += "[m1] secured in [chastity_name]. "
+		else if(do_we_know_chat)
+			. += span_italics("[m1] covertly secured in [chastity_name]. ")
+	
+	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
+	if(modular_chastity_toy_line)
+		. += modular_chastity_toy_line
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
@@ -1202,15 +1216,19 @@
 /// Same as get_heretic_text, but returns a simple symbol depending on the type of heretic!
 /mob/living/proc/get_heretic_symbol(mob/examiner)
 	var/heretic_text
+	var/seer = FALSE
 	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		return
-	if(HAS_TRAIT(src, TRAIT_COMMIE) && HAS_TRAIT(examiner, TRAIT_COMMIE))
+	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
+		seer = TRUE
+	
+	if(HAS_TRAIT(src, TRAIT_COMMIE) && (HAS_TRAIT(examiner, TRAIT_COMMIE)||seer))
 		heretic_text += "♠"
-	else if(HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(examiner, TRAIT_CABAL))
+	else if(HAS_TRAIT(src, TRAIT_CABAL) && (HAS_TRAIT(examiner, TRAIT_CABAL)||seer))
 		heretic_text += "♦"
-	else if(HAS_TRAIT(src, TRAIT_HORDE) && HAS_TRAIT(examiner, TRAIT_HORDE))
+	else if(HAS_TRAIT(src, TRAIT_HORDE) && (HAS_TRAIT(examiner, TRAIT_HORDE)||seer))
 		heretic_text += "♠"
-	else if(HAS_TRAIT(src, TRAIT_DEPRAVED) && HAS_TRAIT(examiner, TRAIT_DEPRAVED))
+	else if(HAS_TRAIT(src, TRAIT_DEPRAVED) && (HAS_TRAIT(examiner, TRAIT_DEPRAVED)||seer))
 		heretic_text += "♥"
 
 	return heretic_text

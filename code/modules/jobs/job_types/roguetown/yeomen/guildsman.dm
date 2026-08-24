@@ -1,4 +1,4 @@
-// Guildsman. Replacement class for the Blacksmith, Artificer, and Smithy Apprentice.
+// Guildsman. Replacement class for the Blacksmith, Artificer.
 // But also includes a Mason-Architect.
 /datum/job/roguetown/guildsman
 	title = "Guildsman"

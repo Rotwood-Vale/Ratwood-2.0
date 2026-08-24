@@ -112,6 +112,7 @@
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	beltl = /obj/item/quiver/Warrows
 	beltr = /obj/item/rogueweapon/mace/cudgel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,

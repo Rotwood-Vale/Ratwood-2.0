@@ -191,9 +191,9 @@
 
 /datum/status_effect/buff/standard_steady/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/standard_steady/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))
 

@@ -42,12 +42,13 @@
 
 /obj/item/rogueweapon/pick/blacksteel
 	name = "blacksteel pick"
-	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
-	force_wielded = 30
+	desc = "Glimmering with silvered blackness, this is a pretigious tool for miners delving into the darkness. It looks like it will strike hard enough to shatter any boulders within a rocky surface instantly."
+	possible_item_intents = list(/datum/intent/pick/bad)
+	gripped_intents = list(/datum/intent/pick)
+	force = 25
+	force_wielded = 32
 	icon_state = "blacksteelpick1"
 	item_state = "blacksteelpick1"
-	possible_item_intents = list(/datum/intent/pick)
-	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 800
 	smeltresult = /obj/item/ingot/blacksteel
 
