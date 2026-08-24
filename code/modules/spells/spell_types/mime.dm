@@ -7,7 +7,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>I form a wall in front of myself.</span>"
 	summon_lifespan = 5 SECONDS
-	recharge_time = 300
+	recharge_time = 10 SECONDS
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	range = 0
