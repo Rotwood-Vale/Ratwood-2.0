@@ -60,6 +60,17 @@
 /obj/structure/spider/stickyweb/solo
 	icon_state = "stickyweb3"
 
+/obj/structure/spider/stickyweb/thin
+	opacity = FALSE
+
+/obj/structure/spider/stickyweb/thin/Initialize(mapload)
+	. = ..()
+	alpha = 100
+
+/obj/structure/spider/stickyweb/thick/Initialize(mapload)
+	. = ..()
+	alpha = 200
+
 /obj/structure/spider/stickyweb/Initialize(mapload)
 	if(icon_state == "stickyweb1")
 		if(prob(50))
