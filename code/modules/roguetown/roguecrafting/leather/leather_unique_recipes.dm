@@ -131,14 +131,12 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6 //Can be a bit strong, reduce to 5 if too high.
 
-/datum/crafting_recipe/roguetown/leather/unique/crafteast
-	name = "decorated dopo robe"
-	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
+/datum/crafting_recipe/roguetown/leather/unique/crafteast/mastercraft //t3 dopo robe. Equal to the Warden's light armor.
+	name = "fortified dopo robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/mastercraft)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,
-		/obj/item/reagent_containers/food/snacks/tallow = 1,
-		/obj/item/natural/fibers = 2,
-		/obj/item/clothing/suit/roguetown/armor/basiceast = 1)
+		/obj/item/natural/silk = 2,
+		/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast = 1) // requires you to have the previous tier instead of just the base item
 	tools = list(/obj/item/needle)
 	craftdiff = 5
-
