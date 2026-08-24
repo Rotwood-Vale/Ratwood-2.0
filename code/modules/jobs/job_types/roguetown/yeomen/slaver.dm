@@ -64,7 +64,7 @@
 	pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
 	belt = /obj/item/storage/belt/rogue/leather/shalal
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	beltl = /obj/item/rogueweapon/whip
+	beltl = /obj/item/rogueweapon/whip/bronze
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	backr = /obj/item/storage/backpack/rogue/satchel

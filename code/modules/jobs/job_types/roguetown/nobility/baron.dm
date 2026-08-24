@@ -36,11 +36,12 @@
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
-	head = /obj/item/clothing/head/roguetown/chaperon/noble
+	head = /obj/item/clothing/head/roguetown/circlet
+	id = /obj/item/scomstone/garrison //Giving them a crownstone given their new position over lowtown garrison
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backpack_contents = list(/obj/item/roguekey/baron = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel, /obj/item/rogueweapon/scabbard/sheath/royal)
 
 // Baron subclasses
 
@@ -53,16 +54,19 @@
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
 	subclass_stats = list(
 		STATKEY_INT = 2,
-		STATKEY_PER = 1,
+		STATKEY_PER = 2,
 		STATKEY_SPD = 1,
-		STATKEY_WIL = 1,
-		STATKEY_LCK = 1,
+		STATKEY_WIL = 2,
+		STATKEY_LCK = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/baron/shrewd_nobleman/pre_equip(mob/living/carbon/human/H)
@@ -87,15 +91,19 @@
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_EXP_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/baron/landed_knight/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
+	beltl = /obj/item/rogueweapon/scabbard/sword/royal
 	r_hand = /obj/item/rogueweapon/sword/sabre/dec
 	backl = /obj/item/rogueweapon/shield/iron

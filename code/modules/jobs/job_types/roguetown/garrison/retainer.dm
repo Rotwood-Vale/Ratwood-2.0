@@ -34,7 +34,7 @@
 	tutorial = "A brute to back up the baron whenever needed, actions speak louder than words and you are the embodiment of this saying."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 2)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -56,18 +56,19 @@
 
 /datum/outfit/job/roguetown/baron_retainer/henchman/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	neck = /obj/item/clothing/neck/roguetown/coif/padded
-	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	pants = /obj/item/clothing/under/roguetown/chainlegs
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+	cloak = /obj/item/clothing/cloak/tabard
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+	neck = /obj/item/clothing/neck/roguetown/bevor
+	head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
-	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/angle
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1, /obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,)
+	H.verbs |= list(/mob/proc/haltyell)
 	if(H.mind)
-		var/weapons = list("Polearm", "Bludgeon", "Sword & Shield", "Flail & Shield", "Greatsword")
+		var/weapons = list("Polearm", "Bludgeon", "Grand Mace", "Sword & Shield", "Flail & Shield", "Greatsword")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Polearm")
@@ -76,6 +77,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			if("Bludgeon")
 				r_hand = /obj/item/rogueweapon/mace/maul
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			if("Grand Mace")
+				r_hand = /obj/item/rogueweapon/mace/goden/steel
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			if("Sword & Shield")
@@ -149,12 +154,12 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
-	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 4, STATKEY_PER = 4)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 3, STATKEY_PER = 4)
 	subclass_skills = list(
-		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/slings = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
@@ -163,15 +168,14 @@
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/swimming = SKILL_EXP_EXPERT
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/baron_retainer/greyleaf/pre_equip(mob/living/carbon/human/H)
 	..()
-	mask = /obj/item/clothing/head/roguetown/roguehood/warden/antler
-	cloak = /obj/item/clothing/cloak/wardencloak
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/angle
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
@@ -179,27 +183,42 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
-		var/helmets = list("Bear", "Goat", "Wolf")
-		var/helmet_choice = input(H, "Choose your warden skull helm.", "HELMET SELECTION") as anything in helmets
+		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Studded Hood and Hound Mask")
+		var/helmet_choice = input(H, "Choose your Outfit", "EQUIP THINESELF") as anything in helmets
 		switch(helmet_choice)
-			if("Bear")
+			if("Warden Bearskull")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear
-			if("Goat")
+				mask = /obj/item/clothing/head/roguetown/roguehood/warden
+				cloak = /obj/item/clothing/cloak/wardencloak
+			if("Warden Goatskull")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat
-			if("Wolf")
+				mask = /obj/item/clothing/head/roguetown/roguehood/warden
+				cloak = /obj/item/clothing/cloak/wardencloak
+			if("Warden Wolfskull")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
+				mask = /obj/item/clothing/head/roguetown/roguehood/warden
+				cloak = /obj/item/clothing/cloak/wardencloak
+			if("Studded Hood and Hound Mask")
+				head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
+				mask = /obj/item/clothing/mask/rogue/facemask/steel/hound
+				cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+			
 		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow", "Slurbow")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/weapon_choice = input(H, "Choose your weapon", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Crossbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/poisonarrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Blackhorn Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
 				beltr = /obj/item/quiver/poisonarrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Recurve Bow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
 				beltr = /obj/item/quiver/poisonarrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Slurbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 				beltr = /obj/item/quiver/bolts
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
