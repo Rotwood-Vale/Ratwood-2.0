@@ -38,7 +38,7 @@
 	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 	pants = /obj/item/clothing/under/roguetown/trou/formal
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak
+	cloak = /obj/item/clothing/cloak/lordcloak/baronycloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	head = /obj/item/clothing/head/roguetown/circlet

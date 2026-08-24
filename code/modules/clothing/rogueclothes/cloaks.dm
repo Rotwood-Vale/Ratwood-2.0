@@ -788,6 +788,31 @@
 	GLOB.lordcolor -= src
 	return ..()
 
+/obj/item/clothing/cloak/lordcloak/baronycloak
+	name = "Barony Cloak"
+	desc = "A cloak in the heraldic colors of the Lowtown Barony."
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/lordcolor(primary,secondary)
+	return //ignores the ducal scheme, only the barony one applies
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/baronycolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_cloak()
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/Initialize(mapload)
+	. = ..()
+	GLOB.lordcolor -= src
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
 /obj/item/clothing/cloak/darkcloak
 	name = "dark cloak"
 	desc = "It'll warm up your flesh, but not your cold, dead heart."
