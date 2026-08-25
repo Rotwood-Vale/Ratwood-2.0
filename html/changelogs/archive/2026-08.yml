@@ -501,3 +501,13 @@
   MickDick1:
   - bugfix: Retuned Inspector statline/weapon choices so he's able to wield them at
       all
+2026-08-24:
+  Ephemeralis:
+  - bugfix: Adjusted the sellprice of some clothing items made with weaving that were
+      massively overpriced compared to their inputs (halfmask, most god robes, etc).
+  Gug1234:
+  - bugfix: Fixed an exploit allowing enchantments to be stacked.
+  HelennaC:
+  - admin: mail archive
+  Xander3359:
+  - balance: Allows abyssor's infusion to be self-casted
