@@ -190,6 +190,10 @@
 	pixel_y = 34
 	},
 /obj/structure/rack/rogue/shelf,
+/obj/item/clothing/head/roguetown/helmet/kettle/iron{
+	pixel_x = 6;
+	pixel_y = 32
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "abL" = (
@@ -10619,6 +10623,22 @@
 /area/rogue/outdoors/town/rockhill)
 "cgr" = (
 /obj/structure/rack/rogue/shelf,
+/obj/item/clothing/mask/rogue/facemask/hound{
+	pixel_x = -10;
+	pixel_y = 35
+	},
+/obj/item/clothing/mask/rogue/facemask/hound{
+	pixel_x = -4;
+	pixel_y = 35
+	},
+/obj/item/clothing/mask/rogue/facemask/hound{
+	pixel_x = 3;
+	pixel_y = 35
+	},
+/obj/item/clothing/mask/rogue/facemask/hound{
+	pixel_x = 10;
+	pixel_y = 35
+	},
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/indoors/town/cell/warden)
 "cgs" = (
@@ -11448,14 +11468,21 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/rtfield/rockhill/above)
 "coq" = (
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/reagent_containers/glass/cup/wooden,
-/obj/item/reagent_containers/glass/cup/wooden,
 /obj/structure/closet/crate/chest{
 	lockid = "bog_gatehouse"
 	},
+/obj/item/signal_flare_gun,
+/obj/item/signal_flare_gun,
+/obj/item/signal_flare_gun,
+/obj/item/signal_flare_gun,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
+/obj/item/signal_flare,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "cou" = (
@@ -19728,9 +19755,7 @@
 /obj/item/roguekey/baron,
 /obj/item/roguekey/baron,
 /obj/item/roguekey/baronguest,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring,
-/obj/item/storage/keyring/guard,
+/obj/item/roguekey/baronguest,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "dWY" = (
@@ -20538,7 +20563,6 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/storage/keyring/guard,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "eeN" = (
@@ -36688,6 +36712,8 @@
 /area/rogue/under/dungeon/tricksntraps)
 "hCG" = (
 /obj/structure/rack/rogue,
+/obj/item/quiver/javelin/iron,
+/obj/item/quiver/javelin/iron,
 /obj/item/quiver/javelin/iron,
 /obj/item/quiver/javelin/iron,
 /turf/open/floor/rogue/concrete,
@@ -53031,6 +53057,10 @@
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
 /obj/machinery/light/rogue/torchholder/c,
+/obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
+/obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
+/obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
+/obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/cell/warden)
 "kYW" = (
@@ -62302,17 +62332,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/rogue/candle/l,
-/obj/item/storage/keyring{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "BaronManor";
-	name = "Lowtown Manor Key";
-	pixel_x = 9;
-	pixel_y = 3
-	},
 /obj/item/candle/gold/lit{
 	pixel_y = 6
 	},
@@ -64662,6 +64681,10 @@
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
+/obj/item/needle,
+/obj/item/needle,
+/obj/item/needle,
+/obj/item/needle,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/cell/warden)
 "nsr" = (
@@ -67360,6 +67383,7 @@
 /obj/item/clothing/neck/roguetown/coif/padded,
 /obj/item/clothing/neck/roguetown/coif/padded,
 /obj/item/clothing/neck/roguetown/coif/padded,
+/obj/item/clothing/neck/roguetown/coif/padded,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "nXG" = (
@@ -68746,6 +68770,10 @@
 /area/rogue/under/dungeon/oldgoblincamp)
 "onB" = (
 /obj/structure/rack/rogue,
+/obj/item/quiver/arrows,
+/obj/item/quiver/arrows,
+/obj/item/quiver/arrows,
+/obj/item/quiver/arrows,
 /obj/item/quiver/arrows,
 /obj/item/quiver/arrows,
 /obj/item/quiver/arrows,
@@ -86837,6 +86865,14 @@
 /area/rogue/indoors)
 "siu" = (
 /obj/structure/rack/rogue/shelf,
+/obj/item/quiver/bolts{
+	pixel_x = 7;
+	pixel_y = 33
+	},
+/obj/item/quiver/bolts{
+	pixel_x = -4;
+	pixel_y = 34
+	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/cell/warden)
 "siv" = (
@@ -91793,6 +91829,8 @@
 /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat,
 /obj/item/clothing/head/roguetown/chaperon/noble,
 /obj/machinery/light/rogue/candle/r,
+/obj/item/storage/keyring/baronretainer,
+/obj/item/storage/keyring/baronretainer,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors)
 "tlr" = (
@@ -92302,6 +92340,10 @@
 /obj/item/clothing/neck/roguetown/psicross/pearl,
 /obj/item/roguekey/baronguest,
 /obj/item/storage/keyring,
+/obj/item/roguekey/baron,
+/obj/item/roguekey/baronguest,
+/obj/item/storage/keyring,
+/obj/item/roguekey/baron,
 /turf/open/floor/rogue/ruinedwood/herringbone_clear,
 /area/rogue/indoors)
 "tqA" = (
@@ -98340,6 +98382,10 @@
 /obj/structure/rack/rogue,
 /obj/item/quiver/sling/iron,
 /obj/item/quiver/sling/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling,
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling,
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling,
+/obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /obj/item/gun/ballistic/revolver/grenadelauncher/sling,
 /turf/open/floor/rogue/concrete,
@@ -111608,6 +111654,14 @@
 	pixel_x = 10;
 	pixel_y = -4
 	},
+/obj/item/rogueweapon/stoneaxe/handaxe{
+	pixel_x = 10;
+	pixel_y = -4
+	},
+/obj/item/rogueweapon/stoneaxe/handaxe{
+	pixel_x = 10;
+	pixel_y = -4
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "xvN" = (
@@ -113799,6 +113853,11 @@
 /obj/structure/closet/crate/chest{
 	lockid = "walls"
 	},
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
+/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
 /obj/item/reagent_containers/food/snacks/rogue/crackerscooked,
