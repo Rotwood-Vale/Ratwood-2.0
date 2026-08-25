@@ -12,6 +12,15 @@
 	return get_item_for_held_index(get_inactive_hand_index())
 
 
+//Returns a list of items in both hands
+/mob/proc/get_held_items()
+	var/list/obj/item/held_item = list()
+	held_item += get_active_held_item()
+	held_item += get_inactive_held_item()
+
+	return held_item
+
+
 //Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
@@ -308,7 +317,7 @@
 		if(istype(src, /mob/living/carbon/human))
 			// Putting things into hands is a null loc ref why? no idea! But this works for now...
 			// Because the only alternative is removing something from someone, which puts it on the floor.
-			if(newloc == null) 
+			if(newloc == null)
 				var/mob/living/carbon/human/H = src
 				for(var/Item in H.get_equipped_items()) // Find this item
 					if(Item == I)
