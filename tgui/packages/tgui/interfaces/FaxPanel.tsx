@@ -6,6 +6,7 @@ import {
   LabeledList,
   Section,
   Stack,
+  Tabs,
   TextArea,
 } from 'tgui-core/components';
 
@@ -17,10 +18,19 @@ type HermesEntry = {
   tag: string;
 };
 
+type LetterEntry = {
+  sender: string;
+  recipient: string;
+  sender_ckey: string;
+  recipient_ckey: string;
+  body: string;
+};
+
 type Data = {
   hermes_list: HermesEntry[];
   player_list: string[];
   master_exists: boolean;
+  letter_history: LetterEntry[];
 };
 
 const STAMPS = [
@@ -120,8 +130,10 @@ const RIM_PREVIEW_STYLE: Record<string, React.CSSProperties> = {
 
 export const FaxPanel = (props) => {
   const { act, data } = useBackend<Data>();
-  const { hermes_list, player_list, master_exists } = data;
+  const { hermes_list, player_list, master_exists, letter_history } = data;
 
+  const [activePage, setActivePage] = useState<'send' | 'archive'>('send');
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [sendMode, setSendMode] = useState<'player' | 'hermes'>('player');
   const [sender, setSender] = useState('');
   const [body, setBody] = useState('');
@@ -181,292 +193,387 @@ export const FaxPanel = (props) => {
     <Window width={900} height={760} title="Admin Fax Panel">
       <Window.Content scrollable>
         <Stack vertical fill>
-          {/* Sender & Mode */}
           <Stack.Item>
-            <Section title="Sender">
-              <LabeledList>
-                <LabeledList.Item label="From">
-                  <input
-                    style={{ width: '100%', padding: '2px 4px' }}
-                    placeholder="e.g. The Grand Duke, Anonymous..."
-                    value={sender}
-                    onChange={(e) => setSender((e.target as HTMLInputElement).value)}
-                  />
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
+            <Tabs>
+              <Tabs.Tab
+                selected={activePage === 'send'}
+                onClick={() => setActivePage('send')}
+              >
+                Send Letter
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={activePage === 'archive'}
+                onClick={() => setActivePage('archive')}
+              >
+                Letter Archive
+              </Tabs.Tab>
+            </Tabs>
           </Stack.Item>
 
-          {/* Recipient */}
-          <Stack.Item>
-            <Section title="Recipient">
-              <Stack>
-                <Stack.Item>
-                  <Button
-                    selected={sendMode === 'player'}
-                    onClick={() => setSendMode('player')}
-                  >
-                    By Player Name
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    selected={sendMode === 'hermes'}
-                    onClick={() => setSendMode('hermes')}
-                  >
-                    By HERMES #
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button icon="sync" onClick={() => act('refresh')}>
-                    Refresh
-                  </Button>
-                </Stack.Item>
-              </Stack>
-              <Box mt={1}>
-                {sendMode === 'player' ? (
-                  master_exists ? (
-                    player_list?.length > 0 ? (
+          {activePage === 'archive' ? (
+            <Stack.Item>
+              <Section title="Player Letter Archive">
+                <Button icon="sync" onClick={() => act('refresh')}>
+                  Refresh
+                </Button>
+                <Box mt={1}>
+                  {!letter_history || letter_history.length === 0 ? (
+                    <Box color="label" italic>
+                      No player letters have been sent yet.
+                    </Box>
+                  ) : (
+                    letter_history.map((entry, index) => (
+                      <Box
+                        key={`${entry.sender}-${entry.recipient}-${entry.sender_ckey}-${entry.recipient_ckey}-${index}`}
+                        className="candystripe"
+                        p={1}
+                        mb={1}
+                        style={{
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '4px',
+                          whiteSpace: 'pre-wrap',
+                          wordBreak: 'break-word',
+                        }}
+                      >
+                        <Box bold>
+                          From: {entry.sender || 'Anonymous'}
+                        </Box>
+                        <Box color="label" fontSize="0.85em">
+                          Sender ckey: {entry.sender_ckey || 'unknown'}
+                        </Box>
+                        <Box bold>
+                          To: {entry.recipient || 'Unknown'}
+                        </Box>
+                        <Box color="label" fontSize="0.85em">
+                          Recipient ckey: {entry.recipient_ckey || 'unknown'}
+                        </Box>
+                        <Box mt={1}>
+                          <Button
+                            compact
+                            icon="file-alt"
+                            onClick={() => setPreviewIndex(previewIndex === index ? null : index)}
+                          >
+                            {previewIndex === index ? 'Hide Preview' : 'Preview Letter'}
+                          </Button>
+                        </Box>
+                        {previewIndex === index && (
+                          <Box mt={1} style={{ border: '1px solid #8f7142', borderRadius: '4px', overflow: 'hidden' }}>
+                            <Box
+                              style={{
+                                background: '#fdf6e3',
+                                color: '#2c1a0e',
+                                padding: '12px',
+                                fontFamily: 'serif',
+                                minHeight: '80px',
+                                lineHeight: 1.5,
+                              }}
+                            >
+                              <Box
+                                style={{
+                                  fontStyle: 'italic',
+                                  color: '#5a3e1b',
+                                  borderBottom: '1px solid #c8aa7a',
+                                  paddingBottom: '4px',
+                                  marginBottom: '6px',
+                                }}
+                              >
+                                From: {entry.sender || 'Anonymous'}
+                              </Box>
+                              <Box
+                                dangerouslySetInnerHTML={{
+                                  __html: (entry.body || '(empty letter)').replace(/\r?\n/g, '<br>'),
+                                }}
+                              />
+                            </Box>
+                          </Box>
+                        )}
+                      </Box>
+                    ))
+                  )}
+                </Box>
+              </Section>
+            </Stack.Item>
+          ) : (
+            <>
+              <Stack.Item>
+                <Section title="Sender">
+                  <LabeledList>
+                    <LabeledList.Item label="From">
+                      <input
+                        style={{ width: '100%', padding: '2px 4px' }}
+                        placeholder="e.g. The Grand Duke, Anonymous..."
+                        value={sender}
+                        onChange={(e) => setSender((e.target as HTMLInputElement).value)}
+                      />
+                    </LabeledList.Item>
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
+
+              <Stack.Item>
+                <Section title="Recipient">
+                  <Stack>
+                    <Stack.Item>
+                      <Button
+                        selected={sendMode === 'player'}
+                        onClick={() => setSendMode('player')}
+                      >
+                        By Player Name
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        selected={sendMode === 'hermes'}
+                        onClick={() => setSendMode('hermes')}
+                      >
+                        By HERMES #
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button icon="sync" onClick={() => act('refresh')}>
+                        Refresh
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
+                  <Box mt={1}>
+                    {sendMode === 'player' ? (
+                      master_exists ? (
+                        player_list?.length > 0 ? (
+                          <select
+                            style={{ width: '100%', padding: '2px' }}
+                            value={playerRecipient}
+                            onChange={(e) =>
+                              setPlayerRecipient(
+                                (e.target as HTMLSelectElement).value,
+                              )
+                            }
+                          >
+                            {player_list.map((name) => (
+                              <option key={name} value={name}>
+                                {name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <Box color="average">No players online.</Box>
+                        )
+                      ) : (
+                        <Box color="bad">Master mailer is offline — cannot send by name.</Box>
+                      )
+                    ) : hermes_list?.length > 0 ? (
                       <select
                         style={{ width: '100%', padding: '2px' }}
-                        value={playerRecipient}
+                        value={hermesNum}
                         onChange={(e) =>
-                          setPlayerRecipient(
-                            (e.target as HTMLSelectElement).value,
+                          setHermesNum(
+                            Number((e.target as HTMLSelectElement).value),
                           )
                         }
                       >
-                        {player_list.map((name) => (
-                          <option key={name} value={name}>
-                            {name}
+                        {hermes_list.map((h) => (
+                          <option key={h.num} value={h.num}>
+                            #{h.num}
+                            {h.tag ? ` — ${h.tag}` : ''}
                           </option>
                         ))}
                       </select>
                     ) : (
-                      <Box color="average">No players online.</Box>
-                    )
-                  ) : (
-                    <Box color="bad">Master mailer is offline — cannot send by name.</Box>
-                  )
-                ) : hermes_list?.length > 0 ? (
-                  <select
-                    style={{ width: '100%', padding: '2px' }}
-                    value={hermesNum}
-                    onChange={(e) =>
-                      setHermesNum(
-                        Number((e.target as HTMLSelectElement).value),
-                      )
-                    }
-                  >
-                    {hermes_list.map((h) => (
-                      <option key={h.num} value={h.num}>
-                        #{h.num}
-                        {h.tag ? ` — ${h.tag}` : ''}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <Box color="bad">No HERMES machines on this map.</Box>
-                )}
-              </Box>
-            </Section>
-          </Stack.Item>
-
-          {/* Body */}
-          <Stack.Item>
-            <Section title="Letter Body">
-              <Box mb={1}>
-                <Button
-                  icon="sync"
-                  color={previewDirty ? 'average' : undefined}
-                  onClick={updatePreview}>
-                  Update Preview
-                </Button>
-              </Box>
-              <TextArea
-                height="200px"
-                width="100%"
-                style={{ display: 'block', boxSizing: 'border-box' }}
-                value={body}
-                onChange={(value: string) => setBody(value)}
-                placeholder="Write your letter here. HTML is supported: &lt;b&gt;bold&lt;/b&gt;, &lt;i&gt;italic&lt;/i&gt;, &lt;br&gt;. Shift+Enter for new lines."
-              />
-            </Section>
-          </Stack.Item>
-
-          {/* Stamp & Rim */}
-          <Stack.Item>
-            <Stack>
-              <Stack.Item grow>
-                <Section title="Wax Stamp">
-                  <Stack vertical>
-                    {STAMPS.map((s) => (
-                      <Stack.Item key={s.key}>
-                        <Button
-                          fluid
-                          selected={stamp === s.key}
-                          onClick={() => setStamp(s.key)}
-                        >
-                          {s.label}
-                        </Button>
-                      </Stack.Item>
-                    ))}
-                  </Stack>
+                      <Box color="bad">No HERMES machines on this map.</Box>
+                    )}
+                  </Box>
                 </Section>
               </Stack.Item>
-              <Stack.Item grow>
-                <Section title="Letter Rim">
-                  <Stack vertical>
-                    {RIMS.map((r) => (
-                      <Stack.Item key={r.key}>
-                        <Button
-                          fluid
-                          selected={rim === r.key}
-                          onClick={() => setRim(r.key)}
-                        >
-                          {r.label}
-                        </Button>
-                      </Stack.Item>
-                    ))}
-                  </Stack>
+
+              <Stack.Item>
+                <Section title="Letter Body">
+                  <Box mb={1}>
+                    <Button
+                      icon="sync"
+                      color={previewDirty ? 'average' : undefined}
+                      onClick={updatePreview}>
+                      Update Preview
+                    </Button>
+                  </Box>
+                  <TextArea
+                    height="200px"
+                    width="100%"
+                    style={{ display: 'block', boxSizing: 'border-box' }}
+                    value={body}
+                    onChange={(value: string) => setBody(value)}
+                    placeholder="Write your letter here. HTML is supported: &lt;b&gt;bold&lt;/b&gt;, &lt;i&gt;italic&lt;/i&gt;, &lt;br&gt;. Shift+Enter for new lines."
+                  />
                 </Section>
               </Stack.Item>
-            </Stack>
-          </Stack.Item>
 
-          {/* Preview */}
-          <Stack.Item>
-            <Section title="Preview">
-              {/* Outer box carries the rim border — mirrors the reading window frame */}
-              <Box style={rim !== 'none' ? RIM_PREVIEW_STYLE[rim] : {}}>
-                <Box
-                  style={{
-                    background: '#fdf6e3',
-                    padding: '12px',
-                    fontFamily: 'serif',
-                    minHeight: '80px',
-                  }}
-                >
-                  {/* Sender header */}
-                  {sender && (
+              <Stack.Item>
+                <Stack>
+                  <Stack.Item grow>
+                    <Section title="Wax Stamp">
+                      <Stack vertical>
+                        {STAMPS.map((s) => (
+                          <Stack.Item key={s.key}>
+                            <Button
+                              fluid
+                              selected={stamp === s.key}
+                              onClick={() => setStamp(s.key)}
+                            >
+                              {s.label}
+                            </Button>
+                          </Stack.Item>
+                        ))}
+                      </Stack>
+                    </Section>
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <Section title="Letter Rim">
+                      <Stack vertical>
+                        {RIMS.map((r) => (
+                          <Stack.Item key={r.key}>
+                            <Button
+                              fluid
+                              selected={rim === r.key}
+                              onClick={() => setRim(r.key)}
+                            >
+                              {r.label}
+                            </Button>
+                          </Stack.Item>
+                        ))}
+                      </Stack>
+                    </Section>
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+
+              <Stack.Item>
+                <Section title="Preview">
+                  <Box style={rim !== 'none' ? RIM_PREVIEW_STYLE[rim] : {}}>
                     <Box
                       style={{
-                        fontStyle: 'italic',
-                        color: '#5a3e1b',
-                        borderBottom: '1px solid #c8aa7a',
-                        paddingBottom: '4px',
-                        marginBottom: '6px',
+                        background: '#fdf6e3',
+                        padding: '12px',
+                        fontFamily: 'serif',
+                        minHeight: '80px',
                       }}
                     >
-                      From: {sender}
+                      {sender && (
+                        <Box
+                          style={{
+                            fontStyle: 'italic',
+                            color: '#5a3e1b',
+                            borderBottom: '1px solid #c8aa7a',
+                            paddingBottom: '4px',
+                            marginBottom: '6px',
+                          }}
+                        >
+                          From: {sender}
+                        </Box>
+                      )}
+                      {body && (
+                        <Box
+                          color="black"
+                          style={{ fontFamily: 'serif' }}
+                          dangerouslySetInnerHTML={{ __html: previewHtml }}
+                        />
+                      )}
+                      {stamp !== 'none' && (
+                        <Box textAlign="center" mt={1}>
+                          <span style={STAMP_PREVIEW_STYLE[stamp]}>
+                            {STAMP_LABELS[stamp]}
+                          </span>
+                        </Box>
+                      )}
+                      {!sender && !body && stamp === 'none' && (
+                        <Box color="grey" italic>
+                          Nothing to preview.
+                        </Box>
+                      )}
                     </Box>
-                  )}
-                  {body && (
-                    <Box
-                      color="black"
-                      style={{ fontFamily: 'serif' }}
-                      dangerouslySetInnerHTML={{ __html: previewHtml }}
-                    />
-                  )}
-                  {stamp !== 'none' && (
-                    <Box textAlign="center" mt={1}>
-                      <span style={STAMP_PREVIEW_STYLE[stamp]}>
-                        {STAMP_LABELS[stamp]}
-                      </span>
-                    </Box>
-                  )}
-                  {!sender && !body && stamp === 'none' && (
-                    <Box color="grey" italic>
-                      Nothing to preview.
-                    </Box>
-                  )}
-                </Box>
-              </Box>
-            </Section>
-          </Stack.Item>
+                  </Box>
+                </Section>
+              </Stack.Item>
 
-          {/* Parcel Item */}
-          <Stack.Item>
-            <Section title="Parcel Item (Optional)">
-              <LabeledList>
-                <LabeledList.Item label="Item Path">
-                  <input
-                    style={{ width: '100%', padding: '2px 4px', fontFamily: 'monospace' }}
-                    placeholder="e.g. /obj/item/coin/gold"
-                    value={itemPath}
-                    onChange={(e) => setItemPath((e.target as HTMLInputElement).value)}
-                  />
-                </LabeledList.Item>
-                {trimmedItemPath && (
-                  <>
-                    <LabeledList.Item label="Item Name">
+              <Stack.Item>
+                <Section title="Parcel Item (Optional)">
+                  <LabeledList>
+                    <LabeledList.Item label="Item Path">
                       <input
-                        style={{ width: '100%', padding: '2px 4px' }}
-                        placeholder="Override item name (blank = keep default)"
-                        value={itemName}
-                        onChange={(e) => setItemName((e.target as HTMLInputElement).value)}
+                        style={{ width: '100%', padding: '2px 4px', fontFamily: 'monospace' }}
+                        placeholder="e.g. /obj/item/coin/gold"
+                        value={itemPath}
+                        onChange={(e) => setItemPath((e.target as HTMLInputElement).value)}
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Item Desc">
-                      <input
-                        style={{ width: '100%', padding: '2px 4px' }}
-                        placeholder="Override item description (blank = keep default)"
-                        value={itemDesc}
-                        onChange={(e) => setItemDesc((e.target as HTMLInputElement).value)}
-                      />
-                    </LabeledList.Item>
-                    <LabeledList.Item label="Package Size">
-                      <select
-                        style={{ padding: '2px' }}
-                        value={packageSize}
-                        onChange={(e) => setPackageSize(Number((e.target as HTMLSelectElement).value))}
-                      >
-                        <option value={0}>Auto (from item)</option>
-                        <option value={1}>1 — Tiny</option>
-                        <option value={2}>2 — Small</option>
-                        <option value={3}>3 — Normal</option>
-                        <option value={4}>4 — Bulky</option>
-                        <option value={5}>5 — Huge</option>
-                        <option value={6}>6 — Gigantic</option>
-                      </select>
-                    </LabeledList.Item>
-                    <LabeledList.Item label="">
-                      <Box color="average">
-                        The letter (if any) will be attached as a readable note inside the package.
-                      </Box>
-                    </LabeledList.Item>
-                  </>
-                )}
-              </LabeledList>
-            </Section>
-          </Stack.Item>
+                    {trimmedItemPath && (
+                      <>
+                        <LabeledList.Item label="Item Name">
+                          <input
+                            style={{ width: '100%', padding: '2px 4px' }}
+                            placeholder="Override item name (blank = keep default)"
+                            value={itemName}
+                            onChange={(e) => setItemName((e.target as HTMLInputElement).value)}
+                          />
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Item Desc">
+                          <input
+                            style={{ width: '100%', padding: '2px 4px' }}
+                            placeholder="Override item description (blank = keep default)"
+                            value={itemDesc}
+                            onChange={(e) => setItemDesc((e.target as HTMLInputElement).value)}
+                          />
+                        </LabeledList.Item>
+                        <LabeledList.Item label="Package Size">
+                          <select
+                            style={{ padding: '2px' }}
+                            value={packageSize}
+                            onChange={(e) => setPackageSize(Number((e.target as HTMLSelectElement).value))}
+                          >
+                            <option value={0}>Auto (from item)</option>
+                            <option value={1}>1 — Tiny</option>
+                            <option value={2}>2 — Small</option>
+                            <option value={3}>3 — Normal</option>
+                            <option value={4}>4 — Bulky</option>
+                            <option value={5}>5 — Huge</option>
+                            <option value={6}>6 — Gigantic</option>
+                          </select>
+                        </LabeledList.Item>
+                        <LabeledList.Item label="">
+                          <Box color="average">
+                            The letter (if any) will be attached as a readable note inside the package.
+                          </Box>
+                        </LabeledList.Item>
+                      </>
+                    )}
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
 
-          <Divider />
+              <Divider />
 
-          {/* Send */}
-          <Stack.Item textAlign="right">
-            <Button
-              color="good"
-              disabled={!canSend}
-              onClick={() =>
-                act('send', {
-                  sender,
-                  body,
-                  stamp,
-                  rim,
-                  send_mode: sendMode,
-                  recipient: playerRecipient,
-                  hermes_num: hermesNum,
-                  item_path: trimmedItemPath,
-                  item_name: trimmedItemName,
-                  item_desc: trimmedItemDesc,
-                  package_size: packageSize,
-                })
-              }
-            >
-              {trimmedItemPath ? 'Send Parcel' : 'Send Letter'}
-            </Button>
-          </Stack.Item>
+              <Stack.Item textAlign="right">
+                <Button
+                  color="good"
+                  disabled={!canSend}
+                  onClick={() =>
+                    act('send', {
+                      sender,
+                      body,
+                      stamp,
+                      rim,
+                      send_mode: sendMode,
+                      recipient: playerRecipient,
+                      hermes_num: hermesNum,
+                      item_path: trimmedItemPath,
+                      item_name: trimmedItemName,
+                      item_desc: trimmedItemDesc,
+                      package_size: packageSize,
+                    })
+                  }
+                >
+                  {trimmedItemPath ? 'Send Parcel' : 'Send Letter'}
+                </Button>
+              </Stack.Item>
+            </>
+          )}
         </Stack>
       </Window.Content>
     </Window>

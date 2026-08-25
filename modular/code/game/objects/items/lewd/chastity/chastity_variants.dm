@@ -130,6 +130,7 @@
 
 /obj/item/chastity/cursed
 	name = "cursed chastity device"
+	always_show_examine_link = FALSE
 	desc = "A writhing, rune-etched chastity frame. It flexes like something alive."
 	icon_state = "cage_cursed"
 	item_state = "cage_cursed"
@@ -142,3 +143,6 @@
 	cursed_anal_open = FALSE
 	cursed_spikes_on = FALSE
 	suffix = null
+
+/obj/item/chastity/cursed/show_examine_hover_tooltip()
+	return TRUE
