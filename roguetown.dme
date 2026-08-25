@@ -1557,6 +1557,7 @@
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_iron.dm"
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_light.dm"
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_steel.dm"
+#include "code\modules\cargo\packsrogue\merchant\weapons\merch_weapons_bronze.dm"
 #include "code\modules\cargo\packsrogue\merchant\weapons\merch_weapons_foreign.dm"
 #include "code\modules\cargo\packsrogue\merchant\weapons\merch_weapons_melee_iron.dm"
 #include "code\modules\cargo\packsrogue\merchant\weapons\merch_weapons_melee_steel.dm"
