@@ -28755,7 +28755,9 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/needle,
 /obj/item/needle,
-/obj/structure/closet/crate/roguecloset/dark,
+/obj/structure/closet/crate/roguecloset/dark{
+	lockid = "DTManorCells"
+	},
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
