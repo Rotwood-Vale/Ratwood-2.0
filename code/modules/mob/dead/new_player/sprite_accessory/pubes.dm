@@ -5,8 +5,18 @@
 	color_key_defaults = list(KEY_HAIR_COLOR)
 	layer = 44.5
 
-/datum/sprite_accessory/pubes/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
+/datum/sprite_accessory/pubes/proc/get_pubes_suffix(mob/living/carbon/owner)
+	var/datum/species/species = owner?.dna?.species
+	if(species?.clothes_id == "dwarf")
+		return owner.gender == FEMALE ? "d_f" : "d_m"
+	if(is_species(owner, /datum/species/elf) && owner.gender == MALE)
+		return "e_m"
+	if(is_species(owner, /datum/species/halforc))
+		return owner.gender == FEMALE ? "h_ft" : "h_mt"
+	return owner.gender == FEMALE ? "h_f" : "h_m"
+
+/datum/sprite_accessory/pubes/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return "[icon_state]_[get_pubes_suffix(owner)]"
 
 /datum/sprite_accessory/pubes/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
