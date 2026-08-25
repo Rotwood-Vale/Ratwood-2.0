@@ -17027,7 +17027,8 @@
 /obj/effect/decal/carpet/square/black{
 	dir = 1;
 	pixel_x = -1;
-	pixel_y = 42
+	pixel_y = 42;
+	layer = 2.9
 	},
 /obj/structure/fluff/wallclock{
 	pixel_y = -32
@@ -34168,10 +34169,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/dungeon/drowfort)
 "hpH" = (
-/obj/structure/fluff/pillow/blue{
-	color = "#2762cf";
-	dir = 8
-	},
+/obj/item/cushion/desert2,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hpR" = (
@@ -52721,6 +52719,12 @@
 /obj/structure/fluff/pillow/purple{
 	pixel_x = -3
 	},
+/obj/effect/decal/carpet/square/black{
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = 42;
+	layer = 2.9
+	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "lsG" = (
@@ -53324,6 +53328,7 @@
 /obj/structure/fluff/walldeco/rpainting/forest{
 	pixel_x = -32
 	},
+/obj/item/cushion/zybantine,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "lAw" = (
@@ -64533,7 +64538,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/cavewet)
 "nWi" = (
-/obj/structure/fluff/pillow/magenta,
+/obj/item/cushion/desert1,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "nWl" = (
