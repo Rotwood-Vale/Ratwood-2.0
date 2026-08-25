@@ -70,6 +70,9 @@ GLOBAL_LIST_INIT(pridelist, list(
 	var/ducal_scheme = FALSE // Whether primary color is using Ducal Scheme
 	var/ducal_scheme_detail = FALSE // Whether detail color is using Ducal Scheme
 	var/ducal_scheme_altdetail = FALSE // Whether altdetail color is using Ducal Scheme
+	var/barony_scheme = FALSE // Whether primary color is using Barony Scheme
+	var/barony_scheme_detail = FALSE // Whether detail color is using Barony Scheme
+	var/barony_scheme_altdetail = FALSE // Whether altdetail color is using Barony Scheme
 	var/list/allowed_types = list(
 			/obj/item/clothing,
 			/obj/item/storage,
@@ -301,12 +304,18 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 	if(href_list["select"])
 		ducal_scheme = FALSE
+		barony_scheme = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			var/input_type = alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
-			if(input_type == "Ducal Scheme")
-				ducal_scheme = TRUE
-				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
+			var/input_type = alert(usr, "Input Choice", "Primary Dye", "Color Wheel", "Color Preset", "Scheme")
+			if(input_type == "Scheme")
+				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
+				if(scheme_type == "Barony")
+					barony_scheme = TRUE
+					activecolor = GLOB.baronprimary ? GLOB.baronprimary : "#685542"
+				else
+					ducal_scheme = TRUE
+					activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
 			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
@@ -320,24 +329,34 @@ GLOBAL_LIST_INIT(pridelist, list(
 		else
 			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
+			choice_list["Barony Scheme"] = "#BARONY"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
 			if(choice == "Ducal Scheme")
 				ducal_scheme = TRUE
 				activecolor = GLOB.lordprimary ? GLOB.lordprimary : "#264d26"
+			else if(choice == "Barony Scheme")
+				barony_scheme = TRUE
+				activecolor = GLOB.baronprimary ? GLOB.baronprimary : "#685542"
 			else
 				activecolor = GLOB.colorlist[choice]
 			interact(usr)
 
 	if(href_list["select_detail"])
 		ducal_scheme_detail = FALSE
+		barony_scheme_detail = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			var/input_type = alert(usr, "Input Choice", "Detail Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
-			if(input_type == "Ducal Scheme")
-				ducal_scheme_detail = TRUE
-				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			var/input_type = alert(usr, "Input Choice", "Detail Dye", "Color Wheel", "Color Preset", "Scheme")
+			if(input_type == "Scheme")
+				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
+				if(scheme_type == "Barony")
+					barony_scheme_detail = TRUE
+					activecolor_detail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
+				else
+					ducal_scheme_detail = TRUE
+					activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
 			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
@@ -351,24 +370,34 @@ GLOBAL_LIST_INIT(pridelist, list(
 		else
 			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
+			choice_list["Barony Scheme"] = "#BARONY"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
 			if(choice == "Ducal Scheme")
 				ducal_scheme_detail = TRUE
 				activecolor_detail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else if(choice == "Barony Scheme")
+				barony_scheme_detail = TRUE
+				activecolor_detail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
 			else
 				activecolor_detail = GLOB.colorlist[choice]
 			interact(usr)
 
 	if(href_list["select_altdetail"])
 		ducal_scheme_altdetail = FALSE
+		barony_scheme_altdetail = FALSE
 		if(HAS_TRAIT(usr, TRAIT_DYES))
 			var/choice
-			var/input_type = alert(usr, "Input Choice", "Tertiary Dye", "Color Wheel", "Color Preset", "Ducal Scheme")
-			if(input_type == "Ducal Scheme")
-				ducal_scheme_altdetail = TRUE
-				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			var/input_type = alert(usr, "Input Choice", "Tertiary Dye", "Color Wheel", "Color Preset", "Scheme")
+			if(input_type == "Scheme")
+				var/scheme_type = alert(usr, "Choose Scheme", "Scheme", "Ducal", "Barony")
+				if(scheme_type == "Barony")
+					barony_scheme_altdetail = TRUE
+					activecolor_altdetail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
+				else
+					ducal_scheme_altdetail = TRUE
+					activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
 			else if(input_type != "Color Wheel")
 				choice = input(usr, "Choose your dye:", "Dyes", null) as null|anything in used_colors
 				if(!choice)
@@ -382,12 +411,16 @@ GLOBAL_LIST_INIT(pridelist, list(
 		else
 			var/choice_list = GLOB.colorlist.Copy()
 			choice_list["Ducal Scheme"] = "#DUCAL"
+			choice_list["Barony Scheme"] = "#BARONY"
 			var/choice = input(usr,"Choose your dye:","Dyes",null) as null|anything in choice_list
 			if(!choice)
 				return
 			if(choice == "Ducal Scheme")
 				ducal_scheme_altdetail = TRUE
 				activecolor_altdetail = GLOB.lordsecondary ? GLOB.lordsecondary : "#2b292e"
+			else if(choice == "Barony Scheme")
+				barony_scheme_altdetail = TRUE
+				activecolor_altdetail = GLOB.baronsecondary ? GLOB.baronsecondary : "#505050"
 			else
 				activecolor_altdetail = GLOB.colorlist[choice]
 			interact(usr)
@@ -400,14 +433,28 @@ GLOBAL_LIST_INIT(pridelist, list(
 		// Apply primary color only
 		if(ducal_scheme)
 			inserted_item.ducal_primary = TRUE
+			inserted_item.barony_primary = FALSE
 			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
 			if(!(inserted in GLOB.lordcolor))
 				GLOB.lordcolor += inserted
+			if(!inserted_item.barony_detail && !inserted_item.barony_altdetail && (inserted in GLOB.baronycolor))
+				GLOB.baronycolor -= inserted
+		else if(barony_scheme)
+			inserted_item.barony_primary = TRUE
+			inserted_item.ducal_primary = FALSE
+			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
+			if(!(inserted in GLOB.baronycolor))
+				GLOB.baronycolor += inserted
+			if(!inserted_item.ducal_detail && !inserted_item.ducal_altdetail && (inserted in GLOB.lordcolor))
+				GLOB.lordcolor -= inserted
 		else
 			inserted_item.ducal_primary = FALSE
+			inserted_item.barony_primary = FALSE
 			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
 			if(!inserted_item.ducal_detail && !inserted_item.ducal_altdetail && (inserted in GLOB.lordcolor))
 				GLOB.lordcolor -= inserted
+			if(!inserted_item.barony_detail && !inserted_item.barony_altdetail && (inserted in GLOB.baronycolor))
+				GLOB.baronycolor -= inserted
 		
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
@@ -429,12 +476,25 @@ GLOBAL_LIST_INIT(pridelist, list(
 			inserted_item.detail_color = activecolor_detail
 			if(ducal_scheme_detail)
 				inserted_item.ducal_detail = TRUE
+				inserted_item.barony_detail = FALSE
 				if(!(inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor += inserted_item
-			else
+				if(!inserted_item.barony_primary && !inserted_item.barony_altdetail && (inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor -= inserted_item
+			else if(barony_scheme_detail)
+				inserted_item.barony_detail = TRUE
 				inserted_item.ducal_detail = FALSE
+				if(!(inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor += inserted_item
 				if(!inserted_item.ducal_primary && !inserted_item.ducal_altdetail && (inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor -= inserted_item
+			else
+				inserted_item.ducal_detail = FALSE
+				inserted_item.barony_detail = FALSE
+				if(!inserted_item.ducal_primary && !inserted_item.ducal_altdetail && (inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor -= inserted_item
+				if(!inserted_item.barony_primary && !inserted_item.barony_altdetail && (inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor -= inserted_item
 		
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
@@ -450,12 +510,25 @@ GLOBAL_LIST_INIT(pridelist, list(
 			inserted_item.altdetail_color = activecolor_altdetail
 			if(ducal_scheme_altdetail)
 				inserted_item.ducal_altdetail = TRUE
+				inserted_item.barony_altdetail = FALSE
 				if(!(inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor += inserted_item
-			else
+				if(!inserted_item.barony_primary && !inserted_item.barony_detail && (inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor -= inserted_item
+			else if(barony_scheme_altdetail)
+				inserted_item.barony_altdetail = TRUE
 				inserted_item.ducal_altdetail = FALSE
+				if(!(inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor += inserted_item
 				if(!inserted_item.ducal_primary && !inserted_item.ducal_detail && (inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor -= inserted_item
+			else
+				inserted_item.ducal_altdetail = FALSE
+				inserted_item.barony_altdetail = FALSE
+				if(!inserted_item.ducal_primary && !inserted_item.ducal_detail && (inserted_item in GLOB.lordcolor))
+					GLOB.lordcolor -= inserted_item
+				if(!inserted_item.barony_primary && !inserted_item.barony_detail && (inserted_item in GLOB.baronycolor))
+					GLOB.baronycolor -= inserted_item
 		
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
@@ -468,8 +541,11 @@ GLOBAL_LIST_INIT(pridelist, list(
 		// Remove primary color
 		inserted.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 		inserted_item.ducal_primary = FALSE
+		inserted_item.barony_primary = FALSE
 		if(!inserted_item.ducal_detail && !inserted_item.ducal_altdetail && (inserted in GLOB.lordcolor))
 			GLOB.lordcolor -= inserted
+		if(!inserted_item.barony_detail && !inserted_item.barony_altdetail && (inserted in GLOB.baronycolor))
+			GLOB.baronycolor -= inserted
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
@@ -482,8 +558,11 @@ GLOBAL_LIST_INIT(pridelist, list(
 		if(inserted_item.detail_color)
 			inserted_item.detail_color = "#FFFFFF"
 			inserted_item.ducal_detail = FALSE
+			inserted_item.barony_detail = FALSE
 			if(!inserted_item.ducal_primary && !inserted_item.ducal_altdetail && (inserted_item in GLOB.lordcolor))
 				GLOB.lordcolor -= inserted_item
+			if(!inserted_item.barony_primary && !inserted_item.barony_altdetail && (inserted_item in GLOB.baronycolor))
+				GLOB.baronycolor -= inserted_item
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
@@ -496,8 +575,11 @@ GLOBAL_LIST_INIT(pridelist, list(
 		if(inserted_item.altdetail_color)
 			inserted_item.altdetail_color = "#FFFFFF"
 			inserted_item.ducal_altdetail = FALSE
+			inserted_item.barony_altdetail = FALSE
 			if(!inserted_item.ducal_primary && !inserted_item.ducal_detail && (inserted_item in GLOB.lordcolor))
 				GLOB.lordcolor -= inserted_item
+			if(!inserted_item.barony_primary && !inserted_item.barony_detail && (inserted_item in GLOB.baronycolor))
+				GLOB.baronycolor -= inserted_item
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)

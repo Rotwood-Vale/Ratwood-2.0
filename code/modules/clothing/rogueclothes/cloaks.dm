@@ -443,6 +443,31 @@
 /obj/item/clothing/cloak/tabard/retinue/captain //Because of his other snowflake cloak we can't actually use the naming normally.
 	name = "captain's tabard"
 
+/obj/item/clothing/cloak/tabard/retinue/baronycloak
+	desc = "A tabard with the baron's heraldic colors."
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/Initialize(mapload)
+	. = ..()
+	GLOB.lordcolor -= src
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/lordcolor(primary,secondary)
+	return //ignores the ducal scheme, only the barony one applies
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/baronycolor(primary,secondary)
+	color = primary
+	detail_color = secondary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_cloak()
+
+/obj/item/clothing/cloak/tabard/retinue/baronycloak/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
 //////////////////////////
 /// SOLDIER TABARD
 ////////////////////////
@@ -788,6 +813,31 @@
 	GLOB.lordcolor -= src
 	return ..()
 
+/obj/item/clothing/cloak/lordcloak/baronycloak
+	name = "Barony Cloak"
+	desc = "A cloak in the heraldic colors of the Lowtown Barony."
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/lordcolor(primary,secondary)
+	return //ignores the ducal scheme, only the barony one applies
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/baronycolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_cloak()
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/Initialize(mapload)
+	. = ..()
+	GLOB.lordcolor -= src
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+
+/obj/item/clothing/cloak/lordcloak/baronycloak/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
 /obj/item/clothing/cloak/darkcloak
 	name = "dark cloak"
 	desc = "It'll warm up your flesh, but not your cold, dead heart."
@@ -830,7 +880,7 @@
 
 /obj/item/clothing/cloak/darkcloak/bear/wardenmaster
 	name = "Warden trophy-cloak"
-	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman."
+	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman, it is clasped with a pin of the Lowtown Baron."
 	sellprice = 80
 	color = "#99a39d"
 
@@ -967,6 +1017,9 @@
 	color = CLOTHING_DRAB
 /obj/item/clothing/cloak/raincloak/darkdrab
 	color = CLOTHING_DARKDRAB
+
+/obj/item/clothing/cloak/raincloak/white
+	color = CLOTHING_WHITE
 
 /obj/item/clothing/head/hooded/rainhood
 	name = "hood"
@@ -1254,6 +1307,10 @@
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = 600
 
+/obj/item/clothing/cloak/shadowcloak/vanguard
+	name = "vanguard cloak"
+	desc = "A dark cloak, clasped with a pin of the Lowtown Baron. Worn by the Vanguard"
+
 /obj/item/clothing/cloak/thief_cloak
 	name = "rapscallion's shawl"
 	desc = "A simple shawl clasped with an ersatz fastener. Practical and functional, though the fabric is rough and wearing bare."
@@ -1383,7 +1440,7 @@
 	icon_state = "wicker_cloak"
 	item_state = "wicker_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
-	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK	
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
 	inhand_mod = TRUE
@@ -1691,6 +1748,23 @@
 	icon_state = "naledisash"
 	item_state = "naledisash"
 	desc = "A limp piece of fabric traditionally used to fasten bags that are too baggy, but in modern days has become more of a fashion statement than anything."
+	color = null
+	detail_color = null
+	detail_tag = "_detail"
+	naledicolor = TRUE
+
+/obj/item/clothing/cloak/hierophant/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/cloak/hierophant/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/clothing/cloak/stabard/grenzelmage
 	name = "grenzelhoftian magos mantle"
@@ -1704,7 +1778,7 @@
 
 /obj/item/clothing/cloak/wardencloak
 	name = "warden cloak"
-	desc = "A cloak worn by the Wardens of the realm's Forests"
+	desc = "A cloak worn by the Wardens of the realm's Forests. It is clasped with a pin of the Lowtown Baron."
 	icon_state = "wardencloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
