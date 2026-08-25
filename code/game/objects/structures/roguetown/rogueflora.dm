@@ -391,6 +391,14 @@
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
 	plane = FLOOR_PLANE
+	var/list/bush_stuck = list()	// handles mobility impairment in-tile
+
+/obj/structure/flora/roguegrass/proc/release_bush_stuck(mob/living/L)	// Helps you get stuck in a feature for a bit. Usual slowdown is applied after you leave the tile, this is on the actual tile.
+	if(!L)
+		return
+
+	bush_stuck -= L
+	L.mobility_flags |= MOBILITY_MOVE
 
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
@@ -483,7 +491,6 @@
 	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 	var/list/looty = list()
 	var/bushtype
-	var/list/bush_stuck = list()
 
 /obj/structure/flora/roguegrass/bush/Initialize(mapload)
 	AddComponent(/datum/component/hiding_spot)
@@ -517,7 +524,7 @@
 	var/mob/living/L = AM
 
 	if(L.mobility_flags & MOBILITY_STAND)
-		var/stuck_time = max(1, 12 - round(L.STASTR * 0.6))
+		var/stuck_time = max(1, 18 - round(L.STASTR * 0.6))
 
 		bush_stuck[L] = TRUE
 		L.mobility_flags &= ~MOBILITY_MOVE
@@ -527,13 +534,13 @@
 			stuck_time
 		)
 
-		if(L.m_intent == MOVE_INTENT_RUN)
+		if(L.m_intent == MOVE_INTENT_RUN || (L.buckled)) // running or riding brings injury since they sidestep the slowdown
 			if(!ishuman(L))
 				to_chat(L, span_warning("I'm cut on a thorn!"))
 				L.apply_damage(5, BRUTE)
 			else
 				var/mob/living/carbon/human/H = L
-				if(prob(20))
+				if(prob(25))
 					if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 						var/obj/item/bodypart/BP = pick(H.bodyparts)
 						var/obj/item/natural/thorn/TH = new(src.loc)
@@ -545,12 +552,6 @@
 					to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
 					BP.receive_damage(10)
 
-/obj/structure/flora/roguegrass/bush/proc/release_bush_stuck(mob/living/L)
-	if(!L)
-		return
-
-	bush_stuck -= L
-	L.mobility_flags |= MOBILITY_MOVE
 
 /obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
 	if(ismovableatom(caller))
@@ -798,18 +799,17 @@
 
 /obj/structure/flora/roguegrass/thorn_bush/Crossed(atom/movable/AM)
 	..()
-
 	if(!isliving(AM))
 		return
 
 	var/mob/living/L = AM
 
 	// Small critters can zoom past.
-	if(L.mob_size <= MOB_SIZE_HUMAN)
+	if(L.mob_size <= MOB_SIZE_SMALL)
 		return
 
 	// Dense thorn bushes briefly tangle anything large enough to trigger them.
-	L.Immobilize(36 - L.STASTR * 2)
+	L.Immobilize(max(0, 36 - L.STASTR * 2))
 
 	// Non-carbon mobs just take basic thorn damage. Another size check since the previous doesnt catch damage for some reason.
 	if(!iscarbon(L))
@@ -831,6 +831,17 @@
 	// Kneestinger immunity prevents the thorn effects unless cursed.
 	if(HAS_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY))
 		return
+	
+	// Riding movestop and extra damage since it sidesteps stun. Galloping through thorn bushes shouldnt be the play. Riding skill gives a chance to escape this fate
+	if(H.buckled)
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		to_chat(H, span_warning("My [BP.name] snags on a thorn."))
+		BP.receive_damage(10)
+		var/riding_level = H.get_skill_level(/datum/skill/misc/riding)
+		if(prob(100 - (riding_level * 5)))
+			to_chat(H, span_danger("My mount goes mad with pain!"))
+			H.unbuckle_mob()
+			H.Paralyze(10)
 
 	// Chance to embed a thorn, reduced by LUCK.
 	if(prob(25 - H.STALUC))
@@ -848,6 +859,7 @@
 	var/obj/item/bodypart/BP = pick(H.bodyparts)
 	to_chat(H, span_warning("A thorn [pick("slices", "cuts", "nicks")] my [BP.name]."))
 	BP.receive_damage(10)
+
 
 // fyrituis bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/pyroclasticflowers

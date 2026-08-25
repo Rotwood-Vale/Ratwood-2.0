@@ -325,9 +325,12 @@
 		M.mobility_flags &= ~MOBILITY_MOVE
 		addtimer(CALLBACK(src, PROC_REF(release_vine_stuck), M), stuck_time)
 
-		if(prob(23))
+		if(prob(23) || (M.buckled) || (M.m_intent == MOVE_INTENT_RUN)) // buckled mobs & runners avoid slowdown due to how buckling works, but gets guaranteed damage instead
 			M.adjustBruteLoss(5)
 			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+
+
+
 
 /obj/structure/vine/proc/release_vine_stuck(mob/living/M)
 	if(!M)
