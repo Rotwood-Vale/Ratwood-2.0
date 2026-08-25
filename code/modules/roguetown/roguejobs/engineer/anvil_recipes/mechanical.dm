@@ -45,9 +45,9 @@
 	craftdiff = 5
 
 /datum/anvil_recipe/engineering/sandedbarrel
-	name = "Sanded Iron Barrel (+4 sand, +2 stone dust, +1 partially refined barrel)"
+	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 partially refined barrel)"
 	req_bar = /obj/item/ingot/iron
-	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarrel)
+	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarrel)
 	created_item = /obj/item/bombard_sandedbarrel
 	createditem_num = 1
 	craftdiff = 5
