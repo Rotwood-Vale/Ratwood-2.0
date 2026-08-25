@@ -79,14 +79,16 @@
 	else
 		used_name = "[adjective] [penis.name][arousal_modifier]"
 	var/branded = ""
+	var/brand_text = ""
 	if(length(penis.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(penis.branded_writing)]</span>"
-	var/base_description = "[used_name][branded]"
-	var/obj/item/organ/testicles/testes = H.getorganslot(ORGAN_SLOT_TESTICLES)
-	if(testes && penis.sheath_type != SHEATH_TYPE_SLIT)
-		return base_description
-	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+		brand_text = penis.branded_writing
+		if(penis.enslavement_mark)
+			brand_text = "[brand_text], a mark of ownership"
+	else if(penis.enslavement_mark)
+		brand_text = "a mark of ownership"
+	if(length(brand_text))
+		branded = ", branded with <span style='font-size:150%;'>[span_boldwarning(brand_text)]</span>"
+	return "[used_name][branded]"
 
 /datum/mob_descriptor/testicles
 	name = "balls"
@@ -126,11 +128,16 @@
 		if(3)
 			adjective = "a large"
 	var/branded = ""
+	var/brand_text = ""
 	if(length(testes.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(testes.branded_writing)]</span>"
-	var/base_description = "[adjective] pair of balls[branded]"
-	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+		brand_text = testes.branded_writing
+		if(testes.enslavement_mark)
+			brand_text = "[brand_text], a mark of ownership"
+	else if(testes.enslavement_mark)
+		brand_text = "a mark of ownership"
+	if(length(brand_text))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
+	return "[adjective] pair of balls[branded]"
 
 /datum/mob_descriptor/vagina
 	name = "vagina"
@@ -183,13 +190,16 @@
 		if(20 to 50)
 			arousal_modifier = ", wet with arousal"
 	var/branded = ""
+	var/brand_text = ""
 	if(length(vagina.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(vagina.branded_writing)]</span>"
-	var/base_description = "a [vagina_type][arousal_modifier][branded]"
-	if(H.getorganslot(ORGAN_SLOT_PENIS) || H.getorganslot(ORGAN_SLOT_TESTICLES))
-		return base_description
-	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+		brand_text = vagina.branded_writing
+		if(vagina.enslavement_mark)
+			brand_text = "[brand_text], a mark of ownership"
+	else if(vagina.enslavement_mark)
+		brand_text = "a mark of ownership"
+	if(length(brand_text))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
+	return "a [vagina_type][arousal_modifier][branded]"
 
 /datum/mob_descriptor/breasts
 	name = "breasts"
@@ -244,8 +254,15 @@
 		if(12)
 			adjective = "a torso-sized"
 	var/branded = ""
+	var/brand_text = ""
 	if(length(breasts.branded_writing))
-		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(breasts.branded_writing)]</span>"
+		brand_text = breasts.branded_writing
+		if(breasts.enslavement_mark)
+			brand_text = "[brand_text], a mark of ownership"
+	else if(breasts.enslavement_mark)
+		brand_text = "a mark of ownership"
+	if(length(brand_text))
+		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	if(breasts.breast_size == 0)
 		return "[adjective][branded]"
 	return "[adjective] pair of breasts[branded]"
