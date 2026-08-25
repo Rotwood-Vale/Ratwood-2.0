@@ -355,6 +355,12 @@
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
 
+		if(HAS_TRAIT(src, TRAIT_ROTMAN))
+			. += span_small("Their skin is cold and clammy, the faint smell of rot follows them...")
+
+		if(HAS_TRAIT(src, TRAIT_PALLID))
+			. += span_small("Their skin is drained of colour...")
+
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(family_datum == H.family_datum && family_datum)
