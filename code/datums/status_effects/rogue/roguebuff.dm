@@ -673,6 +673,77 @@
 		owner.updatehealth()
 // Lesser miracle effect end
 
+#define REWIND_AURA "originhealing"
+
+/datum/status_effect/buff/originhealing // not affected by the heartbeast, since this is not really "healing", you're restoring someone in time. It will also only heal one limb at a time, to differ from other heals that are more uniform.
+	id = "originhealing"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
+	duration = 10 SECONDS
+	examine_text = "<font color='#ffae00'>SUBJECTPRONOUN is slowly being rewound in time!</font>"
+	var/healing_on_tick = 2.5
+	var/outline_colour = "#ffc558"
+	var/increment
+
+/datum/status_effect/buff/originhealing/on_creation(mob/living/new_owner, new_healing_on_tick)
+	if(!isnull(new_healing_on_tick))
+		healing_on_tick = new_healing_on_tick
+	return ..()
+
+/datum/status_effect/buff/originhealing/on_apply()
+	var/filter = owner.get_filter(REWIND_AURA)
+	if (!filter)
+		owner.add_filter(REWIND_AURA, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
+		duration = 20 SECONDS
+	return TRUE
+
+/datum/status_effect/buff/originhealing/on_remove()
+	. = ..()
+	owner.remove_filter(REWIND_AURA)
+
+/datum/status_effect/buff/originhealing/tick()
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
+	H.color = "#ffda95"
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
+
+	// Rewind the most damaged limb.
+	if(ishuman(owner))
+		var/mob/living/carbon/human/HM = owner
+		var/obj/item/bodypart/most_damaged
+		for(var/obj/item/bodypart/BP in HM.bodyparts)
+			if(QDELETED(BP))
+				continue
+			if(!most_damaged || (BP.brute_dam + BP.burn_dam) > (most_damaged.brute_dam + most_damaged.burn_dam))
+				most_damaged = BP
+
+		if(most_damaged)
+			var/total_damage = most_damaged.brute_dam + most_damaged.burn_dam
+			if(total_damage > 0)
+				//Vizier Time magic. SCALED HEALING. 36 healing over 10 seconds(Worse then over half acolyte heals with condition met, and basic keeper research)
+				//with convergence extra duration, scales to 120 over 20 seconds. Worse then Eora and ravox, but better then others.
+				increment++
+				healing_on_tick = round((3 + (1/3)) * (2.71828 ** (0.08986 * increment)))
+				most_damaged.heal_damage(healing_on_tick, healing_on_tick)
+				HM.update_damage_overlays()
+
+	var/list/wCount = owner.get_wounds()
+
+	if(length(wCount))
+		owner.heal_wounds(healing_on_tick * 2)
+		owner.update_damage_overlays()
+
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
+
+	owner.stamina_add(-6)
+	owner.energy_add(9)
+
+#undef REWIND_AURA
+
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"
 	desc = "The warmth of a fire soothes my ails."
@@ -1149,10 +1220,24 @@
 	duration = 15 MINUTES
 	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1)
 
-/datum/status_effect/buff/convergence //Increases all healing while it lasts.
+#define CONVERGENCE_FILTER "convergence_glow"
+/datum/status_effect/buff/convergence //Increases  duration of Naledi buffs
 	id = "convergence"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/convergence
 	duration = 1 MINUTES
+	var/outline_colour = "#90D5FF"
+
+/datum/status_effect/buff/convergence/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(CONVERGENCE_FILTER)
+	if (!filter)
+		owner.add_filter(CONVERGENCE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+
+/datum/status_effect/buff/convergence/on_remove()
+	. = ..()
+	owner.remove_filter(CONVERGENCE_FILTER)
+
+#undef CONVERGENCE_FILTER
 
 /datum/status_effect/buff/stasis //Increases all healing while it lasts.
 	id = "stasis"
@@ -1860,6 +1945,43 @@
 		mob.apply_status_effect(/datum/status_effect/buff/recuperation/eoran)
 
 #undef EORANAURA_FILTER
+
+#define INVIGORATION_FILTER "invigoration_filter"
+
+/atom/movable/screen/alert/status_effect/buff/invigoration
+	name = "Invigoration"
+	desc = "My energy is being replenished."
+	icon_state = "buff"
+
+/datum/status_effect/buff/invigoration
+	id = "invigoration"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/invigoration
+	duration = 10 SECONDS
+	var/outline_colour = "#3a86ff"
+	var/energy_per_tick = 12
+
+/datum/status_effect/buff/invigoration/on_creation(mob/living/new_owner, set_duration = 10 SECONDS)
+	if(set_duration)
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/buff/invigoration/on_apply()
+	owner.add_filter(INVIGORATION_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 80, "size" = 1))
+	to_chat(owner, span_notice("A surge of energy begins to circulate through my body!"))
+	return TRUE
+
+/datum/status_effect/buff/invigoration/tick()
+	if(!owner || owner.stat == DEAD)
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	H.color = outline_colour
+	owner.energy_add(energy_per_tick)
+
+/datum/status_effect/buff/invigoration/on_remove()
+	owner.remove_filter(INVIGORATION_FILTER)
+	return ..()
+
+#undef INVIGORATION_FILTER
 
 /atom/movable/screen/alert/status_effect/buff/recuperation
 	name = "Recuperation"
