@@ -356,6 +356,9 @@
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
 
+/obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
 	..()
 	if(ishuman(user))
@@ -641,8 +644,11 @@
 	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
+/obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
 	..()
