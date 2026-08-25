@@ -9,6 +9,7 @@
 	traits_applied = list(TRAIT_EMPATH, TRAIT_DODGEEXPERT)
 	category_tags = list(CTAG_INQUISITION)
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	subclass_stats = list(//This does not follow the typical 8 stat setup.
 		STATKEY_STR = 1,
 		STATKEY_LCK = 1,
