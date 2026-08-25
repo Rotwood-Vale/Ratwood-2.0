@@ -20,15 +20,15 @@
 	var/aggressive = 0
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
-	if(!(AIStatus == NPC_AI_OFF))
-		if(aggressive)
-			return ..()
-		else
-			if(!enemies.len)
-				return list()
-			var/list/see = ..()
-			see &= enemies // Remove all entries that aren't in enemies
-			return see
+	if(AIStatus == NPC_AI_OFF)
+		return list()
+	if(aggressive)
+		return ..()
+	if(!LAZYLEN(enemies))
+		return list()
+	var/list/see = ..()
+	see &= enemies // Remove all entries that aren't in enemies
+	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/DismemberBody(mob/living/L)
 	//Lets keep track of this to see if we start getting wounded while eating.
