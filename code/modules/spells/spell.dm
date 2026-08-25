@@ -208,6 +208,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/miracle = FALSE
 	var/devotion_cost = 0
 	var/ignore_cockblock = FALSE //whether or not to ignore TRAIT_SPELLCOCKBLOCK
+	var/mute_allowed = FALSE //Mostly for mimes and mute people in general. Since they have TRAIT_PERMAMUTE it will let them bypass the shout/whisper speech check
 
 	action_icon_state = "spell0"
 	action_icon = 'icons/mob/actions/roguespells.dmi'
@@ -238,6 +239,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
 	if(staff && staff.cast_time_reduction)
 		newtime = newtime - (chargetime * (staff.cast_time_reduction))
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens Charge by 25%.
+		newtime *= 0.75
 	if(newtime > 0)
 		return newtime
 	return 0.1
@@ -287,6 +290,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/staff_mod = chargetime * staff.cast_time_reduction
 		if(staff_mod > 0)
 			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
+		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
 	return breakdown
 
 /obj/effect/proc_holder/spell/proc/get_cooldown_breakdown(mob/living/user)
@@ -332,13 +337,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!user || is_cdr_exempt || miracle)
 		return initial(recharge_time)
 	var/base = initial(recharge_time)
+	var/newtime
 	if(user.STAINT > SPELL_SCALING_THRESHOLD)
 		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
-		return base - (base * diff * COOLDOWN_REDUCTION_PER_INT)
+		newtime = base - (base * diff * COOLDOWN_REDUCTION_PER_INT)
 	else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 		var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
-		return base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-	return base
+		newtime = base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
+	else
+		newtime = base
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+		newtime *= 0.75
+	return newtime
 
 /obj/effect/proc_holder/spell/proc/get_spell_statistics(mob/living/user)
 	var/list/stats = list()
@@ -420,7 +430,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
+		if((invocation_type == "whisper" || invocation_type == "shout") && ((!H.can_speak_vocal() && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
 		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
@@ -573,7 +583,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 			var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+		recharge_time *= 0.75
 	// If the spell was fully charged before recalculation, keep it fully charged
 	if(charge_counter >= old_recharge && old_recharge > 0)
 		charge_counter = recharge_time
@@ -900,7 +911,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
 		if(!living_user.can_speak_vocal())
-			return FALSE
+			if(!(mute_allowed && HAS_TRAIT(user, TRAIT_PERMAMUTE)))
+				return FALSE
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				if(human_user.check_mouth_grabbed())
+					return FALSE
 		if(ishuman(user) && !living_user.getorganslot(ORGAN_SLOT_TONGUE)) // Shapeshifter has no tongue yeah
 			return FALSE
 
