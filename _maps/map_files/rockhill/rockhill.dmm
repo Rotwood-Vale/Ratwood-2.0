@@ -19730,6 +19730,7 @@
 /obj/item/roguekey/baronguest,
 /obj/item/storage/keyring,
 /obj/item/storage/keyring,
+/obj/item/storage/keyring/guard,
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors)
 "dWY" = (
@@ -20537,6 +20538,7 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
+/obj/item/storage/keyring/guard,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "eeN" = (
