@@ -661,6 +661,18 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
+
 /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	name = "sojourner's mask"
 	item_state = "naledimask"
