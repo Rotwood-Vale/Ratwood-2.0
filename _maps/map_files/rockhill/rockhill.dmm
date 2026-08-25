@@ -73923,11 +73923,6 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town)
-"pqW" = (
-/obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/dt/courtslave,
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/garrison)
 "pri" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -90217,7 +90212,6 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/rogue/shit,
-/obj/effect/landmark/start/dt/courtslave,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "sVF" = (
@@ -421952,7 +421946,7 @@ hNW
 hNW
 axD
 hNW
-pqW
+lxk
 tNj
 pWT
 fnA
