@@ -1,0 +1,4 @@
+author: "CloverIsLucky"
+delete-after: True
+changes:
+  - bugfix: "Fixes Miracles Skill Description. You don't really get higher access to higher tier of miracles from your patrons if you had miracles increased."
