@@ -1,5 +1,10 @@
 // Blade
 
+// Container path for mercenary variants; should never be offered directly.
+/datum/advclass/slaver/mercenary
+	name = ""
+	category_tags = list()
+
 /datum/advclass/slaver/mercenary/blade
 	name = "Zybantynian Blade Mercenary"
 	tutorial = "A hired arm for the Zybantine Slave troop. You have come from the deserts of Zybantine and are hired under contract by the Zybantynian Master."

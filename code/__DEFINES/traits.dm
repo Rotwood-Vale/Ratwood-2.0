@@ -223,6 +223,7 @@
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
+#define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
 #define TRAIT_RESIDENT "Resident"
@@ -330,6 +331,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the realm see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
+	TRAIT_OWNED_SLAVE = span_info("I am a marked slave, previously broken and now owned by a Master."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),

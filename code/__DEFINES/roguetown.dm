@@ -350,6 +350,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BOGMASTER		"CAT_BOGMASTER"		// BOGMASTER class - Handles BOGMASTER class selector (weapons selection)
 #define CTAG_SHERIFF		"CAT_SHERIFF"		// SHERIFF class - Handles SHERIFF class selector (weapons selection)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
+#define CTAG_RETAINER		"CAT_RETAINER"		// Retainer class - Handles Retainer class selector
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
 #define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
 #define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercenary class - Handles Mercenary class selector
@@ -357,6 +358,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector
 #define CTAG_HEIR			"CAT_HEIR"			// Prince(cess) class - Handles Heir class selector
 #define CTAG_LORD			"CAT_LORD"			// Lord class - Handles Lord class selector
+#define CTAG_BARON			"CAT_BARON"			// Baron class - Handles Baron class selector
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
 #define CTAG_ROOKIE			"CAT_ROOKIE"		// Rookie class - Handles Rookie class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
@@ -415,6 +417,10 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BATHMOM		"CAT_BATHMOM"
 #define CTAG_TAPSTER		"CAT_TAPSTER"
 #define CTAG_LUNATIC		"CAT_LUNATIC"
+
+#define CTAG_SLAVER			"CAT_SLAVER"
+#define CTAG_SLAVE			"CAT_SLAVE"
+
 /*
 	Defines for the triumph buy datum categories
 */
