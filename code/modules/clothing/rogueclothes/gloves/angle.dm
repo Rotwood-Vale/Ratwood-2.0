@@ -18,6 +18,9 @@
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = 50
 
+/obj/item/clothing/gloves/roguetown/angle/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	name = "grenzelhoft gloves"
 	desc = "Regal gloves of Grenzelhoftian design, more a fashion statement than actual protection."
@@ -30,7 +33,7 @@
 	name = "forge gauntlets"
 	color = "#ffffff"
 	heat_protection = HAND_LEFT | HAND_RIGHT
-	max_heat_protection_temperature = 600 
+	max_heat_protection_temperature = 600
 
 /obj/item/clothing/gloves/roguetown/angle/pontifex
 	name = "rune-scrybed wrappings"

@@ -55,6 +55,9 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/clothing/wrists/roguetown/bracers/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/wrists/roguetown/bracers/bronze
 	name = "bronze wristguards"
 	desc = "Padded with hide and cuffed to comfort the joints, these bronze plates fit perfectly around both forearms. Your fingers tingle with an unspoken purpose, as the bracers clasp into place; primordial, yet everclear."
@@ -119,6 +122,9 @@
 	color = "#684338"
 	cold_protection = ARM_LEFT | ARM_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/wrists/roguetown/bracers/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	name = "hardened leather bracers"
@@ -244,6 +250,9 @@
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
 
+/obj/item/clothing/wrists/roguetown/splintarms/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/wrists/roguetown/splintarms/iron
 	name = "splint bracers"
 	desc = "A pair of leather sleeves backed with iron splints, couters, and shoulderpieces that protect your arms and remain decently light."
@@ -274,6 +283,9 @@
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	smeltresult = null
+
+/obj/item/clothing/wrists/roguetown/bracers/jackchain/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/wrists/roguetown/gem
 	name = "gem bracelet base"
