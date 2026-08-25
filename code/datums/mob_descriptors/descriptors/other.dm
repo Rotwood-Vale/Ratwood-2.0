@@ -311,29 +311,29 @@
 	var/datum/bodypart_feature/pubes/feature = get_pubes_feature(H)
 	if(!feature?.accessory_type)
 		return
+	var/material_description = feature.get_description_name()
+	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
+	var/description_color = LAZYACCESS(accessory_colors, 1)
+	if(description_color)
+		description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
+		material_description = "<span style='color:[description_color]'>[material_description]</span>"
 	var/adjective
 	switch(feature.accessory_type)
 		if(/datum/sprite_accessory/pubes/hairy)
-			adjective = "a dense bushel of [feature.get_description_name()]"
+			adjective = "a dense bushel of [material_description]"
 		if(/datum/sprite_accessory/pubes/trim)
-			adjective = "[feature.get_description_name()] manicured neatly save for some wayward stubble"
+			adjective = "[material_description] manicured neatly save for some wayward stubble"
 		if(/datum/sprite_accessory/pubes/strip)
-			adjective = "[feature.get_description_name()] shaved bare save for an inviting strip"
+			adjective = "[material_description] shaved bare save for an inviting strip"
 		if(/datum/sprite_accessory/pubes/heart)
-			adjective = "a heart shaped mound of [feature.get_description_name()]"
+			adjective = "a heart shaped mound of [material_description]"
 		if(/datum/sprite_accessory/pubes/extreme)
-			adjective = "a luridly unkempt jungle of [feature.get_description_name()]"
+			adjective = "a luridly unkempt jungle of [material_description]"
 		if(/datum/sprite_accessory/pubes/cross)
-			adjective ="[feature.get_description_name()] shaved into the shape of the Psycross"
+			adjective ="[material_description] shaved into the shape of the Psycross"
 		else//someone add more bush sprites but they forget to set the examine text? Just default to our descriptor name.
-			adjective ="[feature.get_description_name()]"
-	var/description = "[adjective]"
-	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
-	var/description_color = LAZYACCESS(accessory_colors, 1)
-	if(!description_color)
-		return description
-	description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
-	return "<span style='color:[description_color]'>[description]</span>"
+			adjective ="[material_description]"
+	return "[adjective]"
 
 /// The genital descriptor calling this proc already owns the visibility check.
 /datum/mob_descriptor/pubes/proc/append_to_genital_description(base_description, mob/living/carbon/human/H)
@@ -375,6 +375,12 @@
 	var/datum/bodypart_feature/pits/feature = get_pits_feature(H)
 	if(!feature?.accessory_type)
 		return
+	var/material_description = feature.get_description_name()
+	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
+	var/description_color = LAZYACCESS(accessory_colors, 1)
+	if(description_color)
+		description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
+		material_description = "<span style='color:[description_color]'>[material_description]</span>"
 	var/adjective
 	switch(feature.accessory_type)
 		if(/datum/sprite_accessory/pits/trim)
@@ -387,10 +393,4 @@
 			adjective = "an utterly unkempt jungle of"
 		else
 			adjective = "an average crop of"
-	var/description = "[adjective] [feature.get_description_name()]"
-	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
-	var/description_color = LAZYACCESS(accessory_colors, 1)
-	if(!description_color)
-		return description
-	description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
-	return "<span style='color:[description_color]'>[description]</span>"
+	return "[adjective] [material_description]"
