@@ -18,6 +18,9 @@
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/suit/roguetown/armor/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket
 	name = "winter jacket"
 	desc = "The most elegant of furs and vivid of royal dyes combined together into a most classy jacket."
@@ -134,6 +137,9 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 25
 	armor_class = ARMOR_CLASS_LIGHT
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	name = "cuir-bouilli armor"
@@ -417,7 +423,7 @@
 	item_state = "steward"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	armor = ARMOR_PADDED_BAD
-	
+
 /obj/item/clothing/head/roguetown/duchess_hood
 	name = "duchess hood"
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'

@@ -968,6 +968,9 @@
 /obj/item/clothing/cloak/raincloak/darkdrab
 	color = CLOTHING_DARKDRAB
 
+/obj/item/clothing/cloak/raincloak/white
+	color = CLOTHING_WHITE
+
 /obj/item/clothing/head/hooded/rainhood
 	name = "hood"
 	desc = "This one will shelter me from the weather and my identity too."
@@ -1383,7 +1386,7 @@
 	icon_state = "wicker_cloak"
 	item_state = "wicker_cloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
-	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK	
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
 	inhand_mod = TRUE
@@ -1691,6 +1694,23 @@
 	icon_state = "naledisash"
 	item_state = "naledisash"
 	desc = "A limp piece of fabric traditionally used to fasten bags that are too baggy, but in modern days has become more of a fashion statement than anything."
+	color = null
+	detail_color = null
+	detail_tag = "_detail"
+	naledicolor = TRUE
+
+/obj/item/clothing/cloak/hierophant/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/cloak/hierophant/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/clothing/cloak/stabard/grenzelmage
 	name = "grenzelhoftian magos mantle"
