@@ -81,7 +81,7 @@
 /datum/supply_pack/rogue/armor_bronze/chainkilt
 	name = "Chain Kilt"
 	cost = 25
-	contains = list(/obj/item/clothing/under/roguetown/chainlegsbronze/kilt)
+	contains = list(/obj/item/clothing/under/roguetown/chainlegs/kilt/bronze)
 
 /datum/supply_pack/rogue/armor_bronze/maskbronze
 	name = "Mask"
