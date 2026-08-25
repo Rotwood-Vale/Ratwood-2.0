@@ -18,7 +18,6 @@
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
-		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
 		/datum/job/roguetown/tribalchieftain,
@@ -30,6 +29,7 @@
 	slot_adjust = list(
 		/datum/job/roguetown/manorguard = 4,//split with watchmen
 		/datum/job/roguetown/warden = 4,//split with vanguard
+		/datum/job/roguetown/adventurer/courtslave = 2,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
