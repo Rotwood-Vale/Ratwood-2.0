@@ -469,6 +469,37 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/sapprentice
 	name = "Guild Apprentice"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/rockhillslaver
+	name = "Rockhill Slaver"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/rockhillslavelate
+	name = "Rockhill Slaver Late"
+	jobspawn_override = list("Slaver", "Slave")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/rockhillslave
+	name = "Rockhill Slave"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/baron
+	name = "Baron"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/baronlate
+	name = "Baron Late"
+	jobspawn_override = list("Baron")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/retainer
+	name = "Retainer"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/retainerlate
+	name = "Retainer Late"
+	jobspawn_override = list("Retainer")
+	delete_after_roundstart = FALSE
 	
 /obj/effect/landmark/start/lich
 	name = "lich"
