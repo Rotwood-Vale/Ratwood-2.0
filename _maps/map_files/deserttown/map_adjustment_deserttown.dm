@@ -11,6 +11,7 @@
 		// /datum/job/roguetown/mercenary = 7, //haha fuck you one less slot!!
 		// /datum/job/roguetown/apothecary = 1, //remodelled the building for more room
 		/datum/job/roguetown/gnoll = 3,//hyenas just belong here!
+		/datum/job/roguetown/slave = 8,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Sultan", f_title = "Sultana"),
@@ -124,6 +125,10 @@
 		/datum/job/roguetown/tribalguard,
 		/datum/job/roguetown/tribalrabble,
 		/datum/job/roguetown/tribalvillager,
+		/datum/job/roguetown/slaver,
+		/datum/job/roguetown/rockhillslave,
+		/datum/job/roguetown/baron,
+		/datum/job/roguetown/baron_retainer,
 		
 	)
 

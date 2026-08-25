@@ -258,6 +258,37 @@
 	M.color = secondary
 	add_overlay(M)
 
+/obj/structure/fluff/walldeco/customflag/barony
+	name = "Banner of the Lowtown Barony"
+	desc = "Prominently fluttering in the breeze you see the sturdy banner of the barony, the heraldry of the local baron. Many would be honored to wear these colors in loyal service to lowtown."
+	icon_state = "wallflag"
+
+/obj/structure/fluff/walldeco/customflag/barony/Initialize(mapload)
+	. = ..(mapload)
+	name = "Banner of the Lowtown Barony" //parent's map-based renaming is ducal-specific, override it back
+	desc = "Prominently fluttering in the breeze you see the sturdy banner of the barony, the heraldry of the local baron. Many would be honored to wear these colors in loyal service to lowtown."
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+	GLOB.lordcolor -= src //don't respond to the ducal scheme, only the barony one
+
+/obj/structure/fluff/walldeco/customflag/barony/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
+/obj/structure/fluff/walldeco/customflag/barony/lordcolor(primary, secondary)
+	return //barony flags ignore the ducal scheme entirely
+
+/obj/structure/fluff/walldeco/customflag/barony/baronycolor(primary,secondary)
+	if(!primary || !secondary)
+		return
+	var/mutable_appearance/M = mutable_appearance(icon, "wallflag_primary", -(layer+0.1))
+	M.color = primary
+	add_overlay(M)
+	M = mutable_appearance(icon, "wallflag_secondary", -(layer+0.1))
+	M.color = secondary
+	add_overlay(M)
+
 /obj/structure/fluff/walldeco/moon
 	name = "noccite banner"
 	desc = "On a plate of silvered metal is draped a banner of deep purple, with the leering face of a crescent moon in its center; the heraldry of Noc has an expression of deep concentration, meant to inspire insight in his acolytes."

@@ -297,6 +297,17 @@
 					. += span_syndradio("[m3] a bounty on [m2] head of [b.amount] mammon for [b.reason], issued by [b.employer].")
 					break
 
+		if(HAS_TRAIT(src, TRAIT_OWNED_SLAVE))
+			var/list/ownership_info = src.get_active_ownership_brand_info()
+			if(!length(ownership_info["name"]))
+				ownership_info["name"] = "the Slaver"
+			if(user == src)
+				. += span_greentext("<b>I have a branding marking me as owned by [ownership_info["name"]].</b>")
+			else if(ownership_info["owner"] && user == ownership_info["owner"])
+				. += span_greentext("<b>They are my property.</b>")
+			else
+				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
+
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
@@ -1126,18 +1137,43 @@
 
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
 		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
-			if(length(branded_bodypart.branded_writing) && get_location_accessible(src, branded_bodypart.body_zone))
-				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(branded_bodypart.branded_writing)]."
+			var/brand_text = ""
+			var/is_surface_handled_separately = istype(branded_bodypart, /obj/item/bodypart/chest) || istype(branded_bodypart, /obj/item/bodypart/head)
+			if(length(branded_bodypart.branded_writing))
+				brand_text = branded_bodypart.branded_writing
+				if(branded_bodypart.enslavement_mark)
+					brand_text = "[brand_text], a mark of ownership"
+			else if(branded_bodypart.enslavement_mark && !is_surface_handled_separately)
+				brand_text = "a mark of ownership"
+			if(length(brand_text) && get_location_accessible(src, branded_bodypart.body_zone))
+				. += span_info("[capitalize(m2)] [LOWER_TEXT(branded_bodypart.name)] has been branded with ") + "[span_boldwarning(brand_text)]."
 			if(istype(branded_bodypart, /obj/item/bodypart/chest))
 				var/obj/item/bodypart/chest/chest = branded_bodypart
-				if(length(chest.branded_writing_on_buttocks) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
-					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest.branded_writing_on_buttocks)]."
-				if(length(chest.branded_writing_on_stomach) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
-					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(chest.branded_writing_on_stomach)]."
+				var/chest_brand_text = ""
+				if(length(chest.branded_writing_on_buttocks))
+					chest_brand_text = chest.branded_writing_on_buttocks
+					if(chest.enslavement_mark)
+						chest_brand_text = "[chest_brand_text], a mark of ownership"
+				if(length(chest_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
+					. += span_info("[capitalize(m2)] hindquarters has been branded with ") + "[span_boldwarning(chest_brand_text)]."
+				var/stomach_brand_text = ""
+				if(length(chest.branded_writing_on_stomach))
+					stomach_brand_text = chest.branded_writing_on_stomach
+					if(chest.enslavement_mark)
+						stomach_brand_text = "[stomach_brand_text], a mark of ownership"
+				if(length(stomach_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
+					. += span_info("[capitalize(m2)] stomach has been branded with ") + "[span_boldwarning(stomach_brand_text)]."
 			else if(istype(branded_bodypart, /obj/item/bodypart/head))
 				var/obj/item/bodypart/head/neck = branded_bodypart
-				if(length(neck.branded_writing_on_neck) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
-					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck.branded_writing_on_neck)]."
+				var/neck_brand_text = ""
+				if(length(neck.branded_writing_on_neck))
+					neck_brand_text = neck.branded_writing_on_neck
+					if(neck.enslavement_mark)
+						neck_brand_text = "[neck_brand_text], a mark of ownership"
+				else if(neck.enslavement_mark)
+					neck_brand_text = "a mark of ownership"
+				if(length(neck_brand_text) && get_location_accessible(src, BODY_ZONE_PRECISE_NECK))
+					. += span_info("[capitalize(m2)] neck has been branded with ") + "[span_boldwarning(neck_brand_text)]."
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)

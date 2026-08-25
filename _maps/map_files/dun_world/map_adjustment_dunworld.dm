@@ -17,7 +17,10 @@
 		/datum/job/roguetown/azeb,
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
-		/datum/job/roguetown/slave,
+		/datum/job/roguetown/slaver,
+		/datum/job/roguetown/rockhillslave,
+		/datum/job/roguetown/baron,
+		/datum/job/roguetown/baron_retainer,
 		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
