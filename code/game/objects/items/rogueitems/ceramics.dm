@@ -41,8 +41,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 75 // Larger than glass bottle
-	sellprice = 5
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/claybottleclassic
 	name = "clay bottle"
@@ -52,8 +52,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 75 // Larger than glass bottle
-	sellprice = 5
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/claybottle/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -125,8 +125,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 65 // Larger than glass bottle
-	sellprice = 7
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/clayvaseclassic
 	name = "ceramic vase"
@@ -136,8 +136,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 65 // Larger than glass bottle
-	sellprice = 7
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/clayvase/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -208,8 +208,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 65 // Larger than glass bottle
-	sellprice = 15
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/clayfancyvaseclassic
 	name = "fancy ceramic vase"
@@ -219,8 +219,8 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	volume = 65 // Larger than glass bottle
-	sellprice = 15
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/reagent_containers/glass/bottle/clayfancyvase/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -290,7 +290,7 @@
 	icon_state = "claycupcook"
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
-	sellprice = 2
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
 
 /obj/item/reagent_containers/glass/cup/claycupclassic
@@ -300,7 +300,7 @@
 	icon_state = "claycupbaked"
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
-	sellprice = 2
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 	reagent_flags = OPENCONTAINER	//So it doesn't appear through
 
 /obj/item/reagent_containers/glass/cup/claycup/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
@@ -431,7 +431,7 @@
 	obj_flags = CAN_BE_HIT|UNIQUE_RENAME
 	pottery_fragile = TRUE
 	smeltresult = null	//No resource return
-	sellprice = 25 //Expert-tier Clay recipe. Skillgated to Towners, or those that take the 'Homesteader Expert' virtue. Let 'em cook.
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/roguestatue/clay/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	if(pottery_throw_shatter(hit_atom, thrownthing))
@@ -499,7 +499,7 @@
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "statueglass1"
 	smeltresult = null	//No resource return
-	sellprice = 55		//Quality scales from here. Skill-gated artisan luxury.
+	glaze_bonus_pct = GLAZE_BONUS_PCT
 
 /obj/item/roguestatue/glass/Initialize(mapload)
 	. = ..(mapload)

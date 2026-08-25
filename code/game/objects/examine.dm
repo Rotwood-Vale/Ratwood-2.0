@@ -75,6 +75,17 @@
 			else
 				. += span_info("[quality_data["text"]].")
 
+	var/list/seals = list()
+	if(atc_sealed)
+		seals += "ATC seal"
+	if(unmintable)
+		seals += "town-property stamp"
+	if(length(seals))
+		. += span_info("Marked with [english_list(seals)] - the navigator will not take it.")
+	else if(was_crafted)
+		. += span_info("It appears to be crafted by the hand of a local artisan.")
+	else if(is_carved)
+		. += span_info("It is a carved item.")
 	for(var/datum/examine_effect/E in examine_effects)
 		E.trigger(user)
 
@@ -120,4 +131,4 @@
 			if(80 to 99)
 				result = span_warning("It's a little damaged.")
 	return result
-	
+

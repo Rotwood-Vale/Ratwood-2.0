@@ -2765,7 +2765,7 @@
 #include "code\modules\roguetown\roguemachine\merchant\trade\realms\realm_lirvas.dm"
 #include "code\modules\roguetown\roguemachine\merchant\trade\realms\realm_naledi.dm"
 #include "code\modules\roguetown\roguemachine\merchant\trade\realms\realm_otava.dm"
-#include "code\modules\roguetown\roguemachine\merchant\trade\realms\realm_raneshen.dm"
+#include "code\modules\roguetown\roguemachine\merchant\trade\realms\realm_zybantium.dm"
 #include "code\modules\roguetown\roguemachine\noticeboard\assembly_floor.dm"
 #include "code\modules\roguetown\roguemachine\noticeboard\noticeboard.dm"
 #include "code\modules\roguetown\roguemachine\noticeboard\posting.dm"

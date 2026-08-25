@@ -6,7 +6,6 @@
 	possible_transfer_amounts = list(5, 10)
 	volume = 75 // 3 cups
 	dropshrink = 1
-	sellprice = 10
 	closed = FALSE
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
 	obj_flags = CAN_BE_HIT

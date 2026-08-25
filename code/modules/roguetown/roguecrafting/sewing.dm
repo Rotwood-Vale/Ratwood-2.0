@@ -77,6 +77,7 @@
 	reqs = list(/obj/item/clothing/head/roguetown/necrahood = 1,
 				/obj/item/natural/bone = 1)
 	craftdiff = 0
+	display_category = ITEM_CAT_CLOTH_MASK
 
 /* craftdif of 1 */
 

@@ -150,55 +150,55 @@ GLOBAL_LIST_INIT(pridelist, list(
 
 	//Preview system
 	dat += "<div style='text-align:center;'>"
-	
+
 	//Create preview icon - extracts only SOUTH direction.
 	var/obj/item/preview_item = inserted_item
 	var/icon/preview_icon = new /icon()
 	preview_icon.Insert(new /icon(preview_item.icon, preview_item.icon_state), "", SOUTH, 0)
 	preview_icon.Blend(activecolor, ICON_MULTIPLY)
-	
+
 	//Apply detail overlay if it exists.
 	if(preview_item.detail_tag && preview_item.detail_color)
 		var/icon/detail_overlay = new /icon()
 		detail_overlay.Insert(new /icon(preview_item.icon, "[preview_item.icon_state][preview_item.detail_tag]"), "", SOUTH, 0)
 		detail_overlay.Blend(activecolor_detail, ICON_MULTIPLY)
 		preview_icon.Blend(detail_overlay, ICON_OVERLAY)
-	
+
 	//Apply altdetail overlay if it exists.
 	if(preview_item.altdetail_tag && preview_item.altdetail_color)
 		var/icon/altdetail_overlay = new /icon()
 		altdetail_overlay.Insert(new /icon(preview_item.icon, "[preview_item.icon_state][preview_item.altdetail_tag]"), "", SOUTH, 0)
 		altdetail_overlay.Blend(activecolor_altdetail, ICON_MULTIPLY)
 		preview_icon.Blend(altdetail_overlay, ICON_OVERLAY)
-	
+
 	//Show offmob item icon.
 	dat += "<img src='data:image/png;base64,[icon2base64(preview_icon)]' style='vertical-align:middle; width:64px; height:64px; image-rendering: pixelated; image-rendering: crisp-edges;'>"
-	
+
 	//Show onmob icon.
 	if(istype(preview_item, /obj/item/clothing))
 		var/obj/item/clothing/clothing_item = preview_item
 		var/mob_icon_to_use = clothing_item.mob_overlay_icon
-		
+
 		if(mob_icon_to_use)
 			var/worn_state = clothing_item.icon_state
 			var/icon/worn_preview = new /icon()
 			worn_preview.Insert(new /icon(mob_icon_to_use, worn_state), "", SOUTH, 0)
 			worn_preview.Blend(activecolor, ICON_MULTIPLY)
-			
+
 			//Apply detail overlay if it exists.
 			if(preview_item.detail_tag && preview_item.detail_color)
 				var/icon/detail_overlay = new /icon()
 				detail_overlay.Insert(new /icon(mob_icon_to_use, "[worn_state][preview_item.detail_tag]"), "", SOUTH, 0)
 				detail_overlay.Blend(activecolor_detail, ICON_MULTIPLY)
 				worn_preview.Blend(detail_overlay, ICON_OVERLAY)
-			
+
 			//Apply altdetail overlay if it exists.
 			if(preview_item.altdetail_tag && preview_item.altdetail_color)
 				var/icon/altdetail_overlay = new /icon()
 				altdetail_overlay.Insert(new /icon(mob_icon_to_use, "[worn_state][preview_item.altdetail_tag]"), "", SOUTH, 0)
 				altdetail_overlay.Blend(activecolor_altdetail, ICON_MULTIPLY)
 				worn_preview.Blend(altdetail_overlay, ICON_OVERLAY)
-			
+
 			//Add sleeved parts if they exist (for cloaks).
 			if(clothing_item.sleeved && ("[worn_state]" in icon_states(clothing_item.sleeved)))
 				// check if r_ and l_ prefixed states exist before trying to use them
@@ -207,13 +207,13 @@ GLOBAL_LIST_INIT(pridelist, list(
 					r_sleeve.Insert(new /icon(clothing_item.sleeved, "r_[worn_state]"), "", SOUTH, 0)
 					r_sleeve.Blend(activecolor, ICON_MULTIPLY)
 					worn_preview.Blend(r_sleeve, ICON_OVERLAY)
-				
+
 				if("l_[worn_state]" in icon_states(clothing_item.sleeved))
 					var/icon/l_sleeve = new /icon()
 					l_sleeve.Insert(new /icon(clothing_item.sleeved, "l_[worn_state]"), "", SOUTH, 0)
 					l_sleeve.Blend(activecolor, ICON_MULTIPLY)
 					worn_preview.Blend(l_sleeve, ICON_OVERLAY)
-				
+
 				//Add sleeved detail if it exists.
 				if(preview_item.detail_tag && preview_item.detail_color && clothing_item.sleeved_detail)
 					if("r_[worn_state][preview_item.detail_tag]" in icon_states(clothing_item.sleeved))
@@ -221,19 +221,19 @@ GLOBAL_LIST_INIT(pridelist, list(
 						r_detail.Insert(new /icon(clothing_item.sleeved, "r_[worn_state][preview_item.detail_tag]"), "", SOUTH, 0)
 						r_detail.Blend(activecolor_detail, ICON_MULTIPLY)
 						worn_preview.Blend(r_detail, ICON_OVERLAY)
-					
+
 					if("l_[worn_state][preview_item.detail_tag]" in icon_states(clothing_item.sleeved))
 						var/icon/l_detail = new /icon()
 						l_detail.Insert(new /icon(clothing_item.sleeved, "l_[worn_state][preview_item.detail_tag]"), "", SOUTH, 0)
 						l_detail.Blend(activecolor_detail, ICON_MULTIPLY)
 						worn_preview.Blend(l_detail, ICON_OVERLAY)
-			
+
 			dat += " <img src='data:image/png;base64,[icon2base64(worn_preview)]' style='vertical-align:middle; width:64px; height:64px; image-rendering: pixelated; image-rendering: crisp-edges;'>"
-	
+
 	dat += "</div><BR>"
-	
+
 	dat += "Item inserted: [inserted]<BR><BR>"
-	
+
 	dat += "Color: <font color='[activecolor]'>&#10070;</font> "
 	dat += "<A href='?src=\ref[src];select=1'>Select new color.</A><BR>"
 	dat += "<A href='?src=\ref[src];paint_primary=1'>Apply new color</A> | "
@@ -396,7 +396,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 		if(!inserted)
 			return
 		var/obj/item/inserted_item = inserted
-		
+
 		// Apply primary color only
 		if(ducal_scheme)
 			inserted_item.ducal_primary = TRUE
@@ -408,22 +408,22 @@ GLOBAL_LIST_INIT(pridelist, list(
 			inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
 			if(!inserted_item.ducal_detail && !inserted_item.ducal_altdetail && (inserted in GLOB.lordcolor))
 				GLOB.lordcolor -= inserted
-		
+
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
-		
+
 		// If there's only a single dye slot, eject the item automatically
 		if(!inserted_item.detail_color && !inserted_item.altdetail_color)
 			inserted.forceMove(drop_location())
 			inserted = null
-		
+
 		interact(usr)
-	
+
 	if(href_list["paint_detail"])
 		if(!inserted)
 			return
 		var/obj/item/inserted_item = inserted
-		
+
 		// Apply detail color only
 		if(inserted_item.detail_color)
 			inserted_item.detail_color = activecolor_detail
@@ -435,16 +435,16 @@ GLOBAL_LIST_INIT(pridelist, list(
 				inserted_item.ducal_detail = FALSE
 				if(!inserted_item.ducal_primary && !inserted_item.ducal_altdetail && (inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor -= inserted_item
-		
+
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
-	
+
 	if(href_list["paint_altdetail"])
 		if(!inserted)
 			return
 		var/obj/item/inserted_item = inserted
-		
+
 		// Apply altdetail color only
 		if(inserted_item.altdetail_color)
 			inserted_item.altdetail_color = activecolor_altdetail
@@ -456,7 +456,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 				inserted_item.ducal_altdetail = FALSE
 				if(!inserted_item.ducal_primary && !inserted_item.ducal_detail && (inserted_item in GLOB.lordcolor))
 					GLOB.lordcolor -= inserted_item
-		
+
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
-	
+
 	if(href_list["clear_detail"])
 		if(!inserted)
 			return
@@ -487,7 +487,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 		inserted_item.update_icon()
 		playsound(src, "bubbles", 50, 1)
 		interact(usr)
-	
+
 	if(href_list["clear_altdetail"])
 		if(!inserted)
 			return

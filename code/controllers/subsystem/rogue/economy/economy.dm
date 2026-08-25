@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(economy)
 	return get_active_player_count()
 
 /datum/controller/subsystem/economy/Initialize()
-	init_pricing_engine()
+//	init_pricing_engine()
 	populate_standing_order_templates()
 	for(var/region_id in GLOB.economic_regions)
 		var/datum/economic_region/region = GLOB.economic_regions[region_id]

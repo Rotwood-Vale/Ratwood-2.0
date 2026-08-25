@@ -1,5 +1,6 @@
 /datum/crafting_recipe/roguetown/engineering
 	abstract_type = /datum/crafting_recipe/roguetown/engineering
+	display_category = ITEM_CAT_ENG_MISC
 
 /datum/crafting_recipe/roguetown/engineering/coolingtable
 	name = "cooling table"
@@ -11,6 +12,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/potionseller
 	name = "potion seller peddler"
@@ -23,6 +25,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/lever
 	name = "lever"
@@ -31,6 +34,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_TRIGGERS
 
 /datum/crafting_recipe/roguetown/engineering/trapdoor
 	name = "floorhatch"
@@ -41,6 +45,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/bars
 	name = "metal bars"
@@ -50,6 +55,7 @@
 	verbage = "engineers"
 	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/bars/cemetery
 	name = "cemetery bars"
@@ -69,6 +75,7 @@
 	verbage = "engineers"
 	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/distiller
 	name = "copper distiller"
@@ -78,6 +85,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 1 // so if above average int you can craft it without having to dedicate to artificering shit.
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/freedomchair
 	name = "LIBERTAS"
@@ -87,6 +95,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/passage
 	name = "passage"
@@ -97,6 +106,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/passage/TurfCheck(mob/user, turf/T)
 	if(istype(T,/turf/open/transparent/openspace))
@@ -116,6 +126,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/shutters/TurfCheck(mob/user, turf/T)
 	if(istype(T,/turf/open/transparent/openspace))
@@ -135,6 +146,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/slurbow
 	name = "Slurbow"
@@ -143,6 +155,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/twentybolts
 	name = "Crossbow Bolts 20x"
@@ -171,7 +184,8 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
-	
+	display_category = ITEM_CAT_ENG_COMBAT
+
 //pyro arrow crafting, from stonekeep
 /datum/crafting_recipe/roguetown/engineering/pyrobolt
 	name = "pyroclastic bolt"
@@ -181,6 +195,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/pyrobolt_five
 	name = "pyroclastic bolt"
@@ -196,6 +211,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/pyroarrow
 	name = "pyroclastic arrow"
@@ -205,6 +221,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/pyroarrow_five
 	name = "pyroclastic arrow"
@@ -220,6 +237,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/structure/pressure_plate
 	name = "pressure plate"
@@ -229,6 +247,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_TRIGGERS
 
 /datum/crafting_recipe/roguetown/structure/activator
 	name = "engineer's launcher"
@@ -238,6 +257,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 //rotational and minecart parts
 /datum/crafting_recipe/roguetown/engineering/shaft
@@ -253,6 +273,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/stickshaft
 	name = "wooden shaft"
@@ -264,6 +285,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/cog
 	name = "wooden cogwheel(2x)"
@@ -276,6 +298,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 
 /datum/crafting_recipe/roguetown/engineering/waterwheel
@@ -288,6 +311,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/large_cog
 	name = "large wooden cogwheel"
@@ -299,6 +323,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/gearbox
 	name = "gearbox"
@@ -309,6 +334,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/vertical_gearbox
 	name = "vertical gearbox"
@@ -319,6 +345,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
 
 /datum/crafting_recipe/roguetown/engineering/rails
 	name = "minecart rails (10x)"
@@ -338,6 +365,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/railbreak
 	name = "minecart rail break (4x)"
@@ -351,7 +379,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
-
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/engineering/minecart
 	name = "minecart"
@@ -362,10 +390,10 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
-
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 // ------------ Craftable Traps ----------
-//trying out adding in traps, we'll start with 3 of them. 
+//trying out adding in traps, we'll start with 3 of them.
 
 
 
@@ -404,7 +432,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
-
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/satchelbomb
 	name = "blastsand satchel"
@@ -414,6 +442,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impactexplosive
 	name = "impact grenades (x3)"
@@ -425,6 +454,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/signalflare
 	name = "signal flare canister (x4)"
@@ -441,13 +471,14 @@
 /datum/crafting_recipe/roguetown/engineering/impactsmoke
 	name = "smoke grenades (x3)"
 	category = "Explosives"
-	result = list(/obj/item/impact_grenade/smoke, 
+	result = list(/obj/item/impact_grenade/smoke,
 				  /obj/item/impact_grenade/smoke,
 				  /obj/item/impact_grenade/smoke,)
 	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impactpoisonsmoke
 	name = "smoke grenades, poisonous (x3)"
@@ -459,6 +490,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impactfiresmoke
 	name = "smoke grenades, incendiary (x3)"
@@ -470,6 +502,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impactblindingsmoke
 	name = "smoke grenades, blinding (x3)"
@@ -481,6 +514,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impactmutesmoke
 	name = "smoke grenades, muting (x3)"
@@ -492,6 +526,7 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/impacthealingsmoke
 	name = "smoke grenades, healing (x3)"
@@ -502,4 +537,5 @@
 	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4 
+	craftdiff = 4
+	display_category = ITEM_CAT_ENG_COMBAT

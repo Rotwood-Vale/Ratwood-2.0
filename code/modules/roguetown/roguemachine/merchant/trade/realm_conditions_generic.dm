@@ -370,7 +370,7 @@
 /datum/realm_condition/naledi_djinn_resurgence
 	id = "naledi_djinn_resurgence"
 	name = "Djinn Resurgence"
-	description = "The Olindar warscholars report the Djinn are bold again in the dunes. Steel and iron are demanded by the desperate warscholars; silk trade has all but stopped while caravans take cover in the cities."
+	description = "The scattered warscholars report the Djinn are bold again in the dunes. Steel and iron are demanded by the desperate warscholars; silk trade has all but stopped while caravans take cover in the desperate settlements."
 	weight = 10
 	affected_realms = list(REALM_NALEDI)
 	demand_modifiers = list(
@@ -385,7 +385,7 @@
 /datum/realm_condition/naledi_sandstorm_season
 	id = "naledi_sandstorm_season"
 	name = "Sandstorm Season"
-	description = "The Arisole storms have begun early and run long. Glass and gold dust harvests are choked by sand. The desert cities want cloth and cured leather to mend caravans and cover the images of Psydon during the blow."
+	description = "The Arisole storms have begun early and run long. Glass and gold dust harvests are choked by sand. The cloistered desert communities want cloth and cured leather to mend caravans and cover the images of Psydon during the blow."
 	weight = 10
 	affected_realms = list(REALM_NALEDI)
 	supply_modifiers = list(
@@ -400,7 +400,7 @@
 /datum/realm_condition/naledi_warscholar_council
 	id = "naledi_warscholar_council"
 	name = "Warscholar Council"
-	description = "The four Ndavere have called a council at Olindar. Hierophant kits and Treatises are produced cheaper for the visiting initiates, and the council pays desperate prices for enchscrolls, paper, and silk for ceremonial gifts."
+	description = "The leading remnants of the Warscholars have called a council. Hierophant kits and Treatises are produced cheaper for the visiting initiates, and the council pays desperate prices for enchscrolls, paper, and silk for ceremonial gifts."
 	weight = 5
 	affected_realms = list(REALM_NALEDI)
 	// TODO(cultural stock step): cultural_modifiers deferred - referenced /datum/supply_pack/rogue/naledi/{hierophant_kit,treatise} not yet ported.

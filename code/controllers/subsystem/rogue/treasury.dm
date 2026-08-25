@@ -74,22 +74,17 @@ SUBSYSTEM_DEF(treasury)
 	force_set_round_statistic(STATS_STARTING_TREASURY, discretionary_fund.balance)
 	record_round_statistic(STATS_PLEDGE_GENERATED, burgher_pledge_fund.balance)
 
-	// Stockpile datums seed the sell/trade catalogue. The /datum/roguestock/bounty family is
-	// fully retired with stockpile minting (AP 50d6434899); nothing seeds it anymore.
 	for(var/path in subtypesof(/datum/roguestock/stockpile))
 		var/datum/D = new path
 		stockpile_datums += D
-	// Step 15: legacy /datum/roguestock/import entries replaced by GLOB.crown_imports.
-	// Charters of the realm (item 6 decree port).
 	init_decrees()
-	// AP parity (Step 15): pop-scale the auto-limited stockpile caps at roundstart.
 	autoset_stockpile_limits()
 	return ..()
 
 /datum/controller/subsystem/treasury/proc/has_account(target)
 	return !isnull(bank_accounts[target])
 
-// AP parity helper (Step 16 Meister Panel). Ratwood deviation: player accounts are integer
+// AP parity helper - Ratwood deviation: player accounts are integer
 // balances keyed by mob in bank_accounts, not /datum/fund accounts.
 /datum/controller/subsystem/treasury/proc/get_balance(target)
 	return bank_accounts[target] || 0

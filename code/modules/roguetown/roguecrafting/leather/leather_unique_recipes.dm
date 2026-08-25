@@ -10,6 +10,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 3
 	sellprice = 11
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/unique/baggyleatherpants
 	name = "pontifex's chaqchur"
@@ -20,6 +21,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 20
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leatherunique/gladsandals
 	name = "gladiator sandals"
@@ -29,6 +31,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 3
 	sellprice = 12
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/unique/grenzelboots
 	name = "grenzelhoftian boots"
@@ -40,6 +43,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6
 	sellprice = 15
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/unique/otavanleatherpants
 	name = "otavan leather trousers"
@@ -51,6 +55,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6
 	sellprice = 30
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/unique/fencingbreeches
 	name = "fencing breeches"
@@ -61,6 +66,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6
 	sellprice = 20
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/unique/otavanboots
 	name = "otavan leather boots"
@@ -72,6 +78,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6
 	sellprice = 25
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/unique/buckleshoes
 	name = "buckled shoes"
@@ -81,6 +88,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 6
 	sellprice = 25
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/unique/monkleather
 	name = "pontifex's kaftan"
@@ -91,6 +99,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 23
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/unique/furlinedjacket
 	name = "artificer jacket"
@@ -101,6 +110,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 21
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/unique/winterjacket
 	name = "winter jacket"
@@ -111,6 +121,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 24
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/unique/openrobes
 	name = "shamanic coat"
@@ -121,6 +132,7 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 20
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/unique/monkrobes
 	name = "holy monk vestments"
@@ -130,6 +142,7 @@
 				/obj/item/natural/fibers = 2)
 	tools = list(/obj/item/needle)
 	craftdiff = 6 //Can be a bit strong, reduce to 5 if too high.
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/unique/crafteast
 	name = "decorated dopo robe"
@@ -141,4 +154,4 @@
 		/obj/item/clothing/suit/roguetown/armor/basiceast = 1)
 	tools = list(/obj/item/needle)
 	craftdiff = 5
-
+	display_category = ITEM_CAT_ARMOR_LIGHT

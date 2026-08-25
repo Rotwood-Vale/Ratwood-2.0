@@ -1,4 +1,4 @@
-#define EXPORT_TIME 2.5 MINUTES
+#define EXPORT_TIME 1 MINUTES
 #define EXPORT_TIME_TESTING 5 SECONDS
 
 /obj/item/roguemachine/navigator
@@ -575,13 +575,17 @@
 /proc/get_navigator_bucket_for_item(obj/O, category)
 	if(!isitem(O))
 		return NAVIGATOR_BUCKET_MISCELLANEOUS
-	// Ratwood deviation: no is_carved/was_crafted item vars in this tree, so AP's carved and
+	var/obj/item/I = O
+	if(I.is_carved)
+		return NAVIGATOR_BUCKET_CARVED
 	// crafted-valuables bucket refinements are dropped; armor still splits by class.
 	var/bucket = get_navigator_bucket_for_category(category)
 	if(bucket == NAVIGATOR_BUCKET_ARMOR_HEAVY && isclothing(O))
-		var/obj/item/clothing/C = O
+		var/obj/item/clothing/C = I
 		if(C.armor_class <= ARMOR_CLASS_LIGHT)
 			bucket = NAVIGATOR_BUCKET_ARMOR_LIGHT
+	if(bucket == NAVIGATOR_BUCKET_VALUABLES_LOOTED && I.was_crafted)
+		return NAVIGATOR_BUCKET_VALUABLES_CRAFTED
 	return bucket
 
 /proc/get_navigator_refusal_message(bucket)

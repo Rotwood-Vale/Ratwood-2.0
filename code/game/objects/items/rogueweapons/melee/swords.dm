@@ -186,7 +186,6 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 	minstr = 7
-	sellprice = 30
 	wdefense = 4
 	grid_width = 32
 	grid_height = 64
@@ -211,7 +210,6 @@
 	minstr = 6
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
-	sellprice = 10
 	sheathe_icon = "isword"
 
 /obj/item/rogueweapon/sword/bronze
@@ -244,7 +242,7 @@
 	name = "decorated arming sword"
 	desc = "A valuable ornate arming sword made for the purpose of ceremonial fashion, with a fine leather grip and a carefully engraved golden crossguard."
 	icon_state = "decsword1"
-	sellprice = 140
+	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/decorated/Initialize(mapload)
 	. = ..()
@@ -277,7 +275,6 @@
 	smeltresult = null
 	minstr = 4
 	wdefense = 4
-	sellprice = 10
 
 /obj/item/rogueweapon/sword/long
 	name = "longsword"
@@ -355,12 +352,12 @@
 	. = ..()
 	if(used)
 		return
-		
+
 	var/list/special_options = list()
 	for(var/intent in selection)
 		var/datum/special_intent/S = intent // Hate this DM quirk.
 		special_options[S::name] = S
-	
+
 	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
 	if(choice)
 		qdel(special)
@@ -951,7 +948,6 @@
 	wdefense = 3
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
-	sellprice = 10
 
 /obj/item/rogueweapon/sword/short/kazengun
 	name = "steel kodachi"
@@ -1090,7 +1086,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
-	sellprice = 10
 	sheathe_icon = "isword"
 
 /obj/item/rogueweapon/sword/short/messer/iron/virtue
@@ -1147,7 +1142,7 @@
 /obj/item/rogueweapon/sword/sabre/dec
 	icon_state = "decsaber"
 	sheathe_icon = "decsaber"
-	sellprice = 140
+	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/sabre/ancient
 	name = "ancient khopesh"
@@ -1172,7 +1167,6 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
 	icon_state = "isaber"
-	sellprice = 10
 
 /obj/item/rogueweapon/sword/sabre/steppesman
 	name = "aavnic shashka"
@@ -1367,7 +1361,7 @@
 	desc = "A strange, cheap ring devoid of purpose, yet carrying an uncanny sense of nostalgia of grand upsets, felled short.\n<i>'You shall know his name. You shall know his purpose. You shall die.'</i>"
 	icon_state = "decrapier"
 	sheathe_icon = "decrapier"
-	sellprice = 140
+	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/rapier/blacksteel
 	name = "blacksteel rapier"
@@ -1395,12 +1389,12 @@
 	. = ..()
 	if(used)
 		return
-		
+
 	var/list/special_options = list()
 	for(var/intent in selection)
 		var/datum/special_intent/S = intent // Hate this DM quirk.
 		special_options[S::name] = S
-	
+
 	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
 	if(choice)
 		qdel(special)
@@ -1502,7 +1496,7 @@
 	to the siege that smashed the Mad Duke's keep to rubble, and burnt the Duke himself to cinders."
 	icon_state = "lordrap"
 	sheathe_icon = "lordrapier"
-	sellprice = 150
+	no_loot_taint = TRUE
 	max_integrity = 300
 	max_blade_int = 300
 	wdefense = 7
@@ -1526,7 +1520,7 @@
 	icon = 'icons/roguetown/weapons/swords32.dmi'
 	icon_state = "doccaneblade"
 	sheathe_icon = "doccaneblade"
-	sellprice = 100 //Gold handle
+	no_loot_taint = TRUE
 	grid_width = 32
 	grid_height = 64
 	dropshrink = 0
@@ -1801,7 +1795,7 @@
 /obj/item/rogueweapon/sword/long/oathkeeper
 	name = "Oathkeeper"
 	desc = "An ornate golden longsword with a ruby embedded in the hilt, given to the Knight Commander for their valiant service to the crown."
-	sellprice = 140
+	no_loot_taint = TRUE
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	icon_state = "kingslayer"
 	sheathe_icon = "kingslayer"
@@ -1963,7 +1957,7 @@
 	desc = "A valuable ornate longsword made for the purpose of ceremonial fashion, with a fine leather grip and a carefully engraved golden crossguard. \
 	Its blade bears twin inscriptions on either side. One reads, \"THY KINGDOM COME\" while the obverse reads, \"THY WILL BE DONE\"."
 	icon_state = "declongsword"
-	sellprice = 140
+	no_loot_taint = TRUE
 
 // kazengite content
 // Stronger offense less defense sword meant to be paired w/ scabbard for parrying
@@ -2212,6 +2206,7 @@
 	wdefense = 6
 	max_integrity = 350
 	max_blade_int = 350
+	sellprice = 150
 
 /obj/item/rogueweapon/sword/decorated/blacksteel
 	name = "decorated blacksteel arming sword"
@@ -2221,6 +2216,7 @@
 	sheathe_icon = "bs_swordregal"
 	wdefense = 7
 	sellprice = 200
+	no_loot_taint = TRUE
 
 /obj/item/rogueweapon/sword/long/shotel
 	name = "steel shotel"

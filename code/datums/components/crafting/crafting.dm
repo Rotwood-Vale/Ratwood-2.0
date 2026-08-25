@@ -114,8 +114,8 @@
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
 	check_contents - takes a recipe and a key-type list and checks if said recipe can be done with available stuff
 	check_tools - takes recipe, a key-type list, and a user and checks if there are enough tools to do the stuff, checks bugs one level deep
-	construct_item - takes a recipe and a user, call all the checking procs, calls do_after, 
-	checks all the things again, calls del_reqs, creates result, 
+	construct_item - takes a recipe and a user, call all the checking procs, calls do_after,
+	checks all the things again, calls del_reqs, creates result,
 	calls CheckParts of said result with argument being list returned by del_reqs
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
@@ -390,6 +390,7 @@
 							I.OnCrafted(user.dir, user)
 							if(isitem(I))
 								var/obj/item/CI = I
+								CI.was_crafted = TRUE
 								if(CI.has_item_quality)
 									if(R.skip_quality)
 										if(inherited_quality != null)
@@ -417,6 +418,7 @@
 								I.OnCrafted(user.dir, user)
 							if(isitem(I))
 								var/obj/item/CI = I
+								CI.was_crafted = TRUE
 								if(CI.has_item_quality)
 									if(R.skip_quality)
 										if(inherited_quality != null)
