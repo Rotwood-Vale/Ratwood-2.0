@@ -65,7 +65,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/angle
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1, /obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1, /obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,)
 	H.verbs |= list(/mob/proc/haltyell)
 	if(H.mind)
 		var/weapons = list("Polearm", "Bludgeon", "Grand Mace", "Sword & Shield", "Flail & Shield", "Greatsword")
@@ -136,7 +136,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	beltr = /obj/item/rogueweapon/scabbard/sheath/kazengun
 	backl = /obj/item/rogueweapon/scabbard/sword/kazengun/gold
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1)
 
 /datum/outfit/job/roguetown/baron_retainer/ronin/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
@@ -181,7 +181,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
-	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
 		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Studded Hood and Hound Mask")
 		var/helmet_choice = input(H, "Choose your Outfit", "EQUIP THINESELF") as anything in helmets

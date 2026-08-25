@@ -403,6 +403,9 @@
 /obj/item/storage/keyring/wardenmaster
 	keys = list(/obj/item/roguekey/sheriff, /obj/item/roguekey/dungeon, /obj/item/roguekey/garrison, /obj/item/roguekey/walls, /obj/item/roguekey/manor, /obj/item/roguekey/armory, /obj/item/roguekey/sergeant, /obj/item/roguekey/warden, /obj/item/seal/master_warden)
 
+/obj/item/storage/keyring/baronretainer
+	keys = list(/obj/item/roguekey/warden, /obj/item/roguekey/walls, /obj/item/roguekey/slaverdungeon, /obj/item/roguekey/slaverpillory, /obj/item/roguekey/slaverhouse)
+
 /obj/item/storage/keyring/tribalchief
 	keys = list(/obj/item/roguekey/tribal, /obj/item/roguekey/tribalchief)
 
