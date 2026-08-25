@@ -57,7 +57,6 @@
 	var/immune_to_genderswap = FALSE
 	var/armor_class = ARMOR_CLASS_NONE
 
-	sellprice = 1
 	var/naledicolor = FALSE
 
 	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?

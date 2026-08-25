@@ -1,3 +1,4 @@
+#define PRICING_ENGINE_MAX_RECURSION_DEPTH 12
 // Pricing engine compatibility vars added to existing recipe datums.
 // hides_from_books already exists on both recipe datums in this codebase.
 // display_category: ITEM_CAT_* string for market bucketing. Null means the engine falls back to defaults.
@@ -9,6 +10,8 @@ GLOBAL_LIST_EMPTY(derived_sellprices)
 GLOBAL_LIST_EMPTY(derived_categories)
 GLOBAL_LIST_EMPTY(item_cat_markups)
 GLOBAL_LIST_EMPTY(bulk_trade_item_types)
+GLOBAL_LIST_EMPTY(recipe_cost_resolution_cache)
+GLOBAL_LIST_EMPTY(recipe_cost_visiting)
 
 /proc/init_item_cat_markups()
 	GLOB.item_cat_markups = list(
@@ -104,6 +107,9 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 /proc/init_derived_sellprices(force_audits = FALSE)
 	GLOB.derived_sellprices = list()
 	GLOB.derived_categories = list()
+	GLOB.recipe_cost_resolution_cache = list()
+
+	GLOB.recipe_cost_visiting = list()
 	var/list/trade_good_lookup = list()
 	var/list/sticky_trade_goods = list()
 	for(var/id in GLOB.trade_goods)
@@ -330,6 +336,21 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 
 /proc/derived_pass(list/audit_lines, list/missing_materials, list/trade_good_lookup)
 	var/new_derivations = 0
+
+	var/list/created_item_lookup = list()
+	for(var/datum/anvil_recipe/AR_all as anything in GLOB.anvil_recipes)
+		if(!AR_all.created_item || !AR_all.req_bar)
+			continue
+		if(!created_item_lookup[AR_all.created_item])
+			created_item_lookup[AR_all.created_item] = AR_all
+
+	var/list/result_lookup = list()
+	for(var/datum/crafting_recipe/CR_all as anything in GLOB.crafting_recipes)
+		var/rp = pick_recipe_result(CR_all)
+		if(!rp)
+			continue
+		if(!result_lookup[rp])
+			result_lookup[rp] = CR_all
 	for(var/datum/anvil_recipe/AR as anything in GLOB.anvil_recipes)
 		if(AR.hides_from_books || !AR.created_item || !AR.req_bar)
 			continue
@@ -342,10 +363,10 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 			cat_missing = TRUE
 		var/list/local_missing = list()
 		var/list/breakdown = list()
-		var/material_cost = build_input_breakdown(AR.req_bar, 1, local_missing, breakdown)
+		var/material_cost = build_input_breakdown(AR.req_bar, 1, local_missing, breakdown, created_item_lookup, result_lookup)
 		if(islist(AR.additional_items))
 			for(var/path in AR.additional_items)
-				material_cost += build_input_breakdown(path, 1, local_missing, breakdown)
+				material_cost += build_input_breakdown(path, 1, local_missing, breakdown, created_item_lookup, result_lookup)
 		if(missing_materials)
 			for(var/m in local_missing)
 				if(!(m in missing_materials))
@@ -380,7 +401,7 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 				var/qty = CR.reqs[path]
 				if(!isnum(qty))
 					qty = 1
-				material_cost += build_input_breakdown(path, qty, local_missing, breakdown)
+				material_cost += build_input_breakdown(path, qty, local_missing, breakdown, created_item_lookup, result_lookup)
 		if(missing_materials)
 			for(var/m in local_missing)
 				if(!(m in missing_materials))
@@ -407,8 +428,8 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 	// already covered by the crafting-recipe derive pass. No separate food recipe datum exists.
 	return 0
 
-/proc/build_input_breakdown(path, qty, list/missing_materials_log, list/breakdown)
-	var/unit_cost = recipe_material_cost_for(path, missing_materials_log)
+/proc/build_input_breakdown(path, qty, list/missing_materials_log, list/breakdown, list/created_item_lookup, list/result_lookup)
+	var/unit_cost = resolve_component_unit_cost(path, missing_materials_log, created_item_lookup, result_lookup)
 	var/atom/A = path
 	var/short_name = initial(A.name) || "[path]"
 	if(unit_cost <= 0)
@@ -428,18 +449,76 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 		escaped += s
 	return jointext(escaped, ",")
 
-/proc/recipe_material_cost_for(path, list/missing_materials_log)
+/proc/resolve_component_unit_cost(path, list/missing_materials_log, list/created_item_lookup, list/result_lookup, depth = 0)
 	if(!path)
 		return 0
+
+	if(!isnull(GLOB.recipe_cost_resolution_cache[path]))
+		return GLOB.recipe_cost_resolution_cache[path]
+
+	// Fast path: raw baseline material (bars, ores, wood, etc).
 	var/cost = GLOB.material_baseline_prices[path]
 	if(cost)
+		GLOB.recipe_cost_resolution_cache[path] = cost
 		return cost
 	for(var/known_path in GLOB.material_baseline_prices)
 		if(ispath(path, known_path))
-			return GLOB.material_baseline_prices[known_path]
-	if(missing_materials_log && !("[path]" in missing_materials_log))
+			cost = GLOB.material_baseline_prices[known_path]
+			GLOB.recipe_cost_resolution_cache[path] = cost
+			return cost
+
+	if(depth >= PRICING_ENGINE_MAX_RECURSION_DEPTH)
+		log_world("Pricing engine WARNING: recursion depth exceeded resolving [path], likely a recipe cycle.")
+		if(missing_materials_log && !("[path]" in missing_materials_log))
+			missing_materials_log += "[path]"
+		return 0
+
+	// Cycle guard: if we're already resolving this path further up the call stack, bail.
+	if(GLOB.recipe_cost_visiting[path])
+		return 0
+	GLOB.recipe_cost_visiting[path] = TRUE
+
+	var/resolved = 0
+
+	var/datum/anvil_recipe/AR = created_item_lookup[path]
+	if(!AR)
+		for(var/known in created_item_lookup)
+			if(ispath(path, known))
+				AR = created_item_lookup[known]
+				break
+
+	if(AR)
+		var/sub_cost = resolve_component_unit_cost(AR.req_bar, missing_materials_log, created_item_lookup, result_lookup, depth + 1)
+		if(islist(AR.additional_items))
+			for(var/p in AR.additional_items)
+				sub_cost += resolve_component_unit_cost(p, missing_materials_log, created_item_lookup, result_lookup, depth + 1)
+		var/sub_yield = max(1, AR.createditem_num)
+		resolved = round(sub_cost / sub_yield)
+	else
+		var/datum/crafting_recipe/CR = result_lookup[path]
+		if(!CR)
+			for(var/known in result_lookup)
+				if(ispath(path, known))
+					CR = result_lookup[known]
+					break
+		if(CR && islist(CR.reqs))
+			var/sub_cost = 0
+			for(var/p in CR.reqs)
+				var/qty = CR.reqs[p]
+				if(!isnum(qty))
+					qty = 1
+				sub_cost += resolve_component_unit_cost(p, missing_materials_log, created_item_lookup, result_lookup, depth + 1) * qty
+			var/result_path = pick_recipe_result(CR)
+			var/sub_yield = recipe_result_yield(CR, result_path)
+			resolved = round(sub_cost / sub_yield)
+
+	GLOB.recipe_cost_visiting[path] = FALSE
+
+	if(resolved <= 0 && missing_materials_log && !("[path]" in missing_materials_log))
 		missing_materials_log += "[path]"
-	return 0
+
+	GLOB.recipe_cost_resolution_cache[path] = resolved
+	return resolved
 
 /proc/derive_price_from_cost(material_cost, category, yield)
 	if(material_cost <= 0)
@@ -560,7 +639,7 @@ GLOBAL_LIST_EMPTY(bulk_trade_item_types)
 	parts += "tradegoods:[jointext(sortList(trade_good_keys), "|")]"
 	var/list/recipe_keys = list()
 	for(var/datum/anvil_recipe/AR as anything in GLOB.anvil_recipes)
-		if(AR.hides_from_books || !AR.created_item || !AR.req_bar)
+		if(!AR.created_item || !AR.req_bar)
 			continue
 		var/extra = ""
 		if(islist(AR.additional_items))
