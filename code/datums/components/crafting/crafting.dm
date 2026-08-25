@@ -393,7 +393,7 @@
 								CI.was_crafted = TRUE
 								if(CI.has_item_quality)
 									if(R.skip_quality)
-										if(inherited_quality != null)
+										if(!isnull(inherited_quality))
 											CI.apply_quality(null, null, inherited_quality)
 									else
 										CI.apply_quality(user, R.skillcraft)
@@ -421,7 +421,7 @@
 								CI.was_crafted = TRUE
 								if(CI.has_item_quality)
 									if(R.skip_quality)
-										if(inherited_quality != null)
+										if(!isnull(inherited_quality))
 											CI.apply_quality(null, null, inherited_quality)
 									else
 										CI.apply_quality(user, R.skillcraft)
@@ -605,7 +605,7 @@
 			var/obj/item/IT = AM
 			if(!IT.has_item_quality)
 				continue
-			if(min_q == null || IT.item_quality < min_q)
+			if(isnull(min_q) || IT.item_quality < min_q)
 				min_q = IT.item_quality
 		for(var/atom/movable/AM in .)
 			if(!isitem(AM))
@@ -613,7 +613,7 @@
 			var/obj/item/IT = AM
 			if(!IT.has_item_quality)
 				continue
-			if(min_q == null || IT.item_quality < min_q)
+			if(isnull(min_q) || IT.item_quality < min_q)
 				min_q = IT.item_quality
 		quality_out["min_quality"] = min_q
 	while(Deletion.len)

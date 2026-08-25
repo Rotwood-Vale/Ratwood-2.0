@@ -137,7 +137,7 @@
 				current_value = M.getToxLoss()
 			else if(damage_type == "oxy")
 				current_value = M.getOxyLoss()
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -164,7 +164,7 @@
 				current_value = H.getToxLoss()
 			else if(damage_type == "oxy")
 				current_value = H.getOxyLoss()
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -187,7 +187,7 @@
 				current_value = BP.brute_dam
 			else if(damage_type == "burn")
 				current_value = BP.burn_dam
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage for [BP.name]:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -244,7 +244,7 @@
 				else if(wound_choice == "Dislocation")
 					if(BP.body_zone == BODY_ZONE_HEAD)
 						wound_path = /datum/wound/dislocation/neck
-				
+
 				// Check for wound subtypes (like small/large punctures, small/large slashes, etc.)
 				var/list/wound_subtypes = list()
 				for(var/subtype in subtypesof(wound_path))
@@ -252,7 +252,7 @@
 					var/wound_name = initial(W.name)
 					if(wound_name && wound_name != initial(wound_path:name))
 						wound_subtypes[wound_name] = subtype
-				
+
 				// If there are subtypes, let the user choose
 				if(wound_subtypes.len > 0)
 					var/subtype_choice = input(usr, "Select wound severity:", "Wound Tier") as null|anything in wound_subtypes
@@ -261,7 +261,7 @@
 					else
 						show_heal_panel(M)
 						return
-				
+
 				BP.add_wound(wound_path)
 				var/datum/wound/applied_wound = wound_path
 				var/wound_display_name = initial(applied_wound:name)
@@ -1136,18 +1136,18 @@
 		var/patron_type = text2path(href_list["patron"])
 		if(!patron_type)
 			return
-		
+
 		// For divine spellcasters (those with devotion), we need to handle spells specially
 		var/is_divine_caster = FALSE
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.devotion)
 				is_divine_caster = TRUE
-		
+
 		// Remove old patron bonuses/spells
 		if(M.patron)
 			M.patron.on_loss(M)
-			
+
 			// For divine casters, remove devotion spells from old patron
 			if(is_divine_caster && ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -1155,10 +1155,10 @@
 					for(var/spell_type in M.patron.miracles)
 						if(H.mind?.has_spell(spell_type))
 							H.mind.RemoveSpell(spell_type)
-		
+
 		// Set new patron
 		M.set_patron(patron_type)
-		
+
 		// For divine casters, grant new patron's devotion spells
 		if(is_divine_caster && ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1167,7 +1167,7 @@
 				H.devotion.patron = M.patron
 				// Update the level to trigger spell granting
 				H.devotion.try_add_spells(silent = FALSE)
-		
+
 		message_admins(span_danger("Admin [key_name_admin(usr)] changed [key_name_admin(M)]'s patron to [initial(M.patron.name)]"))
 		log_admin("[usr] changed [M]'s patron to [initial(M.patron.name)].")
 		show_player_panel_next(M, "patron")
@@ -1310,7 +1310,7 @@
 		var/obj_quality_set = FALSE
 		if(length(quality_raw))
 			obj_quality = text2num(quality_raw)
-			if(obj_quality != null && obj_quality >= ITEM_QUALITY_RUINED && obj_quality <= ITEM_QUALITY_MASTERWORK)
+			if(!isnull(obj_quality) && obj_quality >= ITEM_QUALITY_RUINED && obj_quality <= ITEM_QUALITY_MASTERWORK)
 				obj_quality_set = TRUE
 			else
 				obj_quality = null
@@ -1375,9 +1375,7 @@
 									var/obj/item/ingot/ING = spawned_item
 									ING.apply_smelt_quality(obj_quality)
 								else if(spawned_item.has_item_quality)
-									spawned_item.item_quality = obj_quality
-									if(initial(spawned_item.sellprice) > 0)
-										spawned_item.sellprice = max(1, round(initial(spawned_item.sellprice) * ITEM_QUALITY_MULT(obj_quality)))
+									spawned_item.apply_quality(null, null, obj_quality)
 							if(obj_name)
 								O.name = obj_name
 								if(ismob(O))
