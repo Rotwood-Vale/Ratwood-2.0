@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "talk overlay should no longer get stuck and point in hand shouldn't stay red anymore"

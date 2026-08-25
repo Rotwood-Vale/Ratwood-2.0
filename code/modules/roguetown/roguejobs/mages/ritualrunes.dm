@@ -358,7 +358,7 @@ GLOBAL_LIST(teleport_runes)
 	name = "Knowledge rune"
 	desc = "arcane symbols pulse upon the ground..."
 	icon_state = "6"
-	invocation = "Thal’ un’vethar!"
+	invocation = "Thal' un'vethar!"
 	color = "#3A0B61"
 	spellbonus = 15
 	scribe_damage = 10
@@ -400,7 +400,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 1
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	invocation = "Thal’miren vek’laris un’vethar!"
+	invocation = "Thal'miren vek'laris un'vethar!"
 	layer = SIGIL_LAYER
 	can_be_scribed = TRUE
 	ritual_number = TRUE
@@ -435,7 +435,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 1
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	invocation = "Ral’kor vek’varun eyn’torath!"
+	invocation = "Ral'kor vek'varun eyn'torath!"
 	layer = SIGIL_LAYER
 	can_be_scribed = TRUE
 	ritual_number = TRUE
@@ -467,7 +467,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 2
 	pixel_x = -64 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -64
-	invocation = "Zar’kalthra ul’norak ven’thelis!"
+	invocation = "Zar'kalthra ul'norak ven'thelis!"
 
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wall
@@ -475,7 +475,7 @@ GLOBAL_LIST(teleport_runes)
 	desc = "arcane symbols litter the ground- is that a wall of some sort?"
 	icon_state = "wall"
 	tier = 2
-	invocation = "Fren’aleth ar’quor!"
+	invocation = "Fren'aleth ar'quor!"
 	ritual_number = TRUE
 	can_be_scribed = TRUE
 	color = "#184075"
@@ -584,7 +584,7 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "wall"
 	tier = 3
-	invocation = "Thar’morak dul’vorr keth’alor!"
+	invocation = "Thar'morak dul'vorr keth'alor!"
 	ritual_number = FALSE
 	runesize = 2
 	pixel_x = -64 //So the big ol' 96x96 sprite shows up right
@@ -681,7 +681,7 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "portal"
 	tier = 2
-	invocation = "Xel’tharr un’korel!"
+	invocation = "Xel'tharr un'korel!"
 	ritual_number = FALSE
 	req_keyword = TRUE
 	runesize = 2
