@@ -73451,6 +73451,11 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/tile/masonic,
 /area/rogue/indoors/town/manor/rockhill)
+"pms" = (
+/obj/structure/bars/grille,
+/obj/effect/landmark/start/dt/courtslave,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/rtfield/rockhill)
 "pmz" = (
 /obj/structure/bars/pipe{
 	dir = 9;
@@ -281635,10 +281640,10 @@ tyE
 hHF
 tob
 pOX
-aiS
+pms
 dJb
 pUG
-aiS
+pms
 aiS
 pUG
 sjP

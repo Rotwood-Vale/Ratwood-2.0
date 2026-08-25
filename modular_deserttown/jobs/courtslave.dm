@@ -16,6 +16,11 @@
 	class_setup_examine = FALSE
 	social_rank = SOCIAL_RANK_DIRT
 
+/datum/job/roguetown/adventurer/courtslave/special_check_latejoin(client/C)
+	if(SSmapping?.current_map?.map_name == "Rockhill")
+		return FALSE
+	return ..()
+
 // //Hooking in here does not mess with their equipment procs
 // /datum/job/roguetown/adventurer/courtagent/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 // 	if(L)
