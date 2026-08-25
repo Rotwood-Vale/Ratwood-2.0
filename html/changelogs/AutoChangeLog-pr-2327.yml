@@ -1,0 +1,11 @@
+author: "RadiantFlash7"
+delete-after: True
+changes:
+  - rscadd: "Two new Vizier spells, acceleration, Divergence"
+  - rscadd: "The Naledi Complex- Penalties for removing your mask."
+  - rscadd: "New Hierophant spell, Obelisks of power"
+  - rscadd: "Naledi refugee now has some btter customizaiton and options."
+  - rscdel: "Vizier no longer has psydonite miracles"
+  - code_imp: "Naledi roles have had spells shifted"
+  - code_imp: "Vizier unique spells use devotion properly"
+  - code_imp: "updated Naledi information mentioned in game to reflect long existing lore."
