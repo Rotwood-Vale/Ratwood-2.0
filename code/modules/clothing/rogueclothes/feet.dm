@@ -393,7 +393,7 @@
 	out of favor with Psydonia's knights since the advent of custom-fitted steel sabatons, it nevertheless remains an excellent choice \
 	for those who'd rather not catch an career-ending arrow to the knee."
 	body_parts_covered = FEET
-	icon_state = "iplateboots"
+	icon_state = "soldierboots"
 	item_state = "iplateboots"
 	color = null
 	blocksound = PLATEHIT
