@@ -1,8 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - rscadd: "Rockhill Slaver and Slave roles with their own base of operations in lowtown"
-  - rscadd: "Rockhill Baron role, new ruler of lowtown with his manor."
-  - rscadd: "Owned Slave trait, through using branding tools to mark someone as owned which is examinable"
-  - rscadd: "Brands can now be burnt off (including ownership brands) with a toggle in the branding tool menu"
-  - bugfix: "Cursed collar/chastity device examine text, and collar pref persisting properly"
