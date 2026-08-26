@@ -173,7 +173,7 @@
 	desc = "Not many are given second chances. Somehow, you're among the lucky bastards who were. What foul, cruel fate did you narrowly escape, changed yet still living?"
 	max_choices = 1
 	restricted = TRUE
-	races = list(/datum/species/construct/metal, /datum/species/gnoll)
+	races = list(/datum/species/construct/metal, /datum/species/gnoll, /datum/species/dullahan, /datum/species/ooze)
 
 	extra_choices = list(
 		SC_ROTCURED,
