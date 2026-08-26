@@ -1,4 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - qol: "Heartweave (Eora T2) no longer requests a confirmation popup on its beneficiary, making it actively usable in combat without griefing the person you're trying to help."
