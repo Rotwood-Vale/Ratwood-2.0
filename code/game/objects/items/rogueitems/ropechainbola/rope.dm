@@ -58,6 +58,9 @@
 		try_cuff_legs(C, user)
 		return
 
+/obj/item/rope/proc/still_in_reach(mob/user, mob/living/carbon/C)
+	return user.Adjacent(C)
+
 /obj/item/rope/proc/try_cuff_arms(mob/living/carbon/C, mob/living/user)
 	if(C.handcuffed)
 		return
@@ -78,9 +81,7 @@
 						span_userdanger("[user] is trying to tie my arms with [src.name]!"))
 	playsound(loc, cuffsound, 100, TRUE, -2)
 
-	//do_mob watches neither party's position on its own, so re-check reach every tick or the tie
-	//completes at any range once it has started
-	var/datum/callback/in_reach = CALLBACK(user, TYPE_PROC_REF(/atom, Adjacent), C)
+	var/datum/callback/in_reach = CALLBACK(src, PROC_REF(still_in_reach), user, C)
 	if(!(do_mob(user, C, 60 * surrender_mod, extra_checks = in_reach, double_progress = TRUE) && C.get_num_arms(FALSE)))
 		to_chat(user, span_warning("I fail to tie up [C]!"))
 		return
@@ -112,8 +113,8 @@
 
 	playsound(loc, cuffsound, 30, TRUE, -2)
 
-	var/datum/callback/in_reach = CALLBACK(user, TYPE_PROC_REF(/atom, Adjacent), C)
-	if(!do_mob(user, C, 60 * surrender_mod, extra_checks = in_reach) || C.get_num_legs(FALSE) < 2)
+	var/datum/callback/in_reach = CALLBACK(src, PROC_REF(still_in_reach), user, C)
+	if(!do_mob(user, C, 60 * surrender_mod, extra_checks = in_reach, double_progress = TRUE) || C.get_num_legs(FALSE) < 2)
 		to_chat(user, span_warning("I fail to tie up [C]!"))
 		return
 
