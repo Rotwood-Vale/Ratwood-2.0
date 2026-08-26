@@ -109,6 +109,7 @@
 #define SUITOR		(1<<8)
 #define PRINCE		(1<<9)
 #define CLERK 		(1<<10)
+#define BARON		(1<<11)
 
 #define GARRISON		(1<<1)
 
@@ -122,6 +123,7 @@
 #define SHERIFF		(1<<7)
 #define VETERAN		(1<<8)
 #define BOGMASTER	(1<<9)
+#define RETAINER	(1<<10)
 
 #define CHURCHMEN		(1<<2)
 
@@ -256,7 +258,8 @@
 #define JDO_STEWARD 3
 #define JDO_CLERK 3.1
 #define JDO_MARSHAL 4
-#define JDO_COUNCILLOR 4.1
+#define JDO_BARON 4.1
+#define JDO_COUNCILLOR 4.2
 
 // Courtiers
 #define JDO_MAGICIAN 5
@@ -272,6 +275,7 @@
 #define JDO_KNIGHT 8.1
 #define JDO_SQUIRE 8.2
 #define JDO_SERGEANT 8.3
+#define JDO_RETAINER 8.35
 #define JDO_CASTLEGUARD 8.4
 #define JDO_GATEMASTER 8.5
 #define JDO_SHERIFF 8.6
@@ -309,6 +313,9 @@
 #define JDO_WENCH 27.3
 
 #define JDO_SOILSON 28
+
+#define JDO_SLAVER 29
+#define JDO_SLAVE 29.1
 
 #define JDO_VILLAGER 30
 #define JDO_ADVENTURER 30.1
@@ -360,6 +367,7 @@
 	/datum/job/roguetown/magician,\
 	/datum/job/roguetown/headslave,\
 	/datum/job/roguetown/slave,\
+	/datum/job/roguetown/rockhillslave,\
 
 #define NOBLE_ROLES \
 	/datum/job/roguetown/prince,\
