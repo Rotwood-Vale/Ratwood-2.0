@@ -104,4 +104,4 @@
     cost = 8
     weight = 5
     min_chaos = 3
-    villain_events = list(/datum/round_event_control/antagonist/solo/lich)
+    villain_events = list(/datum/round_event_control/antagonist/solo/lich)	
