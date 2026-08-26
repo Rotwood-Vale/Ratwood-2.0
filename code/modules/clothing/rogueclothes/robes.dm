@@ -213,8 +213,25 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	icon_state = "desertgown"
 	item_state = "desertgown"
+	color = null
+	detail_color = null
+	detail_tag = "_detail"
+	naledicolor = TRUE
 	heat_protection = CHEST | GROIN
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	name = "pointfex's qaba"
@@ -225,10 +242,27 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "monkcloth"
 	item_state = "monkcloth"
+	color = null
+	detail_color = null
+	detail_tag = "_detail"
+	naledicolor = TRUE
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/suit/roguetown/shirt/robe/pointfex/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/shirt/robe/feld
 	name = "feldsher's robe"
