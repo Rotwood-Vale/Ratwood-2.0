@@ -15,6 +15,8 @@
 	alpha = 173
 
 /datum/reagent/medicine/healthpot/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_NOREGEN) || HAS_TRAIT(M, TRAIT_BLACKBLOOD))
+		return ..()
 	if(volume >= 60)
 		M.reagents.remove_reagent(/datum/reagent/medicine/healthpot, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
@@ -31,6 +33,53 @@
 		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1*REM)
 	..()
 
+/datum/reagent/medicine/healthpot/zarum/blood
+	name = "Blackened Sludge"
+	description = "A fairly disgusting, bubbling mess of an unknown origin that seems to be constantly fermenting onto itself, exhuding a foul smell."
+	color = "#241a1a"
+	taste_description = "sins of Otava"
+	scent_description = "dark darker yet darker"
+
+/datum/reagent/medicine/healthpot/zarum/bog // no changes, it's just more palatable :>
+	name = "Honeyed Zarum"
+	description = "A fermented sauce of fish innards, vinegar and honey, which gradually regenerates all types of damage while remaining surprisingly pleasant to the tastebuds."
+	color = "#dd9700"
+	taste_description = "sweet-sour fish-glazed honey"
+	scent_description = "sweet fermented pungence"
+
+/datum/reagent/medicine/healthpot/zarum
+	name = "Zarum"
+	description = "A fermented sauce of fish innards and vinegar, which gradually regenerates all types of damage."
+	reagent_state = LIQUID
+	color = "#891305"
+	var/nutriment_factor = 16
+	metabolization_rate = 0.4
+	taste_description = "lip-puckeringly rich fishiness"
+	scent_description = "fermented pungence"
+	taste_mult = 8
+	var/hydration = 4
+
+/datum/reagent/medicine/healthpot/zarum/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_NOREGEN))
+		return ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+			H.adjust_hydration(hydration)
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(4) //Better than traditional lifeblood at sealing open wounds. Slightly weaker healing potency, in turn.
+	if(volume > 0.99)
+		M.adjustBruteLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0) //Minor reduction of ~15%-ish potency.
+		M.adjustFireLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOxyLoss(-1.25, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3  * REAGENTS_EFFECT_MULTIPLIER)
+		M.adjustCloneLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1 * REAGENTS_EFFECT_MULTIPLIER)
+	..()
+
 /datum/reagent/medicine/stronghealth
 	name = "Strong Health Potion"
 	description = "Quickly regenerates all types of damage."
@@ -39,6 +88,8 @@
 	metabolization_rate = REAGENTS_METABOLISM * 3
 
 /datum/reagent/medicine/stronghealth/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_NOREGEN) || HAS_TRAIT(M, TRAIT_BLACKBLOOD))
+		return ..()
 	if(volume >= 60)
 		M.reagents.remove_reagent(/datum/reagent/medicine/healthpot, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
@@ -258,6 +309,28 @@
 	M.apply_status_effect(/datum/status_effect/buff/alch/fortunepot)
 	return ..()
 
+/* Ruined Potion
+	When two conflicting potions end up in the same container (or the same body),
+	they neutralize each other into this useless sludge.
+*/
+/datum/reagent/ruined_potion
+	name = "Odd water"
+	description = "A foul mess of conflicting alchemical essences that tried to push nature too far. Utterly useless."
+	reagent_state = LIQUID
+	color = "#6b5d4f" // muddy brownish-green
+	taste_description = "bitter failure"
+	scent_description = "rancid alchemical waste"
+	metabolization_rate = REAGENTS_METABOLISM
+	overdose_threshold = 0
+	can_synth = FALSE 
+
+/datum/reagent/ruined_potion/on_mob_life(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_NASTY_EATER))
+		return
+	if(volume > 0.99)
+		M.add_nausea(2) // Drinking ruined potions is unpleasant but not dangerous.
+	return ..()
+
 
 //Poisons
 /* Tested this quite a bit. Heres the deal. Metabolism REAGENTS_SLOW_METABOLISM is 0.1 and needs to be that so poison isnt too fast working but
@@ -283,7 +356,6 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.add_nausea(3) // so one berry or one dose (one clunk of extracted poison, 5u) will make you really sick and a hair away from crit.
 			M.adjustToxLoss(2)
 	return ..()
-
 
 /datum/reagent/strongpoison		// Strong poison, meant to be somewhat difficult to produce using alchemy or spawned with select antags. Designed to kill in one full dose (5u) better drink antidote fast
 	name = "Strong Poison"
@@ -337,7 +409,6 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
-
 /datum/reagent/organpoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER))
 		M.add_nausea(9)
@@ -367,7 +438,6 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	taste_description = "frozen air"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 9
 	harmful = TRUE
-
 
 /datum/reagent/strongstampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))

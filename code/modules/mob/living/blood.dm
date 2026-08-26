@@ -241,7 +241,7 @@
 			amt = amt * CRIT_RESISTANCE_EFFECTIVE_BLEEDRATE
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			amt = amt * 2
-		else if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
+		else if(HAS_TRAIT(src, TRAIT_BLOOD_RESISTANCE))
 			amt *= BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE
 	if(surrendering)
 		amt = amt / 4 // Helps yield condition not be a bloodloss failure state. Approx to grabbing all of your bodyparts at once

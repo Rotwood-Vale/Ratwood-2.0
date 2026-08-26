@@ -163,7 +163,7 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
 		return
-	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD) && prob(80))
+	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD) && prob(90))
 		to_chat(src, span_danger("I feel something churning within my body... Luckily, it doesn't take hold."))
 		return FALSE
 	return mind.add_antag_datum(/datum/antagonist/zombie)

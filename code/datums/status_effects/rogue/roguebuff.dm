@@ -648,6 +648,8 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
@@ -753,7 +755,7 @@
 	id = "consumehealing"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
-	duration = 3 SECONDS
+	duration = 4 SECONDS
 	examine_text = "<font color='#b3b3b3'>SUBJECTPRONOUN is healing unnaturally fast!</font>"
 	var/fare_power = 0
 	var/healing_on_tick = 1
@@ -780,42 +782,18 @@
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
 	H.color = "#bdbdbd"
 
-	// Hunger-based healing multiplier.
+	// Base heal.
+	var/base_heal = healing_on_tick
+	// Fare: +10% healing per tier
+	var/fare_mult = 1 + (fare_power * 0.10)
+	// Nutrition multiplier
 	var/effective_nutrition = clamp(owner.nutrition, 0, NUTRITION_LEVEL_FULL)
-	var/missing_nutrition = NUTRITION_LEVEL_FULL - effective_nutrition
-	var/hunger_ratio = missing_nutrition / NUTRITION_LEVEL_FULL
-
-	// 0.25x healing while full, 2.0x while starving.
-	var/healing_mult = 0.25 + (hunger_ratio * 1.75)
-
-	var/heal_amount = healing_on_tick * healing_mult
-
-	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		owner.set_blood_volume(min(owner.get_blood_volume() + ((BLOOD_VOLUME_NORMAL * 0.005) * healing_mult), BLOOD_VOLUME_NORMAL)) // 0.5% blood restored per tick, for pity's sake
-
-	if(ishuman(owner))
-		var/mob/living/carbon/human/HM = owner
-		var/obj/item/bodypart/most_damaged
-
-		for(var/obj/item/bodypart/BP in HM.bodyparts)
-			if(QDELETED(BP))
-				continue
-
-			if(!most_damaged || (BP.brute_dam + BP.burn_dam) > (most_damaged.brute_dam + most_damaged.burn_dam))
-				most_damaged = BP
-
-		if(most_damaged)
-			var/total_damage = most_damaged.brute_dam + most_damaged.burn_dam
-
-			if(total_damage > 0)
-				var/brute_heal = heal_amount
-				var/burn_heal = heal_amount
-
-				brute_heal += most_damaged.brute_dam * (0.08 * healing_mult)
-				burn_heal += most_damaged.burn_dam * (0.08 * healing_mult)
-
-				most_damaged.heal_damage(brute_heal, burn_heal)
-				HM.update_damage_overlays()
+	var/hunger_ratio = (NUTRITION_LEVEL_FULL - effective_nutrition) / NUTRITION_LEVEL_FULL
+	var/nutrition_mult = 0.75 + (hunger_ratio * 0.75)
+	// Final healing
+	var/heal_amount = base_heal * fare_mult * nutrition_mult
+	owner.adjustBruteLoss(-heal_amount, 0)
+	owner.adjustFireLoss(-heal_amount, 0)
 
 	owner.adjustOxyLoss(-heal_amount, 0)
 	owner.adjustToxLoss(-heal_amount, 0)
@@ -823,8 +801,8 @@
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
 	owner.adjustCloneLoss(-heal_amount, 0)
 
-	owner.stamina_add(-6)
-	owner.energy_add(9)
+	owner.energy_add(10)
+	owner.update_damage_overlays()
 
 #undef CONSUME_AURA
 
@@ -870,6 +848,8 @@
 /datum/status_effect/buff/campfire_stamina/tick()
 	if(owner.construct)
 		return
+	if(HAS_TRAIT(owner, TRAIT_NOREGEN))
+		return
 	var/stamheal = healing_on_tick
 	if(!owner.cmode)
 		stamheal *= 2
@@ -894,6 +874,8 @@
 	if(owner.cmode)
 		return
 	if(owner.construct)
+		return
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
 		return
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
@@ -1031,6 +1013,8 @@
 	owner.remove_filter(MIRACLE_BLOODHEAL_FILTER)
 
 /datum/status_effect/buff/bloodheal/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_blood(get_turf(owner))
@@ -1061,6 +1045,8 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
@@ -1112,6 +1098,8 @@
 	return TRUE
 
 /datum/status_effect/buff/psyhealing/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
@@ -1192,6 +1180,8 @@
 	return ..()
 
 /datum/status_effect/buff/gemmuncher/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return 
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
@@ -1226,6 +1216,8 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher_lesser/tick()
+	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+		return 
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
 		healing_on_tick /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
