@@ -144,13 +144,9 @@
 /datum/species/arachnid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/arachnid/on_species_gain(mob/living/carbon/arachnidcarbon, datum/species/old_species) // one of those auto-appends a dot at the end of player speech
+/datum/species/arachnid/after_creation(mob/living/carbon/arachnidcarbon, datum/species/old_species) // one of those auto-appends a dot at the end of player speech
 	..()
 	RegisterSignal(arachnidcarbon, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	give_web_spells(arachnidcarbon)
-
-/datum/species/arachnid/after_creation(mob/living/carbon/arachnidcarbon)
-	..()
 	give_web_spells(arachnidcarbon)
 
 /datum/species/arachnid/proc/give_web_spells(mob/living/carbon/arachnidcarbon)
