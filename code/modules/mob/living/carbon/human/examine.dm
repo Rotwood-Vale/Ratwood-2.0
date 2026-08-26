@@ -1106,9 +1106,9 @@
 
 	var/list/lines
 	if((get_face_name() != real_name) && !observer_privilege)
-		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
+		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
 	else
-		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
+		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src, user)
 
 	for(var/line in lines)
 		. += span_info(line)
@@ -1126,7 +1126,7 @@
 			if(src.getorganslot(ORGAN_SLOT_TESTICLES))
 				descriptors += /datum/mob_descriptor/testicles
 			. += span_info("[t_his] underwear doesn't cover [t_him] from behind.")
-			for(var/genital_line in build_cool_description(descriptors, src))
+			for(var/genital_line in build_cool_description(descriptors, src, user))
 				. += span_info(genital_line)
 
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.

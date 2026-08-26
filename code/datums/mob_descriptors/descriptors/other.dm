@@ -41,6 +41,9 @@
 	return TRUE
 
 /datum/mob_descriptor/penis/get_description(mob/living/described)
+	return get_description_for_watcher(described, null)
+
+/datum/mob_descriptor/penis/get_description_for_watcher(mob/living/described, mob/watcher)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	var/adjective
@@ -93,7 +96,7 @@
 	if(testes && penis.sheath_type != SHEATH_TYPE_SLIT)
 		return base_description
 	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+	return pubes_descriptor.append_to_genital_description(base_description, H, watcher)
 
 /datum/mob_descriptor/testicles
 	name = "balls"
@@ -122,6 +125,9 @@
 	return TRUE
 
 /datum/mob_descriptor/testicles/get_description(mob/living/described)
+	return get_description_for_watcher(described, null)
+
+/datum/mob_descriptor/testicles/get_description_for_watcher(mob/living/described, mob/watcher)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/testicles/testes = H.getorganslot(ORGAN_SLOT_TESTICLES)
 	var/adjective
@@ -144,7 +150,7 @@
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	var/base_description = "[adjective] pair of balls[branded]"
 	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+	return pubes_descriptor.append_to_genital_description(base_description, H, watcher)
 
 /datum/mob_descriptor/vagina
 	name = "vagina"
@@ -170,6 +176,9 @@
 	return TRUE
 
 /datum/mob_descriptor/vagina/get_description(mob/living/described)
+	return get_description_for_watcher(described, null)
+
+/datum/mob_descriptor/vagina/get_description_for_watcher(mob/living/described, mob/watcher)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	var/vagina_type
@@ -210,7 +219,7 @@
 	if(H.getorganslot(ORGAN_SLOT_PENIS) || H.getorganslot(ORGAN_SLOT_TESTICLES))
 		return base_description
 	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)
-	return pubes_descriptor.append_to_genital_description(base_description, H)
+	return pubes_descriptor.append_to_genital_description(base_description, H, watcher)
 
 /datum/mob_descriptor/breasts
 	name = "breasts"
@@ -306,7 +315,14 @@
 		return FALSE
 	return is_human_part_visible(H, HIDEJUMPSUIT|HIDECROTCH)
 
+/datum/mob_descriptor/pubes/can_user_see(mob/living/described, mob/user)
+	var/datum/preferences/viewer_preferences = user?.client?.prefs
+	return !viewer_preferences || viewer_preferences.pubes
+
 /datum/mob_descriptor/pubes/get_description(mob/living/described)
+	return get_description_for_watcher(described, null)
+
+/datum/mob_descriptor/pubes/get_description_for_watcher(mob/living/described, mob/watcher)
 	var/mob/living/carbon/human/H = described
 	var/datum/bodypart_feature/pubes/feature = get_pubes_feature(H)
 	if(!feature?.accessory_type)
@@ -314,7 +330,7 @@
 	var/material_description = feature.get_description_name()
 	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
 	var/description_color = LAZYACCESS(accessory_colors, 1)
-	if(description_color)
+	if(description_color && user_allows_descriptor_color(watcher))
 		description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
 		material_description = "<span style='color:[description_color]'>[material_description]</span>"
 	var/adjective
@@ -336,10 +352,12 @@
 	return "[adjective]"
 
 /// The genital descriptor calling this proc already owns the visibility check.
-/datum/mob_descriptor/pubes/proc/append_to_genital_description(base_description, mob/living/carbon/human/H)
+/datum/mob_descriptor/pubes/proc/append_to_genital_description(base_description, mob/living/carbon/human/H, mob/watcher)
 	if(!base_description)
 		return base_description
-	var/pubes_description = get_description(H)
+	if(!can_user_see(H, watcher))
+		return base_description
+	var/pubes_description = get_description_for_watcher(H, watcher)
 	if(!pubes_description)
 		return base_description
 	return "[base_description], framed by [pubes_description]"//we use pube_description and not just adjective so we can have the colors seperate
@@ -370,7 +388,14 @@
 		return FALSE
 	return is_human_part_visible(H, HIDEBOOB|HIDEJUMPSUIT)
 
+/datum/mob_descriptor/pits/can_user_see(mob/living/described, mob/user)
+	var/datum/preferences/viewer_preferences = user?.client?.prefs
+	return !viewer_preferences || viewer_preferences.pits
+
 /datum/mob_descriptor/pits/get_description(mob/living/described)
+	return get_description_for_watcher(described, null)
+
+/datum/mob_descriptor/pits/get_description_for_watcher(mob/living/described, mob/watcher)
 	var/mob/living/carbon/human/H = described
 	var/datum/bodypart_feature/pits/feature = get_pits_feature(H)
 	if(!feature?.accessory_type)
@@ -378,7 +403,7 @@
 	var/material_description = feature.get_description_name()
 	var/list/accessory_colors = color_string_to_list(feature.accessory_colors)
 	var/description_color = LAZYACCESS(accessory_colors, 1)
-	if(description_color)
+	if(description_color && user_allows_descriptor_color(watcher))
 		description_color = sanitize_hexcolor(description_color, 6, TRUE, "#FFFFFF")
 		material_description = "<span style='color:[description_color]'>[material_description]</span>"
 	var/adjective

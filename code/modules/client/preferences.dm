@@ -121,6 +121,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/edging = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
+	var/pubes = FALSE
+	var/pits = FALSE
+	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
 	var/voting_popup = TRUE
