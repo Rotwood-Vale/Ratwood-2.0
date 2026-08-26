@@ -501,3 +501,68 @@
   MickDick1:
   - bugfix: Retuned Inspector statline/weapon choices so he's able to wield them at
       all
+2026-08-24:
+  Ephemeralis:
+  - bugfix: Adjusted the sellprice of some clothing items made with weaving that were
+      massively overpriced compared to their inputs (halfmask, most god robes, etc).
+  Gug1234:
+  - bugfix: Fixed an exploit allowing enchantments to be stacked.
+  HelennaC:
+  - admin: mail archive
+  Xander3359:
+  - balance: Allows abyssor's infusion to be self-casted
+2026-08-25:
+  ophaq:
+  - rscadd: Adds the hierophant shawl and hijab to the tailor silverface.
+  - qol: Allows xylixians with mute to cast certain xylixian miracles that do not
+      have incantations. Previously they could not.
+  - rscadd: Gives mute xylixians the mime jester's invisible wall and chair ability.
+  - rscadd: Makes the invisible wall a 3x1 like how kneestingers are. It lasts 5 seconds.
+  - rscadd: The invisible chair can be picked up and you can beat people with it.
+      The chair lasts longer but despawns after a while as usual.
+  - rscadd: Mute xylixians can still be mouth grabbed to prevent them from casting
+      like non-mute ones.
+  wikimody:
+  - rscadd: Naziby golden masks now provide the same sandstorm immunity sand gogles
+      do
+2026-08-26:
+  2whatever2:
+  - admin: SQDL code is cleaner and now allows for nested lists
+  CloverIsLucky:
+  - bugfix: Fixes Miracles Skill Description. You don't really get higher access to
+      higher tier of miracles from your patrons if you had miracles increased.
+  Ephemeralis:
+  - qol: Heartweave (Eora T2) no longer requests a confirmation popup on its beneficiary,
+      making it actively usable in combat without griefing the person you're trying
+      to help.
+  IronDragoon:
+  - rscadd: Rockhill Slaver and Slave roles with their own base of operations in lowtown
+  - rscadd: Rockhill Baron role, new ruler of lowtown with his manor.
+  - rscadd: Owned Slave trait, through using branding tools to mark someone as owned
+      which is examinable
+  - rscadd: Brands can now be burnt off (including ownership brands) with a toggle
+      in the branding tool menu
+  - bugfix: Cursed collar/chastity device examine text, and collar pref persisting
+      properly
+  Makximus:
+  - rscadd: masc and fem versions of elvish/dwarvish, evil, zeth, and wizardly voicepacks
+      made available.
+  - sound: Makes (some) previously unselectable voicepacks selectable
+  RadiantFlash7:
+  - rscadd: Two new Vizier spells, acceleration, Divergence
+  - rscadd: The Naledi Complex- Penalties for removing your mask.
+  - rscadd: New Hierophant spell, Obelisks of power
+  - rscadd: Naledi refugee now has some btter customizaiton and options.
+  - rscdel: Vizier no longer has psydonite miracles
+  - code_imp: Naledi roles have had spells shifted
+  - code_imp: Vizier unique spells use devotion properly
+  - code_imp: updated Naledi information mentioned in game to reflect long existing
+      lore.
+  Yuckuza:
+  - balance: Phoenix Guard cooldown raised from 20s -> 60s
+  annikaRU:
+  - rscadd: engineers around the globe have discovered you can in-fact wear your spectacles
+      above your eyes, gold prices skyrocket after this sudden realization
+  picklewilly83:
+  - rscadd: Added "a2 Untitled" by Lotchek as a selectable combat track, under the
+      name, "Psydonite".

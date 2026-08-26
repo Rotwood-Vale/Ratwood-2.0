@@ -72,6 +72,14 @@
 //	smooth_icon = 'icons/turf/walls/hardrock.dmi'
 	above_floor = /turf/closed/mineral/rogue/bedrock
 
+/turf/closed/mineral/rogue/bedrock/sandbrick
+	name = "sandstone"
+	desc = "Seems barren and nigh-indestructable"
+	icon = 'modular_deserttown/icons/sandstone.dmi'
+	icon_state = "sand-stone"
+//	smooth_icon = 'icons/turf/walls/hardrock.dmi'
+	above_floor = /turf/closed/mineral/rogue/bedrock
+
 /turf/closed/mineral/random/rogue/sandstone
 	name = "sandstone"
 	desc = "Dusty, sand-blasted rock."

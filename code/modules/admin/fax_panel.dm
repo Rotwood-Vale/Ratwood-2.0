@@ -8,6 +8,7 @@
 
 GLOBAL_DATUM_INIT(fax_panel_state, /datum/ui_state/fax_panel_state, new)
 GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
+GLOBAL_LIST_EMPTY(player_letter_history)
 
 /datum/fax_panel
 	/// Cached UI payload sections to avoid rebuilding large lists every tgui update tick.
@@ -45,6 +46,40 @@ GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
+/datum/fax_panel/proc/register_player_letter(sender, recipient, body, sender_ckey = null, recipient_ckey = null)
+	var/clean_sender = sanitize(copytext(sender || "Anonymous", 1, MAX_NAME_LEN))
+	if(!clean_sender)
+		clean_sender = "Anonymous"
+
+	var/clean_recipient = sanitize(copytext(recipient || "Unknown", 1, MAX_NAME_LEN))
+	if(!clean_recipient)
+		clean_recipient = "Unknown"
+
+	var/clean_sender_ckey = sanitize(copytext(sender_ckey || "unknown", 1, MAX_NAME_LEN))
+	if(!clean_sender_ckey)
+		clean_sender_ckey = "unknown"
+
+	var/clean_recipient_ckey = sanitize(copytext(recipient_ckey || "unknown", 1, MAX_NAME_LEN))
+	if(!clean_recipient_ckey)
+		clean_recipient_ckey = "unknown"
+
+	var/clean_body = body || ""
+	clean_body = html_decode(clean_body)
+	clean_body = replacetext(clean_body, ascii2text(13), "")
+	clean_body = replacetext(clean_body, "\n", "<br>")
+	clean_body = copytext(clean_body, 1, 4000)
+
+	var/list/entry = list(
+		"sender" = clean_sender,
+		"recipient" = clean_recipient,
+		"sender_ckey" = clean_sender_ckey,
+		"recipient_ckey" = clean_recipient_ckey,
+		"body" = clean_body,
+	)
+	GLOB.player_letter_history = list(entry) + GLOB.player_letter_history
+	if(GLOB.player_letter_history.len > 200)
+		GLOB.player_letter_history.Cut(201)
+
 /datum/fax_panel/ui_data(mob/user)
 	var/list/data = list()
 	refresh_ui_cache()
@@ -52,6 +87,7 @@ GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
 	data["hermes_list"] = cached_hermes_list
 	data["player_list"] = cached_player_list
 	data["master_exists"] = cached_master_exists
+	data["letter_history"] = GLOB.player_letter_history
 
 	return data
 
