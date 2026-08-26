@@ -84,15 +84,11 @@
 		if(istype(P, /obj/item/roguecoin))
 			var/mob/living/carbon/human/H = user
 			if(H in SStreasury.bank_accounts)
-				var/list/deposit_results = SStreasury.generate_money_account(P.get_real_price(), H)
-				if(islist(deposit_results))
-					record_round_statistic(STATS_MAMMONS_DEPOSITED, deposit_results[1] - deposit_results[2])
-				if(deposit_results[2] != 0)
-					say("Your deposit was taxed [deposit_results[2]] mammon.")
-					record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, deposit_results[2])
-					record_round_statistic(STATS_TAXES_COLLECTED, deposit_results[2])
+				if(SStreasury.generate_money_account(P.get_real_price(), H))
+					record_round_statistic(STATS_MAMMONS_DEPOSITED, P.get_real_price())
 				qdel(P)
 				playsound(src, 'sound/misc/coininsert.ogg', 100, FALSE, -1)
+				SStreasury.clear_poll_tax_debt(H)
 				return
 
 		if(istype(P, /obj/item/coveter))
@@ -131,23 +127,25 @@
 
 /obj/structure/roguemachine/atm/examine(mob/user)
 	. += ..()
-	var/tax_rate = SStreasury.get_tax_value_for(user) * 100 // proc returns a decimal, multiply by 100 for percentage
-	var/job_text // what tax bracket the user falls into, for examine text purpose
-	var/fine_exempt_status = SStreasury.check_fine_exemption(user) ? "Exempt from fines." : "Not exempt from fines." // returns TRUE/FALSE
-
-	if(HAS_TRAIT(user, TRAIT_OUTLANDER))
-		job_text = "Outlanders"
-	else if(HAS_TRAIT(user, TRAIT_NOBLE))
-		job_text = "Nobles"
-	else if(HAS_TRAIT(user, TRAIT_RESIDENT) || (user.job in GLOB.yeoman_positions))
-		job_text = "Yeomen"
-	else if(user.job in GLOB.church_positions)
-		job_text = "Clergymen"
-	else
-		job_text = "Peasants"
-
-	. += span_info("For [job_text], the current tax rate on deposits is [tax_rate] percent. [fine_exempt_status]")
 	. += span_smallnotice("Crown levies - Contract: [round(SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY) * 100)]%, Headeater: [round(SStreasury.get_tax_rate(TAX_CATEGORY_HEADEATER_LEVY) * 100)]%, Import: [round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * 100)]%, Export: [round(SStreasury.get_tax_rate(TAX_CATEGORY_EXPORT_DUTY) * 100)]%")
+	var/datum/decree/concordat = SStreasury.get_decree(DECREE_ZENITSTADT_CONCORDAT)
+	if(concordat?.active)
+		. += span_smallnotice("Concordat of Zenitstadt: [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of Azuria, drawn from the Crown's share.")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/poll_category = SStreasury.get_poll_tax_category(H)
+		if(poll_category)
+			var/pretty = SStreasury.get_poll_tax_category_pretty_name(poll_category)
+			if(SStreasury.is_poll_tax_charter_exempt(H, poll_category))
+				. += span_smallnotice("Poll tax ([pretty]): exempt by decree")
+			else
+				var/rate = SStreasury.get_poll_tax_rate_for(H, poll_category)
+				if(rate > 0)
+					. += span_smallnotice("Poll tax ([pretty]): [rate]m/day")
+				else if(rate < 0)
+					. += span_smallnotice("Poll tax ([pretty]): [-rate]m/day subsidy")
+				else
+					. += span_smallnotice("Poll tax ([pretty]): none")
 
 /obj/structure/roguemachine/atm/proc/drill(obj/structure/roguemachine/atm)
 	if(!drilling)

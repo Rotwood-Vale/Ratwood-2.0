@@ -195,9 +195,6 @@ SUBSYSTEM_DEF(treasury)
 				if(SSgamemode?.roundvoteend)
 					send_ooc_note("<b>NERVELOCK:</b> Error: The round is ending. No further fines may be levied.", name = target_name)
 					return FALSE
-				// Item 6 decrees: charter exemptions (Great Writ) and caps (Golden Bull,
-				// one-fine-per-day) bound the Crown's fines. Ratwood deviation: integer ledger,
-				// so the cap math runs on bank_accounts rather than a fund balance.
 				var/mob/living/fine_owner = istype(target, /mob/living) ? target : null
 				var/fine_amt = abs(amt)
 				if(fine_owner)
@@ -223,7 +220,6 @@ SUBSYSTEM_DEF(treasury)
 					send_ooc_note("<b>NERVELOCK:</b> Error: Insufficient funds in the account to complete the fine.", name = target_name)
 					return FALSE  // Return early if the player has insufficient funds
 				bank_accounts[X] -= fine_amt  // Deduct the fine amount from the player's account
-				// AP parity: fined money returns to the Crown's Purse instead of vanishing
 				mint(discretionary_fund, fine_amt, source || "fine levied on [target_name]")
 				record_round_statistic(STATS_FINES_INCOME, fine_amt)
 				if(source)
@@ -302,14 +298,11 @@ SUBSYSTEM_DEF(treasury)
 	mint(discretionary_fund, amt, "Bank deposit - [character.real_name]")
 	if(!(character in bank_accounts))
 		return FALSE
-
-	taxed_amount = round(amt * get_tax_value_for(character))
-	amt -= taxed_amount
 	bank_accounts[character] += amt
 
-	log_to_steward("+[original_amt] deposited by [character.real_name] of which taxed [taxed_amount]")
+	log_to_steward("+[original_amt] deposited by [character.real_name]")
 
-	return list(original_amt, taxed_amount)
+	return list(original_amt, 0)
 
 /datum/controller/subsystem/treasury/proc/withdraw_money_account(amt, target)
 	if(!amt)

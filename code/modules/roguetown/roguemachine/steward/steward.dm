@@ -1,10 +1,8 @@
 #define TAB_MAIN 1
 #define TAB_BANK 2
-#define TAB_STOCK 3
 #define TAB_IMPORT 4
 #define TAB_DEBT 5
-#define TAB_LOG 6
-#define TAB_STATISTICS 7
+#define TAB_FISCAL 6
 #define TAB_PAYDAY 8
 #define TAB_SALTMINE 9
 
@@ -424,19 +422,13 @@
 				break
 	if(href_list["compact"])
 		compact = !compact
-	// Step 15: category browsing and the auto-export slider live in the StewardTrade TGUI now.
 	if(href_list["trade_tgui"])
 		open_trade_tgui(usr)
 		return
 
 	return attack_hand(usr)
 
-// ── StewardTrade TGUI trade helpers (Step 15) ────────────────────────────────────────────────
-
 /obj/structure/roguemachine/steward/proc/quote_trade(mob/user, side, region_id, good_id, quantity)
-	// Carry the request identity on EVERY return (including the error early-returns below), so the
-	// TradeModal's incoming-quote filter (side/region_id/good_id must match) doesn't discard an
-	// error quote and leave the modal spinning without ever showing the failure reason.
 	. = list(
 		"ok" = FALSE,
 		"reason" = "",
@@ -703,11 +695,9 @@
 			contents += "<a href='?src=\ref[src];trade_tgui=1'>\[Trade & Stockpile\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_IMPORT]'>\[Import\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_PAYDAY]'>\[Daily Payments\]</a><BR>"
+			contents += "<a href='?src=\ref[src];switchtab=[TAB_FISCAL]'>\[Fiscal Ledger\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_DEBT]'>\[Debts &amp; Arrears\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_LOG]'>\[Log\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_STATISTICS]'>\[Statistics\]</a><BR>"
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_SALTMINE]'>\[Salt Mine Report\]</a><BR>"
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_STOCK]'>\[Passive Imports\]</a><BR>"
 			contents += "<a href='?src=\ref[src];printresidency=1'>\[Print Letter of Citizenry\]</a><BR>"
 			contents += "<a href='?src=\ref[src];setpurchasefloor=1'>\[Purchase Floor: [SStreasury.stockpile_purchase_floor]m\]</a><BR>"
 			contents += "</center>"
@@ -742,21 +732,7 @@
 						contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m<BR>"
 					var/wage_status = HAS_TRAIT(A, TRAIT_WAGES_SUSPENDED) ? "Unsuspend Wages" : "Suspend Wages"
 					contents += "<a href='?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a> <a href='?src=\ref[src];togglewages=\ref[A]'>\[[wage_status]\]</a><BR><BR>"
-		if(TAB_STOCK)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Passive Imports<BR>"
-			contents += "--------------<BR>"
-			contents += "Treasury: [SStreasury.treasury_value]m<BR>"
-			contents += "Current Passive Spending: [SStreasury.get_current_passive_spending()]m per tick</center><BR>"
-			// Ratwood passive imports: rate management stays here; prices, limits and manual
-			// import/export moved to the StewardTrade TGUI.
-			for(var/datum/roguestock/stockpile/A in SStreasury.stockpile_datums)
-				if(A.no_passive)
-					continue
-				contents += "<b>[A.name]:</b> [A.stockpile_amount]/[A.stockpile_limit]"
-				contents += " / Rate: <a href='?src=\ref[src];setrate=\ref[A]'>[A.passive_generation]</a> ([A.generation_price]m each)<BR>"
 		if(TAB_IMPORT)
-			// Step 15: renders GLOB.crown_imports (regional sourcing + blockade surcharges).
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
 			contents += " <a href='?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
 			contents += "<center>Imports<BR>"
@@ -774,9 +750,6 @@
 					contents += "<b>[A.name][blockade_tag_full]</b> - <i>[A.desc]</i> "
 					contents += "<a href='?src=\ref[src];import=\ref[A]'>\[Import [A.import_amt] ([A.get_import_price()])\]</a><BR>"
 		if(TAB_DEBT)
-			// AP parity (their TAB_DEBT), with one fix: AP built the loan-line string but
-			// never appended it and counted every loan as a Crown loan - here the list
-			// renders and the count matches it.
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Debts &amp; Arrears<BR>"
 			contents += "--------------<BR>"
@@ -819,23 +792,178 @@
 			contents += "<font color='gray'><i>(Forgives outstanding loans entirely and lifts the defaulter mark.)</i></font><BR>"
 			contents += "<a href='?src=\ref[src];clearpolltax=1'>\[Clear Poll Tax Obligation\]</a><BR>"
 			contents += "<font color='gray'><i>(Wipes a subject's poll tax arrears.)</i></font><BR>"
-		if(TAB_LOG)
+		if(TAB_FISCAL)
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Log<BR>"
-			contents += "--------------</center><BR><BR>"
-			for(var/i = SStreasury.log_entries.len to 1 step -1)
-				contents += "<span class='info'>[SStreasury.log_entries[i]]</span><BR>"
-		if(TAB_STATISTICS)
-			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
-			contents += "<center>Statistics:<BR>"
-			contents += "Known Economic Output: [SStreasury.economic_output]m<BR>"
-			contents += "Total Rural Tax: [SStreasury.total_rural_tax]m<BR>"
-			contents += "Total Deposit Tax: [SStreasury.total_deposit_tax]m<BR>"
-			contents += "Total Noble Estate Income: [SStreasury.total_noble_income]m<BR>"
-			contents += "Total Import: [SStreasury.total_import]m<BR>"
-			contents += "Total Export: [SStreasury.total_export]m<BR>"
-			contents += "Trade Balance: [SStreasury.total_export - SStreasury.total_import]m<BR>"
-			contents  += "</center><BR>"
+			var/list/snap = SStreasury.compute_fiscal_snapshot()
+			var/list/charters = SStreasury.compute_charter_states()
+			contents += "<center><b>Fiscal Ledger &mdash; Day [GLOB.dayspassed]</b></center>"
+			contents += "<hr>"
+
+			// Balances (two-column)
+			contents += "<b><font color='#e6b327'>BALANCES</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Crown's Purse</td><td align='right'><font color='#e6b327'>[snap["discretionary"]]m</font></td>"
+			contents += "<td>Burgher Pledge</td><td align='right'><font color='#e6b327'>[snap["burgher_pledge"]]m</font></td></tr>"
+			contents += "<tr><td>Total Bank Coin</td><td align='right'>[snap["total_bank"]]m</td>"
+			contents += "<td>Held Accounts</td><td align='right'>[snap["held_accounts"]]</td></tr>"
+			contents += "<tr><td>Average Balance</td><td align='right'>[snap["avg_balance"]]m</td>"
+			contents += "<td>Under 50m</td><td align='right'><font color='#e07b39'>[snap["under_50m"]]</font></td></tr>"
+			contents += "</table><br>"
+
+			// Revenue (two-column, green) - only mammon that lands in Crown's Purse
+			contents += "<b><font color='#5cb85c'>CROWN REVENUE THIS WEEK</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Rural Tax</td><td align='right'><font color='#5cb85c'>[SStreasury.total_rural_tax]m</font></td>"
+			contents += "<td>Fines</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_FINES_INCOME]]m</font></td></tr>"
+			contents += "<tr><td>Poll Tax</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_POLL_TAX_COLLECTED]]m</font></td>"
+			contents += "<td>Deposit Tax</td><td align='right'><font color='#5cb85c'>[SStreasury.total_deposit_tax]m</font></td></tr>"
+			contents += "<tr><td>Contract Levy</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_REVENUE_CONTRACT_LEVY]]m</font></td>"
+			contents += "<td>Headeater Levy</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_REVENUE_HEADEATER_LEVY]]m</font></td></tr>"
+			contents += "<tr><td>Import Tariff</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_REVENUE_IMPORT_TARIFF]]m</font></td>"
+			contents += "<td>Export Duty</td><td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_REVENUE_EXPORT_DUTY]]m</font></td></tr>"
+			contents += "</table><br>"
+
+			// Forgone Revenue (two-column, muted - what the Crown *could* have collected)
+			var/exempt_contract = GLOB.azure_round_stats[STATS_EXEMPTED_CONTRACT_LEVY]
+			var/exempt_headeater = GLOB.azure_round_stats[STATS_EXEMPTED_HEADEATER_LEVY]
+			var/exempt_import = GLOB.azure_round_stats[STATS_EXEMPTED_IMPORT_TARIFF]
+			var/exempt_export = GLOB.azure_round_stats[STATS_EXEMPTED_EXPORT_DUTY]
+			var/exempt_fine = GLOB.azure_round_stats[STATS_EXEMPTED_FINE]
+			var/exempt_poll = GLOB.azure_round_stats[STATS_EXEMPTED_POLL_TAX]
+			var/exempt_total = exempt_contract + exempt_headeater + exempt_import + exempt_export + exempt_fine + exempt_poll
+			contents += "<b><font color='#8f7a5a'>FORGONE REVENUE (tax exempted)</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Contract Levy</td><td align='right'><font color='#8f7a5a'>[exempt_contract]m</font></td>"
+			contents += "<td>Headeater Levy</td><td align='right'><font color='#8f7a5a'>[exempt_headeater]m</font></td></tr>"
+			contents += "<tr><td>Import Tariff</td><td align='right'><font color='#8f7a5a'>[exempt_import]m</font></td>"
+			contents += "<td>Export Duty</td><td align='right'><font color='#8f7a5a'>[exempt_export]m</font></td></tr>"
+			contents += "<tr><td>Fines Waived</td><td align='right'><font color='#8f7a5a'>[exempt_fine]m</font></td>"
+			contents += "<td>Poll Tax</td><td align='right'><font color='#8f7a5a'>[exempt_poll]m</font></td></tr>"
+			contents += "<tr><td><b>Total Forgone</b></td><td align='right'><b><font color='#8f7a5a'>[exempt_total]m</font></b></td>"
+			contents += "<td></td><td></td></tr>"
+			contents += "</table>"
+			contents += "<font size='1'><i>Charter exemptions, levy-exempt stamps, and rate-cap gaps. Mammon the Crown would have collected had no exemption applied.</i></font><br><br>"
+
+			// Trade (two-column, mixed)
+			contents += "<b><font color='#c0b283'>TRADE</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Stockpile Exports</td><td align='right'><font color='#5cb85c'>[SStreasury.total_export]m</font></td>"
+			contents += "<td>Stockpile Imports</td><td align='right'><font color='#d9534f'>-[SStreasury.total_import]m</font></td></tr>"
+			var/trade_bal = SStreasury.total_export - SStreasury.total_import
+			var/trade_col = trade_bal >= 0 ? "#5cb85c" : "#d9534f"
+			contents += "<tr><td>Trade Balance</td><td align='right'><font color='[trade_col]'>[trade_bal]m</font></td>"
+			contents += "<td>Economic Output</td><td align='right'>[SStreasury.economic_output]m</td></tr>"
+			contents += "</table><br>"
+
+			// Expenses (two-column, red)
+			contents += "<b><font color='#d9534f'>EXPENSES THIS WEEK</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Wages Paid</td><td align='right'><font color='#d9534f'>-[GLOB.azure_round_stats[STATS_WAGES_PAID]]m</font></td>"
+			contents += "<td>Treasury Transfers</td><td align='right'><font color='#d9534f'>-[GLOB.azure_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]m</font></td></tr>"
+			contents += "<tr><td>Stockpile Imports <font size='1'><i>(see Trade)</i></font></td><td align='right'><font color='#d9534f'>-[SStreasury.total_import]m</font></td>"
+			contents += "<td></td><td></td></tr>"
+			contents += "</table><br>"
+
+			// Tax Rates (two columns: rate name | percentage)
+			contents += "<b>TAX RATES</b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			var/list/rate_entries = list()
+			for(var/cat in SStreasury.tax_rates)
+				if(cat == TAX_CATEGORY_FINE)
+					continue
+				rate_entries += "<td>[SStreasury.get_tax_category_pretty_name(cat)]</td><td align='right'>[round(SStreasury.tax_rates[cat] * 100)]%</td>"
+			for(var/i = 1, i <= length(rate_entries), i += 2)
+				contents += "<tr>"
+				contents += rate_entries[i]
+				if(i + 1 <= length(rate_entries))
+					contents += rate_entries[i + 1]
+				else
+					contents += "<td></td><td></td>"
+				contents += "</tr>"
+			contents += "</table><br>"
+
+			// Poll Tax Rates (two columns: category | m/day)
+			contents += "<b>POLL TAX RATES (daily)</b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			var/datum/decree/golden = SStreasury.get_decree(DECREE_GOLDEN_BULL)
+			var/golden_active = golden?.active
+			var/datum/decree/covenant = SStreasury.get_decree(DECREE_NOC_PESTRA_COVENANT)
+			var/covenant_active = covenant?.active
+			var/datum/decree/merc_charter = SStreasury.get_decree(DECREE_GUILD_CHARTER_OF_ARMS)
+			var/merc_charter_active = merc_charter?.active
+			var/list/poll_entries = list()
+			for(var/pcat in SStreasury.poll_tax_rates)
+				var/rate = SStreasury.poll_tax_rates[pcat]
+				var/pretty = SStreasury.get_poll_tax_category_pretty_name(pcat)
+				var/rate_display = "[rate]m"
+				if(pcat == POLL_TAX_CAT_BURGHER && golden_active && rate > GOLDEN_BULL_POLL_CAP)
+					rate_display = "<font color='#e07b39'>[GOLDEN_BULL_POLL_CAP]m</font> (raw [rate]m, capped)"
+				else if(pcat == POLL_TAX_CAT_MERCENARY && merc_charter_active && rate > GUILD_CHARTER_OF_ARMS_POLL_CAP)
+					rate_display = "<font color='#e07b39'>[GUILD_CHARTER_OF_ARMS_POLL_CAP]m</font> (raw [rate]m, capped)"
+				poll_entries += "<td>[pretty]</td><td align='right'>[rate_display]</td>"
+			for(var/i = 1, i <= length(poll_entries), i += 2)
+				contents += "<tr>"
+				contents += poll_entries[i]
+				if(i + 1 <= length(poll_entries))
+					contents += poll_entries[i + 1]
+				else
+					contents += "<td></td><td></td>"
+				contents += "</tr>"
+			contents += "</table>"
+			if(covenant_active)
+				contents += "<i><font color='#e07b39'>Covenant of Noc & Pestra in force: University and Apothecary pay no more than [NOC_PESTRA_POLL_CAP]m/day regardless of category rate.</font></i><br>"
+			contents += "<br>"
+
+			// Charters (two-column)
+			contents += "<b>CHARTERS</b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			var/list/charter_rows = list()
+			for(var/entry in charters)
+				var/cooldown_left = entry["cooldown_remaining"]
+				var/cd_text = cooldown_left > 0 ? " <i>(cd: [round(cooldown_left / 600, 0.1)]m)</i>" : ""
+				var/status_color = entry["active"] ? "#5cb85c" : "#d9534f"
+				var/status_text = entry["active"] ? "ACTIVE" : "SUSPENDED"
+				charter_rows += "<td>[entry["name"]]</td><td align='right'><font color='[status_color]'>[status_text]</font>[cd_text]</td>"
+			for(var/i = 1, i <= length(charter_rows), i += 2)
+				contents += "<tr>"
+				contents += charter_rows[i]
+				if(i + 1 <= length(charter_rows))
+					contents += charter_rows[i + 1]
+				else
+					contents += "<td></td><td></td>"
+				contents += "</tr>"
+			contents += "</table><br>"
+
+			// Debt & Loans (two-column, orange for warnings)
+			contents += "<b><font color='#e07b39'>DEBT &amp; LOANS</font></b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td>Accounts in Arrears</td><td align='right'><font color='#e07b39'>[snap["in_arrears"]]</font></td>"
+			contents += "<td>Accounts in Advance</td><td align='right'>[snap["in_advance"]]</td></tr>"
+			contents += "<tr><td>Default Debtors</td><td align='right'><font color='#d9534f'>[snap["debtor_count"]]</font></td>"
+			contents += "<td>Loans Outstanding</td><td align='right'>[snap["loans_outstanding"]] ([snap["loan_exposure"]]m)</td></tr>"
+			contents += "</table><br>"
+
+			// Contracts (three-column: Issued / Taken / Completed, by issuing authority)
+			contents += "<b>CONTRACTS THIS WEEK</b>"
+			contents += "<table width='100%' cellspacing='0' cellpadding='2'>"
+			contents += "<tr><td></td><td align='right'><b>Issued</b></td><td align='right'><b>Taken</b></td><td align='right'><b>Completed</b></td></tr>"
+			contents += "<tr><td>Guild</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_GENERATED_POOL]]</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_TAKEN_POOL]]</td>"
+			contents += "<td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_CONTRACTS_COMPLETED_POOL]]</font></td></tr>"
+			contents += "<tr><td>Tavern</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_GENERATED_RUMOR]]</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_TAKEN_RUMOR]]</td>"
+			contents += "<td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_CONTRACTS_COMPLETED_RUMOR]]</font></td></tr>"
+			contents += "<tr><td>Crown</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_GENERATED_DEFENSE]]</td>"
+			contents += "<td align='right'>[GLOB.azure_round_stats[STATS_CONTRACTS_TAKEN_DEFENSE]]</td>"
+			contents += "<td align='right'><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_CONTRACTS_COMPLETED_DEFENSE]]</font></td></tr>"
+			contents += "<tr><td><b>Total</b></td>"
+			contents += "<td align='right'><b>[GLOB.azure_round_stats[STATS_CONTRACTS_GENERATED]]</b></td>"
+			contents += "<td align='right'><b>[GLOB.azure_round_stats[STATS_CONTRACTS_TAKEN]]</b></td>"
+			contents += "<td align='right'><b><font color='#5cb85c'>[GLOB.azure_round_stats[STATS_CONTRACTS_COMPLETED]]</font></b></td></tr>"
+			contents += "</table>"
 		if(TAB_PAYDAY)
 			contents += "<a href='?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Daily Payments<BR>"
@@ -900,14 +1028,11 @@
 
 #undef TAB_MAIN
 #undef TAB_BANK
-#undef TAB_STOCK
 #undef TAB_IMPORT
 #undef TAB_DEBT
-#undef TAB_LOG
-#undef TAB_STATISTICS
 #undef TAB_PAYDAY
 #undef TAB_SALTMINE
-
+#undef TAB_FISCAL
 // Item 6 (decrees): bump configured wages up to any active charter's mandated floor, and
 // ensure floored jobs missing from the payments list get an entry at the floor.
 /obj/structure/roguemachine/steward/proc/enforce_wage_floors()

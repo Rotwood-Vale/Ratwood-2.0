@@ -70,10 +70,10 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 /datum/economic_region/kingsfield
 	region_id = TRADE_REGION_KINGSFIELD
 	name = "Kingsfield"
-	subtitle = "The Royal Demesne, Heartland of the Vale"
+	subtitle = "The Royal Demesne, Heartland of Ferentia"
 	blockade_replenish_eligible = FALSE
 	order_celebrants = list("Lady Marisol of Cherrybrook", "Lord Berenger the Younger", "Dame Vesalia Sundermark", "Sir Aldwin of Aubergrove")
-	description = "The royal demesne of the Duke of the Vale, and their most valuable possession besides Rotwood Vale itself. A stretch of land some ten miles across the south bank of the great river, home to dozens of agricultural settlements, hamlets, and smaller market towns. Its lands are rich, and its people aplenty. The agricultural heartland of the Vale, producing most of its grain, meat, and dairy, imported into Rotwood Vale daily and re-exported for profit. Many of Rotwood Vale's residents keep estates here. The Duke, owning most of the land directly, claims a tithe of ten percent of all produce from the region, and at least a quarter on any land directly owned by the Crown, as is their perogative, making this region vital to the Crown's coffers."
+	description = "The royal demesne of the Queen of Ferentia, and their most valuable possession. A stretch of land some ten miles across the south bank of the great river, home to dozens of agricultural settlements, hamlets, smaller market towns and the City of Kingsfield itself. Its lands are rich, and its people aplenty. The agricultural heartland of Ferentia, producing most of its grain, meat, and dairy, imported into The Realm daily and re-exported for profit. Many of The Realm's residents keep estates here. The Queen, owning most of the land directly, claims a tithe of ten percent of all produce from the region, and at least a quarter on any land directly owned by the Crown, as is their perogative, making this region vital to the Crown's coffers."
 	threat_region_id = THREAT_REGION_AZURE_GROVE
 	produces = list(
 		TRADE_GOOD_GRAIN = TG_SUPPLY_LOCAL_GRAIN,
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Rosawood"
 	subtitle = "The Elven Enclave, Lumber of the Cold Coast"
 	order_celebrants = list("Lady Sylvarine Briarmoss")
-	description = "The last vassal of the Vale still ruled by an elven lord with a majority elven population. An elven enclave on a peninsula jutting north of Mount Decapitation, alongside a narrow strip of infertile coastal woodland known as the Southern Rosawood. Access is largely by sea. Lumber is exported from the southern edge. The county is unusually, almost magically cold, its growing season barely three months a yil. Its inhabitants feed themselves on those three months of harvest, supplemented by fish from the northern sea, though it never produces or exports enough to supply the Vale. The overland route through the passes below Decapitation is passable, but slow, and fraught with rogue Black Oaks. And the elves prefer it that way. Some say, the beautiful white cloaks of the Rosawood Count, are woven in the same manner as those of the Black Oaks, notorious mercenaries that are barely tolerated the Crown. As for any allegations of collusion, the Count of Rosawood has always been quick to deny them, and the Crown has never found any evidence to the contrary."
+	description = "The last vassal of the Ferentia still ruled by an elven lord with a majority elven population. An elven enclave on a peninsula jutting north of The Realm, alongside a narrow strip of infertile coastal woodland known as the Southern Rosawood. Access is largely by sea. Lumber is exported from the southern edge. The county is unusually, almost magically cold, its growing season barely three months a yil. Its inhabitants feed themselves on those three months of harvest, supplemented by fish from the northern sea, though it never produces or exports enough to supply  The Realm. The overland route through the passes below Mountains is passable, but slow, and fraught with rogue Black Oaks. And the elves prefer it that way. Some say, the beautiful white cloaks of the Rosawood Count, are woven in the same manner as those of the Black Oaks, notorious mercenaries that are barely tolerated the Crown. As for any allegations of collusion, the Count of Rosawood has always been quick to deny them, and the Crown has never found any evidence to the contrary."
 	threat_region_id = THREAT_REGION_AZURE_GROVE
 	produces = list(
 		TRADE_GOOD_WOOD = TG_SUPPLY_CHEAP_RAW_MAT,
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Rockhill"
 	subtitle = "The Orchards, Vintners and Herbalists of the Ridge"
 	order_celebrants = list("Lord Hadrius Vespermill", "Lady Aurinde Greengable")
-	description = "A cluster of orchards and herb gardens to the north of the Vale, sheltered by a ridge that makes the climate there milder than it has any right to be. The many rolling hills of the county make for poor grain land but excellent orchard land. Rockhill wine and liquor are renowned throughout the Vale, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates. Rockhill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manor, with perhaps three quarter of the noble houses of the realm owning at least one in Rockhill."
+	description = "A cluster of orchards and herb gardens to the north of The Realm, sheltered by a ridge that makes the climate there milder than it has any right to be. The many rolling hills of the county make for poor grain land but excellent orchard land. Rockhill wine and liquor are renowned throughout Ferentia, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates. Rockhill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manor, with perhaps three quarter of the noble houses of the realm owning at least one in Rockhill."
 	threat_region_id = THREAT_REGION_AZUREAN_COAST
 	produces = list(
 		TRADE_GOOD_APPLE = TG_SUPPLY_LOCAL_FRUIT,
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	region_id = TRADE_REGION_ROCKHILL
 	name = "Vespermill"
 	subtitle = "The Orchards, Vintners and Herbalists of the Wold"
-	description = "A cluster of orchards and herb gardens across the rolling wold, sheltered by a long ridge that makes the climate there milder than it has any right to be. The hills make for poor grain land but excellent orchard land, and the county has leaned into it for six generations. Vespermill wine and liquor are renowned throughout the Vale, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates and named for the mill above the vesper-brook that the first Lord Vespermill built his hall around. Vespermill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manors, with perhaps three quarters of the noble houses of the realm owning at least one among the orchards."
+	description = "A cluster of orchards and herb gardens across the rolling wold, sheltered by a long ridge that makes the climate there milder than it has any right to be. The hills make for poor grain land but excellent orchard land, and the county has leaned into it for six generations. Vespermill wine and liquor are renowned throughout Ferentia, and some are exported beyond. It is a quiet, quaint, agricultural county, dotted with noble estates and named for the mill above the vesper-brook that the first Lord Vespermill built his hall around. Vespermill apple brandy is the realm's most counterfeited drink. Every other inn from Bleakcoast to Heartfelt claims to serve it, but perhaps only a third of them actually do. The county is also known for its many country manors, with perhaps three quarters of the noble houses of the realm owning at least one among the orchards."
 	threat_region_id = THREAT_REGION_AZUREAN_COAST
 	produces = list(
 		TRADE_GOOD_APPLE = TG_SUPPLY_LOCAL_FRUIT,
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Daftsmarch"
 	subtitle = "The Mining March, Ores of the Mount"
 	order_celebrants = list("Lord Korgrad of Pickleridge")
-	description = "The County of Daftsmarch is the heart of the Vale's mining industry, a long strip of land hugging the southern end of Mount Decapitation. It produces most of the raw ore and salt that the Vale depends on. The work pays well, and the veins are plentiful. But Daftsmarch sits uncomfortably close to the ruins of Tarichea, and the various denizens of the Underdark. The dangers posed by the drows and their ilk are a constant threat - many of them seeing Daftsmarch as a convenient source of slaves. But the ore vein are even richer - and the Crown is loathe to keep them unused - sending adventurers, mercenaries and garrison alike to do battle with the Underdark's denizens and keep them at bay."
+	description = "The County of Daftsmarch is the heart of Ferentia's mining industry, a long strip of land hugging the western mountain range. It produces most of the raw ore and salt that Ferentia depends on. The work pays well, and the veins are plentiful. But Daftsmarch sits uncomfortably close to ancient ruins beneath the mountains, and the various denizens of the Underdark. The dangers posed by the drows and their ilk are a constant threat - many of them seeing Daftsmarch as a convenient source of slaves. But the ore vein are even richer - and the Crown is loathe to keep them unused - sending adventurers, mercenaries and garrison alike to do battle with the Underdark's denizens and keep them at bay."
 	threat_region_id = THREAT_REGION_UNDERDARK
 	produces = list(
 		TRADE_GOOD_IRON_ORE = TG_SUPPLY_IRON,
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Blackholt"
 	subtitle = "The Bog's Edge, Huntsmarshal's Demesne"
 	order_celebrants = list("Huntsmarshal Ostran")
-	description = "A settlement at the southern edge of the Terrorbog, part of the Royal Demesne, and the only part the Duke never tours or manages directly. Instead, management is assigned to a special courtier, the Huntsmarshal of Blackholt. It straddles the bog proper and the undrained marshland at its edge. The locals have learned to make a living off the bog's unusual, some say Psydon-blessed yields: silk from its moths, viscera from its inhabitants, and the rare Essence of Dendor that herbalists and mages pay handsomely for. Blackholt itself is a grim, functional place. Nobody moves there. People end up there."
+	description = "A settlement at the southern edge of the Terrorbog, part of the Ducal Demesne, and the only part the Duke never tours or manages directly. Instead, management is assigned to a special courtier, the Huntsmarshal of Blackholt. It straddles the bog proper and the undrained marshland at its edge. The locals have learned to make a living off the bog's unusual, some say Psydon-blessed yields: silk from its moths, viscera from its inhabitants, and the rare Essence of Dendor that herbalists and mages pay handsomely for. Blackholt itself is a grim, functional place. Nobody moves there. People end up there."
 	threat_region_id = THREAT_REGION_AZURE_GROVE
 	produces = list(
 		TRADE_GOOD_SILK = TG_SUPPLY_SILK,
@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	region_id = TRADE_REGION_SALTWICK
 	name = "Saltwick"
 	subtitle = "The Coastal Town, Fisheries of the Realm"
-	description = "A settlement southeast of Rotwood Vale, around a day's ride away, located on the coast of Kingsfield. It was settled first by immigrants from Hammerhold and later by settlers from southern Gronn. The town is divided starkly into two parts: The curing houses and salt farms owned mostly by the town's dwarven and Hammerholdian settlers, while those of Gronnic descent makes up most of the fishermen and sailors. The two groups marry eachother rarely and argue often - but coexists somewhat harmoniously in the same town either way. Of course, Hammerholdian and Gronnmen are not the only inhabitants - many people down on their luck or seeking work also reside. Salt is imported from Daftsmarch, used to preserve the fish caught by local fishermen, and then exported throughout the Vale and Psydonia."
+	description = "A settlement southeast of The Realm, around a day's ride away, located on the coast of Kingsfield. It was settled first by immigrants from Hammerhold and later by settlers from southern Gronn. The town is divided starkly into two parts: The curing houses and salt farms owned mostly by the town's dwarven and Hammerholdian settlers, while those of Gronnic descent makes up most of the fishermen and sailors. The two groups marry eachother rarely and argue often - but coexists somewhat harmoniously in the same town either way. Of course, Hammerholdian and Gronnmen are not the only inhabitants - many people down on their luck or seeking work also reside. Salt is imported from Daftsmarch, used to preserve the fish caught by local fishermen, and then exported throughout Ferentia and Psydonia."
 	threat_region_id = THREAT_REGION_AZUREAN_COAST
 	produces = list(
 		TRADE_GOOD_FISH_FILET = TG_SUPPLY_FISH_BULK,
@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	name = "Bleakcoast"
 	subtitle = "The Bleakisles Seamarch, Pirate Archipelago"
 	order_celebrants = list("Lord Captain Vesarion of Saltreef")
-	description = "Also known as the Bleakisles Seamarch. A series of rocky outcrops said to have been created when Comet Syon impacted near the Terrorbog, radiating outward and hurling the islands from the sea itself. The archipelago numbers in the hundreds and makes navigation along all but a narrow stretch of the Vale's coast treacherous. What it lacks in fertile land it makes up for in the bounty of its seas. Schools of fish swarm in the shallow, rocky bottoms and swim as far as the Vale's coast, feeding thousands. But that bounty is not for Bleakisles inhabitants to enjoy. The isles are infested with pirates, the notorious Bleakisles Reavers, who prey on any merchant or fisherman that strays too far from shore. The Duchy maintains several garrisons to keep them in check, and has, once every two generations, undertaken a harrying of the isles, burning every non-military settlement and salting it. To no avail. Within a generation, the pirates always return, for trade is lucrative, and piracy even more so."
+	description = "Also known as the Bleakisles Seamarch. A series of rocky outcrops said to have been created during the war between the ancient elven city states in a feat of great magical prowess. The archipelago numbers in the hundreds and makes navigation along all but a narrow stretch of Ferentia's coast treacherous. What it lacks in fertile land it makes up for in the bounty of its seas. Schools of fish swarm in the shallow, rocky bottoms and swim as far as Ferentia's coast, feeding thousands. But that bounty is not for Bleakisles inhabitants to enjoy. The isles are infested with pirates, the notorious Bleakisles Reavers, who prey on any merchant or fisherman that strays too far from shore. The Duchy maintains several garrisons to keep them in check, and has, once every two generations, undertaken a harrying of the isles, burning every non-military settlement and salting it. To no avail. Within a generation, the pirates always return, for trade is lucrative, and piracy even more so."
 	threat_region_id = THREAT_REGION_AZUREAN_COAST
 	produces = list()
 	demands = list(
@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	region_id = TRADE_REGION_NORTHFORT
 	name = "Northfort"
 	subtitle = "The Border Fort, Watch on the Northern Approach"
-	description = "A fortified castle at the northern approach into the Vale, the only direct overland route from the north. As economically unproductive as a fort can be, which is very. The crown feeds it because without it, the border between Grenzelhoft and the Vale becomes negotiable."
+	description = "A fortified castle at the northern approach into The Realm, the only direct overland route from the north. As economically unproductive as a fort can be, which is very. The crown feeds it because without it, it would leave Ferentia vulnerable to foreign incursion."
 	threat_region_id = THREAT_REGION_MOUNT_DECAP
 	produces = list()
 	demands = list(
@@ -357,9 +357,9 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 /datum/economic_region/heartfelt
 	region_id = TRADE_REGION_HEARTFELT
 	name = "Heartfelt"
-	subtitle = "The Borderland, Greatest Vassal of the Vale"
-	order_celebrants = list("Count Eduard Harlause", "Sir Ardent of the March")
-	description = "The County of Heartfelt is the Vale's most powerful vassal, comprising nearly the entirety of the western borderland, bordering Otava, Grenzelhoft, Naledi, and Aavnr. The Count of Heartfelt has always been afforded considerable liberty in how they raise revenues and how many men they keep under arms, for if Heartfelt falls, the Vale's heartland would be exposed. Its defense is funded by a network of estates, holdings, and acres scattered across hundreds of pockets in the Vale outside Heartfelt proper, which the Count uses to purchase armaments and pay retinue alike. But any ruler of the Vale knows there is no greater threat to themselves than the self-professed greatest defender of the Vale."
+	subtitle = "The Origin of Artifice, The Once Great Crafthalls of Ferentia"
+	order_celebrants = list("Councillor Eduard Harlause", "Sir Ardent of the March")
+	description = "The Barony of Heartfelt was one of Ferentia's most innovative and influential holdings. Having fostered the invention of Artificery, many eyes set upon Heartfelt with envy. The Barony suffers from many setbacks, troubling a once prosperous land and limiting it's exports, requiring immense importation to sustain itself in it's exigency."
 	threat_region_id = THREAT_REGION_AZURE_GROVE
 	produces = list()
 	demands = list(
@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	region_id = TRADE_REGION_HAGENWALD
 	name = "Hagenwald"
 	subtitle = "The Industrial Heart, Forges of the Coppiced Wood"
-	description = "The industrial heart of the Vale, sitting on the northern face of Mount Decapitation, where Daftsmarch's ore is taken by mules to be smelted, refined, and forged. Hagenwald produces nearly every ingot of iron, steel, copper, and tin the kingdom uses - without its furnaces, the Vale's smiths would be reduced to working scrap. The town's wealth is built on coppiced woodland that flanks it on three sides, cut and re-cut on a generational rotation so the fire never go out. Its workforce is half Grenzelhoftian by descent, drawn over the centuries by wages, and the streets are perpetually grey with soot. The Crown garrisons it quietly."
+	description = "The industrial heart of Ferentia, sitting on the northern face of the Ferentian mountains, where Daftsmarch's ore is taken by mules to be smelted, refined, and forged. Hagenwald produces nearly every ingot of iron, steel, copper, and tin the kingdom uses - without its furnaces, Ferentia's smiths would be reduced to working scrap. The town's wealth is built on coppiced woodland that flanks it on three sides, cut and re-cut on a generational rotation so the fire never goes out. Its workforce is half Grenzelhoftian by descent, drawn over the centuries by wages, and the streets are perpetually grey with soot. The Crown garrisons it quietly."
 	threat_region_id = THREAT_REGION_MOUNT_DECAP
 	produces = list(
 		TRADE_GOOD_IRON_INGOT = TG_SUPPLY_REFINED_INGOTS,
@@ -454,9 +454,9 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 /datum/economic_region/rosawood/alashar
 	map_swap_only = TRUE
 	name = "Rosabagh"
-	subtitle = "The Elven Enclave, Cypress Timber of the Cold Shore"
+	subtitle = "The Drakian Enclave, Cypress Timber of the Cold Shore"
 	order_celebrants = list("Lady Sylvarine of the Cypresses")
-	description = "The last vassal still ruled by an elven lord: a grove country of black cypress on the cold northern shore, reached more easily by sea than by the pass road. Its timber is prized for beams and ship keels, and its taciturn woodwrights fell exactly as many trees as they plant. The Count of Rosabagh weaves white cloaks in the manner of the Black Oaks, and answers questions about that fraternity the way cypress answers wind."
+	description = "The last vassal still ruled by an drakian lord: a grove country of black cypress on the cold northern shore, reached more easily by sea than by the pass road. Its timber is prized for beams and ship keels, and its taciturn woodwrights fell exactly as many trees as they plant. The Satrap of Rosabagh weaves red cloaks in the manner of the oathmarked, and answers questions about that fraternity the way cypress answers wind."
 
 /datum/economic_region/rockhill/alashar
 	map_swap_only = TRUE
@@ -483,7 +483,7 @@ GLOBAL_LIST_INIT(economic_regions, init_economic_regions())
 	map_swap_only = TRUE
 	name = "Saltabad"
 	subtitle = "The Salt Flats, Fisheries of the Gulf"
-	description = "A white country: salt pans glittering to the horizon, and past them the gulf with its fishing fleets. Saltabad's brine masters and net captains feed the realm and cure what they feed it with, and its harbor bazaar changes silver in six languages. The town is said to be the only place in Al-Ashur where the tax farmer arrives by boat."
+	description = "A white country: salt pans glittering to the horizon, and past them the gulf with its fishing fleets. Saltabad's brine masters and net captains feed the realm and cure what they feed it with, and its harbor bazaar changes silver in six languages. The town is said to be the only place in Al-Ashur where the tax collector arrives by boat."
 
 /datum/economic_region/bleakcoast/alashar
 	map_swap_only = TRUE

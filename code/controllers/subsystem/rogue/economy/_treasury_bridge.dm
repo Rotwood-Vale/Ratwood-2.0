@@ -121,9 +121,8 @@
 		D.automatic_limit = TRUE
 
 /// Expected daily rural tax income, surfaced by the StewardTrade ledger header.
-/// Flat in AP too - decrees don't touch rural tax (tick_rural_tax mints the same).
 /datum/controller/subsystem/treasury/proc/get_rural_tax_amount()
-	return 50 // keep in sync with RURAL_TAX in treasury.dm
+	return RURAL_TAX
 
 /// Projected daily wage outlay from the Nerve Master's configured daily payments.
 /// Ratwood deviation: bank_accounts values are integers and wage suspension is a trait,
