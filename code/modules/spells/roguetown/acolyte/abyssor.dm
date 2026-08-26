@@ -217,12 +217,6 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
-		if(HAS_TRAIT(target, TRAIT_BLACKBLOOD))
-			target.visible_message(span_artery("[target] stirs in discomfort, the miracle dissipates."), span_artery("A dull ache spreads through your body, only to fade as quickly as it arrived."))
-			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			target.emote("pain")
-			return FALSE
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD))
 			target.visible_message(span_danger("[target] is crushed by divine pressure!"), span_userdanger("I'm crushed by divine pressure!"))
 			target.adjustBruteLoss(30)			
