@@ -50,16 +50,9 @@
 
 		playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
 		C_caster.visible_message(span_warning("A thread of silvery lux spools out from [C_caster] and attaches to [C_target], softly aglow..."), span_warning("You begin twining your lux together with [C_target], drawing forth their wounds unto yourself..."))
+		var/static/list/disallowed_wounds = typecacheof(list(/datum/wound/dismemberment, /datum/wound/facial, /datum/wound/fracture/head, /datum/wound/fracture/neck, /datum/wound/cbt/permanent, /datum/wound/grievous/pre_decapitation, /datum/wound/grievous/pre_skullshatter))
 		for(var/datum/wound/targetwound in tw_List)
-			if (istype(targetwound, /datum/wound/dismemberment))
-				continue
-			if (istype(targetwound, /datum/wound/facial))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/head))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/neck))
-				continue
-			if (istype(targetwound, /datum/wound/cbt/permanent))
+			if (disallowed_wounds[targetwound.type])
 				continue
 			if (move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
 				if (!targetwound) // it's possible they might've healed on or advanced
