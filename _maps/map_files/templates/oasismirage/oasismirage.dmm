@@ -1,0 +1,622 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"b" = (
+/obj/machinery/light/rogue/hearth,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"c" = (
+/turf/open/water/ocean/deep/thermalwater,
+/area/rogue/outdoors/desert/mirage)
+"e" = (
+/obj/structure/flora/roguetree/palm,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"f" = (
+/obj/effect/decal/cleanable/debris/woody,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"g" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"h" = (
+/obj/effect/decal/carpet/kover_darkred,
+/obj/machinery/light/rogue/torchholder/hotspring,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"j" = (
+/obj/machinery/light/rogue/campfire/densefire,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"k" = (
+/obj/structure/flora/roguegrass/bush/desert,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"l" = (
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"m" = (
+/obj/item/natural/rock/desert,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"n" = (
+/obj/item/grown/log/tree/stick,
+/obj/effect/spawner/lootdrop/general_loot_low,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"p" = (
+/turf/open/floor/rogue/twig{
+	icon = 'modular/DesertTown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue/outdoors/desert/mirage)
+"q" = (
+/obj/structure/flora/roguegrass/herb/random,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"s" = (
+/obj/structure/fluff/pillow/purple{
+	dir = 8
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"u" = (
+/obj/structure/curtain/drab{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/obj/effect/decal/duneedge,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"v" = (
+/obj/structure/tent_wall,
+/obj/structure/tent_wall,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"w" = (
+/obj/structure/underworld/carriage_normal{
+	desc = "The dunes await.";
+	density = 0;
+	pixel_x = -64;
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"z" = (
+/obj/structure/flora/roguegrass/bush/jungle,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"B" = (
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"C" = (
+/obj/structure/shisha/hookah,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"D" = (
+/obj/structure/bed/rogue/inn/hay,
+/obj/effect/decal/cleanable/debris/woody,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"E" = (
+/turf/open/floor/rogue/dirt/desert,
+/area/rogue/outdoors/desert/mirage)
+"G" = (
+/obj/structure/table/templestoneslab/slab4,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"I" = (
+/obj/structure/table/templestoneslab,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"K" = (
+/obj/structure/fluff/pillow/purple,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"L" = (
+/obj/structure/curtain/drab{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/obj/effect/decal/duneedge{
+	dir = 1
+	},
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"M" = (
+/obj/item/natural/rock/desert,
+/turf/open/floor/rogue/sandbrick,
+/area/rogue/outdoors/desert/mirage)
+"N" = (
+/obj/effect/spawner/lootdrop/roguetown/sewers,
+/obj/structure/closet/crate/chest/wicker,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"O" = (
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"P" = (
+/obj/structure/tent_wall,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"Q" = (
+/obj/item/natural/rock/desert{
+	icon_state = "sandrock2"
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"R" = (
+/obj/machinery/light/rogue/torchholder/hotspring/standing,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"S" = (
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"U" = (
+/obj/machinery/light/rogue/torchholder/hotspring,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue/outdoors/desert/mirage)
+"W" = (
+/obj/item/cushion/zybantine,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"X" = (
+/obj/effect/decal/carpet/kover_darkred,
+/turf/open/floor/rogue/dunes,
+/area/rogue/outdoors/desert/mirage)
+"Y" = (
+/obj/structure/closet/crate/chest/crate,
+/obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
+/obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+"Z" = (
+/obj/structure/bed/rogue/inn/hay,
+/turf/open/floor/rogue/twig,
+/area/rogue/outdoors/desert/mirage)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+m
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+p
+a
+a
+K
+X
+a
+a
+a
+P
+P
+P
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+w
+p
+E
+a
+C
+s
+a
+a
+P
+P
+N
+P
+P
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+Q
+a
+a
+a
+p
+E
+e
+a
+a
+a
+a
+P
+O
+f
+S
+P
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+l
+l
+l
+z
+l
+k
+E
+u
+O
+b
+Z
+P
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+E
+g
+l
+q
+c
+c
+l
+U
+E
+P
+f
+O
+S
+P
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+G
+l
+B
+U
+c
+c
+c
+c
+l
+e
+P
+P
+Y
+v
+v
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+k
+l
+l
+c
+c
+c
+c
+B
+l
+a
+P
+P
+v
+M
+a
+"}
+(11,1,1) = {"
+a
+a
+P
+P
+P
+P
+e
+l
+c
+c
+c
+c
+c
+l
+l
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+P
+n
+O
+P
+q
+B
+z
+c
+c
+c
+g
+q
+a
+a
+X
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+P
+b
+f
+L
+E
+l
+l
+c
+c
+c
+B
+R
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+P
+Z
+O
+P
+a
+e
+l
+B
+l
+B
+k
+I
+a
+W
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+P
+P
+P
+P
+a
+a
+a
+l
+E
+a
+a
+a
+W
+j
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+h
+a
+P
+L
+P
+P
+a
+a
+W
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+Q
+P
+f
+O
+P
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+m
+a
+a
+a
+a
+P
+b
+D
+P
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+v
+P
+P
+v
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
