@@ -545,69 +545,7 @@
 	if(dna.species.update_health_hud())
 		return
 	else
-		if(hud_used.bloods)
-			var/bloodloss = ((BLOOD_VOLUME_NORMAL - blood_volume) / BLOOD_VOLUME_NORMAL) * 100
-
-			var/toxloss = getToxLoss()
-			var/oxyloss = getOxyLoss()
-			var/painpercent = get_complex_pain() / pain_threshold
-			painpercent = painpercent * 100
-
-			var/usedloss = 0
-			if(bloodloss > 0)
-				usedloss = bloodloss
-
-			var/toxoverlay = null
-			var/oxyoverlay = null
-			var/painoverlay = null
-			if(usedloss <= 0)
-				hud_used.bloods.icon_state = "dam0"
-				if(toxloss > 0)
-					switch(toxloss)
-						if(1 to 20)
-							toxoverlay = "toxloss20"
-						if(21 to 49)
-							toxoverlay = "toxloss40"
-						if(50 to 79)
-							toxoverlay = "toxloss60"
-						if(80 to 99)
-							toxoverlay = "toxloss80"
-						if(100 to 999)
-							toxoverlay = "toxloss100"
-
-				if(oxyloss > 0)
-					switch(oxyloss)
-						if(1 to 20)
-							oxyoverlay = "oxyloss20"
-						if(21 to 49)
-							oxyoverlay = "oxyloss40"
-						if(50 to 79)
-							oxyoverlay = "oxyloss60"
-						if(80 to 99)
-							oxyoverlay = "oxyloss80"
-						if(100 to 999)
-							oxyoverlay = "oxyloss100"
-			else
-				var/used = round(usedloss, 10)
-				if(used <= 80)
-					hud_used.bloods.icon_state = "dam[used]"
-				else
-					hud_used.bloods.icon_state = "damelse"
-			if(painpercent > 0)
-				switch(painpercent)
-					if(1 to 29)
-						painoverlay = "painloss20"
-					if(30 to 59)
-						painoverlay = "painloss40"
-					if(60 to 79)
-						painoverlay = "painloss60"
-					if(80 to 99)
-						painoverlay = "painloss80"
-					if(100 to 999)
-						painoverlay = "painloss100"
-			var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
-			if(istype(blood_hud))
-				blood_hud.update_indicator_states(toxoverlay, oxyoverlay, painoverlay)
+		update_blood_hud()
 
 /*		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -642,9 +580,7 @@
 
 
 /mob/living/carbon/human/proc/update_temperature_hud()
-	if(isnull(hud_used))
-		return FALSE
-	if(isnull(hud_used.temperature) || stat == DEAD)
+	if(isnull(hud_used?.temperature) || stat == DEAD)
 		return FALSE
 	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
 		hud_used.temperature.icon_state = "tempnormal"
@@ -678,6 +614,73 @@
 		return FALSE
 	var/ratio = max_energy ? (energy / max_energy) : 0
 	hud_used.energy.set_meter_fill(ratio, "energy100", "energy20", "energy10")
+	return TRUE
+
+/mob/living/carbon/human/update_blood_hud()
+	if(!hud_used?.bloods)
+		return FALSE
+	var/bloodloss = ((BLOOD_VOLUME_NORMAL - blood_volume) / BLOOD_VOLUME_NORMAL) * 100
+
+	var/toxloss = getToxLoss()
+	var/oxyloss = getOxyLoss()
+	var/painpercent = get_complex_pain() / pain_threshold
+	painpercent = painpercent * 100
+
+	var/usedloss = 0
+	if(bloodloss > 0)
+		usedloss = bloodloss
+
+	var/toxoverlay = null
+	var/oxyoverlay = null
+	var/painoverlay = null
+	if(usedloss <= 0)
+		hud_used.bloods.icon_state = "dam0"
+		if(toxloss > 0)
+			switch(toxloss)
+				if(1 to 20)
+					toxoverlay = "toxloss20"
+				if(21 to 49)
+					toxoverlay = "toxloss40"
+				if(50 to 79)
+					toxoverlay = "toxloss60"
+				if(80 to 99)
+					toxoverlay = "toxloss80"
+				if(100 to 999)
+					toxoverlay = "toxloss100"
+
+		if(oxyloss > 0)
+			switch(oxyloss)
+				if(1 to 20)
+					oxyoverlay = "oxyloss20"
+				if(21 to 49)
+					oxyoverlay = "oxyloss40"
+				if(50 to 79)
+					oxyoverlay = "oxyloss60"
+				if(80 to 99)
+					oxyoverlay = "oxyloss80"
+				if(100 to 999)
+					oxyoverlay = "oxyloss100"
+	else
+		var/used = round(usedloss, 10)
+		if(used <= 80)
+			hud_used.bloods.icon_state = "dam[used]"
+		else
+			hud_used.bloods.icon_state = "damelse"
+	if(painpercent > 0)
+		switch(painpercent)
+			if(1 to 29)
+				painoverlay = "painloss20"
+			if(30 to 59)
+				painoverlay = "painloss40"
+			if(60 to 79)
+				painoverlay = "painloss60"
+			if(80 to 99)
+				painoverlay = "painloss80"
+			if(100 to 999)
+				painoverlay = "painloss100"
+	var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
+	if(istype(blood_hud))
+		blood_hud.update_indicator_states(toxoverlay, oxyoverlay, painoverlay)
 	return TRUE
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
@@ -1185,7 +1188,7 @@
 
 		for(var/datum/wound/W in BP.wounds)
 			if(istype(W, /datum/wound/heatstroke))
-				BP.remove_wound(W)
+				W.remove_from_bodypart()
 				found = TRUE
 
 	if(found)
@@ -1251,7 +1254,7 @@
 		return FALSE
 
 	var/datum/language_holder/language_holder = get_language_holder()
-	var/list/preserved_languages = language_holder ? language_holder.copy_language_cache(language_holder.languages) : null
+	var/list/preserved_languages = language_holder?.languages?.Copy()
 	var/selected_default_language = language_holder?.selected_default_language
 
 	client.prefs.copy_to(src, TRUE, FALSE)
@@ -1259,8 +1262,7 @@
 
 	if(language_holder && length(preserved_languages))
 		for(var/language_type in preserved_languages)
-			for(var/source in preserved_languages[language_type])
-				grant_language(language_type, source = source)
+			grant_language(language_type)
 		language_holder.selected_default_language = selected_default_language
 
 	return TRUE

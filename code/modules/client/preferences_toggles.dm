@@ -102,7 +102,9 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "no_redflash", "label" = "Anti-Eyestrain Mode", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
+		list("id" = "mouseover_role", "label" = "Show Mouseover Role", "enabled" = !!owner.prefs.show_mouseover_role, "desc" = "Show role text under player names on mouseover."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
 		list("id" = "language_icon", "label" = "Disable Language Icon", "enabled" = !!owner.prefs.no_language_icon, "desc" = "Hide language icon prefixes in chat."),
@@ -175,10 +177,14 @@
 				owner.mob?.toggle_tgui_multiline()
 			if("screen_shake")
 				owner.toggle_screenshake()
+			if("no_redflash")
+				owner.toggle_redflash()
 			if("chat_headshot")
 				owner.set_picinchat()
 			if("masked_examine")
 				owner.masked_examine()
+			if("mouseover_role")
+				owner.toggle_mouseover_role()
 			if("nsfw_examine")
 				owner.nsfw_examine_always()
 			if("examine_blocks")
@@ -286,6 +292,19 @@
 		else
 			to_chat(src, "Screen shake disabled.")
 
+/client/verb/toggle_redflash()
+	set category = "Options"
+	set name = "Toggle Anti-Eyestrain"
+	set hidden = 1
+	if(prefs)
+		prefs.no_redflash = !prefs.no_redflash
+		prefs.save_preferences()
+		if(prefs.no_redflash)
+			to_chat(src, "Your screen will no longer flash red or white from pain or other events.")
+		else
+			to_chat(src, "Your screen will now flash red or white from pain or other events.")
+	mob.update_redflash_pref(prefs.no_redflash)
+
 /client/verb/masked_examine()
 	set category = "Options"
 	set name = "Toggle Masked Examine"
@@ -297,6 +316,18 @@
 			to_chat(src, "Your character information will be viewable when masked.")
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
+
+/client/verb/toggle_mouseover_role()
+	set category = "Options"
+	set name = "Toggle Mouseover Role"
+	set hidden = 1
+	if(prefs)
+		prefs.show_mouseover_role = !prefs.show_mouseover_role
+		prefs.save_preferences()
+		if(prefs.show_mouseover_role)
+			to_chat(src, "Role text will now be shown under player mouseover names.")
+		else
+			to_chat(src, "Role text will no longer be shown under player mouseover names.")
 
 /client/verb/nsfw_examine_always()
 	set category = "Options"

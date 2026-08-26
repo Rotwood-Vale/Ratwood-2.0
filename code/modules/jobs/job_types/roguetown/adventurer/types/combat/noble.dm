@@ -209,7 +209,7 @@
 /datum/outfit/job/roguetown/adventurer/squire/pre_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, span_warning("You are a squire who has traveled far in search of a master to train you and a lord to knight you."))
-	head = /obj/item/clothing/head/roguetown/roguehood
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	cloak = /obj/item/clothing/cloak/stabard
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron

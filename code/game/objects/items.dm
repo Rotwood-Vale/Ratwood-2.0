@@ -220,7 +220,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/examine_effects = list()
 
 	///played when an item that is equipped blocks a hit
-	var/list/blocksound
+	var/blocksound
 
 	var/thrown_damage_flag = "blunt"
 
@@ -1771,6 +1771,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
+	lose_polish()//call to remove polish bonus on armor/weaps when broken. lives in /blacksmith/items.dm
 	..()
 
 	update_damaged_state()
@@ -1790,6 +1791,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_integrity = max_integrity * 0.6
 
 /obj/item/obj_destruction(damage_flag)
+	if (obj_flags & PREVENTS_DESTRUCTION)
+		return FALSE
 	if (damage_flag == "acid")
 		obj_destroyed = TRUE
 		acid_melt()
@@ -1958,4 +1961,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(desc != initial(desc))
 		return TRUE
 	return FALSE
-

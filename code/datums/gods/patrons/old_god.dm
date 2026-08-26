@@ -233,7 +233,7 @@
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
-		user.blood_volume = max(user.blood_volume-30, 0)//We don't care about scaling, for this one.
+		user.set_blood_volume(max(user.get_blood_volume()-30, 0))//We don't care about scaling, for this one.
 		return TRUE
 
 	revert_cast()

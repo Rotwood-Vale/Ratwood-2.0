@@ -16,20 +16,20 @@
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
-		STATKEY_PER = 3,//Anvil"Strikes deftly" is based on PER
+		STATKEY_PER = 3, //Anvil "Strikes deftly" is based on PER
 		STATKEY_STR = 1,
 		STATKEY_SPD = -2
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,	//Shouldn't be better than the smith (though the stats are already)
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 
@@ -86,7 +86,8 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 /datum/outfit/job/roguetown/mercenary/grudgebearer_soldier/pre_equip(mob/living/carbon/human/H)
@@ -190,12 +191,18 @@
 	desc = "Forged to fit the stubbiest of fingers. It is covered in protective layers."
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	sleeved = null
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
 	prevent_crits = list(BCLASS_TWIST)
 	icon_state = "dwarfhand"
 	item_state = "dwarfhand"
 	armor = ARMOR_GRUDGEBEARER
 	max_integrity = 1000
+
+/obj/item/clothing/gloves/roguetown/plate/dwarven/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	customi = null
+	override_state = female ? "dwarfhand_f_dwarf" : "dwarfhand_dwarf"
+	return ..()
 
 /obj/item/clothing/gloves/roguetown/plate/dwarven/ComponentInitialize()
 	. = ..()

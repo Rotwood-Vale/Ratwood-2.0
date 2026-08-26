@@ -128,6 +128,7 @@
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	anvilrepair = /datum/skill/craft/armorsmithing
+	adjustable = CAN_CADJUST
 	var/active_item = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden/equipped(mob/user, slot)
@@ -148,7 +149,8 @@
 	else
 		return
 
-
+/obj/item/clothing/mask/rogue/spectacles/golden/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/spectacles/golden/dropped(mob/user, slot)
 	..()
@@ -355,6 +357,9 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
+
+/obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
 	..()
@@ -641,14 +646,41 @@
 	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
+/obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	name = "sojourner's mask"
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "A golden mask, gnarled by the sustained agonies of djinnic corruption; yet as long as its Naledian hexes endure, so too will its wearer. Hand-fitted shingles flank the sides to repel incoming strikes. </br>'..Clad with the stereotype of abruptly disappearing without any forewarning, the typical Sojourner is in constant pursuit of diversifying their erudition. One might arrive to learn the local witch's recipe of sanctifying atropa extract and spend yils in the community trying to master it, while another might work alongside the region's Orthodoxic chapter to slay a lycker lord in exchange for his archive, only to vanish the very next day..'"
+	max_integrity = 150
+	armor = ARMOR_PLATE
+	flags_inv = HIDEFACE|HIDESNOUT
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	sellprice = 0
+
+/obj/item/clothing/mask/rogue/lordmask/zizite
+	name = "fateful visage"
+	item_state = "zizomask"
+	icon_state = "zizomask"
+	desc = "To advance, at any cost."
+	alternate_worn_layer = HOOD_LAYER
 	max_integrity = 150
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT

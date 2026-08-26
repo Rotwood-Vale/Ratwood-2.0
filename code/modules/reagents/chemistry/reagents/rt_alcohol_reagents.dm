@@ -193,14 +193,14 @@
 
 /datum/reagent/consumable/ethanol/butterhairs
 	name = "Butterhairs"
-	boozepwr = 30
+	boozepwr = 40
 	taste_description = "buttery richness"
-	color = "#5D8A8A"
+	color = "#D4A020"
 	quality = DRINK_GOOD
 
 /datum/reagent/consumable/ethanol/stonebeards
 	name = "Stonebeard Reserve"
-	boozepwr = 40
+	boozepwr = 60
 	taste_description = "potent oatlike liquor"
 	color = "#5D8A8A"
 	quality = DRINK_GOOD

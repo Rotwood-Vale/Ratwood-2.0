@@ -321,8 +321,8 @@
 	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
 		if(volume >= 60)
 			M.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+40, BLOOD_VOLUME_MAXIMUM)
+		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
 		var/list/wCount = M.get_wounds()
 		if(wCount.len > 0)
 			M.heal_wounds(4.5)
@@ -407,8 +407,8 @@
 /obj/item/clothing/ring/griefflower
 	name = "rosa ring"
 	desc = "Once a flower of love, now touched by Baotha's hand. Its petals whisper of desire, despair, and the kind of longing that never dies. Worn by those who cannot let go."
-	icon_state = "peaceflower"
-	item_state = "peaceflower"
+	icon_state = "baothaflower"
+	item_state = "baothaflower"
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 

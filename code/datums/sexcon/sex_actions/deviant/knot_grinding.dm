@@ -61,9 +61,9 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 	if(is_bottom_grinding)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds [target]'s knot in [user.p_their()] [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds [target]'s knot in [user.p_their()] [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds [user.p_their()] knot inside [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds [user.p_their()] knot inside [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.make_sucking_noise()
 		user.sexcon.do_thrust_animate(target, pixels = 2, time = 1.5)

@@ -133,12 +133,19 @@
 			var/sentinel = SH.calculate_sentinel_bonus()
 			prob2defend += sentinel
 
+	if(HAS_TRAIT(U, TRAIT_ARMOUR_LIKED))
+		if(HAS_TRAIT(U, TRAIT_FENCERDEXTERITY))
+			prob2defend -= 5
+
 	prob2defend = clamp(prob2defend, 5, 90)
 	if(HAS_TRAIT(user, TRAIT_HARDSHELL) && H.client)	//Dwarf-merc specific limitation w/ their armor on in pvp
 		prob2defend = clamp(prob2defend, 5, 70)
 	if(!H?.check_armor_skill())
 		prob2defend = clamp(prob2defend, 5, 75)			//Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
 		drained = drained + 5							//More stamina usage for not being trained in the armor you're using.
+
+	if(HAS_TRAIT(src, TRAIT_NODEF))
+		prob2defend = 0
 
 	//Dual Wielding
 	var/defender_dualw
@@ -231,8 +238,8 @@
 
 			if(prob(66) && AB)
 				if((used_weapon.flags_1 & CONDUCT_1) && (AB.flags_1 & CONDUCT_1))
-					flash_fullscreen("whiteflash")
-					user.flash_fullscreen("whiteflash")
+					fullscreen_redflash("whiteflash")
+					user.fullscreen_redflash("whiteflash")
 					var/datum/effect_system/spark_spread/S = new()
 					var/turf/front = get_step(src,src.dir)
 					S.set_up(1, 1, front)

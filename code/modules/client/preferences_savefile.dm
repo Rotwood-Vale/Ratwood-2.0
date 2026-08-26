@@ -246,6 +246,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
@@ -267,7 +268,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["edging"]				>> edging
 	S["sensitive_brands"] 	>> sensitive_brands
 	S["facial_brands"] 		>> facial_brands
+	S["cursed_collarable"] 	>> cursed_collarable
 	S["shake"]				>> shake
+	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
@@ -322,6 +325,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_on_map		= sanitize_integer(chat_on_map, 0, 1, initial(chat_on_map))
 	showrolls		= sanitize_integer(showrolls, 0, 1, initial(showrolls))
 	chatheadshot	= sanitize_integer(chatheadshot, 0, 1, initial(chatheadshot))
+	show_mouseover_role = sanitize_integer(show_mouseover_role, 0, 1, initial(show_mouseover_role))
 	chastity_hardmode = sanitize_integer(chastity_hardmode, CHASTITY_HARDMODE_DISABLED, CHASTITY_HARDMODE_ENABLED, initial(chastity_hardmode))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
 	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
@@ -417,6 +421,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
@@ -437,7 +442,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["edging"], edging)
 	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
 	WRITE_FILE(S["facial_brands"], facial_brands)
+	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
 	WRITE_FILE(S["shake"], shake)
+	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)

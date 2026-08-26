@@ -24,6 +24,11 @@
 	req_bar = /obj/item/ingot/bronze
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
+/datum/anvil_recipe/armor/gold
+	abstract_type = /datum/anvil_recipe/armor/gold
+	req_bar = /obj/item/ingot/gold
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
 /datum/anvil_recipe/armor/iron
 	abstract_type = /datum/anvil_recipe/armor/iron
 	req_bar = /obj/item/ingot/iron
@@ -52,6 +57,11 @@
 
 /datum/anvil_recipe/armor/blacksteel
 	abstract_type = /datum/anvil_recipe/armor/blacksteel
+	req_bar = /obj/item/ingot/blacksteel
+	craftdiff = SKILL_LEVEL_MASTER
+
+/datum/anvil_recipe/armor/blacksteel/modern
+	abstract_type = /datum/anvil_recipe/armor/blacksteel/modern
 	req_bar = /obj/item/ingot/blacksteel
 	craftdiff = SKILL_LEVEL_MASTER
 
@@ -293,6 +303,12 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/upgraded
 	i_type = "Armor"
 
+/datum/anvil_recipe/armor/steel/wardenmeleehauberk
+	name = "Forester's Hauberk (+1 Forester's Cuirass, +1 Essence of Wilderness, +1 Steel)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee, /obj/item/natural/cured/essence, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee/upgraded
+	i_type = "Armor"
+
 /datum/anvil_recipe/armor/iron/halfplate
 	name = "Half-Plate, Iron (+1 Iron Breastplate, +2 Cured Leather)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/iron, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
@@ -465,7 +481,7 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	i_type = "Armor"
 
-/datum/anvil_recipe/armor/steel/steel/brigandine
+/datum/anvil_recipe/armor/steel/brigandine
 	name = "Brigandine, Steel (+1 Steel, +2 Cloth)"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/cloth, /obj/item/natural/cloth)
 	created_item = /obj/item/clothing/suit/roguetown/armor/brigandine
@@ -492,7 +508,7 @@
 	name = "Plate Gauntlets, Steel"
 	created_item = /obj/item/clothing/gloves/roguetown/plate
 
-/datum/anvil_recipe/armor/steel/chainleg
+/datum/anvil_recipe/armor/steel/chainlegs
 	name = "Chain Chausses, Steel"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs
 
@@ -854,12 +870,10 @@
 
 /datum/anvil_recipe/armor/gold/belt
 	name = "Plated Belt, Gold"
-	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/storage/belt/rogue/leather/plaquegold
 
 /datum/anvil_recipe/armor/gold/mask
 	name = "Mask, Gold"
-	req_bar = /obj/item/ingot/gold
 	created_item = /obj/item/clothing/mask/rogue/facemask/goldmask
 
 // BLACKSTEEL
