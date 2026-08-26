@@ -525,3 +525,44 @@
   wikimody:
   - rscadd: Naziby golden masks now provide the same sandstorm immunity sand gogles
       do
+2026-08-26:
+  2whatever2:
+  - admin: SQDL code is cleaner and now allows for nested lists
+  CloverIsLucky:
+  - bugfix: Fixes Miracles Skill Description. You don't really get higher access to
+      higher tier of miracles from your patrons if you had miracles increased.
+  Ephemeralis:
+  - qol: Heartweave (Eora T2) no longer requests a confirmation popup on its beneficiary,
+      making it actively usable in combat without griefing the person you're trying
+      to help.
+  IronDragoon:
+  - rscadd: Rockhill Slaver and Slave roles with their own base of operations in lowtown
+  - rscadd: Rockhill Baron role, new ruler of lowtown with his manor.
+  - rscadd: Owned Slave trait, through using branding tools to mark someone as owned
+      which is examinable
+  - rscadd: Brands can now be burnt off (including ownership brands) with a toggle
+      in the branding tool menu
+  - bugfix: Cursed collar/chastity device examine text, and collar pref persisting
+      properly
+  Makximus:
+  - rscadd: masc and fem versions of elvish/dwarvish, evil, zeth, and wizardly voicepacks
+      made available.
+  - sound: Makes (some) previously unselectable voicepacks selectable
+  RadiantFlash7:
+  - rscadd: Two new Vizier spells, acceleration, Divergence
+  - rscadd: The Naledi Complex- Penalties for removing your mask.
+  - rscadd: New Hierophant spell, Obelisks of power
+  - rscadd: Naledi refugee now has some btter customizaiton and options.
+  - rscdel: Vizier no longer has psydonite miracles
+  - code_imp: Naledi roles have had spells shifted
+  - code_imp: Vizier unique spells use devotion properly
+  - code_imp: updated Naledi information mentioned in game to reflect long existing
+      lore.
+  Yuckuza:
+  - balance: Phoenix Guard cooldown raised from 20s -> 60s
+  annikaRU:
+  - rscadd: engineers around the globe have discovered you can in-fact wear your spectacles
+      above your eyes, gold prices skyrocket after this sudden realization
+  picklewilly83:
+  - rscadd: Added "a2 Untitled" by Lotchek as a selectable combat track, under the
+      name, "Psydonite".
