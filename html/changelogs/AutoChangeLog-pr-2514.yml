@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Bronze cogs and lamps, craftable with one ingot thats yielding 2 cogs and 3 lamps, respectively, are no longer smeltable. No more duping your bronze."
