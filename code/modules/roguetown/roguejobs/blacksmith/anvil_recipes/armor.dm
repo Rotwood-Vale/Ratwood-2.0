@@ -694,7 +694,16 @@
 	name = "Volf Face Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
-	i_type = "Armor"
+
+/datum/anvil_recipe/armor/steel/helmetowl
+	name = "Strigidae Armet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/owl
+
+/datum/anvil_recipe/armor/steel/helmetknightarmetgreatplume
+	name = "Knight's Greatplumed Armet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume
 
 /datum/anvil_recipe/armor/steel/frogmouthgreatplume
 	name = "Froggemund Helmet With Greatplume, Steel (+2 Steel)"
