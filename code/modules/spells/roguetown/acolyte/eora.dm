@@ -279,12 +279,6 @@
 		revert_cast()
 		return FALSE
 
-	var/consent = alert(target, "[user] offers a lifebond. Accept?", "Heartweave", "Yes", "No")
-	if(consent != "Yes" || QDELETED(target))
-		to_chat(user, span_warning("The bond was rejected."))
-		revert_cast()
-		return FALSE
-
 	var/holy_skill = user.get_skill_level(associated_skill)
 	// Add component to both participants without mutual recursion
 	user.AddComponent(/datum/component/eora_bond, target, user, holy_skill)
