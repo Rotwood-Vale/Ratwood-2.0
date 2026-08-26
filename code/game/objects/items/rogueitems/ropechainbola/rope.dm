@@ -122,7 +122,7 @@
 						span_danger("[user] ties my legs with [src.name]."))
 	SSblackbox.record_feedback("tally", "legcuffs", 1, type)
 
-	log_combat(user, C, "legcuffed", src)
+	log_combat(user, C, "legcuffed", TRUE)
 
 /obj/item/rope/proc/apply_cuffs(mob/living/carbon/target, mob/user, leg = FALSE)
 	if(!leg)
