@@ -10307,6 +10307,10 @@
 /obj/machinery/light/rogue/candle/floorcandle,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"cfo" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/rtfield)
 "cfq" = (
 /obj/structure/table/finestone,
 /obj/machinery/light/rogue/candle/floorcandle,
@@ -20591,6 +20595,11 @@
 /obj/item/reagent_containers/glass/bottle/alchemical/healthpot,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/warden)
+"eoK" = (
+/obj/effect/decal/cleanable/debris/woody,
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/sewer)
 "eoP" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/dirt/road,
@@ -65092,6 +65101,10 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/manor)
+"nAY" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/grassyel,
+/area/rogue/outdoors/rtfield)
 "nAZ" = (
 /obj/structure/closet/dirthole/grave,
 /obj/item/natural/dirtclod{
@@ -90860,11 +90873,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/rtfield)
-"sTz" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/mob/living/carbon/human/species/npc/deadite,
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/town/sewer)
 "sTD" = (
 /obj/structure/closet/crate/chest/gold{
 	locked = 1;
@@ -95320,10 +95328,6 @@
 /obj/structure/flora/roguegrass/jungle/sparse,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
-"tNQ" = (
-/mob/living/carbon/human/species/npc/deadite,
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/town/sewer)
 "tNR" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/rogue/church,
@@ -96544,7 +96548,6 @@
 /area/rogue/outdoors/exposed/town/keep)
 "uaR" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/carbon/human/species/npc/deadite,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/sewer)
 "uaU" = (
@@ -195906,7 +195909,7 @@ ylh
 mMx
 cqm
 uvm
-tNQ
+axX
 loz
 epN
 dlK
@@ -196811,7 +196814,7 @@ mMx
 cqm
 cHC
 uaR
-cHC
+xpi
 uvm
 dlK
 ylh
@@ -197261,7 +197264,7 @@ cqm
 xNL
 mMx
 cqm
-sTz
+nPw
 bLa
 lmI
 axX
@@ -199070,7 +199073,7 @@ dlK
 amm
 dlK
 dDd
-llI
+eoK
 axX
 mMx
 cqm
@@ -285399,7 +285402,7 @@ rZO
 sNZ
 sNZ
 sNZ
-bsL
+cfo
 hjw
 bsL
 quW
@@ -291756,7 +291759,7 @@ pxF
 pxF
 ibp
 ibp
-ibp
+nAY
 ibp
 sNZ
 asY

@@ -6327,10 +6327,6 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdark/rockhill)
-"brA" = (
-/obj/item/roguemachine/zadcote/steward,
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/exposed/town/keep)
 "brB" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/cobble/mossy,
@@ -397122,7 +397118,7 @@ kIS
 hSk
 pOf
 pOf
-brA
+pOf
 sTJ
 wrj
 snF
