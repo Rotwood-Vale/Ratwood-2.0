@@ -24,6 +24,7 @@
 	max_integrity = 30
 	opacity = TRUE
 	debris = list(/obj/item/natural/silk = 1)
+	var/randomize_alpha = TRUE
 
 /obj/structure/spider/stickyweb/attacked_by(obj/item/I, mob/living/user) //Snipping action for webs, scissors turning webs into silk fast!
 	var/snip_time = 50
@@ -60,12 +61,23 @@
 /obj/structure/spider/stickyweb/solo
 	icon_state = "stickyweb3"
 
+/obj/structure/spider/stickyweb/thin
+	opacity = FALSE
+	alpha = 100
+	randomize_alpha = FALSE
+
+/obj/structure/spider/stickyweb/thick
+	alpha = 200
+	max_integrity = 60
+	randomize_alpha = FALSE
+
 /obj/structure/spider/stickyweb/Initialize(mapload)
 	if(icon_state == "stickyweb1")
 		if(prob(50))
 			icon_state = "stickyweb2"
 	dir = pick(GLOB.cardinals)
-	alpha = rand(80,109)
+	if(randomize_alpha)
+		alpha = rand(80, 109)
 	switch(pick(1,2))
 		if (1)
 			static_debris = FALSE
