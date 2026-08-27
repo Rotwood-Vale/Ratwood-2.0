@@ -46,25 +46,3 @@
 		decree_revoke_used_day = GLOB.dayspassed
 	log_game("CHARTER: [usr ? key_name(usr) : "system"] [new_active ? "restored" : "revoked"] [D.name]")
 	return TRUE
-
-// Wage floors (Indenture of War / Covenant of Noc & Pestra). AP keeps these on treasury.dm;
-// ES consolidates them here with the rest of the decree consumers.
-/datum/controller/subsystem/treasury/proc/get_wage_floor(job_title)
-	var/floor = 0
-	for(var/id in decrees)
-		var/datum/decree/D = decrees[id]
-		if(!D?.active)
-			continue
-		floor = D.apply_wage_floor(job_title, floor)
-	return floor
-
-/// Union of every active decree's wage-floored job list.
-/datum/controller/subsystem/treasury/proc/enumerate_wage_floored_jobs()
-	var/list/out = list()
-	for(var/id in decrees)
-		var/datum/decree/D = decrees[id]
-		if(!D?.active)
-			continue
-		for(var/job in D.wage_floored_jobs())
-			out |= job
-	return out

@@ -1,27 +1,28 @@
-/datum/foreign_realm/lirvas
-	id = REALM_LIRVAS
-	name = "Lirvas"
+/datum/foreign_realm/vakra
+	id = REALM_VAKRA
+	name = "Vakran"
 	roll_weight = TRADE_REALM_WEIGHT_RARE
-	demanded_categories = list(NAVIGATOR_BUCKET_GARMENT_FINELUX, NAVIGATOR_BUCKET_WEAPONS, NAVIGATOR_BUCKET_ARMOR_HEAVY, NAVIGATOR_BUCKET_SEAFOOD, NAVIGATOR_BUCKET_MISCELLANEOUS)
+	demanded_categories = list(NAVIGATOR_BUCKET_GARMENT_FINELUX, NAVIGATOR_BUCKET_WEAPONS, NAVIGATOR_BUCKET_ARMOR_LIGHT, NAVIGATOR_BUCKET_ARMOR_HEAVY, NAVIGATOR_BUCKET_SEAFOOD, NAVIGATOR_BUCKET_MISCELLANEOUS)
 	ship_name_words = list(
-		"Zarvlor", "Drak", "Aurum", "Mammon", "Debt",
-		"Hoard", "Indenture", "Sissean", "Coil", "Scale",
-		"Ring", "Vault", "Talon", "Wyrm", "Avarice",
+		"Otter", "Noc-lit", "Vakran", "Packlord", "Lupianowy",
+		"Seavolf", "Toothy", "Fanged", "Claw", "Forder",
+		"Paddler", "Noc-bounty",
 	)
 	captain_first_names = list(
-		"Zarrak", "Hosk", "Kessith", "Slazri", "Rokzar",
+		"Larai", "Hosk", "Kessith", "Slazri", "Rokzar",
 		"Hralz", "Zelkar", "Vossar", "Sirhak", "Kazros",
 		"Zessira", "Hsalka", "Rikzira", "Solzra", "Kazinna",
 	)
 	captain_last_names = list(
-		"Goldscale", "Hoardkeeper", "Debtholder", "Coilmaster", "Ringclimber",
-		"of-Zarvlor's Ring", "Mammonborn", "Scriphandler", "of the Topmost Ring", "Drake-Sworn",
+		"Sturmvolf", "the Sockeye", "Torn-Ear", "Swiftwoda", "the Kundlu",
+		"Noclicht", "the Kunda", "Long-Tooth", "the lupianowy",
 	)
+//Grenzelhoftian ship- Vakra's a clientstate/loosely 'governed' even before the civilwar
 	ship_types = list(
-		list("name" = "Tithebearer Cog", "tonnage" = 100, "weight" = 35),
-		list("name" = "Goldscale Hulk", "tonnage" = 220, "weight" = 35),
-		list("name" = "Drake Carrack", "tonnage" = 450, "weight" = 25),
-		list("name" = "Hoardship", "tonnage" = 700, "weight" = 5),
+		list("name" = "Coaster", "tonnage" = 30, "weight" = 15),
+		list("name" = "Cog", "tonnage" = 120, "weight" = 50),
+		list("name" = "Hulk", "tonnage" = 250, "weight" = 25),
+		list("name" = "Carrack", "tonnage" = 500, "weight" = 10),
 	)
 	city_tags = list()
 	city_tag_chance = 0
@@ -58,6 +59,7 @@
 		list("good" = TRADE_GOOD_FAT, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_FAIR),
 		list("good" = TRADE_GOOD_POPPY, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_PREMIUM),
 		list("good" = TRADE_GOOD_CARROT, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_FAIR),
+		list("good" = TRADE_GOOD_HEALTH_POTION, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
 	)
 	victualling_fresh_pool = list(
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/hcake, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_LUXURY),
@@ -78,24 +80,23 @@
 		list("recipe" = /datum/brewing_recipe/blackberry_wine),
 	)
 	cultural_stock_pool = list(
-		/datum/supply_pack/rogue/lirvas/tabard,
-		/datum/supply_pack/rogue/lirvas/pauldrons,
-		/datum/supply_pack/rogue/lirvas/gold_gorget,
-		/datum/supply_pack/rogue/lirvas/gold_kilt,
+		/datum/supply_pack/rogue/vakra/vreccale,
+		/datum/supply_pack/rogue/vakra/helmet,
+		/datum/supply_pack/rogue/vakra/warhammer,
+		/datum/supply_pack/rogue/vakra/forlorn_hope_regalia,
 		/datum/supply_pack/rogue/lirvas/gold_quarterstaff,
 		/datum/supply_pack/rogue/lirvas/sabre,
-		/datum/supply_pack/rogue/lirvas/tithebound_kit,
 		/datum/supply_pack/rogue/alcohol/rtoper,
 	)
 	hail_lines = list(
-		"By the Hoard and the Tithe, Factor, you have kept a faithful ledger. The scales remember.",
-		"My grain is short. My gems are not. The Inner Ring sends its compliments and its hunger.",
-		"Mammon weighs every transaction, friend, and Zarvlor remembers what Mammon weighs. Give honest measure - or do not, and learn the cost in a quieter season.",
-		"The drakes drink deep of gold these days. We bring scales, gems, and a thirst that has never known bottom. Trade.",
-		"I am Tithebound. My captain's purse is not mine; it is the Hoard's. Speak prices accordingly.",
-		"A coin dropped in Lirvas takes seven years to settle. Yours, here, will be counted in heartbeats. Try to keep up.",
-		"The figurehead of my ship is gold leafed over an older carving. The crew swears the under carving smiles when the lamps go out. I have stopped asking what it smiles at.",
-		"You burn coin for warmth in your hearths. We do not. Sell us your grain and you will learn why.",
-		"A Tithecaster of the Inner Ring rides with me, weighing souls in coin as her line has done for three generations. For one gold sovereign she will tell you the weight your sins would fetch at the Hoard's scales upon your death. She has not been wrong yet. Most of her clients do not ask twice - but those who heed her have died well, and the Hoard remembers a settled debt before it remembers any other thing.",
-		"Rumors says that Lord Zarvlor does not eat proper food and only eat gold. Do not let that deters you, the people of the Inner Ring are quite fond of your seafood. Send me anything and everything you have that is quality and worth the space of runic chests home."
-	)
+		"The battle lines in Vakra shift all the time. There's no way to know who will own the port by the time we get back to it. Whoever it is, they'll need these supplies.",
+		"Vakrans never thought highly of sailing folk, before the war. Called us Otters, they did. They'd chuckle and turn their snouts up at our riverboats. Now? You've never seen a lupianowy so happy as when we come back to port with fresh equipment." ,
+		"Most of this stuff was looted from some packlord's holding or other. They raid each other, they sell us the spoils, they buy our supplies. In a few years, nothing will be left in Vakra that shines at all.",
+		"Seems odd to be buying fancy dresses and frilly clothes in the middle of a war, doesn't it? I'll let you in on a little secret: no one's wearing this stuff. Anything made with fur will be broken down to make insulation for armor, the rest will be repurposed into gambesons. Peasant clothes aren't made strong enough." ,
+		"Got any fish? We can use the flesh to make jerky, of course, but the real value is the oil. Makes lupianowy fur grow thick and lustrous. One of the few luxuries most of them can still afford, back in Vakra.",
+		"News from Vakra? Territories aren't the same from one dae to the next. Anything I'd tell you was out of date by the time we left port. If you want to know what's going on in the packlands, hop aboard and see for yourself... I mean, don't, we don't have room for a passenger, but you get what I'm saying.",
+		"Buying? Selling? Tak? No? Make up your mind, we've got a war to get back to.",
+		"The coffee's for the crew. Don't get much sleep; we work long hours and there's no leg of our journey that's truly safe. Well, that and Rufus snores like Abyssor having a wet dream...",
+		"Prusaks aren't all bad, even with their ridiculous hats. I mean, they let us travel their waterways, and unload in their ports. Still, I dread the day the war spills over into their territory. Not sure they'll be so welcoming then.",
+		"Dobry den! What can a lightly-salted, old lupianowy do for you t'dae?",
+		)

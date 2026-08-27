@@ -22,8 +22,8 @@
 			return REALM_ETRUSCA
 		if("Gronn")
 			return REALM_GRONN
-		if("Lirvas")
-			return REALM_LIRVAS
+		if("Vakra")
+			return REALM_VAKRA
 		if("Lingyue")
 			return REALM_LINGYUE
 		if("Naledi")

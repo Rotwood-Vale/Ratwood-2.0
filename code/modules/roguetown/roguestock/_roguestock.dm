@@ -238,20 +238,10 @@
 		var/list/best = SSeconomy.get_best_export_region(trade_good_id)
 		if(best && best["unit_price"])
 			return round(best["unit_price"] * importexport_amt)
-	// Legacy fallback: demand-adjusted export price with queen's tax
-	if(export_price)
-		var/taxed_amount = round((export_price * importexport_amt) * (demand / 100))
-		taxed_amount = taxed_amount - round(SStreasury.queens_tax * taxed_amount)
-		return max(taxed_amount, 0)
 	return payout_price * importexport_amt
 
 /datum/roguestock/proc/get_import_price()
-	if(trade_good_id)
-		return withdraw_price * importexport_amt
-	// Legacy fallback
-	var/taxed_amount = round((export_price * importexport_amt) * (demand / 100))
-	taxed_amount = taxed_amount + round(SStreasury.queens_tax * taxed_amount)
-	return max(taxed_amount, 5)
+	return withdraw_price * importexport_amt
 
 // Legacy demand procs — used by stockpile types without trade_good_id
 /datum/roguestock/proc/lower_demand()

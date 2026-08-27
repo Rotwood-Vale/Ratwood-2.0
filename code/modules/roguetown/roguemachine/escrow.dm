@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(escrow_machines)
+
 /datum/escrow_order
 	var/commissioner_name
 	var/datum/weakref/commissioner_ref
@@ -13,6 +15,7 @@
 	var/list/cached_required_counts
 	var/list/cached_lines
 	var/list/cached_materials
+	var/list/cached_material_tally
 
 /datum/escrow_order/proc/label()
 	var/list/parts = list()
@@ -415,7 +418,7 @@
 				total += get_material_price(path) * CR.reqs[path]
 	return total
 
-/obj/structure/roguemachine/escrow/proc/recipe_materials(datum/recipe)
+/obj/structure/roguemachine/escrow/proc/recipe_material_tally(datum/recipe)
 	var/list/tally = list()
 	if(istype(recipe, /datum/anvil_recipe))
 		var/datum/anvil_recipe/AR = recipe
@@ -429,6 +432,10 @@
 		if(islist(CR.reqs))
 			for(var/path in CR.reqs)
 				tally[path] = (tally[path] || 0) + CR.reqs[path]
+	return tally
+
+/obj/structure/roguemachine/escrow/proc/recipe_materials(datum/recipe)
+	var/list/tally = recipe_material_tally(recipe)
 	var/list/sorted_paths = list()
 	for(var/path in tally)
 		var/qty = tally[path]
@@ -1119,3 +1126,18 @@
 /obj/structure/roguemachine/escrow/tailor/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("This commissioner accepts tailoring and garment work only.")
+
+/datum/escrow_order/proc/material_tally(obj/structure/roguemachine/escrow/E)
+	if(cached_material_tally)
+		return cached_material_tally
+	var/list/out = list()
+	if(E)
+		for(var/key in recipe_quantities)
+			var/want = recipe_quantities[key]
+			if(want <= 0)
+				continue
+			var/list/per_craft = E.recipe_material_tally(key)
+			for(var/path in per_craft)
+				out[path] = (out[path] || 0) + (per_craft[path] * want)
+		cached_material_tally = out
+	return out

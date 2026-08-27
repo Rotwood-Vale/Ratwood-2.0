@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	switch(mode)
 		if(0)
 			if(findtext(message, "secrets of the throat"))
-				say("My commands are: Make Decree, Make Announcement, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, Nevermind")
+				say("My commands are: Make Decree, Make Announcement, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Set Laws, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, I Ascend, Nevermind")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 			if(findtext(message, "make announcement"))
 				if(nocrown)
@@ -187,15 +187,6 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				purge_decrees()
 				return
-			if(findtext(message, "revise charter"))
-				if(notlord || nocrown)
-					say("You are not my master!")
-					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
-					return
-				say("The charters of the realm lay before thee...")
-				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-				give_decree_popup(H)
-				return
 			if(findtext(message, "make law"))
 				if(!SScommunications.can_announce(H))
 					say("I must gather my strength!")
@@ -209,7 +200,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
 				mode = 4
 				return
-			if(findtext(message, "remove law"))
+			if(findtext(message, "set laws"))
 				if(!SScommunications.can_announce(H))
 					say("I must gather my strength!")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
@@ -218,14 +209,9 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 					say("You are not my master!")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
-				var/message_clean = replacetext(message, "remove law", "")
-				var/law_index = text2num(message_clean) || 0
-				if(!law_index || !GLOB.laws_of_the_land[law_index])
-					say("That law doesn't exist!")
-					return
-				say("That law shall be gone!")
-				playsound(src, 'sound/misc/machineyes.ogg', 100, FALSE, -1)
-				remove_law(law_index)
+				say("The new laws shall be as such...")
+				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+				give_law_popup(H)
 				return
 			if(findtext(message, "purge laws"))
 				if(!SScommunications.can_announce(H))
@@ -258,6 +244,15 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				give_tax_popup(H)
 				return
+			if(findtext(message, "revise charter"))
+				if(notlord || nocrown)
+					say("You are not my master!")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				say("The charters of the realm lay before thee...")
+				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+				give_decree_popup(H)
+				return
 			if(findtext(message, "become regent"))
 				if(nocrown)
 					say("You need the crown.")
@@ -268,7 +263,8 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 					SSticker.regentmob = null
 					return
-				if(SSticker.rulermob != null)
+				var/mob/living/current_lord = SSticker.rulermob
+				if(current_lord && !QDELETED(current_lord) && current_lord.stat != DEAD)
 					say("The true lord is already present in the realm.")
 					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 					return
@@ -307,7 +303,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 			make_decree(H, raw_message)
 			mode = 0
 		if(3)
-			declare_outlaw(H, message)
+			declare_outlaw(H, raw_message)
 			mode = 0
 		if(4)
 			if(!SScommunications.can_announce(speaker))
@@ -315,71 +311,46 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 			make_law(raw_message)
 			mode = 0
 
+/obj/structure/roguemachine/titan/proc/summon_crown()
+	var/obj/item/clothing/head/roguetown/crown/serpcrown/I = SSroguemachine.crown
+
+	if(I)
+		I.anti_stall()
+
+	I = new /obj/item/clothing/head/roguetown/crown/serpcrown(src.loc)
+	SSroguemachine.crown = I
+
+	say("The crown is summoned!")
+	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+	playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+
+	return I
+
 /obj/structure/roguemachine/titan/proc/give_tax_popup(mob/living/carbon/human/user)
 	if(!Adjacent(user))
 		return
-	// Sales/transaction taxes are all category levies now (import tariff, contract levy, etc.),
-	// set through the Taxation 2 panel; the legacy flat tax_value lever is gone.
-	var/choice = input(user, "Which levies shall you adjust?", "Crown Taxation") as null|anything in list("Deposit Taxes & Fines", "Levies & Poll Tax")
-	if(!choice || !Adjacent(user))
-		return
-	switch(choice)
-		if("Deposit Taxes & Fines")
-			// Ratwood per-category deposit taxation and fine exemptions
-			// (SStreasury.taxation_cat_settings). The upstream TaxSetter TGUI only drives
-			// the new levy/poll rates, so the categories are adjusted here.
-			var/list/new_settings = list()
-			for(var/category in SStreasury.taxation_cat_settings)
-				var/cur_amount = SStreasury.taxation_cat_settings[category]["taxAmount"]
-				var/cur_exempt = SStreasury.taxation_cat_settings[category]["fineExemption"]
-				var/newamt = input(user, "[category]: deposit tax percent (0-99). Currently [cur_amount]%.", src, cur_amount) as null|num
-				if(isnull(newamt) || !Adjacent(user))
-					return
-				newamt = CLAMP(round(newamt), 0, 99)
-				var/exempt_choice = alert(user, "[category]: exempt from fines? Currently [cur_exempt ? "exempt" : "not exempt"].", "Fine Exemption", "Exempt", "Not Exempt")
-				if(!Adjacent(user))
-					return
-				new_settings[category] = list("taxAmount" = newamt, "fineExemption" = (exempt_choice == "Exempt"))
-			SStreasury.set_taxes(new_settings, "The Generous Lord Decrees", "The Tyrannical Lord Dictates")
-		if("Levies & Poll Tax")
-			var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
-			taxsetter.ui_interact(user)
+	var/datum/taxsetter/taxsetter = new("The Generous Lord Decrees")
+	taxsetter.ui_interact(user)
 
+/obj/structure/roguemachine/titan/proc/give_law_popup(mob/living/carbon/human/user)
+	if(!Adjacent(user))
+		return
+	var/datum/laws_menu/lawmenu = new
+	lawmenu.ui_interact(user)
+
+/obj/structure/roguemachine/titan/proc/give_decree_popup(mob/living/carbon/human/user)
+	if(!Adjacent(user))
+		return
+	var/datum/decree_setter/panel = new
+	panel.ui_interact(user)
 
 /obj/structure/roguemachine/titan/proc/make_announcement(mob/living/user, raw_message)
 	if(!SScommunications.can_announce(user))
 		return
-	try_make_rebel_decree(user)
-
 	SScommunications.make_announcement(user, FALSE, raw_message)
 	GLOB.last_crown_announcement_time = world.time
 
-/obj/structure/roguemachine/titan/proc/try_make_rebel_decree(mob/living/user)
-	if(!SScommunications.can_announce(user))
-		return
-	var/datum/antagonist/prebel/P = user.mind?.has_antag_datum(/datum/antagonist/prebel)
-	if(P)
-		if(P.rev_team)
-			if(P.rev_team.members.len < 3)
-				to_chat(user, "<span class='warning'>I need more folk on my side to declare victory.</span>")
-			else
-				for(var/datum/objective/prebel/obj in user.mind.get_all_objectives())
-					obj.completed = TRUE
-				if(!SSmapping.retainer.head_rebel_decree)
-					user.mind.adjust_triumphs(1)
-				SSmapping.retainer.head_rebel_decree = TRUE
-
 /obj/structure/roguemachine/titan/proc/make_decree(mob/living/user, raw_message)
-	var/datum/antagonist/prebel/rebel_datum = user.mind?.has_antag_datum(/datum/antagonist/prebel)
-	if(rebel_datum)
-		if(rebel_datum.rev_team?.members.len < 3)
-			to_chat(user, "<span class='warning'>I need more folk on my side to declare victory.</span>")
-		else
-			for(var/datum/objective/prebel/obj in user.mind.get_all_objectives())
-				obj.completed = TRUE
-			if(!SSmapping.retainer.head_rebel_decree)
-				user.mind.adjust_triumphs(1)
-			SSmapping.retainer.head_rebel_decree = TRUE
 	record_round_statistic(STATS_LAWS_AND_DECREES_MADE)
 	SScommunications.make_announcement(user, TRUE, raw_message)
 
@@ -393,18 +364,38 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 		return
 	return make_outlaw(raw_message)
 
+/proc/get_containing_mob(atom/A) // Returns the mob that ultimately contains A (A in bag in clothing in mob, etc.), or null.
+	var/atom/current = A
+	var/safety = 0
+	while(current && safety++ < 30)
+		if(ismob(current))
+			return current
+		current = current.loc
+	return null
+
 /proc/make_outlaw(raw_message)
+	// Strip trailing punctuation/whitespace from typed input ("Eduard." -> "Eduard")
+	raw_message = trim(raw_message)
+	while(length(raw_message))
+		var/last_char = copytext(raw_message, length(raw_message))
+		if(!(last_char in list(".", ",", "!", "?", ";", ":")))
+			break
+		raw_message = copytext(raw_message, 1, length(raw_message))
+	var/mob/living/carbon/human/found_human
+	for(var/mob/living/carbon/human/H in GLOB.human_list)
+		if(H.real_name == raw_message)
+			found_human = H
+			break
 	if(raw_message in GLOB.outlawed_players)
 		GLOB.outlawed_players -= raw_message
-		priority_announce("[raw_message] is no longer an outlaw in the realm.", "The [SSticker.rulertype] Decrees", 'sound/misc/royal_decree.ogg', "Captain")
+		priority_announce("[raw_message] is no longer an outlaw in [SSticker.realm_name].", "The [SSticker.rulertype] Decrees", 'sound/misc/royal_decree.ogg', "Captain")
+		if(istype(found_human))
+			REMOVE_TRAIT(found_human, TRAIT_OUTLAW, TRAIT_GENERIC)
 		return FALSE
-	var/found = FALSE
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.real_name == raw_message)
-			found = TRUE
-	if(!found)
+	if(!found_human)
 		return FALSE
 	GLOB.outlawed_players += raw_message
+	ADD_TRAIT(found_human, TRAIT_OUTLAW, TRAIT_GENERIC)
 	priority_announce("[raw_message] has been declared an outlaw and must be captured or slain.", "The [SSticker.rulertype] Decrees", 'sound/misc/royal_decree2.ogg', "Captain")
 	return TRUE
 
@@ -431,13 +422,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	priority_announce("All of the land's prior decrees have been purged!", "DECREES PURGED", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 
 /proc/become_regent(mob/living/carbon/human/H)
-	priority_announce("[H.name], the [H.get_role_title()], sits as the regent of the realm.", "A New Regent Resides", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
+	priority_announce("[H.real_name], the [H.get_role_title()], sits as the regent of the realm.", "A New Regent Resides", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 	SSticker.regentmob = H
 	SSticker.regentday = GLOB.dayspassed
 
-// Item 6 (decrees): the Lord's charter panel - revoke/restore the realm's ancient compacts.
-/obj/structure/roguemachine/titan/proc/give_decree_popup(mob/living/carbon/human/user)
-	if(!Adjacent(user))
-		return
-	var/datum/decree_setter/panel = new
-	panel.ui_interact(user)

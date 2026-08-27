@@ -900,7 +900,7 @@
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic
 	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()

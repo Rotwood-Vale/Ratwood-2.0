@@ -1,20 +1,20 @@
-/datum/supply_pack/rogue/lirvas
+/datum/supply_pack/rogue/vakra
 	group = "Cultural Stock"
-	crate_name = "Lirvas crate"
+	crate_name = "Vakra crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 	not_in_public = TRUE
 
-/datum/supply_pack/rogue/lirvas/tabard
-	name = "Lirvan Tabard"
+/datum/supply_pack/rogue/vakra/vreccale
+	name = "Vakran Vreccale"
 	cost = 90
-	contains = list(/obj/item/clothing/cloak/ordinatorcape)
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/lirvas/pauldrons
-	name = "Lirvasi Pauldrons"
+/datum/supply_pack/rogue/vakra/helmet
+	name = "Vakran Volf Helm"
 	cost = 70
-	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
@@ -32,10 +32,10 @@
 	ship_qty_min = 1
 	ship_qty_max = 1
 
-/datum/supply_pack/rogue/lirvas/gold_quarterstaff
-	name = "Gold-Plated Quarterstaff"
+/datum/supply_pack/rogue/vakra/warhammer
+	name = "Silvered Warhammer"
 	cost = 140
-	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/steel)
+	contains = list(/obj/item/rogueweapon/mace/warhammer/steel/silver)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
@@ -46,16 +46,16 @@
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/lirvas/tithebound_kit
-	name = "Lirvan Tithebound Regalia"
+/datum/supply_pack/rogue/vakra/forlorn_hope_regalia
+	name = "Vakran Forlorn Hope Regalia"
 	no_name_quantity = TRUE
 	cost = 540
 	contains = list(
-		/obj/item/clothing/cloak/ordinatorcape,
-		/obj/item/clothing/wrists/roguetown/bracers,
-		/obj/item/clothing/neck/roguetown/gorget/steel,
-		/obj/item/clothing/under/roguetown/chainlegs/kilt,
-		/obj/item/storage/belt/rogue/leather/plaquegold,
+		/obj/item/clothing/neck/roguetown/gorget/forlorncollar,
+		/obj/item/clothing/wrists/roguetown/splintarms,
+		/obj/item/clothing/head/roguetown/helmet/heavy/volfplate,
+		/obj/item/clothing/under/roguetown/splintlegs,
+		/obj/item/clothing/suit/roguetown/armor/brigandine/light,
 		/obj/item/clothing/gloves/roguetown/angle,
 	)
 	ship_qty_min = 1

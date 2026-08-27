@@ -129,7 +129,7 @@ export const Navigator = () => {
               <div style={fieldRowStyle}>
                 <div style={fieldLabelStyle}>Crown export duty</div>
                 <div style={fieldValueStyle}>
-                  <span style={{ fontWeight: 'bold' }}>{dutyRatePct}</span>
+                  <span style={{ fontWeight: 'bold' }}>{dutyRatePct}%</span>
                   {isProprietor && (
                     <span
                       style={{

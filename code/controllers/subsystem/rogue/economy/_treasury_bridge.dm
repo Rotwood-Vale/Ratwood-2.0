@@ -1,5 +1,4 @@
-// Treasury bridge: AP-style fund system vars and stubs for SStreasury.
-// datum/fund and related procs live in code/modules/banking/.
+
 
 /datum/controller/subsystem/treasury
 	/// Crown's general purse — replaces legacy treasury_value (kept in sync for compat).
@@ -99,8 +98,6 @@
 /datum/controller/subsystem/treasury/proc/dirty_auto_import_view()
 	auto_import_view_dirty = TRUE
 
-/// AP parity (Step 15): pop-scaled stockpile limits for auto-limited entries.
-/// Ratwood deviation: CEILING(x, 1) instead of AP's ceil() builtin.
 /datum/controller/subsystem/treasury/proc/autoset_stockpile_limits()
 	var/effective_pop = (SSeconomy && SSeconomy.simulated_player_scalar > 0) ? SSeconomy.simulated_player_scalar : get_active_player_count()
 	var/pop_mult = min(REGION_POP_SCALE_MAX, 1.0 + (effective_pop * REGION_POP_SCALE_PER_PLAYER))
@@ -125,8 +122,6 @@
 	return RURAL_TAX
 
 /// Projected daily wage outlay from the Nerve Master's configured daily payments.
-/// Ratwood deviation: bank_accounts values are integers and wage suspension is a trait,
-/// not an account flag (AP checks account.wages_suspended).
 /datum/controller/subsystem/treasury/proc/get_expected_wage_outlay()
 	if(!steward_machine || !steward_machine.daily_payments)
 		return 0

@@ -43,12 +43,11 @@
 	treasury_debt += loan_amount
 	force_set_round_statistic(STATS_TREASURY_DEBT_OUTSTANDING, treasury_debt)
 	record_round_statistic(STATS_ARREARS_DECLARED, 1)
-	// Direct credit so the loan isn't immediately skimmed against the debt we just registered.
+	// Direct credit so the loan itself isn't immediately skimmed against the debt we just registered.
 	discretionary_fund.balance += loan_amount
-	treasury_value = discretionary_fund.balance
 	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, loan_amount, "Arrears advance from the Ferentian Trading Company"))
 	priority_announce(
-		"The Crown's coffers ran dry at payroll. The Burghers of Rotwood Vale, by their standing pledge, advance [loan_amount]m at no interest to cover the day's wages. Should the Crown fail again on the morrow, the realm enters sequestration.",
+		"The Crown's coffers ran dry at payroll. The Burghers of Ferentia, by their standing pledge, advance [loan_amount]m at no interest to cover the day's wages. Should the Crown fail again on the morrow, the realm enters sequestration.",
 		"THE BURGHERS LEND",
 		'sound/misc/royal_decree2.ogg',
 		"Captain",
@@ -61,18 +60,19 @@
 	bankruptcy_count += 1
 	record_round_statistic(STATS_BANKRUPTCY_DECLARED, 1)
 
+	// Reset purse to the operating floor. Adjust by difference and log so the ledger reflects
+	// the residual being burned (or topped up) rather than a silent assignment.
 	if(discretionary_fund.balance > BANKRUPTCY_OPERATING_FLOOR)
 		var/excess = discretionary_fund.balance - BANKRUPTCY_OPERATING_FLOOR
 		discretionary_fund.balance = BANKRUPTCY_OPERATING_FLOOR
 		log_fund_entry(new /datum/treasury_entry("burn", discretionary_fund, null, excess, "Sequestration: residual purse forfeit"))
-		record_round_statistic(STATS_FORFEITURE_AMOUNT, excess)
-		record_round_statistic(STATS_FORFEITURE_COUNT, 1)
 	else if(discretionary_fund.balance < BANKRUPTCY_OPERATING_FLOOR)
 		var/topup = BANKRUPTCY_OPERATING_FLOOR - discretionary_fund.balance
 		discretionary_fund.balance = BANKRUPTCY_OPERATING_FLOOR
 		log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, topup, "Sequestration: operating reserve from the Ferentian Trading Company"))
-	treasury_value = discretionary_fund.balance
 
+	// Existing arrears debt is rolled into the new sequestration debt rather than dropped,
+	// so the Crown doesn't escape the smaller obligation by failing harder.
 	var/new_debt = BANKRUPTCY_DEBT_FLAT
 	treasury_debt += new_debt
 	force_set_round_statistic(STATS_TREASURY_DEBT_OUTSTANDING, treasury_debt)
@@ -83,37 +83,35 @@
 	suspend_wages_for_bankruptcy()
 
 	priority_announce(
-		"Following seizure of [atc_seizure_blurb()] against the Crown's outstanding obligations, the Ferentian Trading Company - most blessed servant of Malum the Worker - has graciously advanced an interest-free reserve of [BANKRUPTCY_OPERATING_FLOOR]m in exchange for a debt of [new_debt]m to the Company. Until the debt is repaid in full, the Company holds the sequestered revenues of the realm; the stockpile and trade-engine pass to its hand. Salaries stand suspended.",
+		"Following seizure of [atc_seizure_blurb()] against the Crown's outstanding obligations, the Ferentian Trading Company - most blessed, most devout servant of Malum the Worker and Abyssor the Dreamer - has graciously advanced an interest-free reserve of [BANKRUPTCY_OPERATING_FLOOR]m in exchange for a debt of [new_debt]m to the Company. Until the debt is repaid in full, the Company holds the sequestered revenues of the realm and farms the customs and salt tolls in perpetuity; the stockpile and trade-engine pass to its hand, that the orderly operation of commerce may be assured for the common weal. Salaries stand suspended; all Charters but the Golden Bull are dissolved.",
 		"SEQUESTRATION DECLARED",
 		'sound/misc/royal_decree.ogg',
 		"Captain",
 	)
 	return TRUE
 
-/// ES: bank_accounts stores integer balances. Track suspended mobs in suspended_wage_mobs.
 /datum/controller/subsystem/treasury/proc/suspend_wages_for_bankruptcy()
 	if(!steward_machine || !steward_machine.daily_payments)
 		return
 	var/list/payments = steward_machine.daily_payments
-	for(var/mob/living/carbon/human/owner as anything in bank_accounts)
+	for(var/mob/living/owner as anything in bank_accounts)
 		if(!owner || !(payments[owner.job] > 0))
 			continue
-		if(owner in suspended_wage_mobs)
+		var/datum/fund/account = bank_accounts[owner]
+		if(!account || account.wages_suspended)
 			continue
-		suspended_wage_mobs[owner] = TRUE
-		// ES: the payroll gate reads HAS_TRAIT(TRAIT_WAGES_SUSPENDED) (treasury.dm / _treasury_bridge.dm),
-		// so the flag must actually be applied, not just recorded. A distinct "sequestration" trait
-		// source keeps a steward's manual suspension intact when the realm later recovers.
-		ADD_TRAIT(owner, TRAIT_WAGES_SUSPENDED, "sequestration")
+		account.wages_suspended = TRUE
 		to_chat(owner, span_danger("My wages have been suspended after the Crown's sequestration. They will resume when the realm recovers."))
 
 /datum/controller/subsystem/treasury/proc/resume_wages_after_bankruptcy()
 	var/list/payments = steward_machine?.daily_payments
-	for(var/mob/living/carbon/human/owner as anything in suspended_wage_mobs.Copy())
+	for(var/mob/living/owner as anything in bank_accounts)
 		if(!owner)
 			continue
-		suspended_wage_mobs -= owner
-		REMOVE_TRAIT(owner, TRAIT_WAGES_SUSPENDED, "sequestration")
+		var/datum/fund/account = bank_accounts[owner]
+		if(!account || !account.wages_suspended)
+			continue
+		account.wages_suspended = FALSE
 		if(payments && payments[owner.job] > 0)
 			to_chat(owner, span_notice("My wages have been reinstated as the Crown's sequestration lifts."))
 
@@ -150,10 +148,11 @@
 		return
 	treasury_state = TREASURY_NORMAL
 
+	// The skim leaves the purse at exactly the operating floor; top up to the recovery target
+	// so the Crown has working capital to resume.
 	if(discretionary_fund.balance < BANKRUPTCY_RECOVERY_RESET)
 		var/topup = BANKRUPTCY_RECOVERY_RESET - discretionary_fund.balance
 		discretionary_fund.balance = BANKRUPTCY_RECOVERY_RESET
-		treasury_value = discretionary_fund.balance
 		log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, topup, "Sequestration lifted: working capital"))
 
 	resume_wages_after_bankruptcy()
@@ -270,7 +269,6 @@
 	atc_loan_arrears_consumed = TRUE
 	// Direct credit so principal isn't immediately skimmed against the debt we just registered.
 	discretionary_fund.balance += amount
-	treasury_value = discretionary_fund.balance
 	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, amount, "ETC emergency loan (principal)"))
 	priority_announce(
 		"The Crown takes an advance of [amount]m from the Ferentian Trading Company at the customary one-quarter interest, registering a debt of [debt_owed]m. The arrears grace stands forfeit; should the Crown miss its next payroll, the realm enters sequestration without warning.",

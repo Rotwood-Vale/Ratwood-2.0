@@ -255,6 +255,9 @@
 		last_market_refresh = world.time
 		update_static_data(H)
 		return TRUE
+	if(action == "help")
+		open_economy_guidebook(usr, "Merchant", /datum/book_entry/treasury_merchant)
+		return TRUE
 	if(!(H.job in profit_id))
 		to_chat(H, span_warning("Only a Merchant may tamper with the Navigator's toll."))
 		return TRUE

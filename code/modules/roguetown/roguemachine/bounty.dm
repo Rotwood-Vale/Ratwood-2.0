@@ -162,9 +162,14 @@
 		say("Insufficient amount. Bounties cannot be more than 500 mammon.")
 		return
 
+	// Has user a bank account?
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
+		return
+
 	// Has user enough money?
-	if(budget < amount)
-		say("Insufficient funds.")
+	if(SStreasury.get_balance(user) < amount)
+		say("Insufficient balance funds.")
 		return
 
 	var/reason = input(user, "For what sins do you summon the hounds of hell?", src) as null|text
@@ -175,19 +180,9 @@
 	var/confirm = input(user, "Do you dare unleash this darkness upon the world? Your name will be known.", src) as null|anything in list("Yes", "No")
 	if(isnull(confirm) || confirm == "No") return
 
-	// Deduct money from user
-	budget -= round(amount)
-
-	//Deduct royal tax from amount. A bounty posting is a contract, so the Contract Levy rate applies.
-	var/royal_tax = round(amount * SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY))
-	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
-	SStreasury.mint(SStreasury.discretionary_fund, royal_tax, "Bounty levy")
-	SStreasury.log_to_steward("+[royal_tax] to treasury (bounty levy)")
-	record_round_statistic(STATS_TAXES_COLLECTED, royal_tax)
-	record_round_statistic(STATS_REVENUE_CONTRACT_LEVY, royal_tax)
-	record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, royal_tax)
-
-	amount -= royal_tax
+	var/datum/fund/user_account = SStreasury.get_account(user)
+	amount = round(amount)
+	SStreasury.burn(user_account, amount, "bounty placement - [target.real_name]")
 
 	var/race = target.dna.species
 	var/gender = target.gender
@@ -354,14 +349,15 @@
 	if(choice != "Yes")
 		return
 
-	if(budget < cost)
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
+		return
+
+	if(SStreasury.get_balance(user) < cost)
 		say("Insufficient funds. [cost] mammons required.")
 		return
 
-	budget -= cost
-	// fund-API-backed (raw treasury_value writes desync from the Crown's Purse)
-	SStreasury.mint(SStreasury.discretionary_fund, cost, "Bounty scroll fee")
-	SStreasury.log_to_steward("+[cost] to treasury (bounty scroll fee)")
+	SStreasury.transfer(SStreasury.get_account(user), SStreasury.discretionary_fund, cost, "bounty scroll fee")
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()

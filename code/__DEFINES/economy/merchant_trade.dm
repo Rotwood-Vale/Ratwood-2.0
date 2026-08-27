@@ -10,7 +10,7 @@
 #define REALM_HAMMERHOLD "hammerhold"
 #define REALM_ETRUSCA "etrusca"
 #define REALM_GRONN "gronn"
-#define REALM_LIRVAS "lirvas"
+#define REALM_VAKRA "vakra"
 #define REALM_LINGYUE "lingyue"
 #define REALM_NALEDI "naledi"
 #define REALM_ZYBANTIUM "zybantium"

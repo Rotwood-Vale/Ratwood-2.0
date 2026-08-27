@@ -74,7 +74,7 @@
 	data["compact"] = withdraw_tab.compact ? TRUE : FALSE
 	data["categories"] = categories
 	data["category"] = withdraw_tab.current_category
-	data["food_stipend"] = (ishuman(user) && HAS_TRAIT(user, TRAIT_FOOD_STIPEND)) ? TRUE : FALSE
+	data["food_stipend"] = (ishuman(user) && HAS_TRAIT(user, TRAIT_ROYAL_SUBSIDY)) ? TRUE : FALSE
 	data["fiscal_authority"] = has_fiscal_authority(user) ? TRUE : FALSE
 	var/treasury_balance = SStreasury.discretionary_fund?.balance || 0
 	data["treasury_floor"] = SStreasury.stockpile_purchase_floor
@@ -187,10 +187,6 @@
 	return SSeconomy.manual_export(null, best["region_id"], D.trade_good_id, units)
 
 /obj/structure/roguemachine/stockpile/proc/attemptsell(obj/item/I, mob/H, message = TRUE, sound = TRUE)
-	// Ratwood deviation: never treat coinage as sellable treasure - attackby routes held coins to
-	// the coin slot, but the bulk-sell turf scans (and cart contents) would mint them away
-	if(istype(I, /obj/item/roguecoin))
-		return
 	if(istype(I, /obj/structure/handcart)) // Handle carts specially - sell their contents, leave the empty cart
 		var/obj/structure/handcart/cart = I
 		var/turf/cart_location = get_turf(cart)
@@ -226,7 +222,7 @@
 			playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		return
 
-	// Pre-check: farmer must have a Nervelock account. Otherwise the stockpile would silently
+	// Pre-check: farmer must have a Meister account. Otherwise the stockpile would silently
 	// eat their goods for no payment - do not scam walk-ins.
 	var/has_account = SStreasury.has_account(H)
 	if(!has_account)
@@ -251,13 +247,6 @@
 					if(message)
 						say("The Crown's ledger is thin. No purchases today.")
 					return
-				// Refuse outright if the purse cannot cover the payout - the goods must never be
-				// consumed without compensation (give_money_account is burn-backed now).
-				var/projected = round((R.payout_price * B.amount) * (1 - SStreasury.get_tax_value_for(H)))
-				if(projected > treasury_balance)
-					if(message)
-						say("The Crown's Purse cannot cover a load of this size. Try smaller bundles or return when the Crown is solvent.")
-					return
 				var/bundle_amt = B.amount
 				var/full_on_arrival = (R.stockpile_amount >= R.stockpile_limit)
 				R.stockpile_amount += bundle_amt
@@ -280,12 +269,13 @@
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				R.refresh_auto_price()
 				var/amt = R.payout_price * bundle_amt
+				if(HAS_TRAIT(H, TRAIT_ROYAL_SUBSIDY))
+					SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Deposit: [R.name] by [H.real_name]"))
+					record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, amt)
+					send_ooc_note("<b>NERVELOCK:</b> Subsidy claims [amt]m from the [R.name]. Thank you for your diligent service.", name = H.real_name)
+					return
 				SStreasury.economic_output += amt
-				// Ratwood per-category deposit tax: the Crown pays out the post-tax amount
-				var/tax_rate = SStreasury.get_tax_value_for(H)
-				var/taxed = round(amt * tax_rate)
-				amt -= taxed
-				SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty. [taxed]m taxed")
+				SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty")
 				if(auto_exported && message)
 					say("Crown's [R.name] stockpile is full - shipped regionally on your behalf.")
 				record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
@@ -295,7 +285,7 @@
 		else if(istype(I,R.item_type))
 			if(!R.check_item(I))
 				continue
-			// Steward-controlled accept toggle: refuses with a message; the item stays in hand.
+			// Steward-controlled accept toggle. Refuses with a message; item stays in hand.
 			if(!R.accept_toggle_enabled)
 				if(message)
 					say("The Crown has no interest in [R.name] at this time.")
@@ -304,21 +294,6 @@
 				if(message)
 					say("The Crown's ledger is thin. No purchases today.")
 				return
-			// Settlement is computed up front so the solvency check below can refuse the
-			// deposit before any stock is credited or the item consumed - give_money_account
-			// is burn-backed now, and the machine must never eat goods it cannot pay for.
-			var/list/settlement = R.get_quality_settlement(I)
-			var/amt = settlement["seller_payout"]
-			var/crown_delta = settlement["crown_delta"]
-			var/quality_baseline = settlement["baseline"]
-			var/true_value = I.get_real_price()
-			if(amt)
-				var/projected_balance = (SStreasury.discretionary_fund?.balance || 0) + max(crown_delta, 0)
-				var/post_tax = round(amt * (1 - SStreasury.get_tax_value_for(H)))
-				if(post_tax > projected_balance)
-					if(message)
-						say("The Crown's Purse cannot cover this purchase. Return when the Crown is solvent.")
-					return
 			var/auto_exported = FALSE
 			var/full_on_arrival = (R.stockpile_amount >= R.stockpile_limit)
 			if(full_on_arrival)
@@ -333,6 +308,11 @@
 					return
 				auto_exported = TRUE
 			R.refresh_auto_price()
+			var/list/settlement = R.get_quality_settlement(I)
+			var/amt = settlement["seller_payout"]
+			var/crown_delta = settlement["crown_delta"]
+			var/quality_baseline = settlement["baseline"]
+			var/true_value = I.get_real_price()
 			if(message && I.has_item_quality && I.item_quality != ITEM_QUALITY_STANDARD)
 				var/flavor = quality_delta_flavor(I.item_quality)
 				if(flavor)
@@ -342,8 +322,7 @@
 				SStreasury.mint(SStreasury.discretionary_fund, crown_delta, "Quality premium: [I.name] (+[crown_delta]m)")
 			else if(crown_delta < 0)
 				SStreasury.burn(SStreasury.discretionary_fund, -crown_delta, "Quality penalty: [I.name] ([crown_delta]m)")
-			// Ratwood deviation: AP double-increments here (+2 per item); the full_on_arrival
-			// path already added its unit before the auto-export attempt above
+				record_treasury_expense(TREASURY_FLOW_MISC, "Quality Penalty", -crown_delta)
 			if(!full_on_arrival)
 				R.stockpile_amount += 1
 			SStreasury.dirty_market_view()
@@ -353,18 +332,18 @@
 			if(sound == TRUE)
 				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 			if(amt)
+				if(HAS_TRAIT(H, TRAIT_ROYAL_SUBSIDY))
+					SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Deposit: [R.name] by [H.real_name]"))
+					record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, amt)
+					send_ooc_note("<b>NERVELOCk:</b> Subsidy claims [amt]m from the [R.name]. Thank you for your diligent service.", name = H.real_name)
+					return
 				SStreasury.economic_output += true_value
-				// Ratwood per-category deposit tax, same as the bundle branch: the Crown
-				// pays out the post-tax amount
-				var/tax_rate = SStreasury.get_tax_value_for(H)
-				var/taxed = round(amt * tax_rate)
-				var/seller_delta = amt - quality_baseline
-				amt -= taxed
-				var/bounty_msg = "+[amt] from [R.name] bounty. [taxed]m taxed"
+				var/bounty_msg = "+[amt] from [R.name] bounty"
 				if(crown_delta != 0)
+					var/seller_delta = amt - quality_baseline
 					var/seller_sign = seller_delta > 0 ? "+" : ""
 					var/crown_sign = crown_delta > 0 ? "+" : ""
-					bounty_msg = "+[amt] from [R.name] bounty (quality: you [seller_sign][seller_delta]m, Crown [crown_sign][crown_delta]m vs. [quality_baseline]m baseline). [taxed]m taxed"
+					bounty_msg = "+[amt] from [R.name] bounty (quality: you [seller_sign][seller_delta]m, Crown [crown_sign][crown_delta]m vs. [quality_baseline]m baseline)"
 				SStreasury.give_money_account(amt, H, bounty_msg)
 				if(auto_exported && message)
 					say("Crown's [R.name] stockpile is full - shipped regionally on your behalf.")

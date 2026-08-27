@@ -4,9 +4,7 @@
 		"azure_default" = "Ascendant",
 		"azure_green" = "Undivided",
 		"azure_lane" = "Cerulean",
-		// "azure_gold" = "Lirvas",
 		"azure_purple" = "Zybantium",
-		// "azure_gilbranze" = "Gilbranze", - Coming soon :tm:
 		"trey_liam" = "Trey Liam"
 	)
 	return theme_names[tgui_theme] || tgui_theme

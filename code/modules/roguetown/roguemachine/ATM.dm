@@ -103,7 +103,7 @@
 			if(!can_anyone_know)
 				to_chat(user, span_info("There is no one important for the transaction to flow through."))
 				return
-			if(SStreasury.treasury_value <50)
+			if(SStreasury.discretionary_fund.balance <50)
 				to_chat(user, "<font color='red'>These fools are completely broke. We'll get nothing out of this...</font>")
 				return
 			if(mammonsiphoned >499)
@@ -150,7 +150,7 @@
 /obj/structure/roguemachine/atm/proc/drill(obj/structure/roguemachine/atm)
 	if(!drilling)
 		return
-	if(SStreasury.treasury_value <50)
+	if(SStreasury.discretionary_fund.balance <50)
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The Crown grinds to a halt as the last of the treasury spills from the Nervelock!"))
 		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
@@ -174,15 +174,12 @@
 			has_reported = TRUE
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
 		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
-			loc.visible_message(span_warning("The Nervelock spills its bounty!"))
-			// fund-API-backed; a barren purse yields nothing to drain
-			if(!SStreasury.burn(SStreasury.discretionary_fund, 20, "Freefolk parasite drain"))
-				drill(src)
-				return
+			loc.visible_message(span_warning("The meister spills its bounty!"))
+			SStreasury.burn(SStreasury.discretionary_fund, 20, "ATM drill - Freefolk")
+			record_treasury_expense(TREASURY_FLOW_MISC, "ATM Drill", 20)
 			mammonsiphoned += 20
 			budget2change(20, null, "SILVER")
 			playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
-			SStreasury.log_to_steward("-[20] exported mammon to the Freefolks!")
 			drill(src)
 
 /obj/structure/roguemachine/atm/attack_right(mob/living/carbon/human/user)
@@ -238,15 +235,18 @@
 	if(H.head)
 		to_chat(user,span_info("Their head is covered."))
 		return
-	if(H in SStreasury.bank_accounts)
-		if(SStreasury.bank_accounts[H] > 0)
+	if(SStreasury.has_account(H))
+		if(SStreasury.get_balance(H) > 0)
+			if(SStreasury.get_balance(H) < 10)
+				to_chat(user,span_info("There's too little in their veins to bother extracting."))
+				return
 			var/turf/T = get_turf(H)
 			var/sum
 			var/choice = alert(user,"How would you like to take it? Fast and Loud or Slow and Quiet?","CHOOSE","Fast","Slow","Nevermind")
 			switch(choice)
 				if("Fast")
 					is_active = TRUE
-					needed_cycles = round(SStreasury.bank_accounts[H] / fast_drain)
+					needed_cycles = round(SStreasury.get_balance(H) / fast_drain)
 					if(needed_cycles == 0)	//If you have less than 50 mammon, you'll still get drained at least once.
 						needed_cycles = 1
 					user.visible_message(span_warn("[user] hastily shoves \the [src] into [H]'s forehead!"))
@@ -255,10 +255,16 @@
 					to_chat(H,span_info("<font color ='red'>Sharp claws dig into your skull. There's a warmth trickling down your head.</font>"))
 					for(var/i = 1,i<=needed_cycles,i++)
 						if(do_after(user, 25))
-							SStreasury.bank_accounts[H] -= fast_drain
-							sum += fast_drain
-							new /obj/item/roguecoin/gold(T, fast_drain / 10)
-							SStreasury.log_to_steward("-[fast_drain] exported mammon to the Freefolks!")
+							var/coins = floor(min(fast_drain, SStreasury.get_balance(H)) / 10)
+							if(coins <= 0 || !SStreasury.burn(SStreasury.get_account(H), coins * 10, "Coveter Crown - Freefolk"))
+								playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+								is_active = FALSE
+								to_chat(H,span_info("<font color ='red'>You feel very drained.</font>"))
+								if(sum)
+									send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								break
+							sum += coins * 10
+							new /obj/item/roguecoin/gold(T, coins)
 							if(prob(needed_cycles*2))
 								drain_effect_fast(H)
 							if(i == needed_cycles)	//Last cycle.
@@ -273,7 +279,7 @@
 							break
 				if("Slow")
 					is_active = TRUE
-					needed_cycles = round(SStreasury.bank_accounts[H] / slow_drain)
+					needed_cycles = round(SStreasury.get_balance(H) / slow_drain)
 					if(needed_cycles == 0)	//If you have less than 10 mammon, you'll still get drained at least once.
 						needed_cycles = 1
 					user.visible_message(span_warn("[user] carefully and methodically aligns \the [src] with [H]'s forehead..."))
@@ -285,10 +291,14 @@
 					H.apply_damage(10, BRUTE, head)
 					for(var/i = 1,i<=needed_cycles,i++)
 						if(do_after(user, 10))
-							SStreasury.bank_accounts[H] -= slow_drain
-							sum += slow_drain
-							new /obj/item/roguecoin/gold(T, slow_drain / 10)
-							SStreasury.log_to_steward("-[slow_drain] exported mammon to the Freefolks!")
+							var/coins = floor(min(slow_drain, SStreasury.get_balance(H)) / 10)
+							if(coins <= 0 || !SStreasury.burn(SStreasury.get_account(H), coins * 10, "Coveter Crown - Freefolk"))
+								is_active = FALSE
+								if(sum)
+									send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))
+								break
+							sum += coins * 10
+							new /obj/item/roguecoin/gold(T, coins)
 							if(prob(needed_cycles*2))
 								drain_effect_fast(H)
 							if(i == needed_cycles)	//Last cycle.
@@ -310,7 +320,6 @@
 	else
 		to_chat(user,span_info("Their blood is unsoiled by the Duchy's Nervemaster. There is nothing to take."))
 		return
-
 /obj/item/coveter/proc/drain_effect_fast(mob/living/carbon/human/H)
 	var/consequence = pick(fast_effects)
 	var/obj/item/bodypart/head = H.get_bodypart(BODY_ZONE_HEAD)

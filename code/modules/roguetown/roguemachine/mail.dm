@@ -127,7 +127,6 @@
 		if(found)
 			visible_message(span_warning("[user] sends something."))
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-			SStreasury.give_money_treasury(coin_loaded, "Mail Income")
 			coin_loaded = FALSE
 			update_icon()
 			return
@@ -156,7 +155,6 @@
 			return
 		visible_message(span_warning("[user] sends something."))
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-		SStreasury.give_money_treasury(coin_loaded, "Mail")
 		coin_loaded = FALSE
 		update_icon()
 

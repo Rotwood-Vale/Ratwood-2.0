@@ -61,24 +61,3 @@ GLOBAL_LIST_INIT(bathhouse_positions, list(
 
 /datum/controller/subsystem/job/proc/townie_contract_gate_exempt_display_names()
 	return townie_contract_gate_exempt_names
-
-// ---- Treasury rumor-point state (innkeeper rumor economy; AP treasury.dm:123-125,479) ----
-/datum/controller/subsystem/treasury/var/rumor_points = RUMOR_POINTS_START
-/datum/controller/subsystem/treasury/var/list/rumor_log = list()
-/datum/controller/subsystem/treasury/var/list/rumor_issued_today = list()
-/// Chunk 6: running log of blockade-defense commissions/directives issued by the Steward.
-/datum/controller/subsystem/treasury/var/list/defense_log = list()
-
-/datum/controller/subsystem/treasury/proc/tick_rumor_points()
-	var/active = get_active_player_count()
-	var/refill = RUMOR_POINTS_BASE_REFILL + (RUMOR_POINTS_PER_PLAYER * active)
-	var/before = rumor_points
-	rumor_points += refill
-	var/ceiling = RUMOR_POINTS_CLAWBACK_MULTIPLIER * refill
-	if(rumor_points > ceiling)
-		rumor_points = ceiling
-	record_round_statistic(STATS_RUMOR_POINTS_GENERATED, rumor_points - before)
-
-// ---- Quest logging helper (AP _logging.dm:103; ES routes through log_game) ----
-// NOTE: quest_recovery_shipments is now the real GLOBAL_LIST_INIT in types/kill/quest_recovery.dm
-// (Chunk 5). The Chunk 4 stub that lived here has been removed.

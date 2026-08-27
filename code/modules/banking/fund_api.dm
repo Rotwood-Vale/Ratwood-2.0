@@ -126,10 +126,9 @@
 	credited = skim_for_treasury_debt(to_fund, credited)
 	if(credited > 0)
 		to_fund.balance += credited
+		if(to_fund == discretionary_fund)
+			record_purse_inflow(credited)
 		log_fund_entry(new /datum/treasury_entry("mint", null, to_fund, credited, reason, from_label))
-	// ES compat: keep legacy treasury_value mirroring the Crown's Purse.
-	if(to_fund == discretionary_fund)
-		treasury_value = discretionary_fund.balance
 	return TRUE
 
 /datum/controller/subsystem/treasury/proc/mint_fractional(datum/fund/to_fund, amount, reason, datum/fund/source_fund)
@@ -164,26 +163,28 @@
 	if(from_fund.balance < amount)
 		return FALSE
 	from_fund.balance -= amount
-	log_fund_entry(new /datum/treasury_entry("burn", from_fund, null, amount, reason))
 	if(from_fund == discretionary_fund)
-		treasury_value = discretionary_fund.balance
+		record_purse_outflow(amount)
+	log_fund_entry(new /datum/treasury_entry("burn", from_fund, null, amount, reason))
 	return TRUE
 
 /datum/controller/subsystem/treasury/proc/transfer(datum/fund/from_fund, datum/fund/to_fund, amount, reason)
 	if(!from_fund || !to_fund || amount <= 0)
 		return FALSE
 	if(from_fund.currency != to_fund.currency)
-		stack_trace("treasury transfer between funds of differing currency: [from_fund.currency] -> [to_fund.currency]")
+		stack_trace("Treasury transfer with mismatched currencies: [from_fund.currency] -> [to_fund.currency] ([reason])")
 		return FALSE
 	if(from_fund.balance < amount)
 		return FALSE
 	from_fund.balance -= amount
+	if(from_fund == discretionary_fund)
+		record_purse_outflow(amount)
 	var/credited = skim_for_banditry_debt(to_fund, amount)
 	credited = skim_for_treasury_debt(to_fund, credited)
 	to_fund.balance += credited
+	if(to_fund == discretionary_fund)
+		record_purse_inflow(credited)
 	log_fund_entry(new /datum/treasury_entry("transfer", from_fund, to_fund, amount, reason))
-	if(from_fund == discretionary_fund || to_fund == discretionary_fund)
-		treasury_value = discretionary_fund.balance
 	return TRUE
 
 /datum/controller/subsystem/treasury/proc/get_tax_rate(tax_category)
@@ -198,7 +199,7 @@
 /datum/controller/subsystem/treasury/proc/is_tax_exempt(mob/living/payer, tax_category)
 	if(!payer)
 		return FALSE
-	if(HAS_TRAIT(payer, TRAIT_OUTLAW))
+	if(HAS_TRAIT(payer, TRAIT_OUTLAW)|| HAS_TRAIT(payer, TRAIT_ROYAL_SUBSIDY))
 		return FALSE
 	for(var/id in decrees)
 		var/datum/decree/D = decrees[id]
@@ -218,20 +219,6 @@
 		var/datum/decree/D = decrees[id]
 		cap = D.apply_rate_cap(payer, tax_category, cap)
 	return cap
-
-/// Ceiling on a single Crown fine against this subject right now: charter-exempt subjects
-/// return 0, otherwise balance x rate-cap. Daily-fine tracking is applied separately in
-/// give_money_account. Used by the Nerve Master to bound the fine prompt.
-/datum/controller/subsystem/treasury/proc/get_max_fine_for(mob/living/target)
-	if(!target)
-		return 0
-	if(is_tax_exempt(target, TAX_CATEGORY_FINE))
-		return 0
-	var/balance = get_balance(target)
-	if(balance <= 0)
-		return 0
-	var/cap_rate = get_rate_cap(target, TAX_CATEGORY_FINE)
-	return FLOOR(min(balance * cap_rate, get_daily_fine_remaining(target)), 1)
 
 /datum/controller/subsystem/treasury/proc/apply_tax(datum/fund/payer, base_amount, tax_category, reason)
 	if(!payer || base_amount <= 0)
@@ -328,33 +315,3 @@
 	if(istype(F, /datum/fund/innkeeper))
 		return "the Tavern"
 	return "the Stewardry"
-
-/datum/controller/subsystem/treasury/proc/tick_rural_tax()
-	if(!discretionary_fund)
-		return
-	mint(discretionary_fund, RURAL_TAX, "Rural Tax Collection")
-	record_round_statistic(STATS_RURAL_TAXES_COLLECTED, RURAL_TAX)
-	total_rural_tax += RURAL_TAX
-
-/// Daily Burgher Pledge generation (item 6 decrees): the burghers' compact under the Golden
-/// Bull. No Bull, no pledge - revoking the charter absolves the burghers of their tribute.
-/datum/controller/subsystem/treasury/proc/tick_burgher_pledge()
-	if(!burgher_pledge_fund)
-		return
-	var/datum/decree/golden = get_decree(DECREE_GOLDEN_BULL)
-	if(!golden?.active)
-		return
-	var/refill = BURGHER_PLEDGE_BASE_REFILL + (get_active_player_count() * BURGHER_PLEDGE_PER_PLAYER)
-	// The Guild of Arms' reciprocal contribution, when their charter is active. Minted as a
-	// separate ledger entry so the tribute is visible in the treasury log distinct from the
-	// burghers' own pledge.
-	var/datum/decree/arms_charter = get_decree(DECREE_GUILD_CHARTER_OF_ARMS)
-	var/guild_bonus = (arms_charter?.active) ? GUILD_CHARTER_OF_ARMS_PLEDGE_BONUS : 0
-	var/ceiling = (refill + guild_bonus) * BURGHER_PLEDGE_CLAWBACK_MULTIPLIER
-	if(burgher_pledge_fund.balance > ceiling)
-		var/surplus = burgher_pledge_fund.balance - ceiling
-		burn(burgher_pledge_fund, surplus, "Burgher Pledge clawback")
-	mint(burgher_pledge_fund, refill, "Burgher Pledge replenishment")
-	if(guild_bonus > 0)
-		mint(burgher_pledge_fund, guild_bonus, "Guild of Arms tribute (Charter of Arms)")
-	record_round_statistic(STATS_PLEDGE_GENERATED, refill + guild_bonus)

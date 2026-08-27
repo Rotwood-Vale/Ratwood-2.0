@@ -334,12 +334,12 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_RICE, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),
 	)
 
-/datum/realm_condition/lirvas_debt_collection
-	id = "lirvas_debt_collection"
-	name = "Debt Collection"
-	description = "Zarvlor has called in the outer rings' debts. Gold flows out cheap as defaulters' hoards are seized, and confiscated gems are dumped at discount. Grain is demanded at premium - the indentured must be fed."
+/datum/realm_condition/vakra_scortched_grimoria
+	id = "vakra_debt_collection"
+	name = "Scorched Grimoria"
+	description = "Several Lupian packs have engaged in scorching their lands at the loss of key strongholds. Valuables flows out cheaply as defenders' hoards are seized, and confiscated gems are dumped at discount. Grain is demanded at premium - the scorched land brings no harvest."
 	weight = 8
-	affected_realms = list(REALM_LIRVAS)
+	affected_realms = list(REALM_VAKRA)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_GOLD_INGOT, "price_mod" = CONDITION_PRICE_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_GOLD_ORE, "price_mod" = CONDITION_PRICE_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
@@ -350,12 +350,12 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_GRAIN, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
 	)
 
-/datum/realm_condition/lirvas_famine
-	id = "lirvas_famine"
+/datum/realm_condition/vakra_famine
+	id = "vakra_famine"
 	name = "Famine"
-	description = "The Lirvasian harvests have failed three seasons running, and the lowest rings starve while their debts mount. Lirvas opens its vaults - gems and gold ore sell for whatever foreign grain they can buy. Fibers and oats are demanded in huge measure."
+	description = "The Vakran harvests have failed three seasons running; the conflicting armies and civilians starve alike. Looted valueables flow like water - gems and gold ore sell for whatever foreign grain they can buy. Fibers and oats are demanded in huge measure."
 	weight = 10
-	affected_realms = list(REALM_LIRVAS)
+	affected_realms = list(REALM_VAKRA)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_GEMERALD, "price_mod" = CONDITION_PRICE_VERY_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SAFFIRA, "price_mod" = CONDITION_PRICE_VERY_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
@@ -571,10 +571,10 @@
 /datum/realm_condition/cross_zybantium_drought
 	id = "cross_zybantium_drought"
 	name = "Zybantine Drought"
-	description = "The Zybantine continent's harvests have collapsed. The Zybantine heartlands ship no rice or garlick this season, and Lirvas's tributary fields wither in tandem. Both realms beg for foreign grain and oats."
+	description = "The Zybantine continent's harvests have collapsed. The Zybantine heartlands ship no rice or garlick this season, and Vakra's tributary fields wither in tandem. Both realms beg for foreign grain and oats."
 	weight = 6
 	cross_realm = TRUE
-	affected_realms = list(REALM_ZYBANTIUM, REALM_LIRVAS)
+	affected_realms = list(REALM_ZYBANTIUM, REALM_VAKRA)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_RICE),
 		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_GARLICK),

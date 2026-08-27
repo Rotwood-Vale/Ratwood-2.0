@@ -1,9 +1,3 @@
-// Fiscal snapshot data layer, ported from AP #6849 treasury_snapshot.dm. Feeds the admin
-// Economic Panel (and, later, steward fiscal displays).
-// Ratwood deviations: player accounts are integer balances keyed by mob in bank_accounts (no
-// /datum/fund per player, no per-account currency - every personal account is mammons).
-// compute_charter_states() reads the item 6 decree system (code/modules/politics/).
-
 /datum/controller/subsystem/treasury/proc/compute_fiscal_snapshot()
 	var/total_bank = 0
 	var/under_50m = 0
@@ -12,14 +6,16 @@
 	var/debtor_count = 0
 	var/held_accounts = 0
 	for(var/key in bank_accounts)
-		var/mob/living/owner = key
-		if(!istype(owner))
+		var/datum/fund/account = bank_accounts[key]
+		if(!account || account.currency != CURRENCY_MAMMON)
 			continue
 		held_accounts++
-		var/balance = bank_accounts[owner] || 0
-		total_bank += balance
-		if(balance < 50)
+		total_bank += account.balance
+		if(account.balance < 50)
 			under_50m++
+		var/mob/living/owner = account.get_owner()
+		if(!owner)
+			continue
 		if(poll_tax_advance_days[owner])
 			in_advance++
 		if(poll_tax_owed[owner])
@@ -54,6 +50,7 @@
 		"tax_rates" = tax_rates.Copy(),
 		"poll_tax_rates" = poll_tax_rates.Copy(),
 	)
+
 
 /datum/controller/subsystem/treasury/proc/compute_charter_states()
 	var/list/out = list()
