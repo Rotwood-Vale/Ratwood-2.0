@@ -1,0 +1,5 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Changes some single letter variables for the arachnid race code-wise."
+  - rscadd: "Gives arachnids two new abilities which let them spin a thin gossamer type of web that can be seen through and a thicker one that blocks visibility. Added two new icons for the abilities as well."
