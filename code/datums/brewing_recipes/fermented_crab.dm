@@ -4,7 +4,6 @@
 	bottle_name = "fermented crab" // magical penis wine
 	bottle_desc = "Fermented. Crab. One barrel of this triples the brothel's earnings for the week. A man thinks he's done, drinks a mouthful of this. Five minutes later he's back in the race."
 	reagent_to_brew = /datum/reagent/fermented_crab
-	output_bottle_type = /obj/item/reagent_containers/glass/bottle/brewing_bottle/fermentedcrab
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(
 		/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 2,
