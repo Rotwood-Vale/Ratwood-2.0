@@ -23230,7 +23230,7 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "gxz" = (
 /obj/structure/table/vtable/v2,
-/obj/item/enchantmentscroll/fireresist,
+/obj/item/enchantmentscroll/superior/trekk,
 /turf/open/floor/rogue/deserttempletile,
 /area/rogue/under/cave)
 "gxB" = (
@@ -28402,8 +28402,8 @@
 	},
 /area/rogue/outdoors/desert)
 "hTB" = (
-/obj/item/enchantmentscroll/infernalflame,
 /obj/structure/table/wood/long_table/north_east,
+/obj/item/enchantmentscroll/mythic/infernalflame,
 /turf/open/floor/rogue/deserttempletile,
 /area/rogue/under/cave)
 "hTH" = (
