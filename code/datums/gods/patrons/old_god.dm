@@ -21,6 +21,25 @@
 		"FORGIVE THEM, ALLFATHER, FOR THEY KNOW-NOT WHAT THEY DO!",
 		"BARE WITNESS, MY GOD; THE SACRIFICE MADE MANIFEST!",
 	)
+	hates_surrender = TRUE // YOU HAVE NOT FAILED PSYDON. YOU HAVE FAILED YOURSELF.
+
+/datum/patron/old_god/punish_surrender(mob/living/follower)
+	. = ..()
+	var/list/disdain = list(
+		"I can't... go on...",
+		"I DON'T WANT TO DIE!!!",
+		"Like so many others before you, and so many more yet to come.",
+		"All of my lyfe's toil... amounts to this?",
+		"With every broken bone, I swear I--MAKE IT STOP!!!",
+		"No, it cannot be true...",
+		"You will see this moment of weakness again in every drop of rain. Every mote, every speck...",
+		"This is what they will remember you for.",
+		"I CAN'T TAKE IT ANYMORE!!!",
+		"In the dirt, in the muck... your sobbing a choir for the worms.",
+		"You have not failed HIM. You have failed yourself.",
+		"Oh, you poor fool. This was never going to go any other way...",
+		)
+	to_chat(follower, span_boldwarning(pick(disdain)))
 
 
 /obj/effect/proc_holder/spell/self/check_boot
@@ -238,3 +257,4 @@
 
 	revert_cast()
 	return FALSE
+
