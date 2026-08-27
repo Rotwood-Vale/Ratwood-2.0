@@ -1154,7 +1154,7 @@
 	set hidden = 1
 	if(surrendering || stat == DEAD)
 		return
-	if (IsUnconscious())
+	if (stat == UNCONSCIOUS)
 		to_chat(src, span_boldwarning("TOO LATE!!!"))
 		to_chat(src, span_boldwarning("Oblivion swallows you whole, surrender and all..."))
 		return
