@@ -213,6 +213,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	icon_state = "desertgown"
 	item_state = "desertgown"
+	boob_detail = FALSE
 	color = null
 	detail_color = null
 	detail_tag = "_detail"
@@ -242,6 +243,7 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "monkcloth"
 	item_state = "monkcloth"
+	boob_detail = FALSE
 	color = null
 	detail_color = null
 	detail_tag = "_detail"
@@ -250,6 +252,7 @@
 	l_sleeve_status = SLEEVE_NOMOD
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	boob_detail = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
 	. = ..()
