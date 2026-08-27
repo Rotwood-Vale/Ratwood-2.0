@@ -21,6 +21,9 @@
 	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 	color = "#646464"
 
@@ -283,6 +286,7 @@
 	icon_state = "desertrobe"
 	item_state = "desertrobe"
 	desc = "A thick robe intervowen with spell-laced fabrics. Thick and protective while remaining light and breezy; the perfect gear for protecting one from the threats of the sun, the desert and the daemons, yet still allowing one to cast spells aptly."
+	color = null
 	naledicolor = TRUE
 	shiftable = FALSE
 	cold_protection = null

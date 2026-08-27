@@ -793,6 +793,37 @@
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
+//Rockhill Slaver/Baron and Related Keys
+/obj/item/roguekey/baron
+	name = "Lowtown Manor Key"
+	desc = "A key to the Lowtown Manor, home of the Baron"
+	icon_state = "brownkey"
+	lockid = "BaronManor"
+
+/obj/item/roguekey/baronguest
+	name = "Lowtown Manor Guest Key"
+	desc = "A key to the guest rooms of the Lowtown Manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorGuest"
+
+/obj/item/roguekey/slaverhouse
+	name = "Slaver's Office Key"
+	desc = "A key to the Slaver Office in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaverHome"
+
+/obj/item/roguekey/slaverdungeon
+	name = "Slaver's Dungeon Key"
+	desc = "A key to the Slaver Dungeon in Lowtown"
+	icon_state = "spikekey"
+	lockid = "DTManorCells"
+
+/obj/item/roguekey/slaverpillory
+	name = "Auction Pillory Key"
+	desc = "A key to the Slaver Pillories in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaveAuction"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"
