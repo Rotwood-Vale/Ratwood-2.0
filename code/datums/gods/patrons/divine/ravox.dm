@@ -78,6 +78,6 @@
 	. = ..()
 	var/list/disdain = list(
 		"Nothing is glorious about your capitulation, and you know this deep in your heart. Shame floods your veins...",
-		"Fallen before a greater a foe. IT WOULD HAVE BEEN BETTER TO SIMPLY DIE.",
+		"Fallen before a greater foe... IT WOULD HAVE BEEN BETTER TO SIMPLY DIE.",
 		)
 	to_chat(follower, span_boldwarning(pick(disdain)))
