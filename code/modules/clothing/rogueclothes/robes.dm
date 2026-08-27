@@ -252,7 +252,6 @@
 	l_sleeve_status = SLEEVE_NOMOD
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
-	boob_detail = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
 	. = ..()
