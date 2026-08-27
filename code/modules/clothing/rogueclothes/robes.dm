@@ -213,7 +213,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	icon_state = "desertgown"
 	item_state = "desertgown"
-	boob_detail = FALSE
+	boobed_detail = FALSE
 	color = null
 	detail_color = null
 	detail_tag = "_detail"
@@ -243,7 +243,7 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "monkcloth"
 	item_state = "monkcloth"
-	boob_detail = FALSE
+	boobed_detail = FALSE
 	color = null
 	detail_color = null
 	detail_tag = "_detail"
