@@ -39,6 +39,9 @@ GLOBAL_LIST_EMPTY(prayers)
 	/// List of traits associated with rank. Trait = Cleric_Tier
 	var/list/traits_tier = list()
 
+	/// Whether the patron hates surrender and punishes faithful who attempt to yield.
+	var/hates_surrender = FALSE
+
 	var/datum/storyteller/storyteller
 
 /datum/patron/proc/on_gain(mob/living/pious)
@@ -133,3 +136,13 @@ GLOBAL_LIST_EMPTY(prayers)
 	SHOULD_CALL_PARENT(TRUE)
 	follower.playsound_local(follower, 'sound/misc/notice (2).ogg', 100, FALSE)
 	follower.add_stress(/datum/stressevent/psyprayer)
+
+/// The follower has yielded and we >>REALLY<< hate surrender. Overload this per patron for bonus messaging/extra grief, etc.
+/datum/patron/proc/punish_surrender(mob/living/follower)
+	if (!ishuman(follower))
+		return
+	var/mob/living/carbon/human/us = follower
+	var/datum/devotion/our_devotion = us.devotion
+	if (us && our_devotion)
+		// by default, lose a quarter of our max devotion immediately
+		our_devotion.update_devotion(-(our_devotion.max_devotion / 4), silent = TRUE)

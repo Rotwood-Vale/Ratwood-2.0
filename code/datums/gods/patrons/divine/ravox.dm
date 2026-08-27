@@ -21,6 +21,7 @@
 		"THROUGH STRIFE, GRACE!",
 		"THROUGH PERSISTENCE, GLORY!",
 	)
+	hates_surrender = TRUE
 	storyteller = /datum/storyteller/ravox
 	COOLDOWN_DECLARE(lesser_heal_buff_cooldown)
 
@@ -72,3 +73,11 @@
 
 	*conditional_buff = TRUE
 	*situational_bonus = bonus
+
+/datum/patron/divine/ravox/punish_surrender(mob/living/follower)
+	. = ..()
+	var/list/disdain = list(
+		"Nothing is glorious about your capitulation, and you know this deep in your heart. Shame floods your veins...",
+		"Fallen before a greater a foe. IT WOULD HAVE BEEN BETTER TO SIMPLY DIE.",
+		)
+	to_chat(follower, span_boldwarning(pick(disdain)))

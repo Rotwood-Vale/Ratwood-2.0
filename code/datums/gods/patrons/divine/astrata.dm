@@ -21,6 +21,7 @@
 		"ASTRATA BRINGS LAW!",
 		"I SERVE THE GLORY OF THE SUN!",
 	)
+	hates_surrender = TRUE
 	storyteller = /datum/storyteller/astrata
 
 // In daylight, church, cross, or ritual chalk.
@@ -55,3 +56,13 @@
 	if(GLOB.tod == "day")
 		*conditional_buff = TRUE
 		*situational_bonus = 2
+
+/datum/patron/divine/astrata/punish_surrender(mob/living/follower)
+	. = ..()
+	if (HAS_TRAIT(follower, TRAIT_NOBLE) && GLOB.tod == "day")
+		var/list/disdain = list(
+			"The silence left between the wake of your thundering heartbeats is DEAFENING. The shame of your surrender, laid bare 'neath the Sun...",
+			"A chill settles in your bones, as if an inherent warmness to your blessed blood has begun to fade...",
+			"What manner of tyrant lies upon the floor, trembling in fear? You. You do. AND SHE SEES YOU.",
+			)
+		to_chat(follower, span_boldwarning(pick(disdain)))

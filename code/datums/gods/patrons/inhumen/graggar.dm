@@ -19,6 +19,7 @@
 		"THROUGH VIOLENCE, DIVINITY!",
 		"THE GOD OF CONQUEST DEMANDS BLOOD!",
 	)
+	hates_surrender = TRUE
 	storyteller = /datum/storyteller/graggar
 
 /datum/patron/inhumen/graggar/on_lesser_heal(
@@ -83,3 +84,21 @@
 		return TRUE
 	to_chat(follower, span_danger("For Graggar to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, near fresh blood or draw blood of my own!"))
 	return FALSE
+
+/datum/patron/inhumen/graggar/punish_surrender(mob/living/follower)
+	. = ..()
+	var/mob/living/carbon/human/us = follower
+	var/datum/devotion/our_devotion = us.devotion
+	var/list/disdain = list("\"PATHETIC.\"", 
+	"Shame burns molten-hot, then bitter cold in your breast. Your cowardice disappoints HIM.", 
+	"Mewling, simpering weakness floods your quailing self. Thoughts of unworthiness flood your mind...")
+	to_chat(follower, span_boldwarning(pick(disdain)))
+
+	//fun bonus: if you're very close to 0 devo after losing 25% max devo, you simply lose your devotion entirely.
+	//don't surrender :)
+	if (our_devotion && our_devotion.devotion <= 10) // tiny leeway to accomdate for regen ticks
+		to_chat(follower, span_boldwarning("THE GORESTAR TURNS HIS GAZE FROM ME!!! I AM NOTHING!!!"))
+		if(follower.mind && length(our_devotion.granted_spells))
+			for(var/obj/effect/proc_holder/spell/S in our_devotion.granted_spells)
+				follower.mind.RemoveSpell(S)
+		qdel(our_devotion)

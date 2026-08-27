@@ -1154,10 +1154,22 @@
 	set hidden = 1
 	if(surrendering || stat == DEAD)
 		return
+	if (IsUnconscious())
+		to_chat(src, span_boldwarning("TOO LATE!!!"))
+		to_chat(src, span_boldwarning("Oblivion swallows you whole, surrender and all..."))
+		return
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
 	log_combat(src, null, "surrendered")
+
+	// wuh oh. your god hates surrender and you're a devout cleric. PUNISHMENT.
+	if (ishuman(src))
+		var/mob/living/carbon/human/our = src
+		var/datum/devotion/our_devotion = our.devotion
+		if (our_devotion && our.patron.hates_surrender)
+			our.patron.punish_surrender(src)
+	
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
