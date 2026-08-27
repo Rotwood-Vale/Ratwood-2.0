@@ -38,7 +38,7 @@
 
 /datum/merchant_catalog/underdark
 	id = "underdark"
-	name = "Anthraxi Armory"
+	name = "Crocs de l'araignée Armory"
 	desc = "Finely crafted drow weapons and armor, with a reputation for quality and lethality."
 	favor_cost = UNDERDARK_CARAVAN_FAVOR
 	stock = list(

@@ -1,6 +1,6 @@
 /datum/foreign_realm/aavnr
 	id = REALM_AAVNR
-	name = "Aavnr"
+	name = "Avar"
 	roll_weight = TRADE_REALM_WEIGHT_NEIGHBOR
 	demanded_categories = list(NAVIGATOR_BUCKET_WEAPONS, NAVIGATOR_BUCKET_ARMOR_LIGHT, NAVIGATOR_BUCKET_SEAFOOD, NAVIGATOR_BUCKET_POTTERY, NAVIGATOR_BUCKET_VALUABLES_LOOTED, NAVIGATOR_BUCKET_MISCELLANEOUS)
 	ship_name_words = list(
@@ -94,7 +94,7 @@
 		/datum/supply_pack/rogue/alcohol/saigamilk,
 	)
 	hail_lines = list(
-		"Greetings, Factor. Hide, grain, fish and fur. Of the finest quality from the Steppes of Aavnr. Bring me silk and gemerald or do not bring me anything at all.",
+		"Greetings, Factor. Hide, grain, fish and fur. Of the finest quality from the Steppes of Avar. Bring me silk and gemerald or do not bring me anything at all.",
 		"The Hetman of Tomorzurkh sends his regards and his demand for lemons. The second is not optional.",
 		"My crossing was peaceful. The four crossings before were not. I would speak to your Bleakisles watch about that.",
 		"Trade quickly, friend. The steppes do not wait, and neither do the wolves on my home road.",

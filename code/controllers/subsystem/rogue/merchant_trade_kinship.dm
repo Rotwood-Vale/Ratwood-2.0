@@ -24,8 +24,8 @@
 			return REALM_GRONN
 		if("Vakra")
 			return REALM_VAKRA
-		if("Lingyue")
-			return REALM_LINGYUE
+		if("Underdark")
+			return REALM_UNDERDARK
 		if("Naledi")
 			return REALM_NALEDI
 	return null

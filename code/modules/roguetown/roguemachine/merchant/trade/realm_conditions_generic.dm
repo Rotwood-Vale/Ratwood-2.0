@@ -273,24 +273,14 @@
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_FUR, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
 	)
 
-/datum/realm_condition/cross_chengtian_uprising
-	id = "cross_chengtian_uprising"
-	name = "Chengtian Uprising"
-	description = "The Chengtianhui rebels have crossed the Yanshe river and the Lingyuese heartland burns. The Xinyi court mobilizes for a counterattack while the Kazengunese suzerain reinforces its mainland army from the isles; both realms strip their markets for war supply."
+/datum/realm_condition/pui_maen_uprising
+	id = "pui-maen_uprising"
+	name = "Pui-Maen Uprising"
+	description = "The Pui-Maen rebels have crossed the Yanshe river and the Xinyi heartland burns. The Xinyi court mobilizes for a counterattack while the Kazengunese suzerain reinforces its mainland army from the isles; both realms strip their markets for war supply."
 	weight = 12
 	cross_realm = TRUE
-	affected_realms = list(REALM_LINGYUE, REALM_KAZENGUN)
+	affected_realms = list(REALM_KAZENGUN)
 	per_realm_modifiers = list(
-		REALM_LINGYUE = list(
-			"supply" = list(
-				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_RICE, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
-				list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_SILK),
-			),
-			"demand" = list(
-				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_IRON_INGOT, "price_mod" = CONDITION_PRICE_HEAVY, "qty_mod" = CONDITION_QTY_MODERATE),
-				list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_CURED_LEATHER, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_EAGER_PREMIUM),
-			),
-		),
 		REALM_KAZENGUN = list(
 			"supply" = list(
 				list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_TEA, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
@@ -304,12 +294,12 @@
 		),
 	)
 
-/datum/realm_condition/lingyue_imperial_examinations
-	id = "lingyue_imperial_examinations"
-	name = "Imperial Examinations"
-	description = "The triennial Examinations have brought scholar aspirants to Shenzhou by the thousands. Enchscrolls and paper sell at desperate premium, while tea and cloth flow cheap from the surrounding prefectures."
+/datum/realm_condition/underdark_enchanting
+	id = "underdark_enchanting"
+	name = "Brightest-Light Enchanting"
+	description = "The elusive Fluvian city-state of Mercuriam seeks enchanters to renew the enchantments upon their false sun. Aspiring foreign enchanters and mages flock to the city by the thousands. Enchscrolls and paper sell at desperate premium, while tea and cloth flow cheap from the surrounding caverns."
 	weight = 6
-	affected_realms = list(REALM_LINGYUE)
+	affected_realms = list(REALM_UNDERDARK)
 	demand_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_ENCHSCROLL_BASIC, "price_mod" = CONDITION_PRICE_HEAVY, "qty_mod" = CONDITION_QTY_MODERATE),
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_PAPER, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),
@@ -319,20 +309,18 @@
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_CLOTH, "price_mod" = CONDITION_PRICE_CHEAP, "qty_mod" = CONDITION_QTY_MODERATE),
 	)
 
-/datum/realm_condition/lingyue_river_flood
-	id = "lingyue_river_flood"
-	name = "River Flood"
-	description = "The Ciwai has overrun its banks for the first time in twelve yils. The paddies are drowned and the cloth-villages are washed downstream. The dispossessed of three counties demand foreign grain and rice at any cost."
+/datum/realm_condition/underdark_quake
+	id = "underdark_quake"
+	name = "Under-Quake"
+	description = "The Underdark suffers from severe tremors, collapsing several caverns and cutting off a large swath of kobold spider-honey harvesting settlements. Wood is required to shore up the cavern walls."
 	weight = 8
-	affected_realms = list(REALM_LINGYUE)
+	affected_realms = list(REALM_UNDERDARK)
 	supply_modifiers = list(
-		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_RICE),
-		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_CLOTH, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
+		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_HONEY),
+		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SILK, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 	)
 	demand_modifiers = list(
-		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_GRAIN, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),
-		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_RICE, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),
-	)
+		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_WOOD, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),	)
 
 /datum/realm_condition/vakra_scortched_grimoria
 	id = "vakra_debt_collection"
@@ -555,10 +543,10 @@
 /datum/realm_condition/cross_eastern_unrest
 	id = "cross_eastern_unrest"
 	name = "Eastern Unrest"
-	description = "Disorder rolls across the Asemai. Silk and tea from both Kazengun and Lingyue arrive thin and dear, while the eastern realms collectively demand iron and coal to settle the unrest."
+	description = "Disorder rolls across the Shogunate. Silk and tea from Kazengun arrive thin and dear, while the eastern realm demands iron and coal to settle the unrest."
 	weight = 6
 	cross_realm = TRUE
-	affected_realms = list(REALM_KAZENGUN, REALM_LINGYUE)
+	affected_realms = list(REALM_KAZENGUN)
 	supply_modifiers = list(
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SILK, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_TEA, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
@@ -587,12 +575,13 @@
 /datum/realm_condition/cross_aavnr_naledi_drought
 	id = "cross_aavnr_naledi_drought"
 	name = "Southern Drought"
-	description = "A scorching season has dried the Aavnic steppes and the dunes alike. The Naledian rice paddies have gone to dust, while both the Potentate and the Malikat beg the seafaring realms for grain and oats."
+	description = "A scorching season has dried the Avaric steppes and the dunes alike. The Avar grain fields have gone to dust, while the sweltering conditions make salt harvests in Naledi challenging."
 	weight = 6
 	cross_realm = TRUE
 	affected_realms = list(REALM_AAVNR, REALM_NALEDI)
 	supply_modifiers = list(
-		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_RICE),
+		list("op" = CONDITION_OP_REMOVE, "good" = TRADE_GOOD_GRAIN),
+		list("op" = CONDITION_OP_MODIFY, "good" = TRADE_GOOD_SALT, "price_mod" = CONDITION_PRICE_MODERATE, "qty_mod" = CONDITION_QTY_LOW),
 	)
 	demand_modifiers = list(
 		list("op" = CONDITION_OP_ADD, "good" = TRADE_GOOD_GRAIN, "qty_min" = BULK_QTY_LARGE_MIN, "qty_max" = BULK_QTY_LARGE_MAX, "price_mod" = BULK_PRICE_DESPERATE),

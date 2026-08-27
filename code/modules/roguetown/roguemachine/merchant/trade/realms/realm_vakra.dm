@@ -9,9 +9,9 @@
 		"Paddler", "Noc-bounty",
 	)
 	captain_first_names = list(
-		"Larai", "Hosk", "Kessith", "Slazri", "Rokzar",
-		"Hralz", "Zelkar", "Vossar", "Sirhak", "Kazros",
-		"Zessira", "Hsalka", "Rikzira", "Solzra", "Kazinna",
+		"Larai", "Jaromir", "Marek", "Slazri", "Dobromir",
+		"Kasim", "Rudai", "Valmir", "Borai", "Jarek",
+		"Razmir", "Velar", "Brazir", "Varik", "Lazmir",
 	)
 	captain_last_names = list(
 		"Sturmvolf", "the Sockeye", "Torn-Ear", "Swiftwoda", "the Kundlu",
@@ -40,7 +40,7 @@
 		list("good" = TRADE_GOOD_HEARTSTONE, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_DISCOUNT),
 		list("good" = TRADE_GOOD_AMBER, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_DEEP_DISCOUNT),
 		list("good" = TRADE_GOOD_ROSESTONE, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_DISCOUNT),
-		list("good" = TRADE_GOOD_CINNABAR, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_DISCOUNT),
+		list("good" = TRADE_GOOD_SILK, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_DISCOUNT),
 		list("good" = TRADE_GOOD_GOLD_ORE, "qty_min" = BULK_QTY_MEDIUM_MIN, "qty_max" = BULK_QTY_MEDIUM_MAX, "price_mod" = BULK_PRICE_FAIR),
 		list("good" = TRADE_GOOD_GOLD_INGOT, "qty_min" = BULK_QTY_SMALL_MIN, "qty_max" = BULK_QTY_SMALL_MAX, "price_mod" = BULK_PRICE_FAIR),
 	)
@@ -63,7 +63,7 @@
 	)
 	victualling_fresh_pool = list(
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/hcake, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_LUXURY),
-//		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlickcucumber, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_FEAST),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins/cooked/sauced, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_FEAST),
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/pepperfish, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_STEAK),
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/peppersteak, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
@@ -74,9 +74,9 @@
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/raisinbread, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_FISH),
 	)
 	victualling_drinks_pool = list(
-		list("recipe" = /datum/brewing_recipe/luxintenebre),
+		list("recipe" = /datum/brewing_recipe/brandy),
 		list("recipe" = /datum/brewing_recipe/voddena),
-		list("recipe" = /datum/brewing_recipe/jack_wine),
+		list("recipe" = /datum/brewing_recipe/beer),
 		list("recipe" = /datum/brewing_recipe/blackberry_wine),
 	)
 	cultural_stock_pool = list(
@@ -84,8 +84,8 @@
 		/datum/supply_pack/rogue/vakra/helmet,
 		/datum/supply_pack/rogue/vakra/warhammer,
 		/datum/supply_pack/rogue/vakra/forlorn_hope_regalia,
-		/datum/supply_pack/rogue/lirvas/gold_quarterstaff,
-		/datum/supply_pack/rogue/lirvas/sabre,
+		/datum/supply_pack/rogue/vakra/shield,
+		/datum/supply_pack/rogue/vakra/crossbow,
 		/datum/supply_pack/rogue/alcohol/rtoper,
 	)
 	hail_lines = list(

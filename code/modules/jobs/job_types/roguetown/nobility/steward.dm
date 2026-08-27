@@ -21,7 +21,7 @@
 	advclass_cat_rolls = list(CTAG_STEWARD = 2)
 	virtue_restrictions = list(/datum/virtue/utility/blacksmith)
 
-	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
+	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_ROYAL_SUBSIDY)
 	job_subclasses = list(
 		/datum/advclass/steward
 	)

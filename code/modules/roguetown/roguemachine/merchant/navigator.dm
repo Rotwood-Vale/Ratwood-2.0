@@ -13,6 +13,7 @@
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	/// A fixed handler's fee lost to the void before any Crown duty. Used for blackmarket
+	item_flags = ABSTRACT
 	var/fixed_tax = 0
 	var/grants_passive_favor = TRUE
 	var/accepts_unmintable = FALSE
