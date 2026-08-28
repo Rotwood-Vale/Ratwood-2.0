@@ -1,5 +1,0 @@
-author: "Makximus"
-delete-after: True
-changes:
-  - rscadd: "masc and fem versions of elvish/dwarvish, evil, zeth, and wizardly voicepacks made available."
-  - sound: "Makes (some) previously unselectable voicepacks selectable"
