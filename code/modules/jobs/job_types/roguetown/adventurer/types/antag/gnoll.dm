@@ -152,6 +152,25 @@
 	add_mob_descriptor(prefs.descriptor_voice || /datum/mob_descriptor/voice/growly)
 	add_mob_descriptor(prefs.descriptor_muzzle || /datum/mob_descriptor/face/gnoll/long_muzzle)
 	add_mob_descriptor(prefs.descriptor_expression || /datum/mob_descriptor/face_exp/gnoll/alert)
+
+	// Copy gnoll flavortext to gnoll mob
+	headshot_link = prefs.headshot_link
+	flavortext = prefs.flavortext
+	ooc_notes = prefs.ooc_notes
+	rumour = prefs.rumour
+	noble_gossip = prefs.noble_gossip
+	nsfwflavortext = prefs.nsfwflavortext
+	nsfw_ooc_extra_img = prefs.nsfw_ooc_extra_img
+	nsfw_ooc_extra_img_link = prefs.nsfw_ooc_extra_img_link
+	song_artist = prefs.song_artist
+	song_title = prefs.song_artist
+	erpprefs = prefs.erpprefs
+	img_gallery = prefs.img_gallery
+	nsfw_img_gallery = prefs.nsfw_img_gallery
+	ooc_extra = prefs.ooc_extra
+	ooc_extra_img = prefs.ooc_extra_img
+	ooc_extra_img_link = prefs.ooc_extra_img_link
+
 	return TRUE
 
 /mob/living/carbon/human/proc/reset_gnoll_sprite_scale()

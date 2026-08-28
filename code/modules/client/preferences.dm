@@ -2337,6 +2337,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					preview_examine_panel.pref = src
 					preview_examine_panel.holder = user
 					preview_examine_panel.viewing = user
+					preview_examine_panel.previewing = "character"
 					preview_examine_panel.ui_interact(user)
 
 				if("rumour_preview")

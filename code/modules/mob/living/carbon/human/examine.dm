@@ -1079,7 +1079,7 @@
 					var/skilldiff = user.get_skill_level(user_skill) - get_skill_level(src_skill)
 					. += "<font size = 3><i>[skilldiff_report(skilldiff)] in my wielded skill than they are in theirs.</i></font>"
 
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
