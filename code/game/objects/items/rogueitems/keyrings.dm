@@ -418,10 +418,10 @@
 	keys = list(/obj/item/roguekey/slaverhouse)
 
 /obj/item/storage/keyring/sedeentcommander
-	keys = list(/obj/item/roguekey/commandersedeent, /obj/item/roguekey/sedeentmayor, obj/item/roguekey/sedeentgarrison)
+	keys = list(/obj/item/roguekey/commandersedeent, /obj/item/roguekey/sedeentmayor, /obj/item/roguekey/sedeentgarrison)
 
 /obj/item/storage/keyring/sedeentmayor
-	keys = list(/obj/item/roguekey/commandersedeent, /obj/item/roguekey/sedeentmayor, obj/item/roguekey/sedeentgarrison)
+	keys = list(/obj/item/roguekey/commandersedeent, /obj/item/roguekey/sedeentmayor, /obj/item/roguekey/sedeentgarrison)
 
 /obj/item/storage/keyring/sedeentgarrison
-	keys = list(obj/item/roguekey/sedeentgarrison)
+	keys = list(/obj/item/roguekey/sedeentgarrison)
