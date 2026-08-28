@@ -1,19 +1,9 @@
-// Loan contracts and indenture writs - ported from Azure-Peak PR #7000 (economy port Step 16,
-// AP source: code/modules/politics/items/loan_contract.dm).
-// Ratwood deviations:
-//  - Player accounts are integer balances in SStreasury.bank_accounts (keyed by mob), not
-//    /datum/fund accounts. Disbursement burns the issuing fund and credits the ledger directly
-//    (exact inverse of the landed repay_loan() pattern in code/modules/banking/loan.dm).
-//  - icon: AP's 'icons/roguetown/items/paper.dmi' ("paper_altprep") doesn't exist in ES;
-//    uses ES's stock parchment art from misc.dmi instead.
-//  - No CALENDAR_EPOCH_YEAR calendar system in ES; contracts are undated when unsigned.
-//  - Church usury flavor references Astrata (ES church convention, see fund_api.dm).
-
+// Loan contracts and indenture writs 
 /obj/item/loan_contract
-	name = "loan contract"
+	name = "Loan Contract"
 	desc = "A binding writ from the Nerve Master, bearing the Steward's signature. Any eligible bearer may accept its terms."
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "paper"
+	icon_state = "paper_prep"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	throwforce = 0
@@ -26,7 +16,7 @@
 	var/principal_due_on_day = 0
 	var/source_fund_id = "crown"
 
-/obj/item/loan_contract/Initialize()
+/obj/item/loan_contract/Initialize(mapload)
 	. = ..()
 	if(!total_due && principal)
 		total_due = FLOOR(principal * (1 + (interest_rate * term_days)), 1)
@@ -34,12 +24,10 @@
 /obj/item/loan_contract/examine(mob/user)
 	. = ..()
 	var/signature = issuer_name || "the Nerve Master"
+	var/year = issuer_year || CALENDAR_EPOCH_YEAR
 	var/pct = round(interest_rate * 100)
 	. += span_info("The contract reads: <i>\"Be it known that the bearer doth receive of the Crown the sum of [principal] mammon, to be repaid in full on the [ordinal(term_days)] dae after the acceptance of this loan, at the rate of [pct] per centum per dae of simple interest, totaling [total_due] mammon due.\"</i>")
-	if(issuer_year)
-		. += span_info("<i>Signed in the year [issuer_year], [signature].</i>")
-	else
-		. += span_info("<i>Signed, [signature].</i>")
+	. += span_info("<i>Signed in the year [year], [signature].</i>")
 	. += span_notice("Left-click in hand to accept or decline its terms.")
 
 /obj/item/loan_contract/proc/ordinal(n)
@@ -61,16 +49,16 @@
 	if(!istype(user))
 		return ..()
 	if(HAS_TRAIT(user, TRAIT_DEBTOR))
-		to_chat(user, span_warning("I am already marked a defaulter. I cannot take on new debt."))
+		to_chat(user, span_warning("I am already marked a defaulter of the Crown. I cannot take on new debt."))
 		return
 	if(SStreasury.get_loan_for(user))
-		to_chat(user, span_warning("I already owe a debt. I cannot hold two at once."))
+		to_chat(user, span_warning("I already owe the Crown. I cannot hold two debts at once."))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("I have no Nervelock account to receive these funds. I must open one first."))
+		to_chat(user, span_warning("I have no Meister account to receive these funds. I must open one first."))
 		return
 	if(source_fund_id == "church" && (user.job in GLOB.church_positions))
-		to_chat(user, span_warning("The Church prohibits usury to its own. Astrata's coin is for the poor and the downtrodden, not the faithful."))
+		to_chat(user, span_warning("The Church prohibits usury to its own. Eora's coin is for the poor and the downtrodden, not the faithful."))
 		return
 	var/datum/fund/preview_fund = SStreasury.resolve_fund_by_id(source_fund_id)
 	var/preview_label = preview_fund ? SStreasury.indenture_faction_label(preview_fund) : "an unknown lender"
@@ -82,13 +70,14 @@
 	if(QDELETED(src) || QDELETED(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_DEBTOR))
-		to_chat(user, span_warning("I am already marked a defaulter."))
+		to_chat(user, span_warning("I am already marked a defaulter of the Crown."))
 		return
 	if(SStreasury.get_loan_for(user))
-		to_chat(user, span_warning("I already owe a debt."))
+		to_chat(user, span_warning("I already owe the Crown."))
 		return
-	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("My Nervelock account is gone."))
+	var/datum/fund/account = SStreasury.get_account(user)
+	if(!account)
+		to_chat(user, span_warning("My Meister account is gone."))
 		return
 	var/datum/fund/issuing_fund = SStreasury.resolve_fund_by_id(source_fund_id)
 	if(!issuing_fund)
@@ -97,12 +86,11 @@
 	if(issuing_fund.balance < principal)
 		to_chat(user, span_warning("[issuing_fund.name]'s coffers are too thin to honor this writ."))
 		return
-	// Ratwood deviation: burn from the issuing fund and credit the integer ledger directly
-	// (inverse of repay_loan(), which debits the ledger and mints the destination fund).
-	if(!SStreasury.burn(issuing_fund, principal, "Loan principal - [user.real_name]"))
+	if(!SStreasury.transfer(issuing_fund, account, principal, "Loan principal"))
 		to_chat(user, span_warning("The meister refuses the transfer."))
 		return
-	SStreasury.bank_accounts[user] += principal
+	if(issuing_fund == SStreasury.discretionary_fund)
+		record_treasury_expense(TREASURY_FLOW_LOAN_OUT, treasury_role_of(user), principal)
 	var/datum/loan/L = new(user, principal, term_days, interest_rate, issuer_name, issuing_fund)
 	SStreasury.loans += L
 	record_round_statistic(STATS_LOANS_ISSUED, 1)
@@ -110,12 +98,13 @@
 	user.visible_message(span_notice("[user] signs the loan contract and pockets [lender_label]'s coin."), \
 		span_notice("I accept the loan of [principal]m from [lender_label], repayable in [term_days] day\s at [pct]%/day. Total due: [total_due]m."))
 	playsound(get_turf(user), 'sound/misc/gold_license.ogg', 60, FALSE, -1)
-	send_ooc_note("<b>NERVELOCK:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
+	send_ooc_note("<b>MEISTER:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
 	qdel(src)
 
 /obj/item/loan_contract/indenture
-	name = "writ of indenture"
-	desc = "A binding indenture between two institutions of Rotwood Vale. Only the named target's authorised hand may seal it."
+	name = "Writ of Indenture"
+	desc = "A binding indenture between two institutions of Azuria. Only the named target's authorised hand may seal it."
+	icon_state = "paper_prep"
 	var/target_fund_id
 
 /obj/item/loan_contract/indenture/examine(mob/user)
@@ -150,10 +139,6 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	for(var/datum/loan/L in SStreasury.loans)
-		if(L.is_institutional && L.target_fund == target_fund)
-			to_chat(user, span_warning("[SStreasury.indenture_faction_label(target_fund)] already holds an outstanding indenture."))
-			return
 	if(issuing_fund.balance < principal)
 		to_chat(user, span_warning("[issuing_fund.name]'s coffers are too thin to honor this indenture."))
 		return

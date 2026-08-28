@@ -140,6 +140,10 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Slaver",
 	"Tailor",
 ))
+GLOBAL_LIST_INIT(bathhouse_positions, list(
+	"Bathmaster",
+	"Bathhouse Attendant",
+))
 
 GLOBAL_LIST_INIT(peasant_positions, list(
 	"Soilson",

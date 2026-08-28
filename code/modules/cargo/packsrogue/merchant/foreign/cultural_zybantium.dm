@@ -9,17 +9,17 @@
 	no_name_quantity = TRUE
 	cost = 440
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy,
-		/obj/item/clothing/suit/roguetown/armor/plate/scale,
-		/obj/item/clothing/head/roguetown/helmet/sallet,
-		/obj/item/clothing/neck/roguetown/chaincoif/full,
+		/obj/item/clothing/suit/roguetown/armor/gambeson/zyb,
+		/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary,
+		/obj/item/clothing/head/roguetown/helmet/janissaryhelm,
+		/obj/item/clothing/neck/roguetown/chaincoif/chainmantle,
 		/obj/item/clothing/mask/rogue/facemask/steel,
 		/obj/item/clothing/gloves/roguetown/chain,
-		/obj/item/clothing/wrists/roguetown/splintarms,
-		/obj/item/clothing/under/roguetown/splintlegs,
-		/obj/item/clothing/shoes/roguetown/boots/leather/reinforced,
+		/obj/item/clothing/wrists/roguetown/bracers,
+		/obj/item/clothing/under/roguetown/chainlegs/kilt,
+		/obj/item/clothing/shoes/roguetown/shalal/reinforced,
 		/obj/item/storage/belt/rogue/leather/shalal,
-		/obj/item/clothing/cloak/half/rider/red,
+		/obj/item/clothing/cloak/citywatch/janissary,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
@@ -46,9 +46,28 @@
 /datum/supply_pack/rogue/zybantine/megarmach_coat
 	name = "Megarmach Scale Coat"
 	cost = 140
-	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat)
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb)
 	ship_qty_min = 1
 	ship_qty_max = 1
+
+/datum/supply_pack/rogue/zybantine/paddedgambeson
+	name = "Padded Desert Gambeson"
+	cost = 80
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/zybantine/gambeson
+	name = "Desert Gambeson"
+	cost = 45 // Base sellprice of 20
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/zyb)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/zybantine/zybtrou
+	name = "Baggy Hardened Leather Desert Pants"
+	cost = 60 // Base sellprice of 20
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb)
 
 /datum/supply_pack/rogue/zybantine/tower_shield
 	name = "Shalal Tower Shield"
@@ -86,9 +105,9 @@
 	ship_qty_max = 2
 
 /datum/supply_pack/rogue/zybantine/spear
-	name = "Janissary Spear"
+	name = "Janissary Bardiche"
 	cost = 60
-	contains = list(/obj/item/rogueweapon/spear)
+	contains = list(/obj/item/rogueweapon/halberd/bardiche)
 	ship_qty_min = 2
 	ship_qty_max = 4
 
@@ -155,13 +174,6 @@
 	ship_qty_min = 2
 	ship_qty_max = 4
 
-/datum/supply_pack/rogue/zybantine/pontifex_trou
-	name = "Pontifex Trousers"
-	cost = 40
-	contains = list(/obj/item/clothing/under/roguetown/trou/leather/pontifex)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
 /datum/supply_pack/rogue/zybantine/shalal_slippers
 	name = "Shalal Slippers"
 	cost = 25
@@ -189,31 +201,3 @@
 	contains = list(/obj/item/rogueweapon/sword/short/messer)
 	ship_qty_min = 2
 	ship_qty_max = 3
-
-/datum/supply_pack/rogue/zybantine/bronzekhopesh
-	name = "Bronze Khopesh"
-	cost = 90
-	contains = list(/obj/item/rogueweapon/sword/sabre/nockhopesh)
-	ship_qty_min = 2
-	ship_qty_max = 3
-
-/datum/supply_pack/rogue/zybantine/bronze_axe
-	name = "Bronze Axe"
-	cost = 90
-	contains = list(/obj/item/rogueweapon/stoneaxe/handaxe/copper)
-	ship_qty_min = 1
-	ship_qty_max = 3
-
-/datum/supply_pack/rogue/zybantine/bronze_spear
-	name = "Bronze Spear"
-	cost = 70
-	contains = list(/obj/item/rogueweapon/spear/bronze)
-	ship_qty_min = 2
-	ship_qty_max = 4
-
-/datum/supply_pack/rogue/zybantine/bronze_knife
-	name = "Bronze Knife"
-	cost = 40
-	contains = list(/obj/item/rogueweapon/huntingknife/copper)
-	ship_qty_min = 2
-	ship_qty_max = 4

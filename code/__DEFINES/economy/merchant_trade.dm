@@ -1,4 +1,3 @@
-// Ported from AP code/__DEFINES/trading.dm (Economy 3 PR #7000 + follow-up commits on apsrc/main).
 // Backs the SSmerchant_trade subsystem, foreign realms/conditions, trade ships, the ship
 // fulfillment crate, and the merchant catalogs (ROSAWOOD_ARSENAL_FAVOR, UNDERDARK_CARAVAN_FAVOR,
 // CATALOG_KIN_BUY_MULT) in merchant/trade/merchant_catalog.dm.

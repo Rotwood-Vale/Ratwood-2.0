@@ -207,16 +207,12 @@
 // Assembly poll tax is disabled from the resolution slate pending anti-dodge design - the
 // assess-against-bank-only check invited a trivial exploit (pull cash to on-person before
 // the vote resolves, appear broke, skip the levy, redeposit after). levy_poll_tax remains
-// callable for direct testing. See AP design doc for the replacement proposal.
+// callable from the admin verb for direct testing. See design doc for the replacement proposal.
 //
 // /datum/controller/subsystem/city_assembly/proc/apply_poll_tax(list/result)
-//     ... (formerly wired into resolve_session)
+//		... (formerly wired into resolve_session)
 
 /datum/controller/subsystem/city_assembly/proc/levy_poll_tax(amount)
-	// ES: AP assesses this against SStreasury.get_account(H) /datum/fund balances. Emerald
-	// Summit keeps per-mob balances as plain numbers in SStreasury.bank_accounts keyed by the
-	// mob object (as every other ES site does), so the levy debits those directly and mints
-	// the pledge bonus via fund_api.
 	var/total_collected = 0
 	var/payers = 0
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
@@ -224,13 +220,14 @@
 			continue
 		if(HAS_TRAIT(H, TRAIT_OUTLAW))
 			continue
-		if(!(H in SStreasury.bank_accounts))
+		var/datum/fund/account = SStreasury.get_account(H)
+		if(!account)
 			continue
-		if(SStreasury.bank_accounts[H] < amount)
+		if(account.balance < amount)
 			continue
-		SStreasury.bank_accounts[H] -= amount
-		total_collected += amount
-		payers++
+		if(SStreasury.burn(account, amount, "City Assembly poll levy for common defense"))
+			total_collected += amount
+			payers++
 	if(total_collected <= 0)
 		return
 	var/pledge_gain = total_collected * ASSEMBLY_POLL_PLEDGE_MULTIPLIER

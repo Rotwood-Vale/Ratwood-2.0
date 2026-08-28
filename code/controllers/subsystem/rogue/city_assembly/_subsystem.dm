@@ -308,8 +308,6 @@ SUBSYSTEM_DEF(city_assembly)
 		prefix = "[who] has left the seat. "
 	else
 		prefix = ""
-	// ES: priority_announce here takes (text, title, sound, type, sender, receiver) - no
-	// sender-name string or strip_html arg like AP's version.
 	priority_announce(
 		"[prefix]The Alderman's seat has been vacated - the citizenry must choose anew at the next session.",
 		ASSEMBLY_ANNOUNCE_TITLE,
@@ -372,9 +370,6 @@ SUBSYSTEM_DEF(city_assembly)
 	var/mob/current = resolve_get_alderman()
 	return current && current == user
 
-/// ES: Emerald Summit's priority_announce strips HTML (STRIP_HTML_SIMPLE), so the HTML
-/// summary built for the TGUI history would collapse into an unreadable blob. Flatten it
-/// to plain text (same information) before announcing.
 /datum/controller/subsystem/city_assembly/proc/flatten_summary_html(text)
 	if(!text)
 		return ""
@@ -389,7 +384,6 @@ SUBSYSTEM_DEF(city_assembly)
 
 /datum/controller/subsystem/city_assembly/proc/announce_session_summary(list/summary)
 	var/body = summary["rendered_text"] || build_summary_text(summary)
-	// ES: no sender-name/strip_html args on ES's priority_announce; body flattened to plain text.
 	priority_announce(
 		flatten_summary_html(body),
 		ASSEMBLY_ANNOUNCE_TITLE,

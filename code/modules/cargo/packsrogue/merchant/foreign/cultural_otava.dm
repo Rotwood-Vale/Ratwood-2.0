@@ -54,7 +54,7 @@
 	ship_qty_max = 2
 
 /datum/supply_pack/rogue/otava/heavy_gambeson
-	name = "Otavan Heavy Gambeson"
+	name = "Otavan Fencing Gambeson"
 	cost = 100
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan)
 	ship_qty_min = 1

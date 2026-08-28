@@ -92,6 +92,7 @@
 		/datum/supply_pack/rogue/kazengun/kote,
 		/datum/supply_pack/rogue/kazengun/boots,
 		/datum/supply_pack/rogue/kazengun/trousers,
+		/datum/supply_pack/rogue/kazengun/kazenpants,
 		/datum/supply_pack/rogue/kazengun/chonin_kit,
 		/datum/supply_pack/rogue/kazengun/kouken_kit,
 		/datum/supply_pack/rogue/luxury/fancyteaset,

@@ -11,6 +11,26 @@
 	ship_qty_min = 1
 	ship_qty_max = 3
 
+/datum/supply_pack/rogue/gronn/gronnarmor
+	name = "Gronnic Hardened Leather Armor"
+	cost = 60
+	contains = list (/obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn)
+
+/datum/supply_pack/rogue/gronn/gronnpants
+	name = "Nomad Hardened Leather Pants"
+	cost = 50
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
+
+/datum/supply_pack/rogue/gronn/gronnpantsalt
+	name = "Gronnic Leather Pants"
+	cost = 40
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/gronn)
+
+/datum/supply_pack/rogue/gronn/gronnglovesleather
+	name = "Gronnic Fur-lined Heavy Leather Gloves"
+	cost = 40
+	contains = list (/obj/item/clothing/gloves/roguetown/angle/gronn)
+
 /datum/supply_pack/rogue/gronn/owl_helmet
 	name = "Owl Helmet"
 	cost = 150

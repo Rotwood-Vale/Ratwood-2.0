@@ -12,24 +12,9 @@
 //
 // Ported from Azure-Peak PR #7000 "Economy 3" (apsrc/main, code/modules/roguetown/roguemachine/merchant/_goldface.dm).
 // Ratwood deviations from AP's version:
-//  - Category lists rebuilt from ES's actual /datum/supply_pack group = "..." strings (see below).
-//    AP's "Cosmetics" -> ES "Perfumes" (never renamed here), AP's "Weapons (Bronze)" dropped (no such
-//    group exists in any ES pack). "Zadpacks" was dropped when this file first landed (Zadcote not yet
-//    ported) and restored in the Step 12 Zadcote port (code/modules/cargo/packsrogue/merchant/zadpack.dm);
-//    the bathhouse-side "Discreet Zads" group lives on BRASSFACE (bathmaster.dm), mirroring AP.
-//  - Groups that are exclusive to ES's other vendor machines are intentionally NOT listed here, matching
-//    legacy goldface.dm's behavior of never surfacing them on Goldface/Silverface:
-//      COPPERFACE (blackmarket.dm): Beverages, Diplomacy and Persuasion, Exotic Import, General Labour,
-//        Health and Hygiene, Self Defense
-//      BRASSFACE (bathmaster.dm/bathvend): Exotic Apparel, Roguery (Alcohols/Drugs/Instruments/Perfumes
-//        are shared with Goldface, same as legacy)
-//      Legacy goldface.dm never sold Drugs either (vice goods stay behind bathvend/blackmarket) - kept.
-//  - "Cultural Stock" is deliberately never listed as a flat category - it's realm/ship scoped and only
-//    reachable through the Harbor/Cultural Stock tabs (see build_harbor_data()/build_cultural_stock_data()).
 //  - Knight/Knave/Mage/Pioneer/Sawbones/Brigand/Sellsword/Iconoclast (subclass starter-kit packs) and
 //    Things (general junk) are not claimed by any other ES vendor, so they're slotted into Goldface's
 //    gamer/mundane columns respectively to give the full ES pack catalog a home.
-//  - AP's /obj/item/roguekey/skeleton universal-bypass key does not exist in ES - dropped from attackby().
 //  - Uses ES's real treasury/stats API (SStreasury.mint/get_tax_rate/apply_concordat_tithe,
 //    record_round_statistic/record_featured_stat, budget2change()) instead of AP's - these already exist
 //    1:1 in ES (see code/modules/banking/fund_api.dm, code/__HELPERS/round_statistics.dm).
@@ -94,13 +79,11 @@
 		"Armor (Iron)",
 		"Armor (Steel)",
 		"Armor (Exotic)",
-		"Imported Armor (Light)", // Ratwood pack groups the upstream list dropped
 		"Potions",
 		"Weapons (Ranged)",
 		"Weapons (Iron and Shields)",
 		"Weapons (Steel)",
 		"Weapons (Foreign)",
-		"Weapons (Exotic)",
 	)
 	var/is_public = FALSE // Whether it is a public access vendor.
 	var/extra_fee = 0 // Public-tier Porters/Gnomes margin tacked onto base price. Meant to make publicface very unprofitable until Gnomes are unlocked and the margin flows to the Merchant Fund.
@@ -136,7 +119,6 @@
 		"Seeds",
 		"Substances",
 		"Tools",
-		"Weapons (Exotic)",
 		"Weapons (Foreign)",
 	)
 	categories_gamer = list()
@@ -167,7 +149,6 @@
 		"Apparel",
 		"Wardrobe",
 		"Armor (Light)",
-		"Imported Armor (Light)",
 	)
 	categories_gamer = list()
 

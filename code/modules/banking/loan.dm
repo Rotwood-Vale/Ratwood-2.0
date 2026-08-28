@@ -1,5 +1,4 @@
 // Loan system: player loans (personal debt) and institutional indentures (fund-to-fund).
-// ES adaptation: player accounts are integer balances in bank_accounts, not datum/fund.
 
 /datum/loan
 	var/debtor_name

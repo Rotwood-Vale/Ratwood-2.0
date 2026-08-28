@@ -1,7 +1,5 @@
 // Treasury solvency state machine: NORMAL -> IN_ARREARS -> BANKRUPTCY (and back).
-// ES adaptation: wage suspension tracked via suspended_wage_mobs list (integer ledger).
-// Charter suspension/concession-restore is live as of item 6 (code/modules/politics/).
-// "Ferentian Trading Company" renamed to "Ferentian Trading Company" throughout.
+// "Azurian Trading Company" renamed to "Ferentian Trading Company" throughout.
 
 /datum/controller/subsystem/treasury/proc/is_in_receivership()
 	return treasury_state == TREASURY_BANKRUPTCY
@@ -295,7 +293,7 @@ GLOBAL_LIST_INIT(atc_seizure_inventory, list(
 	"the last Marshal's silver-mounted hunting-horn",
 	"a portrait of a long-forgotten ancestor, slashed by a disgruntled debtor",
 	"the Court Cupbearer's pewter inventory and the keys to it",
-	"a Lirvanic jewel-encrusted bathtub of indecent proportion",
+	"a jewel-encrusted bathtub of indecent proportion",
 	"twelve casks of Bleakcoast firewine, marked for the Midwinter feast",
 	"a Kazengun lacquered wardrobe of indeterminate vintage",
 	"an Etruscan illuminated bestiary, water-damaged",

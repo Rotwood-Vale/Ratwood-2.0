@@ -95,17 +95,17 @@
 	ship_qty_min = 1
 	ship_qty_max = 3
 
-/datum/supply_pack/rogue/grenzelhoft/siegebow
-	name = "Siegebow"
+/datum/supply_pack/rogue/grenzelhoft/crossbow
+	name = "crossbow"
 	cost = 220
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
-/datum/supply_pack/rogue/grenzelhoft/heavy_bolts
-	name = "Quiver of Heavy Bolts"
+/datum/supply_pack/rogue/grenzelhoft/fyrebolts
+	name = "Quiver of Pyroclastic Bolts"
 	cost = 60
-	contains = list(/obj/item/quiver/bolts)
+	contains = list(/obj/item/quiver/pyrobolts)
 	ship_qty_min = 1
 	ship_qty_max = 3
 

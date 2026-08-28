@@ -8,11 +8,6 @@ Hopefully they are more useful than just writing a letter via HERMES.
 Mercenary statue: see talkstatue_mercenary.dm (legacy merc plumbing,
 chat-delivered messaging, Topic handlers for register/response links) and
 talkstatue_tgui.dm (the real player-facing TGUI: ui_state/ui_interact/ui_data/ui_act).
-
-ES port note (Step 9f): Azure-Peak's talkstatue_tgui.dm is a shared TGUI surface across
-mercenary/adventurer/wretch roles. ES has no Adventurer or Wretch-for-hire framework under
-any name (confirmed exhaustively in Step 9e), so only the mercenary role's TGUI surface was
-ported - see talkstatue_tgui.dm's header comment for exactly what was stubbed out.
 */
 
 /obj/structure/roguemachine/talkstatue
@@ -33,6 +28,8 @@ ported - see talkstatue_tgui.dm's header comment for exactly what was stubbed ou
 	var/static/list/pending_broadcast_responses = list()
 	var/static/list/pending_direct_responses = list()
 	var/static/list/sender_cooldowns = list()
+	var/static/list/adventurer_status = list()
+	var/static/list/wretch_status = list()
 	var/message_char_limit = 300
 	var/response_timeout = 2 MINUTES
 	var/single_cooldown = 10 MINUTES

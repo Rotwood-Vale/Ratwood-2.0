@@ -1,6 +1,5 @@
-// Ratwood deviation: AP's elvish weapon line (longsword, shortsword, curveblade, glaive, dirk),
 // the woad light helm and maille, the blackoak barbutes, the woad recurve bow and the javelin
-// quiver do not exist in this tree. Their packs are omitted until those items are ported.
+// quiver do not exist. Their packs are omitted until those items are ported.
 /datum/supply_pack/rogue/rosawood
 	group = "Cultural Stock"
 	crate_name = "Rosawood crate"
@@ -119,3 +118,25 @@
 		/obj/item/reagent_containers/food/snacks/butter,
 		/obj/item/reagent_containers/food/snacks/butter,
 	)
+
+//// Elven Blades
+/datum/supply_pack/rogue/rosawood/elfsword
+	name = "Elven Shortsword"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/sword/short/elf)
+	
+/datum/supply_pack/rogue/rosawood/elflongsword
+	name = "Elven Longsword"
+	cost = 80
+	contains = list(/obj/item/rogueweapon/sword/long/elf)
+
+/datum/supply_pack/rogue/rosawood/elfswordspear
+	name = "Elven Swordspear"
+	cost = 100
+	contains = list(/obj/item/rogueweapon/spear/naginata/elf)
+
+/datum/supply_pack/rogue/rosawood/elfcurveblade
+	name = "Elven Curveblade"
+	cost = 120
+	contains = list(/obj/item/rogueweapon/greatsword/elf)
+

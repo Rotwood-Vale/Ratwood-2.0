@@ -67,7 +67,4 @@
 
 // These jobs cannot hold office due to abuse potentials by
 // direct import / export that benefits their roles massively
-// ES: AP also lists "Bathmaster" and "Bathhouse Attendant"; ES renamed those roles to
-// "Nightmaster"/"Nightswain", which lack AP's direct import/export levers, so they are
-// not barred here.
-#define ASSEMBLY_OFFICE_INELIGIBLE_JOBS list("Merchant", "Shophand")
+#define ASSEMBLY_OFFICE_INELIGIBLE_JOBS list("Merchant", "Shophand", "Bathmaster", "Bathhouse Attendant")

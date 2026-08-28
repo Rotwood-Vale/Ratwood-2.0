@@ -69,8 +69,6 @@
 #define TRADE_GOOD_SALUMOI "SALUMOI"
 #define TRADE_GOOD_SAUSAGE "SAUSAGE"
 #define TRADE_GOOD_DRIED_FISH "DRIED_FISH"
-// Step 14 (stockpile rework) additions - defines only, matching AP: these goods have stockpile
-// entries but no /datum/trade_good yet, so auto-pricing falls back to the datum defaults.
 #define TRADE_GOOD_HONEY "HONEY"
 #define TRADE_GOOD_BONES "BONES"
 #define TRADE_GOOD_MEAT_EXOTIC "MEAT_EXOTIC"

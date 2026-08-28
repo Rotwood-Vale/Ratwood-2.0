@@ -21,6 +21,23 @@
 	ship_qty_min = 1
 	ship_qty_max = 1
 
+/datum/supply_pack/rogue/naledi/pontifex_kit
+	name = "Naledi Pontifex Vestments"
+	no_name_quantity = TRUE
+	cost = 200
+	contains = list(
+		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex,
+		/obj/item/clothing/suit/roguetown/shirt/robe/pointfex,
+		/obj/item/clothing/head/roguetown/roguehood/pontifex,
+		/obj/item/clothing/under/roguetown/trou/leather/pontifex,
+		/obj/item/clothing/mask/rogue/lordmask/naledi,
+		/obj/item/clothing/neck/roguetown/psicross/naledi,
+		/obj/item/clothing/shoes/roguetown/sandals,
+		/obj/item/clothing/gloves/roguetown/angle/pontifex,
+	)
+	ship_qty_min = 1
+	ship_qty_max = 1
+
 /datum/supply_pack/rogue/naledi/psicross
 	name = "Naledi Psicross"
 	cost = 80
@@ -41,6 +58,27 @@
 	contains = list(/obj/item/clothing/head/roguetown/roguehood/hierophant)
 	ship_qty_min = 2
 	ship_qty_max = 4
+
+/datum/supply_pack/rogue/naledi/hierophantshawl
+	name = "Hierophant Shawl"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/naledi/naleditrou
+	name = "Pontifex's Chaqchur"
+	cost = 40 
+	contains = list (/obj/item/clothing/under/roguetown/trou/leather/pontifex)
+	ship_qty_min = 1
+	ship_qty_max = 2
+
+/datum/supply_pack/rogue/naledi/naledigamba
+	name = "Pontifex's Kaftan"
+	cost = 60 // Base sellprice of 30
+	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex)
+	ship_qty_min = 1
+	ship_qty_max = 2
 
 /datum/supply_pack/rogue/naledi/sandals
 	name = "Naledi Sandals"

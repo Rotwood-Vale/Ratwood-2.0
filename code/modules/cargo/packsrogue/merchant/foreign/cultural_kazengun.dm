@@ -25,12 +25,12 @@
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/kazengun/mentorhat
-	name = "Worn Bamboo Hat"
-	cost = 60
-	contains = list(/obj/item/clothing/head/roguetown/mentorhat)
-	ship_qty_min = 2
-	ship_qty_max = 4
+/datum/supply_pack/rogue/kazengun/kazenpants
+	name = "Kazengunese Heavy Leather Trousers"
+	cost = 40 
+	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun)
+	ship_qty_min = 1
+	ship_qty_max = 2
 
 /datum/supply_pack/rogue/kazengun/mentorhat
 	name = "Worn Bamboo Hat"

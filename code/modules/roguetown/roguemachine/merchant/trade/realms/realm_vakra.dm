@@ -85,7 +85,8 @@
 		/datum/supply_pack/rogue/vakra/warhammer,
 		/datum/supply_pack/rogue/vakra/forlorn_hope_regalia,
 		/datum/supply_pack/rogue/vakra/shield,
-		/datum/supply_pack/rogue/vakra/crossbow,
+		/datum/supply_pack/rogue/vakra/siegebow,
+		/datum/supply_pack/rogue/vakra/siegebolts,
 		/datum/supply_pack/rogue/alcohol/rtoper,
 	)
 	hail_lines = list(

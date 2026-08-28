@@ -20,7 +20,7 @@
 
 /datum/supply_pack/rogue/vakra/warhammer
 	name = "Silvered Warhammer"
-	cost = 140
+	cost = 220
 	contains = list(/obj/item/rogueweapon/mace/warhammer/steel/silver)
 	ship_qty_min = 1
 	ship_qty_max = 1
@@ -32,15 +32,19 @@
 	ship_qty_min = 1
 	ship_qty_max = 2
 
-/datum/supply_pack/rogue/vakra/crossbow
-	name = "Vakran Crossbow set"
-	cost = 150
-	contains = list(
-		/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-		/obj/item/quiver/pyrobolts,
-	)
+/datum/supply_pack/rogue/vakra/siegebow
+	name = "Vakra Siegebow"
+	cost = 220
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy)
 	ship_qty_min = 1
-	ship_qty_max = 2
+	ship_qty_max = 1
+
+/datum/supply_pack/rogue/vakra/siegebolts
+	name = "Quiver of Heavy Bolts"
+	cost = 60
+	contains = list(/obj/item/quiver/heavybolts)
+	ship_qty_min = 1
+	ship_qty_max = 3
 
 /datum/supply_pack/rogue/vakra/forlorn_hope_regalia
 	name = "Vakran Forlorn Hope Regalia"
