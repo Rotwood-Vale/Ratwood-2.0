@@ -284,27 +284,27 @@
 	if(headshot_link != null)
 		dat += "<br><img src='[headshot_link]' width='100px' height='100px'>"
 
-	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp;task=input'>(?)</a><a href='?_src_=gnoll_prefs;action=flavortext'>Change</a>"
-	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp;task=input'>(?)</a><a href='?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
-	dat += "<br><b>OOC Notes: </b><a href='?_src_=gnoll_prefs;action=formathelp;task=input'>(?)</a><a href='?_src_=gnoll_prefs;action=ooc_notes'>Change</a>"
+	dat += "<br><b>Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=flavortext'>Change</a>"
+	dat += "<br><b>NSFW Flavortext: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=nsfwflavortext'>Change</a>"
+	dat += "<br><b>OOC Notes: </b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=ooc_notes'>Change</a>"
 
-	dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=gnoll_prefs;action=formathelp;task=input'>(?)</a><br><a href='?_src_=gnoll_prefs;action=rumour;task=input'>Set Rumours</a><a href='?_src_=gnoll_prefs;action=gossip;task=input'>Set Gossip</a><a href='?_src_=gnoll_prefs;action=rumour_preview;task=input'><i>Preview</i></a>"
+	dat += "<br><b>Rumours & Noble Gossip:</b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><br><a href='?_src_=gnoll_prefs;action=rumour'>Set Rumours</a><a href='?_src_=gnoll_prefs;action=gossip'>Set Gossip</a><a href='?_src_=gnoll_prefs;action=rumour_preview'><i>Preview</i></a>"
 
-	dat += "<br><b>ERP Preferences:</b><a href='?_src_=gnoll_prefs;action=formathelp;task=input'>(?)</a><a href='?_src_=gnoll_prefs;action=erpprefs;task=input'>Change</a>"
-	dat += "<br><b>Song:</b> <a href='?_src_=gnoll_prefs;action=ooc_extra;task=input'>Change URL</a>"
-	dat += "<a href='?_src_=gnoll_prefs;action=change_title;task=input'>Change Title</a>"
-	dat += "<a href='?_src_=gnoll_prefs;action=change_artist;task=input'>Change Artist</a>"
-	dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=ooc_extra_img;task=input'>Change</a>"
+	dat += "<br><b>ERP Preferences:</b><a href='?_src_=gnoll_prefs;action=formathelp'>(?)</a><a href='?_src_=gnoll_prefs;action=erpprefs'>Change</a>"
+	dat += "<br><b>Song:</b> <a href='?_src_=gnoll_prefs;action=ooc_extra'>Change URL</a>"
+	dat += "<a href='?_src_=gnoll_prefs;action=change_title'>Change Title</a>"
+	dat += "<a href='?_src_=gnoll_prefs;action=change_artist'>Change Artist</a>"
+	dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=ooc_extra_img'>Change</a>"
 	if(ooc_extra_img_link != null)
 		dat += "<br><img src='[ooc_extra_img_link]' width='100px' height='100px'>"
-	dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=nsfw_ooc_extra_img;task=input'>Change</a>"
+	dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=gnoll_prefs;action=nsfw_ooc_extra_img'>Change</a>"
 	if(nsfw_ooc_extra_img_link != null)
 		dat += "<br><img src='[nsfw_ooc_extra_img_link]' width='100px' height='100px'>"
-	dat += "<br><B>Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=img_gallery;task=input'>Add</a>"
-	dat+= "<a href='?_src_=gnoll_prefs;action=clear_gallery;task=input'>Clear Gallery</a>"
-	dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=nsfw_img_gallery;task=input'>Add</a>"
-	dat+= "<a href='?_src_=gnoll_prefs;action=clear_nsfw_gallery;task=input'>Clear Nsfw Gallery</a>"
-	dat += "<br><a href='?_src_=gnoll_prefs;action=ooc_preview;task=input'><b>Preview Examine</b></a>"
+	dat += "<br><B>Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=img_gallery'>Add</a>"
+	dat+= "<a href='?_src_=gnoll_prefs;action=clear_gallery'>Clear Gallery</a>"
+	dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=gnoll_prefs;action=nsfw_img_gallery'>Add</a>"
+	dat+= "<a href='?_src_=gnoll_prefs;action=clear_nsfw_gallery'>Clear Nsfw Gallery</a>"
+	dat += "<br><a href='?_src_=gnoll_prefs;action=ooc_preview'><b>Preview Examine</b></a>"
 
 	dat += "<center><a href='?_src_=gnoll_prefs;action=close'>Close</a></center>"
 	dat += "</body></html>"
