@@ -445,8 +445,8 @@
 	/datum/job/roguetown/watchcaptain,\
 	/datum/job/roguetown/wardenmaster,\
 	/datum/job/roguetown/sergeant,\
-	/datum/advclass/sedeentcommander,\
-	/datum/advclass/sedeentwatchman,\
+	/datum/job/roguetown/sedeentcommander,\
+	/datum/job/roguetown/sedeentwatchman,\
 	/datum/job/roguetown/veteran,\
 	/datum/job/roguetown/dungeoneer,\
 	/datum/job/roguetown/gatemaster,\
