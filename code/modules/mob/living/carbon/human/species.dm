@@ -2332,16 +2332,18 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(!Canignite_mob(H))
 		return TRUE
-
+	
+	// Stops maxing out temp from firestacks alone
+	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	
+		return
 	var/thermal_protection = H.get_thermal_protection()
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
-
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 		H.adjust_bodytemperature(1)
 	else
-		H.adjust_bodytemperature(5)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 30 seconds of being on fire to heatstroke
+		H.adjust_bodytemperature(2)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 50 seconds of being on fire to top out at lvl 2
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
