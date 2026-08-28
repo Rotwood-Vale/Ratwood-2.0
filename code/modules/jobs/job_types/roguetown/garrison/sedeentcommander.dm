@@ -1,4 +1,4 @@
-/datum/advclass/sedeentcommander
+/datum/roguetown/sedeentcommander
 	name = "Militia Commander"
 	flag = SEDEENTCOMMANDER
 	tutorial = "You are the commander of the Militia at Sedeent, you are to ensure the exiles to not flee back to the mainland."
