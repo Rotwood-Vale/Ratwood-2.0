@@ -22,6 +22,9 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 
 	advclass_cat_rolls = list(CTAG_MAYOR = 2)
+
+spells = list(/obj/effect/proc_holder/spell/self/convertrole/militia)
+
 	job_subclasses = list(
 		/datum/advclass/mayor
 	)
@@ -71,3 +74,12 @@
 	backpack_contents = list(/obj/item/storage/keyring/sedeentmayor = 1)
 	// backpack_contents = list(/obj/item/recipe_book/survival = 1)//superceded by tgui
 	H.set_blindness(0)
+
+/obj/effect/proc_holder/spell/self/convertrole/guard
+	name = "Recruit Militia-Man"
+	new_role = "Militia Watchman"
+	overlay_state = "recruit_guard"
+	recruitment_faction = "Watchman"
+	recruitment_message = "Serve the town guard, %RECRUIT!"
+	accept_message = "FOR THE CROWN!"
+	refuse_message = "I refuse."
