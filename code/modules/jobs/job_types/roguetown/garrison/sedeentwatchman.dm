@@ -16,6 +16,7 @@
 	display_order = JDO_WATCHMAN
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
+	always_show_on_latechoices = TRUE
 
 	outfit = /datum/outfit/job/roguetown/sedeentwatchman
 

@@ -143,16 +143,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	jobspawn_override = list("Towner")
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/exiledtowner
-	name = "Exiled Towner"
-	icon_state = "arrow"
-
-/obj/effect/landmark/start/exiledtownerlate
-	name = "Townerlate"
-	icon_state = "arrow"
-	jobspawn_override = list("Exiled Towner")
-	delete_after_roundstart = FALSE
-
 /obj/effect/landmark/start/lord
 	name = "Grand Duke"
 	icon_state = "arrow"

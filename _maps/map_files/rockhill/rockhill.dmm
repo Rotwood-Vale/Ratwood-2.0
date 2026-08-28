@@ -2031,7 +2031,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 5
 	},
-/obj/effect/landmark/start/exiledtownerlate,
+/obj/effect/landmark/start/sedeentmayorlate,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/cityofsedeent)
 "auG" = (
@@ -5678,12 +5678,6 @@
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors)
-"bff" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Sedeent Outside Mayor"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/beach/cityofsedeent)
 "bfl" = (
 /obj/structure/stairs{
 	dir = 1
@@ -18531,6 +18525,11 @@
 "dFh" = (
 /turf/open/water/bath,
 /area/rogue/indoors/inq)
+"dFn" = (
+/obj/structure/chair/hotspring_bench/right,
+/obj/effect/landmark/start/villager,
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/beach/cityofsedeent)
 "dFp" = (
 /obj/structure/stairs/stone/ccwdown{
 	dir = 1
@@ -29425,6 +29424,12 @@
 /obj/item/clothing/cloak/apron/waist,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement/tavern)
+"fMH" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Town Square"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/beach/cityofsedeent)
 "fMI" = (
 /obj/structure/mineral_door/wood/deadbolt,
 /turf/open/floor/rogue/dirt/road,
@@ -34537,12 +34542,9 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/bath)
 "gQt" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/obj/effect/landmark/start/exiledtownerlate,
-/turf/open/floor/rogue/ruinedwood/turned,
-/area/rogue/outdoors/beach/cityofsedeent)
+/obj/effect/landmark/start/sedeentwatchman,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/garrison)
 "gQw" = (
 /obj/structure/fluff/railing/wood/west{
 	pixel_x = -11
@@ -40775,7 +40777,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
-/obj/effect/landmark/start/sedeentcommanderlate,
+/obj/effect/landmark/start/villagerlate,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/cityofsedeent)
 "igg" = (
@@ -44897,12 +44899,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
-"iZn" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Sedeent Tavern"
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
 "iZo" = (
 /obj/structure/fluff/railing/wood{
 	pixel_x = 8;
@@ -49106,6 +49102,12 @@
 	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town)
+"jSi" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Tavern"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "jSk" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/church,
@@ -51883,6 +51885,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 10
 	},
+/obj/effect/landmark/start/sedeentwatchmanlate,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/beach/cityofsedeent)
 "ktO" = (
@@ -56943,6 +56946,14 @@
 "lwm" = (
 /turf/open/floor/rogue/hay,
 /area/rogue/outdoors/exposed/town/keep)
+"lwt" = (
+/obj/structure/roguemachine/scomm{
+	pixel_y = 0;
+	pixel_x = -32;
+	scom_tag = "Sedeent Commander's Bedroom"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/garrison)
 "lwu" = (
 /turf/open/floor/rogue/ruinedwood{
 	icon_state = "vertw"
@@ -61789,7 +61800,6 @@
 /obj/structure/fluff/railing/border{
 	dir = 6
 	},
-/obj/effect/landmark/start/exiledtownerlate,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/cityofsedeent)
 "msz" = (
@@ -65211,12 +65221,6 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/grove)
-"ncz" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Sedeent Town Square"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/beach/cityofsedeent)
 "ncC" = (
 /obj/structure/flora/roguetree/burnt{
 	pixel_x = -28
@@ -76750,7 +76754,7 @@
 /area/rogue/outdoors/town/roofs/church)
 "pvF" = (
 /obj/structure/chair/stool/rogue,
-/obj/effect/landmark/start/exiledtowner,
+/obj/effect/landmark/start/villagerlate,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "pvH" = (
@@ -80178,14 +80182,6 @@
 /obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/town/warden)
-"qgm" = (
-/obj/structure/roguemachine/scomm{
-	pixel_y = 0;
-	pixel_x = -32;
-	scom_tag = "Sedeent Commander's Bedroom"
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/garrison)
 "qgq" = (
 /obj/structure/fluff/clock{
 	pixel_x = 4;
@@ -83432,11 +83428,8 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/bath)
 "qOe" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/obj/effect/landmark/start/sedeentmayorlate,
-/turf/open/floor/rogue/ruinedwood/turned,
+/obj/effect/landmark/start/villager,
+/turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/beach/cityofsedeent)
 "qOk" = (
 /turf/open/floor/rogue/cobble,
@@ -86243,7 +86236,6 @@
 /area/rogue/indoors/town/bath)
 "ruo" = (
 /obj/structure/chair/hotspring_bench/right,
-/obj/effect/landmark/start/exiledtowner,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/beach/cityofsedeent)
 "rup" = (
@@ -88202,6 +88194,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "rQc" = (
 /obj/structure/chair/hotspring_bench/right,
+/obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/cityofsedeent)
 "rQd" = (
@@ -88584,6 +88577,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/shop)
+"rVl" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Outside Mayor"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/beach/cityofsedeent)
 "rVm" = (
 /obj/structure/chair/bench/couchablack/r,
 /turf/open/floor/rogue/tile/bath,
@@ -93182,6 +93181,12 @@
 	dir = 4
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
+"sUv" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Garrison"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/garrison)
 "sUx" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
@@ -100569,7 +100574,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/landmark/start/sedeentwatchmanlate,
+/obj/effect/landmark/start/sedeentcommanderlate,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/cityofsedeent)
 "utT" = (
@@ -104185,7 +104190,7 @@
 /area/rogue/indoors/town/bath)
 "vfF" = (
 /obj/structure/chair/hotspring_bench/right,
-/obj/effect/landmark/start/exiledtowner,
+/obj/effect/landmark/start/villager,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/beach/cityofsedeent)
 "vfN" = (
@@ -116243,7 +116248,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/landmark/start/exiledtownerlate,
+/obj/effect/landmark/start/villagerlate,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/cityofsedeent)
 "xEo" = (
@@ -116972,12 +116977,6 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
-"xLy" = (
-/obj/structure/roguemachine/scomm{
-	scom_tag = "Sedeent Garrison"
-	},
-/turf/open/floor/rogue/blocks,
-/area/rogue/indoors/town/garrison)
 "xLD" = (
 /obj/effect/decal/cleanable/debris/woody,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -309504,7 +309503,7 @@ gfs
 hYL
 vIL
 aqG
-qgm
+lwt
 sxm
 tfr
 qYg
@@ -312100,7 +312099,7 @@ mPW
 ley
 pZg
 xre
-ncz
+fMH
 pCC
 vzJ
 swv
@@ -312108,7 +312107,7 @@ bWo
 bWo
 pCC
 pCC
-bWo
+qOe
 pCC
 pCC
 xtY
@@ -313812,9 +313811,9 @@ irJ
 gfs
 gfs
 hYL
+gQt
 tyu
-tyu
-tyu
+gQt
 hYL
 czl
 tyu
@@ -314686,7 +314685,7 @@ qcN
 ofI
 eSB
 pZg
-ruo
+dFn
 pCC
 pCC
 pCC
@@ -315564,10 +315563,10 @@ pCC
 bWo
 ktC
 vdC
-gQt
-tvT
-gQt
 vdC
+vdC
+vdC
+ige
 vdC
 ozx
 brV
@@ -316428,7 +316427,7 @@ mso
 hef
 utS
 hef
-hef
+xEi
 hef
 hef
 tPu
@@ -319850,7 +319849,7 @@ gfs
 eNZ
 eNZ
 hYL
-xLy
+sUv
 hpj
 hYL
 hpj
@@ -319868,7 +319867,7 @@ dws
 dws
 pZg
 xre
-bff
+rVl
 pCC
 pCC
 dXJ
@@ -320731,15 +320730,15 @@ ftp
 vjF
 vjF
 bWo
-bWo
+qOe
 bWo
 jKj
-qOe
+tvT
 vdC
 vdC
 ige
 vdC
-vdC
+ige
 vdC
 ktv
 dmp
@@ -321597,7 +321596,7 @@ bWo
 pCC
 jKu
 hef
-xEi
+hef
 hef
 hef
 xEi
@@ -325897,7 +325896,7 @@ pZg
 myi
 eBW
 pZg
-iZn
+jSi
 bOc
 eBW
 eBW
@@ -326761,7 +326760,7 @@ eBW
 rRu
 lQe
 eBW
-pvF
+lQe
 lkl
 lQe
 pZg
@@ -327621,7 +327620,7 @@ aYV
 vmY
 eBW
 tFf
-lQe
+pvF
 eBW
 lQe
 xdg
@@ -328483,7 +328482,7 @@ aYV
 vmY
 eBW
 tFf
-pvF
+lQe
 eBW
 eBW
 bWe
