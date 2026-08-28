@@ -22,8 +22,7 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 
 	advclass_cat_rolls = list(CTAG_MAYOR = 2)
-
-spells = list(/obj/effect/proc_holder/spell/self/convertrole/militia)
+	spells = list(/obj/effect/proc_holder/spell/self/convertrole/militia)
 
 	job_subclasses = list(
 		/datum/advclass/mayor
