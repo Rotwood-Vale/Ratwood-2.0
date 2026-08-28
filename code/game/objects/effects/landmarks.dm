@@ -143,6 +143,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	jobspawn_override = list("Towner")
 	delete_after_roundstart = FALSE
 
+/obj/effect/landmark/start/exiledtowner
+	name = "Exiled Towner"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/exiledtownerlate
+	name = "Townerlate"
+	icon_state = "arrow"
+	jobspawn_override = list("Exiled Towner")
+	delete_after_roundstart = FALSE
+
 /obj/effect/landmark/start/lord
 	name = "Grand Duke"
 	icon_state = "arrow"
@@ -158,6 +168,36 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/guard_captain
 	name = "Knight Captain"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/sedeentcommander
+	name = "Militia Commander"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/sedeentcommanderlate
+	name = "Militia Commander"
+	icon_state = "arrow"
+	jobspawn_override = list("Militia Commander")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/sedeentwatchman
+	name = "Militia Watchman"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/sedeentwatchmanlate
+	name = "Militia Watchman"
+	icon_state = "arrow"
+	jobspawn_override = list("Militia Watchman")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/sedeentmayor
+	name = "Sedeent Mayor"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/sedeentmayorlate
+	name = "Sedeent Mayor"
+	icon_state = "arrow"
+	jobspawn_override = list("Sedeent Mayor")
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/barkeep
 	name = "Barkeep"

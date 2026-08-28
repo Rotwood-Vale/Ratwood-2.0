@@ -124,6 +124,8 @@
 #define VETERAN		(1<<8)
 #define BOGMASTER	(1<<9)
 #define RETAINER	(1<<10)
+#define JDO_COMMANDER (1<<11)
+#define JDO_WATCHMAN (1<<12)
 
 #define CHURCHMEN		(1<<2)
 
@@ -153,6 +155,7 @@
 #define SCRIBE		(1<<9)
 #define CRIER		(1<<10)
 #define KEEPER		(1<<11)
+#define MAYOR		(1<<12)
 
 #define PEASANTS	(1<<5)
 
@@ -280,10 +283,13 @@
 #define JDO_GATEMASTER 8.5
 #define JDO_SHERIFF 8.6
 #define JDO_TOWNGUARD 8.7
-#define JDO_DUNGEONEER 8.8
-#define JDO_VET 8.9
-#define JDO_BOGMASTER 9.0
-#define JDO_BOGGUARD 9.1
+#define JDO_COMMANDER 8.8
+#define JDO_WATCHMAN 8.9
+#define JDO_DUNGEONEER 9.0
+#define JDO_VET 9.1
+#define JDO_BOGMASTER 9.2
+#define JDO_BOGGUARD 9.3
+
 
 #define JDO_PRIEST 10
 #define JDO_MARTYR 11
@@ -300,6 +306,7 @@
 
 #define JDO_ARCHIVIST 18
 #define JDO_CRIER 18.1
+#define JDO_MAYOR 18.2
 
 #define JDO_GUILDMASTER 19.1
 #define JDO_GUILDSMAN 19.2
@@ -307,6 +314,7 @@
 #define JDO_GUILDAPPRENTICE 19.4
 
 #define JDO_BARKEEP 26
+#define
 #define JDO_COOK 27
 #define JDO_NITEMASTER 27.1
 #define JDO_KNAVEWENCH 27.2
@@ -396,6 +404,7 @@
 
 #define PEASANT_ROLES \
 	/datum/job/roguetown/villager,\
+	/datum/job/roguetown/exiled,\
 	/datum/job/roguetown/nightmaiden,\
 	/datum/job/roguetown/beggar,\
 	/datum/job/roguetown/cook,\
@@ -411,6 +420,7 @@
 
 #define YEOMEN_ROLES \
 	/datum/job/roguetown/keeper,\
+	/datum/job/roguetown/mayor,\
 	/datum/job/roguetown/crier,\
 	/datum/job/roguetown/niteman,\
 	/datum/job/roguetown/archivist,\
@@ -435,6 +445,8 @@
 	/datum/job/roguetown/watchcaptain,\
 	/datum/job/roguetown/wardenmaster,\
 	/datum/job/roguetown/sergeant,\
+	/datum/advclass/sedeentcommander,\
+	/datum/advclass/sedeentwatchman,\
 	/datum/job/roguetown/veteran,\
 	/datum/job/roguetown/dungeoneer,\
 	/datum/job/roguetown/gatemaster,\

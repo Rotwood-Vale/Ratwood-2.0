@@ -347,6 +347,8 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_VANGUARD		"CAT_VANGUARD"		// Vanguard class - Handles vanguard class selector.
 #define CTAG_WATCH			"CAT_WATCH"			// Watch class - Handles Town Watch class selector
 #define CTAG_MENATARMS		"CAT_MENATARMS"		// Men-at-Arms class - Handles Men-at-Arms class selector
+#define CTAG_SEDEENTCOMMANDER		"CAT_SEDEENTCOMMANDER"	// Militia Commander class -- handles weapon selection
+#define CTAG_SEDEENTWATCHMAN		"CAT_SEDEENTWATCHMAN"	// Militia Watchman ckass -- handles weapon selection
 #define CTAG_BOGMASTER		"CAT_BOGMASTER"		// BOGMASTER class - Handles BOGMASTER class selector (weapons selection)
 #define CTAG_SHERIFF		"CAT_SHERIFF"		// SHERIFF class - Handles SHERIFF class selector (weapons selection)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
