@@ -5678,6 +5678,12 @@
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors)
+"bff" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Outside Mayor"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/beach/cityofsedeent)
 "bfl" = (
 /obj/structure/stairs{
 	dir = 1
@@ -7963,7 +7969,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
 	locked = 1;
-	lockid = "garrison";
+	lockid = "sedeentgarrison";
 	name = "Militia Barracks"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -43580,6 +43586,10 @@
 /obj/machinery/light/rogue/candle{
 	pixel_x = -32
 	},
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Mayor's Office";
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "iLe" = (
@@ -44887,6 +44897,12 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
+"iZn" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Tavern"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "iZo" = (
 /obj/structure/fluff/railing/wood{
 	pixel_x = 8;
@@ -50126,7 +50142,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
 	locked = 1;
-	lockid = "garrison";
+	lockid = "sedeentgarrison";
 	name = "Sedeent Militia"
 	},
 /turf/open/floor/rogue/blocks,
@@ -55582,7 +55598,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
 	locked = 1;
-	lockid = "garrison";
+	lockid = "sedeentmayor";
 	name = "Seedent Mayoral Office"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -65195,6 +65211,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/grove)
+"ncz" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Town Square"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/beach/cityofsedeent)
 "ncC" = (
 /obj/structure/flora/roguetree/burnt{
 	pixel_x = -28
@@ -80156,6 +80178,14 @@
 /obj/structure/mineral_door/swing_door,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/town/warden)
+"qgm" = (
+/obj/structure/roguemachine/scomm{
+	pixel_y = 0;
+	pixel_x = -32;
+	scom_tag = "Sedeent Commander's Bedroom"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/garrison)
 "qgq" = (
 /obj/structure/fluff/clock{
 	pixel_x = 4;
@@ -91024,7 +91054,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
 	locked = 1;
-	lockid = "sergeant";
+	lockid = "commandersedeent";
 	name = "Sedeent Garrison Leader"
 	},
 /turf/open/floor/rogue/blocks,
@@ -92252,7 +92282,7 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
 	locked = 1;
-	lockid = "garrison";
+	lockid = "sedeentgarrison";
 	name = "Militia Armory"
 	},
 /turf/open/floor/rogue/blocks,
@@ -92444,8 +92474,8 @@
 /obj/structure/mineral_door/wood/donjon{
 	dir = 8;
 	locked = 1;
-	lockid = "garrison";
-	name = "Sedeent Militia"
+	lockid = "sedeentgarrison";
+	name = "Militia Barracks"
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
@@ -116942,6 +116972,12 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/rockhill)
+"xLy" = (
+/obj/structure/roguemachine/scomm{
+	scom_tag = "Sedeent Garrison"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/garrison)
 "xLD" = (
 /obj/effect/decal/cleanable/debris/woody,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -309468,7 +309504,7 @@ gfs
 hYL
 vIL
 aqG
-tyu
+qgm
 sxm
 tfr
 qYg
@@ -312064,7 +312100,7 @@ mPW
 ley
 pZg
 xre
-bWo
+ncz
 pCC
 vzJ
 swv
@@ -319814,7 +319850,7 @@ gfs
 eNZ
 eNZ
 hYL
-hpj
+xLy
 hpj
 hYL
 hpj
@@ -319832,7 +319868,7 @@ dws
 dws
 pZg
 xre
-bWo
+bff
 pCC
 pCC
 dXJ
@@ -325861,7 +325897,7 @@ pZg
 myi
 eBW
 pZg
-eBW
+iZn
 bOc
 eBW
 eBW
