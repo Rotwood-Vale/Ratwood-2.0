@@ -80,7 +80,7 @@
 	holy_area = TRUE
 	town_area = FALSE
 
-area/rogue/outdoors/beach/okbutanmanor
+/area/rogue/outdoors/beach/okbutanmanor
 	name = "Manor on Okbutan"
 	icon_state = "manorisle"
 	droning_sound = list('sound/music/area/manor.ogg', 'sound/music/area/manor2.ogg')
@@ -90,7 +90,7 @@ area/rogue/outdoors/beach/okbutanmanor
 	deathsight_message = "A manor on the forgotten island of Okbutan"
 	town_area = TRUE
 
-area/rogue/outdoors/beach/mounteclisium
+/area/rogue/outdoors/beach/mounteclisium
 	name = "Mount Eclisium"
 	icon_state = "eclesium"
 	droning_sound = 'sound/music/area/prospector.ogg'
@@ -98,6 +98,26 @@ area/rogue/outdoors/beach/mounteclisium
 	droning_sound_night = null
 	first_time_text = "The Volcano Mount Eclisium"
 	deathsight_message = "A massive volcano on the island of Okbutan"
+	town_area = FALSE
+
+/area/rogue/outdoors/beach/cityofsedeent
+	name = "Settlement of Sedeent"
+	icon_state = "town"
+	droning_sound = 'sound/music/area/towngen.ogg'
+	droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	first_time_text = "The Settlement of Sedeent"
+	deathsight_message = "Sedeent, a town of miscreants and exiles, darkness lays here"
+	town_area = TRUE
+
+/area/rogue/outdoors/beach/sauro
+	name = "Isle Sauro"
+	icon_state = "sauro"
+	ambientsounds = AMB_ABISLAND
+	ambientnight = AMB_ABISLAND
+	droning_sound = 'sound/music/area/harbor.ogg'
+	first_time_text = "The Island of Sauro"
+	deathsight_message = "Sauro, the only inhabited island of the Vale's coastal islands"
 	town_area = FALSE
 
 /area/rogue/outdoors/beach/north
