@@ -58,6 +58,27 @@
 	first_time_text = "The Island of Vortuan"
 	deathsight_message = "A temperate island sat in the middle of the Sea of Velmen"
 	town_area = FALSE
+	
+/area/rogue/outdoors/beach/isleserikals
+	name = "Isle Serik-Als"
+	icon_state = "serikals"
+	droning_sound = 'sound/music/area/catacombs.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	first_time_text = "The Island of Serik-Als"
+	deathsight_message = "An island seemingly reclaimed by Necra"
+	holy_area = TRUE
+	town_area = FALSE
+
+/area/rogue/outdoors/beach/isleserikalsunknown
+	name = "? ? ? Serik-Als?"
+	icon_state = "serikals???"
+	droning_sound = 'sound/music/area/catacombs.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	first_time_text = "? ? ? Serik-Als ? ? ?"
+	holy_area = TRUE
+	town_area = FALSE
 
 area/rogue/outdoors/beach/okbutanmanor
 	name = "Manor on Okbutan"
