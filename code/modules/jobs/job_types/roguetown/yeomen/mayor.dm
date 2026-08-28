@@ -74,7 +74,7 @@
 	// backpack_contents = list(/obj/item/recipe_book/survival = 1)//superceded by tgui
 	H.set_blindness(0)
 
-/obj/effect/proc_holder/spell/self/convertrole/guard
+/obj/effect/proc_holder/spell/self/convertrole/militia
 	name = "Recruit Militia-Man"
 	new_role = "Militia Watchman"
 	overlay_state = "recruit_guard"
