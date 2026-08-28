@@ -124,8 +124,8 @@
 #define VETERAN		(1<<8)
 #define BOGMASTER	(1<<9)
 #define RETAINER	(1<<10)
-#define JDO_COMMANDER (1<<11)
-#define JDO_WATCHMAN (1<<12)
+#define COMMANDER	(1<<11)
+#define WATCHMAN	(1<<12)
 
 #define CHURCHMEN		(1<<2)
 
