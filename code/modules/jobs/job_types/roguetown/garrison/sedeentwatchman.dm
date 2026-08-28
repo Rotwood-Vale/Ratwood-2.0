@@ -9,7 +9,7 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
-	allowed_ages = list(AGE_ADULT)
+	allowed_ages = list(GE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 
 	tutorial = "You are a watchman of the Sedeent Militia, you are tasked with ensuring the exiles stay on the island."
 

@@ -40,6 +40,13 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/indoors/town/shop)
+"aao" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/obj/effect/landmark/start/villagerlate,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/beach/cityofsedeent)
 "aap" = (
 /obj/machinery/light/rogue/candle/green{
 	pixel_y = -32
@@ -40840,13 +40847,6 @@
 /obj/effect/decal/cleanable/food/salt,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
-"ige" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/obj/effect/landmark/start/villagerlate,
-/turf/open/floor/rogue/ruinedwood/turned,
-/area/rogue/outdoors/beach/cityofsedeent)
 "igg" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/rogue/dirt,
@@ -80635,6 +80635,11 @@
 	dir = 4
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
+"qjZ" = (
+/obj/structure/fluff/railing/border,
+/obj/effect/landmark/start/villagerlate,
+/turf/open/floor/rogue/ruinedwood/turned,
+/area/rogue/outdoors/beach/cityofsedeent)
 "qka" = (
 /obj/structure/bars/pipe{
 	dir = 10;
@@ -116524,12 +116529,17 @@
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/shelter/bog)
 "xEi" = (
-/obj/structure/fluff/railing/border{
-	dir = 4
+/obj/structure/closet/crate/drawer{
+	lockid = "sedeentmayor"
 	},
-/obj/effect/landmark/start/villagerlate,
-/turf/open/floor/rogue/ruinedwood/turned,
-/area/rogue/outdoors/beach/cityofsedeent)
+/obj/item/roguekey/sedeentgarrison,
+/obj/item/roguekey/sedeentgarrison,
+/obj/item/roguekey/sedeentgarrison,
+/obj/item/roguekey/sedeentgarrison,
+/obj/item/storage/keyring/sedeentgarrison,
+/obj/item/storage/keyring/sedeentcommander,
+/turf/open/floor/rogue/carpet,
+/area/rogue/indoors/town)
 "xEo" = (
 /obj/structure/chair/bench/couch/r,
 /obj/machinery/light/rogue/candle/blue,
@@ -315853,7 +315863,7 @@ vdC
 vdC
 vdC
 vdC
-ige
+vdC
 vdC
 ozx
 brV
@@ -316714,7 +316724,7 @@ mso
 hef
 utS
 hef
-xEi
+hef
 hef
 hef
 tPu
@@ -321023,9 +321033,9 @@ jKj
 tvT
 vdC
 vdC
-ige
 vdC
-ige
+vdC
+vdC
 vdC
 ktv
 dmp
@@ -321886,7 +321896,7 @@ hef
 hef
 hef
 hef
-xEi
+hef
 hef
 hef
 auC
@@ -323613,8 +323623,8 @@ pfK
 gfi
 brV
 brV
-cWp
-dmp
+aao
+qjZ
 peb
 xre
 flO
@@ -535651,7 +535661,7 @@ bPy
 bPy
 pZg
 dmn
-tZE
+xEi
 eBW
 fWa
 pZg
