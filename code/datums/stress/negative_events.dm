@@ -555,3 +555,13 @@
 	timer = 15 MINUTES
 	stressadd = 2
 	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")
+
+/datum/stressevent/evilgriefflower
+	timer = INFINITY
+	stressadd = 4
+	desc = span_red("Mine has been a life of much shame.")
+
+/datum/stressevent/superevilgriefflower
+	timer = INFINITY
+	stressadd = 15
+	desc = span_red("He is dead. He remains dead. And we have killed Him.")

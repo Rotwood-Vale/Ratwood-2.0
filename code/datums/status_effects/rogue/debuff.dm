@@ -1233,3 +1233,43 @@
 	name = "Musked"
 	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
 	icon_state = "debuff"
+
+/datum/status_effect/debuff/evilgriefflower
+	id = "evilgriefflower"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/evilgriefflower
+	effectedstats = list(STATKEY_CON = -1,STATKEY_WIL = -1)
+
+/datum/status_effect/debuff/evilgriefflower/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/evilgriefflower)
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/debuff/evilgriefflower/on_remove()
+	. = ..()
+	to_chat(owner, span_notice("You part from the ring's touch. The pain fades..."))
+	owner.remove_stress(/datum/stressevent/evilgriefflower)
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/atom/movable/screen/alert/status_effect/debuff/evilgriefflower
+	name = "Rosa Ring"
+	desc = "The past haunts you."
+
+/datum/status_effect/debuff/superevilgriefflower
+	id = "superevilgriefflower"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/superevilgriefflower
+	effectedstats = list(STATKEY_CON = -1,STATKEY_WIL = -4)
+
+/datum/status_effect/debuff/superevilgriefflower/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/superevilgriefflower)
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/debuff/superevilgriefflower/on_remove()
+	. = ..()
+	to_chat(owner, span_notice("You part from the ring's touch, and yet..."))
+	owner.remove_stress(/datum/stressevent/superevilgriefflower)
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/atom/movable/screen/alert/status_effect/debuff/superevilgriefflower
+	name = "HE IS DEAD"
+	desc = "AND IT IS MY FAULT."
