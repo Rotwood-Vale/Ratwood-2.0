@@ -1,6 +1,6 @@
 /datum/job/roguetown/sedeentcommander
 	title = "Militia Commander"
-	flag = SEDEENTCOMMANDER
+	flag = COMMANDER
 	department_flag = GARRISON
 	faction = "Station"
 	total_positions = 1

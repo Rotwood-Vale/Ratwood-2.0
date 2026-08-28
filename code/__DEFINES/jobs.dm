@@ -315,7 +315,6 @@
 #define JDO_GUILDAPPRENTICE 19.4
 
 #define JDO_BARKEEP 26
-#define
 #define JDO_COOK 27
 #define JDO_NITEMASTER 27.1
 #define JDO_KNAVEWENCH 27.2
