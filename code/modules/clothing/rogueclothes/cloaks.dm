@@ -2055,9 +2055,32 @@
 	item_state = "citywatch_cape"
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 
+/obj/item/clothing/cloak/citywatch/sedeent
+	name = "sedeent militia cloak"
+	desc = "A cloak denoting the island militia of sedeent"
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/cloaks.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/cloaks.dmi'
+	icon_state = "citywatch_cape"
+	item_state = "citywatch_cape"
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
+
 /obj/item/clothing/cloak/citywatchcaptain
 	name = "citywatch captain's cloak"
 	desc = "A most handsome cloak, denoting a certain superlative cosmipolitan authority"
+	icon_state = "shortcloak"
+	item_state = "shortcloak"
+	alternate_worn_layer = CLOAK_BEHIND_LAYER
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
+	boobed = TRUE
+	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	sleevetype = "shirt"
+	inhand_mod = TRUE
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+
+/obj/item/clothing/cloak/citywatchcaptain/commander
+	name = "sedeent commander's cloak"
+	desc = "A cloak denoting the commander of the militia, worn with authority for they command the island"
 	icon_state = "shortcloak"
 	item_state = "shortcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER

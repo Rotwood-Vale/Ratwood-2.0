@@ -824,6 +824,26 @@
 	icon_state = "brownkey"
 	lockid = "SlaveAuction"
 
+// sedeent keys
+
+/obj/item/roguekey/sedeentcommander
+	name = "Sedeent Commander's Key"
+	desc = "A key to the commander's quarters."
+	icon_state = "spikekey"
+	lockid = "sedeentcommander"
+
+/obj/item/roguekey/sedeentmayor
+	name = "Sedeent Mayor's Key"
+	desc = "A key to the mayor's office"
+	icon_state = "brownkey"
+	lockid = "sedeentmayor"
+
+/obj/item/roguekey/sedeentgarrison
+	name = "Sedeent Garrison Key"
+	desc = "A key to the Sedeent Garrison"
+	icon_state = "spikekey"
+	lockid = "sedeentgarrison"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"

@@ -674,3 +674,17 @@
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
 	dropshrink = null
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/sedeent
+	name = "sedeent militia helmet"
+	desc = "A heavy helmet. Notably resilient. Issued to the Sedeent Militia."
+	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon_state = "citywatch_helmet"
+	item_state = "citywatch_helmet"
+	armor_class = ARMOR_CLASS_MEDIUM
+	body_parts_covered = HEAD|HAIR|EARS
+	flags_inv = HIDEHAIR
+	smeltresult = /obj/item/ingot/steel
+	emote_environment = 3
+	dropshrink = null
