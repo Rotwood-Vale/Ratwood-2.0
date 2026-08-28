@@ -575,3 +575,8 @@
   - rscadd: Gives arachnids two new abilities which let them spin a thin gossamer
       type of web that can be seen through and a thicker one that blocks visibility.
       Added two new icons for the abilities as well.
+2026-08-28:
+  zoktiik:
+  - bugfix: Fixed "This was their only chance at lyfe." not being appropriately displayed.
+      It was checking if YOUR mob is "dead", not the DNR person, so examining the
+      (living) Duke as a ghost would show that message.

@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - bugfix: "Fixed \"This was their only chance at lyfe.\" not being appropriately displayed. It was checking if YOUR mob is \"dead\", not the DNR person, so examining the (living) Duke as a ghost would show that message."
