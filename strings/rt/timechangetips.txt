@@ -157,3 +157,12 @@ The creation of the Rust Plague not tied to Zizo, it was a creation of heretical
 The creation of the Rust Plague not tied to Zizo, it was a creation of the trinity worshipping psydonites!
 There is no privacy in the spires, only the illusion of such. The Order of Brass does not monitor every mirror, only some.
 There is privacy in the spires, to imply otherwise is treason. Please report to your nearest Brass Knight about said rumors.
+The Island of Sauro is the only currently inhabited outlying island of the Vale, the people of Sedeent live on the island.
+The Island of Okbutan, the only thing people remember of it is the eruption yils ago.
+The Island of Serik-Als, no one but Necrans dare venture there, for no one but her children have returned.
+The outlying islands of the vale are surprisingly well suited for agriculture.
+What happened on the Isle of Okbutan?
+Sedeent, a booming settlement of exiles from the duchy.
+What lies at the bottom of Serik-Als?
+Mount Eclesium was said to of erupted a hundred years ago, the settlement there destroyed leaving only the manor behind.
+Many venture to Mount Eclesium for the bountiful materials, many do not return.
