@@ -2054,14 +2054,17 @@
 /datum/status_effect/buff/lessergriefflower
 	id = "lessergriefflower"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/lessergriefflower
+	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
 
 /datum/status_effect/buff/lessergriefflower/on_apply()
 	. = ..()
+	owner.add_stress(/datum/stressevent/evilgriefflower)
 	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/lessergriefflower/on_remove()
 	. = ..()
 	to_chat(owner, span_notice("You part from the ring's touch. The pain fades..."))
+	owner.remove_stress(/datum/stressevent/evilgriefflower)
 	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/buff/lessergriefflower

@@ -420,7 +420,7 @@
 	if(slot == SLOT_RING)
 		switch(user.patron?.type)
 			if(/datum/patron/inhumen/baotha)
-				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures retreat, leaving only bliss in their place."))
+				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures mingle with newfound bliss.... Pure ecstasy overtakes you."))
 				user.apply_status_effect(/datum/status_effect/buff/griefflower)
 			if(/datum/patron/inhumen/graggar)
 				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures surge through your mind... They will pay in blood."))
@@ -432,33 +432,21 @@
 				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures surge through your mind... In death, you will shine once more."))
 				user.apply_status_effect(/datum/status_effect/buff/lessergriefflower)
 			if(/datum/patron/old_god)
-				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures surge through your mind... He is dead, and you know it's your fault."))
+				to_chat(user, span_notice("The ring's thorns dig into your finger deeply, drawing a lot of blood. Memories of your failures surge through your mind... He is dead, and you know it's your fault."))
 				user.apply_status_effect(/datum/status_effect/debuff/superevilgriefflower)
+				ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 			if(/datum/patron/divine)
-				to_chat(user, span_notice("The ring's thorns dig into your finger, drawing blood. Memories of your failures surge through your mind..."))
+				to_chat(user, span_notice("The ring's thorns dig into your finger deeply, drawing a lot of blood. Memories of your failures surge through your mind..."))
 				user.apply_status_effect(/datum/status_effect/debuff/evilgriefflower)
+				ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/ring/griefflower/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(istype(user) && user?.wear_ring == src)
 		user.remove_status_effect(/datum/status_effect/buff/griefflower)
-
-/obj/item/clothing/ring/griefflower/proc/misery_check(mob/living/user)
-	// return true if we should be unequippable, return false if not
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.id && !(user.patron?.type == /datum/patron/inhumen/baotha))
-			to_chat(user, span_notice("I deserve to suffer."))
-			return TRUE
-	return FALSE
-
-/obj/item/clothing/ring/griefflower/MouseDrop(atom/over_object)
-	if (!misery_check(user))
-		return ..()
-
-/obj/item/clothing/ring/griefflower/attack_hand(mob/user)
-	if (!misery_check(user))
-		return ..()
+		user.remove_status_effect(/datum/status_effect/buff/lessergriefflower)
+		user.remove_status_effect(/datum/status_effect/debuff/evilgriefflower)
+		user.remove_status_effect(/datum/status_effect/debuff/superevilgriefflower)
 
 // T2 - bond that lasts for 8 minutes as long as bonded are within 7 tiles, TRAIT_NOPAIN, spd = 5 end = 3
 /obj/effect/proc_holder/spell/invoked/joyride
