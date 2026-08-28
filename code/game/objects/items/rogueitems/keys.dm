@@ -826,11 +826,11 @@
 
 // sedeent keys
 
-/obj/item/roguekey/sedeentcommander
+/obj/item/roguekey/commandersedeent
 	name = "Sedeent Commander's Key"
 	desc = "A key to the commander's quarters."
 	icon_state = "spikekey"
-	lockid = "sedeentcommander"
+	lockid = "commandersedeent"
 
 /obj/item/roguekey/sedeentmayor
 	name = "Sedeent Mayor's Key"
