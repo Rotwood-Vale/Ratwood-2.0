@@ -60,8 +60,8 @@
 	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	l_hand = /obj/item/rogueweapon/sword/rapier/dec
 	backpack_contents = list(
-		/obj/item/storage/keyring/sedeentmayor = 1.
-		/obj/item/storage/belt/rogue/pouch/coins/rich = 1.
+		/obj/item/storage/keyring/sedeentmayor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 	)
 	if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/half/red
