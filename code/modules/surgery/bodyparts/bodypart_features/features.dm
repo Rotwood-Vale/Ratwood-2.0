@@ -119,7 +119,7 @@
 	material = sanitize_integer(
 		new_material,
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)
 	switch(material)
@@ -129,6 +129,8 @@
 			name = "Pubic Feathers"
 		if(BODY_HAIR_MATERIAL_FUZZ)
 			name = "Pubic Fuzz"
+		if(BODY_HAIR_MATERIAL_BRAIDS)
+			name = "Pubic Braids"
 		else
 			name = "Pubic Hair"
 	return material
@@ -141,6 +143,8 @@
 			return "pubic feathers"
 		if(BODY_HAIR_MATERIAL_FUZZ)
 			return "pubic fuzz"
+		if(BODY_HAIR_MATERIAL_BRAIDS)
+			return "pubic braids"
 	return "pubic hair"
 
 /datum/bodypart_feature/pits
@@ -153,7 +157,7 @@
 	material = sanitize_integer(
 		new_material,
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)
 	switch(material)
@@ -163,6 +167,8 @@
 			name = "Armpit Feathers"
 		if(BODY_HAIR_MATERIAL_FUZZ)
 			name = "Armpit Fuzz"
+		if(BODY_HAIR_MATERIAL_BRAIDS)
+			name = "Armpit Braids"
 		else
 			name = "Armpit Hair"
 	return material
@@ -175,4 +181,6 @@
 			return "armpit feathers"
 		if(BODY_HAIR_MATERIAL_FUZZ)
 			return "armpit fuzz"
+		if(BODY_HAIR_MATERIAL_BRAIDS)
+			return "armpit braids"
 	return "armpit hair"

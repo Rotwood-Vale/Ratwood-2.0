@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 	"Fur" = BODY_HAIR_MATERIAL_FUR,
 	"Feathers" = BODY_HAIR_MATERIAL_FEATHERS,
 	"Fuzz" = BODY_HAIR_MATERIAL_FUZZ,
+	"Braids" = BODY_HAIR_MATERIAL_BRAIDS,//rock and stone
 ))
 
 /datum/customizer_entry/bodypart_feature/pubes
@@ -28,6 +29,9 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 
 /datum/customizer/bodypart_feature/pubes/fuzzy
 	default_material = BODY_HAIR_MATERIAL_FUZZ
+
+/datum/customizer/bodypart_feature/pubes/braids
+	default_material = BODY_HAIR_MATERIAL_BRAIDS
 
 /datum/customizer_choice/bodypart_feature/pubes
 	name = "Pubic Style"
@@ -58,7 +62,7 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 	pubes_entry.material = sanitize_integer(
 		pubes_entry.material,
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)
 
@@ -84,7 +88,7 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 	pubes_entry.material = sanitize_integer(
 		GLOB.named_body_hair_materials[named_material],
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)
 
@@ -114,6 +118,9 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 /datum/customizer/bodypart_feature/pits/fuzzy
 	default_material = BODY_HAIR_MATERIAL_FUZZ
 
+/datum/customizer/bodypart_feature/pits/braids
+	default_material = BODY_HAIR_MATERIAL_BRAIDS
+
 /datum/customizer_choice/bodypart_feature/pits
 	name = "Armpit Style"
 	customizer_entry_type = /datum/customizer_entry/bodypart_feature/pits
@@ -141,7 +148,7 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 	pits_entry.material = sanitize_integer(
 		pits_entry.material,
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)
 
@@ -167,6 +174,6 @@ GLOBAL_LIST_INIT(named_body_hair_materials, list(
 	pits_entry.material = sanitize_integer(
 		GLOB.named_body_hair_materials[named_material],
 		BODY_HAIR_MATERIAL_HAIR,
-		BODY_HAIR_MATERIAL_FUZZ,
+		BODY_HAIR_MATERIAL_BRAIDS,
 		BODY_HAIR_MATERIAL_HAIR,
 	)

@@ -122,6 +122,7 @@
 #define BODY_HAIR_MATERIAL_FUR 2
 #define BODY_HAIR_MATERIAL_FEATHERS 3
 #define BODY_HAIR_MATERIAL_FUZZ 4
+#define BODY_HAIR_MATERIAL_BRAIDS 5
 
 //flags for requirements for a surgery step
 #define SURGERY_BLOODY (1<<0)
