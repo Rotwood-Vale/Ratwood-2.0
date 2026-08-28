@@ -144,13 +144,23 @@
 /datum/species/arachnid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/arachnid/on_species_gain(mob/living/carbon/C, datum/species/old_species) // one of those auto-appends a dot at the end of player speech
+/datum/species/arachnid/on_species_gain(mob/living/carbon/arachnidcarbon, datum/species/old_species) // one of those auto-appends a dot at the end of player speech
 	..()
-	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(arachnidcarbon, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	give_web_spells(arachnidcarbon)
 
-/datum/species/arachnid/on_species_loss(mob/living/carbon/C) // one of those auto-appends a dot at the end of player speech
+/datum/species/arachnid/proc/give_web_spells(mob/living/carbon/arachnidcarbon)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/thin)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/dense)
+
+/datum/species/arachnid/on_species_loss(mob/living/carbon/arachnidcarbon) // one of those auto-appends a dot at the end of player speech
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_SAY)
+	UnregisterSignal(arachnidcarbon, COMSIG_MOB_SAY)
+	remove_web_spells(arachnidcarbon)
+
+/datum/species/arachnid/proc/remove_web_spells(mob/living/carbon/arachnidcarbon)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/thin)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/dense)
 
 /datum/species/arachnid/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST
