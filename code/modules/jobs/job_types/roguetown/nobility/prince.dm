@@ -264,8 +264,8 @@
 /datum/outfit/job/roguetown/heir/inbred/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
-	wrists = /obj/item/storage/keyring/heir
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
+	wrists = /obj/item/storage/keyring/heir
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/rogueweapon/scabbard/sheath/noble
@@ -345,6 +345,7 @@
 	head = /obj/item/clothing/head/roguetown/circlet
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
 	neck = /obj/item/storage/keyring/heir
+	wrists = /obj/item/lockpickring/mundane
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/quiver/sling/iron
 	beltr = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
@@ -375,7 +376,6 @@
 			head = /obj/item/clothing/head/roguetown/circlet
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
-		/obj/item/lockpickring/mundane = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 	)
