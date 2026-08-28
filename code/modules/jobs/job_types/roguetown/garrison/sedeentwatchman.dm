@@ -16,7 +16,6 @@
 	display_order = JDO_WATCHMAN
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
-	always_show_on_latechoices = TRUE
 
 	outfit = /datum/outfit/job/roguetown/sedeentwatchman
 
@@ -90,6 +89,10 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	cloak = /obj/item/clothing/cloak/citywatch/sedeent
 	head = /obj/item/clothing/head/roguetown/helmet/citywatch/sedeent
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	belt = /obj/item/storage/belt/rogue/leather
+	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/scomstone/bad/garrison
 
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger = 1,

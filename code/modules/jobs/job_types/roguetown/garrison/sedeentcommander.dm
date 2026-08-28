@@ -13,7 +13,6 @@
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_YEOMAN
 	outfit = /datum/outfit/job/roguetown/sedeentcommander
-	always_show_on_latechoices = TRUE
 	advclass_cat_rolls = list(
 		CTAG_SEDEENTCOMMANDER = 2
 	)
@@ -76,6 +75,10 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	belt = /obj/item/storage/belt/rogue/leather
+	backr = /obj/item/storage/backpack/rogue/satchel
+	id = /obj/item/scomstone/bad/garrison
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list(
