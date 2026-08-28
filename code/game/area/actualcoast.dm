@@ -49,6 +49,16 @@
 	deathsight_message = "A long forgotten island in the far north of the Sea of Yelmen"
 	town_area = FALSE
 
+/area/rogue/outdoors/beach/islevortuan
+	name = "Isle Vortuan"
+	icon_state = "vortuan"
+	ambientsounds = AMB_ABISLAND
+	ambientnight = AMB_ABISLAND
+	droning_sound = 'sound/music/area/harbor.ogg'
+	first_time_text = "The Island of Vortuan"
+	deathsight_message = "A temperate island sat in the middle of the Sea of Velmen"
+	town_area = FALSE
+
 area/rogue/outdoors/beach/okbutanmanor
 	name = "Manor on Okbutan"
 	icon_state = "manorisle"
