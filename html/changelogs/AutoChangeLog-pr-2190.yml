@@ -1,8 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - qol: "Allows xylixians with mute to cast certain xylixian miracles that do not have incantations. Previously they could not."
-  - rscadd: "Gives mute xylixians the mime jester's invisible wall and chair ability."
-  - rscadd: "Makes the invisible wall a 3x1 like how kneestingers are. It lasts 5 seconds."
-  - rscadd: "The invisible chair can be picked up and you can beat people with it. The chair lasts longer but despawns after a while as usual."
-  - rscadd: "Mute xylixians can still be mouth grabbed to prevent them from casting like non-mute ones."

@@ -113,6 +113,12 @@
 
 	/// Branded writing on body part
 	var/branded_writing = ""
+	/// Branded enslavement mark
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this part, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this part, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 64
