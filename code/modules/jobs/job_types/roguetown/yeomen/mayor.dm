@@ -56,16 +56,28 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/satchel
-	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	id = /obj/item/scomstone/garrison
-	beltl = /obj/item/rogueweapon/sword/sabre/dec
-	l_hand = /obj/item/rogueweapon/scabbard/sword/noble
+	beltl = /obj/item/rogueweapon/scabbard/sword/noble
+	l_hand = /obj/item/rogueweapon/sword/rapier/dec
+	backpack_contents = list(
+		/obj/item/storage/keyring/sedeentmayor = 1.
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1.
+	)
 	if(should_wear_masc_clothes(H))
 		cloak = /obj/item/clothing/cloak/half/red
 		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/red
 		pants = /obj/item/clothing/under/roguetown/tights/black
+		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
+		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
+		head = /obj/item/clothing/head/roguetown/inqhat/mayor
+		mask = /obj/item/clothing/mask/rogue/spectacles/red
 	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/gen/purple
-		cloak = /obj/item/clothing/cloak/raincloak/purple
+		cloak = /obj/item/clothing/cloak/half/red
+		shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/red
+		pants = /obj/item/clothing/under/roguetown/tights/black
+		armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
+		shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
+		head = /obj/item/clothing/head/roguetown/inqhat/mayor
+		mask = /obj/item/clothing/mask/rogue/spectacles/red
 	// backpack_contents = list(/obj/item/recipe_book/survival = 1)//superceded by tgui
 	H.set_blindness(0)

@@ -304,6 +304,10 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 	resistance_flags = FIRE_PROOF // drip is eternal
 
+/obj/item/clothing/head/roguetown/inqhat/mayor
+	name = "mayor's hat"
+	desc = "A fine leather hat deplumed with a crimson feather, fitted with a steel skullcap, it serves as a sign of prestige for who wears it. "
+
 /obj/item/clothing/head/roguetown/headband/red
 	color = CLOTHING_RED
 

@@ -95,7 +95,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/storage/belt/rogue/pouch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/storage/keyring/guardcastle = 1,
+		/obj/item/storage/keyring/sedeentgarrison = 1,
 		/obj/item/rogueweapon/hammer/iron = 1
 	)
 

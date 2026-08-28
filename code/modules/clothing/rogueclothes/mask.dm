@@ -118,6 +118,21 @@
 			return
 		lensmoved = FALSE
 
+/obj/item/clothing/mask/rogue/spectacles/red
+	name = "red solarshade spectacles"
+	icon_state = "bglasses"
+	break_sound = "glassbreak"
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
+	max_integrity = 50
+	max_integrity = 35
+	integrity_failure = 0.5
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = EYES
+	anvilrepair = /datum/skill/craft/armorsmithing
+	adjustable = CAN_CADJUST
+	var/active_item = FALSE
+
+
 /obj/item/clothing/mask/rogue/spectacles/golden
 	name = "golden spectacles"
 	icon_state = "goggles"
