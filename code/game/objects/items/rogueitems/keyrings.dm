@@ -424,4 +424,4 @@
 	keys = list(/obj/item/roguekey/commandersedeent, /obj/item/roguekey/sedeentmayor, obj/item/roguekey/sedeentgarrison)
 
 /obj/item/storage/keyring/sedeentgarrison
-	eys = list(obj/item/roguekey/sedeentgarrison)
+	keys = list(obj/item/roguekey/sedeentgarrison)

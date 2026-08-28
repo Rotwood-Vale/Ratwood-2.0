@@ -1,25 +1,37 @@
 /datum/job/roguetown/mayor
-	name = "Sedeent Mayor"
+	title = "Sedeent Mayor"
+	tutorial = "You are the mayor of the settlement Sedeent on Isle Sauro, you oversee the settlement and ensure everything runs accordingly.\
+		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro."
 	flag = MAYOR
-	department_flag = YEOMAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
 	allowed_races = ACCEPTED_RACES
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	always_show_on_latechoices = TRUE
 	
 	outfit = /datum/outfit/job/roguetown/mayor
 	display_order = JDO_MAYOR
-	tutorial = "You are the mayor of the settlement Sedeent on Isle Sauro, you oversee the exiles on the island, ensure they do not leave the island."
-	whitelist_req = FALSE
 	give_bank_account = 40
 	min_pq = 8
 	max_pq = null
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
-	cmode_music = 'sound/music/combat_knight.ogg'
+
+	advclass_cat_rolls = list(CTAG_MAYOR = 2)
+	job_subclasses = list(
+		/datum/advclass/mayor
+	)
+
+/datum/advclass/mayor
+	name = "Sedeent Mayor"
+	tutorial = "You are the mayor of the settlement Sedeent on Isle Sauro, you oversee the settlement and ensure everything runs accordingly.\
+		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro."
+
+	outfit = /datum/outfit/job/roguetown/mayor
+	category_tags = list(CTAG_MAYOR)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 2,

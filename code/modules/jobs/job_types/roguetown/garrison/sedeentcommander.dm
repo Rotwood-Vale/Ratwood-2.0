@@ -72,7 +72,6 @@
 	..()
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	cloak = /obj/item/clothing/cloak/citywatch/commander
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
@@ -148,8 +147,7 @@
 
 		var/helmets = list(
 			"Kettle Helmet" = /obj/item/clothing/head/roguetown/helmet/kettle,
-			"Militia Helmet" = /obj/item/clothing/head/roguetown/helmet/citywatch/sedeent
-			"None"
+			"Militia Helmet" = /obj/item/clothing/head/roguetown/helmet/citywatch/sedeent,
 		)
 
 		var/helmchoice = input(
