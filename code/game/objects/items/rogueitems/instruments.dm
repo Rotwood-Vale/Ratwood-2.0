@@ -247,6 +247,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	/// When TRUE, songs will loop (repeat) when they end. Off by default.
 	var/loop_enabled = FALSE
 
+	var/last_played // store the last played thing we have here to use in quick cmode toggle
+
 // Added null-guard on soundloop. During Initialize() the parent chain
 // may trigger equipped() before soundloop is assigned.
 /obj/item/rogue/instrument/equipped(mob/living/user, slot)
@@ -306,6 +308,14 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(!owner_mob)
 				GLOB.instrument_band_lobbies -= lobby_id
 
+/obj/item/rogue/instrument/examine(mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/viewer_human = user
+		if (viewer_human.inspiration)
+			. += span_notice("You can quickly add and remove people from your audience by <b>middle-clicking</b> on them with this instrument in your hand.")
+			. += span_notice("If you try to play with combat mode active, you'll automatically play your last song.")
+
 /obj/item/rogue/instrument/attack_self(mob/living/user)
 	var/stressevent = /datum/stressevent/music
 	. = ..()
@@ -333,6 +343,21 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/volume_label
 		var/loop_notice
 		var/volume_selection
+		if (user.cmode && last_played)
+			// quickly just play the last song we chose if we do this in combat
+			var/quickfile = song_list[last_played]
+			if(quickfile)
+				user.balloon_alert(user, "quick-playing last song! (combat)")
+				soundloop.set_mid_sounds(list(quickfile))
+				soundloop.volume = clamp(curvol, 10, 100)
+				soundloop.repeat_sound = loop_enabled
+				if(!soundloop.start(user))
+					to_chat(user, span_warning("Could not play - no sound channels available. Try again in a moment."))
+					return
+				playing = TRUE
+				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
+				return
+			
 		while(TRUE)
 			loop_state = "Off"
 			if(loop_enabled)
@@ -411,6 +436,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					song_list[songname] = curfile
 				return
 			curfile = song_list[choice]
+			last_played = choice
 			if(!user || playing || !(src in user.held_items) && !(not_held))
 				return
 			note_color = "#7f7f7f"
