@@ -124,7 +124,7 @@
 		/datum/customizer/organ/vagina/animal,
 		/datum/customizer/bodypart_feature/pubes/furry,
 		/datum/customizer/bodypart_feature/pits/furry,
-		/datum/customizer/organ/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,

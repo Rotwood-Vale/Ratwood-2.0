@@ -4,7 +4,7 @@
 	allows_disabling = TRUE
 	default_disabled =  TRUE
 
-/datum/customizer_choice/organ/tusks
+/datum/customizer_choice/organ/tusks/humanoid
 	name = "Tusks"
 	organ_type = /obj/item/organ/tusks
 	sprite_accessories = list(

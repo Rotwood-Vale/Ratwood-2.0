@@ -86,7 +86,7 @@
 		/datum/customizer/organ/vagina/human,
 		/datum/customizer/bodypart_feature/pubes,
 		/datum/customizer/bodypart_feature/pits,
-		/datum/customizer/organ/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		/datum/customizer/organ/ears/halforc,
 		)
 	languages = list(
