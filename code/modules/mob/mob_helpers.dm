@@ -45,6 +45,25 @@
 
 	return zone
 
+/proc/check_face_subzone(zone, check_head = TRUE)
+	if(!zone)
+		return FALSE
+	switch(zone)
+		if(BODY_ZONE_PRECISE_R_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_L_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_NOSE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			return TRUE
+		if(BODY_ZONE_PRECISE_EARS)
+			return TRUE
+		if(BODY_ZONE_PRECISE_SKULL)
+			return TRUE
+
+	return FALSE
+
 /// Returns the targeting zone equivalent of a given bodypart. Kudos to you if you find a use for this.
 /proc/bodypart_to_zone(part)
 	var/obj/item/bodypart/B = part
