@@ -220,10 +220,6 @@
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
 		/obj/item/rogueweapon/hammer/iron = 1, 
-		/obj/item/rogueweapon/tongs = 1, 
-		/obj/item/recipe_book/survival = 1,
-		/obj/item/repair_kit/metal = 1,
-		/obj/item/repair_kit = 1,
 	)
 	if(H.mind)
 		var/armors = list("Light Armor","Medium Armor")
