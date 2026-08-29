@@ -36,8 +36,8 @@
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-        "Sewing Kit" =  /obj/item/repair_kit,
-    )
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
 /datum/outfit/job/roguetown/wretch/antipope
