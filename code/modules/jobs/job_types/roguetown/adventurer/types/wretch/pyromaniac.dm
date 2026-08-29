@@ -29,8 +29,8 @@
 		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
 	)
 	subclass_stashed_items = list(
-        "Sewing Kit" =  /obj/item/repair_kit,
-    )
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 /datum/outfit/job/roguetown/wretch/pyromaniac/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff //wear protection :)
 	mask = /obj/item/clothing/mask/rogue/facemask/
