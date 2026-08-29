@@ -37397,6 +37397,11 @@
 /obj/structure/trap/rock_fall,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
+"hNd" = (
+/obj/structure/fluff/railing/corner,
+/obj/structure/flagpole,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/beach/forest/hamlet)
 "hNf" = (
 /turf/closed/wall/mineral/rogue/tent{
 	dir = 8
@@ -44738,6 +44743,9 @@
 	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/his_vault/four)
+"jpK" = (
+/turf/closed/wall/mineral/rogue/decostone/fluffstone,
+/area/rogue/outdoors/town)
 "jpO" = (
 /obj/structure/flora/roguegrass,
 /obj/effect/landmark/chest_or_mimic/loot_chest,
@@ -57627,6 +57635,12 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
+"lWe" = (
+/obj/machinery/light/rogue/campfire/fireplace{
+	pixel_y = 32
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town)
 "lWm" = (
 /obj/effect/decal/remains/mole,
 /turf/open/water/swamp,
@@ -291237,7 +291251,7 @@ cne
 epy
 epy
 qKs
-qfA
+qKs
 qfA
 qfA
 qfA
@@ -291689,8 +291703,8 @@ jdZ
 pwB
 ljW
 qKs
-qfA
-qfA
+jpK
+lWe
 qfA
 qfA
 qfA
@@ -292141,7 +292155,7 @@ cne
 epy
 epy
 qKs
-qfA
+qKs
 qfA
 qfA
 qfA
@@ -323169,7 +323183,7 @@ kuf
 llr
 jIc
 rxK
-kds
+hNd
 sfX
 kwO
 bEp
