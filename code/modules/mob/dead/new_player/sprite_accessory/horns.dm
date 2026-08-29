@@ -231,21 +231,20 @@
 	name = "Tiefling Alt"
 	icon_state = "tiebhornsalt"
 
-/datum/sprite_accessory/horns/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	return is_human_part_visible(owner, HIDESNOUT)
-
-/datum/sprite_accessory/horns/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
-	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_FACE, OFFSET_FACE_F)
-
-
 /datum/sprite_accessory/horns/halforc
 	name = "Orc"
 	icon = 'icons/mob/sprite_accessory/halforc.dmi'
 	icon_state = "orctusk"
 	default_colors = list("#F4F4BE")
 
+/datum/sprite_accessory/horns/halforc/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return is_human_part_visible(owner, HIDESNOUT)
+
 /datum/sprite_accessory/horns/longtusk
 	name = "Long"
 	icon = 'icons/mob/sprite_accessory/halforc.dmi'
 	icon_state = "longtusk"
 	default_colors = list("#F4F4BE")
+
+/datum/sprite_accessory/horns/longtusk/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return is_human_part_visible(owner, HIDESNOUT)
