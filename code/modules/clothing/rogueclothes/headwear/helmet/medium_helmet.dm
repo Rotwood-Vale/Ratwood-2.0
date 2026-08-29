@@ -188,7 +188,7 @@
 	desc = "A steel helmet which protects the ears, nose, and eyes."
 	icon_state = "sallet_visor"
 	adjustable = CAN_CADJUST
-	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES
 	block2add = FOV_BEHIND
