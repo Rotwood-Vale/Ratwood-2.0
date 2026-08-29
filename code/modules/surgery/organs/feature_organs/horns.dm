@@ -10,4 +10,4 @@
 
 /obj/item/organ/horns/halforc
 	name = "halforc horns"
-	accessory_type = /datum/sprite_accessory/horns/halforc
+	accessory_type = /datum/sprite_accessory/tusks/halforc
