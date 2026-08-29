@@ -17,8 +17,8 @@
 	//lower-than-avg stats for wretch but their traits are insanely good
 	subclass_stats = list(
 		STATKEY_INT = 1,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2, // 8 weight instead of 9 full weight
+		STATKEY_PER = 1,
+		STATKEY_SPD = 2,
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 	)
