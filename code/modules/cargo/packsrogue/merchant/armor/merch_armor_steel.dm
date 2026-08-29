@@ -116,6 +116,11 @@
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
 
+/datum/supply_pack/rogue/armor_steel/bracers_chain
+	name = "Bracers, Chainmaille"
+	cost = 50 // 1 Steel
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/chain)
+
 /datum/supply_pack/rogue/armor_steel/helmet_nasal
 	name = "Helmet, Nasal"
 	cost = 50 // 1 Steel
@@ -210,6 +215,11 @@
 	name = "Plated Boots"
 	cost = 50 // 1 Steel
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
+
+/datum/supply_pack/rogue/armor_iron/mailleboots_steel
+	name = "Maille Boots"
+	cost = 50
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/maille)
 
 /datum/supply_pack/rogue/armor_steel/mask_steel
 	name = "Mask"

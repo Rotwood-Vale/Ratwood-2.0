@@ -153,7 +153,9 @@
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.
+	smeltresult = /obj/item/ingot/bronze
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	dropshrink = null

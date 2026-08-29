@@ -805,4 +805,3 @@
 	blade_class = BCLASS_PIERCE//TEAR CHUNKS OFF OF THEM. THROW IT ACROSS THE ROOM.
 	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg', 'sound/combat/hits/bladed/genthrust (2).ogg')
 	icon_state = "intear"
-
