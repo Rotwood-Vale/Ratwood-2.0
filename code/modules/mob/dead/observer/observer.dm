@@ -379,13 +379,19 @@ Works together with spawning an observer, noted above.
 	return ghost
 
 /mob/living/carbon/human/ghostize(can_reenter_corpse = 1, force_respawn = FALSE, admin = FALSE, drawskip = FALSE)
+	if(admin) //aghost is never subject to in-character restrictions, this override took the arg but never read it
+		return ..()
 	if(mind)
 		if(mind.has_antag_datum(/datum/antagonist/zombie))
 			if(force_respawn)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
 				return ..()
 			var/datum/antagonist/zombie/Z = mind.has_antag_datum(/datum/antagonist/zombie)
-			if(!Z.revived)
+			// revived means the rise finished, not that they came back to life. The rise is blocked
+			// indoors in town and can be cured outright, so one that never comes must not hold them
+			// in the body for the rest of the round
+			var/rise_still_coming = Z.zombie_start && (world.time < Z.zombie_start + DEAD_TO_ZOMBIE_TIME)
+			if(!Z.revived && stat == DEAD && rise_still_coming)
 				if(!(world.time % 5))
 					to_chat(src, span_warning("I'm preparing to walk again."))
 				return

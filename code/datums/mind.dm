@@ -114,6 +114,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/personal_objectives = list() // List of personal objectives not tied to the antag roles
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
+	/// Weakref to this character's severed head, set on decapitation and cleared on reattachment.
+	/// Never qdel it, weakref/Destroy() qdels its target
+	var/datum/weakref/severed_head_ref
+	/// The player's OOC card and identity, captured from their body so it follows the mind through transplants
+	var/datum/player_card/player_card
 
 /datum/mind/New(key)
 	src.key = key
@@ -124,6 +129,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	QDEL_NULL(player_card)
 	QDEL_NULL(sleep_adv)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
@@ -293,6 +299,16 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
+		// The OOC card rides the mind rather than the body, so it is snapshotted on the way out of one
+		// body and restamped on the way into the next. Shapeshift shells are skipped on both sides:
+		// capturing out of one would overwrite the card with the shell's empty fields, and stamping onto
+		// one would put the player's flavortext, notes and ERP prefs on an animal for anyone to examine
+		if(ishuman(current))
+			var/mob/living/carbon/human/old_human = current
+			if(!old_human.is_shapeshift_shell())
+				if(!player_card)
+					player_card = new
+				player_card.capture_from(old_human)
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
@@ -320,6 +336,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(curses && curses.len)
 		apply_curses_to_mob(current, src)
 	new_character.mind = src							//and associate our new body with ourself
+	if(ishuman(new_character) && player_card)	// and the card restamps onto whatever body the mind now wears
+		var/mob/living/carbon/human/new_human = new_character
+		if(!new_human.is_shapeshift_shell())
+			player_card.apply_card_to(new_human)
 	for(var/datum/antagonist/A in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))

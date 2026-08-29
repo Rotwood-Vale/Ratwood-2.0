@@ -9,7 +9,7 @@
 
 	// Check if the target has rot
 	var/has_rot = FALSE
-	var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
+	var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(target)
 
 	if (was_zombie || target.infected || target.has_status_effect(/datum/status_effect/zombie_infection))
 		has_rot = TRUE
@@ -46,8 +46,21 @@
 	return FALSE
 
 
+///Finds the deadite datum for this body even when its mind has moved off, a decapitated deadite
+///keeps its mind in the head's brainmob and a mind lookup on the body would find nothing
+/proc/get_deadite_antag_for_body(mob/living/carbon/body)
+	if(!body)
+		return null
+	var/datum/antagonist/zombie/by_mind = body.mind?.has_antag_datum(/datum/antagonist/zombie)
+	if(by_mind)
+		return by_mind
+	for(var/datum/antagonist/zombie/candidate in GLOB.antagonists)
+		if(candidate.deadite_body_ref?.resolve() == body)
+			return candidate
+	return null
+
 /proc/remove_zombie_antag(mob/living/carbon/target, mob/living/user, method, lethal = TRUE)
-	var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
+	var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(target)
 	if (!was_zombie)
 		return
 
@@ -58,7 +71,7 @@
 		target.Jitter(100)
 	else if(was_zombie.has_turned)
 		target.death(nocutscene = TRUE)
-	target.mind.remove_antag_datum(/datum/antagonist/zombie)
+	was_zombie.on_removal() //not remove_antag_datum, that routes through a mind and a decapitated deadite has none
 
 	if (!HAS_TRAIT(target, TRAIT_IWASUNZOMBIFIED) && user?.ckey)
 		adjust_playerquality(PQ_GAIN_UNZOMBIFY, user.ckey)
