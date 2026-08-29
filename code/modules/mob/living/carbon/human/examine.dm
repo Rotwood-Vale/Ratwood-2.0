@@ -398,8 +398,8 @@
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
-				. += span_danger("They extrude a pale aura. Their soul [src.stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
-			else if(user.stat == DEAD)
+				. += span_danger("They extrude a pale aura. Their soul [stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
+			else if(stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
 
 	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
@@ -1106,9 +1106,9 @@
 
 	var/list/lines
 	if((get_face_name() != real_name) && !observer_privilege)
-		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
+		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
 	else
-		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
+		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src, user)
 
 	for(var/line in lines)
 		. += span_info(line)
@@ -1126,14 +1126,8 @@
 			if(src.getorganslot(ORGAN_SLOT_TESTICLES))
 				descriptors += /datum/mob_descriptor/testicles
 			. += span_info("[t_his] underwear doesn't cover [t_him] from behind.")
-			//male genitalia line
-			var/malegen = build_coalesce_description(descriptors, src, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), "%THEY% %DESC1%, and %DESC2%.")
-			if(malegen)
-				. += span_info(malegen)
-			//female genitalia line
-			var/femgen = build_coalesce_description(descriptors, src, list(MOB_DESCRIPTOR_SLOT_VAGINA), "%THEY% %DESC1%.")
-			if(femgen)
-				. += span_info(femgen)
+			for(var/genital_line in build_cool_description(descriptors, src, user))
+				. += span_info(genital_line)
 
 	if(branded) // we are branded, now check what bodypart brands we've got. genital brands handled separately.
 		for(var/obj/item/bodypart/branded_bodypart as anything in bodyparts)
@@ -1223,6 +1217,15 @@
 
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_DUSTRUNNER))
+		var/mob/living/living_examiner = examiner
+		if(HAS_TRAIT(examiner, TRAIT_DUSTRUNNER))
+			heretic_text += "Fellow runner. The dust moves."
+		else if(living_examiner?.patron?.type == /datum/patron/inhumen/matthios)
+			heretic_text += "A Guild runner, by the look of them."
+		else if(examiner.job == "Bathhouse Attendant" || examiner.job == "Bathmaster")
+			heretic_text += "One of the Guild's runners. I know the signs."
 
 	if(HAS_TRAIT(src, TRAIT_COMMIE))
 		if(seer)

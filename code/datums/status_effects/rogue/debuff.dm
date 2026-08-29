@@ -179,19 +179,6 @@
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
 	duration = 30 SECONDS
 
-/datum/status_effect/debuff/netted/on_apply()
-		. = ..()
-		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, multiplicative_slowdown = 3)
-
-/datum/status_effect/debuff/netted/on_remove()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.legcuffed = null
-		C.update_inv_legcuffed()
-		C.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN)
-
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	name = "Tired"
 	desc = "I should get some rest."
