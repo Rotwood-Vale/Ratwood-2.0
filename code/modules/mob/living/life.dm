@@ -52,9 +52,9 @@
 		//passively heal wounds, when you're in trouble..
 		if(blood_volume > BLOOD_VOLUME_SURVIVE)
 			for(var/datum/wound/wound as anything in get_wounds())
-				if(wound?.severity <= WOUND_SEVERITY_MODERATE)
-					if(!istype(wound, /datum/wound/slash/incision))
-						wound.heal_wound(0.4)
+				wound.heal_wound(0.6)
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(0.4)
 
 	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
 		handle_passive_blood()
