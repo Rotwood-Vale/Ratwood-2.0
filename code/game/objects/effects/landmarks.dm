@@ -163,20 +163,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Militia Commander"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/sedeentcommanderlate
-	name = "Militia Commander Late"
-	icon_state = "arrow"
-	jobspawn_override = list("Militia Commander")
-	delete_after_roundstart = FALSE
-
 /obj/effect/landmark/start/sedeentwatchman
 	name = "Militia Watchman"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/sedeentwatchmanlate
-	name = "Militia Watchman Late"
+/obj/effect/landmark/start/sedeentcommanderlate
+	name = "Militia Late"
 	icon_state = "arrow"
-	jobspawn_override = list("Militia Watchman")
+	jobspawn_override = list("Militia Commander, Militia Watchman")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/sedeentmayor
@@ -186,7 +180,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/sedeentmayorlate
 	name = "Sedeent Mayor Late"
 	icon_state = "arrow"
-	jobspawn_override = list("Sedeent Mayor")
+	jobspawn_override = list("Mayor")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/barkeep
