@@ -33,8 +33,8 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-        "Armor Plates" =  /obj/item/repair_kit/metal,
-    )
+		Armor Plates" =  /obj/item/repair_kit/metal,
+	)
 	extra_context = "This class is restricted from using the Equestrian virtue."
 
 	virtue_restrictions = list(
