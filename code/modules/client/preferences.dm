@@ -121,6 +121,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/edging = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
+	var/pubes = FALSE
+	var/pits = FALSE
+	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
 	var/voting_popup = TRUE
@@ -373,6 +376,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/culinary_preferences = list()
 
 	var/datum/advclass/preview_subclass
+
+	var/preview_erect_state = ERECT_STATE_NONE//toggle pintle floppy, half-chubbed, or full mast on preview dummy.
 
 	var/tgui_pref = TRUE
 
@@ -698,6 +703,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<div style='text-align: center'><br>Subclass Preview:<br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.name]" : "None"]</a></div>"
 			else
 				preview_subclass = null
+			var/arousal_preview_label
+			switch(preview_erect_state)
+				if(ERECT_STATE_PARTIAL)
+					arousal_preview_label = "Partial"
+				if(ERECT_STATE_HARD)
+					arousal_preview_label = "Hard"
+				else
+					arousal_preview_label = "None"
+			dat += "<div style='text-align: center'><br>Arousal Preview:<br> <a href='?_src_=prefs;preference=preview_erect_state'>[arousal_preview_label]</a></div>"
 			// Rightmost column, 40% width
 			dat += "<td width=40% valign='top'>"
 			dat += "<h2>Body</h2>"
@@ -3020,6 +3034,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences_browser")
 					user << browse(null, "window=lobby_window")
 					return
+
+				if("preview_erect_state")
+					switch(preview_erect_state)
+						if(ERECT_STATE_NONE)
+							preview_erect_state = ERECT_STATE_PARTIAL
+						if(ERECT_STATE_PARTIAL)
+							preview_erect_state = ERECT_STATE_HARD
+						else
+							preview_erect_state = ERECT_STATE_NONE
 
 				if("save")
 					save_preferences()
