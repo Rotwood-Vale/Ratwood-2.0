@@ -138,6 +138,7 @@
 	name = "sallet"
 	icon_state = "sallet"
 	desc = "A steel helmet which protects the ears."
+	flags_inv = HIDEEARS
 	smeltresult = /obj/item/ingot/steel
 	body_parts_covered = HEAD|HAIR|EARS
 
