@@ -52002,7 +52002,6 @@
 /obj/structure/fluff/railing/border{
 	dir = 10
 	},
-/obj/effect/landmark/start/sedeentwatchmanlate,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/beach/cityofsedeent)
 "ktO" = (
@@ -96238,13 +96237,6 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/manor/rockhill)
-"tvT" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/obj/effect/landmark/start/sedeentwatchmanlate,
-/turf/open/floor/rogue/ruinedwood/turned,
-/area/rogue/outdoors/beach/cityofsedeent)
 "tvU" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -321030,7 +321022,7 @@ bWo
 qOe
 bWo
 jKj
-tvT
+vdC
 vdC
 vdC
 vdC

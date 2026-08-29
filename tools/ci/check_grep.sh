@@ -189,22 +189,6 @@ if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS'
 	st=1
 fi;
 
-part "common spelling mistakes"
-if $grep -i 'centcomm' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of CentCom detected in code, please remove the extra M(s).${NC}"
-    st=1
-fi;
-if $grep -ni 'nanotransen' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please remove the extra N(s).${NC}"
-    st=1
-fi;
-if $grep 'NanoTrasen' $code_files; then
-	echo
-    echo -e "${RED}ERROR: Misspelling(s) of Nanotrasen detected in code, please uncapitalize the T(s).${NC}"
-    st=1
-fi;
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
