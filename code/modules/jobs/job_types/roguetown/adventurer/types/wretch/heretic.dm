@@ -30,8 +30,8 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-        "Armor Plates" =  /obj/item/repair_kit/metal,
-    )
+		"Armor Plates" =  /obj/item/repair_kit/metal,
+	)
 	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
 
 /datum/outfit/job/roguetown/wretch/heretic
@@ -255,8 +255,8 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 	)
 	subclass_stashed_items = list(
-        "Sewing Kit" =  /obj/item/repair_kit,
-    )
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
 
 
