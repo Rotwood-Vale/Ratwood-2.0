@@ -2,9 +2,7 @@
 	set waitfor = FALSE
 	set invisibility = 0
 
-	// Sleep gate: skip Life() for AI-off NPCs to save cycles, but only if fully conscious.
-	// If not conscious, we must keep running Life() so wounds bleed, blood drops, and update_stat() can transition us.
-	if(!client && stat == CONSCIOUS && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+	if(!client && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
 		return
 
 	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
@@ -47,7 +45,7 @@
 		heal_wounds(1)
 
 	/// ENDVRE AS HE DOES.
-	if(!stat && (HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS)))
+	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
 		handle_wounds()
 		//passively heal wounds, when you're in trouble..
 		if(blood_volume > BLOOD_VOLUME_SURVIVE)
@@ -63,7 +61,7 @@
 		return
 
 	handle_environment()
-
+	
 	//Random events (vomiting etc)
 	handle_random_events()
 
@@ -116,7 +114,7 @@
 				return
 			if(istype(drownrelay.loc, /turf/open/water))
 				handle_inwater(drownrelay.loc, extinguish = FALSE, force_drown = TRUE)
-			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.
+			if(istype(loc, /turf/open/water)) // Extinguish ourselves if our body is in water.	
 				extinguish_mob()
 			return
 	. =..()
@@ -136,7 +134,22 @@
 		handle_inwater(loc)
 
 /mob/living/proc/handle_random_events()
-	return
+	//random painstun
+	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))
+		if(world.time > mob_timers["painstun"] + 600)
+			if(getBruteLoss() + getFireLoss() >= (STAWIL * 10))
+				var/probby = 53 - (STAWIL * 2)
+				if(!(mobility_flags & MOBILITY_STAND))
+					probby = probby - 20
+				if(prob(probby))
+					mob_timers["painstun"] = world.time
+					Immobilize(10)
+					emote("painscream")
+					visible_message(span_warning("[src] freezes in pain!"),
+								span_warning("I'm frozen in pain!"))
+					sleep(10)
+					Stun(110)
+					Knockdown(110)
 
 /mob/living/proc/handle_environment()
 	return
