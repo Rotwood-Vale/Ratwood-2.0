@@ -2,7 +2,9 @@
 	set waitfor = FALSE
 	set invisibility = 0
 
-	if(!client && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+	// Sleep gate: skip Life() for AI-off NPCs to save cycles, but only if fully conscious.
+	// If not conscious, we must keep running Life() so wounds bleed, blood drops, and update_stat() can transition us.
+	if(!client && stat == CONSCIOUS && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
 		return
 
 	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds, times_fired)
@@ -29,50 +31,46 @@
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
 
-	if(notransform)
+	if (notransform)
 		return
-	if(isnull(loc))
-		return
-
-	if(times_fired % 3 == 0) // Every third tick, handle simple wounds
-		if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
-			handle_wounds()
-			handle_embedded_objects()
-			handle_blood()
-			//passively heal even wounds with no passive healing
-			heal_wounds(3) // Check how many ticks we've passed then heal them based on the amount passed. (1 tick = 1, 2 ticks = 2, etc)
-
-	if(QDELETED(src)) // diseases can qdel the mob via transformations
+	if(!loc)
 		return
 
-	/** Why fire every X ticks instead of every tick?
-	 * This only touches CLIENTLESS mobs. Keep in mind we're iterating over 1k+ mobs, every time the mobs subsystem fires.
-	 * Does this mean that random events, traits, and pain stuns will happen less frequently? Yes.
-	 * Most of these handle procs have an additional argument. So, what number do you add?
-	 * Handle_Traits() uses multiplier, starts off at 1.
-	 * 
-	 * Depending on the proc...
-	 * 	Chance based?
-	 * 	- Generally you'll want to add 5 for each tick you're passing. Default: 5 per tick passed
-	 * 	Guaranteed? / Status effects?
-	 * 	- One per tick passed. Default: ticks skipped
-	 * 	- For ones that are decrementing... same concept. Default: ticks skipped
-	 *  - Handle_traits() is a special case, it's a multiplier. Default: 1
-	 */
-	if(!client)
-		if(times_fired % 3 == 0)
-			handle_status_effects(3) //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-			handle_environment()
-			handle_random_events(15) // pain stun, vomitting, etc
-			update_sneak_invis()
-			handle_traits(3) // eye, ear, brain damages
-	else
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-		handle_environment()
-		handle_random_events()  // pain stun, vomitting, etc
-		update_sneak_invis()
-		handle_traits() // eye, ear, brain damages
+	//Breathing, if applicable - CURRENTLY NOT IMPLEMENTED
+	//handle_breathing(times_fired)
 
+	if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
+		handle_wounds()
+		handle_embedded_objects()
+		handle_blood()
+		//passively heal even wounds with no passive healing
+		heal_wounds(1)
+
+	/// ENDVRE AS HE DOES.
+	if(!stat && (HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS)))
+		handle_wounds()
+		//passively heal wounds, when you're in trouble..
+		if(blood_volume > BLOOD_VOLUME_SURVIVE)
+			for(var/datum/wound/wound as anything in get_wounds())
+				if(wound?.severity <= WOUND_SEVERITY_MODERATE)
+					if(!istype(wound, /datum/wound/slash/incision))
+						wound.heal_wound(0.4)
+
+	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
+		handle_passive_blood()
+
+	if (QDELETED(src)) // diseases can qdel the mob via transformations
+		return
+
+	handle_environment()
+
+	//Random events (vomiting etc)
+	handle_random_events()
+
+	handle_traits() // eye, ear, brain damages
+	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+
+	update_sneak_invis()
 
 	if(machine)
 		machine.check_eye(src)
@@ -81,6 +79,28 @@
 
 	if(stat != DEAD)
 		return 1
+
+/mob/living/proc/handle_passive_blood()
+	#define MAX_PASSIVE_BLOOD_HEAL	10
+	#define MIN_PASSIVE_BLOOD_HEAL	0
+
+	var/passive_regen_rate = MIN_PASSIVE_BLOOD_HEAL
+	if(nutrition <= NUTRITION_LEVEL_HUNGRY)
+		passive_regen_rate -= 5
+	else
+		passive_regen_rate += 5
+
+	if(hydration <= HYDRATION_LEVEL_THIRSTY)
+		passive_regen_rate -= 5
+	else
+		passive_regen_rate += 5
+
+	passive_regen_rate = CLAMP(passive_regen_rate, MIN_PASSIVE_BLOOD_HEAL, MAX_PASSIVE_BLOOD_HEAL)
+
+	blood_volume += passive_regen_rate
+
+	#undef MAX_PASSIVE_BLOOD_HEAL
+	#undef MIN_PASSIVE_BLOOD_HEAL
 
 /mob/living/proc/check_drowning()
 	if(istype(loc, /turf/open/water))
@@ -114,26 +134,9 @@
 	update_sneak_invis()
 	if(istype(loc, /turf/open/water))
 		handle_inwater(loc)
-	if(GLOB.cold_breath_overlay in overlays)
-		cut_overlay(GLOB.cold_breath_overlay)
 
-/mob/living/proc/handle_random_events(additional = 0)
-	//random painstun
-	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))
-		if(world.time > mob_timers["painstun"] + 600)
-			if(getBruteLoss() + getFireLoss() >= (STAWIL * 10))
-				var/probby = 53 - (STAWIL * 2) + additional
-				if(!(mobility_flags & MOBILITY_STAND))
-					probby = probby - 20
-				if(prob(probby))
-					mob_timers["painstun"] = world.time
-					Immobilize(10)
-					emote("painscream")
-					visible_message(span_warning("[src] freezes in pain!"),
-								span_warning("I'm frozen in pain!"))
-					sleep(10)
-					Stun(110)
-					Knockdown(110)
+/mob/living/proc/handle_random_events()
+	return
 
 /mob/living/proc/handle_environment()
 	return
@@ -167,24 +170,23 @@
 			to_chat(src,span_danger("[embedded] falls out of me!"))
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
-/mob/living/proc/handle_status_effects(additional)
-	var/amt_to_remove = 1 + additional
+/mob/living/proc/handle_status_effects()
 	if(confused)
-		confused = max(confused - amt_to_remove, 0)
+		confused = max(confused - 1, 0)
 	if(slowdown)
-		slowdown = max(slowdown - amt_to_remove, 0)
+		slowdown = max(slowdown - 1, 0)
 	if(slowdown <= 0)
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_SLOWDOWN_STATUS)
 
-/mob/living/proc/handle_traits(multiplier = 1)
+/mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)	//blindness, heals slowly over time
 		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-3 * multiplier)
+			adjust_blindness(-3)
 		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			adjust_blindness(-1 * multiplier)
+			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
-		adjust_blurriness(-1 * multiplier)
+		adjust_blurriness(-1)
 
 /mob/living/proc/update_damage_hud()
 	return
