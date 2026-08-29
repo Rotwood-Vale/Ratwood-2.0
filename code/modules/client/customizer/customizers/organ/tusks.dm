@@ -8,6 +8,10 @@
 	organ_type = /obj/item/organ/tusks
 	organ_slot = ORGAN_SLOT_TUSKS
 
+/datum/customizer/organ/tusks/humanoid
+	customizer_choices = list(/datum/customizer_choice/organ/tusks/humanoid)
+	allows_disabling = TRUE
+
 /datum/customizer_choice/organ/tusks/humanoid
 	name = "Tusks"
 	organ_type = /obj/item/organ/tusks/humanoid
