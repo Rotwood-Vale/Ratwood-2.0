@@ -7,12 +7,13 @@
 	spawn_positions = 1
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
-	allowed_ages = list(GE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	tutorial = "You are the commander of the Militia at Sedeent. You are to ensure the exiles do not flee back to the mainland."
 	display_order = JDO_COMMANDER
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_YEOMAN
 	outfit = /datum/outfit/job/roguetown/sedeentcommander
+	always_show_on_latechoices = TRUE
 	advclass_cat_rolls = list(
 		CTAG_SEDEENTCOMMANDER = 2
 	)

@@ -11,7 +11,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
-	
+	always_show_on_latechoices = TRUE
 	outfit = /datum/outfit/job/roguetown/mayor
 	display_order = JDO_MAYOR
 	give_bank_account = 40
