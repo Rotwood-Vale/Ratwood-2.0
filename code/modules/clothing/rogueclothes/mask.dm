@@ -128,6 +128,7 @@
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	anvilrepair = /datum/skill/craft/armorsmithing
+	adjustable = CAN_CADJUST
 	var/active_item = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden/equipped(mob/user, slot)
@@ -148,7 +149,8 @@
 	else
 		return
 
-
+/obj/item/clothing/mask/rogue/spectacles/golden/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/spectacles/golden/dropped(mob/user, slot)
 	..()
@@ -355,6 +357,9 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
+
+/obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
 	..()
@@ -641,8 +646,23 @@
 	max_integrity = 100
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
+/obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	user.update_fov_angles()
+
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	name = "sojourner's mask"

@@ -23,6 +23,7 @@
 /obj/item/clothing/under/roguetown/chainlegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs
 	name = "brigandine chausses"
