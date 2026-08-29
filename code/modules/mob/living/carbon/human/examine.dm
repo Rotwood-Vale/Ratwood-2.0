@@ -426,8 +426,8 @@
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
-				. += span_danger("They extrude a pale aura. Their soul [src.stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
-			else if(user.stat == DEAD)
+				. += span_danger("They extrude a pale aura. Their soul [stat == DEAD ? "was not" : "is not"] clean. This is it for them.")
+			else if(stat == DEAD)
 				. += span_danger("This was their only chance at lyfe.")
 
 	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
