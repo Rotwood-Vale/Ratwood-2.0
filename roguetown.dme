@@ -1553,6 +1553,7 @@
 #include "code\modules\cargo\packsrogue\merchant\substances.dm"
 #include "code\modules\cargo\packsrogue\merchant\tools.dm"
 #include "code\modules\cargo\packsrogue\merchant\wardrobe.dm"
+#include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_bronze.dm"
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_exotic.dm"
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_iron.dm"
 #include "code\modules\cargo\packsrogue\merchant\armor\merch_armor_light.dm"
