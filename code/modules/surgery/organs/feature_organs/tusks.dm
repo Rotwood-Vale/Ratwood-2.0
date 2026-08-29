@@ -8,4 +8,4 @@
 
 /obj/item/organ/tusks/humanoid
 
-obj/item/organ/tusks/halforc
+/obj/item/organ/tusks/halforc
