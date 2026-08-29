@@ -63,6 +63,11 @@
 	reach = 2
 	item_d_type = "slash"
 
+/datum/intent/sword/peel/miaodao
+	name = "long sword armor peel"
+	peel_divisor = 4
+	reach = 2
+
 /datum/intent/spear/cut/oneh
 	name = "one-handed cut"
 	reach = 1
@@ -1804,6 +1809,27 @@
 	gripped_intents = null
 	gripsprite = FALSE
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/greatsword/miaodao
+	name = "steel miaodao"
+	icon_state = "odachi"
+	desc = "An unusually long saber of Lingyunese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
+	force = 24
+	force_wielded = 30
+	minstr = 8
+	wdefense = 6
+	wdefense_wbonus = 1 //Only +1 defense from wielding
+	max_blade_int = 150 //Thin blade
+	wbalance = WBALANCE_SWIFT
+	alt_intents = null
+
+/obj/item/rogueweapon/greatsword/miaodao/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen") return list("shrink" = 0.5, "sx" = -14, "sy" = -8, "nx" = 15, "ny" = -7, "wx" = -10, "wy" = -5, "ex" = 7, "ey" = -6, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -13, "sturn" = 110, "wturn" = -60, "eturn" = -30, "nflip" = 1, "sflip" = 1, "wflip" = 8, "eflip" = 1)
+			if("wielded") return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 
 /////////////////////
 // Special Weapon! //
