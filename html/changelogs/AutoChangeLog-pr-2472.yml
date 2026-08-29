@@ -1,5 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - balance: "WEEP now transfers wounds instead of remaking them, meaning that partly-healed wounds will be moved to the absolver/stigmata instead of being reset back to full severity."
-  - qol: "The messaging and visual effect for the WEEP spell has been vastly improved, making it clearer when someone is benefitting from the spell and who is using it on them."
