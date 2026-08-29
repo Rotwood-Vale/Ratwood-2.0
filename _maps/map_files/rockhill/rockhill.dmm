@@ -90766,7 +90766,7 @@
 	pixel_y = 9
 	},
 /obj/item/carvedgem/porcelain/bust{
-	pixel_y = 10;
+	pixel_y = 11;
 	pixel_x = 16
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
