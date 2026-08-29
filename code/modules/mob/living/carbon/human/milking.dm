@@ -65,7 +65,7 @@
 
 	if(has_blood)
 		// Consume blood to produce milk
-		blood_volume = max(0, blood_volume - 20)
+		adjust_blood_volume(-20)
 	else
 		// No blood - take burn damage from life essence being drained
 		adjustFireLoss(15)
