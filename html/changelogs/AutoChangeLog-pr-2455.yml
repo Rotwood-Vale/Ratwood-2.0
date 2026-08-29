@@ -1,8 +1,0 @@
-author: "NPC1314"
-delete-after: True
-changes:
-  - rscadd: "brazier heat hands on r-click (+temp)"
-  - rscdel: "hypothermia no longer progress to frostbite"
-  - qol: "several weathers tweaked average temp per tick effect"
-  - balance: "firestacks slower to raise temp and caps out before the max on their own, still give mega heatstroke but less time to cool down"
-  - code_imp: "bumping into mobs while on fire, and walking over burning mobs now 50% chance to spread not 100"

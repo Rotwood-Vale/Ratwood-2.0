@@ -927,3 +927,35 @@
 	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
 	. += span_notice("Shift+MMB toggles identity concealment.")
 	. += span_notice("When using the harlequin styles: Right-click to honk.")
+
+// Duelist Goggles = New invention that protects your eyes against critical hits +  doesn't hide your identity
+
+/obj/item/clothing/mask/rogue/spectacles/duelist
+	name = "iron duelist goggles"
+	desc = "A rigid pair of protective goggles made for fencing bouts, shielding the eyes without concealing the face."
+	icon_state = "iduelist"
+	break_sound = "garrote_snap"
+	blocksound = PLATEHIT
+	max_integrity = ARMOR_INT_MASK_IRON_MAILLE
+	body_parts_inherent = EYES//no peeling these
+	armor = ARMOR_PLATE
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	anvilrepair = /datum/skill/craft/armorsmithing
+	smeltresult = /obj/item/ash
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/steel
+	name = "steel duelist goggles"
+	desc = "Steel duelist goggles forged for the most punishing exchanges. They guard the eyes while leaving pride and identity uncovered."
+	icon_state = "sduelist"
+	max_integrity = ARMOR_INT_MASK_STEEL_MAILLE
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/bronze
+	name = "bronze duelist goggles"
+	desc = "Bronze duelist goggles offering modest protection without obscuring one's features. Every victory deserves a witness."
+	icon_state = "bduelist"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_MASK_BRONZE + 50//worse protection than iron goggles so it gets a slight buff

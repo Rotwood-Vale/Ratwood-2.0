@@ -560,6 +560,16 @@
 	icon_state = "hudesutu"
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
 
+/obj/item/clothing/suit/roguetown/armor/plate/scale/bronze
+	name = "bronze lamellar"
+	desc = "A coat of small bronze plates, segmented together in a manner not unlike chainmail. Divorced from the \
+	romanticized images of bare-chested legionnaires banishing nightmares from a pre-Syonic world, but venerable nevertheless."
+	icon_state = "blamellar"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+	armor_class = ARMOR_CLASS_MEDIUM
+
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat
 	slot_flags = ITEM_SLOT_ARMOR
 	slot_flags = ITEM_SLOT_ARMOR
@@ -691,7 +701,7 @@
 	icon_state = "bronzeplatealt"
 	item_state = "bronzeplatealt"
 	body_parts_covered = CHEST | VITALS | LEGS
-	max_integrity = ARMOR_INT_CHEST_PLATE_IRON //Halfplate analogue. Still heavy as hell.
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
 
 //----------------- INFAREDBARON SPRITEWORK/ARMOR.DM ---------------------
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
