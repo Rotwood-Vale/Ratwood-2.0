@@ -73,7 +73,7 @@
 		/datum/customizer/bodypart_feature/pubes,
 		/datum/customizer/bodypart_feature/pits,
 		/datum/customizer/organ/ears/goblin,
-		/datum/customizer/organ/horns/tusks,
+		/datum/customizer/organ/tusks,
 		)
 	languages = list(
 		/datum/language/common,
