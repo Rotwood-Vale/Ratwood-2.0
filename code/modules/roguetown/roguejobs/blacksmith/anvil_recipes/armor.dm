@@ -392,6 +392,31 @@
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron
 
+/datum/anvil_recipe/armor/iron/sallet/visor_snouted
+	name = "Visored Sallet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted
+
+/datum/anvil_recipe/armor/iron/helmetroundface
+	name = "Roundface Bascinet, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron
+
+/datum/anvil_recipe/armor/iron/helmetroundface_snouted
+	name = "Roundface Bascinet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted
+
+/datum/anvil_recipe/armor/iron/helmetarmet
+	name = "Armet, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron
+
+/datum/anvil_recipe/armor/iron/helmetarmet_snouted
+	name = "Armet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted
+
 /datum/anvil_recipe/armor/iron/knighthelmet
 	name = "Knight's Helmet, Iron (+1 Iron)"
 	additional_items = list(/obj/item/ingot/iron)
@@ -593,6 +618,11 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored
 
+/datum/anvil_recipe/armor/steel/helmetsallv_snouted
+	name = "Visored Sallet, Snouted, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted
+
 /datum/anvil_recipe/armor/steel/helmetbuc
 	name = "Bucket Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
@@ -607,6 +637,16 @@
 	name = "Hounskull Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull
+
+/datum/anvil_recipe/armor/steel/helmetroundface
+	name = "Roundface Bascinet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface
+
+/datum/anvil_recipe/armor/steel/helmetroundface_snouted
+	name = "Roundface Bascinet, Snouted, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted
 
 /datum/anvil_recipe/armor/steel/bascinet
 	name = "Bascinet Helmet, Steel"
@@ -626,6 +666,11 @@
 	name = "Armet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet
+
+/datum/anvil_recipe/armor/steel/helmetarmet_snouted
+	name = "Armet, Snouted, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted
 
 /datum/anvil_recipe/armor/steel/slittedkettle
 	name = "Slitted Kettle, Steel (+1 Steel)"
@@ -765,6 +810,11 @@
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
 
+/datum/anvil_recipe/armor/holysteel/nochelm_snouted
+	name = "Noccian Helmet, Snouted (+1 Cured Leather)"
+	additional_items = list(/obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm/snouted
+
 /datum/anvil_recipe/armor/holysteel/dendorhelm
 	name = "Dendorite Helmet (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
@@ -817,6 +867,10 @@
 	name = "Psydonic Bucket Helm (+1 Blessed Silver)"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy
+	name = "Psydonic Volfskulle Bascinet (+1 Blessed Silver)"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
+
 /datum/anvil_recipe/armor/blessedsilver/helmetabso
 	name = "Psydonian Conical Helm (+2 Blessed Silver)"
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)
@@ -852,6 +906,9 @@
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmbucketpsy/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmetabso/inq
