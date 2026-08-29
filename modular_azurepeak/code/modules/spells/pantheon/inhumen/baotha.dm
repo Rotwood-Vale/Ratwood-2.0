@@ -317,25 +317,25 @@
 	color = "#9c2745"
 	taste_description = "sin"
 
-/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
+/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_CRACKHEAD))
 		if(volume >= 60)
-			M.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
-		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			M.set_blood_volume(min(M.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
-		var/list/wCount = M.get_wounds()
+			affected_mob.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
+		if(affected_mob.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			affected_mob.set_blood_volume(min(affected_mob.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
+		var/list/wCount = affected_mob.get_wounds()
 		if(wCount.len > 0)
-			M.heal_wounds(4.5)
+			affected_mob.heal_wounds(4.5)
 		if(volume > 0.99)
-			M.adjustBruteLoss(-2*REM, 0)
-			M.adjustFireLoss(-2*REM, 0)
-			M.adjustOxyLoss(-2, 0)
-			M.adjustToxLoss(-2, 0)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-			M.adjustCloneLoss(-4*REM, 0)
+			affected_mob.adjustBruteLoss(-2*REM, 0)
+			affected_mob.adjustFireLoss(-2*REM, 0)
+			affected_mob.adjustOxyLoss(-2, 0)
+			affected_mob.adjustToxLoss(-2, 0)
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+			affected_mob.adjustCloneLoss(-4*REM, 0)
 	else
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(1, 0)
+		affected_mob.adjustToxLoss(3, 0)
+		affected_mob.adjustOxyLoss(1, 0)
 	..()
 
 /obj/item/melee/touch_attack/loversruin/proc/create_ichor(atom/thing, mob/living/carbon/human/user)
@@ -395,9 +395,9 @@
 	recharge_time = 30 MINUTES //To avoid spamming this shit and giving all heretics florida-man crackhead superpowers. No Bro.
 
 /obj/effect/proc_holder/spell/invoked/griefflower/cast(mob/living/user)
-	var/turf/T = get_turf(user)
-	if(!isclosedturf(T))
-		new /obj/item/clothing/ring/griefflower(T)
+	var/turf/spawn_turf = get_turf(user)
+	if(!isclosedturf(spawn_turf))
+		new /obj/item/clothing/ring/griefflower(spawn_turf)
 		return TRUE
 
 	to_chat(user, span_warning("The targeted location is blocked. Her gift cannot be invoked."))
@@ -536,8 +536,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/baotha_addiction
 	var/last_sniff_time = 0
 	var/withdrawal_active = FALSE
-	var/message_cooldown = 2 MINUTES
-	var/current_cooldown = 0
+	COOLDOWN_DECLARE(current_cooldown)
+	/// Cooldown for the message being sent
+	COOLDOWN_DECLARE(regretmessage_cooldown)
 	var/list/regret_msgs = list(
 		span_italics("The face of someone you failed drifts through your vision, their expression frozen in disappointment."),
 		span_warning("A sudden, cold weight settles in your chest as you remember a door you should never have opened."),
@@ -557,7 +558,7 @@
 	. = ..()
 	// We apply withdrawals immediately
 	last_sniff_time = world.time - (5 MINUTES)
-	current_cooldown = world.time + message_cooldown
+	COOLDOWN_START(src, current_cooldown, 2 MINUTES)
 	RegisterSignal(owner, COMSIG_DRUG_SNIFFED, PROC_REF(on_sniff))
 
 /datum/status_effect/debuff/baotha_addiction/proc/on_sniff()
@@ -576,20 +577,20 @@
 
 	if(world.time >= current_cooldown)
 		send_creepy_message()
-		current_cooldown = world.time + message_cooldown
+		COOLDOWN_START(src, current_cooldown, 2 MINUTES)
 
 /datum/status_effect/debuff/baotha_addiction/proc/start_withdrawal()
 	withdrawal_active = TRUE
 	owner.apply_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
-	var/mob/living/carbon/human/H = owner
-	H.add_stress(/datum/stressevent/baotha_withdrawal_severe)
+	var/mob/living/carbon/human/human = owner
+	human.add_stress(/datum/stressevent/baotha_withdrawal_severe)
 	to_chat(owner, span_userdanger("The craving for dust becomes unbearable..."))
 
 /datum/status_effect/debuff/baotha_addiction/proc/stop_withdrawal()
 	withdrawal_active = FALSE
 	owner.remove_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
-	var/mob/living/carbon/human/H = owner
-	H.remove_stress(/datum/stressevent/baotha_withdrawal_severe)
+	var/mob/living/carbon/human/human = owner
+	human.remove_stress(/datum/stressevent/baotha_withdrawal_severe)
 	to_chat(owner, span_nicegreen("The sweet sting of the drugs calms your nerves. Relief."))
 
 /datum/status_effect/debuff/baotha_addiction/on_remove()
@@ -603,8 +604,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/baotha_withdrawal
 	// Mild debuff because it's mixed with a mood debuff!
 	effectedstats = list(
-		STATKEY_STR = -1,
-		STATKEY_PER = -1
+		STATKEY_STR = -2,
+		STATKEY_SPD = -2,
+		STATKEY_WIL = -2,
 	)
 
 /atom/movable/screen/alert/status_effect/baotha_addiction

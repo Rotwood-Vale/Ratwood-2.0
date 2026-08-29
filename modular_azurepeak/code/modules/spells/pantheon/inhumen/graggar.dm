@@ -48,13 +48,13 @@
 	miracle = TRUE
 
 /obj/effect/proc_holder/spell/invoked/projectile/blood_net/cast(list/targets, mob/user = usr)
-	var/obj/item/I = user.get_active_held_item()
-	if(!istype(I, req_inhand))
+	var/obj/item/held_item = user.get_active_held_item()
+	if(!istype(held_item, req_inhand))
 		to_chat(user, span_warning("I'm missing viscera in my hand to cast this."))
 		return FALSE
 	. = ..()
-	if(. && I)
-		qdel(I)
+	if(. && held_item)
+		qdel(held_item)
 
 /obj/projectile/magic/unholy_grasp
 	name = "viceral organ net"
@@ -91,26 +91,26 @@
 
 /obj/item/net/unholy_grasp/remove_effect()
 	if(iscarbon(loc))
-		var/mob/living/carbon/M = loc
-		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			M.update_inv_legcuffed()
-			if(M.has_status_effect(/datum/status_effect/debuff/netted))
-				M.remove_status_effect(/datum/status_effect/debuff/netted)
-		var/turf/T = get_turf(M)
-		if(T)
-			forceMove(T)
+		var/mob/living/carbon/mob_target = loc
+		if(mob_target.legcuffed == src)
+			mob_target.legcuffed = null
+			mob_target.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
+			mob_target.update_inv_legcuffed()
+			if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
+				mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
+		var/turf/spawn_turf = get_turf(mob_target)
+		if(spawn_turf)
+			forceMove(spawn_turf)
 
 /obj/item/net/unholy_grasp/Destroy() //we avoud forceMove() my manna caused by destroy as its not good to put it together
 	if(iscarbon(loc))
-		var/mob/living/carbon/M = loc
-		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			M.update_inv_legcuffed()
-		if(M.has_status_effect(/datum/status_effect/debuff/netted))
-			M.remove_status_effect(/datum/status_effect/debuff/netted)
+		var/mob/living/carbon/mob_target = loc
+		if(mob_target.legcuffed == src)
+			mob_target.legcuffed = null
+			mob_target.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
+			mob_target.update_inv_legcuffed()
+		if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
+			mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
 	return ..()
 
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter
@@ -187,14 +187,14 @@
 	if(!ishuman(user))
 		revert_cast()
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.resting)
-		H.set_resting(FALSE, FALSE)
-	H.emote("warcry")
+	var/mob/living/carbon/human/human = user
+	if(human.resting)
+		human.set_resting(FALSE, FALSE)
+	human.emote("warcry")
 	for(var/effect in purged_effects)
-		H.remove_status_effect(effect)
-	H.apply_status_effect(/datum/status_effect/buff/bloodrage)
-	H.visible_message(span_danger("[H] rises upward, boiling with immense rage!"))
+		human.remove_status_effect(effect)
+	human.apply_status_effect(/datum/status_effect/buff/bloodrage)
+	human.visible_message(span_danger("[human] rises upward, boiling with immense rage!"))
 	return TRUE
 
 /// - GRAGGAR REVIVAL - ///
@@ -232,17 +232,16 @@
 	var/mob/living/target
 	var/orc_count = 0
 	/// Orcs to spawn, let's keep this at one because carbon orcs are wicked.
-	var/max_orcs = 1
+	var/max_orcs = 3
 	/// When has our cowardice target been out of range for too long?
-	var/out_of_range_since = 0
-	var/lifetime = 15 MINUTES
+	COOLDOWN_DECLARE(out_of_range_since)
 
 /obj/structure/primal_rift/Initialize(mapload)
 	. = ..()
 	spawn_orcs()
 
 	// Auto-delete after 15 minutes
-	addtimer(CALLBACK(src, PROC_REF(expire)), lifetime)
+	addtimer(CALLBACK(src, PROC_REF(expire)), 15 MINUTES)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/primal_rift/process()
@@ -264,11 +263,11 @@
 		out_of_range_since = 0
 
 /obj/structure/primal_rift/proc/spawn_orcs()
-	var/turf/T = get_turf(src)
-	for(var/i in 1 to max_orcs)
-		var/mob/living/carbon/human/species/orc/npc/warlord/O = new(T)
-		O.visible_message(span_danger("[O] step out of the rift, axes drawn!"))
-		O.AddComponent(/datum/component/rift_bound, src)
+	var/turf/spawn_turf = get_turf(src)
+	for(var/orc_index in 3 to max_orcs)
+		var/mob/living/carbon/human/species/orc/npc/warlord/orc_warlord = new(spawn_turf)
+		orc_warlord.visible_message(span_danger("[orc_warlord] step out of the rift, axes drawn!"))
+		orc_warlord.AddComponent(/datum/component/rift_bound, src)
 		orc_count++
 
 /datum/component/rift_bound
@@ -300,9 +299,9 @@
 
 /obj/structure/primal_rift/proc/trigger_consequences()
 	to_chat(target, span_boldannounce("Graggar punishes your cowardice!"))
-	var/datum/status_effect/debuff/graggar_challenge/G = target.has_status_effect(/datum/status_effect/debuff/graggar_challenge)
-	if(G)
-		G.trigger_failure_consequences(target)
+	var/datum/status_effect/debuff/graggar_challenge/challenge_effect = target.has_status_effect(/datum/status_effect/debuff/graggar_challenge)
+	if(challenge_effect)
+		challenge_effect.trigger_failure_consequences(target)
 		target.remove_status_effect(/datum/status_effect/debuff/graggar_challenge)
 	qdel(src)
 
@@ -335,8 +334,8 @@
 	to_chat(owner, span_userdanger("Your mind feels clouded by a primal bloodlust. Graggar demands a challenge! Summon the rift before your time runs out!"))
 
 	// Grant the summoning spell
-	var/obj/effect/proc_holder/spell/invoked/summon_rift/S = new(owner)
-	owner.mind?.AddSpell(S)
+	var/obj/effect/proc_holder/spell/invoked/summon_rift/summoning_spell = new(owner)
+	owner.mind?.AddSpell(summoning_spell)
 
 /datum/status_effect/debuff/graggar_challenge/on_remove()
 	// If the duration ran out naturally (didn't get cleared by the rift)
@@ -345,24 +344,24 @@
 		trigger_failure_consequences(owner)
 
 	// Cleanup the spell if they still have it
-	for(var/obj/effect/proc_holder/spell/invoked/summon_rift/S in owner.mind?.spell_list)
-		owner.mind.RemoveSpell(S)
-		qdel(S)
+	for(var/obj/effect/proc_holder/spell/invoked/summon_rift/summoning_spell in owner.mind?.spell_list)
+		owner.mind.RemoveSpell(summoning_spell)
+		qdel(summoning_spell)
 	. = ..()
 
-/datum/status_effect/debuff/graggar_challenge/proc/trigger_failure_consequences(mob/living/carbon/human/H)
-	if(!istype(H))
+/datum/status_effect/debuff/graggar_challenge/proc/trigger_failure_consequences(mob/living/carbon/human/coward)
+	if(!istype(coward))
 		return
 
-	to_chat(H, span_boldannounce("Your bones snap under the weight of your own cowardice!"))
-	playsound(H, 'sound/combat/fracture/fracturedry (1).ogg', 100, TRUE)
+	to_chat(coward, span_boldannounce("Your bones snap under the weight of your own cowardice!"))
+	playsound(coward, 'sound/combat/fracture/fracturedry (1).ogg', 100, TRUE)
 
 	// Apply fractures to arms. I'd break legs too but we have to account for player error. (like summoning the rift whilst you're in the rimboe)
 	var/list/limbs = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	for(var/zone in limbs)
-		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		if(BP)
-			BP.add_wound(/datum/wound/fracture/no_bleed)
+		var/obj/item/bodypart/bodypart = coward.get_bodypart(zone)
+		if(bodypart)
+			bodypart.add_wound(/datum/wound/fracture/no_bleed)
 
 /// Helper spell
 
@@ -383,14 +382,14 @@
 		revert_cast()
 		return FALSE
 
-	var/turf/T = targets[1]
-	if(!isturf(T) || T.density)
+	var/turf/spawn_turf = targets[1]
+	if(!isturf(spawn_turf) || spawn_turf.density)
 		to_chat(user, span_warning("The rift needs solid ground to tear open!"))
 		revert_cast()
 		return FALSE
 
 	user.visible_message(span_warning("[user] slams their fist into the ground, tearing a crimson hole in reality!"))
-	var/obj/structure/primal_rift/R = new(T)
-	R.target = user
+	var/obj/structure/primal_rift/rift = new(spawn_turf)
+	rift.target = user
 	summoned = TRUE
 	return TRUE

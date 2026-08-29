@@ -295,7 +295,7 @@
 				if(limb)
 					possible_limbs += limb
 				var/limbs_to_gib = min(rand(1, 4), possible_limbs.len)
-				for(var/i in 1 to limbs_to_gib)
+				for(var/limb_index in 1 to limbs_to_gib)
 					var/obj/item/bodypart/selected_limb = pick(possible_limbs)
 					possible_limbs -= selected_limb
 					if(selected_limb?.drop_limb())
@@ -331,20 +331,19 @@
 /datum/component/debt_collector
 	var/debt_remaining = 0
 	/// There's a couple instances where on_equip() is called twice incorrectly. I'm applying a small cooldown to prevent abuse of this...
-	var/next_payment_time = 0
-
+	COOLDOWN_DECLARE(next_payment_time)
 /datum/component/debt_collector/Initialize(start_debt = 200)
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/living/carbon/human/H = parent
-	if(HAS_TRAIT(H, TRAIT_NOBLE))
+	var/mob/living/carbon/human/human = parent
+	if(HAS_TRAIT(human, TRAIT_NOBLE))
 		debt_remaining = start_debt * NOBLE_MULTIPLIER
 	else
 		debt_remaining = start_debt
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 
-/datum/component/debt_collector/proc/on_equip(mob/living/carbon/human/H, obj/item/I, slot)
+/datum/component/debt_collector/proc/on_equip(mob/living/carbon/human/human, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
 	if(slot != ITEM_SLOT_HANDS)
@@ -357,42 +356,42 @@
 	next_payment_time = world.time + 1
 
 	// Only interact with standard currency, so no marques or psila
-	if(istype(I, /obj/item/roguecoin/gold) || istype(I, /obj/item/roguecoin/silver) || istype(I, /obj/item/roguecoin/copper))
-		addtimer(CALLBACK(src, PROC_REF(process_payment), H, I), 1)
+	if(istype(equipped_item, /obj/item/roguecoin/gold) || istype(equipped_item, /obj/item/roguecoin/silver) || istype(equipped_item, /obj/item/roguecoin/copper) || istype(equipped_item, /obj/item/roguecoin/gilbranze))
+		addtimer(CALLBACK(src, PROC_REF(process_payment), human, equipped_item), 1)
 
-/datum/component/debt_collector/proc/process_payment(mob/living/carbon/human/H, obj/item/roguecoin/C)
-	var/total_real_value = C.get_real_price()
+/datum/component/debt_collector/proc/process_payment(mob/living/carbon/human/human, obj/item/roguecoin/coin)
+	var/total_real_value = coin.get_real_price()
 	if(debt_remaining <= 0)
-		clear_debt(H)
+		clear_debt(human)
 		return
 
 	if(total_real_value > debt_remaining)
 		var/refund_budget = total_real_value - debt_remaining
 		refund_budget = max(0, floor(refund_budget))
-		to_chat(H, span_warning("A golden hand claims [C] and manifest the remainder."))
+		to_chat(human, span_warning("A golden hand claims [coin] and manifest the remainder."))
 
-		qdel(C)
+		qdel(coin)
 		// We need a delay to stop the old coin pile from merging with the refund prematurely. Delay one tick :D
 		// I love coin code!!
 		spawn(1)
 			var/obj/structure/roguemachine/temp_ref = new /obj/structure/roguemachine()
-			temp_ref.budget2change(refund_budget, H)
+			temp_ref.budget2change(refund_budget, human)
 			qdel(temp_ref)
 
 		debt_remaining = 0
-		clear_debt(H)
+		clear_debt(human)
 
 	else
 		debt_remaining -= total_real_value
-		to_chat(H, span_warning("As you grasp [C], [total_real_value] worth of debt vanishes. Remaining: [debt_remaining]."))
-		playsound(H, 'sound/foley/coins1.ogg', 50, TRUE)
-		qdel(C)
+		to_chat(human, span_warning("As you grasp [coin], [total_real_value] worth of debt vanishes. Remaining: [debt_remaining]."))
+		playsound(human, 'sound/foley/coins1.ogg', 50, TRUE)
+		qdel(coin)
 		if(debt_remaining <= 0)
-			clear_debt(H)
+			clear_debt(human)
 
-/datum/component/debt_collector/proc/clear_debt(mob/living/carbon/human/H)
-	to_chat(H, span_nicegreen("The weight of your debt has lifted!"))
-	H.remove_status_effect(/datum/status_effect/debuff/debt_indicator)
+/datum/component/debt_collector/proc/clear_debt(mob/living/carbon/human/human)
+	to_chat(human, span_nicegreen("The weight of your debt has lifted!"))
+	human.remove_status_effect(/datum/status_effect/debuff/debt_indicator)
 	qdel(src)
 
 #undef NOBLE_MULTIPLIER
