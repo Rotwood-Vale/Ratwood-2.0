@@ -368,8 +368,6 @@ SUBSYSTEM_DEF(questpool)
 	if(!Q.preview(landmark))
 		qdel(Q)
 		return null
-	// Flat base plus the region's travel fee. Waves are flat in TP regardless of region,
-	// so the premium only accounts for the journey there, not extra danger.
 	Q.reward_amount = BLOCKADE_SCROLL_REWARD + TR.blockade_travel_fee
 	Q.funding_fund = source_fund
 	Q.funding_cost = cost

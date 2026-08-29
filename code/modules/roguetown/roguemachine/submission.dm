@@ -40,7 +40,6 @@
 
 // ripped out of stockpile machine, this deserves a future refactor
 /obj/structure/feedinghole/proc/attemptstockpile(obj/item/I, mob/H, sound = TRUE)
-	// Ratwood deviation: never process coinage in the sell loop.
 	if(istype(I, /obj/item/roguecoin))
 		return
 	for(var/datum/roguestock/R in SStreasury.stockpile_datums)
