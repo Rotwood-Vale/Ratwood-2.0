@@ -1,3 +1,7 @@
-/obj/item/organ/horns/halforc
-	name = "halforc horns"
-	accessory_type = /datum/sprite_accessory/tusks/halforc
+/obj/item/organ/tusks
+	name = "tusks"
+	desc = "A severed pair of tusks. What mouth did you rip this out of?"
+	icon_state = "severedtail" //placeholder
+	visible_organ = TRUE
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_TUSKS
