@@ -214,6 +214,6 @@
 	name = "Tusks"
 	organ_type = /obj/item/organ/horns
 	sprite_accessories = list(
-		/datum/sprite_accessory/tusks/halforc
+		/datum/sprite_accessory/tusks/halforc,
 		/datum/sprite_accessory/tusks/longtusk
 		)
