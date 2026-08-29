@@ -5,7 +5,6 @@
 	relevant_layers = list(BODY_FRONT_LAYER)
 	default_colors = list("#F4F4BE")
 
-
 /datum/sprite_accessory/tusks/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return is_human_part_visible(owner, HIDESNOUT)
 
