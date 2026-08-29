@@ -1809,9 +1809,9 @@
 	name = "steel miaodao"
 	icon_state = "odachi"
 	desc = "An unusually long saber of Lingyunese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
-	force = 21
+	force = 22
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/sword/chop/militia, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/chop/militia, /datum/intent/sword/cut/arming, /datum/intent/sword/strike)
 	gripped_intents = list( /datum/intent/sword/cut/zwei , /datum/intent/sword/peel/miaodao, /datum/intent/sword/chop/militia, /datum/intent/rend)
 	minstr = 10
 	wdefense = 5
