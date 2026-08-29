@@ -189,8 +189,7 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/clothing/ring/duelist = 2,
-		/obj/item/clothing/mask/rogue/spectacles/duelist = 1,
+		/obj/item/clothing/ring/duelist = 2
 		)
 
 /datum/advclass/sfighter/barbarian
