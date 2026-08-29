@@ -6405,12 +6405,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/harbor)
 "bmA" = (
-/obj/item/roguecoin/gold/pile{
-	pixel_x = 2;
-	pixel_y = 11
-	},
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
+/turf/closed/wall/mineral/rogue/decostone/mossy/long{
+	dir = 1;
+	max_integrity = 1e+007
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "bmQ" = (
@@ -7759,7 +7756,6 @@
 /area/rogue/indoors/town)
 "bAP" = (
 /obj/structure/mannequin/male,
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer,
 /obj/item/clothing/head/roguetown/helmet/kettle,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/shoes/roguetown/boots/nobleboot,
@@ -20752,6 +20748,15 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/academy)
+"dZC" = (
+/obj/item/roguecoin/gold/pile{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "dZD" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grassyel,
@@ -29785,12 +29790,6 @@
 	icon_state = "concretefloor1"
 	},
 /area/rogue/under/town/basement)
-"fPo" = (
-/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
 "fPv" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/rogue/cobble/mossy,
@@ -36080,11 +36079,8 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/bath)
 "hhp" = (
-/obj/effect/spawner/lootdrop/blacksteel_equipment_spawner,
-/obj/structure/rack/rogue/shelf/biggest,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
+/obj/machinery/light/rogue/firebowl/standing/green,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach/mounteclisium)
 "hhz" = (
 /obj/machinery/light/rogue/torchholder,
@@ -37807,9 +37803,9 @@
 /area/rogue/under/cavewet)
 "hzB" = (
 /obj/structure/closet/crate/roguecloset,
-/obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots,
-/obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate,
-/obj/item/rogueweapon/stoneaxe/battle/blacksteel,
+/obj/item/clothing/suit/roguetown/armor/plate/cuirass,
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
+/obj/item/rogueweapon/greatsword,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach/okbutanmanor)
 "hzF" = (
@@ -42916,6 +42912,19 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
+"iBR" = (
+/obj/effect/decal/cleanable/roguerune/arcyne/summoning/max{
+	color = "#ff0000"
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/boss{
+	name = "Father";
+	wander = 0;
+	faction = list("dragonden")
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "iBS" = (
 /turf/closed/wall/mineral/rogue/decostone/end,
 /area/rogue/under/town/basement/keep)
@@ -43677,8 +43686,9 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "iLe" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy{
-	max_integrity = 1e+007
+/obj/machinery/light/rogue/firebowl/standing/green,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "iLg" = (
@@ -47990,7 +48000,7 @@
 	},
 /area/rogue/outdoors/mountains/decap/rockhill)
 "jEX" = (
-/obj/machinery/light/rogue/firebowl/standing/green,
+/obj/structure/barricade/mineshaft,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach/mounteclisium)
 "jEY" = (
@@ -48002,14 +48012,7 @@
 /turf/open/floor/rogue/dirt/nospawn,
 /area/rogue/outdoors/bogsafe)
 "jFg" = (
-/obj/effect/decal/cleanable/roguerune/arcyne/summoning/max{
-	color = "#ff0000"
-	},
-/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/boss{
-	name = "Father";
-	wander = 0;
-	faction = list("dragonden")
-	},
+/obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -48956,6 +48959,13 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/tavern)
+"jOY" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "jOZ" = (
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
 /area/rogue/outdoors/beach/okbutanmanor)
@@ -62418,6 +62428,12 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/tavern)
+"mxE" = (
+/obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "mxF" = (
 /obj/structure/table/wood/poor,
 /obj/item/book/rogue/playerbook,
@@ -63749,13 +63765,6 @@
 /obj/item/rogueweapon/huntingknife/stoneknife,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/cavewet)
-"mKp" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/roguegem/random,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
 "mKs" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -66712,8 +66721,13 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/shop)
 "nqo" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy/long{
-	max_integrity = 1e+007
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon/broodmother{
+	name = "Mother";
+	wander = 0;
+	faction = list("dragonden")
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "nqq" = (
@@ -70817,11 +70831,10 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/tavern)
 "ojt" = (
-/obj/structure/fluff/statue/gargoyle/candles,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
+/obj/structure/flora/newtree,
+/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/beach/isleokbutan)
 "ojy" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -70832,8 +70845,14 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/dungeon/oldgoblincamp)
 "ojC" = (
-/obj/structure/barricade/mineshaft,
-/turf/open/floor/rogue/naturalstone,
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
+	name = "Brother";
+	wander = 0;
+	faction = list("dragonden")
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
 /area/rogue/outdoors/beach/mounteclisium)
 "ojI" = (
 /turf/closed/wall/mineral/rogue/decostone,
@@ -74663,10 +74682,11 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
 "oXE" = (
-/obj/structure/flora/newtree,
-/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
-/turf/open/floor/rogue/grass,
-/area/rogue/outdoors/beach/isleokbutan)
+/obj/structure/fluff/statue/gargoyle/candles,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "oXK" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble/mossy,
@@ -77667,9 +77687,8 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill)
 "pDm" = (
-/obj/structure/trap/fire{
-	max_integrity = 100
-	},
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -80671,6 +80690,13 @@
 	dir = 9
 	},
 /area/rogue/outdoors/town/roofs/keep)
+"qkw" = (
+/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/item/rogueweapon/shield/tower/metal/blacksteel,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "qkx" = (
 /turf/closed/wall/shroud,
 /area/rogue/outdoors/town/grove)
@@ -81648,13 +81674,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab,
 /turf/open/water/ocean,
 /area/rogue/outdoors/beach/harbor)
-"quB" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
-/obj/item/rogueweapon/shield/tower/metal/blacksteel,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
 "quC" = (
 /obj/structure/far_travel,
 /turf/open/floor/rogue/dirt/road,
@@ -82948,11 +82967,8 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/shelter/bog)
 "qGY" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/dragon/broodmother{
-	name = "Mother";
-	wander = 0;
-	faction = list("dragonden")
-	},
+/obj/effect/spawner/lootdrop/blacksteel_equipment_spawner,
+/obj/structure/rack/rogue/shelf/biggest,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -82977,11 +82993,7 @@
 	},
 /area/rogue/outdoors/beach/ocean)
 "qHh" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
-	name = "Brother";
-	wander = 0;
-	faction = list("dragonden")
-	},
+/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -84690,7 +84702,6 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/grove)
 "rbF" = (
-/obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
@@ -87943,8 +87954,9 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/manor/rockhill)
 "rKX" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet,
+/obj/structure/trap/fire{
+	max_integrity = 100
+	},
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -91276,9 +91288,8 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
 "swT" = (
-/obj/item/roguecoin/gold/pile{
-	pixel_x = 8
-	},
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -94558,16 +94569,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/dungeon/tricksntraps)
-"tfo" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
-	name = "Sister";
-	wander = 0;
-	faction = list("dragonden")
-	},
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
 "tfr" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -98824,12 +98825,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/town/manor/rockhill)
-"tXp" = (
-/obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
-/area/rogue/outdoors/beach/mounteclisium)
 "tXt" = (
 /obj/structure/chair/bench/couch/r{
 	pixel_y = 5
@@ -101065,7 +101060,8 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
 "uvB" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/roguegem/random,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -103014,9 +103010,8 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/bath)
 "uQO" = (
-/obj/item/clothing/shoes/roguetown/boots/blacksteel/modern/plateboots,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
+/turf/closed/wall/mineral/rogue/decostone/mossy{
+	max_integrity = 1e+007
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "uQP" = (
@@ -103821,9 +103816,11 @@
 	},
 /area/rogue/indoors/town/manor/rockhill)
 "uYF" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy/long{
-	dir = 1;
-	max_integrity = 1e+007
+/obj/item/roguecoin/gold/pile{
+	pixel_x = 8
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "uYG" = (
@@ -108424,7 +108421,11 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
 "vVn" = (
-/obj/machinery/light/rogue/firebowl/standing/green,
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
+	name = "Sister";
+	wander = 0;
+	faction = list("dragonden")
+	},
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -117393,10 +117394,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/rockhill)
 "xMt" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
+/turf/closed/wall/mineral/rogue/decostone/mossy/long{
+	max_integrity = 1e+007
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "xMB" = (
@@ -309528,7 +309527,7 @@ vzX
 vzX
 vzX
 vzX
-jEX
+hhp
 bOB
 odD
 uWi
@@ -311254,7 +311253,7 @@ vzX
 vzX
 vzX
 vzX
-ojC
+jEX
 odD
 uWi
 uWi
@@ -312117,18 +312116,18 @@ vzX
 vzX
 bOB
 bOB
-iLe
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-iLe
+uQO
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+uQO
 uWi
 uWi
 uWi
@@ -312977,20 +312976,20 @@ vzX
 vzX
 vzX
 vzX
-ojC
+jEX
 bOB
-uYF
-ojt
-vVn
+bmA
+oXE
+iLe
 aSz
 aSz
 aSz
 aSz
 aSz
 aSz
-vVn
-ojt
-uYF
+iLe
+oXE
+bmA
 uWi
 uWi
 uWi
@@ -313838,12 +313837,12 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 dEo
+uQO
 iLe
-vVn
-pDm
+rKX
 qGC
 qGC
 qGC
@@ -313851,8 +313850,8 @@ qGC
 qGC
 qGC
 qGC
-vVn
-uYF
+iLe
+bmA
 uWi
 uWi
 uWi
@@ -314700,33 +314699,33 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 qGC
-uYF
+bmA
 aSz
 qGC
 qGC
 qGC
-tfo
+vVn
 qGC
 qGC
 qGC
-pDm
+rKX
 aSz
-iLe
-iLe
+uQO
+uQO
 axZ
 axZ
 axZ
 axZ
 axZ
-iLe
-nqo
-nqo
-nqo
-nqo
-iLe
+uQO
+xMt
+xMt
+xMt
+xMt
+uQO
 uWi
 uWi
 gwt
@@ -315562,33 +315561,33 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 qGC
-iLe
-aSz
-qGC
-qGC
-pDm
-qGC
-qGC
-qGC
-qGC
-qGC
-aSz
-aSz
-uYF
-gSw
-gSw
-aSz
-aSz
-gSw
-uYF
-nXi
 uQO
+aSz
+qGC
+qGC
+rKX
+qGC
+qGC
+qGC
+qGC
+qGC
+aSz
+aSz
+bmA
+gSw
+gSw
+aSz
+aSz
+gSw
+bmA
+nXi
+jFg
 uVp
 bjd
-uYF
+bmA
 uWi
 uWi
 gwt
@@ -316424,7 +316423,7 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 dEo
 qGC
 jGI
@@ -316439,18 +316438,18 @@ qGC
 qGC
 qGC
 qGC
-iLe
-nqo
-iLe
+uQO
+xMt
+uQO
 qGC
 qGC
 qGC
 utC
 gwg
+dZC
+qkw
+swT
 bmA
-quB
-rbF
-uYF
 uWi
 uWi
 gwt
@@ -317286,7 +317285,7 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 qGC
 qGC
@@ -317294,9 +317293,9 @@ qGC
 qGC
 qGC
 qGC
-jFg
+iBR
 qGC
-qGY
+nqo
 qGC
 qGC
 qGC
@@ -317308,11 +317307,11 @@ qGC
 qGC
 qGC
 utC
-swT
-fPz
-swT
-xMt
 uYF
+fPz
+uYF
+jOY
+bmA
 uWi
 uWi
 gwt
@@ -318148,7 +318147,7 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 qGC
 qGC
@@ -318163,18 +318162,18 @@ qGC
 qGC
 qGC
 qGC
-iLe
-nqo
-iLe
+uQO
+xMt
+uQO
 qGC
 qGC
 qGC
 utC
-uvB
-fPo
+rbF
+qHh
 fPz
-mKp
-uYF
+uvB
+bmA
 uWi
 uWi
 gwt
@@ -319010,7 +319009,7 @@ vzX
 vzX
 vzX
 vzX
-uYF
+bmA
 qGC
 qGC
 jSx
@@ -319025,18 +319024,18 @@ qGC
 qGC
 aSz
 aSz
-uYF
-gSw
-gSw
-aSz
-aSz
-gSw
-uYF
-rKX
-tXp
 bmA
-hhp
-uYF
+gSw
+gSw
+aSz
+aSz
+gSw
+bmA
+pDm
+mxE
+dZC
+qGY
+bmA
 uWi
 uWi
 gwt
@@ -319872,33 +319871,33 @@ vzX
 vzX
 vzX
 vzX
-uYF
-vVn
+bmA
+iLe
 rpX
-uYF
+bmA
 aSz
 qGC
 qGC
 qGC
-qHh
+ojC
 qGC
 qGC
-pDm
+rKX
 qGC
 aSz
-iLe
-iLe
+uQO
+uQO
 axZ
 axZ
 axZ
 axZ
 axZ
-iLe
-nqo
-nqo
-nqo
-nqo
-iLe
+uQO
+xMt
+xMt
+xMt
+xMt
+uQO
 uWi
 uWi
 gwt
@@ -320734,12 +320733,12 @@ odD
 odD
 odD
 odD
-uYF
-nqo
-nqo
+bmA
+xMt
+xMt
+uQO
 iLe
-vVn
-pDm
+rKX
 qGC
 qGC
 qGC
@@ -320747,8 +320746,8 @@ qGC
 qGC
 qGC
 qGC
-vVn
-uYF
+iLe
+bmA
 uWi
 uWi
 uWi
@@ -320769,7 +320768,7 @@ kzR
 kzR
 pHc
 pHc
-oXE
+ojt
 kzR
 pHc
 pHc
@@ -321599,18 +321598,18 @@ uWi
 uWi
 uWi
 uWi
-uYF
-ojt
-vVn
+bmA
+oXE
+iLe
 aSz
 aSz
 aSz
 aSz
 aSz
 aSz
-vVn
-ojt
-uYF
+iLe
+oXE
+bmA
 uWi
 uWi
 uWi
@@ -322461,18 +322460,18 @@ uWi
 uWi
 uWi
 uWi
-iLe
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-nqo
-iLe
+uQO
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+xMt
+uQO
 uWi
 uWi
 uWi
