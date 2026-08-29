@@ -77,9 +77,8 @@
 	net.slipouttime = max(2 SECONDS, 13 SECONDS - max(0, carbon.STASTR - 10) * 0.5 SECONDS)
 	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
 	to_chat(carbon, span_danger("\The [src] ensnares you!"))
-	carbon.legcuffed = net
 	net.forceMove(carbon)
-	carbon.update_inv_legcuffed()
+	carbon.set_legcuffed(net, firer)
 	carbon.Knockdown(knockdown)
 	carbon.apply_status_effect(/datum/status_effect/debuff/netted)
 	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
@@ -93,22 +92,18 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/mob_target = loc
 		if(mob_target.legcuffed == src)
-			mob_target.legcuffed = null
-			mob_target.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			mob_target.update_inv_legcuffed()
+			mob_target.set_legcuffed(null)
 			if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
 				mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
-		var/turf/spawn_turf = get_turf(mob_target)
-		if(spawn_turf)
-			forceMove(spawn_turf)
+		var/turf/T = get_turf(mob_target)
+		if(T)
+			forceMove(T)
 
 /obj/item/net/unholy_grasp/Destroy() //we avoud forceMove() my manna caused by destroy as its not good to put it together
 	if(iscarbon(loc))
 		var/mob/living/carbon/mob_target = loc
 		if(mob_target.legcuffed == src)
-			mob_target.legcuffed = null
-			mob_target.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			mob_target.update_inv_legcuffed()
+			mob_target.set_legcuffed(null)
 		if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
 			mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
 	return ..()

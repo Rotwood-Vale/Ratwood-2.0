@@ -19,7 +19,14 @@
 #define TRAIT_DEFILED_NOBLE "Drained Noble Blood"
 #define TRAIT_DISGRACED_NOBLE "Formerly Noble Blooded"
 #define TRAIT_EMPATH "Empath"
+#define TRAIT_EXPLOSIVE_SUPPLY "Explosive Supply"
+#define TRAIT_DRUG_SUPPLY "Drug Supply"
+#define TRAIT_BOMBER_EXPERT "Explosive Specialist"
+#define TRAIT_DUSTRUNNER "Dust Runner"
 #define TRAIT_BREADY "Battleready"
+#define TRAIT_ARMOUR_LIKED "Fitting Armour"
+#define TRAIT_ARMOUR_DISLIKED "Misfitting Armour"
+#define TRAIT_FENCERDEXTERITY "Fencer's Dexterity"
 #define TRAIT_MEDIUMARMOR "Maille Training"
 #define TRAIT_HEAVYARMOR "Plate Training"
 #define TRAIT_DODGEEXPERT "Expert Dodger"
@@ -30,6 +37,7 @@
 #define TRAIT_SHATTER_WEAKNESS "Brittle Form"
 #define TRAIT_DNR "Bane of Existence"
 #define TRAIT_MANIAC_AWOKEN "Awoken"
+#define TRAIT_NALEDI "Naledi Complex"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
 #define TRAIT_NUDIST "Nudist" //you can't wear most clothes
 #define TRAIT_CYCLOPS_LEFT "Cyclops (Left)" //poked left eye
@@ -219,6 +227,7 @@
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
+#define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
 #define TRAIT_RESIDENT "Resident"
@@ -265,6 +274,8 @@
 #define TRAIT_ADRENALINE_RUSH "Adrenaline Rush"
 #define TRAIT_DYES "Dyemaster"
 #define TRAIT_GOODWRITER "Great Writer"
+#define TRAIT_NODEF "Recklessness"
+#define TRAIT_LEYLINE_HASTE "Leyline's Clarity"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
 /// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
@@ -324,6 +335,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the realm see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
+	TRAIT_OWNED_SLAVE = span_info("I am a marked slave, previously broken and now owned by a Master."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),
@@ -363,9 +375,16 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
 	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me. I regain energy slowly over time."),
+	TRAIT_ARMOUR_LIKED = span_greentext("I'm wearing something more suited to my style."),
+	TRAIT_ARMOUR_DISLIKED = span_warning("I'm wearing something that burdens me."),
+	TRAIT_FENCERDEXTERITY = span_info("I've trained my entire lyfe around the art of unarmoured fencing, affording myself unmatched speed when wearing very light armour. I'm very choosy otherwise."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),
+	TRAIT_BOMBER_EXPERT = span_greentext("I know explosives inside and out. I can draw grenades from a bombdolier instantly, and I've learned how to squeeze an extra bomb out of my supply runs."),
+	TRAIT_EXPLOSIVE_SUPPLY = span_greentext("I've a supplier of bombs. I can request one delivered to my mailbox once a day."),
+	TRAIT_DRUG_SUPPLY = span_greentext("I've a supplier of drugs. I can request one delivered to my mailbox once a day."),
+	TRAIT_DUSTRUNNER = span_greentext("I run dust for the Guild. Other runners and their patrons can recognize me by the signs."),
 	TRAIT_MAGEARMOR = span_info("My magics can protect me from a blow every so often."),
 	TRAIT_DECEIVING_MEEKNESS = span_info("People look at me and think I am a weakling. They are mistaken. I've learned how to hide my vices and true beliefs from others."),
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few criitical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
@@ -373,6 +392,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SHATTER_WEAKNESS = span_danger("My form is especially brittle and frail. A critical, shattering blow to my chest or spine will kill me instantly."),
 	TRAIT_DNR = span_danger("My lux' vigor is weak. There is no hope for me. This lyfe is all I have."),
 	TRAIT_MANIAC_AWOKEN = span_danger("I am <b>WAKING UP</b> and the sheeple know this. They will resist."),
+	TRAIT_NALEDI = span_info("I hail from the Fallen lands of Naledi. My blood and knowledge storied in yils of texts and techniques. My birthright is my pride."),
 	TRAIT_INFINITE_STAMINA = "I have boundless energy, I will never tire.",
 	TRAIT_NUDIST = "I <b>refuse</b> to wear clothes. They are a hindrance to my freedom.",
 	TRAIT_CYCLOPS_LEFT = span_warning("My left eye has been poked out..."),
@@ -522,6 +542,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_RACISMISBAD = span_warning("The Black Oaks can spot ANY Foreigners and Outsiders, no matter how long they've lived in the realm. This is an easy skill to master, as it is simply identifying who isn't an elf."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
+	TRAIT_NODEF = span_warning("I expose myself in battle completely."),
+	TRAIT_LEYLINE_HASTE = span_warning("I can fully see and use the threads which bind the world together! Spell casting time and cooldowns are 25% faster now."),
 	TRAIT_PONYGIRL_RIDEABLE = span_notice("Willing or not, I've been trained to carry other people's burdens."),
 	TRAIT_VENOMOUS = span_necrosis("I am venomous. When chewing someone I've bitten, I will inject venom."),
 	TRAIT_COMBAT_AWARE = span_notice("My honed senses and intuition allow me to spot notable things in the midst of battle with ease."),
