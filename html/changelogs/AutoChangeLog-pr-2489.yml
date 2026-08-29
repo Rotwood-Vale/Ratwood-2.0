@@ -1,5 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - qol: "Towner thug subclasses now show properly on examine."
-  - bugfix: "Miscreant thugs who take magical brick specialization have been given arcyne T1 to make it function properly with Arcyne Potential."
