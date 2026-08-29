@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		TRAIT_VOTARY,
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_HOLYWARRIOR,
+		TRAIT_CLERGY,
 	)
 	advclass_cat_rolls = list(CTAG_BISHOP = 2)
 	job_subclasses = list(

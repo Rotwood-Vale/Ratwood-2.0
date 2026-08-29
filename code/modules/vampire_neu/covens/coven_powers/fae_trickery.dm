@@ -24,21 +24,16 @@
 
 /datum/coven_power/fae_trickery/darkling_trickery/activate(mob/living/target)
 	. = ..()
-	if(!.)
-		return
-
-	var/generation = max(owner.get_vampire_generation() || GENERATION_THINBLOOD, GENERATION_THINBLOOD)
 	target.visible_message(span_suicide("[target] is disarmed!"),
-					span_boldwarning("I'm disarmed!"))
+					span_boldwarning("I'm disarmed!"))	
 	playsound(get_turf(target), 'sound/magic/mockery.ogg', 40, FALSE)
 	var/turnangle = (prob(50) ? 270 : 90)
 	var/turndir = turn(target.dir, turnangle)
-	var/dist = rand(1, generation)
+	var/dist = rand(1, owner.get_vampire_generation())
 	var/current_turf = get_turf(target)
 	var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
 	target.throw_item(target_turf, FALSE)
-	if(generation > GENERATION_THINBLOOD)
-		target.apply_status_effect(/datum/status_effect/debuff/clickcd, (generation - 1) SECONDS)
+	target.apply_status_effect(/datum/status_effect/debuff/clickcd, (owner.get_vampire_generation() - 1) SECONDS)
 
 //GOBLINISM
 /datum/coven_power/fae_trickery/goblinism
@@ -62,12 +57,14 @@
 	. = ..()
 	var/obj/item/clothing/mask/rogue/goblin_mask/goblin = new (get_turf(owner))
 	goblin.throw_at(target, 10, 14, owner)
+	owner.visible_message(
+		span_warning("[owner]'s hand glows green, only to launch a goblin at [target]!"))
+	playsound(get_turf(owner), 'sound/magic/clang.ogg', 40, TRUE)
 
 /obj/item/clothing/mask/rogue/goblin_mask
 	name = "goblin"
 	desc = "A green changeling creature."
 	icon_state = "goblin"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	max_integrity = 200
 	body_parts_covered = FULL_HEAD
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
@@ -99,8 +96,7 @@
 		var/mob/living/carbon/C = user
 		var/used_hand_zone = C.used_hand == 1 ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
 		to_chat(user, span_warning("[src] bites!"))
-		if(!C.apply_damage(5, BRUTE, used_hand_zone, C.run_armor_check(used_hand_zone, "stab", damage = 5)))
-			to_chat(user, span_warning("Armor stops the damage."))
+		C.apply_damage(5, BRUTE, used_hand_zone, C.run_armor_check(used_hand_zone, "stab", damage = 5))
 		playsound(get_turf(src), pick('sound/vo/mobs/gob/aggro (1).ogg','sound/vo/mobs/gob/aggro (2).ogg','sound/vo/mobs/gob/aggro (3).ogg','sound/vo/mobs/gob/aggro (4).ogg'), 100, FALSE, -1)
 		return
 	if((stat == CONSCIOUS))
@@ -230,37 +226,38 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		to_chat(C, span_warning("[src] is eating your face!"))
-		if(!C.apply_damage(5, BRUTE, BODY_ZONE_HEAD, C.run_armor_check(BODY_ZONE_HEAD, "stab", damage = 5)))
-			to_chat(C, span_warning("Armor stops the damage."))
+		C.apply_damage(5, BRUTE, BODY_ZONE_HEAD, C.run_armor_check(BODY_ZONE_HEAD, "stab", damage = 5))
 
-/obj/fae_trickery_trap
+/obj/structure/fae_trickery_trap
 	name = "fae trap"
 	desc = "Creates a fae trap to protect your domain."
 	anchored = TRUE
 	density = FALSE
-	alpha = 64
+	max_integrity = 20
+	alpha = 25
 	icon = 'icons/effects/clan.dmi'
 	icon_state = "rune1"
 	color = "#4182ad"
 	var/unique = FALSE
-	var/mob/living/owner
+	var/mob/owner
 
-/obj/fae_trickery_trap/Crossed(atom/movable/AM, oldloc)
+/obj/structure/fae_trickery_trap/Crossed(atom/movable/AM, oldloc)
 	..()
 	if(isliving(AM) && owner)
-		var/mob/living/crosser = AM
-		if(AM != owner && !crosser.is_clanmate(owner))
+		if(AM != owner)
 			if(!unique)
+				var/mob/living/L = AM
 				var/atom/throw_target
 				if(!oldloc)
 					throw_target = get_edge_target_turf(AM, pick(GLOB.cardinals))
 				else
 					throw_target = get_edge_target_turf(AM, get_dir(AM, oldloc))
-				crosser.apply_damage(20, BRUTE)
+				L.apply_damage(45, BRUTE)
+				L.OffBalance (2 SECONDS)
 				AM.throw_at(throw_target, rand(8,10), 4, owner, spin = TRUE)
 				qdel(src)
 
-/obj/fae_trickery_trap/disorient
+/obj/structure/fae_trickery_trap/disorient
 	name = "fae trap"
 	desc = "Creates a fae trap to protect your domain."
 	anchored = TRUE
@@ -268,11 +265,11 @@
 	unique = TRUE
 	icon_state = "rune2"
 
-/obj/fae_trickery_trap/disorient/Crossed(atom/movable/AM)
+/obj/structure/fae_trickery_trap/disorient/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && owner)
-		var/mob/living/L = AM
-		if(AM != owner && !L.is_clanmate(owner))
+		if(AM != owner)
+			var/mob/living/L = AM
 			var/rotation = 50
 			for(var/screen_type in L.hud_used?.plane_masters)
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
@@ -284,7 +281,7 @@
 					animate(whole_screen, transform = matrix(), time = 0.5 SECONDS, easing = QUAD_EASING)
 			qdel(src)
 
-/obj/fae_trickery_trap/drop
+/obj/structure/fae_trickery_trap/drop
 	name = "fae trap"
 	desc = "Creates a fae trap to protect your domain."
 	anchored = TRUE
@@ -292,13 +289,13 @@
 	unique = TRUE
 	icon_state = "rune3"
 
-/obj/fae_trickery_trap/drop/Crossed(mob/living/carbon/AM)
+/obj/structure/fae_trickery_trap/drop/Crossed(mob/living/carbon/AM)
 	..()
 	if(iscarbon(AM) && owner)
-		if(AM != owner && !AM.is_clanmate(owner))
+		if(AM != owner)
 			AM.adjustBruteLoss(35)
 			AM.Knockdown(5)
-			AM.visible_message(span_suicide("[AM] is disarmed!"),
+			AM.visible_message(span_suicide("[AM] is disarmed!"), 
 							span_boldwarning("I'm disarmed!"))
 			playsound(get_turf(AM), 'sound/magic/mockery.ogg', 40, FALSE)
 			var/target_turf = get_ranged_target_turf(get_turf(AM), pick(GLOB.cardinals), rand(2, 5))
@@ -328,13 +325,13 @@
 
 	switch(try_trap)
 		if("Brutal")
-			var/obj/fae_trickery_trap/trap = new (get_turf(owner))
+			var/obj/structure/fae_trickery_trap/trap = new (get_turf(owner))
 			trap.owner = owner
 		if("Spin")
-			var/obj/fae_trickery_trap/disorient/trap = new (get_turf(owner))
+			var/obj/structure/fae_trickery_trap/disorient/trap = new (get_turf(owner))
 			trap.owner = owner
 		if("Drop")
-			var/obj/fae_trickery_trap/drop/trap = new (get_turf(owner))
+			var/obj/structure/fae_trickery_trap/drop/trap = new (get_turf(owner))
 			trap.owner = owner
 
 //RIDDLE PHANTASTIQUE
@@ -374,9 +371,7 @@
 				if(RIDDLE)
 					if(RIDDLE.riddle_text == try_riddle)
 						actual_riddle = RIDDLE
-			if(!actual_riddle)
-				to_chat(owner, span_warning("That riddle has slipped your mind."))
-				return
+			target.add_movespeed_modifier("riddle", 5)
 			actual_riddle.ask(target)
 			owner.say(actual_riddle.riddle_text)
 	else
@@ -401,7 +396,7 @@
 	var/datum/riddle/riddle
 	var/bad_answers = 0
 
-/atom/movable/screen/alert/riddle/handle_click()
+/atom/movable/screen/alert/riddle/Click()
 	if(iscarbon(usr) && (usr == mob_viewer))
 		var/mob/living/carbon/M = usr
 		if(riddle)
@@ -445,7 +440,7 @@
 		to_chat(riddler, span_danger("Your riddle is too complicated."))
 		return FALSE
 
-/datum/riddle/proc/answer_riddle(mob/living/answerer, the_answer, atom/movable/screen/alert/riddle/alert)
+/datum/riddle/proc/answer_riddle(mob/living/answerer, the_answer, var/atom/movable/screen/alert/riddle/alert)
 	if(the_answer != riddle_answer)
 		alert.bad_answers++
 		to_chat(answerer,
@@ -497,7 +492,7 @@
 	var/turf/initial = get_turf(owner)
 	INVOKE_ASYNC(src, PROC_REF(aftervisual), initial)
 	for(var/mob/living/carbon/human/viewer in oviewers(range, owner))
-		if(viewer.is_clanmate(owner))
+		if(viewer.clan == owner.clan)
 			continue
 
 		var/turf/T = get_step(viewer, GLOB.flip_dir[viewer.dir])

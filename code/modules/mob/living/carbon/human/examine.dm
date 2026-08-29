@@ -395,6 +395,14 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 
+		var/datum/antagonist/vampire/vamp_inspect_vlord = src.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(vamp_inspect_vlord && (!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS)))
+			. += span_userdanger("A MONSTER!")
+
+		var/datum/antagonist/vampire/vamp_inspect = src.mind?.has_antag_datum(/datum/antagonist/vampire)
+		if(vamp_inspect && (!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS)))
+			. += span_redtext("[m3] strange glowying eyes and fangs!")
+
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
 			if(HAS_TRAIT(user, TRAIT_DEATHSIGHT))
@@ -719,6 +727,13 @@
 	if(effect && HAS_TRAIT(user, TRAIT_INQUISITION))
 		. += "<A href='?src=[REF(src)];item=[effect.device]'><span class='warning'>[m3] \a [effect.device] implanted.</span></A>"
 
+		if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED) && user.mind?.has_antag_datum(/datum/antagonist/vampire))
+			. += span_redtext ("SILVER-BLOODED...")
+
+		var/datum/antagonist/vampire/vamp_inspect_vlord = src.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(vamp_inspect_vlord && (!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS)))
+			. += span_userdanger("A MONSTER!")
+
 	//Gets encapsulated with a warning span
 	var/list/msg = list()
 
@@ -885,6 +900,19 @@
 		for(var/i in stun_absorption)
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[m1][stun_absorption[i]["examine_message"]]"
+
+	// Vampire port from AP - IronDragoon
+	if(user?.mind?.has_antag_datum(/datum/antagonist/vampire) && HAS_TRAIT(src, TRAIT_VAMPIRE_TORPOR))
+		var/time_remaining = max(0, vampire_revival_target - vampire_revival_progress)
+
+		var/total_seconds = round(time_remaining / 10)
+		var/minutes = floor(total_seconds / 60)
+		var/seconds = total_seconds % 60
+
+		if(minutes > 0)
+			msg += "<font color='#8b0000'>[m1] is in a <b>death torpor</b> and may rise in [minutes] minute[minutes == 1 ? "" : "s"], [seconds] second[seconds == 1 ? "" : "s"].</font>"
+		else
+			msg += "<font color='#8b0000'>[m1] is in a <b>death torpor</b> and may rise in [seconds] second[seconds == 1 ? "" : "s"].</font>"
 
 	if(!appears_dead)
 		if(!skipface)
@@ -1213,6 +1241,22 @@
 	if(dat.len)
 		return dat.Join()
 
+// Used for Church tags
+/mob/living/proc/get_clergy_text(mob/examiner)
+	var/clergy_text
+	if(!HAS_TRAIT(examiner, TRAIT_CLERGY)) //If the person doing the examining doesn't have the trait, we don't need to do the other four ifs
+		return null
+	if(HAS_TRAIT(src, TRAIT_CLERGY) && HAS_TRAIT(examiner, TRAIT_CLERGY))
+		clergy_text = "A fellow member of the Church of the Ten."
+	if(HAS_TRAIT(src, TRAIT_CHOSEN) && HAS_TRAIT(examiner, TRAIT_CLERGY))
+		clergy_text = "The Bishop, the leader of my Church and Chosen of the Ten."
+	if(HAS_TRAIT(src, TRAIT_CLERGY) && HAS_TRAIT(examiner, TRAIT_CHOSEN))
+		clergy_text = "A member of the clergy under my leadership, as willed by the Ten."
+	if(HAS_TRAIT(src, TRAIT_CHOSEN) && HAS_TRAIT(examiner, TRAIT_CHOSEN))
+		clergy_text = "Myself. I am a Bishop of the Grenzelhoft Holy See, voice of the Ten in these lands."
+
+	return clergy_text
+
 /// Returns patron-related examine text for the mob, if any. Can return null.
 /mob/living/proc/get_heretic_text(mob/examiner)
 	var/heretic_text = null
@@ -1223,6 +1267,15 @@
 
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
+
+	if(HAS_TRAIT(src, TRAIT_DUSTRUNNER))
+		var/mob/living/living_examiner = examiner
+		if(HAS_TRAIT(examiner, TRAIT_DUSTRUNNER))
+			heretic_text += "Fellow runner. The dust moves."
+		else if(living_examiner?.patron?.type == /datum/patron/inhumen/matthios)
+			heretic_text += "A Guild runner, by the look of them."
+		else if(examiner.job == "Bathhouse Attendant" || examiner.job == "Bathmaster")
+			heretic_text += "One of the Guild's runners. I know the signs."
 
 	if(HAS_TRAIT(src, TRAIT_COMMIE))
 		if(seer)

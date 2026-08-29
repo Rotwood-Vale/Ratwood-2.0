@@ -1,22 +1,29 @@
 GLOBAL_LIST_EMPTY(vampire_objects)
 #define INITIAL_BLOODPOOL_PERCENTAGE 40
+// Storyteller scaling:
+// scaling=2, min_players=0, default_cap=0
+// On Astrata (cap=2): uses storyteller_scale_slots → always 2 slots at any pop.
+// On others (cap=0): falls through to event control's base_antags path.
+//  Event          | base | denom | max | Formula: base + floor(pop/denom), capped at max
+//  Vampires       |  1   |  80   |  2  | 1-79 pop → 1, 80+ → 2
+//  Masquerade     |  2   |  80   |  4  | 1-79 pop → 2, 80-159 → 3, 160+ → 4
+//  Vamp+Werewolf  |  2   |  80   |  4  | 1-79 pop → 2, 80-159 → 3, 160+ → 4
 /datum/antagonist/vampire
 	name = "Vampire"
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
 	antag_hud_type = ANTAG_HUD_VAMPIRE
-	antag_hud_name = "Vspawn"
+	antag_hud_name = "vamp_spawn_hud"
 	confess_lines = list(
 		"I WANT YOUR BLOOD!",
 		"DRINK THE BLOOD!",
 		"CHILD OF KAIN!",
 	)
 	rogue_enabled = TRUE
-	typecache_datum_blacklist = list(/datum/antagonist/zombie) //the rot cannot claim what the Curse already holds
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE // Base vampire shouldn't be directly selectable - use Vampire Lord or specific subtypes
-	var/datum/clan/default_clan = /datum/clan/nosferatu
+	var/datum/clan/default_clan = /datum/clan/crimson_fang
 	// New variables for clan selection
 	var/clan_selected = FALSE
 	var/custom_clan_name = ""
@@ -25,9 +32,17 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/datum/clan/forcing_clan
 	var/generation
 	var/research_points = 10
-	var/list/pre_embrace_state
+	var/research_spent = 0
+	var/max_thralls = 1
+	var/thrall_count = 0
 
-/datum/antagonist/vampire/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation)
+	var/STASTR = 12
+	var/STASPD = 12
+	var/STAWIL = 12
+	var/STACON = 12
+	var/STAPER = 12
+
+/datum/antagonist/vampire/New(incoming_clan = /datum/clan/crimson_fang, forced_clan = FALSE, generation)
 	. = ..()
 	if(forced_clan)
 		forced = forced_clan
@@ -43,7 +58,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			research_points = 17
 		if(GENERATION_NEONATE)
 			research_points = 9
-		if(GENERATION_THINBLOOD)
+		if(GENERATION_THINBLOOD, GENERATION_THINNERBLOOD)
 			research_points = 0
 
 /datum/antagonist/vampire/get_antag_cap_weight()
@@ -56,6 +71,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 			return 0.75 // Licker Wretch
 		if(GENERATION_THINBLOOD)
 			return 0.25 // You are not even an antagonist
+		if(GENERATION_THINNERBLOOD)
+			return 0 //Vagabond class
 		else
 			return 1 // Default weight if generation not set
 
@@ -68,85 +85,109 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		return span_boldnotice("Another deadite.")
 	if(istype(examined_datum, /datum/antagonist/skeleton))
 		return span_boldnotice("Another deadite.")
+	if(istype(examined_datum, /datum/antagonist/lich))
+		return span_boldnotice("Another deadite.")
 
 /datum/antagonist/vampire/on_gain()
-	// the Curse takes precedence over the rot - covers dying to it partway through being sired
-	owner?.remove_antag_datum(/datum/antagonist/zombie)
-	owner?.current?.remove_status_effect(/datum/status_effect/zombie_infection)
 	SSmapping.retainer.vampires |= owner
 	//move_to_spawnpoint()
 	owner.special_role = name
 	owner.current.adjust_bloodpool()
+	max_thralls = initial(max_thralls)
+	var/clan_setup_deferred = FALSE
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/vampdude = owner.current
 		vampdude.hud_used?.shutdown_bloodpool()
 		vampdude.hud_used?.initialize_bloodpool()
 		vampdude.hud_used?.bloodpool.set_fill_color("#510000")
 
+		switch(generation)
+			if(GENERATION_METHUSELAH)
+				vampdude?.cmode_music = 'sound/music/cmode/antag/combat_ready_to_die.ogg' //LISTEN TO ME WHETHER YOU WANT TO HEAR IT OR NOT, YOU WEREN'T EVEN BORN WHEN THIS HAPPENED
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 6, TRUE)
+				max_thralls = 69
+			if(GENERATION_ANCILLAE)
+				vampdude?.cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg'
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 5, TRUE) // Masquerade round antagonist. They should be given a little bit more leeway.
+				vampdude?.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+				max_thralls = 3
+			if(GENERATION_NEONATE)
+				vampdude?.cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg'
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 4, TRUE) // Licker Wretch
+				max_thralls = 1
+			if(GENERATION_THINBLOOD)
+				vampdude?.cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg'
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 3, TRUE) // You are not even an antagonist
+				max_thralls = 0
+			if(GENERATION_THINNERBLOOD)
+				vampdude?.cmode_music = 'sound/music/cmode/antag/combat_daywalker.ogg'
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 1, TRUE)
+				max_thralls = 0
+			else
+				vampdude?.adjust_skillrank_up_to(/datum/skill/magic/blood, 2, TRUE) // Default weight if generation not set
+				max_thralls = 0
+
+		if(HAS_TRAIT(vampdude, TRAIT_DNR)) //if you have DNR, we add dustable
+			ADD_TRAIT(vampdude, TRAIT_DUSTABLE, TRAIT_GENERIC)
+
 		if(!forced)
-			// Show clan selection interface
 			if(!clan_selected)
 				show_clan_selection(vampdude)
+				clan_setup_deferred = TRUE
 			else
-				// Apply the selected clan
 				vampdude.set_clan(default_clan)
 		else
 			vampdude.set_clan_direct(forcing_clan)
 			forcing_clan = null
 
-	// The clan system now handles most of the setup, but we can still do antagonist-specific things
-	after_gain()
+
+	if(!clan_setup_deferred)
+		after_gain()
 	. = ..()
 	equip()
 
+	if(HAS_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE))
+		REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, null)
+
 /datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
-	var/list/clan_options = list()
-	var/list/available_clans = list()
-
-	if(vampdude.job == "Wretch")
-		create_custom_clan(vampdude)
+	if(!vampdude)
 		return
 
-	for(var/clan_type in subtypesof(/datum/clan))
-		var/datum/clan/temp_clan = new clan_type
-		if(temp_clan.selectable_by_vampires)
-			available_clans += clan_type
-			clan_options[temp_clan.name] = clan_type
-		qdel(temp_clan)
-
-	clan_options["Create Custom Clan"] = "custom"
-
-	var/choice = input(vampdude, "Choose your vampire clan:", "Clan Selection") as null|anything in clan_options
-
-	if(!choice)
-		// Default to nosferatu if no choice made
-		default_clan = /datum/clan/nosferatu
-		vampdude.set_clan(default_clan)
-		clan_selected = TRUE
+	if(vampdude.job == "Wretch" || vampdude.job == "Stray")
+		var/wretch_name = tgui_input_text(vampdude, "Enter your Caitiff clan name:", "Custom Clan", "Custom Clan", MAX_NAME_LEN)
+		create_custom_clan(vampdude, wretch_name)
 		return
 
-	if(clan_options[choice] == "custom")
-		create_custom_clan(vampdude)
-	else
-		default_clan = clan_options[choice]
-		vampdude.set_clan(default_clan)
-		clan_selected = TRUE
+	var/datum/vampire_clan_selection_menu/menu = new(src, vampdude)
+	menu.ui_interact(vampdude)
 
-/datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude)
-	// Get custom clan name
-	custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null
-	if(!custom_clan_name)
-		custom_clan_name = "Custom Clan"
+/datum/antagonist/vampire/proc/finalize_clan_selection(mob/living/carbon/human/vampdude, clan_type)
+	if(clan_selected || !vampdude)
+		return
+	if(!clan_type)
+		clan_type = /datum/clan/crimson_fang
+	default_clan = clan_type
+	vampdude.set_clan(default_clan)
+	clan_selected = TRUE
+	after_gain()
+
+/datum/antagonist/vampire/proc/finalize_default_clan_selection(mob/living/carbon/human/vampdude)
+	finalize_clan_selection(vampdude, /datum/clan/crimson_fang)
+
+/datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude, custom_name = null)
+	custom_clan_name = (istext(custom_name) && length(custom_name)) ? custom_name : "Custom Clan"
 
 	var/datum/clan/custom/new_clan = new /datum/clan/custom()
 	new_clan.name = custom_clan_name
 	switch(vampdude.get_vampire_generation())
 		if(GENERATION_NEONATE, GENERATION_THINBLOOD)
 			new_clan.covens_to_select = COVENS_PER_WRETCH_CLAN
+		if(GENERATION_THINNERBLOOD)
+			new_clan.covens_to_select = COVENS_PER_VAGABOND
 
-	// Apply the custom clan
 	vampdude.set_clan_direct(new_clan)
 	clan_selected = TRUE
+	after_gain()
 
 	to_chat(vampdude, span_notice("You are now a member of the [custom_clan_name] clan with [length(selected_covens)] coven(s)."))
 
@@ -160,6 +201,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		var/mob/living/carbon/human/vampdude = owner.current
 		// Remove the clan when losing antagonist status
 		vampdude.set_clan(null)
+		if(HAS_TRAIT(vampdude, TRAIT_DUSTABLE)) //if you have DNR, we add dustable
+			REMOVE_TRAIT(vampdude, TRAIT_DUSTABLE, TRAIT_GENERIC)
 	owner.current?.hud_used?.shutdown_bloodpool()
 	if(!silent && owner.current)
 		to_chat(owner.current, span_danger("I am no longer a [job_rank]!"))
@@ -178,7 +221,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'
 	density = TRUE
 
-/obj/structure/vampire/Initialize(mapload)
+/obj/structure/vampire/Initialize()
 	GLOB.vampire_objects |= src
 	. = ..()
 
@@ -192,7 +235,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirelord/Initialize(mapload)
+/obj/effect/landmark/start/vampirelord/Initialize()
 	. = ..()
 	GLOB.vlord_starts += loc
 
@@ -201,9 +244,10 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 
-/obj/effect/landmark/start/vampirespawn/Initialize(mapload)
+/obj/effect/landmark/start/vampirespawn/Initialize()
 	. = ..()
 	GLOB.vspawn_starts += loc
+	GLOB.secondlife_respawns += loc
 
 /obj/effect/landmark/start/vampireknight
 	name = "Death Knight"
@@ -233,7 +277,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	name = "Thinblood"
 	show_in_antagpanel = TRUE
 
-/datum/antagonist/vampire/thinblood/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation = GENERATION_THINBLOOD)
+/datum/antagonist/vampire/thinblood/New(incoming_clan = /datum/clan/crimson_fang, forced_clan = FALSE, generation = GENERATION_THINBLOOD)
 	. = ..(incoming_clan, forced_clan, generation)
 
 /// Similarly as before, just a prefab for admins to give them via Traitor Panel
@@ -241,15 +285,14 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	name = "Licker - Neonate"
 	show_in_antagpanel = TRUE
 
-/datum/antagonist/vampire/licker/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation = GENERATION_NEONATE)
-	. = ..(incoming_clan, forced_clan, generation)
+/datum/antagonist/vampire/licker/New(incoming_clan = /datum/clan/crimson_fang, forced_clan = FALSE, generation = GENERATION_NEONATE)
 
 /// Just a prefab for admins to give them via Traitor Panel, otherwise unused because vars can be normally passed in parent's New()
 /datum/antagonist/vampire/ancillae
 	name = "Ancillae"
 	show_in_antagpanel = TRUE
 
-/datum/antagonist/vampire/ancillae/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation = GENERATION_ANCILLAE)
+/datum/antagonist/vampire/ancillae/New(incoming_clan = /datum/clan/crimson_fang, forced_clan = FALSE, generation = GENERATION_ANCILLAE)
 	. = ..()
 
-
+#undef INITIAL_BLOODPOOL_PERCENTAGE

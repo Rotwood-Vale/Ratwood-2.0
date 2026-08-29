@@ -23,6 +23,8 @@
 #define COVERAGE_TORSO			( CHEST | GROIN | VITALS )
 #define COVERAGE_ALL_BUT_ARMS	( CHEST | GROIN | VITALS | LEGS )
 #define COVERAGE_ALL_BUT_LEGS	( CHEST | GROIN | VITALS | ARMS )
+#define COVERAGE_ALL_BUT_HANDFEET	( CHEST | GROIN | VITALS | LEGS | ARMS)
+#define COVERAGE_ALL_BUT_ARMFEET	( CHEST | GROIN | VITALS | LEGS )
 #define COVERAGE_FULL			( CHEST | GROIN | VITALS | LEGS | ARMS )
 
 #define COVERAGE_PANTS			( GROIN | LEGS )
@@ -331,6 +333,9 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_COURTAGENT		"CAT_COURTAGENT"	// Court agent classes
 #define CTAG_WRETCH			"CAT_WRETCH"		// Wretch classes untethered from adventurer
 #define CTAG_LSKELETON		"CAT_LSKELETON"		// Lich Fortified Skeleton classes
+#define CTAG_VAMPSERVANT	"CAT_VAMPSERVANT"	// Vampire lord bloodpool servant classes
+#define CTAG_VAMPGUARD		"CAT_VAMPGUARD"		// Vampire Lord bloodpool guard classes
+#define CTAG_VAMPSPAWN		"CAT_VAMPSPAWN"		// Vampire Lord bloodpool elite classes
 #define CTAG_NSKELETON		"CAT_NSKELETON"		// Necromancer Greater Skeleton classes
 #define CTAG_LICKER_WRETCH  "CAT_LICKER_WRETCH" // Licker wretch. Nuff said.
 #define CTAG_GNOLL			"CAT_GNOLL"			// Wretch-esque gnolls, graggar's chosen.

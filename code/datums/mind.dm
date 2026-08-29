@@ -115,6 +115,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
 
+    
+
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src

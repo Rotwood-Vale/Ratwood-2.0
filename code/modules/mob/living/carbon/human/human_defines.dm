@@ -163,6 +163,13 @@
 	var/second_voice	// Virtue-specific. Can be swapped to / from and changed.
 	var/original_voice
 
+	// Setting up vars for vampire color values, ported from AP - IronDragoon
+	var/vampire_headshot_link
+	var/vampire_skin = null
+	var/vampire_eyes = null
+	var/vampire_hair = null
+	var/vampire_ears = null
+
 	/// Whether our FOV cone is overridden to be hidden. Simple bool.
 	var/viewcone_override
 

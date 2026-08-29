@@ -770,6 +770,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
+	S["vampire_skin"]		>> vampire_skin
+	S["vampire_hair"]		>> vampire_hair
+	S["vampire_eyes"]		>> vampire_eyes
+	S["vampire_ears"]		>> vampire_ears
 	S["family"]				>> family
 	S["gender_choice"] 		>> gender_choice
 	S["setspouse"] 			>> setspouse
@@ -946,6 +950,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["headshot_link"]			>> headshot_link
 	if(!valid_headshot_link(null, headshot_link, TRUE))
 		headshot_link = null
+
+	S["vampire_headshot_link"]			>> vampire_headshot_link
+	if(!valid_headshot_link(null, vampire_headshot_link, TRUE))
+		vampire_headshot_link = null
 
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes

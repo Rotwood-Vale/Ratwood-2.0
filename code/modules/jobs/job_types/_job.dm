@@ -237,9 +237,9 @@
 		H.apply_status_effect(/datum/status_effect/buff/mealbuff)
 		H.hydration = 1000 // Set higher hydration
 
-		if(H.mind)
-			H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
 
+	if(H.mind)
+		H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
 
 	if(H.islatejoin && announce_latejoin)

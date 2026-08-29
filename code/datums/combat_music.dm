@@ -626,3 +626,18 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Ancient"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/ready_to_die
+	name = "I'M READY TO DIE, ARE YOU?"
+	desc = "I REMEMBER A TIME NOT THAT LONG AGO, WHEN WE HAD VAMPIRES AND DUNPEALS BOTH AROUND HERE..." // yes it's "dunpeals". ask hunter d not me
+	shortname = "Ready to Die"
+	credits = "T-87 SULFURHEAD - I'M READY TO DIE, ARE YOU? (https://www.youtube.com/watch?v=cJpAxIvd8_g)"
+	musicpath = list('sound/music/cmode/antag/combat_ready_to_die.ogg')
+
+/datum/combat_music/daywalker
+	name = "Masquerade Violation"
+	desc = "No one holds command over me. No man, no god, no Prince. Call your damnable Hunt. We shall see who I drag screaming down to Hell with me." 
+	shortname = "Masquerade"
+	credits = "T-87 SULFURHEAD - MASQUERADE VIOLATION (https://www.youtube.com/watch?v=JEcszTQ3i2Y)"
+	musicpath = list('sound/music/cmode/antag/combat_daywalker.ogg')
+

@@ -226,3 +226,9 @@
 
 	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
 	var/no_redflash = FALSE
+
+	/// Vampire revival stuff, ported from AP - IronDragoon
+	var/vampire_revival_progress = 0
+	var/vampire_revival_target = 7 MINUTES // vamp timer testing goes here, base value should be 7 minutes
+	var/vampire_time_of_death = 0
+	var/vampire_resurrect_chances = 1 // 1 by default, it goes up by 1 per player you drain dry.

@@ -34,7 +34,7 @@
 	var/frenzy_chance_boost = 10
 	var/humanity = 7
 
-	var/potence_weapon_buff = 0
+	var/last_telepathy_use = 0
 
 	/// List of covens this mob possesses
 	var/list/datum/coven/covens
@@ -318,11 +318,13 @@
 		if(!HAS_TRAIT(src, TRAIT_DEATHCOMA))
 			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		heal_overall_damage(5, 5)
-		adjust_bloodpool(-2)
+		heal_overall_damage(20, 20)
+		//adjust_bloodpool(10)
+		heal_wounds(10)
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
 		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		to_chat(src, span_warning("You have recovered from Torpor."))
+		src.playsound_local(loc, 'sound/misc/vampirespell.ogg', 50, TRUE) //Que since it takes a bit you might go AFK briefly
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels

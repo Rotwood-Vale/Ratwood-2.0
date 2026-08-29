@@ -36,6 +36,7 @@
 
 #define STATUS_EFFECT_ANTIMAGIC /datum/status_effect/antimagic //grants antimagic (and reapplies if lost) for the duration
 
+#define STATUS_EFFECT_VAMPIRE_SPAWN_PROTECTION /datum/status_effect/vampire_spawn_protection // Stops vamps instantly burning in the sun on spawn for a short time
 /////////////
 // DEBUFFS //
 /////////////

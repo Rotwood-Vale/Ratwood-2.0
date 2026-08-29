@@ -1,38 +1,54 @@
-
 /datum/clan_leader/thronleer
-	lord_spells = list(
-		/obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform
+	lord_verbs = list(
+		/mob/living/carbon/human/proc/punish_spawn
 	)
-	lord_title = "Elder"
+	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_INFINITE_ENERGY, TRAIT_SEEPRICES, TRAIT_STRENGTH_UNCAPPED) //Lord is more learned than other leaders
+	vitae_bonus = 1000 //Sun scorned heavily, helps us hold more to deal w/ this cavet
+	lord_title = "Arch-Seer"
 
+//Completely re-done because inital Thronleer didn't really have any identity beyond, children of the Abyss but better
 /datum/clan/thronleer
 	name = "House Thronleer"
-	desc = "House Thronleer is a secretive, tradition‑bound clan that favors ritual, subtlety, and guile."
-	curse = "Weakness of the soul."
+	desc = "Noc, facinated by your House's endless pursuit of archiving knowledge has bestowed his blessing upon your cursed bloodline, yet Astrata's scorn and ire only grows at what your clan has achieved."
+	curse = "spurned harshly in the sun, endless compulsion to learn."
 	clanicon = "bloodheal"
-	blood_preference = BLOOD_PREFERENCE_FANCY
+	blood_preference = BLOOD_PREFERENCE_ALL //Noc blessed, they'll eat anything that moves.
+	clane_traits = list(
+		TRAIT_STRONGBITE,
+		TRAIT_VAMPBITE,
+		TRAIT_NOHUNGER,
+		TRAIT_NOBREATH,
+		TRAIT_NOPAIN,
+		TRAIT_TOXIMMUNE,
+		TRAIT_STEELHEARTED,
+		TRAIT_JESTERPHOBIA, //YOU KNOW WHAT, THIS IS FUNNY SURE.
+		TRAIT_BAD_MOOD, //Heavier mood debuffs, can actually effect you heavily.
+		TRAIT_SELF_SUSTENANCE,
+		TRAIT_GOODWRITER,
+		TRAIT_JACKOFALLTRADES, //Knowledge (halved skill costs is your big thing)
+		TRAIT_INTELLECTUAL,
+		TRAIT_NOSLEEP,
+		TRAIT_VAMPMANSION,
+		TRAIT_VAMP_DREAMS,
+		TRAIT_DARKVISION,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_KEENEARS,
+		TRAIT_SILVER_WEAK,
+	)
 	clane_covens = list(
-		/datum/coven/obfuscate,
-		/datum/coven/presence,
 		/datum/coven/demonic,
+		/datum/coven/auspex,
+		/datum/coven/fae_trickery,
 	)
 	leader = /datum/clan_leader/thronleer
 	covens_to_select = 0
 
 /datum/clan/thronleer/get_blood_preference_string()
-	return "prepared blood"
+	return "all blood, variety is knowledge"
 
 /datum/clan/thronleer/get_downside_string()
-	return "weak in fights"
+	return "burn in sunlight"
 
 /datum/clan/thronleer/apply_clan_components(mob/living/carbon/human/H)
+	H.AddComponent(/datum/component/sunlight_vulnerability) //largest damage buildup of all clans. Vitae drain is below average though.
 	H.AddComponent(/datum/component/vampire_disguise)
-
-/datum/clan/thronleer/get_frenzy_messages()
-	return list(
-		"My weak soul buckles, and the [span_danger("Beast")] pours through every crack.",
-		"Ritual and restraint [span_danger("desert")] me. Only the raw thirst remains.",
-		"The composure my House prizes slips through my fingers like [span_danger("water")].",
-		"Something base and starving [span_userdanger("wears my face")] now.",
-		"Tradition cannot hold this - the [span_danger("hunger")] is older than any House.",
-	)

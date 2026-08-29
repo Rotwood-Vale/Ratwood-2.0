@@ -55,13 +55,28 @@
 		SSdroning.kill_loop(client)
 		SSdroning.kill_rain(client)
 
+	// Dusting deaths - IronDragoon
+	if(!gibbed && HAS_TRAIT(src, TRAIT_DUSTABLE))
+		if(HAS_TRAIT(src, TRAIT_DUST_LEAVE_HEAD))
+			var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+			if(head)
+				head.drop_limb()
+		var/delete_gear = HAS_TRAIT(src, TRAIT_DUST_DELETE_GEAR)
+		if(delete_gear)
+			for(var/obj/item/gear in get_equipped_items(TRUE) + held_items)
+				qdel(gear)
+		dust(just_ash=TRUE, drop_items=!delete_gear)
+		return
+
 	if(mind)
 		if(!gibbed)
-			var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
-			if(VD)
-				dust(just_ash=TRUE,drop_items=TRUE)
-				return
-
+			var/has_secondlife = HAS_TRAIT(mind.current, TRAIT_SECONDLIFE)
+			if(has_secondlife)
+				var/respawn_time = 5 SECONDS
+				var/datum/mind/playermind = mind
+				addtimer(CALLBACK(src, PROC_REF(secondliferespawn), playermind), respawn_time, TIMER_UNIQUE)
+				REMOVE_TRAIT(mind.current,TRAIT_SECONDLIFE,TRAIT_GENERIC)
+		
 		var/datum/antagonist/lich/L = mind.has_antag_datum(/datum/antagonist/lich)
 		if (L && !L.out_of_lives)
 			if(L.consume_phylactery())
@@ -92,6 +107,19 @@
 				record_round_statistic(STATS_DEADITES_KILLED)
 			if(mind.has_antag_datum(/datum/antagonist/skeleton) || mind.has_antag_datum(/datum/antagonist/lich))
 				record_round_statistic(STATS_SKELETONS_KILLED)
+	
+	var/notreally = FALSE
+
+	if(!gibbed)
+		if(mind?.has_antag_datum(/datum/antagonist/vampire) && vampire_resurrect_chances) // You only have 1 chance by default. You gain 1 chance per person you frag through blood drinking.
+			begin_vampire_torpor()
+			vampire_resurrect_chances--
+			notreally = TRUE
+			to_chat(src, span_artery("<i>...Wryyyyy...</i>"))
+			playsound(src, 'sound/vo/mobs/ghost/death.ogg', 15, FALSE, -1)
+		else
+			to_chat(src, span_artery("<i>Ashes, ashes.<br>They all.<br>Fall.<br>Down.</i>"))
+			playsound(src, 'sound/magic/psydonmusicbox.ogg', 15)
 
 	if(!gibbed)
 		/*
@@ -101,6 +129,8 @@
 			if(!is_in_roguetown(src) || has_world_trait(/datum/world_trait/zizo_defilement))
 				if(!zombie_check_can_convert()) //Gives the dead unit the zombie antag flag
 					to_chat(src, span_userdanger("..is this to be my end..?"))
+					if(notreally)
+						to_chat(src, span_artery("...No, it's not over yet... I'll be back. I'll always be back."))
 					to_chat(src, span_danger("The cold consumes the final flicker of warmth in your chest and begins to seep into your limbs..."))
 
 	stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -203,3 +233,122 @@
 				CA.adjust_triumphs(-1)
 			CA.add_stress(/datum/stressevent/viewgib)
 	return ..()
+
+/mob/living/carbon/human/proc/secondliferespawn(datum/mind/mind)
+	var/mob_type = /mob/living/carbon/human
+	var/turf/T = get_turf(src)
+	var/mob/living/body
+
+	//drop everything they had on the ground
+	if(T)
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/BP = X
+			for(var/obj/item/I as anything in BP.embedded_objects)
+				I.forceMove(T)
+
+	if(mind.current)
+		if(mind.current.stat != DEAD)
+			return
+		else
+			body = mind.current
+	if(!body)
+		body = new mob_type(T)
+		var/mob/ghostie = mind.get_ghost(TRUE)
+		if(ghostie.client && ghostie.client.prefs)
+			ghostie.client.prefs.copy_to(body)
+		mind.transfer_to(body)
+	else
+		body.forceMove(pick(GLOB.secondlife_respawns))
+		body.revive(full_heal = TRUE, admin_revive = TRUE)
+	mind.grab_ghost(TRUE)
+	body.flash_act()
+
+	playsound(T, 'sound/magic/antimagic.ogg', 50, TRUE)
+
+/mob/living/carbon/human/proc/begin_vampire_torpor()
+	if(HAS_TRAIT(src, TRAIT_VAMPIRE_TORPOR))
+		return
+
+	ADD_TRAIT(src, TRAIT_VAMPIRE_TORPOR, TRAIT_GENERIC)
+
+	vampire_revival_progress = 0
+	vampire_time_of_death = world.time
+
+	addtimer(CALLBACK(src, PROC_REF(vampire_torpor_tick)), 1 SECONDS)
+
+
+/mob/living/carbon/human/proc/vampire_torpor_tick()
+	if(QDELETED(src))
+		return
+	if(!get_bodypart(BODY_ZONE_CHEST))
+		return
+	if(stat != DEAD)
+		return
+	if(!HAS_TRAIT(src, TRAIT_VAMPIRE_TORPOR)) // Removing the Torpor trait during regen will also stop them from reviving. Intended for Inquisition doohickeys in the future.
+		return
+
+	var/progress_gain = 1 SECONDS
+
+	// Decapitation functions to completely stop the process.
+	var/obj/item/bodypart/head/H = get_bodypart(BODY_ZONE_HEAD)
+	if(!H)
+		progress_gain = 0
+
+	// Direct sunlight should stop the process too.
+	if(is_in_torpor_sunlight())
+		progress_gain = 0
+	// Coffins and graves accelerate the timer. A cross, however, will properly round-remove a vampire and ash them.
+	if(progress_gain)
+		if(istype(loc, /obj/structure/closet/crate/coffin))
+			progress_gain *= 2
+		else if(istype(loc, /obj/structure/closet/dirthole/closed))
+			progress_gain *= 2
+
+	vampire_revival_progress += progress_gain
+
+	// Blood feeding begins after 1 minute, basically, if you're bleeding around a vampire, we can skip 1 second per blood trickle
+	if(world.time >= vampire_time_of_death + 1 MINUTES)
+		for(var/obj/effect/decal/cleanable/blood/B in view(3, src))
+			qdel(B)
+			vampire_revival_progress += 1 SECONDS
+			break
+
+	if(vampire_revival_progress >= vampire_revival_target)
+		vampire_resurrect()
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(vampire_torpor_tick)), 1 SECONDS)
+
+/mob/living/carbon/human/proc/is_in_torpor_sunlight()
+	if(GLOB.tod != "day")
+		return FALSE
+
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+
+	if(!T.can_see_sky())
+		return FALSE
+		
+	if(HAS_TRAIT(src, TRAIT_VAMPIRE_SPAWN_PROTECTION))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/human/proc/vampire_resurrect()
+	if(stat != DEAD)
+		return
+
+	visible_message(span_warning("[src]'s corpse suddenly jolts awake!"), span_userdanger("Death releases its grip upon me. I LYYYYYVE!!!"))
+	// HE LYYYYYYVES!!!!
+	playsound(src, 'sound/magic/antimagic.ogg', 100, FALSE)
+
+	revive(full_heal = TRUE, admin_revive = TRUE)
+	emote("cackle")
+
+	apply_status_effect(/datum/status_effect/vampire_spawn_protection)
+	REMOVE_TRAIT(src, TRAIT_VAMPIRE_TORPOR, TRAIT_GENERIC)
+
+	vampire_revival_progress = 0
+	vampire_time_of_death = 0
+	bloodpool = 0

@@ -132,6 +132,7 @@
 /datum/action/clan_hierarchy/command_subordinate
 	name = "Command Subordinate"
 	desc = "Give a telepathic command to a subordinate."
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "command"
 	cooldown_time = 100
 
@@ -162,8 +163,7 @@
 			valid_targets += sub.assigned_member
 
 	if(!length(valid_targets))
-		to_chat(user, "<span class='warning'>You have no subordinates!</span>")
-		return
+		to_chat(user, "<span class='warning'>You have no subordinates, assign them in the clan menu!</span>")
 
 	var/mob/living/carbon/human/target = input(user, "Choose subordinate to command:", "Command Subordinate") as null|anything in valid_targets
 
@@ -182,7 +182,7 @@
 	// Send the command
 	to_chat(user, "<span class='notice'>You telepathically command [target.real_name]: \"[command]\"</span>")
 	to_chat(target, "<span class='userdanger'><b>[user.real_name] commands you telepathically:</b> \"[command]\"</span>")
-
+	log_game("VAMPIRE TELEPATHY: [user.real_name] [user.ckey] used vampiric telepathy to command [target.real_name] [target.ckey]: [command]")
 	// Play sound to target
 	//playsound(target, 'sound/magic/whisper.ogg', 30, TRUE)
 
@@ -204,6 +204,7 @@
 /datum/action/clan_hierarchy/summon_subordinate
 	name = "Summon Subordinate"
 	desc = "Command a subordinate to come to your location immediately."
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "summon"
 	cooldown_time = 300
 
@@ -274,7 +275,8 @@
 /datum/action/clan_hierarchy/mass_command
 	name = "Mass Command"
 	desc = "Send a telepathic message to all your subordinates."
-	button_icon_state = "mass_command"
+	button_icon = 'icons/mob/actions/vampspells.dmi'
+	button_icon_state = "command"
 	cooldown_time = 600
 
 /datum/action/clan_hierarchy/mass_command/IsAvailable()
@@ -306,7 +308,7 @@
 			valid_targets += sub.assigned_member
 
 	if(!length(valid_targets))
-		to_chat(user, "<span class='warning'>You have no subordinates!</span>")
+		to_chat(user, "<span class='warning'>You have no subordinates, assign them in the clan menu!</span>")
 		return
 
 	var/command = input(user, "What is your mass command?", "Mass Command") as text|null
@@ -319,6 +321,7 @@
 
 	// Send to all subordinates
 	to_chat(user, "<span class='notice'>You send a mass command to [length(valid_targets)] subordinate(s): \"[command]\"</span>")
+	log_game("VAMPIRE TELEPATHY: [user.real_name] [user.ckey] used vampiric telepathy to command all subordinates: [command] [valid_targets]")
 
 	for(var/mob/living/carbon/human/target in valid_targets)
 		to_chat(target, "<span class='userdanger'><b>[user.real_name] commands all subordinates:</b> \"[command]\"</span>")
@@ -328,6 +331,7 @@
 /datum/action/clan_hierarchy/locate_subordinate
 	name = "Locate Subordinate"
 	desc = "Sense the location of your subordinates."
+	button_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon_state = "locate"
 	cooldown_time = 200
 

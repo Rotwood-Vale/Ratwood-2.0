@@ -148,6 +148,10 @@
 		return FALSE
 	return TRUE
 
+/datum/stressevent/sundercritted
+	stressadd = 5 //Its literally killing you, sire.
+	desc = span_boldred("I CAN FEEL MY SOUL TEARING APART FROM BLESSED FLAMES, I NEED TO GET AWAY!")
+
 /datum/stressevent/freakout
 	timer = 15 SECONDS
 	stressadd = 2
