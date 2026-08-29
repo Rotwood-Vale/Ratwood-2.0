@@ -28,8 +28,8 @@
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 	)
 	subclass_stashed_items = list(
-        "Sewing Kit" =  /obj/item/repair_kit,
-    )
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 // Hedge Mage on purpose has nearly the same fit as a Adv Mage / Mage Associate who cast conjure armor roundstart. Call it meta disguise.
 /datum/outfit/job/roguetown/wretch/hedgemage/pre_equip(mob/living/carbon/human/H)
 	mask = /obj/item/clothing/mask/rogue/eyepatch // Chuunibyou up to 11.
