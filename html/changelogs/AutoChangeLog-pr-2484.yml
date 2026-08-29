@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Added an arousal preview toggle that allows players to see the different erection states of their chosen pintle in the lobby."
+  - rscadd: "Added a sheath toggle. All pintles can now be sheathed, slitted, or floppy-free to bounce about as it pleases."

@@ -575,3 +575,33 @@
   - rscadd: Gives arachnids two new abilities which let them spin a thin gossamer
       type of web that can be seen through and a thicker one that blocks visibility.
       Added two new icons for the abilities as well.
+2026-08-28:
+  zoktiik:
+  - bugfix: Fixed "This was their only chance at lyfe." not being appropriately displayed.
+      It was checking if YOUR mob is "dead", not the DNR person, so examining the
+      (living) Duke as a ghost would show that message.
+2026-08-29:
+  CameronWoof:
+  - image: Restored the majority of our prior food sprites
+  Ephemeralis:
+  - qol: Towner thug subclasses now show properly on examine.
+  - bugfix: Miscreant thugs who take magical brick specialization have been given
+      arcyne T1 to make it function properly with Arcyne Potential.
+  - balance: WEEP now transfers wounds instead of remaking them, meaning that partly-healed
+      wounds will be moved to the absolver/stigmata instead of being reset back to
+      full severity.
+  - qol: The messaging and visual effect for the WEEP spell has been vastly improved,
+      making it clearer when someone is benefitting from the spell and who is using
+      it on them.
+  NPC1314:
+  - rscadd: brazier heat hands on r-click (+temp)
+  - rscdel: hypothermia no longer progress to frostbite
+  - qol: several weathers tweaked average temp per tick effect
+  - balance: firestacks slower to raise temp and caps out before the max on their
+      own, still give mega heatstroke but less time to cool down
+  - code_imp: bumping into mobs while on fire, and walking over burning mobs now 50%
+      chance to spread not 100
+  RadiantFlash7:
+  - bugfix: crafted book sprite fix
+  - bugfix: disabled bood detailing on qaba and kandy to stop it stealing all dye
+      color from dyed naledi clothes

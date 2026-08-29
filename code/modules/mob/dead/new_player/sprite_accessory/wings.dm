@@ -51,6 +51,10 @@
 	name = "Feathery v2"
 	icon_state = "featheryv2"
 
+/datum/sprite_accessory/wings/dragon/clipped
+	name = "Clipped Dragon"
+	icon_state = "clipped"
+
 /datum/sprite_accessory/wings/moth
 	abstract_type = /datum/sprite_accessory/wings/moth
 	icon = 'icons/mob/sprite_accessory/wings/moth_wings.dmi'
