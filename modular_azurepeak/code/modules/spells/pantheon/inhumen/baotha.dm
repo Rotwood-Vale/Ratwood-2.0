@@ -575,10 +575,9 @@
 		if(withdrawal_active)
 			stop_withdrawal()
 
-	if(world.time >= current_cooldown)
+	if(COOLDOWN_FINISHED(src, current_cooldown))
 		send_creepy_message()
 		COOLDOWN_START(src, current_cooldown, 2 MINUTES)
-
 /datum/status_effect/debuff/baotha_addiction/proc/start_withdrawal()
 	withdrawal_active = TRUE
 	owner.apply_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
