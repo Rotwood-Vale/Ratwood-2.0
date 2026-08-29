@@ -26588,10 +26588,6 @@
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/town)
-"fBe" = (
-/obj/structure/fluff/railing/border/east,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/outdoors/woods/northeast)
 "fBf" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -30052,6 +30048,10 @@
 	},
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/manor)
+"gmH" = (
+/obj/structure/ladder,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/outdoors/woods/northeast)
 "gmN" = (
 /obj/structure/fluff/railing/border/west{
 	dir = 6
@@ -46000,10 +46000,6 @@
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor)
-"jEC" = (
-/obj/structure/fluff/railing/border/west,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/outdoors/woods/northeast)
 "jED" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mirespider,
 /turf/open/floor/rogue/dirt,
@@ -100043,6 +100039,16 @@
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
+	},
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/natural/cloth{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/natural/cloth{
+	pixel_x = -7;
+	pixel_y = 4
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/under/cavewet/bogcaves/north)
@@ -212258,15 +212264,15 @@ oTx
 oTx
 oTx
 oTx
-oTx
+oYL
+uKV
+uKV
+uyt
 uKV
 uKV
 uKV
 uKV
-uKV
-uKV
-uKV
-oTx
+oYL
 oTx
 oTx
 oTx
@@ -212709,16 +212715,16 @@ oTx
 oTx
 oTx
 oTx
-oTx
+ops
+ops
+uEo
+uEo
 ops
 uEo
 uEo
 uEo
 uEo
-uEo
-uEo
 ops
-oTx
 oTx
 oTx
 oTx
@@ -213161,7 +213167,7 @@ oTx
 oTx
 oTx
 oTx
-oTx
+ops
 ops
 uEo
 uEo
@@ -213169,8 +213175,8 @@ uEo
 uEo
 uEo
 uEo
+uEo
 ops
-oTx
 oTx
 oTx
 oTx
@@ -213613,16 +213619,16 @@ oTx
 oTx
 oTx
 oTx
-oTx
+ops
+ops
+uEo
+uEo
 ops
 uEo
 uEo
 uEo
 uEo
-uEo
-uEo
 ops
-oTx
 oTx
 oTx
 oTx
@@ -214066,15 +214072,15 @@ oTx
 oTx
 oTx
 oTx
-oTx
+oYL
+uKV
+uKV
+uyt
 uKV
 uKV
 uKV
 uKV
-uKV
-uKV
-uKV
-oTx
+oYL
 oTx
 oTx
 oTx
@@ -327068,7 +327074,7 @@ orv
 orv
 orv
 bLl
-jEC
+ckc
 ckc
 ckc
 bLl
@@ -327517,7 +327523,7 @@ orv
 orv
 orv
 orv
-iqs
+orv
 ckc
 ckc
 ckc
@@ -327968,7 +327974,7 @@ orv
 orv
 orv
 orv
-iqs
+orv
 ckc
 ckc
 ckc
@@ -328420,7 +328426,7 @@ orv
 orv
 orv
 orv
-iqs
+orv
 ckc
 ckc
 ckc
@@ -328872,7 +328878,7 @@ orv
 orv
 orv
 orv
-iqs
+orv
 ckc
 ckc
 ckc
@@ -328882,7 +328888,7 @@ ckc
 lCu
 ckc
 ckc
-ckc
+gmH
 lCu
 orv
 orv
@@ -329325,10 +329331,10 @@ orv
 orv
 orv
 orv
-iqs
+orv
 ckc
 ckc
-mEi
+ckc
 ckc
 ckc
 lCu
@@ -329780,9 +329786,9 @@ orv
 orv
 orv
 bLl
-fBe
-fBe
-fBe
+ckc
+ckc
+ckc
 bLl
 mEi
 mEi
