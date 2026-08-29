@@ -11,8 +11,8 @@
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 
-	tutorial = "You are a watchman of the Sedeent Militia, you are tasked with ensuring the exiles stay on the island."
-
+	tutorial = "You were an aspiring rookie in the City Watch before you screwed up, you have been deployed to the island of Sauro as a Militia Man to face the horrors of the Sea of Yelmen protecting the settlement of Sedeent.\
+		You now serve under the command of the Militia Commander and the Mayor, protect the island for it is your home now against the horrors that delve in the deep."
 	display_order = JDO_WATCHMAN
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_PEASANT
@@ -43,7 +43,8 @@
 /datum/advclass/sedeentwatchman/watchman
 	name = "Militia Watchman"
 
-	tutorial = "You are a watchman of the Sedeent Militia, you are tasked with ensuring the exiles stay on the island."
+	tutorial = "You were an aspiring rookie in the City Watch before you screwed up, you have been deployed to the island of Sauro as a Militia Man to face the horrors of the Sea of Yelmen protecting the settlement of Sedeent.\
+		You now serve under the command of the Militia Commander and the Mayor, protect the island for it is your home now against the horrors that delve in the deep."
 
 	outfit = /datum/outfit/job/roguetown/sedeentwatchman/watchman
 

@@ -4457,8 +4457,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "aSz" = (
-/obj/item/roguecoin/copper/pile,
-/obj/item/ingot/gold,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/effect/spawner/lootdrop/blacksteel_equipment_spawner,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -6065,8 +6065,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "bjd" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/roguestatue/blacksteel,
+/obj/structure/fluff/statue/gargoyle/candles,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -6408,10 +6407,10 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/harbor)
 "bmA" = (
-/obj/structure/fluff/iconsign/skullsign{
-	name = "EXTREME DANGER AHEAD"
+/turf/closed/wall/mineral/rogue/decostone/mossy/long{
+	dir = 1;
+	max_integrity = 30000
 	},
-/turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach/mounteclisium)
 "bmQ" = (
 /obj/structure/flora/roguegrass/reedbush{
@@ -26044,6 +26043,15 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church)
+"fbT" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon/broodmother{
+	name = "Mother";
+	wander = 0
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "fbU" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/dirt,
@@ -32722,7 +32730,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/warden)
 "gwg" = (
-/obj/item/roguegem/random,
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
+	name = "Brother";
+	wander = 0
+	},
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -36076,9 +36087,11 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/indoors/town/bath)
 "hhp" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/outdoors/beach/isleokbutan)
+/obj/item/ingot/gold,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "hhz" = (
 /obj/machinery/light/rogue/torchholder,
 /turf/closed/wall/mineral/rogue/decostone/end{
@@ -43670,8 +43683,11 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "iLe" = (
-/turf/closed/wall/mineral/rogue/decostone/mossy/long{
-	dir = 1
+/obj/structure/trap/fire{
+	max_integrity = 100
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "iLg" = (
@@ -47983,10 +47999,8 @@
 	},
 /area/rogue/outdoors/mountains/decap/rockhill)
 "jEX" = (
-/obj/effect/decal/cleanable/roguerune/arcyne/summoning/adv{
-	color = "#fbbdff"
-	},
-/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/boss,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -48000,8 +48014,8 @@
 /turf/open/floor/rogue/dirt/nospawn,
 /area/rogue/outdoors/bogsafe)
 "jFg" = (
-/obj/item/roguecoin/gilbranze/pile,
-/obj/item/roguegem/random,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -66697,10 +66711,8 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/shop)
 "nqo" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
+/turf/closed/wall/mineral/rogue/decostone/mossy/long{
+	max_integrity = 30000
 	},
 /area/rogue/outdoors/beach/mounteclisium)
 "nqq" = (
@@ -70804,9 +70816,11 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/tavern)
 "ojt" = (
-/obj/item/roguegem/random,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/outdoors/beach/isleokbutan)
+/obj/item/clothing/suit/roguetown/armor/plate/modern/blacksteel_full_plate,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "ojy" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -70817,8 +70831,12 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/dungeon/oldgoblincamp)
 "ojC" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	locked = 1
+/obj/effect/decal/cleanable/roguerune/arcyne/summoning/max{
+	color = "#ff0000"
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/boss{
+	name = "Father";
+	wander = 0
 	},
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
@@ -74652,9 +74670,12 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
 "oXE" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/outdoors/beach/isleokbutan)
+/obj/item/roguecoin/gold/pile,
+/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "oXK" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble/mossy,
@@ -77655,9 +77676,10 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill)
 "pDm" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
-/obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet,
+/mob/living/simple_animal/hostile/retaliate/rogue/dragon{
+	name = "Sister";
+	wander = 0
+	},
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -82956,11 +82978,8 @@
 	},
 /area/rogue/outdoors/beach/ocean)
 "qHh" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/ingot/blacksteel,
-/obj/item/ingot/blacksteel,
-/obj/effect/spawner/lootdrop/blacksteel_equipment_spawner,
-/obj/item/ingot/gold,
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguestatue/blacksteel,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -91248,10 +91267,8 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
 "swT" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend,
-/turf/open/floor/rogue/churchmarble{
-	color = "#d4ffcf"
-	},
+/obj/structure/barricade/mineshaft,
+/turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach/mounteclisium)
 "swU" = (
 /obj/structure/flora/newleaf,
@@ -101019,9 +101036,8 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
 "uvB" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/infernal/hellhound{
-	wander = 0
-	},
+/obj/item/roguecoin/copper/pile,
+/obj/item/clothing/gloves/roguetown/blacksteel/modern/plategloves,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -102970,9 +102986,10 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/bath)
 "uQO" = (
-/mob/living/simple_animal/hostile/retaliate/rogue/direbear,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/outdoors/beach/isleokbutan)
+/turf/closed/wall/mineral/rogue/decostone/mossy{
+	max_integrity = 30000
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "uQP" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/closet/crate/chest/wicker,
@@ -103775,9 +103792,12 @@
 	},
 /area/rogue/indoors/town/manor/rockhill)
 "uYF" = (
-/obj/item/roguecoin/copper/pile,
-/turf/open/floor/rogue/naturalstone,
-/area/rogue/outdoors/beach/isleokbutan)
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/roguegem/random,
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/outdoors/beach/mounteclisium)
 "uYG" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/concrete,
@@ -108376,8 +108396,8 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/rockhill)
 "vVn" = (
+/obj/effect/spawner/lootdrop/blacksteel_equipment_spawner,
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/clothing/under/roguetown/platelegs/blacksteel/modern,
 /turf/open/floor/rogue/churchmarble{
 	color = "#d4ffcf"
 	},
@@ -310349,9 +310369,9 @@ bOB
 bOB
 odD
 uWi
-uWi
-uWi
-uWi
+gwt
+gwt
+gwt
 gwt
 gwt
 gwt
@@ -311208,11 +311228,11 @@ vzX
 vzX
 vzX
 vzX
-bOB
+swT
 odD
-odD
-rel
-rel
+uWi
+uWi
+uWi
 uWi
 uWi
 uWi
@@ -312069,20 +312089,20 @@ vzX
 vzX
 vzX
 vzX
-vzX
 bOB
-vzX
-vzX
-jSx
-axZ
-jSx
-axZ
-axZ
-axZ
-axZ
-axZ
-axZ
-jSx
+bOB
+uQO
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+uQO
 uWi
 gwt
 gwt
@@ -312096,8 +312116,8 @@ gwt
 gwt
 gwt
 gwt
+gwt
 pHc
-tXh
 pHc
 pHc
 kzR
@@ -312931,35 +312951,35 @@ vzX
 vzX
 vzX
 vzX
-vzX
+swT
 bOB
-vzX
-vzX
-iLe
-qGC
-iLe
-gSw
-gSw
-qGC
+bmA
+bjd
 qGC
 gSw
 gSw
-iLe
+gSw
+gSw
+gSw
+gSw
+qGC
+bjd
+bmA
 uWi
-uWi
-gwt
-gwt
-gwt
-gwt
-gwt
-cZK
 gwt
 gwt
 gwt
 gwt
 gwt
 gwt
-pHc
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
 pHc
 kzR
 pHc
@@ -313792,12 +313812,10 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-bOB
-vzX
-vzX
-iLe
+bmA
+qGC
+dEo
+uQO
 qGC
 iLe
 qGC
@@ -313806,23 +313824,25 @@ qGC
 qGC
 qGC
 qGC
-jSx
-jSx
+qGC
+qGC
+bmA
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
 uWi
 gwt
 gwt
 gwt
-gwt
-cZK
-oXE
-cZK
-gwt
-gwt
-gwt
-gwt
-gwt
-pHc
-kzR
 pHc
 pHc
 pHc
@@ -314654,38 +314674,38 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-bOB
 bmA
-bOB
-jSx
-qGC
-jSx
-qGC
-uvB
-qGC
-swT
 qGC
 qGC
+bmA
 gSw
+qGC
+qGC
+qGC
+pDm
+qGC
+qGC
+qGC
 iLe
-uWi
-uWi
-uWi
-gwt
-cZK
+gSw
 uQO
-cZK
-cZK
-gwt
-gwt
+uQO
+axZ
+axZ
+axZ
+axZ
+axZ
+uQO
+nqo
+nqo
+nqo
+nqo
+uQO
+uWi
 gwt
 gwt
 gwt
 pHc
-kzR
-tXh
 tXh
 pHc
 pHc
@@ -315516,38 +315536,38 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-bOB
-bOB
-bOB
-ojC
+bmA
 qGC
-jGI
 qGC
+uQO
+gSw
+qGC
+qGC
+iLe
 qGC
 qGC
 qGC
 qGC
 qGC
 gSw
-jSx
-axZ
-jSx
+gSw
+bmA
+gSw
+gSw
+gSw
+gSw
+gSw
+bmA
+nXi
+uvB
+uVp
+aSz
+bmA
 uWi
-cZK
-cZK
-uYF
-cZK
-uQO
-cZK
-gwt
 gwt
 gwt
 gwt
 pHc
-kzR
-nva
 pHc
 pHc
 pHc
@@ -316378,37 +316398,37 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-bOB
 bmA
-bOB
-ojC
-dEo
 qGC
 qGC
-uvB
+jGI
 qGC
-jEX
 qGC
-uvB
 qGC
-gSW
-iJt
-iLe
-uWi
-oXE
-cZK
-cZK
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+uQO
+nqo
+uQO
+qGC
+qGC
+qGC
+utC
 hhp
-cZK
-cZK
+uVp
+rKX
+xMt
+bmA
+uWi
 gwt
 gwt
 gwt
-gwt
-gwt
-kzR
 pHc
 pHc
 pHc
@@ -317240,37 +317260,37 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-vzX
-bOB
-bOB
+bmA
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
 ojC
 qGC
+fbT
 qGC
 qGC
 qGC
 qGC
+gSW
+iJt
+utC
 qGC
 qGC
 qGC
-gSw
-jSx
-axZ
-jSx
+utC
+uVp
+fPz
+qGY
+jEX
+bmA
 uWi
 gwt
-ojt
-uQO
-cZK
-cZK
-cZK
 gwt
 gwt
-gwt
-gwt
-gwt
-kzR
 pHc
 kzR
 kzR
@@ -318102,37 +318122,37 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-vzX
-bOB
-bOB
-jSx
-rpX
-jSx
-qGC
-uvB
-qGC
-swT
+bmA
 qGC
 qGC
-gSw
-iLe
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+uQO
+nqo
+uQO
+qGC
+qGC
+qGC
+utC
+uVp
+ojt
+oXE
+uYF
+bmA
 uWi
-uWi
-uWi
-gwt
-cZK
-cZK
-gwt
-gwt
-cZK
 gwt
 gwt
 gwt
-gwt
-gwt
-pHc
 kzR
 pHc
 nva
@@ -318964,36 +318984,36 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-vzX
-vzX
-odD
-iLe
-qGC
-iLe
-qGC
-qGC
-qGC
-qGC
+bmA
 qGC
 qGC
 jSx
-jSx
+gSw
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+gSw
+gSw
+bmA
+gSw
+gSw
+gSw
+gSw
+gSw
+bmA
+jFg
+uVp
+qHh
+vVn
+bmA
 uWi
 gwt
 gwt
-gwt
-gwt
-gwt
-gwt
-gwt
-cZK
-gwt
-gwt
-gwt
-gwt
-pHc
 pHc
 pHc
 tXh
@@ -319826,36 +319846,36 @@ vzX
 vzX
 vzX
 vzX
-vzX
-vzX
-vzX
-odD
-odD
-iLe
+bmA
 qGC
-iLe
-gSw
+rpX
+bmA
 gSw
 qGC
 qGC
-gSw
-gSw
+qGC
+gwg
+qGC
+qGC
 iLe
-rel
+qGC
+gSw
+uQO
+uQO
+axZ
+axZ
+axZ
+axZ
+axZ
+uQO
+nqo
+nqo
+nqo
+nqo
+uQO
 uWi
 gwt
 gwt
-gwt
-gwt
-gwt
-gwt
-gwt
-cZK
-cZK
-gwt
-gwt
-gwt
-pHc
 pHc
 lTn
 pHc
@@ -320688,36 +320708,36 @@ odD
 odD
 odD
 odD
-odD
-odD
-odD
-odD
-odD
-jSx
-axZ
-jSx
-axZ
-jSx
-utC
-utC
-jSx
-axZ
-jSx
+bmA
+nqo
+nqo
+uQO
+qGC
+iLe
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+qGC
+bmA
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
 uWi
 gwt
 gwt
-gwt
-gwt
-gwt
-gwt
-gwt
-gwt
-gwt
-cZK
-cZK
-gwt
-cZK
-pHc
 tXh
 kzR
 kzR
@@ -321545,27 +321565,27 @@ gwt
 gwt
 uWi
 uWi
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-odD
 uWi
 uWi
-iLe
-nXi
-aSz
-uVp
-gwg
-iLe
-rel
 uWi
 uWi
+uWi
+uWi
+uWi
+uWi
+bmA
+bjd
+qGC
+gSw
+gSw
+gSw
+gSw
+gSw
+gSw
+qGC
+bjd
+bmA
+uWi
 gwt
 gwt
 gwt
@@ -321576,9 +321596,9 @@ gwt
 gwt
 gwt
 gwt
-cZK
-cZK
-cZK
+gwt
+gwt
+gwt
 pHc
 pHc
 pHc
@@ -322406,28 +322426,28 @@ pHc
 pHc
 gwt
 gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
 uWi
-uWi
-uWi
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-uWi
-uWi
-iLe
+uQO
 nqo
-uVp
-rKX
-xMt
-iLe
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+nqo
+uQO
 uWi
-gwt
-gwt
 gwt
 gwt
 gwt
@@ -323270,26 +323290,26 @@ kzR
 gwt
 gwt
 gwt
-uWi
-uWi
-odD
-odD
-odD
-odD
-odD
-odD
-odD
-uWi
-uWi
-iLe
-bjd
-fPz
-qGY
-vVn
-iLe
-uWi
 gwt
 gwt
+gwt
+gwt
+gwt
+gwt
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
+uWi
 gwt
 gwt
 gwt
@@ -324133,23 +324153,23 @@ tXh
 nva
 gwt
 gwt
-uWi
-uWi
-uWi
-uWi
-uWi
-uWi
-uWi
-odD
-uWi
-uWi
-iLe
-qHh
-uVp
-jFg
-pDm
-iLe
-uWi
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
 gwt
 gwt
 gwt
@@ -325001,17 +325021,17 @@ gwt
 gwt
 gwt
 gwt
-uWi
-uWi
-uWi
-uWi
-jSx
-axZ
-axZ
-axZ
-axZ
-jSx
-uWi
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
 gwt
 gwt
 gwt
@@ -325866,14 +325886,14 @@ gwt
 gwt
 gwt
 gwt
-uWi
-uWi
-uWi
-uWi
-uWi
-uWi
-uWi
-uWi
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
+gwt
 gwt
 gwt
 pHc
@@ -531907,7 +531927,7 @@ pHc
 pHc
 tXh
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -532770,7 +532790,7 @@ pHc
 pHc
 pHc
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -533632,8 +533652,8 @@ kzR
 pHc
 pHc
 pHc
-xny
-xny
+pHc
+pHc
 xny
 xny
 xny
@@ -534494,8 +534514,8 @@ kzR
 pHc
 tXh
 pHc
-xny
-xny
+pHc
+pHc
 xny
 xny
 xny
@@ -535356,8 +535376,8 @@ kzR
 pHc
 kzR
 kzR
-xny
-xny
+pHc
+pHc
 xny
 xny
 xny
@@ -536219,7 +536239,7 @@ pHc
 pHc
 imG
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -537081,7 +537101,7 @@ pHc
 mMw
 kzR
 kzR
-xny
+pHc
 xny
 xny
 xny
@@ -537943,7 +537963,7 @@ pHc
 kzR
 pHc
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -538804,7 +538824,7 @@ pHc
 kzR
 kzR
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -539666,7 +539686,7 @@ pHc
 kzR
 pHc
 pHc
-xny
+pHc
 xny
 xny
 xny
@@ -540528,7 +540548,7 @@ pHc
 pHc
 pHc
 nva
-xny
+pHc
 xny
 xny
 xny

@@ -1,7 +1,7 @@
 /datum/job/roguetown/mayor
 	title = "Sedeent Mayor"
 	tutorial = "You are the mayor of the settlement Sedeent on Isle Sauro, you oversee the settlement and ensure everything runs accordingly.\
-		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro."
+		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro of course when it isn't."
 	flag = MAYOR
 	department_flag = YEOMEN
 	faction = "Station"
@@ -30,7 +30,7 @@
 /datum/advclass/mayor
 	name = "Sedeent Mayor"
 	tutorial = "You are the mayor of the settlement Sedeent on Isle Sauro, you oversee the settlement and ensure everything runs accordingly.\
-		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro."
+		You are in charge of the townsfolk, commerce, the militia and the exiles, your authority is near absolute on Sauro of course when it isn't."
 
 	outfit = /datum/outfit/job/roguetown/mayor
 	category_tags = list(CTAG_MAYOR)
@@ -78,6 +78,6 @@
 	new_role = "Militia Watchman"
 	overlay_state = "recruit_guard"
 	recruitment_faction = "Watchman"
-	recruitment_message = "Serve the town guard, %RECRUIT!"
-	accept_message = "FOR THE CROWN!"
+	recruitment_message = "Serve the Island Militia, %RECRUIT!"
+	accept_message = "FOR SAURO AND SEDEENT!"
 	refuse_message = "I refuse."

@@ -8,7 +8,8 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "You are the commander of the Militia at Sedeent. You are to ensure the exiles do not flee back to the mainland."
+	tutorial = "You are the commander of the Militia at Sedeent, you protect the Mayor and command the Militia.\
+		the denizens of the settlement look upon you for protection against the waves."
 	display_order = JDO_COMMANDER
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -34,7 +35,8 @@
 
 /datum/advclass/sedeentcommander/commander
 	name = "Militia Commander"
-	tutorial = "You are the commander of the Militia at Sedeent. You are to ensure the exiles do not flee back to the mainland."
+	tutorial = "You are the commander of the Militia at Sedeent, you protect the Mayor and command the Militia.\
+		The denizens of the settlement look upon you for protection against the waves."
 	outfit = /datum/outfit/job/roguetown/sedeentcommander/commander
 	category_tags = list(
 		CTAG_SEDEENTCOMMANDER
@@ -115,7 +117,7 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/storage/keyring/guardcastle = 1,
+		/obj/item/storage/keyring/commanderseedent = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1
 	)
