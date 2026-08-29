@@ -63,7 +63,6 @@
 	reach = 2
 	item_d_type = "slash"
 
-
 /datum/intent/spear/cut/oneh
 	name = "one-handed cut"
 	reach = 1
@@ -1810,12 +1809,13 @@
 	name = "steel miaodao"
 	icon_state = "odachi"
 	desc = "An unusually long saber of Lingyunese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
-	force = 14
-	force_wielded = 35
-	minstr = 9
+	force = 21
+	force_wielded = 27
+	minstr = 8
 	wdefense = 5
-	max_blade_int = 300
-
+	wdefense_wbonus = 1 //Only +1 defense from wielding
+	max_blade_int = 240 //Thin blade
+	wbalance = WBALANCE_SWIFT
 
 /obj/item/rogueweapon/greatsword/miaodao/getonmobprop(tag)
 	. = ..()
