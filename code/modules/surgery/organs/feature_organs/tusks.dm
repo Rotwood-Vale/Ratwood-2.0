@@ -7,3 +7,5 @@
 	slot = ORGAN_SLOT_TUSKS
 
 /obj/item/organ/tusks/humanoid
+
+obj/item/organ/tusks/halforc
