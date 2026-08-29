@@ -71,9 +71,7 @@
 	Q.quest_scroll_ref = WEAKREF(spawned_scroll)
 	spawned_scroll.update_quest_text()
 
-	// Ratwood deviation: integer ledger, so the deposit is debited straight off the bearer's balance.
-	// It is minted back as part of gross_reward on completion, or forfeited (never returned) on abandon.
-	SStreasury.bank_accounts[user] -= deposit
+	SStreasury.burn(SStreasury.get_account(user), deposit, "quest deposit")
 
 /obj/structure/roguemachine/contractledger/proc/resolve_turnin_mode(mob/user, obj/item/quest_writ/scroll, mob/living/holder)
 	if(user in scroll.get_quest_assignees(user, TRUE))
@@ -103,15 +101,13 @@
 
 	var/datum/quest/completed_quest = scroll.assigned_quest
 	var/holder_name = completed_quest.quest_receiver_name
-	// Ratwood deviation: integer ledger, so the beneficiary is a mob on the ledger rather than
-	// an AP fund account. An official's proxy turn-in credits the holder; everyone else
-	// (self or fellowship) credits whoever hands the scroll over.
 	var/mob/beneficiary = (mode == QUEST_TURNIN_OFFICIAL) ? holder : user
-	if(!isliving(beneficiary) || !SStreasury.has_account(beneficiary))
+	var/datum/fund/benef_account = SStreasury.get_account(beneficiary)
+	if(!benef_account)
 		if(mode == QUEST_TURNIN_OFFICIAL)
-			say("[holder_name] has no account on record, the reward cannot be credited.")
+			say("[holder_name] has no account on record - the reward cannot be credited.")
 		else
-			say("No account on record, register with a Nervelock before turning in the contract.")
+			say("No account on record - register with a Meister before turning in the contract.")
 		return
 
 	var/base_reward = completed_quest.reward_amount
@@ -124,41 +120,21 @@
 	qdel(scroll.assigned_quest)
 	qdel(scroll)
 
-	// Ratwood deviation: integer ledger, so the gross is credited straight onto the
-	// beneficiary's balance.
-	SStreasury.bank_accounts[beneficiary] += gross_reward
+	SStreasury.mint(benef_account, gross_reward, "quest reward - [src.name]")
 
 	// Levy applies only to the base reward, not the returned deposit. The deposit is the
 	// bearer's own money being given back; taxing it would be a hidden levy on principal.
-	// Ratwood deviation: AP's apply_tax() fund path is inlined here, mirroring headeater.dm - the
-	// levy is debited from the ledger and minted into the Crown's Purse, honouring charter
-	// exemptions and rate caps.
 	var/tax_amt = 0
-	if(quest_levy_exempt)
+	if(!quest_levy_exempt)
+		tax_amt = SStreasury.apply_tax(benef_account, base_reward, TAX_CATEGORY_CONTRACT_LEVY, src.name)
+		if(tax_amt > 0)
+			record_featured_stat(FEATURED_STATS_TAX_PAYERS, beneficiary, tax_amt)
+			record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+	else
 		var/levy_rate = SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY)
 		SStreasury.record_tax_exemption(TAX_CATEGORY_CONTRACT_LEVY, FLOOR(base_reward * levy_rate, 1))
-	else
-		// The levy runs against the beneficiary, so a fellowship turn-in uses the
-		// turner-in's exemptions and caps, and an official's proxy uses the holder's.
-		var/base_rate = SStreasury.get_tax_rate(TAX_CATEGORY_CONTRACT_LEVY)
-		if(isliving(beneficiary) && SStreasury.is_tax_exempt(beneficiary, TAX_CATEGORY_CONTRACT_LEVY))
-			SStreasury.record_tax_exemption(TAX_CATEGORY_CONTRACT_LEVY, FLOOR(base_reward * base_rate, 1))
-		else
-			var/rate = base_rate
-			if(isliving(beneficiary))
-				rate = min(rate, SStreasury.get_rate_cap(beneficiary, TAX_CATEGORY_CONTRACT_LEVY))
-			if(rate < base_rate)
-				SStreasury.record_tax_exemption(TAX_CATEGORY_CONTRACT_LEVY, FLOOR(base_reward * (base_rate - rate), 1))
-			tax_amt = FLOOR(base_reward * rate, 1)
-			if(tax_amt > 0)
-				SStreasury.apply_concordat_tithe(base_reward, TAX_CATEGORY_CONTRACT_LEVY, src.name)
-				SStreasury.bank_accounts[beneficiary] -= tax_amt
-				SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "Contract Levy")
-				record_round_statistic(STATS_REVENUE_CONTRACT_LEVY, tax_amt)
-				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
-				record_featured_stat(FEATURED_STATS_TAX_PAYERS, beneficiary, tax_amt)
 
-	var/guild_fee_paid = pay_innkeeper_referral_fees(beneficiary, completed_quest, gross_reward)
+	var/guild_fee_paid = pay_innkeeper_referral_fees(benef_account, completed_quest, gross_reward)
 
 	var/take_home = gross_reward - tax_amt - guild_fee_paid
 	SSquestpool.record_completion(user, completed_quest, take_home, tax_amt)
@@ -206,5 +182,3 @@
 	matched_scroll.assigned_quest = null
 	qdel(matched_quest)
 	qdel(matched_scroll)
-
-
