@@ -98,12 +98,13 @@
 		to_chat(user, span_warning("That scent slips away before you can lock onto it."))
 		return
 
-	last_selection = selection
+
 	tracked_target_ref = WEAKREF(selected_target)
 	sync_antag_tracked_target(user, selected_target)
 	notify_tracked_target(selected_target)
-	to_chat(user, span_notice("You focus your senses on [selected_target.real_name]."))
+	to_chat(user, span_notice("You focus your senses on [selected_target.real_name].") + selection != last_selection ? "(<a href='?src=[REF(user)];task=gnoll_view_tracked;'>Preview Target</a>)" : "")
 	give_tracking_directions(user)
+	last_selection = selection
 
 /obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/add_target_to_list(mob/living/carbon/human/human, list/target_list, list/name_counts)
 	var/base_name = "[human.real_name]"

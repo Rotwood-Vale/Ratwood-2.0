@@ -211,11 +211,11 @@
 		return
 	var/datum/weakref/tracked_target_ref = gnoll_antag.tracked_target_ref
 	if(!tracked_target_ref)
-		to_chat(src, span_warning("Strange! I can't remember anything about it. Is it gone?"))
+		to_chat(src, span_warning("I can't remember anything. Did I forget to track my prey?"))
 		return
 	var/mob/living/carbon/human/tracked_target = tracked_target_ref.resolve()
 	if(!istype(tracked_target))
-		to_chat(src, span_warning("Either I am not tracking true prey, or it is gone..."))
+		to_chat(src, span_warning("My prey is gone..."))
 		return
 
 	to_chat(src, span_warning("I recall my mark with blessed foreknowledge..."))
