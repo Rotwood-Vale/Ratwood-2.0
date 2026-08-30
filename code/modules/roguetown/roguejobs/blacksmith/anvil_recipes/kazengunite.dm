@@ -101,3 +101,13 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/short/kazengun
 	
+/datum/anvil_recipe/kazengunite/hook
+	name = "Hook Sword, Steel"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/hook
+
+/datum/anvil_recipe/kazengunite/ogremask
+	name = "Ogre Mask"
+	created_item = /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full

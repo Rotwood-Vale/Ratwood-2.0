@@ -553,15 +553,17 @@
 	name = "soldier's half-mask"
 	desc = "\"The first lesson of war is that it would be better to live in peace.\""
 	block2add = null
-	armor = ARMOR_PLATE
-	max_integrity = ARMOR_INT_MASK_IRON
+	body_parts_covered = MOUTH|NOSE
+	max_integrity = ARMOR_INT_MASK_STEEL
 	icon_state = "kazengunmouthguard"
 	item_state = "kazengunmouthguard"
 
 /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
 	name = "ogre mask"
 	desc = "\"The second lesson: Rich men have dreams. Poor men die to make them come true.\""
-	max_integrity = ARMOR_INT_MASK_IRON
+	block2add = FOV_BEHIND
+	body_parts_covered = FACE
+	max_integrity = ARMOR_INT_MASK_STEEL
 	icon_state = "kazengunfaceguard"
 	item_state = "kazengunfaceguard"
 
