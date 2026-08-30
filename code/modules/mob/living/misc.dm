@@ -1,3 +1,6 @@
+/mob/living/proc/apply_necras_revival(touched_type = /datum/status_effect/debuff/necras_touched)
+	apply_status_effect(touched_type)
+
 /mob/proc/food_tempted(/obj/item/W, mob/user)
 	return
 

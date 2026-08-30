@@ -378,17 +378,132 @@
 	desc = "A putrid rotting scent fills your nose as Graggar's call for slaughter rattles you to your core.."
 	icon_state = "call_to_slaughter"
 
-//For revive - your body DIDN'T rot, but it did suffer damage. Unlike being rotted, this one is only timed. Not forever.
-/datum/status_effect/debuff/revived
-	id = "revived"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/revived
-	effectedstats = list(STATKEY_STR = -1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)
-	duration = 15 MINUTES		//Should be long enough to stop someone from running back into battle. Plus, this stacks with body-rot debuff. RIP.
+/datum/status_effect/debuff/necras_touched
+	id = "necras_touched"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/necras_touched
+	duration = 20 MINUTES
+	tick_interval = 1 MINUTES
+	var/list/raw_penalties
+	var/recovery_progress = 0
+	var/recovery_goal = 300
+	var/ticks_elapsed = 0
 
-/atom/movable/screen/alert/status_effect/debuff/revived
-	name = "Revival Sickness"
-	desc = "You felt lyfe itself course through you, restoring your lux and your essance. You.. live - but your body aches. It still needs time to recover.."
+/datum/status_effect/debuff/necras_touched/on_apply()
+	raw_penalties = list(STATKEY_STR = -5, STATKEY_CON = -5, STATKEY_WIL = -5, STATKEY_LCK = -5, STATKEY_PER = -5, STATKEY_INT = -5, STATKEY_SPD = -5)
+	effectedstats = raw_penalties.Copy()
+	. = ..()
+
+/datum/status_effect/debuff/necras_touched/proc/get_recovery_points()
+	var/points = 5
+	var/is_hungry = owner.has_status_effect("hungryt1") || owner.has_status_effect("hungryt2") || owner.has_status_effect("hungryt3")
+	var/is_thirsty = owner.has_status_effect("thirsty1") || owner.has_status_effect("thirsty2") || owner.has_status_effect("thirsty3")
+	var/well_fed = !is_hungry && !is_thirsty && (owner.has_status_effect("meal") || owner.has_status_effect("greatmeal") || owner.has_status_effect("snack") || owner.has_status_effect("greatsnack"))
+	if(well_fed)
+		points += 5
+	if(owner.has_status_effect("vigorized"))
+		points += 5
+	if(owner.buckled && (istype(owner.buckled, /obj/structure/bed) || istype(owner.buckled, /obj/structure/chair)))
+		points += 20
+	return points
+
+/datum/status_effect/debuff/necras_touched/tick()
+	ticks_elapsed++
+	if(ticks_elapsed == 1)
+		ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+		ADD_TRAIT(owner, TRAIT_DNR, id)
+	else if(ticks_elapsed == 11)
+		REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+		REMOVE_TRAIT(owner, TRAIT_DNR, id)
+	recovery_progress = min(recovery_progress + get_recovery_points(), recovery_goal)
+	var/target_penalty
+	if(recovery_progress < recovery_goal * 0.5)
+		target_penalty = -5
+	else
+		var/second_half_progress = (recovery_progress - recovery_goal * 0.5) / (recovery_goal * 0.5)
+		target_penalty = round(-5 * (1 - second_half_progress))
+	var/list/to_remove = list()
+	for(var/S in raw_penalties)
+		var/current_penalty = raw_penalties[S]
+		var/delta = target_penalty - current_penalty
+		if(delta > 0 && effectedstats[S])
+			var/actual = min(delta, -effectedstats[S])
+			if(actual > 0)
+				owner.change_stat(S, actual)
+				effectedstats[S] += actual
+			if(effectedstats[S] >= 0)
+				effectedstats -= S
+		raw_penalties[S] = target_penalty
+		if(target_penalty >= 0)
+			to_remove += S
+	for(var/S in to_remove)
+		raw_penalties -= S
+	if(recovery_progress >= recovery_goal)
+		owner.remove_status_effect(src)
+
+/datum/status_effect/debuff/necras_touched/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, id)
+	REMOVE_TRAIT(owner, TRAIT_DNR, id)
+	. = ..()
+
+/datum/status_effect/debuff/necras_touched/lux
+	duration = 5 MINUTES
+	recovery_goal = 75
+
+/datum/status_effect/debuff/necras_touched/frankenstein
+	duration = 3 MINUTES
+	recovery_goal = 25
+
+/atom/movable/screen/alert/status_effect/debuff/necras_touched
+	name = "Necra's Touch"
+	desc = "Necra's cold grasp lingers on my body. My body falters, and I am vulnerable to grievous wounds."
 	icon_state = "revived"
+
+/atom/movable/screen/alert/status_effect/debuff/necras_touched/examine_ui(mob/user)
+	var/datum/status_effect/debuff/necras_touched/E = attached_effect
+	var/list/inspec = list("----------------------")
+	inspec += "<br><span class='notice'><b>[name]</b></span>"
+	inspec += "<br>[desc]"
+	for(var/S in E?.effectedstats)
+		if(E.effectedstats[S] < 0)
+			var/newnum = E.effectedstats[S] * -1
+			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
+	inspec += "<br>----------------------"
+	if(E?.owner)
+		var/mob/living/M = E.owner
+		var/halfway = E.recovery_goal * 0.5
+		if(E.recovery_progress < halfway)
+			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='danger'>(Stats locked until [halfway])</span>"
+		else
+			inspec += "<br><b>Recovery: [E.recovery_progress] / [E.recovery_goal]</b> <span class='green'>(Stats recovering)</span>"
+		if(E.ticks_elapsed >= 1 && E.ticks_elapsed < 11)
+			inspec += "<br><span class='danger'>Death mark active — cannot be revived. ([11 - E.ticks_elapsed] min remaining)</span>"
+		else if(E.ticks_elapsed < 1)
+			inspec += "<br><span class='warning'>Death mark activates in 1 minute.</span>"
+		var/is_hungry = M.has_status_effect("hungryt1") || M.has_status_effect("hungryt2") || M.has_status_effect("hungryt3")
+		var/is_thirsty = M.has_status_effect("thirsty1") || M.has_status_effect("thirsty2") || M.has_status_effect("thirsty3")
+		var/well_fed = !is_hungry && !is_thirsty && (M.has_status_effect("meal") || M.has_status_effect("greatmeal") || M.has_status_effect("snack") || M.has_status_effect("greatsnack"))
+		var/has_drink_buff = M.has_status_effect("vigorized")
+		var/resting = M.buckled && (istype(M.buckled, /obj/structure/bed) || istype(M.buckled, /obj/structure/chair))
+		var/points_this_tick = E.get_recovery_points()
+		inspec += "<br>Gaining <b>[points_this_tick]</b> recovery per minute."
+		if(resting)
+			inspec += "<br><span class='green'>Resting (+20)</span>"
+		else
+			inspec += "<br><span class='danger'>Not resting — sit or lie down to recover faster.</span>"
+		if(well_fed && has_drink_buff)
+			inspec += "<br><span class='green'>Well-fed and vigorized (+10)</span>"
+		else if(well_fed)
+			inspec += "<br><span class='green'>Well-fed (+5)</span>"
+		else if(has_drink_buff)
+			inspec += "<br><span class='green'>Vigorized (+5)</span>"
+		else
+			inspec += "<br><span class='danger'>Eat a hearty meal and drink coffee or tea (+5 each).</span>"
+		if(is_hungry)
+			inspec += "<br><span class='danger'>Hunger prevents the meal bonus.</span>"
+		if(is_thirsty)
+			inspec += "<br><span class='danger'>Thirst prevents the meal bonus.</span>"
+	inspec += "<br>----------------------"
+	to_chat(user, "[inspec.Join()]")
 
 //For de-rot - your body ROTTED. Harsher penalty for longer, can be fully off-set with a cure-rot potion.
 /datum/status_effect/debuff/rotted

@@ -169,7 +169,7 @@
 	if(!parent)
 		return
 	var/mob/living/L = parent
-	if(!L.has_status_effect(/datum/status_effect/debuff/devitalised) && !L.has_status_effect(/datum/status_effect/debuff/revived) && !L.has_status_effect(/datum/status_effect/debuff/leech_schizophrenia))
+	if(!L.has_status_effect(/datum/status_effect/debuff/devitalised) && !L.has_status_effect(/datum/status_effect/debuff/necras_touched	) && !L.has_status_effect(/datum/status_effect/debuff/leech_schizophrenia))
 		L.visible_message(span_notice("The leech tick falls off of [L], looking full and satisfied."))
 		new full_leechtick_type(get_turf(L))
 		L.apply_status_effect(/datum/status_effect/debuff/devitalised)

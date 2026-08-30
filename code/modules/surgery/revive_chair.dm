@@ -330,6 +330,6 @@
 		update_icon()
 
 		// Apply debuffs
-		occupant.apply_status_effect(/atom/movable/screen/alert/status_effect/debuff/revived)
+		occupant.apply_necras_revival(/datum/status_effect/debuff/necras_touched/frankenstein)
 
 	return TRUE
