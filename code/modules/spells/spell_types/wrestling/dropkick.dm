@@ -12,7 +12,13 @@
 	var/damage = 0
 
 /obj/effect/proc_holder/spell/invoked/dropkick/cast(list/targets, mob/living/user,)
-	if(targets[1] == user)
+	var/mob/living/target = targets[1]
+	if(!target)
+		to_chat(user, span_warning("You need a valid target to begin the wrestling!"))
+		revert_cast()
+		return FALSE
+
+	if(target == user)
 		to_chat(user, span_notice("You can't wrestle yourself."))
 		revert_cast()
 		return FALSE
@@ -145,7 +151,7 @@
 
 	// using spellblade melee thing for the damage and aimed zone.
 	var/def_zone = user.zone_selected || BODY_ZONE_CHEST
-	arcyne_strike(user, target, null, damage, def_zone, spell_name = "Dropkick", skip_animation = TRUE)
+	target.apply_damage(damage, BRUTE, def_zone)
 	tracker.channeling_throw = FALSE
 	return TRUE
 

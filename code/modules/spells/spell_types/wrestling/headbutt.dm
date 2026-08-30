@@ -209,8 +209,7 @@
 		playsound(user, 'sound/combat/tf2crit.ogg', 100, TRUE)
 		to_chat(user, span_notice("[user] slams their forehead into [target]!"))
 		var/def_zone = user.zone_selected || BODY_ZONE_CHEST // this one does the strike here to not eat the expose
-		arcyne_strike(user, target, null, damage, def_zone, spell_name = "Stunner", skip_animation = TRUE)
-	
+		target.apply_damage(damage, BRUTE, def_zone)
 		target.apply_status_effect(/datum/status_effect/debuff/vulnerable, vulnerable_dur)
 	// using spellblade melee thing for the damage and aimed zone.
 

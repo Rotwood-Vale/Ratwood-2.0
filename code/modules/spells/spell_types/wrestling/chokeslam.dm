@@ -102,7 +102,7 @@
 		
 	// using spellblade melee thing for the damage and aimed zone.
 	var/def_zone = user.zone_selected || BODY_ZONE_CHEST
-	arcyne_strike(user, target, null, damage, def_zone, spell_name = "Chokeslam", skip_animation = TRUE)
+	target.apply_damage(damage, BRUTE, def_zone)
 	tracker.channeling_throw = FALSE
 	return TRUE
 

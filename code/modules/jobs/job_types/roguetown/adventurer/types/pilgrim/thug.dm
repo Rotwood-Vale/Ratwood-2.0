@@ -157,7 +157,17 @@
 				if("Big Stick")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/mace
-
+			var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+			var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+			switch(technique_choice)
+				if("Dropkick - Pushback + Extra Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+				if("Chokeslam - Stamina Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+				if("Stunner - Dazed Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+				if("Headbutt - Vulnerable Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 		if("Longshoreman")
 			H.mind.cosmetic_class_title = "Longshoreman"
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
