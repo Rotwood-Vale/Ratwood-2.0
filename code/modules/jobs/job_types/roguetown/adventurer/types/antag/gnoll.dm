@@ -70,8 +70,22 @@
 		headshot_link = null
 
 	// Gnolls should not inherit player-authored social metadata from their base slot.
+	headshot_link = null
+	flavortext = null
+	ooc_notes = null
 	rumour = null
 	noble_gossip = null
+	nsfwflavortext = null
+	nsfw_ooc_extra_img = null
+	nsfw_ooc_extra_img_link = null
+	song_artist = null
+	song_title = null
+	erpprefs = null
+	img_gallery = null
+	nsfw_img_gallery = null
+	ooc_extra = null
+	ooc_extra_img = null
+	ooc_extra_img_link = null
 
 	if(status_traits)
 		for(var/trait in status_traits.Copy())
