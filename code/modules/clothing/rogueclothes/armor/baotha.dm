@@ -234,12 +234,12 @@
 
 /obj/item/rogueweapon/whip/baotha
 	name = "Perfect Agony"
-desc = "Wicked, wicked, wicked."
-icon_state = "baotha_whip"
-possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
-force = 22
-minstr = 8
+	desc = "Wicked, wicked, wicked."
+	icon_state = "baotha_whip"
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
+	force = 22
+	minstr = 8
 
 /obj/item/rogueweapon/whip/baotha/Initialize(mapload)
-. = ..()
-AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")
