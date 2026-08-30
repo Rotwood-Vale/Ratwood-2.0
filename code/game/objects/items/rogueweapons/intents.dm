@@ -15,6 +15,7 @@
 	var/intent_type
 	var/animname = "strike"
 	var/blade_class = BCLASS_BLUNT
+	var/accuracy_modifier = 0
 	var/list/hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 	var/canparry = TRUE
 	var/candodge = TRUE
