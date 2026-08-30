@@ -51,7 +51,7 @@
 	if(is_valid_hunted(target) && target != user)
 		tracked_target_ref = WEAKREF(target)
 		sync_antag_tracked_target(user, target)
-		to_chat(user, span_notice("You catch the scent of [target.real_name]. The hunt begins!"))
+		to_chat(user, span_notice("You catch the scent of <a href='?src=[REF(user)];task=gnoll_view_tracked;'>[target.real_name]</a>. The hunt begins!"))
 		notify_tracked_target(target)
 		user.playsound_local(get_turf(user), 'sound/vo/mobs/wwolf/sniff.ogg', 50, TRUE)
 	else if(!tracked_target_ref?.resolve())
