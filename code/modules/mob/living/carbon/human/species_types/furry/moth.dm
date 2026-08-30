@@ -84,6 +84,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/bodypart_feature/pubes/fuzzy,
+		/datum/customizer/bodypart_feature/pits/fuzzy,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/moth/reddish,
@@ -104,6 +106,7 @@
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
 		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
 		/datum/body_marking/moth/grayscale/reddish,
 		/datum/body_marking/moth/grayscale/royal,

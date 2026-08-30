@@ -82,6 +82,12 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/houndgem
+	name = "houndstone gem"
+	icon_state = "topaz_cut"
+	sellprice = 0
+	desc = "A component to make a Houndstone, it looks like a topaz."
+
 /obj/item/roguegem/yellow
 	name = "toper"
 	icon_state = "topaz_cut"
@@ -163,7 +169,7 @@
 
 /obj/item/roguegem/turq
 	name = "cerulite"
-	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi’s astrologer-mages in divination."
+	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi's astrologer-mages in divination."
 	icon = 'icons/roguetown/gems/gem_turq.dmi'
 	icon_state = "raw_turq"
 	sellprice = 75

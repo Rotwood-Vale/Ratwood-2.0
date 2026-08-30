@@ -87,6 +87,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/anthro,
+		/datum/customizer/bodypart_feature/pubes/feathered,
+		/datum/customizer/bodypart_feature/pits/feathered,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -99,6 +101,7 @@
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
 		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
 		/datum/body_marking/plain,
 		/datum/body_marking/bellyscale,

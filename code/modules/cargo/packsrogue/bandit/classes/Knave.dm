@@ -23,6 +23,11 @@
 	cost = 20
 	contains = list(/obj/item/clothing/head/roguetown/helmet/kettle)
 
+/datum/supply_pack/rogue/Knave/leather/plhood
+	name = "Padded Leather Hood"
+	cost = 25
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/armorhood)
+
 //////////
 // NECK //
 //////////
@@ -60,6 +65,11 @@
 	name = "Leather Armor"
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
+
+/datum/supply_pack/rogue/Knave/leather/lcorslet
+	name = "Leather Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
 
 /datum/supply_pack/rogue/Knave/leather/studded
 	name = "Studded Leather Armor"

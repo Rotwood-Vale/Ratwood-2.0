@@ -265,6 +265,44 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 1
 
+/datum/crafting_recipe/roguetown/sewing/breechclothbelt
+	name = "belt with breechcloth"
+	result = list(/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth)
+	reqs = list(
+		/obj/item/natural/cloth = 3,
+		/obj/item/natural/hide/cured = 1
+	)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/sewing/breechclothbeltalt
+	name = "belt with breechcloth, black"
+	result = list(/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/blackbelt)
+	reqs = list(
+		/obj/item/natural/cloth = 3,
+		/obj/item/natural/hide/cured = 1
+	)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/sewing/breechclothbeltimprovised
+	name = "belt with breechcloth, improvised"
+	result = list(/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth)
+	tools = list(/obj/item/rogueweapon/huntingknife)
+	reqs = list(
+		/obj/item/clothing/cloak/tabard = 1,
+		/obj/item/storage/belt/rogue/leather = 1
+	)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/sewing/breechclothbeltaltimprovised
+	name = "belt with breechcloth, black, improvised"
+	result = list(/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/blackbelt)
+	tools = list(/obj/item/rogueweapon/huntingknife)
+	reqs = list(
+		/obj/item/clothing/cloak/tabard = 1,
+		/obj/item/storage/belt/rogue/leather/black = 1
+	)
+	craftdiff = 1
+
 /* craftdif of 2+ */
 
 /datum/crafting_recipe/roguetown/sewing/wrappings

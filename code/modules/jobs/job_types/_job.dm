@@ -242,6 +242,14 @@
 
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
 
+	if(HAS_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY))
+		H.mind.has_bomb = TRUE
+		to_chat(H.mind, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+
+	if(HAS_TRAIT(H, TRAIT_DRUG_SUPPLY))
+		H.mind.has_drug_delivery = TRUE
+		to_chat(H.mind, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
+
 	if(H.islatejoin && announce_latejoin)
 		var/used_title = display_title || title
 		if((H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F) && f_title)
@@ -485,11 +493,17 @@
 		var/list/dat = list()
 		var/show_job_traits = TRUE
 		var/sclass_count = 0
+		var/list/subclasses_to_show = job_subclasses
+		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
+			subclasses_to_show = list()
+			for(var/ctag in advclass_cat_rolls)
+				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+					subclasses_to_show += ctag_class.type
 		if(length(job_subclasses) && length(job_stats))
 			CRASH("[REF(src)] has definitions for both class and subclass stats. Likely not intended, and they will stack!")
-		if(length(job_subclasses))
+		if(length(subclasses_to_show))
 			dat += "This class has the following subclasses: "
-			for(var/sclass in job_subclasses)
+			for(var/sclass in subclasses_to_show)
 				sclass_count++
 				var/datum/advclass/adv = sclass
 				var/datum/advclass/adv_ref = SSrole_class_handler.get_advclass_by_name(initial(adv.name))
@@ -604,7 +618,13 @@
 			winset(usr, "classhelp", "focus=true")
 	if(href_list["jobsubclassinfo"])
 		var/list/dat = list()
-		for(var/adv in job_subclasses)
+		var/list/subclasses_to_show = job_subclasses
+		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
+			subclasses_to_show = list()
+			for(var/ctag in advclass_cat_rolls)
+				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+					subclasses_to_show += ctag_class.type
+		for(var/adv in subclasses_to_show)
 			var/datum/advclass/advpath = adv
 			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
 			if(subclass.maximum_possible_slots != -1)

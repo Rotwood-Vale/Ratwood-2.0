@@ -539,7 +539,7 @@
 	desc = "You were forcefully withdrawn from. Warmth runs freely down your thighs..."
 
 
-/atom/movable/screen/alert/status_effect/knot_tied/Click()
+/atom/movable/screen/alert/status_effect/knot_tied/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
@@ -562,7 +562,7 @@
 	desc = "I have to be careful where I step..."
 	icon_state = "knotted"
 
-/atom/movable/screen/alert/status_effect/knotted/Click()
+/atom/movable/screen/alert/status_effect/knotted/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
@@ -580,11 +580,11 @@
 	alert_type = null
 
 /datum/status_effect/jaw_gaped/on_apply()
-	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("My jaw... It stings!"))
 	return ..()
 
 /datum/status_effect/jaw_gaped/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_warning("I finally feel my jaw again."))

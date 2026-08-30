@@ -45,6 +45,7 @@
 	chargedrain = 0
 	chargetime = 15
 	recharge_time = 10 SECONDS
+	miracle = TRUE
 
 /obj/effect/proc_holder/spell/invoked/projectile/blood_net/cast(list/targets, mob/user = usr)
 	var/obj/item/I = user.get_active_held_item()
@@ -76,9 +77,8 @@
 	net.slipouttime = max(2 SECONDS, 13 SECONDS - max(0, carbon.STASTR - 10) * 0.5 SECONDS)
 	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
 	to_chat(carbon, span_danger("\The [src] ensnares you!"))
-	carbon.legcuffed = net
 	net.forceMove(carbon)
-	carbon.update_inv_legcuffed()
+	carbon.set_legcuffed(net, firer)
 	carbon.Knockdown(knockdown)
 	carbon.apply_status_effect(/datum/status_effect/debuff/netted)
 	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
@@ -92,9 +92,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			M.update_inv_legcuffed()
+			M.set_legcuffed(null)
 			if(M.has_status_effect(/datum/status_effect/debuff/netted))
 				M.remove_status_effect(/datum/status_effect/debuff/netted)
 		var/turf/T = get_turf(M)
@@ -105,9 +103,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			M.update_inv_legcuffed()
+			M.set_legcuffed(null)
 		if(M.has_status_effect(/datum/status_effect/debuff/netted))
 			M.remove_status_effect(/datum/status_effect/debuff/netted)
 	return ..()

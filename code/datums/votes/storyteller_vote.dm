@@ -1,20 +1,14 @@
-/datum/vote/storyteller
-	name = "storyteller"
-	default_message = "Vote for the next storyteller."
+/datum/vote/chaos
+	name = "chaos"
+	default_message = "Vote for round type. Adventure mode disables villains and doubles adventurer count."
+	default_choices = list("Adventure", "Chaos")
 	count_method = VOTE_COUNT_METHOD_SINGLE
 	winner_method = VOTE_WINNER_METHOD_SIMPLE
 
-/datum/vote/storyteller/New()
-	. = ..()
-	default_choices = SSgamemode.storyteller_vote_choices()
-/datum/vote/storyteller/create_vote()
-	default_choices = SSgamemode.storyteller_vote_choices()
-	return ..()
+/datum/vote/chaos/finalize_vote(winning_option)
+	SSgamemode.chaos_vote_result(winning_option || "Chaos")
 
-/datum/vote/storyteller/finalize_vote(winning_option)
-	SSgamemode.storyteller_vote_result(winning_option)
-
-/datum/vote/storyteller/can_be_initiated(forced)
+/datum/vote/chaos/can_be_initiated(forced)
 	. = ..()
 	if(. != VOTE_AVAILABLE)
 		return .

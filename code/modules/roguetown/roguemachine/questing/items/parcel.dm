@@ -20,7 +20,7 @@
 		if(quest && quest.quest_type == QUEST_COURIER && quest.target_delivery_location)
 			delivery_area_type = quest.target_delivery_location
 			allowed_jobs = get_area_jobs(delivery_area_type)
-			RegisterSignal(courier_quest, COMSIG_PARENT_QDELETING, PROC_REF(on_quest_component_deleted))
+			RegisterSignal(courier_quest, COMSIG_QDELETING, PROC_REF(on_quest_component_deleted))
 
 	invisibility = INVISIBILITY_OBSERVER
 	proximity_monitor = new(src, 7)

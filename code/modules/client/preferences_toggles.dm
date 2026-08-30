@@ -102,7 +102,9 @@
 
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
+		list("id" = "no_redflash", "label" = "Anti-Eyestrain Mode", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
 		list("id" = "chat_headshot", "label" = "Headshot in Chat", "enabled" = !!owner.prefs.chatheadshot, "desc" = "Show character headshot images next to chat when available."),
+		list("id" = "mouseover_role", "label" = "Show Mouseover Role", "enabled" = !!owner.prefs.show_mouseover_role, "desc" = "Show role text under player names on mouseover."),
 		list("id" = "examine_blocks", "label" = "Hide Examine Blocks", "enabled" = !!owner.prefs.no_examine_blocks, "desc" = "Hide inspect details for items inside containers."),
 		list("id" = "language_fonts", "label" = "Disable Language Fonts", "enabled" = !!owner.prefs.no_language_fonts, "desc" = "Use normal fonts instead of stylized language fonts."),
 		list("id" = "language_icon", "label" = "Disable Language Icon", "enabled" = !!owner.prefs.no_language_icon, "desc" = "Hide language icon prefixes in chat."),
@@ -112,6 +114,8 @@
 
 	var/list/gameplay_entries = list(
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
+		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
+		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
 		list("id" = "show_rolls", "label" = "Show Rolls", "enabled" = !!owner.prefs.showrolls, "desc" = "Show combat and check roll details in chat."),
 		list("id" = "combat_strip", "label" = "Combat Mode Stripping", "enabled" = !!(owner.prefs.toggles & CMODE_STRIPPING), "desc" = "Allow opening strip menu while in combat mode."),
 		list("id" = "hide_unavailable_emotes", "label" = "Hide Unavailable Noises", "enabled" = !!owner.prefs.hide_unavailable_emotes, "desc" = "Hide anatomy-specific noise verbs your current body cannot use."),
@@ -140,6 +144,9 @@
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
 		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
+		list("id" = "pubes", "label" = "Enable Pubic Hair Descriptors", "enabled" = !!owner.prefs.pubes, "desc" = "See pubic hair descriptors on examining someone with exposed pubic hair (if present)."),
+		list("id" = "pits", "label" = "Enable Armpit Hair Descriptors", "enabled" = !!owner.prefs.pits, "desc" = "See armpit hair descriptors on examining someone with exposed underarms (if present)."),
+		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 	)
 
@@ -173,10 +180,14 @@
 				owner.mob?.toggle_tgui_multiline()
 			if("screen_shake")
 				owner.toggle_screenshake()
+			if("no_redflash")
+				owner.toggle_redflash()
 			if("chat_headshot")
 				owner.set_picinchat()
 			if("masked_examine")
 				owner.masked_examine()
+			if("mouseover_role")
+				owner.toggle_mouseover_role()
 			if("nsfw_examine")
 				owner.nsfw_examine_always()
 			if("examine_blocks")
@@ -193,6 +204,10 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("autowoodcut")
+				owner.toggle_autowoodcut()
+			if("autopicking")
+				owner.toggle_autopicking()
 			if("show_rolls")
 				owner.show_rolls()
 			if("combat_strip")
@@ -238,6 +253,12 @@
 				owner.toggle_facial_brands()
 			if("sensitive_branding")
 				owner.toggle_sensitive_brands()
+			if("pubes")
+				owner.toggle_pubes()
+			if("pits")
+				owner.toggle_pits()
+			if("descriptor_color")
+				owner.toggle_descriptor_color()
 			if("cursed_collars")
 				owner.toggle_cursed_collars()
 			if("voting_popup")
@@ -280,6 +301,19 @@
 		else
 			to_chat(src, "Screen shake disabled.")
 
+/client/verb/toggle_redflash()
+	set category = "Options"
+	set name = "Toggle Anti-Eyestrain"
+	set hidden = 1
+	if(prefs)
+		prefs.no_redflash = !prefs.no_redflash
+		prefs.save_preferences()
+		if(prefs.no_redflash)
+			to_chat(src, "Your screen will no longer flash red or white from pain or other events.")
+		else
+			to_chat(src, "Your screen will now flash red or white from pain or other events.")
+	mob.update_redflash_pref(prefs.no_redflash)
+
 /client/verb/masked_examine()
 	set category = "Options"
 	set name = "Toggle Masked Examine"
@@ -291,6 +325,18 @@
 			to_chat(src, "Your character information will be viewable when masked.")
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
+
+/client/verb/toggle_mouseover_role()
+	set category = "Options"
+	set name = "Toggle Mouseover Role"
+	set hidden = 1
+	if(prefs)
+		prefs.show_mouseover_role = !prefs.show_mouseover_role
+		prefs.save_preferences()
+		if(prefs.show_mouseover_role)
+			to_chat(src, "Role text will now be shown under player mouseover names.")
+		else
+			to_chat(src, "Role text will no longer be shown under player mouseover names.")
 
 /client/verb/nsfw_examine_always()
 	set category = "Options"
@@ -327,6 +373,30 @@
 			to_chat(src, "You will now try to repeatedly consume/feed food/drinks")
 		else
 			to_chat(src, "You will no longer try to repeatedly consume/feed food/drinks")
+
+/client/verb/toggle_autowoodcut()
+	set category = "Options"
+	set name = "Toggle AutoWoodcut"
+	set hidden = 1
+	if(prefs)
+		prefs.autowoodcut = !prefs.autowoodcut
+		prefs.save_preferences()
+		if(prefs.autowoodcut)
+			to_chat(src, "You will now automatically continue chopping trees.")
+		else
+			to_chat(src, "You will no longer automatically continue chopping trees.")
+
+/client/verb/toggle_autopicking()
+	set category = "Options"
+	set name = "Toggle AutoPicking"
+	set hidden = 1
+	if(prefs)
+		prefs.autopicking = !prefs.autopicking
+		prefs.save_preferences()
+		if(prefs.autopicking)
+			to_chat(src, "You will now automatically continue mining rock walls.")
+		else
+			to_chat(src, "You will no longer automatically continue mining rock walls.")
 
 /client/verb/toggle_hide_unavailable_emotes()
 	set category = "Options"
@@ -475,6 +545,42 @@
 			to_chat(src, "Your genital and breast organs can now be branded by others.")
 		else
 			to_chat(src, "Your genital and breast organs can no longer be branded by others.")
+
+/client/verb/toggle_pubes()
+	set category = "Options"
+	set name = "Toggle Pubic Hair Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.pubes = !prefs.pubes
+		prefs.save_preferences()
+		if(prefs.pubes)
+			to_chat(src, "Pubic hair descriptors are now visible when examining exposed players.")
+		else
+			to_chat(src, "You will no longer see pubic hair descriptions when examining exposed players.")
+
+/client/verb/toggle_pits()
+	set category = "Options"
+	set name = "Toggle Armpit Hair Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.pits = !prefs.pits
+		prefs.save_preferences()
+		if(prefs.pits)
+			to_chat(src, "Armpit hair descriptors are now visible when examining exposed players.")
+		else
+			to_chat(src, "You will no longer see armpit hair descriptors when examining players.")
+
+/client/verb/toggle_descriptor_color()
+	set category = "Options"
+	set name = "Toggle Colored Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.descriptor_color = !prefs.descriptor_color
+		prefs.save_preferences()
+		if(prefs.descriptor_color)
+			to_chat(src, "Genital and body hair descriptor colors are now visible.")
+		else
+			to_chat(src, "Genital and body hair descriptor colors are no longer visible.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"

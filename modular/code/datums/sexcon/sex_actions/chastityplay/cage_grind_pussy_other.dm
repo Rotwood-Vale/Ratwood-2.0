@@ -37,7 +37,7 @@
     user.visible_message(span_warning("[user] rolls [user.p_their()] hips forward until [user.p_their()] [get_chastity_device_name(user)] settles against [target]'s bare pussy."))
 
 /datum/sex_action/chastityplay/cage_grind_pussy_other/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rolls [user.p_their()] cage against [target]'s pussy in a slow, deliberate grind \u2014 bars pressing warm and unyielding..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rolls [user.p_their()] cage against [target]'s pussy in a slow, deliberate grind \u2014 bars pressing warm and unyielding..."))
     user.sexcon.outercourse_noise(target, TRUE)
     user.sexcon.do_thrust_animate(target)
 

@@ -21,6 +21,7 @@
 
 
 /mob/proc/flash_fullscreen(state)
+	RETURN_TYPE(/atom/movable/screen/fullscreen/flashholder)
 	var/atom/movable/screen/fullscreen/flashholder/screen = screens["flashholder"]
 
 	if(!screen)
@@ -35,6 +36,28 @@
 	flick(state,screen)
 	return screen
 
+/// Easy drop-in replacement for flash_fullscreen("redflashX") that checks whether the mob has no-redflash on. Returns the same screen obj that flash_fullscreen does.
+/mob/proc/fullscreen_redflash(state)
+	RETURN_TYPE(/atom/movable/screen/fullscreen/flashholder)
+	var/mob/living/user = src
+	if(!istype(user))
+		return
+	if(user.no_redflash)
+		return
+	else
+		return flash_fullscreen(state)
+
+/mob/proc/update_redflash_pref(no_redflash_pref, update_hud = TRUE)
+	var/mob/living/user = src
+	if(!istype(user))
+		return
+	user.no_redflash = no_redflash_pref
+	// Any time the pref could change (i.e. w/ mind transfer), we will need to make sure only the appropriate overlays get displayed.
+	clear_fullscreen("brute")
+	clear_fullscreen("brute_alt")
+	clear_fullscreen("painflash")
+	if(update_hud) // We are also calling this proc from /mob/living/Login(), which triggers an update itself
+		user.update_damage_hud()
 
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
@@ -109,6 +132,11 @@
 
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
+	layer = UI_DAMAGE_LAYER
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/brute_alt
+	icon_state = "brutedamageoverlay_alt"
 	layer = UI_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
