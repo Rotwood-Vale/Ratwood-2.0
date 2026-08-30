@@ -67,7 +67,7 @@
 	return pelt_options
 
 /// Copypaste of the _load_statpack proc from preferences_savefile.dm
-/datum/gnoll_prefs/proc/load_gnoll_statpack(S)
+/datum/gnoll_prefs/proc/load_gnoll_statpack(savefile/S)
 	var/statpack_type
 	S["gnoll_statpack"] >> statpack_type
 	if (statpack_type && ispath(statpack_type))
@@ -925,7 +925,7 @@
 		if(!ispath(descriptor_expression, /datum/mob_descriptor/face_exp/gnoll))
 			descriptor_expression = /datum/mob_descriptor/face_exp/gnoll/alert
 
-	load_gnoll_statpack()
+	load_gnoll_statpack(S)
 	
 	S["gnoll_voice_color"]			>> gnoll_voice_color
 	// Workaround for the voice color always being initially set to 000000 for some weird save reason
