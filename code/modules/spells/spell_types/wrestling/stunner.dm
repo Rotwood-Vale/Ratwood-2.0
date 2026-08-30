@@ -5,10 +5,10 @@
 
 	recharge_time = 60 SECONDS
 	invocation_type = "emote"
-	overlay_icon = 'icons/mob/roguehudgrabs.dmi'
-	action_icon = 'icons/mob/roguehudgrabs.dmi'
-	overlay_state = "grabbing"
-	action_icon_state = "grabbing"
+	overlay_icon = 'icons/mob/actions/vampspells.dmi'
+	action_icon = 'icons/mob/actions/vampspells.dmi'
+	overlay_state = "potence"
+	action_icon_state = "potence"
 	var/damage = 0
 
 /obj/effect/proc_holder/spell/invoked/stunner/cast(list/targets, mob/living/user,)
