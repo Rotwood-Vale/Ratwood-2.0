@@ -25,6 +25,13 @@
 					/obj/item/rogueweapon/sword/short/messer/iron,
 				)
 
+/datum/supply_pack/rogue/iron_weapons/broadsword
+	name = "Broadsword"
+	cost = 40 // 2 iron Ingot
+	contains = list(
+					/obj/item/rogueweapon/sword/long/broadsword,
+				)
+
 /datum/supply_pack/rogue/iron_weapons/mace
 	name = "Mace"
 	cost = 25 // 1 Iron Ingot

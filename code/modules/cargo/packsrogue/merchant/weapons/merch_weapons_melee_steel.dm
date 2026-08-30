@@ -99,6 +99,13 @@
 					/obj/item/rogueweapon/sword/long,
 				)
 
+/datum/supply_pack/rogue/steel_weapons/broadsword
+	name = "Broadsword"
+	cost = 70 // 2 Steel Ingot
+	contains = list(
+					/obj/item/rogueweapon/sword/long/broadsword/steel,
+				)
+
 /datum/supply_pack/rogue/steel_weapons/kriegmesser
 	name = "Kriegsmesser"
 	cost = 70 // 2 Steel Ingot

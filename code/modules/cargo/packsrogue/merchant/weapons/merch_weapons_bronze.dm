@@ -12,7 +12,7 @@
 	contains = list(/obj/item/rogueweapon/sword/bronze)
 
 /datum/supply_pack/rogue/bronze_weapons/katar
-	name = "Bronze Katar"
+	name = "Bronze Pata"
 	cost = 30 // 1 Bronze Ingot
 	contains = list(/obj/item/rogueweapon/katar/bronze)
 
