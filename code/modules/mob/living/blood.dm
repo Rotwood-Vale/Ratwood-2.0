@@ -13,7 +13,7 @@
 		return blood_volume
 	blood_volume = amount
 	SEND_SIGNAL(src, COMSIG_LIVING_BLOOD_VOLUME_CHANGED, blood_volume)
-	update_blood_hud()
+	mark_blood_hud_dirty()
 	return blood_volume
 
 /// Adjusts blood volume by a delta, clamped. Convenience wrapper over set_blood_volume(). Do not set the blood_volume var directly
@@ -40,7 +40,7 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
+	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	//Effects of bloodloss - only run if we're not actually dead.
 	if (stat != DEAD)
 		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
@@ -95,10 +95,10 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
+	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	if(dna?.species)
 		if(NOBLOOD in dna.species.species_traits)
-			blood_volume = BLOOD_VOLUME_NORMAL
+			set_blood_volume(BLOOD_VOLUME_NORMAL)
 			return
 
 	// if we're dead and have no blood left, then there's nothing to do here: we can't regen it ourselves (in this proc), so...
@@ -275,7 +275,7 @@
 	bleed_rate = 0
 
 /mob/living/carbon/human/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	set_blood_volume(BLOOD_VOLUME_NORMAL)
 	bleed_rate = 0
 
 /****************************************************
