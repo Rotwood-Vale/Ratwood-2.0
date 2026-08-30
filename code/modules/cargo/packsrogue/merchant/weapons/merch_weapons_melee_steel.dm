@@ -190,6 +190,11 @@
 					/obj/item/rogueweapon/mace/goden/steel,
 				)
 
+/datum/supply_pack/rogue/steel_weapons/greatflail
+	name = "Greatflail"
+	cost = 80 // 2 Steel Ingot, 1 Small Log, 1 Chain
+	contains = list(/obj/item/rogueweapon/flail/peasantwarflail/steel)
+
 /datum/supply_pack/rogue/steel_weapons/partizan
 	name = "Partizan"
 	cost = 80 // 2 Steel Ingot, 1 Small Log. Slight increase cuz gated behind skill 4

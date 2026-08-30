@@ -269,15 +269,46 @@
 
 /obj/item/rogueweapon/stoneaxe/woodcut/bronze
 	name = "bronze axe"
-	icon_state = "saxe"
-	desc = "An antiquital handstaff, fitted with a bronze axhead. Such a tool once allowed humenity to carve civilization out of Psydonia's wildernesses; now, it's a rare sight beyond the Deadland's nomadic barbarian-tribes."
-	color = "#f9d690" //Stopgap until unique sprites can be provided. Should be ~98% on point with the current bronze palette.
+	icon_state = "bronzeaxe"
+	desc = "An antiquital handstaff, fitted with a bronze axhead. Such a tool once allowed humenity to carve civilization out of Psydonia's wildernesses; now, it's a rare \
+	sight beyond the Deadland's nomadic barbarian-tribes."
 	force = 23 //Basic balance idea. Damage's between iron and steel, but with a sharper edge than steel. Probably not historically accurate, but we're here to have fun.
 	force_wielded = 27
 	max_blade_int = 550
 	smeltresult = /obj/item/ingot/bronze
 	wdefense = 2
-	armor_penetration = 22 //In-between a hurblat and hatchet. Far harder to reproduce.
+	armor_penetration = 22
+	throwforce = 32
+	throw_speed = 6
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
+
+// on azure this is just a reskin, here it's a bit 
+/obj/item/rogueweapon/stoneaxe/woodcut/bronze/double
+	name = "double-headed bronze axe"
+	desc = "'Give them nothing.. but take from them, EVERYTHING!'"
+	force = 25
+	force_wielded = 28
+	wdefense = 1
+	icon_state = "bronzeaxedouble"
+	swingsound = BLADEWOOSH_HUGE
+	minstr = 11// two axeheads are heavier than one, sire
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 66, "embedded_fall_chance" = 2)// two heads so double embed chance i guess
+
+
+/obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
+	name = "bronze war axe"
+	icon_state = "bronzebattleaxe"
+	desc = "An antiquital handstaff, fitted with a thrice-wedged bronze axhead. The unique design of its edge, similar to the khopesh, ensures that each \
+	swing properly ferries all of its wielder's strength into its destination regardless of grip."
+	force = 25 // Similar presentation to a battle axe, but same force both one and two handed
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, SPEAR_BASH)
+	force_wielded = 25
+	max_blade_int = 500
+	smeltresult = /obj/item/ingot/bronze
+	minstr = 8
+	wdefense = 4
+	armor_penetration = 22
 	throwforce = 32
 	throw_speed = 6
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
@@ -314,6 +345,9 @@
 
 /datum/intent/axe/chop/long
 	reach = 2
+
+/datum/intent/axe/cut/long/bronze
+	damfactor = 1.1
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	name = "woodcutter's axe"
@@ -509,6 +543,23 @@
 	max_blade_int = 500
 	wdefense_wbonus = 3 //Increased defense when wielded.
 	resistance_flags = FIRE_PROOF
+
+/obj/item/rogueweapon/greataxe/bronze
+	force = 15
+	force_wielded = 30
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(/datum/intent/axe/cut/long/bronze, /datum/intent/axe/chop/long, SPEAR_BASH)
+	name = "bronze greataxe"
+	desc = "A massive staff with a bronze axhead mantled onto the wood. It splits and carves from afar with lethal force; be it lumber or limbs."
+	icon = 'icons/roguetown/weapons/axes64.dmi'
+	icon_state = "bronzegreataxe"
+	minstr = 11
+	wdefense = 7
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
+	throwforce = 32
+	throw_speed = 3
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
 
 /obj/item/rogueweapon/greataxe/steel/necran
 	name = "Respite"

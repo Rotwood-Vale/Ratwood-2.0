@@ -196,6 +196,16 @@
 	max_ammo = 1
 	start_empty = TRUE
 
+// crossbow for boners made from gilbranze or something
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/ancient
+	name = "ancient crossbow"
+	desc = "A deadly weapon from another tyme, which shoots a bolt with terrific power. Unlike the common bow, it \
+	uses a sophisticated mechanism to renock - and retain - its half-length bolts; a matter that relies more on raw \
+	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of the ancient \
+	empire; now, it shudders in the grasp of Zizo's deathless crusade."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "ancientcrossbow0"
+	item_state = "ancientcrossbow"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	name = "slurbow"
@@ -215,7 +225,7 @@
 	damage_from_perception = TRUE
 
 
-//Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
+//Pseudo-Arbalest. This thing is intended to be fuckhuge, and has it's own icon!
 //Retains an identical damage to the standard crossbow. The pen is what makes this.
 //That's an aside to the silver stake, which does 50, instead of the sunderbolt's 35, AND keeps the pen.
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest
