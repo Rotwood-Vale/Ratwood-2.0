@@ -6,6 +6,7 @@
 	drop_sound = 'sound/blank.ogg'
 	pickup_sound =  'sound/blank.ogg'
 	slot_flags = ITEM_SLOT_OCLOTHING
+	dropshrink = null
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	bloody_icon_state = "bodyblood"

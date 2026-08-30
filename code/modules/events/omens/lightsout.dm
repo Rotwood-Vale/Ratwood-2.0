@@ -8,6 +8,11 @@
 	req_omen = TRUE
 	todreq = list("dusk", "night")
 
+/datum/round_event_control/lightsout/forced
+	weight = 0
+	req_omen = FALSE
+	todreq = list()
+
 /datum/round_event/lightsout
 	announceWhen	= 1
 

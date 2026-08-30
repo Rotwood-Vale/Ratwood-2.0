@@ -27,7 +27,7 @@
 	finalize_bandit()
 
 /datum/antagonist/bandit/proc/finalize_bandit()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor2.ogg', 60, FALSE, pressure_affected = FALSE)
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H.patron, /datum/patron/inhumen))
 		H.set_patron(/datum/patron/inhumen/matthios)//If you're not of the Inhumen, we force you to worship Matthios.

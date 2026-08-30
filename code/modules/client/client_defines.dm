@@ -32,6 +32,10 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
+	/// Single-instance Toggle Options TGUI menu
+	var/datum/toggle_options_menu/toggles_menu = null
+	/// Single-instance Volume Power TGUI menu
+	var/datum/volume_power_menu/volume_power_menu = null
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
 	///Current area of the controlled mob
@@ -45,6 +49,10 @@
 	///Whether an ambience sound has been played and one shouldn't be played again, unset by a callback
 	var/list/played = list()
 	var/list/nextspooky = 0
+	/// Whether combat music preview is currently playing from a picker dialog.
+	var/combat_music_preview_active = FALSE
+	/// Track key currently being previewed.
+	var/combat_music_preview_track_key = null
 
 	var/patreonlevel = -1
 	var/is_donator = FALSE
@@ -136,10 +144,11 @@
 	var/list/open_popups = list()
 
 	var/loop_sound = FALSE
+	var/loop_sound_file
 	var/rain_sound = FALSE
 	var/last_droning_sound
 	var/sound/droning_sound
-	
+
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()
 	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
@@ -152,7 +161,8 @@
 	var/movement_blocked = FALSE
 	/// Are we locking our movement input? This holds you in place so you can turn on the spot
 	var/movement_locked = FALSE
-
+	/// World time cooldown before the mob can turn again
+	var/last_turn = 0
 	/// A rolling buffer of any keys held currently
 	var/list/keys_held = list()
 	/// The direction we WANT to move, based off our keybinds

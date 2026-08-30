@@ -25,7 +25,7 @@
 
 /datum/sex_action/toy_masturbate/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/chosen_verb = pick(list("jerks [user.p_their()] toy", "strokes [user.p_their()] toy", "masturbates [user.p_their()] toy", "jerks off [user.p_their()] toy", "polishes [user.p_their()] toy"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]..."))
 	user.sexcon.generic_sex_noise()
 
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user) || get_dildo_on_belt(user)

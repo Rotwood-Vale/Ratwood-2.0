@@ -1,0 +1,6 @@
+{
+	"map_name": "Bandit Camp",
+	"map_path": "map_files/otherz",
+	"map_file": "banditmountain.dmm",
+	"traits": [{"Name": "banditmountain", "Up": true}, {"Down": true}]
+}

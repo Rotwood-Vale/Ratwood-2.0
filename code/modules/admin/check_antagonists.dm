@@ -144,7 +144,8 @@
 	dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];ctf_toggle=1'>Enable/Disable CTF</a><br>"
 	dat += "<a href='?_src_=holder;[HrefToken()];rebootworld=1'>Reboot World</a><br>"
-	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a><br>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Gnoll Information</a>"
 	var/connected_players = GLOB.clients.len
 	var/lobby_players = 0
 	var/observers = 0
@@ -190,3 +191,139 @@
 
 	dat += "</body></html>"
 	usr << browse(dat.Join(), "window=roundstatus;size=500x500")
+
+/datum/admins/proc/check_hunted_targets()
+	if(!SSticker.HasRoundStarted())
+		alert("The game hasn't started yet!")
+		return
+
+	var/list/combat_roles = get_gnoll_tracking_combat_roles()
+	var/list/hunted_targets = list()
+	var/list/combat_targets = list()
+	var/list/direct_scent_targets = list()
+	var/list/tracking_gnolls_by_target_ref = list()
+
+	for(var/mob/living/L in GLOB.player_list)
+		if(!L || QDELETED(L) || L.stat == DEAD)
+			continue
+		if(istype(L, /mob/living/carbon/human/dummy) || !L.mind)
+			continue
+
+		if(L.has_flaw(/datum/charflaw/hunted))
+			hunted_targets += L
+		else if(L.job in combat_roles)
+			combat_targets += L
+
+	for(var/datum/antagonist/gnoll/G in GLOB.antagonists)
+		var/mob/living/gnoll_mob = G.owner?.current
+		if(!gnoll_mob || QDELETED(gnoll_mob))
+			continue
+		var/mob/living/tracked_target = G.get_tracked_target()
+		if(!tracked_target)
+			continue
+		if(!(tracked_target in hunted_targets) && !(tracked_target in combat_targets) && !(tracked_target in direct_scent_targets))
+			direct_scent_targets += tracked_target
+
+		var/target_ref = "\ref[tracked_target]"
+		if(!tracking_gnolls_by_target_ref[target_ref])
+			tracking_gnolls_by_target_ref[target_ref] = list()
+
+		var/list/tracking_gnolls = tracking_gnolls_by_target_ref[target_ref]
+		if(!(gnoll_mob in tracking_gnolls))
+			tracking_gnolls += gnoll_mob
+
+	var/list/active_targets = length(hunted_targets) ? hunted_targets : combat_targets
+	var/list/display_targets = active_targets.Copy()
+	if(length(direct_scent_targets))
+		for(var/mob/living/direct_target in direct_scent_targets)
+			if(!(direct_target in display_targets))
+				display_targets += direct_target
+	var/active_source = length(hunted_targets) ? "Hunted flaw" : "Combat fallback"
+	var/selection_mode_description = "Follows gnoll tracking rules: hunted targets are preferred globally, combat roles are only used when no hunted targets are valid."
+	if(length(direct_scent_targets))
+		selection_mode_description += " Active direct-scent targets already being tracked by gnolls are also shown below."
+	var/slot_open_display = "Unavailable"
+	var/gnoll_spawn_status = "Enabled"
+	var/list/subclass_slot_lines = list("Unavailable")
+
+	var/datum/job/gnoll_job = SSjob.GetJob("Gnoll")
+	if(gnoll_job)
+		var/gnoll_total_slots = max(gnoll_job.total_positions, 0)
+		var/gnoll_open_slots = max(gnoll_total_slots - gnoll_job.current_positions, 0)
+		slot_open_display = "[gnoll_open_slots]/[gnoll_total_slots]"
+
+		subclass_slot_lines = list()
+		if(!SSrole_class_handler)
+			subclass_slot_lines += "Unavailable (class handler not initialized)"
+		else
+			for(var/adv in gnoll_job.job_subclasses)
+				var/datum/advclass/advpath = adv
+				var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
+				if(!subclass)
+					continue
+
+				if(subclass.maximum_possible_slots == -1)
+					subclass_slot_lines += "[subclass.name]: unlimited"
+					continue
+
+				var/subclass_open_slots = max(subclass.maximum_possible_slots - subclass.total_slots_occupied, 0)
+				subclass_slot_lines += "[subclass.name]: [subclass_open_slots]/[subclass.maximum_possible_slots]"
+
+		if(!length(subclass_slot_lines))
+			subclass_slot_lines += "(none)"
+
+	if(gnoll_job && !gnoll_job.total_positions)
+		gnoll_spawn_status = "No slots rolled this round"
+
+	var/subclass_slots_display = subclass_slot_lines.Join("<br>")
+
+	var/list/dat = list("<html><head><title>Gnoll Information</title></head><body><h1><B>Gnoll Information</B></h1>")
+	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Refresh</a><br>"
+	dat += "<br><b>Selection mode:</b> [active_source]"
+	dat += "<br><b>Gnoll spawning:</b> "
+	dat += gnoll_spawn_status
+	dat += "<br><b>Gnoll slots open:</b> "
+	dat += slot_open_display
+	dat += "<br><b>Subclass slots (open/total):</b><br>"
+	dat += subclass_slots_display
+	dat += "<br><i>[selection_mode_description]</i><br><br>"
+
+	if(!length(display_targets))
+		dat += "No valid gnoll track targets."
+	else
+		var/list/sorted_target_rows = list()
+		for(var/mob/living/target in display_targets)
+			var/target_name = "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(target)]'>[target.real_name]</a>"
+			var/target_location = AREACOORD(target)
+			var/target_key = target.ckey || "(none)"
+			var/target_job = target.job || "(none)"
+			var/target_source = "Direct scent"
+			if(target in hunted_targets)
+				target_source = "Hunted flaw"
+			else if(target in combat_targets)
+				target_source = "Combat fallback"
+			var/target_ref = "\ref[target]"
+			var/gnoll_tracking_display = "(none)"
+			var/gnoll_tracking_locations = "(none)"
+			var/list/tracking_gnolls = tracking_gnolls_by_target_ref[target_ref]
+			if(length(tracking_gnolls))
+				var/list/tracking_name_links = list()
+				var/list/tracking_location_labels = list()
+				for(var/mob/living/gnoll_mob in tracking_gnolls)
+					tracking_name_links += "<a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(gnoll_mob)]'>[gnoll_mob.real_name]</a>"
+					tracking_location_labels += "[gnoll_mob.real_name]: [AREACOORD(gnoll_mob)]"
+				gnoll_tracking_display = tracking_name_links.Join(", ")
+				gnoll_tracking_locations = tracking_location_labels.Join("<br>")
+			var/row_key = "[LOWER_TEXT(target.real_name)]-[REF(target)]"
+			sorted_target_rows[row_key] = "<tr><td>[target_name]</td><td>[target_location]</td><td>[target_key]</td><td>[target_job]</td><td>[target_source]</td><td>[gnoll_tracking_display]</td><td>[gnoll_tracking_locations]</td></tr>"
+
+		sortTim(sorted_target_rows, GLOBAL_PROC_REF(cmp_text_asc), associative = TRUE)
+
+		dat += "<table cellspacing=5>"
+		dat += "<tr><th align='left'>Target</th><th align='left'>Location</th><th align='left'>Key</th><th align='left'>Job</th><th align='left'>Source</th><th align='left'>Tracking Gnolls</th><th align='left'>Tracking Gnoll Locations</th></tr>"
+		for(var/row_key in sorted_target_rows)
+			dat += sorted_target_rows[row_key]
+		dat += "</table>"
+
+	dat += "</body></html>"
+	usr << browse(dat.Join(), "window=gnollinformation;size=700x500")

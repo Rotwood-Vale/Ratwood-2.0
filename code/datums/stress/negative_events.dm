@@ -7,6 +7,9 @@
 /datum/stressevent/vice/nympho
 	desc = list(span_boldred("I'm feeling randy..."),span_boldred("I need to sate my desires."))
 
+/datum/stressevent/vice/baothamarked
+	desc = list(span_boldred("My brand burns painfully..."),span_boldred("I need to sate this brand's yearning soon."))
+
 /datum/stressevent/vice/sadist
 	desc = list(span_boldred("I need to hear someone whimper."),span_boldred("I crave the suffering of others."))
 
@@ -45,6 +48,16 @@
 	timer = 10 SECONDS
 	stressadd = 2
 	desc = span_red("Smells like death here.")
+
+/datum/stressevent/stinky_aura
+	timer = 20 SECONDS
+	stressadd = 2
+	desc = span_red("Something nearby reeks.")
+
+/datum/stressevent/herald_progress_music
+	timer = 2 MINUTES
+	stressadd = 5
+	desc = span_boldred("This music makes me feel hollow. Something is terribly wrong.")
 
 /datum/stressevent/peckish
 	timer = 10 MINUTES
@@ -165,6 +178,11 @@
 	stressadd = 5
 	desc = span_boldred("Oh no! I've received divine punishment!")
 
+/datum/stressevent/treefather_loss
+	timer = 10 MINUTES
+	stressadd = 5
+	desc = span_boldred("The Treefather cries out in grief. A sacred tree has fallen.")
+
 /datum/stressevent/virginchurch
 	timer = INFINITY
 	stressadd = 10
@@ -222,6 +240,11 @@
 	timer = 2 MINUTES
 	stressadd = 5
 	desc = span_red("Better stay away.")
+
+/datum/stressevent/gnoll_examine
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = span_red("Gods above... a Gnoll!!")
 
 /datum/stressevent/paracrowd
 	timer = 15 SECONDS
@@ -505,3 +528,30 @@
 	stressadd = 2
 	desc = span_boldred("The proof of my oath! It's been stolen!")
 	timer = INFINITY
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat
+/datum/stressevent/xylixian_pity
+	timer = 5 MINUTES
+	stressadd = 1
+	desc = span_red("Xylix took pity upon me and saved me from the consequences of bad luck. I must do better!")
+
+// Prestidigitation water bolt stress events — triggered by being a cat and splashed in the face
+/datum/stressevent/water_splashed_cat
+	timer = 30 SECONDS
+	stressadd = 2
+	desc = span_red("Mrowl! My fur and face is completely drenched. What a humiliating experience.")
+
+/datum/stressevent/water_splashed_noble
+	timer = 30 SECONDS
+	stressadd = 2
+	desc = span_red("The nerve! Water in my face? This indignity is intolerable.")
+
+/datum/stressevent/water_splashed_noble_cat
+	timer = 30 SECONDS
+	stressadd = 4
+	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")
+
+/datum/stressevent/stinky_contact
+	timer = 15 MINUTES
+	stressadd = 2
+	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")

@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Added pubic and pit-hair body features. Includes six pubic styles and four pit-hair styles"
+  - rscadd: "Genital descriptors on examine are now colored depending on arousal state. Default is pink, which gradually turns red as arousal rises."

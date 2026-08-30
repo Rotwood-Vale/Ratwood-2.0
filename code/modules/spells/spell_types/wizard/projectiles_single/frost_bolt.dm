@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/spell/invoked/projectile/frostbolt // to do: get scroll icon
 	name = "Frost Bolt"
-	desc = "A ray of frozen energy, slowing the first thing it touches and lightly damaging it."
+	desc = "A ray of frozen energy, slowing the first thing it touches and lightly damaging it. \n\
+		Damage is increased by 100% versus simple-minded creechurs.\n\
+		Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
 	range = 8
 	projectile_type = /obj/projectile/magic/frostbolt
 	overlay_state = "frost_bolt"
@@ -10,7 +12,7 @@
 	releasedrain = 30
 	chargedrain = 1
 	chargetime = 8
-	recharge_time = 6 SECONDS
+	recharge_time = 5 SECONDS
 	human_req = TRUE
 
 	warnie = "spellwarning"
@@ -30,8 +32,13 @@
 	xp_gain = TRUE
 	miracle = FALSE
 
-/obj/effect/proc_holder/spell/self/frostbolt/cast(mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/projectile/frostbolt/cast(list/targets, mob/user = user)
 	var/mob/living/target = user
+	var/datum/intent/a_intent = target.a_intent
+	if(istype(a_intent, /datum/intent/special/magicarc))
+		projectile_type = /obj/projectile/magic/frostbolt/arc
+	else
+		projectile_type = /obj/projectile/magic/frostbolt
 	target.visible_message(span_warning("[target] hurls a frosty beam!"), span_notice("You hurl a frosty beam!"))
 	. = ..()
 
@@ -46,6 +53,11 @@
 	speed = 1
 	nodamage = FALSE
 	var/aoe_range = 0
+
+/obj/projectile/magic/frostbolt/arc
+	name = "Arced Frost Dart"
+	damage = 15 // You cannot modify charge and releasedrain dynamically so lower damage it is.
+	arcshot = TRUE
 
 /obj/projectile/magic/frostbolt/on_hit(target)
 	. = ..()

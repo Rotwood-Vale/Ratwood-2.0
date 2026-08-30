@@ -84,11 +84,20 @@
 	cost = 10
 	contains = list(/obj/item/clothing/neck/roguetown/collar/leather)
 
+/datum/supply_pack/rogue/bath_clothes/catbell_collar
+	name = "Catbell Collar"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/catbell)
+
 /datum/supply_pack/rogue/bath_clothes/cowbell_collar
 	name = "Cowbell Collar"
-	cost = 20
-	contains = list(/obj/item/clothing/neck/roguetown/collar/catbell, /obj/item/clothing/neck/roguetown/collar/cowbell)
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/cowbell)
 
+/datum/supply_pack/rogue/bath_clothes/spikedcollar
+	name = "Spiked Dog-Collar"
+	cost = 40
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
 
 /datum/supply_pack/rogue/bath_clothes/loincloth
 	name = "Loincloth"
@@ -110,3 +119,43 @@
 	name = "Lady's Belt"
 	cost = 10
 	contains = list(/obj/item/storage/belt/rogue/leather/cloth/lady)
+
+/datum/supply_pack/rogue/bath_clothes/corslet
+	name = "Corslet (Leather)"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/studded
+	name = "Corslet, (Leather, studded)"
+	cost = 35
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/hide
+	name = "Corslet (Leather, barbarian-fashion)"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/chain
+	name = "Corslet (Chain)"
+	cost = 40
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/platehalf
+	name = "Corslet (Half Plate)"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bikini)
+
+/datum/supply_pack/rogue/bath_clothes/corslet/plate
+	name = "Corslet (Full Plate)"
+	cost = 80
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)
+
+// /datum/supply_pack/rogue/bath_clothes/horsey
+// 	name = "Bit, Blinders & Barding (full set)"
+// 	cost = 80
+// 	contains = list(
+// 	/obj/item/clothing/gloves/roguetown/leather/horsey = 1,
+// 	/obj/item/clothing/head/roguetown/horsey = 1,
+// 	/obj/item/clothing/shoes/roguetown/boots/horsey = 1,
+// 	/obj/item/clothing/mask/rogue/horsey = 1,
+// 	/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini/horsey = 1)

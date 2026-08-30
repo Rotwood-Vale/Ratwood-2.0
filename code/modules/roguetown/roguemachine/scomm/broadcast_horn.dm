@@ -43,8 +43,7 @@
 		return
 	if(!listening)
 		return
-	var/turf/step_turf = get_step(get_turf(src), src.dir)
-	if(get_turf(speaker) != step_turf)
+	if(!(get_turf(speaker) in get_adjacent_turfs(src)))
 		return
 	var/mob/living/carbon/human/H = speaker
 	var/usedcolor = H.voice_color

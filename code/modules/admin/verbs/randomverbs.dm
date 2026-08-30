@@ -325,22 +325,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>")
 		return
 
-	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
-
-		//check if they were a monkey
-		if(findtext(G_found.real_name,"monkey"))
-			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
-				var/mob/living/carbon/monkey/new_monkey = new
-				SSjob.SendToLateJoin(new_monkey)
-				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_monkey.key = G_found.key
-				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
-				var/msg = span_adminnotice("[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.")
-				message_admins(msg)
-				admin_ticket_log(new_monkey, msg)
-				return	//all done. The ghost is auto-deleted
-
-
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
@@ -440,6 +424,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/list/cake_types = list(
 		/obj/item/reagent_containers/food/snacks/rogue/cakeslice,
 		/obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/berrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/limecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/menthacakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/peacecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/hcakeslice,
+		/obj/item/reagent_containers/food/snacks/rogue/ccakeslice,
 	)
 	var/cake_type = pick(cake_types)
 	new cake_type(T)
@@ -859,7 +858,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			humie.add_stress(/datum/stressevent/maniac_woke_up)
 			to_chat(humie, span_deadsay("<span class='reallybig'>... WHERE AM I? ...</span>"))
 			var/static/list/slop_lore = list(
-				span_deadsay("... Rotwood Vale? No ... It doesn't exist ..."),
+				span_deadsay("... Rockhill? No ... It doesn't exist ..."),
 				span_deadsay("... My name is Trey. Trey Liam, Liamtific Troverseer ..."),
 				span_deadsay("... I'm on NT Liam, a self Treystaining ship, used to Treyserve what Liamains of roguemanity ..."),
 				span_deadsay("... Launched into the Grim Darkness, War and Grim Darkness preserves their grimness ... Their edge ..."),
@@ -940,45 +939,53 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
 
-/// Allow admin to add or remove traits of datum
+/// Every trait in the game listed as a checkbox, checked ones being the traits the datum ends up with
 /datum/admins/proc/modify_traits(datum/D)
 	if(!D)
 		return
 
-	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
-	if(!add_or_remove)
+	var/list/items = list()
+	var/list/descriptions = list()
+	var/list/checked = list()
+	for(var/define_name in GLOB.all_traits)
+		var/trait = GLOB.all_traits[define_name]
+		items += trait
+		descriptions[trait] = trait_menu_description(trait, define_name)
+		if(HAS_TRAIT(D, trait))
+			checked += trait
+	//traits it already has that aren't listed in all_traits, so they can still be taken away
+	for(var/trait in D.status_traits)
+		if(trait in items)
+			continue
+		items += trait
+		descriptions[trait] = "Unlisted trait."
+		checked += trait
+	items = sortList(checked) + sortList(items - checked) //what it already has goes on top
+
+	var/list/chosen = tgui_input_checkboxes(usr, "Checked traits are the ones [D] will end up with.", "Modify Traits of [D]", items, min_checked = 0, max_checked = length(items), default_checked = checked, descriptions = descriptions, strict_modern = TRUE, window_width = 600, window_height = 700)
+	if(isnull(chosen) || QDELETED(D))
 		return
-	var/list/availible_traits = list()
 
-	switch(add_or_remove)
-		if("Add")
-			for(var/key in GLOB.traits_by_type)
-				if(istype(D,key))
-					availible_traits += GLOB.traits_by_type[key]
-		if("Remove")
-			if(!GLOB.trait_name_map)
-				GLOB.trait_name_map = generate_trait_name_map()
-			for(var/trait in D.status_traits)
-				var/name = GLOB.trait_name_map[trait] || trait
-				availible_traits[name] = trait
-
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
-	if(!chosen_trait)
+	var/list/added = chosen - checked
+	var/list/removed = checked - chosen
+	if(!length(added) && !length(removed))
 		return
 
-	var/source = TRAIT_GENERIC
-	switch(add_or_remove)
-		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
-			ADD_TRAIT(D,chosen_trait,source)
-		if("Remove")
-			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
-			if(!specific)
-				return
-			switch(specific)
-				if("All")
-					source = null
-				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
-					if(!source)
-						return
-			REMOVE_TRAIT(D,chosen_trait,source)
+	for(var/trait in added) //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+		ADD_TRAIT(D, trait, "adminbus")
+	for(var/trait in removed)
+		var/list/sources = D.status_traits?[trait]
+		if(!sources)
+			continue
+		for(var/source in sources.Copy()) //one at a time, REMOVE_TRAIT skips entries if it cuts several at once
+			REMOVE_TRAIT(D, trait, source)
+
+	log_admin("[key_name(usr)] modified the traits of [D] ([D.type]): added [english_list(added)], removed [english_list(removed)]")
+	message_admins("[key_name_admin(usr)] modified the traits of [D] ([D.type]): added [english_list(added)], removed [english_list(removed)]")
+
+/// "TRAIT_DEFINE - what the trait does", for the trait modification menu
+/proc/trait_menu_description(trait, define_name)
+	var/description = GLOB.roguetraits[trait]
+	if(!description)
+		return define_name
+	return "[define_name] - [GLOB.html_tags.Replace(description, "")]"

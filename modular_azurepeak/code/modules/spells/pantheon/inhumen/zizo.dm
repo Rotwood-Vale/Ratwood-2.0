@@ -4,6 +4,8 @@
 	name = "Profane"
 	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "profane"
 	range = 8
 	associated_skill = /datum/skill/magic/arcane
@@ -108,6 +110,8 @@
 	name = "Rituos"
 	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "rituos"
 	associated_skill = /datum/skill/magic/arcane
 	chargedloop = /datum/looping_sound/invokeholy
@@ -127,21 +131,6 @@
 	miracle = TRUE
 	devotion_cost = 120
 	associated_skill = /datum/skill/magic/holy
-
-/// Checks if Rituos is complete or not. Requires that you have all 4 skeletonized limbs + 5 or more casts
-/obj/effect/proc_holder/spell/invoked/rituos/proc/check_ritual_progress(mob/living/carbon/user)
-	// Check the counter, you need 5+ completions to "finish" rituos
-	if(rituos_counter < 5)
-		return FALSE
-
-	// Check the limbs, you need a full skeletonized body or else you can't succeed rituos
-	for(var/obj/item/bodypart/skeletonized_limb in user.bodyparts)
-		if(skeletonized_limb.type in excluded_bodyparts)
-			continue
-		if(!skeletonized_limb.skeletonized)
-			return FALSE
-
-	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
 	. = ..()
@@ -175,20 +164,6 @@
 		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
 		return FALSE
 
-	var/list/choices = list()
-	var/list/spell_choices = GLOB.learnable_spells
-	for(var/i = 1, i <= spell_choices.len, i++)
-		var/obj/effect/proc_holder/spell/spell_item = spell_choices[i]
-		if(spell_item.spell_tier > 3) // Hardcap Rituos choice to T3 to avoid Court Mage spells access
-			continue
-		choices["[spell_item.name]"] = spell_item
-	choices = sortList(choices)
-	var/choice = input("Choose an arcyne expression of the Lesser Work") as null|anything in choices
-	var/obj/effect/proc_holder/spell/item = choices[choice]
-
-	if(!choice || !item)
-		return FALSE
-
 	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
 		user.mob_biotypes |= MOB_UNDEAD
@@ -198,40 +173,152 @@
 	user.update_body_parts()
 	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
 
-	if(user.mind?.rituos_spell)
-		to_chat(user, span_warning("My knowledge of [user.mind.rituos_spell.name] flees..."))
-		user.mind.RemoveSpell(user.mind.rituos_spell)
-		user.mind.rituos_spell = null
-
 	user.mind.has_rituos = TRUE
 	rituos_counter++
+	switch(rituos_counter)
+		if(1)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
+			user.mind?.adjust_spellpoints(3)
+		if(2,4)
+			user.mind?.adjust_spellpoints(3)
+		if(3)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			user.mind?.adjust_spellpoints(3)
+		if(5)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			user.grant_language(/datum/language/undead)
+			user.mind?.adjust_spellpoints(6)
+			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
+			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
+			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
+			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
+			if(prob(33))
+				to_chat(user, span_small("...what have I done?"))
+			user.mind?.RemoveSpell(src)
 
-	var/post_rituos = check_ritual_progress(user)
-	if(post_rituos)
-		//everything but our head is skeletonized now, so grant them journeyman rank and 3 extra spellpoints to grief people with
-		user.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
-		user.grant_language(/datum/language/undead)
-		user.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		user.mind?.adjust_spellpoints(18)
-		user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
-		ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
-		ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
-		ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
-		ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
-		if(prob(33))
-			to_chat(user, span_small("...what have I done?"))
-		user.mind?.RemoveSpell(src)
-		return TRUE
+// T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
+
+/obj/effect/proc_holder/spell/targeted/touch/lacrima
+	name = "Lacrima"
+	desc = "Wreath your hand in inhumen energies.\n \
+	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
+	DISARM on a PURE lux to convert it into IMPURE lux, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "lacrima"
+	clothes_req = FALSE
+	drawmessage = "I pray to ZIZO for but a sliver of Her power, wreathing my hand in inhumen energies!"
+	dropmessage = "I allow the energies upon my hand to dissipate."
+	chargedrain = 0
+	chargetime = 0
+	releasedrain = 5
+	miracle = TRUE
+	devotion_cost = 0
+	chargedloop = /datum/looping_sound/invokegen
+	associated_skill = /datum/skill/magic/holy
+	hand_path = /obj/item/melee/touch_attack/lacrima
+
+/obj/effect/proc_holder/spell/targeted/touch/lacrima/free
+	miracle = FALSE
+
+/obj/item/melee/touch_attack/lacrima
+	name = "\improper lux ripper"
+	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of HER power, you will do exactly that."
+	catchphrase = null
+	possible_item_intents = list(/datum/intent/use, INTENT_DISARM)
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "pulling"
+	icon_state = "grabbing_greyscale"
+	color = "#ff0000"
+	associated_skill = /datum/skill/magic/holy
+
+/obj/item/melee/touch_attack/lacrima/attack_self()
+	qdel(src)
+
+/obj/item/melee/touch_attack/lacrima/afterattack(mob/living/carbon/human/target, mob/living/carbon/human/user, proximity)
+	switch(user.used_intent.type)
+		if(/datum/intent/use)
+			lux_rip(target, user)
+		if(INTENT_DISARM)
+			if(istype(target, /obj/item/reagent_containers/lux))
+				perverse_lux(target, user)
+			else
+				to_chat(user, span_info("That's not pure lux."))
+
+/obj/item/melee/touch_attack/lacrima/proc/lux_rip(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	var/break_time = 100
+	var/tear_time = 50
+
+	if(target == user)
+		to_chat(user, span_alert("I shouldn't rip out my own lux! I need that."))
+		return
+	if(!target.mind)
+		to_chat(user, span_info("This one's lux is weak and insufficient. I need a victim with higher conscious!"))
+		return
+	if(target.stat == DEAD || !isliving(target))
+		to_chat(user, span_info("Only lyving creachers may have their lux torn."))
+		return
+	if(!target.Adjacent(user))
+		to_chat(user, span_info("I need to be next to [target] to rip out their lux."))
+		return
+	if((target.mobility_flags & MOBILITY_STAND))
+		to_chat(user, span_info("My target must be lying down to have their lux torn."))
+		return
+	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
+		to_chat(user, span_notice("This one's lux is already disturbed!"))
+		return
 	else
-		to_chat(user, span_notice("The Lesser Work of Rituos floods my mind with stolen arcyne knowledge: I can now cast [item.name] until I next rest..."))
-		user.mind.rituos_spell = item
-		user.mind.AddSpell(new item)
-		return TRUE
+		to_chat(user, span_alert("I begin reaching my hand towards [target], preparing to tear their lux from their body..."))
+		user.visible_message(span_alert("[user] reaches towards [target]'s chest, inhumen flames wreathing [user.p_their()] hand..."))
+	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+	if(!chest.has_wound(/datum/wound/fracture/chest))
+		if(!do_after(user, break_time, target = target))
+			return
+		if(chest)
+			if(!HAS_TRAIT(target, TRAIT_NOPAIN))
+				target.emote("painscream")
+			target.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
+			user.visible_message(span_alert("[user] plunges their fist into [target]'s ribcage, phasing through it spectacularly!"))
+	if(!do_after(user, tear_time, target = target))
+		return
+	if(!HAS_TRAIT(target, TRAIT_NOPAIN))
+		target.emote("painscream")
+		target.add_stress(/datum/stressevent/myfuckingluxman)
+	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
+	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
+	new /obj/item/reagent_containers/lux_impure(target.loc)
+	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
+	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
+	record_round_statistic(STATS_LUX_HARVESTED)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) // -5 omnistat. prevents harvesting lux again for much longer than regular devitalised
+	qdel(src)
 
+/datum/stressevent/myfuckingluxman
+	desc = span_boldred("THE ESSENCE OF MY LYFE HAS BEEN DEFILED!!")
+	stressadd = 30
+	timer = 15 MINUTES
+
+/obj/item/melee/touch_attack/lacrima/proc/perverse_lux(atom/target, mob/living/carbon/human/user)
+	var/perverse_time = 20
+
+	if(!target.Adjacent(user))
+		to_chat(user, span_info("I need to get closer."))
+		return
+	to_chat(user, span_alert("I begin molding the [target] in my hands, perversing it with inhumen energies..."))
+	if(!do_after(user, perverse_time, target = target))
+		return
+	else
+		qdel(target)
+		qdel(src)
+		user.put_in_hands(new /obj/item/reagent_containers/lux_impure, forced = TRUE)
 
 /obj/effect/proc_holder/spell/self/zizo_snuff
 	name = "Snuff Lights"
 	desc = "Extinguish all lights in range, with your Miracles skill increasing range."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "snuff_lights"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -239,7 +326,6 @@
 	invocations = list("Embrace the darkness!")
 	invocation_type = "shout"
 	sound = 'sound/magic/zizo_snuff.ogg'
-	overlay_state = "rune2"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 20 SECONDS
@@ -260,12 +346,99 @@
 			O.extinguish()
 	return TRUE
 
+// Ancient Champion-exclusive: A non-miracle variant of Snuff Lights with a fixed range of 7 and much longer CD.
+/obj/effect/proc_holder/spell/self/zizo_snuff/champion
+	invocations = list("Mat shal ukhadowuk!")
+	associated_skill = /datum/skill/magic/arcane
+	recharge_time = 60 SECONDS
+	miracle = FALSE
+	devotion cost = 0
+	range = 7
+
+// Ancient Champion-exclusive: An evil variant of Repulse. Longer charge time and CD, but greater maxthrow, push range and the affected people lose 50 stamina. The undead are immune.
+/obj/effect/proc_holder/spell/invoked/churnliving //Repulse variant.
+	name = "Churn Lyving"
+	desc = "Conjure forth a wave of necrotic energy, repelling non-undead around you and greatly damaging their stamina."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "churn_living"
+	xp_gain = FALSE
+	zizo_spell = TRUE
+	releasedrain = 50
+	chargedrain = 1
+	chargetime = 20 //Four times longer charge.
+	recharge_time = 40 SECONDS //15 seconds longer CD.
+	human_req = TRUE
+	ignore_los = TRUE
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	movement_interrupt = FALSE
+	charging_slowdown = 2
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/arcane
+	spell_tier = 2
+	invocations = list("Irzkrat, nullak!")
+	invocation_type = "shout"
+	glow_color = GLOW_COLOR_VAMPIRIC
+	glow_intensity = GLOW_INTENSITY_HIGH
+	gesture_required = TRUE
+	var/maxthrow = 4 //1 tile more.
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
+	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
+	var/push_range = 2 //1 tile more.
+
+/obj/effect/proc_holder/spell/invoked/churnliving/cast(list/targets, mob/user, stun_amt = 5)
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+	for(var/turf/T in view(push_range, user))
+		new /obj/effect/temp_visual/kinetic_blast(T)
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
+
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.anti_magic_check())
+				continue
+
+		if(isliving(AM))
+			var/mob/living/M = AM
+			if(M.mob_biotypes & MOB_UNDEAD)
+				continue
+
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		if(distfromcaster == 0)
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.set_resting(TRUE, TRUE)
+				M.adjustBruteLoss(20)
+				M.stamina_add(50) //50 stamina drain, x2 of Frostbolt's. The spell is very telegraphed.
+				to_chat(M, "<span class='danger'>You're slammed into the floor by [user]! You feel enfeebled!</span>")
+		else
+			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.set_resting(TRUE, TRUE)
+				to_chat(M, "<span class='danger'>You're thrown back by [user]!</span>")
+			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
+	return TRUE
+
+
 // Heresiarch-exclusive: Perfect Reanimation. Anastasis but evil. Requires a heart and a zizocross structure to revive somebody.
 
 /obj/effect/proc_holder/spell/invoked/evil_resurrect
 	name = "Perfect Reanimation" //Wretch Heresiarch-exclusive variant of Anastasis
 	desc = "Rip the target's soul out of Necra's grasp and revive them at a cost of a humanoid being's heart. The target's attributes will be temporarily reduced."
-	overlay_state = "noc_revive"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "revival"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50

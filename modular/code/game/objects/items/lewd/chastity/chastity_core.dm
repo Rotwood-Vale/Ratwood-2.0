@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	mob_overlay_icon = "cage_belt"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = INDESTRUCTIBLE
+	dropshrink = 0.9
 	var/datum/bodypart_feature/chastity/chastity_feature // snowflake slot for chastity items, belt's dont work as clothing equippables
 	var/chastity_type = 0 // 0 = full, 1 = cage, 2 = cage with anal, 3 = spiked cage, 4 = spiked cage with anal, 5 = insertable, 6 = insertable with anal, 7 = spiked insertable, 8 = spiked insertable with anal, 9 = spiked intersex device
 	var/chastity_organtype = 0 // 0 = neuter, 1 = penis required, 2 = vagina required, 3 = both required
@@ -77,11 +78,19 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	. = ..()
 	if(attached_toy)
 		. += "[span_notice("\An [attached_toy] appears attached to \the [initial(name)]. Alt+RMB to remove it.")]"
-	if(chastity_cursed)
-		if(received_cum_count == 1)
-			. += span_notice("1 tally mark is etched into the chastity device's metal surface.")
-		else if(received_cum_count > 1)
-			. += span_notice("[received_cum_count] tally marks are etched into the chastity device's metal surface.")
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		. += span_notice("[tally_text] are etched into the chastity device's metal surface.")
+
+/obj/item/chastity/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the chastity device's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
 
 /obj/item/chastity/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/dildo))
@@ -408,5 +417,5 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 
 	if(chastity_flat)
 		var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-		if(penis?.penis_size >= DEFAULT_PENIS_SIZE)
+		if(penis?.penis_size >= DEFAULT_PENIS_SIZE && penis?.sheath_type == SHEATH_TYPE_NONE)
 			H.add_stress(/datum/stressevent/chastity_flat_cramped)

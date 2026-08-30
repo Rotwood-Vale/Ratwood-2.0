@@ -53,7 +53,8 @@
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
-	var/mob/screenmob = viewmob || mymob
+	return FALSE // TEMPORARY
+/* 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	if(C.prefs)
 		var/pref = C.prefs.parallax
@@ -81,7 +82,7 @@
 	//This is high parallax.
 	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
 	C.parallax_layers_max = 4
-	return TRUE
+	return TRUE */
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
 	remove_parallax(viewmob)

@@ -20,7 +20,7 @@
 	var/burning = 0				// This variable measures the progress of the burning act
 	var/burntime = 5 MINUTES	// How long must it be left unattended to burn and be ruined?
 	var/burned_color = "#302d2d"
-	var/shatter_chance = 20
+
 	var/ash_kneads = 0
 	var/sand_added = FALSE
 	var/is_wet = FALSE
@@ -253,12 +253,6 @@
 /obj/item/natural/clay/heating_act(atom/A)
 	var/obj/item/result
 	if(istype(A,/obj/machinery/light/rogue/oven))
-		if(prob(shatter_chance))
-			if(A)
-				A.visible_message(span_warning("[src] cracks apart in the heat!"))
-			playsound(src, 'sound/foley/glassbreak.ogg', 75, TRUE)
-			qdel(src)
-			return null
 		if(cooked_type)
 			result = new cooked_type(A)
 			apply_pottery_quality(result, pottery_quality, creator_skill)

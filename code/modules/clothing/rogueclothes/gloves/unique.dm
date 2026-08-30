@@ -11,8 +11,31 @@
 	blocksound = SOFTHIT
 	max_integrity = 200
 	anvilrepair = /datum/skill/craft/carpentry
+	sewrepair = FALSE
 	heat_protection = HAND_LEFT | HAND_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+
+/// Dendor ritual variant of the woad elven gloves — grown from the Treefather's sanctified root.
+/obj/item/clothing/gloves/roguetown/elven_gloves/druidic
+	name = "blessed druid gloves"
+	desc = "Gauntlets woven from roots nurtured by the Treefather's blessing. The living wood absorbs impacts and softens cuts that would otherwise tear through."
+	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/gloves/roguetown/elven_gloves/druidic/Initialize(mapload)
+	. = ..()
+	set_light(1, 1, 2, l_color = "#58C86A")
+	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+
+/obj/item/clothing/gloves/roguetown/elven_gloves/druidic/pickup(mob/user)
+	. = ..()
+	if(!istype(user, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.patron?.type == /datum/patron/divine/dendor)
+		return
+	H.electrocute_act(30, src)
+	H.mob_timers["kneestinger"] = world.time
+	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
 
 /obj/item/clothing/gloves/roguetown/bandages
 	name = "bandages"

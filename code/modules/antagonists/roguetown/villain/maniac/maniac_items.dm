@@ -23,6 +23,7 @@
 	icon = 'icons/roguetown/maniac/clothing.dmi'
 	mob_overlay_icon = 'icons/roguetown/maniac/clothing_mob.dmi'
 	icon_state = "shirt"
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/tights/formal
 	name = "formal pants"

@@ -16,11 +16,23 @@ endmap
 map roguetest
 endmap
 
+map roguetest_nootherz
+endmap
+
+
 map dun_world
 	votable
 endmap
 
 map rockhill
 	default
+	votable
+endmap
+
+map byos
+	maxplayers 100
+endmap
+
+map deserttown
 	votable
 endmap

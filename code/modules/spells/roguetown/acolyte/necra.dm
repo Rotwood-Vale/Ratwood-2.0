@@ -95,7 +95,10 @@
 	range = 6
 	no_early_release = TRUE
 	chargedrain = 0
-	overlay_state = "deathdoor"
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "necraportal"
+	action_icon_state = "necraportal"
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	charging_slowdown = 1
 	chargetime = 2 SECONDS
 	recharge_time = 30 SECONDS
@@ -120,7 +123,7 @@
 
 
 //Choosing between skulls/respite
-/obj/effect/proc_holder/spell/self/necra_spirits
+/* /obj/effect/proc_holder/spell/self/necra_spirits
 	name = "Necra's Spirits"
 	overlay_state = "consecrateburial"
 	desc = "The undermaiden holds vengefulspirits within her grasp, allowing you to choose between <b>Her</b> allies."
@@ -151,12 +154,13 @@
 				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance))//Nope.
 					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance)
 		else
-			revert_cast()
+			revert_cast() */
 
 // Speak with dead
 
 /obj/effect/proc_holder/spell/invoked/speakwithdead
 	name = "Speak with Dead"
+	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
 	range = 5
 	overlay_state = "speakwithdead"
 	releasedrain = 30
@@ -352,10 +356,31 @@
 	soul.status_flags &= ~GODMODE
 	soul.density = initial(soul.density) */
 
+/proc/necra_dir_arrow(dir)
+	switch(dir)
+		if(NORTH)      return "↑"
+		if(SOUTH)      return "↓"
+		if(EAST)       return "→"
+		if(WEST)       return "←"
+		if(NORTHEAST)  return "↗"
+		if(NORTHWEST)  return "↖"
+		if(SOUTHEAST)  return "↘"
+		if(SOUTHWEST)  return "↙"
+	return "•"
+
+/proc/necra_repeat_arrow(arrow, count)
+	var/result = ""
+	for(var/i in 1 to count)
+		result += arrow
+	return result
+
 /obj/effect/proc_holder/spell/targeted/locate_dead
 	name = "Locate Corpse"
 	desc = "Call upon the Undermaiden to guide you to a lost soul."
-	overlay_state = "necraeye"
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "locatecorpse"
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon_state = "locatecorpse"
 	sound = 'sound/magic/whiteflame.ogg'
 	releasedrain = 30
 	chargedrain = 0.5
@@ -372,16 +397,20 @@
 /obj/effect/proc_holder/spell/targeted/locate_dead/cast(list/targets, mob/living/user = usr)
 	. = ..()
 	var/list/mob/corpses = list()
+
 	for(var/mob/living/C in GLOB.dead_mob_list)
 		if(!C.mind)
 			continue
+
 		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/B = C
 			if(B.buried)
 				continue
+
 		var/time_dead = 0
 		if(C.timeofdeath)
 			time_dead = world.time - C.timeofdeath
+
 		var/corpse_name
 
 		if(time_dead < 5 MINUTES)
@@ -392,10 +421,12 @@
 			corpse_name = "Long dead "
 		else
 			corpse_name = "Forgotten remains of "
+
 		var/list/d_list = C.get_mob_descriptors()
 		var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, C, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
 		var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, C, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
 		var/descriptor_name = "[trait_desc] [stature_desc]"
+
 		if(descriptor_name == " ")
 			descriptor_name = "Unknown"
 
@@ -407,36 +438,50 @@
 		revert_cast()
 		return .
 
-	var/mob/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
+	var/selected = tgui_input_list(user, "Which body shall I seek?", "Available Bodies", corpses)
 
-	if(QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
+	if(!selected || QDELETED(src) || QDELETED(user) || QDELETED(corpses[selected]))
 		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
 		return .
 
-	var/corpse = corpses[selected]
+	var/mob/living/corpse = corpses[selected]
 
 	var/turf/turf_user = get_turf(user)
 	var/turf/turf_corpse = get_turf(corpse)
-	var/list/directions = list()
-	// Vertical (Z-level) direction
-	if(turf_user.z != turf_corpse.z)
-		if(turf_corpse.z > turf_user.z)
-			directions += "upwards"
-		else
-			directions += "downwards"
 
-	// Horizontal direction (only if we can meaningfully compare)
+	if(!turf_user || !turf_corpse)
+		to_chat(user, span_warning("The Undermaiden's grasp lets slip."))
+		return .
+
+	var/vertical_text = null
+	var/vertical_arrow = null
+	var/horizontal_text = null
+	var/horizontal_arrow = null
+
+	if(turf_user.z != turf_corpse.z)
+		var/z_difference = abs(turf_corpse.z - turf_user.z)
+
+		if(turf_corpse.z > turf_user.z)
+			vertical_text = "upwards"
+			vertical_arrow = necra_repeat_arrow("⇧", z_difference)
+		else
+			vertical_text = "downwards"
+			vertical_arrow = necra_repeat_arrow("⇩", z_difference)
+
 	if(turf_user.x != turf_corpse.x || turf_user.y != turf_corpse.y)
 		var/direction = get_dir(turf_user, turf_corpse)
+		horizontal_arrow = necra_dir_arrow(direction)
+
 		switch(direction)
-			if(NORTH)      directions += "north"
-			if(SOUTH)      directions += "south"
-			if(EAST)       directions += "east"
-			if(WEST)       directions += "west"
-			if(NORTHEAST)  directions += "northeast"
-			if(NORTHWEST)  directions += "northwest"
-			if(SOUTHEAST)  directions += "southeast"
-			if(SOUTHWEST)  directions += "southwest"
+			if(NORTH)      horizontal_text = "north"
+			if(SOUTH)      horizontal_text = "south"
+			if(EAST)       horizontal_text = "east"
+			if(WEST)       horizontal_text = "west"
+			if(NORTHEAST)  horizontal_text = "northeast"
+			if(NORTHWEST)  horizontal_text = "northwest"
+			if(SOUTHEAST)  horizontal_text = "southeast"
+			if(SOUTHWEST)  horizontal_text = "southwest"
+
 	var/dist = get_dist(turf_user, turf_corpse)
 	var/distance_text
 
@@ -451,10 +496,18 @@
 	else
 		distance_text = "It is here."
 
-	var/direction_text
-	if(length(directions))
-		direction_text = english_list(directions, and_text = " and ")
-	else
-		direction_text = "nowhere discernible"
+	var/direction_text = ""
 
-	to_chat(user, span_notice("The Undermaiden pulls on your hand, guiding you [direction_text]. [distance_text]"))
+	if(vertical_text)
+		direction_text += "<br>Vertical: <b>[vertical_arrow]</b> [vertical_text]"
+
+	if(horizontal_text)
+		direction_text += "<br>Horizontal: <b>[horizontal_arrow]</b> [horizontal_text]"
+
+	if(!length(direction_text))
+		direction_text = "<br><b>•</b> nowhere discernible"
+
+	var/area/corpse_area = get_area(turf_corpse)
+	var/area_text = corpse_area ? corpse_area.name : "an unknown place"
+
+	to_chat(user, span_notice("The Undermaiden pulls on your hand.[direction_text]<br>[distance_text] Its resting place lies within <b>[area_text]</b>."))

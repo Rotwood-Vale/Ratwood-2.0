@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
 	apply_prefs_virtue(character, player)
+	apply_prefs_origin(character, player)
 	apply_prefs_race_bonus(character, player)
 	apply_voicepacks(character, player)
 	if(player.prefs.dnr_pref)
@@ -246,3 +247,13 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	special.on_apply(character, silent)
 	if(!silent && special.greet_text)
 		to_chat(character, special.greet_text)
+
+/proc/apply_prefs_origin(mob/living/carbon/human/character, client/player)
+	if(!player.prefs)
+		return
+	var/datum/origin/O = player.prefs.origin
+	if(!O)
+		O = new /datum/origin/ferentia
+	character.origin = O.origin_title
+	if(O.origin_language)
+		character.grant_language(O.origin_language)

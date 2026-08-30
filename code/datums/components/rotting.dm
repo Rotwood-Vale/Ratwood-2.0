@@ -1,5 +1,5 @@
-#define DEAD_TO_ZOMBIE_TIME 7 MINUTES	//Time before death -> raised as zombie (when outside of the city)
-										//(This isn't exact time. Extended 5 -> 7 because only takes 2-3 min in testing at 5.)
+#define DEAD_TO_ZOMBIE_TIME 5 MINUTES	//Time before death -> raised as zombie (when outside of the city)
+										//(This might not be the exact time)
 
 /datum/component/rot
 	var/amount = 0

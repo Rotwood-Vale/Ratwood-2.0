@@ -8,8 +8,8 @@
 	crate_type = /obj/structure/closet/crate/chest/merchant
 	no_name_quantity = TRUE
 
-/datum/supply_pack/rogue/armor_exotic/gronn_pack_light
-	name = "Gronnic Ravager Leather Set (Light)"
+/datum/supply_pack/rogue/armor_exotic/hammerhold_pack_light
+	name = "Ravager Leather Set (Light)"
 	cost = 125
 	contains = list(
 		/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn,
@@ -18,8 +18,8 @@
 		/obj/item/clothing/gloves/roguetown/angle/gronn
 		)
 
-/datum/supply_pack/rogue/armor_exotic/gronn_pack_medium
-	name = "Gronnic Byrine Chain Set (Medium)"
+/datum/supply_pack/rogue/armor_exotic/hammerhold_pack_medium
+	name = "Byrine Chain Set (Medium)"
 	cost = 225
 	contains = list(
 		/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi/gronn/ownel,
@@ -28,8 +28,8 @@
 		/obj/item/clothing/under/roguetown/splintlegs/iron/gronn
 		)
 
-/datum/supply_pack/rogue/armor_exotic/gronn_pack_heavy
-	name = "Gronnic Norsii Plate Set (Heavy)"
+/datum/supply_pack/rogue/armor_exotic/hammerhold_pack_heavy
+	name = "Norsii Plate Set (Heavy)"
 	cost = 400
 	contains = list(
 		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn,

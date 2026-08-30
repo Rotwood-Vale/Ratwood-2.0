@@ -1,6 +1,7 @@
 #define COMBAT_COOLDOWN_LENGTH 45 SECONDS
 #define REVEAL_COOLDOWN_LENGTH 15 SECONDS
-#define MASK_DURATION 5 MINUTES
+#define OBFUSCATE_ALPHA 10
+#define OBFUSCATE_FADE_TIME 0.5 SECONDS
 
 /datum/coven/obfuscate
 	name = "Obfuscate"
@@ -29,6 +30,28 @@
 	deltimer(cooldown_timer)
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(cooldown_expire)), COMBAT_COOLDOWN_LENGTH, TIMER_STOPPABLE)
 
+/datum/coven_power/obfuscate/proc/conceal(mob/living/target)
+	if (!target)
+		return
+
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_concealed_death), override = TRUE)
+	animate(target, alpha = OBFUSCATE_ALPHA, time = OBFUSCATE_FADE_TIME)
+
+/datum/coven_power/obfuscate/proc/unconceal(mob/living/target)
+	if (!target)
+		return
+
+	UnregisterSignal(target, COMSIG_LIVING_DEATH)
+	animate(target, alpha = initial(target.alpha), time = OBFUSCATE_FADE_TIME)
+
+/datum/coven_power/obfuscate/proc/on_concealed_death(mob/living/source)
+	SIGNAL_HANDLER
+
+	if (source == owner)
+		try_deactivate(direct = TRUE)
+	else
+		unconceal(source)
+
 /datum/coven_power/obfuscate/proc/is_seen_check()
 	for (var/mob/living/viewer in oviewers(7, owner))
 		//cats cannot stop you from Obfuscating
@@ -37,6 +60,9 @@
 
 		//the corpses are not watching you
 		if (HAS_TRAIT(viewer, TRAIT_BLIND) || viewer.stat >= UNCONSCIOUS)
+			continue
+
+		if (owner.is_clanmate(viewer))
 			continue
 
 		to_chat(owner, span_warning("You cannot use [src] while you're being observed!"))
@@ -59,6 +85,8 @@
 
 /datum/coven_power/obfuscate/cloak_of_shadows/pre_activation_checks()
 	. = ..()
+	if(!.)
+		return FALSE
 	return is_seen_check()
 
 /datum/coven_power/obfuscate/cloak_of_shadows/activate()
@@ -66,14 +94,14 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	owner.alpha = 10
+	conceal(owner)
 
 /datum/coven_power/obfuscate/cloak_of_shadows/deactivate()
 	. = ..()
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	owner.alpha = 255
+	unconceal(owner)
 
 /datum/coven_power/obfuscate/cloak_of_shadows/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER
@@ -101,14 +129,14 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	owner.alpha = 10
+	conceal(owner)
 
 /datum/coven_power/obfuscate/unseen_presence/deactivate()
 	. = ..()
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	owner.alpha = 255
+	unconceal(owner)
 
 /datum/coven_power/obfuscate/unseen_presence/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER
@@ -137,7 +165,7 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	owner.alpha = 10
+	conceal(owner)
 
 	// Memory wipe effect - make nearby people forget they saw you
 	for(var/mob/living/carbon/human/viewer in oviewers(7, owner))
@@ -150,7 +178,7 @@
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	owner.alpha = 255
+	unconceal(owner)
 
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER
@@ -178,6 +206,8 @@
 
 /datum/coven_power/obfuscate/cloak_the_gathering/pre_activation_checks()
 	. = ..()
+	if(!.)
+		return FALSE
 	return is_seen_check()
 
 /datum/coven_power/obfuscate/cloak_the_gathering/activate()
@@ -185,17 +215,20 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	owner.alpha = 10
+	conceal(owner)
 	cloaked_mobs = list(owner)
 
-	// Cloak nearby allies
+	// Cloak nearby Clan - the veil is not extended to cattle or rivals
 	for(var/mob/living/target in oviewers(3, owner))
-		if(target.client && target.stat < UNCONSCIOUS)
-			// Add faction/ally checks here as appropriate
-			target.alpha = 10
-			cloaked_mobs += target
-			to_chat(target, span_notice("You feel a supernatural veil fall over you..."))
-			RegisterSignal(target, aggressive_signals, PROC_REF(on_ally_combat_signal), override = TRUE)
+		if(target.stat >= UNCONSCIOUS)
+			continue
+		if(!target.is_clanmate(owner))
+			continue
+
+		conceal(target)
+		cloaked_mobs += target
+		to_chat(target, span_notice("You feel a supernatural veil fall over you..."))
+		RegisterSignal(target, aggressive_signals, PROC_REF(on_ally_combat_signal), override = TRUE)
 
 	to_chat(owner, span_notice("You extend your cloak to [length(cloaked_mobs) - 1] nearby allies."))
 
@@ -206,7 +239,7 @@
 
 	// Restore visibility to all cloaked mobs
 	for(var/mob/living/target in cloaked_mobs)
-		target.alpha = 255
+		unconceal(target)
 		UnregisterSignal(target, aggressive_signals)
 		if(target != owner)
 			to_chat(target, span_warning("The supernatural veil fades away..."))
@@ -229,10 +262,16 @@
 	to_chat(ally, span_danger("Your actions break the supernatural veil!"))
 
 	// Remove this ally from the cloak
-	ally.alpha = 255
+	unconceal(ally)
 	UnregisterSignal(ally, aggressive_signals)
 	cloaked_mobs -= ally
 
+/datum/coven_power/obfuscate/cloak_the_gathering/on_concealed_death(mob/living/source)
+
+	cloaked_mobs -= source
+	return ..()
+
 #undef COMBAT_COOLDOWN_LENGTH
 #undef REVEAL_COOLDOWN_LENGTH
-#undef MASK_DURATION
+#undef OBFUSCATE_ALPHA
+#undef OBFUSCATE_FADE_TIME

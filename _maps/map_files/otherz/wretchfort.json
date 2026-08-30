@@ -1,0 +1,6 @@
+{
+	"map_name": "Wretched Fortress",
+	"map_path": "map_files/otherz",
+	"map_file": "wretchfort.dmm",
+	"traits": [{"Name": "wretchfort", "Up": true}, {"Up": true, "Down": true}, {"Down": true}]
+}

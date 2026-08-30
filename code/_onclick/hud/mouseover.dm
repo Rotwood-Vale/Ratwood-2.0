@@ -182,16 +182,53 @@
 		var/offset_x = 8 - (AT.x - x) - (p.client.pixel_x / world.icon_size)
 		var/offset_y = 8 - (AT.y - y) - (p.client.pixel_y / world.icon_size)
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
-		var/mousecolor = "#c1aaaa"
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.voice_color)
-				if(H.name == H.real_name)
-					mousecolor = "#[H.voice_color]"
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		var/list/mouseover_data = get_mouseover_data(p)
+		if(!mouseover_data)
+			return FALSE
+		p.client.mouseovertext.maptext_height = mouseover_data["height"]
+		p.client.mouseovertext.maptext = mouseover_data["text"]
 		p.client.mouseovertext.movethis(PM)
+		if(mouseover_data["y_shift"])
+			p.client.mouseovertext.maptext_y += mouseover_data["y_shift"]
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
+
+/mob/proc/get_mouseover_data(mob/viewer)
+	return list(
+		"height" = 32,
+		"text" = {"<span style='font-size:8pt;font-family:"Pterra";color:#c1aaaa;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"},
+	)
+
+/mob/living/carbon/human/get_mouseover_data(mob/viewer)
+	var/mousecolor = "#c1aaaa"
+	if(voice_color && name == real_name)
+		mousecolor = "#[voice_color]"
+
+	if(viewer?.client?.prefs?.show_mouseover_role && get_face_name(""))
+		var/role_text = get_mouseover_role_title()
+		if(role_text)
+			return list(
+				"height" = 44,
+				"y_shift" = 3,
+				"text" = "<span style='font-size:8pt;font-family:\"Pterra\";color:[mousecolor];text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #e60073,0 0 40px #e60073,0 0 50px #e60073,0 0 60px #e60073,0 0 70px #e60073;display:block;text-align:center;' class='center maptext '>[name]</span><span style='font-size:6pt;font-family:\"Pterra\";color:#c1aaaa;text-shadow:0 0 10px #000,0 0 10px #000,0 0 10px #000;display:block;text-align:center;'>[role_text]</span>",
+			)
+
+	var/list/mouseover_data = ..()
+	mouseover_data["text"] = replacetext(mouseover_data["text"], "color:#c1aaaa", "color:[mousecolor]")
+	return mouseover_data
+
+/mob/proc/get_mouseover_role_title()
+	var/used_title = get_role_title()
+	return used_title || mind?.assigned_role || job
+
+/mob/living/carbon/human/get_mouseover_role_title()
+	if(!migrant_type && job)
+		var/datum/job/J = SSjob.GetJob(job)
+		if(!J || J.wanderer_examine)
+			return "Wanderer"
+		if(J.lowlife_examine)
+			return "Lowlife"
+	return ..()
 
 /atom/movable/screen
 	nomouseover = TRUE

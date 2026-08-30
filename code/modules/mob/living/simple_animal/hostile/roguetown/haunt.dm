@@ -43,7 +43,7 @@
 	retreat_health = null
 	var/obj/structure/bonepile/slavepile
 
-	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)	
+	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/haunt
@@ -140,6 +140,7 @@
 		return
 	if(!spawning)
 		return
+
 	spawning = FALSE
 	var/mob/living/simple_animal/hostile/rogue/haunt/H = new (get_turf(src))
 	H.slavepile = src
@@ -158,9 +159,8 @@
 /obj/structure/bonepile/Destroy()
 	soundloop.stop()
 	spawning = FALSE
-	for(var/H in haunts)
-		var/mob/living/simple_animal/hostile/rogue/haunt/D = H
-		D.death()
+	for(var/mob/living/simple_animal/hostile/rogue/haunt/ghost in haunts)
+		INVOKE_ASYNC(ghost, TYPE_PROC_REF(/mob/living/simple_animal/hostile/rogue/haunt, death))
 	var/spawned = pick(/obj/item/reagent_containers/powder/spice)
 	new spawned(get_turf(src))
 	. = ..()

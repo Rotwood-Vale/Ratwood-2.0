@@ -54,3 +54,6 @@
 
 /datum/alch_grind_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=new_recipe;size=500x810")
+
+/datum/alch_grind_recipe/proc/get_bonus_output_chance(output_path, mob/living/carbon/human/user, base_chance)
+	return base_chance

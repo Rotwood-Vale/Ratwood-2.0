@@ -1,0 +1,641 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"b" = (
+/obj/machinery/light/rogue/torchholder/hotspring/standing,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"c" = (
+/obj/structure/flora/roguetree/palm,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"d" = (
+/turf/open/floor/rogue/dirt/desert,
+/area/rogue)
+"e" = (
+/obj/item/natural/rock/desert{
+	icon_state = "sandrock2"
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"g" = (
+/obj/item/cushion/zybantine,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"h" = (
+/turf/closed/wall/mineral/rogue/tent{
+	dir = 8
+	},
+/area/rogue)
+"i" = (
+/obj/structure/bed/rogue/inn/hay,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"j" = (
+/turf/open/water/ocean/deep/thermalwater,
+/area/rogue)
+"k" = (
+/turf/closed/wall/mineral/rogue/tent{
+	dir = 4
+	},
+/area/rogue)
+"m" = (
+/obj/structure/fluff/pillow/purple,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"n" = (
+/obj/effect/decal/cleanable/debris/woody,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"o" = (
+/obj/structure/curtain/drab{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/obj/effect/decal/duneedge{
+	dir = 1
+	},
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"p" = (
+/obj/effect/decal/carpet/kover_darkred,
+/obj/machinery/light/rogue/torchholder/hotspring,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"q" = (
+/obj/structure/flora/roguegrass/verdant,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"s" = (
+/obj/structure/flora/roguegrass/bush/desert,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"t" = (
+/obj/structure/flora/roguegrass/herb/random,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"u" = (
+/obj/structure/underworld/carriage_normal{
+	density = 0;
+	desc = "The dunes await.";
+	pixel_x = -64;
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"v" = (
+/obj/effect/spawner/lootdrop/roguetown/sewers,
+/obj/structure/closet/crate/chest/wicker,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"w" = (
+/obj/item/grown/log/tree/stick,
+/obj/effect/spawner/lootdrop/general_loot_low,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"x" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"y" = (
+/obj/structure/closet/crate/chest/crate,
+/obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
+/obj/effect/spawner/lootdrop/cheap_jewelry_spawner,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"B" = (
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"C" = (
+/obj/structure/flora/roguegrass/bush/jungle,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"D" = (
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+"F" = (
+/turf/closed/wall/mineral/rogue/tent,
+/area/rogue)
+"G" = (
+/obj/structure/fluff/pillow/purple{
+	dir = 8
+	},
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"I" = (
+/obj/machinery/light/rogue/campfire/densefire,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"K" = (
+/turf/closed/wall/mineral/rogue/sandbrick,
+/area/rogue)
+"L" = (
+/obj/structure/curtain/drab{
+	icon_state = "curtain-closed";
+	opacity = 1;
+	open = 0
+	},
+/obj/effect/decal/duneedge,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"M" = (
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"N" = (
+/obj/effect/decal/carpet/kover_darkred,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"P" = (
+/obj/structure/bed/rogue/inn/hay,
+/obj/effect/decal/cleanable/debris/woody,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"Q" = (
+/obj/item/natural/rock/desert,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"R" = (
+/obj/item/natural/rock/desert,
+/turf/open/floor/rogue/sandbrick,
+/area/rogue)
+"S" = (
+/turf/closed/wall/mineral/rogue/wood,
+/area/rogue)
+"V" = (
+/obj/structure/shisha/hookah,
+/turf/open/floor/rogue/dunes,
+/area/rogue)
+"X" = (
+/obj/machinery/light/rogue/hearth,
+/turf/open/floor/rogue/twig{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue)
+"Z" = (
+/obj/machinery/light/rogue/torchholder/hotspring,
+/turf/open/floor/rogue/desert_grass,
+/area/rogue)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Q
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+B
+a
+a
+m
+N
+a
+a
+K
+K
+K
+k
+K
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+u
+B
+d
+a
+V
+G
+a
+a
+F
+S
+v
+S
+F
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+e
+a
+a
+a
+B
+d
+c
+a
+a
+a
+a
+F
+B
+n
+M
+F
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+D
+D
+D
+C
+D
+s
+d
+L
+B
+X
+i
+K
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+d
+x
+D
+t
+j
+j
+D
+Z
+d
+F
+n
+B
+M
+K
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+D
+q
+Z
+j
+j
+j
+j
+D
+c
+F
+S
+y
+S
+K
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+s
+D
+D
+j
+j
+j
+j
+q
+D
+K
+h
+h
+K
+R
+a
+"}
+(11,1,1) = {"
+a
+a
+K
+K
+K
+K
+c
+D
+j
+j
+j
+j
+j
+D
+D
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+K
+w
+B
+F
+t
+q
+C
+j
+j
+j
+x
+t
+a
+a
+N
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+K
+X
+n
+o
+d
+D
+D
+j
+j
+j
+q
+b
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+F
+i
+B
+F
+a
+c
+D
+q
+D
+q
+s
+a
+a
+g
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+S
+h
+h
+S
+a
+a
+a
+D
+d
+a
+a
+a
+g
+I
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+p
+a
+S
+o
+k
+K
+a
+a
+g
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+e
+F
+n
+B
+K
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+Q
+a
+a
+a
+a
+F
+X
+P
+K
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+S
+h
+K
+S
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -10,13 +10,18 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 	dodgetime = 30
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
-
 	wander = FALSE
+	var/bum_boss = FALSE//If you ever want a bum boss to spawn without his outfit, for some reason.
 
+//Special types.
 /mob/living/carbon/human/species/human/northern/bum/ambush
 	aggressive=1
-
 	wander = TRUE
+
+/mob/living/carbon/human/species/human/northern/bum/boss
+	aggressive=1
+	flee_in_pain = FALSE
+	bum_boss = TRUE
 
 /mob/living/carbon/human/species/human/northern/bum/retaliate(mob/living/L)
 	var/newtarg = target
@@ -46,6 +51,15 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/roguetown/vagrantnpc)
+	if(!bum_boss)
+		equipOutfit(new /datum/outfit/job/roguetown/vagrantnpc)
+		
+/mob/living/carbon/human/species/human/northern/bum/boss/after_creation()
+	..()
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+	if(bum_boss)
+		equipOutfit(new /datum/outfit/job/roguetown/vagrant_boss)
 
 /datum/outfit/job/roguetown/vagrantnpc/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -58,10 +72,77 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
 		if(prob(50))
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
+	if(prob(20))
+		head = /obj/item/clothing/head/roguetown/knitcap
+	if(prob(10))
+		cloak = /obj/item/clothing/cloak/raincloak/brown
+	if(prob(10))
+		gloves = /obj/item/clothing/gloves/roguetown/fingerless
 
 	if(prob(33))
 		cloak = /obj/item/clothing/cloak/raincloak/brown
 		gloves = /obj/item/clothing/gloves/roguetown/fingerless
+	if(prob(5))
+		r_hand = /obj/item/rogueweapon/mace/woodclub
+	else if(prob(5))
+		r_hand = /obj/item/rogueweapon/huntingknife/stoneknife
+	else if(prob(5))
+		r_hand = /obj/item/rogueweapon/woodstaff
+	else if(prob(5))
+		r_hand = /obj/item/rogueweapon/mace/wsword
+
+	H.STASPD = 6
+	H.STACON = 12
+	H.STAWIL = 12
+	H.STAINT = 1
+
+//The KING
+/datum/outfit/job/roguetown/vagrant_boss/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(prob(25))
+		head = /obj/item/clothing/head/roguetown/knitcap
+	else
+		head = /obj/item/clothing/head/roguetown/helmet/leather
+
+	if(prob(50))
+		cloak = /obj/item/clothing/cloak/raincloak/brown
+	else
+		cloak = /obj/item/clothing/cloak/raincloak/furcloak/crafted
+
+	if(prob(50))
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+	else
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
+
+	if(prob(50))
+		armor = /obj/item/clothing/suit/roguetown/armor/leather
+	else
+		armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
+
+	if(prob(80))
+		gloves = /obj/item/clothing/gloves/roguetown/fingerless
+	else//Proper gloves!
+		gloves = null
+
+	if(prob(80))
+		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	else//Stole a pair of bracers!
+		wrists = /obj/item/clothing/wrists/roguetown/bracers
+
+//Again, roll for weapon. If any.
+	if(prob(25))
+		r_hand = /obj/item/rogueweapon/mace/spiked
+		l_hand = /obj/item/rogueweapon/shield/wood/crafted
+	else if(prob(25))
+		r_hand = /obj/item/rogueweapon/sword/iron
+		l_hand = /obj/item/rogueweapon/shield/wood/crafted
+
+	H.STASTR = 14
+	H.STASPD = 8
+	H.STACON = 14
+	H.STAWIL = 14
+	H.STAINT = 1
+
 
 /mob/living/carbon/human/species/human/northern/bum/npc_idle()
 	if(m_intent == MOVE_INTENT_SNEAK)

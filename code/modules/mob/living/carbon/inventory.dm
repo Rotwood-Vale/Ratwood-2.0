@@ -71,8 +71,7 @@
 			handcuffed = I
 			update_handcuffed()
 		if(SLOT_LEGCUFFED)
-			legcuffed = I
-			update_inv_legcuffed()
+			set_legcuffed(I)
 		if(SLOT_HANDS)
 			put_in_hands(I)
 			update_inv_hands()
@@ -130,9 +129,10 @@
 		if(!QDELETED(src))
 			update_handcuffed()
 	else if(I == legcuffed)
-		legcuffed = null
 		if(!QDELETED(src))
-			update_inv_legcuffed()
+			set_legcuffed(null)
+		else
+			legcuffed = null
 
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)

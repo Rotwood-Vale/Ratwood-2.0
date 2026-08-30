@@ -7,7 +7,7 @@
 		/datum/migrant_role/fablefield/goliard = 1,
 		/datum/migrant_role/fablefield/troubadour = 3,
 	)
-	greet_text = "A troupe of troubadours from fair Fablefield, you travel to the vale seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
+	greet_text = "A troupe of troubadours from fair Fablefield, you travel to these lands seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
 
 /datum/migrant_wave/fablefield_down_one
 	name = "The Fablefield Troupe"
@@ -18,7 +18,7 @@
 		/datum/migrant_role/fablefield/goliard = 1,
 		/datum/migrant_role/fablefield/troubadour = 2,
 	)
-	greet_text = "A troupe of troubadours from fair Fablefield, you travel to the vale seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
+	greet_text = "A troupe of troubadours from fair Fablefield, you travel to these lands seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
 
 /datum/migrant_wave/fablefield_down_two
 	name = "The Fablefield Troupe"
@@ -29,7 +29,7 @@
 		/datum/migrant_role/fablefield/goliard = 1,
 		/datum/migrant_role/fablefield/troubadour = 1,
 	)
-	greet_text = "A troupe of troubadours from fair Fablefield, you travel to the vale seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
+	greet_text = "A troupe of troubadours from fair Fablefield, you travel to these lands seeking inspiration, drawn at every step seemingly by the whims of Xylix. The people here look like they could do with a good show, give them one they'll remember!"
 
 /datum/migrant_wave/fablefield_down_three
 	name = "The Fablefield Goliard"
@@ -38,4 +38,4 @@
 	roles = list(
 		/datum/migrant_role/fablefield/goliard = 1
 	)
-	greet_text = "Your friends have abandoned you - lost to the whims of lyfe as Xylix taught you. Yet you march on into the Vale. The people here look like they could do with a good show, give them one they'll remember - for your comrades!"
+	greet_text = "Your friends have abandoned you - lost to the whims of lyfe as Xylix taught you. Yet you march on into these lands. The people here look like they could do with a good show, give them one they'll remember - for your comrades!"

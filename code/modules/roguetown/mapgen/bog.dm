@@ -33,6 +33,7 @@
 							/obj/structure/flora/roguegrass/swampweed = 10,
 							/obj/structure/flora/roguegrass/bush/westleach = 10,
 							/obj/structure/flora/roguegrass/maneater/real/juvenile = 3,
+							/obj/structure/deadbodyrandom/med = 0.3,
 							/obj/structure/zizo_bane = 2)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=1)

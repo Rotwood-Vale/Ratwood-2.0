@@ -25,7 +25,7 @@
 	user.visible_message(span_warning("[user] ducks low and presses [user.p_their()] face to the lower edge of [target]'s anal shield, searching for an angle."))
 
 /datum/sex_action/chastityplay/rimming_shield/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drives [user.p_their()] tongue beneath [target]'s anal shield, working it into whatever gap the metal allows..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drives [user.p_their()] tongue beneath [target]'s anal shield, working it into whatever gap the metal allows..."))
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)
 

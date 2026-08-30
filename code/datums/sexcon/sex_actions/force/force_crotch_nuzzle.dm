@@ -33,7 +33,7 @@
 	user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] crotch!"))
 
 /datum/sex_action/force_crotch_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] crotch."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to nuzzle [user.p_their()] crotch."))
 	target.sexcon.make_sucking_noise()
 
 	user.sexcon.perform_sex_action(user, 0.5, 0, TRUE)

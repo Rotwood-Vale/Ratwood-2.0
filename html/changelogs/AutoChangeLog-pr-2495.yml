@@ -1,0 +1,8 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Targeting face carries a heavier accuracy malus on fully-able player targets."
+  - balance: "Guaranteed limb accuracies on hits in certain situations now replaced with high % bonuses"
+  - balance: "Pure unarmed punch intent has a 10% bonus, much the same as short-length weapons."
+  - balance: "Attacking exposed/vulnerable targets, such as those off balance, feinted, baited, riposted, stamina stunned, etc., grants a 20% bonus to accuracy."
+  - balance: "The perception bonus to accuracy is now capped at 40%, or 15 PER."

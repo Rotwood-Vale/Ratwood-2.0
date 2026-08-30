@@ -29,6 +29,9 @@
 	var/custom_area_sound = null
 	var/list/other_z
 
+	/// Opts this map out of automatic z-stack sharing, giving it its own full z-levels
+	var/no_z_sharing = FALSE
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_rogue",
@@ -136,6 +139,9 @@
 	else if (!isnull(temp))
 		log_world("map_config space_empty_levels is not a number!")
 		return
+
+	if (json["no_z_sharing"])
+		no_z_sharing = TRUE
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

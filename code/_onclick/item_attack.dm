@@ -25,6 +25,11 @@
 		if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 			to_chat(user, span_warning("...What?"))
 			return
+		// FAR less aggressive version of chunkyfingers, designed to be used with nudist. Shrimply lets the user still use neat stuff like orison without letting them weaponize.
+		if(HAS_TRAIT(user, TRAIT_GNARLYDIGITS))
+			if(istype(src, /obj/item/rogueweapon) && !istype(src, /obj/item/rogueweapon/werewolf_claw) && !istype(src, /obj/item/rogueweapon/surgery/cautery/branding))
+				to_chat(user, span_warning("My fingers are too misshapen to use this puny implement."))
+				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
@@ -87,12 +92,6 @@
 		worn_thing.hit_response(src, user) //checks if clothing has hit response. Refer to Items.dm
 	return I.attack(src, user)
 
-/mob/living
-	var/tempatarget = null
-	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
-	var/construct = 0
-	var/burialrited = FALSE
-
 #define ATTACK_OVERRIDE_NODEFENSE 2
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
@@ -133,13 +132,15 @@
 			if(!user.used_intent.noaa)
 				playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			if(user.used_intent.no_attack) //BYE!!!
+				log_combat(user, M, "used a non-damaging intent on", src.name, "(INTENT: [uppertext(user.used_intent.name)])", log_seen = FALSE)
+				add_fingerprint(user)
 				return
 	else
 		return
 
 //	if(force)
 //		user.emote("attackgrunt")
-
+	user.mob_timers[MT_SNEAKATTACK] = world.time
 	var/swingdelay = user.used_intent.swingdelay
 	var/_swingdelay_mod = SEND_SIGNAL(src, COMSIG_LIVING_SWINGDELAY_MOD)
 	if(_swingdelay_mod)
@@ -266,6 +267,7 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
+	user.mob_timers[MT_SNEAKATTACK] = world.time
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
 	if(item_flags & NOBLUDGEON)
@@ -277,6 +279,7 @@
 /obj/item/proc/attack_turf(turf/T, mob/living/user, multiplier)
 	if(T.max_integrity)
 		if(T.attacked_by(src, user, multiplier))
+			user.mob_timers[MT_SNEAKATTACK] = world.time
 			user.do_attack_animation(T, simplified = TRUE)
 			return TRUE
 
@@ -441,7 +444,10 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = (get_complex_damage(I, user, blade_dulling) * I.demolition_mod)
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
+		newforce = min(newforce, 5)
+	newforce *= I.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0

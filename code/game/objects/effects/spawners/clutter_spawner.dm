@@ -23,7 +23,7 @@
 		/obj/item/needle = 1,
 		/obj/item/needle/thorn = 1,
 		/obj/item/roguestatue/steel = 1,
-		/obj/item/roguestatue/aalloy = 1,
+		/obj/item/roguestatue/decrepit = 1,
 		/obj/item/roguestatue/iron = 1,
 	)
 
@@ -100,9 +100,9 @@
 	icon_state = "lowjewlery"
 	lootcount = 1
 	loot = list(
-		/obj/item/clothing/ring/aalloy = 6,
+		/obj/item/clothing/ring/decrepit = 6,
 		/obj/item/clothing/neck/roguetown/psicross = 2,
-		/obj/item/clothing/neck/roguetown/psicross/aalloy = 2,
+		/obj/item/clothing/neck/roguetown/psicross/decrepit = 2,
 		/obj/item/clothing/neck/roguetown/psicross/astrata = 6,
 		/obj/item/clothing/neck/roguetown/psicross/noc = 6,
 		/obj/item/clothing/neck/roguetown/psicross/abyssor = 6,
@@ -172,9 +172,9 @@
 		/obj/item/clothing/neck/roguetown/skullamulet = 2,
 		/obj/item/clothing/ring/silver = 10,
 		/obj/item/clothing/ring/gold = 15,
-		/obj/item/clothing/ring/aalloy = 15,
+		/obj/item/clothing/ring/decrepit = 15,
 		/obj/item/clothing/ring/emerald = 1,
-		/obj/item/clothing/ring/aalloy = 15,
+		/obj/item/clothing/ring/decrepit = 15,
 		/obj/item/clothing/neck/roguetown/psicross = 2,
 		/obj/item/clothing/neck/roguetown/psicross/wood = 2,
 		/obj/item/clothing/neck/roguetown/psicross/shell = 6,

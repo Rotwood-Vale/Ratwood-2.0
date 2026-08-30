@@ -11,12 +11,13 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	unarmed_bonus = 1.1
 	color = "#66584c"
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/gloves/roguetown/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/leather/black
 	color = CLOTHING_BLACK
@@ -30,8 +31,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
@@ -63,8 +62,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/gloves/roguetown/otavan
@@ -80,8 +77,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -116,8 +111,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
 /obj/item/clothing/gloves/roguetown/eastgloves2
 	name = "stylish gloves"
@@ -131,17 +124,13 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
-/obj/item/clothing/gloves/roguetown/harms
+/obj/item/clothing/gloves/roguetown/leather/horsey
 	name = "arm harness"
 	desc = "Reinforced leather bindings for the arms."
 	icon_state = "harms"
 	item_state = "harms"
-	body_parts_covered = HANDS
-	max_integrity = 400
-	armor = list("blunt" = 60, "slash" = 90, "stab" = 60, "piercing" = 60, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
-	sewrepair = TRUE
-	sleeved = FALSE
+	slot_flags = ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS
+	body_parts_covered = HANDS|ARMS
+	// sleeved = FALSE
+	color = null

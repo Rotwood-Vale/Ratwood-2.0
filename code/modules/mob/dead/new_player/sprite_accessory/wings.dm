@@ -51,6 +51,10 @@
 	name = "Feathery v2"
 	icon_state = "featheryv2"
 
+/datum/sprite_accessory/wings/dragon/clipped
+	name = "Clipped Dragon"
+	icon_state = "clipped"
+
 /datum/sprite_accessory/wings/moth
 	abstract_type = /datum/sprite_accessory/wings/moth
 	icon = 'icons/mob/sprite_accessory/wings/moth_wings.dmi'
@@ -151,6 +155,7 @@
 /datum/sprite_accessory/wings/wide
 	abstract_type = /datum/sprite_accessory/wings/wide
 	icon = 'icons/mob/sprite_accessory/wings/wings_wide.dmi'
+	gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients45x34.dmi'
 	pixel_x = -7
 
 /datum/sprite_accessory/wings/wide/succubus
@@ -216,6 +221,7 @@
 /datum/sprite_accessory/wings/huge
 	abstract_type = /datum/sprite_accessory/wings/huge
 	icon = 'icons/mob/sprite_accessory/wings/wings_huge.dmi'
+	gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients96x34.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	pixel_x = -32
 	can_open = TRUE
@@ -251,6 +257,7 @@
 	icon = 'icons/mob/sprite_accessory/wings/wings_64x32.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 	pixel_x = -16
+	gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients64x32.dmi'
 
 /datum/sprite_accessory/wings/large/harpyswept
 	name = "Harpy (Swept)"

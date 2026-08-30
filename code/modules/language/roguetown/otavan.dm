@@ -1,6 +1,6 @@
 /datum/language/otavan
 	name = "Otavais"
-	desc = "The language of the Sovereignty of Otava, renowned for their chevaliers and for hosting the stricter sects of Psydon worshippers. A \"Language of Love\", as it has been called before."
+	desc = "\"(Spoken with ,v)\"The language of the Sovereignty of Otava, renowned for their chevaliers and for hosting the stricter sects of Psydon worshippers. A \"Language of Love\", as it has been called before.()"
 	speech_verb = "remarks"
 	ask_verb = "inquires"
 	exclaim_verb = "asserts"

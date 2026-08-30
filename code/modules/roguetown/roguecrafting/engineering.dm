@@ -51,6 +51,16 @@
 	ignoredensity = TRUE
 	skillcraft = /datum/skill/craft/engineering
 
+/datum/crafting_recipe/roguetown/engineering/bars/cemetery
+	name = "cemetery bars"
+	result = /obj/structure/bars/cemetery
+	reqs = list(/obj/item/ingot/iron = 1)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	ignoredensity = TRUE
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/engineering/shopbars
 	name = "shop bars"
 	result = /obj/structure/bars/shop
@@ -63,7 +73,7 @@
 /datum/crafting_recipe/roguetown/engineering/distiller
 	name = "copper distiller"
 	result = /obj/structure/fermentation_keg/distiller
-	reqs = list(/obj/item/rogueore/copper = 2, /obj/item/reagent_containers/glass/bucket/pot/stone = 1) // changed to be craftable by cooks and provisoners. this is rarely ever used.
+	reqs = list(/obj/item/ingot/copper = 2, /obj/item/reagent_containers/glass/bucket/pot/stone = 1)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
@@ -415,6 +425,18 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/signalflare
+	name = "signal flare canister (x4)"
+	category = "Ranged"
+	result = list(/obj/item/signal_flare,
+				  /obj/item/signal_flare,
+				  /obj/item/signal_flare,
+				  /obj/item/signal_flare)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/impactsmoke
 	name = "smoke grenades (x3)"

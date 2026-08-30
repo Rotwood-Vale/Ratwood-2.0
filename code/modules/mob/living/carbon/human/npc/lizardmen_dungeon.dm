@@ -5,6 +5,8 @@
 	aggressive=1
 	rude = TRUE
 	mode = NPC_AI_IDLE
+	smart_combatant = TRUE
+	special_attacker = TRUE
 	faction = list("psy_vault_guard")
 	ambushable = FALSE
 	cmode = 1
@@ -188,7 +190,7 @@
 	var/add_random_psy_vault_guard_psycross = rand(1,5)
 	switch(add_random_psy_vault_guard_psycross)
 		if(1)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/aalloy
+			wrists = /obj/item/clothing/neck/roguetown/psicross/decrepit
 		if(2)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/wood
 		if(3)
@@ -216,7 +218,7 @@
 		if(7)
 			beltl = /obj/item/rope/chain
 		if(8)
-			beltl = /obj/item/clothing/neck/roguetown/psicross/aalloy
+			beltl = /obj/item/clothing/neck/roguetown/psicross/decrepit
 		if(9)
 			beltl = /obj/item/clothing/neck/roguetown/psicross/wood
 		if(10)
@@ -242,7 +244,7 @@
 		if(7)
 			beltr = /obj/item/rope/chain
 		if(8)
-			beltr = /obj/item/clothing/neck/roguetown/psicross/aalloy
+			beltr = /obj/item/clothing/neck/roguetown/psicross/decrepit
 		if(9)
 			beltr = /obj/item/clothing/neck/roguetown/psicross/wood
 		if(10)

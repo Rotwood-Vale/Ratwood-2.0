@@ -7,6 +7,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/disciple
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(
 		TRAIT_CIVILIZEDBARBARIAN,
@@ -61,8 +62,7 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				H.change_stat(STATKEY_PER, 1)

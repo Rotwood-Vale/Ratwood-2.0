@@ -30,6 +30,10 @@
 		/datum/advclass/captain/infantry
 	)
 
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding,
+	)
+
 /datum/outfit/job/roguetown/captain
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
@@ -102,18 +106,15 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
 
-	virtue_restrictions = list(
-		/datum/virtue/utility/riding
-	)
 	extra_context = "This class gains Master skill in their weapon of choice."
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
 	..()
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
-		/obj/item/storage/keyring/sheriff = 1,
+		/obj/item/storage/keyring/kcaptain = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	if(H.mind)
@@ -142,7 +143,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/capsabre
 				l_hand = /obj/item/rogueweapon/shield/capbuckler
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/rogueweapon/scabbard/sword/royal
 			if("Glaive")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
 				r_hand = /obj/item/rogueweapon/halberd/capglaive

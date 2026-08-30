@@ -83,7 +83,7 @@
 	var/droning_repeat = TRUE
 	var/droning_wait = 0
 	var/droning_volume = 100
-	var/droning_channel = CHANNEL_BUZZ
+	var/droning_channel = CHANNEL_MUSIC
 	var/droning_frequency = 0
 
 	var/list/spookysounds = null
@@ -217,34 +217,24 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sets machine power levels in the area
  */
 /area/LateInitialize()
+	update_areasize()
 	update_beauty()
 
 /**
  * Register this area as belonging to a z level
  *
  * Ensures the item is added to the SSmapping.areas_in_z list for this z
- *
- * It also goes through every item in this areas contents and sets the area level z to it
- * breaking the exat first time it does this, this seems crazy but what would I know, maybe
- * areas don't have a valid z themself or something
  */
 /area/proc/reg_in_areas_in_z()
-	if(contents.len)
-		var/list/areas_in_z = SSmapping.areas_in_z
-		var/z
-		update_areasize()
-		for(var/i in 1 to contents.len)
-			var/atom/thing = contents[i]
-			if(!thing)
-				continue
-			z = thing.z
-			break
-		if(!z)
-			WARNING("No z found for [src]")
-			return
-		if(!areas_in_z["[z]"])
-			areas_in_z["[z]"] = list()
-		areas_in_z["[z]"] += src
+	if(!length(contents))
+		return
+	var/list/areas_in_z = SSmapping.areas_in_z
+	if(!z)
+		WARNING("No z found for [src]")
+		return
+	if(!areas_in_z["[z]"])
+		areas_in_z["[z]"] = list()
+	areas_in_z["[z]"] += src
 
 /**
  * Destroy an area and clean it up
@@ -518,6 +508,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	areasize = 0
 	for(var/turf/open/T in contents)
 		areasize++
+		CHECK_TICK
 
 /**
  * Causes a runtime error
@@ -569,3 +560,23 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(href_list["getdescription"])
 		if(detail_text)
 			to_chat(usr, span_info("[detail_text]"))
+
+/area/start
+	name = "start area"
+	icon_state = "start"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/space
+	icon_state = "space"
+	requires_power = TRUE
+	always_unpowered = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
+	flags_1 = CAN_BE_DIRTY_1

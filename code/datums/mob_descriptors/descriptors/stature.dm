@@ -335,6 +335,13 @@
 /datum/mob_descriptor/stature/widower
 	name = "Widower/Widow"
 
+// Gnoll stature — always returns "gnoll" regardless of pronouns
+/datum/mob_descriptor/stature/gnoll
+	name = "Gnoll"
+
+/datum/mob_descriptor/stature/gnoll/get_description(mob/living/described)
+	return "gnoll"
+
 /datum/mob_descriptor/stature/widower/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)

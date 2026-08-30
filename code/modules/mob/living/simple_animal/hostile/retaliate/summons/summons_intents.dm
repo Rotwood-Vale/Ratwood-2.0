@@ -19,3 +19,6 @@
 	chargetime = 0
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	swingdelay = 3
+
+/datum/intent/simple/elementalt2_unarmed/lesser_dryad
+	swingdelay = 2 // ~50% faster attack speed than the base dryad (swingdelay 3 → 2)

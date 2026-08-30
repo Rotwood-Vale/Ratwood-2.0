@@ -29,7 +29,7 @@
 	)
 	extra_context = "This subclass, exclusive to Psydonites and Inhumen, focuses on two styles of gameplay. \
 	You can choose a martial loadout, for: +2PER/+1STR, JMAN spears, EXPT shields. \
-	Alternatively, neglect your martial, for: +2PER/+1SPD, JMAN holy, EXPT staves, T2 miracles."
+	Alternatively, neglect your martial, for: +2PER/+1SPD, JMAN holy, EXPT polearms, T2 miracles."
 
 //This is gross, but it works. Better than a new define.
 /datum/outfit/job/roguetown/adventurer/dnomad
@@ -71,29 +71,32 @@
 				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 				H.change_stat(STATKEY_PER, 2)
 				H.change_stat(STATKEY_SPD, 1)//As above, 6 stats total.
-				H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, 3, TRUE)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				backl = /obj/item/storage/backpack/rogue/satchel
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				if(H.patron?.type == /datum/patron/inhumen/zizo)
+					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 
 //Just the nomad clothes.
 /obj/item/clothing/cloak/cape/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/neck/roguetown/coif/padded/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/nomad
 	name = "nomad shawl"
 	desc = "Thick and protective while remaining light and breezy. A staple of Zybantu nomads. Distinctly Dunewell..."
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB
 
 /obj/item/clothing/mask/rogue/ragmask/nomad
-	color = "#7c6d5c"
+	color = CLOTHING_DARKDRAB

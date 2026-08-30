@@ -33,7 +33,7 @@
     user.visible_message(span_warning("[user] shifts forward until [user.p_their()] locked belt slit settles against [target]'s bare cunt."))
 
 /datum/sex_action/chastityplay/scissor_cage_other/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds the slit of [user.p_their()] belt against [target]'s cunt — metal edge dragging where [target] is most sensitive..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds the slit of [user.p_their()] belt against [target]'s cunt — metal edge dragging where [target] is most sensitive..."))
     user.sexcon.outercourse_noise(target, TRUE)
     user.sexcon.perform_sex_action(user, 1.6, 0.5, TRUE)
     user.sexcon.perform_sex_action(target, 1.7, 0.5, TRUE)

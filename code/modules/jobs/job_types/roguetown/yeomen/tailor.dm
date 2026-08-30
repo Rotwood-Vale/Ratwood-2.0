@@ -39,7 +39,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/tanning = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/tanning = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
@@ -62,12 +62,18 @@
 		/obj/item/dye_brush,
 		/obj/item/recipe_book/sewing,
 		/obj/item/book/rogue/swatchbook,
-		/obj/item/recipe_book/leatherworking
+		/obj/item/recipe_book/leatherworking,
+		/obj/item/mini_flagpole/tailor,
 		)
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 	else if(should_wear_masc_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
+	if(SSmapping.current_map.map_name == "Desert Town")
+		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
+		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
+		head = /obj/item/clothing/head/roguetown/turban/fancypurple
+		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fittedclothing)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)

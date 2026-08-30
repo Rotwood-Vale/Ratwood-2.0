@@ -14,13 +14,13 @@
 	advclass_cat_rolls = list(CTAG_DUNGEONEER = 2)
 
 	tutorial = "Sometimes at night you stare into the vacant room and feel the loneliness of your existence crawl into whatever remains of your loathsome soul. \
-				You will never know hunger, thirst or want for anything with the mammons you make: Just as you’ll never forget the sounds a saw makes cutting through the bone, what a drowning man will gurgle out between the blood and teeth strangling his breath. \
+				You will never know hunger, thirst or want for anything with the mammons you make: Just as you'll never forget the sounds a saw makes cutting through the bone, what a drowning man will gurgle out between the blood and teeth strangling his breath. \
 				You are the monster that is called when civility has run it's course. Everything owed to the current ruler, serve your master well and answer to no other authority in your pursuits far away from Astrata's light. They shall fear."
 
 	announce_latejoin = FALSE
 	outfit = /datum/outfit/job/roguetown/dungeoneer
 	give_bank_account = 25
-	min_pq = 0
+	min_pq = 15
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -71,7 +71,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//Enough for majority of surgeries without grinding.
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 	)

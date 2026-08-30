@@ -35,7 +35,7 @@
 
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
         play_chastity_impact_sound(target, 'sound/combat/hits/bladed/genstab (1).ogg', 45, 45)
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] wrenches [target]'s spiked [get_chastity_device_name(target)] outward, the inward spikes raking [target.p_their()] trapped flesh on every pull..."))
+        user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] wrenches [target]'s spiked [get_chastity_device_name(target)] outward, the inward spikes raking [target.p_their()] trapped flesh on every pull..."))
         user.sexcon.perform_sex_action(target, 0.25, 6.6, TRUE)
         user.sexcon.try_do_pain_scream(target, 6.6)
         target.sexcon.handle_passive_ejaculation(user)
@@ -44,7 +44,7 @@
             _try_spiked_catastrophe(user, target, "pull")
         return
     play_chastity_impact_sound(target, list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg'), 40, 40)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] hauls back on [target]'s [get_chastity_device_name(target)], metal biting and dragging against everything it's pressing on..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] hauls back on [target]'s [get_chastity_device_name(target)], metal biting and dragging against everything it's pressing on..."))
     user.sexcon.perform_sex_action(target, 0.6, 4, TRUE)
     user.sexcon.try_do_pain_scream(target, 4)
     target.sexcon.handle_passive_ejaculation(user)

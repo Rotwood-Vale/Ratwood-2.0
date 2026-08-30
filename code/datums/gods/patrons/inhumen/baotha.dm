@@ -3,6 +3,8 @@
 	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
 	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, having been kept by the Naledi as a concubine. Until one dae, She was consumed by Her depravity and addiction, stealing a shard of SYON from Her captors and ascending to godhood. Her followers desire only to experience mind-rotting pleasures."
 	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
+	virtues = "Lust, Gluttony, Thrill-Seeking"
+	sins = "Chastity, Temperance, Gloom"
 	mob_traits = list(TRAIT_DEPRAVED, TRAIT_CRACKHEAD)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/baothavice					= CLERIC_T0,

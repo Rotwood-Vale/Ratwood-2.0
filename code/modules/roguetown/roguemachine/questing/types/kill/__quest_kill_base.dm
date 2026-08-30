@@ -15,7 +15,10 @@
 		if(!spawn_turf)
 			continue
 
-		var/mob/living/new_mob = new target_mob_type(spawn_turf)
+		var/obj/effect/quest_spawn/spawn_effect = new /obj/effect/quest_spawn(spawn_turf)
+		var/mob/living/new_mob = new target_mob_type(spawn_effect)
+		spawn_effect.contained_atom = new_mob
+
 		new_mob.faction |= "quest"
 		new_mob.AddComponent(/datum/component/quest_object/kill, src)
 		add_tracked_atom(new_mob)

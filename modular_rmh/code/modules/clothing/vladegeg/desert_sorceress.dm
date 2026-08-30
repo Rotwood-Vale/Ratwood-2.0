@@ -1,4 +1,4 @@
-/obj/item/clothing/shirt/undershirt/desert_sorceress
+/obj/item/clothing/suit/roguetown/shirt/desert_sorceress
 	name = "desert sorceress top"
 	desc = "A revealing silk-and-linen top worn by desert sorceresses, designed to keep the body cool while allowing unrestricted movement and spellcasting."
 	icon = 'modular_rmh/icons/clothing/vladegeg/desert_sorceress.dmi'
@@ -37,7 +37,7 @@
 	reqs = list(
 		/obj/item/natural/cloth = 2,
 		/obj/item/natural/fibers = 1)
-	result = /obj/item/clothing/shirt/undershirt/desert_sorceress
+	result = /obj/item/clothing/suit/roguetown/shirt/desert_sorceress
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/deserts_skirt
@@ -59,7 +59,7 @@
 
 /datum/loadout_item/deserts_top
 	name = "desert sorceress top"
-	path = /obj/item/clothing/shirt/undershirt/desert_sorceress
+	path = /obj/item/clothing/suit/roguetown/shirt/desert_sorceress
 
 /datum/loadout_item/deserts_skirt
 	name = "desert sorceress skirt"

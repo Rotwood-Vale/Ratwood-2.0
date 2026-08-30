@@ -29,7 +29,7 @@
 			chastity_volume = 30
 		if(SEX_FORCE_HIGH)
 			chastity_volume = 40
-		if(SEX_FORCE_EXTREME)
+		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			chastity_volume = 50
 
 	playsound(sound_target, chastity_item.chastity_move_sound ? chastity_item.chastity_move_sound : SFX_JINGLE_BELLS, chastity_volume, TRUE, -2, ignore_walls = FALSE)

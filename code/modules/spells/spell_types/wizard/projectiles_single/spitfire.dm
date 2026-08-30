@@ -43,7 +43,7 @@
 	exp_light = 0
 	exp_flash = 0
 	exp_fire = 0
-	damage = 20
+	damage = 15
 	npc_simple_damage_mult = 2 // Makes it more effective against NPCs.
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
 	damage_type = BURN
@@ -54,7 +54,7 @@
 
 /obj/projectile/magic/aoe/fireball/spitfire/arc
 	name = "Arced Spitfire"
-	damage = 15 // 25% damage penalty
+	damage = 12 // 25% damage penalty
 	arcshot = TRUE
 
 /obj/projectile/magic/aoe/fireball/spitfire/on_hit(target)

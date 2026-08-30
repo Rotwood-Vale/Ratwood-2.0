@@ -10,10 +10,10 @@
 	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER)//GET THIS SHIT OFF OF ME!!!!!
 	subclass_stats = list(
 		STATKEY_INT = 2,
-		STATKEY_LCK = 2,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
+		STATKEY_STR = 1,
+		STATKEY_LCK = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,//He works with explosives. And firearms are otherwise unobtanium. Just fluff.
@@ -21,18 +21,20 @@
 		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,//For the shovel...
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,//For the backup knives.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,//For when his backup knives run out of backups.
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,//Sadly, for Joe, he has less than stellar athletics.
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,//Point of the class.
 		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN,//Contraptions, explosives, etc.
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,//Repairs, really. But dabbling.
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,//As above.
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,//Yet again.
+		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
@@ -84,7 +86,7 @@
 	max_targets = 0
 	cast_without_targets = TRUE
 	antimagic_allowed = TRUE
-	associated_skill = /datum/skill/craft/traps
+	associated_skill = /datum/skill/craft/crafting
 	invocations = list("Measure twice, set once...")
 	invocation_type = "whisper"
 	miracle = FALSE

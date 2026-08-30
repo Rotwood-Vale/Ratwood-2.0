@@ -25,6 +25,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar,
@@ -45,8 +46,11 @@
 	if(modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
-	for(var/datum/wound/facial/ears/tongue_wound as anything in M.get_wounds())
+	for(var/datum/wound/facial/ears/tongue_wound in M.get_wounds())
 		qdel(tongue_wound)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_tongue_noise_verbs()
 
 /obj/item/organ/tongue/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -54,6 +58,9 @@
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 	UnregisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	M.RegisterSignal(M, COMSIG_MOB_SAY, TYPE_PROC_REF(/mob/living/carbon, handle_tongueless_speech))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_tongue_noise_verbs()
 
 /obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	return is_type_in_typecache(dt, languages_possible)
@@ -185,8 +192,7 @@
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/monkey))
+		/datum/language/draconic))
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
 	. = ..()

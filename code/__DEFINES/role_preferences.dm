@@ -17,6 +17,7 @@
 #define ROLE_ASPIRANT			"Aspirant"
 #define ROLE_LICH				"Lich"
 #define ROLE_DREAMWALKER		"Dreamwalker"
+#define ROLE_GNOLL				"Gnoll"
 #define ROLE_ASCENDANT			"Ascendant"
 #define ROLE_WRETCH				"Wretch"
 #define ROLE_UNBOUND_DEATHKNIGHT "Unbound Death Knight"
@@ -34,7 +35,6 @@
 #define ROLE_CULTIST			"Cultist"
 #define ROLE_BLOB				"Blob"
 #define ROLE_NINJA				"Space Ninja"
-#define ROLE_MONKEY				"Monkey"
 #define ROLE_ABDUCTOR			"Abductor"
 #define ROLE_REVENANT			"Revenant"
 #define ROLE_DEVIL				"Devil"
@@ -66,6 +66,7 @@ GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_VAMPIRE = /datum/antagonist/vampire,
 	ROLE_LICH = /datum/antagonist/lich,
 	ROLE_DREAMWALKER = /datum/antagonist/dreamwalker,
+	ROLE_GNOLL = /datum/antagonist/gnoll,
 	ROLE_THIEVESGUILD = /datum/antagonist/thievesguild,
 	ROLE_ASSASSIN = /datum/antagonist/assassin,
 ))

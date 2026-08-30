@@ -3,6 +3,8 @@
 	domain = "Justice, Battle, Glory, Righteous Fury"
 	desc = "The Glorious Justice plays as foil to Astrata's Order, preventing the world from being ruled by the Sun's Tyranny. He is an impartial God who exists solely to enforce Divine Justice. His followers are often misguided in their pursuit of such."
 	worshippers = "Warriors, Mercenaries, Knights, Seekers of Justice"
+	virtues = "Fairness, Combat Mastery, Courage"
+	sins = "Cowardice, Sadism, Sexual Violence"
 	mob_traits = list(TRAIT_SHARPER_BLADES)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/tug_of_war			= CLERIC_T0,
@@ -59,9 +61,9 @@
 	if(istype(target.get_active_held_item(), /obj/item/rogueweapon))
 		bonus += 0.5
 
-	if(target == user && target.blood_volume <= BLOOD_VOLUME_OKAY && COOLDOWN_FINISHED(src, lesser_heal_buff_cooldown))
+	if(target == user && target.get_blood_volume() <= BLOOD_VOLUME_OKAY && COOLDOWN_FINISHED(src, lesser_heal_buff_cooldown))
 		user.emote("warcry")
-		user.blood_volume += BLOOD_VOLUME_SURVIVE / 3
+		user.adjust_blood_volume(BLOOD_VOLUME_SURVIVE / 3)
 		bonus += 2
 		COOLDOWN_START(src, lesser_heal_buff_cooldown, 30 SECONDS)
 

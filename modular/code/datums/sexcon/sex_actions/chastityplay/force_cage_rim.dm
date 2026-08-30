@@ -30,7 +30,7 @@
     user.visible_message(span_warning("[user] grabs [target] and shoves [target.p_their()] face beneath [user.p_their()] chastity shield with no ceremony!"))
 
 /datum/sex_action/chastityplay/force_cage_rim/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] keeps [target]'s face wedged beneath [user.p_their()] anal shield, using the hold to steer every movement of [target.p_their()] tongue..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] keeps [target]'s face wedged beneath [user.p_their()] anal shield, using the hold to steer every movement of [target.p_their()] tongue..."))
     user.sexcon.oralcourse_noise(target)
     user.sexcon.perform_sex_action(user, 1.3, 0, TRUE)
     user.sexcon.perform_sex_action(target, 0, 2.5, FALSE)

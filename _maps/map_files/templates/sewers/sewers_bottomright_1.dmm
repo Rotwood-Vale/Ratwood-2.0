@@ -28,7 +28,7 @@
 /area/rogue/under/town/sewer)
 "h" = (
 /obj/structure/table/wood,
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /obj/item/needle/thorn,
 /obj/item/needle/thorn,
 /obj/item/needle/thorn,
@@ -37,7 +37,7 @@
 "i" = (
 /obj/structure/table/church,
 /obj/structure/table/church/m,
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -82,7 +82,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "t" = (
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "u" = (

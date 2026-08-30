@@ -26,7 +26,7 @@
 	user.visible_message(span_warning("[user] forces [target]'s to gobble on \the [dildo]..."))
 
 /datum/sex_action/toy_other_oral/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to suck on the dildo..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to suck on the dildo..."))
 	user.sexcon.oralcourse_noise(target)
 
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
@@ -52,9 +52,9 @@
 
 /datum/sex_action/toy_other_oral/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!oxy_damage)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s mouth."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s mouth."))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s throat."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s throat."))
 		user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.oralcourse_noise(target)
 	user.sexcon.do_thrust_animate(target)

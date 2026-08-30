@@ -14,7 +14,7 @@
 	tutorial = "Odd-jobs, running messages, fixing dents and talking to locals; the Guard can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \
 				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
 				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
-	
+
 	outfit = /datum/outfit/job/roguetown/rookie
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE
@@ -53,7 +53,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/shields = 2,
@@ -70,8 +70,8 @@
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/footman/pre_equip(mob/living/carbon/human/H)
@@ -82,12 +82,16 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
-	if(SSmapping.config.map_name == "Rockhill")
+	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/
+	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
 		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	else
-		cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
-		head = /obj/item/clothing/head/roguetown/helmet/kettle/
+	if(SSmapping.current_map.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/citywatch/janissary
+		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger,
 		/obj/item/storage/belt/rogue/pouch,
@@ -121,7 +125,7 @@
 	subclass_stats = list(
 		STATKEY_SPD = 1,
 		STATKEY_PER = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/bows = 3,
@@ -138,8 +142,8 @@
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/skirmisher/pre_equip(mob/living/carbon/human/H)
@@ -150,12 +154,16 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
-	if(SSmapping.config.map_name == "Rockhill")
+	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
+	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
 		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	else
-		cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
-		head = /obj/item/clothing/head/roguetown/helmet/kettle/
+	if(SSmapping.current_map.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/citywatch/janissary
+		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger,
 		/obj/item/storage/belt/rogue/pouch,
@@ -179,7 +187,7 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Sling")
 				beltr = /obj/item/quiver/sling/iron
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling 
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 
 		switch(armor_choice)
 			if("Light Armor")

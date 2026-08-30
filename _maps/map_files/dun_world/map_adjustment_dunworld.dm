@@ -7,7 +7,29 @@
 /datum/map_adjustment/template/dunworld
 	map_file_name = "dun_world.dmm"
 	realm_name = "Rotwood Vale"
-	blacklist = list(
+	blacklist = list(//I had wanted the map variable in the roles themselves to bar them from non-desert maps but it still shows up in the Latejoin menu so I'm doing this just to keep it clear)
+		/datum/job/roguetown/cataphract,
+		// /datum/job/roguetown/vizier,
+		/datum/job/roguetown/headslave,
+		// /datum/job/roguetown/sheikh,
+		/datum/job/roguetown/janissary,
+		/datum/job/roguetown/janissarysergeant,
+		/datum/job/roguetown/azeb,
+		/datum/job/roguetown/azebagha,
+		/datum/job/roguetown/slavemaster,
+		/datum/job/roguetown/slaver,
+		/datum/job/roguetown/rockhillslave,
+		/datum/job/roguetown/baron,
+		/datum/job/roguetown/baron_retainer,
+		/datum/job/roguetown/adventurer/courtslave,
+		/datum/job/roguetown/dtchaplain,
+		
+		/datum/job/roguetown/tribalchieftain,
+		/datum/job/roguetown/tribalshaman,
+		/datum/job/roguetown/tribalguard,
+		/datum/job/roguetown/tribalrabble,
+		/datum/job/roguetown/tribalvillager,
+		
 		/datum/job/roguetown/vanguard,//more wardens
 		/datum/job/roguetown/guardsman,//MAA do double duty here
 		/datum/job/roguetown/watchcaptain,//sergeant does the job here
@@ -17,6 +39,7 @@
 		/datum/job/roguetown/warden = 6,
 	)
 	title_adjust = list(
+		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
 	)
 	tutorial_adjust = list(
 		/datum/job/roguetown/rookie = "Odd-jobs, running messages, fixing dents and talking to locals; the Men at Arms can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \

@@ -48,13 +48,6 @@
 
 	var/voicecolor_override
 
-	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/priority_overlays
-	/// a very temporary list of overlays to remove
-	var/list/remove_overlays
-	/// a very temporary list of overlays to add
-	var/list/add_overlays
-
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
 	var/list/managed_vis_overlays
 	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
@@ -118,11 +111,8 @@
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -181,7 +171,7 @@
 
 	if (opacity && isturf(loc))
 		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+		T.opaque_atom_count++
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
@@ -232,7 +222,6 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -268,9 +257,6 @@
 	if(!is_centcom_level(T.z))//if not, don't bother
 		return FALSE
 
-	//Check for centcom itself
-	if(istype(T.loc, /area/centcom))
-		return TRUE
 
 /**
  * Ensure a list of atoms/reagents exists inside this atom
@@ -442,7 +428,29 @@
 			else
 				. += span_danger("It's empty.")
 
+		//SNIFFING
+		if (user.zone_selected == BODY_ZONE_PRECISE_NOSE && get_dist(src, user) <= 1)
+			// if atom's path is item/reagent_containers/glass/carafe
+			var/is_closed = FALSE
+			if(istype(src, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/container = src
+				is_closed = !container.spillable
+			if(is_closed == FALSE && reagents.total_volume) // if the container is open, and there's liquids in there
+				user.visible_message(span_info("[user] takes a whiff of [src]..."), span_info("I take a whiff of [src]..."))
+				. += span_notice("I smell [src.reagents.generate_scent_message()].")
+				if (HAS_TRAIT(user, TRAIT_ALCHEMY_EXPERT))
+					var/full_reagents = ""
+					for (var/datum/reagent/R in reagents.reagent_list)
+						if (R.volume > 0)
+							if (full_reagents)
+								full_reagents += ", "
+							full_reagents += "[LOWER_TEXT(R.name)]"
+					. += span_notice("My expert nose lets me distinguish this liquid as [full_reagents].")
+
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
+/atom/proc/get_mechanics_examine(mob/user)
+	return list()
 
 //taking in the vanderline update on apperance, name and desc processes
 /atom/proc/vand_update_appearance(updates = ALL)
@@ -497,11 +505,13 @@
  * An atom we are buckled or is contained within us has tried to move
  *
  * Default behaviour is to send a warning that the user can't move while buckled as long
- * as the buckle_message_cooldown has expired (50 ticks)
+ * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (25 ticks)
  */
-/atom/proc/relaymove(mob/user)
+/atom/proc/relaymove(mob/user, direction)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
+		return
 	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+		buckle_message_cooldown = world.time + 25
 		to_chat(user, "<span class='warning'>I should try resisting.</span>")
 	return
 
@@ -999,10 +1009,6 @@
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return SEND_SIGNAL(src, COMSIG_ATOM_ANALYSER_ACT, user, I)
-
-///Generate a tag for this atom
-/atom/proc/GenerateTag()
-	return
 
 /// Generic logging helper
 /atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)

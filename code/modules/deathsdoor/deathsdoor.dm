@@ -125,8 +125,8 @@ GLOBAL_VAR(deaths_door_exit)//turf at necra's shrine on each map
 
 /obj/structure/deaths_door_portal
 	name = "death's door"
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "underworldportal"
+	icon = 'icons/mob/actions/necramiracles.dmi'
+	icon_state = "necraportal"
 	anchored = TRUE
 	density = FALSE
 	var/turf/destination

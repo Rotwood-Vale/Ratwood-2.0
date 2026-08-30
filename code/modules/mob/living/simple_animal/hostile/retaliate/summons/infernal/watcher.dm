@@ -84,3 +84,7 @@
 	update_icon()
 	spill_embedded_objects()
 	qdel(src)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher/awaken_summon(mob/living/carbon/human/master, ckey)
+	..()
+	ranged_cooldown = 6 SECONDS

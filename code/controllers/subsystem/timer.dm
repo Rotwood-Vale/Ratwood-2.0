@@ -224,7 +224,7 @@ SUBSYSTEM_DEF(timer)
 
 //formated this way to be runtime resistant
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
-	. = "Timer: [TE]"
+	. = TE ? TE.get_name() : "Timer: NULL"
 	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
 	if(TE.spent)
 		. += ", SPENT([TE.spent])"
@@ -318,7 +318,6 @@ SUBSYSTEM_DEF(timer)
 	var/hash
 	var/list/flags
 	var/spent = 0 //time we ran the timer.
-	var/name //for easy debugging.
 	//cicular doublely linked list
 	var/datum/timedevent/next
 	var/datum/timedevent/prev
@@ -346,8 +345,6 @@ SUBSYSTEM_DEF(timer)
 		else
 			nextid++
 		SStimer.timer_id_dict[id] = src
-
-	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
 	if ((timeToRun < world.time || timeToRun < SStimer.head_offset) && !(flags & TIMER_CLIENT_TIME))
 		CRASH("Invalid timer state: Timer created that would require a backtrack to run (addtimer would never let this happen): [SStimer.get_timer_debug_string(src)]")
@@ -450,10 +447,23 @@ SUBSYSTEM_DEF(timer)
 ///Returns a string of the type of the callback for this timer
 /datum/timedevent/proc/getcallingtype()
 	. = "ERROR"
+	if (!callBack)
+		return
 	if (callBack.object == GLOBAL_PROC)
 		. = "GLOBAL_PROC"
 	else
 		. = "[callBack.object.type]"
+
+/**
+ * Builds the human readable description of this timer.
+ *
+ * Built on demand rather than stored on creation: this is only read by VV and by timer debug logging,
+ * and generating it for every timer made it one of the most expensive procs in the game.
+ */
+/datum/timedevent/proc/get_name()
+	if (!callBack)
+		return "Timer: [id] (\ref[src]), TTR: [timeToRun], NO CALLBACK"
+	return "Timer: [id] (\ref[src]), TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")), ", ")], callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
 /**
  * Create a new timer and insert it in the queue

@@ -45,6 +45,8 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(modifiers["right"] && A.attack_ghost_secondary(src))
+		return
 
 	if(world.time <= next_move)
 		return
@@ -65,3 +67,14 @@
 
 /mob/living/attack_ghost(mob/dead/observer/user)
 	return ..()
+
+/// Right click as a ghost. Admins have the orbit menu, everyone else uses this to watch a HUD.
+/atom/proc/attack_ghost_secondary(mob/dead/observer/user)
+	return FALSE
+
+/mob/living/attack_ghost_secondary(mob/dead/observer/user)
+	if(user.observetarget == src) //A second right click gives them their own eyes back.
+		user.reset_perspective(null)
+		return TRUE
+	user.ManualFollow(src) //Orbit as well, the way the orbit menu does with auto-observe on.
+	return user.do_observe(src)

@@ -37,7 +37,7 @@
 /area/rogue/under/town/sewer)
 "g" = (
 /obj/structure/bed/rogue/shit,
-/obj/machinery/light/rogue/wallfire/candle,
+/obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "h" = (

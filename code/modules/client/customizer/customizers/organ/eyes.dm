@@ -70,7 +70,10 @@
 	var/second_color = "#111111"
 
 /datum/customizer/organ/eyes/humanoid
-	customizer_choices = list(/datum/customizer_choice/organ/eyes/humanoid)
+	customizer_choices = list(
+		/datum/customizer_choice/organ/eyes/humanoid,
+		/datum/customizer_choice/organ/eyes/moth,
+		)
 	default_choice = /datum/customizer_choice/organ/eyes/humanoid
 
 /datum/customizer_choice/organ/eyes/humanoid
@@ -80,4 +83,5 @@
 	default_choice = /datum/customizer_choice/organ/eyes/moth
 
 /datum/customizer_choice/organ/eyes/moth
+	name = "Fluvian Eyes"
 	organ_type = /obj/item/organ/eyes/moth

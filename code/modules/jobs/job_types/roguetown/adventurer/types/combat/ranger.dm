@@ -28,7 +28,6 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 	)
@@ -47,6 +46,7 @@
 	cloak = /obj/item/clothing/cloak/raincloak/green
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/bait = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
@@ -68,7 +68,7 @@
 
 /datum/advclass/ranger/wayfarer
 	name = "Wayfarer"
-	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And The Vale is a prime paycheck.."
+	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And these lands are a prime paycheck.."
 	outfit = /datum/outfit/job/roguetown/adventurer/assassin
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander.ogg'
 	subclass_languages = list(/datum/language/thievescant)
@@ -87,7 +87,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
@@ -109,6 +109,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/quiver/bolts
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
@@ -116,11 +117,11 @@
 	H.set_blindness(0)
 
 /datum/advclass/ranger/bombadier
-	name = "Bombadier"
+	name = "Bombardier"
 	tutorial = "Bombs? You've got them. Plenty of them - and the skills to make more. You've spent years training under skilled alchemists and have found the perfect mix to create some chaos - now go blow something up!"
 	outfit = /datum/outfit/job/roguetown/adventurer/bombadier
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ALCHEMY_EXPERT) // Bombardier get an exception - alchemy is part of the gimmick.
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ALCHEMY_EXPERT, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_BOMBER_EXPERT) // Bombardier get an exception - alchemy is part of the gimmick.
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 2,
@@ -133,7 +134,7 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	)
@@ -151,10 +152,11 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/bmbstrap/firebomb
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/mace/cudgel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
-		/obj/item/bomb = 4,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)

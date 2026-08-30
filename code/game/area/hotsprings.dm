@@ -1,4 +1,4 @@
-/area/rogue/outdoors/rtfield/eora
+/area/rogue/outdoors/rtfield/eora//filepath is referenced elsewhere
 	name = "Eoran Shrine"
 	icon_state = "eora"
 	soundenv = 19

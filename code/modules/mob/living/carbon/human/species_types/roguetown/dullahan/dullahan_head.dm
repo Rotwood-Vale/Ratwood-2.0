@@ -24,6 +24,10 @@
 	/// Stored traits removed by traits_to_remove
 	var/list/traits_removed = list()
 
+/obj/item/bodypart/head/dullahan/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_PERSIST_WOUNDS, BODYPART_TRAIT)
+
 /obj/item/bodypart/head/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
 	src.original_owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
@@ -630,7 +634,7 @@
 		var/keenears
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			keenears = HAS_TRAIT(H, TRAIT_KEENEARS)
+			keenears = H.has_keen_ears()
 			var/name_to_highlight = H.nickname
 			if(name_to_highlight && name_to_highlight != "" && name_to_highlight != "Please Change Me")	//We don't need to highlight an unset or blank one.
 				highlighted_message = replacetext_char(message, name_to_highlight, "<b><font color = #[H.highlight_color]>[name_to_highlight]</font></b>")

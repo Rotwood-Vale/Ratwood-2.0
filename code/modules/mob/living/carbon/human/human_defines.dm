@@ -95,8 +95,6 @@
 	dodgetime = 0
 
 	var/list/possibleclass
-	var/advsetup = 0
-
 
 //	var/alignment = ALIGNMENT_TN
 
@@ -129,6 +127,7 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null
 	var/ooc_extra
@@ -136,6 +135,7 @@
 	var/ooc_extra_img_link
 	var/rumour = null
 	var/noble_gossip = null
+	var/has_gnoll_scent_this_round = FALSE
 	var/song_title
 	var/song_artist
 	var/received_resident_key = FALSE
@@ -208,3 +208,5 @@
 	var/time_flags = 0
 	var/heatstroke_timer_id
 	var/hypothermia_timer_id
+
+	var/branded = FALSE // Saves time during examine if character hasn't been branded at all

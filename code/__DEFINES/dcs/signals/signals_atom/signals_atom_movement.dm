@@ -62,6 +62,8 @@
 #define COMSIG_MOVABLE_KEYBIND_FACE_DIR "keybind_face_dir"
 	///ignores the movement lock key, used for turning while strafing in a mech
 	#define COMSIG_IGNORE_MOVEMENT_LOCK (1<<0)
+///from base of client/key_down(): (dir). A single fresh press of a movement key while the movement lock is held, camera-corrected. Unlike COMSIG_MOVABLE_KEYBIND_FACE_DIR, fires once per press rather than every tick the key is held.
+#define COMSIG_MOB_MOVEMENT_LOCKED_KEY_PRESSED "mob_movement_locked_key_pressed"
 
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf

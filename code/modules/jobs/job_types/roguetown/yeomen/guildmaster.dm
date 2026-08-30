@@ -12,7 +12,7 @@
 	social_rank = SOCIAL_RANK_YEOMAN
 	allowed_races = ACCEPTED_RACES
 
-	tutorial = "You are the leader of the Rotwood Vale Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
+	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
 	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 
 	outfit = /datum/outfit/job/roguetown/guildmaster
@@ -35,7 +35,7 @@
 
 /datum/advclass/guildmaster
 	name = "Guildmaster"
-	tutorial = "You are the leader of the Vale Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
+	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
 	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 	outfit = /datum/outfit/job/roguetown/guildmaster/basic
 	category_tags = list(CTAG_GUILDSMASTER)
@@ -64,7 +64,6 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
@@ -90,6 +89,8 @@
 			/obj/item/recipe_book/blacksmithing = 1,
 			/obj/item/clothing/mask/rogue/spectacles/golden = 1,
 			/obj/item/contraption/linker/master = 1,
+			/obj/item/mini_flagpole/blacksmith = 1,
+			/obj/item/mini_flagpole/artificer = 1,
 			)
 		belt = /obj/item/storage/belt/rogue/leather
 		beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
@@ -112,7 +113,7 @@
 	set category = "GUILDMASTER"
 	if(stat)
 		return
-	var/announcementinput = input("Bellow to the vale", "Make an Announcement") as text|null
+	var/announcementinput = input("Bellow to the realm", "Make an Announcement") as text|null
 	if(announcementinput)
 		if(!src.can_speak_vocal())
 			to_chat(src,span_warning("I can't speak!"))

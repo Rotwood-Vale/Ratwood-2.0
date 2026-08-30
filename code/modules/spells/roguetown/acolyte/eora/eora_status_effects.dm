@@ -156,15 +156,15 @@
 	M.adjustOxyLoss(-healing_power)
 	M.adjustCloneLoss(-healing_power)
 
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = min(M.blood_volume + healing_power * 2, BLOOD_VOLUME_NORMAL)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.set_blood_volume(min(M.get_blood_volume() + healing_power * 2, BLOOD_VOLUME_NORMAL))
 
 	var/list/wounds = M.get_wounds()
 	if(length(wounds))
 		M.heal_wounds(healing_power)
 		M.update_damage_overlays()
 
-	if(M.getBruteLoss() < 50 && M.getFireLoss() < 50 && M.getToxLoss() < 50 && M.getOxyLoss() < 50 && M.blood_volume >= BLOOD_VOLUME_SAFE)
+	if(M.getBruteLoss() < 50 && M.getFireLoss() < 50 && M.getToxLoss() < 50 && M.getOxyLoss() < 50 && M.get_blood_volume() >= BLOOD_VOLUME_SAFE)
 
 		new /obj/effect/temp_visual/heal(get_turf(M), "#8A2BE2")
 
@@ -201,22 +201,24 @@
 	var/outline_colour ="#42001f"
 	var/datum/weakref/source_ref
 
-/datum/status_effect/debuff/pomegranate_aura/on_creation(mob/living/owner, tree)
-	source_ref = WEAKREF(tree)
-	var/str_change = 0
-	var/perc_change = 0
+/datum/status_effect/debuff/pomegranate_aura/on_creation(mob/living/carbon/owner, tree)
+	if(!owner)
+		return ..()
 
-	if(owner.patron.type != /datum/patron/divine/eora)
-		str_change = -8
-		perc_change = -8
-	else if (!(owner.get_skill_level(/datum/skill/magic/holy) >= 1))
-		//Eorans get a slight edge.
-		str_change = -6
-		perc_change = -6
-	else
-		//Devotees to Eora get a strong edge.
-		str_change = -4
-		perc_change = -2
+	source_ref = WEAKREF(tree)
+	var/str_change = -8
+	var/perc_change = -8
+
+	if(owner?.head?.type == /obj/item/clothing/head/peaceflower)
+		str_change += 1
+		perc_change += 1
+
+	if(owner.patron.type == /datum/patron/divine/eora)
+		str_change += 2
+		perc_change += 2
+		if(owner.get_skill_level(/datum/skill/magic/holy) >= 1)
+			str_change += 2
+			perc_change += 4
 
 	effectedstats = list(
 		STATKEY_STR = str_change,
@@ -238,6 +240,10 @@
 	to_chat(owner, span_warning("As I leave the influence of the tree, my strength returns."))
 
 /datum/status_effect/debuff/pomegranate_aura/tick()
+	if(HAS_TRAIT(owner, TRAIT_EORAN_CALM))
+		owner.remove_status_effect(src)
+		return
+
 	// Check if source tree still exists
 	var/obj/structure/eoran_pomegranate_tree/tree = source_ref?.resolve()
 	if(QDELETED(tree) || !istype(tree))
@@ -265,7 +271,7 @@
 
 	// There is no beauty in death. Feed my tree.
 	if(owner.stat == DEAD)
-		owner.blood_volume = max(10, owner.blood_volume - 10)
+		owner.set_blood_volume(max(10, owner.get_blood_volume() - 10))
 
 /atom/movable/screen/alert/status_effect/pomegranate_aura
 	name = "Eora's Blessing"

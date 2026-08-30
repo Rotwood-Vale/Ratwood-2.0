@@ -178,6 +178,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_mem_log = "[GLOB.log_directory]/memory_stats.log"
 	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.character_list_log = "[GLOB.log_directory]/character_list.log"
 	GLOB.hunted_log = "[GLOB.log_directory]/hunted.log"
@@ -194,6 +195,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
 	start_log(GLOB.world_qdel_log)
+	start_log(GLOB.world_mem_log)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)

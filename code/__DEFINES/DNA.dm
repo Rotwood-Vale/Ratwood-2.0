@@ -112,6 +112,7 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
+#define INVISBLOOD		8
 /// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9
@@ -133,7 +134,8 @@
 #define NO_ORGAN_FEATURES			22
 #define NO_BODYPART_FEATURES			23
 #define LAMIAN_TAIL		24
-#define HARPY			25
+#define SPIDER_ABDOMEN	25
+#define HARPY			26
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
@@ -173,6 +175,7 @@
 #define PENIS_TYPE_BARBED_KNOTTED 8
 #define PENIS_TYPE_TENTACLE 9
 #define PENIS_TYPE_TAPERED_KNOTTED 10
+#define PENIS_TYPE_EQUINE_KNOTTED 11
 
 #define SHEATH_TYPE_NONE 0
 #define SHEATH_TYPE_NORMAL 1

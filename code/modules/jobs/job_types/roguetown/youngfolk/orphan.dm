@@ -32,7 +32,8 @@
 		/datum/advclass/vagabond_runner,
 		/datum/advclass/vagabond_scholar,
 		/datum/advclass/vagabond_wanted,
-		/datum/advclass/vagabond_unraveled
+		/datum/advclass/vagabond_unraveled,
+		/datum/advclass/vagabond_busker
 	)
 
 /datum/job/roguetown/orphan/New()

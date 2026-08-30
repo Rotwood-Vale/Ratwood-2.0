@@ -3,6 +3,7 @@
 	desc = "A cream that can be used to dye and style hair with various colors and gradients."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "cream"
+	dropshrink = 0.8
 	w_class = WEIGHT_CLASS_SMALL
 	var/uses_remaining = 30
 	grid_width = 32

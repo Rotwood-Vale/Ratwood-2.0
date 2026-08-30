@@ -120,7 +120,11 @@
 			if(mmb_intent.get_chargetime())
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
+					stop_attack()
 					return
+	if(modifiers["shift"] && modifiers["ctrl"] && modifiers["left"])
+		A.MiddleMouseDrop_T(src, src)
+		return
 	if(modifiers["left"] && atkswinging == "left")
 		if(active_hand_index == 1)
 			used_hand = 1
@@ -154,13 +158,6 @@
 				return
 
 
-//	if(modifiers["shift"] && modifiers["middle"])
-//		changeNext_move(CLICK_CD_MELEE)
-//		ShiftMiddleClickOn(A)
-//		return
-//	if(modifiers["shift"] && modifiers["ctrl"])
-//		CtrlShiftClickOn(A)
-//		return
 	if(modifiers["shift"] && modifiers["right"])
 		ShiftRightClickOn(A, params)
 		return
@@ -198,9 +195,6 @@
 
 	if(!atkswinging)
 		face_atom(A)
-
-	if(!modifiers["catcher"] && A.IsObscured())
-		return
 
 	if(dir == get_dir(A,src)) //they are behind us and we are not facing them
 		return
@@ -374,6 +368,10 @@
 			changeNext_move(adf)
 		UnarmedAttack(A,1,params)
 
+	break_invisibility()
+
+///Drops any active invisibility spell. Call from anything that should give away a hidden mob.
+/mob/proc/break_invisibility()
 	var/invis_timer = mob_timers[MT_INVISIBILITY]
 	if(invis_timer > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
@@ -400,25 +398,6 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.stamina_add(used_intent.misscost)
-
-//Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
-/atom/proc/IsObscured()
-	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
-		return FALSE
-	var/turf/T = get_turf_pixel(src)
-	if(!T)
-		return FALSE
-	for(var/atom/movable/AM in T)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
-			return TRUE
-	return FALSE
-
-/turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
-			return TRUE
-	return FALSE
 
 /atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	if(ismob(src))
@@ -601,8 +580,6 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 			continue
 		if(overrides.len && (A in overrides))
 			continue
-		if(A.IsObscured())
-			continue
 		if(!A.name)
 			continue
 		var/AN = A.name
@@ -713,7 +690,12 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 		user.client.statpanel = T.name
 
 /mob/proc/CtrlRightClickOn(atom/A, params)
+	if(A.CtrlRightClick(src))
+		return
 	pointed(A)
+
+/atom/proc/CtrlRightClick(mob/user)
+	return FALSE
 
 /*
 	Misc helpers
@@ -956,7 +938,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	return FALSE
 
 /mob/living/try_special_attack(atom/A, list/modifiers)
-	if(!rmb_intent || !cmode || istype(A, /obj/item/clothing) || istype(A, /obj/item/quiver) || istype(A, /obj/item/storage))
+	if(!rmb_intent || !cmode || isobj(A))
 		return FALSE
 
 	if(next_move > world.time && !rmb_intent?.bypasses_click_cd)

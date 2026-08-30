@@ -41,7 +41,7 @@
 	name = "striped tunic"
 	desc = "This cheap tunic is often used by sturdy laborous men and women."
 	icon_state = "workervest"
-	armor = null
+	armor = ARMOR_PADDED_BAD
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	body_parts_covered = COVERAGE_VEST

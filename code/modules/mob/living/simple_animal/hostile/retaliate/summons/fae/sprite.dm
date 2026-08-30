@@ -64,8 +64,7 @@
 	new /obj/item/magic/fae/dust(deathspot)
 	new /obj/item/magic/fae/dust(deathspot)
 	update_icon()
-	sleep(1)
-	qdel(src)
+	QDEL_IN(src, 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sprite/taunted(mob/user)
 	emote("aggro")

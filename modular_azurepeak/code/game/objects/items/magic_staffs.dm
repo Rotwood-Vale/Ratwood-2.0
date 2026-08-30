@@ -1,15 +1,11 @@
-#define TOPER_CAST_TIME_REDUCTION 0.1
-#define EMERALD_CAST_TIME_REDUCTION 0.15
-#define SAPPHIRE_CAST_TIME_REDUCTION 0.2
-#define QUARTZ_CAST_TIME_REDUCTION 0.25
-#define RUBY_CAST_TIME_REDUCTION 0.3
-#define DIAMOND_CAST_TIME_REDUCTION 0.35
-#define RIDDLE_OF_STEEL_CAST_TIME_REDUCTION 0.4
-
 //we use discrete staff objs so that they can be easily thrown into loot tables and maps without complex varediting
 
-/obj/item/rogueweapon/woodstaff
-	var/cast_time_reduction = null
+/obj/item/rogueweapon/examine(mob/user)
+	.=..()
+	if(cast_time_reduction)
+		. += span_notice("This staff has been augmented with a gem, reducing a mage's spell casting time by [cast_time_reduction * 100]% when they hold it in their hand.")
+	else
+		return
 
 /obj/item/rogueweapon/woodstaff/Initialize(mapload)
 	. = ..()
@@ -23,6 +19,7 @@
 		/datum/crafting_recipe/gemstaff/diamond_staff,
 		/datum/crafting_recipe/gemstaff/riddle_of_steel_staff,
 		/datum/crafting_recipe/gemstaff/blacksteelstaffupgrade,
+		/datum/crafting_recipe/gemstaff/ducalblacksteelstaffupgrade,
 		)
 
 	AddElement(
@@ -67,6 +64,12 @@
 	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is an less efficient though equally beautiful alchemical Dorpel. Perhaps I could enhance it with a better Dorpel?"
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
+	sellprice = 60
+
+/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
+	name = "ducal blacksteel staff"
+	desc = "A mage's staff that has been reinforced with blacksteel rivets and plating. An extravagent gift for a precocious heir that serves as both casting implement and mark of station. The alchemical Dorpel it uses, however, leaves it as a generally sub-par channeling tool. Perhaps it could be improved with a true Dorpel?"
+	sellprice = 100
 
 /obj/item/rogueweapon/woodstaff/sapphire
 	name = "saffira-focused staff"
@@ -114,9 +117,15 @@
 
 /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff // Upgraded version, more CDR can be crafted by combining a base Blacksteel Staff with a dorpel
 	name = "refined blacksteel staff"
-	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is a new beautiful Dorpel that shimmers with magical energies"
+	desc = "A fine wood staff that is reinforced with blacksteel rivets and furnishings often used by War-Magos that have graduated from the Celestial Academy of Magos. Perched atop it is a new beautiful Dorpel that shimmers with magical energies."
 	icon_state = "blacksteelstaff"
 	max_integrity = 300 // 100 more integrity than a steel quarterstaff due to it's blacksteel nature. Can't smelt it down though :)
+	sellprice = 160
+
+/obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff/royal
+	name = "refined ducal blacksteel staff"
+	desc = "A mage's staff that has been reinforced with blacksteel rivets and plating. An extravagent gift for a precocious heir that serves as both casting implement and mark of station. Perched atop it is a new beautiful Dorpel that shimmers with magical energies."
+	sellprice = 230
 
 /obj/item/rogueweapon/woodstaff/riddle_of_steel
 	name = "\improper Staff of the Riddle-Steel"
@@ -208,5 +217,12 @@
 	name = "Refined Blacksteel Staff"
 	result = /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff
 	reqs = list(/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff = 1,
+				/obj/item/roguegem/diamond = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/gemstaff/ducalblacksteelstaffupgrade
+	name = "Refined Ducal Blacksteel Staff"
+	result = /obj/item/rogueweapon/woodstaff/diamond/blacksteelstaff/royal
+	reqs = list(/obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal = 1,
 				/obj/item/roguegem/diamond = 1)
 	craftdiff = 0

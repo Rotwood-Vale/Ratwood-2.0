@@ -16,9 +16,6 @@
 	. = ..()
 	. += span_notice("Improves the yield of butchering. Also increases speed by 25%.")
 
-/obj/structure/meathook/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/structure/meathook/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
@@ -116,7 +113,7 @@
 /obj/structure/meathook/Destroy()
 	if(has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
-			release_mob(L)
+			INVOKE_ASYNC(src, PROC_REF(release_mob), L)
 	return ..()
 
 /obj/structure/meathook/deconstruct()

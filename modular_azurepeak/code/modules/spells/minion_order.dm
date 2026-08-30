@@ -3,6 +3,9 @@
 	desc = "Cast on turf to head in that direction ignoring all else. \
 	Cast on a minion to set to aggressive, cast on self to passive and follow, cast on target to focus them. \
 	Does not work on greater skeletons."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "ZIZO"
 	range = 12
 	associated_skill = /datum/skill/misc/athletics
 	chargedrain = 1

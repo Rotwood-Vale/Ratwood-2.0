@@ -20,6 +20,10 @@
 	name = "meat pie"
 	scent = "meat pie"
 
+/datum/pollutant/food/spider_pie
+	name = "spider pie"
+	scent = "spider pie"
+
 /datum/pollutant/food/pot_pie
 	name = "pot pie"
 	scent = "pot pie"
@@ -32,9 +36,41 @@
 	name = "crab pie"
 	scent = "crab pie"
 
+/datum/pollutant/food/pumpkin_pie
+	name = "pumpkin pie"
+	scent = "pumpkin pie"
+
+/datum/pollutant/food/cookies_chocolate
+	name = "freshly baked chocolate cookies"
+	scent = "freshly baked chocolate cookies"
+
+/datum/pollutant/food/cookies_caramel
+	name = "freshly baked caramelized cookies"
+	scent = "freshly baked caramelized cookies"
+
+/datum/pollutant/food/cookies_dragee
+	name = "freshly baked herbal cookies"
+	scent = "freshly baked herbal cookies"
+
+/datum/pollutant/food/cookies_raisins
+	name = "freshly baked raisined cookies"
+	scent = "freshly baked raisined cookies"
+
 /datum/pollutant/food/bread
 	name = "fresh baked bread"
 	scent = "fresh baked bread"
+
+/datum/pollutant/food/bookbread
+	name = "fresh baked loaf of bookbread"
+	scent = "fresh baked loaf of bookbread"
+
+/datum/pollutant/food/fruity_bookbread
+	name = "fresh baked loaf of fruity bookbread"
+	scent = "fresh baked loaf of fruity bookbread"
+
+/datum/pollutant/food/chocolate_bookbread
+	name = "fresh baked loaf of chocolately bookbread"
+	scent = "fresh baked loaf of chocolately bookbread"
 
 /datum/pollutant/food/bun
 	name = "fresh baked buns"
@@ -48,6 +84,10 @@
 	name = "fresh baked pie crust"
 	scent = "fresh baked pie crust"
 
+/datum/pollutant/food/hardtack
+	name = "fresh baked crackers"
+	scent = "fresh baked crackers"
+
 /datum/pollutant/food/toast
 	name = "cooked toast"
 	scent = "cooked toast"
@@ -55,6 +95,38 @@
 /datum/pollutant/food/raisin_bread
 	name = "fresh baked loaf of raisin bread"
 	scent = "fresh baked loaf of raisin bread"
+
+/datum/pollutant/food/apple_bread
+	name = "fresh baked loaf of apple bread"
+	scent = "fresh baked loaf of apple bread"
+
+/datum/pollutant/food/fruity_dottart
+	name = "fresh fruit-stuffed pastry"
+	scent = "fresh fruit-stuffed pastry"
+
+/datum/pollutant/food/tomatoplate
+	name = "fresh tomatoes and cheesy flatbread"
+	scent = "fresh tomatoes and cheesy flatbread"
+
+/datum/pollutant/food/tomatoplate_meat
+	name = "fresh tomatoes and meaty flatbread"
+	scent = "fresh tomatoes and meaty flatbread"
+
+/datum/pollutant/food/tomatoplate_fish
+	name = "fresh tomatoes and fishy flatbread"
+	scent = "fresh tomatoes and fishy flatbread"
+
+/datum/pollutant/food/tomatoplate_truffle
+	name = "fresh tomatoes and truffled flatbread"
+	scent = "fresh tomatoes and truffled flatbread"
+
+/datum/pollutant/food/tomatoplate_pear
+	name = "fresh tomatoes and peared flatbread"
+	scent = "fresh tomatoes and peared flatbread"
+
+/datum/pollutant/food/tomatoplate_onion
+	name = "fresh tomatoes and teary-eyed flatbread"
+	scent = "fresh tomatoes and teary-eyed flatbread"
 
 /datum/pollutant/food/cheese_bun
 	name = "fresh baked cheese buns"
@@ -100,6 +172,10 @@
 	name = "fried meat"
 	scent = "fried meat"
 
+/datum/pollutant/food/fried_spidermeat
+	name = "fried spidermeat"
+	scent = "fried spidermeat"
+
 /datum/pollutant/food/cooked_chicken
 	name = "cooked chicken"
 	scent = "cooked chicken"
@@ -123,10 +199,6 @@
 /datum/pollutant/food/roasted_seeds
 	name = "roasted seeds"
 	scent = "roasted seeds"
-
-/datum/pollutant/food/muffin
-	name = "fresh baked muffin"
-	scent = "fresh baked muffin"
 
 /datum/pollutant/food/fried_rat
 	name = "fried rats"
@@ -163,3 +235,15 @@
 /datum/pollutant/food/roasted_seeds
 	name = "toasted seeds"
 	scent = "toasted seeds"
+
+/datum/pollutant/food/muffin
+	name = "fresh baked muffins"
+	scent = "fresh baked muffins"
+
+/datum/pollutant/food/strange_meat
+	name = "strangely delicious meat"
+	scent = "strangely delicious meat"
+
+/datum/pollutant/food/rotten_meat
+	name = "rotten flesh"
+	scent = "rotten flesh"

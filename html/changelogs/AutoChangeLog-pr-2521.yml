@@ -1,0 +1,5 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - bugfix: "Fixed crippling willpower loss bug affecting Gnolls. Previously, every time a gnoll raised their guard, and someone hit that guard with a weapon, the gnoll would permanently lose 1 WIL."
+  - balance: "Gnolls weren't benefiting from any mechanics of Adrenaline Rush when they hit a riposte. Now, they get +1 WIL for its duration & stamina refilled to 50% (if below), just like everybody else. Unlike everybody else, they still do NOT get blood replenished (as they can get health potion from biting people)."

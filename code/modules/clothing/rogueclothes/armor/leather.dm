@@ -15,6 +15,11 @@
 	sellprice = 20
 	armor_class = ARMOR_CLASS_LIGHT
 	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = CHEST
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/armor/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/winterjacket
 	name = "winter jacket"
@@ -102,6 +107,22 @@
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
 
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee
+	name = "forester's cuirass"
+	desc = "A hardened leather harness with a reinforced pauldron worn over a maille coat. Imbued with Dendor's essence, it is built sturdier for front-line fighting."
+	armor = ARMOR_CUIRASS
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 30
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee/upgraded
+	name = "forester's hauberk"
+	desc = "A forester's cuirass reinforced with plates and maille rings, the result of careful smithwork."
+	icon_state = "forestbrig"
+	armor = ARMOR_CUIRASS
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 20
+	equip_delay_self = 4 SECONDS
+	smeltresult = /obj/item/ingot/steel
+
 /obj/item/clothing/suit/roguetown/armor/leather/studded
 	name = "studded leather armor"
 	desc = "Studded leather is the most durable of all hides and leathers and about as light."
@@ -116,6 +137,9 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 25
 	armor_class = ARMOR_CLASS_LIGHT
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
 	name = "cuir-bouilli armor"
@@ -158,7 +182,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
 	name = "megarmach scale coat"
@@ -185,6 +209,7 @@
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
 	sellprice = 25
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
@@ -196,9 +221,7 @@
 	detail_tag = "_detail"
 	color = "#5E4440"
 	detail_color = "#c08955"
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	heat_protection = CHEST
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/update_icon()
@@ -224,7 +247,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 100
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	min_cold_protection_temperature = 50
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
@@ -234,6 +257,7 @@
 	item_state = "leatherkini"
 	allowed_sex = list(FEMALE, MALE)
 	allowed_race = CLOTHED_RACES_TYPES
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
 	name = "studded leather corslet"
@@ -252,6 +276,7 @@
 	item_state = "hidearmorkini"
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest
 	name = "leather vest"
@@ -259,7 +284,7 @@
 	icon_state = "vest"
 	item_state = "vest"
 	color = "#514339"
-	armor = ARMOR_CLOTHING
+	armor = ARMOR_LEATHER_BAD
 	prevent_crits = list(BCLASS_CUT)
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -267,7 +292,6 @@
 	body_parts_covered = COVERAGE_TORSO
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	sewrepair = TRUE
 	sleevetype = null
 	sleeved = null
 	armor_class = ARMOR_CLASS_LIGHT
@@ -280,7 +304,6 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
-	sewrepair = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/white
 	color = CLOTHING_WHITE
@@ -308,11 +331,8 @@
 	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it does not impede the complex movements they are known for. Well padded."
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
-
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"
-
-	sewrepair = TRUE
 	boobed = TRUE
 
 	slot_flags = ITEM_SLOT_ARMOR
@@ -403,7 +423,7 @@
 	item_state = "steward"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	armor = ARMOR_PADDED_BAD
-	
+
 /obj/item/clothing/head/roguetown/duchess_hood
 	name = "duchess hood"
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
@@ -413,3 +433,9 @@
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	armor = ARMOR_PADDED_BAD
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/fur
+	name = "fur underarmor"
+	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
+	icon_state = "hatanga"
+	item_state = "hatanga"

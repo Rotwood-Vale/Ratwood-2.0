@@ -31,7 +31,7 @@
 	race_titles = list(
 	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
 	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
-	"Half-Pig", "Half-Boar", "Half-Cabbit", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Pig", "Half-Boar", "Half-Cabbit", "Half-Rabbit", "Half-Hare", "Half-Horse", "Half-Donkey",
 	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
 	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
 	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
@@ -122,6 +122,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/bodypart_feature/pubes/furry,
+		/datum/customizer/bodypart_feature/pits/furry,
 		/datum/customizer/organ/horns/tusks,
 		)
 	body_marking_sets = list(
@@ -135,6 +137,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/tonage,
 		/datum/body_marking/socklonger,
 		/datum/body_marking/tips,

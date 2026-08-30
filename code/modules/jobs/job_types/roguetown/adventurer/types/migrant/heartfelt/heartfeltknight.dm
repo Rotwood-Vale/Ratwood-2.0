@@ -45,7 +45,7 @@
 /datum/advclass/heartfelt/knight
 	name = "Knight of Heartfelt"
 	tutorial = "You are a Knight of Heartfelt, once part of a brotherhood in service to your Lord. \
-	Now, alone and committed to safeguarding what remains of your court, you ride to the Vale, resolved to ensure their safe arrival."
+	Now, alone and committed to safeguarding what remains of your court, you ride to these lands, resolved to ensure their safe arrival."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/heartfelt/knight
@@ -54,7 +54,7 @@
 	category_tags = list(CTAG_HFT_KNIGHT)
 	class_select_category = CLASS_CAT_HFT_COURT
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT, TRAIT_EQUESTRIAN)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_PER = 2,
@@ -71,15 +71,19 @@
 	/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
-	/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+	/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 	/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
-	/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+	/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+	)
+
+	subclass_virtues = list(
+		/datum/virtue/utility/riding
 	)
 
 /datum/outfit/job/heartfelt/knight/pre_equip(mob/living/carbon/human/H)
@@ -93,20 +97,17 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt/hand //Heartfelt armor w/o cloak. It's neat.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	l_hand = /obj/item/rogueweapon/sword/long
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/rogue/leather/steel
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight
-	var/turf/TU = get_turf(H)
-	if(TU)
-		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 	)
@@ -115,7 +116,7 @@
 	// IT WORKS :TM: still gives them a helm and grandmace, just not the choice
 	
 	H.adjust_blindness(-3)
-	var/weapons = list("Dec Sword + Shield","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Eagle's Beak", "Partizan", "Glaive")
+	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Eagle's Beak", "Partizan", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -124,7 +125,9 @@
 			backl = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		if("Zweihander")
-			r_hand = /obj/item/rogueweapon/greatsword/zwei
+			r_hand = /obj/item/rogueweapon/greatsword/grenz
+		if("Greatsword")
+			r_hand = /obj/item/rogueweapon/greatsword
 		if("Great Mace")
 			r_hand = /obj/item/rogueweapon/mace/goden/steel
 		if("Battle Axe")

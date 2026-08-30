@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_KAZENGUN
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_NOBLE) //i hate nobles but it's thematic
-	cmode_music = 'sound/music/combat_kazengite.ogg'
+	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	maximum_possible_slots = 3
 	subclass_stats = list(  // mounted knight, but slower.
 		STATKEY_STR = 2,
@@ -101,7 +101,7 @@
 
 /datum/advclass/mercenary/chonin
 	name = "Hangyaku-Chonin"
-	tutorial = "Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You’ve hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."
+	tutorial = "Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You've hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ALL //do they have constructs in kazengun?
 	outfit = /datum/outfit/job/roguetown/mercenary/chonin
@@ -132,7 +132,7 @@
 	..()
 	H.adjust_blindness(-3)
 	has_loadout = TRUE
-	to_chat(H, span_warning("Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You’ve hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."))
+	to_chat(H, span_warning("Once, you were a farmer, a miner, a seamstress, a commoner. Now the sword is your plow and war your field. You've hammered your scythes into spears and recast your knives into swords. Past the door, your daimyo is calling - and destiny awaits."))
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa

@@ -132,6 +132,6 @@
 /datum/carebox_loot/wretch/zizite_cross
 	name = "Zizite Cross (2)"
 	loot = list(
-		/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
-		/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient,
+		/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient,
 	)

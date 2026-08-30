@@ -5,6 +5,7 @@
 	icon_state = "bear"
 	density = FALSE
 	anchored = TRUE
+	plane = -8
 
 /obj/structure/foxpelt
 	name = "Venardpelt"
@@ -13,6 +14,7 @@
 	icon_state = "fox"
 	density = FALSE
 	anchored = TRUE
+	plane = -8
 
 /obj/structure/bobcatpelt
 	name = "Lynxpelt"
@@ -21,6 +23,7 @@
 	icon_state = "bobcat"
 	density = FALSE
 	anchored = TRUE
+	plane = -8
 
 /////item carpets
 

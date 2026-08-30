@@ -42,7 +42,7 @@
 		container_name = "container"
 	var/chosen_verb = pick(list("pleasures themself over \the [container_name]", "sensually massages themself over \the [container_name]", "masturbates over \the [container_name]"))
 
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [chosen_verb]."))
 
 	user.sexcon.generic_sex_noise()
 

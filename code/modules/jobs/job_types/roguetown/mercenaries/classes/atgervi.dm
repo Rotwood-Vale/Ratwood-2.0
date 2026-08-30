@@ -185,6 +185,7 @@
 	worn_y_dimension = 48
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
+	dropshrink = 0.8
 
 /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
 	name = "atgervi leather boots"

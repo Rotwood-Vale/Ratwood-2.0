@@ -27,7 +27,7 @@
     user.visible_message(span_warning("[user] works [user.p_their()] tail tip under the lower edge of [target]'s rear shield, finding the gap between plate and skin."))
 
 /datum/sex_action/chastityplay/tailprod_cage_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] tail beneath [target]'s rear shield, the tip pressing and curling against whatever the metal hasn't sealed away..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] tail beneath [target]'s rear shield, the tip pressing and curling against whatever the metal hasn't sealed away..."))
     user.sexcon.perform_sex_action(target, 1.1, 3, TRUE)
     target.sexcon.handle_passive_ejaculation(user)
 

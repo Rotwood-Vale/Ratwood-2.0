@@ -75,20 +75,21 @@
  * Default implementation of clean-up code.
  *
  * This should be overridden to remove all references pointing to the object being destroyed, if
- * you do override it, make sure to call the parent and return it's return value by default
+ * you do override it, make sure to call the parent and return its return value by default
  *
- * Return an appropriate QDEL_HINT to modify handling of your deletion;
- * in most cases this is QDEL_HINT_QUEUE.
+ * Return an appropriate [QDEL_HINT][QDEL_HINT_QUEUE] to modify handling of your deletion;
+ * in most cases this is [QDEL_HINT_QUEUE].
  *
  * The base case is responsible for doing the following
  * * Erasing timers pointing to this datum
  * * Erasing compenents on this datum
  * * Notifying datums listening to signals from this datum that we are going away
  *
- * Returns QDEL_HINT_QUEUE
+ * Returns [QDEL_HINT_QUEUE]
  */
 /datum/proc/Destroy(force=FALSE, ...)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 	weak_reference = null	//ensure prompt GCing of weakref.
@@ -261,6 +262,13 @@
 		return
 	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
 	TIMER_COOLDOWN_END(source, index)
+
+///Generate a tag for this /datum, if it implements one
+///Should be called as early as possible, best would be in New, to avoid weakref mistargets
+///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
+///We really only use it for mobs to make id'ing people easier
+/datum/proc/GenerateTag()
+	datum_flags |= DF_USE_TAG
 
 /// Returns whether a type is an abstract type.
 /proc/is_abstract(datum/datum_type)

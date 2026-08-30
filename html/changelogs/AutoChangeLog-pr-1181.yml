@@ -1,4 +1,0 @@
-author: "technotuna"
-delete-after: True
-changes:
-  - bugfix: "shift+1, etc. can now be set as keybinds"

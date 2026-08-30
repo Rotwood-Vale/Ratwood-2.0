@@ -27,7 +27,7 @@
     user.visible_message(span_warning("[user] sweeps [user.p_their()] tail low and coils it around [target]'s [get_chastity_device_name(target)], feeling the weight of the device."))
 
 /datum/sex_action/chastityplay/tailprod_cage/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] coils and strokes [user.p_their()] tail along [target]'s [get_chastity_device_name(target)], the tip pressing into gaps between bars with practiced patience..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] coils and strokes [user.p_their()] tail along [target]'s [get_chastity_device_name(target)], the tip pressing into gaps between bars with practiced patience..."))
     user.sexcon.perform_sex_action(target, 1.3, 2, TRUE)
     target.sexcon.handle_passive_ejaculation(user)
 

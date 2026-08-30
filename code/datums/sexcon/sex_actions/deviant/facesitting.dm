@@ -26,9 +26,13 @@
 
 /datum/sex_action/facesitting/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/verbstring = pick(list("rubs", "smushes", "forces"))
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [verbstring] [user.p_their()] butt against [target] face."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] [verbstring] [user.p_their()] butt against [target] face."))
 	target.sexcon.make_sucking_noise()
 	user.sexcon.do_thrust_animate(target)
+
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_jaw_crush(target)
 
 	user.sexcon.perform_sex_action(user, 1, 3, TRUE)
 	user.sexcon.handle_passive_ejaculation(target)

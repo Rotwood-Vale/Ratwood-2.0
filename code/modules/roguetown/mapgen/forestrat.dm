@@ -43,6 +43,7 @@
 							/obj/structure/flora/roguetree/stump = 1,
 							/obj/structure/closet/dirthole/closed/loot=1,
 							/obj/structure/flora/roguegrass/maneater/real/juvenile=1,
+							/obj/structure/deadbodyrandom/low = 0.2,
 							/obj/item/reagent_containers/food/snacks/smallrat = 0.3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=1,)

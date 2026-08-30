@@ -9,6 +9,7 @@
 	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -123,6 +124,7 @@ Here because they're unused elsewhere.
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter
 	name = "arbiter gambeson"
@@ -132,6 +134,7 @@ Here because they're unused elsewhere.
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter
 	name = "arbiter brigandine"
@@ -143,6 +146,7 @@ Here because they're unused elsewhere.
 	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	boobed = TRUE
 	is_silver = TRUE
+	dropshrink = null
 
 /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter
 	name = "arbiter gloves"
@@ -151,14 +155,16 @@ Here because they're unused elsewhere.
 	item_state = "overseergloves"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	dropshrink = null
 
 /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice
 	icon_state = "viceseergloves"
 	item_state = "viceseergloves"
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/arbiter
 	name = "arbiter mask"
-	desc = "An iconic, gilbranze mask, depicting the visage of Him. Weeping, as He is."
+	desc = "An iconic gilbranze mask, depicting the visage of HIM. Weeping, as HE is."
 	icon_state = "overseermask"
 	item_state = "overseermask"
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
@@ -170,15 +176,17 @@ Here because they're unused elsewhere.
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	sewrepair = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/aaslag
 	var/active_item = FALSE
+	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/arbiter/vice
-	desc = "An iconic, silver mask depicting the visage of Him. Weeping, as He is."
+	desc = "An iconic, silver mask depicting the visage of HIM. Weeping, as HE is."
 	icon_state = "viceseermask"
 	item_state = "viceseermask"
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
+	dropshrink = null
 
 //The intent of the trait was to frighten heretics, if they saw the user with it present.
 //Alas...
@@ -210,6 +218,7 @@ Here because they're unused elsewhere.
 	body_parts_covered = FACE|EARS|MOUTH|NECK
 	slot_flags = ITEM_SLOT_MASK
 	sewrepair = TRUE
+	dropshrink = null
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
 	name = "heavy trousers"
@@ -219,6 +228,7 @@ Here because they're unused elsewhere.
 	icon = 'icons/roguetown/clothing/special/overseer/overseer.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
+	dropshrink = null
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/arbiter
 	icon_state = "overseershirt"
@@ -226,3 +236,4 @@ Here because they're unused elsewhere.
 	mob_overlay_icon = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	color = null
+	dropshrink = null

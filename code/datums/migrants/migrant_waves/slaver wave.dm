@@ -5,10 +5,8 @@
 	downgrade_wave = /datum/migrant_wave/slaver_down_one
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercsword = 3,
-		/datum/migrant_role/slaver/slavemercwhip = 2,
-		/datum/migrant_role/slaver/slavemercbow = 1,
-		/datum/migrant_role/slaver/slavez = 2
+		/datum/migrant_role/slaver/slavemerc = 6,
+		/datum/migrant_role/slaver/slavez = 2,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 
@@ -19,10 +17,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercsword = 2,
-		/datum/migrant_role/slaver/slavemercwhip = 2,
-		/datum/migrant_role/slaver/slavemercbow = 1,
-		/datum/migrant_role/slaver/slavez = 2
+		/datum/migrant_role/slaver/slavemerc = 5,
+		/datum/migrant_role/slaver/slavez = 2,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 
@@ -33,10 +29,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercsword = 1,
-		/datum/migrant_role/slaver/slavemercwhip = 2,
-		/datum/migrant_role/slaver/slavemercbow = 1,
-		/datum/migrant_role/slaver/slavez = 1
+		/datum/migrant_role/slaver/slavemerc = 4,
+		/datum/migrant_role/slaver/slavez = 1,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 
@@ -47,10 +41,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercsword = 1,
-		/datum/migrant_role/slaver/slavemercwhip = 1,
-		/datum/migrant_role/slaver/slavemercbow = 1,
-		/datum/migrant_role/slaver/slavez = 1
+		/datum/migrant_role/slaver/slavemerc = 3,
+		/datum/migrant_role/slaver/slavez = 1,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 
@@ -61,9 +53,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercsword = 1,
-		/datum/migrant_role/slaver/slavemercwhip = 1,
-		/datum/migrant_role/slaver/slavemercbow = 1,
+		/datum/migrant_role/slaver/slavemerc = 2,
+		/datum/migrant_role/slaver/slavez = 2,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers. Yours got away - so you'll need new flesh."
 
@@ -74,9 +65,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercwhip = 1,
-		/datum/migrant_role/slaver/slavemercbow = 1,
-		/datum/migrant_role/slaver/slavez = 1
+		/datum/migrant_role/slaver/slavemerc = 2,
+		/datum/migrant_role/slaver/slavez = 1,
 	)
 	greet_text = "A troop of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 
@@ -87,8 +77,8 @@
 	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/slaver/master = 1,
-		/datum/migrant_role/slaver/slavemercwhip = 1,
-		/datum/migrant_role/slaver/slavez = 1
+		/datum/migrant_role/slaver/slavemerc = 1,
+		/datum/migrant_role/slaver/slavez = 1,
 	)
 	greet_text = "A duo of slavers coming to the mainland from the deserts of Zybantine in the hopes of gathering wealth through the trade unfortunate laborers."
 

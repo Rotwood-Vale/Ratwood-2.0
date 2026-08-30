@@ -232,6 +232,7 @@
 	var/uses = 0
 	var/max_uses = 3
 	var/turf/linked_turf
+	var/safe_passage = FALSE
 
 /obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
