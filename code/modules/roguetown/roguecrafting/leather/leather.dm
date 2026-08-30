@@ -217,3 +217,10 @@
 	result = /obj/item/clothing/mask/rogue/physician
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/bone = 1)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/leathermask
+	name = "leather mask"
+	result = /obj/item/clothing/mask/rogue/facemask/leather
+	reqs = list(/obj/item/natural/hide/cured = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 1

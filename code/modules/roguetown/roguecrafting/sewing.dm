@@ -210,6 +210,13 @@
 	reqs = list(/obj/item/natural/cloth = 3,)
 	craftdiff = 1
 
+/datum/crafting_recipe/roguetown/sewing/paddedmask
+	name = "padded mask"
+	result = list(/obj/item/clothing/mask/rogue/facemask/padded)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/sewing/basichood
 	name = "hood"
 	result = list(/obj/item/clothing/head/roguetown/roguehood)
