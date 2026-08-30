@@ -4,7 +4,7 @@
 	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband. Guide them to glory and wealth or try to survive."
 	outfit = /datum/outfit/job/roguetown/hammerhold/jarl
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi) //Same racelocks as Gronn Chieftain, subject to change
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula) //Same racelocks as Gronn Chieftain, subject to change
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/jarl/pre_equip(mob/living/carbon/human/H)
@@ -68,7 +68,7 @@
 	greet_text = "You are a cleric of the Lord of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
 	outfit = /datum/outfit/job/roguetown/hammerhold/tideweaver
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula)
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/tideweaver/pre_equip(mob/living/carbon/human/H)
@@ -142,7 +142,7 @@
 	greet_text = "You are a volfskin, one of the legendary Hammerholdian warriors who are said to be possessed by raging volf spirits in battles. Distrusted due to your less than savoury religious practices, but well-respected for your combat prowess."
 	outfit = /datum/outfit/job/roguetown/hammerhold/volfskin
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula)
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/volfskin/pre_equip(mob/living/carbon/human/H)
@@ -205,7 +205,7 @@
 	greet_text = "You are a loyal and skilled bodyguard to your jarl, specialising in pillaging, kidnapping and fighting with an axe and shield."
 	outfit = /datum/outfit/job/roguetown/hammerhold/huscarl
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi)
+	allowed_races = list(/datum/species/human/northern, /datum/species/halforc, /datum/species/goblinp, /datum/species/tieberian, /datum/species/lizardfolk, /datum/species/lupian, /datum/species/anthromorph, /datum/species/demihuman, /datum/species/dwarf/mountain, /datum/species/dracon, /datum/species/tabaxi, /datum/species/akula)
 	show_wanderer_examine = FALSE
 
 /datum/outfit/job/roguetown/hammerhold/huscarl/pre_equip(mob/living/carbon/human/H)
