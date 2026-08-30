@@ -102,7 +102,9 @@
 
 	var/datum/gnoll_prefs/prefs = client.prefs.gnoll_prefs
 
-	// Gnolls are assigned their own subclass statlines later in equip flow; wipe inherited statpack roll during initial setup only.
+	// We will be ignoring the slot's statpack in favor of what's set in our Gnoll Preferences.
+	statpack = prefs.gnoll_statpack
+
 	if(initial_setup)
 		roll_stats()
 	refresh_live_vocal_preferences()
@@ -111,6 +113,8 @@
 
 	if(prefs.gnoll_pronouns)
 		pronouns = prefs.gnoll_pronouns
+
+	voice_color = prefs.gnoll_voice_color
 
 	icon_state = prefs.pelt_type || "firepelt"
 	dna?.species?.custom_base_icon = prefs.pelt_type || "firepelt"

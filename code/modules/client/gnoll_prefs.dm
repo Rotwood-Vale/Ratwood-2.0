@@ -14,6 +14,9 @@
 	var/descriptor_muzzle     = /datum/mob_descriptor/face/gnoll/long_muzzle
 	var/descriptor_expression = /datum/mob_descriptor/face_exp/gnoll/alert
 
+	var/gnoll_voice_color = "a0a0a0"
+	var/datum/statpack/gnoll_statpack = new /datum/statpack/wildcard/fated()
+
 	var/headshot_link
 	var/flavortext
 	var/ooc_notes
@@ -62,6 +65,16 @@
 		"Darkpelt" = "darkpelt"
 	)
 	return pelt_options
+
+/// Copypaste of the _load_statpack proc from preferences_savefile.dm
+/datum/gnoll_prefs/proc/load_gnoll_statpack(S)
+	var/statpack_type
+	S["gnoll_statpack"] >> statpack_type
+	if (statpack_type && ispath(statpack_type))
+		gnoll_statpack = new statpack_type()
+	else
+		gnoll_statpack = pick(GLOB.statpacks - /datum/statpack/wildcard/virtuous)
+		gnoll_statpack = GLOB.statpacks[gnoll_statpack]
 
 /datum/gnoll_prefs/proc/get_descriptor_options(slot)
 	var/static/list/descriptor_options_by_slot = list(
@@ -212,6 +225,21 @@
 	dat += "<b>Pronouns:</b> "
 	dat += "<a href='?_src_=gnoll_prefs;action=choose_pronouns'>[pronoun_label]</a>"
 	dat += "<br>"
+
+	dat += "<b>Voice Color:</b> <a href='?_src_=gnoll_prefs;action=voice_color'>Change</a><br>"
+
+	dat += "<b>Gnoll Statpack:</b> <a href='?_src_=gnoll_prefs;action=gnoll_statpack'>Change</a><br>"
+	dat += "<span style='color:#b2b2b2;'>" 
+	if(gnoll_statpack)
+		var/stats_string = gnoll_statpack.generate_modifier_string()
+		if(stats_string)
+			dat += "<b>[gnoll_statpack.name]</b> <i>" + stats_string + "</i><br>"
+		else
+			dat += "<b>[gnoll_statpack.name]</b><br>"
+		dat += "[gnoll_statpack.desc]<br>"
+	else
+		dat += "None Selected<br>"
+	dat += "</span><br>"
 
 	// Pelt type section
 	var/list/pelt_options = get_pelt_options()
@@ -830,6 +858,39 @@
 			to_chat(user, "<span class='notice'>Successfully updated gnoll NSFW OOC Extra Image with [info]</span>")
 			log_game("[user] has set their gnoll NSFW OOC Extra Image to '[link]'.")
 
+		if("gnoll_statpack")
+			// Build statpack list
+			var/list/statpacks_available = list()
+			for (var/path as anything in GLOB.statpacks - /datum/statpack/wildcard/virtuous) // gnolls can't have virtues
+				var/datum/statpack/SP = GLOB.statpacks[path]
+				if (!SP.name)
+					continue
+				// Add stats to the name in the selection list
+				var/display_name = SP.name
+				var/stats = SP.generate_modifier_string()
+				if(stats)
+					display_name = "[SP.name] [stats]"
+				statpacks_available[display_name] = SP
+			
+			statpacks_available = sort_list(statpacks_available)
+			var/choice = tgui_input_list(usr, "Choose your gnoll statpack:", "Statpack Selection", statpacks_available)
+			
+			if(choice)
+				var/datum/statpack/selected = statpacks_available[choice]
+				gnoll_statpack = selected
+				to_chat(usr, span_notice("Selected [choice] gnoll statpack."))
+				to_chat(usr, "<span class='info'>[selected.description_string()]</span>")
+			gnoll_show_ui(user)
+
+		if("voice_color")
+			var/new_voice = input(user, "Choose your gnoll's voice color:", "Character Preference","#"+gnoll_voice_color) as color|null
+			if(new_voice)
+				if(color_hex2num(new_voice) < 230)
+					to_chat(user, "<font color='red'>This voice color is too dark for mortals.</font>")
+					return
+				gnoll_voice_color = sanitize_hexcolor(new_voice)
+			gnoll_show_ui(user)
+
 		if("close")
 			user << browse(null, "window=gnoll_prefs")
 
@@ -863,6 +924,13 @@
 		S["gnoll_descriptor_expression"]	>> descriptor_expression
 		if(!ispath(descriptor_expression, /datum/mob_descriptor/face_exp/gnoll))
 			descriptor_expression = /datum/mob_descriptor/face_exp/gnoll/alert
+
+	load_gnoll_statpack()
+	
+	S["gnoll_voice_color"]			>> gnoll_voice_color
+	// Workaround for the voice color always being initially set to 000000 for some weird save reason
+	if(color_hex2num(sanitize_hexcolor(gnoll_voice_color)) < 230)
+		gnoll_voice_color = "a0a0a0"
 
 	S["gnoll_headshot_link"]	>> headshot_link
 	if(!valid_headshot_link(null, headshot_link, TRUE))
@@ -910,6 +978,9 @@
 		WRITE_FILE(S["gnoll_descriptor_voice"] , descriptor_voice)
 		WRITE_FILE(S["gnoll_descriptor_muzzle"] , descriptor_muzzle)
 		WRITE_FILE(S["gnoll_descriptor_expression"] , descriptor_expression)
+
+		WRITE_FILE(S["gnoll_voice_color"] , gnoll_voice_color) 
+		WRITE_FILE(S["gnoll_statpack"] , preferences_typepath_or_null(gnoll_statpack))
 
 		WRITE_FILE(S["gnoll_headshot_link"] , headshot_link)
 		WRITE_FILE(S["gnoll_flavortext"] , html_decode(flavortext))
