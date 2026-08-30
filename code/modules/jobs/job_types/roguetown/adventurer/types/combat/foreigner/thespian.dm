@@ -196,7 +196,7 @@
 				head = /obj/item/clothing/head/roguetown/helmet/bronze
 				neck = /obj/item/clothing/neck/roguetown/bevor/bronze
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/bronze
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/full/bronze/alt
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/full/bronze
 				pants = /obj/item/clothing/under/roguetown/loincloth/brown
 				cloak = /obj/item/clothing/cloak/cape/red
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
