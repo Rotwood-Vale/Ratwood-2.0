@@ -111,6 +111,18 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
+	name = "bronze chain kilt"
+	desc = "An ankle-length bronze maille skirt, warding cuts against the thighs without slowing the feet."
+	icon_state = "bchainkilt"
+	item_state = "bchainkilt"
+	sleevetype = "bchainkilt"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE + 25//275, slight big extra cause medium
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+	alternate_worn_layer = (SHIRT_LAYER)
+	smeltresult = /obj/item/ingot/bronze
+
 /obj/item/clothing/under/roguetown/chainlegs/iron/kilt
 	name = "iron chain kilt"
 	desc = "Interlinked metal rings that drape down all the way to the ankles."

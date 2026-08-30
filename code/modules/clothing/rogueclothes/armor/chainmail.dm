@@ -27,6 +27,16 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/bronze
+	icon_state = "bhaubergeon"
+	name = "bronze haubergeon"
+	desc = "A maille shirt fashioned from hundreds of interlinked bronze rings. The value of flexible protection, especially in \
+	the centuries before plate, made any form of chainmail a rather valuable commodity; enough-so that it was worth its own weight \
+	in gold."
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	name = "ancient haubergeon"
 	desc = "Polished gilbranze rings and silk, woven together to form a short maille-atekon. The death of a million brought forth the ascension of Zizo; and if a million more must perish to complete Her works, then let it be done."
@@ -61,6 +71,16 @@
 	item_state = "ihauberk"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/bronze
+	name = "bronze hauberk"
+	desc = "A maille-aketon of bronze, sleeved to cover both the arms and legs. In antiquity, such an armored garment was seen as second-to-none \
+	in every facet; light enough to leave a well-trained warrior unfettered, yet still capable of turning away both arrow-and-blade."
+	icon_state = "bhauberk"
+	item_state = "bhauberk"
+	armor = ARMOR_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"

@@ -234,6 +234,15 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
+/obj/item/clothing/neck/roguetown/chaincoif/bronze
+	name = "bronze chain coif"
+	desc = "A maille-hood, fashioned from interlinked bronze rings. As preached by the Pantheon, these maille-hoods were originally made in mimicry of what was worn by the earliest priests."
+	icon_state = "bchaincoif"
+	anvilrepair = /datum/skill/craft/armorsmithing
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = ARMOR_INT_SIDE_BRONZE
+	armor = ARMOR_BRONZE
+
 /obj/item/clothing/neck/roguetown/chaincoif/full
 	name = "full chain coif"
 	icon_state = "fchaincoif"
@@ -308,6 +317,15 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_SIDE_IRON
 
+/obj/item/clothing/neck/roguetown/bevor/bronze
+	name = "bronze gorgette"
+	desc = "A jutting slab of bronze, traditionally mounted atop a panoplic assembly to veil the neck from precise strikes. </br>To tip the chin up while grounded is an ancient gesture; one which willingly beckons for the 'gift of mercy'."
+	icon_state = "bbevor"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_SIDE_BRONZE + 25//275, -25 compared to bronze neckguard
+	smeltresult = /obj/item/ingot/bronze
+	anvilrepair = /datum/skill/craft/armorsmithing
+
 /obj/item/clothing/neck/roguetown/gorget
 	name = "gorget"
 	desc = "A series of iron plates designed to protect the neck."
@@ -343,6 +361,14 @@
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/clothing/neck/roguetown/gorget/bronze
+	name = "bronze neckguard"
+	desc = "An interlinked veil of bronze plates, shielding the throat from terrible wounds since the dawn of tyme. Piercing blows may sunder the plate, but - as long as the alloy persists - so shall you."
+	icon_state = "bronzegorget"
+	armor = ARMOR_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = ARMOR_INT_SIDE_BRONZE + ARMOR_INT_SIDE_COVERAGE_BONUS
 
 /obj/item/clothing/neck/roguetown/gorget/copper
 	name = "neck protector"
@@ -470,6 +496,12 @@
 	icon_state = "zcross_a"
 	color = "#bb9696"
 
+/obj/item/clothing/neck/roguetown/psicross/inhumen/bronze
+	name = "bronze inverted psycross"
+	desc = "'Look upon mine works, thee-mighty, and despair!'"
+	icon_state = "zcross_b"
+	resistance_flags = FIRE_PROOF
+
 /obj/item/clothing/neck/roguetown/psicross/undivided
 	name = "see amulet"
 	desc = "An amulet, typically worn by the Holy See's own influential figures. Stalwart for centuries against the darkness. \
@@ -490,6 +522,11 @@
 	name = "amulet of Noc"
 	desc = "There is always more to know, more to learn, more to be."
 	icon_state = "noc"
+
+/obj/item/clothing/neck/roguetown/psicross/noc/bronze
+	name = "bronze amulet of Noc"
+	desc = "Knowledge predates lyfe and death itself. Who art thou, to assume the quill's works are no holier than a sword or masterwork?"
+	icon_state = "noc_b"
 
 /obj/item/clothing/neck/roguetown/psicross/abyssor
 	name = "amulet of Abyssor"
@@ -548,6 +585,29 @@
 	icon_state = "psycross_a"
 	color = "#bb9696"
 
+/obj/item/clothing/neck/roguetown/psicross/ravox/bronze
+	name = "bronze amulet of Ravox"
+	desc = "'YOU FIGHT WELL, RAVOX OF UR-SYON. YOUR CLEMENCY HATH BEEN EARNED. SURRENDER NOW, AND GRAGGAR SHALL-'</br>‎	</br>'No.' </br>‎	</br>'-WHAT? YOU'RE GOING TO THROW AWAY YOUR LYFE FOR A GOD THAT HAS NO LOVE FOR YOU?' </br>‎	</br>'One of us will.'"
+	icon_state = "ravox_b"
+
+/obj/item/clothing/neck/roguetown/psicross/astrata/bronze
+	name = "bronze amulet of Astrata"
+	desc = "'We are Her soldiers, the Legion of light.' </br>'We are the center, the depth of the Sun.' </br>'Fire and flame - we are one.'"
+	icon_state = "astrata_b"
+	item_state = "astrata_b"
+
+/obj/item/clothing/neck/roguetown/psicross/malum/bronze
+	name = "bronze amulet of Malum"
+	desc = "Stone to steel, bone to bronze, mulched to masterworked."
+	icon_state = "malum_b"
+	item_state = "malum_b"
+
+/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze
+	name = "bronze amulet of Graggar"
+	desc = "'EVERYTHING - AND EVERYONE YOU LOVE - WILL BE GONE! WHAT WILL YOU HAVE, AFTER THE LAST FIRE'S BEEN SMOTHERED OUT?!' </br>‎	</br>'..You. I'd still have you.'"
+	icon_state = "graggar_b"
+	item_state = "graggar_b"
+
 /obj/item/clothing/neck/roguetown/psicross/silver
 	name = "silver psycross"
 	desc = "'The horrors persist, but so do I!'"
@@ -578,6 +638,12 @@
 	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
 	sellprice = 0
 	icon_state = "psycross_reform"
+
+/obj/item/clothing/neck/roguetown/psicross/bronze
+	name = "bronze psycross"
+	desc = "'Until my heart ceases beating, and until my vigil ends - I will bring you down with me!'"
+	icon_state = "psycross_b"
+	item_state = "psycross_b"
 
 /obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
 	name = "pearl amulet"
