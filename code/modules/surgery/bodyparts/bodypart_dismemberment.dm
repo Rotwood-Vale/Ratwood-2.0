@@ -458,10 +458,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -476,10 +476,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -492,10 +492,10 @@
 		if(HAS_TRAIT_FROM(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR))
 			REMOVE_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()

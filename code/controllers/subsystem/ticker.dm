@@ -444,6 +444,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!rulermob)
 		lord_color_default()
+	barony_color_default()
 
 
 //These callbacks will fire after roundstart key transfer

@@ -525,3 +525,83 @@
   wikimody:
   - rscadd: Naziby golden masks now provide the same sandstorm immunity sand gogles
       do
+2026-08-26:
+  2whatever2:
+  - admin: SQDL code is cleaner and now allows for nested lists
+  CloverIsLucky:
+  - bugfix: Fixes Miracles Skill Description. You don't really get higher access to
+      higher tier of miracles from your patrons if you had miracles increased.
+  Ephemeralis:
+  - qol: Heartweave (Eora T2) no longer requests a confirmation popup on its beneficiary,
+      making it actively usable in combat without griefing the person you're trying
+      to help.
+  IronDragoon:
+  - rscadd: Rockhill Slaver and Slave roles with their own base of operations in lowtown
+  - rscadd: Rockhill Baron role, new ruler of lowtown with his manor.
+  - rscadd: Owned Slave trait, through using branding tools to mark someone as owned
+      which is examinable
+  - rscadd: Brands can now be burnt off (including ownership brands) with a toggle
+      in the branding tool menu
+  - bugfix: Cursed collar/chastity device examine text, and collar pref persisting
+      properly
+  Makximus:
+  - rscadd: masc and fem versions of elvish/dwarvish, evil, zeth, and wizardly voicepacks
+      made available.
+  - sound: Makes (some) previously unselectable voicepacks selectable
+  RadiantFlash7:
+  - rscadd: Two new Vizier spells, acceleration, Divergence
+  - rscadd: The Naledi Complex- Penalties for removing your mask.
+  - rscadd: New Hierophant spell, Obelisks of power
+  - rscadd: Naledi refugee now has some btter customizaiton and options.
+  - rscdel: Vizier no longer has psydonite miracles
+  - code_imp: Naledi roles have had spells shifted
+  - code_imp: Vizier unique spells use devotion properly
+  - code_imp: updated Naledi information mentioned in game to reflect long existing
+      lore.
+  Yuckuza:
+  - balance: Phoenix Guard cooldown raised from 20s -> 60s
+  annikaRU:
+  - rscadd: engineers around the globe have discovered you can in-fact wear your spectacles
+      above your eyes, gold prices skyrocket after this sudden realization
+  picklewilly83:
+  - rscadd: Added "a2 Untitled" by Lotchek as a selectable combat track, under the
+      name, "Psydonite".
+2026-08-27:
+  Yuckuza:
+  - balance: Bronze cogs and lamps, craftable with one ingot thats yielding 2 cogs
+      and 3 lamps, respectively, are no longer smeltable. No more duping your bronze.
+  ophaq:
+  - bugfix: Changes some single letter variables for the arachnid race code-wise.
+  - rscadd: Gives arachnids two new abilities which let them spin a thin gossamer
+      type of web that can be seen through and a thicker one that blocks visibility.
+      Added two new icons for the abilities as well.
+2026-08-28:
+  zoktiik:
+  - bugfix: Fixed "This was their only chance at lyfe." not being appropriately displayed.
+      It was checking if YOUR mob is "dead", not the DNR person, so examining the
+      (living) Duke as a ghost would show that message.
+2026-08-29:
+  CameronWoof:
+  - image: Restored the majority of our prior food sprites
+  Ephemeralis:
+  - qol: Towner thug subclasses now show properly on examine.
+  - bugfix: Miscreant thugs who take magical brick specialization have been given
+      arcyne T1 to make it function properly with Arcyne Potential.
+  - balance: WEEP now transfers wounds instead of remaking them, meaning that partly-healed
+      wounds will be moved to the absolver/stigmata instead of being reset back to
+      full severity.
+  - qol: The messaging and visual effect for the WEEP spell has been vastly improved,
+      making it clearer when someone is benefitting from the spell and who is using
+      it on them.
+  NPC1314:
+  - rscadd: brazier heat hands on r-click (+temp)
+  - rscdel: hypothermia no longer progress to frostbite
+  - qol: several weathers tweaked average temp per tick effect
+  - balance: firestacks slower to raise temp and caps out before the max on their
+      own, still give mega heatstroke but less time to cool down
+  - code_imp: bumping into mobs while on fire, and walking over burning mobs now 50%
+      chance to spread not 100
+  RadiantFlash7:
+  - bugfix: crafted book sprite fix
+  - bugfix: disabled bood detailing on qaba and kandy to stop it stealing all dye
+      color from dyed naledi clothes
