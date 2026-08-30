@@ -1108,6 +1108,9 @@
 /obj/item/clothing/cloak/cape/guard
 	color = CLOTHING_AZURE
 
+/obj/item/clothing/cloak/cape/red
+	color = CLOTHING_RED
+
 /obj/item/clothing/cloak/cape/guard/Initialize(mapload)
 	. = ..()
 	if(GLOB.lordprimary)
