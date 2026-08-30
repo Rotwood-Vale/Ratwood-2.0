@@ -445,8 +445,14 @@
 	desc = "The bow is your life; to hold it high and pull the string is to know the path of destiny."
 	var/hasloadedsprite = TRUE
 	accfactor = 1.15 //A fairly mild alternative to the Crude Selfbow, themed to be more like a proper ranged weapon. Same general stats, but with an increased bonus to accuracy.
+	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "classicbow0"
 	item_state = "classicbow"
+	bigboy = TRUE
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/classic/update_icon()
 	. = ..()
