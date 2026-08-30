@@ -37,7 +37,7 @@
 	)
 
 /datum/threat_region/desert_deep
-	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_TOWNER_MINER_OREVEIN)
+	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_TOWNER_MINER_OREVEIN, QUEST_NOTORIOUS_BOUNTY)
 	tp_budget_multiplier = 1.5
 	blockade_travel_fee = BLOCKADE_TRAVEL_FEE_MOUNTAIN
 	kill_target_floor = 9

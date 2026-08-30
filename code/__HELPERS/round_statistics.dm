@@ -92,7 +92,7 @@
 #define STATS_REVENUE_HEADEATER_LEVY    "revenue_headeater_levy"
 #define STATS_REVENUE_IMPORT_TARIFF     "revenue_import_tariff"
 #define STATS_REVENUE_EXPORT_DUTY       "revenue_export_duty"
-// Poll tax (Taxation 2): net mammons collected per civic class (subsidies record negative)
+#define STATS_REVENUE_RECOVERED_SPOILS "revenue_recovered_spoils"
 #define STATS_POLL_TAX_COLLECTED        "poll_tax_collected"
 #define STATS_POLL_TAX_NOBLE            "poll_tax_noble"
 #define STATS_POLL_TAX_CLERGY           "poll_tax_clergy"
@@ -157,6 +157,7 @@
 #define STATS_BLOCKADES_CLEARED        "blockades_cleared"
 #define STATS_BANDITRY_LOSSES          "banditry_losses"
 #define STATS_BANDITRY_DEBT_OUTSTANDING "banditry_debt_outstanding"
+#define STATS_BANDITRY_HOARD_OUTSTANDING "banditry_hoard_outstanding"
 // Influence related statistics
 
 //Psydon

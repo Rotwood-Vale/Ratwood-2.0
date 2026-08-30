@@ -84,7 +84,7 @@
 /datum/threat_region/rockhill_woods_north
 	// Default kill/evergreen set plus the smith caravan - the towner posting rides the
 	// wooded roads here, and pick_region_for_quest only offers regions that allow it.
-	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN)
+	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_NOTORIOUS_BOUNTY)
 	kill_target_floor = 4
 	evergreen_target = 2
 	delivery_reward_multiplier = 1.5
@@ -96,7 +96,7 @@
 	)
 
 /datum/threat_region/rockhill_woods_south
-	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN)
+	allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_NOTORIOUS_BOUNTY)
 	kill_target_floor = 4
 	evergreen_target = 2
 	delivery_reward_multiplier = 1.5
@@ -108,7 +108,7 @@
 	)
 
 /datum/threat_region/rockhill_bog_north
-	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN, QUEST_NOTORIOUS_BOUNTY)
 	tp_budget_multiplier = 1.2
 	blockade_travel_fee = BLOCKADE_TRAVEL_FEE_COAST
 	kill_target_floor = 3
@@ -122,7 +122,7 @@
 	)
 
 /datum/threat_region/rockhill_bog_west
-	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN, QUEST_NOTORIOUS_BOUNTY)
 	tp_budget_multiplier = 1.2
 	blockade_travel_fee = BLOCKADE_TRAVEL_FEE_COAST
 	kill_target_floor = 3
@@ -136,7 +136,7 @@
 	)
 
 /datum/threat_region/rockhill_bog_south
-	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN, QUEST_NOTORIOUS_BOUNTY)
 	tp_budget_multiplier = 1.2
 	blockade_travel_fee = BLOCKADE_TRAVEL_FEE_COAST
 	kill_target_floor = 3
@@ -150,7 +150,7 @@
 	)
 
 /datum/threat_region/rockhill_bog_sunkmire
-	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	allowed_quest_types = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN, QUEST_NOTORIOUS_BOUNTY)
 	tp_budget_multiplier = 1.5
 	blockade_travel_fee = BLOCKADE_TRAVEL_FEE_MOUNTAIN
 	kill_target_floor = 3

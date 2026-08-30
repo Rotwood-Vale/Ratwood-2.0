@@ -302,6 +302,7 @@
 #define TRAIT_OAR "oar"
 #define TRAIT_OAR_PROPELLED "oar_propelled"
 #define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
+#define CONTRACT_SPAWN_TRAIT "contract-spawn"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"

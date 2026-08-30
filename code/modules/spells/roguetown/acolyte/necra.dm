@@ -399,7 +399,7 @@
 	var/list/mob/corpses = list()
 
 	for(var/mob/living/C in GLOB.dead_mob_list)
-		if(!C.mind)
+		if(!C.mind || C.contract_spawned)
 			continue
 
 		if(istype(C, /mob/living/carbon/human))

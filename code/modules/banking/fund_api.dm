@@ -252,6 +252,8 @@
 			record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, due)
 		if(TAX_CATEGORY_EXPORT_DUTY)
 			record_round_statistic(STATS_REVENUE_EXPORT_DUTY, due)
+		if(TAX_CATEGORY_RECOVERED_SPOILS)
+			record_round_statistic(STATS_REVENUE_RECOVERED_SPOILS, due)
 	return due
 
 /// Zenitstadt Concordat (item 6 decrees): while the charter stands, a fixed fraction of every

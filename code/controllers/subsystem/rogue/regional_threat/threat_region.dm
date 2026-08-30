@@ -15,6 +15,9 @@
 	var/list/allowed_quest_types
 	var/kill_target_floor = 2
 	var/evergreen_target = 0
+	// Mammons the region have stolen, for recovery
+	var/banditry_hoard = 0
+	var/datum/weakref/active_hoard_recovery_ref
 	var/tp_budget_multiplier = 1.0
 	/// Multiplier on the threat-scaled bonus paid to retrieval/courier quests. Independent of
 	/// tp_budget_multiplier so reward and combat scaling tune separately.
@@ -31,7 +34,13 @@
 /datum/threat_region/New()
 	. = ..()
 	if(!allowed_quest_types)
-		allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY)
+		allowed_quest_types = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_COURIER, QUEST_RETRIEVAL, QUEST_RECOVERY, QUEST_NOTORIOUS_BOUNTY)
+
+/datum/threat_region/proc/has_active_blockade()
+	for(var/datum/blockade/B as anything in GLOB.active_blockades)
+		if(B.threat_region_name == region_name)
+			return TRUE
+	return FALSE
 
 /// Scales a per-region kill-quest target off live population, clamped to this region's floor..floor+offset.
 /datum/threat_region/proc/get_kill_target(pop)
@@ -92,3 +101,30 @@
 			return "#800080"
 		else
 			return "#FFFFFF"
+
+
+/datum/threat_region/proc/get_ic_description()
+	var/list/result = list()
+	if(!length(faction_weights) || latent_ambush <= 0)
+		return result
+	var/total_bands = round(latent_ambush / THREAT_POINTS_PER_BAND)
+	if(total_bands <= 0)
+		return result
+	var/weight_sum = 0
+	for(var/id in faction_weights)
+		weight_sum += faction_weights[id]
+	if(!weight_sum)
+		return result
+	var/list/shares = list()
+	for(var/id in faction_weights)
+		var/datum/quest_faction/F = get_quest_faction(id)
+		if(!F)
+			continue
+		var/bands = round(total_bands * faction_weights[id] / weight_sum)
+		if(bands <= 0)
+			continue
+		shares[F] = bands
+	sortTim(shares, /proc/cmp_numeric_dsc, associative = TRUE)
+	for(var/datum/quest_faction/F as anything in shares)
+		result += F.describe_group_count(shares[F])
+	return result

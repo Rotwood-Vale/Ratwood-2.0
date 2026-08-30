@@ -4,17 +4,21 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { inkButtonStyle, tabBarStyle, tabStyle } from './common/parchment';
 import { CulturalStockTab } from './Goldface/CulturalStock/CulturalStockTab';
-import { GoodsTab } from './Goldface/GoodsTab';
 import { HarborTab } from './Goldface/Harbor/HarborTab';
+import { LedgerTab } from './Goldface/Ledger/LedgerTab';
 import { MammonRow } from './Goldface/MammonRow';
+import { ManagementTab } from './Goldface/Management/ManagementTab';
 import { MarketTab } from './Goldface/Market/MarketTab';
 import type { VendingData } from './Goldface/types';
+import { VendingPanel } from './Goldface/VendingPanel';
 
-// Ratwood deviation: AP's Goldface.tsx also has 'management' and 'ledger' tabs (ManagementTab/LedgerTab),
-// which belong to a MeisterPanel/steward-trade ecosystem not yet scoped for this port step. They're
-// omitted here rather than stubbed - the backend (_goldface.dm) still computes their data
-// (build_favor_data/build_ledger_data) so a later port step can add the tabs without backend changes.
-type GoldfaceTab = 'goods' | 'cultural' | 'harbor' | 'market';
+type GoldfaceTab =
+  | 'goods'
+  | 'cultural'
+  | 'harbor'
+  | 'market'
+  | 'management'
+  | 'ledger';
 
 export const Goldface = () => {
   const { act, data } = useBackend<VendingData>();
@@ -62,18 +66,27 @@ export const Goldface = () => {
             {helpButton}
           </div>
           {mammonBar}
-          <GoodsTab data={data} act={act} />
+          <VendingPanel data={data} act={act} />
         </Window.Content>
       </Window>
     );
   }
 
+  const canSeeMerchantTabs = isProprietor;
   const canSeeHarborTabs = isProprietor || isAgent;
   const culturalStock = data.harbor?.cultural_stock ?? [];
   let activeTab = tab;
-  if ((activeTab === 'harbor' || activeTab === 'cultural') && !canSeeHarborTabs) {
+  if (
+    (activeTab === 'harbor' || activeTab === 'cultural') &&
+    !canSeeHarborTabs
+  ) {
     activeTab = 'goods';
-  } else if (activeTab === 'market' && !isProprietor) {
+  } else if (
+    (activeTab === 'market' ||
+      activeTab === 'management' ||
+      activeTab === 'ledger') &&
+    !canSeeMerchantTabs
+  ) {
     activeTab = 'goods';
   }
 
@@ -81,44 +94,60 @@ export const Goldface = () => {
     <Window width={880} height={800} theme="parchment">
       <Window.Content scrollable>
         <div style={{ position: 'relative' }}>
-        <div style={tabBarStyle}>
-          <div
-            style={tabStyle(activeTab === 'goods')}
-            onClick={() => setTab('goods')}
-          >
-            Goods
+          <div style={tabBarStyle}>
+            <div
+              style={tabStyle(activeTab === 'goods')}
+              onClick={() => setTab('goods')}
+            >
+              Goods
+            </div>
+            {canSeeHarborTabs && (
+              <div
+                style={tabStyle(activeTab === 'cultural')}
+                onClick={() => setTab('cultural')}
+              >
+                Cultural Stock
+              </div>
+            )}
+            {canSeeHarborTabs && (
+              <div
+                style={tabStyle(activeTab === 'harbor')}
+                onClick={() => setTab('harbor')}
+              >
+                Harbor
+              </div>
+            )}
+            {canSeeMerchantTabs && (
+              <div
+                style={tabStyle(activeTab === 'market')}
+                onClick={() => setTab('market')}
+              >
+                Market
+              </div>
+            )}
+            {canSeeMerchantTabs && (
+              <div
+                style={tabStyle(activeTab === 'management')}
+                onClick={() => setTab('management')}
+              >
+                Management
+              </div>
+            )}
+            {canSeeMerchantTabs && (
+              <div
+                style={tabStyle(activeTab === 'ledger')}
+                onClick={() => setTab('ledger')}
+              >
+                Ledger
+              </div>
+            )}
           </div>
-          {canSeeHarborTabs && (
-            <div
-              style={tabStyle(activeTab === 'cultural')}
-              onClick={() => setTab('cultural')}
-            >
-              Cultural Stock
-            </div>
-          )}
-          {canSeeHarborTabs && (
-            <div
-              style={tabStyle(activeTab === 'harbor')}
-              onClick={() => setTab('harbor')}
-            >
-              Harbor
-            </div>
-          )}
-          {isProprietor && (
-            <div
-              style={tabStyle(activeTab === 'market')}
-              onClick={() => setTab('market')}
-            >
-              Market
-            </div>
-          )}
-        </div>
-        <div style={{ position: 'absolute', right: 0, top: '10px' }}>
-          {helpButton}
-        </div>
+          <div style={{ position: 'absolute', right: 0, top: '10px' }}>
+            {helpButton}
+          </div>
         </div>
         {mammonBar}
-        {activeTab === 'goods' && <GoodsTab data={data} act={act} />}
+        {activeTab === 'goods' && <VendingPanel data={data} act={act} />}
         {activeTab === 'cultural' && canSeeHarborTabs && (
           <CulturalStockTab
             stock={culturalStock}
@@ -137,8 +166,14 @@ export const Goldface = () => {
             act={act}
           />
         )}
-        {activeTab === 'market' && isProprietor && (
+        {activeTab === 'market' && canSeeMerchantTabs && (
           <MarketTab harbor={data.harbor} />
+        )}
+        {activeTab === 'management' && canSeeMerchantTabs && (
+          <ManagementTab harbor={data.harbor} act={act} />
+        )}
+        {activeTab === 'ledger' && canSeeMerchantTabs && (
+          <LedgerTab harbor={data.harbor} />
         )}
       </Window.Content>
     </Window>

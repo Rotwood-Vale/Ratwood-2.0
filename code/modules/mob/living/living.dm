@@ -2438,12 +2438,13 @@
 
 // Contract-spawned mobs: heads pay no HEADEATER bounty (the contract reward is the payment)
 // and the corpse dusts itself a while after death so cleared warbands don't litter the wilds.
-/mob/living/proc/mark_contract_spawned()
+/mob/living/proc/mark_contract_spawned(dust_corpse = TRUE)
 	no_head_bounty = TRUE
 	contract_spawned = TRUE
-	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_contract_death))
-
-/mob/living/carbon/mark_contract_spawned()
+	ADD_TRAIT(src, TRAIT_ZOMBIE_IMMUNE, CONTRACT_SPAWN_TRAIT)
+	if(dust_corpse)
+		RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_contract_death))
+/mob/living/carbon/mark_contract_spawned(dust_corpse = TRUE)
 	. = ..()
 	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
 	if(istype(head))
