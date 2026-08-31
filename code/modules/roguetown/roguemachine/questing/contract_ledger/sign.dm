@@ -107,7 +107,7 @@
 		if(mode == QUEST_TURNIN_OFFICIAL)
 			say("[holder_name] has no account on record - the reward cannot be credited.")
 		else
-			say("No account on record - register with a Meister before turning in the contract.")
+			say("No account on record - register with a Nervelock before turning in the contract.")
 		return
 
 	var/base_reward = completed_quest.reward_amount

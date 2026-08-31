@@ -33,7 +33,7 @@ export const MeisterPanel = () => {
     <Window title="Nervelock" width={620} height={620} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
-          <div style={titleStyle}>The Meister</div>
+          <div style={titleStyle}>The Nervelock</div>
           <div style={subtitleStyle}>
             Day {data.day} &middot; Personal balance:{' '}
             <span style={{ color: SEAL_AMBER, fontWeight: 'bold' }}>

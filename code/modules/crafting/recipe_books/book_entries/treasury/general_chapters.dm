@@ -23,7 +23,7 @@
 //    ruler is absent. The old flat Sales Tax is gone. Charter exemptions/caps are live.
 //  - Fines: Golden Bull per-stroke cap + daily ceiling and the one-fine-per-day rule are real
 //    as of item 6, on top of the general fine cap (GENERIC_RATE_CAP).
-//  - Patronage: all three writs are real as of the Step 16 Meister Panel port
+//  - Patronage: all three writs are real as of the Step 16 Nervelock Panel port
 //    (code/modules/banking/patronage_writ.dm; TRAIT_AGENT_MERCHANT/BATHHOUSE/CHURCH,
 //    PATRON_CAP_* in code/__DEFINES/banking.dm). Drafted from the NERVELOCK's Patronage tab.
 //  - Mercenary Statue: only the public mercenary roster is real

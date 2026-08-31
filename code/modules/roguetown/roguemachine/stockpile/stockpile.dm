@@ -222,7 +222,7 @@
 			playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		return
 
-	// Pre-check: farmer must have a Meister account. Otherwise the stockpile would silently
+	// Pre-check: farmer must have a Nervelock account. Otherwise the stockpile would silently
 	// eat their goods for no payment - do not scam walk-ins.
 	var/has_account = SStreasury.has_account(H)
 	if(!has_account)

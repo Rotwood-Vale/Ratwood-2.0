@@ -55,7 +55,7 @@
 		to_chat(user, span_warning("I already owe the Crown. I cannot hold two debts at once."))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("I have no Meister account to receive these funds. I must open one first."))
+		to_chat(user, span_warning("I have no Nervelock account to receive these funds. I must open one first."))
 		return
 	if(source_fund_id == "church" && (user.job in GLOB.church_positions))
 		to_chat(user, span_warning("The Church prohibits usury to its own. Eora's coin is for the poor and the downtrodden, not the faithful."))
@@ -77,17 +77,22 @@
 		return
 	var/datum/fund/account = SStreasury.get_account(user)
 	if(!account)
-		to_chat(user, span_warning("My Meister account is gone."))
+		to_chat(user, span_warning("My Nervelock account is gone."))
 		return
 	var/datum/fund/issuing_fund = SStreasury.resolve_fund_by_id(source_fund_id)
 	if(!issuing_fund)
-		to_chat(user, span_warning("The writ names no recognised lender. The meister cannot honor it."))
+		to_chat(user, span_warning("The writ names no recognised lender. The nervelock cannot honor it."))
 		return
+
+	if(issuing_fund == account)
+		to_chat(user, span_warning("I cannot take a loan from myself. The nervelock will not honor this writ."))
+		return
+
 	if(issuing_fund.balance < principal)
 		to_chat(user, span_warning("[issuing_fund.name]'s coffers are too thin to honor this writ."))
 		return
 	if(!SStreasury.transfer(issuing_fund, account, principal, "Loan principal"))
-		to_chat(user, span_warning("The meister refuses the transfer."))
+		to_chat(user, span_warning("The nervelock refuses the transfer."))
 		return
 	if(issuing_fund == SStreasury.discretionary_fund)
 		record_treasury_expense(TREASURY_FLOW_LOAN_OUT, treasury_role_of(user), principal)
@@ -98,7 +103,7 @@
 	user.visible_message(span_notice("[user] signs the loan contract and pockets [lender_label]'s coin."), \
 		span_notice("I accept the loan of [principal]m from [lender_label], repayable in [term_days] day\s at [pct]%/day. Total due: [total_due]m."))
 	playsound(get_turf(user), 'sound/misc/gold_license.ogg', 60, FALSE, -1)
-	send_ooc_note("<b>MEISTER:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
+	send_ooc_note("<b>NERVELOCK:</b> Loan of [principal]m received from [lender_label]. [total_due]m will be collected on day [L.due_on_day].", name = user.real_name)
 	qdel(src)
 
 /obj/item/loan_contract/indenture
@@ -119,7 +124,7 @@
 	var/datum/fund/issuing_fund = SStreasury.resolve_fund_by_id(source_fund_id)
 	var/datum/fund/target_fund = SStreasury.resolve_fund_by_id(target_fund_id)
 	if(!issuing_fund || !target_fund)
-		to_chat(user, span_warning("The indenture names no recognised parties. The meister cannot honor it."))
+		to_chat(user, span_warning("The indenture names no recognised parties. The nervelock cannot honor it."))
 		return
 	var/obj/structure/roguemachine/vaultbank/target_jawbank = SStreasury.find_jawbank_for_fund_id(target_fund_id)
 	if(!target_jawbank)
@@ -143,7 +148,7 @@
 		to_chat(user, span_warning("[issuing_fund.name]'s coffers are too thin to honor this indenture."))
 		return
 	if(!SStreasury.transfer(issuing_fund, target_fund, principal, "Indenture principal"))
-		to_chat(user, span_warning("The meister refuses the transfer."))
+		to_chat(user, span_warning("The nervelock refuses the transfer."))
 		return
 	var/datum/loan/L = new(null, principal, term_days, interest_rate, issuer_name, issuing_fund, target_fund)
 	SStreasury.loans += L

@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(contract_proxy_officials, list(
 		to_chat(user, span_warning("Only a Fellowship of [BLOCKADE_FELLOWSHIP_REQUIREMENT] or more may call for a Hoard Recovery."))
 		return
 	if(!SStreasury.has_account(user))
-		to_chat(user, span_warning("No account on record - register with a Meister before calling for a recovery."))
+		to_chat(user, span_warning("No account on record - register with a Nervelock before calling for a recovery."))
 		return
 	var/datum/fund/pledge_account = SStreasury.get_account(user)
 	if(SStreasury.get_balance(user) < HOARD_RECOVERY_PLEDGE)

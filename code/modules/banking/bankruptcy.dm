@@ -156,7 +156,8 @@
 	resume_wages_after_bankruptcy()
 	bankruptcy_concession_picks = BANKRUPTCY_CONCESSION_PICKS
 	atc_loan_arrears_consumed = FALSE
-	force_set_round_statistic(STATS_TREASURY_DEBT_OUTSTANDING, 0)
+	treasury_debt = 0
+	force_set_round_statistic(STATS_TREASURY_DEBT_OUTSTANDING, treasury_debt)
 
 	priority_announce(
 		"The Ferentian Trading Company releases the Crown's commerce. Wages resume on the morrow. The Lord may, by ancient prerogative, restore up to [BANKRUPTCY_CONCESSION_PICKS] of the suspended Charters at once; all others must wait the customary span between proclamations.",

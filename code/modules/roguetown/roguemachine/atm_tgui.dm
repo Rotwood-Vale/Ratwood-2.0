@@ -1,4 +1,4 @@
-// MeisterPanel TGUI backend - ported from Azure-Peak PR #7000 (economy port Step 16,
+// NervelockPanel TGUI backend - ported from Azure-Peak PR #7000 (economy port Step 16,
 // AP source: code/modules/roguetown/roguemachine/atm_tgui.dm).
 // Ratwood deviations:
 //  - Poll tax runtime is live (Taxation 2, treasury_poll_tax.dm): the tab gets real

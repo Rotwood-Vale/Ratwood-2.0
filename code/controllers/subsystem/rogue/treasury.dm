@@ -349,16 +349,16 @@ SUBSYSTEM_DEF(treasury)
 		record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, amt)
 		if(!mint_new)
 			record_treasury_payout(usr, istype(target, /mob/living) ? target : null, amt, is_salary)
-		send_ooc_note(source ? "<b>MEISTER:</b> You received [amt]m. ([source])" : "<b>MEISTER:</b> You received [amt]m.", name = target_name)
+		send_ooc_note(source ? "<b>NERVELOCK:</b> You received [amt]m. ([source])" : "<b>NERVELOCK</b> You received [amt]m.", name = target_name)
 		log_game("CROWN GRANT: [usr ? key_name(usr) : "system"] granted [amt]m to [istype(target, /mob/living) ? key_name(target) : target_name] via [source || "unknown"]")
 	else
 		if(SSgamemode?.roundvoteend)
-			send_ooc_note("<b>MEISTER:</b> Error: The round is ending. No further fines may be levied.", name = target_name)
+			send_ooc_note("<b>NERVELOCK:</b> Error: The round is ending. No further fines may be levied.", name = target_name)
 			return FALSE
 		var/mob/living/fine_owner = istype(target, /mob/living) ? target : null
 		if(fine_owner && is_tax_exempt(fine_owner, TAX_CATEGORY_FINE))
 			record_tax_exemption(TAX_CATEGORY_FINE, abs(amt))
-			send_ooc_note("<b>MEISTER:</b> Error: By decree, they cannot be fined.", name = target_name)
+			send_ooc_note("<b>NERVELOCK:</b> Error: By decree, they cannot be fined.", name = target_name)
 			log_game("FINE REFUSED: [usr ? key_name(usr) : "system"] attempted to fine [key_name(fine_owner)] [abs(amt)]m but they were Charter-exempt")
 			return FALSE
 		var/fine_amt = abs(amt)
@@ -371,15 +371,15 @@ SUBSYSTEM_DEF(treasury)
 				fine_amt = max_fine
 		if(fine_amt <= 0)
 			if(fine_owner && has_been_fined_today(fine_owner))
-				send_ooc_note("<b>MEISTER:</b> Error: They have already been fined today.", name = target_name)
+				send_ooc_note("<b>NERVELOCK:</b> Error: They have already been fined today.", name = target_name)
 			else
-				send_ooc_note("<b>MEISTER:</b> Error: No fineable amount remains.", name = target_name)
+				send_ooc_note("<b>NERVELOCK:</b> Error: No fineable amount remains.", name = target_name)
 			return FALSE
 		if(!transfer(account, discretionary_fund, fine_amt, "[TAX_CATEGORY_FINE] ([source])"))
-			send_ooc_note("<b>MEISTER:</b> Error: Insufficient funds in the account to complete the fine.", name = target_name)
+			send_ooc_note("<b>NERVELOCK:</b> Error: Insufficient funds in the account to complete the fine.", name = target_name)
 			return FALSE
 		record_round_statistic(STATS_FINES_INCOME, fine_amt)
-		send_ooc_note(source ? "<b>MEISTER:</b> You were fined [fine_amt]m. ([source])" : "<b>MEISTER:</b> You were fined [fine_amt]m.", name = target_name)
+		send_ooc_note(source ? "<b>NERVELOCK:</b> You were fined [fine_amt]m. ([source])" : "<b>NERVELOCK:</b> You were fined [fine_amt]m.", name = target_name)
 		log_game("FINE: [usr ? key_name(usr) : "system"] fined [istype(target, /mob/living) ? key_name(target) : target_name] [fine_amt]m via [source || "unknown"]")
 		if(fine_owner)
 			notify_fine_applied(fine_owner, fine_amt)
@@ -394,7 +394,7 @@ SUBSYSTEM_DEF(treasury)
 	var/datum/fund/account = get_account(character)
 	if(!account)
 		return FALSE
-	mint(account, amt, "Meister deposit by [character.real_name]")
+	mint(account, amt, "NERVELOCK deposit by [character.real_name]")
 	return list(amt, 0)
 
 /datum/controller/subsystem/treasury/proc/withdraw_money_account(amt, target)
@@ -408,9 +408,9 @@ SUBSYSTEM_DEF(treasury)
 	if(!account)
 		return
 	if(account.balance < amt)
-		send_ooc_note("<b>MEISTER:</b> Error: Insufficient funds in the account to complete the withdrawal.", name = target_name)
+		send_ooc_note("<b>NERVELOCK:</b> Error: Insufficient funds in the account to complete the withdrawal.", name = target_name)
 		return
-	if(!burn(account, amt, "Meister withdraw by [target_name]"))
+	if(!burn(account, amt, "NERVELOCK withdraw by [target_name]"))
 		return
 	return TRUE
 
@@ -431,7 +431,7 @@ SUBSYSTEM_DEF(treasury)
 		return FALSE
 	record_round_statistic(STATS_NOBLE_INCOME_TOTAL, payout)
 	total_noble_income += payout
-	send_ooc_note("<b>MEISTER:</b> You received [payout]m. ([source])", name = recipient.real_name)
+	send_ooc_note("<b>NERVELOCK:</b> You received [payout]m. ([source])", name = recipient.real_name)
 	return TRUE
 
 /datum/controller/subsystem/treasury/proc/distribute_estate_incomes()
