@@ -21044,6 +21044,7 @@
 /obj/machinery/light/rogue/torchholder{
 	pixel_y = 32
 	},
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town)
 "epl" = (
@@ -24545,6 +24546,11 @@
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
+"faq" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/town)
 "fax" = (
 /obj/effect/decal/edge{
 	color = "s";
@@ -62738,6 +62744,13 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor)
+"mLg" = (
+/obj/machinery/light/rogue/lanternpost{
+	pixel_y = 10;
+	pixel_x = -12
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "mLi" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/dirt/road,
@@ -66894,6 +66907,13 @@
 "nES" = (
 /turf/closed/mineral/random/rogue/high,
 /area/rogue/indoors/town/grove)
+"nET" = (
+/obj/structure/fluff/sellsign{
+	pixel_y = 33;
+	name = "Rotwood Faire"
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/outdoors/town)
 "nEZ" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/cleanshallow,
@@ -75539,6 +75559,13 @@
 /mob/living/carbon/human/species/orc/npc/footsoldier,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault)
+"ppo" = (
+/obj/machinery/light/rogue/torchholder{
+	pixel_y = 32
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "ppu" = (
 /turf/closed/wall/mineral/rogue/pipe/corners/one,
 /area/rogue/outdoors/mountains/decap/stepbelow)
@@ -86725,11 +86752,6 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/manor)
-"rFo" = (
-/obj/structure/flora/roguegrass,
-/obj/structure/bars/cemetery,
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/town)
 "rFp" = (
 /obj/effect/decal/mossy{
 	dir = 8
@@ -103708,6 +103730,7 @@
 "vcP" = (
 /obj/structure/flora/roguegrass,
 /obj/machinery/light/rogue/torchholder/r,
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/town)
 "vcT" = (
@@ -114977,6 +115000,7 @@
 /obj/structure/fluff/littlebanners/greenred{
 	pixel_y = 20
 	},
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town)
 "xss" = (
@@ -116557,6 +116581,18 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/physician)
+"xJa" = (
+/obj/machinery/light/rogue/lanternpost{
+	pixel_y = 10;
+	pixel_x = -9
+	},
+/obj/structure/fluff/sellsign{
+	pixel_y = 10;
+	name = "Rotwood Faire";
+	pixel_x = 4
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "xJd" = (
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/dirt/road,
@@ -117297,6 +117333,11 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
+"xRF" = (
+/obj/structure/flora/roguegrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/town)
 "xRG" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/outdoors/woods/southwest)
@@ -294943,7 +294984,7 @@ pWT
 mQr
 uzZ
 pWT
-rFo
+rYO
 hsi
 dIU
 hsi
@@ -295396,7 +295437,7 @@ pWT
 pWT
 pWT
 cpF
-njB
+aZo
 fpx
 rcz
 wyE
@@ -295407,7 +295448,7 @@ qKs
 qyR
 wyE
 qyR
-njB
+aZo
 qfA
 sns
 ndr
@@ -295851,12 +295892,12 @@ cpF
 pWT
 fpx
 rcz
-rcz
+xRF
 qyR
 wyE
 qyR
 qyR
-wyE
+noZ
 fpx
 cne
 oDz
@@ -295872,11 +295913,11 @@ qfA
 qfA
 sns
 qfA
-rcz
+faq
 ldD
 ldD
 teB
-nlW
+rYO
 njB
 pWT
 exD
@@ -296322,7 +296363,7 @@ rUL
 fKY
 vcP
 fpx
-rcz
+faq
 pWT
 pWT
 pWT
@@ -297204,7 +297245,7 @@ xPB
 exD
 pWT
 cpF
-njB
+jiQ
 vmH
 edg
 pvg
@@ -297683,7 +297724,7 @@ xWk
 oxm
 lgC
 koG
-njB
+aZo
 cpF
 njB
 qfA
@@ -298587,7 +298628,7 @@ xWk
 oxm
 lgC
 cRA
-njB
+jiQ
 cpF
 pWT
 sns
@@ -299011,7 +299052,7 @@ qyR
 exD
 exD
 pWT
-cpF
+rYO
 cPL
 dJN
 ftH
@@ -299039,7 +299080,7 @@ tPl
 njV
 jwm
 cDX
-laf
+ppo
 cpF
 njB
 qfA
@@ -299462,7 +299503,7 @@ aPX
 qyR
 exD
 exD
-ivJ
+xJa
 cpF
 pWT
 cne
@@ -299470,9 +299511,9 @@ mBJ
 kFy
 pWT
 pWT
-njB
+jiQ
 pWT
-njB
+aZo
 pWT
 kFy
 xUI
@@ -299492,9 +299533,9 @@ sns
 kFy
 pWT
 hkc
-cpF
-ivJ
-sns
+rYO
+mLg
+nET
 sns
 exD
 hpr
@@ -301276,9 +301317,9 @@ pWT
 cne
 nik
 kFy
+aZo
 njB
-njB
-njB
+jiQ
 eFP
 cDX
 olV
@@ -301300,7 +301341,7 @@ sns
 kFy
 pWT
 xsr
-cpF
+rYO
 ygO
 sns
 sns
@@ -301723,13 +301764,13 @@ xPG
 exD
 exD
 pWT
-nlW
+rYO
 cpF
 cpF
 cpF
 cpF
 cpF
-nlW
+rYO
 pWT
 sns
 rbI
@@ -302196,7 +302237,7 @@ exD
 exD
 fKY
 qrK
-njB
+aZo
 wdT
 nky
 xWU
@@ -302655,7 +302696,7 @@ xWU
 qXa
 gHI
 trb
-njB
+aZo
 cpF
 pWT
 sns
@@ -303087,7 +303128,7 @@ sns
 pWT
 cpF
 pWT
-njB
+jiQ
 rbI
 jew
 jew
@@ -303991,20 +304032,20 @@ sns
 sns
 cpF
 pWT
-njB
+aZo
 pWT
 fpx
 rcz
 pWT
 pWT
 pWT
-njB
+aZo
 pWT
 pWT
-njB
+jiQ
 pWT
 pWT
-njB
+jiQ
 rcz
 rcz
 fpx
@@ -304447,7 +304488,7 @@ pWT
 njB
 pWT
 fpx
-rcz
+xRF
 fpx
 njB
 njB
@@ -304459,9 +304500,9 @@ njB
 njB
 pWT
 pWT
-njB
+aZo
 fpx
-njB
+aZo
 pWT
 kFy
 cpF
@@ -304893,30 +304934,30 @@ gyu
 aFv
 sns
 sns
-nlW
+rYO
 cpF
 cpF
 cpF
 cpF
 cpF
 cpF
-nlW
+rYO
 cpF
 cpF
 cpF
-nlW
+rYO
 cpF
 cpF
 oDr
 oDr
-nlW
+rYO
 cpF
 cpF
 cpF
 cpF
 cpF
 cpF
-nlW
+rYO
 pWT
 qfA
 sns
