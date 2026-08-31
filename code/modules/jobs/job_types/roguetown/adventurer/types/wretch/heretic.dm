@@ -514,6 +514,21 @@
 				pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
 				wrists = /obj/item/clothing/wrists/roguetown/bracers
 				shoes = /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
+				switch(H.patron?.type)
+					if(/datum/patron/inhumen/zizo)
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+					if(/datum/patron/inhumen/graggar)
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+					if(/datum/patron/inhumen/matthios)
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+					if(/datum/patron/inhumen/baotha)
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothagronn
+					if(/datum/patron/divine/abyssor)
+						id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+					if(/datum/patron/divine/dendor)
+						id = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+					else
+						id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn/special
 			if("Disgraced Disciple (Natural Armor)") //Orthodoxist Disciple. You get Disciple's Natural Armor.
 				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
 				head = /obj/item/clothing/head/roguetown/roguehood/psydon
