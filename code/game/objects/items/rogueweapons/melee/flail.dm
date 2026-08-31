@@ -306,7 +306,7 @@
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
 	max_integrity = 500
 	anvilrepair = /datum/skill/craft/weaponsmithing
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/blacksteel
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
@@ -314,13 +314,14 @@
 	desc = "Weight of wealth in a deadly striking end."
 	icon_state = "matthiosflail"
 	sellprice = 250
-	smeltresult = /obj/item/ingot/steel
+	smeltresult = /obj/item/ingot/gold
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
