@@ -709,7 +709,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "citywatch armor"
-	desc = "Heavy, well worn armour. Incredibly resilient to all forms of damage. Issued to the Citywatch."
+	desc = "Heavy, well worn armour. Resilient to damage. Issued to the Citywatch."
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	icon_state = "citywatch"
@@ -722,8 +722,6 @@
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
-	sleevetype = "shirt"
-	sleeved = "icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi"
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
