@@ -65,7 +65,7 @@
 		if(/datum/patron/inhumen/matthios)
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothagronn
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
 		if(/datum/patron/divine/abyssor)
 			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
 		if(/datum/patron/divine/dendor)
@@ -139,7 +139,7 @@
 		if(/datum/patron/inhumen/matthios)
 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
 		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baothagronn
+			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
 		if(/datum/patron/divine/abyssor)
 			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
 		if(/datum/patron/divine/dendor)
@@ -280,7 +280,7 @@
 	desc = "'The hunt, the studying of your prey, the learning of its routes, the knowledge our ancestors passed down, the empowerment of your people and yourself. Learn of the world, or fade away.'	</br>	</br>The Plotting Wolf embodies the virtues of progress and knowledge, so that no obstacle nor threat to the homeland remains insurmountable. To understand the truths of beast-and-bronze is to lighten the future's hardships. Do not humor magicka, however, for playing with fire shall always end in someone being burned."
 	icon_state = "gronnzizo"
 
-/obj/item/clothing/neck/roguetown/psicross/inhumen/baothagronn
+/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
 	name = "carved talisman" //relishing talisma
 	desc = "'“The excess of desire, the want of more, the glory of victory, the lover's embrace. Embrace the Leopard, or forget your strength.'	</br>	</br>The Relishing Leopard embodies the virtues of love and glory, both in battle and at home. Enjoy the flesh, the drink, and the spice; but be wary to avoid overindulgence, for it shall leave you despondant and lethargic. To become too comfortable is to become weak, and such weakness would turn you into a delicious snack for the Leopard."
 	icon_state = "gronnbaotha"
