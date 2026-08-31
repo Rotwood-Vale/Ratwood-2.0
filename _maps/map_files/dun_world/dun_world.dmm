@@ -8151,7 +8151,7 @@
 /area/rogue/outdoors/town/roofs)
 "bGj" = (
 /obj/structure/curtain/purple,
-/obj/machinery/light/rogue/campfire/fireplace{
+/obj/machinery/light/rogue/campfire/fireplace/blue{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet/purple,
@@ -8645,6 +8645,10 @@
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
+"bLJ" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "bLK" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/cobble,
@@ -12385,7 +12389,9 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "czS" = (
-/mob/living/simple_animal/hostile/rogue/deepone,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "czU" = (
@@ -23713,6 +23719,7 @@
 /area/rogue/indoors/town/tavern)
 "eRx" = (
 /obj/effect/decal/cleanable/dirt/cobweb,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "eRB" = (
@@ -27159,7 +27166,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/scarymaze)
 "fBH" = (
-/mob/living/simple_animal/hostile/boss/fishboss,
+/mob/living/carbon/human/species/human/northern/deranged_knight/matthios,
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "fBI" = (
@@ -51620,6 +51627,10 @@
 	dir = 8
 	},
 /area/rogue/indoors/town/manor)
+"kAw" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "kAx" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
@@ -61664,6 +61675,10 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
+"mAC" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "mAF" = (
 /obj/structure/fluff/walldeco/mercenaryflag{
 	name = "mercenary's guild";
@@ -62164,6 +62179,11 @@
 /obj/structure/mineral_door/wood/donjon/stone,
 /turf/open/floor/rogue/concrete/bronze,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
+"mFf" = (
+/obj/machinery/light/rogue/candle/red,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "mFh" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -75201,6 +75221,10 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach/south)
+"plv" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "ply" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/rogue/grasscold,
@@ -75233,7 +75257,7 @@
 /obj/structure/lever/wall{
 	pixel_x = 11;
 	redstone_id = "deepone_pen";
-	name = "deep ones"
+	name = "mad heretic"
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
@@ -80095,6 +80119,12 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
+"qlx" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "qlC" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -108044,6 +108074,7 @@
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
 	},
+/obj/structure/bed/rogue/shit,
 /turf/open/floor/rogue/blocks/green,
 /area/rogue/under/town/sewer)
 "vWZ" = (
@@ -111419,6 +111450,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
+"wGc" = (
+/obj/effect/decal/cleanable/blood/splatter/walls,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/under/town/sewer)
 "wGf" = (
 /obj/structure/bars/passage/steel{
 	max_integrity = 9000;
@@ -180637,7 +180672,7 @@ bhJ
 bhJ
 oxx
 oxx
-oxx
+wGc
 oxx
 oxx
 oxx
@@ -181087,7 +181122,7 @@ bhJ
 bhJ
 bhJ
 bhJ
-oxx
+wGc
 eRx
 ylh
 gyP
@@ -181540,9 +181575,9 @@ sIr
 bhJ
 bhJ
 oxx
-cWO
-ylh
-ylh
+mFf
+bLJ
+mAC
 uTL
 bmZ
 bmZ
@@ -181994,14 +182029,14 @@ bhJ
 oxx
 gyP
 ylh
-ylh
+plv
 bao
 ylh
 bao
+mAC
 ylh
-ylh
-ylh
-ylh
+kAw
+mAC
 owo
 jtd
 oxx
@@ -182446,12 +182481,12 @@ bhJ
 oxx
 oxx
 oxx
-oxx
+wGc
 oxx
 oxx
 hES
-ylh
-ylh
+mAC
+mcl
 ylh
 ylh
 owo
@@ -182896,15 +182931,15 @@ ehs
 bhJ
 bhJ
 oxx
+mAC
 czS
-czS
-ylh
+mcl
 rKd
 ylh
 rKd
 ylh
 ylh
-ylh
+kAw
 ylh
 owo
 jtd
@@ -183347,16 +183382,16 @@ ehs
 ehs
 bhJ
 bhJ
-oxx
-czS
-czS
+wGc
+ylh
+qlx
 ylh
 vXa
 vXa
 vXa
+kAw
 ylh
-ylh
-ylh
+mAC
 ylh
 owo
 jtd
@@ -184706,7 +184741,7 @@ bhJ
 oxx
 oxx
 oxx
-oxx
+wGc
 oxx
 nRH
 oxx
