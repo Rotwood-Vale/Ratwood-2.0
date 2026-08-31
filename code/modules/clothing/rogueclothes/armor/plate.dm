@@ -722,8 +722,8 @@
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
-	sleevetype = null
-	sleeved = null
+	sleevetype = "shirt"
+	sleeved = "icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi"
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
