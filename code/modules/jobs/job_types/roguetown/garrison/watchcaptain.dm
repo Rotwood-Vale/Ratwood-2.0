@@ -36,7 +36,7 @@
 	cloak = /obj/item/clothing/cloak/citywatchcaptain
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
