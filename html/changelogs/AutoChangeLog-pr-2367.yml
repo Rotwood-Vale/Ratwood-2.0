@@ -1,4 +1,0 @@
-author: "UntoldTactics"
-delete-after: True
-changes:
-  - bugfix: "Heirophant's kandys now has a proper integrity value, equivilient to a padded gambeson."

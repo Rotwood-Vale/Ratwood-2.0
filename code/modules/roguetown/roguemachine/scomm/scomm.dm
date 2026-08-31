@@ -1,7 +1,4 @@
-#define GARRISON_SCOM_COLOR "#FF4242"
-#define NORMAL_SCOM_TRANSMISSION_DELAY 15 SECONDS
-#define NORMAL_SCOM_PER_MESSAGE_DELAY 15 SECONDS
-#define CHEESE_QUIET_TIME 2 MINUTES // How long stuffing a slice of cheese in quieten the SCOM
+
 
 /obj/structure/roguemachine/scomm
 	name = "SCOM"

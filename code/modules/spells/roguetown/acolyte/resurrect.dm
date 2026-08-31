@@ -108,7 +108,8 @@
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 		target.mind.remove_antag_datum(/datum/antagonist/zombie)
 		target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-		target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
+		if(debuff_type)
+			target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 		//Due to an increased cost and cooldown, these revival types heal quite a bit.
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 		consume_items(target)
@@ -318,7 +319,7 @@
 		// For those without hunger, drain blood instead. CONSEQUENCES FOR MY TRAIT CHOICES?!
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.blood_volume = max(H.blood_volume - 100, BLOOD_VOLUME_SURVIVE)
+			H.set_blood_volume(max(H.get_blood_volume() - 100, BLOOD_VOLUME_SURVIVE))
 	else
 		// For normal humans, drain nutrition
 		owner.adjust_nutrition(-100)

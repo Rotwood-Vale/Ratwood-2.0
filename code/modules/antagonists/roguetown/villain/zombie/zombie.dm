@@ -96,13 +96,13 @@
 /*
 	Deadite transformation is 2 ways. First is on the initial bite (low chance) and second is on being chewed on.
 
-	Initial bite is: other_mobs.dm, /mob/living/carbon/onbite(mob/living/carbon/human/user) ->
+	Initial bite is: rogueweapons/mmb/bite.dm, /mob/living/carbon/onbite(mob/living/carbon/human/user) ->
 	bite_victim.zombie_infect_attempt() ->
 	attempt_zombie_infection(src, "bite", ZOMBIE_BITE_CONVERSION_TIME) -> rng check here
 	time passes ->
 	wake_zombie.
 
-	Wound transformation goes: grabbing.dm, /obj/item/grabbing/bite/proc/bitelimb(mob/living/carbon/human/user) ->
+	Wound transformation goes: rogueweapons/mmb/bite.dm, /obj/item/grabbing/bite/proc/bitelimb(mob/living/carbon/human/user) ->
 	/datum/wound/proc/zombie_infect_attempt() ->
 	human_owner.attempt_zombie_infection(src, "wound", zombie_infection_time) ->
 	time passes ->
@@ -340,7 +340,7 @@
 
 	
 
-	zombie.blood_volume = BLOOD_VOLUME_NORMAL
+	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE)
 	if(!infected_wake)	// if we died, heal all this too
@@ -389,7 +389,7 @@
 
 	record_round_statistic(STATS_DEADITES_WOKEN_UP)
 	// Heal the zombie
-	zombie.blood_volume = BLOOD_VOLUME_NORMAL
+	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE) // Zombies don't breathe
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE) // Zombies are immune to poison
 

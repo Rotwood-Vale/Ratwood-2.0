@@ -33,7 +33,7 @@
 	user.visible_message(span_warning("[user] shoves [target]'s head against [user.p_their()] butt!"))
 
 /datum/sex_action/force_rimming/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to rim [user.p_their()] butt."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] forces [target] to rim [user.p_their()] butt."))
 	user.sexcon.oralcourse_noise(target)
 	target.sexcon.do_thrust_animate(user)
 

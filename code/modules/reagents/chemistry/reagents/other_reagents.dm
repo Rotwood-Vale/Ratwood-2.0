@@ -23,7 +23,7 @@
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !HAS_TRAIT(C,TRAIT_NASTY_EATER))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+				C.set_blood_volume(min(C.get_blood_volume() + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 //Dirty blood shouldn't go in your veins!
 /datum/reagent/blood/shitty/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(iscarbon(L))
@@ -32,7 +32,7 @@
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !(HAS_TRAIT(C, TRAIT_NASTY_EATER) && HAS_TRAIT(C, TRAIT_WILD_EATER)))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.8)
 			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+				C.set_blood_volume(min(C.get_blood_volume() + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -61,8 +61,8 @@
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 		H.adjust_nutrition(10)
 		H.adjust_hydration(10)
-		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume = min(H.blood_volume+4, BLOOD_VOLUME_NORMAL)//Less effective than just water.
+		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			H.set_blood_volume(min(H.get_blood_volume()+4, BLOOD_VOLUME_NORMAL))//Less effective than just water.
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER))
 		return
@@ -76,8 +76,8 @@
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 		H.adjust_nutrition(3)
 		H.adjust_hydration(3)
-		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume = min(H.blood_volume+2, BLOOD_VOLUME_NORMAL)//Much less effective than just water.
+		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
 			to_chat(H, span_red("This will hardly do... I must procure a better source of lyfeblood..."))
 		return
@@ -137,8 +137,8 @@
 			M.add_nausea(2)
 		else
 			H.adjust_hydration(hydration)
-			if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-				M.blood_volume = min(M.blood_volume+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL)
+			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+				M.set_blood_volume(min(M.get_blood_volume()+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL))
 		if(M.bodytemperature > BODYTEMP_NORMAL_MIN + 5)	//drinking water lowers a persons temperature up to the 'normal' minimum
 			M.adjust_bodytemperature(-5)
 	..()
@@ -764,8 +764,8 @@
 	color = "#606060" //pure iron? let's make it violet of course
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
-	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-		C.blood_volume += 0.5
+	if(C.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		C.adjust_blood_volume(0.5)
 	..()
 
 /datum/reagent/gold
@@ -1017,7 +1017,7 @@
 	M.drowsyness += 2
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - 10, 0)
+		H.set_blood_volume(max(H.get_blood_volume() - 10, 0))
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)

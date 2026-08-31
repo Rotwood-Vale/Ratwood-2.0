@@ -1746,6 +1746,10 @@
 	name = "Willow"
 	icon_state = "willow"
 
+/datum/sprite_accessory/hair/head/aki
+	name = "Aki"
+	icon_state = "aki"
+
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian
 	icon = 'icons/mob/sprite_accessory/hair/vulpkian_hair.dmi'

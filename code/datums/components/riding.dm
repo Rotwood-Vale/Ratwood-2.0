@@ -94,6 +94,8 @@
 			riding_xp_move_counter = 0 //reset counter if not running
 	handle_vehicle_offsets(rider)
 	handle_vehicle_layer()
+	if(driver && driver.IsImmobilized())
+		force_dismount(driver)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
@@ -275,6 +277,26 @@
 	else if(slowed)
 		vehicle_move_delay = vehicle_move_delay - slowvalue
 		slowed = FALSE
+
+/datum/component/riding/dinghy/keycheck(mob/user)
+	for(var/obj/item/I in user.held_items)
+		if(HAS_TRAIT(I, TRAIT_OAR))
+			return TRUE
+	return FALSE
+
+/datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/Mob, force = FALSE)
+	var/atom/movable/AtomMovable = parent
+	restore_position(Mob)
+	unequip_buckle_inhands(Mob)
+	Mob.updating_glide_size = TRUE
+	if(del_on_unbuckle_all && !AtomMovable.has_buckled_mobs())
+		qdel(src)
+		return
+	if(driver == Mob)
+		driver = null
+		for(var/mob/living/rider in AtomMovable.buckled_mobs)
+			driver = rider
+			break
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
