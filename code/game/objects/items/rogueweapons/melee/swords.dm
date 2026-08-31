@@ -1681,7 +1681,7 @@
 
 /obj/item/rogueweapon/sword/silver/decorated
 	name = "decorated silver khadga" //While ostensibly a sword, it's functionally identical - if a little weaker - than the Silver War Axe.
-	desc = "Beautifully designed for nobility, yet born from an ignoble purpose; to satiate the powers of ancient mythos with sacrifical blood. This Naledian \
+	desc = "Beautifully designed for nobility, yet born from an ignoble purpose; to satiate the powers of ancient mythos with sacrificial blood. This Naledian \
 	sword, better known as a 'ram-dao', now serves to satiate the spite of vengeful spirits - not through bloodshed, but through sunderance."
 	icon_state = "ram_dao"
 	sheathe_icon = "scabbard_decsword3"

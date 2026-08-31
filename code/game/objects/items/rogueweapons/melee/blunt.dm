@@ -207,7 +207,7 @@
 
 /obj/item/rogueweapon/mace/steel/silver/decorated
 	name = "decorated mace"
-	desc = "An ornate mace, inlayed with silver and decorated with golden heraldries. Formally known as a 'gada' amongst the nobility of Naledi, this heftsome scepter \
+	desc = "An ornate mace, inlaid with silver and decorated with golden heraldry. Formally known as a 'gada' amongst the nobility of Naledi, this heftsome scepter \
 	will force anyone to bend the knee; if not through respect, then through a shattered femur."
 	icon_state = "gada"
 	smeltresult = /obj/item/ingot/gold
