@@ -183,6 +183,9 @@
 		return hit_zone
 	return BODY_ZONE_CHEST
 
+/mob/living/proc/hit_zone_name(hit_zone)
+	return parse_zone(check_limb_hit(hit_zone))
+
 /mob/living/carbon/check_limb_hit(hit_zone)
 	if(get_bodypart(hit_zone))
 		return hit_zone
