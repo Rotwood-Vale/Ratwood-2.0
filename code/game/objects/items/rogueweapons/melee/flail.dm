@@ -302,6 +302,8 @@
 	icon_state = "bs_greatflail"
 	wdefense = 7
 	minstr = 12
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
 	max_integrity = 500
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
