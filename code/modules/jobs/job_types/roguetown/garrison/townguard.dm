@@ -32,6 +32,19 @@
 /datum/outfit/job/roguetown/guardsman
 	job_bitflag = BITFLAG_GARRISON
 
+/datum/job/roguetown/guardsman/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/plate/citywatch))
+			var/obj/item/clothing/S = H.wear_armor
+			var/index = findtext(H.real_name, " ")
+			if(index)
+				index = copytext(H.real_name, 1,index)
+			if(!index)
+				index = H.real_name
+			S.name = "citywatch armor ([index])"
+
 /datum/outfit/job/roguetown/guardsman
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -43,7 +56,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
 	beltr = /obj/item/rogueweapon/mace/cudgel
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/citywatch
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
 
@@ -133,7 +146,11 @@
 
 
 #define CLOTHING_CITYWATCH		"#557d8f"
-#define CLOTHING_CITYWATCHLIGHT	"#b0f1f5"
+#define CLOTHING_CITYWATCHLIGHT	"#60a0dbbb"
+
+/obj/item/storage/belt/rogue/leather/citywatch
+	name = "watchman's belt"
+	color = CLOTHING_CITYWATCHLIGHT
 
 /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
 	color = CLOTHING_CITYWATCH
