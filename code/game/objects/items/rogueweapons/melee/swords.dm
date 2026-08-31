@@ -1686,7 +1686,6 @@
 	icon_state = "ram_dao"
 	sheathe_icon = "scabbard_decsword3"
 	force = 25
-	no_loot_taint = TRUE
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	gripped_intents = null
 	minstr = 11

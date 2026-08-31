@@ -786,12 +786,12 @@
 	created_item = /obj/item/rogueweapon/shield/tower/metal/gold
 
 /datum/anvil_recipe/weapons/gold/kingarming
-	name = "Golden Arming Sword (+2 Gold, +2 Silk, +1 Dorpel)"
+	name = "Golden Arming Sword, Royal (+2 Gold, +2 Silk, +1 Dorpel)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/rogueweapon/sword/gold/king
 
 /datum/anvil_recipe/weapons/gold/kingmace
-	name = "Golden Mace (+2 Gold, +2 Silk, +1 Dorpel)"
+	name = "Golden Mace, Royal (+2 Gold, +2 Silk, +1 Dorpel)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/rogueweapon/mace/gold/king
 
