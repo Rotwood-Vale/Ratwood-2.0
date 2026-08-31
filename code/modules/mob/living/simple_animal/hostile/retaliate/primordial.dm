@@ -249,8 +249,7 @@
 			else if(dx < 0 && dy > 0) // NW corner
 				T.ChangeTurf(/turf/open/water/river/flow, flags = CHANGETURF_IGNORE_AIR)
 	// Auto-remove after duration
-	spawn(duration)
-		qdel(src)
+	QDEL_IN(src, duration)
 
 /obj/effect/whirlpool/Destroy()
 	// Restore saved turfs

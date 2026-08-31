@@ -38,7 +38,7 @@
 				H.Stun(80)
 				H.apply_damage(50, BRUTE, def_zone)
 				H.emote("agony")
-				spawn(5)
+				// A bodyless spawn(5) sat here delaying nothing; the line was always immediate.
 				say("Blueblood for the Freefolk!")
 				playsound(src, 'sound/vo/mobs/ghost/laugh (5).ogg', 100, TRUE)
 				return

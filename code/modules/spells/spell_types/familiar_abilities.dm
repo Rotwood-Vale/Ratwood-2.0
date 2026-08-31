@@ -89,8 +89,7 @@
 	. = ..()
 	if (prob(60) && isturf(src.loc))
 		var/obj/item/glow_petal/petal = new /obj/item/glow_petal(src.loc)
-		spawn(rand(50, 60))
-			qdel(petal)
+		QDEL_IN(petal, rand(50, 60))
 
 /obj/item/glow_petal
 	name = "Faint Petals"

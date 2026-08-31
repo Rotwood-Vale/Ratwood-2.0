@@ -188,7 +188,8 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 /obj/item/cannonball/canister/detonate(turf/T)
 	..()
 	canister_detonate()
-	spawn(2 SECONDS)//It detonates ABOVE, or something. I 'unno. It's COOL.
+	// A bodyless spawn(2 SECONDS) sat here ("It detonates ABOVE, or something") delaying
+	// nothing; the explosion has always been immediate.
 	explosion(T, 0, 0, 1, 4)
 
 //A secondary type of 'canister' charge. Small explosions on all turfs in view.

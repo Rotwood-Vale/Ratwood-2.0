@@ -183,8 +183,7 @@ GLOBAL_LIST_INIT(capstone_pool, list(
 			user.Stun(100)
 			user.Knockdown(100)
 			for(var/i = 1, i <= 10, i++)
-				spawn((i - 1) * 5)
-					to_chat(user, span_userdanger("I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD "))
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_userdanger("I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD I AM GOD ")), (i - 1) * 5)
 			sleep(30)
 			user.fullscreen_redflash("redflash3")
 

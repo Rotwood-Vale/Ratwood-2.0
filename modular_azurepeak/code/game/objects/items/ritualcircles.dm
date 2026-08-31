@@ -60,8 +60,7 @@
 							user.emote("firescream")
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(120)
-							icon_state = "astrata_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
@@ -226,8 +225,7 @@
 							playsound(loc, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
 							flylordstriage(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "pestra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/pestra/proc/flylordstriage(src)
 	var/ritualtargets = view(0, loc)
@@ -276,8 +274,7 @@
 							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
 							lesserwolf(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "dendor_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
 		if("Borrowed Madness")
 			if(do_after(user, 50))
 				user.say("I pray for strength...")
@@ -294,8 +291,7 @@
 							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
 							borrowedmadness(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "dendor_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
 		if("Spider Kinship")
 			if(do_after(user, 50))
 				user.say("I call to the ruthless wilds,")
@@ -309,8 +305,7 @@
 						playsound(loc, 'sound/vo/mobs/spider/pain.ogg', 100, FALSE, -1)
 						spiderkinship(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(120)
-							icon_state = "dendor_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
 
 /obj/structure/ritualcircle/dendor/proc/lesserwolf(src)
 	var/ritualtargets = view(1, loc)
@@ -405,8 +400,7 @@
 							playsound(loc, 'sound/magic/churn.ogg', 100, FALSE, -1)
 							holyreforge(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "malum_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "malum_chalky"), 120)
 
 /obj/structure/ritualcircle/malum/proc/holyreforge(src)
 	var/ritualtargets = view(7, loc)
@@ -487,8 +481,7 @@
 						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
 						new /obj/item/abyssal_marker(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(240)
-							icon_state = "abyssoralt_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "abyssoralt_chalky"), 240)
 		if("Rite of Dreamcraft")
 			if(!HAS_TRAIT(user, TRAIT_DREAMWALKER))
 				return
@@ -523,8 +516,7 @@
 				var/mob/living/carbon/human/H = user
 				if(H.mind)
 					H.mind.special_role = "dreamwalker"
-			spawn(240)
-				icon_state = "abyssoralt_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "abyssoralt_chalky"), 240)
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamcraft_weapon(mob/living/user, choice)
 	var/obj/item/new_weapon
@@ -573,8 +565,7 @@
 		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
 		target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		spawn(40)
-			to_chat(target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law."))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law.")), 40)
 
 /obj/structure/ritualcircle/abyssor/attack_hand(mob/living/user)
 	if(!..())
@@ -601,8 +592,7 @@
 						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
 						new /obj/item/abyssal_marker/tidal(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(240)
-							icon_state = "abyssor_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "abyssor_chalky"), 240)
 
 /obj/item/abyssal_marker
 	name = "abyssal marker"
@@ -1031,8 +1021,7 @@
 						playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 						undermaidenbargain(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(120)
-							icon_state = "necra_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 		if("Vow to the Undermaiden")
 			loc.visible_message(span_warning("[user] sways before the rune, they open their mouth, though no words come out..."))
 			playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
@@ -1050,8 +1039,7 @@
 						if(undermaidenvow(src))
 							playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "necra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 						else
 							loc.visible_message(span_warning("Then... nothing. The Undermaiden does not care for the vows of the damned, or those of other faiths."))
 		if("The Toll")
@@ -1077,8 +1065,7 @@
 							user.say("For this toll, a soul!!")
 							to_chat(user,span_cultsmall("[user] grasps the strands of Lux and attempts to pull a soul through the rift!"))
 							thetoll(target, user)
-							spawn(120)
-								icon_state = "necra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 
 
 
@@ -1204,8 +1191,7 @@
 							icon_state = "eora_active"
 							pacify(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "eora_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "eora_chalky"), 120)
 		if("Rite of the Open Hearth")
 			var/onrune = view(1, loc)
 			var/list/folksonrune = list()
@@ -1233,8 +1219,7 @@
 			icon_state = "eora_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			eoranaura(target)
-			spawn(120)
-				icon_state = "eora_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "eora_chalky"), 120)
 
 /obj/structure/ritualcircle/eora/proc/pacify(src)
 	var/ritualtargets = view(0, loc)
@@ -1299,8 +1284,7 @@
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			zizoarmaments(target)
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Rite of the Dark Crystal")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1317,8 +1301,7 @@
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			new /obj/item/necro_relics/necro_crystal(loc)
 			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")
@@ -1347,8 +1330,7 @@
 				return
 			icon_state = "zizo_active"
 			zizoconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 
 /obj/structure/ritualcircle/zizo/proc/zizoarmaments(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_CABAL))
@@ -1370,8 +1352,7 @@
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful."))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful.")), 40)
 
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1501,8 +1482,7 @@
 			icon_state = "matthios_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			matthiosarmaments(target)
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 		if("Defenestration")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1521,8 +1501,7 @@
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			else
 				to_chat(user, span_cultsmall("The ritual fails. A noble must be in the center of the circle!"))
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Matthios' blessing.")
@@ -1551,8 +1530,7 @@
 				return
 			icon_state = "matthios_active"
 			matthiosconversion(target)
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosarmaments(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_COMMIE))
@@ -1575,8 +1553,7 @@
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_cult("More to the maw, this shall help feed our greed."))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("More to the maw, this shall help feed our greed.")), 40)
 
 /// Performs the de-noblification ritual, which requires a noble character in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/matthios/proc/defenestration()
@@ -1752,8 +1729,7 @@
 			icon_state = "graggar_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			graggararmor(target)
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 		if("War Ritual")
 			to_chat(user, span_userdanger("This rite will get me more tired than usual... I wonder, should I proceed?"))
 			if(!do_after(user, 5 SECONDS))
@@ -1772,8 +1748,7 @@
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_heavy)
 			else
 				to_chat(user, span_smallred("The ritual fails. A noble, member of the inquisition or a tennite churchling body must be in the center of the circle!"))
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Graggar's blessing.")
@@ -1802,8 +1777,7 @@
 				return
 			icon_state = "graggar_active"
 			graggarconversion(target)
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 
 /obj/structure/ritualcircle/graggar/proc/graggararmor(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_HORDE))
@@ -1826,8 +1800,7 @@
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_cult("Break them."))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("Break them.")), 40)
 
 /// Performs the war ritual, which requires a noble or inquisition member in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/graggar/proc/perform_warritual()
@@ -1984,8 +1957,7 @@
 						if(do_after(user, 50))
 							icon_state = "baotha_active"
 							baothaconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
-							spawn(120)
-								icon_state = "baotha_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "baotha_chalky"), 120)
 		if("Unholy Boon of Fertility")
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -2005,8 +1977,7 @@
 						if(do_after(user, 50))
 							icon_state = "baotha_active"
 							baothablessing(target)
-							spawn(120)
-								icon_state = "baotha_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "baotha_chalky"), 120)
 		if("Rite of Armaments")
 			var/onrune = view(1, loc)
 			var/list/folksonrune = list()
@@ -2030,8 +2001,7 @@
 			icon_state = "baotha_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			baothaarmor(target)
-			spawn(120)
-				icon_state = "baotha_active"
+			addtimer(VARSET_CALLBACK(src, icon_state, "baotha_active"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2147,8 +2117,7 @@
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_purple("All will love you and despair."))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("All will love you and despair.")), 40)
 
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.

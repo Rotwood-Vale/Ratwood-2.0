@@ -125,9 +125,12 @@ Firstly, the squire's buffs and boons or whatever.
 	icon_state = "buff"
 
 /datum/status_effect/buff/squire_prox/on_creation()
-	spawn(5)//Why are you so gross and hacky?
-		examine_text = span_slime("<small>SUBJECTPRONOUN is the squire of [owner.mind.knight.real_name].</small>")
+	// deferred: the knight/squire mind links aren't set yet when this is created
+	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
+
+/datum/status_effect/buff/squire_prox/proc/build_examine_text()
+	examine_text = span_slime("<small>SUBJECTPRONOUN is the squire of [owner.mind.knight.real_name].</small>")
 
 /datum/status_effect/buff/squire_prox/tick()
 	for(var/mob/living/carbon/H in view(5, owner))
@@ -167,9 +170,12 @@ Now, the knight's.
 	icon_state = "buff"
 
 /datum/status_effect/buff/knight_prox/on_creation()
-	spawn(5)//Why are you so gross and hacky?
-		examine_text = span_slime("<small>SUBJECTPRONOUN is the knight of [owner.mind.squire.real_name], their ward.</small>")
+	// deferred: the knight/squire mind links aren't set yet when this is created
+	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
+
+/datum/status_effect/buff/knight_prox/proc/build_examine_text()
+	examine_text = span_slime("<small>SUBJECTPRONOUN is the knight of [owner.mind.squire.real_name], their ward.</small>")
 
 /datum/status_effect/buff/knight_prox/tick()
 	for(var/mob/living/carbon/H in view(5, owner))

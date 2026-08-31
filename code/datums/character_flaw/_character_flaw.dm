@@ -869,8 +869,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 				marking_overlay.pixel_y -= 3
 	user.add_overlay(marking_overlay)
 
-	spawn(40)
-
+	// A bodyless spawn(40) sat here doing nothing; the trait has always applied immediately.
 	ADD_TRAIT(user, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
 
 	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)

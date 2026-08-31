@@ -189,8 +189,7 @@
 	animate(pixel_x = oldx-1, time = 0.5)
 	animate(pixel_x = oldx, time = 0.5)
 	if(shaker == TRUE)
-		spawn(2)
-			shaking(src)
+		addtimer(CALLBACK(src, PROC_REF(shaking), src), 2)
 
 /obj/structure/roguemachine/vaultbank/proc/drill(obj/structure/roguemachine/vaultbank)
 	if(!drilling)

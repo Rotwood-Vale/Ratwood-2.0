@@ -222,8 +222,7 @@
 		var/datum/cb = CALLBACK(src,/obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head)
 		for(var/i in 1 to 10)
 			addtimer(cb, (i - 1) * 1.5 SECONDS)
-		spawn(16 SECONDS)
-			qdel(src)
+		QDEL_IN(src, 16 SECONDS)
 	return TRUE
 
 /obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head()

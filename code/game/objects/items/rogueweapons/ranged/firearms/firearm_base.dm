@@ -76,6 +76,13 @@ At least, it should. Fingers crossed.
 	var/gunpowder = FALSE
 	var/obj/item/ramrod/myrod = null
 
+// Deferred so the smoke trails from where the shooter is facing when each puff appears,
+// matching the old spawn() behavior of evaluating position at fire time.
+/obj/item/gun/ballistic/firearm/proc/spawn_arquebus_smoke(mob/user, dist)
+	if(QDELETED(user))
+		return
+	new /obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, dist))
+
 /obj/item/gun/ballistic/firearm/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -264,12 +271,9 @@ At least, it should. Fingers crossed.
 	for(var/obj/item/ammo_casing/MB in get_ammo_list(FALSE, TRUE))
 		qdel(MB)
 
-	spawn (5)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
-	spawn (10)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
-	spawn (16)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 5)
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 10)
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 16)
 	for(var/mob/M in range(5, user))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
