@@ -1,19 +1,21 @@
 
 /proc/make_tracker_effects(tr_source, tr_destination, tr_number = 10, custom_icon_state = "soul", number_of_icons = 3, tr_type = /obj/effect/tracker/soul, force_size)
-	spawn()
-		var/list/possible_icons = list()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(do_make_tracker_effects), tr_source, tr_destination, tr_number, custom_icon_state, number_of_icons, tr_type, force_size)
+
+/proc/do_make_tracker_effects(tr_source, tr_destination, tr_number, custom_icon_state, number_of_icons, tr_type, force_size)
+	var/list/possible_icons = list()
+	if(custom_icon_state)
+		for(var/i = 1;i <= number_of_icons;i++)
+			if (force_size)
+				possible_icons.Add("[custom_icon_state][force_size]")
+			else
+				possible_icons.Add("[custom_icon_state][i]")
+	for(var/i = 0;i < tr_number;i++)
+		var/obj/effect/tracker/Tr = new tr_type(tr_source)
+		Tr.target = tr_destination
 		if(custom_icon_state)
-			for(var/i = 1;i <= number_of_icons;i++)
-				if (force_size)
-					possible_icons.Add("[custom_icon_state][force_size]")
-				else
-					possible_icons.Add("[custom_icon_state][i]")
-		for(var/i = 0;i < tr_number;i++)
-			var/obj/effect/tracker/Tr = new tr_type(tr_source)
-			Tr.target = tr_destination
-			if(custom_icon_state)
-				Tr.icon_state = pick(possible_icons)
-			sleep(1)
+			Tr.icon_state = pick(possible_icons)
+		sleep(1)
 
 //object that moves constantly toward a target.
 

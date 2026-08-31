@@ -561,12 +561,7 @@
 	target.emote("Agony")
 	playsound(loc, 'sound/combat/newstuck.ogg', 50)
 	loc.visible_message(span_cult("Ethereal tendrils emerge from the rune, wrapping around [target]'s body. Their form shifts and warps as dream-stuff solidifies into armor."))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law.")), 40)
-
+	addtimer(CALLBACK(src, PROC_REF(dreamarmor_stage2), target), 20)
 /obj/structure/ritualcircle/abyssor/attack_hand(mob/living/user)
 	if(!..())
 		return
@@ -1230,14 +1225,7 @@
 
 /obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
 	loc.visible_message(span_good("[target]'s form becomes enveloped in calming aura."))
-	spawn(20)
-		target.apply_status_effect(/datum/status_effect/eoranaura)
-		playsound(target, 'sound/magic/eora_bless.ogg', 90, FALSE, -1)
-		to_chat(target, span_boldred("I can do no HARM."))
-		ADD_TRAIT(target, TRAIT_PACIFISM, TRAIT_MIRACLE)
-
-
-
+	addtimer(CALLBACK(src, PROC_REF(eoranaura_stage2), target), 20)
 // TIME FOR THE ASCENDANT. These can be stronger. As they are pretty much antag exclusive - Iconoclast for Matthios, Lich for ZIZO. ZIZO!
 
 
@@ -1346,14 +1334,7 @@
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful.")), 40)
-
+	addtimer(CALLBACK(src, PROC_REF(zizoarmaments_stage2), target), 20)
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/list/items = list()
@@ -1396,36 +1377,7 @@
 		target.emote("Agony")
 		playsound(loc, 'sound/combat/newstuck.ogg', 50)
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. [target] is convulsing on the ground, as they finally accept the truth. "))
-		spawn(20)
-			playsound(target, 'sound/health/slowbeat.ogg', 60)
-			playsound(loc, 'sound/ambience/creepywind.ogg', 80)
-			target.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-			target.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-			spawn(40)
-				playsound(loc, 'sound/misc/boatleave.ogg', 100)
-				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/zizo)
-					target.already_converted_once = TRUE
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/zizo) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
-					target.already_converted_once = TRUE
+		addtimer(CALLBACK(src, PROC_REF(zizoconversion_stage2), target), 20)
 	if(prompt == "DEATH")
 		to_chat(target, span_warning("Images of Her Work most grandoise flood your mind yet... you choose to reject them. Only final death awaits now, you foolish thing."))
 		target.Stun(60)
@@ -1547,14 +1499,7 @@
 		playsound(src,'sound/misc/lava_death.ogg', rand(30,60), TRUE)
 		return
 	loc.visible_message(span_cult("[target]'s lux pours from their nose, into the rune, gleaming golds sizzles. Molten gold and metals swirl into armor, seered to their skin."))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/gildedrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("More to the maw, this shall help feed our greed.")), 40)
-
+	addtimer(CALLBACK(src, PROC_REF(matthiosarmaments_stage2), target), 20)
 /// Performs the de-noblification ritual, which requires a noble character in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/matthios/proc/defenestration()
 	var/mob/living/carbon/human/victim = null
@@ -1648,33 +1593,7 @@
 		target.emote("Laugh")
 		playsound(loc, 'sound/misc/smelter_fin.ogg', 50)
 		loc.visible_message(span_cult("[target]'s eyes gleam and shine with a glimmer of a thousand gems and jewels, as they give in to their lust for wealth."))
-		spawn(20)
-			playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-			target.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE) //fuck do they gotta get? a better grip
-			target.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
-			spawn(40)
-				to_chat(target, span_cult("More to the maw, for [target] shall feed their own greed along with us!"))
-				playsound(loc, 'sound/items/matidol2.ogg', 50)
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/matthios)
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/matthios) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(matthiosconversion_stage2), target), 20)
 	if(prompt == "NO DEAL!")
 		to_chat(target, span_warning("All that does glimmer could be yours... if only you would submit to your own greedy nature. Only final death awaits now, you, fellow most austere."))
 		target.Stun(60)
@@ -1794,14 +1713,7 @@
 		playsound(src,'sound/misc/lava_death.ogg', rand(30,60), TRUE)
 		return
 	loc.visible_message(span_cult("[target]'s lux pours from their nose, into the rune, motive and metals swirl into armor, snug around their form!"))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/viciousrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("Break them.")), 40)
-
+	addtimer(CALLBACK(src, PROC_REF(graggararmor_stage2), target), 20)
 /// Performs the war ritual, which requires a noble or inquisition member in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/graggar/proc/perform_warritual()
 	var/mob/living/carbon/human/victim = null
@@ -1875,33 +1787,7 @@
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 		target.emote("Warcry")
 		loc.visible_message(span_cult("[target]'s mind if flooded with images of slaughter most sublime, as they embrace their violent nature, casting away shackles of honour and empathy.")) // i cant
-		spawn(20)
-			playsound(target, 'sound/misc/heroin_rush.ogg', 100)
-			playsound(target, 'sound/health/fastbeat.ogg', 100)
-			target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
-			spawn(40)
-				to_chat(target, span_cult("Break them."))
-				target.say("SLAUGHTER!!") // many enemies bring much honour
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/graggar)
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/graggar) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(graggarconversion_stage2), target), 20)
 	if(prompt == "I DEFY YOU!!")
 		to_chat(target, span_warning("AAAAAAAAAAAAAAAAHHHH!!"))
 		target.Stun(60)
@@ -2022,33 +1908,7 @@
 		to_chat(target, span_userdanger("PLEASURE FOR PLEASURE'S SAKE!"))
 		target.sexcon.set_arousal(300)
 		loc.visible_message(span_cult("[target] writhes and moans as sensations of pleasure and pain surge through their body...")) // warhammer 3 slaaneshi daemonette quotes
-		spawn(20)
-			playsound(target, 'sound/health/fastbeat.ogg', 60)
-			playsound(loc, 'sound/ambience/creepywind.ogg', 80)
-			target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE) // haha get it?
-			spawn(40)
-				to_chat(target, span_purple("Enjoy yourself, for what is lyfe without pleasure, ha?")) // help
-				if(target.devotion == null)
-					target.set_patron(new /datum/patron/inhumen/baotha)
-					return
-				else
-					var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					target.set_patron(new /datum/patron/inhumen/baotha)
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(baothaconversion_stage2), target), 20)
 	if(prompt == "LASH")
 		to_chat(target, span_warning("All too asutere, aloof and prudish, aren't you? Bah, I shall not waste any more of my time on you.")) // gotta change it too
 		target.Stun(60)
@@ -2072,22 +1932,7 @@
 		target.Knockdown(60)
 		target.sexcon.set_arousal(100)
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
-		spawn(20)
-			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
-			if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
-				if(target.gender == MALE)
-					marking_overlay.pixel_y -= 6
-				else
-					marking_overlay.pixel_y -= 4
-			target.add_overlay(marking_overlay)
-			target.update_body_parts()
-			playsound(target, 'sound/health/fastbeat.ogg', 60)
-			spawn(40)
-				to_chat(target, span_purple("Enjoy the new you!"))
-				ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
-				var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
-				if(vagina && !vagina.fertility)
-					vagina.fertility = TRUE
+		addtimer(CALLBACK(src, PROC_REF(baothablessing_stage2), target), 20)
 	if(prompt == "Resist!")
 		to_chat(target, span_warning("I sincerely proposed you my greatest blessing, and you rejected me? How foolish!"))
 		target.Stun(60)
@@ -2111,14 +1956,7 @@
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("All will love you and despair.")), 40)
-
+	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
@@ -2233,34 +2071,7 @@
 		target.emote("cry")
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
-		spawn(20)
-			playsound(target, 'sound/magic/PSYDONE.ogg', 60)
-			to_chat(target, span_mind_control("..."))
-			spawn(20)
-				to_chat(target, span_warning("Has it always been this quiet? It's all so dim..."))
-				to_chat(target, span_mind_control("..."))
-				spawn(40)
-					to_chat(target, span_mind_control("..."))
-					if(target.devotion == null)
-						target.set_patron(new /datum/patron/old_god)
-						return
-					else
-						var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-						target.set_patron(new /datum/patron/old_god)
-						var/datum/devotion/C = new /datum/devotion(target, target.patron)
-						if(previous_level == 4)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-						if(previous_level == 3)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-						if(previous_level == 2)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-						if(previous_level == 1)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
-
+		addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage2), target), 20)
 	if(prompt == "NAE")
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
 		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
@@ -2356,12 +2167,7 @@
 	target.emote("Agony")
 	playsound(loc, 'sound/misc/pressurepad_up.ogg', 50)
 	loc.visible_message(span_cult("[target]'s flesh briefly warps, as some unseen force tears the equipment from their frame!"))
-	spawn(20)
-		playsound(loc, 'sound/misc/pressurepad_down.ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
-		if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-
+	addtimer(CALLBACK(src, PROC_REF(psydonstrip_stage2), target), 20)
 //Dropping rite armour. Or, well, basically everything.
 /datum/outfit/job/roguetown/rite_strip/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -2370,3 +2176,228 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
+
+/obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law.")), 40)
+
+/obj/structure/ritualcircle/eora/proc/eoranaura_stage2(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/eoranaura)
+	playsound(target, 'sound/magic/eora_bless.ogg', 90, FALSE, -1)
+	to_chat(target, span_boldred("I can do no HARM."))
+	ADD_TRAIT(target, TRAIT_PACIFISM, TRAIT_MIRACLE)
+
+/obj/structure/ritualcircle/zizo/proc/zizoarmaments_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful.")), 40)
+
+/obj/structure/ritualcircle/zizo/proc/zizoconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/health/slowbeat.ogg', 60)
+	playsound(loc, 'sound/ambience/creepywind.ogg', 80)
+	target.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+	target.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(zizoconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/zizo/proc/zizoconversion_stage3(mob/living/carbon/human/target)
+	playsound(loc, 'sound/misc/boatleave.ogg', 100)
+	to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/zizo)
+		target.already_converted_once = TRUE
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/zizo) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		target.already_converted_once = TRUE
+
+/obj/structure/ritualcircle/matthios/proc/matthiosarmaments_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/gildedrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("More to the maw, this shall help feed our greed.")), 40)
+
+/obj/structure/ritualcircle/matthios/proc/matthiosconversion_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE) //fuck do they gotta get? a better grip
+	target.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(matthiosconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/matthios/proc/matthiosconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_cult("More to the maw, for [target] shall feed their own greed along with us!"))
+	playsound(loc, 'sound/items/matidol2.ogg', 50)
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/matthios)
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/matthios) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/graggar/proc/graggararmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/viciousrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("Break them.")), 40)
+
+/obj/structure/ritualcircle/graggar/proc/graggarconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/misc/heroin_rush.ogg', 100)
+	playsound(target, 'sound/health/fastbeat.ogg', 100)
+	target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(graggarconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/graggar/proc/graggarconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_cult("Break them."))
+	target.say("SLAUGHTER!!") // many enemies bring much honour
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/graggar)
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/graggar) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/baotha/proc/baothaconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/health/fastbeat.ogg', 60)
+	playsound(loc, 'sound/ambience/creepywind.ogg', 80)
+	target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE) // haha get it?
+	addtimer(CALLBACK(src, PROC_REF(baothaconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/baotha/proc/baothaconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_purple("Enjoy yourself, for what is lyfe without pleasure, ha?")) // help
+	if(target.devotion == null)
+		target.set_patron(new /datum/patron/inhumen/baotha)
+		return
+	else
+		var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		target.set_patron(new /datum/patron/inhumen/baotha)
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing_stage2(mob/living/carbon/human/target)
+	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
+		if(target.gender == MALE)
+			marking_overlay.pixel_y -= 6
+		else
+			marking_overlay.pixel_y -= 4
+	target.add_overlay(marking_overlay)
+	target.update_body_parts()
+	playsound(target, 'sound/health/fastbeat.ogg', 60)
+	addtimer(CALLBACK(src, PROC_REF(baothablessing_stage3), target), 40)
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_purple("Enjoy the new you!"))
+	ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+	var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina && !vagina.fertility)
+		vagina.fertility = TRUE
+
+/obj/structure/ritualcircle/baotha/proc/baothaarmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("All will love you and despair.")), 40)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/magic/PSYDONE.ogg', 60)
+	to_chat(target, span_mind_control("..."))
+	addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage3), target), 20)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_warning("Has it always been this quiet? It's all so dim..."))
+	to_chat(target, span_mind_control("..."))
+	addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage4), target), 40)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
+	to_chat(target, span_mind_control("..."))
+	if(target.devotion == null)
+		target.set_patron(new /datum/patron/old_god)
+		return
+	else
+		var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		target.set_patron(new /datum/patron/old_god)
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/psydon/proc/psydonstrip_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/misc/pressurepad_down.ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
+	if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+

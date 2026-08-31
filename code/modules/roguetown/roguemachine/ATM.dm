@@ -97,9 +97,11 @@
 			var/datum/job/target_job = SSjob.GetJob(H.mind.assigned_role)
 			if(target_job && target_job.noble_income)
 				SStreasury.noble_incomes[H] = target_job.noble_income
-		spawn(5)
-			say("New account created.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+		addtimer(CALLBACK(src, PROC_REF(announce_new_account)), 5)
+
+/obj/structure/roguemachine/atm/proc/announce_new_account()
+	say("New account created.")
+	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 
 /*
 /obj/structure/roguemachine/atm/attack_right(mob/user)
@@ -210,14 +212,16 @@
 			send_ooc_note("A parasite of the Freefolk is draining a Nervelock! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
-		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
-			loc.visible_message(span_warning("The Nervelock spills its bounty!"))
-			SStreasury.treasury_value -= 20 // Takes from the treasury
-			mammonsiphoned += 20
-			budget2change(20, null, "SILVER")
-			playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
-			SStreasury.log_to_steward("-[20] exported mammon to the Freefolks!")
-			drill(src)
+		addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
+
+/obj/structure/roguemachine/atm/proc/drill_payout()
+	loc.visible_message(span_warning("The Nervelock spills its bounty!"))
+	SStreasury.treasury_value -= 20 // Takes from the treasury
+	mammonsiphoned += 20
+	budget2change(20, null, "SILVER")
+	playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
+	SStreasury.log_to_steward("-[20] exported mammon to the Freefolks!")
+	drill(src)
 
 /obj/structure/roguemachine/atm/attack_right(mob/living/carbon/human/user)
 	if(drilling)

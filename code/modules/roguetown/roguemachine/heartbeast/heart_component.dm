@@ -148,11 +148,13 @@
 		if(!valid_turfs.len)
 			break
 
-		spawn(rand(1, 5) SECONDS)
-			var/turf/target_turf = pick(valid_turfs)
-			valid_turfs -= target_turf
-			playsound(heart_beast, 'sound/misc/machinevomit.ogg', 75, TRUE)
-			create_discharge_projectile(target_turf)
+		addtimer(CALLBACK(src, PROC_REF(delayed_discharge), valid_turfs), rand(1, 5) SECONDS)
+
+/datum/component/chimeric_heart_beast/proc/delayed_discharge(list/valid_turfs)
+	var/turf/target_turf = pick(valid_turfs)
+	valid_turfs -= target_turf
+	playsound(heart_beast, 'sound/misc/machinevomit.ogg', 75, TRUE)
+	create_discharge_projectile(target_turf)
 
 /datum/component/chimeric_heart_beast/proc/process_environment_quirks()
 	if(!environment_quirks.len)

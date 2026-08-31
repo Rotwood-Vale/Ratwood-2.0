@@ -526,10 +526,12 @@
 	// Apply some damage or negative effect
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		spawn(0)
-			H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			H.adjust_fire_stacks(2)
-			H.ignite_mob()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamscape_backfire), H), 0)
+
+/proc/dreamscape_backfire(mob/living/carbon/human/H)
+	H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	H.adjust_fire_stacks(2)
+	H.ignite_mob()
 
 /obj/item/rogueweapon/halberd/glaive/dreamscape
 	name = "otherworldly spear"

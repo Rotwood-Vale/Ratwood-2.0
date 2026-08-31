@@ -115,6 +115,9 @@
 /obj/item/rogueweapon/spear/dreamscape_trident/proc/knockup_effect(mob/living/L)
 	// Animation
 	animate(L, pixel_y = L.pixel_y + 16, time = 3, easing = SINE_EASING)
-	spawn(3)
-		animate(L, pixel_y = L.pixel_y - 16, time = 3, easing = SINE_EASING)
-		L.visible_message(span_warning("[L] is thrown off their feet by the shockwave!"))
+	// global so the landing still plays if the trident is deleted mid-knockup
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamscape_knockup_land), L), 3)
+
+/proc/dreamscape_knockup_land(mob/living/L)
+	animate(L, pixel_y = L.pixel_y - 16, time = 3, easing = SINE_EASING)
+	L.visible_message(span_warning("[L] is thrown off their feet by the shockwave!"))

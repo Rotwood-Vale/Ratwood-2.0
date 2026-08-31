@@ -473,22 +473,24 @@
 
 	user.visible_message(span_emote("[user.name] blurs at the edges, dissolving like mist."))
 
-	spawn(20)
-		// Re-find the entry by name to ensure it's still valid
-		var/current_index = 0
-		for (var/i = 1, i <= user.saved_trails.len, i++)
-			if (user.saved_trails[i]["name"] == selected_trail_name)
-				current_index = i
-				break
-		if (!(isturf(target_location) || isopenturf(target_location)))
-			to_chat(user, span_warning("The path has faded..."))
-			if (current_index)
-				user.saved_trails.Cut(current_index, current_index+1)
-			return
-		do_teleport(user, target_location, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		user.visible_message(span_emote("A ripple in the air resolves into fur and paw. [user.name] pads silently into view."))
+	addtimer(CALLBACK(src, PROC_REF(complete_shift), user, selected_trail_name, target_location), 20)
 
 	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/veilbound_shift/proc/complete_shift(mob/living/simple_animal/pet/familiar/mist_lynx/user, selected_trail_name, target_location)
+	// Re-find the entry by name to ensure it's still valid
+	var/current_index = 0
+	for (var/i = 1, i <= user.saved_trails.len, i++)
+		if (user.saved_trails[i]["name"] == selected_trail_name)
+			current_index = i
+			break
+	if (!(isturf(target_location) || isopenturf(target_location)))
+		to_chat(user, span_warning("The path has faded..."))
+		if (current_index)
+			user.saved_trails.Cut(current_index, current_index+1)
+		return
+	do_teleport(user, target_location, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+	user.visible_message(span_emote("A ripple in the air resolves into fur and paw. [user.name] pads silently into view."))
 
 /obj/effect/proc_holder/spell/self/verdant_veil
 	name = "Verdant Veil"

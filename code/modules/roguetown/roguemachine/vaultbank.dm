@@ -228,14 +228,16 @@
 			has_reported = TRUE
 
 	playsound(src, 'sound/misc/TheDrill.ogg', 50, TRUE)
-	spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
-		var/taken = min(rand(5, 20), SStreasury.treasury_value)
-		anguish()
-		budget2change(taken, null)
-		SStreasury.treasury_value -= taken
-		visible_message(span_danger("The Crown just drilled [taken] mammon out of [src]!"))
-		drilltime += 3 // Adjust this to increase or decrease how long it'll take to drill open.
-		drill(src)
+	addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
+
+/obj/structure/roguemachine/vaultbank/proc/drill_payout()
+	var/taken = min(rand(5, 20), SStreasury.treasury_value)
+	anguish()
+	budget2change(taken, null)
+	SStreasury.treasury_value -= taken
+	visible_message(span_danger("The Crown just drilled [taken] mammon out of [src]!"))
+	drilltime += 3 // Adjust this to increase or decrease how long it'll take to drill open.
+	drill(src)
 
 /obj/structure/roguemachine/vaultbank/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coveter))
