@@ -268,6 +268,35 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/rogueweapon/shield/tower/metal/gold
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshield"
+	force = 25
+	throwforce = 35
+	throw_speed = 1
+	throw_range = 3
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
+	wlength = WLENGTH_NORMAL
+	resistance_flags = null
+	flags_1 = CONDUCT_1
+	wdefense = 14
+	coverage = 90
+	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	max_integrity = 50
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/shield/tower/metal/gold/king
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil socketed with a dorpel. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshieldking"
+	max_integrity = 75
+	sellprice = 300
+
 /obj/item/rogueweapon/shield/tower/metal/psy
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."

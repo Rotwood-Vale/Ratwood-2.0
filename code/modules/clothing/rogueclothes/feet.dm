@@ -402,6 +402,28 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
 
+/obj/item/clothing/shoes/roguetown/boots/armor/gold
+	name = "golden greaves"
+	desc = "Resplendant sabatons of pure gold, adorned with angled greaves that proudly bear the holy sigil. Its besilked cuffs have remained surprisingly bereft of debris - not even a sprig of lint remains to be criticized."
+	icon_state = "goldgreaves"
+	item_state = "goldgreaves"
+	body_parts_covered = FEET | LEGS
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	grid_height = 96
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/shoes/roguetown/boots/armor/gold/king
+	name = "royal golden greaves"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	sellprice = 300
+	unenchantable = TRUE
+
 /obj/item/clothing/shoes/roguetown/boots/armor/bronze
 	name = "bronze greaves"
 	desc = "Padded sabatons of bronze, tightly strapped together and padded with hide from a fearsome beaste. The sandals clack about, yet they do not feel obstructive; if anything, you've never felt more agile while beplated."
