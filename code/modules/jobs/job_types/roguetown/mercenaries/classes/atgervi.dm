@@ -282,7 +282,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
 	name = "carved talisman" //relishing talisma
-	desc = "'“The excess of desire, the want of more, the glory of victory, the lover's embrace. Embrace the Leopard, or forget your strength.'	</br>	</br>The Relishing Leopard embodies the virtues of love and glory, both in battle and at home. Enjoy the flesh, the drink, and the spice; but be wary to avoid overindulgence, for it shall leave you despondant and lethargic. To become too comfortable is to become weak, and such weakness would turn you into a delicious snack for the Leopard."
+	desc = "'“The excess of desire, the want of more, the glory of victory, the lover's embrace. Embrace the Leopard, or forget your strength.'	</br>	</br>The Relishing Leopard embodies the virtues of love and glory, both in battle and at home. Enjoy the flesh, the drink, and the spice; but be wary to avoid overindulgence, for it shall leave you despondent and lethargic. To become too comfortable is to become weak, and such weakness would turn you into a delicious snack for the Leopard."
 	icon_state = "gronnbaotha"
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
@@ -292,7 +292,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
 	name = "carved talisman" //grinning talisman
-	desc = "'The battle, the combat, the violence, the rush of victory, the honored glories. Defeat the foe, or die with them.'	</br>	</br>The Grinning Moose embodies the virtues of strengh and domination; to survive both the homeland's frigid blizzards and those who'd seek to maraude its countrymen. Be untamed and unstoppable, but do not lose yourself in the haze; for even the Moose was chained, once. Kill your own without reason, and the chain shall be tugged; and your soul, too, shall be impaled on their horns."
+	desc = "'The battle, the combat, the violence, the rush of victory, the honored glories. Defeat the foe, or die with them.'	</br>	</br>The Grinning Moose embodies the virtues of strength and domination; to survive both the homeland's frigid blizzards and those who'd seek to maraud its countrymen. Be untamed and unstoppable, but do not lose yourself in the haze; for even the Moose was chained once. Kill your own without reason, and the chain shall be tugged; and your soul, too, shall be impaled on their horns."
 	icon_state = "gronngraggar"
 
 /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
@@ -302,7 +302,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
 	name = "carved talisman" //hadal talisman
-	desc = "'The chaos below, of coldblack pressure and crushing weight. Be the current. Control the waves. Reign your sails and hold fast against the storm, or be washed away onto an odyssey with no end.'	</br>	</br>The Spiraling Kraken is no virtue, but a presence; the homeland's nautical warden, who's tentacled presence is as unpredictable as the oceans it lords over. To embrace the uncertainty of lyfe is to be rewarded with fortune and mercy when it is most needed. Do not embrace such futility, however, lest you are swept away with all the others into the abyss."
+	desc = "'The chaos below, of coldblack pressure and crushing weight. Be the current. Control the waves. Reign your sails and hold fast against the storm, or be washed away onto an odyssey with no end.'	</br>	</br>The Spiraling Kraken is no virtue, but a presence; the homeland's nautical warden, whose tentacled presence is as unpredictable as the oceans it lords over. To embrace the uncertainty of lyfe is to be rewarded with fortune and mercy when it is most needed. Do not embrace such futility, however, lest you be swept away with all the others into the abyss."
 	icon_state = "gronnabyssor"
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn/special
