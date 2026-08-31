@@ -737,7 +737,7 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/helmet/citywatch/captain
-	name "watch captain helmet"
+	name = "watch captain helmet"
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
 	icon_state = "sheriff_helm"
 	item_state = "sheriff_helm"
