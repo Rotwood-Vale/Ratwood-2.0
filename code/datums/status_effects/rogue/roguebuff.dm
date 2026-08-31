@@ -492,7 +492,7 @@
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
-	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 3)
+	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 2)
 
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
@@ -529,23 +529,6 @@
 	name = "Vigilant Tavernkeep"
 	desc = "My home. I watch vigilantly and respond swiftly."
 	icon_state = "drunk"
-
-// Guard area buff
-/datum/status_effect/buff/guardbuffone
-	id = "guardbuffone"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/guardbuffone
-	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1, STATKEY_SPD = 1, STATKEY_PER = 2)
-
-/datum/status_effect/buff/guardbuffone/process()
-	. = ..()
-	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.town_area))
-		owner.remove_status_effect(/datum/status_effect/buff/guardbuffone)
-
-/atom/movable/screen/alert/status_effect/buff/guardbuffone
-	name = "Vigilant Guardsman"
-	desc = "My home. I watch vigilantly and respond swiftly."
-	icon_state = "guardsman"
 
 // Dungeoneer area buff
 /datum/status_effect/buff/dungeoneerbuff
