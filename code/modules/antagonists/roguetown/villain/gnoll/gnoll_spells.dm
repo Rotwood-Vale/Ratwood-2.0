@@ -102,7 +102,7 @@
 	tracked_target_ref = WEAKREF(selected_target)
 	sync_antag_tracked_target(user, selected_target)
 	notify_tracked_target(selected_target)
-	to_chat(user, "<span class='notice'>You focus your senses on [selected_target.real_name].</span> [selection != last_selection ? "(<a href='?src=[REF(user)];task=gnoll_view_tracked;'>Preview Target</a>)" : ""]")
+	to_chat(user, "<span class='notice'>You focus your senses on [selected_target.real_name].</span> [selection != last_selection ? "(<a href='?src=[REF(user)];task=gnoll_view_tracked;'>View</a>)" : ""]")
 	give_tracking_directions(user)
 	last_selection = selection
 
