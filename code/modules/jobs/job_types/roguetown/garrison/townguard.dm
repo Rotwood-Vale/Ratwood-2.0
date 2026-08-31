@@ -32,19 +32,6 @@
 /datum/outfit/job/roguetown/guardsman
 	job_bitflag = BITFLAG_GARRISON
 
-/datum/job/roguetown/guardsman/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(istype(H.armor, /obj/item/clothing/suit/roguetown/armor/plate/citywatch))
-			var/obj/item/clothing/S = H.armor
-			var/index = findtext(H.real_name, " ")
-			if(index)
-				index = copytext(H.real_name, 1,index)
-			if(!index)
-				index = H.real_name
-			S.name = "citywatch armor ([index])"
-
 /datum/outfit/job/roguetown/guardsman
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -55,7 +42,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
-
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
