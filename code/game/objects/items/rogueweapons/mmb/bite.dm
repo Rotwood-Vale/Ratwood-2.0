@@ -71,12 +71,42 @@
 	if(checkdefense(bitten, user))
 		return FALSE
 
-	if(user.pulling != src)
-		if(!lying_attack_check(user))
-			return FALSE
+	var/def_zone
+	if(src.cmode)
+		def_zone = melee_accuracy_check(user.zone_selected, user, src, /datum/skill/combat/unarmed, bitten, null)
+	else
+		def_zone = user.zone_selected
 
-	var/selzone = accuracy_check(user.zone_selected, user, src, /datum/skill/combat/unarmed, bitten)
-	var/def_zone = check_zone(selzone)
+	switch(def_zone) // redirects that to where it makes sense, because I hate how soulless it is atm
+		if(BODY_ZONE_PRECISE_R_EYE)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_L_EYE)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_SKULL)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_MOUTH)
+			def_zone = BODY_ZONE_PRECISE_NECK
+
+		if(BODY_ZONE_PRECISE_STOMACH)
+			def_zone = BODY_ZONE_CHEST
+
+	if(src.cmode) // no more hands/feet biting in combat, ser
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_R_HAND)
+				def_zone = BODY_ZONE_R_ARM
+
+			if(BODY_ZONE_PRECISE_L_HAND)
+				def_zone = BODY_ZONE_L_ARM
+
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
+
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(!affecting)
 		to_chat(user, span_warning("Nothing to bite."))
@@ -105,9 +135,9 @@
 			rid = /datum/reagent/vampsolution
 	var/datum/wound/caused_wound
 	if(!nodmg)
-		caused_wound = affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, selzone, crit_message = TRUE)
-	visible_message(span_danger("[user] bites [src]'s [parse_zone(selzone)]![next_attack_msg.Join()]"), \
-					span_userdanger("[user] bites my [parse_zone(selzone)]![next_attack_msg.Join()]"))
+		caused_wound = affecting.bodypart_attacked_by(BCLASS_BITE, dam2do, user, def_zone, crit_message = TRUE)
+	visible_message(span_danger("[user] bites [src]'s [parse_zone(def_zone)]![next_attack_msg.Join()]"), \
+					span_userdanger("[user] bites my [parse_zone(def_zone)]![next_attack_msg.Join()]"))
 
 	next_attack_msg.Cut()
 //nodmg if they don't have an open wound
@@ -143,7 +173,7 @@
 	var/obj/item/grabbing/bite/B = new()
 	user.equip_to_slot_or_del(B, SLOT_MOUTH)
 	if(user.mouth == B)
-		var/used_limb = src.find_used_grab_limb(user, selzone)
+		var/used_limb = src.find_used_grab_limb(user, def_zone)
 		B.name = "[src]'s [parse_zone(used_limb)]"
 		var/obj/item/bodypart/BP = get_bodypart(check_zone(used_limb))
 		LAZYADD(BP.grabbedby, B)
