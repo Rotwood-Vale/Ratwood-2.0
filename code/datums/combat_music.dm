@@ -613,12 +613,11 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = " Andrius Klimka & Andrey Kulik - World of Tanks Original Soundtrack: Studzianki "
 	musicpath = list('sound/music/combat_czwarteki.ogg')
 
-// killer organ solo while you larp as a gladiator
 /datum/combat_music/thespian
 	name = "Thespian-Errant"
 	desc = "Witness us! We, who are about to die, salute thee!"
 	shortname = "Thespian"
-	credits = "Swords And Sandals, Spartacus - Title Theme"
+	credits = "Tai Tomisawa - Elden Ring Nightreign Original Soundtrack - Fulghor, Champion of the Nightglow"
 	musicpath = list('sound/music/combat_thespian.ogg')
 
 /datum/combat_music/ancient
