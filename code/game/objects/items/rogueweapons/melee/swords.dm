@@ -355,6 +355,7 @@
 	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
 	smeltresult = /obj/item/ingot/iron //Sidegrade of the longswords and battle axes - non-blunt attacks hit harder, but are always telegraphed and swing-delayed.
+	special = /datum/special_intent/axe_swing//seemed appropriate
 
 /obj/item/rogueweapon/sword/long/broadsword/bronze
 	name = "spatha"

@@ -274,6 +274,39 @@
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/rogueweapon/flail/peasantwarflail/silver
+	name = "silver greatflail"
+	desc = "PSLM 81:59... AND HE COMMANDED; \"SHATTER THEM APART, LIKE A POTTER'S VESSEL AGAINST THE STONES!\" AND SO, WE STRUCK!"
+	icon_state = "silver_greatflail"
+	wdefense = 6
+	minstr = 13
+	max_integrity = 300
+	is_silver = TRUE
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/flail/peasantwarflail/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/flail/peasantwarflail/blacksteel
+	name = "blacksteel greatflail"
+	desc = "An elegant flail of blacksteel that - once spun - can devastate anything caught in its way."
+	icon_state = "bs_greatflail"
+	wdefense = 7
+	minstr = 12
+	max_integrity = 500
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/silver
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
+
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."

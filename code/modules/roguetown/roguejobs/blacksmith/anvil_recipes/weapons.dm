@@ -921,6 +921,12 @@
 	additional_items = list(/obj/item/ingot/silver, /obj/item/rope/chain)
 	created_item = /obj/item/rogueweapon/flail/sflail/silver
 
+/datum/anvil_recipe/weapons/silver/peasantwarflail
+	name = "Greatflail, Silver (+2 Silver, +2 Small Log)"
+	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/silver, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/flail/peasantwarflail/silver
+
+
 /datum/anvil_recipe/weapons/silver/whip
 	name = "Whip, Silver (+1 Leather Whip)"
 	additional_items = list(/obj/item/rogueweapon/whip)
@@ -1229,6 +1235,11 @@
 	name = "Blacksteel Flail (+2 Blacksteel, +1 Silk)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/natural/silk)
 	created_item = /obj/item/rogueweapon/flail/blacksteel
+
+/datum/anvil_recipe/weapons/blacksteel/peasantwarflail
+	name = "Blacksteel Greatflail (+2 Blacksteel, +1 Small Log, +1 Rontz)"
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/roguegem/ruby, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/flail/peasantwarflail/blacksteel
 
 /datum/anvil_recipe/weapons/blacksteel/dagger
 	name = "Blacksteel Dagger (+1 Rontz, +1 Silk)"
