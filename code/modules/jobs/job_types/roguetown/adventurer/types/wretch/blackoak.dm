@@ -53,7 +53,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
+	head = /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
