@@ -36,19 +36,18 @@
 	. = ..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/citywatch))
-			var/obj/item/clothing/S = H.cloak
+		if(istype(H.armor, /obj/item/clothing/suit/roguetown/armor/plate/citywatch))
+			var/obj/item/clothing/S = H.armor
 			var/index = findtext(H.real_name, " ")
 			if(index)
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "watchman halfcloak ([index])"
+			S.name = "citywatch armor ([index])"
 
 /datum/outfit/job/roguetown/guardsman
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	cloak = /obj/item/clothing/cloak/citywatch
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	head = /obj/item/clothing/head/roguetown/helmet/citywatch
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson

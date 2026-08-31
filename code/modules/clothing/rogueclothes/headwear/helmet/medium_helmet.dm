@@ -732,6 +732,7 @@
 	body_parts_covered = FULL_HEAD
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
 	dropshrink = null
