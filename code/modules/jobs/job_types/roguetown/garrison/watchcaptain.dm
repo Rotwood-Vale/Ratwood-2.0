@@ -31,10 +31,10 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/outfit/job/roguetown/watchcaptain
-	head = /obj/item/clothing/head/roguetown/helmet/citywatch
+	head = /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	cloak = /obj/item/clothing/cloak/citywatchcaptain
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	belt = /obj/item/storage/belt/rogue/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
