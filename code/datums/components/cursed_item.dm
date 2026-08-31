@@ -23,9 +23,11 @@
 		return
 	var/mob/living/carbon/human/user = I.loc
 	if(!HAS_TRAIT(user, required_trait))
-		spawn(0)
-			to_chat(user, "<font color='red'>UNWORTHY HANDS TOUCHING THIS [item_type], CEASE OR BE [verbed]!</font>")
-			user.adjust_fire_stacks(5)
-			user.ignite_mob()
-			user.Stun(40)
+		INVOKE_ASYNC(src, PROC_REF(punish_unworthy), user)
+
+/datum/component/cursed_item/proc/punish_unworthy(mob/living/carbon/human/user)
+	to_chat(user, "<font color='red'>UNWORTHY HANDS TOUCHING THIS [item_type], CEASE OR BE [verbed]!</font>")
+	user.adjust_fire_stacks(5)
+	user.ignite_mob()
+	user.Stun(40)
 

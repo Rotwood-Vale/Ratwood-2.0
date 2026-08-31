@@ -288,8 +288,7 @@
 	if(channeling_abduction && ishuman(parent) && get_recent_damage() >= GNOLL_ABDUCT_DAMAGE_THRESHOLD)
 		// micro stun to break any do_afters
 		// asynchronous as to not mess with signal behavior!
-		spawn(0)
-			H.Stun(1)
+		INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living, Stun), 1)
 		to_chat(H, span_userdanger("The pain interrupts your concentration!"))
 		channeling_abduction = FALSE // Reset channel flag
 

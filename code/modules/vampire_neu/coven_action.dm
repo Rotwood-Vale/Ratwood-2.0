@@ -159,11 +159,13 @@
 		return
 
 	//actually try to use the Coven on the target
-	spawn()
-		if (coven.current_power.try_activate(target))
-			end_targeting()
+	INVOKE_ASYNC(src, PROC_REF(async_try_activate), target)
 
 	return COMSIG_MOB_CANCEL_CLICKON
+
+/datum/action/coven/proc/async_try_activate(atom/target)
+	if (coven.current_power.try_activate(target))
+		end_targeting()
 
 /datum/action/coven/proc/begin_targeting()
 	var/client/client = owner?.client

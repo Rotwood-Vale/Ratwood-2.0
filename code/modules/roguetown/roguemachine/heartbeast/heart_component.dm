@@ -236,12 +236,10 @@
 	SIGNAL_HANDLER
 
 	if(istype(I, /obj/item/heart_blood_canister))
-		spawn(0)
-			try_fill_blood_container(I, user, (max_blood_pool / 10), /obj/item/heart_blood_canister/filled)
+		INVOKE_ASYNC(src, PROC_REF(try_fill_blood_container), I, user, (max_blood_pool / 10), /obj/item/heart_blood_canister/filled)
 		return
 	else if(istype(I, /obj/item/heart_blood_vial))
-		spawn(0)
-			try_fill_blood_container(I, user, (max_blood_pool / 30), /obj/item/heart_blood_vial/filled)
+		INVOKE_ASYNC(src, PROC_REF(try_fill_blood_container), I, user, (max_blood_pool / 30), /obj/item/heart_blood_vial/filled)
 		return
 
 	if(!item_interaction_quirks.len)

@@ -38,9 +38,8 @@
 	if(!isclothing(I))
 		return
 	var/obj/item/clothing/worn_thing = I
-	spawn(0)
-		if(!(worn_thing.item_flags & IN_INVENTORY))
-			return
+	// A spawn(0) here wrapped an IN_INVENTORY check whose return only exited the spawned
+	// block, so the check has never gated anything. Removed; behavior unchanged.
 	if(worn_thing.item_flags & IN_STORAGE)
 		return
 	var/list/obj/item/held_list = user.get_held_items()
