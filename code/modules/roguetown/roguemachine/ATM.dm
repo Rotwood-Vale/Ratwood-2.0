@@ -38,8 +38,9 @@
 				H.Stun(80)
 				H.apply_damage(50, BRUTE, def_zone)
 				H.emote("agony")
-				// A bodyless spawn(5) sat here delaying nothing; the line was always immediate.
-				say("Blueblood for the Freefolk!")
+				// A bodyless spawn(5) sat here. It bound the say below, so the taunt has always
+				// landed half a second after the shock rather than on top of it.
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), "Blueblood for the Freefolk!"), 5)
 				playsound(src, 'sound/vo/mobs/ghost/laugh (5).ogg', 100, TRUE)
 				return
 	if(H in SStreasury.bank_accounts)
