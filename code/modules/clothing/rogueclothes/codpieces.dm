@@ -179,4 +179,4 @@
 	name = "metal codpiece"
 	result = list(/obj/item/codpiece/froggemund)
 	reqs = list(/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth = 1)
-	craftdiff = 0
+	craftdiff = 6//funny
