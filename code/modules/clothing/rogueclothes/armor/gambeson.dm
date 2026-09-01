@@ -29,11 +29,53 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	name = "arming jacket"
+	desc = "A collared jacket, purpose-woven for warfare. The flared collar and sleeves keep the wearer's dexterity from being mitigated, while its tighter presentation helps to ward off killing blows from afar."
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	color ="#c5ab8c"
 	allowed_sex = list(MALE, FEMALE)
-	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //More integ than a gamberson, at the cost of leg protection
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT 
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	var/picked = FALSE
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/lord/attack_right(mob/user)
+	..()
+	if(!picked)
+		var/choice = input(user, "Choose a color.", "Jacket colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
+		picked = TRUE
+		detail_color = playerchoice
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_shirt()
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/lord/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/lord/light
+	name = "light arming jacket"
+	desc = "A lightweight collared jacket, purpose-woven for skirmishes and battle. The modest weight and streamlined form make it ideal for wearing under a cuirass or elegant halfplate."
+	icon_state = "dgamb"
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //More integrity and superior protection vs a light gamberson, and cheaper than a proper gamberson with the same integrity.
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
+	name = "padded arming jacket"
+	desc = "A collared jacket, intended to be worn underneath plate armor. The thicker padding ensures that any gaps left within its alloyed shell are thoroughly protected - lest an unforseen bowstrike, landing true, ruptures the vulnerable flesh beneath."
+	icon_state = "dgamb"
+	armor = ARMOR_PADDED_GOOD
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE //More integ than a padded gamberson, at the cost of leg protection
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
 	name = "stalker robe"
@@ -268,6 +310,54 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split
+	name = "split-tone grenzelhoftian hip-shirt"
+	icon_state = "grenzelshirtsplit"
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	color = "#1d1d22"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#1d1d22"
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split/attack_right(mob/user)
+	..()
+	if(!picked)
+		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
+		picked = TRUE
+		detail_color = playerchoice
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_shirt()
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
+/datum/crafting_recipe/roguetown/survival/hipshirtsplit
+	name = "swap hipshirt to split-tone"
+	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split)
+	reqs = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft = 1)
+	craftdiff = 0
+	req_table = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	name = "desert coat"

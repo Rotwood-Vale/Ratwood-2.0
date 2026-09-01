@@ -1927,6 +1927,12 @@ generate/load female uniform sprites matching all previously decided variables
 				pic.color = I.get_detail_color()
 			sleeves += pic
 
+		if(I.get_altdetail_tag() && I.sleeved_detail)
+			var/mutable_appearance/pic = mutable_appearance(icon(I.sleeved, "[used][I.get_altdetail_tag()]"), layer=-layer2use)
+			if(I.get_altdetail_color())
+				pic.color = I.get_altdetail_color()
+			sleeves += pic
+
 		if(HAS_BLOOD_DNA(I))
 			var/icon/blood_overlay = bloody_r[used]
 			if(!blood_overlay)
@@ -1952,6 +1958,12 @@ generate/load female uniform sprites matching all previously decided variables
 //			pic.appearance_flags = RESET_COLOR
 			if(I.get_detail_color())
 				pic.color = I.get_detail_color()
+			sleeves += pic
+
+		if(I.get_altdetail_tag() && I.sleeved_detail)
+			var/mutable_appearance/pic = mutable_appearance(icon(I.sleeved, "[used][I.get_altdetail_tag()]"), layer=-layer2use)
+			if(I.get_altdetail_color())
+				pic.color = I.get_altdetail_color()
 			sleeves += pic
 
 		if(HAS_BLOOD_DNA(I))

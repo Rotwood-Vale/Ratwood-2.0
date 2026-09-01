@@ -622,6 +622,15 @@
 	name = "Chain Chausses, Steel"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs
 
+/datum/anvil_recipe/armor/steel/chainhose
+	name = "Chain Hoses, Steel"
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/hose
+
+/datum/anvil_recipe/armor/steel/chaintights
+	name = "Chain Tights, Steel (+1 Steel, +1 Leather)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/tights
+
 /datum/anvil_recipe/armor/steel/chainlegs/kilt
 	name = "Chain Kilt, Steel"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs/kilt

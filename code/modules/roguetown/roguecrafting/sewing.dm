@@ -177,6 +177,13 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 1
 
+/datum/crafting_recipe/roguetown/sewing/clothhosen
+	name = "cloth hosen"
+	result = list(/obj/item/clothing/under/roguetown/tights/hose)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/sewing/Reyepatch
 	name = "right eye patch"
 	result = list(/obj/item/clothing/mask/rogue/eyepatch)
@@ -222,6 +229,14 @@
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/light)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+
+/datum/crafting_recipe/roguetown/sewing/lgambesonskirt
+	name = "light gambesoned kilt"
+	result = list(/obj/item/clothing/under/roguetown/skirt/gambeson/light)
+	reqs = list(/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/clothblindfold
@@ -304,6 +319,13 @@
 	craftdiff = 1
 
 /* craftdif of 2+ */
+
+/datum/crafting_recipe/roguetown/sewing/clothpaddedgloves
+	name = "padded gloves"
+	result = list(/obj/item/clothing/gloves/roguetown/cloth)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/wrappings
 	name = "solar wrappings"
@@ -626,6 +648,23 @@
 	craftdiff = 3
 	sellprice = 20
 
+/datum/crafting_recipe/roguetown/sewing/gambesonskirt
+	name = "gambesoned kilt"
+	result = /obj/item/clothing/under/roguetown/skirt/gambeson
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/larmingjacket
+	name = "light arming jacket" //its a gambeson without leg cover
+	category = "Gambesons"
+	result = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/light
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 2 //because if it was 3, you'd just make the proper arming jacket
+
 /datum/crafting_recipe/roguetown/sewing/armingjacket
 	name = "arming jacket"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
@@ -634,8 +673,8 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 3
 
-/datum/crafting_recipe/roguetown/sewing/paddedcap
-	name = "padded cap"
+/datum/crafting_recipe/roguetown/sewing/armingcap
+	name = "arming cap"
 	result = /obj/item/clothing/head/roguetown/paddedcap
 	reqs = list(/obj/item/natural/fibers = 5)
 	tools = list(/obj/item/needle)
@@ -706,6 +745,20 @@
 				/obj/item/natural/fibers = 4)
 	craftdiff = 5
 
+/datum/crafting_recipe/roguetown/sewing/hgambesonskirt
+	name = "padded gambesoned kilt"
+	result = list(/obj/item/clothing/under/roguetown/skirt/gambeson/heavy)
+	reqs = list(/obj/item/natural/cloth = 6,
+				/obj/item/natural/fibers = 4)
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/sewing/harmingjacket
+	name = "padded arming jacket"
+	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy)
+	reqs = list(/obj/item/natural/cloth = 5,
+				/obj/item/natural/fibers = 5)
+	craftdiff = 5 //highest possible light-armor integ on a shirt layer, so should take some work
+
 /datum/crafting_recipe/roguetown/sewing/monkwraps
 	name = "padded arm wrappings"
 	result = list(/obj/item/clothing/wrists/roguetown/bracers/cloth/monk)
@@ -718,6 +771,55 @@
 	result = list(/obj/item/clothing/head/roguetown/headband/monk)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/paddedchausses
+	name = "padded chausses"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/paddedchaussesalt
+	name = "padded chausses, alternate"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
+	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
+				/obj/item/clothing/under/roguetown/trou/leather = 1,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/sewing/heavypaddedchausses
+	name = "heavy padded chausses"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
+	reqs = list(/obj/item/natural/cloth = 6,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/heavypaddedchaussesalt
+	name = "heavy padded chausses, alternate"
+	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
+	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
+				/obj/item/clothing/under/roguetown/trou/leather = 1,
+				/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/heavypaddedgloves
+	name = "heavy padded gloves"
+	result = list(/obj/item/clothing/gloves/roguetown/cloth/heavy)
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/sewing/paddedarmingcap
+	name = "padded arming cap"
+	result = /obj/item/clothing/head/roguetown/paddedcap/heavy
+	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 5)
+	tools = list(/obj/item/needle)
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/heavypadded
@@ -1199,6 +1301,13 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 4
 	sellprice = 15
+
+/datum/crafting_recipe/roguetown/sewing/dhoti
+	name = "dhoti"
+	result = list(/obj/item/clothing/under/roguetown/tights/dhoti)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/otavangambeson
 	name = "otavan gambeson"
