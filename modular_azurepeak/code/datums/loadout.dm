@@ -1296,6 +1296,23 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Eoran Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/eora
 
+// CODPIECES
+/datum/loadout_item/codpiece
+	name = "Codpiece"
+	path = /obj/item/codpiece
+
+/datum/loadout_item/metalcod
+	name = "Metal Codpiece"
+	path = /obj/item/codpiece/metal
+
+/datum/loadout_item/foppishcod
+	name = "Foppish Codpiece"
+	path = /obj/item/codpiece/foppish
+
+/datum/loadout_item/flapcod
+	name = "Flap Codpiece"
+	path = /obj/item/codpiece/flap
+
 //==========================
 // TRIUMPH LOADOUT ITEMS
 //==========================
