@@ -6,6 +6,7 @@
 	item_state = "codpiece"
 	desc = "A leather codpiece that fits snugly (for most, save the elves) around the groin. Considered to be the height of fashion in Drow high society."
 	color = "#66584c"
+	dropshrink = 0.5
 	var/is_attached_to_pants = FALSE
 	var/draws_above_clothing = TRUE
 	var/detail_suffix_after_tag = FALSE
@@ -92,6 +93,7 @@
 	icon_state = "frogge"
 	desc = "An upturned Froggemund jousting helm somehow fashioned into an ungaitly codpiece. The garb of a madman."
 	color = "#ffffff"
+	dropshrink = 1
 
 /obj/item/codpiece/flap
 	name = "flap codpiece"
