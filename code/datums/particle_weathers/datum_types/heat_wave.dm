@@ -118,28 +118,34 @@
 
 	QDEL_IN(src, duration)
 /obj/effect/temp_visual/heat_ripple/proc/start_ripple()
+	addtimer(CALLBACK(src, PROC_REF(ripple_loop)), rand(0,5))
 
-	spawn(rand(0,5))
-		while(src)
+// The old version of this loop had no sleep; BYOND's infinite loop detector was
+// backgrounding a busy-loop for every shimmer's lifetime, then it runtimed on the
+// deleted src. The sleep matches the combined length of the two animates.
+/obj/effect/temp_visual/heat_ripple/proc/ripple_loop()
+	while(!QDELETED(src))
 
-			var/matrix/M1 = matrix()
-			var/matrix/M2 = matrix()
+		var/matrix/M1 = matrix()
+		var/matrix/M2 = matrix()
 
-			M1.Scale(1.02, 0.98)
-			M1.Translate(rand(-0.3,0.3), rand(0,0.6))
+		M1.Scale(1.02, 0.98)
+		M1.Translate(rand(-0.3,0.3), rand(0,0.6))
 
-			M2.Scale(0.98, 1.02)
-			M2.Translate(rand(-0.3,0.3), rand(0,0.6))
+		M2.Scale(0.98, 1.02)
+		M2.Translate(rand(-0.3,0.3), rand(0,0.6))
 
-			animate(src,
-				transform = M1,
-				time = rand(6,10),
-				easing = SINE_EASING)
+		animate(src,
+			transform = M1,
+			time = rand(6,10),
+			easing = SINE_EASING)
 
-			animate(src,
-				transform = M2,
-				time = rand(6,10),
-				easing = SINE_EASING)
+		animate(src,
+			transform = M2,
+			time = rand(6,10),
+			easing = SINE_EASING)
+
+		sleep(rand(12,20))
 
 /obj/effect/temp_visual/heat_ripple/proc/fade_in()
 	animate(src, alpha = rand(20,40), time = 5)
