@@ -9,7 +9,7 @@
 	dropshrink = 0.5
 	var/is_attached_to_pants = FALSE
 	var/draws_above_clothing = TRUE
-	var/detail_suffix_after_tag = FALSE
+	var/detail_suffix_after_tag = FALSE//snowflake var for the flap codpiece since it doesn't have an _under onmob.
 
 /obj/item/codpiece/Initialize(mapload)
 	. = ..()
@@ -107,15 +107,28 @@
 
 /obj/item/clothing/under/roguetown
 	var/obj/item/codpiece/attached_codpiece
+	var/mutable_appearance/codpiece_item_overlay
+
+/obj/item/clothing/under/roguetown/update_icon()
+	. = ..()
+	update_codpiece_item_overlay()
+
+/obj/item/clothing/under/roguetown/proc/update_codpiece_item_overlay()// this updates the ITEM not the onmob.
+	if(codpiece_item_overlay)
+		cut_overlay(codpiece_item_overlay)
+		codpiece_item_overlay = null
+	if(attached_codpiece)
+		codpiece_item_overlay = new /mutable_appearance(attached_codpiece)
+		add_overlay(codpiece_item_overlay)
 
 /obj/item/clothing/under/roguetown/Destroy()
 	if(attached_codpiece)
 		var/obj/item/codpiece/codpiece = attached_codpiece
-		vis_contents -= codpiece
+		attached_codpiece = null
+		update_codpiece_item_overlay()
 		codpiece.forceMove(drop_location())
 		codpiece.update_icon()
 		codpiece.is_attached_to_pants = FALSE
-		attached_codpiece = null
 	refresh_codpiece_overlay()
 	return ..()
 
@@ -140,8 +153,8 @@
 	user.visible_message(span_warning("[user] equips \the [held_codpiece] onto \the [initial(name)]."))
 	attached_codpiece = held_codpiece
 	playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-	vis_contents += attached_codpiece
 	update_icon()
+	update_codpiece_item_overlay()
 	refresh_codpiece_overlay()
 	return TRUE
 
@@ -155,13 +168,13 @@
 		return
 	var/obj/item/codpiece/codpiece = attached_codpiece
 	user.visible_message(span_warning("[user] removes \the [codpiece] from \the [initial(name)]."))
-	vis_contents -= codpiece
 	if(!user.put_in_hands(codpiece))
 		codpiece.forceMove(get_turf(src))
 	codpiece.update_icon()
 	codpiece.is_attached_to_pants = FALSE
 	attached_codpiece = null
 	update_icon()
+	update_codpiece_item_overlay()//we need this cause 
 	refresh_codpiece_overlay()
 
 /obj/item/clothing/under/roguetown/proc/refresh_codpiece_overlay()
