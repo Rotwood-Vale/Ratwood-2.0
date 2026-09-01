@@ -16,10 +16,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
-"aad" = (
-/obj/structure/roguemachine/escrow,
-/turf/open/floor/rogue/ruinedwood,
-/area/rogue/outdoors/town)
 "aae" = (
 /obj/structure/roguemachine/scrapper,
 /turf/open/floor/rogue/grass,
@@ -28,10 +24,6 @@
 /obj/item/roguemachine/zadcote/steward,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
-"aag" = (
-/obj/item/roguemachine/zadcote/merchant,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/physician)
 "aah" = (
 /turf/open/floor/rogue/carpet/lord/left{
 	dir = 1
@@ -306251,7 +306243,7 @@ vAb
 mhG
 nbL
 mXZ
-aag
+mXZ
 vRV
 dkS
 rCj
@@ -307608,7 +307600,7 @@ dkS
 kDS
 kDS
 kDS
-aad
+kDS
 dVt
 cCB
 mYC
