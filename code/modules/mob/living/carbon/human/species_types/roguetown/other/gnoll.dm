@@ -82,6 +82,8 @@
 /datum/species/gnoll/send_voice(mob/living/carbon/human/H)
 	if(H.m_intent != MOVE_INTENT_SNEAK)
 		playsound(get_turf(H), pick('sound/vo/mobs/wwolf/wolftalk1.ogg','sound/vo/mobs/wwolf/wolftalk2.ogg'), 100, TRUE, -1)
+	else
+		playsound(get_turf(H), 'sound/misc/talk.ogg', 100, TRUE, -1)
 
 /datum/species/gnoll/proc/cancel_default_bark(datum/source, list/hearers, distance, volume, pitch)
 	SIGNAL_HANDLER
