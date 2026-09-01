@@ -492,7 +492,6 @@
 /datum/status_effect/buff/wardenbuff
 	id = "wardenbuff"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/wardenbuff
-	effectedstats = list(STATKEY_SPD = 1, STATKEY_PER = 2)
 
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
