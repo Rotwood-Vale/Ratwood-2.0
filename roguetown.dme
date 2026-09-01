@@ -1390,6 +1390,7 @@
 #include "code\modules\admin\verbs\beakerpanel.dm"
 #include "code\modules\admin\verbs\bluespacearty.dm"
 #include "code\modules\admin\verbs\BrokenInhands.dm"
+#include "code\modules\admin\verbs\check_timer_sources.dm"
 #include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
