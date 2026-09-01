@@ -1634,6 +1634,7 @@
 #include "code\modules\clothing\neck\_neck.dm"
 #include "code\modules\clothing\outfits\vv_outfit.dm"
 #include "code\modules\clothing\rogueclothes\cloaks.dm"
+#include "code\modules\clothing\rogueclothes\codpieces.dm"
 #include "code\modules\clothing\rogueclothes\dummy_items.dm"
 #include "code\modules\clothing\rogueclothes\feet.dm"
 #include "code\modules\clothing\rogueclothes\mask.dm"

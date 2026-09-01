@@ -217,3 +217,17 @@
 	result = /obj/item/clothing/mask/rogue/physician
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/bone = 1)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/codpiece
+	name = "codpiece"
+	result = /obj/item/codpiece
+	reqs = list(/obj/item/natural/hide/cured = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/flapcodpiece
+	name = "flap codpiece"
+	result = list(/obj/item/codpiece/flap)
+	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 2
