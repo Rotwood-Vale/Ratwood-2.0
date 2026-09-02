@@ -312,7 +312,7 @@
 /datum/inqports/equipment/strangemask
 	name = "1 Confessional Mask"
 	item_type = /obj/item/clothing/mask/rogue/facemask/steel/confessor
-	marquescost = 6
+	marquescost = 8
 
 /datum/inqports/equipment/otavansatchel
 	name = "1 Otavan Leather Satchel"
