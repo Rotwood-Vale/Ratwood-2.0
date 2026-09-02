@@ -113,10 +113,9 @@
 	var/drained_npc = 5
 	if(ishuman(src))
 		H = src
-	if(ishuman(user))
-		UH = user
-		if (UH.used_intent)
-			I = UH.used_intent.masteritem
+	UH = user
+	if (UH.used_intent)
+		I = UH.used_intent.masteritem
 	var/prob2defend = U.defprob
 	if(L.stamina >= L.max_stamina)
 		return FALSE

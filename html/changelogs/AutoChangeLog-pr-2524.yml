@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - balance: "Harpies can now move while taking flight."
+  - balance: "Harpies can now move down z levels faster while in flight, and can move while doing so"

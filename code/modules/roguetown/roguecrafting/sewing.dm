@@ -357,6 +357,14 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/clothpaddedfootwraps
+	name = "padded footwraps"
+	category = "Boots"
+	result = list(/obj/item/clothing/shoes/roguetown/boots/footwraps/padded)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/sewing/coif
 	name = "coif"
 	result = list(/obj/item/clothing/neck/roguetown/coif)
