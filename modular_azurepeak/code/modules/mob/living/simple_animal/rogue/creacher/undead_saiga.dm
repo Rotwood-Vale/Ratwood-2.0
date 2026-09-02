@@ -74,7 +74,7 @@
 		stat = CONSCIOUS
 		update_icon()
 		// If you don't kill it, it will become a threat again.
-		addtimer(CALLBACK(src, .proc/reanimation), reinimation_timer)
+		addtimer(CALLBACK(src, PROC_REF(reanimation)), reinimation_timer)
 		return
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/proc/reanimation()

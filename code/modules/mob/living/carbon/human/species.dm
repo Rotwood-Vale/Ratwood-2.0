@@ -230,6 +230,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc
+
+	/**
+	 * Was on_species_gain ever actually called?
+	 * Species code is really odd...
+	 **/
+	var/properly_gained = FALSE
+
 ///////////
 // PROCS //
 ///////////
@@ -569,6 +576,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+
+	properly_gained = TRUE
 
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
@@ -2623,3 +2632,9 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 	var/datum/browser/popup = new(src.mob, "species_info", "<center>BESTIARY</center>", 460, 550)
 	popup.set_content(species_info)
 	popup.open()
+
+/datum/species/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Gained / Owned: [properly_gained ? "Yes" : "No"]"

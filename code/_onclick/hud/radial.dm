@@ -9,6 +9,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
+/atom/movable/screen/radial/Destroy()
+	parent = null
+	return ..()
+
 /atom/movable/screen/radial/slice
 	icon_state = "radial_slice"
 	var/choice
@@ -273,7 +277,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
+	QDEL_LIST(elements)
+	QDEL_NULL(close_button)
 	QDEL_NULL(custom_check_callback)
+	current_user = null
+	anchor = null
 	. = ..()
 
 /*

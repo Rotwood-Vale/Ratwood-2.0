@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pitch = 1
 	var/detail_color = "000"
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
-	var/static/datum/species/default_species = new /datum/species/human/northern()
+	var/const/datum/species/default_species = /datum/species/human/northern
 	var/datum/patron/selected_patron
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
@@ -289,6 +289,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
+	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
 
 	// PATREON
@@ -416,7 +417,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(!combat_music)
 		combat_music = GLOB.cmode_tracks_by_type[default_cmusic_type]
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C.update_movement_keys()
+	C?.update_movement_keys()
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
