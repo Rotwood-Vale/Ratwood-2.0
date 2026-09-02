@@ -17,7 +17,6 @@
 		/datum/job/roguetown/azeb,
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
-		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
 		/datum/job/roguetown/tribalchieftain,
@@ -37,6 +36,7 @@
 		/datum/job/roguetown/baron_retainer = 1,
 		/datum/job/roguetown/slaver = 1,
 		/datum/job/roguetown/rockhillslave = 4,
+		/datum/job/roguetown/adventurer/courtslave = 2,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
