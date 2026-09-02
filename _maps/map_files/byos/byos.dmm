@@ -3257,7 +3257,6 @@
 	name = "Door of Gluttony";
 	locked = 1;
 	lockid = "gluttony";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -8244,7 +8243,6 @@
 	name = "Door of Sloth";
 	locked = 1;
 	lockid = "sloth";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -10196,7 +10194,6 @@
 	name = "Door of Pride";
 	locked = 1;
 	lockid = "pride";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -10527,7 +10524,6 @@
 	name = "Door of Lust";
 	locked = 1;
 	lockid = "lust";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -11291,7 +11287,6 @@
 	name = "Door of Envy";
 	locked = 1;
 	lockid = "envy";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -12679,6 +12674,17 @@
 /area/rogue/under/cave/tribeden)
 "nGj" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mole{
+	STASTR = 24;
+	health = 500;
+	faction = list("undead")
+	},
+/obj/structure/fluff/walldeco/chains,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/mole{
+	STAWIL = 13;
 	STASTR = 24;
 	health = 500;
 	faction = list("undead")
@@ -20371,7 +20377,6 @@
 	name = "Door of Greed";
 	locked = 1;
 	lockid = "greed";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -21664,7 +21669,6 @@
 	name = "Door of Wrath";
 	locked = 1;
 	lockid = "wrath";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},

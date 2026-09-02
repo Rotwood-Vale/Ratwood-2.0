@@ -27326,6 +27326,17 @@
 	STASPD = 13;
 	STASTR = 13
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
+	},
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep/above)
 "hCJ" = (
@@ -30643,6 +30654,17 @@
 	STASPD = 13;
 	STASTR = 13
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
+	},
 /turf/open/floor/rogue/lightpath,
 /area/rogue/outdoors/desertdeep)
 "iBA" = (
@@ -31299,6 +31321,17 @@
 	STACON = 13;
 	STASPD = 13;
 	STASTR = 13
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
 	},
 /turf/open/floor/rogue/naturalstone/sandstone,
 /area/rogue/under/cavewet/bogcaves)
@@ -43488,6 +43521,17 @@
 	STASTR = 13;
 	inertia_move_delay = 0
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
+	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/desertdeep)
 "mhY" = (
@@ -51132,6 +51176,17 @@
 	STACON = 13;
 	STASPD = 13;
 	STASTR = 13
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
 	},
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/outdoors/desertdeep)
@@ -59679,7 +59734,7 @@
 "qNU" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -78387,6 +78442,17 @@
 	STASPD = 13;
 	STASTR = 13
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/carbon/human/species/skeleton/npc/ambush{
+	STACON = 13;
+	STAWIL = 13;
+	STASPD = 13;
+	STASTR = 13;
+	inertia_move_delay = 0
+	},
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/under/cavewet/bogcaves)
 "vUR" = (
@@ -80638,7 +80704,7 @@
 "wCa" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0

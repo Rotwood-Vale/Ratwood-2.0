@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(last_words)
 //	if(mind)
 //		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
-	if(!gibbed && !was_dead_before)
+	if(!QDELETED(src) && !gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 
 //	stop_all_loops()

@@ -29,56 +29,73 @@
 	armor = ARMOR_CLOTHING
 	cold_protection = FOOT_LEFT | FOOT_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	var/atom/movable/holdingknife = null
-	var/atom/movable/holdinglockpick = null
+	/// The knife stored in the boot
+	var/atom/movable/holdingknife
+	/// The lockpick stored in the boot
+	var/atom/movable/holdinglockpick
+
+/obj/item/clothing/shoes/roguetown/boots/Destroy()
+	QDEL_NULL(holdingknife)
+	QDEL_NULL(holdinglockpick)
+	return ..()
+
+/obj/item/clothing/shoes/roguetown/boots/deconstruct(disassembled)
+	if(holdingknife)
+		holdingknife.forceMove(get_turf(src))
+		holdingknife = null
+	if(holdinglockpick)
+		holdinglockpick.forceMove(get_turf(src))
+		holdinglockpick = null
+	return ..()
 
 /obj/item/clothing/shoes/roguetown/boots/examine()
 	. = ..()
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
-/obj/item/clothing/shoes/roguetown/boots/attackby(obj/item/W, mob/living/carbon/user, params)
-	if(istype(W, /obj/item/rogueweapon/huntingknife))
-		if(holdingknife == null)
-			for(var/obj/item/clothing/shoes/roguetown/boots/B in user.get_equipped_items(TRUE))
-				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))
-				user.transferItemToLoc(W, holdingknife)
-				holdingknife = W
-				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
-		else
-			to_chat(loc, span_warning("My boot already holds a knife."))
-
-	if(istype(W, /obj/item/lockpick))
-		if(holdinglockpick == null)
-			for(var/obj/item/clothing/shoes/roguetown/boots/B in user.get_equipped_items(TRUE))
-				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))
-				user.transferItemToLoc(W, holdinglockpick)
-				holdinglockpick = W
-				playsound(loc, 'sound/foley/equip/rummaging-01.ogg')
-		else
-			to_chat(loc, span_warning("My boot already holds a lockpick."))
-
+/obj/item/clothing/shoes/roguetown/boots/attackby(obj/item/storing_item, mob/living/carbon/user, params)
+	if(istype(storing_item, /obj/item/rogueweapon/huntingknife))
+		if(!isnull(holdingknife))
+			to_chat(user, span_warning("My boot already holds a knife."))
+			return
+		to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
+		user.transferItemToLoc(storing_item, holdingknife)
+		holdingknife = storing_item
+		playsound(user, 'sound/foley/equip/swordsmall1.ogg')
 		return
-	. = ..()
+
+	if(istype(storing_item, /obj/item/lockpick))
+		if(!isnull(holdinglockpick))
+			to_chat(user, span_warning("My boot already holds a lockpick."))
+			return
+		to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
+		user.transferItemToLoc(storing_item, holdinglockpick)
+		holdinglockpick = storing_item
+		playsound(user, 'sound/foley/equip/rummaging-01.ogg')
+		return
+
+	return ..()
 
 /obj/item/clothing/shoes/roguetown/boots/attack_right(mob/user)
-	if(holdingknife != null)
-		user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a knife from [src]!"))
-		if(do_after(user, 2 SECONDS))
-			if(!user.get_active_held_item())
-				user.put_in_active_hand(holdingknife, user.active_hand_index)
-				holdingknife = null
-				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
-				return TRUE
+	if(isnull(holdingknife))
+		return
+	user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a knife from [src]!"))
+	if(!do_after(user, 2 SECONDS))
+		return
+	user.put_in_hands(holdingknife)
+	holdingknife = null
+	playsound(user, 'sound/foley/equip/swordsmall1.ogg')
+	return TRUE
 
 /obj/item/clothing/shoes/roguetown/boots/MiddleClick(mob/user)
-	if(holdinglockpick != null)
-		user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a lockpick from [src]!"))
-		if(do_after(user, 2 SECONDS))
-			if(!user.get_active_held_item())
-				user.put_in_active_hand(holdinglockpick, user.active_hand_index)
-				holdinglockpick = null
-				playsound(loc, 'sound/foley/equip/rummaging-01.ogg')
-				return TRUE
+	if(isnull(holdinglockpick))
+		return
+	user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a lockpick from [src]!"))
+	if(!do_after(user, 2 SECONDS))
+		return
+	user.put_in_hands(holdinglockpick)
+	holdinglockpick = null
+	playsound(user, 'sound/foley/equip/rummaging-01.ogg')
+	return TRUE
 
 /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	name = "psydonic leather boots"
@@ -641,3 +658,27 @@
 	item_state = "hlegs"
 	body_parts_covered = LEGS|FEET
 	color = null
+
+//Wraps
+
+/obj/item/clothing/shoes/roguetown/boots/footwraps
+	name = "cloth footwraps"
+	desc = "Thickly-woven bandages that've been wrapped around the ankles to protect from any unwanted shattered teeth from sticking in your precious legs."
+	gender = PLURAL
+	icon_state = "footwraps"
+	sewrepair = TRUE
+	salvage_result = /obj/item/natural/cloth
+
+/obj/item/clothing/shoes/roguetown/boots/footwraps/padded
+	name = "padded cloth footwraps"
+	desc = "Thickly-woven padded bandages wrapped about one's ankles to maintain mobility for climbing and kicking."
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+
+/obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
+	name = "hardened leather footwraps"
+	desc = "A cut down pair of boots maintaining most of the cover they'd normally offer with added comfort for those with inhumen anatomy."
+	icon_state = "footwraps_hleather"
+	salvage_result = /obj/item/natural/hide/cured
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER

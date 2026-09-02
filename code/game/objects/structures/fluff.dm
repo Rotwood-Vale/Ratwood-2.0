@@ -290,7 +290,7 @@
 	smooth_fences()
 
 /obj/structure/fluff/railing/fence/Destroy()
-	..()
+	. = ..()
 	smooth_fences()
 
 /obj/structure/fluff/railing/fence/OnCrafted(dirin)
@@ -609,8 +609,8 @@
 
 /obj/structure/fluff/clock/Destroy()
 	if(soundloop)
-		soundloop.stop()
-	..()
+		QDEL_NULL(soundloop)
+	return ..()
 
 /obj/structure/fluff/clock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
@@ -699,8 +699,8 @@
 
 /obj/structure/fluff/wallclock/Destroy()
 	if(soundloop)
-		soundloop.stop()
-	..()
+		QDEL_NULL(soundloop)
+	return ..()
 
 /obj/structure/fluff/wallclock/examine(mob/user)
 	. = ..()
@@ -1564,7 +1564,7 @@
 
 /obj/structure/fluff/psycross/copper/Destroy()
 	addomen("psycross")
-	..()
+	return ..()
 
 /obj/structure/fluff/psycross/proc/AOE_flash(mob/user, range = 15, power = 5, targeted = FALSE)
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
@@ -1620,7 +1620,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/sword/long/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr sword appears in your hand."))
@@ -1636,7 +1635,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/greataxe/steel/doublehead/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr axe appears in your hand."))
@@ -1652,7 +1650,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/mace/goden/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr mace appears in your hand."))
@@ -1668,7 +1665,6 @@
 		I.anti_stall()
 
 	I = new /obj/item/rogueweapon/spear/partizan/martyr(src.loc)
-	SSroguemachine.martyrweapon = I
 
 	if(user.put_in_hands(I))
 		to_chat(user, span_notice("The martyr trident appears in your hand."))

@@ -51,7 +51,7 @@
 	if (QDELETED(src))
 		return
 	if(!target)
-		target = pick(GLOB.player_list)
+		target = safepick(GLOB.player_list)
 		return
 	if(target.z != z)
 		qdel(src)

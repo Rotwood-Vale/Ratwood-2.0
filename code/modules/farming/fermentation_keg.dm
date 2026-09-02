@@ -62,6 +62,10 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(heated)
 		START_PROCESSING(SSobj, src)
 
+/obj/structure/fermentation_keg/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
 /obj/structure/fermentation_keg/update_overlays()
 	. = ..()
 	if(length(overlays))

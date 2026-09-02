@@ -33,6 +33,7 @@
 	var/knockedoffbefore = 0
 	var/drillgoal = 100
 
+<<<<<<< HEAD
 /obj/structure/roguemachine/vaultbank/Initialize(mapload)
 	..()
 	enforce_placement()
@@ -67,6 +68,8 @@
 		message_admins(msg)
 	return linked_fund
 
+=======
+>>>>>>> upstream/main
 /obj/structure/roguemachine/vaultbank/update_icon()
 	if(drilling)
 		return
@@ -88,40 +91,29 @@
 	switch(feedme)
 		if(1)
 			src.say("MORE. MORE. MORE.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(2)
 			src.say("I WILL KEEP IT SAFE.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(3)
 			src.say("I WILL TREASURE THAT.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(4)
 			src.say("MORE FOR THE DUCHY. MORE FOR ME.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(5)
 			src.say("TENS, HUNDREDS, THOUSANDS.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(6)
 			src.say("THERE IS NO SAFER PLACE FOR IT.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(7)
 			src.say("I'M AROUND YOUR BEST INTEREST.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(8)
 			src.say("IT WILL NEVER BE ENOUGH.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(9)
 			src.say("ANOTHER HANDFUL. ANOTHER ZENNY.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(10)
 			src.say("A LITTLE RICHER. NONE THE POORER.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		if(11)
 			src.say("EARNINGS SAVED. EARNINGS GIVEN.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		else
 			src.say("YOUR TREASURED TREASURY. ALWAYS SAFE WITH ME.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 
 /obj/structure/roguemachine/vaultbank/proc/whine()
 	whineline = rand(1,12)
@@ -130,40 +122,29 @@
 	switch(whineline)
 		if(1)
 			src.say("YOU SWING LIKE A PAUPER.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(2)
 			src.say("I AM TELLING THE NERVEMASTER.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(3)
 			src.say("THEY'LL HEAR YOU.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(4)
 			src.say("STOP THAT.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(5)
 			src.say("THAT IS THE DUCHY'S COIN.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(6)
 			src.say("YOU LOWLYFE.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(7)
 			src.say("THAT'S NOT YOURS.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(8)
 			src.say("THIS ISN'T A PROPER WITHDRAWAL.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(9)
 			src.say("I AM INSURED FOR THIS. ARE YOU?")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(10)
 			src.say("YOU WON'T BREAK THIS BANK.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		if(11)
 			src.say("KEEP TRYING.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 		else
 			src.say("QUIT IT.")
-			playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
+	playsound(src, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
 
 /obj/structure/roguemachine/vaultbank/proc/anguish()
 	anguish = rand(1,12)
@@ -172,45 +153,37 @@
 	switch(anguish)
 		if(1)
 			src.say("NO MORE OF THIS.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(2)
 			src.say("GIVE IT UP.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(3)
 			src.say("THE TREASURY REMAINS.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(4)
 			src.say("I STAY PUT.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(5)
 			src.say("CEASE.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(6)
 			src.say("LEAVE.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(7)
 			src.say("GO AWAY.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(8)
 			src.say("THEFT.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(9)
 			src.say("BE SMARTER THAN THIS.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(10)
 			src.say("YOU'RE A FOOL.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		if(11)
 			src.say("WHEN DOES THIS END?")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 		else
 			src.say("NOT YOUR COIN.")
-			playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
+	playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 
+<<<<<<< HEAD
 // ============================================================================
 // DRILLING / BASHING
 // ============================================================================
 
+=======
+>>>>>>> upstream/main
 /obj/structure/roguemachine/vaultbank/proc/resetlump()
 	og_treasury = null
 	total_extorted = null
@@ -223,6 +196,7 @@
 	animate(pixel_x = oldx-2, time = 0.5)
 	animate(pixel_x = oldx, time = 0.5)
 
+<<<<<<< HEAD
 /obj/structure/roguemachine/vaultbank/proc/shaking()
 	var/oldx = pixel_x
 	animate(src, pixel_x = oldx+1, time = 0.5)
@@ -231,6 +205,15 @@
 	if(shaker == TRUE)
 		spawn(2)
 			shaking()
+=======
+/obj/structure/roguemachine/vaultbank/proc/update_shaking()
+	if(shaker)
+		animate(src, pixel_x = 1, time = 0.5, loop = -1, flags = ANIMATION_RELATIVE, tag = "shaking")
+		animate(pixel_x = -2, time = 0.5, flags = ANIMATION_RELATIVE)
+		animate(pixel_x = 1, time = 0.5, flags = ANIMATION_RELATIVE)
+	else
+		animate(src, tag = "shaking", flags = ANIMATION_END_LOOP)
+>>>>>>> upstream/main
 
 /obj/structure/roguemachine/vaultbank/proc/drill()
 	if(!drilling)
@@ -249,6 +232,7 @@
 		SStreasury.burn(F, full_drain, "Vaultbank fully drilled")
 		playsound(src, 'sound/misc/jawbankhit.ogg', 70, TRUE)
 		shaker = FALSE
+		update_shaking()
 		drilling = FALSE
 		has_reported = FALSE
 		knockitoff = 0
@@ -317,8 +301,13 @@
 		has_reported = FALSE
 		drilling = TRUE
 		shaker = TRUE
+<<<<<<< HEAD
 		shaking()
 		drill()
+=======
+		update_shaking()
+		drill(src)
+>>>>>>> upstream/main
 		qdel(I)
 		message_admins("[usr.key] has applied the Crustacean to [src].")
 		return
@@ -344,9 +333,18 @@
 		return
 
 	user.changeNext_move(CLICK_CD_INTENTCAP)
+<<<<<<< HEAD
 	gethit()
 
 	if(drilling)
+=======
+	if (!og_treasury)
+		og_treasury = SStreasury.treasury_value
+	var/puke_chance = (I.force > 25) ? 75 : 25
+	var/extorted = min(rand(5, 20), SStreasury.treasury_value)
+	gethit()
+	if (drilling)
+>>>>>>> upstream/main
 		playsound(src, 'sound/misc/drillhit.ogg', 70, TRUE)
 		knockitoff += 1
 		visible_message(span_info("The covetous crab is knocked slightly more loose from [src]! <b>[knockitoff]</b>!"))
