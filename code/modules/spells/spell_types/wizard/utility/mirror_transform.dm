@@ -45,7 +45,8 @@
 	if (!H)
 		return
 	var/should_update = FALSE
-	var/list/choices = list("reset appearance", "hairstyle", "facial hairstyle", "accessory", "face detail", "crest", "horns", "horn color", "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "tail feature", "tail feature color", "wings", "wing color one", "wing color two", "frills", "frill color", "antennas", "antenna color", "snout", "snout color", "head feature", "head feature color", "neck feature", "neck feature color", "back feature", "back feature color", "descriptors", "hair color", "facial hair color", "eye color", "skin color", "mutant color", "mutant color 2", "mutant color 3", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "penis color", "penis color 2", "testicles", "testicles color", "breasts", "breasts color", "vagina", "vagina color", "breast size", "penis size", "testicle size")
+	var/force_bodypart_update = FALSE
+	var/list/choices = list("reset appearance", "hairstyle", "facial hairstyle", "accessory", "pubes", "pits", "face detail", "crest", "horns", "horn color", "ears", "ear color one", "ear color two", "tail", "tail color one", "tail color two", "tail feature", "tail feature color", "wings", "wing color one", "wing color two", "frills", "frill color", "antennas", "antenna color", "snout", "snout color", "head feature", "head feature color", "neck feature", "neck feature color", "back feature", "back feature color", "descriptors", "hair color", "facial hair color", "eye color", "skin color", "mutant color", "mutant color 2", "mutant color 3", "natural gradient", "natural gradient color", "dye gradient", "dye gradient color", "penis", "penis color", "penis color 2", "testicles", "testicles color", "breasts", "breasts color", "vagina", "vagina color", "breast size", "penis size", "testicle size")
 	var/chosen = input(H, "Change what?", "Appearance") as null|anything in choices
 
 	if(!chosen)
@@ -443,6 +444,96 @@
 						detail_feature.set_accessory_type(valid_details[new_detail], H.hair_color, H)
 						head.add_bodypart_feature(detail_feature)
 					should_update = TRUE
+
+		if("pubes")
+			var/list/valid_pubes = list("none")
+			for(var/pubes_type in subtypesof(/datum/sprite_accessory/pubes))
+				if(is_abstract(pubes_type))
+					continue
+				var/datum/sprite_accessory/pubes/pube_accessory = SPRITE_ACCESSORY(pubes_type)
+				if(!pube_accessory)
+					continue
+				valid_pubes[pube_accessory.name] = pubes_type
+
+			var/new_pubes = input(H, "Style your pubic hair", "Pube Styling") as null|anything in valid_pubes
+			if(new_pubes)
+				var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+				if(chest)
+					var/datum/bodypart_feature/pubes/current_pubes
+					for(var/datum/bodypart_feature/pubes/pubes_feature in chest.bodypart_features)
+						current_pubes = pubes_feature
+						break
+
+					if(new_pubes == "none")
+						if(current_pubes)
+							chest.remove_bodypart_feature(current_pubes)
+							should_update = TRUE
+							force_bodypart_update = TRUE
+					else if(current_pubes)
+						current_pubes.set_accessory_type(valid_pubes[new_pubes], current_pubes.accessory_colors, H)
+						should_update = TRUE
+						force_bodypart_update = TRUE
+					else
+						var/default_material = BODY_HAIR_MATERIAL_HAIR
+						var/datum/species/current_species = H.dna.species
+						for(var/customizer_type as anything in current_species.customizers)
+							if(!ispath(customizer_type, /datum/customizer/bodypart_feature/pubes))
+								continue
+							var/datum/customizer/bodypart_feature/pubes/pubes_customizer = CUSTOMIZER(customizer_type)
+							if(pubes_customizer)
+								default_material = pubes_customizer.default_material
+							break
+						var/datum/bodypart_feature/pubes/pubes_feature = new()
+						pubes_feature.set_material(default_material)
+						pubes_feature.set_accessory_type(valid_pubes[new_pubes], null, H)
+						chest.add_bodypart_feature(pubes_feature)
+						should_update = TRUE
+						force_bodypart_update = TRUE
+
+		if("pits")
+			var/list/valid_pits = list("none")
+			for(var/pits_type in subtypesof(/datum/sprite_accessory/pits))
+				if(is_abstract(pits_type))
+					continue
+				var/datum/sprite_accessory/pits/pits_accessory = SPRITE_ACCESSORY(pits_type)
+				if(!pits_accessory)
+					continue
+				valid_pits[pits_accessory.name] = pits_type
+
+			var/new_pits = input(H, "Style your armpit hair", "Pithair Styling") as null|anything in valid_pits
+			if(new_pits)
+				var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
+				if(chest)
+					var/datum/bodypart_feature/pits/current_pits
+					for(var/datum/bodypart_feature/pits/pits_feature in chest.bodypart_features)
+						current_pits = pits_feature
+						break
+
+					if(new_pits == "none")
+						if(current_pits)
+							chest.remove_bodypart_feature(current_pits)
+							should_update = TRUE
+							force_bodypart_update = TRUE
+					else if(current_pits)
+						current_pits.set_accessory_type(valid_pits[new_pits], current_pits.accessory_colors, H)
+						should_update = TRUE
+						force_bodypart_update = TRUE
+					else
+						var/default_material = BODY_HAIR_MATERIAL_HAIR
+						var/datum/species/current_species = H.dna.species
+						for(var/customizer_type as anything in current_species.customizers)
+							if(!ispath(customizer_type, /datum/customizer/bodypart_feature/pits))
+								continue
+							var/datum/customizer/bodypart_feature/pits/pits_customizer = CUSTOMIZER(customizer_type)
+							if(pits_customizer)
+								default_material = pits_customizer.default_material
+							break
+						var/datum/bodypart_feature/pits/pits_feature = new()
+						pits_feature.set_material(default_material)
+						pits_feature.set_accessory_type(valid_pits[new_pits], null, H)
+						chest.add_bodypart_feature(pits_feature)
+						should_update = TRUE
+						force_bodypart_update = TRUE
 
 		if("penis")
 			var/list/valid_penis_types = list("none")
@@ -1368,6 +1459,6 @@
 	if(should_update)
 		H.update_hair()
 		H.update_body()
-		H.update_body_parts()
+		H.update_body_parts(force_bodypart_update)
 		if(H.sexcon)
 			H.sexcon.update_erect_state()

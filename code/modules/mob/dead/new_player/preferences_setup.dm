@@ -71,12 +71,20 @@
 		preview_subclass.equipme(mannequin, dummy = TRUE)
 
 	mannequin.regenerate_clothes()
+	apply_preview_erect_state_to_mannequin(mannequin)
 	mannequin.update_body()
 	mannequin.update_hair()
 	mannequin.rebuild_obscured_flags()
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 
+/datum/preferences/proc/apply_preview_erect_state_to_mannequin(mob/living/carbon/human/mannequin)
+	if(!mannequin)
+		return
+	var/obj/item/organ/penis/preview_penis = mannequin.getorganslot(ORGAN_SLOT_PENIS)
+	if(preview_penis)
+		preview_penis.erect_state = preview_erect_state
+		mannequin.update_body_parts(TRUE)
 
 /datum/preferences/proc/spec_check(mob/user)
 	if(!istype(pref_species))
