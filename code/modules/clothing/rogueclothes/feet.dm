@@ -43,7 +43,7 @@
 		if(!isnull(holdingknife))
 			to_chat(user, span_warning("My boot already holds a knife."))
 			return
-		to_chat(user, span_warning("I quickly slot [storing_item] into [B]!"))
+		to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
 		user.transferItemToLoc(storing_item, holdingknife)
 		holdingknife = storing_item
 		playsound(user, 'sound/foley/equip/swordsmall1.ogg')
