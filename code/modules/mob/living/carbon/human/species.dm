@@ -988,7 +988,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_blood)
-		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		H.set_blood_volume(min(H.get_blood_volume() + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 
@@ -1326,7 +1326,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "attempted to punch")
 			return FALSE
 */
-		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 
@@ -1612,7 +1612,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.lastattacker_weakref = WEAKREF(user)
 			if(target.mind)
 				target.mind.attackedme[user.real_name] = world.time
-			var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+			var/selzone = user.zone_selected
 			var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 			var/damage = user.get_punch_dmg() * 1.4
 			var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT, damage = damage)
@@ -1623,7 +1623,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 			else
 				if(affecting)
-					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, user.zone_selected, crit_message = TRUE)
+					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone, crit_message = TRUE)
 					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						target.visible_message(span_danger("[user] stomps [target]![target.next_attack_msg.Join()]"), \
 						span_danger("I'm stomped by [user]![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
@@ -1764,7 +1764,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "kicked")
 
 
-		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 		if(!affecting)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
@@ -1836,7 +1836,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/hit_area
 
-	selzone = accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
+	selzone = melee_accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
 	affecting = H.get_bodypart(check_zone(selzone))
 
 	if(!affecting)
@@ -1965,7 +1965,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//dismemberment
 	var/bloody = 0
 	var/probability = I.get_dismemberment_chance(affecting, user, selzone)
-	if(affecting.brute_dam && prob(probability) && affecting.dismember(I.damtype, user.used_intent?.blade_class, user, selzone, vorpal = I.vorpal))
+	//stopgap fix, this should prevent oathed martyr decaps from ashing the head
+	var/dismember_damtype = I.damtype
+	var/datum/component/martyrweapon/martyr = I.GetComponent(/datum/component/martyrweapon)
+	if(martyr?.is_active)
+		dismember_damtype = BRUTE
+	if(affecting.brute_dam && prob(probability) && affecting.dismember(dismember_damtype, user.used_intent?.blade_class, user, selzone, vorpal = I.vorpal))
 		bloody = 1
 		I.add_mob_blood(H)
 		user.update_inv_hands()
@@ -2327,16 +2332,18 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(!Canignite_mob(H))
 		return TRUE
-
+	
+	// Stops maxing out temp from firestacks alone
+	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	
+		return
 	var/thermal_protection = H.get_thermal_protection()
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
-
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 		H.adjust_bodytemperature(1)
 	else
-		H.adjust_bodytemperature(5)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 30 seconds of being on fire to heatstroke
+		H.adjust_bodytemperature(2)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 50 seconds of being on fire to top out at lvl 2
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))

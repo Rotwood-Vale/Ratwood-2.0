@@ -322,6 +322,51 @@
 	throwforce = 5
 	thrown_bclass = BCLASS_BLUNT
 
+/obj/item/rogueweapon/sword/long/blacksteel
+	name = "blacksteel longsword"
+	desc = "A sleek blade of a dark, and burnished hue. \
+			A handle carved from a rosawood branch. A pairing that shall sing as it parts the air. \
+			With it, one can write a song across all of Psydonia."
+	force = 27
+	force_wielded = 33
+	icon_state = "bslongsword"
+	item_state = "bslongsword"
+	sheathe_icon = "bslongsword"
+	max_blade_int = 400
+	max_integrity = 180
+	wdefense_wbonus = 5
+	smeltresult = /obj/item/ingot/blacksteel
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/side_sweep,
+		/datum/special_intent/axe_swing,
+		/datum/special_intent/piercing_lunge,
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/flail_sweep,
+		)
+
+/obj/item/rogueweapon/sword/long/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/sword/long/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+		
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+	
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
 /obj/item/rogueweapon/sword/long/church
 	name = "see longsword"
 	desc = "A blessed longsword, wielded by the Holy See's templars in their stalwart defense against evil. Originating in the wake of the Celestial Empire's collapse, legends say that it is the grandfather to longswords all across Psydonia: the triumph of an ancient Malumite priest, stricken with divine inspiration in humenity's darkest hour. Centuries later, it still remains the ideal choice for skewering infidels and monsters alike. </br>'I am the holder of light, in the dark abyss..' </br>'..I am the holder of order and ward against vileness..' </br>'..let the Gods guide my hand, and let the Inhumen cower before me.'"
@@ -1064,6 +1109,18 @@
 	wdefense = 2
 	smeltresult = /obj/item/ingot/copper
 
+/obj/item/rogueweapon/sword/short/messer/blacksteel
+	name = "blacksteel messer"
+	desc = "A magnificent shortsword of blacksteel. Divorced from the labors that originally warranted its creation, yet no-less-adept at cleaving \
+	whatever might trouble one's morning strolls."
+	force = 27
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/rend/krieg/short, /datum/intent/sword/peel)
+	smeltresult = /obj/item/ingot/blacksteel
+	icon_state = "bs_messer"
+	sheathe_icon = "bs_messer"
+	max_blade_int = 300
+	wbalance = WBALANCE_SWIFT
+
 /obj/item/rogueweapon/sword/sabre
 	name = "sabre"
 	desc = "A very popular backsword made for cavalrymen that originated in Naledi and spread its influence further north, reaching Aavnr as a \"Szablya\" and notoriously cementing itself as the preferred weapon of the Potentate's Hussars."
@@ -1309,6 +1366,46 @@
 	icon_state = "decrapier"
 	sheathe_icon = "decrapier"
 	sellprice = 140
+
+/obj/item/rogueweapon/sword/rapier/blacksteel
+	name = "blacksteel rapier"
+	desc = "A magnificent rapier of blacksteel. Despite originating from the matrimony of cutting-edge swordsmanship techniques and metallurgy, it \
+	doesn't actually have a cutting edge to call its own. Not like that matters as much, of course, when it can pierce straight through plate armor."
+	force = 27
+	smeltresult = /obj/item/ingot/blacksteel
+	icon_state = "blacksteelrapier"
+	sheathe_icon = "blacksteelrapier"
+	max_blade_int = 400
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/sword/peel)
+	wdefense = 9 //Absurdly high defense, but no added integrity; for the discerning duelmaster.
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/piercing_lunge,
+		/datum/special_intent/polearm_backstep,
+		)
+
+/obj/item/rogueweapon/sword/rapier/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/sword/rapier/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+		
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+	
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
 
 /obj/item/rogueweapon/sword/rapier/silver
 	name = "silver rapier"
@@ -2102,19 +2199,24 @@
 
 /obj/item/rogueweapon/sword/blacksteel
 	name = "blacksteel arming sword"
-	desc = "A long blacksteel blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations. This one is a great deal more expensive than its steel counterparts."
+	desc = "A broad blade of blacksteel, mounted to a rosawooden handle that perfectly compliments its wielder's grasp. It is the culmination of \
+	Psydonia's storied history with arming swords; a mastersmith's triumph, only fit for the hands of a true hero.. or a truer villain."
 	icon_state = "bs_sword"
-	minstr = 6
+	sheathe_icon = "bs_sword"
 	smeltresult = /obj/item/ingot/blacksteel
-	max_integrity = 300
-	sellprice = 150
-	sheathe_icon = "sword1"
+	force = 25
+	force_wielded = 30
+	wdefense = 6
+	max_integrity = 350
+	max_blade_int = 350
 
 /obj/item/rogueweapon/sword/decorated/blacksteel
-	name = "decorated arming sword"
-	desc = "A valuable ornate arming sword made for the purpose of ceremonial fashion. It has a fine leather grip, a carefully engraved gold-plated crossguard, and its blade is made entirely of blacksteel."
+	name = "decorated blacksteel arming sword"
+	desc = "A broad blade of blacksteel, mounted atop a golden sabreguard that's been meticulously engraved with its commissoner's heraldry. It is \
+	a masterwork of unmatched opulance and lethality, and is - perhaps - the finest arming sword your eyes'll ever lay upon."
 	icon_state = "bs_swordregal"
-	max_integrity = 280
+	sheathe_icon = "bs_swordregal"
+	wdefense = 7
 	sellprice = 200
 
 /obj/item/rogueweapon/sword/long/shotel

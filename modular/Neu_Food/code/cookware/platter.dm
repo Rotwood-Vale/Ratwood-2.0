@@ -10,18 +10,19 @@
 	experimental_inhand = FALSE
 	grid_width = 64
 	grid_height = 32
-	sellprice = 0
 	obj_flags = UNIQUE_RENAME
 
 
-/obj/item/cooking/platter/examine()
+/obj/item/cooking/platter/get_mechanics_examine(mob/user)
 	. = ..()
+	. += span_info("Left-click a platter with food to 'plate' it up. This will also effectively prevent the food from rotting, while plated.")
 	. += span_info("Can be renamed with a feather. Name will be overridden by plating or finishing food.")
+	. += span_info("Plated food is preferred by nobility. Left-clicking plated food with a fork will allow you to eat it more elegantly.")
 
 /*
 NEW SYSTEM
 What it does:
-	- The platter stays intact, adds object on top of it.
+	- The platter stays intact, adds object on top of it. 
 	- Examining the platter tells you what is on the platter
 	- Adds food overlay to the platre
 	- Can remove item with right click
@@ -49,7 +50,7 @@ What it does:
 			else
 				to_chat(user, span_info("Something is already on this [initial(name)]! Remove it first."))
 		else
-			return ..()
+			return ..()	
 
 
 /obj/item/cooking/platter/attack(mob/living/M, mob/living/user, def_zone)
@@ -110,6 +111,11 @@ What it does:
 	color = "#bb9696"
 	sellprice = 0
 
+/obj/item/cooking/platter/bronze
+	name = "bronze platter"
+	desc = "A shined bronze platter that hasn't lost its charm, even after a thousand yils."
+	icon_state = "platter_bronze"
+
 /obj/item/cooking/platter/copper
 	name = "copper platter"
 	desc = "A platter made from a sheet of copper. Known to impart a metallic taste when combined with acidic food."
@@ -119,8 +125,8 @@ What it does:
 	sellprice = 8
 
 /obj/item/cooking/platter/pewter
-	name = "tin platter"
-	desc = "A tin plate that could almost be mistaken for silver."
+	name = "pewter platter"
+	desc = "A tin plate that contains just a tinge of lead."
 	icon_state = "platter_tin"
 	resistance_flags = FIRE_PROOF
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'

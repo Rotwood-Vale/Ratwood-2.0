@@ -8,10 +8,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)//I like the idea of making it set you to middle aged, but having the requirement removes it from the latejoin menu which I think is bad for visibility
-	tutorial = "You are the most experienced of the Wardens, the elite rangers that patrol, scout and fiercely defend the lower city and wilderness surrounding it, attending to threats and crimes below the city's attention. \
-				Your job is to lead the aloof Wardens and wrangle the unruly vanguard, carving order out of the chaos south of the city's wals.\
-				Obey the orders of your Marshal and the Crown, and enact their will beyond the wall as the first line of defence from threats beyond the borders of civilisation. \
-				Keep the roads safe, and hold the vanguard fortress. The Crown is counting on you."
+	tutorial = "You are the most experienced of the Wardens, the elite rangers that patrol, scout and fiercely defend the lower city and wilderness surrounding it, attending to threats and crimes below the city's attention. Your job is to lead the aloof Wardens and wrangle the unruly vanguard, carving order out of the chaos south of the city's walls. Obey the orders of the lowtown baron, and enact their will beyond the wall as the first line of defence from threats beyond the borders of civilisation. Keep the roads safe, and hold the vanguard fortress. The Crown is counting on you."
 	display_order = JDO_BOGMASTER
 	whitelist_req = TRUE
 	round_contrib_points = 3
@@ -47,6 +44,18 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 	id = /obj/item/scomstone/garrison
+
+/datum/outfit/job/roguetown/wardenmaster/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare_gun) in H.belt)
+			return
+		var/obj/item/signal_flare_gun/loaded/gun = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, gun, null, TRUE, TRUE))
+			gun.forceMove(get_turf(H))
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
 
 //Rare-ish anti-armor two hander sword. Kinda alternative of a bastard sword type. Could be cool.
 /datum/advclass/wardenmaster/wardenmaster

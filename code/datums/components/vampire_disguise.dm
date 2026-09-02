@@ -46,7 +46,7 @@
 		return
 
 	// Check if we have enough blood to maintain disguise
-	if(source.bloodpool < disguise_upkeep)
+	if(source.get_bloodpool() < disguise_upkeep)
 		to_chat(source, span_warning("My disguise fails as I run out of blood!"))
 		remove_disguise(source)
 		return
@@ -62,7 +62,7 @@
 		to_chat(H, span_warning("I must wait before transforming again."))
 		return FALSE
 
-	if(H.bloodpool < min_bloodpool)
+	if(H.get_bloodpool() < min_bloodpool)
 		to_chat(H, span_warning("I don't have enough blood to maintain a disguise."))
 		return FALSE
 
