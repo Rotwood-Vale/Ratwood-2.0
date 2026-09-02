@@ -39,7 +39,7 @@
 
     // Chastity device sound is handled internally by perform_sex_action via chastitycourse_noise — no outercourse noise here, it's purely metal-on-metal.
     if(HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED) || HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user_device] against [target]'s [target_device], spikes dragging and snagging across both sides with every pass."))
+        user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user_device] against [target]'s [target_device], spikes dragging and snagging across both sides with every pass."))
         user.sexcon.perform_sex_action(user, 0.6, 2.2, TRUE)
         user.sexcon.perform_sex_action(target, 0.6, 2.2, TRUE)
         user.sexcon.try_do_pain_scream(user, 2.2)
@@ -47,7 +47,7 @@
         user.sexcon.handle_passive_ejaculation(target)
         target.sexcon.handle_passive_ejaculation(user)
         return
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [user_device] against [target]'s [target_device], the steel on steel loud and graceless..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [user_device] against [target]'s [target_device], the steel on steel loud and graceless..."))
     user.sexcon.perform_sex_action(user, 1, 1, TRUE)
     user.sexcon.perform_sex_action(target, 1, 1, TRUE)
     user.sexcon.handle_passive_ejaculation(target)

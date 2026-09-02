@@ -667,6 +667,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/verb/map_vote_tally_count()
 	set name = "Show Map Vote Tallies"
-	set desc = "View the current map vote tally counts."
+	set desc = "View your own banked map vote tallies."
 	set category = "OOC"
-	to_chat(mob, SSmap_vote.tally_printout)
+	to_chat(src, SSmap_vote.get_personal_tally_text(ckey))

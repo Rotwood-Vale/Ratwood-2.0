@@ -231,7 +231,7 @@
 //Handles value settings done for a track that need to be done.
 /obj/effect/track/proc/handle_creation(mob/living/track_source)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_PARENT_QDELETING, PROC_REF(clear_creator_reference), TRUE)
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference), TRUE)
 	creation_time = world.time
 	track_source.get_track_info(src)
 	if(track_source.m_intent == MOVE_INTENT_SNEAK)
@@ -272,12 +272,12 @@
 				LAZYADD(highlighted, tracker)
 		if(tracker.client)
 			tracker.client.images += real_image
-	RegisterSignal(tracker, COMSIG_PARENT_QDELETING, PROC_REF(remove_knower), override = TRUE)
+	RegisterSignal(tracker, COMSIG_QDELETING, PROC_REF(remove_knower), override = TRUE)
 
 ///Removes a knower from the known ones. Usually only done when qdeleted.
 /obj/effect/track/proc/remove_knower(mob/living/tracker)
 	SIGNAL_HANDLER
-	UnregisterSignal(tracker, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(tracker, COMSIG_QDELETING)
 	if(tracker.client)
 		tracker.client.images -= real_image
 	LAZYREMOVE(highlighted, tracker)
@@ -288,7 +288,7 @@
 ///Clears the reference to the creator. Is replaced by the above proc if the creator analyzes it.
 /obj/effect/track/proc/clear_creator_reference(mob/living/creator_arg)
 	SIGNAL_HANDLER
-	UnregisterSignal(creator, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(creator, COMSIG_QDELETING)
 	creator = null
 
 ///Called when the track's time expires, at which point it becomes indistinguishable (aka, deleted)
@@ -477,7 +477,7 @@
 
 /obj/effect/track/structure/handle_creation(mob/living/track_source)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_PARENT_QDELETING, PROC_REF(clear_creator_reference))
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference))
 	creation_time = world.time
 	track_source.get_track_info(src)
 	real_image = image(icon, src, real_icon_state, ABOVE_OPEN_TURF_LAYER, track_source.dir)
@@ -541,7 +541,7 @@
 
 /obj/effect/track/thievescant/handle_creation(mob/living/track_source, thiefmessage)
 	creator = track_source
-	RegisterSignal(track_source, COMSIG_PARENT_QDELETING, PROC_REF(clear_creator_reference))
+	RegisterSignal(track_source, COMSIG_QDELETING, PROC_REF(clear_creator_reference))
 	creation_time = world.time
 	track_source.get_track_info(src)
 	real_image = image(icon, src, real_icon_state, BULLET_HOLE_LAYER, track_source.dir)

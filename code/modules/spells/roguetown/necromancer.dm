@@ -130,7 +130,7 @@
 
 	// Handle single loose bones
 	else if(istype(sacrifice, /obj/item/natural/bone))
-		to_chat(user, span_warning("A single bone isn’t enough to raise a skeleton! You need a bundle of at least four."))
+		to_chat(user, span_warning("A single bone isn't enough to raise a skeleton! You need a bundle of at least four."))
 		revert_cast()
 		return FALSE
 

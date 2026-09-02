@@ -384,3 +384,282 @@
   - rscadd: The flare gun has a dial you can set in advance so it fires without asking
       which signal.
   - rscadd: Signal flare canisters can now be crafted at the artificer table.
+2026-08-18:
+  AllCorruptingWyrm:
+  - rscadd: The Keep has reinforced (NOT barred) windows
+  - rscadd: Expanded the mage section of the Keep.
+  - rscadd: Counsillors/Guestroom keys to the stewardry.
+  - rscadd: Expanded the Maid hallway.
+  - rscadd: Teapot sets to the maid area.
+  - rscadd: Left and right vomitorium in the maid section
+  - rscadd: Ammenities to the Keeper Sanctum.
+  - rscadd: Antechamber to the Inquisition Embassy
+  - rscadd: Secret exit ways to the [REDACTED]
+  - rscadd: Adjusted the feasthall a little.
+  - rscadd: Church Vault on Z level 4
+  - rscdel: KC balcony
+  - rscdel: Merchant balcony
+  - rscadd: Stone walls to the upper floor of the Merchantry.
+  Arturlang:
+  - bugfix: a lag issue related to timer datums being created
+  IronDragoon:
+  - rscadd: New Martyr weapons from AP with special intents, the weapon can be recalled
+      by the martyr at a pantheon cross
+  - rscadd: New parts of Martyr Armor from AP
+  - balance: Martyr 2 minute duration's buffs are now frontloaded instead of being
+      given at the last 30 seconds.
+  - balance: Martyr 2 minute duration no longer has an aheal / revive.
+  - rscadd: orison and prestidigitation offer some new mechanical sexcon actions
+  - rscadd: A few other new sexcon actions
+  - qol: sexcon actions no longer repeat and spam chat, subtle still will though at
+      longer intervals
+  - bugfix: cumming while knotted will now roll pregnancy check where appropriate
+  NPC1314:
+  - rscadd: Adds leather corslet and padded leather hood to Knave store for bandits.
+  - rscadd: Adds bandit hood to  Clothing tab in bandit store
+  - rscadd: Adds blue hat to loadouts
+  Shadow-Quill:
+  - qol: ABSOLVE now has "NO" as the default response when used on a dead person,
+      for revival.
+  Teragenic:
+  - rscadd: Adds a whole lot of Neufood Code from AP. Lots of pies. Deserts. Etc
+  - balance: Tried to rebalance AP values to RW values and
+  - bugfix: FIND ME ANY MENTIONS ABOUT THE AZUREAN PEAK PLEASE
+  - image: Adds a lot of Neufood Icons
+  - code_imp: Ports the entirety of AP's neufood code
+  mushy:
+  - bugfix: Fixes the ztratocaster being able to be broken (for real this time)
+  - bugfix: Fixes the ztratocaster not being able to be repaired
+  ophaq:
+  - rscadd: Centaurs and people who are interested rejoice! Sexcon menu now lets you
+      hide your genitals.
+  - rscadd: Two new pintles. Sheathless equine ones of both variants.
+  - bugfix: Fixes mirror magic genital swapping. It now updates the sexcon menu so
+      you actually use the verbs of the pintle / etc you switched too, plus you can
+      knot. It should also no longer make your pintle look flat and update properly.
+  yupup123:
+  - rscadd: Adds a new toggle for seeing a character's role under their name in the
+      options.
+2026-08-19:
+  RadiantFlash7:
+  - bugfix: fixes missing tin sprites in cookware
+  - rscadd: Crafting oars/dinghys from crafting menu
+  - rscadd: Dinghy's fit two people now
+  - rscadd: Dinghy's have a slot for an oar, and can go upriver as long as one person
+      is holding an oar.
+  - bugfix: No longer get cold from riding in a dinghy on water
+  - bugfix: dinghy's now move diagonally without breaking terribly, similar to mounts
+  Yuckuza:
+  - bugfix: blessed silver and masterwork weapons that have a metal glint are now
+      able to be polished with cream for the associated force and integrity buffs.
+      No more avoiding making masterworks because it denies your squire from buffing
+      the weapon.
+  - balance: polish and glint loss now occurs when an item breaks rather than when
+      below 25% integrity.
+2026-08-20:
+  Pidgey-chan:
+  - rscadd: Fluvians can now be Underdwllers.
+  RadiantFlash7:
+  - bugfix: fixed dodging/feinting simple mobs
+  Xander3359:
+  - rscadd: Adds a few more tools to Malum's Conjure tool
+2026-08-21:
+  Mysterious Benefactor:
+  - qol: Chastity messaging is now significantly more subtle, appears more logically
+      on your examine and ghosts or other individuals with exceptional perception
+      are no longer flashbanged into knowing the exact model and make of chastity
+      device you're wearing from 12 tiles away.
+  PPooch:
+  - balance: Bashdoors trait was removed from towner thug and ferentia mercenary,
+      replaced by bigguy.
+  RadiantFlash7:
+  - refactor: Tally Subsystem is no longer global, but per person's individual mapvote.
+  wikimody:
+  - bugfix: Moondust is no longer outside of Baotha control
+2026-08-22:
+  Cameronwoof:
+  - balance: Padded coifs, heavy padded coifs, and leather gorgets are now fireproof.
+  DelineFortune:
+  - rscadd: New pestra's 1 miracle fleshcraft
+  Ephemeralis:
+  - rscadd: Punch daggers, katars, steel knuckles and hound claws are now available
+      as options for the Conjure Weapon spell, as long as you have at least 12 intelligence.
+  Pidgey-chan:
+  - balance: changes the mounted knight's longbow and grand mace option to longbow
+      and steel mace
+  Shadow-Quill:
+  - bugfix: Noticeboards will now only alert that they have a new listing if there's
+      _actually_ a posting, and the alert text will appear in the examine box.
+  Skyglazer:
+  - rscdel: Removed the 'Warcaster' wretch Fighter subclass.
+  Xander3359:
+  - rscadd: Malum's T4 miracle now has a UI when selecting an item to create
+  wikimody:
+  - rscadd: Incresed the ghost/observer sight range in the dark
+  - bugfix: fixed royal knive sheath being an immovable object (it had 500 hp)
+2026-08-23:
+  MickDick1:
+  - bugfix: Retuned Inspector statline/weapon choices so he's able to wield them at
+      all
+2026-08-24:
+  Ephemeralis:
+  - bugfix: Adjusted the sellprice of some clothing items made with weaving that were
+      massively overpriced compared to their inputs (halfmask, most god robes, etc).
+  Gug1234:
+  - bugfix: Fixed an exploit allowing enchantments to be stacked.
+  HelennaC:
+  - admin: mail archive
+  Xander3359:
+  - balance: Allows abyssor's infusion to be self-casted
+2026-08-25:
+  ophaq:
+  - rscadd: Adds the hierophant shawl and hijab to the tailor silverface.
+  - qol: Allows xylixians with mute to cast certain xylixian miracles that do not
+      have incantations. Previously they could not.
+  - rscadd: Gives mute xylixians the mime jester's invisible wall and chair ability.
+  - rscadd: Makes the invisible wall a 3x1 like how kneestingers are. It lasts 5 seconds.
+  - rscadd: The invisible chair can be picked up and you can beat people with it.
+      The chair lasts longer but despawns after a while as usual.
+  - rscadd: Mute xylixians can still be mouth grabbed to prevent them from casting
+      like non-mute ones.
+  wikimody:
+  - rscadd: Naziby golden masks now provide the same sandstorm immunity sand gogles
+      do
+2026-08-26:
+  2whatever2:
+  - admin: SQDL code is cleaner and now allows for nested lists
+  CloverIsLucky:
+  - bugfix: Fixes Miracles Skill Description. You don't really get higher access to
+      higher tier of miracles from your patrons if you had miracles increased.
+  Ephemeralis:
+  - qol: Heartweave (Eora T2) no longer requests a confirmation popup on its beneficiary,
+      making it actively usable in combat without griefing the person you're trying
+      to help.
+  IronDragoon:
+  - rscadd: Rockhill Slaver and Slave roles with their own base of operations in lowtown
+  - rscadd: Rockhill Baron role, new ruler of lowtown with his manor.
+  - rscadd: Owned Slave trait, through using branding tools to mark someone as owned
+      which is examinable
+  - rscadd: Brands can now be burnt off (including ownership brands) with a toggle
+      in the branding tool menu
+  - bugfix: Cursed collar/chastity device examine text, and collar pref persisting
+      properly
+  Makximus:
+  - rscadd: masc and fem versions of elvish/dwarvish, evil, zeth, and wizardly voicepacks
+      made available.
+  - sound: Makes (some) previously unselectable voicepacks selectable
+  RadiantFlash7:
+  - rscadd: Two new Vizier spells, acceleration, Divergence
+  - rscadd: The Naledi Complex- Penalties for removing your mask.
+  - rscadd: New Hierophant spell, Obelisks of power
+  - rscadd: Naledi refugee now has some btter customizaiton and options.
+  - rscdel: Vizier no longer has psydonite miracles
+  - code_imp: Naledi roles have had spells shifted
+  - code_imp: Vizier unique spells use devotion properly
+  - code_imp: updated Naledi information mentioned in game to reflect long existing
+      lore.
+  Yuckuza:
+  - balance: Phoenix Guard cooldown raised from 20s -> 60s
+  annikaRU:
+  - rscadd: engineers around the globe have discovered you can in-fact wear your spectacles
+      above your eyes, gold prices skyrocket after this sudden realization
+  picklewilly83:
+  - rscadd: Added "a2 Untitled" by Lotchek as a selectable combat track, under the
+      name, "Psydonite".
+2026-08-27:
+  Yuckuza:
+  - balance: Bronze cogs and lamps, craftable with one ingot thats yielding 2 cogs
+      and 3 lamps, respectively, are no longer smeltable. No more duping your bronze.
+  ophaq:
+  - bugfix: Changes some single letter variables for the arachnid race code-wise.
+  - rscadd: Gives arachnids two new abilities which let them spin a thin gossamer
+      type of web that can be seen through and a thicker one that blocks visibility.
+      Added two new icons for the abilities as well.
+2026-08-28:
+  zoktiik:
+  - bugfix: Fixed "This was their only chance at lyfe." not being appropriately displayed.
+      It was checking if YOUR mob is "dead", not the DNR person, so examining the
+      (living) Duke as a ghost would show that message.
+2026-08-29:
+  CameronWoof:
+  - image: Restored the majority of our prior food sprites
+  Ephemeralis:
+  - qol: Towner thug subclasses now show properly on examine.
+  - bugfix: Miscreant thugs who take magical brick specialization have been given
+      arcyne T1 to make it function properly with Arcyne Potential.
+  - balance: WEEP now transfers wounds instead of remaking them, meaning that partly-healed
+      wounds will be moved to the absolver/stigmata instead of being reset back to
+      full severity.
+  - qol: The messaging and visual effect for the WEEP spell has been vastly improved,
+      making it clearer when someone is benefitting from the spell and who is using
+      it on them.
+  NPC1314:
+  - rscadd: brazier heat hands on r-click (+temp)
+  - rscdel: hypothermia no longer progress to frostbite
+  - qol: several weathers tweaked average temp per tick effect
+  - balance: firestacks slower to raise temp and caps out before the max on their
+      own, still give mega heatstroke but less time to cool down
+  - code_imp: bumping into mobs while on fire, and walking over burning mobs now 50%
+      chance to spread not 100
+  RadiantFlash7:
+  - bugfix: crafted book sprite fix
+  - bugfix: disabled bood detailing on qaba and kandy to stop it stealing all dye
+      color from dyed naledi clothes
+2026-08-30:
+  CameronWoof:
+  - bugfix: Pork can now be chopped into bacon
+  IronDragoon:
+  - rscadd: Dust Runner gives a daily explosive/drug delivery and can recognise other
+      runners, bathhouse and matthiosans can recognise you
+  - rscadd: Pyromaniac, Under-dweller and Ranger/Bombardier classes given some form
+      of these trait
+  - rscadd: Bombstrap reworked, holds 10 now and requires explosive specialist trait
+      to remove bombs quickly
+  SirSwagmeyer:
+  - rscadd: Added Clipped Wings to wildkin and drakian options.
+  - rscadd: Added eyeliner and eye sockets to the character customization pool.
+  Yuckuza:
+  - rscadd: Added an arousal preview toggle that allows players to see the different
+      erection states of their chosen pintle in the lobby.
+  - rscadd: Added a sheath toggle. All pintles can now be sheathed, slitted, or floppy-free
+      to bounce about as it pleases.
+  - rscadd: Added pubic and pit-hair body features. Includes six pubic styles and
+      four pit-hair styles
+  - rscadd: Genital descriptors on examine are now colored depending on arousal state.
+      Default is pink, which gradually turns red as arousal rises.
+  - balance: Jarhelm now tolerated by nudists.
+  - rscadd: Ported bronze weapons and armor from Azure Peak.
+  - rscadd: Ported bronze armor from Azure Peak.  Also ported duelist goggles, maille
+      masks, tailored masks, steel bascinets, aventail neck protection, aventailed
+      helms, steel hose + cloth hose with two color zones, cuirassed hauberk in ancient
+      alloy and steel variants, padded hose, padded gloves, leather/cloth footwraps,
+      arming jacket variations, and chain sleeves.
+  - rscadd: Gold/silverface now have categories for bronze armor and weapons. Existing
+      weapon/armor categories have also been updated with new and existing items.
+  - rscadd: Thespian Errant advclass. A wandering warrior clad in bronze that gives
+      players access to every new bronze item.
+  - rscadd: Ported other bronze tools and valuables from Azure Peak.
+  - rscadd: Ported gold armor from Azure Peak. Ornamental armor with very low integrity
+      but incredibly high resistances. Also ported decorated steel armor.
+  - rscadd: Ported bronze armor from Azure Peak.  Also ported duelist goggles and
+      chainsleeves + their bronze variants.
+  - balance: Targeting face carries a heavier accuracy malus on fully-able player
+      targets.
+  - balance: Guaranteed limb accuracies on hits in certain situations now replaced
+      with high % bonuses
+  - balance: Pure unarmed punch intent has a 10% bonus, much the same as short-length
+      weapons.
+  - balance: Attacking exposed/vulnerable targets, such as those off balance, feinted,
+      baited, riposted, stamina stunned, etc., grants a 20% bonus to accuracy.
+  - balance: The perception bonus to accuracy is now capped at 40%, or 15 PER.
+  zoktiik:
+  - bugfix: Fixed crippling willpower loss bug affecting Gnolls. Previously, every
+      time a gnoll raised their guard, and someone hit that guard with a weapon, the
+      gnoll would permanently lose 1 WIL.
+  - balance: Gnolls weren't benefiting from any mechanics of Adrenaline Rush when
+      they hit a riposte. Now, they get +1 WIL for its duration & stamina refilled
+      to 50% (if below), just like everybody else. Unlike everybody else, they still
+      do NOT get blood replenished (as they can get health potion from biting people).
+2026-08-31:
+  SirSwagmeyer:
+  - rscadd: Adds inhumen revival spells.

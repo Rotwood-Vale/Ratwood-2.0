@@ -120,7 +120,7 @@
 		/obj/item/flint = 40,
 		/obj/item/rogueweapon/stoneaxe/woodcut = 30,
 		/obj/item/rogueweapon/stoneaxe = 30,
-		/obj/item/rogueweapon/hammer = 30,
+		/obj/item/rogueweapon/hammer/iron = 30,
 		/obj/item/rogueweapon/tongs = 30,
 		/obj/item/rogueweapon/pick = 30,
 

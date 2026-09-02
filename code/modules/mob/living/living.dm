@@ -1094,6 +1094,9 @@
 	set name = "Resist"
 	set category = "IC"
 	set hidden = 1
+	//giving up on a struggle must not wait on the breakout cooldown that same struggle charged up front
+	if(cancel_restraint_struggle())
+		return
 	if(!can_resist() || surrendering)
 		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
@@ -1340,6 +1343,10 @@
 
 /mob/living/proc/resist_restraints()
 	return
+
+///Routes a resist press to cuff_resist's give-up branch while a struggle is running. TRUE if it handled it
+/mob/living/proc/cancel_restraint_struggle()
+	return FALSE
 
 /mob/living/proc/get_visible_name()
 	return name
@@ -1660,7 +1667,6 @@
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
-
 /**
  * Adjust the amount of fire stacks on a mob
  *
@@ -1706,6 +1712,9 @@
 		return
 
 	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE) || HAS_TRAIT(src, TRAIT_NOFIRE))
+		return
+
+	if(prob(50))	// 50% chance you don´t catch fire from a bump or walking over a burning corpse. Cause people don´t often bathe in gasoline.
 		return
 
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
@@ -2121,6 +2130,8 @@
 				if(isturf(M.loc) && M.armed)
 					found_ping(get_turf(M), client, "trap")
 			if(istype(O, /obj/structure/flora/roguegrass/maneater/real))
+				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/structure/quicksand))
 				found_ping(get_turf(O), client, "trap")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.

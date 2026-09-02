@@ -241,6 +241,7 @@
 /obj/item/seeds/berryrogue/poison
 	seed_identity = "berry seeds"
 	plant_def_type = /datum/plant_def/bush/berry_poison
+	cooked_type = /obj/item/reagent_containers/food/snacks/grown/pepperseed //The rancid effects? Have you imagined eating a handful of grape-sized peppercorns before? That'd probably do a number on anyone.
 
 /obj/item/seeds/turnip
 	seed_identity = "turnip seeds"

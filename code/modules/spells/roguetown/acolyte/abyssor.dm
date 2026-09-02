@@ -415,11 +415,6 @@
 		revert_cast()
 		return FALSE
 
-	if(target == user)
-		to_chat(user, span_warning("You must maintain the connection to the dreamfiend from a safe spiritual distance or risk being consumed yourself!"))
-		revert_cast()
-		return FALSE
-
 	if(target.mind.has_spell(/obj/effect/proc_holder/spell/invoked/abyssal_strength))
 		to_chat(user, span_warning("[target] is already blessed with Abyssor's strength."))
 		revert_cast()

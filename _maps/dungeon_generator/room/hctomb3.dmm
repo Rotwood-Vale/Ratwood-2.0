@@ -1166,7 +1166,7 @@
 "Mu" = (
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer,
+/obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/cave/spider)
 "MS" = (
