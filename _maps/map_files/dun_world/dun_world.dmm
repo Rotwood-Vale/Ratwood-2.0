@@ -9123,6 +9123,9 @@
 	dir = 1
 	},
 /area/rogue/indoors/town/church)
+"bLN" = (
+/turf/closed/wall/mineral/rogue/pipe,
+/area/rogue/indoors/town/garrison)
 "bLQ" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_x = 16;
@@ -37641,7 +37644,7 @@
 /obj/item/rope/chain,
 /obj/item/rope/chain,
 /turf/open/floor/rogue/church,
-/area/rogue/indoors/town/magician)
+/area/rogue/indoors/town/garrison)
 "hkK" = (
 /obj/structure/roguemachine/musicbox/tavern{
 	pixel_y = 13
@@ -38140,7 +38143,7 @@
 "hpe" = (
 /obj/structure/bars/grille,
 /turf/open/water/sewer,
-/area/rogue/indoors/town/magician)
+/area/rogue/indoors/town/garrison)
 "hph" = (
 /turf/open/water/river/flow/east,
 /area/rogue/under/cavewet/bogcaves/south)
@@ -57113,9 +57116,6 @@
 /obj/structure/flora/hotspring_rocks,
 /turf/open/water/ocean,
 /area/rogue/under/cave)
-"kXu" = (
-/turf/closed/wall/mineral/rogue/stonebrick,
-/area/rogue/under/town/sewer)
 "kXy" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin)
@@ -77451,6 +77451,9 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/floor/rogue/snowrough,
 /area/rogue/outdoors/mountains)
+"oMu" = (
+/turf/closed/wall/mineral/rogue/pipe/corners/one,
+/area/rogue/indoors/town/garrison)
 "oMw" = (
 /obj/structure/bars/passage/steel{
 	max_integrity = 9000;
@@ -80282,7 +80285,7 @@
 	name = "City Watchhouse"
 	},
 /turf/open/floor/rogue/blocks/green,
-/area/rogue/under/town/sewer)
+/area/rogue/indoors/town/garrison)
 "pov" = (
 /obj/structure/fluff/statue/scare,
 /turf/open/floor/rogue/dirt/road,
@@ -83544,6 +83547,9 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/dwarfin)
+"pVR" = (
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/garrison)
 "pVU" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -87528,7 +87534,7 @@
 "qIS" = (
 /obj/structure/ladder,
 /turf/open/floor/rogue/church,
-/area/rogue/indoors/town/magician)
+/area/rogue/indoors/town/garrison)
 "qIW" = (
 /obj/machinery/light/rogue/hearth,
 /obj/item/cooking/pan,
@@ -98986,7 +98992,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/rogue/church,
-/area/rogue/indoors/town/magician)
+/area/rogue/indoors/town/garrison)
 "sXq" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
@@ -229558,10 +229564,10 @@ ssd
 qxU
 faH
 iSm
-iSm
-iSm
-iSm
-gau
+dEP
+dEP
+dEP
+oMu
 iZp
 iZp
 iZp
@@ -230010,10 +230016,10 @@ ssd
 qxU
 faH
 iSm
-iSm
+dEP
 hkH
 qIS
-dlK
+bLN
 urZ
 ylh
 urZ
@@ -230462,10 +230468,10 @@ iWb
 iSm
 twf
 iSm
-iSm
+dEP
 sXm
-aST
-kXu
+pVR
+dEP
 mMx
 mMx
 mMx
@@ -230914,8 +230920,8 @@ faH
 faH
 whf
 iSm
-iSm
-aST
+dEP
+pVR
 hpe
 pou
 ylh
@@ -231366,10 +231372,10 @@ faH
 faH
 whf
 iSm
-iSm
-iSm
-iSm
-dlK
+dEP
+dEP
+dEP
+bLN
 iZp
 sIr
 hAd
@@ -349343,9 +349349,9 @@ vAw
 hss
 noW
 vAw
-jVw
+wMg
 aCF
-jVw
+wMg
 xSY
 afY
 afY
@@ -349795,9 +349801,9 @@ jVw
 lHI
 lHI
 jVw
-lHI
+wMg
 bNj
-jVw
+wMg
 lHI
 tIw
 tIw

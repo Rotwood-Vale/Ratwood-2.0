@@ -17,10 +17,6 @@
 		/datum/job/roguetown/azeb,
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
-		/datum/job/roguetown/slaver,
-		/datum/job/roguetown/rockhillslave,
-		/datum/job/roguetown/baron,
-		/datum/job/roguetown/baron_retainer,
 		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
@@ -29,14 +25,18 @@
 		/datum/job/roguetown/tribalguard,
 		/datum/job/roguetown/tribalrabble,
 		/datum/job/roguetown/tribalvillager,
-		
-		/datum/job/roguetown/vanguard,//more wardens
-		/datum/job/roguetown/guardsman,//MAA do double duty here
-		/datum/job/roguetown/watchcaptain,//sergeant does the job here
-		/datum/job/roguetown/wardenmaster,//wardens get to be more independent here!
 	)
 	slot_adjust = list(
-		/datum/job/roguetown/warden = 6,
+		/datum/job/roguetown/manorguard = 4,
+		/datum/job/roguetown/warden = 4,
+		/datum/job/roguetown/vanguard = 4,
+		/datum/job/roguetown/wardenmaster = 1,
+		/datum/job/roguetown/guardsman = 4,
+		/datum/job/roguetown/watchcaptain = 1,
+		/datum/job/roguetown/baron = 1,
+		/datum/job/roguetown/baron_retainer = 1,
+		/datum/job/roguetown/slaver = 1,
+		/datum/job/roguetown/rockhillslave = 4,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
