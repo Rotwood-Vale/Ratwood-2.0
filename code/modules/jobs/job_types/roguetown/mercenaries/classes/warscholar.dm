@@ -172,7 +172,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, 3, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
-			H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
 	gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
