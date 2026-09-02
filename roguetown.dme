@@ -2623,6 +2623,7 @@
 #include "code\modules\roguetown\roguejobs\gravedigger\hole.dm"
 #include "code\modules\roguetown\roguejobs\gravedigger\tools.dm"
 #include "code\modules\roguetown\roguejobs\mages\arcana_crafting.dm"
+#include "code\modules\roguetown\roguejobs\mages\naziby_mages.dm"
 #include "code\modules\roguetown\roguejobs\mages\enchanting_scrolls.dm"
 #include "code\modules\roguetown\roguejobs\mages\magestructures.dm"
 #include "code\modules\roguetown\roguejobs\mages\ritualdatums.dm"
