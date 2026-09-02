@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(titlescreen)
 	load_progress_json()
 
 	// The boot screen deliberately reuses the lobby backdrop rather than a separate splash.
-	current_title_screen = pick_title_screen()
+	current_title_screen = TITLE_DEFAULT_SCREEN_IMAGE // pick_title_screen()
 
 	GLOB.admin_verbs_fun += list(/client/proc/fenysha_change_title_screen, /client/proc/fenysha_set_title_notice)
 	GLOB.admin_verbs_admin += /client/proc/fenysha_fix_title_screen

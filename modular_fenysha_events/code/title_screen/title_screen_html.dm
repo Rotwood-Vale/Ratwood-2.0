@@ -2,9 +2,7 @@
 #define MAX_STARTUP_MESSAGES 1
 
 /mob/dead/new_player/proc/get_title_html()
-	var/dat = SStitlescreen.title_html
-	dat += {"<img src="[TITLE_IMAGE_RESOURCE]" class="bg" alt="" draggable="false" ondragstart="return false;">"}
-
+	var/dat = TITLE_DEFAULT_HTML
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		dat += build_startup_terminal()
 	else
@@ -12,15 +10,25 @@
 
 	// Tells the server the page is live and can receive output() calls.
 	if(!title_screen_is_ready)
-		dat += {"<script>location.href = "byond://?src=[REF(get_title_menu())];title_is_ready=1";</script>"}
+		var/datum/fenysha_title_menu/menu = get_title_menu()
+		var/menu_ref = menu ? REF(menu) : REF(src)
+		dat += {"<script>location.href = "byond://?src=[menu_ref];title_is_ready=1";</script>"}
 
 	dat += "</body></html>"
 	return dat
 
-/// Boot terminal plus the predictive loading bar.
+/// Boot terminal plus the SVG progress ring.
 /mob/dead/new_player/proc/build_startup_terminal()
-	var/dat = {"<div class="container_terminal" id="terminal"></div>"}
-	dat += {"<div class="container_progress" id="progress_container"><div class="progress_bar" id="progress"></div></div>"}
+	var/dat = {"<img src="loading_screen.gif" class="bg" id="bg_layer" alt="">"}
+	dat += {"
+	<div class="container_loading" id="parallax_loader">
+		<div class="terminal_text" id="terminal"></div>
+		<svg class="progress_ring" width="60" height="60">
+			<circle class="progress_ring_bg" stroke="rgba(240, 211, 11, 1)" stroke-width="4" fill="transparent" r="24" cx="30" cy="30"/>
+			<circle class="progress_ring_circle" id="progress_circle" stroke="#a19020" stroke-width="4" fill="transparent" r="24" cx="30" cy="30"/>
+		</svg>
+	</div>
+	"}
 
 	dat += {"
 	<script language="JavaScript">
@@ -37,58 +45,46 @@
 		function append_terminal_text(text) {
 			if(text) { terminal_lines.push(text); }
 			while(terminal_lines.length > [MAX_STARTUP_MESSAGES]) { terminal_lines.shift(); }
-			terminal.innerHTML = terminal_lines.join("");
+			var last_msg = terminal_lines.slice(-1);
+			terminal.innerHTML = last_msg.length ? last_msg.pop() : '';
 		}
 		append_terminal_text();
 
-		var progress_bar = document.getElementById("progress");
-		// Milliseconds, real wall clock.
+		var circle = document.getElementById("progress_circle");
+		var radius = circle.r.baseVal.value;
+		var circumference = 2 * Math.PI * radius;
+		circle.style.strokeDasharray = circumference + ' ' + circumference;
+		circle.style.strokeDashoffset = circumference;
+
+		function setProgress(percent) {
+			var offset = circumference - (percent / 100 * circumference);
+			circle.style.strokeDashoffset = offset;
+		}
+
 		var previous_tick = new Date().getTime();
-		// Everything below is in tenths of a second, like BYOND.
 		var progress_current_time = [SStitlescreen.elapsed_boot_time()];
 		var progress_completion_time = [SStitlescreen.average_completion_time];
 		var progress_current_position = 0;
 
-		function real_position() {
-			// A zero estimate would divide to Infinity, which clamps to a permanent 100%.
-			if(!(progress_completion_time > 0)) { progress_completion_time = 1; }
-			// Boot has outrun the estimate. Stretch it so the bar keeps creeping rather than
-			// sitting pinned at the end for the rest of the load.
-			if(progress_current_time >= progress_completion_time) {
-				progress_completion_time = progress_current_time * 1.15;
-			}
-			return progress_current_time / progress_completion_time * 100;
-		}
-
-		function draw_progress() {
-			progress_bar.style.width = "" + progress_current_position + "%";
-		}
-
 		setInterval(function() {
-			// Keep creeping on wall clock between server messages, otherwise the bar freezes
-			// for the whole of a long silent step like map load.
-			var current_tick = new Date().getTime();
-			progress_current_time += (current_tick - previous_tick) / 100;
-			previous_tick = current_tick;
+			if(progress_current_time < progress_completion_time) {
+				var current_tick = new Date().getTime();
+				progress_current_time += (current_tick - previous_tick) / 100;
+				previous_tick = current_tick;
+			}
 
-			// Forwards only between server updates, and never quite full - reaching 100 is
-			// the server's call, not something we extrapolate our way into.
-			progress_current_position = Math.min(Math.max(real_position(), progress_current_position), 99);
-			draw_progress();
+			progress_current_position = Math.min(Math.max(progress_current_time / progress_completion_time * 100, progress_current_position), 100);
+			setProgress(progress_current_position);
 		}, 16.666666667);
 
 		function update_loading_progress(current_time, total_time) {
 			progress_current_time = parseFloat(current_time);
 			progress_completion_time = parseFloat(total_time);
-			previous_tick = new Date().getTime();
-			// The server is authoritative. Without this the ratchet above would make a single
-			// bad reading stick for the whole load.
-			progress_current_position = Math.min(real_position(), 99);
-			draw_progress();
 		}
 
 		function update_status() {}
 		function toggle_ready() {}
+		function update_current_character() {}
 	</script>
 	"}
 	return dat
@@ -96,55 +92,71 @@
 /// The lobby menu proper.
 /mob/dead/new_player/proc/build_title_menu()
 	var/datum/fenysha_title_menu/menu = get_title_menu()
-	var/menu_ref = REF(menu)
-	var/dat = ""
+	var/menu_ref = menu ? REF(menu) : REF(src)
+	var/dat = {"<img src="fenysha_tittle_screen.gif" class="bg" id="bg_layer" alt="">"}
 
 	if(SStitlescreen.current_notice)
 		dat += {"<div class="container_notice"><p class="menu_notice">[SStitlescreen.current_notice]</p></div>"}
 
-	dat += {"<div class="container_nav">"}
+	dat += {"<div class="container_nav" id="parallax_nav">"}
 
-	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a id="ready" class="menu_button" href='byond://?src=[menu_ref];toggle_ready=1'>[ready == PLAYER_READY_TO_PLAY ? "<span class='checked'>&#9745;</span> READY" : "<span class='unchecked'>&#9746;</span> READY"]</a>"}
+	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
+		dat += {"<a id="ready" class="menu_button" href='byond://?src=[menu_ref];toggle_ready=1'>[ready == PLAYER_READY_TO_PLAY ? "<span class='checked'>☑</span> READY" : "<span class='unchecked'>☒</span> READY"]</a>"}
 	else
-		dat += {"<a class="menu_button" href='byond://?src=[menu_ref];late_join=1'>JOIN THE VALE</a>"}
-		dat += {"<a class="menu_button" href='byond://?src=[menu_ref];manifest=1'>FOLK OF THE VALE</a>"}
+		dat += {"
+			<a class="menu_button" href='byond://?src=[menu_ref];late_join=1'>JOIN GAME</a>
+			<a class="menu_button" href='byond://?src=[menu_ref];view_manifest=1'>CREW MANIFEST</a>
+		"}
 
 	dat += {"<a class="menu_button" href='byond://?src=[menu_ref];observe=1'>OBSERVE</a>"}
 
-	var/character_name = uppertext(client?.prefs?.real_name || "UNNAMED")
 	dat += {"
 		<hr>
-		<a class="menu_button" href='byond://?src=[menu_ref];character_setup=1'>SETUP CHARACTER (<span id="character_slot">[character_name]</span>)</a>
+		<a class="menu_button" href='byond://?src=[menu_ref];character_setup=1'>SETUP CHARACTER</a>
 		<a class="menu_button" href='byond://?src=[menu_ref];game_options=1'>GAME OPTIONS</a>
-		<a class="menu_button" href='byond://?src=[menu_ref];keybinds=1'>KEYBINDS</a>
-		<hr>
-		<a class="menu_button" href='byond://?src=[menu_ref];lore_primer=1'>LORE PRIMER</a>
-		<a class="menu_button" href='byond://?src=[menu_ref];changelog=1'>CHANGELOG</a>
+		<a id="be_antag" class="menu_button" href='byond://?src=[menu_ref];toggle_antag=1'>[client?.prefs?.be_special ? "<span class='checked'>☑</span> BE ANTAGONIST" : "<span class='unchecked'>☒</span> BE ANTAGONIST"]</a>
 	"}
 
 	if(!IsGuestKey(key))
 		dat += build_poll_button(menu_ref)
 
-	dat += {"<hr><span class="menu_status" id="status">[SStitlescreen.build_status_line(src)]</span>"}
+	var/character_name = uppertext(client?.prefs?.real_name || "UNNAMED")
+	dat += {"
+		<div class="character_display">
+			CURRENT CHARACTER:<br>
+			<span id="character_slot" class="character_name">[character_name]</span>
+		</div>
+	"}
+
 	dat += "</div>"
 
 	dat += {"
 	<script language="JavaScript">
 		const PLAYER_READY_TO_PLAY = "[PLAYER_READY_TO_PLAY]";
+		const PLAYER_NOT_READY = "[PLAYER_NOT_READY]";
 		var ready_mark = document.getElementById("ready");
 		function toggle_ready(setReady) {
 			if(!ready_mark) { return; }
 			if(setReady === PLAYER_READY_TO_PLAY) {
-				ready_mark.innerHTML = "<span class='checked'>&#9745;</span> READY";
+				ready_mark.innerHTML = "<span class='checked'>☑</span> READY";
 			} else {
-				ready_mark.innerHTML = "<span class='unchecked'>&#9746;</span> READY";
+				ready_mark.innerHTML = "<span class='unchecked'>☒</span> READY";
 			}
 		}
 
-		var status_line = document.getElementById("status");
-		function update_status(text) {
-			if(status_line) { status_line.innerHTML = text; }
+		var antag_int = 0;
+		var antag_mark = document.getElementById("be_antag");
+		var antag_marks = \[ "<span class='unchecked'>☒</span> BE ANTAGONIST", "<span class='checked'>☑</span> BE ANTAGONIST" \];
+		function toggle_antag(setAntag) {
+			if(!antag_mark) { return; }
+			if(setAntag) {
+				antag_int = setAntag;
+				antag_mark.innerHTML = antag_marks\[antag_int\];
+			} else {
+				antag_int++;
+				if (antag_int === antag_marks.length) { antag_int = 0; }
+				antag_mark.innerHTML = antag_marks\[antag_int\];
+			}
 		}
 
 		var character_name_slot = document.getElementById("character_slot");
@@ -154,8 +166,27 @@
 
 		function append_terminal_text() {}
 		function update_loading_progress() {}
+		function update_status() {}
+		function toggle_translate() {}
+
+		document.addEventListener("mousemove", function(e) {
+			var cx = window.innerWidth / 2;
+			var cy = window.innerHeight / 2;
+			var dx = (e.clientX - cx) / cx;
+			var dy = (e.clientY - cy) / cy;
+
+			var nav = document.getElementById("parallax_nav");
+			var bg = document.getElementById("bg_layer");
+
+			if (nav) { nav.style.transform = "translate(" + (dx * 15) + "px, calc(-50% + " + (dy * 15) + "px))"; }
+			if (bg) { bg.style.transform = "translate(calc(-50% + " + (-dx * 10) + "px), calc(-50% + " + (-dy * 10) + "px))"; }
+		});
 	</script>
 	"}
+	return dat
+
+/mob/dead/new_player/proc/get_default_title_html()
+	var/dat = SStitlescreen.title_html
 	return dat
 
 /// Flags the button when the player has polls they haven't answered.

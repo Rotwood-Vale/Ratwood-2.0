@@ -109,11 +109,12 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>LOBBY MENU</div>", 250, 200)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
-	popup.open(FALSE)*/
+	popup.open(FALSE)
 	if(client)
 		if(client.prefs)
 			client.prefs.ShowChoices(src, 4)
-
+	*/
+	
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0

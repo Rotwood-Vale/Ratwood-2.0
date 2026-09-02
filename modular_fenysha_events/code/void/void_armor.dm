@@ -1,8 +1,7 @@
 /obj/item/clothing/suit/roguetown/armor/plate/voidarmor 
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "Modular combat spacesuit"
-	desc = "A super-durable combat suit made from adaptive materials. \ 
-			Violium fibers and energy fabric allow it to absorb kinetic energy. Ultratech technology"
+	desc = "A super-durable combat suit made from adaptive materials. Violium fibers and energy fabric allow it to absorb kinetic energy. Ultratech technology"
 	body_parts_covered = FULL_BODY
 	icon_state = "voidcombat"
 	item_state = "voidcombat"

@@ -68,6 +68,7 @@ SUBSYSTEM_DEF(lobbymenu)
 
 	actor_list = actor_list.Join()
 
+	/* Fenysha events removeal: new lobby screen
 	while(currentrun.len)
 		var/mob/dead/new_player/player = currentrun[currentrun.len]
 		currentrun.len--
@@ -75,3 +76,4 @@ SUBSYSTEM_DEF(lobbymenu)
 			player.lobby_refresh(actor_list)
 		if (MC_TICK_CHECK)
 			return
+	*/

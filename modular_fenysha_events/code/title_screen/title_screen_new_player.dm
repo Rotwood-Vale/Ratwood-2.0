@@ -9,6 +9,11 @@
 		title_menu = new(src)
 	return title_menu
 
+/datum/asset/simple/lobby
+	assets = list(
+		"OCRAExtended.ttf" = 'modular_fenysha_events/html/OCRAEXT.TTF',
+	)
+
 /// Reveals the title browser and renders the current page into it.
 /mob/dead/new_player/proc/show_title_screen()
 	if(!client)
@@ -16,8 +21,8 @@
 
 	winset(src, TITLE_BROWSER_ID, "is-disabled=false;is-visible=true")
 
-	var/datum/asset/simple/roguefonts/fonts = get_asset_datum(/datum/asset/simple/roguefonts)
-	fonts.send(src)
+	var/datum/asset/simple/lobby/lobby_fonts = get_asset_datum(/datum/asset/simple/lobby)
+	lobby_fonts.send(src)
 
 	update_title_screen()
 
@@ -25,8 +30,8 @@
 /mob/dead/new_player/proc/update_title_screen()
 	if(!client)
 		return
-	if(SStitlescreen.current_title_screen)
-		src << browse(SStitlescreen.current_title_screen, "file=[TITLE_IMAGE_RESOURCE];display=0")
+
+	src << browse(SStitlescreen.current_title_screen, "file=[TITLE_IMAGE_RESOURCE];display=0")
 	src << browse(get_title_html(), "window=[TITLE_BROWSER_ID]")
 
 /**
