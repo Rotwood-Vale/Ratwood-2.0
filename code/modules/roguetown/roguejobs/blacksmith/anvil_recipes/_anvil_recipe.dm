@@ -29,6 +29,7 @@
 	// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE
 	var/req_trait = null
+	var/rotations_required = 1
 
 /datum/anvil_recipe/New(datum/P, using_blade = FALSE, ...)
 	. = ..()
