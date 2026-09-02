@@ -726,6 +726,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Cloth Tights"
 	path = /obj/item/clothing/under/roguetown/tights/black
 
+/datum/loadout_item/hosen
+	name = "Hosen"
+	path = /obj/item/clothing/under/roguetown/tights/hose
+
 /datum/loadout_item/leathertights
 	name = "Leather Tights"
 	path = /obj/item/clothing/under/roguetown/trou/leathertights
@@ -761,6 +765,14 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/sirwal
 	name = "Sirwal"
 	path = /obj/item/clothing/under/roguetown/sirwal
+
+/datum/loadout_item/kilt
+	name = "Kilt"
+	path = /obj/item/clothing/under/roguetown/skirt/kilt
+
+/datum/loadout_item/dhoti
+	name = "Dhoti"
+	path = /obj/item/clothing/under/roguetown/tights/dhoti
 
 //ACCESSORIES
 /datum/loadout_item/wrappings

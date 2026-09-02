@@ -44,7 +44,8 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
 	body_parts_covered = GROIN|LEGS
-	cold_protection = 10
+	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	color = "#ad977d"
 	var/shiftable = TRUE
 	var/shifted = FALSE
@@ -74,6 +75,23 @@
 					var/mob/living/carbon/H = user
 					H.update_inv_pants()
 			return
+
+/obj/item/clothing/under/roguetown/skirt/kilt
+	name = "kilt"
+	desc = "Long, flowing, and modest; a traditional kilt."
+	icon_state = "patkilt"
+	item_state = "patkilt"
+	armor = ARMOR_CLOTHING
+	max_integrity = ARMOR_INT_LEG_LEATHER - 50
+	blocksound = SOFTUNDERHIT
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	body_parts_covered = GROIN|LEGS
+	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	color = "#ad977d"
+	shiftable = FALSE
 
 /obj/item/clothing/under/roguetown/skirt/gambeson/light
 	name = "light gambesoned kilt"
