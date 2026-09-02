@@ -360,7 +360,7 @@
 /datum/crafting_recipe/roguetown/sewing/clothpaddedfootwraps
 	name = "padded footwraps"
 	category = "Boots"
-	result = list(/obj/item/clothing/shoes/roguetown/footwraps/padded)
+	result = list(/obj/item/clothing/shoes/roguetown/boots/footwraps/padded)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
