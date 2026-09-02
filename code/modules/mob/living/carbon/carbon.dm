@@ -433,18 +433,37 @@
 		cuff_resist(I)
 
 
+/mob/living/carbon/cancel_restraint_struggle()
+	if(!doing) //without this the fast path could START a struggle, skipping the breakout cooldown
+		return FALSE
+	for(var/obj/item/I in list(handcuffed, legcuffed))
+		if(I.item_flags & BEING_REMOVED)
+			cuff_resist(I)
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
-	if(I.item_flags & BEING_REMOVED)
-		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+	//resisting again gives up, do_after breaks out once doing clears. A flag set with nothing running
+	//outlived its attempt, so fall through and start fresh rather than lock the item forever
+	if((I.item_flags & BEING_REMOVED) && doing)
+		doing = FALSE
+		visible_message("<span class='warning'>[src] stops struggling with [I].</span>", \
+						"<span class='warning'>I stop struggling with [I].</span>")
+		log_message("stopped struggling out of [I]", LOG_ATTACK, color = "orange")
 		return
 	I.item_flags |= BEING_REMOVED
-	breakouttime = I.slipouttime
+	log_message("began struggling out of [I]", LOG_ATTACK, color = "orange")
+	//with free hands you untie your own legs at the speed someone else could untie them for you.
+	//min() so this can never be slower than struggling out, nets slip faster than they strip
+	var/untying = (I == legcuffed && !handcuffed && has_active_hand())
+	breakouttime = untying ? min(I.strip_delay, I.slipouttime) : I.slipouttime
+	//0.1 per point above 10, so the scale runs the full way to 20 rather than bottoming out at 15
 	if((STASTR > 10))
-		var/time_mod = breakouttime * (STASTR - 10) * 0.2
+		var/time_mod = breakouttime * (STASTR - 10) * 0.1
 		breakouttime = max(0, breakouttime - time_mod)
-	if(mind && mind.has_antag_datum(/datum/antagonist/zombie))
+	if(!untying && mind && mind.has_antag_datum(/datum/antagonist/zombie))
 		breakouttime = 10 SECONDS
-	if(STASTR > 15)
+	if(STASTR >= 20 && !untying)
 		cuff_break = INSTANT_CUFFBREAK
 		breakouttime = I.breakouttime
 	if(!cuff_break)
@@ -465,6 +484,8 @@
 		clear_cuffs(I, cuff_break)
 	I.item_flags &= ~BEING_REMOVED
 
+//drops both cuffs to the floor. This is from SS13, not Roguetown.
+//predates nets, so it needs netted status cleanup before anything calls it again
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
@@ -483,8 +504,7 @@
 		changeNext_move(0, override = TRUE)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
+		set_legcuffed(null)
 		if (client)
 			client.screen -= W
 		if (W)
@@ -500,6 +520,9 @@
 		return FALSE
 	if(I != handcuffed && I != legcuffed)
 		return FALSE
+	//getting free clears the breakout cooldown, or a fast escape leaves you locked out of everything
+	//for the remainder of the 10 seconds resist_restraints charged up front. Same as uncuff() does
+	changeNext_move(0, override = TRUE)
 	visible_message("[cuff_break ? "<span class='danger'>" : "<span class='warning'>"][src] manages to [cuff_break ? "break" : "slip"] out of [I]!</span>")
 	if(cuff_break)
 		playsound(src, 'sound/misc/chain_snap.ogg', 100, FALSE, 10)
@@ -524,10 +547,9 @@
 			update_handcuffed()
 			return TRUE
 		if(I == legcuffed)
-			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
-			legcuffed = null
-			update_inv_legcuffed()
+			set_legcuffed(null)
+			I.forceMove(drop_location())
+			I.dropped(src)
 			return TRUE
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
@@ -1120,6 +1142,30 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 	update_mobility()
+
+// sole owner of legcuffed, every path that changes the slot comes through here
+// There are three states that must be maintained consistently with the slot:
+// the movespeed slowdown, the alert, and the overlay!
+// Otherwise, it will keep breaking. If we know it's always true,
+// encapsulate instead of writing it directly every time you need itz`
+/mob/living/carbon/proc/set_legcuffed(obj/item/cuffs, mob/user)
+	if(legcuffed == cuffs)
+		return
+	var/obj/item/old_cuffs = legcuffed
+	legcuffed = cuffs
+	//must hold: the movespeed slowdown is applied exactly when the slot holds a slowing item
+	remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)
+	if(legcuffed)
+		if(legcuffed.legcuff_slowdown)
+			add_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN, update=TRUE, priority=100, multiplicative_slowdown=legcuffed.legcuff_slowdown, movetypes=GROUND)
+		//must hold: the alert shows exactly when the slot is occupied, this branch and the else are its halves
+		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = legcuffed)
+		log_combat(user || src, src, "legcuffed", legcuffed)
+	else
+		clear_alert("legcuffed")
+		log_combat(user || src, src, "removed legcuffs from", old_cuffs)
+	//must hold: the overlay matches the slot
+	update_inv_legcuffed()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	if(reagents)

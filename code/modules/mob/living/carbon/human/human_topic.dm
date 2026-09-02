@@ -23,6 +23,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		mob_examine_panel.ui_interact(usr)
 		return
 
+	if(href_list["task"] == "gnoll_view_tracked")
+		gnoll_view_tracked_char()
+
 	if(href_list["inspect_limb"] && (observer_privilege || usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)))
 		var/list/msg = list()
 		var/mob/user = usr

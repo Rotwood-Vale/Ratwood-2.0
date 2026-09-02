@@ -2066,17 +2066,14 @@
 	var/blood_restore = 30
 
 /datum/status_effect/buff/adrenaline_rush/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.dna?.species?.type == /datum/species/gnoll)
-			return FALSE
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ADRENALINE_RUSH, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.playsound_local(get_turf(H), 'sound/misc/adrenaline_rush.ogg', 100, TRUE)
-		H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 		H.stamina -= max((H.stamina - (H.max_stamina / 2)), 0)
+		if(H.dna?.species?.type != /datum/species/gnoll)
+			H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 
 /datum/status_effect/buff/adrenaline_rush/on_remove()
 	. = ..()

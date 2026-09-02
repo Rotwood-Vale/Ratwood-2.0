@@ -183,56 +183,56 @@
 	category = CATEGORY_HUMAN
 
 /datum/keybinding/mob/fly_up/down(client/user)
-	if(iscarbon(user.mob))
-		var/mob/living/carbon/C = user.mob
-		if(C.flying)
-			var/turf/open/transparent/openspace/turf_above = get_step_multiz(C, UP)
-			if(C.canZMove(UP, turf_above))
-				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
-				var/stamina_cost_final = round((10 - athletics_skill), 1)
-				var/atom/movable/pulling = C.pulling
-				var/time_taken = 1.5 SECONDS
-				if(ismob(pulling))
-					stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
-					time_taken *= 2
-				if(do_after(C, time_taken))
-					if(QDELETED(pulling) || C.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
-						pulling = null
-					if(ismob(pulling))
-						ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
-						pulling.forceMove(turf_above)
-					C.forceMove(turf_above)
-					for(var/mob/buckled_living as anything in C.buckled_mobs)
-						buckled_living.forceMove(turf_above)
-					if(pulling)
-						C.start_pulling(pulling, state = 1, supress_message = TRUE)
-						if(C.pulling == pulling)
-							C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
-							var/obj/item/grabbing/I = C.get_inactive_held_item()
-							if(istype(I, /obj/item/grabbing/))
-								I.icon_state = null
-						if(ismob(pulling))
-							REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
-					C.stamina_add(stamina_cost_final)
-					to_chat(C, span_notice("I fly upwards."))
-			else
-				to_chat(C, span_red("I can't fly up there!!"))
-		else
-			to_chat(C, span_red("I'm not flying!"))
-	else if(istype(user.mob, /mob/living/simple_animal/hostile/retaliate/bat))
-		var/mob/living/simple_animal/hostile/retaliate/bat/mobius = user.mob
+	. = TRUE
+	var/mob/flyer = user.mob
+	if(!flyer.flying)
+		to_chat(flyer, span_red("I'm not flying!"))
+		return
+	if(iscarbon(flyer))
+		var/mob/living/carbon/carbon_flyer = flyer
+		var/turf/open/transparent/openspace/turf_above = get_step_multiz(carbon_flyer, UP)
+		if(!carbon_flyer.canZMove(UP, turf_above))
+			to_chat(carbon_flyer, span_red("I can't fly up there!!"))
+			return
+		var/athletics_skill = max(carbon_flyer.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+		var/stamina_cost_final = round((10 - athletics_skill), 1)
+		var/atom/movable/pulling = carbon_flyer.pulling
+		var/time_taken = 1.5 SECONDS
+		if(ismob(pulling))
+			stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
+			time_taken *= 2
+		if(!do_after(carbon_flyer, time_taken))
+			return
+		if(QDELETED(pulling) || carbon_flyer.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
+			pulling = null
+		if(ismob(pulling))
+			ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
+			pulling.forceMove(turf_above)
+		carbon_flyer.forceMove(turf_above)
+		for(var/mob/buckled_living as anything in carbon_flyer.buckled_mobs)
+			buckled_living.forceMove(turf_above)
+		if(pulling)
+			carbon_flyer.start_pulling(pulling, state = 1, supress_message = TRUE)
+			if(carbon_flyer.pulling == pulling)
+				carbon_flyer.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+				var/obj/item/grabbing/I = carbon_flyer.get_inactive_held_item()
+				if(istype(I, /obj/item/grabbing))
+					I.icon_state = null
+			if(ismob(pulling))
+				REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
+		carbon_flyer.stamina_add(stamina_cost_final)
+		to_chat(carbon_flyer, span_notice("I fly upwards."))
+	else if(istype(flyer, /mob/living/simple_animal/hostile/retaliate/bat))
+		var/mob/living/simple_animal/hostile/retaliate/bat/mobius = flyer
 		var/turf/open/transparent/openspace/turf_above = get_step_multiz(mobius, UP)
 		if(mobius.canZMove(UP, turf_above))
 			if(!do_after(mobius, mobius.fly_time))
 				return
 			mobius.forceMove(turf_above)
-	else if(user.mob.flying)
-		var/mob/mobius = user.mob
+	else if(flyer.flying)
+		var/mob/mobius = flyer
 		if(mobius.zMove(UP, TRUE))
 			to_chat(mobius, span_notice("I move upwards."))
-	else
-		return
-	return TRUE
 
 /datum/keybinding/mob/fly_down
 	hotkey_keys = list("Southeast")
@@ -242,53 +242,53 @@
 	category = CATEGORY_HUMAN
 
 /datum/keybinding/mob/fly_down/down(client/user)
-	if(iscarbon(user.mob))
-		var/mob/living/carbon/C = user.mob
-		if(C.flying)
-			var/turf/open/transparent/openspace/turf_below = get_step_multiz(C, DOWN)
-			if(C.canZMove(DOWN, turf_below))
-				var/athletics_skill = max(C.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
-				var/stamina_cost_final = round((10 - athletics_skill), 1)
-				var/atom/movable/pulling = C.pulling
-				var/time_taken = 1.5 SECONDS
-				if(ismob(pulling))
-					stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
-					time_taken *= 2
-				if(do_after(C, time_taken))
-					if(QDELETED(pulling) || C.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
-						pulling = null
-					if(ismob(pulling))
-						ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
-						pulling.forceMove(turf_below)
-					C.forceMove(turf_below)
-					for(var/mob/buckled_living as anything in C.buckled_mobs)
-						buckled_living.forceMove(turf_below)
-					if(pulling)
-						C.start_pulling(pulling, state = 1, supress_message = TRUE)
-						if(C.pulling == pulling)
-							C.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
-							var/obj/item/grabbing/I = C.get_inactive_held_item()
-							if(istype(I, /obj/item/grabbing/))
-								I.icon_state = null
-						if(ismob(pulling))
-							REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
-					C.stamina_add(stamina_cost_final)
-					to_chat(C, span_notice("I fly downwards."))
-			else
-				to_chat(C, span_red("I can't fly down there!!"))
-		else
-			to_chat(C, span_red("I'm not flying!"))
-	else if(istype(user.mob, /mob/living/simple_animal/hostile/retaliate/bat))
-		var/mob/living/simple_animal/hostile/retaliate/bat/mobius = user.mob
+	. = TRUE
+	var/mob/flyer = user.mob
+	if(!flyer.flying)
+		to_chat(flyer, span_red("I'm not flying!"))
+		return
+	if(iscarbon(flyer))
+		var/mob/living/carbon/carbon_flyer = flyer
+		var/turf/open/transparent/openspace/turf_below = get_step_multiz(carbon_flyer, DOWN)
+		if(!carbon_flyer.canZMove(DOWN, turf_below))
+			to_chat(carbon_flyer, span_red("I can't fly down there!!"))
+			return
+		var/athletics_skill = max(carbon_flyer.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
+		var/stamina_cost_final = round((10 - athletics_skill), 1)
+		var/atom/movable/pulling = carbon_flyer.pulling
+		var/time_taken = 0.75 SECONDS
+		if(ismob(pulling))
+			stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
+			time_taken *= 2
+		if(!move_after(carbon_flyer, time_taken))
+			return
+		if(QDELETED(pulling) || carbon_flyer.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
+			pulling = null
+		if(ismob(pulling))
+			ADD_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition") // This is given to prevent them falling before we can regrab
+			pulling.forceMove(turf_below)
+		carbon_flyer.forceMove(turf_below)
+		for(var/mob/buckled_living as anything in carbon_flyer.buckled_mobs)
+			buckled_living.forceMove(turf_below)
+		if(pulling)
+			carbon_flyer.start_pulling(pulling, state = 1, supress_message = TRUE)
+			if(carbon_flyer.pulling == pulling)
+				carbon_flyer.buckle_mob(pulling, TRUE, TRUE, FALSE, 0, 0)
+				var/obj/item/grabbing/I = carbon_flyer.get_inactive_held_item()
+				if(istype(I, /obj/item/grabbing/))
+					I.icon_state = null
+			if(ismob(pulling))
+				REMOVE_TRAIT(pulling, TRAIT_PREVENT_Z_FALL, "z_transition")
+		carbon_flyer.stamina_add(stamina_cost_final)
+		to_chat(carbon_flyer, span_notice("I fly downwards."))
+	else if(istype(flyer, /mob/living/simple_animal/hostile/retaliate/bat))
+		var/mob/living/simple_animal/hostile/retaliate/bat/mobius = flyer
 		var/turf/open/transparent/openspace/turf_below = get_step_multiz(mobius, DOWN)
 		if(mobius.canZMove(DOWN, turf_below))
 			if(!do_after(mobius, mobius.fly_time))
 				return
 			mobius.forceMove(turf_below)
-	else if(user.mob.flying)
-		var/mob/mobius = user.mob
+	else if(flyer.flying)
+		var/mob/mobius = flyer
 		if(mobius.zMove(DOWN, TRUE))
 			to_chat(mobius, span_notice("I move downwards."))
-	else
-		return
-	return TRUE

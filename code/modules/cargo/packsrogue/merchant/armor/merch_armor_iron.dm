@@ -101,6 +101,11 @@
 	cost = 25
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor/iron)
 
+/datum/supply_pack/rogue/armor_iron/mailleboots_iron
+	name = "Maille Boots"
+	cost = 25
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/maille/iron)
+
 /datum/supply_pack/rogue/armor_iron/skullcap_helmet
 	name = "Helmet, Skullcap"
 	cost = 25
