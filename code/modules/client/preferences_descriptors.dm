@@ -157,25 +157,24 @@
 	COOLDOWN_START(src, descriptor_preview, 5 SECONDS)
 	to_chat(user, span_notice("-- Preview of [real_name]'s descriptors --"))
 
-	// someone please fix this horror one day
-	var/mob/living/temp = new /mob/living(null)
-	temp.pronouns = pronouns
-	apply_descriptors(temp)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	copy_to(mannequin, FALSE, TRUE, TRUE)
+	apply_descriptors(mannequin)
 
 	// Calculate speaking name
 	to_chat(user, \
 		"[SPAN_TOOLTIP("This will be displayed when you speak when your face is hidden or out of view range.", span_notice("Anonymous Speaking Name"))]: \
-		<font color='[voice_color]'>[get_speaking_name_preview(temp)]</font>")
+		<font color='[voice_color]'>[get_speaking_name_preview(mannequin)]</font>")
 
 	// Calculate visible name
-	var/list/descriptors = temp.get_mob_descriptors(FALSE, null)
+	var/list/descriptors = mannequin.get_mob_descriptors(FALSE, null)
 	to_chat(user, \
 		"[SPAN_TOOLTIP("This will be displayed when you emote or are examined when your face is hidden.", span_notice("Anonymous Visible Name"))]: \
-		<font color='[voice_color]'>[get_visible_name_preview(temp, descriptors.Copy())]</font>")
+		<font color='[voice_color]'>[get_visible_name_preview(mannequin, descriptors.Copy())]</font>")
 
 	// Calculate descriptor blurb
-	var/list/desc_lines = build_cool_description(descriptors, temp)
-	QDEL_NULL(temp)
+	var/list/desc_lines = build_cool_description(descriptors, mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 
 	// Output blurb
 	to_chat(user, span_notice("<b>Details</b>"))
@@ -183,8 +182,8 @@
 		to_chat(user, span_info(line))
 
 // This should mirror /mob/living/carbon/human/get_alt_name()
-/datum/preferences/proc/get_speaking_name_preview(mob/living/temp)
-	var/datum/mob_descriptor/voice/voice_descriptor = temp.get_descriptor_type(/datum/mob_descriptor/voice)
+/datum/preferences/proc/get_speaking_name_preview(mob/living/carbon/human/mannequin)
+	var/datum/mob_descriptor/voice/voice_descriptor = mannequin.get_descriptor_type(/datum/mob_descriptor/voice)
 	if(!voice_descriptor)
 		return "Unknown Person"
 	var/voice_gender = "Person"
@@ -198,9 +197,9 @@
 	return voice_descriptor.get_speaking_name(voice_gender, src)
 
 // This should mirror /mob/living/carbon/human/get_visible_name()
-/datum/preferences/proc/get_visible_name_preview(mob/living/temp, list/descriptors)
-	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, temp, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
-	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, temp, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
+/datum/preferences/proc/get_visible_name_preview(mob/living/carbon/human/mannequin, list/descriptors)
+	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, mannequin, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
+	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, mannequin, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
 	return "[trait_desc] [stature_desc]"
 
 /datum/preferences/proc/get_descriptor_entry_for_choice(choice_type)
