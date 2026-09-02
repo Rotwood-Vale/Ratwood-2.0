@@ -151,6 +151,8 @@
 	salvage_result = /obj/item/natural/cloth
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	color = "#ffffff"
+	detail_color = "#ffffff"
 
 /obj/item/clothing/gloves/roguetown/cloth/Initialize(mapload)
 	. = ..()
