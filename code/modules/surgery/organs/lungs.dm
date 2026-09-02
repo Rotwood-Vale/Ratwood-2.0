@@ -54,7 +54,7 @@
 /obj/item/organ/lungs/t2
 	name = "blessed lungs"
 	icon_state = "lungs"
-	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it's not…"
 	sellprice = 200
 
 /obj/item/organ/lungs/t3
