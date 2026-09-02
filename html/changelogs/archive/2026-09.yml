@@ -1,3 +1,13 @@
 2026-09-01:
   kimesik:
   - balance: Eastern Warrior gets Enduring.
+2026-09-02:
+  zoktiik:
+  - balance: Gnolls now have baseline sneaking and better crafting skills. Gnolls
+      now have an unlocked right back slot, as well as a satchel to go with it. Mind,
+      the right back slot does not allow for larger storage like backpacks.
+  - balance: On SNEAK intent, Gnolls produce a far quieter, more indistinct speech
+      sound when talking.
+  - rscadd: Added a "Remember Your Prey" verb for Gnolls that pulls up their current
+      target's flavortext window, allowing them to view that target's notes before
+      actually finding them in-person.
