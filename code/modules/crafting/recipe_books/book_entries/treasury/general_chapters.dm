@@ -49,6 +49,17 @@
 	name = "00. Charters of the Realm"
 
 /datum/book_entry/treasury_general/charters/inner_book_html(mob/user)
+	var/datum/decree/great_writ = SStreasury.get_decree(DECREE_GREAT_WRIT)
+	var/great_writ_name = great_writ?.name || "The Great Writ of the Vale"
+
+	var/datum/decree/golden_bull = SStreasury.get_decree(DECREE_GOLDEN_BULL)
+	var/golden_bull_name = golden_bull?.name || "The Golden Bull of Kingsfield"
+
+	var/datum/decree/guild_charter = SStreasury.get_decree(DECREE_GUILD_CHARTER_OF_ARMS)
+	var/guild_charter_name = guild_charter?.name || "The Guild Charter of Arms"
+
+	var/datum/decree/indenture_of_war = SStreasury.get_decree(DECREE_INDENTURE_OF_WAR)
+	var/indenture_of_war_name = indenture_of_war?.name || "The Indenture of War"
 	return {"
 		<div>
 		<p>Charters protect classes of subject from the Crown's taxation and levies.
@@ -56,13 +67,13 @@
 		</div>
 
 		<ul>
-			<li><b>[SStreasury.get_decree(DECREE_GREAT_WRIT)?.name || "The Great Writ of the Vale"]</b> - Nobility pays no tax and levy, and cannot be fined.</li>
+			<li><b>[great_writ_name]</b> - Nobility pays no tax and levy, and cannot be fined.</li>
 			<li><b>The Zenitstadt Concordat</b> - The Church, and any declared benefactors of the Church, pays no taxation and levy. While in force, [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church Fund.</li>
 			<li><b>The Otavan Accords</b> - The Inquisition pays no tax and no levy.</li>
-			<li><b>[SStreasury.get_decree(DECREE_GOLDEN_BULL)?.name || "The Golden Bull of Kingsfield"]</b> - burghers are capped at [GOLDEN_BULL_BURGHER_CAP * 100]% of balance per levy or fine, with a [GOLDEN_BULL_DAILY_FINE_CAP]-mammon ceiling on each fine and a [GOLDEN_BULL_POLL_CAP]m poll-tax cap. While it stands, the burghers replenish the Burgher Pledge daily.</li>
+			<li><b>[golden_bull_name]</b> - burghers are capped at [GOLDEN_BULL_BURGHER_CAP * 100]% of balance per levy or fine, with a [GOLDEN_BULL_DAILY_FINE_CAP]-mammon ceiling on each fine and a [GOLDEN_BULL_POLL_CAP]m poll-tax cap. While it stands, the burghers replenish the Burgher Pledge daily.</li>
 			<li><b>The Covenant of Noc and Pestra</b> - University members, the Apothecary and the Court Physician are limited to the lightest poll tax of [NOC_PESTRA_POLL_CAP]m, and a minimum wage from the Crown's payroll.</li>
-			<li><b>[SStreasury.get_decree(DECREE_GUILD_CHARTER_OF_ARMS)?.name || "The Guild Charter of Arms"]</b> - Guild mercenaries are capped at [GUILD_CHARTER_OF_ARMS_POLL_CAP]m of poll tax per day, and the Guild remits [GUILD_CHARTER_OF_ARMS_PLEDGE_BONUS]m daily to the Burgher's Pledge while in force.</li>
-			<li><b>[SStreasury.get_decree(DECREE_INDENTURE_OF_WAR)?.name || "The Indenture of War"]</b> - Garrison ranks are subject to a minimum salary floor while this is in effect.</li>
+			<li><b>[guild_charter_name]</b> - Guild mercenaries are capped at [GUILD_CHARTER_OF_ARMS_POLL_CAP]m of poll tax per day, and the Guild remits [GUILD_CHARTER_OF_ARMS_PLEDGE_BONUS]m daily to the Burgher's Pledge while in force.</li>
+			<li><b>[indenture_of_war_name]</b> - Garrison ranks are subject to a minimum salary floor while this is in effect.</li>
 			<li><b>The Magna Carta</b> - a dormant modern charter; if the Lord dares press it, every Crown levy and poll tax is zeroed. Fines remain.</li>
 		</ul>
 
