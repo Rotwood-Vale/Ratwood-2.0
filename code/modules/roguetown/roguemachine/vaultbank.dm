@@ -33,7 +33,6 @@
 	var/knockedoffbefore = 0
 	var/drillgoal = 100
 
-<<<<<<< HEAD
 /obj/structure/roguemachine/vaultbank/Initialize(mapload)
 	..()
 	enforce_placement()
@@ -68,8 +67,6 @@
 		message_admins(msg)
 	return linked_fund
 
-=======
->>>>>>> upstream/main
 /obj/structure/roguemachine/vaultbank/update_icon()
 	if(drilling)
 		return
@@ -177,13 +174,10 @@
 			src.say("NOT YOUR COIN.")
 	playsound(src, 'sound/misc/jawbankanguish.ogg', 100, FALSE, -1)
 
-<<<<<<< HEAD
 // ============================================================================
 // DRILLING / BASHING
 // ============================================================================
 
-=======
->>>>>>> upstream/main
 /obj/structure/roguemachine/vaultbank/proc/resetlump()
 	og_treasury = null
 	total_extorted = null
@@ -196,16 +190,6 @@
 	animate(pixel_x = oldx-2, time = 0.5)
 	animate(pixel_x = oldx, time = 0.5)
 
-<<<<<<< HEAD
-/obj/structure/roguemachine/vaultbank/proc/shaking()
-	var/oldx = pixel_x
-	animate(src, pixel_x = oldx+1, time = 0.5)
-	animate(pixel_x = oldx-1, time = 0.5)
-	animate(pixel_x = oldx, time = 0.5)
-	if(shaker == TRUE)
-		spawn(2)
-			shaking()
-=======
 /obj/structure/roguemachine/vaultbank/proc/update_shaking()
 	if(shaker)
 		animate(src, pixel_x = 1, time = 0.5, loop = -1, flags = ANIMATION_RELATIVE, tag = "shaking")
@@ -213,7 +197,6 @@
 		animate(pixel_x = 1, time = 0.5, flags = ANIMATION_RELATIVE)
 	else
 		animate(src, tag = "shaking", flags = ANIMATION_END_LOOP)
->>>>>>> upstream/main
 
 /obj/structure/roguemachine/vaultbank/proc/drill()
 	if(!drilling)
@@ -301,13 +284,8 @@
 		has_reported = FALSE
 		drilling = TRUE
 		shaker = TRUE
-<<<<<<< HEAD
-		shaking()
-		drill()
-=======
 		update_shaking()
 		drill(src)
->>>>>>> upstream/main
 		qdel(I)
 		message_admins("[usr.key] has applied the Crustacean to [src].")
 		return
@@ -333,18 +311,9 @@
 		return
 
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-<<<<<<< HEAD
 	gethit()
 
 	if(drilling)
-=======
-	if (!og_treasury)
-		og_treasury = SStreasury.treasury_value
-	var/puke_chance = (I.force > 25) ? 75 : 25
-	var/extorted = min(rand(5, 20), SStreasury.treasury_value)
-	gethit()
-	if (drilling)
->>>>>>> upstream/main
 		playsound(src, 'sound/misc/drillhit.ogg', 70, TRUE)
 		knockitoff += 1
 		visible_message(span_info("The covetous crab is knocked slightly more loose from [src]! <b>[knockitoff]</b>!"))

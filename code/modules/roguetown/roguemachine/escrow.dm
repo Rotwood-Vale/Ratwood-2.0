@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(escrow_machines)
 	layer = BELOW_OBJ_LAYER
 	var/list/keycontrol = list("crafterguild", "craftermaster")
 	locked = TRUE
-	budget = 0
+	var/budget = 0
 	var/list/material_prices
 	var/list/derived_material_prices
 	var/percent_margin = 70
@@ -1075,7 +1075,7 @@ GLOBAL_LIST_EMPTY(escrow_machines)
 		spill += manifest_deposits[ck]
 	manifest_deposits.Cut()
 	budget = 0
-	budget2change(spill, custom_turf = T)
+	budget2change(spill, usr)
 	update_icon()
 
 /obj/structure/roguemachine/escrow/update_icon()

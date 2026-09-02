@@ -16,7 +16,8 @@
 	var/next_hawk = 0
 	var/will_hawk = TRUE
 	var/max_items = 30
-
+	var/budget
+	
 /obj/structure/roguemachine/vendor/proc/get_group_items(param)
 	// Accepts either:
 	// - an object/ref (e.g. REF(rep) from attack_hand links), or

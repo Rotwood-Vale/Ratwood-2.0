@@ -24,7 +24,8 @@
 	var/recent_payments = 0
 	var/last_payout = 0
 	var/drugrade_flags
-
+	var/budget
+	
 /obj/structure/roguemachine/drugmachine/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P

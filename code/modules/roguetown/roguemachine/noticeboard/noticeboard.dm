@@ -56,7 +56,6 @@ Ratwood deviations from AP:
 
 /obj/structure/roguemachine/noticeboard/Destroy()
 	SSroguemachine.noticeboards -= src
-<<<<<<< HEAD
 	if(SSmerchant_trade)
 		SSmerchant_trade.unregister_market_watcher(src)
 	return ..()
@@ -80,7 +79,6 @@ Ratwood deviations from AP:
 		if(WEST)
 			pixel_x = -32
 	. = ..()
-=======
 	return ..()
 
 /datum/noticeboardpost
@@ -90,7 +88,6 @@ Ratwood deviations from AP:
 	var/poster
 	var/message
 	var/banner
->>>>>>> upstream/main
 
 /obj/structure/roguemachine/noticeboard/examine(mob/living/carbon/human/user)
 	. = ..()

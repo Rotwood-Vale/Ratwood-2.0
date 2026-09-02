@@ -20,6 +20,7 @@
 	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
+	var/budget
 	var/list/held_items = list()
 	locked = FALSE
 	var/upgrade_flags

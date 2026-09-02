@@ -35,7 +35,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	locked = FALSE
-	budget = 0
+	var/budget = 0
 	var/upgrade_flags
 	var/current_cat = ""
 	var/search_query = ""
@@ -1088,7 +1088,7 @@
 /obj/structure/roguemachine/goldface/obj_break(damage_flag)
 	..()
 	var/turf/T = get_turf(src)
-	budget2change(budget, custom_turf = T)
+	budget2change(budget, T)
 	set_light(0)
 	update_icon()
 	icon_state = "goldvendor0"

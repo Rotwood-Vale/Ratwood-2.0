@@ -18,7 +18,8 @@
 	var/obj/item/reagent_containers/glass/bottle/inserted
 	var/bottle_price = 10
 	var/bottle_sold_max = 10
-
+	var/budget
+	
 /obj/structure/roguemachine/potionseller/crafted
 	is_crafted = TRUE
 	max_integrity = 100

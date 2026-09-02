@@ -10,7 +10,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/list/keycontrol = list("crafterguild", "craftermaster")
-	budget = 0
+	var/budget = 0
 	var/seed_budget = 0
 	var/list/material_prices = list()
 	var/list/material_caps = list()
@@ -300,7 +300,7 @@
 	..()
 	var/turf/T = get_turf(src)
 	if(budget > 0)
-		budget2change(budget, custom_turf = T)
+		budget2change(budget, usr)
 		budget = 0
 		bark_dirty = TRUE
 	for(var/obj/item/I in contents)
