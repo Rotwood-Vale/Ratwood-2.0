@@ -63,7 +63,7 @@
 	invocations = list("flicks their wrist, filling the air in front of them with a fine powder.")
 	antimagic_allowed = TRUE
 	miracle = TRUE
-	devotion_cost = 30
+	devotion_cost = 10
 
 /obj/effect/proc_holder/spell/self/insufflation/cast(list/targets, mob/user)
 	if(!ishuman(user))
