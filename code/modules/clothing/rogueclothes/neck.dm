@@ -923,7 +923,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/equipped(mob/living/user, slot)
@@ -966,7 +966,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/equipped(mob/living/user, slot)

@@ -37,4 +37,4 @@ SUBSYSTEM_DEF(rivers)
 
 /turf/open/water/river/Destroy()
 	STOP_PROCESSING(SSrivers, src)
-	..()
+	return ..()

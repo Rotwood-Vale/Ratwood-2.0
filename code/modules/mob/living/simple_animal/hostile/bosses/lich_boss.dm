@@ -74,6 +74,10 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	//REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC) //Ditto.
 
+/mob/living/simple_animal/hostile/boss/lich/Destroy()
+	QDEL_NULL(blink)
+	. = ..()
+
 /mob/living/simple_animal/hostile/boss/lich/Shoot()
 	projectiletype = pick(allowed_projectile_types)
 	..()
