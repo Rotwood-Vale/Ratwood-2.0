@@ -344,9 +344,8 @@ GLOBAL_VAR(restart_counter)
 		hostedby = CONFIG_GET(string/hostedby)
 
 	new_status += " ("
-	new_status += "<a href=\"[CONFIG_GET(string/discordurl)]\">"
-	new_status += "Discord"
-	new_status += ")\]"
+	new_status += "<a href=\"[CONFIG_GET(string/discordurl)]\">Discord</a>"
+	new_status += ")"
 	new_status += "<br>[CONFIG_GET(string/servertagline)]"
 
 	var/players = GLOB.clients.len
@@ -361,7 +360,6 @@ GLOBAL_VAR(restart_counter)
 	else
 		new_status += "Round Time: <b>NEW ROUND STARTING</b>"
 	new_status += "<br>Player[players == 1 ? "": "s"]: <b>[players]</b>"
-	new_status += "</a>"
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
