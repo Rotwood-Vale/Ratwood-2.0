@@ -9,7 +9,6 @@
 	return FALSE
 
 /datum/mob_descriptor/prominent/custom
-	var/custom_index
 
 /datum/mob_descriptor/prominent/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

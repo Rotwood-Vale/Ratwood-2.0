@@ -48,7 +48,7 @@
 /datum/mob_descriptor/skin/custom
 	name = "Custom Skin"
 	suffix = "skin"
-	var/custom_index = 11
+	custom_index = 11
 
 /datum/mob_descriptor/skin/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

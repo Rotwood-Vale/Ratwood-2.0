@@ -99,7 +99,7 @@
 
 /datum/mob_descriptor/voice/custom
 	name = "Custom Voice"
-	var/custom_index = 12
+	custom_index = 12
 
 /datum/mob_descriptor/voice/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

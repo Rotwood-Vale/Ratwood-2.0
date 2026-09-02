@@ -95,7 +95,7 @@
 
 /datum/mob_descriptor/body/custom
 	name = "Custom Body"
-	var/custom_index = 8
+	custom_index = 8
 
 /datum/mob_descriptor/body/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

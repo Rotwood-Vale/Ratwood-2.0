@@ -425,7 +425,7 @@
 
 /datum/mob_descriptor/stature/custom
 	name = "Custom Stature"
-	var/custom_index = 6
+	custom_index = 6
 
 /datum/mob_descriptor/stature/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

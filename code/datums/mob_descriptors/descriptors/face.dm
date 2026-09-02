@@ -77,7 +77,7 @@
 /datum/mob_descriptor/face/custom
 	name = "Custom Face"
 	prefix = null
-	var/custom_index = 9
+	custom_index = 9
 
 /datum/mob_descriptor/face/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index
@@ -293,7 +293,7 @@
 
 /datum/mob_descriptor/face_exp/custom
 	name = "Custom Expression"
-	var/custom_index = 10
+	custom_index = 10
 
 /datum/mob_descriptor/face_exp/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index

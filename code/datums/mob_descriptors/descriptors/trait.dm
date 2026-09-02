@@ -247,7 +247,7 @@
 /datum/mob_descriptor/trait/custom
 	name = "Custom Trait"
 	prefix = "is"
-	var/custom_index = 5
+	custom_index = 5
 
 /datum/mob_descriptor/trait/custom/can_describe(mob/living/described)
 	return length(described.custom_descriptors) >= custom_index
