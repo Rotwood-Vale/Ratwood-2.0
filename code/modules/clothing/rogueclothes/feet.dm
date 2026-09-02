@@ -641,3 +641,55 @@
 	item_state = "hlegs"
 	body_parts_covered = LEGS|FEET
 	color = null
+
+//Wraps
+
+/obj/item/clothing/shoes/roguetown/footwraps
+	name = "cloth footwraps"
+	desc = "Thickly-woven bandages that've been wrapped around the ankles to protect from any unwanted shattered teeth from sticking in your precious legs."
+	gender = PLURAL
+	icon_state = "footwraps"
+	sewrepair = TRUE
+	salvage_result = /obj/item/natural/cloth
+	var/atom/movable/holdingknife = null
+
+/obj/item/clothing/shoes/roguetown/footwraps/examine(mob/user)
+	. = ..()
+	if(holdingknife)
+		. += span_notice("There is a knife tucked into the side of the footwraps.")
+
+/obj/item/clothing/shoes/roguetown/footwraps/attackby(obj/item/W, mob/living/carbon/user, params)
+	if(istype(W, /obj/item/rogueweapon/huntingknife))
+		if(holdingknife == null)
+			for(var/obj/item/clothing/shoes/roguetown/footwraps/B in user.get_equipped_items(TRUE))
+				to_chat(loc, span_warning("I quickly slot [W] into [B]!"))
+				user.transferItemToLoc(W, holdingknife)
+				holdingknife = W
+				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
+		else
+			to_chat(loc, span_warning("My boot already holds a knife."))
+	. = ..()
+
+/obj/item/clothing/shoes/roguetown/footwraps/attack_right(mob/user)
+	if(holdingknife != null)
+		user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a knife from [src]!"))
+		if(do_after(user, 2 SECONDS))
+			if(!user.get_active_held_item())
+				user.put_in_active_hand(holdingknife, user.active_hand_index)
+				holdingknife = null
+				playsound(loc, 'sound/foley/equip/swordsmall1.ogg')
+				return TRUE
+
+/obj/item/clothing/shoes/roguetown/footwraps/padded
+	name = "padded cloth footwraps"
+	desc = "Thickly-woven padded bandages wrapped about one's ankles to maintain mobility for climbing and kicking."
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+
+/obj/item/clothing/shoes/roguetown/footwraps/hleather
+	name = "hardened leather footwraps"
+	desc = "A cut down pair of boots maintaining most of the cover they'd normally offer with added comfort for those with inhumen anatomy."
+	icon_state = "footwraps_hleather"
+	salvage_result = /obj/item/natural/hide/cured
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
