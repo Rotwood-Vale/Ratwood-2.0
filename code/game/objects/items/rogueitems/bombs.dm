@@ -16,7 +16,7 @@
 	dropshrink = 0.7
 
 /obj/item/bomb/Initialize(mapload)
-	..()
+	. = ..()
 	fuze = rand(40,60)
 
 /obj/item/bomb/spark_act()
@@ -137,7 +137,7 @@
 	var/list/obj/item/tripwire/wire_trigger = list()
 
 /obj/item/bomb/tripbomb/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = b_type.icon_state
 
 /obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
@@ -159,11 +159,8 @@
 	..()
 
 /obj/item/bomb/tripbomb/Destroy()
-	..()
-
-	if(wire_trigger.len)
-		for(var/list/obj/item/tripwire/wire in wire_trigger)
-			QDEL_NULL(wire)
+	QDEL_LIST(wire_trigger)
+	return ..()
 
 /obj/item/bomb/tripbomb/light()
 	var/obj/item/bomb/bomb = new b_type (loc)
@@ -180,8 +177,8 @@
 	var/obj/item/bomb/tripbomb/payload
 
 /obj/item/tripwire/Destroy()
-	..()
 	new /obj/item/natural/fibers(loc)
+	. = ..()
 
 /obj/item/tripwire/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
@@ -284,10 +281,6 @@
 	smoke.start()
 	new /obj/item/ash(T)
 	qdel(src)
-
-/obj/item/grenade/smokebomb
-	parent_type = /obj/item/bomb/smoke
-
 
 /obj/item/tntstick
 	name = "blastpowder stick"
@@ -448,9 +441,6 @@
 	grid_width = 32
 	grid_height = 32
 	dropshrink = 0.75
-
-/obj/item/impact_grenade/Initialize(mapload)
-	. = ..()
 
 // Define a base explodes() proc that subtypes can override because its now explodes proc
 /obj/item/impact_grenade/proc/explodes()

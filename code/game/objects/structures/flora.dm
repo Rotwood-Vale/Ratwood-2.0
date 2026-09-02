@@ -108,6 +108,7 @@
 
 /obj/structure/flora/tree/evil/Destroy()
 	soundloop.stop()
+	QDEL_NULL(soundloop)
 	if(controller)
 		controller.endvines()
 		controller.tree = null

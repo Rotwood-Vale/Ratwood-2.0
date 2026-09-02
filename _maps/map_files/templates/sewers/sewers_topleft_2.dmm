@@ -38,7 +38,7 @@
 /area/rogue/under/town/sewer)
 "p" = (
 /obj/structure/fermentation_keg,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "q" = (
@@ -73,12 +73,12 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "J" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "K" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)

@@ -514,15 +514,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 			if(!spec_check())
-				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species].")
-				pref_species = new default_species.type()
+				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species::name].")
+				pref_species = new default_species
 			else
 				testing("spec_check() succeeded on type [newtype] and name [species_name].")
 		else
-			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species].")
-			pref_species = new default_species.type()
+			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species::name].")
+			pref_species = new default_species
 	else
-		pref_species = new default_species.type()
+		pref_species = new default_species
 	if(pref_species.custom_selection)
 		S["race_bonus"] >> race_bonus
 

@@ -1,0 +1,4 @@
+author: "RadiantFlash7"
+delete-after: True
+changes:
+  - bugfix: "Dustdevils won't spawn inside the town on DT"

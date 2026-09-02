@@ -660,3 +660,6 @@
       they hit a riposte. Now, they get +1 WIL for its duration & stamina refilled
       to 50% (if below), just like everybody else. Unlike everybody else, they still
       do NOT get blood replenished (as they can get health potion from biting people).
+2026-08-31:
+  SirSwagmeyer:
+  - rscadd: Adds inhumen revival spells.
