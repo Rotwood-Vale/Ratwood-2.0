@@ -720,17 +720,25 @@
 	dropshrink = null
 
 
-	//----------------- INFAREDBARON/HATS.DM ---------------------
+	//----------------- CITYWATCH ---------------------
 /obj/item/clothing/head/roguetown/helmet/citywatch
 	name = "city watch helmet"
 	desc = "A heavy helmet. Notably resilient. Issued to the Citywatch."
-	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	icon = 'icons/roguetown/clothing/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	icon_state = "citywatch_helmet"
 	item_state = "citywatch_helmet"
 	armor_class = ARMOR_CLASS_MEDIUM
-	body_parts_covered = HEAD|HAIR|EARS
-	flags_inv = HIDEHAIR
+	body_parts_covered = FULL_HEAD
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
 	dropshrink = null
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/captain
+	name = "watch captain helmet"
+	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
+	icon_state = "sheriff_helm"
+	item_state = "sheriff_helm"
