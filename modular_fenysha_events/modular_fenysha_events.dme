@@ -1,6 +1,8 @@
 // Fenysha Events. Included as a single line from roguetown.dme.
 // Paths here resolve relative to this file's directory.
 
+#include "code\__defines\armor_defines.dm"
+
 #include "code\projectiles\beams.dm"
 #include "code\projectiles\test_guns.dm"
 
@@ -9,3 +11,5 @@
 #include "code\title_screen\title_screen_html.dm"
 #include "code\title_screen\title_screen_new_player.dm"
 #include "code\title_screen\title_screen_admin.dm"
+
+#include "code\void\void_armor.dm"

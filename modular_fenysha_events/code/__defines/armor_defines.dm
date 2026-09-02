@@ -1,0 +1,2 @@
+#define ARMOR_VOIDCOMBAT list("blunt" = 90, "slash" = 100, "stab" = 90, "piercing" = 90, "fire" = 100, "acid" = 100) // Almost invincible armor
+#define ARMOR_VOIDMUTANT list("blunt" = 80, "slash" = 80, "stab" = 80, "piercing" = 80, "fire" = 50, "acid" = 100)
