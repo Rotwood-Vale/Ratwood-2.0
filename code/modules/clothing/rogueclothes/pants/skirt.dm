@@ -91,7 +91,6 @@
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	color = "#ad977d"
-	shiftable = FALSE
 
 /obj/item/clothing/under/roguetown/skirt/gambeson/light
 	name = "light gambesoned kilt"
