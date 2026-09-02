@@ -70,6 +70,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner

@@ -69,6 +69,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
 
 
@@ -171,6 +172,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, 3, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
+			H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
 	gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
@@ -285,6 +287,7 @@
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//Naledi Vizier spells functionally replace psydonite ones
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 	H.merctype = 14
 
 
