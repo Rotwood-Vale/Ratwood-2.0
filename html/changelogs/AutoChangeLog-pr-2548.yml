@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - rscadd: "Added a \"Remember Your Prey\" verb for Gnolls that pulls up their current target's flavortext window, allowing them to view that target's notes before actually finding them in-person."
