@@ -198,12 +198,6 @@ GLOBAL_LIST_INIT(defense_quest_tier_costs, list(
 // 2.0× region (Terrorbog, Mt Decap, Underdark) adds the full amount.
 #define QUEST_DELIVERY_THREAT_BONUS 20
 
-// Contract corpse cleanup (Viscera Cleanup port): dead warband corpses dust after a delay,
-// severed contract heads dust faster.
-#define QUEST_MOB_DUST_DELAY (5 MINUTES)
-#define QUEST_HEAD_DUST_DELAY (5 SECONDS)
-
-#define BLOCKADE_WAVE_TIMER_DS (15 MINUTES)
 
 // Minimum Pledge to call a hoard recovery writ from a fellowship without being the Steward.
 #define HOARD_RECOVERY_PLEDGE 200

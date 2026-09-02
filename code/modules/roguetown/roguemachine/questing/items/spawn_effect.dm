@@ -63,21 +63,23 @@
 /obj/effect/quest_spawn/proc/reveal_contained()
 	if(!contained_atom || revealing)
 		return
-
 	revealing = TRUE
-	new /obj/effect/temp_visual/contract_phantom(get_turf(src), contained_atom)
-	addtimer(CALLBACK(src, PROC_REF(finish_reveal)), QUEST_SPAWN_REVEAL_TIME)
+	var/atom/movable/spawned_atom = contained_atom
+	new /obj/effect/temp_visual/contract_phantom(get_turf(src), spawned_atom)
+	addtimer(CALLBACK(src, PROC_REF(finish_reveal), spawned_atom), QUEST_SPAWN_REVEAL_TIME)
 
-/obj/effect/quest_spawn/proc/finish_reveal()
-	if(!contained_atom)
+/obj/effect/quest_spawn/proc/finish_reveal(atom/movable/spawned_atom)
+	if(!spawned_atom)
 		qdel(src)
 		return
-	if(isliving(contained_atom))
-		var/datum/component/quest_object/quest_component = GetComponent(/datum/component/quest_object)
+	spawned_atom.forceMove(get_turf(src))
+	contained_atom = null
+	if(isliving(spawned_atom))
+		var/datum/component/quest_object/quest_component = spawned_atom.GetComponent(/datum/component/quest_object)
 		var/datum/quest/kill/notorious_bounty/quest = quest_component?.quest_ref?.resolve()
 		if(istype(quest))
-			INVOKE_ASYNC(quest, TYPE_PROC_REF(/datum/quest/kill/notorious_bounty, offer_boss_control), contained_atom)
-	return
+			INVOKE_ASYNC(quest, TYPE_PROC_REF(/datum/quest/kill/notorious_bounty, offer_boss_control), spawned_atom)
+	qdel(src)
 
 /obj/effect/temp_visual/contract_phantom
 	name = "approaching threat"
