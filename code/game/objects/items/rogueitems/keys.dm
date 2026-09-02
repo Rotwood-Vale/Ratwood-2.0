@@ -832,7 +832,7 @@
 
 /obj/item/roguekey/custom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = (input(user, "What would you name this key?", "", "") as text)
+		var/input = stripped_input(user, "What would you name this key?", "", "", MAX_NAME_LEN)
 		if(input)
 			name = input + " key"
 			to_chat(user, span_notice("You rename the key to [name]."))
@@ -944,7 +944,7 @@
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		src.holdname = stripped_input(user, "What would you like to name this?", "", "", MAX_NAME_LEN)
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))
 	else
