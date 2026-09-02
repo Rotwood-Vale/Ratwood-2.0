@@ -189,6 +189,7 @@
 		owner.bodyparts -= src
 		owner.bodyparts_by_zone -= body_zone
 		owner = null
+	original_owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
 	for(var/datum/wound/wound as anything in wounds)

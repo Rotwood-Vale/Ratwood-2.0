@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(loadout_items)
+GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item
 	var/name = "Parent loadout datum"
