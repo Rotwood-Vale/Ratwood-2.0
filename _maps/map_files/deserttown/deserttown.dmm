@@ -2445,7 +2445,7 @@
 "aGS" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -23255,7 +23255,7 @@
 "gza" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -31572,7 +31572,7 @@
 "iYW" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -41427,7 +41427,7 @@
 "lJz" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -78691,7 +78691,7 @@
 "wgw" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0
@@ -85743,7 +85743,7 @@
 "ycC" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush{
 	STACON = 13;
-	STAEND = 13;
+	STAWIL = 13;
 	STASPD = 13;
 	STASTR = 13;
 	inertia_move_delay = 0

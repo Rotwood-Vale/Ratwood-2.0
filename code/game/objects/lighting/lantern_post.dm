@@ -33,6 +33,11 @@
 	torchy.spark_act()
 	. = ..()
 
+/obj/machinery/light/rogue/lanternpost/Destroy()
+	if(torchy)
+		QDEL_NULL(torchy)
+	return ..()
+
 /obj/machinery/light/rogue/lanternpost/process()
 	if(on)
 		if(torchy)

@@ -11,6 +11,10 @@
 	stockpile_index = stockpile_param
 	parent_structure = structure_param
 
+/datum/withdraw_tab/Destroy(force, ...)
+	parent_structure = null
+	return ..()
+
 /datum/withdraw_tab/proc/get_contents(title, show_back)
 	var/contents = "<center>[title]<BR>"
 	if(show_back)
