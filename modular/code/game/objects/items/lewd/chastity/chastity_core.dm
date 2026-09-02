@@ -204,10 +204,10 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(chastity_feature)
 		return TRUE
 	var/datum/bodypart_feature/chastity/chastity_new = new /datum/bodypart_feature/chastity()
-	// Use the base accessory setter so we don't spawn a second hidden chastity item.
-	call(chastity_new, /datum/bodypart_feature/proc/set_accessory_type)(sprite_acc, null, H)
 	chastity_new.chastity_item = src
-	chastity_feature = chastity_new
+	// Use the base accessory setter so we don't spawn a second hidden chastity item.
+	// ^ DON'T DO THAT, IF YOU DO THAT YOU WROTE YOUR CODE WRONG
+	chastity_new.set_accessory_type(sprite_acc, null, H)
 	return TRUE
 
 // Attaches the prepared chastity bodypart feature to the chest bodypart.

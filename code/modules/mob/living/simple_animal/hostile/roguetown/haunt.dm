@@ -157,7 +157,7 @@
 	addtimer(CALLBACK(src, PROC_REF(createhaunt)), 4 SECONDS)
 
 /obj/structure/bonepile/Destroy()
-	soundloop.stop()
+	QDEL_NULL(soundloop)
 	spawning = FALSE
 	for(var/mob/living/simple_animal/hostile/rogue/haunt/ghost in haunts)
 		INVOKE_ASYNC(ghost, TYPE_PROC_REF(/mob/living/simple_animal/hostile/rogue/haunt, death))

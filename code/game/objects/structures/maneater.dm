@@ -52,7 +52,7 @@
 			eaten.forceMove(target)
 			contents.Remove(eaten)
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/structure/flora/roguegrass/maneater/real/Crossed(atom/movable/AM)
 	..()
@@ -197,7 +197,7 @@
 
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/Initialize(mapload)
-	..()
+	. = ..()
 	transform = transform.Scale(0.75, 0.75)  // Start larger than an kobold.
 	addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 

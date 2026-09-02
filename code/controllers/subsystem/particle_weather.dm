@@ -83,9 +83,9 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 		// Schedule late warning 30 seconds before start
 		if(randTime > 30 SECONDS)
-			addtimer(CALLBACK(runningWeather, /datum/particle_weather/proc/send_late_warning),randTime - (30 SECONDS),TIMER_UNIQUE|TIMER_STOPPABLE)
+			addtimer(CALLBACK(runningWeather, TYPE_PROC_REF(/datum/particle_weather, send_late_warning)),randTime - (30 SECONDS),TIMER_UNIQUE|TIMER_STOPPABLE)
 		// Schedule actual start
-		addtimer(CALLBACK(runningWeather, /datum/particle_weather/proc/start),randTime,TIMER_UNIQUE|TIMER_STOPPABLE)
+		addtimer(CALLBACK(runningWeather, TYPE_PROC_REF(/datum/particle_weather, start)),randTime,TIMER_UNIQUE|TIMER_STOPPABLE)
 
 
 /datum/controller/subsystem/ParticleWeather/proc/make_eligible(possible_weather)

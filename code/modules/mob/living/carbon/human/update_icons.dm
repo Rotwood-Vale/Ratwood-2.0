@@ -61,7 +61,7 @@ There are several things that need to be remembered:
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
 	if(body_overlay_cache_key != new_cache_key)
-		dna.species.handle_body(src)
+		dna?.species?.handle_body(src)
 		body_overlay_cache_key = new_cache_key
 	..() // always do update_body_parts when we call this
 
@@ -267,11 +267,12 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
+	if(!dna?.species)
+		return // Huh??
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
-		if(dna.species)
-			if(dna.species.regenerate_icons(src))
-				return
+		if(dna?.species?.regenerate_icons(src))
+			return
 		update_body()
 		update_hair()
 //		update_inv_w_uniform()
@@ -1987,6 +1988,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
+	if(!dna?.species)
+		return "UNINITIALIZED"
 	. = list(dna.species.limbs_id)
 
 	if(dna.species.use_skintones)
