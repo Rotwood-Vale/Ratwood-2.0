@@ -34,6 +34,20 @@
 	/// The lockpick stored in the boot
 	var/atom/movable/holdinglockpick
 
+/obj/item/clothing/shoes/roguetown/boots/Destroy()
+	QDEL_NULL(holdingknife)
+	QDEL_NULL(holdinglockpick)
+	return ..()
+
+/obj/item/clothing/shoes/roguetown/boots/deconstruct(disassembled)
+	if(holdingknife)
+		holdingknife.forceMove(get_turf(src))
+		holdingknife = null
+	if(holdinglockpick)
+		holdinglockpick.forceMove(get_turf(src))
+		holdinglockpick = null
+	return ..()
+
 /obj/item/clothing/shoes/roguetown/boots/examine()
 	. = ..()
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
@@ -647,50 +661,21 @@
 
 //Wraps
 
-/obj/item/clothing/shoes/roguetown/footwraps
+/obj/item/clothing/shoes/roguetown/boots/footwraps
 	name = "cloth footwraps"
 	desc = "Thickly-woven bandages that've been wrapped around the ankles to protect from any unwanted shattered teeth from sticking in your precious legs."
 	gender = PLURAL
 	icon_state = "footwraps"
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/cloth
-	/// The knife stored in the boot
-	var/atom/movable/holdingknife
 
-/obj/item/clothing/shoes/roguetown/footwraps/examine(mob/user)
-	. = ..()
-	if(holdingknife)
-		. += span_notice("There is a knife tucked into the side of the footwraps.")
-
-/obj/item/clothing/shoes/roguetown/footwraps/attackby(obj/item/storing_item, mob/living/carbon/user, params)
-	if(!istype(storing_item, /obj/item/rogueweapon/huntingknife))
-		return ..()
-	if(!isnull(holdingknife))
-		to_chat(user, span_warning("My boot already holds a knife."))
-		return
-	to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
-	user.transferItemToLoc(storing_item, holdingknife)
-	holdingknife = storing_item
-	playsound(user, 'sound/foley/equip/swordsmall1.ogg')
-
-/obj/item/clothing/shoes/roguetown/footwraps/attack_right(mob/user)
-	if(isnull(holdingknife))
-		return
-	user.visible_message(span_warning("[user] is drawing something from [src]!"), span_warning("I begin drawing a knife from [src]!"))
-	if(!do_after(user, 2 SECONDS))
-		return
-	user.put_in_hands(holdingknife)
-	holdingknife = null
-	playsound(user, 'sound/foley/equip/swordsmall1.ogg')
-	return TRUE
-
-/obj/item/clothing/shoes/roguetown/footwraps/padded
+/obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	name = "padded cloth footwraps"
 	desc = "Thickly-woven padded bandages wrapped about one's ankles to maintain mobility for climbing and kicking."
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
-/obj/item/clothing/shoes/roguetown/footwraps/hleather
+/obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
 	name = "hardened leather footwraps"
 	desc = "A cut down pair of boots maintaining most of the cover they'd normally offer with added comfort for those with inhumen anatomy."
 	icon_state = "footwraps_hleather"
