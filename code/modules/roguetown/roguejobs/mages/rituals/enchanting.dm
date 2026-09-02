@@ -147,6 +147,7 @@
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/fae/core = 1, /obj/item/magic/voidstone = 2, /obj/item/magic/melded/t2 = 1)
 	result_atoms = list(/obj/item/enchantmentscroll/voidtouched)
 
+/*
 /datum/runeritual/enchanting/frostveil	//armor enchantment
 	name = "Frostveil"
 	desc = "Chills foes."
@@ -162,6 +163,7 @@
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/core = 1, /obj/item/magic/infernal/fang = 2, /obj/item/magic/melded/t2 = 1)
 	result_atoms = list(/obj/item/enchantmentscroll/phoenixguard)
+*/
 
 /datum/runeritual/enchanting/returningweapon
 	name = "Returning Weapon"
