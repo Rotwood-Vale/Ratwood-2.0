@@ -30,7 +30,7 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/neck/roguetown/psicross/naledi
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	pants = /obj/item/clothing/under/roguetown/skirt/black
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
