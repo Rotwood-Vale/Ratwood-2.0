@@ -2594,9 +2594,6 @@
 /obj/item/restraints/legcuffs/beartrap/armed/camouflage,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/cave)
-"ayC" = (
-/turf/closed/wall/mineral/rogue/decostone/fluffstone,
-/area/rogue/outdoors/mountains)
 "ayE" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10
@@ -5460,7 +5457,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "bac" = (
 /obj/structure/flora/hotspring_rocks/small/five{
 	pixel_y = 11
@@ -26296,6 +26293,10 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/bath)
+"eXD" = (
+/obj/structure/table/wood/poor,
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors)
 "eXE" = (
 /obj/structure/fluff/railing/border/west{
 	dir = 5
@@ -49386,10 +49387,6 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter)
-"joN" = (
-/obj/structure/fluff/railing/border,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/outdoors/mountains)
 "joP" = (
 /obj/effect/decal/mossy{
 	dir = 1
@@ -50567,6 +50564,12 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone_clear,
 /area/rogue/indoors/inq)
+"jAD" = (
+/obj/item/roguebin/water,
+/turf/open/floor/rogue/ruinedwood{
+	icon_state = "vertw"
+	},
+/area/rogue/indoors)
 "jAH" = (
 /obj/structure/flora/roguegrass/water{
 	pixel_y = -1
@@ -66010,7 +66013,7 @@
 	dir = 9
 	},
 /turf/open/transparent/openspace,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "mvO" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/roguegrass/herb/rosa{
@@ -66941,7 +66944,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "mEp" = (
 /obj/structure/trap/curse/hidden,
 /turf/open/floor/rogue/greenstone/runed,
@@ -70517,7 +70520,7 @@
 /obj/structure/bed/rogue/inn/double,
 /obj/structure/fluff/railing/border,
 /turf/open/floor/carpet/royalblack,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "nna" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /obj/structure/glowshroom,
@@ -75095,13 +75098,6 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/cleanshallow,
 /area/rogue/under/cavewet/bogcaves)
-"odW" = (
-/obj/structure/roguewindow{
-	max_integrity = 500
-	},
-/obj/structure/curtain/directional/brown,
-/turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
 "oee" = (
 /obj/structure/fluff/railing/border/north,
 /obj/structure/rack/rogue,
@@ -85803,13 +85799,6 @@
 	},
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town)
-"qcR" = (
-/obj/structure/flora/roguegrass/water/reeds,
-/obj/structure/flora/roguegrass/water/reeds,
-/turf/open/water/river{
-	icon_state = "rockwd"
-	},
-/area/rogue/outdoors/woods/northeast)
 "qcW" = (
 /obj/structure/bars/pipe{
 	dir = 8
@@ -98114,7 +98103,7 @@
 	},
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "suJ" = (
 /obj/structure/stairs{
 	dir = 4
@@ -100772,10 +100761,6 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/under/town/basement)
-"sWz" = (
-/obj/structure/fluff/railing/border,
-/turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
 "sWD" = (
 /obj/structure/bed/rogue/inn/wool,
 /obj/item/bedsheet/rogue/wool,
@@ -106770,12 +106755,6 @@
 /obj/structure/flora/roguegrass/thorn_bush,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet/bogcaves)
-"ubX" = (
-/obj/structure/flora/roguegrass/water/reeds,
-/turf/open/water/river{
-	icon_state = "rockwd"
-	},
-/area/rogue/outdoors/woods/northeast)
 "ubY" = (
 /obj/machinery/anvil,
 /obj/item/rogueweapon/tongs,
@@ -106882,15 +106861,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/inq)
-"ucY" = (
-/obj/structure/roguewindow{
-	max_integrity = 500
-	},
-/obj/structure/curtain/directional/brown{
-	dir = 8
-	},
-/turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
 "udg" = (
 /obj/structure/curtain/red,
 /obj/structure/fluff/railing/border,
@@ -108251,12 +108221,6 @@
 /obj/item/ingot/copper,
 /turf/open/floor/rogue/metal,
 /area/rogue/outdoors/mountains/decap/minotaurfort)
-"upZ" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
-	},
-/turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
 "uqa" = (
 /obj/structure/flora/roguegrass/water,
 /obj/effect/decal/cobbleedge{
@@ -109394,13 +109358,21 @@
 /obj/structure/rack/rogue/shelf{
 	pixel_y = -29
 	},
-/obj/item/roguegem/ruby{
-	pixel_y = -23;
-	pixel_x = -7
+/obj/item/reagent_containers/glass/cup/silver{
+	pixel_y = -19;
+	pixel_x = 8
 	},
-/obj/item/roguegem/yellow{
-	pixel_y = -23;
-	pixel_x = 6
+/obj/item/reagent_containers/glass/cup/silver{
+	pixel_y = -19;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/glass/cup/silver{
+	pixel_y = -19;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/cup/silver{
+	pixel_y = -19;
+	pixel_x = -11
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
@@ -118970,7 +118942,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "wpV" = (
 /obj/structure/chair/wood/rogue/fancy,
 /obj/effect/landmark/start/wapprentice,
@@ -124042,7 +124014,7 @@
 	},
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/woodturned,
-/area/rogue/outdoors/mountains)
+/area/rogue/indoors)
 "xoV" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 1;
@@ -313390,11 +313362,11 @@ bhJ
 bhJ
 bhJ
 bhJ
-ubX
-qcR
-ubX
+clQ
+clQ
+clQ
 xHP
-ryc
+xHP
 bwv
 htz
 htz
@@ -421887,12 +421859,12 @@ aBB
 aBB
 aBB
 jpY
-rep
-wLS
-wLS
-wLS
-wLS
-rep
+bwv
+tVb
+tVb
+tVb
+tVb
+bwv
 aBB
 aBB
 aBB
@@ -422339,12 +422311,12 @@ aBB
 aBB
 aBB
 jpY
-wLS
+tVb
 xoS
-dgv
-upZ
+mIq
+gva
 suF
-wLS
+tVb
 aBB
 bwv
 tVb
@@ -422791,12 +422763,12 @@ aBB
 aBB
 aBB
 jpY
-wLS
+tVb
 wpQ
-dgv
-sWz
+mIq
+goO
 mvH
-wLS
+tVb
 aBB
 tVb
 pIL
@@ -423243,12 +423215,12 @@ aBB
 aBB
 aBB
 jpY
-odW
-joN
+xVy
+fQw
 mEm
-sWz
-aBB
-wLS
+goO
+rLS
+tVb
 aBB
 xVy
 piI
@@ -423695,12 +423667,12 @@ aBB
 aBB
 aBB
 jpY
-wLS
+tVb
 nmX
-daq
+eXD
 aZV
-wLS
-wLS
+tVb
+tVb
 aBB
 tVb
 snj
@@ -424147,12 +424119,12 @@ aBB
 aBB
 aBB
 jpY
-rep
-ucY
-ucY
-ayC
-wLS
-rep
+bwv
+iJQ
+iJQ
+udQ
+tVb
+bwv
 aBB
 tVb
 mIq
@@ -425033,7 +425005,7 @@ knr
 kmD
 knr
 bwv
-uOV
+jAD
 uOV
 tVb
 gJt
@@ -425485,7 +425457,7 @@ knr
 kFG
 knr
 bwv
-uOV
+lNV
 uOV
 tVb
 rls
