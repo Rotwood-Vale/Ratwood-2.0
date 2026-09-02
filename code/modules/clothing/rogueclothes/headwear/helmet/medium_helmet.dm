@@ -194,6 +194,12 @@
 	smelt_bar_num = 2
 	armor = ARMOR_PLATE
 
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/gilded
+	name = "gilded visored sallet"
+	desc = "A steel helmet with gilded trim which protects the ears, nose, and eyes."
+	icon_state = "gildedsallet_visor"
+	item_state = "gildedsallet_visor"
+
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 	name = "steel shishak"
 	desc = "A flat decorated steel helmet of Aavnic make with a spike at the top end. A hanging layer of chainmail protects the sides of the head and even the neck."

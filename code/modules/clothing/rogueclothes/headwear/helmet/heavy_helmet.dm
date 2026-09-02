@@ -292,6 +292,24 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gilded
+	name = "gilded knight's helmet"
+	desc = "A noble knight's helm made of steel and completed with a gilded trim."
+	icon_state = "gildedknight"
+	item_state = "gildedknight"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gilded/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(!(istype(W, /obj/item/natural/feather) && !detail_tag))
+		return
+	user.visible_message(span_warning("[user] adds [W] to [src]."))
+	user.transferItemToLoc(W, src, FALSE, FALSE)
+	detail_tag = "_detail"
+	update_icon()
+	if(loc == user && ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_head()
+
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient
 	name = "ancient bascinet"
 	desc = "An ancient greathelm of polished gilbranze. There is no sight more haunting than that of a noble knight, long-succumbed to the undying forces of evil. Add a feather to show the colors of your family or allegiance."
