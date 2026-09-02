@@ -6,6 +6,11 @@
 	. = ..()
 	if(controller.blackboard[BB_BASIC_MOB_FOOD_TARGET]) // this means we are likely eating a corpse (maybe also moving)
 		return
+
+	if(istype(controller.pawn, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/hostile_wanderer = controller.pawn
+		if(hostile_wanderer.stationary_until_aggro && !hostile_wanderer.target)
+			return FALSE
 	
 	var/mob/living/simple_animal/simple_mob = controller.pawn
 	if(istype(simple_mob) && simple_mob.binded)

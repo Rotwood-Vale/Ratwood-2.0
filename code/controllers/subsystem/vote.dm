@@ -379,6 +379,11 @@ SUBSYSTEM_DEF(vote)
 					this is potentially a malicious exploit and worth noting.")
 				return
 
+			if(istype(current_vote, /datum/vote/endround))
+				GLOB.round_timer = world.time + ROUND_EXTENSION_TIME // Canceling endround defaults to the same behavior as "Continue Playing".
+				log_admin("[key_name(voter)] canceled end round vote.")
+				message_admins("[key_name(voter)] canceled end round vote.")
+
 			voter.log_message("cancelled a vote.", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has cancelled the current vote.")
 			SStgui.close_uis(src)

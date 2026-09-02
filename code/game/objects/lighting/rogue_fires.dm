@@ -361,6 +361,26 @@
 /obj/machinery/light/rogue/torchholder/l
 	dir = EAST
 
+/obj/machinery/light/rogue/torchholder/empty
+	name = "empty sconce"
+	on = FALSE
+
+/obj/machinery/light/rogue/torchholder/empty/Initialize(mapload)
+	. = ..()
+	QDEL_NULL(torchy)
+	on = FALSE
+	set_light(0)
+	update_icon()
+
+/obj/machinery/light/rogue/torchholder/empty/c
+	pixel_y = 32
+
+/obj/machinery/light/rogue/torchholder/empty/r
+	dir = WEST
+
+/obj/machinery/light/rogue/torchholder/empty/l
+	dir = EAST
+
 /obj/machinery/light/rogue/torchholder/fire_act(added, maxstacks)
 	if(torchy)
 		if(!on)

@@ -26,12 +26,14 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_SLIPPERY)
 	job_subclasses = list(
 		/datum/advclass/tribalrabble/rabble,
 	)
 
 /datum/outfit/job/roguetown/tribalrabble
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 	cloak = /obj/item/clothing/cloak/tribal
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -45,7 +47,10 @@
 
 /datum/advclass/tribalrabble/rabble
 	name = "Hunter"
-	tutorial = "Ooga Chacka Sneaka-Chacka."
+	tutorial = "A gremlin among many other gremlins. You worship the chief as the representation of The Dragon, his chosen as the biggest and the strongest. \
+	There's little to say about you, aside from your proclivity for skullduggery over outright skull smashing, much to your chief's disappointment. Obey when called upon. \
+	This is The Dragon's island, and there's rumor of newcomers, which means more gold for him. \
+	Perhaps if you brought a fresh slave or mammons... The Dragon would finally notice you."
 	outfit = /datum/outfit/job/roguetown/tribalrabble/rabble
 	category_tags = list(CTAG_TRIBALRABBLE)
 	traits_applied = list(TRAIT_DODGEEXPERT)
@@ -93,3 +98,10 @@
 		/obj/item/lockpickring/mundane = 1,
 		)
 	H.set_blindness(0)
+/datum/job/roguetown/tribalrabble/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE

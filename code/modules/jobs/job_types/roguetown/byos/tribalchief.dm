@@ -42,6 +42,8 @@
 
 /datum/outfit/job/roguetown/tribalchieftain
 	// job_bitflag = BITFLAG_ROYALTY
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 
 /datum/outfit/job/roguetown/tribalchieftain
 	head = /obj/item/clothing/head/roguetown/crown/byos
@@ -99,8 +101,10 @@
 				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalchieftain/warrior
-	name = "Valiant Warrior"
-	tutorial = "Ooga Chacka BESTA chacka!"
+	name = "Tribal Warrior"
+	tutorial = "You're the Chief of the local island tribe. A representation of The Dragon's rule, as you are the biggest and strongest. You ensure the spread of his dominion over others where you can, while ensuring none disturb his slumber. \
+	There's news of an arriving duchy seeking to lay claim to The Dragon's island. \
+	Have your subjects sneak through the caves and elsewhere, robbing and kidnapping passersby. Spread His will upon the weak fools. Bring gold and slaves to your tribe in The Dragon's name!"
 	// outfit = /datum/outfit/job/roguetown/tribalchieftain/warrior
 	category_tags = list(CTAG_TRIBALCHIEFTAIN)
 	traits_applied = list(TRAIT_DNR, TRAIT_HEAVYARMOR, TRAIT_TRIBAL, TRAIT_DARKVISION)
@@ -127,3 +131,10 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
+/datum/job/roguetown/tribalchieftain/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE

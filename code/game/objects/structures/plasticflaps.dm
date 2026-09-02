@@ -63,6 +63,8 @@
 
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
+		if(HAS_TRAIT(M, TRAIT_PASSTABLE))
+			return TRUE
 		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
 	return ..()

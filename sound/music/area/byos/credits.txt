@@ -1,0 +1,21 @@
+ship.ogg: Port Royale 16 England 2, by Ascaron Entertainment
+keep.ogg: Port Royale Spain 8, by Ascaron Entertainment
+abandoned_magic.ogg: Prince of Persia: The Sands of Time - Magic Fountain
+settlement_day.ogg: Risen 2 - Dark Waters - Soundtrack 06 Outdoor 
+settlement_night.ogg: Risen 2 - Dark Waters - Soundtrack 16 Pirate Town Part 2 
+outskirts.ogg: Risen 2 - Dark Waters - Soundtrack 07 Deep Jungle Part 1
+outskirts_night.ogg: Robin Hood - The Legend Of Sherwood Soundtrack - 08 Lincoln At Night
+beach_night.ogg:  Risen 2 - Dark Waters - Soundtrack 17 The Beach 
+bog_night.ogg: Gothic - OST 15 Swamp at Night
+bog_day.ogg: Risen - Soundtrack 13 The Great Swamp
+volcano.ogg: Gothic - OST 09 Old Mine
+
+
+pride.ogg: Risen - Soundtrack 10 The Holy Fire
+lust.ogg: Divinity Original Sin 2 - Impish Pocket Realm - Hasted Version
+sloth.ogg: Divinity Original Sin 2 - Impish Pocket Realm - Slowed Version
+envy.ogg: Alice: Madness Returns OST - Queensland
+gluttony.ogg: Kings Field IV - Dark Reality (Reversed & Slowed) 
+greed.ogg: Alice: Madness Returns OST - Dollhouses
+
+ 

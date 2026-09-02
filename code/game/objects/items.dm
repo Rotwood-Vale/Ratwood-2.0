@@ -265,6 +265,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/Initialize(mapload)
 	. = ..()
+	if(is_important)
+		GLOB.important_items |= src
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
 		pixel_y = rand(-5,5)
@@ -365,6 +367,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	update_force_dynamic()
 
 	. = ..()
+	if(is_important)
+		GLOB.important_items |= src
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
@@ -398,6 +402,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			blade_int = max_blade_int
 
 /obj/item/Destroy()
+	if(is_important)
+		GLOB.important_items -= src
+		var/atom/last_known_container = get_atom_on_turf(src, /mob)
+		var/last_known_location = "Unknown"
+		if(ismob(last_known_container))
+			var/mob/M = last_known_container
+			last_known_location = "[M.real_name] ([M.ckey || "no ckey"])"
+		else if(isturf(src.loc))
+			last_known_location = "[AREACOORD(src)]"
+		else if(src.loc)
+			last_known_location = "[src.loc]"
+		GLOB.important_item_destroyed_log += "[name] ([type]) - last known: [last_known_location]"
+		if(length(GLOB.important_item_destroyed_log) > 200)
+			GLOB.important_item_destroyed_log.Cut(1, 2)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc

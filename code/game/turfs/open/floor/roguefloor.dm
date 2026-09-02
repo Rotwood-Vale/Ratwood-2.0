@@ -958,13 +958,41 @@
 	tiled_dirt = FALSE
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt)
+	canSmoothWith = list(/turf/open/floor/rogue/dirt/road,/turf/open/floor/rogue/dirt,/turf/open/floor/rogue/volcanic/magma)
 	neighborlay = "lavedge"
 	temperature = 500
 
 /turf/open/floor/rogue/volcanic/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
 	. = ..()
+
+/turf/open/floor/rogue/volcanic/magma
+	name = "magma"
+	desc = "A thin crust over seething magma. Even brushing it can set you ablaze."
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "magma"
+	dir = SOUTH
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/turf/open/floor/rogue/volcanic)
+	temperature = 1000
+	light_outer_range = 2
+	light_power = 0.45
+	light_color = LIGHT_COLOR_LAVA
+
+/turf/open/floor/rogue/volcanic/magma/Initialize(mapload)
+	. = ..()
+	dir = SOUTH
+
+/turf/open/floor/rogue/volcanic/magma/cardinal_smooth(adjacencies)
+	roguesmooth(adjacencies)
+
+/turf/open/floor/rogue/volcanic/magma/Entered(atom/movable/AM, atom/oldLoc)
+	. = ..()
+	AM.fire_act(1,5)
+
+/turf/open/floor/rogue/volcanic/magma/Crossed(atom/movable/O)
+	..()
+	O.fire_act(1,5)
 
 
 /turf/open/floor/rogue/blocks

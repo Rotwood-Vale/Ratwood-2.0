@@ -1436,6 +1436,7 @@ GLOBAL_VAR_INIT(extend_round_timestamp, 0)
 	if((GLOB.round_timer > world.time + (3 * ROUND_EXTENSION_TIME)) || SSgamemode.round_ends_at - world.time > (3 * ROUND_EXTENSION_TIME))
 		to_chat(usr, "<span class='notice'>Failsafe! Round end is already over 3 times out! Ignoring.</span>")
 		return
+
 	if(SSgamemode.round_ends_at != 0) // End round is already ticking.
 		SSgamemode.round_ends_at += ROUND_EXTENSION_TIME
 	else //We push back the automated endround vote.

@@ -121,6 +121,11 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 
 /datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE)
 	var/mob/living/L = mind.current
+	var/datum/skill/skillref = GetSkillRef(skill)
+	var/base_amt = amt
+	if(SSmapping?.map_adjustment?.map_file_name == "byos.dmm")
+		if(skillref && (skillref.type == /datum/skill/craft/carpentry || skillref.type == /datum/skill/craft/masonry))
+			amt *= 2
 	var/show_xp = TRUE
 	if(!(L.client?.prefs.floating_text_toggles & XP_TEXT))
 		show_xp = FALSE
@@ -134,7 +139,6 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 				L.balloon_alert(L, "[amt] XP")
 				COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
 		return
-	var/datum/skill/skillref = GetSkillRef(skill)
 	var/trait_capped_level = skillref.max_untraited_level
 
 	#ifdef USES_TRAIT_SKILL_GATING
@@ -165,7 +169,7 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
 
 	adjust_sleep_xp(skill, amt)
-	add_cross_training_experience(skill, amt)
+	add_cross_training_experience(skill, base_amt)
 
 	var/can_advance_post = enough_sleep_xp_to_advance(skill, 1)
 	var/capped_post = enough_sleep_xp_to_advance(skill, 2)

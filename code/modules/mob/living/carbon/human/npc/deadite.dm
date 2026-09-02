@@ -9,6 +9,7 @@
 	ambushable = FALSE
 	wander = TRUE
 	infected = TRUE
+	var/deadite_outfit = /datum/outfit/job/roguetown/deadite
 
 /mob/living/carbon/human/species/npc/deadite/Initialize(mapload)
 	. = ..()
@@ -42,10 +43,20 @@
 	src.mind_initialize()
 	mob_biotypes |= MOB_UNDEAD
 	var/datum/zombie_antag = src.mind.add_antag_datum(/datum/antagonist/zombie, team = FALSE, admin_panel = TRUE)
-	equipOutfit(new /datum/outfit/job/roguetown/deadite)
+	if(deadite_outfit)
+		equipOutfit(new deadite_outfit)
 	//Make sure deadite NPCs don't show up in the antag listings
 	GLOB.antagonists -= zombie_antag
 	update_body()
+
+// Spawn-only variants. Not referenced in ambient/ambush pools.
+/mob/living/carbon/human/species/npc/deadite/medium
+	deadite_outfit = /datum/outfit/job/roguetown/deadite/medium
+	wander = FALSE
+
+/mob/living/carbon/human/species/npc/deadite/hard
+	deadite_outfit = /datum/outfit/job/roguetown/deadite/hard
+	wander = FALSE
 
 /mob/living/carbon/human/species/npc/deadite/npc_try_backstep()
 	return FALSE // deadites cannot juke
@@ -82,6 +93,28 @@
 
 	r_hand = null
 	l_hand = null
+
+/datum/outfit/job/roguetown/deadite/medium/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.STASTR = 13
+	H.STASPD = 11
+	H.STACON = 13
+	H.STAWIL = 12
+	H.STAINT = 9
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+
+/datum/outfit/job/roguetown/deadite/hard/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.STASTR = 16
+	H.STASPD = 13
+	H.STACON = 16
+	H.STAWIL = 14
+	H.STAINT = 11
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
 
 /mob/living/carbon/human/proc/deadite_get_aimheight(victim)
 	if(!(mobility_flags & MOBILITY_STAND))

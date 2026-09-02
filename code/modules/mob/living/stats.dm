@@ -5,6 +5,8 @@
 	var/STAPER = 10
 	var/STAINT = 10
 	var/STACON = 10
+	// Legacy map compatibility: some map-placed mobs still preload STAEND.
+	var/STAEND = 10
 	var/STAWIL = 10
 	var/STASPD = 10
 	var/STALUC = 10

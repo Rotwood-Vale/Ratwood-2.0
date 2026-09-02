@@ -20,6 +20,8 @@
 	var/del_on_deaggro = null
 	var/last_aggro_loss = null
 	var/wander = TRUE
+	/// If TRUE, this NPC will not run idle movement logic until it has an active aggro target.
+	var/stationary_until_aggro = FALSE
 	var/ai_when_client = FALSE
 	var/next_idle = 0
 	var/next_seek = 0
@@ -147,6 +149,8 @@
 			// don't return, taunting is a free action
 	if(!handle_combat())
 		if(mode == NPC_AI_IDLE && !pickupTarget)
+			if(stationary_until_aggro && !target)
+				return
 			npc_idle()
 			if(del_on_deaggro && last_aggro_loss && (world.time >= last_aggro_loss + del_on_deaggro))
 				if(deaggrodel())

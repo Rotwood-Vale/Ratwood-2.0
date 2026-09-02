@@ -10,7 +10,6 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	// tutorial = "Ooga Chacka WORK-a chacka."
 	tutorial = "You are the lowest of the low in the tribe. You're the camp's laborer, in service to the Chief before all others. \
 	They've chosen you, as the weakest of them all, to prepare and service the camp in whatever fashion they see fit. \
 	Make sure everyone is fed, healthy, and satisfied, all while hoping maybe one day you'll be something more."
@@ -18,7 +17,7 @@
 	whitelist_req = TRUE
 
 	outfit = /datum/outfit/job/roguetown/tribalvillager
-	advclass_cat_rolls = list(CTAG_PILGRIM = 20)
+	advclass_cat_rolls = list(CTAG_TOWNER = 20)
 
 	min_pq = 0
 	max_pq = null
@@ -26,7 +25,7 @@
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	// social_rank = SOCIAL_RANK_PEASANT
 	// job_traits = list(TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_TRIBAL)
-	job_traits = list(TRAIT_TRIBAL, TRAIT_OUTDOORSMAN, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_TRIBAL, TRAIT_OUTDOORSMAN, TRAIT_DARKVISION, TRAIT_SLIPPERY)
 	job_subclasses = list(
 		/datum/advclass/barbersurgeon,
 		/datum/advclass/blacksmith,
@@ -57,3 +56,13 @@
 		pants = /obj/item/clothing/under/roguetown/loincloth/brown
 		wrists = null
 		shoes = null
+/datum/job/roguetown/tribalvillager/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE
+/datum/outfit/job/roguetown/tribalvillager
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon

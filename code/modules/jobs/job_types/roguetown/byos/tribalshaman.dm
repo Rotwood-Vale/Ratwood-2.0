@@ -11,7 +11,6 @@
 	allowed_sexes = list(MALE, FEMALE)
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	display_order = JDO_TRIBALSHAMAN
-	// tutorial = "Ooga chacka ZAP a chacka!"
 	tutorial = "You've seen visions of fire and magma, gnashing claws and red scales. The Dragon's will burns behind your eyes, and Graggar's voice echoes in your dreams. \
 	Your wild hallucinations and prophetic trances set you apart from the rest of your tribe—some fear you, others revere you, but all know you are touched by something greater. \
 	You serve as the spiritual heart of the tribe, guiding the Chief and your kin with fervent, sometimes unsettling, devotion. \
@@ -27,14 +26,17 @@
 	// Can't get very far as a magician if you can't chant spells now can you?
 	vice_restrictions = list(/datum/charflaw/mute)
 
-	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION, TRAIT_SLIPPERY)
 	job_subclasses = list(
-		/datum/advclass/courtmage
+		/datum/advclass/tribalshaman
 	)
 
 /datum/advclass/tribalshaman
-	name = "Tribe Shaman"
-	tutorial = "Ooga chacka ZAP a chacka!"
+	name = "Tribal Shaman"
+	tutorial = "You've seen visions of fire and magma, gnashing claws and red scales. The Dragon's will burns behind your eyes, and Graggar's voice echoes in your dreams. \
+	Your wild hallucinations and prophetic trances set you apart from the rest of your tribe—some fear you, others revere you, but all know you are touched by something greater. \
+	You serve as the spiritual heart of the tribe, guiding the Chief and your kin with fervent, sometimes unsettling, devotion. \
+	Let no one doubt your faith: you are the Dragon's chosen, and you will do anything, no matter how mad, to see Graggar's vision made real."
 	outfit = /datum/outfit/job/roguetown/tribalshaman/basic
 
 	subclass_spellpoints = 33
@@ -66,6 +68,8 @@
 
 /datum/outfit/job/roguetown/tribalshaman
 	has_loadout = TRUE
+	allowed_patrons = list(/datum/patron/dragon)
+	default_patron = /datum/patron/dragon
 
 /datum/outfit/job/roguetown/tribalshaman/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
@@ -102,3 +106,10 @@
 		/obj/item/book/spellbook,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
 	)
+/datum/job/roguetown/tribalshaman/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..();
+	if(L)
+		var/mob/living/carbon/human/H = L
+		if(!H.mind)
+			return
+		H.ambushable = FALSE

@@ -106,6 +106,7 @@
 	icon_state = "bosskey"
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
+	is_important = TRUE
 
 /obj/item/roguekey/lord/Initialize(mapload)
 	. = ..()
@@ -135,6 +136,60 @@
 	desc = "The Key to the royal chambers. It even feels pretentious."
 	icon_state = "ekey"
 	lockid = "royal"
+
+// BYOS Keys
+/obj/item/roguekey/sin
+	is_important = TRUE
+
+/obj/item/roguekey/sin/greed
+	name = "Key of Greed"
+	desc = "It's golden-perfect sheen almost make it look like it's glowing."
+	icon_state = "bosskey"
+	lockid = "greed"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/lust
+	name = "Key of Lust"
+	desc = "It's smooth and sensual to the touch."
+	icon_state = "vampkey"
+	lockid = "lust"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/wrath
+	name = "Key of Wrath"
+	desc = "It's eye glares at you intensely."
+	icon_state = "eyekey"
+	lockid = "wrath"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/envy
+	name = "Key of Envy"
+	desc = "It's covered in small spikes. It hurts to hold."
+	icon_state = "spikekey"
+	lockid = "envy"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/gluttony
+	name = "Key of Gluttony"
+	desc = "It's covered in a thick flesh-like substance."
+	icon_state = "vampkey"
+	lockid = "gluttony"
+	color = "#751f09"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/pride
+	name = "Key of Pride"
+	desc = "It depicts an etched face, grinning like a madman."
+	icon_state = "bosskey"
+	lockid = "pride"
+	is_important = TRUE
+
+/obj/item/roguekey/sin/sloth
+	name = "Key of Sloth"
+	desc = "Whoever forged this key put barely any effort into it."
+	icon_state = "greenkey"
+	lockid = "sloth"
+	is_important = TRUE
 
 /obj/item/roguekey/manor
 	name = "manor key"
