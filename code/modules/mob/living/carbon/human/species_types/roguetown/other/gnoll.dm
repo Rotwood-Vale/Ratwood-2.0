@@ -47,7 +47,7 @@
 	)
 	inherent_biotypes = MOB_HUMANOID
 	armor = 30
-	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
+	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_L, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
@@ -80,7 +80,10 @@
 	examine_relief_event = /datum/stressevent/gnoll_graggar
 
 /datum/species/gnoll/send_voice(mob/living/carbon/human/H)
-	playsound(get_turf(H), pick('sound/vo/mobs/wwolf/wolftalk1.ogg','sound/vo/mobs/wwolf/wolftalk2.ogg'), 100, TRUE, -1)
+	if(H.m_intent != MOVE_INTENT_SNEAK)
+		playsound(get_turf(H), pick('sound/vo/mobs/wwolf/wolftalk1.ogg','sound/vo/mobs/wwolf/wolftalk2.ogg'), 100, TRUE, -1)
+	else
+		playsound(get_turf(H), 'sound/misc/talk.ogg', 100, TRUE, -1)
 
 /datum/species/gnoll/proc/cancel_default_bark(datum/source, list/hearers, distance, volume, pitch)
 	SIGNAL_HANDLER
