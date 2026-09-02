@@ -262,7 +262,7 @@
 			else
 				playsound(M.loc,  "nodmg", 100, FALSE, -1)
 
-	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)]) (AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 	execute_cleave(user, get_turf(M), M)
 
