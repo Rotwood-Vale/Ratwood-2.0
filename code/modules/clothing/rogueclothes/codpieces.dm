@@ -4,7 +4,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/codpieces.dmi'
 	icon_state = "codpiece"
 	item_state = "codpiece"
-	desc = "A leather codpiece that fits snugly (for most, save the elves) around the groin. Considered to be the height of fashion in Drow high society."
+	desc = "A leather codpiece that fits snugly (for most, save the elves) around the groin. Considered to be the height of fashion in my aristocratic circles including, somewhat paradoxically, undercity matriarchs."
 	color = "#66584c"
 	dropshrink = 0.5
 	var/is_attached_to_pants = FALSE
