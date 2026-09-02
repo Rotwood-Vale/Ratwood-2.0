@@ -243,3 +243,15 @@
 /datum/mob_descriptor/trait/amber
 	name = "Amber"
 	prefix = "is very"
+
+/datum/mob_descriptor/trait/custom
+	name = "Custom Trait"
+	prefix = "is"
+	custom_index = 5
+
+/datum/mob_descriptor/trait/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/trait/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text

@@ -137,13 +137,15 @@
 	. = ..()
 	. += span_info("It has [charges] charge\s remaining.")
 
-/obj/item/alch/bloomstone/Destroy()
+/obj/item/alch/bloomstone/Destroy(force=FALSE)
+	if(force)
+		charges = 0
 	remove_filter("bloomstone_glow")
 	charges--
 	if(charges > 0)
 		// Stone survives this use; re-apply glow and stay alive.
 		add_filter("bloomstone_glow", 2, list("type" = "outline", "color" = "#73c47a", "alpha" = 95, "size" = 1))
-		return QDEL_HINT_LETMELIVE
+		return QDEL_HINT_LETMELIVE // <---- DO NOT EVER EVER EVER EVER EVER EVER EVER EVER EVER DO THIS
 	// All charges spent — shatter into stone dust.
 	new /obj/item/alch/stonedust(get_turf(src))
 	if(loc && isliving(loc))
