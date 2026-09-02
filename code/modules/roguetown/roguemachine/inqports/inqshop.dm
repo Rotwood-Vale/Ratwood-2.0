@@ -262,7 +262,7 @@
 /datum/inqports/articles/confessions
 	name = "3 Confessions"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/confessions
-	marquescost = 8
+	marquescost = 5
 
 /obj/structure/closet/crate/chest/inqcrate/articles/confessions/Initialize(mapload)
 	. = ..()
@@ -362,7 +362,7 @@
 /datum/inqports/equipment/crankbox
 	name = "The Crankbox"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/crankbox/
-	marquescost = 20
+	marquescost = 16
 	maximum = 1
 
 /obj/structure/closet/crate/chest/inqreliquary/relic/crankbox/Initialize(mapload)
