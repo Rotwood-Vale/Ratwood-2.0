@@ -857,7 +857,7 @@
 	desc = "A blessed executioner's sword, whose massive silver blade lays mounted atop an intricately-carved \
 	handle. The heft belies a purpose most holy, when hoisted beyond the chopping block; to cleave through hordes, and \
 	to march knee-deep through the dead in search of absolution."
-	icon_state = "silvexe"
+	icon_state = "psyexe"
 	force = 22
 	force_wielded = 25
 	minstr_req = TRUE
