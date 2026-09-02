@@ -145,6 +145,8 @@
 		if(!(direction & dpdir))
 			continue
 		var/turf/step_back = get_step(src, direction)
+		if(!step_back)
+			continue
 		for(var/obj/structure/structure in step_back.contents)
 			if(!structure.rotation_network)
 				continue
