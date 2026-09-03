@@ -1,31 +1,28 @@
-//A subtype of the melee goon. You're given the stunmace, which allows access off of Rockhill.
-//Additionally, one of the rarer weapon types, the maul, as a choice.
-//Expert unarmed to top it off. Make sah proud.
-//In exchange, you're slower. Much slower. Both in matters of speed or otherwise.
+// You're the corn-fed brute they keep around solely to smash people into pulps.
 /datum/advclass/manorguard/gormless
 	name = "Catchpole"
-	tutorial = "Not quite the professional. Not quite the soldier. More akin to a brute they've given a hammer, some leftover equipment and told to face the enemy. \
+	tutorial = "Not quite the professional. Not quite the soldier. More akin to a brute they've given a bludgeon, some leftover equipment and told to face the enemy. \
 	Yet, you've proven yourself more reliable than disposable. More than most can say."
 	outfit = /datum/outfit/job/roguetown/manorguard/gormless
 
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(//This is more like +4/+2/+3/-2/-1
-		STATKEY_CON = 3,//+1 from guard bonus, so +4 in town.
+	subclass_stats = list(
+		STATKEY_CON = 4,// Stat weight of FOUR. All in on brawn.
 		STATKEY_STR = 2,
-		STATKEY_WIL = 2,//+1 from guard bonus, so +3 in town.
+		STATKEY_WIL = 2,
 		STATKEY_INT = -2,
-		STATKEY_SPD = -2,//+1 from guard bonus, so -1 in town.
+		STATKEY_SPD = -2
 	)
-	subclass_skills = list(//You get no reading, m'lord. Go smack a dummy with a book, if you don't like soul.
+	subclass_skills = list(// No reading. No medicine. You're a dumbass who smashes people, smashes things, and smashes things into people.
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,// I CAN SMELL THEM
 	)
 
 /datum/outfit/job/roguetown/manorguard/gormless/pre_equip(mob/living/carbon/human/H)
@@ -37,34 +34,35 @@
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms/iron
 	pants = /obj/item/clothing/under/roguetown/splintlegs/iron
-	beltl = /obj/item/rogueweapon/mace/cudgel
+	beltr = /obj/item/rogueweapon/mace/stunmace// You can have this.
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Maul - 14STR Minimum")
+		var/weapons = list("KNUCKLEDUSTERS!!","Mace & Shield","Maul - +1 STR, -1 SPD, -1 INT")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Stunmace & Shield")
-				r_hand = /obj/item/rogueweapon/mace/stunmace
+			if("KNUCKLEDUSTERS!!")// Impractical compared to the other options. An impractical weapon for an impractical man.
+				H.put_in_hands(new /obj/item/rogueweapon/knuckles(H), TRUE, forced = TRUE)
+			if("Mace & Shield")
+				H.put_in_hands(new /obj/item/rogueweapon/mace/steel(H), TRUE, forced = TRUE)
 				backl = /obj/item/rogueweapon/shield/iron
-			if("Maul - 14STR Minimum")
-				r_hand = /obj/item/rogueweapon/mace/maul
+			if("Maul - +1 STR, -1 SPD, -1 INT")
+				H.put_in_hands(new /obj/item/rogueweapon/mace/maul(H), TRUE, forced = TRUE)
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				H.change_stat(STATKEY_STR, 1) /// so even without a strength-specific statpack, you can at least use the weapon. With one, it allows great maul just like on city guard.
+				H.change_stat(STATKEY_STR, 1)// To physically wield it.
 				H.change_stat(STATKEY_SPD, -1)
 				H.change_stat(STATKEY_INT, -1)
 
-	backpack_contents = list(//Iron dagger and ale instead of red.
-		/obj/item/rogueweapon/huntingknife/idagger = 1,
+	backpack_contents = list(
+		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 
 	H.verbs |= /mob/proc/haltyell
 
-//All iron exclusive, as with the armour.
 	if(H.mind)
 		var/helmets = list(
 		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle/iron,

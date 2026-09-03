@@ -14,67 +14,87 @@
 		STATKEY_WIL = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/bows = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/slings = SKILL_LEVEL_MASTER,//Your entire point is ranged.
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,// Choose a ranged skill to master.
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/slings = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,//You get a knife, just in case.
-		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,//And can double in maces and swords.
-		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,// Regardless of spec, always okay with knives.
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
 	extra_context = "Chooses between Light Armor (Dodge Expert) & Medium Armor. Additionally, this subclass can set traps."
 
 /datum/outfit/job/roguetown/manorguard/skirmisher/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Crossbow","Bow","Sling")
+		var/weapons = list("Dagger","Cudgel","Nagaika Whip","Short Sword")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		var/armor_options = list("Light Armor", "Medium Armor")
+		var/ranged_weapons = list("Bow","Crossbow","Sling")
+		var/ranged_choice = input(H, "Choose your ranged weapon.", "TAKE UP ARMS") as anything in ranged_weapons
+		var/armor_options = list("Light Armor + Dodge Expert", "Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow")
-				beltr = /obj/item/quiver/bolts
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if("Bow") // They can head down to the armory to sideshift into one of the other bows.
-				beltr = /obj/item/quiver/arrows
+			if("Dagger")
+				H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/special(H), TRUE, forced = TRUE)
+				beltl = /obj/item/rogueweapon/scabbard/sheath
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+			if("Cudgel")
+				H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel(H), TRUE, forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			if("Nagaika Whip")// Meme... If we didn't give them a nagaika.
+				H.put_in_hands(new /obj/item/rogueweapon/whip/nagaika(H), TRUE, forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+			if("Short Sword")
+				H.put_in_hands(new /obj/item/rogueweapon/sword/short(H), TRUE, forced = TRUE)
+				beltl = /obj/item/rogueweapon/scabbard
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+
+		switch(ranged_choice)
+			if("Bow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				beltr = /obj/item/quiver/arrows
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
+			if("Crossbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltr = /obj/item/quiver/bolts
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 			if("Sling")
+				H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/sling(H), TRUE, forced = TRUE)
 				beltr = /obj/item/quiver/sling/iron
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
+				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
 
 		switch(armor_choice)
-			if("Light Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+			if("Light Armor + Dodge Expert")
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			if("Medium Armor")
-				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/rogueweapon/huntingknife = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
 			/obj/item/rogueweapon/scabbard/sheath = 1,
 			/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 			)
 		H.verbs |= /mob/proc/haltyell
-		//Skirmishers get funny spells. Wowzers.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/skirmisher_trap)
 
 		var/helmets = list(
