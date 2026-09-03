@@ -2379,6 +2379,11 @@
 /obj/structure/fluff/railing/wood/west{
 	pixel_x = -8
 	},
+/obj/structure/winch{
+	gid = "eastgateinner";
+	name = "East Gate";
+	redstone_id = "eastgate"
+	},
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/rtfield)
 "avW" = (
@@ -9511,7 +9516,7 @@
 /area/rogue/under/cave)
 "bNj" = (
 /obj/structure/winch{
-	gid = "eastgate";
+	gid = "eastgateinner";
 	name = "East Gate";
 	redstone_id = "eastgate"
 	},
@@ -11965,7 +11970,8 @@
 	name = "inner gate winch";
 	pixel_x = 7;
 	pixel_y = 3;
-	redstone_id = "westgateinner"
+	redstone_id = "westgateinner";
+	gid = "innerwestgate"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
@@ -38849,10 +38855,11 @@
 /area/rogue/indoors/town/manor)
 "hnY" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "westgateouter"
+	redstone_id = "westgateouter";
+	gid = "outerwestgate"
 	},
 /turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/rtfield)
+/area/rogue/outdoors/town)
 "hoa" = (
 /obj/structure/table/church/end/alt/north,
 /obj/item/cooking/platter/silver,
@@ -68116,7 +68123,8 @@
 	name = "outer gate winch";
 	pixel_x = -8;
 	pixel_y = 3;
-	redstone_id = "westgateouter"
+	redstone_id = "westgateouter";
+	gid = "outerwestgate"
 	},
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -75262,7 +75270,8 @@
 /area/rogue/indoors/town)
 "ock" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "westgateinner"
+	redstone_id = "westgateinner";
+	gid = "innerwestgate"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town)
@@ -105116,7 +105125,7 @@
 "tIw" = (
 /obj/structure/bars/passage/preopen{
 	redstone_id = "eastgate";
-	gid = "eastgate"
+	gid = "eastgateinner"
 	},
 /turf/open/floor/rogue/cobblerock{
 	smooth = 0
