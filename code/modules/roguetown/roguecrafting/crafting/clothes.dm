@@ -209,7 +209,6 @@
 
 /datum/crafting_recipe/roguetown/survival/flowercrown_rosa_thorns
 	name = "rosa crown with thorns"
-	display_category = ITEM_CAT_GARMENT_COMMON
 	category = "Clothes"
 	result = /obj/item/flowercrown/rosa/thorns
 	reqs = list(
@@ -223,7 +222,6 @@
 
 /datum/crafting_recipe/roguetown/survival/flowercrown_rosa_gray
 	name = "gray flower crown"
-	display_category = ITEM_CAT_GARMENT_COMMON
 	category = "Clothes"
 	result = /obj/item/flowercrown/rosa/dyecrown
 	reqs = list(
