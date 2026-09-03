@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/Destroy()
 	if (action)
-		qdel(action)
+		QDEL_NULL(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -550,7 +550,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	qdel(action)
+	if(action)
+		QDEL_NULL(action)
 	return ..()
 
 /obj/effect/proc_holder/spell/Click()
@@ -636,7 +637,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	before_cast(targets, user = user)
 	if(user && user.ckey)
-		user.log_message(span_danger("cast the spell [name]."), LOG_ATTACK)
+		user.log_message("cast the spell [name].", LOG_ATTACK, color = "red")
 	if(breaks_invisibility)
 		user.break_invisibility()
 	if(cast(targets, user = user))
