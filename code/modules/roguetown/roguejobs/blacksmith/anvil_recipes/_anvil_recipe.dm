@@ -26,6 +26,7 @@
 	var/hides_from_books = FALSE
 	var/req_trait = null
 	var/rotations_required = 1
+	var/display_category = ITEM_CAT_SMITHING_MISC
 
 /datum/anvil_recipe/New(datum/P, using_blade = FALSE, ...)
 	. = ..()
