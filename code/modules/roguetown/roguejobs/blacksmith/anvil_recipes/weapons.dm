@@ -528,6 +528,7 @@
 	name = "Greatflail, Iron (+1 Iron, +2 Small Log)"
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/flail/peasantwarflail
+	display_category = ITEM_CAT_WEAPONS_FLAILS
 
 /datum/anvil_recipe/weapons/iron/maciejowski
 	name = "Maciejowski, Iron (+1 Iron)"
@@ -624,6 +625,7 @@
 	name = "Greatflail, Steel (+1 Steel, +2 Small Log)"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/flail/peasantwarflail/steel
+	display_category = ITEM_CAT_WEAPONS_FLAILS
 
 /datum/anvil_recipe/weapons/steel/longsword
 	name = "Longsword, Steel (+1 Steel)"
