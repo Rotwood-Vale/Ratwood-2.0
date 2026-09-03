@@ -995,32 +995,6 @@
 	createditem_num = 2
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
-/datum/anvil_recipe/weapons/bronze/gladius
-	name = "Gladius, Bronze"
-	created_item = /obj/item/rogueweapon/sword/short/gladius
-	craftdiff = 2
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
-/datum/anvil_recipe/weapons/bronze/spear
-	name = "Spear, Bronze (+1 Bronze, +1 Small Log)"
-	additional_items = list(/obj/item/ingot/bronze, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/bronze
-	craftdiff = 2
-	display_category = ITEM_CAT_WEAPONS_POLEARMS
-
-/datum/anvil_recipe/weapons/bronze/trident
-	name = "Trident, Bronze (+1 Steel, +1 Iron, +1 Small Log)"
-	req_blade = /obj/item/blade/steel_polearm
-	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron, /obj/item/grown/log/tree/small)
-	created_item = /obj/item/rogueweapon/spear/trident
-	craftdiff = 4
-	display_category = ITEM_CAT_WEAPONS_POLEARMS
-
-/datum/anvil_recipe/weapons/bronze/bronzeknuckle
-	name = "Knuckles, Bronze"
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
-	craftdiff = 2
-	display_category = ITEM_CAT_WEAPONS_MACES
 
 /// SHIELDS
 

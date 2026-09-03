@@ -163,7 +163,7 @@
 	update_icon()
 
 /obj/item/bmbstrap/bomb_and_fire/Initialize()
-	..()
+	.=..()
 	fill_list = list(/obj/item/bomb,
 	/obj/item/bomb,
 	/obj/item/bomb,
@@ -185,7 +185,7 @@
 	update_icon()
 
 /obj/item/bmbstrap/firebomb/Initialize()
-	..()
+	.=..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/bomb/I = new(src)
 		I.forceMove(src)

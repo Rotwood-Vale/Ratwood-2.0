@@ -45,3 +45,8 @@ talkstatue_tgui.dm (the real player-facing TGUI: ui_state/ui_interact/ui_data/ui
 	. = ..()
 	if(SSroguemachine.church_statue == null)
 		SSroguemachine.church_statue = src
+
+/obj/structure/roguemachine/talkstatue/church/Destroy()
+	if(SSroguemachine.church_statue == src)
+		SSroguemachine.church_statue = null
+	return ..()

@@ -34,7 +34,7 @@
 	var/drillgoal = 100
 
 /obj/structure/roguemachine/vaultbank/Initialize(mapload)
-	..()
+	. = ..()
 	enforce_placement()
 	if(SStreasury)
 		SStreasury.jawbanks_by_fund_id[get_fund_id()] = src
