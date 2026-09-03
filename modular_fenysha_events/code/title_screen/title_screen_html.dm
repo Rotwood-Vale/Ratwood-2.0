@@ -19,7 +19,7 @@
 
 /// Boot terminal plus the SVG progress ring.
 /mob/dead/new_player/proc/build_startup_terminal()
-	var/dat = {"<img src="loading_screen.gif" class="bg" id="bg_layer" alt="">"}
+	var/dat = {"<img src="[TITLE_LOADING_RESOURCE]" class="bg" id="bg_layer" alt="">"}
 	dat += {"
 	<div class="container_loading" id="parallax_loader">
 		<div class="terminal_text" id="terminal"></div>
@@ -93,7 +93,7 @@
 /mob/dead/new_player/proc/build_title_menu()
 	var/datum/fenysha_title_menu/menu = get_title_menu()
 	var/menu_ref = menu ? REF(menu) : REF(src)
-	var/dat = {"<img src="fenysha_tittle_screen.gif" class="bg" id="bg_layer" alt="">"}
+	var/dat = {"<img src="[TITLE_IMAGE_RESOURCE]" class="bg" id="bg_layer" alt="">"}
 
 	if(SStitlescreen.current_notice)
 		dat += {"<div class="container_notice"><p class="menu_notice">[SStitlescreen.current_notice]</p></div>"}

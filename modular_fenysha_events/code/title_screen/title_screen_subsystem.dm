@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(titlescreen)
 	/// Backdrop currently being displayed, as a resource reference. Seeded so it is never null:
 	/// players connecting mid-boot need a valid image before Initialize() has picked one.
 	var/current_title_screen = TITLE_DEFAULT_SCREEN_IMAGE
+	/// Backdrop shown behind the boot terminal, as a resource reference.
+	var/current_loading_screen = TITLE_DEFAULT_LOADING_IMAGE
 	/// Admin-set red banner text, or null.
 	var/current_notice
 	/// Backdrops eligible for the rotation, as resource references.
@@ -178,6 +180,7 @@ SUBSYSTEM_DEF(titlescreen)
 /datum/controller/subsystem/titlescreen/Recover()
 	title_html = SStitlescreen.title_html
 	current_title_screen = SStitlescreen.current_title_screen
+	current_loading_screen = SStitlescreen.current_loading_screen
 	current_notice = SStitlescreen.current_notice
 	title_screens = SStitlescreen.title_screens
 	average_completion_time = SStitlescreen.average_completion_time

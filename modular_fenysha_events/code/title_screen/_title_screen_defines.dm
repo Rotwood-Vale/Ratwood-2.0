@@ -7,7 +7,9 @@
 #define TITLE_MIN_LOADTIME (20 SECONDS)
 
 /// Title art shown once we reach the lobby, when config supplies nothing.
-#define TITLE_DEFAULT_SCREEN_IMAGE 'modular_fenysha_events/icons/lobby/fenysha_tittle_screen.png'
+#define TITLE_DEFAULT_SCREEN_IMAGE 'modular_fenysha_events/icons/lobby/fenysha_title_screen.png'
+/// Art shown behind the boot terminal, while the server is still loading.
+#define TITLE_DEFAULT_LOADING_IMAGE 'modular_fenysha_events/icons/lobby/loading_screen.gif'
 
 /// Where per-map load timings are cached between rounds.
 #define TITLE_PROGRESS_CACHE_FILE "data/fenysha_title_progress.json"
@@ -17,8 +19,11 @@
 /// Optional server-side override for the markup below.
 #define TITLE_HTML_CONFIG_PATH "[global.config.directory]/fenysha/title_html.txt"
 
-/// Browser resource name the title art is sent to the client under.
-#define TITLE_IMAGE_RESOURCE "modular_fenysha_events/icons/lobby/loading_screen.gif"
+/// Browser resource name the lobby art is sent to the client under.
+#define TITLE_IMAGE_RESOURCE "fenysha_title_screen.png"
+/// Browser resource name the loading art is sent to the client under. Kept distinct from the
+/// lobby art so the swap out of startup can't hand the browser a stale cache entry.
+#define TITLE_LOADING_RESOURCE "loading_screen.gif"
 
 /// Skin element the page renders into. Declared in interface/skin.dmf.
 #define TITLE_BROWSER_ID "title_browser"

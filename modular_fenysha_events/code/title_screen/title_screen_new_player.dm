@@ -9,9 +9,18 @@
 		title_menu = new(src)
 	return title_menu
 
+/**
+ * Everything the page loads by name: the font and both backdrops.
+ *
+ * keep_local_name is required. Without it the transport renames each file to asset.<hash>.<ext>,
+ * and the page's <img src> / CSS url() - which have to be written out ahead of time - never resolve.
+ */
 /datum/asset/simple/lobby
+	keep_local_name = TRUE
 	assets = list(
 		"OCRAExtended.ttf" = 'modular_fenysha_events/html/OCRAEXT.TTF',
+		TITLE_LOADING_RESOURCE = TITLE_DEFAULT_LOADING_IMAGE,
+		TITLE_IMAGE_RESOURCE = TITLE_DEFAULT_SCREEN_IMAGE,
 	)
 
 /// Reveals the title browser and renders the current page into it.
@@ -21,8 +30,8 @@
 
 	winset(src, TITLE_BROWSER_ID, "is-disabled=false;is-visible=true")
 
-	var/datum/asset/simple/lobby/lobby_fonts = get_asset_datum(/datum/asset/simple/lobby)
-	lobby_fonts.send(src)
+	var/datum/asset/simple/lobby/lobby_assets = get_asset_datum(/datum/asset/simple/lobby)
+	lobby_assets.send(src)
 
 	update_title_screen()
 
@@ -31,7 +40,12 @@
 	if(!client)
 		return
 
-	src << browse(SStitlescreen.current_title_screen, "file=[TITLE_IMAGE_RESOURCE];display=0")
+	// The stock backdrops ride the asset cache above. Only a runtime swap - an admin upload or a
+	// config screen - needs sending here, under the same name so the markup doesn't have to change.
+	if(SStitlescreen.current_loading_screen != TITLE_DEFAULT_LOADING_IMAGE)
+		src << browse(SStitlescreen.current_loading_screen, "file=[TITLE_LOADING_RESOURCE];display=0")
+	if(SStitlescreen.current_title_screen != TITLE_DEFAULT_SCREEN_IMAGE)
+		src << browse(SStitlescreen.current_title_screen, "file=[TITLE_IMAGE_RESOURCE];display=0")
 	src << browse(get_title_html(), "window=[TITLE_BROWSER_ID]")
 
 /**
