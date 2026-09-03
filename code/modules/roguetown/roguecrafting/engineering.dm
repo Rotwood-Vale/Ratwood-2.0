@@ -255,6 +255,19 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
+/datum/crafting_recipe/roguetown/engineering/roller
+	name = "rollers (4x)"
+	category = "Minecarts"
+	result = list(/obj/item/rotation_contraption/roller,
+				  /obj/item/rotation_contraption/roller,
+				  /obj/item/rotation_contraption/roller,
+				  /obj/item/rotation_contraption/roller)
+	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/grown/log/tree/stick = 4, /obj/item/roguegear = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
 /datum/crafting_recipe/roguetown/engineering/smither
 	name = "Autosmither"
 	result = /obj/structure/autosmither

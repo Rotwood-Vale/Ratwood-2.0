@@ -8,9 +8,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/bronze
 	slot_flags = ITEM_SLOT_HIP
-	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze
+	var/obj/item/accepted_power_source = /obj/item/roguegear
+	var/obj/item/prime_power_source = /obj/item/debug
 	/// This is the amount of charges we get per power source
 	var/charge_per_source = 5
+	var/charge_per_prime = 10
+	//allows you to store several charges
+	var/max_stored_charge = 20
 	var/current_charge = 0
 	var/misfire_chance
 	var/sneaky_misfire_chance
@@ -56,15 +60,16 @@
 	var/mob/living/player = user
 	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
 	if(current_charge)
-		. += span_warning("The contraption has [current_charge] charges left.")
+		. += span_warning("The contraption has [current_charge] of [max_stored_charge] charges left.")
+		. += span_warning("It uses [initial(accepted_power_source.name)] or [initial(prime_power_source.name)] to function.")
 	if(!current_charge)
-		. += span_warning("This contraption requires a new [initial(accepted_power_source.name)] to function.")
-	if(misfire_chance && skill < 6)
+		. += span_warning("This contraption requires a new [initial(accepted_power_source.name)] or [initial(prime_power_source.name)] to function.")
+	if(misfire_chance)
 		if(skill > 2)
 			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
 		else
 			. += span_warning("It seems slightly unstable...")
-	if(skill >= 6 && sneaky_misfire_chance)
+	if(skill >= 2 && sneaky_misfire_chance)
 		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperient.")
 
 /obj/item/contraption/proc/battery_collapse(obj/O, mob/living/user)
@@ -114,13 +119,34 @@
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
-		if(current_charge)
+		if((max_stored_charge - current_charge) < charge_per_source) //checking if there's too much charge
 			to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			shake_camera(user, 1, 1)
 		else
 			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking."))
-			current_charge = charge_per_source
+			current_charge += charge_per_source
+			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+			qdel(I)
+			addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
+	if(istype(I, prime_power_source))
+		user.changeNext_move(CLICK_CD_FAST)
+		S.set_up(1, 1, front)
+		S.start()
+		if((max_stored_charge - current_charge) < charge_per_prime) //checking if there's too much charge with a prime source
+			if((max_stored_charge - current_charge) < charge_per_source) //if there's too much for prime, we give it the standard charge
+				to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+				shake_camera(user, 1, 1)
+			else
+				to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. I feel I reached capacity before it was fully used"))
+				current_charge = max_stored_charge
+				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+				qdel(I)
+				addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
+		else
+			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. It gets a big boost"))
+			current_charge += charge_per_prime
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
 			addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
@@ -172,13 +198,42 @@
 	var/datum/buffer // simple machine buffer for device linkage
 	smeltresult = /obj/item/ingot/bronze
 	charge_per_source = 20
+	max_stored_charge = 80
 	grid_width = 64
 	grid_height = 32
+	var/active_item = FALSE
 
 /obj/item/contraption/linker/master
 	name = "Guild Master's Wrench"
 	desc = "Able to do more advanced linking than a standard wrench. Keep it out of apprentice's hands"
-	charge_per_source = 200
+	charge_per_source = 20
+	max_stored_charge = 100
+
+/obj/item/contraption/linker/equipped(mob/user, slot)
+	..()
+	if(active_item)
+		return
+	if(slot == ITEM_SLOT_HANDS)
+		if (user.get_skill_level(/datum/skill/craft/engineering) >= 4)
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
+			to_chat(user, span_notice("Tune up time"))
+			active_item = TRUE
+			return
+		else 
+			if(active_item)
+				active_item = FALSE
+				user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
+				to_chat(user, span_notice("I set my wrench down"))
+			return
+	else
+		return
+
+/obj/item/contraption/linker/dropped(mob/user, slot)
+	..()
+	if(active_item)
+		active_item = FALSE
+		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineertuneup)
+		to_chat(user, span_notice("I set my wrench down"))
 
 /obj/item/contraption/linker/hammer_action(obj/item/I, mob/user)
 	return
@@ -232,6 +287,10 @@
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_BULKY
 	charge_per_source = 5
+	max_stored_charge = 100
+	grid_height = 64
+	grid_width = 64
+	misfire_chance = 0
 
 /obj
 	/// This is the result when the wood metalizer artifact is used on this item
@@ -292,7 +351,7 @@
 	qdel(src)
 
 /obj/item/contraption/smelter
-	name = "portable smelter"
+	name = "portable furnace"
 	desc = "Furnaces are a thing of the past. The future is here!"
 	icon_state = "smelter"
 	on_icon = "smelter_flick"
@@ -300,7 +359,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
 	misfire_chance = 0
-	charge_per_source = 6
+	charge_per_source = 15
 
 /obj/item/contraption/smelter/misfire_result()
 	misfiring = TRUE
@@ -399,6 +458,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ingot/bronze
 	charge_per_source = 4
+	max_stored_charge = 20
+	grid_height = 32
+	grid_width = 64
 
 /obj/item/contraption/shears/hammer_action(obj/item/I, mob/user)
 	return
@@ -445,138 +507,158 @@
 		charge_deduction(amputee, user, 1)
 
 /obj/item/contraption/lock_imprinter
-	name = "lock imprinter"
-	desc = "A useful contraption that facilitates a locksmith's job on already installed locks."
+	name = "lock improver"
+	desc = "A useful contraption improves locks at the cost of locks."
 	icon_state = "imprinter"
 	on_icon = "imprinter_flick"
 	off_icon = "imprinter_off"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	accepted_power_source = /obj/item/customlock
 	misfire_chance = 0
 	sneaky_misfire_chance = 20
 	charge_per_source = 2
-	cog_accept = FALSE
-	var/list/allowed_locks = list(/obj/structure/mineral_door, /obj/structure/closet, /obj/structure/roguemachine/steward, /obj/structure/roguemachine/vendor, /obj/structure/roguemachine/goldface)
-	var/stored_lock_id = "artificer"
-	var/stored_lock_hash = 354
-	var/mode = "Examiner"
-
-/obj/item/contraption/lock_imprinter/examine(mob/user)
-	. = ..()
-	if(!istype(user, /mob/living))
-		return
-	var/mob/living/player = user
-	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
-	if(skill >= 2)
-		. += span_warning("The [name] is currently in [mode] mode.")
-		if(skill >= 4)
-			if(stored_lock_id)
-				. += span_warning("The current stored Lock ID is [stored_lock_id].")
-			else
-				. += span_warning("There is no stored Lock ID.")
-		else
-			. += span_warning("I cannot yet fully understand this contraption.")
-
-/obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/key))
-		var/obj/item/key/the_key = I
-		user.changeNext_move(CLICK_CD_FAST)
-		flick(off_icon, src)
-		playsound(user, 'sound/foley/doors/unlock.ogg', 100, TRUE)
-		var/datum/effect_system/spark_spread/S = new()
-		var/turf/front = get_turf(src)
-		S.set_up(1, 1, front)
-		S.start()
-		stored_lock_id = the_key.lockid
-		stored_lock_hash = the_key.lockhash
-		user.visible_message(span_notice("[user] inserts \a [the_key] into the [name] and it starts ticking..."))
-		addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
+	max_stored_charge = 20
+	grid_height = 32
+	grid_width = 64
 
 /obj/item/contraption/lock_imprinter/attack_obj(obj/O, mob/living/user)
 	..()
-	if(!current_charge)
+	if(current_charge<1)
+		flick(off_icon, src)
+		to_chat(user, span_info("The contraption beeps! It requires \a [initial(accepted_power_source.name)]!"))
+		playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
 		return
-	var/skill = user.get_skill_level(/datum/skill/craft/engineering)
-	var/valid_lock
-	for(var/type in allowed_locks)
-		if(istype(O, type))
-			valid_lock = TRUE
-			if(mode == "Examiner")
-				if(O.lockid)
-					to_chat(user, span_warning("The [name] identifies this lock's ID as [O.lockid]."))
-				else
-					to_chat(user, span_warning("The [name] identifies an absense of a lock or lock ID."))
-				playsound(loc, 'sound/misc/beep.ogg', 50, TRUE)
-				flick(off_icon, src)
-				break
-			if(mode == "Imprinter")
-				O.lockid = stored_lock_id
-				O.lockhash = stored_lock_hash
-				flick(on_icon, src)
-				shake_camera(user, 1, 1)
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
-				playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
-				charge_deduction(O, user, 1)
-				var/datum/effect_system/spark_spread/S = new()
-				var/turf/front = get_turf(O)
-				S.set_up(1, 1, front)
-				S.start()
-				user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT)) // Only imprinting gives EXP
-				message_admins("[user] has used [name] to change the lock of [O] to [stored_lock_id] hash [stored_lock_hash] in [ADMIN_VERBOSEJMP(front)]")
-				log_game("[user] has used [name] to change the lock of [O] to [stored_lock_id] hash [stored_lock_hash] in [ADMIN_VERBOSEJMP(front)]")
-				if(!skill && prob(sneaky_misfire_chance))
-					misfire(O, user)
-				break
-			if(mode == "Unlocker")
-				var/turf/front = get_turf(O)
-				if(O.locked)
-					O.locked = FALSE
-					playsound(user, 'sound/foley/doors/unlock.ogg', 150, TRUE)
-					playsound(user, 'sound/foley/doors/lockrattlemetal.ogg', 100, TRUE)
-					message_admins("[user] has used [name] to unlock [O] in [ADMIN_VERBOSEJMP(front)]")
-					log_game("[user] has used [name] to unlock [O] in [ADMIN_VERBOSEJMP(front)]")
-				else
-					O.locked = TRUE
-					playsound(user, 'sound/foley/doors/lock.ogg', 150, TRUE)
-					message_admins("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
-					log_game("[user] has used [name] to lock [O] in [ADMIN_VERBOSEJMP(front)]")
-				user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
-				var/datum/effect_system/spark_spread/S = new()
-				S.set_up(1, 1, front)
-				S.start()
-				var/oldx = O.pixel_x
-				animate(O, pixel_x = oldx+1, time = 0.5)
-				animate(pixel_x = oldx-1, time = 0.5)
-				animate(pixel_x = oldx, time = 0.5)
-				flick(on_icon, src)
-				charge_deduction(O, user, 1)
-				if(!skill && prob(sneaky_misfire_chance))
-					misfire(O, user)
-				break
-		if(!valid_lock)
-			to_chat(user, span_info("The [name] refuses to function."))
-			playsound(user, 'sound/items/flint.ogg', 100, FALSE)
-			flick(off_icon, src)
-			var/datum/effect_system/spark_spread/S = new()
-			var/turf/front = get_turf(O)
-			S.set_up(1, 1, front)
-			S.start()
 
-/obj/item/contraption/lock_imprinter/hammer_action(obj/item/I, mob/user)
-	user.changeNext_move(CLICK_CD_FAST)
-	flick(off_icon, src)
-	user.visible_message(span_info("[user] beats the [name] into submission!"))
-	playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
-	shake_camera(user, 1, 1)
-	var/datum/effect_system/spark_spread/S = new()
-	var/turf/front = get_turf(I)
-	S.set_up(1, 1, front)
-	S.start()
-	switch(mode)
-		if("Examiner")
-			mode = "Imprinter"
-		if("Imprinter")
-			mode = "Unlocker"
-		if("Unlocker")
-			mode = "Examiner"
+	else if(ispath(O.type, /obj/structure/mineral_door))
+		var/obj/structure/mineral_door/doorupgrade = O
+		var/oldlockdifficulty = doorupgrade.lockdifficulty
+		var/newlockdifficulty = oldlockdifficulty + 1
+		if(newlockdifficulty > 4)
+			flick(off_icon, src)
+			to_chat(user, span_info("The contraption beeps! its upgraded to its limit!"))
+			playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
+			return
+		flick(on_icon, src)
+		shake_camera(user, 1, 1)
+		user.visible_message(span_notice("[user] holds the [name] up to the [O.name] causing sparks to fly!"))
+		playsound(src, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg', 'sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, TRUE)
+		doorupgrade.lockdifficulty = newlockdifficulty
+		charge_deduction(O, user, 1)
+		var/datum/effect_system/spark_spread/S = new()
+		var/turf/front = get_turf(O)
+		S.set_up(1, 1, front)
+		S.start()
+		user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT)) // Only imprinting gives EXP
+		return
+
+/obj/item/contraption/pick/drill
+	name = "clockwork drill"
+	desc = "A wonderfully complex work of engineering capable of shredding walls in seconds as opposed to hours."
+	force = 21
+	force_wielded = 28
+	demolition_mod = 6.0
+	w_defense = 6
+	anvilrepair = /datum/skill/craft/engineering
+	max_integrity = 700
+	force_wielded = 19 
+	icon_state = "drill"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	item_state = "drill"
+	possible_item_intents = list(MACE_SMASH)
+	gripped_intents = list(/datum/intent/drill)
+	//experimental_inhand = FALSE
+	//experimental_onback = FALSE
+	slot_flags = ITEM_SLOT_BACK
+	//gripspriteonmob = TRUE
+	smeltresult = /obj/item/ingot/bronze
+	//pickmult = 1.5
+	w_class = WEIGHT_CLASS_HUGE
+	accepted_power_source = /obj/item/alch/coaldust
+	prime_power_source = /obj/item/alch/firedust
+	misfire_chance = 0
+	sneaky_misfire_chance = 0
+	charge_per_source = 100
+	charge_per_prime = 200
+	max_stored_charge = 600
+	grid_height = 64
+	grid_width = 64
+	var/active_item = FALSE
+
+
+/obj/item/contraption/pick/drill/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	//AddComponent(/datum/component/steam_storage, 300, 0)
+	//RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(pre_wield_check))
+
+
+/obj/item/contraption/pick/drill/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/contraption/pick/drill/attack_obj(obj/O, mob/living/user)
+	. = ..()
+
+/obj/item/contraption/pick/drill/attack_turf(turf/T, mob/living/user, multiplier)
+
+	. = ..()
+	src.current_charge -= 1
+	//var/turf/closed/mineral/rogue/
+
+
+/obj/item/contraption/pick/drill/afterattack(atom/target, mob/living/user, proximity_flag, list/modifiers)
+	. = ..()
+	//SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 5)
+/*
+/obj/item/rogueweapon/pick/drill/proc/pre_wield_check(datum/source, mob/living/carbon/user)
+	if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
+		to_chat(user, span_warning("[src] doesn't have enough power to be wielded!"))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
+
+/obj/item/rogueweapon/pick/drill/process()
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
+		if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
+			var/datum/component/two_handed/twohanded = GetComponent(/datum/component/two_handed)
+			if(ismob(loc))
+				twohanded.unwield(loc)
+*/
+
+/obj/item/contraption/pick/drill/attack_right(mob/user)
+	. = ..()
+
+/obj/item/contraption/pick/drill/equipped(mob/user, slot, initial)
+	..()
+	if(active_item)
+		return
+	if(slot == ITEM_SLOT_HANDS)
+		if (user.get_skill_level(/datum/skill/craft/engineering) >= 4)
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
+			to_chat(user, span_notice("Time to wind things up"))
+			active_item = TRUE
+			return
+		else 
+			if(active_item)
+				active_item = FALSE
+				user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
+				to_chat(user, span_notice("Setting my drill down"))
+			return
+	else
+		return
+
+/obj/item/contraption/pick/drill/dropped(mob/user, slot)
+	..()
+	if(active_item)
+		active_item = FALSE
+		user.mind.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/engineerwindup)
+		to_chat(user, span_notice("Setting my drill down"))
+
+/obj/item/contraption/pick/drill/engineer
+	name = "engineer's drill"
+	desc = "A wonderfully complex work of engineering capable of shredding walls in seconds as opposed to hours, this one's been specially modified by an engineer."
+	force = 24
+	force_wielded = 34
+	w_defense = 8
+	anvilrepair = /datum/skill/craft/engineering
+	max_integrity = 1000
+	slot_flags = ITEM_SLOT_HIP

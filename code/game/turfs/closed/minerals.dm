@@ -80,6 +80,19 @@
 		if(!ismineralturf(src))
 			return
 		attackby(held_item, user, multiplier = 2)
+			user.stamina_add(15)
+	if(user.used_intent.type == /datum/intent/drill && (user.get_skill_level(/datum/skill/labor/mining) >= SKILL_LEVEL_APPRENTICE) && (istype(item, /obj/item/contraption/pick/drill)))
+		var/obj/item/contraption/pick/drill/drillitem = item
+		if(drillitem.current_charge < 10)
+			to_chat(user, span_notice("Not enough fuel!"))
+			return
+		if(!do_after(user, 1 SECONDS, TRUE, src, TRUE, null, TRUE))
+			return
+		if(!ismineralturf(src))
+			return
+		attackby(drillitem, user, multiplier = 2) //higherimpact
+		user.stamina_add(5) //less stamina
+		drillitem.current_charge -= 10
 
 /turf/closed/mineral/attackby(obj/item/item, mob/user, params, multiplier)
 	if (!user.IsAdvancedToolUser())
@@ -87,7 +100,7 @@
 		return
 	lastminer = user
 	..()
-	if(istype(item, /obj/item/rogueweapon/pick))
+	if(istype(I, /obj/item/rogueweapon/pick)||istype(I, /obj/item/contraption/pick/drill))
 		if(!isliving(user))
 			return
 
@@ -98,20 +111,48 @@
 			return
 		// Makes more sense for the check since they always
 		// become an open tile afterwards
-		while(density && user.Adjacent(src))
-			if((living_user.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
-				..()
-				var/olddam = turf_integrity
-				if(turf_integrity && turf_integrity > 10)
-					if(turf_integrity < olddam)
-						if(prob(50))
-							if(user.Adjacent(src))
-								var/obj/item/natural/stone/dropped_stone = new(src)
-								dropped_stone.forceMove(get_turf(user))
-					if(!density)
-						break
-			else
-				break
+		if(istype(I, /obj/item/contraption/pick/drill)&& L.used_intent.type == /datum/intent/drill)
+			var/obj/item/contraption/pick/drill/drillitem = I
+			// we're holding a drill and on drill intent
+			if (drillitem.current_charge < 1)
+				to_chat(user, span_warning("Not enough fuel."))
+				drillitem.ungrip(user)
+				return
+			while(density && user.Adjacent(src))
+				if((L.energy > 0) && (do_after(user, CLICK_CD_RANGE, TRUE, src))&&(drillitem.current_charge > 2))
+					..()
+					drillitem.current_charge -= 1
+					user.stamina_add(-10)//not using up as much stamina for a drill, instead using up charges
+					if (drillitem.current_charge < 1)
+						drillitem.ungrip(user, "it ran out of fuel")
+					var/olddam = turf_integrity
+					if(turf_integrity && turf_integrity > 10)
+						if(turf_integrity < olddam)
+							if(prob(50))
+								if(user.Adjacent(src))
+									var/obj/item/natural/stone/S = new(src)
+									S.forceMove(get_turf(user))
+						if(!density)
+							break
+				else
+					break
+		else
+			// Makes more sense for the check since they always
+			// become an open tile afterwards
+			while(density && user.Adjacent(src))
+				if((L.energy > 0) && (do_after(user, CLICK_CD_MELEE, TRUE, src)))
+					..()
+					var/olddam = turf_integrity
+					if(turf_integrity && turf_integrity > 10)
+						if(turf_integrity < olddam)
+							if(prob(50))
+								if(user.Adjacent(src))
+									var/obj/item/natural/stone/S = new(src)
+									S.forceMove(get_turf(user))
+						if(!density)
+							break
+				else
+					break
 
 /turf/closed/mineral/attack_right(mob/user)
 	var/obj/item = user.get_active_held_item()
@@ -120,6 +161,18 @@
 			if(!ismineralturf(src))
 				return
 			attackby(item, user, multiplier = 4)
+			user.stamina_add(25)
+	if(user.used_intent.type == /datum/intent/drill && (user.get_skill_level(/datum/skill/craft/engineering) >= SKILL_LEVEL_JOURNEYMAN) && (istype(item, /obj/item/contraption/pick/drill)))
+		var/obj/item/contraption/pick/drill/drillitem = item
+		if(drillitem.current_charge < 10)
+			to_chat(user, span_notice("Not enough fuel!"))
+			return
+		if(do_after(user, 2 SECONDS, TRUE, src))
+			if(!ismineralturf(src))
+				return
+			src.attackby(drillitem, user, multiplier = 5) //higherimpact
+			user.stamina_add(5) //less stamina
+			drillitem.current_charge -= 10
 	..()
 
 /turf/closed/mineral/turf_destruction(damage_flag)
