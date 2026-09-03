@@ -183,7 +183,7 @@
 	)
 	categories_gamer = list()
 
-/obj/structure/roguemachine/goldface/Initialize()
+/obj/structure/roguemachine/goldface/Initialize(mapload)
 	. = ..()
 	update_icon()
 

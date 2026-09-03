@@ -6591,6 +6591,9 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/shop)
 "bqT" = (
@@ -28756,6 +28759,7 @@
 	lockid = "tavern";
 	name = "Kitchen"
 	},
+/obj/structure/roguemachine/noticeboard/wall,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/tavern)
 "fTL" = (
@@ -55706,6 +55710,10 @@
 /obj/structure/table/wood/large_table/north_east,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/shelter/bog)
+"lGd" = (
+/obj/structure/roguemachine/noticeboard/wall,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors/town/physician)
 "lGe" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
@@ -67074,6 +67082,9 @@
 	},
 /obj/structure/table/wood/poor,
 /obj/machinery/loom,
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "nWl" = (
@@ -76459,6 +76470,14 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/rockhill)
+"pUn" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/decostone/end{
+	dir = 4
+	},
+/area/rogue/indoors/town/manor/rockhill)
 "pUr" = (
 /obj/effect/decal/carpet/kover_black{
 	pixel_y = -3
@@ -87580,6 +87599,12 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/south)
+"sqQ" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/stone/blue_moss,
+/area/rogue/indoors/town/warden)
 "sqS" = (
 /obj/structure/lever/wall{
 	dir = 4;
@@ -96090,6 +96115,12 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
+"ugs" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "ugv" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -285460,7 +285491,7 @@ kYH
 kIO
 aad
 efu
-vnv
+sqQ
 vnv
 efu
 wMB
@@ -300095,7 +300126,7 @@ gjg
 nDa
 nDa
 gjg
-hNi
+lGd
 hNi
 jxO
 gGC
@@ -401939,7 +401970,7 @@ snF
 snF
 wRk
 eAu
-eAu
+pUn
 pBu
 qpE
 pfp
@@ -417543,7 +417574,7 @@ qqj
 qqj
 dmM
 sco
-sco
+ugs
 ejQ
 sco
 sco

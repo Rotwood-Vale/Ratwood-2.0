@@ -22,7 +22,7 @@ gold to broadcast to all) to use it; this ported system has no coin cost, matchi
 upstream. That cost gate was not reimplemented here - flagged for follow-up if wanted.
 */
 
-/obj/structure/roguemachine/talkstatue/mercenary/Initialize()
+/obj/structure/roguemachine/talkstatue/mercenary/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.mercenary_statue == null)
 		SSroguemachine.mercenary_statue = src

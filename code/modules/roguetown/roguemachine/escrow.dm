@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(escrow_machines)
 	)
 	var/list/group_order = list("Armor", "Weapons", "Tools", "Valuables", "Decoration", "Engineering", "Other")
 
-/obj/structure/roguemachine/escrow/Initialize()
+/obj/structure/roguemachine/escrow/Initialize(mapload)
 	. = ..()
 	init_material_prices()
 	disabled_materials = default_disabled_materials?.Copy() || list()

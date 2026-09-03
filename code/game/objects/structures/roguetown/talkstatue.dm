@@ -41,7 +41,7 @@ talkstatue_tgui.dm (the real player-facing TGUI: ui_state/ui_interact/ui_data/ui
 	desc = "A blessed stone statue radiating divine presence."
 	icon_state = "goldvendor" //TODO: Get proper sprite
 
-/obj/structure/roguemachine/talkstatue/church/Initialize()
+/obj/structure/roguemachine/talkstatue/church/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.church_statue == null)
 		SSroguemachine.church_statue = src

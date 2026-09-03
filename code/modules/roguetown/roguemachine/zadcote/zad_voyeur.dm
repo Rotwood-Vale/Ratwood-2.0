@@ -118,7 +118,7 @@
 	name = "scrying through a zad"
 	var/datum/weakref/bonded_cage
 
-/mob/dead/observer/screye/zadcote_voyeur/Initialize()
+/mob/dead/observer/screye/zadcote_voyeur/Initialize(mapload)
 	. = ..()
 	verbs += /mob/dead/observer/screye/zadcote_voyeur/proc/end_zad_voyeur // Ratwood deviation: AP uses add_verb(), which ES lacks
 

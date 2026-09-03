@@ -1632,6 +1632,12 @@
 /obj/structure/flora/roguegrass/verdant,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/outdoors/desertdeep)
+"axR" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors/town/tavern/desert)
 "axV" = (
 /obj/structure/fluff/walldeco/painting/queen{
 	pixel_x = -32
@@ -32662,6 +32668,9 @@
 /area/rogue/indoors/town/desert)
 "jnP" = (
 /obj/structure/fermentation_keg/sandpot/water,
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/physician/desert)
 "jnV" = (
@@ -44069,6 +44078,14 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
+"mwQ" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/concrete{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue/indoors/town/steward)
 "mwZ" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -52090,6 +52107,12 @@
 /obj/structure/fluff/railing/border,
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/town/desert/warden)
+"oHb" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/sandstone,
 /area/rogue/indoors/town/desert/warden)
 "oHe" = (
 /obj/structure/fluff/railing/border{
@@ -67388,6 +67411,15 @@
 /obj/structure/fluff/wallclock/l,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church)
+"sVX" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/rogue/concrete{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue/indoors/town/steward)
 "sVY" = (
 /obj/structure/fluff/walldeco/rpainting,
 /turf/closed/wall/mineral/rogue/decostone/long/east_west,
@@ -69218,6 +69250,12 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/town/basement/desert/keep)
+"tuO" = (
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = 0
+	},
+/turf/closed/wall/mineral/rogue/sandbrick,
+/area/rogue/indoors/town/dwarfin/desert)
 "tuU" = (
 /obj/effect/decal/carpet/square,
 /turf/open/floor/rogue/citybrick,
@@ -73321,6 +73359,9 @@
 /obj/item/clothing/shoes/roguetown/shalal/reinforced,
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb,
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb,
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/desert)
 "uCR" = (
@@ -85942,6 +85983,9 @@
 	},
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
+	},
+/obj/structure/roguemachine/noticeboard/wall{
+	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors/town/shop/desert)
@@ -392633,7 +392677,7 @@ cRY
 adk
 cRY
 tud
-tud
+oHb
 nsd
 tud
 oko
@@ -419035,7 +419079,7 @@ rPy
 rPy
 uSw
 rPy
-hOc
+mwQ
 eVk
 tSD
 xHX
@@ -419344,7 +419388,7 @@ iLi
 nJm
 nJm
 wIc
-hOc
+sVX
 nJm
 sWQ
 ajz
@@ -424987,7 +425031,7 @@ uKs
 qwx
 ond
 ond
-uKs
+tuO
 rHG
 rHG
 rHG
@@ -426889,7 +426933,7 @@ jsO
 jsO
 jsO
 jsO
-jsO
+axR
 ttU
 ttU
 lgt
@@ -538220,7 +538264,7 @@ nJm
 nJm
 wiI
 vvc
-eVk
+vvc
 eVk
 tyc
 tyc
@@ -538533,7 +538577,7 @@ sqx
 bVE
 luT
 eVk
-tyc
+eVk
 tyc
 tyc
 kdC

@@ -21,7 +21,7 @@
 	var/bark_dirty = TRUE
 	var/next_bark = 0
 
-/obj/structure/roguemachine/scrapper/Initialize()
+/obj/structure/roguemachine/scrapper/Initialize(mapload)
 	. = ..()
 	populate_defaults()
 	if(seed_budget > 0)
