@@ -1,0 +1,4 @@
+author: "mushy"
+delete-after: True
+changes:
+  - balance: "Bards of T2 and above can now play instruments with an occupied offhand."
