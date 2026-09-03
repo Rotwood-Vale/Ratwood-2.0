@@ -38910,7 +38910,8 @@
 /area/rogue/indoors/town/manor)
 "hnY" = (
 /obj/structure/bars/passage/preopen{
-	gid = "outerwestgate"
+	gid = "outerwestgate";
+	
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town)
