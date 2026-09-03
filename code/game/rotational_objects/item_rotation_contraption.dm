@@ -172,6 +172,12 @@
 	grid_height = 64
 	grid_width = 32
 
+/obj/item/rotation_contraption/roller
+	placed_type = /obj/structure/roller
+
+	grid_height = 32
+	grid_width = 32
+
 /* commenting out water pipes for now 
 /obj/item/rotation_contraption/water_pipe
 	placed_type = /obj/structure/water_pipe
