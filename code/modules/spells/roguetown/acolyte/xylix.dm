@@ -890,7 +890,7 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.drunkenness = max(C.drunkenness, 30)
-	owner.apply_status_effect(/datum/status_effect/buff/baothablessing)
+	owner.apply_status_effect(/datum/status_effect/buff/druqks/baotha)
 	if(owner.client?.prefs?.sexable)
 		if(!owner.sexcon)
 			owner.sexcon = new /datum/sex_controller(owner)
