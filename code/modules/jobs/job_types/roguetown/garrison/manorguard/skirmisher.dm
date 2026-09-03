@@ -42,7 +42,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Dagger","Cudgel","Nagaika Whip","Short Sword")
+		var/weapons = list("Dagger","Cudgel","Whip","Short Sword")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/ranged_weapons = list("Bow","Crossbow","Sling")
 		var/ranged_choice = input(H, "Choose your ranged weapon.", "TAKE UP ARMS") as anything in ranged_weapons
@@ -57,8 +57,8 @@
 			if("Cudgel")
 				H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel(H), TRUE, forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-			if("Nagaika Whip")// Meme... If we didn't give them a nagaika.
-				H.put_in_hands(new /obj/item/rogueweapon/whip/nagaika(H), TRUE, forced = TRUE)
+			if("Whip")// Meme... You're more taking this option for the skill, and then to go get a flail or nagaika.
+				H.put_in_hands(new /obj/item/rogueweapon/whip(H), TRUE, forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			if("Short Sword")
 				H.put_in_hands(new /obj/item/rogueweapon/sword/short(H), TRUE, forced = TRUE)
