@@ -95,19 +95,9 @@
 	desc = "A simple crown of flowers, they seem to be easily dyed."
 	item_state = "flower"
 	icon_state = "flower"
-	detail_color = "#FFFFFF"
+	color = "#FFFFFF"
+	detail_color = "#ffffff"
 	detail_tag = "_detail"
-
-/obj/item/flowercrown/rosa/dyecrown/attackby(obj/item/W, mob/living/user, params)
-	..()
-	if(istype(W, /obj/item/natural/thorn) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Thorns.")
-		user.visible_message(span_warning("[user] adds [W] to [src]."))
-		user.transferItemToLoc(W, src, FALSE, FALSE)
-		update_icon()
-		if(loc == user && ishuman(user))
-			var/mob/living/carbon/H = user
-			H.update_inv_head()
 
 /obj/item/flowercrown/rosa/dyecrown/update_icon()
 	cut_overlays()
