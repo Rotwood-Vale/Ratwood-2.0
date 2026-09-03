@@ -9526,7 +9526,6 @@
 /area/rogue/under/cave)
 "bNj" = (
 /obj/structure/winch{
-	gid = "eastgate";
 	name = "East Gate";
 	redstone_id = "eastgate"
 	},
@@ -11993,8 +11992,7 @@
 	name = "inner gate winch";
 	pixel_x = 7;
 	pixel_y = 3;
-	redstone_id = "westgateinner";
-	gid = "westgateinner"
+	redstone_id = "westgateinner"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
@@ -38905,8 +38903,7 @@
 /area/rogue/indoors/town/manor)
 "hnY" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "westgateouter";
-	gid = "westgateouter"
+	redstone_id = "westgateouter"
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town)
@@ -68181,8 +68178,7 @@
 	name = "outer gate winch";
 	pixel_x = -8;
 	pixel_y = 3;
-	redstone_id = "westgateouter";
-	gid = "westgateouter"
+	redstone_id = "westgateouter"
 	},
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -75333,7 +75329,6 @@
 /area/rogue/indoors/town)
 "ock" = (
 /obj/structure/bars/passage/preopen{
-	gid = "westgateinner";
 	redstone_id = "westgateinner"
 	},
 /turf/open/floor/rogue/cobble,
@@ -105188,7 +105183,6 @@
 /area/rogue/indoors/town/church/chapel)
 "tIw" = (
 /obj/structure/bars/passage/preopen{
-	gid = "eastgate";
 	redstone_id = "eastgate"
 	},
 /turf/open/floor/rogue/cobblerock{
