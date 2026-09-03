@@ -1,38 +1,25 @@
 #define STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL -2
 
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/user)
-	var/prob2defend = user.defprob
-	var/mob/living/H = src
-	var/mob/living/U = user
-	if(H && U)
-		prob2defend = 0
-
-	if(!can_see_cone(user))
-		if(d_intent == INTENT_PARRY)
-			return FALSE
-		else
-			prob2defend = max(prob2defend-15,0)
-
-//	if(!cmode) // not currently used, see cmode check above
-//		prob2defend = max(prob2defend-15,0)
-
-	if(m_intent == MOVE_INTENT_RUN)
-		prob2defend = max(prob2defend-15,0)
-
+	if(!intenty.parriable_intent) // If the intent is unparriable whatsoever just skip all the math
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 		return FALSE
 	if(pulledby || pulling)
 		return FALSE
-	if(world.time < last_parry + setparrytime)
+	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable) || has_status_effect(/datum/status_effect/debuff/riposted))
+		return FALSE
+	if(!can_see_cone(user))
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, last_parry))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
-	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable))
-		return FALSE
-	if(has_status_effect(/datum/status_effect/debuff/riposted))
-		return FALSE
-	last_parry = world.time
-	if(intenty && !intenty.canparry)
-		return FALSE
+	COOLDOWN_START(src, last_parry, setparrytime)
+
+	var/prob2defend = user.defprob
+	if(m_intent == MOVE_INTENT_RUN)
+		prob2defend = max(prob2defend - 15, 0)
+
 	var/drained = BASE_PARRY_STAMINA_DRAIN
 	var/weapon_parry = FALSE
 	var/offhand_defense = 0
@@ -45,17 +32,17 @@
 	var/obj/item/rogueweapon/shield/buckler/skillerbuck = get_active_held_item()
 
 	if(istype(offhand, /obj/item/rogueweapon/shield/buckler))
-		skiller.bucklerskill(H)
+		skiller.bucklerskill(src)
 	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
-		skillerbuck.bucklerskill(H)  //buckler code end
+		skillerbuck.bucklerskill(src)  //buckler code end
 
 	if(mainhand)
 		if(mainhand.can_parry)
-			mainhand_defense += (H.get_skill_level(mainhand.associated_skill) * 20)
+			mainhand_defense += (src.get_skill_level(mainhand.associated_skill) * 20)
 			mainhand_defense += (mainhand.wdefense_dynamic * 10)
 	if(offhand)
 		if(offhand.can_parry)
-			offhand_defense += (H.get_skill_level(offhand.associated_skill) * 20)
+			offhand_defense += (src.get_skill_level(offhand.associated_skill) * 20)
 			offhand_defense += (offhand.wdefense_dynamic * 10)
 
 	if(mainhand_defense >= offhand_defense)
@@ -68,9 +55,9 @@
 	var/attacker_skill = 0
 	var/obj/item/clothing/wrists/roguetown/bracers/unarmed_bracers
 
-	if(highest_defense <= (H.get_skill_level(/datum/skill/combat/unarmed) * 20))
-		defender_skill = H.get_skill_level(/datum/skill/combat/unarmed)
-		var/obj/B = H.get_item_by_slot(SLOT_WRISTS)
+	if(highest_defense <= (src.get_skill_level(/datum/skill/combat/unarmed) * 20))
+		defender_skill = src.get_skill_level(/datum/skill/combat/unarmed)
+		var/obj/B = src.get_item_by_slot(SLOT_WRISTS)
 		if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
 			prob2defend += (defender_skill * 35)
 			unarmed_bracers = B
@@ -79,14 +66,14 @@
 		weapon_parry = FALSE
 	else
 		if(used_weapon)
-			defender_skill = H.get_skill_level(used_weapon.associated_skill)
+			defender_skill = src.get_skill_level(used_weapon.associated_skill)
 		else
-			defender_skill = H.get_skill_level(/datum/skill/combat/unarmed)
+			defender_skill = src.get_skill_level(/datum/skill/combat/unarmed)
 		prob2defend += highest_defense
 		weapon_parry = TRUE
 
 	if(intenty.masteritem)
-		attacker_skill = U.get_skill_level(intenty.masteritem.associated_skill)
+		attacker_skill = user.get_skill_level(intenty.masteritem.associated_skill)
 
 		if(intenty.sharpness_penalty)
 			intenty.masteritem.remove_bintegrity(intenty.sharpness_penalty)
@@ -106,7 +93,7 @@
 				finalmod = clamp(spdmod, 0, 30)
 			prob2defend -= finalmod
 	else
-		attacker_skill = U.get_skill_level(/datum/skill/combat/unarmed)
+		attacker_skill = user.get_skill_level(/datum/skill/combat/unarmed)
 		prob2defend -= (attacker_skill * 20)
 
 	if(HAS_TRAIT(src, TRAIT_GUIDANCE))
@@ -118,8 +105,8 @@
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
 
-	if(ishuman(H))
-		var/mob/living/carbon/human/oldie = H
+	if(ishuman(src))
+		var/mob/living/carbon/human/oldie = src
 		if(oldie.age == AGE_OLD && !HAS_TRAIT(oldie, TRAIT_MAGEARMOR))//Old martial characters get a bonus to parry. Mages do not, they get unique bonuses already for being old.
 			prob2defend += 20
 
@@ -127,20 +114,20 @@
 	if(!(mobility_flags & MOBILITY_STAND))
 		prob2defend *= 0.65
 
-	if(HAS_TRAIT(H, TRAIT_SENTINELOFWITS))
-		if(ishuman(H))
-			var/mob/living/carbon/human/SH = H
+	if(HAS_TRAIT(src, TRAIT_SENTINELOFWITS))
+		if(ishuman(src))
+			var/mob/living/carbon/human/SH = src
 			var/sentinel = SH.calculate_sentinel_bonus()
 			prob2defend += sentinel
 
-	if(HAS_TRAIT(U, TRAIT_ARMOUR_LIKED))
-		if(HAS_TRAIT(U, TRAIT_FENCERDEXTERITY))
+	if(HAS_TRAIT(user, TRAIT_ARMOUR_LIKED))
+		if(HAS_TRAIT(user, TRAIT_FENCERDEXTERITY))
 			prob2defend -= 5
 
 	prob2defend = clamp(prob2defend, 5, 90)
-	if(HAS_TRAIT(user, TRAIT_HARDSHELL) && H.client)	//Dwarf-merc specific limitation w/ their armor on in pvp
+	if(HAS_TRAIT(user, TRAIT_HARDSHELL) && src.client)	//Dwarf-merc specific limitation w/ their armor on in pvp
 		prob2defend = clamp(prob2defend, 5, 70)
-	if(!H?.check_armor_skill())
+	if(!src?.check_armor_skill())
 		prob2defend = clamp(prob2defend, 5, 75)			//Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
 		drained = drained + 5							//More stamina usage for not being trained in the armor you're using.
 
@@ -177,17 +164,17 @@
 	else
 		to_chat(src, span_warning("The enemy defeated my parry!"))
 		if(HAS_TRAIT(src, TRAIT_MAGEARMOR))
-			if(H.magearmor == 0)
-				H.magearmor = 1
-				H.apply_status_effect(/datum/status_effect/buff/magearmor)
+			if(src.magearmor == 0)
+				src.magearmor = 1
+				src.apply_status_effect(/datum/status_effect/buff/magearmor)
 				to_chat(src, span_boldwarning("My mage armor absorbs the hit and dissipates!"))
 				return TRUE
 			else
 				return FALSE
 		if(HAS_TRAIT(src, TRAIT_SCALEARMOR))
-			if(H.scalearmor == 0)
-				H.scalearmor = 1
-				H.apply_status_effect(/datum/status_effect/buff/scalearmor)
+			if(src.scalearmor == 0)
+				src.scalearmor = 1
+				src.apply_status_effect(/datum/status_effect/buff/scalearmor)
 				to_chat(src, span_boldwarning("My scales absorb the hit and dissipate the force!"))
 				return TRUE
 			else
@@ -199,7 +186,7 @@
 
 	var/exp_multi = 1
 
-	if(!U.mind)
+	if(!user.mind)
 		exp_multi = exp_multi/2
 	if(istype(user.rmb_intent, /datum/rmb_intent/weak))
 		exp_multi = exp_multi/2
@@ -218,23 +205,23 @@
 			if(ispath(attacker_skill_type, /datum/skill/combat) && ispath(used_weapon.associated_skill, /datum/skill/combat))
 				if ((mobility_flags & MOBILITY_STAND))
 					var/skill_target = attacker_skill
-					if(!HAS_TRAIT(U, TRAIT_GOODTRAINER))
+					if(!HAS_TRAIT(user, TRAIT_GOODTRAINER))
 						skill_target -= SKILL_LEVEL_NOVICE
-					if(HAS_TRAIT(U, TRAIT_BADTRAINER))
+					if(HAS_TRAIT(user, TRAIT_BADTRAINER))
 						skill_target -= SKILL_LEVEL_NOVICE
 					if (can_train_combat_skill(src, used_weapon.associated_skill, skill_target))
 						mind.add_sleep_experience(used_weapon.associated_skill, max(round(STAINT*exp_multi), 0), FALSE)
 
 				//attacker skill gain
-				if(U.mind)
+				if(user.mind)
 					if ((mobility_flags & MOBILITY_STAND))
 						var/skill_target = defender_skill
 						if(!HAS_TRAIT(src, TRAIT_GOODTRAINER))
 							skill_target -= SKILL_LEVEL_NOVICE
-						if(HAS_TRAIT(U, TRAIT_BADTRAINER))
+						if(HAS_TRAIT(user, TRAIT_BADTRAINER))
 							skill_target -= SKILL_LEVEL_NOVICE
-						if (can_train_combat_skill(U, attacker_skill_type, skill_target))
-							U.mind.add_sleep_experience(attacker_skill_type, max(round(STAINT*exp_multi), 0), FALSE)
+						if (can_train_combat_skill(user, attacker_skill_type, skill_target))
+							user.mind.add_sleep_experience(attacker_skill_type, max(round(STAINT*exp_multi), 0), FALSE)
 
 			if(prob(66) && AB)
 				if((used_weapon.flags_1 & CONDUCT_1) && (AB.flags_1 & CONDUCT_1))
@@ -279,12 +266,12 @@
 			if(ispath(attacker_skill_type, /datum/skill/combat))
 				if((mobility_flags & MOBILITY_STAND))
 					var/skill_target = attacker_skill
-					if(!HAS_TRAIT(U, TRAIT_GOODTRAINER))
+					if(!HAS_TRAIT(user, TRAIT_GOODTRAINER))
 						skill_target -= SKILL_LEVEL_NOVICE
-					if(HAS_TRAIT(U, TRAIT_BADTRAINER))
+					if(HAS_TRAIT(user, TRAIT_BADTRAINER))
 						skill_target -= SKILL_LEVEL_NOVICE
-					if(can_train_combat_skill(H, /datum/skill/combat/unarmed, skill_target))
-						H.mind?.add_sleep_experience(/datum/skill/combat/unarmed, max(round(STAINT*exp_multi), 0), FALSE)
+					if(can_train_combat_skill(src, /datum/skill/combat/unarmed, skill_target))
+						src.mind?.add_sleep_experience(/datum/skill/combat/unarmed, max(round(STAINT*exp_multi), 0), FALSE)
 
 			if(unarmed_bracers)
 				unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)

@@ -1,10 +1,13 @@
+/// Checks if a mob being attacked is able to block or dodge an attack
 /mob/living/proc/checkdefense(datum/intent/intenty, mob/living/user)
 	testing("begin defense")
+	if(!intenty || !user)
+		stack_trace("/mob/living/checkdefense called without passing a intent or user.")
 	if(!cmode)
 		return FALSE
 	if(stat)
 		return FALSE
-	if(!canparry && !candodge) //mob can do neither of these
+	if(!mob_can_parry && !mob_can_dodge) //mob can do neither of these
 		return FALSE
 	if(user == src)
 		return FALSE
@@ -20,4 +23,3 @@
 			return attempt_parry(intenty, user)
 		if(INTENT_DODGE)
 			return attempt_dodge(intenty, user)
-			

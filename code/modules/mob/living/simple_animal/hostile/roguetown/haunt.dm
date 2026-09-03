@@ -39,7 +39,7 @@
 	faction = list("undead")
 	footstep_type = null
 	defprob = 50 //decently skilled
-	canparry = TRUE
+	mob_can_parry = TRUE
 	retreat_health = null
 	var/obj/structure/bonepile/slavepile
 

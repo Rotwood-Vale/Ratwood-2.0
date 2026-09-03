@@ -64,8 +64,8 @@
 	recovery = 10
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	canparry = FALSE
-	candodge = FALSE
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 
 /datum/intent/dagger/chop
 	name = "chop"
@@ -959,8 +959,8 @@
 	icon_state = "insnip"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0

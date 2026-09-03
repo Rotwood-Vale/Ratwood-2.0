@@ -42,7 +42,7 @@
 	var/deaggroprob = 10
 	var/eat_forever
 	
-	candodge = TRUE
+	mob_can_dodge = TRUE
 
 	var/summon_tier = 0 // Tier of summoning
 	var/summon_primer = null // The message they get when summoned

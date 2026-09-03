@@ -34,7 +34,7 @@
 	STASPD = 4
 	deaggroprob = 0
 	defprob = 40
-	canparry = TRUE
+	mob_can_parry = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0

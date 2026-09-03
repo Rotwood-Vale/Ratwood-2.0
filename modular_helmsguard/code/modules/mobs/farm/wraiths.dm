@@ -50,7 +50,7 @@
 	defprob = 20 //ghost attack
 //	defdrain = 8
 	dodgetime = 10
-	canparry = TRUE
+	parriable_intent = TRUE
 	retreat_health = null
 	can_buckle = TRUE
 	patron = /datum/patron/inhumen/zizo		//So they can be hurt by holy fire/healing

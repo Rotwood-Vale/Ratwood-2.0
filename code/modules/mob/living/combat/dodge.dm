@@ -13,9 +13,9 @@
 	if(src.loc == user.loc)
 		return FALSE
 	if(intenty)
-		if(!intenty.candodge)
+		if(!intenty.dodgeable_intent)
 			return FALSE
-	if(candodge)
+	if(mob_can_dodge)
 		var/list/dirry = list()
 		var/dx = x - user.x
 		var/dy = y - user.y

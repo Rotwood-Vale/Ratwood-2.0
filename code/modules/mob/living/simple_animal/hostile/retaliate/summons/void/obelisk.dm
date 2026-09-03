@@ -95,8 +95,6 @@
 	chargetime = 0
 	penfactor = 20
 	swingdelay = 0
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
