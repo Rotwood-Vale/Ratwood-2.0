@@ -31,7 +31,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
-	extra_context = "Chooses between Light Armor (Dodge Expert) & Medium Armor. Additionally, this subclass can set traps."
+	extra_context = "This subclass gains Expert skill in their weapon of choice and chooses between Light Armor (Dodge Expert) or Medium Armor. Additionally, this subclass can set traps."
 
 /datum/outfit/job/roguetown/manorguard/skirmisher/pre_equip(mob/living/carbon/human/H)
 	..()

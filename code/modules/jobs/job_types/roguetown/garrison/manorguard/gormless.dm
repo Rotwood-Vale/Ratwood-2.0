@@ -24,6 +24,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,// I CAN SMELL THEM
 	)
+	extra_context = "This subclass cannot read."
 
 /datum/outfit/job/roguetown/manorguard/gormless/pre_equip(mob/living/carbon/human/H)
 	..()

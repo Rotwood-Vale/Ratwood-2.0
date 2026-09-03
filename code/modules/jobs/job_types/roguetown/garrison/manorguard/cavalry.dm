@@ -32,6 +32,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,// Slightly better at it than the other guardsmen.
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
+	extra_context = "This subclass gains Expert skill in their weapon of choice."
 
 	extra_context = "This class is restricted from using the Equestrian virtue."
 

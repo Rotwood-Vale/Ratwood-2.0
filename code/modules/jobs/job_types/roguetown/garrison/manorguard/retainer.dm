@@ -33,6 +33,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,// A bone.
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
+	extra_context = "This subclass gains Expert skill in their weapon of choice, but always retains Expert in swords to utilize their decorated arming sword."
 
 /datum/outfit/job/roguetown/manorguard/retainer/pre_equip(mob/living/carbon/human/H)
 	..()
