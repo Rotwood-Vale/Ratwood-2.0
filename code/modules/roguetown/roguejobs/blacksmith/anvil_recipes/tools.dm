@@ -176,51 +176,61 @@
 	name = "Dolabra, Bronze (+1 Stick, +1 Bronze)"
 	additional_items = list(/obj/item/grown/log/tree/stick, /obj/item/ingot/bronze)
 	created_item = /obj/item/rogueweapon/pick/bronze
+	display_category = ITEM_CAT_TOOLS_FIELD
 	i_type = "Tools"
 
 /datum/anvil_recipe/tools/bronze/pan
 	name = "Frypan, Bronze"
 	created_item = /obj/item/cooking/pan/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/pot
 	name = "Cooking Pot, Bronze"
 	created_item = /obj/item/reagent_containers/glass/bucket/pot/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/gobs
 	name = "Goblet, Bronze (x2)"
 	created_item = /obj/item/reagent_containers/glass/cup/bronzegob
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	createditem_num = 2
 
 /datum/anvil_recipe/tools/bronze/amugs
 	name = "Mug, Bronze (x2)"
 	created_item = /obj/item/reagent_containers/glass/cup/bronzemug
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	createditem_num = 2
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/platter
 	name = "Platter, Bronze (x2)"
 	created_item = /obj/item/cooking/platter/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	createditem_num = 2
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/bowl
 	name = "Bowl, Bronze"
 	created_item = /obj/item/reagent_containers/glass/bowl/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/fork
 	name = "Fork, Bronze (x2)"
 	created_item = /obj/item/kitchen/fork/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	createditem_num = 2
 	craftdiff = 0
 
 /datum/anvil_recipe/tools/bronze/spoon
 	name = "Spoon, Bronze (x2)"
 	created_item = /obj/item/kitchen/spoon/bronze
+	display_category = ITEM_CAT_TOOLS_COOKWARE
 	createditem_num = 2
 	craftdiff = 0
+
 // --------- IRON -----------
 
 /datum/anvil_recipe/tools/iron/blowrod
