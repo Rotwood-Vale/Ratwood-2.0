@@ -2026,6 +2026,13 @@
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
+			var/list/armor_options = list(
+				"Baothan Cuirass" = image(icon = 'icons/roguetown/clothing/special/baotha.dmi', icon_state = "baothachest"),
+				"Saccharine Plate Armor" = image(icon = 'icons/roguetown/clothing/armor.dmi', icon_state = "baothaplate"),
+			)
+			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
+			if(!armor_choice)
+				armor_choice = "Baothan Cuirass"
 			user.say("Lady, my Lady...")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -2037,7 +2044,7 @@
 				return
 			icon_state = "baotha_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			baothaarmor(target)
+			baothaarmor(target, armor_choice)
 			spawn(120)
 				icon_state = "baotha_active"
 
@@ -2135,10 +2142,21 @@
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
 
-/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice)
 	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
 		return
+	if(!armor_choice)
+		armor_choice = "Baothan Cuirass"
+	switch(armor_choice)
+		if("Baothan Cuirass")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
+			target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+		if("Saccharine Plate Armor")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
+			ADD_TRAIT(target, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			ADD_TRAIT(target, TRAIT_NOPAIN, TRAIT_GENERIC)
+			target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 	target.Stun(60)
 	target.Knockdown(60)
 	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
@@ -2151,7 +2169,6 @@
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	spawn(20)
 		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)

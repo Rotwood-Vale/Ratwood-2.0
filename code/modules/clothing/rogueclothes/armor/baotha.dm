@@ -251,3 +251,201 @@
 /obj/item/rogueweapon/whip/spiderwhip/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")
+
+/obj/item/clothing/head/roguetown/helmet/light/baotha
+	name = "Saccharine Sallet"
+	desc = "A beauty so unnatural, yet unlike any kind of beauty you've ever seen before.."
+	icon_state = "baothahelm"
+	item_state = "baothahelm"
+	body_parts_covered = HEAD | HAIR | EARS | MOUTH | EYES
+	armor_class = ARMOR_CLASS_LIGHT
+	max_integrity = ARMOR_INT_HELMET_ANTAG - 300 //Halved durability, compared to traditional Ascendant-tier armor.
+	smeltresult = null
+
+/obj/item/clothing/head/roguetown/helmet/light/baotha/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "HELMET")
+
+/obj/item/clothing/neck/roguetown/coif/baotha
+	name = "Saccharine Veil"
+	desc = "Submission to darkness.."
+	icon_state = "baothacoif"
+	item_state = "baothacoif"
+	armor = ARMOR_PADDED_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
+	body_parts_covered = NECK | HAIR | EARS | HEAD | NOSE
+	armor_class = ARMOR_CLASS_LIGHT
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	resistance_flags = FIRE_PROOF
+	blocksound = SOFTHIT
+	color = null
+	smeltresult = null
+
+/obj/item/clothing/neck/roguetown/coif/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VEIL")
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/cloth_wipe (1).ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/neck/roguetown/coif/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha
+	name = "Saccharine Plate Armor"
+	desc = "A light piece of plated armor. Powerful Baothan Magycks protect the exposed flesh yet grants the armor some lighter properties at the cost of durability.."
+	icon_state = "baothaplate"
+	item_state = "baothaplate"
+	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG - 350 //Halved durability, compared to traditional Ascendant-tier armor.
+	armor_class = ARMOR_CLASS_LIGHT //The big, big thing.
+	color = null
+	body_parts_covered = COVERAGE_FULL
+	smeltresult = null
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "ARMOR")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/baotha
+	name = "Saccharine Vestments"
+	desc = "A woven garment, imbued with Baothan Magicks, yet still exposing a vital area of the body.. A welcoming of the pain and pleasure of a blade.."
+	icon_state = "baothagamb"
+	armor_class = ARMOR_CLASS_LIGHT
+	armor = ARMOR_PADDED_GOOD
+	color = null
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
+	armor_class = ARMOR_CLASS_LIGHT
+	resistance_flags = FIRE_PROOF
+	body_parts_covered = CHEST | GROIN | ARMS
+	icon = 'icons/roguetown/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	smeltresult = null
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VESTMENTS")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/wrists/roguetown/bracers/leather/baotha
+	name = "Saccharine Cuffs"
+	desc = "Gilded bracers that protect the arms."
+	icon_state = "baothabracers"
+	armor = ARMOR_PADDED_GOOD
+	resistance_flags = FIRE_PROOF
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
+	smeltresult = null
+
+/obj/item/clothing/wrists/roguetown/bracers/leather/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BRACERS")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/wrists/roguetown/bracers/leather/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/under/roguetown/baotha/skirt
+	name = "Saccharine Fauldcoat"
+	desc = "Weaved from one's lux, combined with powerful Baothan Magicks to form a fashionable, yet protective, skirt."
+	armor = ARMOR_PADDED_GOOD
+	icon_state = "baothaskirt"
+	resistance_flags = FIRE_PROOF
+	armor_class = ARMOR_CLASS_LIGHT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
+	body_parts_covered = GROIN | LEGS
+	smeltresult = null
+
+/obj/item/clothing/under/roguetown/baotha/skirt/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "SKIRT")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/under/roguetown/baotha/skirt/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/gloves/roguetown/plate/baotha
+	name = "Saccharine Gauntlets"
+	desc = "Powerful Baothan magicks woven to protect the flesh under soft hands.."
+	icon_state = "baothagloves"
+	item_state = "baothagloves"
+	max_integrity = ARMOR_INT_SIDE_ANTAG - 150
+	armor_class = ARMOR_CLASS_LIGHT
+	smeltresult = null
+
+/obj/item/clothing/gloves/roguetown/plate/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "GLOVES")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/gloves/roguetown/plate/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha
+	name = "Saccharine Heels"
+	desc = "Baothan Magicks strung around the explosed flesh.. Fashioned into a pair of heels, to protect the soft supple flesh underneath.."
+	icon_state = "baothaboots"
+	item_state = "baothaboots"
+	max_integrity = ARMOR_INT_SIDE_ANTAG - 150
+	armor_class = ARMOR_CLASS_LIGHT
+	smeltresult = null
+
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/Initialize()
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BOOTS")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
+	stepnoise_flag = STEPNOISE_HEELS // This will prevent default footstep noise from being made by the heels (sounds odd)
+
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)	
+
+/datum/outfit/job/roguetown/baothalightarmor/pre_equip(mob/living/carbon/human/H)
+	..()
+	var/list/items = list()
+	items |= H.get_equipped_items(TRUE)
+	for(var/I in items)
+		H.dropItemToGround(I, TRUE)
+	H.drop_all_held_items()
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/baotha
+	pants = /obj/item/clothing/under/roguetown/baotha/skirt
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/baotha
+	head = /obj/item/clothing/head/roguetown/helmet/light/baotha
+	belt = /obj/item/storage/belt/rogue/leather/plaquegold/baotha
+	gloves = /obj/item/clothing/gloves/roguetown/plate/baotha
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/baotha
+	neck = /obj/item/clothing/neck/roguetown/coif/baotha
+	backr = /obj/item/storage/backpack/rogue/satchel/short
+	backl = /obj/item/rogueweapon/spear/partizan/baotha
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
