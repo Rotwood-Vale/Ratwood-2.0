@@ -38910,7 +38910,6 @@
 /area/rogue/indoors/town/manor)
 "hnY" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "westgateouter";
 	gid = "outerwestgate"
 	},
 /turf/open/floor/rogue/cobble,
@@ -75338,7 +75337,6 @@
 /area/rogue/indoors/town)
 "ock" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "westgateinner";
 	gid = "innerwestgate"
 	},
 /turf/open/floor/rogue/cobble,
@@ -105193,7 +105191,6 @@
 /area/rogue/indoors/town/church/chapel)
 "tIw" = (
 /obj/structure/bars/passage/preopen{
-	redstone_id = "eastgate";
 	gid = "eastgateinner"
 	},
 /turf/open/floor/rogue/cobblerock{
