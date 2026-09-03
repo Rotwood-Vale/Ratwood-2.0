@@ -60,6 +60,7 @@
 	if(SSmapping.current_map.map_name == "Rockhill")
 		daily_payments["Watch Captain"] = 45 //Don't get to live in a fancy keep with servants. More expenses.
 		daily_payments["Master Warden"] = 35 //Garrison
+		daily_payments["Sergeant"] = 40 //Garrison
 		daily_payments["City Guard"] = 30
 		daily_payments["Vanguard"] = 20
 	daily_payments["Rookie"] = 20//paid more than squires because they don't get to live in a castle with maids cooking them dinner
