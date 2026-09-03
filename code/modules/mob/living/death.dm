@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY(last_words)
 	if(!gibbed && !QDELETED(src) && rot_type)
 		LoadComponent(rot_type)
 
-	clear_typing_indicator()
+	clear_typing_indicator("died")
 
 	// AZURE EDIT BEGIN: necra acolyte/priest deathsight trait
 	// this was a player that just died, so do the honors

@@ -419,7 +419,7 @@
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			user.visible_message("<span class='info'>[user] Carves a name into the door.</span>")
 			if(do_after(user, 10))
-				doorname = sanitize(input("What name would you like to carve into the door?"))
+				doorname = stripped_input(user, "What name would you like to carve into the door?", "", "", MAX_NAME_LEN)
 				if (doorname)
 					name = doorname + "(door)"
 					desc = "a door with a name carved into it"
