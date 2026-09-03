@@ -109,6 +109,7 @@ export const ExaminePanel = (props) => {
           )}
           {showTabs && <Stack.Divider />}
           <Stack.Item
+            key="examine-content"
             grow
             position="relative"
             overflowX="hidden"
