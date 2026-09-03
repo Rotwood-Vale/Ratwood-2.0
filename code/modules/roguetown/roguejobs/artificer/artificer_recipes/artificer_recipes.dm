@@ -102,7 +102,7 @@
 	i_type = "General"
 
 /datum/artificer_recipe/bronze/bulk
-	name = "Bulk Bronze Cogs 3x (+2 Bronze Bars)"
+	name = "Bulk Bronze Cogs 6x (+2 Bronze Bars)"
 	created_item = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze)
 	hammers_per_item = 10
