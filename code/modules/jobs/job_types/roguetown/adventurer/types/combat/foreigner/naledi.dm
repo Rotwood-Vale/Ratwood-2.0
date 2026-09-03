@@ -42,7 +42,8 @@
 			ADD_TRAIT(H, TRAIT_NALEDI, TRAIT_GENERIC)
 			mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 			if(H.mind)
-				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/maskore)
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/maskingot)
 		else
 			mask = /obj/item/clothing/mask/rogue/lordmask/tarnished
 
@@ -85,7 +86,10 @@
 			if(H.mind)
 				H.mind?.adjust_spellpoints(20)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
-				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/warstaffore)
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/warstaffingot)
+
 
 		if("Desert Ascetic (Pontifex)")//reduced spellpoints, stats, no dodge expert. Toughened up refugee.
 			H.set_patron(/datum/patron/old_god)
@@ -134,7 +138,7 @@
 
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
 				H.mind?.adjust_spellpoints(2)
-				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+
 
 		if("Abandoned Diviner (Vizier)")	//reduced stats/skills/spellpoints from Vizier, Not given Stasis
 			H.set_patron(/datum/patron/old_god)
@@ -179,6 +183,9 @@
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
-				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+				
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/warstaffore)
+				H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/naledi/warstaffingot)
+
 
 
