@@ -27007,6 +27007,12 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town)
+"fcl" = (
+/obj/structure/bars/passage{
+	redstone_id = "SlavePen1"
+	},
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/under/town/basement)
 "fcm" = (
 /obj/structure/table/church{
 	icon_state = "churchtable_end"
@@ -47293,7 +47299,7 @@
 /obj/structure/mineral_door/bars{
 	locked = 1;
 	lockid = "DTManorCells";
-	name = "Slave Pen 1"
+	name = "Persuasion 1"
 	},
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
@@ -63499,6 +63505,10 @@
 /area/rogue/indoors/town/warden)
 "lUd" = (
 /obj/structure/stairs/cw,
+/obj/structure/stairs{
+	dir = 4;
+	layer = 1
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
 "lUe" = (
@@ -83958,7 +83968,7 @@
 /obj/structure/mineral_door/bars{
 	locked = 1;
 	lockid = "DTManorCells";
-	name = "Slave Pen 1"
+	name = "Slave Persuasion"
 	},
 /obj/structure/stairs/stone/d{
 	dir = 1
@@ -87689,12 +87699,6 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/scarymaze)
-"qqP" = (
-/obj/structure/bars/passage/shutter{
-	redstone_id = "lowtowngatehouse"
-	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/indoors/town/warden)
 "qqQ" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/burial_shroud,
@@ -92108,6 +92112,20 @@
 /obj/item/trash/applecore,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town)
+"rik" = (
+/obj/structure/stairs/stone/d{
+	dir = 1
+	},
+/obj/structure/curtain/directional/black,
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "DTManorCells";
+	name = "Persuasion 2"
+	},
+/turf/open/floor/rogue/churchbrick{
+	icon_state = "concretefloor1"
+	},
+/area/rogue/under/town/basement)
 "rin" = (
 /obj/structure/closet/dirthole/closed/loot,
 /turf/open/floor/rogue/dirt,
@@ -95749,6 +95767,10 @@
 	},
 /obj/structure/fluff/railing/border{
 	dir = 4
+	},
+/obj/structure/stairs{
+	dir = 4;
+	layer = 1
 	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors)
@@ -102664,6 +102686,16 @@
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
+"tjx" = (
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "DTManorCells";
+	name = "Slave Pen 3"
+	},
+/obj/structure/stairs/stone/d,
+/obj/structure/curtain/directional/black,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/basement)
 "tjz" = (
 /obj/machinery/light/rogue/candle/floorcandle/alt/pink,
 /obj/machinery/light/rogue/campfire/fireplace{
@@ -122551,6 +122583,16 @@
 /obj/structure/spider/stickyweb/mirespider,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault/one)
+"wTQ" = (
+/obj/structure/mineral_door/bars{
+	locked = 1;
+	lockid = "DTManorCells";
+	name = "Slave Pen 2"
+	},
+/obj/structure/stairs/stone/d,
+/obj/structure/curtain/directional/black,
+/turf/open/floor/rogue/cobble,
+/area/rogue/under/town/basement)
 "wTR" = (
 /obj/structure/table/wood/long_table,
 /obj/item/natural/bundle/cloth/bandage/full{
@@ -210954,7 +210996,7 @@ fAm
 hhR
 uNr
 hSR
-hTz
+wTQ
 kgL
 bVa
 tcx
@@ -211865,7 +211907,7 @@ tcx
 rLw
 ioS
 ioS
-iSX
+rik
 xFm
 uKJ
 faR
@@ -212310,7 +212352,7 @@ eXr
 xlM
 uNr
 hSR
-hTz
+tjx
 qkC
 dvN
 eXr
@@ -214574,7 +214616,7 @@ kwT
 xEp
 xEp
 mlJ
-tAD
+fcl
 jen
 kPa
 nNR
@@ -308172,7 +308214,7 @@ rOA
 dfe
 tqP
 qXe
-qqP
+hly
 mMk
 mMk
 hly
