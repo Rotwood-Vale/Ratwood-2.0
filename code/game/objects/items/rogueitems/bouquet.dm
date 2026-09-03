@@ -57,6 +57,23 @@
 	item_state = "rosa_crown"
 	icon_state = "rosa_crown"
 
+/obj/item/flowercrown/matricaria
+	name = "crown of matricaria"
+	item_state = "matricaria_crown"
+	icon_state = "matricaria_crown"
+
+/obj/item/flowercrown/calendula
+	name = "crown of calendula"
+	item_state = "calendula_crown"
+	icon_state = "calendula_crown"
+
+/obj/item/flowercrown/manabloom
+	name = "crown of manabloom"
+	desc = "A crown formed of manabloom flowers. Often worn by those who find themselves in need of a \
+	deeper attunement to the arcyne; a favourite of young apprentices and faltering old masters both."
+	item_state = "manabloom_crown"
+	icon_state = "manabloom_crown"
+
 /obj/item/flowercrown/salvia
 	name = "crown of salvia"
 	item_state = "salvia_crown"
