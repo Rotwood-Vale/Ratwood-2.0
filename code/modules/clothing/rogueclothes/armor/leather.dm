@@ -212,6 +212,15 @@
 	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
 	sellprice = 25
 
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/shadowvest
+	name = "drowcraft vest"
+	desc = "Traditional Drow armour made from the hide of one of the Underdark's many beasts, underlayered with the chitin plates of a drider. Durable yet still flexible, perfect for skirmishers."
+	icon_state = "shadowvest"
+	item_state = "shadowvest"
+	body_parts_covered = COVERAGE_FULL
+	armor = ARMOR_LEATHER_STUDDED
+	allowed_race = NON_DWARVEN_RACE_TYPES
+
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
 	name = "fencing jacket"
 	desc = "A light, flexible button-up leather jacket that will keep your vitals out of harm's way."

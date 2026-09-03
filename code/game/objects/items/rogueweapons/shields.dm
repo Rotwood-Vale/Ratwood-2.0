@@ -326,6 +326,9 @@
 	desc = "A bulky shield of spike-like lengths molten together. The motifs evoke anything but safety and protection."
 	icon_state = "spidershield"
 	coverage = 55
+	force = 25//it's a big spikey shield, it should hurt people
+	resistance_flags = FIRE_PROOF//need this so it doesnt inherit flammability from tower shield parent
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
 
 /obj/item/rogueweapon/shield/buckler
 	name = "buckler"

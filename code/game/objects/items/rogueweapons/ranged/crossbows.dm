@@ -214,6 +214,15 @@
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
 	damage_from_perception = TRUE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
+	name = "drow crossbow"
+	desc = "A stripped down crossbow specifically made for the small engagement ranges of the Underdark and caverns. A practical tool of the Drow assassin - \
+	a lady's friend is a man's end."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "drowcrossbowgilded0"
+	item_state = "drowcrossbowgilded"
+	penfactor = 0.6
+	damfactor = 0.7
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
 //Retains an identical damage to the standard crossbow. The pen is what makes this.

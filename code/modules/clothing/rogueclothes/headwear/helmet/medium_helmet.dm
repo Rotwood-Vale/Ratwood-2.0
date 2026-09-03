@@ -542,6 +542,12 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/shadowplate
+	name = "smiling bascinet"
+	desc = "A helmet of drowsmith sporting a gold wreath and a grinning visor."
+	icon_state = "drowhelm"
+	item_state = "drowhelm"
+
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	name = "\improper Etruscan bascinet"
