@@ -3,7 +3,7 @@
 /obj/item/bouquet
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/items/misc.dmi' 
+	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = ""
 	item_state = ""
 
@@ -38,7 +38,7 @@
 /obj/item/flowercrown
 	name = ""
 	desc = ""
-	icon = 'icons/roguetown/clothing/head.dmi' 
+	icon = 'icons/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
 	alternate_worn_layer  = 8.9 //On top of helmet
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -95,13 +95,13 @@
 	desc = "A simple crown of flowers, they seem to be easily dyed."
 	item_state = "flower"
 	icon_state = "flower"
+	detail_color = "#FFFFFF"
+	detail_tag = "_detail"
 
 /obj/item/flowercrown/rosa/dyecrown/attackby(obj/item/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/natural/thorn) && !detail_tag)
-		var/choice = input(user, "Choose a color.", "Thorns.") as anything in COLOR_MAP
-		detail_color = COLOR_MAP[choice]
-		detail_tag = "_detail"
+		var/choice = input(user, "Choose a color.", "Thorns.")
 		user.visible_message(span_warning("[user] adds [W] to [src]."))
 		user.transferItemToLoc(W, src, FALSE, FALSE)
 		update_icon()
