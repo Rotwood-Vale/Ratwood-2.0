@@ -1,5 +1,6 @@
 /datum/crafting_recipe/roguetown/sewing
 	abstract_type = /datum/crafting_recipe/roguetown/sewing
+	display_category = ITEM_CAT_GARMENT_COMMON
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
 	subtype_reqs = TRUE		//For subtypes of fur
@@ -212,6 +213,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/paddedmask
 	name = "padded mask"
+	category = "Hoods"
 	result = list(/obj/item/clothing/mask/rogue/facemask/padded)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
