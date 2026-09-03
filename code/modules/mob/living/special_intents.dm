@@ -135,7 +135,7 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 /// Completely indulgent proc cus I just want to see default process_attack() have no custom code
 /datum/special_intent/proc/_add_log()
 	if(howner && howner.ckey)
-		howner.log_message(span_danger("Used the Special [name]."), LOG_ATTACK)
+		howner.log_message("Used the Special [name].", LOG_ATTACK, color = "red")
 	else
 		log_admin("[name] Special was deployed.")
 

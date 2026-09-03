@@ -129,21 +129,21 @@
 						target.visible_message(span_danger("[user.name] shoves [target.name]!"),
 										span_danger("I'm shoved by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I shove [target.name]!"))
-						log_combat(user, target, "shoved", "knocking them down")
+						log_combat(user, target, "shoved", null, "knocking them down")
 					else if(target_table)
 						target.Stun(10)
 						target.visible_message(span_danger("[user.name] shoves [target.name] onto \the [target_table]!"),
 										span_danger("I'm shoved onto \the [target_table] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I shove [target.name] onto \the [target_table]!"))
 						target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-						log_combat(user, target, "shoved", "onto [target_table] (table)")
+						log_combat(user, target, "shoved", null, "onto [target_table] (table)")
 					else if(target_collateral_mob)
 						target.Stun(10)
 						target_collateral_mob.Stun(SHOVE_KNOCKDOWN_COLLATERAL)
 						target.visible_message(span_danger("[user.name] shoves [target.name] into [target_collateral_mob.name]!"),
 							span_danger("I'm shoved into [target_collateral_mob.name] by [user.name]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I shove [target.name] into [target_collateral_mob.name]!"))
-						log_combat(user, target, "shoved", "into [target_collateral_mob.name]")
+						log_combat(user, target, "shoved", null, "into [target_collateral_mob.name]")
 				else
 					target.visible_message(span_danger("[user.name] shoves [target.name]!"),
 									span_danger("I'm shoved by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
