@@ -2,6 +2,8 @@
 /obj/effect/proc_holder/spell/targeted/burialrite
 	name = "Burial Rites"
 	desc = "Consecrate a coffin or a grave. Sending any spirits within to Necras realm."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 5
 	overlay_state = "consecrateburial"
 	releasedrain = 30
@@ -35,6 +37,8 @@
 /obj/effect/proc_holder/spell/targeted/churn
 	name = "Churn Undead"
 	desc = "Stuns and explodes undead."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 8//We return it, up from 4...
 	overlay_state = "necra_ult"//Temp.
 	releasedrain = 30
@@ -92,13 +96,13 @@
 /obj/effect/proc_holder/spell/invoked/deaths_door
 	name = "Death's Door"
 	desc = "Opens a one-way portal into a realm on the edge of death, People can be dragged into the portal to prevent their decay. Undead with be set aflame. Those whom enter the domain will find their Will to continue heavily weaken. <br>Necras domain can be left through a portal within to a shrine, or a grave/psycross marked with necra's sight."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 6
 	no_early_release = TRUE
 	chargedrain = 0
-	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necraportal"
 	action_icon_state = "necraportal"
-	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	charging_slowdown = 1
 	chargetime = 2 SECONDS
 	recharge_time = 30 SECONDS
@@ -161,6 +165,8 @@
 /obj/effect/proc_holder/spell/invoked/speakwithdead
 	name = "Speak with Dead"
 	desc = "Call upon the Undermaiden to let your words reach a departed soul, and hear their whisper in return."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 5
 	overlay_state = "speakwithdead"
 	releasedrain = 30
@@ -236,6 +242,8 @@
 
 /obj/effect/proc_holder/spell/invoked/fieldburials
 	name = "Collect Coins"
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "consecrateburial"
 	antimagic_allowed = TRUE
 	devotion_cost = 10
@@ -378,8 +386,8 @@
 	name = "Locate Corpse"
 	desc = "Call upon the Undermaiden to guide you to a lost soul."
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "locatecorpse"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_state = "locatecorpse"
 	action_icon_state = "locatecorpse"
 	sound = 'sound/magic/whiteflame.ogg'
 	releasedrain = 30
