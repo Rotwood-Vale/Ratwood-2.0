@@ -116,8 +116,10 @@
 /obj/effect/proc_holder/spell/invoked/bonemend
 	name = "Bone Mend"
 	desc = "Mend the chosen target's bones with a burst of necrotic magick. Requires standing still for a few seconds"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	cost = 3
-	overlay_state = "rituos"
+	overlay_state = "bonemend"
 	releasedrain = 50
 	chargetime = 5 SECONDS // Make in combat usage harder
 	range = 2
