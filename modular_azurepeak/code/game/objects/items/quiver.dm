@@ -129,7 +129,7 @@
 	update_icon()
 
 /obj/item/quiver/bolt/bronze/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/bronze/A = new()
 		arrows += A
@@ -224,7 +224,7 @@
 	update_icon()
 
 /obj/item/quiver/bronzearrows/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/bronze/A = new()
 		arrows += A
@@ -306,7 +306,7 @@
 	update_icon()
 
 /obj/item/quiver/javelin/bronze/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to 4)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/bronze/A = new()
 		arrows += A
