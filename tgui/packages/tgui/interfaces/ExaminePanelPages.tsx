@@ -5,7 +5,12 @@ import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { ExaminePanelData } from './ExaminePanelData';
 
-export const FlavorTextPage = (props) => {
+type FlavorTextPageProps = {
+  collapsed?: boolean;
+};
+
+export const FlavorTextPage = (props: FlavorTextPageProps) => {
+  const { collapsed = false } = props;
   const { data } = useBackend<ExaminePanelData>();
   const {
     flavor_text,
@@ -20,122 +25,142 @@ export const FlavorTextPage = (props) => {
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
+  const [showHeadshot, setShowHeadshot] = useState(true);
 
-  const flavorHTML = useMemo(() => ({
-    __html: `<span className='Chat'>${flavor_text}</span>`,
-  }), [flavor_text]);
+  const flavorHTML = useMemo(
+    () => ({
+      __html: `<span className='Chat'>${flavor_text}</span>`,
+    }),
+    [flavor_text],
+  );
 
-  const nsfwHTML = useMemo(() => ({
-    __html: `<span className='Chat'>${flavor_text_nsfw}</span>`,
-  }), [flavor_text_nsfw]);
+  const nsfwHTML = useMemo(
+    () => ({
+      __html: `<span className='Chat'>${flavor_text_nsfw}</span>`,
+    }),
+    [flavor_text_nsfw],
+  );
 
-  const oocHTML = useMemo(() => ({
-    __html: `<span className='Chat'>${ooc_notes}</span>`,
-  }), [ooc_notes]);
+  const oocHTML = useMemo(
+    () => ({
+      __html: `<span className='Chat'>${ooc_notes}</span>`,
+    }),
+    [ooc_notes],
+  );
 
-  const oocnsfwHTML = useMemo(() => ({
-    __html: `<span className='Chat'>${ooc_notes_nsfw}</span>`,
-  }), [ooc_notes_nsfw]);
+  const oocnsfwHTML = useMemo(
+    () => ({
+      __html: `<span className='Chat'>${ooc_notes_nsfw}</span>`,
+    }),
+    [ooc_notes_nsfw],
+  );
 
   return (
-        <Stack fill>
-            <Stack fill vertical>
-                <Stack.Item align="center">
-                  <img
-                    src={resolveAsset(headshot)}
-                    width="350px"
-                    height="350px"
-                    /> 
-                </Stack.Item>
-              <Stack.Item grow>
-                <Stack fill>
-                  <Stack.Item grow width="300px">
-                    <Section
-                      scrollable
-                      fill
-                      title="OOC Notes"
-                      preserveWhitespace
-                      buttons={
-                        <>
-                          <Button
-                            selected={oocNotesIndex === 'SFW'}
-                            bold={oocNotesIndex === 'SFW'}
-                            onClick={() => setOocNotesIndex('SFW')}
-                            textAlign="center"
-                            minWidth="60px"
-                          >
-                            SFW
-                          </Button>
-                          <Button
-                            selected={oocNotesIndex === 'NSFW'}
-                            disabled={!ooc_notes_nsfw}
-                            bold={oocNotesIndex === 'NSFW'}
-                            onClick={() => setOocNotesIndex('NSFW')}
-                            textAlign="center"
-                            minWidth="60px"
-                          >
-                            NSFW
-                          </Button>
-                        </>
-                      }
-                    >
-                      {oocNotesIndex === 'SFW' && (
-                    <Box
-                    dangerouslySetInnerHTML={{
-                      __html: ooc_notes
-                        ? `<span class='Chat'>${ooc_notes}</span>`
-                        : "<i>No OOC notes provided.</i>",
-                      }}
-                    />
-                    )}
-                      {oocNotesIndex === 'NSFW' && (
-                    <Box
-                    dangerouslySetInnerHTML={oocnsfwHTML}
-                    />
-                    )}
-                    </Section>
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-            </Stack>
+    <Stack fill>
+      <Stack.Item
+        grow={collapsed}
+        width={collapsed ? undefined : '350px'}
+        minWidth={collapsed ? 0 : undefined}
+      >
+        <Stack fill vertical>
+          {showHeadshot && (
+            <Stack.Item align="center">
+              <img src={resolveAsset(headshot)} width="350px" height="350px" />
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <Section
               scrollable
               fill
+              title="OOC Notes"
               preserveWhitespace
-              title="Flavor Text"
               buttons={
                 <>
                   <Button
-                    selected={flavorTextIndex === 'SFW'}
-                    bold={flavorTextIndex === 'SFW'}
-                    onClick={() => setFlavorTextIndex('SFW')}
+                    icon={showHeadshot ? 'chevron-up' : 'chevron-down'}
+                    tooltip={showHeadshot ? 'Hide headshot' : 'Show headshot'}
+                    selected={!showHeadshot}
+                    onClick={() => setShowHeadshot(!showHeadshot)}
+                  />
+                  <Button
+                    selected={oocNotesIndex === 'SFW'}
+                    bold={oocNotesIndex === 'SFW'}
+                    onClick={() => setOocNotesIndex('SFW')}
                     textAlign="center"
-                    width="60px"
+                    minWidth="60px"
                   >
                     SFW
                   </Button>
                   <Button
-                    selected={flavorTextIndex === 'NSFW'}
-                    disabled={!flavor_text_nsfw || (!is_naked && !nsfw_examine_always)}
-                    bold={flavorTextIndex === 'NSFW'}
-                    onClick={() => setFlavorTextIndex('NSFW')}
+                    selected={oocNotesIndex === 'NSFW'}
+                    disabled={!ooc_notes_nsfw}
+                    bold={oocNotesIndex === 'NSFW'}
+                    onClick={() => setOocNotesIndex('NSFW')}
                     textAlign="center"
-                    width="60px"
+                    minWidth="60px"
                   >
                     NSFW
-                  </Button> 
-                </> 
+                  </Button>
+                </>
               }
-            >                  
-              {flavorTextIndex === 'SFW' && (
-                <>
+            >
+              {oocNotesIndex === 'SFW' && (
                 <Box
-              dangerouslySetInnerHTML={{
-                __html: flavor_text
-                  ? `<span class='Chat'>${flavor_text}</span>`
-                  : "<i>No flavor text provided.</i>",
-              }}
+                  dangerouslySetInnerHTML={{
+                    __html: ooc_notes
+                      ? `<span class='Chat'>${ooc_notes}</span>`
+                      : '<i>No OOC notes provided.</i>',
+                  }}
+                />
+              )}
+              {oocNotesIndex === 'NSFW' && (
+                <Box dangerouslySetInnerHTML={oocnsfwHTML} />
+              )}
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      {!collapsed && (
+        <Stack.Item grow>
+          <Section
+            scrollable
+            fill
+            preserveWhitespace
+            title="Flavor Text"
+            buttons={
+              <>
+                <Button
+                  selected={flavorTextIndex === 'SFW'}
+                  bold={flavorTextIndex === 'SFW'}
+                  onClick={() => setFlavorTextIndex('SFW')}
+                  textAlign="center"
+                  width="60px"
+                >
+                  SFW
+                </Button>
+                <Button
+                  selected={flavorTextIndex === 'NSFW'}
+                  disabled={
+                    !flavor_text_nsfw || (!is_naked && !nsfw_examine_always)
+                  }
+                  bold={flavorTextIndex === 'NSFW'}
+                  onClick={() => setFlavorTextIndex('NSFW')}
+                  textAlign="center"
+                  width="60px"
+                >
+                  NSFW
+                </Button>
+              </>
+            }
+          >
+            {flavorTextIndex === 'SFW' && (
+              <>
+                <Box
+                  dangerouslySetInnerHTML={{
+                    __html: flavor_text
+                      ? `<span class='Chat'>${flavor_text}</span>`
+                      : '<i>No flavor text provided.</i>',
+                  }}
                 />
                 {ooc_extra_image && (
                   <Box
@@ -145,13 +170,11 @@ export const FlavorTextPage = (props) => {
                     }}
                   />
                 )}
-                </>
-              )}
-              {flavorTextIndex === 'NSFW' && (
-                <>
-                <Box
-                dangerouslySetInnerHTML={nsfwHTML}
-                />
+              </>
+            )}
+            {flavorTextIndex === 'NSFW' && (
+              <>
+                <Box dangerouslySetInnerHTML={nsfwHTML} />
                 {nsfw_ooc_extra_image && (
                   <Box
                     mt={1}
@@ -160,12 +183,12 @@ export const FlavorTextPage = (props) => {
                     }}
                   />
                 )}
-                </>
-              )} 
-            </Section>
-          </Stack.Item>
-        </Stack>
-
+              </>
+            )}
+          </Section>
+        </Stack.Item>
+      )}
+    </Stack>
   );
 };
 
