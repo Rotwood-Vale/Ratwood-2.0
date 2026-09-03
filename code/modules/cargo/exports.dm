@@ -40,18 +40,18 @@
 	return sellprice
 
 /atom/movable/proc/get_real_price()
-    if(sellprice == initial(sellprice))
-        randomize_price()
-    if(!sellprice && initial(sellprice) == 0)
-        var/derived = GLOB.derived_sellprices?[type]
-        if(!derived)
-            derived = lookup_derived_subtype_price(type)
-        if(derived)
-            sellprice = derived
-            randomize_price()
-    if(looted)
-        return max(1, round(sellprice * LOOTED_SELL_MULT))
-    return sellprice
+	if(sellprice == initial(sellprice))
+		randomize_price()
+	if(!sellprice && initial(sellprice) == 0)
+		var/derived = GLOB.derived_sellprices?[type]
+		if(!derived)
+			derived = lookup_derived_subtype_price(type)
+		if(derived)
+			sellprice = derived
+			randomize_price()
+	if(looted)
+		return max(1, round(sellprice * LOOTED_SELL_MULT))
+	return sellprice
 
 /proc/lookup_derived_subtype_price(typepath)
 	if(!GLOB.derived_sellprices)

@@ -76,7 +76,7 @@
 /// The list view doesn't need them - the detail panel calls back in with TRUE for the selected row.
 /datum/controller/subsystem/treasury/proc/compute_filtered_players(category_filter, status_filter, search_str, include_details = FALSE)
 	var/list/out = list()
-	var/search_lower = lowertext(search_str || "")
+	var/search_lower = LOWER_TEXT(search_str || "")
 	for(var/key in bank_accounts)
 		var/mob/living/owner = key
 		if(!istype(owner))
@@ -113,7 +113,7 @@
 						continue
 
 		if(search_lower)
-			var/name_lower = lowertext(owner.real_name)
+			var/name_lower = LOWER_TEXT(owner.real_name)
 			if(!findtext(name_lower, search_lower))
 				continue
 

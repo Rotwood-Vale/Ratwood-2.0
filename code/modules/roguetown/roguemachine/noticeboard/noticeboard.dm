@@ -1,28 +1,3 @@
-/*
-Economy 3 noticeboard. Ported from Azure-Peak's split noticeboard/ folder
-(noticeboard.dm + posting.dm + assembly_floor.dm).
-
-Ratwood deviations from AP:
-
-- Blockade writs never physically pin to this board: AP tip dropped its old
-  promote_to_board_gated() attackby flow in favour of the Avisa scout rows simply showing
-  blockade_writ_out via blockade.has_active_scroll(), which build_scout_regions() below
-  already mirrors. The writ item itself posts at the contract ledger.
-- ES's OLD mercenary-hiring system (silver/gold roguecoin gate, merc_message/merc_broadcast/
-  change_merc_status/edit_merc_post, direct_response Topic hrefs, MERC_STATUS_*, the
-  Sellswords board category) has been superseded by the ported dedicated mercenary statue
-  (code/game/objects/structures/roguetown/talkstatue_mercenary.dm - Step 9e Part B), which is
-  a strict functional superset (registration flow, per-merc DM, broadcast, status cycling,
-  yae/nae replies) minus the roguecoin cost gate. build_mercenary_roster() below just reads
-  that statue's roster for display. See the Step 9e port report for the roguecoin-gate note.
-
-- build_charters() reads the item 6 decree system (SStreasury.decrees, code/modules/politics/);
-  never-activated dormant charters stay hidden until the Lord first presses them.
-- build_scout_regions() drops AP's "ic_descriptions" field: ES's /datum/threat_region has no
-  get_ic_description() proc (AP added it alongside a bunch of flavor-text content out of
-  scope here).
-- The "open_assembly" action opens the full City Assembly panel - see assembly_floor.dm.
-*/
 
 /obj/structure/roguemachine/noticeboard
 	name = "Notice Board"

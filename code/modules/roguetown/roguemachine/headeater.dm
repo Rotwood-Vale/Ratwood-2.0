@@ -11,15 +11,15 @@
 	var/topay = 0
 
 /obj/structure/roguemachine/headeater/examine(mob/user)
-    . = ..()
-    . += span_info("Left-click to deposit a head into the machine, and right-click to deposit all heads in front of the machine.")
-    if(isliving(user) && SStreasury.is_tax_exempt(user, TAX_CATEGORY_HEADEATER_LEVY))
-        . += span_smallnotice("Crown's Headeater Levy: exempt by decree")
-    else
-        . += span_smallnotice("Crown's Headeater Levy: [round(SStreasury.get_tax_rate(TAX_CATEGORY_HEADEATER_LEVY) * 100)]%")
-    var/datum/decree/concordat = SStreasury.get_decree(DECREE_ZENITSTADT_CONCORDAT)
-    if(concordat?.active)
-        . += span_smallnotice("Concordat of Zenitstadt: [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of Azuria, drawn from the Crown's share.")
+	. = ..()
+	. += span_info("Left-click to deposit a head into the machine, and right-click to deposit all heads in front of the machine.")
+	if(isliving(user) && SStreasury.is_tax_exempt(user, TAX_CATEGORY_HEADEATER_LEVY))
+		. += span_smallnotice("Crown's Headeater Levy: exempt by decree")
+	else
+		. += span_smallnotice("Crown's Headeater Levy: [round(SStreasury.get_tax_rate(TAX_CATEGORY_HEADEATER_LEVY) * 100)]%")
+	var/datum/decree/concordat = SStreasury.get_decree(DECREE_ZENITSTADT_CONCORDAT)
+	if(concordat?.active)
+		. += span_smallnotice("Concordat of Zenitstadt: [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of Azuria, drawn from the Crown's share.")
 
 
 /obj/structure/roguemachine/headeater/attackby(obj/item/H, mob/user, params)
