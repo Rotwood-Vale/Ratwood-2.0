@@ -4,7 +4,7 @@
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/not_own_contents()
 
 	)
 

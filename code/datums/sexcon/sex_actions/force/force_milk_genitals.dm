@@ -26,6 +26,8 @@
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
 		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
 	if(target.getorganslot(ORGAN_SLOT_PENIS) && !target.sexcon.has_chastity_penis())
@@ -39,9 +41,9 @@
 
 /datum/sex_action/force_milk_genitals/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.getorganslot(ORGAN_SLOT_PENIS))
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock into the [user.get_active_held_item()]..."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] jerks [target]'s cock into the [user.get_active_held_item()]..."))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fingers [target]'s cunt over the [user.get_active_held_item()]..."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] fingers [target]'s cunt over the [user.get_active_held_item()]..."))
 	user.sexcon.generic_sex_noise()
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)

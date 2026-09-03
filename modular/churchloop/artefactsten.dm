@@ -356,14 +356,14 @@ Necra's Censer (by ARefrigerator)
 		S.start()
 
 /*=========================================
-  Dendor’s Endless Hose - additive mode
+  Dendor's Endless Hose - additive mode
   Click soil to add ±100 water/nutrition,
   optional bless, and growth modes incl. KILL
 =========================================*/
 
 /obj/item/artefact/dendor_hose //bless your tree with its piss
 	name = "Dendor's Endless Hose"
-	desc = "A living crook of wood that bends soil to the Treefather’s will. Click soil to add ±100 water/nutriment, bless, or affect growth." //Dendor's piss
+	desc = "A living crook of wood that bends soil to the Treefather's will. Click soil to add ±100 water/nutriment, bless, or affect growth." //Dendor's piss
 	icon = 'icons/roguetown/items/artefactsten.dmi'
 	icon_state = "dendorartefact"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -400,7 +400,7 @@ Necra's Censer (by ARefrigerator)
 	open_config_ui(user)
 
 /obj/item/artefact/dendor_hose/proc/open_config_ui(mob/user)
-	var/contents = "<center><b> — Dendor’s Endless Hose Settings — </b></center><hr>"
+	var/contents = "<center><b> — Dendor's Endless Hose Settings — </b></center><hr>"
 
 	contents += "<b>Water delta per click</b><br>"
 	contents += "<a href='?src=[REF(src)];cyclestep=water'>[hose_state_text(water_step_state)]</a><br><br>"
@@ -868,59 +868,10 @@ Necra's Censer (by ARefrigerator)
 		"clamp_limbs" = FALSE
 	)
 
-	var/tmp/_pending_delete = FALSE
-	var/tmp/_staple_timer = null
-
-
 /obj/item/surgery_staple/proc/start_staple_timer()
-	if(_staple_timer)
-		deltimer(_staple_timer)
-
-	_staple_timer = addtimer(CALLBACK(src, PROC_REF(expire_staple)), SURGERY_STAPLE_LIFETIME, TIMER_STOPPABLE)
-
+	QDEL_IN(src, SURGERY_STAPLE_LIFETIME)
+	item_flags |= DROPDEL // as soon as we're removed from the organ, we vanish
 	return TRUE
-
-
-/obj/item/surgery_staple/proc/expire_staple()
-	if(_pending_delete)
-		return
-
-	if(QDELETED(src))
-		return
-
-	_pending_delete = TRUE
-	qdel(src)
-
-
-/obj/item/surgery_staple/Moved(oldloc, dir, forced = FALSE)
-	. = ..()
-
-	if(_pending_delete)
-		return
-
-	if(isnull(loc))
-		return
-
-	if(!istype(loc, /obj/item/bodypart))
-		_pending_delete = TRUE
-		qdel(src)
-
-
-/obj/item/surgery_staple/attack_hand(mob/living/user)
-	if(!_pending_delete)
-		_pending_delete = TRUE
-		qdel(src)
-
-	return
-
-
-/obj/item/surgery_staple/Destroy()
-	if(_staple_timer)
-		deltimer(_staple_timer)
-		_staple_timer = null
-
-	return ..()
-
 
 /obj/item/surgery_staple/hemostat
 	name = "hemostat staple"
@@ -1309,14 +1260,14 @@ Necra's Censer (by ARefrigerator)
 			found |= _ravox_collect_from_atom(O, species_counts)
 
 	if(!found || !length(species_counts))
-		SAY_WARN("Ravox’s gaze finds no readable traces on [target].")
+		SAY_WARN("Ravox's gaze finds no readable traces on [target].")
 		return
 
 	var/list/parts = list()
 	for(var/race_name in species_counts)
 		var/num = max(1, species_counts[race_name])
 		parts += (num > 1) ? "[race_name] ([num])" : "[race_name]"
-	SAY_INFO("Ravox’s gaze reveals: [english_list(parts)].")
+	SAY_INFO("Ravox's gaze reveals: [english_list(parts)].")
 
 /proc/_ravox_collect_from_atom(atom/A, list/species_counts)
 	if(!A) return FALSE

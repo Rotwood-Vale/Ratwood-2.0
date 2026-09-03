@@ -8,6 +8,7 @@
 // Helmet
 #define ARMOR_INT_HELMET_ANTAG 600
 #define ARMOR_INT_HELMET_BLACKSTEEL 500
+#define ARMOR_INT_HELMET_HEAVY_BRONZE 450
 #define ARMOR_INT_HELMET_HEAVY_STEEL 400
 #define ARMOR_INT_HELMET_HEAVY_IRON 300
 #define ARMOR_INT_HELMET_HEAVY_DECREPIT 200
@@ -24,22 +25,29 @@
 // HEAVY
 #define ARMOR_INT_CHEST_PLATE_ANTAG 700
 #define ARMOR_INT_CHEST_PLATE_BLACKSTEEL 600
+#define ARMOR_INT_CHEST_PLATE_BRONZE 300
 #define ARMOR_INT_CHEST_PLATE_STEEL 500
+#define ARMOR_INT_CHEST_PLATE_STEELLIGHT 450
 #define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350
 #define ARMOR_INT_CHEST_PLATE_PSYDON 500
 #define ARMOR_INT_CHEST_PLATE_IRON 375
+#define ARMOR_INT_CHEST_PLATE_IRONLIGHT 325
 #define ARMOR_INT_CHEST_PLATE_DECREPIT 250
+#define ARMOR_INT_CHEST_PLATE_DECREPITLIGHT 200
 
 // MEDIUM
 #define ARMOR_INT_CHEST_MEDIUM_STEEL 300
+#define ARMOR_INT_CHEST_MEDIUM_BRONZE 250
 #define ARMOR_INT_CHEST_MEDIUM_IRON 225
 #define ARMOR_INT_CHEST_MEDIUM_SCALE 200 // More coverage, less integrity
 #define ARMOR_INT_CHEST_MEDIUM_DECREPIT 150
 
 // LIGHT
+#define ARMOR_INT_CHEST_LIGHT_ELITE 350 // Highest tier cloth / leather for some snowflake AP port armor.
 #define ARMOR_INT_CHEST_LIGHT_MASTER 300 // High tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_MEDIUM 250 // Medium tier cloth / leather armor
 #define ARMOR_INT_CHEST_LIGHT_BASE 200
+#define ARMOR_INT_CHEST_LIGHT_BRONZE 225
 #define ARMOR_INT_CHEST_LIGHT_STEEL 225 // Fencing Cuirass / Future Light AC metal armor?
 #define ARMOR_INT_CHEST_CIVILIAN 100
 
@@ -48,6 +56,7 @@
 #define ARMOR_INT_LEG_BLACKSTEEL 500
 #define ARMOR_INT_LEG_STEEL_PLATE 400
 #define ARMOR_INT_LEG_IRON_PLATE 300
+#define ARMOR_INT_LEG_BRONZE 250
 #define ARMOR_INT_LEG_DECREPIT_PLATE 200
 #define ARMOR_INT_LEG_STEEL_CHAIN 300
 #define ARMOR_INT_LEG_BRIGANDINE 250 // Iron grade but whatever.
@@ -60,12 +69,29 @@
 // SIDE PIECES - Non-Chest armor
 #define ARMOR_INT_SIDE_ANTAG 500 // Integrity for antag pieces
 #define ARMOR_INT_SIDE_BLACKSTEEL 400 // Integrity for blacksteel pieces
+#define ARMOR_INT_SIDE_BRONZE 250 // Integrity for bronze pieces
 #define ARMOR_INT_SIDE_STEEL 300 // Integrity for steel pieces
 #define ARMOR_INT_SIDE_IRON 225 // Integrity for iron pieces
 #define ARMOR_INT_SIDE_HARDLEATHER 250 // Integrity for hardened leather pieces
 #define ARMOR_INT_SIDE_LEATHER 200 // Integrity for leather / copper pieces
 #define ARMOR_INT_SIDE_DECREPIT 150 // Integrity for decrepit pieces
 #define ARMOR_INT_SIDE_CLOTH 100 // Integrity for cloth / aesthetic oriented pieces
+#define ARMOR_INT_SIDE_GOLDPLUS 120 // Integrity for royal variants of golden / cermemonial pieces
+#define ARMOR_INT_SIDE_GOLD 60 // Integrity for golden / ceremonial pieces
+#define ARMOR_INT_SIDE_COVERAGE_BONUS 50 //bonus integrity for side pieces lacking coverage, eg. gorgets
+
+//MASKS - Facemasks
+#define ARMOR_INT_MASK_BRONZE 150 //Integrity for bronze facemasks.
+#define ARMOR_INT_MASK_STEEL 200 //Integrity for steel facemasks.
+#define ARMOR_INT_MASK_IRON 100 //Integrity for iron facemasks.
+#define ARMOR_INT_MASK_GOLD 150 //Integrity for gold facemasks. No idea why so durable when they have iron protection also.
+#define ARMOR_INT_MASK_STEEL_MAILLE 250 //Integrity for steel maille facemasks. Less defence than plate masks, more integ.
+#define ARMOR_INT_MASK_IRON_MAILLE 150 //Integrity for iron maille facemasks.
+#define ARMOR_INT_MASK_LEATHER 180 //Integrity for leather facemasks.
+#define ARMOR_INT_MASK_CLOTH 150 //Integrity for cloth facemasks.
+#define ARMOR_INT_MASK_WOOD 100 //Integrity for carved wood facemasks.
+#define ARMOR_INT_MASK_BONE 100 //Integrity for bone/skull facemasks.
+#define ARMOR_INT_MASK_STONE 50 //Integrity for carved stone facemasks.
 
 
 /*--------------------\
@@ -99,6 +125,8 @@
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
+// BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like.
+#define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 70, "piercing" = 40, "fire" = 50, "acid" = 0)
 
 // Medium AC
 #define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
@@ -126,3 +154,4 @@
 #define ARMOR_BARRIER list("blunt" = 20, "slash" = 20, "stab" = 20, "piercing" = 20, "fire" = 30, "acid" = 30)
 // Blocks every hit, at least once
 #define ARMOR_GRONN_LIGHT list("blunt" = 80, "slash" = 80, "stab" = 30, "piercing" = 30, "fire" = 0, "acid" = 0)
+#define ARMOR_INDESTRUCTIBLE list("blunt" = 90, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 90) // Magical / indestructible items

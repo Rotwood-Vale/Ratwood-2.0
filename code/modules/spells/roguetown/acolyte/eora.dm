@@ -165,7 +165,7 @@
 	// Correct signal name
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_damage))
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
 	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
@@ -229,7 +229,7 @@
 		UnregisterSignal(L, list(
 			COMSIG_MOB_APPLY_DAMGE,
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)
@@ -276,12 +276,6 @@
 
 	if(!do_after(user, 2 SECONDS, target = target))
 		to_chat(user, span_warning("The bond requires focused concentration!"))
-		revert_cast()
-		return FALSE
-
-	var/consent = alert(target, "[user] offers a lifebond. Accept?", "Heartweave", "Yes", "No")
-	if(consent != "Yes" || QDELETED(target))
-		to_chat(user, span_warning("The bond was rejected."))
 		revert_cast()
 		return FALSE
 
@@ -509,7 +503,7 @@
 			)
 			if(!do_after(sacrifice, 15 SECONDS))
 				return
-			sacrifice.blood_volume = max(0, sacrifice.blood_volume - ((BLOOD_VOLUME_NORMAL * 0.03) + (sacrifice.blood_volume * 0.06)))
+			sacrifice.set_blood_volume(max(0, sacrifice.get_blood_volume() - ((BLOOD_VOLUME_NORMAL * 0.03) + (sacrifice.get_blood_volume() * 0.06))))
 			obj_integrity = min(max_integrity, obj_integrity + max_integrity / 4)
 			qdel(I)
 			update_icon()
@@ -1078,11 +1072,11 @@
 	var/list/wCount = eater.get_wounds()
 	if(!eater.construct && !(eater.mob_biotypes & MOB_UNDEAD))
 		var/current_brute_loss = eater.getBruteLoss()
-		blood_loss += (eater.blood_volume * 0.06)
+		blood_loss += (eater.get_blood_volume() * 0.06)
 		if(wCount.len > 0)
 			eater.heal_wounds(heal_amount + (current_brute_loss * 0.12))
 			eater.update_damage_overlays()
-		eater.blood_volume = max(0, eater.blood_volume - blood_loss)
+		eater.set_blood_volume(max(0, eater.get_blood_volume() - blood_loss))
 		eater.adjustBruteLoss(-(heal_amount + (current_brute_loss * 0.12)), 0)
 		eater.adjustFireLoss(-(heal_amount + (eater.getFireLoss() * 0.12)), 0)
 		eater.adjustToxLoss(-(heal_amount + (eater.getToxLoss() * 0.12)), 0)
@@ -1106,11 +1100,11 @@
 	var/list/wCount = eater.get_wounds()
 	if(!eater.construct && !(eater.mob_biotypes & MOB_UNDEAD))
 		var/current_brute_loss = eater.getBruteLoss()
-		blood_loss += (user.blood_volume * 0.08)
+		blood_loss += (user.get_blood_volume() * 0.08)
 		if(wCount.len > 0)
 			eater.heal_wounds(heal_amount + (current_brute_loss * 0.12))
 			eater.update_damage_overlays()
-		user.blood_volume = max(0, user.blood_volume - blood_loss)
+		user.set_blood_volume(max(0, user.get_blood_volume() - blood_loss))
 		eater.adjustBruteLoss(-(heal_amount + (current_brute_loss * 0.12)), 0)
 		eater.adjustFireLoss(-(heal_amount + (eater.getFireLoss() * 0.12)), 0)
 		eater.adjustToxLoss(-(heal_amount + (eater.getToxLoss() * 0.12)), 0)
@@ -1146,13 +1140,13 @@
 /datum/status_effect/buff/eora_grace/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/buff/eora_grace/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent
 	name = "opalescent aril"
@@ -1398,7 +1392,7 @@
 	if(assocskill)
 		duration *= assocskill	//+1 minute per skill level.
 	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)	//Generic origin so other Eorans do not have their innate traits overridden (they use TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	var/hungercheck = H.nutrition
 	var/hydrohomiecheck = H.hydration
 	switch(hungercheck)
@@ -1427,7 +1421,7 @@
 	. = ..()
 
 /datum/status_effect/eora_blessing/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	owner.update_stress()
 	return ..()
 

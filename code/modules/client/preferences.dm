@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pitch = 1
 	var/detail_color = "000"
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
-	var/static/datum/species/default_species = new /datum/species/human/northern()
+	var/const/datum/species/default_species = /datum/species/human/northern
 	var/datum/patron/selected_patron
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
@@ -121,6 +121,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/edging = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
+	var/pubes = FALSE
+	var/pits = FALSE
+	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
 	var/voting_popup = TRUE
@@ -212,6 +215,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
+	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
@@ -285,6 +289,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
+	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
 
 	// PATREON
@@ -373,6 +378,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/datum/advclass/preview_subclass
 
+	var/preview_erect_state = ERECT_STATE_NONE//toggle pintle floppy, half-chubbed, or full mast on preview dummy.
+
 	var/tgui_pref = TRUE
 
 	var/race_bonus
@@ -410,7 +417,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(!combat_music)
 		combat_music = GLOB.cmode_tracks_by_type[default_cmusic_type]
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C.update_movement_keys()
+	C?.update_movement_keys()
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -697,6 +704,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<div style='text-align: center'><br>Subclass Preview:<br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.name]" : "None"]</a></div>"
 			else
 				preview_subclass = null
+			var/arousal_preview_label
+			switch(preview_erect_state)
+				if(ERECT_STATE_PARTIAL)
+					arousal_preview_label = "Partial"
+				if(ERECT_STATE_HARD)
+					arousal_preview_label = "Hard"
+				else
+					arousal_preview_label = "None"
+			dat += "<div style='text-align: center'><br>Arousal Preview:<br> <a href='?_src_=prefs;preference=preview_erect_state'>[arousal_preview_label]</a></div>"
 			// Rightmost column, 40% width
 			dat += "<td width=40% valign='top'>"
 			dat += "<h2>Body</h2>"
@@ -1005,6 +1021,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(PLAYER_READY_TO_PLAY)
 					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
 					log_game("([user || "NO KEY"]) readied as ([real_name])")
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 		else
 			if(!is_active_migrant())
 				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
@@ -1013,6 +1030,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
 			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
 			dat += " - <a href='?_src_=prefs;preference=observe'>SPECTATE</a>"
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 
@@ -1020,6 +1038,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	dat += "<td width='33%' align='right'>"
 	dat += "<b>Be voice:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "Enabled":"Disabled"]</a>"
 	dat += "<br><b>Toggle Admin Sounds:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a>"
+	dat += "<br><a href='?_src_=prefs;preference=close_prefs'><b>CLOSE</b></a>"
 	dat += "</td>"
 	dat += "</tr>"
 	dat += "</table>"
@@ -1109,6 +1128,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		var/datum/job/lastJob
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 			if(!job.spawn_positions)
+				continue
+			if(job.title in GLOB.villain_positions)
 				continue
 
 			index += 1
@@ -2979,6 +3000,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
 
+				if("close_prefs")
+					winshow(user, "preferencess_window", FALSE)
+					user << browse(null, "window=preferences_browser")
+					return
+
 				if("migrants")
 					migrant.show_ui()
 					return
@@ -3009,6 +3035,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences_browser")
 					user << browse(null, "window=lobby_window")
 					return
+
+				if("preview_erect_state")
+					switch(preview_erect_state)
+						if(ERECT_STATE_NONE)
+							preview_erect_state = ERECT_STATE_PARTIAL
+						if(ERECT_STATE_PARTIAL)
+							preview_erect_state = ERECT_STATE_HARD
+						else
+							preview_erect_state = ERECT_STATE_NONE
 
 				if("save")
 					save_preferences()

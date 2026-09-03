@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/Destroy()
 	_remove_self_from_lobbies()
-	qdel(soundloop)
+	QDEL_NULL(soundloop)
 	. = ..()
 
 /obj/item/rogue/instrument/dropped(mob/living/user, silent)
@@ -308,6 +308,10 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/attack_self(mob/living/user)
 	var/stressevent = /datum/stressevent/music
+	var/can_play_with_occupied_offhand = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/bard = user
+		can_play_with_occupied_offhand = bard.inspiration?.level >= BARD_T2
 	. = ..()
 	if(.)
 		return
@@ -378,7 +382,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					continue
 				break
 			
-			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 				return
 				
 			if(choice == "Upload New Song" || choice == "upload")
@@ -390,7 +394,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 				if(!infile)
 					return
-				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 					return
 
 				var/filename = "[infile]"
@@ -436,7 +440,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			soundloop.stress2give = stressevent
 			if(!(src in user.held_items) && !(not_held))
 				return
-			if(user.get_inactive_held_item())
+			if(user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 				playing = FALSE
 				soundloop.stop(user)
 				user.remove_status_effect(/datum/status_effect/buff/playing_music)
@@ -750,6 +754,35 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Becalmed" = 'sound/music/instruments/hurdy (4).ogg',
 	"The Bloody Throne" = 'sound/music/instruments/hurdy (5).ogg',
 	"We Shall Sail Together" = 'sound/music/instruments/hurdy (6).ogg')
+
+/obj/item/rogue/instrument/ztratocaster
+	name = "ztratocaster"
+	desc = "A strange guitar-like instrument with two necks, and a body sharp enough to shred."
+	icon_state = "ztratocaster"
+	force = 15
+	force_wielded = 35
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, SPEAR_BASH)
+	associated_skill = /datum/skill/combat/axes
+	song_list = list("Laid To Rest" = 'sound/music/instruments/ztrato (1).ogg',
+	"Fulmen" = 'sound/music/instruments/ztrato (2).ogg',
+	"Painkiller" = 'sound/music/instruments/ztrato (3).ogg',
+	"Abyssor's Bane" = 'sound/music/instruments/ztrato (4).ogg')
+	blade_dulling = DULLING_BASHCHOP
+	w_class = WEIGHT_CLASS_HUGE
+	minstr = 8
+	max_blade_int = 300
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	obj_flags = CAN_BE_HIT | PREVENTS_DESTRUCTION
+	integrity_failure = 0.2
+	smeltresult = null
+	wdefense = 6
+	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
+	. = ..()
+	soundloop.extra_range = 5 //stop blowing up my ears ser
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
 
 /obj/item/rogue/instrument/lute
 	name = "lute"

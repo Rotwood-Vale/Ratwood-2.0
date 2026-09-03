@@ -76,7 +76,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 100, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 100, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 100 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 100 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -86,7 +86,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_add50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = min(H.blood_volume + 50, BLOOD_VOLUME_MAXIMUM)
+			H.set_blood_volume(min(H.get_blood_volume() + 50, BLOOD_VOLUME_MAXIMUM))
 			message_admins("[key_name_admin(usr)] added 50 blood to [key_name_admin(M)].")
 			log_admin("[key_name(usr)] added 50 blood to [key_name(M)].")
 			show_heal_panel(M)
@@ -96,7 +96,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub50"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 50, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 50, 0))
 			message_admins("[key_name_admin(usr)] removed 50 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 50 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -106,7 +106,7 @@
 		var/mob/living/M = locate(href_list["heal_blood_sub100"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.blood_volume = max(H.blood_volume - 100, 0)
+			H.set_blood_volume(max(H.get_blood_volume() - 100, 0))
 			message_admins("[key_name_admin(usr)] removed 100 blood from [key_name_admin(M)].")
 			log_admin("[key_name(usr)] removed 100 blood from [key_name(M)].")
 			show_heal_panel(M)
@@ -116,9 +116,9 @@
 		var/mob/living/M = locate(href_list["heal_blood_set"])
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.blood_volume) as num|null
+			var/new_amount = input(usr, "Set blood volume to:", "Blood Volume", H.get_blood_volume()) as num|null
 			if(new_amount != null)
-				H.blood_volume = clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM)
+				H.set_blood_volume(clamp(new_amount, 0, BLOOD_VOLUME_MAXIMUM))
 				message_admins("[key_name_admin(usr)] set [key_name_admin(M)]'s blood volume to [new_amount].")
 				log_admin("[key_name(usr)] set [key_name(M)]'s blood volume to [new_amount].")
 				show_heal_panel(M)
@@ -1202,7 +1202,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
+		//a highlight toggle pinged from the POV page's javascript, record it and do not re-render
+		if(href_list["povhl"])
+			usr.client.toggle_pov_highlight(M, href_list["log_src"], href_list["pov_mode"], href_list["povhl"])
+			return
+
+		//same for the filter checkboxes, so a page turn keeps what was filtered out
+		if(href_list["povfilter"])
+			usr.client.set_pov_filters(M, href_list["log_src"], href_list["pov_mode"], href_list["povfilter"])
+			return
+
+		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"] || INDIVIDUAL_ATTACK_LOG, text2num(href_list["log_page"]) || 1, href_list["pov_mode"], href_list["pov_paging"], text2num(href_list["page_len"]) || 0, text2num(href_list["pov_tail"]), href_list["pov_focus"], href_list["pov_fresh"], text2num(href_list["pov_at"]))
 	else if(href_list["languagemenu"])
 		if(!check_rights(R_ADMIN))
 			return

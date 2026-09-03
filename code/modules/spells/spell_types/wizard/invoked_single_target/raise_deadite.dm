@@ -31,12 +31,12 @@
 		to_chat(user, span_notice("They aren't dead enough yet!"))
 		revert_cast()
 		return
-	
+
 	if(ishuman(potential_deadite) && potential_deadite.mind)
 		var/mob/living/carbon/human/human_target = potential_deadite
 		playsound(get_turf(human_target), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)
 		user.visible_message("[user] mutters an incantation and [human_target] twitches with unnatural life!")
-		human_target.blood_volume = BLOOD_VOLUME_NORMAL
+		human_target.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		human_target.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 		human_target.setToxLoss(0, updating_health = FALSE, forced = TRUE)
 		human_target.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
@@ -47,7 +47,7 @@
 		if(Z)
 			Z.wake_zombie(TRUE)
 		human_target.emote("scream")
-	
+
 	else if (potential_deadite.type in GLOB.animal_to_undead)
 		var/undead_type = GLOB.animal_to_undead[potential_deadite.type]
 		playsound(get_turf(potential_deadite), 'sound/magic/magnet.ogg', 80, TRUE, soundping = TRUE)

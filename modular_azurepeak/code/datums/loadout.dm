@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(loadout_items)
+GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item
 	var/name = "Parent loadout datum"
@@ -303,6 +303,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/furhat
 	name = "Fur Hat"
 	path = /obj/item/clothing/head/roguetown/hatfur
+
+/datum/loadout_item/bluehat
+	name = "Blue Hat"
+	path = /obj/item/clothing/head/roguetown/hatblu
 
 /datum/loadout_item/smokingcap
 	name = "Smoking Cap"
@@ -926,6 +930,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/fauldedbelt
 	name = "Belt with faulds"
 	path = /obj/item/storage/belt/rogue/leather/battleskirt/faulds
+
+/datum/loadout_item/breechskirt
+	name = "Belt with Breechcloth"
+	path = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth
 
 /datum/loadout_item/tri_cloth_belt
 	name = "Cloth Belt"

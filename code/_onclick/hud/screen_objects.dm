@@ -22,6 +22,8 @@
 	if(hud)
 		UnregisterSignal(hud, COMSIG_QDELETING)
 	master = null
+	if(hud?.mymob?.client)
+		hud?.mymob?.client?.screen -= src
 	hud = null
 	return ..()
 
@@ -555,8 +557,6 @@
 /atom/movable/screen/act_intent/rogintent/Destroy()
 	QDEL_LIST(intent_slots)
 	QDEL_LIST(border_slots)
-	intent_slots = null
-	border_slots = null
 	return ..()
 
 /atom/movable/screen/act_intent/rogintent/proc/reset_rogintent_layers()

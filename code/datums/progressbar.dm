@@ -10,11 +10,14 @@
 	var/listindex
 	/// our current cell grid
 	var/datum/cell_tracker/our_cells
+	// debug
+	var/tmp/location_type
 
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
 	if (!istype(target))
 		EXCEPTION("Invalid target given")
+	location_type = target.type
 	if (goal_number)
 		goal = goal_number
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0", HUD_LAYER)
@@ -103,3 +106,11 @@
 
 #undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT
+
+///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
+///So let's make hunting harddels easier yeah?
+/datum/progressbar/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Owner's type: [location_type]"

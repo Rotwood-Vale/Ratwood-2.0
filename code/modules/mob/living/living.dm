@@ -2,7 +2,8 @@
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
 	var/zone_selector_hud_dirty = FALSE
-	var/zone_selector_hud_update_queued = FALSE
+	var/pain_hud_dirty = FALSE
+	var/injury_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
@@ -94,17 +95,29 @@
 	if(!hud_used?.zone_select)
 		return
 	zone_selector_hud_dirty = TRUE
-	if(zone_selector_hud_update_queued)
-		return
-	zone_selector_hud_update_queued = TRUE
-	addtimer(CALLBACK(src, PROC_REF(flush_zone_selector_hud)), 0)
+	queue_injury_hud_flush()
 
-/mob/living/proc/flush_zone_selector_hud()
-	zone_selector_hud_update_queued = FALSE
-	if(!zone_selector_hud_dirty)
+/mob/living/proc/mark_pain_hud_dirty()
+	if(!hud_used)
 		return
-	zone_selector_hud_dirty = FALSE
-	update_zone_selector_hud()
+	pain_hud_dirty = TRUE
+	queue_injury_hud_flush()
+
+/mob/living/proc/queue_injury_hud_flush()
+	if(injury_hud_update_queued)
+		return
+	injury_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_injury_huds)), 0)
+
+/mob/living/proc/flush_injury_huds()
+	injury_hud_update_queued = FALSE
+	if(zone_selector_hud_dirty)
+		zone_selector_hud_dirty = FALSE
+		update_zone_selector_hud()
+	if(pain_hud_dirty)
+		pain_hud_dirty = FALSE
+		update_damage_hud()
+		update_health_hud()
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
@@ -1081,6 +1094,9 @@
 	set name = "Resist"
 	set category = "IC"
 	set hidden = 1
+	//giving up on a struggle must not wait on the breakout cooldown that same struggle charged up front
+	if(cancel_restraint_struggle())
+		return
 	if(!can_resist() || surrendering)
 		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
@@ -1144,7 +1160,6 @@
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
-	log_combat(src, null, "surrendered")
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
@@ -1159,10 +1174,14 @@
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
+	log_combat(src, src, "surrendered")
+	log_admin("([key_name(src)]) surrendered at [AREACOORD(src)].")
+	SSblackbox.record_feedback("tally", "submit", 1, "surrenders")
 
 /mob/living/proc/end_submit()
 	surrendering = 0
 	update_mobility()
+	log_combat(src, src, "stopped surrendering")
 
 /mob/living/proc/toggle_compliance()
 	set name = "Toggle Compliance"
@@ -1327,6 +1346,10 @@
 
 /mob/living/proc/resist_restraints()
 	return
+
+///Routes a resist press to cuff_resist's give-up branch while a struggle is running. TRUE if it handled it
+/mob/living/proc/cancel_restraint_struggle()
+	return FALSE
 
 /mob/living/proc/get_visible_name()
 	return name
@@ -1647,7 +1670,6 @@
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
-
 /**
  * Adjust the amount of fire stacks on a mob
  *
@@ -1695,6 +1717,9 @@
 	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE) || HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 
+	if(prob(50))	// 50% chance you don´t catch fire from a bump or walking over a burning corpse. Cause people don´t often bathe in gasoline.
+		return
+
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(fire_status && fire_status.on_fire)
@@ -1708,7 +1733,7 @@
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, meta = list(LOG_META_TARGET = spread_to.ckey))
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
@@ -1959,6 +1984,18 @@
 			set_wallpressed(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
+		if (NAMEOF(src, blood_volume))
+			set_blood_volume(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, bloodpool))
+			set_bloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, maxbloodpool))
+			set_maxbloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
@@ -2096,6 +2133,8 @@
 				if(isturf(M.loc) && M.armed)
 					found_ping(get_turf(M), client, "trap")
 			if(istype(O, /obj/structure/flora/roguegrass/maneater/real))
+				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/structure/quicksand))
 				found_ping(get_turf(O), client, "trap")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
