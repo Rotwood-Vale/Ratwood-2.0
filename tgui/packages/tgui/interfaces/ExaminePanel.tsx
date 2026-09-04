@@ -16,7 +16,7 @@ enum Page {
 const DEFAULT_WIDTH = 1000;
 const DEFAULT_HEIGHT = 700;
 // Headshot is 350px; leftover covers Window content padding.
-const COLLAPSED_WIDTH = 400;
+const COLLAPSED_WIDTH = 450;
 
 export const ExaminePanel = (props) => {
   const { act, data } = useBackend<ExaminePanelData>();
