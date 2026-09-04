@@ -1206,9 +1206,17 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Eastern Flowery Robe"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
 
+/datum/loadout_item/decorative_captain_robe
+	name = "Decorative Flowery Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative
+
 /datum/loadout_item/mentor_suit
 	name = "Eastern Mentor Suit"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+
+/datum/loadout_item/decorative_mentor_suit
+	name = "Decorative Mentor Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
 
 /datum/loadout_item/crafteast
 	name = "Eastern Craft Robe"
@@ -1252,6 +1260,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/mentorhat
 	name = "conical mentor hat"
 	path = /obj/item/clothing/head/roguetown/mentorhat
+
+/datum/loadout_item/decorative_mentorhat
+	name = "decorative bamboo hat"
+	path = /obj/item/clothing/head/roguetown/mentorhat/decorative
 
 // ROBES - ASTRATA
 /datum/loadout_item/robe_astrata

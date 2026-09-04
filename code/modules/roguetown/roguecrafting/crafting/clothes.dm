@@ -250,3 +250,15 @@
 		)
 	skillcraft = /datum/skill/craft/crafting
 	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/survival/decorative_mentorhat
+	name = "decorative bamboo hat"
+	category = "Clothes"
+	result = /obj/item/clothing/head/roguetown/mentorhat/decorative
+	reqs = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/stick = 2,
+		/obj/item/natural/fibers = 2,
+		)
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 1
