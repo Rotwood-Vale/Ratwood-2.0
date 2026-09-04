@@ -9,6 +9,7 @@
 GLOBAL_LIST_INIT(fenysha_fun_verbs, list(
 	/client/proc/fenysha_mandelbrot,
 	/client/proc/fenysha_shockwave,
+	/client/proc/fenysha_shockwave_settings,
 ))
 
 /client/add_admin_verbs()

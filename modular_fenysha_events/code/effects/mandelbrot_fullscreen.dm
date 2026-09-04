@@ -12,6 +12,13 @@
 	/// Half a breath, in ticks. Zero disables the pulse entirely.
 	var/pulse_time = 3 SECONDS
 
+/// Second look: a deep spiral rather than the base state's tendrils. Same
+/// exactly-seamless phase cycle, its own icon rather than a second state, so
+/// each can be regenerated and retuned on its own.
+/atom/movable/screen/fullscreen/mandelbrot/spiral
+	icon = 'modular_fenysha_events/icons/effects/mandelbrot_spiral.dmi'
+	icon_state = "mandelbrot_spiral"
+
 /atom/movable/screen/fullscreen/mandelbrot/update_for_view(client_view)
 	. = ..()
 	start_pulse()
@@ -69,6 +76,15 @@
 			player.clear_mandelbrot()
 		return
 
+	var/static/list/looks = list(
+		"Tendrils" = /atom/movable/screen/fullscreen/mandelbrot,
+		"Spiral" = /atom/movable/screen/fullscreen/mandelbrot/spiral,
+	)
+	var/look = input(usr, "Which look?", "Mandelbrot Overlay") as null|anything in looks
+	if(!look)
+		return
+	var/screen_type = looks[look]
+
 	var/target_alpha = input(usr, "Opacity, 0 to 255.", "Mandelbrot Overlay", 140) as num|null
 	if(isnull(target_alpha))
 		return
@@ -76,10 +92,10 @@
 	var/blend = (alert(usr, "Blend additively?", "Mandelbrot Overlay", "No", "Yes") == "Yes") ? BLEND_ADD : BLEND_DEFAULT
 
 	if(choice == "Me")
-		mob?.overlay_mandelbrot(target_alpha, blend = blend)
+		mob?.overlay_mandelbrot(target_alpha, screen_type = screen_type, blend = blend)
 		return
 
 	for(var/mob/player as anything in GLOB.player_list)
-		player.overlay_mandelbrot(target_alpha, blend = blend)
+		player.overlay_mandelbrot(target_alpha, screen_type = screen_type, blend = blend)
 
 #undef MANDELBROT_PULSE_SCALE

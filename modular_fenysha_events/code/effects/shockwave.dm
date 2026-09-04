@@ -16,8 +16,68 @@
 /// Everything a shockwave can act on. Members register themselves below.
 GLOBAL_LIST_EMPTY(shockwave_targets)
 
-/// Plane master keys the distortion filter is applied to, as hud_used indexes
-/// them. All of them must move together or the layers visibly desync.
+/// Ripple settings, kept live so they can be tuned in game rather than
+/// recompiled. Edited by the "Shockwave: Visuals" verb, or by VV on the global.
+/proc/shockwave_visual_defaults()
+	return list(
+		"amplitude base" = 12,
+		"amplitude gain" = 40,
+		"band falloff" = 0.5,
+		"duration ds" = 9,
+		"end amplitude" = 0.35,
+		"travel px" = 480,
+		"range tiles" = 30,
+		// The plane masters sit at screen_loc "CENTER", but this HUD's visual
+		// centre does not line up with it - the same reason several plane
+		// masters carry a commented out "CENTER-2" and the weather plane still
+		// uses one. Calibrated by eye rather than derived; adjust in the panel
+		// if the ripple drifts off the epicentre.
+		"origin x px" = 64,
+		"origin y px" = 0,
+	)
+
+GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
+
+/// How hard a wave hits and what it costs to break through. Read once per wave
+/// into the datum, so tuning mid-flight never changes a blast already running.
+/proc/shockwave_damage_defaults()
+	return list(
+		"base damage" = 150,
+		"wall damage mult" = 4,
+		"wall absorb scale" = 4000,
+		"wall hold" = 0.35,
+		"wall range per power" = 24,
+		"wall range cap" = 64,
+		"z cost" = 8,
+		"knockdown floor" = 0.25,
+		"knockdown time ds" = 60,
+		"body damage" = 5,
+		"ringing volume" = 45,
+		"ringing time ds" = 80,
+	)
+
+GLOBAL_LIST_INIT(shockwave_damage, shockwave_damage_defaults())
+
+/// Default blast shape, used by the verb and the tuner's fire button.
+/proc/shockwave_blast_defaults()
+	return list(
+		"radius" = 15,
+		"power" = 1,
+		"speed" = 2,
+		"z reach" = 1,
+	)
+
+GLOBAL_LIST_INIT(shockwave_blast, shockwave_blast_defaults())
+
+/**
+ * Plane master keys the distortion filter is applied to, as hud_used indexes
+ * them. All of them must move together or the layers visibly desync.
+ *
+ * Every plane here must override backdrop(), because that is what removes the
+ * ripple afterwards and the base implementation is empty. GAME_PLANE_HIGHEST is
+ * deliberately absent for that reason - it belongs to the vampire blood-sight
+ * plane master, which has no override, so a filter left there would never clear.
+ */
 GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	"[FLOOR_PLANE]",
 	"[WALL_PLANE]",
@@ -25,16 +85,22 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	"[GAME_PLANE]",
 	"[GAME_PLANE_FOV_HIDDEN]",
 	"[GAME_PLANE_UPPER]",
-	"[GAME_PLANE_HIGHEST]",
 ))
 
-/// Damage dealt at the epicentre before falloff. Windows need 100 to break,
-/// chairs topple past 5, leaves die at 10.
-#define SHOCKWAVE_BASE_DAMAGE 150
-/// Beyond this many tiles the epicentre is well off screen, so the screen-space
-/// distortion has nothing to bend and is skipped.
-#define SHOCKWAVE_DISTORT_RANGE 30
 #define SHOCKWAVE_FILTER "shockwave_ripple"
+/**
+ * Channel the ear ringing loops on.
+ *
+ * It has to be addressable so it can be faded and stopped, but the reserved
+ * block above CHANNEL_HIGHEST_AVAILABLE is full and lowering that ceiling means
+ * editing core. Sitting on the top of the dynamic pool is the safe compromise:
+ * BYOND allocates from the bottom, so this is the last channel it would hand
+ * out on its own.
+ */
+#define CHANNEL_SHOCKWAVE_RINGING CHANNEL_HIGHEST_AVAILABLE
+/// Angular sectors the wave is split into. Energy is tracked per sector, so a
+/// wall only drains the direction it actually stands in the way of.
+#define SHOCKWAVE_SECTORS 16
 
 /**
  * Registry membership.
@@ -64,17 +130,20 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	GLOB.shockwave_targets -= src
 	return ..()
 
-/obj/structure/flora/newleaf/New()
+// The whole flora tree, so grass, bushes, undergrowth and leaves all clear.
+// Trees and branches come along too; at default power they take damage without
+// being destroyed, since they carry far more integrity than the blast deals.
+/obj/structure/flora/New()
 	GLOB.shockwave_targets += src
 	return ..()
 
-/obj/structure/flora/newleaf/Destroy()
+/obj/structure/flora/Destroy()
 	GLOB.shockwave_targets -= src
 	return ..()
 
 /// Fires a shockwave. See /datum/shockwave for the arguments.
-/proc/shockwave(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE)
-	return new /datum/shockwave(epicenter, radius, power, speed, silent)
+/proc/shockwave(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1)
+	return new /datum/shockwave(epicenter, radius, power, speed, silent, spare_shake, z_reach)
 
 /datum/shockwave
 	/// Epicentre, cached as coordinates so we never re-resolve the turf.
@@ -87,14 +156,44 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/power
 	/// Tiles the wavefront advances each tick. Larger radii want a larger value.
 	var/speed
-	/// rings[n] holds the targets whose distance rounds to n - 1.
+	/// How many linked z-levels up and down the wave carries.
+	var/z_reach = 1
+	/// Indexed by z: extra tiles of distance for that level, null if out of reach.
+	var/list/z_costs
+	/// Remaining energy per angular sector, spent by whatever the front breaks.
+	var/list/sector_energy
+	// Snapshot of GLOB.shockwave_damage, taken once so a wave stays consistent
+	// even if the numbers are retuned while it is still travelling.
+	var/base_damage
+	var/wall_mult
+	var/absorb_scale
+	var/wall_hold
+	var/wall_range_per_power
+	var/wall_range_cap
+	var/z_cost_per_level
+	var/knockdown_floor
+	var/knockdown_time
+	var/body_damage
+	var/ringing_volume
+	var/ringing_time
+	/// rings[n] maps each target at that distance to the sector it sits in.
 	var/list/rings
 	/// Same bucketing for mobs, which take different effects.
 	var/list/mob_rings
 	/// How far the front has already swept.
 	var/front = 0
+	/**
+	 * Client spared the camera shake, so whoever set this off can watch it.
+	 *
+	 * Keyed on the client rather than the mob because the client is what
+	 * shake_camera actually moves, and because someone watching their own
+	 * shockwave will usually aghost to do it - that swaps which mob they are
+	 * without swapping which screen shakes, and a mob-keyed exemption stops
+	 * matching the moment they do.
+	 */
+	var/client/unshaken
 
-/datum/shockwave/New(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE)
+/datum/shockwave/New(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1)
 	set waitfor = FALSE
 
 	var/turf/center = get_turf(epicenter)
@@ -107,20 +206,76 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	src.radius = round(radius)
 	src.power = power
 	src.speed = max(1, round(speed))
+	unshaken = spare_shake?.client
+	src.z_reach = max(0, round(z_reach))
 
+	var/list/tune = GLOB.shockwave_damage
+	base_damage = tune["base damage"]
+	wall_mult = tune["wall damage mult"]
+	absorb_scale = max(1, tune["wall absorb scale"])
+	wall_hold = tune["wall hold"]
+	wall_range_per_power = tune["wall range per power"]
+	wall_range_cap = tune["wall range cap"]
+	z_cost_per_level = tune["z cost"]
+	knockdown_floor = tune["knockdown floor"]
+	knockdown_time = tune["knockdown time ds"]
+	body_damage = tune["body damage"]
+	ringing_volume = tune["ringing volume"]
+	ringing_time = tune["ringing time ds"]
+
+	map_z_reach()
 	gather()
+	gather_walls()
 	if(!silent)
 		announce(center)
 	sweep()
 
+/**
+ * Works out which z-levels the wave carries to, and what each one costs.
+ *
+ * Walks the map's own up/down linkage rather than assuming z +/- 1 is
+ * physically above or below - unconnected levels are separate places, and a
+ * blast in a cellar has no business rattling an unrelated dungeon.
+ */
+/datum/shockwave/proc/map_z_reach()
+	z_costs = new /list(world.maxz)
+	if(cz < 1 || cz > world.maxz)
+		return
+	z_costs[cz] = 0
+
+	var/list/links = SSmapping.multiz_levels
+	for(var/direction in 1 to 2)
+		var/up = (direction == 1)
+		var/z = cz
+		for(var/step in 1 to z_reach)
+			var/list/link = (z >= 1 && z <= length(links)) ? links[z] : null
+			if(!link || !link[up ? Z_LEVEL_UP : Z_LEVEL_DOWN])
+				break
+			z += up ? 1 : -1
+			if(z < 1 || z > world.maxz)
+				break
+			z_costs[z] = step * z_cost_per_level
+
+/// Which angular sector an offset from the epicentre falls in.
+/datum/shockwave/proc/sector_of(dx, dy)
+	if(!dx && !dy)
+		return 1
+	var/angle = arctan(dx, dy)
+	if(angle < 0)
+		angle += 360
+	return (round(angle / (360 / SHOCKWAVE_SECTORS)) % SHOCKWAVE_SECTORS) + 1
+
 /// Single pass over the registries, bucketing everything in reach by distance.
 /// This is the whole cost of a wave; everything after it is bucket lookups.
 /datum/shockwave/proc/gather()
-	var/radius_sq = radius * radius
+	sector_energy = new /list(SHOCKWAVE_SECTORS)
+	for(var/i in 1 to SHOCKWAVE_SECTORS)
+		sector_energy[i] = power
+
 	rings = new /list(radius + 1)
 	mob_rings = new /list(radius + 1)
-	// Pre-built so the hot loop can Add() in place. `rings[n] += x` would go
-	// through index assignment, rebuilding the inner list on every append.
+	// Pre-built so the hot loop can write straight into them. `rings[n] += x`
+	// would go through index assignment, rebuilding the inner list every time.
 	for(var/i in 1 to radius + 1)
 		rings[i] = list()
 		mob_rings[i] = list()
@@ -129,38 +284,89 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		if(QDELETED(target))
 			continue
 		var/turf/spot = get_turf(target)
-		if(!spot || spot.z != cz)
+		if(!spot)
+			continue
+		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+		if(isnull(z_cost))
+			continue
+		// What is left of the radius once the climb between levels is paid for.
+		var/reach = radius - z_cost
+		if(reach < 1)
 			continue
 		var/dx = spot.x - cx
 		var/dy = spot.y - cy
 		var/spread = dx * dx + dy * dy
 		// Reject on the square first; sqrt only for what actually landed.
-		if(spread > radius_sq)
+		if(spread > reach * reach)
 			continue
-		var/list/bucket = rings[round(sqrt(spread)) + 1]
-		bucket.Add(target)
+		var/list/bucket = rings[round(sqrt(spread) + z_cost) + 1]
+		bucket[target] = sector_of(dx, dy)
 
 	for(var/mob/viewer as anything in GLOB.player_list)
 		if(QDELETED(viewer))
 			continue
 		var/turf/spot = get_turf(viewer)
-		if(!spot || spot.z != cz)
+		if(!spot)
+			continue
+		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+		if(isnull(z_cost))
+			continue
+		var/reach = radius - z_cost
+		if(reach < 1)
 			continue
 		var/dx = spot.x - cx
 		var/dy = spot.y - cy
 		var/spread = dx * dx + dy * dy
-		if(spread > radius_sq)
+		if(spread > reach * reach)
 			continue
-		var/list/bucket = mob_rings[round(sqrt(spread)) + 1]
-		bucket.Add(viewer)
+		var/list/bucket = mob_rings[round(sqrt(spread) + z_cost) + 1]
+		bucket[viewer] = sector_of(dx, dy)
 
-/// Everyone on the z hears it, scaled by how far out they are.
+/**
+ * Buckets wall turfs near the blast.
+ *
+ * Walls are turfs, so they cannot live in the object registry. They are scanned
+ * instead, over a range that scales with power but is hard capped - a full-map
+ * wave would otherwise sweep every turf on every level it touches. Walls only
+ * fall near the epicentre anyway, so the cap costs nothing visible.
+ */
+/datum/shockwave/proc/gather_walls()
+	var/range = min(radius, min(wall_range_cap, round(wall_range_per_power * power)))
+	if(range < 1)
+		return
+
+	for(var/z in 1 to length(z_costs))
+		var/z_cost = z_costs[z]
+		if(isnull(z_cost))
+			continue
+		var/reach = min(range, radius - z_cost)
+		if(reach < 1)
+			continue
+		var/turf/low = locate(max(1, cx - reach), max(1, cy - reach), z)
+		var/turf/high = locate(min(world.maxx, cx + reach), min(world.maxy, cy + reach), z)
+		if(!low || !high)
+			continue
+		var/reach_sq = reach * reach
+		for(var/turf/closed/wall/found as anything in block(low, high))
+			var/dx = found.x - cx
+			var/dy = found.y - cy
+			var/spread = dx * dx + dy * dy
+			if(spread > reach_sq)
+				continue
+			var/list/bucket = rings[round(sqrt(spread) + z_cost) + 1]
+			bucket[found] = sector_of(dx, dy)
+		CHECK_TICK
+
+/// Everyone the wave reaches hears it, scaled by how far out they are.
 /datum/shockwave/proc/announce(turf/center)
 	for(var/mob/listener as anything in GLOB.player_list)
 		var/turf/spot = get_turf(listener)
-		if(!spot || spot.z != cz)
+		if(!spot)
 			continue
-		var/distance = get_dist(spot, center)
+		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+		if(isnull(z_cost))
+			continue
+		var/distance = get_dist(spot, center) + z_cost
 		var/volume = 100 * power * (1 - (distance / max(radius, 1)) * 0.7)
 		if(volume <= 0)
 			continue
@@ -187,32 +393,99 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 
 	var/list/targets = rings[ring]
 	if(length(targets))
-		var/damage = SHOCKWAVE_BASE_DAMAGE * power * falloff
-		if(damage > 0)
-			for(var/obj/target as anything in targets)
-				// take_damage carries each type's own reaction: chairs topple
-				// into a loose item, windows run obj_break, leaves just die.
-				if(!QDELETED(target))
-					target.take_damage(damage, BRUTE, "blunt")
-			CHECK_TICK
+		for(var/atom/target as anything in targets)
+			if(QDELETED(target))
+				continue
+			var/sector = targets[target]
+			var/energy = sector_energy[sector]
+			// This direction is spent already - something ahead absorbed it.
+			if(energy <= 0)
+				continue
+			var/strength = energy * falloff
+			if(isturf(target))
+				breach(target, sector, strength)
+				continue
+			var/obj/thing = target
+			var/damage = base_damage * strength
+			var/absorbed = min(damage, thing.obj_integrity)
+			// take_damage carries each type's own reaction: chairs topple into
+			// a loose item, windows run obj_break, leaves just die.
+			thing.take_damage(damage, BRUTE, "blunt")
+			sector_energy[sector] -= absorbed / absorb_scale
+		CHECK_TICK
 
 	var/list/viewers = mob_rings[ring]
 	if(length(viewers))
 		for(var/mob/viewer as anything in viewers)
-			if(!QDELETED(viewer))
-				stagger(viewer, falloff, ring)
+			if(QDELETED(viewer))
+				continue
+			var/energy = sector_energy[viewers[viewer]]
+			if(energy <= 0)
+				continue
+			stagger(viewer, energy * falloff, ring)
 		CHECK_TICK
 
-/datum/shockwave/proc/stagger(mob/viewer, falloff, ring)
-	var/strength = power * falloff
+/**
+ * Puts the front through one wall and charges the sector for it.
+ *
+ * Breaking through costs energy in proportion to what the wall had left, so
+ * stone drains far more than a tent does. A wall that holds reflects the front
+ * instead, and most of that direction stops there.
+ */
+/datum/shockwave/proc/breach(turf/wall, sector, strength)
+	if(!istype(wall, /turf/closed/wall) || wall.turf_integrity <= 0)
+		return
+	var/damage = base_damage * wall_mult * strength
+	var/before = wall.turf_integrity
 
-	shake_camera(viewer, 3 + round(5 * strength), strength)
+	// Mirrors turf/take_damage's own deflection check, so the wave is never
+	// charged for a hit that never landed.
+	if(damage >= wall.damage_deflection)
+		wall.take_damage(damage, BRUTE, "blunt")
 
-	if(iscarbon(viewer))
-		var/mob/living/carbon/victim = viewer
-		victim.soundbang_act(1, 10 * strength, 8 * strength, 20 * strength)
+	// A destroyed wall is replaced in place, so it stops being a wall turf.
+	if(!istype(wall, /turf/closed/wall) || wall.turf_integrity <= 0)
+		sector_energy[sector] -= min(damage, before) / absorb_scale
+	else
+		sector_energy[sector] *= wall_hold
 
-	if(ring <= SHOCKWAVE_DISTORT_RANGE)
+/datum/shockwave/proc/stagger(mob/viewer, strength, ring)
+	if(viewer.client != unshaken)
+		shake_camera(viewer, 3 + round(5 * strength), strength)
+
+	if(isliving(viewer))
+		var/mob/living/victim = viewer
+		// Knockdown itself checks CANKNOCKDOWN and stun immunity, so anything
+		// that should stay standing still does.
+		if(strength >= knockdown_floor)
+			var/static/list/floored = list(
+				"The ground bucks and throws me down!",
+				"A wall of force slams through me and takes my legs!",
+				"The world lurches - I am thrown from my feet!",
+			)
+			victim.Knockdown(knockdown_time * strength)
+			to_chat(victim, span_userdanger(pick(floored)))
+		else
+			var/static/list/rattled = list(
+				"A deep shudder rolls through the ground beneath me.",
+				"The earth trembles under my feet.",
+			)
+			to_chat(victim, span_danger(pick(rattled)))
+
+		// Spread rather than aimed at one limb: the whole body takes the front.
+		var/bruising = body_damage * strength
+		if(bruising > 0)
+			victim.take_overall_damage(bruising)
+
+		if(iscarbon(victim))
+			var/mob/living/carbon/deafened = victim
+			// Returns how far the bang got past ear protection, so earmuffs
+			// spare the ringing as well as the deafness.
+			var/got_through = deafened.soundbang_act(1, 10 * strength, 8 * strength, 20 * strength)
+			if(got_through > 0)
+				shockwave_ringing(deafened, strength, ringing_volume, ringing_time)
+
+	if(ring <= GLOB.shockwave_visuals["range tiles"])
 		distort(viewer, strength)
 
 /**
@@ -224,57 +497,102 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
  * would only distort the atom it sits on, not the world behind it.
  */
 /datum/shockwave/proc/distort(mob/viewer, strength)
-	if(!viewer.client || !viewer.hud_used)
-		return
 	var/turf/eye = get_turf(viewer)
 	if(!eye)
 		return
+	shockwave_ripple(viewer, (cx - eye.x) * world.icon_size, (cy - eye.y) * world.icon_size, strength)
 
-	var/offset_x = (cx - eye.x) * world.icon_size
-	var/offset_y = (cy - eye.y) * world.icon_size
-	var/size = 8 + round(24 * strength)
-	var/duration = 0.6 SECONDS
+/**
+ * Rings someone's ears.
+ *
+ * The clip carries its own onset punch and decay, so this is a one shot rather
+ * than a loop being faded by hand - it hits hard the moment the front arrives
+ * and rings out on its own. It still goes on an addressable channel so a weak
+ * blast can be cut short rather than ringing for the full tail.
+ */
+/proc/shockwave_ringing(mob/victim, strength, volume, duration)
+	var/level = volume * strength
+	if(level <= 0)
+		return
+
+	SEND_SOUND(victim, sound('modular_fenysha_events/sound/ear_ringing.wav',
+		repeat = FALSE, wait = 0, volume = level, channel = CHANNEL_SHOCKWAVE_RINGING))
+
+	// Scaled by strength, so a glancing blast rings briefly and a direct one
+	// gets the whole tail. At full strength this matches the clip length and
+	// nothing is cut.
+	var/cut_after = duration * strength
+	if(cut_after > 0)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(shockwave_ringing_stop), victim), cut_after)
+
+/// Cuts the ringing channel early, for blasts that did not earn a full tail.
+/proc/shockwave_ringing_stop(mob/victim)
+	if(!victim)
+		return
+	SEND_SOUND(victim, sound(null, repeat = FALSE, wait = 0, channel = CHANNEL_SHOCKWAVE_RINGING))
+
+/**
+ * Puts one ripple on a viewer's world planes.
+ *
+ * Split out from the shockwave itself so the tuner can preview it without
+ * setting anything off. Reads GLOB.shockwave_visuals every time, so edits made
+ * in game take effect on the next ripple with no recompile.
+ */
+/proc/shockwave_ripple(mob/viewer, offset_x = 0, offset_y = 0, strength = 1)
+	if(!viewer?.client || !viewer.hud_used)
+		return
+	var/list/tune = GLOB.shockwave_visuals
+	var/size = tune["amplitude base"] + round(tune["amplitude gain"] * strength)
+	var/duration = max(1, tune["duration ds"])
+	offset_x += tune["origin x px"]
+	offset_y += tune["origin y px"]
 
 	for(var/key in GLOB.shockwave_distorted_planes)
 		var/atom/movable/screen/plane_master/plane = viewer.hud_used.plane_masters[key]
 		if(!plane)
 			continue
+		// Appended raw and animated on the filter object itself, the way the
+		// druqks effect does it. The named-filter API cannot be used here:
+		// add_filter and transition_filter both run update_filters(), which
+		// rebuilds `filters` from filter_data alone - that discards the running
+		// animation, and takes the ambient occlusion and blur that backdrop()
+		// sets raw down with it.
 		// Identical parameters on every plane, or the layers tear apart.
-		plane.add_filter(SHOCKWAVE_FILTER, 1, ripple_filter(
+		plane.filters += filter(arglist(ripple_filter(
 			radius = 0,
 			size = size,
-			falloff = 1,
+			falloff = tune["band falloff"],
 			x = offset_x,
 			y = offset_y,
-		))
-		plane.transition_filter(SHOCKWAVE_FILTER, list("radius" = 480, "size" = 0), duration)
-		addtimer(CALLBACK(plane, TYPE_PROC_REF(/atom/movable, remove_filter), SHOCKWAVE_FILTER), duration)
+		)))
+		var/ripple = plane.filters[plane.filters.len]
+		// Amplitude decays but never reaches zero, which would be invisible.
+		animate(ripple, radius = tune["travel px"], size = size * tune["end amplitude"], time = duration, easing = SINE_EASING)
+		// backdrop() is the codebase's own reset for a plane master's filters,
+		// so it drops the ripple and puts the occlusion back in one go.
+		addtimer(CALLBACK(plane, TYPE_PROC_REF(/atom/movable/screen/plane_master, backdrop), viewer), duration)
 
 /client/proc/fenysha_shockwave()
 	set category = "Fun"
 	set name = "Shockwave"
-	set desc = "Fires an expanding shockwave outward from your location."
+	set desc = "Sets off a shockwave here using the current settings."
 	if(!check_rights(R_FUN))
 		return
 
 	var/turf/epicenter = get_turf(mob)
 	if(!epicenter)
 		return
+	fire_shockwave(epicenter, mob)
 
-	var/radius = input(usr, "Radius in tiles. The map is [world.maxx]x[world.maxy].", "Shockwave", 15) as num|null
-	if(isnull(radius) || radius < 1)
-		return
-	var/power = input(usr, "Power. 1 is a full-strength blast.", "Shockwave", 1) as num|null
-	if(isnull(power))
-		return
-	var/speed = input(usr, "Tiles the front advances per tick.", "Shockwave", 2) as num|null
-	if(isnull(speed))
-		return
+/// Shared by the verb and the tuner's fire button, so both stay in step.
+/proc/fire_shockwave(turf/epicenter, mob/caster)
+	var/list/blast = GLOB.shockwave_blast
+	if(caster?.client)
+		log_admin("[key_name(caster)] set off a shockwave at [epicenter.x],[epicenter.y],[epicenter.z] radius [blast["radius"]] power [blast["power"]].")
+		message_admins("[key_name_admin(caster)] set off a shockwave, radius [blast["radius"]] power [blast["power"]] [ADMIN_JMP(epicenter)]")
+	// The caster is spared the shake so they can watch the distortion.
+	return shockwave(epicenter, blast["radius"], blast["power"], blast["speed"], FALSE, caster, blast["z reach"])
 
-	log_admin("[key_name(src)] fired a shockwave at [epicenter.x],[epicenter.y],[epicenter.z] radius [radius] power [power].")
-	message_admins("[key_name_admin(src)] fired a shockwave, radius [radius] power [power] [ADMIN_JMP(epicenter)]")
-	shockwave(epicenter, radius, power, speed)
-
-#undef SHOCKWAVE_BASE_DAMAGE
-#undef SHOCKWAVE_DISTORT_RANGE
 #undef SHOCKWAVE_FILTER
+#undef CHANNEL_SHOCKWAVE_RINGING
+#undef SHOCKWAVE_SECTORS

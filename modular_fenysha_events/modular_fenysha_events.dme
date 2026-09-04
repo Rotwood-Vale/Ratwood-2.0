@@ -7,6 +7,7 @@
 
 #include "code\effects\mandelbrot_fullscreen.dm"
 #include "code\effects\shockwave.dm"
+#include "code\effects\shockwave_tuner.dm"
 
 #include "code\projectiles\beams.dm"
 #include "code\projectiles\test_guns.dm"
