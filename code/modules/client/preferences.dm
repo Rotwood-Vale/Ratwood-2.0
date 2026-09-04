@@ -97,6 +97,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/mutant_skin = FALSE			//Use mutant color as skin color instead of skin_tone
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
 	var/extra_language_1 = "None" // Additional triumph language slot 1
@@ -725,8 +726,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
 
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
-				dat += "<br>"
+				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a><br>"
+				if(pref_species.mutant_skin_option)
+					dat += "<b>Mutant Skintone:</b> <a href='?_src_=prefs;preference=mutant_skin;task=input'>[mutant_skin ? "Yes" : "No"]</a><br>"
 
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
@@ -2524,6 +2526,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("update_mutant_colors")
 					update_mutant_colors = !update_mutant_colors
 
+				if("mutant_skin")
+					if(pref_species.mutant_skin_option)
+						mutant_skin = !mutant_skin
+						try_update_mutant_colors()
+
 				if("dnr")
 					dnr_pref = !dnr_pref
 
@@ -3254,6 +3261,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
+	character.mutant_skin = mutant_skin
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.detail = detail
