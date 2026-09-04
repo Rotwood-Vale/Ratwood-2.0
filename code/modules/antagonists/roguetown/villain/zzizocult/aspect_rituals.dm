@@ -166,6 +166,9 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
+	if(remnant.fed_from == SSticker.rulermob)
+		to_chat(user, span_danger("The Sun Queen protects this soul!"))
+		return
 	do_teleport(remnant.fed_from, center)
 	to_chat(user, span_notice("ALL MEN OBEY THE DREAMCALL."))
 	remnant.fed_from.electrocute_act(1, src, 1, SHOCK_NOSTUN)
