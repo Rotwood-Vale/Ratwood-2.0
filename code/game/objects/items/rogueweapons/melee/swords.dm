@@ -2307,6 +2307,7 @@
 	alt_intents = null 
 	wdefense_wbonus = 4
 	bigboy = TRUE
+	special = /datum/special_intent/shin_swipe
 
 /obj/item/rogueweapon/sword/long/rhomphaia/stalker/attack(mob/living/M, mob/living/user, bodyzone_hit)
 	. = ..()
@@ -2379,6 +2380,7 @@
 	force_wielded = 27//doesn't get buffed to 30 like normal shotel
 	max_integrity = 175//tiny bit more integ since it's unique
 	bigboy = TRUE
+	special = /datum/special_intent/shin_swipe
 
 /obj/item/rogueweapon/sword/sabre/hook/stalker
 	name = "drow hook sword"
@@ -2428,6 +2430,7 @@
 	alt_intents = null // Can't mordhau this
 	max_integrity = 175// less integ than the real deal, not near as much as the kazen messers
 	bigboy = TRUE
+	special = /datum/special_intent/axe_swing
 
 /obj/item/rogueweapon/sword/long/stalker//what if estoc but longsword?
 	name = "drow longsword"
