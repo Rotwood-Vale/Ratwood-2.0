@@ -449,13 +449,14 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			if(!glass_colour)
 				glass_colour = "brew_bottle"
 
+			var/bottle_path = selected_recipe.output_bottle_type || /obj/item/reagent_containers/glass/bottle/brewing_bottle
 			var/bottlecaps
 			for(bottlecaps = 0, bottlecaps < selected_recipe.brewed_amount, bottlecaps++)
-				var/obj/item/reagent_containers/glass/bottle/brewing_bottle/bottle_made = new /obj/item/reagent_containers/glass/bottle/brewing_bottle(get_turf(src))
+				var/obj/item/reagent_containers/glass/bottle/brewing_bottle/bottle_made = new bottle_path(get_turf(src))
 				bottle_made.icon_state = "[glass_colour]"
 				bottle_made.name = "brewer's bottle of [selected_recipe.bottle_name]"
 				bottle_made.sellprice = round(selected_recipe.sell_value / selected_recipe.brewed_amount)
-				bottle_made.desc =  selected_recipe.bottle_desc || "A bottle of locally-brewed [selected_recipe.bottle_name]."
+				bottle_made.desc =	selected_recipe.bottle_desc || "A bottle of locally-brewed [selected_recipe.bottle_name]."
 				var/datum/reagent/brewed_reagent = selected_recipe.reagent_to_brew
 				if(selected_recipe.ages)
 					var/time = world.time - age_start_time
@@ -468,6 +469,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 			for(items_given= 0, items_given < selected_recipe.brewed_item_count, items_given++)
 				new selected_recipe.brewed_item(get_turf(src))
 		selected_recipe = null
+
 
 /obj/structure/fermentation_keg/proc/try_tapping(mob/user)
 	if(tapped)
