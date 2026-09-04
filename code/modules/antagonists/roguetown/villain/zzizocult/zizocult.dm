@@ -118,8 +118,8 @@
 
 /datum/objective/zizo
 	name = "ASCEND"
-	explanation_text = "Ensure that I ascend."
-	team_explanation_text = "Ensure that I ascend."
+	explanation_text = "Ensure that I ascend. Use the dark crystal in your stash to obtain an aspect."
+	team_explanation_text = "Ensure that I ascend. Use the dark crystal in your stash to obtain an aspect."
 	triumph_count = 5
 
 /datum/objective/zizo/check_completion()
