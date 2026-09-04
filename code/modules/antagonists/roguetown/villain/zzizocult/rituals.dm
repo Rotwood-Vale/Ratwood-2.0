@@ -30,6 +30,17 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		.[ritual.name] = new ritual
 
 // RITUAL DATUMS
+/proc/ritual_available(mob/living/carbon/human/user, datum/ritual/ritual)
+	if(initial(ritual.abstract_type) == ritual)
+		return FALSE
+	if(initial(ritual.is_cultist_ritual) && !is_zizo(user))
+		return FALSE
+	if(initial(ritual.required_aspect) && initial(ritual.required_aspect) != user.aspect)
+		return FALSE
+	if(initial(ritual.needs_aspect) && !user.aspect)
+		return FALSE
+	return TRUE
+
 /datum/ritual
 	abstract_type = /datum/ritual
 	var/name = "DVRK AND EVIL RITVAL"
@@ -39,6 +50,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/s_req
 	var/w_req
 	var/is_cultist_ritual = FALSE
+	var/required_aspect
+	var/needs_aspect = FALSE
+	var/keep_center = FALSE
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
 	return
@@ -94,9 +108,23 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		target.praise()
 	else
 		target.visible_message(span_danger("[target] thrashes around, unyielding!"))
-		to_chat(target, span_danger("Yield."))
-		if(target.electrocute_act(10))
-			target.emote("painscream")
+		if(!absorb_lux(target, get_turf(target)))
+			to_chat(user, span_warning("[target] has no lux left to give."))
+		else
+			to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
+
+/datum/ritual/servantry/sacrifice
+	name = "Sacrifice"
+	center_requirement = /mob/living/carbon/human
+
+/datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
+	var/mob/living/carbon/human/target = locate() in center.contents
+	if(!target || target == user)
+		return
+	if(!absorb_lux(target, center))
+		to_chat(user, span_warning("[target] has no lux left to give."))
+		return
+	to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
 
 /datum/ritual/servantry/heartache
 	name = "Heartaches"
@@ -196,14 +224,14 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	color = LIGHT_COLOR_BLOOD_MAGIC
 
 /datum/ritual/transmutation/propaganda
-	name = "Propaganda"
+	name = "Remnant Leech"
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
 	s_req = /obj/item/natural/feather
 
 /datum/ritual/transmutation/propaganda/invoke(mob/living/user, turf/center)
 	new /obj/item/natural/worms/leech/propaganda(center)
-	to_chat(user, span_notice("A leech to make their minds wrangled. They'll be in bad spirits."))
+	to_chat(user, span_notice("A leech to steal their souls."))
 
 /obj/item/natural/worms/leech/propaganda
 	name = "accursed leech"
@@ -211,6 +239,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	icon_state = "leech"
 	drainage = 0
 	blood_sucking = 0
+	suppressed = TRUE
 	embedding = list(
 		"embed_chance" = 100,
 		"embedded_unsafe_removal_time" = 0,
@@ -302,15 +331,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	if(target.stat == DEAD)
 		target.gib(FALSE, FALSE, FALSE)
+		return
 	ADD_TRAIT(target, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
-	new /obj/item/clothing/suit/roguetown/armor/plate/full/zizo(center)
-	new /obj/item/clothing/under/roguetown/platelegs/zizo(center)
-	new /obj/item/clothing/shoes/roguetown/boots/armor/zizo(center)
-	new /obj/item/clothing/head/roguetown/helmet/heavy/zizo(center)
-	new /obj/item/clothing/gloves/roguetown/plate/zizo(center)
+	target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
 /datum/ritual/transmutation/summonweapon
@@ -337,6 +363,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/fleshcrafting/gutted
 	name = "Gutted Fish"
 	center_requirement = /mob/living/carbon/human // One to be gutted.human
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/gutted/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -361,6 +388,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	w_req = /obj/item/bodypart/l_leg
 	e_req = /obj/item/bodypart/r_leg
 	is_cultist_ritual = TRUE
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/bunnylegs/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -374,11 +402,13 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
 	var/heal_tick = 30
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/fleshmend/greater
 	name = "Greater Fleshmend"
 	is_cultist_ritual = TRUE
 	heal_tick = 70
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/fleshmend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -393,6 +423,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/organ/eyes
 	e_req = /obj/item/organ/eyes
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/darkeyes/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -406,27 +437,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	new_eyes.Insert(target)
 	to_chat(target, span_notice("I no longer fear the dark."))
 
-/datum/ritual/fleshcrafting/undead
-	name = "Dominate Undead"
-	center_requirement = /mob/living/carbon/human
-	w_req = /obj/item/organ/brain
-	e_req = /obj/item/organ/brain
-	is_cultist_ritual = TRUE
-
-/datum/ritual/fleshcrafting/undead/invoke(mob/living/user, turf/center)
-	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target || !target.mind)
-		return
-	target.faction = list("[target.real_name]_faction")
-	target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-	target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-	to_chat(target, span_notice("The undead bow down to my will."))
-
 /datum/ritual/fleshcrafting/nopain
 	name = "Painless Battle"
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/organ/heart
 	e_req = /obj/item/organ/brain
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/nopain/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -441,6 +457,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	name = "Flawed Immortality"
 	center_requirement = /mob/living/carbon/human
 	n_req = /mob/living/carbon/human
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/immortality/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -473,6 +490,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	center_requirement = /mob/living/carbon/human // cult leader
 	n_req = /mob/living/carbon/human // the ruler
 	is_cultist_ritual = TRUE
+	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/cultist = locate() in center.contents
@@ -487,9 +505,27 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	RULER.gib()
 	SSmapping.retainer.cult_ascended = TRUE
 	to_chat(cultist, span_userdanger("I HAVE DONE IT! I HAVE REACHED A HIGHER FORM! ZIZO SMILES UPON ME WITH MALICE IN HER EYES TOWARD THE ONES WHO LACK KNOWLEDGE AND UNDERSTANDING!"))
-	var/mob/living/trl = new /mob/living/simple_animal/hostile/retaliate/blood/ascended(center)
-	cultist.mind?.transfer_to(trl)
-	cultist.gib()
+	ADD_TRAIT(cultist, TRAIT_NOPAIN, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NOLIMBDISABLE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NODISMEMBER, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NODEATH, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NOBREATH, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NOHARDCRIT, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NOSOFTCRIT, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_NOFIRE, TRAIT_GENERIC)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/cleave)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/ascended_heal)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/true_resurrection)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/self/regenerate)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl)
+	if(cultist.head)
+		cultist.dropItemToGround(cultist.head, TRUE)
+	var/obj/item/clothing/head/roguetown/crown/zizo/crown = new(cultist)
+	cultist.equip_to_slot_or_del(crown, SLOT_HEAD)
+	ADD_TRAIT(crown, TRAIT_NODROP, TRAIT_GENERIC)
 	priority_announce("The sky blackens, a dark day for Grimoria.", "Ascension")
 	for(var/mob/living/carbon/human/V in GLOB.human_list)
 		if(V.mind in SSmapping.retainer.cultists)
@@ -497,12 +533,124 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		else
 			V.add_stress(/datum/stressevent/hatezizo)
 
+/obj/item/clothing/head/roguetown/crown/zizo
+	name = "Zizo Crown"
+	desc = "FOR THE ASCENDANT."
+	icon_state = "zcrown"
+
+/obj/effect/proc_holder/spell/targeted/touch/cleave
+	name = "Cleave"
+	desc = "Kill."
+	clothes_req = FALSE
+	overlay_state = "gravemark"
+	recharge_time = 15 SECONDS
+	chargedloop = null
+	hand_path = /obj/item/melee/touch_attack/cleave
+	cost = 0
+	hide_charge_effect = TRUE
+
+/obj/item/melee/touch_attack/cleave
+	name = "reaping hand"
+	desc = "Touch a foe to sever their head."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing_greyscale"
+	color = "#8a13bd"
+
+/obj/item/melee/touch_attack/cleave/attack_self()
+	attached_spell.remove_hand()
+
+/obj/item/melee/touch_attack/cleave/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!isliving(target))
+		return
+	var/mob/living/spelltarget = target
+	if(!do_after(user, 2 SECONDS, target = spelltarget))
+		return
+	if(ishuman(spelltarget))
+		var/mob/living/carbon/human/H = spelltarget
+		var/obj/item/bodypart/head/head = H.get_bodypart("head")
+		if(head)
+			head.dismember()
+	spelltarget.visible_message(span_danger("[user] makes a horizontal cut with their hand and [spelltarget]'s head pops off!"))
+	attached_spell.remove_hand()
+
+/obj/effect/proc_holder/spell/targeted/touch/ascended_heal
+	name = "Blessing"
+	desc = "Heal."
+	clothes_req = FALSE
+	overlay_state = "gravemark"
+	recharge_time = 10 SECONDS
+	chargedloop = null
+	hand_path = /obj/item/melee/touch_attack/ascended_heal
+	cost = 0
+	hide_charge_effect = TRUE
+
+/obj/item/melee/touch_attack/ascended_heal
+	name = "mending hand"
+	desc = "Touch someone to heal them."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing_greyscale"
+	color = "#8a13bd"
+
+/obj/item/melee/touch_attack/ascended_heal/attack_self()
+	attached_spell.remove_hand()
+
+/obj/item/melee/touch_attack/ascended_heal/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!isliving(target))
+		return
+	var/mob/living/spelltarget = target
+	if(spelltarget.stat == DEAD)
+		to_chat(user, span_warning("They're dead. Resurrect them."))
+		return
+	if(!do_after(user, 2 SECONDS, target = spelltarget))
+		return
+	spelltarget.revive(full_heal = TRUE, admin_revive = TRUE)
+	spelltarget.visible_message(span_notice("[user] mends [spelltarget] in a flash of light!"))
+	explosion(get_turf(spelltarget), flash_range = 7)
+	attached_spell.remove_hand()
+
+/obj/effect/proc_holder/spell/targeted/touch/true_resurrection
+	name = "True Resurrection"
+	desc = "Bring them back."
+	clothes_req = FALSE
+	overlay_state = "gravemark"
+	recharge_time = 30 SECONDS
+	chargedloop = null
+	hand_path = /obj/item/melee/touch_attack/true_resurrection
+	cost = 0
+	hide_charge_effect = TRUE
+
+/obj/item/melee/touch_attack/true_resurrection
+	name = "reviving hand"
+	desc = "Touch the dead to bring them back."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing_greyscale"
+	color = "#8a13bd"
+
+/obj/item/melee/touch_attack/true_resurrection/attack_self()
+	attached_spell.remove_hand()
+
+/obj/item/melee/touch_attack/true_resurrection/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!isliving(target))
+		return
+	var/mob/living/spelltarget = target
+	if(spelltarget.stat != DEAD)
+		to_chat(user, span_warning("They still live."))
+		return
+	if(!do_after(user, 2 SECONDS, target = spelltarget))
+		return
+	spelltarget.revive(full_heal = TRUE, admin_revive = TRUE)
+	ADD_TRAIT(spelltarget, TRAIT_ROTMAN, TRAIT_GENERIC)
+	spelltarget.visible_message(span_notice("[user] drags [spelltarget] back from death!"))
+	explosion(get_turf(spelltarget), flash_range = 7)
+	attached_spell.remove_hand()
+
 /obj/effect/decal/cleanable/sigil
 	name = "sigils"
 	desc = "Strange runics. They hurt your eyes."
 	icon_state = "center"
 	icon = 'icons/obj/sigils.dmi'
 	var/sigil_type
+	var/static/list/sigil_states = list("Strand" = "strand")
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
 	. = ..()
@@ -512,6 +660,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		var/mob/living/living_user = user
 		if(istype(living_user.patron, /datum/patron/inhumen/zizo))
 			to_chat(user, "It is of the [sigil_type] circle.")
+
+/obj/effect/decal/cleanable/sigil/proc/set_sigil_type(newtype)
+	sigil_type = newtype
+	if(icon_state == "center")
+		icon_state = sigil_states[newtype] || "center"
+		update_icon()
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)
 	for(var/atom/A in get_step(src, NORTH))
@@ -532,14 +686,28 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 			qdel(A)
 	for(var/atom/A in loc.contents)
 		if(istype(A, R.center_requirement) && !ishuman(A))
+			if(R.keep_center)
+				continue
 			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
 			qdel(A)
 
 /obj/effect/decal/cleanable/sigil/attack_hand(mob/living/user)
 	. = ..()
-	if(icon_state != "center")
-		return
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
+		return
+	if(sigil_type == "Strand")
+		var/obj/effect/decal/cleanable/sigil/dest
+		for(var/obj/effect/decal/cleanable/sigil/S in world)
+			if(S == src || S.sigil_type != "Strand")
+				continue
+			dest = S
+			break
+		if(!dest)
+			to_chat(user, span_warning("Nothing connected."))
+			return
+		do_teleport(user, get_turf(dest))
+		return
+	if(icon_state != "center")
 		return
 	var/list/rituals_pre = list()
 	switch(sigil_type)
@@ -553,11 +721,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	var/list/rituals = list()
 	for(var/datum/ritual/ritual as anything in rituals_pre)
-		if(initial(ritual.abstract_type) == ritual)
-			continue
-		if(initial(ritual.is_cultist_ritual) && !(is_zizocultist(user.mind) || is_zizolackey(user.mind)))
-			continue
-		rituals += initial(ritual.name)
+		if(ritual_available(user, ritual))
+			rituals += initial(ritual.name)
 
 	var/ritualnameinput = input(user, "Rituals", "ZIZO") as null|anything in rituals
 	if(!ritualnameinput)
@@ -649,11 +814,19 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
 			to_chat(M, span_warning("There is already something here."))
 			return
-	if(do_after(M, 5 SECONDS))
-		M.bloody_hands--
-		M.update_inv_gloves()
+	var/isblood = FALSE
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		isblood = (H.aspect == "blood")
+	var/draw_time = 5 SECONDS
+	if(isblood)
+		draw_time = 1 SECONDS
+	if(do_after(M, draw_time))
+		if(!isblood)
+			M.bloody_hands--
+			M.update_inv_gloves()
 		var/obj/effect/decal/cleanable/sigil/C = new(src)
-		C.sigil_type = sigiltype
+		C.set_sigil_type(sigiltype)
 		playsound(M, 'sound/items/write.ogg', 100)
 		var/list/sigilsPath = list(
 			/obj/effect/decal/cleanable/sigil/N,
@@ -675,9 +848,18 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	set category = "ZIZO"
 	if(incapacitated() || stat >= UNCONSCIOUS)
 		return
-	var/list/runes = list("Servantry", "Transmutation", "Fleshcrafting")
-	if(!bloody_hands && !get_bleed_rate())
+	if(aspect != "blood" && !bloody_hands && !get_bleed_rate())
 		to_chat(src, span_danger("My hands aren't bloody enough."))
+		return
+	var/static/list/cats = list("Servantry" = /datum/ritual/servantry, "Transmutation" = /datum/ritual/transmutation, "Fleshcrafting" = /datum/ritual/fleshcrafting)
+	var/list/runes = list()
+	for(var/cat in cats)
+		for(var/datum/ritual/ritual as anything in subtypesof(cats[cat]))
+			if(ritual_available(src, ritual))
+				runes += cat
+				break
+	if(!runes.len)
+		to_chat(src, span_warning("I know no rites."))
 		return
 	var/choice = input("Sigil Type", "ZIZO") as null|anything in runes
 	if(!choice)

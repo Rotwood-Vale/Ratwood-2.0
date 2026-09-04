@@ -78,6 +78,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT)
+	H.mind.special_items["Dark Crystal"] += /obj/item/necro_relics/necro_crystal
 	H.grant_language(/datum/language/undead)
 	greet()
 

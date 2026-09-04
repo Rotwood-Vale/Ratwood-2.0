@@ -1447,6 +1447,7 @@
 #include "code\modules\antagonists\roguetown\villain\zombie\zombie_disease.dm"
 #include "code\modules\antagonists\roguetown\villain\zombie\zombie_verbs.dm"
 #include "code\modules\antagonists\roguetown\villain\zombie\zombie_wound_infection.dm"
+#include "code\modules\antagonists\roguetown\villain\zzizocult\aspect_rituals.dm"
 #include "code\modules\antagonists\roguetown\villain\zzizocult\rituals.dm"
 #include "code\modules\antagonists\roguetown\villain\zzizocult\zizocult.dm"
 #include "code\modules\antagonists\separatist\separatist.dm"
