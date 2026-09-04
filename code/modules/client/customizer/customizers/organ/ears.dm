@@ -282,7 +282,7 @@
 
 /datum/customizer_choice/organ/ears/tiefling
 	name = "Tiefling Ears"
-	organ_type = /obj/item/organ/ears
+	organ_type = /obj/item/organ/ears/tiefling
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/elf,
 		/datum/sprite_accessory/ears/elfw,
