@@ -180,10 +180,16 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	message = treat_message(message, language) // unfortunately we still need this
+	var/swallowed_message = message
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
 	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
 	if(!message)
+		// something on COMSIG_MOB_SAY ate it whole, a slave collar today. Record the attempt: otherwise
+		// anything hooking that signal is a way to speak with no entry anywhere. Nobody heard it, so it
+		// gets no seen copy and no roster
+		if((mind || ckey) && swallowed_message)
+			log_talk(swallowed_message, LOG_SAY, tag = "swallowed")
 		return
 
 	// Allow sign languages and other tongueless speech to bypass the vocal speech check
@@ -201,7 +207,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
 		message_range = 1
 		message_mode = MODE_WHISPER
-		src.log_talk(message, LOG_WHISPER)
+		src.log_talk(message, LOG_WHISPER, forced_by=forced)
 		if(fullcrit)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
@@ -279,6 +285,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
+	// tagged for the seen log: anyone past normal range only eavesdropped the starred version
+	if(eavesdrop_range)
+		for(var/mob/listener as anything in listening)
+			if(get_dist(source, listener) > message_range)
+				listening[listener] = "~"
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
@@ -305,7 +316,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost in listening)
 				listening -= ghost
 				the_dead -= ghost
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered
@@ -353,7 +364,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/ignored_mobs = understanders.Copy()
 	if(length(hidden_ghosts))
 		ignored_mobs += hidden_ghosts
-	visible_message(chatmsg, runechat_message = sign_verb, log_seen = SEEN_LOG_EMOTE, ignored_mobs = ignored_mobs)
+	visible_message(chatmsg, runechat_message = sign_verb, log_seen = SEEN_LOG_EMOTE, log_seen_msg = "[src] [sign_verb].", ignored_mobs = ignored_mobs)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -458,13 +469,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		remove_status_effect(/datum/status_effect/thaumaturgy)
 	// AZURE EDIT END
 	var/list/listening = line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, source) : get_hearers_in_range(message_range + eavesdrop_range, source)
+	// seen log tags, one distance check per listener: ~ eavesdropped the starred version, a numpad digit points
+	// toward speech from past their screen edge. Skipped when the radius cannot reach that far, ie every normal say
+	if(eavesdrop_range || message_range > SEEN_LOG_OFFSCREEN_DIST)
+		for(var/mob/listener as anything in listening)
+			var/listener_dist = get_dist(source, listener)
+			if(eavesdrop_range && listener_dist > message_range)
+				listening[listener] = "~"
+			else if(listener_dist > SEEN_LOG_OFFSCREEN_DIST)
+				listening[listener] = seen_direction_tag(listener, source)
 	if(Zs_too)
 		if(speaker_ceiling) // so people above us can hear us too
-			listening += line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, speaker_ceiling) : get_hearers_in_range(message_range + eavesdrop_range, speaker_ceiling)
+			for(var/mob/listener as anything in (line_of_sight_only ? get_hearers_in_view(message_range + eavesdrop_range, speaker_ceiling) : get_hearers_in_range(message_range + eavesdrop_range, speaker_ceiling)))
+				if(!(listener in listening))
+					listening[listener] = "^"
 		if(!line_of_sight_only) // no real good way to do this for LOS-only
 			var/turf/below_turf = GET_TURF_BELOW(speaker_turf)
 			if(below_turf)
-				listening += get_hearers_in_range(message_range + eavesdrop_range, below_turf)
+				for(var/mob/listener as anything in get_hearers_in_range(message_range + eavesdrop_range, below_turf))
+					if(!(listener in listening))
+						listening[listener] = "v"
 	var/alist/admin_listeners = alist()
 	var/do_ghost_protection = has_ghost_protection(src)
 	if(Zs_all)
@@ -501,7 +525,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(ghost.bypasses_ghost_protection())
 				continue
 			listening -= ghost
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	log_seen(src, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered
