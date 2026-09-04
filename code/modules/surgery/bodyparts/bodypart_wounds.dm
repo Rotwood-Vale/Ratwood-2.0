@@ -290,8 +290,13 @@
 			attempted_wounds += /datum/wound/artery
 	if(bclass in GLOB.whipping_bclasses)
 		used = round(damage_dividend * 20 + (dam / 3))
-		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
-			dam += 10
+		if(user)
+			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			attempted_wounds += /datum/wound/artery		//basically does sword-tier wounds.
 		if(prob(used))
@@ -327,6 +332,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -380,6 +387,10 @@
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(prob(used))
 			if(HAS_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS))
 				attempted_wounds += /datum/wound/artery/chest
@@ -407,6 +418,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -539,6 +552,8 @@
 		if(owner.client)
 			winset(owner.client, "outputwindow.output", "max-lines=1")
 			winset(owner.client, "outputwindow.output", "max-lines=100")
+		if(owner.client || owner.mind)
+			log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 
 
 	for(var/wound_type in shuffle(attempted_wounds))
@@ -546,6 +561,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 

@@ -33,7 +33,7 @@
 /obj/item/needle
 	name = "needle"
 	icon_state = "needle"
-	desc = "This sharp needle can sew wounds, mend clothing, and stab someone if you’re desperate."
+	desc = "This sharp needle can sew wounds, mend clothing, and stab someone if you're desperate."
 	icon = 'icons/roguetown/items/misc.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
@@ -278,7 +278,7 @@
 
 /obj/item/needle/decrepit
 	name = "decrepit needle"
-	icon_state = "aneedle"
+	icon_state = "needle" // "aneedle" // currently missing the sprite
 	desc = "This decrepit old needle doesn't seem helpful for much."
 	stringamt = 5
 	maxstring = 5

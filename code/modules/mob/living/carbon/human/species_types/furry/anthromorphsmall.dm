@@ -97,6 +97,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/anthro,
+		/datum/customizer/bodypart_feature/pubes/furry,
+		/datum/customizer/bodypart_feature/pits/furry,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -193,4 +195,3 @@
 	returned["mcolor2"] = second_color
 	returned["mcolor3"] = third_color
 	return returned
-

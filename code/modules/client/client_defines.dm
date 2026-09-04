@@ -27,6 +27,13 @@
 	///Internal counter for clients sending irc relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/ircreplyamount = 0
 
+	///Built POV timelines, keyed by pov_cache_key(). Oldest first, oldest dropped when full
+	var/list/pov_log_cache
+	///Highlighted actor classes per timeline, same keying as the cache
+	var/list/pov_log_highlights
+	///Filter state per timeline, three characters: attacks, highlighted, faded
+	var/list/pov_log_filters
+
 		/////////
 		//OTHER//
 		/////////
@@ -148,7 +155,7 @@
 	var/rain_sound = FALSE
 	var/last_droning_sound
 	var/sound/droning_sound
-	
+
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()
 	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
@@ -161,7 +168,8 @@
 	var/movement_blocked = FALSE
 	/// Are we locking our movement input? This holds you in place so you can turn on the spot
 	var/movement_locked = FALSE
-
+	/// World time cooldown before the mob can turn again
+	var/last_turn = 0
 	/// A rolling buffer of any keys held currently
 	var/list/keys_held = list()
 	/// The direction we WANT to move, based off our keybinds

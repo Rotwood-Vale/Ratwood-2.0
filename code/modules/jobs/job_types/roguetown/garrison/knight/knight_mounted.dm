@@ -47,7 +47,7 @@
 		var/weapons = list(
 			"Longsword + Crossbow",
 			"Billhook + Recurve Bow",
-			"Grand Mace + Longbow",
+			"Steel Mace + Longbow",
 			"Sabre + Recurve Bow",
 			"Lance + Kite Shield"
 		)
@@ -66,10 +66,10 @@
 				beltr = /obj/item/quiver/arrows
 				beltl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
-			if("Grand Mace + Longbow")
+			if("Steel Mace + Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
-				beltl = /obj/item/rogueweapon/mace/goden/steel
+				beltl = /obj/item/rogueweapon/mace/steel
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Sabre + Recurve Bow")
 				l_hand = /obj/item/rogueweapon/scabbard/sword/noble

@@ -60,6 +60,7 @@
 		"Adventuring Supplies",
 		"Armor (Light)",
 		"Armor (Iron)",
+		"Armor (Bronze)",
 		"Armor (Steel)",
 		"Armor (Exotic)",
 		"Potions",
@@ -112,6 +113,7 @@
 	profit_id = list("Guildsman", "Guildmaster", "Tailor")
 	categories = list(
 		"Armor (Iron)",
+		"Armor (Bronze)",
 		"Armor (Steel)",
 		"Armor (Exotic)",
 		"Weapons (Ranged)",

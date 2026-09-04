@@ -14,6 +14,10 @@
 	soundloop.start()
 	. = ..()
 
+/obj/structure/boatbell/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
 /obj/structure/boatbell/attack_hand(mob/user)
 	if(world.time < last_ring + 50)
 		return
@@ -59,7 +63,7 @@
 			var/list/rolestonotify = list()
 			switch(localarea)
 				if("church")
-					rolestonotify = list("Bishop", "Acolyte", "Druid", "Martyr", "Templar", "Churchling")
+					rolestonotify = GLOB.church_positions
 				if("Shop")
 					rolestonotify = list("Merchant", "Shophand")
 				if("Physician")
@@ -71,9 +75,9 @@
 				if("Baths")
 					rolestonotify = list("Bathmaster", "Bathhouse Attendant")
 				if("The Inquisition")
-					rolestonotify = list("Inquisitor", "Orthodoxist", "Absolver")
-				if("Garrison")
-					rolestonotify = list("Man at Arms", "Sergeant", "Dungeoneer", "Watchman")
+					rolestonotify = GLOB.inquisition_positions
+				if("Garrison", "Warden Fort")
+					rolestonotify = GLOB.garrison_positions + GLOB.noble_positions
 			send_ooc_note(("I hear the distant sounds of [src] ringing. I'm being called to the [localarea]."), job = rolestonotify)
 
 /obj/structure/standingbell/proc/reset_cooldown()

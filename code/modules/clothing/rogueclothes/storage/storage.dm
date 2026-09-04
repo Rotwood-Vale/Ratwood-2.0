@@ -105,6 +105,25 @@
 /obj/item/storage/belt/rogue/leather/battleskirt/black
 	color = CLOTHING_BLACK
 
+/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth
+	name = "belt with breechcloth"
+	desc = "A fine leather strap notched with holes for a buckle to secure itself, and nestled above a halved tabard's coverings."
+	icon_state = "breechcloth"
+	flags_inv = HIDECROTCH
+	sewrepair = FALSE
+	detail_tag = "_belt"
+
+/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/blackbelt
+	name = "black belt with breechcloth"
+	desc = "A fine black-leather strap notched with holes for a buckle to secure itself, and nestled above a halved tabard's coverings."
+	icon_state = "breechclothalt"
+	flags_inv = HIDECROTCH
+	sewrepair = FALSE
+	detail_tag = "_belt"
+
+/obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
+	color = CLOTHING_RED
+
 /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
 	color = "#48443b"
 

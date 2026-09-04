@@ -42,8 +42,8 @@
 /mob/living/carbon/human/proc/finalize_pickpocket_steal(mob/living/carbon/human/victim, obj/item/picked, exp_to_gain)
 	put_in_active_hand(picked)
 	to_chat(src, span_green("I stole [picked]!"))
-	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white")
-	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white")
+	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = ckey))
+	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 	if(victim.client && victim.stat != DEAD)
 		SEND_SIGNAL(src, COMSIG_ITEM_STOLEN, victim)
 		record_featured_stat(FEATURED_STATS_THIEVES, src)
@@ -91,17 +91,17 @@
 		return
 	build_odds_labels()
 	RegisterSignal(thief, COMSIG_MOB_CLICKON, PROC_REF(on_click))
-	RegisterSignal(thief, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
-	RegisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(on_disturbed))
+	RegisterSignal(thief, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_disturbed))
+	RegisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_disturbed))
 
 /datum/pickpocket_session/Destroy()
 	clear_odds_labels()
 	if(thief)
-		UnregisterSignal(thief, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(thief, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if(STR && thief.active_storage == STR)
 			STR.hide_from(thief)
 	if(victim)
-		UnregisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	thief = null
 	victim = null
 	container = null
@@ -238,8 +238,8 @@
 	var/margin = thief_score - victim_score
 
 	if(margin < 0)
-		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white")
-		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white")
+		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = thief.ckey))
+		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 		if(margin < PICKPOCKET_FUMBLE_FLOOR)
 			thief.visible_message(span_danger("[thief] is caught rummaging through [victim]'s belongings!"))
 			victim.balloon_alert(victim, "thief!")

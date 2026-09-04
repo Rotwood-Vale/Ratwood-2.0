@@ -1,7 +1,7 @@
 /datum/patron/inhumen/zizo
 	name = "Zizo"
 	domain = "Necromancy, Ambition, The Rot, Left-Handed Magicks"
-	desc = "In the ancient times there was a mortal who formed a mighty empire, and through the sacrifice of its population ascended to godhood. Those who were weaker were bound even in death, their oaths eternal and their labor without end. Zizo is proof of humanity’s sheer potential. Now chained in the underworld she whispers to mortals to act in her name, rebuild her power and allow her to be freed to roam the mortal world once more, and continue her regime."
+	desc = "In the ancient times there was a mortal who formed a mighty empire, and through the sacrifice of its population ascended to godhood. Those who were weaker were bound even in death, their oaths eternal and their labor without end. Zizo is proof of humanity's sheer potential. Now chained in the underworld she whispers to mortals to act in her name, rebuild her power and allow her to be freed to roam the mortal world once more, and continue her regime."
 	worshippers = "Necromancers, the undead, secretive cabals, conquerors and madmen."
 	virtues = "Ambition, Domination, Undeath"
 	sins = "Humility, Ignorance, Stagnation"

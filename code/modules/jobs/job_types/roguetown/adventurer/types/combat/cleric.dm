@@ -51,7 +51,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	pants = /obj/item/clothing/under/roguetown/tights/black
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	backl = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	belt = /obj/item/storage/belt/rogue/leather/rope
@@ -693,6 +693,9 @@
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
 			mask = /obj/item/clothing/mask/rogue/xylixmask
+			if(HAS_TRAIT(H, TRAIT_PERMAMUTE))
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair)
 		if(/datum/patron/inhumen/zizo)
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe
 			head = /obj/item/clothing/head/roguetown/roguehood
