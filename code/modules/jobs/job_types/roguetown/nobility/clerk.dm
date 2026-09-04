@@ -21,6 +21,7 @@
 	advclass_cat_rolls = list(CTAG_CLERK = 2)
 	social_rank = SOCIAL_RANK_YEOMAN
 	job_traits = list(TRAIT_SEEPRICES, TRAIT_ROYAL_SUBSIDY)
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
 	job_subclasses = list(
 		/datum/advclass/clerk
 	)
