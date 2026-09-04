@@ -279,7 +279,7 @@
 	max_blade_int = 666
 
 /obj/item/rogueweapon/sword/long/exe/berserk/gnoll/Initialize(mapload)
-	..()
+	. = ..()
 	add_filter("shadow_the_hedgehog", 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 188, "size" = 1))
 
 //
