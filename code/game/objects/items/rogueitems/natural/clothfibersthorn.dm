@@ -526,7 +526,7 @@
 /obj/item/natural/bundle/bone/rdm
 
 /obj/item/natural/bundle/bone/rdm/Initialize(mapload)
-	..()
+	. = ..()
 	amount = rand(2,6)
 /*/obj/item/natural/bone/attackby(obj/item/I, mob/living/user, params)
 	var/mob/living/carbon/human/H = user

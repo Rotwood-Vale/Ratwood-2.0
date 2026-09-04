@@ -1094,6 +1094,9 @@
 	set name = "Resist"
 	set category = "IC"
 	set hidden = 1
+	//giving up on a struggle must not wait on the breakout cooldown that same struggle charged up front
+	if(cancel_restraint_struggle())
+		return
 	if(!can_resist() || surrendering)
 		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
@@ -1157,7 +1160,6 @@
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
-	log_combat(src, null, "surrendered")
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
@@ -1172,10 +1174,14 @@
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
+	log_combat(src, src, "surrendered")
+	log_admin("([key_name(src)]) surrendered at [AREACOORD(src)].")
+	SSblackbox.record_feedback("tally", "submit", 1, "surrenders")
 
 /mob/living/proc/end_submit()
 	surrendering = 0
 	update_mobility()
+	log_combat(src, src, "stopped surrendering")
 
 /mob/living/proc/toggle_compliance()
 	set name = "Toggle Compliance"
@@ -1340,6 +1346,10 @@
 
 /mob/living/proc/resist_restraints()
 	return
+
+///Routes a resist press to cuff_resist's give-up branch while a struggle is running. TRUE if it handled it
+/mob/living/proc/cancel_restraint_struggle()
+	return FALSE
 
 /mob/living/proc/get_visible_name()
 	return name
@@ -1723,7 +1733,7 @@
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, meta = list(LOG_META_TARGET = spread_to.ckey))
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)

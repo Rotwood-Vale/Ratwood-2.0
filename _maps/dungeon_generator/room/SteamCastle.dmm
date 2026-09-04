@@ -1692,7 +1692,8 @@
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/under/tomb/indoors/magic)
 "vl" = (
-/obj/structure/bars/pipe/left{
+/obj/structure/bars/pipe{
+	dir = 9;
 	pixel_x = 7;
 	pixel_y = -8
 	},

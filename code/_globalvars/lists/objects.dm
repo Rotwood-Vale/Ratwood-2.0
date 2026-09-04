@@ -18,11 +18,11 @@ GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction d
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST_EMPTY(materials_list)				//list of all /datum/material datums indexed by material id.
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(crafting_recipes)				//list of all table craft recipes
-GLOBAL_LIST_EMPTY(anvil_recipes)				//list of all table craft recipes
-GLOBAL_LIST_EMPTY(artificer_recipes)			//list of all artificer recipes
-GLOBAL_LIST_EMPTY(alch_grind_recipes)			//list of all alchemy grinding recipes
-GLOBAL_LIST_EMPTY(alch_cauldron_recipes)		//list of all alchemy cauldron recipes
+GLOBAL_LIST_INIT(crafting_recipes, init_subtypes(/datum/crafting_recipe)) //list of all table craft recipes
+GLOBAL_LIST_INIT(anvil_recipes, init_anvil_recipes()) //list of all anvil recipes
+GLOBAL_LIST_INIT(artificer_recipes, init_subtypes(/datum/artificer_recipe)) //list of all artificer recipes
+GLOBAL_LIST_INIT(alch_grind_recipes, init_subtypes(/datum/alch_grind_recipe)) //list of all alchemy grinding recipes
+GLOBAL_LIST_INIT(alch_cauldron_recipes, init_subtypes(/datum/alch_cauldron_recipe)) //list of all alchemy cauldron recipes
 GLOBAL_LIST_EMPTY(cooking_recipes)				//list of all cooking recipes. currently unused, pending a broader crafting refactor.
 GLOBAL_LIST_EMPTY(rcd_list)					//list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(apcs_list)					//list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
 
-GLOBAL_LIST_EMPTY(stew_recipes) // list of all stew recipes
+GLOBAL_LIST_INIT(stew_recipes, init_subtypes(/datum/stew_recipe)) // list of all stew recipes
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)

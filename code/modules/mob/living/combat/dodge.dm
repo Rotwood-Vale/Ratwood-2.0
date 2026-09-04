@@ -113,10 +113,9 @@
 	var/drained_npc = 5
 	if(ishuman(src))
 		H = src
-	if(ishuman(user))
-		UH = user
-		if (UH.used_intent)
-			I = UH.used_intent.masteritem
+	UH = user
+	if (UH.used_intent)
+		I = UH.used_intent.masteritem
 	var/prob2defend = U.defprob
 	if(L.stamina >= L.max_stamina)
 		return FALSE
@@ -236,6 +235,10 @@
 			to_chat(src, span_info("Roll to dodge... [prob2defend]%"))
 		if(!prob(prob2defend))
 			return FALSE
+
+	// Should only show success cause it terminates earlier otherwise
+	if(src.client)
+		log_combat(src, user, "dodged", null, defense_log_note(user))
 	dodgecd = TRUE
 	playsound(src, 'sound/combat/dodge.ogg', 100, FALSE)
 	throw_at(turfy, 1, 2, src, FALSE)
