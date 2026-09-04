@@ -169,7 +169,7 @@
 		return
 
 	user.visible_message(span_notice("[user] prepares to take flight."))
-	if(!move_after(user, 3 SECONDS))
+	if(!move_after(user, 3 SECONDS, target = user))
 		return
 
 	var/athletics_skill = max(user.get_skill_level(/datum/skill/misc/athletics), SKILL_LEVEL_NOVICE)
