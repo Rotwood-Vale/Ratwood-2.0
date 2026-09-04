@@ -2371,7 +2371,7 @@
 /obj/item/rogueweapon/sword/long/shotel/stalker
 	name = "drow shotel"
 	desc = "A darkly shimmering shotel of drowsmith. While reminescent of the more commonly used drow falx, \
-	the shotels superior reach and light weight make it a favorite of Crocs de l'araignée Cavaliers who seek\
+	the shotels superior reach and light weight make it a favorite of Crocs de l'araignée Cavaliers who seek \
 	the reach of a polearm with the speed of a sword."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowshotel"
@@ -2387,7 +2387,7 @@
 	name = "drow hook sword"
 	desc = "A darkly shimmering hook sword of drowsmith. While reminescent of the more commonly used drow falx, \
 	the hook swords sport a far more aggressive curve that allows the wielder to hook and pull the weapons from the hands of their enemies. \
-	Historically, the hook sword was employed by Crocs de l'araignée Cavaliers tasked with quelling slave rebellions, easily dispatching\
+	Historically, the hook sword was employed by Crocs de l'araignée Cavaliers tasked with quelling slave rebellions, easily dispatching \
 	the makeshift weapons of would-be freemen."
 	icon_state = "drowhooksword"
 	sheathe_icon = "drowhook"
@@ -2405,7 +2405,7 @@
 
 /obj/item/rogueweapon/sword/long/elf/stalker
 	name = "drow greatsabre"
-	desc = "A large, curved blade sporting a single cutting edge and a blunted spine affixed with a piercing spike.\
+	desc = "A large, curved blade sporting a single cutting edge and a blunted spine affixed with a piercing spike. \
 	While not near as elaborate as other drow blades, the simple strength of the greatsabre makes it adept at cleaving through armor, chitin, and bone alike."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowsword"
@@ -2420,8 +2420,8 @@
 
 /obj/item/rogueweapon/sword/long/kriegmesser/stalker
 	name = "drow kriegsmesser"
-	desc = "A wickedly sharp two-handed sword of drow smith. While you'd never get one to admit it, this blade was\
-	undoubtedly inspired by the grenzelhoftian kriegmesser. The drow version features more gilding than its surface-dwelling cousin,\
+	desc = "A wickedly sharp two-handed sword of drow smith. While you'd never get one to admit it, this blade was \
+	undoubtedly inspired by the grenzelhoftian kriegmesser. The drow version features more gilding than its surface-dwelling cousin, \
 	alongside brutal serration found on many drow blades."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowmesser"
