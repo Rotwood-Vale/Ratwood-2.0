@@ -2,9 +2,9 @@
 	name = "Crocs de l'araignée Débroussaillage"//idea is these guys are important enough to be considered to join, but not important enough to get the badges of office like the spider mount, the unique mask, etc. They get most but not all.
 	tutorial = "The Crocs de l'araignée, translated literally to mean \"Spider's Teeth\", is a renowned collective of blades, \
 	whips, and riders for hire often employed in the vast drow undercity complexes and occasionally the surface above. \
-	You are at the bottom of this proud society of sadists. Before full-membership, would be Crocs must prove themselves before their undercity's guild matriarch. \
-	While formally called Auxiliaire, the prejorative Débroussaillage - translated as \"Weed Trimmings\" - is the far more common title \
-	given how few succeed - let alone survive the grueling recruitment period."
+	You are at the bottom of this proud sorority of sadists. Prior to full-membership, aspiriants like yourself must prove themselves before their undercity's guild matriarch. \
+	While formally called Auxiliaire, the prejorative Débroussaillage, translated as \"Weed Trimmings\", is the far more common title \
+	given how few succeed - let alone survive - the grueling recruitment period."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/elf/dark,
