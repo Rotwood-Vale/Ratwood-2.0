@@ -497,7 +497,7 @@
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.warden_area))
+	if(!istype(our_area) || !(our_area.warden_area))
 		owner.remove_status_effect(/datum/status_effect/buff/wardenbuff)
 
 /datum/status_effect/buff/wardenbuff/on_apply()
@@ -522,7 +522,7 @@
 /datum/status_effect/buff/barkeepbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.tavern_area))
+	if(!istype(our_area) || !(our_area.tavern_area))
 		owner.remove_status_effect(/datum/status_effect/buff/barkeepbuff)
 
 /atom/movable/screen/alert/status_effect/buff/barkeepbuff
@@ -539,7 +539,7 @@
 /datum/status_effect/buff/guardbuffone/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.town_area))
+	if(!istype(our_area) || !(our_area.town_area))
 		owner.remove_status_effect(/datum/status_effect/buff/guardbuffone)
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
@@ -556,7 +556,7 @@
 /datum/status_effect/buff/dungeoneerbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.cell_area))
+	if(!istype(our_area) || !(our_area.cell_area))
 		owner.remove_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 
 /datum/status_effect/buff/dungeoneerbuff/on_apply()
@@ -581,7 +581,7 @@
 /datum/status_effect/buff/viewingbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.viewing_area))
+	if(!istype(our_area) || !(our_area.viewing_area))
 		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
@@ -606,7 +606,7 @@
 /datum/status_effect/debuff/holy_blessing/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
+	if(!istype(our_area) || !(our_area.holy_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
 
 /atom/movable/screen/alert/status_effect/holy_empowerement
@@ -2066,17 +2066,14 @@
 	var/blood_restore = 30
 
 /datum/status_effect/buff/adrenaline_rush/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.dna?.species?.type == /datum/species/gnoll)
-			return FALSE
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ADRENALINE_RUSH, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.playsound_local(get_turf(H), 'sound/misc/adrenaline_rush.ogg', 100, TRUE)
-		H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 		H.stamina -= max((H.stamina - (H.max_stamina / 2)), 0)
+		if(H.dna?.species?.type != /datum/species/gnoll)
+			H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 
 /datum/status_effect/buff/adrenaline_rush/on_remove()
 	. = ..()

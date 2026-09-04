@@ -371,23 +371,30 @@
 
 /obj/item/sendingstonesummoner/Initialize(mapload)
 	. = ..()
-	var/mob/living/user = usr
-	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending
-	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending
+	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending(loc)
+	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending(loc)
 	item1.paired_with = item2
 	item2.paired_with = item1
 	item1.icon_state = "whet"
 	item2.icon_state = "whet"
 	item1.color = "#d8aeff"
 	item2.color = "#d8aeff"
-	user.put_in_hands(item1, FALSE)
-	user.put_in_hands(item2, FALSE)
+	if(usr)
+		var/mob/living/user = usr
+		user.put_in_hands(item1, FALSE)
+		user.put_in_hands(item2, FALSE)
 	qdel(src)
 
 /obj/item/natural/stone/sending
 	name = "sending stone"
 	desc = "One of a pair of sending stones."
 	var/obj/item/natural/stone/sending/paired_with
+
+/obj/item/natural/stone/sending/Destroy()
+	if(paired_with?.paired_with == src)
+		paired_with.paired_with = null
+	paired_with = null
+	return ..()
 
 /obj/item/natural/stone/sending/attack_self(mob/user)
 	var/input_text = input(user, "Enter your message:", "Message")

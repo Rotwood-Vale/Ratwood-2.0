@@ -7,6 +7,10 @@
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC)
 
+/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/Destroy()
+	QDEL_LIST(beam_parts)
+	return ..()
+
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the obelisk
 	return
 

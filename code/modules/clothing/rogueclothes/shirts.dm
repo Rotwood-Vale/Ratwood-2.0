@@ -93,7 +93,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
 	name = "formal silks"
@@ -273,7 +273,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkydress/random/Initialize(mapload)
 	color = pick("#e6e5e5", "#249589", "#a32121", "#428138", "#8747b1", "#007fff")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gown
 	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
@@ -348,7 +348,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/shortshirt
 	name = "shirt"
@@ -360,7 +360,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/shortshirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/shortshirt/merc
 	name = "shirt"
@@ -450,7 +450,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/random/Initialize(mapload)
 	color = pick(CLOTHING_PURPLE, CLOTHING_RED, CLOTHING_BLUE, CLOTHING_GREEN, CLOTHING_BLACK, CLOTHING_WHITE, COLOR_GRAY)
-	..()
+	return ..()
+
 /obj/item/clothing/suit/roguetown/shirt/dress
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "dress"
@@ -483,7 +484,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT

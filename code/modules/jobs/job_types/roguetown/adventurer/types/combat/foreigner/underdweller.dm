@@ -16,7 +16,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/underdweller
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_ADVENTURER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_CON = 1,
 		STATKEY_WIL = 2,
