@@ -11,3 +11,52 @@
   - rscadd: Added a "Remember Your Prey" verb for Gnolls that pulls up their current
       target's flavortext window, allowing them to view that target's notes before
       actually finding them in-person.
+2026-09-03:
+  CameronWoof:
+  - balance: Fire Cascade and Firewalker can no longer be learned
+  Lezerchil:
+  - bugfix: 'do_dodge should work on simplemobs too.
+
+      :cl:'
+  MickDick1:
+  - balance: Gave Arbalist Sleuth
+  RadiantFlash7:
+  - bugfix: Dustdevils won't spawn inside the town on DT
+  UntoldTactics:
+  - balance: City watch armor nerfed by 50 points, it now matches brigandine integrity.
+      City Watch helmet now offers full head coverage.
+  - image: New sprites for the City Watch's helmets and armor.
+  Xander3359:
+  - balance: Harpies can now move while taking flight.
+  - balance: Harpies can now move down z levels faster while in flight, and can move
+      while doing so
+  - rscadd: Adds footwraps and a padded/leather version
+  hugmeorelse:
+  - admin: Added a POV Log tab that rebuilds a round from one player's perspective,
+      with actor blocks, highlights, filters and focus mode
+  - admin: Seen logs now record each witness with their distance and how they perceived
+      the event
+  - admin: Deaths, dismemberment, critical wounds, critical knockouts, dodges and
+      parries are now logged
+  - admin: Attacks record the zone that was aimed at
+  - admin: Typing indicator entries record why typing stopped and no longer go into
+      the attack log file (partially works)
+  - bugfix: Fixed shove logs printing their description in the weapon slot
+  - bugfix: sanitized inputs further and addressed some issues involving html encoding
+      with logs
+  - code_imp: Certain log entries are stored as structured dict-like values instead
+      of unstructured strings
+  mushy:
+  - balance: Bards of T2 and above can now play instruments with an occupied offhand.
+  zeroisthebiggay:
+  - spellcheck: renamed 'vial of Reanimation Elixir' to 'bottle of Reanimation Elixir'
+  - rscadd: custom descriptors for everything
+2026-09-04:
+  Coolgat3:
+  - bugfix: corroded dagger sheathed sprite
+  Xander3359:
+  - bugfix: Fixed Harpy flight not properly channeling
+  ophaq:
+  - bugfix: Fixes ponchos worn on arachnid and lamia races.
+  zeroisthebiggay:
+  - rscadd: toggle for halfkins to swap to mutant colors

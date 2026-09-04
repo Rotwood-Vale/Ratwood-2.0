@@ -164,7 +164,7 @@
 		to_chat(user, span_notice("Time to stop working"))
 
 /obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
-	..()
+	. = ..()
 	AddComponent(/datum/component/spill, null, 'sound/blank.ogg')
 
 /obj/item/clothing/mask/rogue/spectacles/Crossed(mob/crosser)

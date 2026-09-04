@@ -419,7 +419,7 @@
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			user.visible_message("<span class='info'>[user] Carves a name into the door.</span>")
 			if(do_after(user, 10))
-				doorname = input("What name would you like to carve into the door?")
+				doorname = stripped_input(user, "What name would you like to carve into the door?", "", "", MAX_NAME_LEN)
 				if (doorname)
 					name = doorname + "(door)"
 					desc = "a door with a name carved into it"
@@ -851,7 +851,7 @@
 				icon_state = "wcr"
 	if(over_state)
 		add_overlay(mutable_appearance(icon, "[over_state]", ABOVE_MOB_LAYER))
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/blue
 	icon_state = "wcb"
@@ -1079,7 +1079,7 @@
 /obj/structure/mineral_door/wood/donjon/Initialize(mapload)
 	viewportdir = dir
 	icon_state = base_state
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/donjon/MiddleClick(mob/user, params)
 	if(user.get_active_held_item())
@@ -1123,7 +1123,7 @@
 	repairable = FALSE
 
 /obj/structure/mineral_door/wood/donjon/stone/broken/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = "stonebr" // Weird override otherwise
 
 /obj/structure/mineral_door/wood/donjon/stone/tough

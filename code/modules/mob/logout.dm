@@ -2,7 +2,7 @@
 	log_message("[key_name(src)] is no longer owning mob [src]([src.type])", LOG_OWNERSHIP)
 	SStgui.on_logout(src)
 	unset_machine()
-	clear_typing_indicator()
+	clear_typing_indicator("disconnected")
 	GLOB.player_list -= src
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
