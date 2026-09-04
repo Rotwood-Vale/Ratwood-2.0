@@ -290,7 +290,7 @@
 
 /obj/item/rogueweapon/flail/peasantwarflail/stalker
 	name = "spined drow greatflail"
-	desc = "A pendulous, bladed, and spined orb of dark mithryl hung from a throned link of chains. For more robustly built drow caviliers, there is\
+	desc = "A pendulous, bladed, and spined orb of dark mithril hung from a throned link of chains. For more robustly built drow caviliers, there is\
 	nothing quite as potent as these fearsome greatflails. The spikes have a nasty habit of gumming up with gore; this is intentional."
 	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	icon_state = "drowgreatflail"
@@ -307,7 +307,7 @@
 
 /obj/item/rogueweapon/flail/peasantwarflail/stalker/alt
 	name = "drow greatflail"
-	desc = "A pendulous orb of dark mithryl hung from a throned link of chains. For more robustly built drow caviliers, there is\
+	desc = "A pendulous orb of dark mithril hung from a throned link of chains. For more robustly built drow caviliers, there is\
 	nothing quite as potent as these fearsome greatflails."
 	icon_state = "drowgreatflailb"
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage

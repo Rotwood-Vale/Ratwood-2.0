@@ -216,8 +216,8 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
 	name = "gilded drow crossbow"
-	desc = "A stripped down crossbow specifically made for the small engagement ranges of the Underdark and caverns. A practical tool of the Drow assassin - \
-	a lady's friend is a man's end. The machining is finely tuned and the whole of the bow is ornamented in gold - a symbol of rank among drow markswomen."
+	desc = "A stripped-down crossbow specifically made for the small engagement ranges of the Underdark and caverns. A practical tool of the Drow assassin - \
+	a lady's friend is a man's end. The machining is finely tuned, and the whole of the bow is ornamented in gold - a symbol of rank among drow markswomen."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "drowcrossbowgilded0"
 	item_state = "drowcrossbowgilded"
@@ -233,7 +233,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser
 	name = "drow crossbow"
-	desc = "A stripped down crossbow specifically made for the small engagement ranges of the Underdark and caverns. The body is well worn \
+	desc = "A stripped-down crossbow specifically made for the small engagement ranges of the Underdark and caverns. The body is well worn \
 	and lacks the gilding one commonly sees on the equipment of established Drow warriors."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "drowcrossbow0"

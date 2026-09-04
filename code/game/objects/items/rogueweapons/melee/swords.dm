@@ -2370,8 +2370,8 @@
 /obj/item/rogueweapon/sword/long/shotel/stalker
 	name = "drow shotel"
 	desc = "A darkly shimmering shotel of drowsmith. While reminescent of the more commonly used drow falx, \
-	the shotels superior reach and light weight make it a favorite of Crocs de l'araignée Cavaliers who prefer\
-	want the reach of a polearm with the speed of a sword."
+	the shotels superior reach and light weight make it a favorite of Crocs de l'araignée Cavaliers who seek\
+	the reach of a polearm with the speed of a sword."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowshotel"
 	sheathe_icon = "drowshotel"
@@ -2396,7 +2396,7 @@
 
 /obj/item/rogueweapon/sword/falx/stalker
 	name = "stalker falx"
-	desc = "A jagged blade with an inward edge. A popular choice for drow warriors, the falx is adept at slicing through the armor of men, and the flesh of lessers."
+	desc = "A jagged blade with an inward edge. A popular choice for drow warriors, the falx is adept at slicing through the armor of men and the flesh of lessers."
 	icon_state = "spiderfalx"
 	sheathe_icon = "spidersaber"
 	wbalance = WBALANCE_SWIFT
@@ -2419,7 +2419,7 @@
 
 /obj/item/rogueweapon/sword/long/kriegmesser/stalker
 	name = "drow kriegsmesser"
-	desc = "A wickedly sharp two-handed sword of drow smith. While you'd never get one to admit it, this blade is\
+	desc = "A wickedly sharp two-handed sword of drow smith. While you'd never get one to admit it, this blade was\
 	undoubtedly inspired by the grenzelhoftian kriegmesser. The drow version features more gilding than its surface-dwelling cousin,\
 	alongside brutal serration found on many drow blades."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
@@ -2434,8 +2434,8 @@
 
 /obj/item/rogueweapon/sword/long/stalker//what if estoc but longsword?
 	name = "drow longsword"
-	desc = "A long, darkly shimmering blade of drowsmith. While looking familiar to the standard longsword\
-	the use case is far less versetile. Swords of this kind feature rigidly straight blades, uncharateristic of drowsmith, and are primarily used as a hunting tools.\
+	desc = "A long, darkly shimmering blade of drowsmith. While looking familiar to the standard longsword, \
+	the use case is far less versatile. Swords of this kind feature rigidly straight blades, uncharacteristic of drowsmith, and are primarily used as a hunting tool. \
 	Regardless of its intended use, a weapon that can puncture the chitin of underdwelling arachnids can just as easily pierce a man's armor."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowlongsword"

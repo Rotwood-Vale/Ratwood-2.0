@@ -3,7 +3,7 @@
 	tutorial = "The Crocs de l'araignée, translated literally to mean \"Spider's Teeth\", is a renowned collective of blades, \
 	whips, and riders for hire often employed in the vast drow undercity complexes and occasionally the surface above. \
 	You are at the bottom of this proud sorority of sadists. Prior to full-membership, aspiriants like yourself must prove themselves before their undercity's guild matriarch. \
-	While formally called Auxiliaire, the prejorative Débroussaillage, translated as \"Weed Trimmings\", is the far more common title \
+	While formally called Auxiliaire, the pejorative Débroussaillage, translated as \"Weed Trimmings\", is the far more common title \
 	given how few succeed - let alone survive - the grueling recruitment period."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
