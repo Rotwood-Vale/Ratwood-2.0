@@ -42,8 +42,8 @@
 /mob/living/carbon/human/proc/finalize_pickpocket_steal(mob/living/carbon/human/victim, obj/item/picked, exp_to_gain)
 	put_in_active_hand(picked)
 	to_chat(src, span_green("I stole [picked]!"))
-	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white")
-	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white")
+	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = ckey))
+	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 	if(victim.client && victim.stat != DEAD)
 		SEND_SIGNAL(src, COMSIG_ITEM_STOLEN, victim)
 		record_featured_stat(FEATURED_STATS_THIEVES, src)
@@ -238,8 +238,8 @@
 	var/margin = thief_score - victim_score
 
 	if(margin < 0)
-		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white")
-		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white")
+		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = thief.ckey))
+		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 		if(margin < PICKPOCKET_FUMBLE_FLOOR)
 			thief.visible_message(span_danger("[thief] is caught rummaging through [victim]'s belongings!"))
 			victim.balloon_alert(victim, "thief!")

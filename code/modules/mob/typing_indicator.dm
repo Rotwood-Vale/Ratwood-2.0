@@ -37,15 +37,18 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 	if(((!typing_indicator_enabled || (stat != CONSCIOUS)) && !force) || typing_indicator_current)
 		return
 	typing_indicator_current = state_override
-	log_message("started typing", LOG_ATTACK)
+	// panel context only, like its stop below. On disk it would bury the combat an admin is grepping for
+	log_message("started typing", LOG_ATTACK, log_globally = FALSE)
 	add_overlay(state_override)
 	update_vision_cone()
-	typing_indicator_timerid = addtimer(CALLBACK(src, PROC_REF(clear_typing_indicator)), timeout_override, TIMER_STOPPABLE)
+	typing_indicator_timerid = addtimer(CALLBACK(src, PROC_REF(clear_typing_indicator), "timed out"), timeout_override, TIMER_STOPPABLE)
 
 /**
- * Removes typing indicator.
+ * Removes typing indicator. reason, if given, is appended to the stopped typing log entry.
  */
-/mob/proc/clear_typing_indicator()
+/mob/proc/clear_typing_indicator(reason)
+	if(typing_indicator_current)
+		log_message("stopped typing[reason ? " ([reason])" : ""]", LOG_ATTACK, log_globally = FALSE)
 	cut_overlay(typing_indicator_current)
 	update_vision_cone()
 	typing_indicator_current = null
