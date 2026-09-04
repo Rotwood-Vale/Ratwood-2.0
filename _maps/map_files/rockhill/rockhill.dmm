@@ -2950,6 +2950,10 @@
 /obj/machinery/light/rogue/candle/green/r,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/cave)
+"aEm" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/woodsrat/north)
 "aEo" = (
 /obj/item/natural/cloth,
 /obj/structure/closet/crate/drawer{
@@ -3443,6 +3447,10 @@
 /obj/item/bedsheet/rogue/fabric_double,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/magician/rockhill)
+"aJL" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/bograt/west)
 "aJM" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -21352,6 +21360,10 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
+"etQ" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/woodsrat/north)
 "etT" = (
 /obj/machinery/light/rogue/candle/blue/r{
 	pixel_y = 10
@@ -36036,6 +36048,10 @@
 	icon_state = "bfloorz"
 	},
 /area/rogue/indoors/town/manor/rockhill)
+"hwK" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/shelter/woods)
 "hwM" = (
 /obj/structure/flora/roguegrass,
 /obj/item/grown/log/tree/stick,
@@ -56799,6 +56815,10 @@
 "lRD" = (
 /turf/open/floor/rogue/grassgrey,
 /area/rogue/under/cavewet)
+"lRG" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/bograt/north)
 "lRI" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -63235,6 +63255,10 @@
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"neN" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/bograt/north)
 "neU" = (
 /obj/structure/closet/crate/miningcar,
 /turf/open/floor/rogue/cobblerock,
@@ -80729,6 +80753,10 @@
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
+"qOQ" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/bograt/south)
 "qOS" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/twig,
@@ -99241,6 +99269,10 @@
 	},
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/town/grove)
+"uPM" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bograt/south)
 "uPZ" = (
 /obj/structure/stairs{
 	dir = 4
@@ -104236,6 +104268,10 @@
 	icon_state = "roofg"
 	},
 /area/rogue/outdoors/town/roofs/tavern)
+"vQF" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/bograt/north)
 "vQH" = (
 /obj/item/grown/log/tree/small,
 /obj/item/grown/log/tree/small,
@@ -249281,7 +249317,7 @@ ujL
 uRH
 lxs
 lxs
-rfA
+aJL
 rfA
 lxs
 rfA
@@ -254442,7 +254478,7 @@ rfA
 rfA
 ujL
 rfA
-rfA
+aJL
 rfA
 rfA
 ujL
@@ -260095,7 +260131,7 @@ qrc
 uWK
 wfu
 wfu
-uWK
+gxg
 uWK
 qrc
 uWK
@@ -261841,7 +261877,7 @@ uWK
 uWK
 gDP
 wfu
-wfu
+uPM
 wfu
 wfu
 xQW
@@ -263151,7 +263187,7 @@ qrc
 wfu
 wfu
 qrc
-qrc
+bxU
 qrc
 wfu
 wfu
@@ -269983,7 +270019,7 @@ sYx
 sYx
 sYx
 fPd
-sYx
+nQG
 fPd
 fPd
 fPd
@@ -273925,7 +273961,7 @@ wfu
 dux
 dux
 wfu
-dux
+qOQ
 dux
 wfu
 iCG
@@ -278635,7 +278671,7 @@ fPd
 fPd
 fPd
 fPd
-fPd
+neN
 sYx
 fPd
 cuM
@@ -281675,7 +281711,7 @@ azy
 azy
 azy
 azy
-azy
+vQF
 azy
 fPd
 fPd
@@ -282560,7 +282596,7 @@ uWK
 uWK
 uWK
 uWK
-uWK
+gxg
 wfu
 dux
 wfu
@@ -286890,7 +286926,7 @@ qrc
 wfu
 qrc
 qrc
-qrc
+bxU
 wLx
 qrc
 uWK
@@ -290367,7 +290403,7 @@ qrc
 qrc
 qrc
 qrc
-wfu
+uPM
 wfu
 qrc
 xQW
@@ -294181,7 +294217,7 @@ fPd
 sYx
 sYx
 sYx
-lOV
+lRG
 azy
 cuM
 fPd
@@ -296754,7 +296790,7 @@ tcr
 fPd
 lOV
 fPd
-lOV
+lRG
 ljM
 lOV
 iIZ
@@ -302942,7 +302978,7 @@ wfu
 wfu
 wfu
 wfu
-wfu
+uPM
 wfu
 ipV
 aad
@@ -303333,7 +303369,7 @@ whb
 whb
 qrc
 uWK
-qrc
+bxU
 xQW
 qrc
 whb
@@ -308546,7 +308582,7 @@ wLx
 qrc
 qrc
 qrc
-uWK
+gxg
 qrc
 qrc
 qrc
@@ -401770,7 +401806,7 @@ oqx
 oqx
 oqx
 lkU
-lkU
+tMb
 oqx
 oqx
 jUq
@@ -419027,7 +419063,7 @@ fvN
 vXq
 vxd
 nxv
-gaW
+hwK
 wbr
 gaW
 gaW
@@ -420818,7 +420854,7 @@ bGI
 eIa
 gVZ
 gVZ
-gVZ
+oVM
 gVZ
 gVZ
 jcm
@@ -427223,7 +427259,7 @@ stm
 cfi
 oqx
 bef
-bef
+aEm
 bef
 bef
 bef
@@ -435421,7 +435457,7 @@ bQM
 auv
 lkU
 cjH
-cjH
+etQ
 oqx
 lkU
 oqx

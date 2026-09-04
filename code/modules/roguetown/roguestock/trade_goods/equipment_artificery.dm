@@ -11,9 +11,6 @@
 // ARTIFICERY - PROSTHETICS
 // ============================================================================
 
-// ES prosthetics are bodypart items with no shared per-material base type, so these goods
-// match via alt_item_types (any limb of the material). Iron/steel prosthetics don't exist
-// in ES — the iron good matches ES's wooden limbs, and steel stays dead (not in any order).
 /datum/trade_good/equipment/crafted/bronze_prosthetic
 	id = TRADE_GOOD_BRONZE_PROSTHETIC
 	name = "bronze prosthetic limb"
