@@ -153,6 +153,7 @@
 	desc = "Plate gauntlets made out of blackened steel."
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplategloves"//Temp.
 	item_state = "bplategloves"
 	max_integrity = ARMOR_INT_SIDE_IRON + 50//275. 25 less than standard steel.
