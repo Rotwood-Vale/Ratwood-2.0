@@ -82,7 +82,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife = 1,
+			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
 			/obj/item/rogueweapon/scabbard/sheath = 1,

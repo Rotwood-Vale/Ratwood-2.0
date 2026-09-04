@@ -55,7 +55,7 @@
 				H.change_stat(STATKEY_INT, -1)
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,

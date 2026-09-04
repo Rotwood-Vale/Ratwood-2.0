@@ -78,7 +78,7 @@
 		H.put_in_hands(new /obj/item/rogueweapon/sword/decorated(H), TRUE, forced = TRUE)// Your special old man sword.
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife = 1,
+			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 			/obj/item/rogueweapon/mace/cudgel = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,

@@ -88,7 +88,7 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife = 1,
+			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
 			/obj/item/rogueweapon/scabbard/sheath = 1,
