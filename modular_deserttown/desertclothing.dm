@@ -143,7 +143,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/leather/vest/open/random/Initialize()
 	color = pick("#2f51b8", CLOTHING_RED, CLOTHING_ORANGE, CLOTHING_GREEN, CLOTHING_PURPLE)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -180,7 +180,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/random/Initialize()
 	color = pick("#989898", "#FFFFFF", "#9c4744", "#2f51b8", "#846145", "#e9c792", CLOTHING_BLACK)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/bluegrey
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -255,7 +255,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random/Initialize()
 	color = pick("#989898", "#FFFFFF", "#9c4744", "#2f51b8", "#846145", "#e9c792", CLOTHING_BLACK)
-	..()
+	return ..()
 
 /datum/crafting_recipe/roguetown/sewing/thawb
 	name = "thawb"
@@ -366,7 +366,7 @@
 
 /obj/item/clothing/head/roguetown/turban/random/Initialize()
 	color = pick("#414141", "#684f41", "#93714b", "#FFFFFF", "#848484")
-	..()
+	return ..()
 
 /datum/crafting_recipe/roguetown/sewing/turban
 	name = "turban"
@@ -475,7 +475,7 @@
 
 /obj/item/clothing/under/roguetown/sirwal/plainrandom/Initialize()
 	color = pick("#FFFFFF", "#edc6a5", "#927351", CLOTHING_BLACK)
-	..()
+	return ..()
 
 /obj/item/clothing/under/roguetown/sirwal/fancy
 	color = null
@@ -498,7 +498,7 @@
 
 /obj/item/clothing/under/roguetown/sirwal/fancy/random/Initialize()
 	color = pick(CLOTHING_BLACK, CLOTHING_BLUE, CLOTHING_PURPLE, CLOTHING_RED, CLOTHING_YELLOW)
-	..()
+	return ..()
 
 /datum/crafting_recipe/roguetown/sewing/sirwal
 	name = "sirwal"
@@ -622,7 +622,7 @@
 
 /obj/item/storage/belt/rogue/leather/cloth/sash/random/Initialize()
 	color = pick(CLOTHING_BROWN, CLOTHING_RED, CLOTHING_ORANGE, CLOTHING_YELLOW, CLOTHING_WHITE, CLOTHING_PURPLE)
-	..()
+	return ..()
 	
 /obj/item/storage/belt/rogue/leather/noblesash
 	name = "Zybantine noble sash"

@@ -22,7 +22,7 @@
 		. += span_danger("The crystal lies hollow and inert, its magic drained.")
 
 /obj/item/necro_relics/necro_crystal/Initialize(mapload)
-	..()
+	. = ..()
 	set_light(2, 2, 1, l_color = "#551c1c")
 
 /obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux_impure/L, mob/user)

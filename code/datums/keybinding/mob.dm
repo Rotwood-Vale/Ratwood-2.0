@@ -260,7 +260,11 @@
 		if(ismob(pulling))
 			stamina_cost_final *= 2 //double our stamina cost if we're pulling someone with us
 			time_taken *= 2
-		if(!move_after(carbon_flyer, time_taken))
+		if(!move_after(carbon_flyer, time_taken, target = carbon_flyer))
+			return
+		turf_below = get_step_multiz(carbon_flyer, DOWN) // Harpy can move during fly_down so we check the turf and make sure they move down from the new turf
+		if(!carbon_flyer.canZMove(DOWN, turf_below))
+			to_chat(carbon_flyer, span_red("I can't fly down there!!"))
 			return
 		if(QDELETED(pulling) || carbon_flyer.pulling != pulling) // our grab could have been broken or the grabbed deleted while taking off
 			pulling = null
