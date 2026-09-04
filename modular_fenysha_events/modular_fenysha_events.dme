@@ -12,4 +12,10 @@
 #include "code\title_screen\title_screen_new_player.dm"
 #include "code\title_screen\title_screen_admin.dm"
 
+#include "code\void\fractal_infection\_fractal_infection.dm"
+#include "code\void\fractal_infection\fractal_mutant.dm"
+#include "code\void\falling_object.dm"
 #include "code\void\void_armor.dm"
+#include "code\void\alien_examine.dm"
+#include "code\void\capsules.dm"
+#include "code\void\events.dm"

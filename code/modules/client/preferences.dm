@@ -952,7 +952,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 							dat += "<b>As Command:</b> <a href = '?_src_=prefs;preference=toggle_deadmin_head'>[(toggles & DEADMIN_POSITION_HEAD)?"Deadmin":"Keep Admin"]</a><br>"
 						else
 							dat += "<b>As Command:</b> FORCED<br>"
-
 				dat += "</td>"
 			dat += "</tr></table>"
 

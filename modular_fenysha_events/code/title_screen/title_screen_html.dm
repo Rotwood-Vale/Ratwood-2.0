@@ -105,7 +105,6 @@
 	else
 		dat += {"
 			<a class="menu_button" href='byond://?src=[menu_ref];late_join=1'>JOIN GAME</a>
-			<a class="menu_button" href='byond://?src=[menu_ref];view_manifest=1'>CREW MANIFEST</a>
 		"}
 
 	dat += {"<a class="menu_button" href='byond://?src=[menu_ref];observe=1'>OBSERVE</a>"}
@@ -113,8 +112,8 @@
 	dat += {"
 		<hr>
 		<a class="menu_button" href='byond://?src=[menu_ref];character_setup=1'>SETUP CHARACTER</a>
-		<a class="menu_button" href='byond://?src=[menu_ref];game_options=1'>GAME OPTIONS</a>
-		<a id="be_antag" class="menu_button" href='byond://?src=[menu_ref];toggle_antag=1'>[client?.prefs?.be_special ? "<span class='checked'>☑</span> BE ANTAGONIST" : "<span class='unchecked'>☒</span> BE ANTAGONIST"]</a>
+		<a class="menu_button" href='byond://?src=[menu_ref];game_options=1'>SETTINGS</a>
+		<a id="be_antag" class="menu_button" href='byond://?src=[menu_ref];toggle_antag=1'>[client?.prefs?.be_special ? "<span class='checked'>☑</span> BE SPECIAL" : "<span class='unchecked'>☒</span> BE SPECIAL"]</a>
 	"}
 
 	if(!IsGuestKey(key))

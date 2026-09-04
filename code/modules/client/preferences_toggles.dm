@@ -113,6 +113,7 @@
 	)
 
 	var/list/gameplay_entries = list(
+		list("id"= "bodyhorror", "label" = "Body Horror Effects", "enabled" = !!(owner.prefs.toggles & BODY_HORROR), "desc" = "Enable body horror effects on your character."),
 		list("id" = "autoconsume", "label" = "AutoConsume", "enabled" = !!owner.prefs.autoconsume, "desc" = "Repeat consume/feed interactions automatically."),
 		list("id" = "autowoodcut", "label" = "AutoWoodcut", "enabled" = !!owner.prefs.autowoodcut, "desc" = "Automatically continue chopping a tree after the first swing."),
 		list("id" = "autopicking", "label" = "AutoPicking", "enabled" = !!owner.prefs.autopicking, "desc" = "Automatically continue mining after clicking or bumping a rock wall with a pickaxe in hand."),
@@ -204,6 +205,8 @@
 				owner.toggle_xptext()
 			if("autoconsume")
 				owner.autoconsume()
+			if("bodyhorror")
+				owner.toggle_bodyhorror()
 			if("autowoodcut")
 				owner.toggle_autowoodcut()
 			if("autopicking")
@@ -300,6 +303,19 @@
 			to_chat(src, "Screen shake enabled.")
 		else
 			to_chat(src, "Screen shake disabled.")
+
+/client/proc/toggle_bodyhorror()
+	set name = "Toggle Body Horror Effects"
+	set category = "Options"
+	set hidden = 1
+
+	if(prefs)
+		prefs.toggles ^= BODY_HORROR
+		prefs.save_preferences()
+		if(prefs.toggles & BODY_HORROR)
+			to_chat(src, "Body horror effects enabled.")
+		else
+			to_chat(src, "Body horror effects disabled.")
 
 /client/verb/toggle_redflash()
 	set category = "Options"

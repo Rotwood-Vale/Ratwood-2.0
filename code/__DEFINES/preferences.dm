@@ -28,6 +28,8 @@
 #define ROLEPLAY_ADS			(1<<22)
 #define CMODE_STRIPPING			(1<<23)
 
+#define BODY_HORROR				(1<<24)
+
 #define FLOATING_TEXT			(1<<0)
 #define XP_TEXT					(1<<1)
 #define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT)
