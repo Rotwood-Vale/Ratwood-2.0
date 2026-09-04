@@ -51,3 +51,12 @@
   zeroisthebiggay:
   - spellcheck: renamed 'vial of Reanimation Elixir' to 'bottle of Reanimation Elixir'
   - rscadd: custom descriptors for everything
+2026-09-04:
+  Coolgat3:
+  - bugfix: corroded dagger sheathed sprite
+  Xander3359:
+  - bugfix: Fixed Harpy flight not properly channeling
+  ophaq:
+  - bugfix: Fixes ponchos worn on arachnid and lamia races.
+  zeroisthebiggay:
+  - rscadd: toggle for halfkins to swap to mutant colors
