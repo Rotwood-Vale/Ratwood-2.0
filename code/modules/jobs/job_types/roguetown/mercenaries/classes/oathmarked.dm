@@ -162,6 +162,7 @@
 	desc = "Weathered, blackened steel plate armor. Fit for a noble. Weaker as a result of the smithing process, though no less protective."
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplate"//Temp.
 	item_state = "bplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_IRON + 50//425. 75 less than standard steel plate.
