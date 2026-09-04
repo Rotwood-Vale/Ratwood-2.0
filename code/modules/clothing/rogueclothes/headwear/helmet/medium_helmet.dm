@@ -85,6 +85,9 @@
 	body_parts_covered = HEAD|HAIR|EARS
 	armor = ARMOR_PLATE
 
+/obj/item/clothing/head/roguetown/helmet/kettle/shadow
+	color = "#323232"
+
 /obj/item/clothing/head/roguetown/helmet/kettle/iron
 	name = "iron kettle helmet"
 	desc = "A kettle helmet made of iron. It protects the top and sides of the head."
@@ -193,6 +196,9 @@
 	block2add = FOV_BEHIND
 	smelt_bar_num = 2
 	armor = ARMOR_PLATE
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/shadow
+	color = "#323232"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 	name = "steel shishak"
@@ -426,6 +432,19 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/shadow
+	color = "#402c56"
+	detail_color = "#cb9d06"
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/shadow/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged
 	name = "winged elven barbute"
 	desc = "A winged version of the elven barbute. They have always been known for their vanity."
@@ -433,6 +452,19 @@
 	item_state = "elven_barbute_winged"
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/shadow
+	color = "#402c56"
+	detail_color = "#cb9d06"
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/shadow/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))

@@ -215,14 +215,24 @@
 	damage_from_perception = TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
-	name = "drow crossbow"
+	name = "gilded drow crossbow"
 	desc = "A stripped down crossbow specifically made for the small engagement ranges of the Underdark and caverns. A practical tool of the Drow assassin - \
-	a lady's friend is a man's end."
+	a lady's friend is a man's end. The machining is finely tuned and the whole of the bow is ornamented in gold - a symbol of rank among drow markswomen."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "drowcrossbowgilded0"
 	item_state = "drowcrossbowgilded"
 	penfactor = 0.6
 	damfactor = 0.7
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser
+	name = "drow crossbow"
+	desc = "A stripped down crossbow specifically made for the small engagement ranges of the Underdark and caverns. The body is well worn \
+	and lacks the gilding one commonly sees on the equipment of established Drow warriors."
+	damfactor = 0.6
+	penfactor = 0.5
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "drowcrossbow0"
+	item_state = "drowcrossbow"
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
 //Retains an identical damage to the standard crossbow. The pen is what makes this.

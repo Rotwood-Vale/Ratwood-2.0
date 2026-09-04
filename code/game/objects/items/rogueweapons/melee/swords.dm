@@ -2433,7 +2433,7 @@
 	max_integrity = 175// less integ than the real deal, not near as much as the kazen messers
 	bigboy = TRUE
 
-/obj/item/rogueweapon/sword/long/stalker
+/obj/item/rogueweapon/sword/long/stalker//what if estoc but longsword?
 	name = "drow longsword"
 	desc = "A long, darkly shimmering blade of drowsmith. While looking familiar to the standard longsword\
 	the use case is far less versetile. Swords of this kind feature rigidly straight blades, uncharateristic of drowsmith, and are primarily used as a hunting tools.\
@@ -2447,6 +2447,60 @@
 	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
 	alt_intents = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
 	bigboy = TRUE
+	special = /datum/special_intent/piercing_lunge
+
+/obj/item/rogueweapon/sword/long/stalker/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.6,
+					"sx" = -6,
+					"sy" = 7,
+					"nx" = 6,
+					"ny" = 8,
+					"wx" = 0,
+					"wy" = 6,
+					"ex" = -1,
+					"ey" = 8,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+					"nturn" = -50,
+					"sturn" = 40,
+					"wturn" = 50,
+					"eturn" = -50,
+					"nflip" = 0,
+					"sflip" = 8,
+					"wflip" = 8,
+					"eflip" = 0,
+					)
+			if("wielded")
+				return list(
+					"shrink" = 0.6,
+					"sx" = 3,
+					"sy" = 5,
+					"nx" = -3,
+					"ny" = 5,
+					"wx" = -9,
+					"wy" = 4,
+					"ex" = 9,
+					"ey" = 1,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 0,
+					"eturn" = 15,
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 8,
+					"eflip" = 0,
+					)
 
 //Elven weapons sprited and added by Jam
 /obj/item/rogueweapon/sword/short/elf

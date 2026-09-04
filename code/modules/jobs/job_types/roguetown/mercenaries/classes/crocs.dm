@@ -1,6 +1,11 @@
 /datum/advclass/mercenary/crocs // formerly Anthrax.dm
 	name = "Crocs de l'araignée Cavalier"
-	tutorial = "The Crocs de l'araignée, translated literally to mean \"Spider's Teeth\", is a renowned collective of blades, whips, and riders for hire often employed in the vast drow undercity complexes and occasionally the surface above. Infamous for their battlefrenzy, sadism, and mastery over arachnid cavalry, a member of the Spider's Teeth stands among some of the fiercest if cruelest warriors in Psydonia. Dark elves ultimately are only truly aligned to themselves and their own interests; this trait makes them surprisingly pragmatic and straightforward mercenaries, as a drow can be counted on to do any job so long as the price is right and it serves whatever higher ambition they might have."
+	tutorial = "The Crocs de l'araignée, translated literally to mean \"Spider's Teeth\", is a renowned collective of blades, \
+	whips, and riders for hire often employed in the vast drow undercity complexes and occasionally the surface above. \
+	Infamous for their battlefrenzy, sadism, and mastery over arachnid cavalry, a member of the Spider's Teeth stands among some of the \
+	fiercest if cruelest warriors in Psydonia. Dark elves ultimately are only truly aligned to themselves and their own interests; \
+	this trait makes them surprisingly pragmatic and straightforward mercenaries, as a drow can be counted on to do any job so long as the \
+	price is right and it serves whatever higher ambition they might have."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/elf/dark,
@@ -38,14 +43,15 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 
 	)
-	extra_context = "This subclass is race-limited to: Dark Elves Only."
-	
+	extra_context = "This subclass is race-limited to: Dark Elves Only. \
+	Female drow recieve nutcracker and bedbreaker. Male drow \
+	lose -1 STR & -1 LCK, but gain 1 SPD & 1 WIL."
 
 
 /datum/outfit/job/roguetown/mercenary/crocs/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		var/weapons = list("Sabre","Shotel","Aruval","Hooksword","Falx","Greatsabre","Thrusting Longsword","Kriegmesser","Whip","Spined Greatflail, 12 STR MIN","Hefty Greatflail, 13 STR MIN")
+		var/weapons = list("Sabre","Shotel","Aruval","Hooksword","Falx","Greatsabre","Thrusting Longsword","Kriegmesser","Whip","Spined Greatflail - 12 STR MIN","Hefty Greatflail - 13 STR MIN")
 		var/weapon_choice = input(H, "Choose your weapon.", "How do you kill?") as anything in weapons
 		switch(weapon_choice)
 			if("Sabre")
@@ -92,11 +98,11 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/rogueweapon/shield/tower/spidershield
 				r_hand = /obj/item/rogueweapon/whip/spiderwhip
-			if("Spined Greatflail, 12 STR MIN")
+			if("Spined Greatflail - 12 STR MIN")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/stalker
-			if("Hefty Greatflail, 13 STR MIN")
+			if("Hefty Greatflail - 13 STR MIN")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail/stalker/alt
