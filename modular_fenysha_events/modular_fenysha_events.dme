@@ -3,6 +3,8 @@
 
 #include "code\__defines\armor_defines.dm"
 
+#include "code\effects\mandelbrot_fullscreen.dm"
+
 #include "code\projectiles\beams.dm"
 #include "code\projectiles\test_guns.dm"
 
