@@ -82,13 +82,4 @@
 	for(var/mob/player as anything in GLOB.player_list)
 		player.overlay_mandelbrot(target_alpha, blend = blend)
 
-/client/add_admin_verbs()
-	. = ..()
-	if(holder?.rank?.rights & R_FUN)
-		verbs += /client/proc/fenysha_mandelbrot
-
-/client/remove_admin_verbs()
-	. = ..()
-	verbs -= /client/proc/fenysha_mandelbrot
-
 #undef MANDELBROT_PULSE_SCALE
