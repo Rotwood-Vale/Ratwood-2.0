@@ -77,15 +77,15 @@
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/long/stalker
 			if("Piqueuse \"Whipper\"")
-				var/whips = list("Whip", "Urumi", "Greatflail - 12 STR Min")
+				var/whips = list("Whip - 10 STR MIN", "Urumi - 10 STR MIN", "Greatflail - 12 STR Min")
 				var/whip_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in whips
 				switch(whip_choice)
-					if("Whip")
+					if("Whip - 10 STR MIN")
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
 						r_hand = /obj/item/rogueweapon/whip/spiderwhip
-					if("Urumi")
+					if("Urumi - 10 STR MIN")
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
-						r_hand = /obj/item/rogueweapon/whip/urumi
+						r_hand = /obj/item/rogueweapon/whip/urumi/spider
 					if("Greatflail - 12 STR Min")
 						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
 						r_hand = /obj/item/rogueweapon/flail/peasantwarflail/stalker

@@ -355,6 +355,17 @@
 		added_def = 0,\
 	)
 
+/obj/item/rogueweapon/whip/urumi/spider
+	name = "drow urumi"
+	desc = "Two darkly shimmering and flexile blades coiling outwards from a gilded hilt wrapped with a small piece of spider-silk. \
+	The knuckleguarded handle betrays the weapon's grim purpose, to bring the enemies of the drow to knee, be it through blade or bludgeon."
+	icon_state = "spider_urumi"
+	force = "31"//+1, same as spider whip
+	minstr = "10"
+	max_integrity = 150
+	max_integrity = 150
+	special = /datum/special_intent/greatsword_swing
+
 /obj/item/rogueweapon/whip/urumi/blacksteel
 	name = "blacksteel urumi"
 	desc = "Two lengths of precious blacksteel coiling outwards from a finely ornamented hilt. As much an artpiece as it is weapon."

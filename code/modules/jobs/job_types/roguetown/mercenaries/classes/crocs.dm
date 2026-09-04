@@ -51,7 +51,7 @@
 /datum/outfit/job/roguetown/mercenary/crocs/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		var/weapons = list("Sabre","Shotel","Aruval","Hooksword","Falx","Greatsabre","Thrusting Longsword","Kriegmesser","Whip","Spined Greatflail - 12 STR MIN","Hefty Greatflail - 13 STR MIN")
+		var/weapons = list("Sabre","Shotel","Aruval","Hooksword","Falx","Greatsabre","Thrusting Longsword","Kriegmesser","Whip","Urumi","Bardiche","Spined Greatflail - 12 STR MIN","Hefty Greatflail - 13 STR MIN")
 		var/weapon_choice = input(H, "Choose your weapon.", "How do you kill?") as anything in weapons
 		switch(weapon_choice)
 			if("Sabre")
@@ -98,6 +98,14 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/rogueweapon/shield/tower/spidershield
 				r_hand = /obj/item/rogueweapon/whip/spiderwhip
+			if("Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				backr = /obj/item/rogueweapon/shield/tower/spidershield
+				r_hand = /obj/item/rogueweapon/whip/urumi/spider
+			if("Bardiche")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+				backr = /obj/item/rogueweapon/shield/tower/spidershield//intentionally not the gwstrap, the bardiche pairs well with shield, much the same as nomad spear
+				r_hand = /obj/item/rogueweapon/halberd/bardiche/stalker
 			if("Spined Greatflail - 12 STR MIN")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -206,7 +214,7 @@
 /datum/outfit/job/roguetown/mercenary/crocsass/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		var/weapons = list("Slurbow","Shortbow","Dual Daggers","Dual Hookswords","Dual Falx","Dual Shotel","Dual Whips")
+		var/weapons = list("Slurbow","Shortbow","Dual Daggers","Dual Hookswords","Dual Falx","Dual Shotel","Dual Whips - 10 STR Min", "Dual Urumi - 10 STR Min")
 		var/weapon_choice = input(H, "Choose your weapon.", "How do you kill?") as anything in weapons
 		switch(weapon_choice)
 			if("Slurbow")
@@ -254,11 +262,16 @@
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				beltr = /obj/item/rogueweapon/sword/long/shotel/stalker
 				r_hand = /obj/item/rogueweapon/sword/long/shotel/stalker
-			if("Dual Whips")//hilarious
+			if("Dual Whips - 10 STR Min")//hilarious
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/whip/spiderwhip
 				beltl = /obj/item/rogueweapon/whip/spiderwhip
+			if("Dual Urumi - 10 STR Min")
+				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				beltr = /obj/item/rogueweapon/whip/urumi/spider
+				beltl = /obj/item/rogueweapon/whip/urumi/spider
 		var/riding = list("I'm a spider-rider", "I'm a foot-soldier")
 		var/ridingchoice = input(H, "Choose your faith", "FAITH") as anything in riding
 		switch(ridingchoice)
