@@ -190,11 +190,11 @@
 
 		death(FALSE)
 
-/mob/living/proc/suicide_log()
-	log_message("committed suicide as [src.type]", LOG_ATTACK)
+/mob/living/proc/suicide_log(method)
+	log_message("committed suicide as [src.type][method ? " ([method])" : ""]", LOG_ATTACK)
 
-/mob/living/carbon/human/suicide_log()
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+/mob/living/carbon/human/suicide_log(method)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide[method ? " ([method])" : ""]", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
 	switch(stat)
