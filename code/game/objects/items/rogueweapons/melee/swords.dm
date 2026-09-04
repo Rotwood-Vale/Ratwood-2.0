@@ -2303,7 +2303,7 @@
 	force_wielded = 25//good damage both wielded and unweilded, but lower than greatswords and rhomphaia proper
 	max_integrity = 200//50 more than the standard rhomphaia
 	possible_item_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/thrust/hook, /datum/intent/sword/chop/falx, /datum/intent/sword/disarm)
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/hook, /datum/intent/sword/disarm/range)//longer range, two hands on sword makes for better chop, if slower
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/militia, /datum/intent/pick/bad, /datum/intent/sword/disarm/range)//longer range, two hands on sword makes for better chop, if slower. Shitty pick using our weird spikes
 	alt_intents = null 
 	wdefense_wbonus = 4
 	bigboy = TRUE
@@ -2400,10 +2400,6 @@
 	wbalance = WBALANCE_SWIFT
 	wdefense = 5//-1, use it with a shield
 
-/datum/intent/sword/thrust/estoc/slow
-	name = "puncture with spike"
-	swingdelay = 9	
-
 /obj/item/rogueweapon/sword/long/elf/stalker
 	name = "drow greatsabre"
 	desc = "A large, curved blade sporting a single cutting edge and a blunted spine affixed with a piercing spike.\
@@ -2415,7 +2411,7 @@
 	force_wielded = 30
 	max_integrity = 200
 	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
-	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/estoc/slow, /datum/intent/sword/chop/falx)//estoc thrust is us using that back spike to pierce armor
+	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/falx)//shitty pick using our spiked bit.
 	alt_intents = null // nope!
 	bigboy = TRUE
 
@@ -2444,7 +2440,7 @@
 	force = 25
 	force_wielded = 27
 	possible_item_intents = list(/datum/intent/sword/thrust/arming, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
-	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/lunge/estoc, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
 	alt_intents = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
 	bigboy = TRUE
 	special = /datum/special_intent/piercing_lunge
