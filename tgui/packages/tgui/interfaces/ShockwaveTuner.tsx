@@ -47,6 +47,9 @@ const LIMITS: Record<string, Limit> = {
   'body damage': { min: 0, max: 100, step: 1 },
   'ringing volume': { min: 0, max: 100, step: 5 },
   'ringing time ds': { min: 0, max: 600, step: 10 },
+  'throw objects': { min: 0, max: 1, step: 1 },
+  'throw range': { min: 1, max: 32, step: 1 },
+  'throw speed': { min: 1, max: 10, step: 1 },
   // visuals
   'amplitude base': { min: 0, max: 128, step: 1 },
   'amplitude gain': { min: 0, max: 256, step: 1 },

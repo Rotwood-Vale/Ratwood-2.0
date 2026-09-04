@@ -2,13 +2,17 @@
  * Expanding circular shockwave.
  *
  * Radius is fully configurable, from a few tiles up to the whole map, so the
- * cost model matters more than the effect. Nothing here iterates turfs: a
- * map-wide radius would mean tens of thousands of turfs per z-level, almost all
- * of them empty. Instead the destructible types register themselves in
- * GLOB.shockwave_targets, and a wave costs one pass over that list - on the
- * order of a thousand entries for a full map - plus a pass over the player list.
+ * cost model matters more than the effect. The destructible types register
+ * themselves in GLOB.shockwave_targets, and a wave costs one pass over that
+ * list - on the order of a thousand entries for a full map - plus a pass over
+ * the player list. No turf sweep at that scale: a map-wide radius would mean
+ * tens of thousands of turfs per z-level, almost all of them empty.
  *
- * That pass buckets everything by distance up front. Each tick afterwards only
+ * Walls and loose objects are the exception, because neither can live in the
+ * registry. They are found by an actual turf scan, but a hard bounded one that
+ * never grows with radius - see gather_walls.
+ *
+ * Both passes bucket everything by distance up front. Each tick afterwards only
  * touches the buckets the wavefront has just crossed, which is what gives the
  * travelling ring for free.
  */
@@ -54,6 +58,11 @@ GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
 		"body damage" = 5,
 		"ringing volume" = 45,
 		"ringing time ds" = 80,
+		// Off by default: throwing every loose item is a big, messy change to
+		// what a blast does, so it is opted into rather than assumed.
+		"throw objects" = 0,
+		"throw range" = 5,
+		"throw speed" = 2,
 	)
 
 GLOBAL_LIST_INIT(shockwave_damage, shockwave_damage_defaults())
@@ -176,6 +185,11 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/body_damage
 	var/ringing_volume
 	var/ringing_time
+	var/throw_objects
+	var/throw_range
+	var/throw_speed
+	/// Loose movables by ring, mapped to the sector they sit in.
+	var/list/throw_rings
 	/// rings[n] maps each target at that distance to the sector it sits in.
 	var/list/rings
 	/// Same bucketing for mobs, which take different effects.
@@ -222,6 +236,9 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	body_damage = tune["body damage"]
 	ringing_volume = tune["ringing volume"]
 	ringing_time = tune["ringing time ds"]
+	throw_objects = tune["throw objects"]
+	throw_range = tune["throw range"]
+	throw_speed = tune["throw speed"]
 
 	map_z_reach()
 	gather()
@@ -274,11 +291,13 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 
 	rings = new /list(radius + 1)
 	mob_rings = new /list(radius + 1)
+	throw_rings = new /list(radius + 1)
 	// Pre-built so the hot loop can write straight into them. `rings[n] += x`
 	// would go through index assignment, rebuilding the inner list every time.
 	for(var/i in 1 to radius + 1)
 		rings[i] = list()
 		mob_rings[i] = list()
+		throw_rings[i] = list()
 
 	for(var/atom/movable/target as anything in GLOB.shockwave_targets)
 		if(QDELETED(target))
@@ -347,14 +366,29 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		if(!low || !high)
 			continue
 		var/reach_sq = reach * reach
-		for(var/turf/closed/wall/found as anything in block(low, high))
+		for(var/turf/found as anything in block(low, high))
 			var/dx = found.x - cx
 			var/dy = found.y - cy
 			var/spread = dx * dx + dy * dy
 			if(spread > reach_sq)
 				continue
-			var/list/bucket = rings[round(sqrt(spread) + z_cost) + 1]
-			bucket[found] = sector_of(dx, dy)
+			var/sector = sector_of(dx, dy)
+			var/index = round(sqrt(spread) + z_cost) + 1
+
+			if(istype(found, /turf/closed/wall))
+				var/list/bucket = rings[index]
+				bucket[found] = sector
+				continue
+
+			if(!throw_objects)
+				continue
+			// Open turf: sweep up anything loose sitting on it. Mobs are left
+			// out - they get knocked down rather than launched.
+			var/list/loose = throw_rings[index]
+			for(var/atom/movable/thing in found)
+				if(thing.anchored || ismob(thing))
+					continue
+				loose[thing] = sector
 		CHECK_TICK
 
 /// Everyone the wave reaches hears it, scaled by how far out they are.
@@ -414,6 +448,17 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 			sector_energy[sector] -= absorbed / absorb_scale
 		CHECK_TICK
 
+	var/list/loose = throw_rings[ring]
+	if(length(loose))
+		for(var/atom/movable/thing as anything in loose)
+			if(QDELETED(thing) || thing.anchored)
+				continue
+			var/energy = sector_energy[loose[thing]]
+			if(energy <= 0)
+				continue
+			hurl(thing, energy * falloff)
+		CHECK_TICK
+
 	var/list/viewers = mob_rings[ring]
 	if(length(viewers))
 		for(var/mob/viewer as anything in viewers)
@@ -436,6 +481,10 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	if(!istype(wall, /turf/closed/wall) || wall.turf_integrity <= 0)
 		return
 	var/damage = base_damage * wall_mult * strength
+	// With wall damage turned off entirely, walls simply are not part of the
+	// model - they must not silently drain every sector instead.
+	if(damage <= 0)
+		return
 	var/before = wall.turf_integrity
 
 	// Mirrors turf/take_damage's own deflection check, so the wave is never
@@ -448,6 +497,30 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		sector_energy[sector] -= min(damage, before) / absorb_scale
 	else
 		sector_energy[sector] *= wall_hold
+
+/// Launches one loose object away from the epicentre.
+/datum/shockwave/proc/hurl(atom/movable/thing, strength)
+	// Same bar the tornado uses, so anything too heavy for wind stays put.
+	if(thing.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
+		return
+	var/turf/spot = get_turf(thing)
+	if(!spot)
+		return
+
+	var/distance = max(1, round(throw_range * strength))
+
+	// Anything sitting exactly on the epicentre has no outward direction of its
+	// own, so it gets scattered instead.
+	var/direction
+	if(spot.x == cx && spot.y == cy)
+		direction = pick(GLOB.alldirs)
+	else
+		direction = get_dir(locate(cx, cy, spot.z), spot)
+
+	var/turf/destination = get_ranged_target_turf(spot, direction, distance)
+	if(!destination)
+		return
+	thing.throw_at(destination, distance, throw_speed, spin = TRUE)
 
 /datum/shockwave/proc/stagger(mob/viewer, strength, ring)
 	if(viewer.client != unshaken)
