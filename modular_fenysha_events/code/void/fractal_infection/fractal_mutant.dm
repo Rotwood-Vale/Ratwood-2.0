@@ -47,6 +47,8 @@
 	STASPD = 15
 
 	ai_controller = /datum/ai_controller/fractal_mutant
+
+	attack_sound = 'modular_fenysha_events/sound/fractal_attack.ogg'
 	var/static/list/footstep_sounds = list(
 		'modular_fenysha_events/sound/fractal_footstep/heavy_1.ogg',
 		'modular_fenysha_events/sound/fractal_footstep/heavy_2.ogg',

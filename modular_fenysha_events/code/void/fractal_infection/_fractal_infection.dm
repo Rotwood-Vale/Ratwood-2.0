@@ -1,5 +1,292 @@
+
+/*
+ * Temporary status effect responsible for one fractal screen event.
+ *
+ * The infection calls this effect from do_onscreen_effect().
+ * The effect performs one randomized visual event and then removes itself.
+ */
+/datum/status_effect/fractal_screen
+	id = "fractal_screen"
+
+	duration = 6 SECONDS
+
+	var/infection_stage = 1
+
+/datum/status_effect/fractal_screen/on_apply()
+	. = ..()
+
+	if(!owner)
+		return FALSE
+
+	play_effect()
+
+	/*
+	 * This status effect is only a temporary event.
+	 * All actual visual cleanup is handled by the individual event.
+	 */
+	addtimer(CALLBACK(src, PROC_REF(remove_effect)), duration)
+
+	return TRUE
+
+
+
+/datum/status_effect/fractal_screen/proc/remove_effect()
+	qdel(src)
+
+
+
+/datum/status_effect/fractal_screen/proc/play_effect()
+	/*
+	 * Higher stages unlock more violent effects.
+	 */
+	var/list/effects = list(
+		"flash",
+		"pulse",
+		"zoom"
+	)
+
+	if(infection_stage >= 3)
+		effects += "additive"
+		effects += "surge"
+
+	if(infection_stage >= 4)
+		effects += "violent_zoom"
+		effects += "flicker"
+
+	if(infection_stage >= 5)
+		effects += "collapse"
+
+	switch(pick(effects))
+		if("flash")
+			effect_flash()
+
+		if("pulse")
+			effect_pulse()
+
+		if("zoom")
+			effect_zoom()
+
+		if("additive")
+			effect_additive()
+
+		if("surge")
+			effect_surge()
+
+		if("violent_zoom")
+			effect_violent_zoom()
+
+		if("flicker")
+			effect_flicker()
+
+		if("collapse")
+			effect_collapse()
+
+
+
+/datum/status_effect/fractal_screen/proc/get_screen()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = owner.overlay_fullscreen(
+		MANDELBROT_FULLSCREEN,
+		/atom/movable/screen/fullscreen/mandelbrot
+	)
+
+	if(!istype(screen))
+		return null
+
+	return screen
+
+
+
+/*
+ * Very short appearance flash.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_flash()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_DEFAULT
+	screen.alpha = 0
+
+	animate(screen, alpha = 180, time = 4)
+	animate(alpha = 60, time = 4)
+	animate(alpha = 140, time = 3)
+	animate(alpha = 0, time = 8)
+
+
+
+/*
+ * Calm breathing/pulsation.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_pulse()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_DEFAULT
+	screen.alpha = 110
+
+	var/matrix/base = matrix(screen.transform)
+	var/matrix/swelled = matrix(screen.transform)
+
+	swelled.Scale(1.06)
+
+	animate(screen, transform = swelled, time = 12, easing = SINE_EASING)
+	animate(transform = base, time = 12, easing = SINE_EASING)
+	animate(transform = swelled, time = 12, easing = SINE_EASING)
+	animate(transform = base, time = 12, easing = SINE_EASING)
+
+	animate(screen, alpha = 0, time = 12)
+
+
+
+/*
+ * Slow zoom into the fractal.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_zoom()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_DEFAULT
+	screen.alpha = 100
+
+	var/matrix/base = matrix(screen.transform)
+	var/matrix/zoom = matrix(screen.transform)
+
+	zoom.Scale(1.18)
+
+	animate(screen, transform = zoom, time = 30, easing = SINE_EASING)
+	animate(transform = base, time = 8, easing = SINE_EASING)
+	animate(screen, alpha = 0, time = 10)
+
+
+
+/*
+ * Additive glow.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_additive()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_ADD
+	screen.alpha = 0
+
+	animate(screen, alpha = 100, time = 8)
+	animate(alpha = 170, time = 10)
+	animate(alpha = 0, time = 15)
+
+
+
+/*
+ * Sudden energy surge.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_surge()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_ADD
+	screen.alpha = 0
+
+	var/matrix/base = matrix(screen.transform)
+	var/matrix/swelled = matrix(screen.transform)
+
+	swelled.Scale(1.12)
+
+	animate(screen, alpha = 180, transform = swelled, time = 5, easing = JUMP_EASING)
+	animate(alpha = 70, transform = base, time = 8, easing = SINE_EASING)
+	animate(alpha = 150, transform = swelled, time = 4, easing = JUMP_EASING)
+	animate(alpha = 0, transform = base, time = 12)
+
+
+
+/*
+ * Much more aggressive zoom.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_violent_zoom()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_DEFAULT
+	screen.alpha = 120
+
+	var/matrix/base = matrix(screen.transform)
+	var/matrix/zoom = matrix(screen.transform)
+
+	zoom.Scale(1.35)
+
+	animate(screen, transform = zoom, alpha = 180, time = 10, easing = JUMP_EASING)
+	animate(transform = base, alpha = 80, time = 4, easing = JUMP_EASING)
+	animate(transform = zoom, alpha = 150, time = 6, easing = JUMP_EASING)
+	animate(transform = base, alpha = 0, time = 12)
+
+
+
+/*
+ * Rapid flickering.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_flicker()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_DEFAULT
+	screen.alpha = 0
+
+	animate(screen, alpha = 160, time = 2)
+	animate(alpha = 30, time = 3)
+	animate(alpha = 190, time = 2)
+	animate(alpha = 50, time = 2)
+	animate(alpha = 140, time = 3)
+	animate(alpha = 0, time = 8)
+
+
+
+/*
+ * Terminal-stage effect.
+ *
+ * The screen appears to collapse inward before disappearing.
+ */
+
+/datum/status_effect/fractal_screen/proc/effect_collapse()
+	var/atom/movable/screen/fullscreen/mandelbrot/screen = get_screen()
+
+	if(!screen)
+		return
+
+	screen.blend_mode = BLEND_ADD
+	screen.alpha = 0
+
+	var/matrix/base = matrix(screen.transform)
+	var/matrix/collapse = matrix(screen.transform)
+
+	collapse.Scale(0.72)
+
+	animate(screen, alpha = 180, transform = collapse, time = 8, easing = JUMP_EASING)
+	animate(alpha = 220, transform = base, time = 4, easing = JUMP_EASING)
+	animate(alpha = 0, transform = collapse, time = 12, easing = SINE_EASING)
+
+
+
 /datum/status_effect/fractal_infection
 	id = "fractal_infection"
+
 	var/infection_stage = 0
 	var/max_stage = 5
 
@@ -14,8 +301,27 @@
 	/// Time at which current stage ends.
 	COOLDOWN_DECLARE(next_stage)
 
-
+	/*
+	 * Currently applied visual mutations.
+	 *
+	 * Key:
+	 *	BODY_ZONE_*
+	 *
+	 * Value:
+	 *	mutable_appearance
+	 */
 	var/list/mutable_appearance/body_effects
+
+	/*
+	 * Already mutated bodyparts.
+	 *
+	 * Key:
+	 *	BODY_ZONE_*
+	 *
+	 * Value:
+	 *	stage at which the mutation appeared
+	 */
+	var/list/mutated_bodyparts
 
 	var/fractal_message_cd = 80 SECONDS
 	var/body_mutation_cd = 5 MINUTES
@@ -32,7 +338,6 @@
 	COOLDOWN_DECLARE(next_body_effect)
 
 	/// 0.25 = cooldown may vary by ±25%
-	/// 0.75 = cooldown may vary by ±75%
 	var/default_variance = 0.25
 
 	var/static/list/possible_fractal_messages = list(
@@ -68,10 +373,12 @@
 	)
 
 
+
 /datum/status_effect/fractal_infection/on_apply()
 	. = ..()
 
 	body_effects = list()
+	mutated_bodyparts = list()
 
 	start_stage(0)
 	reset_event_cooldowns()
@@ -79,10 +386,12 @@
 	return TRUE
 
 
+
 /datum/status_effect/fractal_infection/tick()
 	. = ..()
 
 	update_stage()
+
 	if(COOLDOWN_FINISHED(src, next_fractal_message) && can_do_fractal_message())
 		do_fractal_message()
 
@@ -102,6 +411,7 @@
 		do_body_effect()
 
 
+
 /datum/status_effect/fractal_infection/proc/update_stage()
 	if(infection_stage >= max_stage)
 		return
@@ -112,13 +422,14 @@
 	start_stage(infection_stage + 1)
 
 
+
 /datum/status_effect/fractal_infection/proc/start_stage(new_stage)
 	if(new_stage < 0 || new_stage > max_stage)
 		return
 
 	infection_stage = new_stage
 
-	// Stage 5 is the terminal stage.
+	/// Stage 5 is the terminal stage.
 	if(infection_stage >= max_stage)
 		COOLDOWN_RESET(src, next_stage)
 	else
@@ -128,6 +439,7 @@
 		COOLDOWN_START(src, next_stage, stage_duration)
 
 	on_stage_changed(infection_stage)
+
 
 
 /datum/status_effect/fractal_infection/proc/get_stage_duration(stage)
@@ -152,50 +464,67 @@
 
 	return infection_stage_duration
 
+
+
 /datum/status_effect/fractal_infection/proc/on_stage_changed(new_stage)
 	switch(new_stage)
 		if(0)
-			sleep(10)
+			return
 
 		if(1)
-			sleep(10)
+			return
 
 		if(2)
-			sleep(10)
+			return
 
 		if(3)
-			sleep(10)
+			return
 
 		if(4)
-			sleep(10)
+			return
 
 		if(5)
-			sleep(10)
+			return
 
+
+
+/*
+ * EVENT CONDITIONS
+ */
 
 /datum/status_effect/fractal_infection/proc/can_do_fractal_message()
 	return TRUE
+
 
 
 /datum/status_effect/fractal_infection/proc/can_do_body_effect()
 	return infection_stage >= 1
 
 
+
 /datum/status_effect/fractal_infection/proc/can_do_onscreen_effect()
 	return infection_stage >= 2
+
 
 
 /datum/status_effect/fractal_infection/proc/can_do_hallucination()
 	return infection_stage >= 2
 
 
+
 /datum/status_effect/fractal_infection/proc/can_do_body_mutation_message()
 	return infection_stage >= 3
 
 
-/datum/status_effect/fractal_infection/proc/can_do_body_mutation()
-	return infection_stage >= 3
 
+/datum/status_effect/fractal_infection/proc/can_do_body_mutation()
+	return infection_stage >= 1
+
+
+
+/*
+ * COOLDOWNS
+ */
 
 /datum/status_effect/fractal_infection/proc/get_randomized_cooldown(base_cooldown)
 	var/min_multiplier = max(0, 1 - default_variance)
@@ -207,6 +536,7 @@
 	) / 100)
 
 
+
 /datum/status_effect/fractal_infection/proc/reset_event_cooldowns()
 	COOLDOWN_START(src, next_fractal_message, get_randomized_cooldown(fractal_message_cd))
 	COOLDOWN_START(src, next_body_mutation, get_randomized_cooldown(body_mutation_cd))
@@ -215,69 +545,397 @@
 	COOLDOWN_START(src, next_hallucination, get_randomized_cooldown(hallucination_cd))
 	COOLDOWN_START(src, next_body_effect, get_randomized_cooldown(body_effect_cd))
 
+
+
 /datum/status_effect/fractal_infection/proc/reset_fractal_message_cooldown()
 	COOLDOWN_START(src, next_fractal_message, get_randomized_cooldown(fractal_message_cd))
+
+
 
 /datum/status_effect/fractal_infection/proc/reset_body_mutation_cooldown()
 	COOLDOWN_START(src, next_body_mutation, get_randomized_cooldown(body_mutation_cd))
 
+
+
 /datum/status_effect/fractal_infection/proc/reset_body_mutation_message_cooldown()
 	COOLDOWN_START(src, next_body_mutation_message, get_randomized_cooldown(body_mutation_message_cd))
+
+
 
 /datum/status_effect/fractal_infection/proc/reset_onscreen_effect_cooldown()
 	COOLDOWN_START(src, next_onscreen_effect, get_randomized_cooldown(onscreen_effect_cd))
 
+
+
 /datum/status_effect/fractal_infection/proc/reset_hallucination_cooldown()
 	COOLDOWN_START(src, next_hallucination, get_randomized_cooldown(hallucination_cd))
+
+
 
 /datum/status_effect/fractal_infection/proc/reset_body_effect_cooldown()
 	COOLDOWN_START(src, next_body_effect, get_randomized_cooldown(body_effect_cd))
 
+
+
+/*
+ * BODY PART MUTATION
+ */
+
+/datum/status_effect/fractal_infection/proc/get_mutatable_body_zones()
+	var/list/zones = list(
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST
+	)
+
+	for(var/zone in zones.Copy())
+		if(!owner.get_bodypart(zone))
+			zones -= zone
+
+	return zones
+
+
+
+/datum/status_effect/fractal_infection/proc/get_mutation_icon_state(zone)
+	switch(zone)
+		if(BODY_ZONE_L_ARM)
+			return "arm_l"
+
+		if(BODY_ZONE_R_ARM)
+			return "arm_r"
+
+		if(BODY_ZONE_L_LEG)
+			return "leg_l"
+
+		if(BODY_ZONE_R_LEG)
+			return "leg_r"
+
+		if(BODY_ZONE_HEAD)
+			return "head"
+
+		if(BODY_ZONE_CHEST)
+			return "chest"
+
+	return null
+
+
+
+/datum/status_effect/fractal_infection/proc/get_preferred_mutation_zones()
+	switch(infection_stage)
+		if(1)
+			return list(
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG
+			)
+
+		if(2)
+			return list(
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG
+			)
+
+		if(3)
+			return list(
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG,
+				BODY_ZONE_CHEST
+			)
+
+		if(4)
+			return list(
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG,
+				BODY_ZONE_CHEST,
+				BODY_ZONE_HEAD
+			)
+
+		if(5)
+			return list(
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG,
+				BODY_ZONE_CHEST,
+				BODY_ZONE_HEAD
+			)
+
+	return list()
+
+
+
+/datum/status_effect/fractal_infection/proc/select_mutation_zone()
+	var/list/possible_zones = get_mutatable_body_zones()
+
+	if(!possible_zones.len)
+		return null
+
+	/*
+	 * Never mutate the same bodypart twice.
+	 */
+	for(var/zone in possible_zones.Copy())
+		if(mutated_bodyparts[zone])
+			possible_zones -= zone
+
+	if(!possible_zones.len)
+		return null
+
+	var/list/preferred_zones = get_preferred_mutation_zones()
+
+	/*
+	 * Prefer zones associated with the current infection stage,
+	 * but keep an element of randomness.
+	 */
+	for(var/zone in preferred_zones)
+		if(zone in possible_zones)
+			if(prob(70))
+				return zone
+
+	return pick(possible_zones)
+
+
+
+/obj/effect/abstract/fractal_mutation
+	name = "fractal mutation"
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = KEEP_TOGETHER
+
+	var/mob/living/carbon/owner
+	var/zone
+
+/obj/effect/abstract/fractal_mutation/proc/setup(
+	mob/living/carbon/new_owner,
+	new_zone,
+	new_icon_state
+)
+	owner = new_owner
+	zone = new_zone
+
+	icon = 'modular_fenysha_events/icons/effects/fractal_mutation.dmi'
+	icon_state = new_icon_state
+	layer = MUTATIONS_LAYER
+
+	add_filter(
+		"fractal_wave",
+		1,
+		list(
+			"type" = "wave",
+			"size" = 2,
+			"x" = 10,
+			"y" = 10,
+			"offset" = 0
+		)
+	)
+
+	var/filter = get_filter("fractal_wave")
+
+	if(filter)
+		animate(filter, offset = 100, time = 30, loop = -1, flags = ANIMATION_PARALLEL)
+
+	var/matrix/M1 = matrix()
+	M1.Scale(1.05, 0.95)
+
+	var/matrix/M2 = matrix()
+	M2.Scale(0.95, 1.05)
+
+	var/matrix/M_reset = matrix()
+
+	animate(src, transform = M1, time = 2, loop = -1, easing = JUMP_EASING, flags = ANIMATION_PARALLEL)
+	animate(transform = M2, time = 2, easing = JUMP_EASING)
+	animate(transform = M_reset, time = 4)
+
+
+
+/datum/status_effect/fractal_infection/proc/mutate_bodypart(zone)
+	if(!zone)
+		return FALSE
+
+	if(mutated_bodyparts[zone])
+		return FALSE
+
+	var/obj/item/bodypart/part = owner.get_bodypart(zone)
+	if(!part)
+		return FALSE
+
+	var/icon_state = get_mutation_icon_state(zone)
+	if(!icon_state)
+		return FALSE
+
+	var/obj/effect/abstract/fractal_mutation/mutation = new
+	mutation.setup(owner, zone, icon_state)
+
+	if(!mutation)
+		return FALSE
+
+	/*
+	 * Store mutation state.
+	 */
+	mutated_bodyparts[zone] = infection_stage
+	body_effects[zone] = mutation
+
+	/*
+	 * Attach visual mutation to the owner.
+	 */
+	owner.vis_contents += mutation
+
+	/*
+	 * Apply gameplay impairment.
+	 */
+	apply_mutation_impairment(part, zone, infection_stage)
+
+	return TRUE
+
+
+
+/datum/status_effect/fractal_infection/proc/apply_mutation_impairment(obj/item/bodypart/part, zone, stage)
+	if(!part)
+		return
+
+
+
+/datum/status_effect/fractal_infection/proc/remove_bodypart_mutation(zone)
+	var/mutable_appearance/mutation = body_effects[zone]
+
+	if(!mutation)
+		return
+
+	if(owner)
+		owner.cut_overlay(mutation)
+
+	body_effects -= zone
+	mutated_bodyparts -= zone
+
+
+
+/datum/status_effect/fractal_infection/proc/remove_all_bodypart_mutations()
+	if(!body_effects)
+		return
+
+	for(var/zone in body_effects.Copy())
+		remove_bodypart_mutation(zone)
+
+
+
+/*
+ * EVENT EFFECTS
+ */
+
 /datum/status_effect/fractal_infection/proc/do_fractal_message()
-	// Message logic goes here.
-	to_chat(owner, span_hypnophrase(pick(possible_fractal_messages)))
+	to_chat(
+		owner,
+		span_hypnophrase(pick(possible_fractal_messages))
+	)
+
 	if(ishuman(owner) && prob(15))
 		var/mob/living/carbon/human/H = owner
 		H.emote_cough()
 		H.Shake()
+
 	reset_fractal_message_cooldown()
 
 
+
 /datum/status_effect/fractal_infection/proc/do_body_mutation()
-	// Body mutation logic goes here.
+	var/zone = select_mutation_zone()
+
+	if(zone)
+		mutate_bodypart(zone)
 
 	reset_body_mutation_cooldown()
 
 
-/datum/status_effect/fractal_infection/proc/do_body_mutation_message()
-	// Mutation message logic goes here.
 
+/datum/status_effect/fractal_infection/proc/do_body_mutation_message()
+	/*
+	 * Pick only from bodyparts that are actually available
+	 * for mutation.
+	 */
+	var/zone = select_mutation_zone()
+
+	if(!zone)
+		reset_body_mutation_message_cooldown()
+		return
+
+	var/part_name
+
+	switch(zone)
+		if(BODY_ZONE_L_ARM)
+			part_name = "left arm"
+
+		if(BODY_ZONE_R_ARM)
+			part_name = "right arm"
+
+		if(BODY_ZONE_L_LEG)
+			part_name = "left leg"
+
+		if(BODY_ZONE_R_LEG)
+			part_name = "right leg"
+
+		if(BODY_ZONE_HEAD)
+			part_name = "head"
+
+		if(BODY_ZONE_CHEST)
+			part_name = "chest"
+
+	if(part_name)
+		to_chat(owner, span_warning("Something feels deeply wrong with your [part_name]."))
 	reset_body_mutation_message_cooldown()
 
 
-/datum/status_effect/fractal_infection/proc/do_onscreen_effect()
-	
 
+/datum/status_effect/fractal_infection/proc/do_onscreen_effect()
+	var/datum/status_effect/fractal_screen/effect = owner.has_status_effect(
+		/datum/status_effect/fractal_screen
+	)
+
+	if(!effect)
+		effect = owner.apply_status_effect(
+			/datum/status_effect/fractal_screen
+		)
+
+	if(effect)
+		effect.infection_stage = infection_stage
+		effect.play_effect()
 
 	reset_onscreen_effect_cooldown()
 
 
+
 /datum/status_effect/fractal_infection/proc/do_hallucination()
-	// Hallucination logic goes here.
+	/*
+	 * Hallucination logic goes here.
+	 */
 
 	reset_hallucination_cooldown()
 
 
+
 /datum/status_effect/fractal_infection/proc/do_body_effect()
-	// Generic body effect logic goes here.
+	/*
+	 * Generic body effect logic goes here.
+	 */
 
 	reset_body_effect_cooldown()
 
 
 
-/atom/movable/screen/fullscreen/fractal
-	icon = 'modular_fenysha_events/icons/onscreen/onscreen_fractal.dmi'
-	icon_state = "mandelbrot"
+/*
+ * CLEANUP
+ */
 
-/atom/movable/screen/fullscreen/fractal/zoom
-	icon_state = "mandelbrot_zoom"
+/datum/status_effect/fractal_infection/on_remove()
+	remove_all_bodypart_mutations()
+
+	return ..()
+

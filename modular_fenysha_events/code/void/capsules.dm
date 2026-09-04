@@ -72,5 +72,5 @@
 /obj/structure/void_capsule/gas/open()
 	. = ..()
 	var/datum/effect_system/smoke_spread/fractal/S = new
-	S.set_up(9, get_turf(src))
+	S.set_up(32, get_turf(src))
 	S.start()
