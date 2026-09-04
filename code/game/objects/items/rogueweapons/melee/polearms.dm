@@ -829,8 +829,8 @@
 
 /obj/item/rogueweapon/halberd/bardiche/stalker
 	name = "drow bardiche"
-	desc = "While similar to the iron bardiche wielded by petty drow raiders, this elegant polearm is cuts a striking image. \
-	Finely forged and superbly balanced, the bardiche of a drow cavallier can cleave through enemy chaff both one-handed on spiderback \
+	desc = "While similar to the iron bardiche wielded by petty drow raiders, this elegant polearm cuts a striking image. \
+	Finely forged and superbly balanced, the bardiche of a drow cavalier can cleave through enemy chaff both one-handed on spiderback \
 	& two-handed on foot."
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "drowbardiche"

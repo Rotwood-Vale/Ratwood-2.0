@@ -357,8 +357,8 @@
 
 /obj/item/rogueweapon/whip/urumi/spider
 	name = "drow urumi"
-	desc = "Two darkly shimmering and flexile blades coiling outwards from a gilded hilt wrapped with a small piece of spider-silk. \
-	The knuckleguarded handle betrays the weapon's grim purpose, to bring the enemies of the drow to knee, be it through blade or bludgeon."
+	desc = "Two darkly shimmering and flexible blades coiling outwards from a gilded hilt wrapped with a small piece of spider-silk. \
+	The knuckleguarded handle betrays the weapon's grim purpose: to bring the enemies of the drow to their knees, be it through blade or bludgeon."
 	icon_state = "spider_urumi"
 	force = "31"//+1, same as spider whip
 	minstr = "10"
