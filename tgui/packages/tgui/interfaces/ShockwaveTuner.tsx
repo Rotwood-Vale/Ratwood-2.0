@@ -29,10 +29,13 @@ type Limit = { min: number; max: number; step: number };
 // Editing bounds per setting, keyed by the name DM sends. Anything not listed
 // falls back to a wide default rather than being locked out.
 const LIMITS: Record<string, Limit> = {
-  // blast
-  radius: { min: 1, max: 255, step: 1 },
-  power: { min: 0.1, max: 10, step: 0.1 },
-  speed: { min: 1, max: 32, step: 1 },
+  // blast. Maps run to 255x450 per z-level, so a corner to corner wave needs
+  // a radius over 500 - the ceiling is well clear of that rather than snug.
+  radius: { min: 1, max: 1024, step: 5 },
+  power: { min: 0.1, max: 20, step: 0.1 },
+  // A big radius needs a matching speed or the front takes minutes to arrive:
+  // the sweep advances `speed` tiles per tick.
+  speed: { min: 1, max: 64, step: 1 },
   'z reach': { min: 0, max: 8, step: 1 },
   // destruction
   'base damage': { min: 0, max: 2000, step: 10 },
