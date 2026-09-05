@@ -732,7 +732,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		if(!dest)
 			to_chat(user, span_warning("Nothing connected."))
 			return
-		do_teleport(user, get_turf(dest))
+		var/turf/T = get_turf(dest)
+		for(var/mob/living/L in range(1, src))
+			do_teleport(L, T)
 		return
 	if(icon_state != "center")
 		return
