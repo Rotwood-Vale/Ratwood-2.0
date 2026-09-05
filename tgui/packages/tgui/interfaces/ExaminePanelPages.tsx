@@ -80,7 +80,7 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
       {showLeft && (
         <Stack.Item
           grow={collapsed}
-          width={collapsed ? undefined : '350px'}
+          width={collapsed ? undefined : '300px'}
           minWidth={collapsed ? 0 : undefined}
         >
           <Stack fill vertical>
