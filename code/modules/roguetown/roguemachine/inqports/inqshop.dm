@@ -232,28 +232,6 @@
 	new /obj/item/paper/inqslip/accusation(src)
 	new /obj/item/paper/inqslip/accusation(src)
 
-/datum/inqports/articles/indexers
-	name = "3 INDEXERs"
-	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexers
-	marquescost = 3
-
-/obj/structure/closet/crate/chest/inqcrate/articles/indexers/Initialize(mapload)
-	. = ..()
-	new /obj/item/inqarticles/indexer(src)
-	new /obj/item/inqarticles/indexer(src)
-	new /obj/item/inqarticles/indexer(src)
-
-/datum/inqports/articles/accusations
-	name = "3 Accusations"
-	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/accusations
-	marquescost = 3
-
-/obj/structure/closet/crate/chest/inqcrate/articles/accusations/Initialize(mapload)
-	. = ..()
-	new /obj/item/paper/inqslip/accusation(src)
-	new /obj/item/paper/inqslip/accusation(src)
-	new /obj/item/paper/inqslip/accusation(src)
-
 /datum/inqports/articles/confessions
 	name = "3 Confessions"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/confessions
