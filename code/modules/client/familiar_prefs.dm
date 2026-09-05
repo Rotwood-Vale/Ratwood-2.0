@@ -238,6 +238,7 @@
 	S["familiar_ooc_notes"]				>> familiar_ooc_notes
 	S["familiar_ooc_extra"]				>> familiar_ooc_extra
 	S["familiar_ooc_extra_link"]		>> familiar_ooc_extra_link
+	return TRUE
 
 /datum/familiar_prefs/proc/save_familiar_prefs(savefile/S)
 	if(istype(S))
