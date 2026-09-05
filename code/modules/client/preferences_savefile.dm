@@ -875,15 +875,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(istype(familiar_prefs))
 		if(!familiar_prefs.load_familiar_prefs(S))
-			to_chat(parent, span_warning("Couldn't save familiar prefs!"))
+			to_chat(parent, span_warning("Couldn't load familiar prefs!"))
 	else
-		to_chat(parent, span_warning("Couldn't save familiar prefs!"))
+		to_chat(parent, span_warning("Couldn't load familiar prefs!"))
 
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.load_gnoll_prefs(S))
-			to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
+			to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
 	else
-		to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
+		to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
 
 	var/patron_typepath
 	S["selected_patron"]	>> patron_typepath
