@@ -163,3 +163,12 @@
 
 	if(prob(30))
 		new /obj/effect/particle_effect/smoke(T)
+
+/obj/effect/falling_object/capsule/gas 
+	fallen_type = /obj/structure/void_capsule/gas
+
+/obj/effect/falling_object/capsule/fractal
+	fallen_type = /obj/structure/void_capsule/fractal_mutants/generic
+
+/obj/effect/falling_object/capsule/fractal_forcer
+	fallen_type = /obj/structure/void_capsule/fractal_mutants/forcer
