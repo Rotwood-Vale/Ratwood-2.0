@@ -151,3 +151,21 @@
 
 /obj/structure/void_capsule/fractal_mutants/forcer
 	creature_type = /mob/living/simple_animal/hostile/fractal_mutant/forcer
+
+/obj/structure/void_ship_part
+	name = "???"
+	desc = ""
+
+
+	icon = 'modular_fenysha_events/icons/obj/void_ship_part.dmi'
+	icon_state = "base"
+	pixel_x = -120
+
+	resistance_flags = INDESTRUCTIBLE|FIRE_PROOF|FREEZE_PROOF
+
+	layer = MASSIVE_OBJ_LAYER
+	plane = GAME_PLANE
+
+/obj/structure/void_ship_part/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/alien_examine)

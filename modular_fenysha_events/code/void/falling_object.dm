@@ -188,3 +188,13 @@
 /obj/effect/falling_object/capsule/fractal_forcer
 	name = "Falling Capsule (Forcer)"
 	fallen_type = /obj/structure/void_capsule/fractal_mutants/forcer
+
+
+
+/obj/effect/falling_object/capsule/void_ship_part
+	name = "Void ship part"
+	start_x = -1200
+	icon_state = "void_ship_part"
+
+	scale_factor = 1 // It's big!
+	fallen_type = /obj/structure/void_ship_part

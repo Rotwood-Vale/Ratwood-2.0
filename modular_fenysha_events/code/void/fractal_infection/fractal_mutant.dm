@@ -61,8 +61,7 @@
 	robust_searching = TRUE
 	vision_range = 8
 	aggro_vision_range = 13
-	retreat_distance = 0
-	minimum_distance = 0
+	minimum_distance = 1
 	limb_destroyer = TRUE
 	defprob = 60
 	

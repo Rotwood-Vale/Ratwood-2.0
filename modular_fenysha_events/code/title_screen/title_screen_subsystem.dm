@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(titlescreen)
 
 	check_progress_reference_time()
 	load_progress_json()
-
+	load_custom_lobbymusic()
 	// The boot screen deliberately reuses the lobby backdrop rather than a separate splash.
 	current_title_screen = TITLE_DEFAULT_SCREEN_IMAGE // pick_title_screen()
 
@@ -204,6 +204,13 @@ SUBSYSTEM_DEF(titlescreen)
 	current_title_screen = new_screen || pick_title_screen()
 	check_finish_progress()
 	show_title_screen()
+
+
+/datum/controller/subsystem/titlescreen/proc/load_custom_lobbymusic()
+	SSticker.login_music = 'modular_fenysha_events/sound/lobby_music.ogg'
+	for(var/client/C in GLOB.clients)
+		C?.stop_sounds()
+		C?.playtitlemusic()
 
 /**
  * Push a boot message to everyone watching the loading terminal.

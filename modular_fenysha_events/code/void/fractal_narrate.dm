@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 
 
 /client/proc/fenysha_narrate_direct(mob/M)
-	set category = "-Special Verbs-"
+	set category = "Fun"
 	set name = "Fractal Narrate - Direct"
 
 	if(!check_rights(R_ADMIN))
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 
 
 /client/proc/fenysha_narrate_local(atom/A)
-	set category = "-Special Verbs-"
+	set category = "Fun"
 	set name = "Fractal Narrate - Local"
 
 	if(!check_rights(R_ADMIN))
@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 
 
 /client/proc/fenysha_narrate_global()
-	set category = "-Special Verbs-"
+	set category = "Fun"
 	set name = "Fractal Narrate - Global"
 
 	if(!check_rights(R_ADMIN))

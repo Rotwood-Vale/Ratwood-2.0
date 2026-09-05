@@ -424,7 +424,7 @@
 /datum/action/cooldown/mob_cooldown/fractal_finish
 	name = "Fractal Finish"
 	desc = "Finish off an incapacitated victim."
-	cooldown_time = 3 SECONDS
+	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
