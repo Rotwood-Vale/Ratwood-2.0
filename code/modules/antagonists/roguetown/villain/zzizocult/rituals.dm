@@ -787,12 +787,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!cardinal_success)
 		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
 		to_chat(user, span_danger("That's not how you do it, fool."))
-		user.electrocute_act(10, src)
+		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 		return
 	if(!center_success)
 		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
 		to_chat(user, span_danger("That's not how you do it, fool."))
-		user.electrocute_act(10, src)
+		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 		return
 
 	consume_ingredients(pickritual)
