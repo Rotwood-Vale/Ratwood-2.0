@@ -172,17 +172,24 @@
 
 	C = viewing.client
 
-	if(ishuman(holder))
+	if(!length(previewing) && ishuman(holder))
 		web_sound_url = holder.ooc_extra
 		if(holder.song_artist)
 			artist_name = holder.song_artist
 		song_title = holder.song_title
-
 	else if(pref)
-		web_sound_url= pref.ooc_extra
-		if(pref.song_artist)
-			artist_name = pref.song_artist
-		song_title = pref.song_title
+		switch(previewing)
+			if("character")
+				web_sound_url = pref.ooc_extra
+				if(pref.song_artist)
+					artist_name = pref.song_artist
+				song_title = pref.song_title
+			if("gnoll")
+				var/datum/gnoll_prefs/gnoll = pref.gnoll_prefs
+				web_sound_url = gnoll.ooc_extra
+				if(gnoll.song_artist)
+					artist_name = gnoll.song_artist
+				song_title = gnoll.song_title
 
 	if(!C || !web_sound_url)
 		return
