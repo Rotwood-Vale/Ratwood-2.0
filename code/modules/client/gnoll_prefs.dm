@@ -929,8 +929,7 @@
 	load_gnoll_statpack(S)
 	
 	S["gnoll_voice_color"]			>> gnoll_voice_color
-	// Workaround for the voice color always being initially set to 000000 for some weird save reason
-	if(color_hex2num(sanitize_hexcolor(gnoll_voice_color)) < 230)
+	if(color_hex2num("#" + sanitize_hexcolor(gnoll_voice_color)) < 230)
 		gnoll_voice_color = "a0a0a0"
 
 	S["gnoll_headshot_link"]	>> headshot_link
