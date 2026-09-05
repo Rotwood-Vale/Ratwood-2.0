@@ -1730,7 +1730,7 @@
 			spread_to.set_fire_stacks(firesplit, fire_type)
 			return
 
-		if(!(mobility_flags & MOBILITY_STAND))// don't ignite because we stepped over someone burning
+		if(!(mobility_flags & MOBILITY_STAND) && spread_to.m_intent == MOVE_INTENT_WALK)// don't ignite because we stepped over someone burning unless we are sprinting
 			to_chat(spread_to, span_notice("You step over [src]'s burning body."))
 			return
 
