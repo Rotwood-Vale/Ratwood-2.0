@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 /proc/find_remnant(mob/user, turf/center)
 	for(var/obj/item/natural/worms/leech/L in center)
-		if(L.fed_from && L.blood_storage > 0 && !QDELETED(L.fed_from) && L.fed_from.stat != DEAD)
+		if(L.fed_from && !QDELETED(L.fed_from) && L.fed_from.stat != DEAD)
 			return L
 	to_chat(user, span_warning("Empty."))
 
