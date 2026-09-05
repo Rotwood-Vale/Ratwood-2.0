@@ -201,6 +201,9 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
 	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient/decrepit
+	belt = /obj/item/storage/belt/rogue/leather
+	if(prob(15))
+		beltl = /obj/item/repair_kit/bad
 	if(prob(30))
 		switch(rand(1, 100))
 			if(1 to 50)
@@ -263,6 +266,9 @@
 		shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient/decrepit
 		neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit
 		gloves = /obj/item/clothing/gloves/roguetown/plate/ancient/decrepit
+		belt = /obj/item/storage/belt/rogue/leather
+		if(prob(15))
+			beltl = /obj/item/repair_kit/metal/bad
 		if(prob(50))
 			r_hand = /obj/item/rogueweapon/greatsword/ancient/decrepit
 		else

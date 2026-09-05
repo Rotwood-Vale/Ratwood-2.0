@@ -361,6 +361,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/repair_kit/metal/bad,
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
