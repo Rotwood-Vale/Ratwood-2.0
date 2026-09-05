@@ -48,7 +48,7 @@
 	if(target.stat == DEAD)
 		return FALSE
 
-	if("void" in target.faction || "fractal" in target.faction)
+	if(("void" in target.faction) || ("fractal" in target.faction))
 		return FALSE
 
 	// No summoner protection.
