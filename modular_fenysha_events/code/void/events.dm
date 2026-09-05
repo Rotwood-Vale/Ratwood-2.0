@@ -134,16 +134,17 @@
 	var/radius = round(sqrt(world.maxx * world.maxx + world.maxy * world.maxy) * 0.5) + 1
 
 	/*
-	 * The front advances `speed` tiles per tick, and the ripple is locked to
-	 * it, so this sets two things at once: how long the wave takes to cross the
-	 * map, and how long it is on anyone's screen as it goes past.
+	 * The front advances `speed` tiles per tick, and the ripple is derived from
+	 * it, so this sets both how long the wave takes to cross the map and how
+	 * long it is on anyone's screen going past.
 	 *
-	 * Those pull against each other. Crossing a 260 tile radius in two seconds
-	 * means about 400px a tick against a 480px viewport - the ring was on and
-	 * off a screen inside a single tick, which is why it could not be seen.
-	 * Around six seconds end to end gives each person roughly a second of it.
+	 * Those pull against each other. Crossing the map in two seconds put the
+	 * ring at about 400px a tick against a 480px viewport - on and off a screen
+	 * inside a single tick, which is why it could not be seen at all. At this
+	 * rate the front takes around four seconds and the ripple, which is timed
+	 * in deciseconds rather than ticks, around eight.
 	 */
-	var/speed = max(2, round(radius / 60))
+	var/speed = max(2, round(radius / 100))
 
 	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], visual only, every player on every level [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
 
