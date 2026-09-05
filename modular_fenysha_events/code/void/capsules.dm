@@ -45,7 +45,7 @@
 		deltimer(open_timer)
 
 /obj/structure/void_capsule/proc/open()
-	icon_state = "[open_prefix][open_postfix]" 
+	icon_state = "[open_prefix][open_postfix]"
 	opened =  TRUE
 	update_icon()
 	if(open_sound)
@@ -73,7 +73,7 @@
 /obj/structure/void_capsule/proc/do_effect()
 	return TRUE
 
-/obj/effect/particle_effect/smoke/fractal 
+/obj/effect/particle_effect/smoke/fractal
 	icon_state = "smoke-static-lowtrans"
 	opacity = FALSE
 	density = FALSE
@@ -85,10 +85,11 @@
 
 /obj/effect/particle_effect/smoke/fractal/smoke_mob(mob/living/carbon/C)
 	. = ..()
-
+	if(!.)
+		return
 	if(!ishuman(C))
 		return
-	
+
 	var/mob/living/carbon/human/H = C
 	H.emote_cough()
 	if(prob(5))
@@ -119,13 +120,13 @@
 	var/datum/effect_system/smoke_spread/fractal/S = new
 	S.set_up(spread_radius, get_turf(src))
 	S.start()
-	
+
 	looping_sound = new(src, TRUE)
 	stopgas_timer = addtimer(CALLBACK(src, PROC_REF(stop_gas)), 20 MINUTES)
 	return TRUE
 
 /obj/structure/void_capsule/gas/proc/stop_gas()
-	qdel(looping_sound) 
+	qdel(looping_sound)
 
 	return TRUE
 
@@ -137,7 +138,7 @@
 /obj/structure/void_capsule/fractal_mutants/do_effect()
 	if(!creature_type)
 		return FALSE
-	
+
 	var/list/possible_turfs = circle_view(src)
 	possible_turfs = shuffle(possible_turfs)
 	for(var/turf/open/OT in possible_turfs)
