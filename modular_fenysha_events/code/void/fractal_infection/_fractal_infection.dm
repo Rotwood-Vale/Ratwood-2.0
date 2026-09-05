@@ -747,17 +747,41 @@
 	/// Icon state on fractal_mutation.dmi, one per body zone.
 	var/mutation_icon_state
 
+/**
+ * Whether the growth is drawn on this body at all.
+ *
+ * Bodypart features are baked into the limb sprite, so this is the wearer's own
+ * preference rather than the viewer's - which matches what the setting says it
+ * does. Read live rather than captured when the mutation is made, so turning it
+ * off part way through an infection clears the growths already there on the
+ * next limb update instead of only sparing future ones.
+ *
+ * A missing client is not a preference, so a disconnected body is left alone.
+ */
+/datum/bodypart_feature/fractal_mutation/proc/wearer_wants_horror(obj/item/bodypart/bodypart)
+	var/mob/living/carbon/wearer = bodypart?.owner
+	if(!wearer?.client?.prefs)
+		return TRUE
+	return !!(wearer.client.prefs.toggles & BODY_HORROR)
+
 /*
  * Limb appearances are shared between mobs through limb_icon_cache, so the key
- * has to describe the mutation.
+ * has to describe the mutation - including whether it is being drawn, or one
+ * player's hidden arm is handed straight to the next player who wants theirs.
  */
 /datum/bodypart_feature/fractal_mutation/get_icon_cache_key(obj/item/bodypart/bodypart)
-	return "fractalmutation-[mutation_icon_state]"
+	return "fractalmutation-[mutation_icon_state]-[wearer_wants_horror(bodypart) ? 1 : 0]"
 
 
 
 /datum/bodypart_feature/fractal_mutation/get_bodypart_overlay(obj/item/bodypart/bodypart)
 	if(!mutation_icon_state)
+		return null
+
+	// Only the sprite is suppressed. The mutation still happens, still counts
+	// toward the stage and still carries whatever impairment it carries, so the
+	// setting stays cosmetic and never becomes an advantage.
+	if(!wearer_wants_horror(bodypart))
 		return null
 
 	return mutable_appearance(

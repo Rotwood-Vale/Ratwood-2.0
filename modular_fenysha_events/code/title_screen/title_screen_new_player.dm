@@ -124,6 +124,25 @@
 		toggle_ready(owner)
 		return
 
+	if(href_list["toggle_bodyhorror"])
+		toggle_bodyhorror(owner)
+		return
+
+/**
+ * Flips the body horror pref from the lobby.
+ *
+ * Hands off to the client proc rather than touching the flag here, so the
+ * chat feedback and the save go through the one path the options menu uses.
+ * The button is then repainted by output() rather than by rebuilding the page,
+ * which would flicker the whole lobby.
+ */
+/datum/fenysha_title_menu/proc/toggle_bodyhorror(mob/dead/new_player/owner)
+	var/client/player = owner.client
+	if(!player?.prefs)
+		return
+	player.toggle_bodyhorror()
+	player << output((player.prefs.toggles & BODY_HORROR) ? 1 : 0, "[TITLE_BROWSER_ID]:toggle_body_horror")
+
 /datum/fenysha_title_menu/proc/toggle_ready(mob/dead/new_player/owner)
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		to_chat(owner, span_boldwarning("The game is starting. You cannot ready up now."))

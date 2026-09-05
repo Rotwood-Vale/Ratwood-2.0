@@ -316,6 +316,10 @@
 			to_chat(src, "Body horror effects enabled.")
 		else
 			to_chat(src, "Body horror effects disabled.")
+		// Body horror is drawn into the limb sprites, so the setting only shows
+		// up on the next redraw. Force one, or it appears to do nothing until
+		// something else happens to update the body.
+		mob?.update_body()
 
 /client/verb/toggle_redflash()
 	set category = "Options"

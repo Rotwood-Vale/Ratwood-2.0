@@ -34,7 +34,11 @@ GLOBAL_LIST_EMPTY(shockwave_targets)
 		"min duration ds" = 4,
 		"end amplitude" = 0.35,
 		"travel px" = 480,
-		"range tiles" = 30,
+		// 0 means the whole blast. Anything lower than the radius leaves the
+		// people past it taking the hit with nothing on screen to explain it,
+		// and capping it saves nothing worth having - there is one ripple per
+		// player, so the count follows the playercount, not the radius.
+		"range tiles" = 0,
 		// The plane masters sit at screen_loc "CENTER", but this HUD's visual
 		// centre does not line up with it - the same reason several plane
 		// masters carry a commented out "CENTER-2" and the weather plane still
@@ -42,6 +46,10 @@ GLOBAL_LIST_EMPTY(shockwave_targets)
 		// if the ripple drifts off the epicentre.
 		"origin x px" = 64,
 		"origin y px" = 0,
+		// Blooms the ring out of each viewer instead of out of the epicentre,
+		// paced by "duration ds" rather than by the front. Only sensible for a
+		// wave that reaches everyone at once - see distort().
+		"centre on viewer" = 0,
 	)
 
 GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
@@ -221,6 +229,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/list/visual_overrides
 	/// Tiles out to which viewers get the distortion, honouring any override.
 	var/distort_range
+	/// Whether the ripple is centred on the viewer rather than the epicentre.
+	var/centre_on_viewer
 	/// rings[n] maps each target at that distance to the sector it sits in.
 	var/list/rings
 	/// Same bucketing for mobs, which take different effects.
@@ -261,6 +271,12 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		distort_range = visuals["range tiles"]
 	else
 		distort_range = GLOB.shockwave_visuals["range tiles"]
+	if(distort_range <= 0)
+		distort_range = src.radius
+	if(visuals && ("centre on viewer" in visuals))
+		centre_on_viewer = visuals["centre on viewer"]
+	else
+		centre_on_viewer = GLOB.shockwave_visuals["centre on viewer"]
 
 	var/list/tune = GLOB.shockwave_damage
 	// Copied only when something actually overrides, same as the visuals.
@@ -665,6 +681,23 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 /datum/shockwave/proc/distort(mob/viewer, strength)
 	var/turf/eye = get_turf(viewer)
 	if(!eye)
+		return
+	/*
+	 * Out of the viewer, not out of the epicentre.
+	 *
+	 * A ring locked to the front is right when the front is what matters: it
+	 * crosses each person as the damage reaches them. It is useless for a wave
+	 * that hits everyone at once, because the front then has to cross the whole
+	 * map in the time the moment is supposed to last. At a map radius that
+	 * works out around 400px a tick against a 480px viewport - the ring is on
+	 * and off a screen inside a single tick, which is why nothing was visible.
+	 *
+	 * Handing it no reach and no front drops it onto the same path the tuner's
+	 * preview uses: a bloom out of the middle of the screen, sized by
+	 * "travel px" and paced by "duration ds".
+	 */
+	if(centre_on_viewer)
+		shockwave_ripple(viewer, 0, 0, strength, 0, 0, visual_overrides)
 		return
 	shockwave_ripple(viewer,
 		(cx - eye.x) * world.icon_size,

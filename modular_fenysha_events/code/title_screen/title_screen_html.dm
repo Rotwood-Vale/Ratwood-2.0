@@ -84,6 +84,7 @@
 
 		function update_status() {}
 		function toggle_ready() {}
+		function toggle_body_horror() {}
 		function update_current_character() {}
 	</script>
 	"}
@@ -114,6 +115,7 @@
 		<a class="menu_button" href='byond://?src=[menu_ref];character_setup=1'>SETUP CHARACTER</a>
 		<a class="menu_button" href='byond://?src=[menu_ref];game_options=1'>SETTINGS</a>
 		<a id="be_antag" class="menu_button" href='byond://?src=[menu_ref];toggle_antag=1'>[client?.prefs?.be_special ? "<span class='checked'>☑</span> BE SPECIAL" : "<span class='unchecked'>☒</span> BE SPECIAL"]</a>
+		<a id="body_horror" class="menu_button" href='byond://?src=[menu_ref];toggle_bodyhorror=1'>[(client?.prefs?.toggles & BODY_HORROR) ? "<span class='checked'>☑</span> BODY HORROR" : "<span class='unchecked'>☒</span> BODY HORROR"]</a>
 	"}
 
 	if(!IsGuestKey(key))
@@ -155,6 +157,18 @@
 				antag_int++;
 				if (antag_int === antag_marks.length) { antag_int = 0; }
 				antag_mark.innerHTML = antag_marks\[antag_int\];
+			}
+		}
+
+		var horror_mark = document.getElementById("body_horror");
+		function toggle_body_horror(setHorror) {
+			if(!horror_mark) { return; }
+			// Loose compare on purpose: output() arrives as a string, and "0"
+			// is truthy, so a plain if() would read off as on.
+			if(setHorror == 1) {
+				horror_mark.innerHTML = "<span class='checked'>☑</span> BODY HORROR";
+			} else {
+				horror_mark.innerHTML = "<span class='unchecked'>☒</span> BODY HORROR";
 			}
 		}
 

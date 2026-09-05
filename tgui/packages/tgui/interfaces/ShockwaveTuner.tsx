@@ -82,6 +82,7 @@ const LIMITS: Record<string, Limit> = {
   'range tiles': { min: 0, max: 1000, step: 1 },
   'origin x px': { min: -4000, max: 4000, step: 8 },
   'origin y px': { min: -4000, max: 4000, step: 8 },
+  'centre on viewer': { min: 0, max: 1, step: 1 },
 };
 
 const FALLBACK: Limit = { min: 0, max: 512, step: 1 };

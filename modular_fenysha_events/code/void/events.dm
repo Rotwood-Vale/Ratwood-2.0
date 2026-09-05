@@ -133,11 +133,17 @@
 	// is the smallest radius that genuinely leaves nothing out.
 	var/radius = round(sqrt(world.maxx * world.maxx + world.maxy * world.maxy) * 0.5) + 1
 
-	// The front advances `speed` tiles per tick, so a map-sized radius at the
-	// default of 2 would take the better part of a minute to finish arriving.
-	// Scale it so the wave crosses the map in about two seconds and reads as a
-	// single impact closing the cinematic.
-	var/speed = max(2, round(radius / 20))
+	/*
+	 * The front advances `speed` tiles per tick, and the ripple is locked to
+	 * it, so this sets two things at once: how long the wave takes to cross the
+	 * map, and how long it is on anyone's screen as it goes past.
+	 *
+	 * Those pull against each other. Crossing a 260 tile radius in two seconds
+	 * means about 400px a tick against a 480px viewport - the ring was on and
+	 * off a screen inside a single tick, which is why it could not be seen.
+	 * Around six seconds end to end gives each person roughly a second of it.
+	 */
+	var/speed = max(2, round(radius / 60))
 
 	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], visual only, every player on every level [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
 
@@ -152,12 +158,15 @@
 		list(
 			"amplitude base" = 80,
 			"amplitude gain" = 80,
-			"range tiles" = radius,
+			// A broad swell rather than a razor thin ring, so the wave is still
+			// arriving while it passes instead of being one frame wide.
+			"band falloff" = 0.1,
+			"end amplitude" = 1,
 		),
 		list(
 			"destroy" = 0,
 			"reach all players" = 1,
-			"strength floor" = 0.4,
+			"strength floor" = 1,
 		)
 	)
 
