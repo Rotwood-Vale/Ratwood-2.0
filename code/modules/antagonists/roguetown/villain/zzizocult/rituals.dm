@@ -121,6 +121,13 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target || target == user)
 		return
+	if(is_zizocultist(target.mind) || is_zizolackey(target.mind))
+		return
+	if(!target.client)
+		return
+	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+		return
 	if(!absorb_lux(target, center))
 		to_chat(user, span_warning("[target] has no lux left to give."))
 		return
@@ -321,8 +328,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/transmutation/summonarmor
 	name = "Summon Darksteel Armor"
 	center_requirement = /mob/living/carbon/human
-	n_req = /obj/item/ingot/steel
-	s_req = /obj/item/ingot/steel
+	n_req = /obj/item/necro_relics/necro_crystal
+	w_req = /obj/item/ingot/steel
+	e_req = /obj/item/ingot/steel
 	is_cultist_ritual = TRUE
 
 /datum/ritual/transmutation/summonarmor/invoke(mob/living/user, turf/center)
@@ -342,14 +350,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/transmutation/summonweapon
 	name = "Summon Weapons"
 	center_requirement = /mob/living/carbon/human
-	n_req = /obj/item/ingot/steel
+	n_req = /obj/item/necro_relics/necro_crystal
+	s_req = /obj/item/ingot/steel
 	is_cultist_ritual = TRUE
 
 /datum/ritual/transmutation/summonweapon/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		return
-	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN)
+	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
@@ -489,6 +498,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	name = "ASCEND!"
 	center_requirement = /mob/living/carbon/human // cult leader
 	n_req = /mob/living/carbon/human // the ruler
+	s_req = /obj/item/necro_relics/necro_crystal
+	e_req = /obj/item/necro_relics/necro_crystal
+	w_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
 	needs_aspect = TRUE
 

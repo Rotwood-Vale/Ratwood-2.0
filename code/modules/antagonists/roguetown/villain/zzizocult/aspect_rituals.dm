@@ -100,6 +100,8 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 		if("toil")
 			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/toil_mend)
 	to_chat(target, span_boldnotice("Zizo grants me the mysteries of [choice]!"))
+	target.Jitter(4)
+	playsound(target, 'sound/villain/male_talk1.ogg', 60, TRUE)
 	target << browse(null, "window=aspectmenu")
 
 // STRAND
@@ -514,7 +516,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	if(!ishuman(H) || H.stat == DEAD)
 		return
 	var/turf/T = get_turf(H)
-	if(T && T.get_lumcount() >= 0.5)
+	if(T && T.get_lumcount() >= 0.75)
 		H.adjustFireLoss(burn_damage)
 		if(prob(30))
 			to_chat(H, span_danger("THE LIGHT BURNS!"))
@@ -527,9 +529,11 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 /datum/status_effect/shadowform/tick()
 	var/turf/T = get_turf(owner)
-	if(T && T.get_lumcount() < 0.5)
+	if(T && T.get_lumcount() < 0.75)
 		owner.adjustBruteLoss(-5)
 		owner.adjustFireLoss(-5)
+	for(var/obj/item/I in owner.get_equipped_items() + owner.held_items)
+		I.fire_act()
 
 /atom/movable/screen/alert/status_effect/shadowform
 	name = "SCADUFORM"
@@ -565,10 +569,10 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 /obj/effect/proc_holder/spell/self/sear/cast(list/targets, mob/user = usr)
 	. = ..()
 	var/obj/item/grabbing/G = user.get_active_held_item()
-	if(!istype(G) || user.grab_state < GRAB_AGGRESSIVE || !isliving(G.grabbed))
+	if(!istype(G) || !isliving(G.grabbed))
 		return FALSE
 	if(!G)
-		to_chat(user, span_warning("Grip must be aggressive."))
+		to_chat(user, span_warning("Must be grabbing someone."))
 		revert_cast()
 		return FALSE
 	var/mob/living/victim = G.grabbed
@@ -581,7 +585,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 /obj/effect/dummy/phased_mob/slaughter/shadow/relaymove(mob/user, direction)
 	var/turf/dest = get_step(src, direction)
-	if(!dest || dest.get_lumcount() >= 0.5)
+	if(!dest || dest.get_lumcount() >= 0.75)
 		to_chat(user, span_warning("THERE IS LIGHT THERE."))
 		return
 	forceMove(dest)
@@ -599,7 +603,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 		revert_cast()
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(T.get_lumcount() >= 0.5)
+	if(T.get_lumcount() >= 0.75)
 		to_chat(user, span_warning("IT'S TOO BRIGHT!"))
 		revert_cast()
 		return FALSE
@@ -642,8 +646,24 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadow_snuff)
 	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/sear)
 	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_jaunt)
+	target.AddComponent(/datum/component/light_vulnerability)
 	for(var/obj/item/I in target.get_equipped_items() + target.held_items)
 		I.fire_act()
+	var/obj/item/organ/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.Remove(target, TRUE)
+		QDEL_NULL(eyes)
+	eyes = new /obj/item/organ/eyes/night_vision
+	eyes.Insert(target)
+	ADD_TRAIT(target, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_NOBREATH, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_NOSLEEP, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_NOMETABOLISM, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+	target.dna.species.name = "???"
 	target.emote("scream")
 	target.Knockdown(5 SECONDS)
 	to_chat(target, span_danger("IT BURNS! IT BURNS! IT STICKS TO MY FLESH AND BURNS!"))
