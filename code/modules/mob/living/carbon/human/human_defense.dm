@@ -36,10 +36,15 @@
 			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 		var/intdamage = damage
 		var/consume_debuff = TRUE
-		// Penetrative damage deals significantly less to the armor. Tentative.
+		// Penetrative damage splits its total damage between armor and body,
+		// whatever damage armor protected from still lands on the armor and damages it.
+		// AP weapons will break armor slower on average, but not "five intdamage per stab" slower as before.
 		if((damage + armor_penetration) > protection && d_type != "blunt")
 			consume_debuff = FALSE
 			intdamage = (damage + armor_penetration) - protection
+			intdamage = protection - armor_penetration
+			if(armor_penetration >= protection) // If you get COMPLETELY penetrated, half of the damage will be dealt to the armor as well. Your gear shouldn't stay pristine after being totally cleaved.
+				intdamage = damage / 2
 		if(intdamfactor != 1)
 			intdamage *= intdamfactor
 		if(d_type == "blunt")
