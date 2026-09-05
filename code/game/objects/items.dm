@@ -272,6 +272,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
 	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
 	var/nudist_approved = FALSE
+	/// This is predominantly for items WITHOUT A RECIPE. Recipes will hold display_category's otherwise
+	var/display_category
 
 /obj/item/Initialize(mapload)
 	if (attack_verb)

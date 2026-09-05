@@ -132,6 +132,7 @@ GLOBAL_LIST_EMPTY(recipe_cost_visiting)
 		audit_lines = list()
 		audit_lines += csv_row(list("kind", "name", "output", "category", "category_missing", "material_cost", "derived_price", "missing_reqs"))
 	derived_pass(audit_lines, missing_materials, sticky_trade_goods)
+	apply_manual_item_categories()
 	for(var/typepath in trade_good_lookup)
 		var/datum/trade_good/TG = trade_good_lookup[typepath]
 		if(!TG.derive_price)
@@ -568,6 +569,7 @@ GLOBAL_LIST_EMPTY(recipe_cost_visiting)
 	if(load_pricing_cache(fingerprint))
 		var/t_loaded = world.timeofday
 		apply_trade_good_categories()
+		apply_manual_item_categories() 
 		rebuild_crafting_recipe_display_cache()
 		log_world("Pricing engine: loaded [length(GLOB.derived_sellprices)] cached prices. [(t_baseline - t_start) * 100]ms baseline + [(t_fingerprint - t_baseline) * 100]ms fingerprint + [(t_loaded - t_fingerprint) * 100]ms cache load = [(t_loaded - t_start) * 100]ms total.")
 		return
@@ -721,3 +723,12 @@ GLOBAL_LIST_EMPTY(recipe_cost_visiting)
 	)
 	fdel("data/pricing_engine_cache.json")
 	text2file(json_encode(payload), "data/pricing_engine_cache.json")
+
+/proc/apply_manual_item_categories()
+	for(var/obj/item/path as anything in subtypesof(/obj/item))
+		var/cat = initial(path.display_category)
+		if(!cat)
+			continue
+		if(GLOB.derived_categories[path])
+			continue // recipe or trade_good already claimed this - don't clobber it
+		GLOB.derived_categories[path] = cat

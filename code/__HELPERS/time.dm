@@ -63,9 +63,11 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
 			scom_announce_new_dawn() // IC calendar: announce active feast/holy daes
+			SStreasury.tick_rural_tax()
 			SStreasury.distribute_estate_incomes()
 			SStreasury.evaluate_payroll_solvency() // Crown insolvency ladder: arrears -> sequestration at payroll
 			SStreasury.distribute_daily_payments()
+			SStreasury.tick_loans()
 			SStreasury.tick_burgher_pledge() // Item 6 decrees: burghers' Golden Bull tribute
 			SStreasury.tick_poll_tax() // Taxation 2: collect per-class poll tax / pay subsidies
 			SStreasury.tick_rumor_points() // Quest 2: refill innkeeper rumor points for the day
