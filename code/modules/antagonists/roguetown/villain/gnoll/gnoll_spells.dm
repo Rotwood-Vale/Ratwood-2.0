@@ -59,7 +59,7 @@
 		to_chat(user, span_warning("[target] isn't something you can hunt."))
 		revert_cast()
 		return FALSE
-	
+
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/gnoll_sniff/proc/select_new_target(mob/user)
@@ -67,7 +67,7 @@
 	var/list/combat_targets = list()
 	var/list/combat_roles = get_gnoll_tracking_combat_roles()
 	var/list/name_counts = list()
-	//Allows a fallback, if no hunted targets are available, we can track worthy prey (combat roles) instead. 
+	//Allows a fallback, if no hunted targets are available, we can track worthy prey (combat roles) instead.
 	for(var/mob/living/carbon/human/human in GLOB.player_list)
 		if(human == user || QDELETED(human) || human.stat == DEAD || istype(human, /mob/living/carbon/human/dummy) || !human.mind)
 			continue
@@ -113,7 +113,7 @@
 	var/class = human.get_class_title()
 	// Names will display in the format "Urist McDwarf (2) - Grudgebearer Soldier"
 	var/entry_name = (name_count > 1) ? "[base_name] ([name_count])[length(class) ? " - [class]" : ""]" : "[base_name][length(class) ? " - [class]" : ""]"
-	
+
 	target_list[entry_name] = human
 	return
 
@@ -133,7 +133,7 @@
 	else
 		var/dist = get_dist(user, tracked_target)
 		var/dir_text = dir2text(get_dir(user, tracked_target))
-		
+
 		if(dist <= 1)
 			to_chat(user, span_boldnotice("The prey is right here! Blood and steel!"))
 		else if(dist < 10)
@@ -346,7 +346,7 @@
 
 	animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 	target.mob_timers[MT_INVISIBILITY] = world.time + base_dur
-	user.invisibility = (SEE_INVISIBLE_LIVING + (user.get_skill_level(/datum/skill/misc/sneaking) * 0.75))+3 //Gnolls are harder to spot when using their evil magicks.
+	user.invisibility = (SEE_INVISIBLE_LIVING)+3 //Gnolls are harder to spot when using their evil magicks.
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), base_dur)
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] lunges out of the shadows!"), span_notice("Your invisibility fades.")), base_dur)
 
