@@ -1,0 +1,13 @@
+author: "NPC1314"
+delete-after: True
+changes:
+  - rscadd: "Replaced old way bushes impact mobility to a slowdown lessened by STR"
+  - rscadd: "Thornbushes got mechanics now, work like above with extra thorns even if walking. LCK helps against getting stung."
+  - rscadd: "Weepwine added a weak slowdown lessened by STR"
+  - rscadd: "Grass and Kneestinger objects layering fixed"
+  - code_imp: "Integrated Curse of Dendor and Kneestinger immunity better into the gameplay with Thornbushes and Weepwine"
+  - sound: "slightly less loud grass crossing"
+  - sound: "spectacles new breaksound. Tiny reduction in glass shatter volume."
+  - image: "minor modifications to weeds for QoL"
+  - bugfix: "mudcrabs and subtypes got correct animal size and density removed so you dont get bodyblocked by a frog"
+  - bugfix: "one sidetype of bush had crazy 150 integrity (thorn bush got 35 for reference) due to incorrect inheritance, set to 30"

@@ -171,6 +171,66 @@
 	verbage_simple = "tied"
 	verbage = "ties"
 
+/datum/crafting_recipe/roguetown/survival/flowercrown_matricaria
+	name = "matricaria crown"
+	category = "Clothes"
+	result = /obj/item/flowercrown/matricaria
+	reqs = list(
+		/obj/item/alch/matricaria = 4,
+		/obj/item/natural/fibers = 2,
+		)
+	craftdiff = 0
+	verbage_simple = "tied"
+	verbage = "ties"
+
+/datum/crafting_recipe/roguetown/survival/flowercrown_calendula
+	name = "calendula crown"
+	category = "Clothes"
+	result = /obj/item/flowercrown/calendula
+	reqs = list(
+		/obj/item/alch/calendula = 4,
+		/obj/item/natural/fibers = 2,
+		)
+	craftdiff = 0
+	verbage_simple = "tied"
+	verbage = "ties"
+
+/datum/crafting_recipe/roguetown/survival/flowercrown_manabloom
+	name = "manabloom crown"
+	category = "Clothes"
+	result = /obj/item/flowercrown/manabloom
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/manabloom = 4,
+		/obj/item/natural/fibers = 2,
+		)
+	craftdiff = 0
+	verbage_simple = "tied"
+	verbage = "ties"
+
+/datum/crafting_recipe/roguetown/survival/flowercrown_rosa_thorns
+	name = "rosa crown with thorns"
+	category = "Clothes"
+	result = /obj/item/flowercrown/rosa/thorns
+	reqs = list(
+		/obj/item/natural/fibers = 2,
+		/obj/item/natural/thorn = 2,
+		/obj/item/alch/rosa = 3,
+		)
+	craftdiff = 0
+	verbage_simple = "tied"
+	verbage = "ties"
+
+/datum/crafting_recipe/roguetown/survival/flowercrown_rosa_gray
+	name = "gray flower crown"
+	category = "Clothes"
+	result = /obj/item/flowercrown/rosa/dyecrown
+	reqs = list(
+		/obj/item/natural/fibers = 2
+		)
+	craftdiff = 0
+	verbage_simple = "tied"
+	verbage = "ties"
+
 // Amulet
 /datum/crafting_recipe/roguetown/survival/pearlcross
 	name = "amulet (pearls)"
@@ -250,3 +310,15 @@
 		)
 	skillcraft = /datum/skill/craft/crafting
 	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/survival/decorative_mentorhat
+	name = "decorative bamboo hat"
+	category = "Clothes"
+	result = /obj/item/clothing/head/roguetown/mentorhat/decorative
+	reqs = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/stick = 2,
+		/obj/item/natural/fibers = 2,
+		)
+	skillcraft = /datum/skill/craft/crafting
+	craftdiff = 1

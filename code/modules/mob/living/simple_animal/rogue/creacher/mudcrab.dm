@@ -28,6 +28,8 @@
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
 	ventcrawler = VENTCRAWLER_ALWAYS
+	mob_size = MOB_SIZE_SMALL
+	density = FALSE
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN

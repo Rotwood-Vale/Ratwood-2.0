@@ -165,8 +165,8 @@
 
 /datum/intent/steal
 	name = "steal"
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE
