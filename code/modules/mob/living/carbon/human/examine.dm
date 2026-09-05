@@ -842,11 +842,14 @@
 /mob/living/carbon/human/proc/generate_main_examine_body(mob/user, m1, m2, m3, obscure_name, race_name, observer_privilege, list/unknown_names)
 	. = list()
 	if(!user.client?.prefs?.top_examine)
-		. += span_info("ø ------------ ø")
-	if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
-		. += "[chat_headshot(headshot_link)]\nø ------------ ø"
-	else
 		. += "ø ------------ ø"
+		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
+			. += "[chat_headshot(headshot_link)]"
+	else
+		if ((dna?.species?.id != "gnoll") && (valid_headshot_link(src, headshot_link, TRUE)) && (user.client?.prefs.chatheadshot) && (!obscure_name || client?.prefs.masked_examine))
+			. += "[chat_headshot(headshot_link)]\nø ------------ ø"
+		else
+			. += "ø ------------ ø"
 
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
