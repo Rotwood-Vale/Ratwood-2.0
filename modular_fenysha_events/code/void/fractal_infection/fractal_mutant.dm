@@ -48,7 +48,9 @@
 	if(target.stat == DEAD)
 		return FALSE
 
-	// No faction check.
+	if("void" in target.faction || "fractal" in target.faction)
+		return FALSE
+
 	// No summoner protection.
 	// No mercy.
 	return TRUE
@@ -459,7 +461,7 @@
 	if(!target || !controller.pawn)
 		return
 	var/distance_to_target = get_dist(controller.pawn, target)
-	if(distance_to_target >= max_range || distance_to_target <= min_range)
+	if(distance_to_target >= max_range || distance_to_target < min_range)
 		return
 	return ..()
 
@@ -520,12 +522,13 @@
 		owner.forceMove(get_step_towards(owner, target))
 		sleep(2)
 
-	for(var/mob/living/living_target in target.contents)
-		if(get_dist(owner, living_target) <= 1)
-			var/damage = rand(20, 30)
-			living_target.take_bodypart_damage(damage)
-			living_target.Knockdown(10)
-			shake_camera(living_target)
+	for(var/mob/living/living_target in range(1, owner))
+		if(living_target == owner)
+			continue
+		var/damage = rand(20, 30)
+		living_target.take_bodypart_damage(damage)
+		living_target.Knockdown(10)
+		shake_camera(living_target)
 	playsound(owner, 'modular_fenysha_events/sound/fractal_glitch2.ogg', 100, TRUE)
 
 
@@ -665,7 +668,7 @@
 
 	// We only stun the owner after the charge.
 	var/mob/living/living_owner = owner
-	living_owner.Stun(6 SECONDS)
+	living_owner.Stun(12 SECONDS)
 
 	owner.face_atom(victim)
 	victim.face_atom(owner)
@@ -1315,7 +1318,7 @@
 		return
 
 	var/datum/action/cooldown/mob_cooldown/fractal_roar/roar = \
-		pawn.actions.Find(/datum/action/cooldown/mob_cooldown/fractal_roar)
+		controller.blackboard["bb_fractal_roar"]
 
 	if(!roar || !roar.IsAvailable())
 		return
@@ -1365,7 +1368,7 @@
 
     controller.queue_behavior(
         /datum/ai_behavior/targeted_mob_ability,
-        repulse,
+        "bb_fractal_repulse",
         BB_BASIC_MOB_CURRENT_TARGET
     )
 
