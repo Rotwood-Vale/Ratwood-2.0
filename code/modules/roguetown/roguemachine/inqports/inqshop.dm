@@ -78,7 +78,7 @@
 /datum/inqports/supplies/chains
 	name = "2 Lengths of Chain"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/chains
-	marquescost = 4
+	marquescost = 2
 
 /datum/inqports/supplies/blessedbolts
 	name = "1 Quiver of Holy Water Bolts"
@@ -93,7 +93,7 @@
 /datum/inqports/supplies/redpotions
 	name = "3 Bottles of Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/redpots
-	marquescost = 6
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/redpots/Initialize(mapload)
 	. = ..()
@@ -104,8 +104,7 @@
 /datum/inqports/supplies/lifebloodvials
 	name = "3 Vials of Strong Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials
-	maximum = 2
-	marquescost = 8
+	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize(mapload)
 	. = ..()
@@ -116,7 +115,7 @@
 /datum/inqports/supplies/bluepotions
 	name = "3 Bottles of Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots
-	marquescost = 6
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots/Initialize(mapload)
 	. = ..()
@@ -127,7 +126,6 @@
 /datum/inqports/supplies/strongbluevials
 	name = "3 Vials of Strong Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials
-	maximum = 2
 	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize(mapload)
@@ -179,7 +177,7 @@
 /datum/inqports/supplies/bottlebombs
 	name = "3 Bottlebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
-	marquescost = 8
+	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
 	. = ..()
@@ -190,7 +188,7 @@
 /datum/inqports/supplies/bullion
 	name = "6 Blessed Silver Bullion"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/bullion/
-	marquescost = 16
+	marquescost = 12
 
 /obj/structure/closet/crate/chest/inqreliquary/relic/bullion/Initialize(mapload)
 	. = ..()
@@ -223,7 +221,7 @@
 /datum/inqports/articles/indexaccused
 	name = "3 INDEXERs, 3 Accusations"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexaccused
-	marquescost = 5
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/articles/indexaccused/Initialize(mapload)
 	. = ..()
@@ -238,7 +236,7 @@
 /datum/inqports/articles/indexers
 	name = "3 INDEXERs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexers
-	marquescost = 4
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/articles/indexers/Initialize(mapload)
 	. = ..()
@@ -250,7 +248,7 @@
 /datum/inqports/articles/accusations
 	name = "3 Accusations"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/accusations
-	marquescost = 8
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/articles/accusations/Initialize(mapload)
 	. = ..()
@@ -294,7 +292,7 @@
 /datum/inqports/articles/whisperer
 	name = "1 Secret Whisperer"
 	item_type = /obj/item/speakerinq
-	marquescost = 4
+	marquescost = 3
 
 
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
@@ -317,12 +315,12 @@
 /datum/inqports/equipment/otavansatchel
 	name = "1 Otavan Leather Satchel"
 	item_type = /obj/item/storage/backpack/rogue/satchel/otavan
-	marquescost = 5
+	marquescost = 2
 
 /datum/inqports/equipment/psysack
 	name = "1 Identity Concealer"
 	item_type = /obj/item/clothing/mask/rogue/sack/psy
-	marquescost = 6
+	marquescost = 2
 
 /datum/inqports/equipment/inqcordage
 	name = "2 Spools of Inquiry Cordage"
@@ -349,8 +347,8 @@
 /datum/inqports/equipment/psydonhelms
 	name = "Helms of Psydon"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms
-	marquescost = 12
-	maximum = 1
+	marquescost = 10
+	maximum = 2
 
 /obj/structure/closet/crate/chest/inqcrate/equipment/psydonhelms/Initialize(mapload)
 	. = ..()
