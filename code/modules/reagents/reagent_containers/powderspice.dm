@@ -545,5 +545,3 @@
 	list_reagents = list(/datum/reagent/sleep_powder = 5)
 	grind_results = null
 	volume = 10
-
-

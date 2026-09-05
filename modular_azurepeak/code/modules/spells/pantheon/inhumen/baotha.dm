@@ -615,5 +615,3 @@
 /atom/movable/screen/alert/status_effect/baotha_withdrawal
 	name = "Withdrawal"
 	desc = "You are weak, slow, and miserable. Sniff something quickly to restore your strength!"
-
-
