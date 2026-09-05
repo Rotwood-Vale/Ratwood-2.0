@@ -103,8 +103,6 @@
 
 	if(!epicenter)
 		return
-	var/dx = max(epicenter.x - 1, world.maxx - epicenter.x)
-	var/dy = max(epicenter.y - 1, world.maxy - epicenter.y)
 	var/radius = world.maxy * 2
 	var/z_reach = max(0, world.maxz - 1)
 	var/power = 1
