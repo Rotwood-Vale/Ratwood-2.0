@@ -181,7 +181,7 @@
 	nsfw_ooc_extra_img = prefs.nsfw_ooc_extra_img
 	nsfw_ooc_extra_img_link = prefs.nsfw_ooc_extra_img_link
 	song_artist = prefs.song_artist
-	song_title = prefs.song_artist
+	song_title = prefs.song_title
 	erpprefs = prefs.erpprefs
 	img_gallery = prefs.img_gallery
 	nsfw_img_gallery = prefs.nsfw_img_gallery
