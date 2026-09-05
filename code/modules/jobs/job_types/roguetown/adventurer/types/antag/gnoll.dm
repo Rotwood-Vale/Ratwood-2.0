@@ -81,8 +81,8 @@
 	song_artist = null
 	song_title = null
 	erpprefs = null
-	img_gallery = null
-	nsfw_img_gallery = null
+	img_gallery = list()
+	nsfw_img_gallery = list()
 	ooc_extra = null
 	ooc_extra_img = null
 	ooc_extra_img_link = null
