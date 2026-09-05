@@ -46,6 +46,12 @@
 	if(!user)
 		return FALSE
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.mind.necro_crystal_cap())
+			to_chat(user, span_warning("I don't have the knowledge to use this!"))
+			return FALSE
+
 	if(length(active_skeletons) >= max_summons)
 		to_chat(user, span_warning("The crystal emits an ominous thrumming. The power within is too strained to conjure another skeleton right now."))
 		return FALSE
