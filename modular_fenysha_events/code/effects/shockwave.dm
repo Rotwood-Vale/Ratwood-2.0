@@ -70,6 +70,14 @@ GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
 		"body damage" = 5,
 		"ringing volume" = 45,
 		"ringing time ds" = 80,
+		// Long term ear damage per blast. Additive and slow to heal, and past
+		// the organ's low threshold it starts re-deafening on its own - so this
+		// is what makes repeat blasts linger, not the deafness below.
+		"ear damage" = 3,
+		// Deafness floor, in organ life ticks - roughly two seconds each.
+		// Applied as a floor rather than a sum, so blasts refresh it instead of
+		// stacking into minutes.
+		"deaf ticks" = 5,
 		// Off by default: throwing every loose item is a big, messy change to
 		// what a blast does, so it is opted into rather than assumed.
 		"throw objects" = 0,
@@ -214,6 +222,10 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/body_damage
 	var/ringing_volume
 	var/ringing_time
+	/// Long term ear damage dealt per blast.
+	var/ear_damage
+	/// Deafness floor in organ life ticks, before strength scaling.
+	var/deaf_ticks
 	var/throw_objects
 	var/throw_range
 	var/throw_speed
@@ -296,6 +308,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	body_damage = tune["body damage"]
 	ringing_volume = tune["ringing volume"]
 	ringing_time = tune["ringing time ds"]
+	ear_damage = tune["ear damage"]
+	deaf_ticks = tune["deaf ticks"]
 	throw_objects = tune["throw objects"]
 	throw_range = tune["throw range"]
 	throw_speed = tune["throw speed"]
@@ -638,10 +652,25 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 
 		if(iscarbon(victim))
 			var/mob/living/carbon/deafened = victim
-			// Returns how far the bang got past ear protection, so earmuffs
-			// spare the ringing as well as the deafness.
-			var/got_through = deafened.soundbang_act(1, 10 * strength, 8 * strength, 20 * strength)
+			/*
+			 * Returns how far the bang got past ear protection, so earmuffs
+			 * spare the ringing as well as the deafness.
+			 *
+			 * The deafen power is deliberately zero. soundbang_act routes it to
+			 * adjustEarDamage, which adds to whatever deafness is already
+			 * there - two blasts in a row stacked into minutes of silence. The
+			 * deafness is applied below instead, and the ear damage still comes
+			 * through here so the organ's own thresholds keep working.
+			 */
+			var/got_through = deafened.soundbang_act(1, 10 * strength, ear_damage * strength, 0)
 			if(got_through > 0)
+				/*
+				 * A floor, not a sum. minimumDeafTicks only ever raises the
+				 * count, so a blast landing during someone else's deafness
+				 * refreshes it rather than extending it. One tick is one organ
+				 * life, so a handful of them is seconds, not the old forty.
+				 */
+				deafened.minimumDeafTicks(round(deaf_ticks * strength))
 				shockwave_ringing(deafened, strength, ringing_volume, ringing_time)
 
 	// The ripple is not fired here - see paint(). It is one animation started

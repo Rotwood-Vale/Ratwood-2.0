@@ -61,6 +61,10 @@ const LIMITS: Record<string, Limit> = {
   // BYOND treats sound volume as 0-100, so higher would simply do nothing.
   'ringing volume': { min: 0, max: 100, step: 5 },
   'ringing time ds': { min: 0, max: 6000, step: 10 },
+  'ear damage': { min: 0, max: 100, step: 1 },
+  // Organ life ticks, roughly two seconds each. Applied as a floor, so this is
+  // the longest one blast can deafen for, not an amount added on.
+  'deaf ticks': { min: 0, max: 200, step: 1 },
   'throw objects': { min: 0, max: 1, step: 1 },
   // Off means the wave never touches the map: no registry pass, no wall scan,
   // and only the player effects below it are left.

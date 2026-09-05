@@ -4,6 +4,7 @@
 #include "code\__defines\armor_defines.dm"
 
 #include "code\_admin_verbs.dm"
+#include "code\_timer_census.dm"
 
 #include "code\effects\mandelbrot_fullscreen.dm"
 #include "code\effects\shockwave.dm"

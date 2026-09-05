@@ -22,11 +22,19 @@ GLOBAL_LIST_INIT(fenysha_fun_verbs, list(
 	/client/proc/fenysha_narrate_global,
 ))
 
+/// Verbs this module grants to holders of R_DEBUG.
+GLOBAL_LIST_INIT(fenysha_debug_verbs, list(
+	/client/proc/fenysha_timer_census,
+))
+
 /client/add_admin_verbs()
 	. = ..()
 	if(holder?.rank?.rights & R_FUN)
 		verbs += GLOB.fenysha_fun_verbs
+	if(holder?.rank?.rights & R_DEBUG)
+		verbs += GLOB.fenysha_debug_verbs
 
 /client/remove_admin_verbs()
 	. = ..()
 	verbs -= GLOB.fenysha_fun_verbs
+	verbs -= GLOB.fenysha_debug_verbs
