@@ -2425,7 +2425,6 @@
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\ghost.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\primordial.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\retaliate.dm"
-#include "code\modules\mob\living\simple_animal\hostile\retaliate\zizoid.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\summons\summons_intents.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\summons\elemental\_base.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\summons\elemental\behemoth.dm"
