@@ -73,6 +73,18 @@
 	id = "void_ship_crash"
 	cleanup_time = 0 SECONDS
 
+	/**
+	 * Absolute z-level the ship comes down on.
+	 *
+	 * Map specific, and there is no reliable way to derive it: Rockhill loads
+	 * five levels of its own plus five more from other_z, and map_config gives
+	 * ZTRAIT_STATION to all of them, so "the first station level" is not the
+	 * surface. On Rockhill the surface is z3 and z2 down is underground.
+	 */
+	var/crash_z = 3
+	/// Linked levels the wave carries through, up and down from the crash.
+	var/crash_z_reach = 4
+
 /datum/cinematic/void_ship_crash/content()
 	screen.icon_state = null
 	cinematic_sound(sound('modular_fenysha_events/sound/void_ship_land.ogg'))
@@ -95,27 +107,66 @@
 	special()
 
 /datum/cinematic/void_ship_crash/special()
+	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	if(!length(levels))
+		return
+
+	// world.maxz is no good here either - SSmapping adds its own
+	// "Transit/Reserved" level on top, and centring the blast there put it on
+	// an empty reservation that links to nothing.
+	var/landing_z = (crash_z in levels) ? crash_z : levels[1]
+
 	var/turf/epicenter = locate(
 		round(world.maxx * 0.5),
 		round(world.maxy * 0.5),
-		world.maxz
+		landing_z
 	)
-
 	if(!epicenter)
 		return
-	var/radius = world.maxy * 2
-	var/z_reach = max(0, world.maxz - 1)
-	var/power = 1
-	var/speed = 2
+
+	// From the centre, the furthest corner is half the map diagonal away. That
+	// is the smallest radius that genuinely leaves nothing out.
+	var/radius = round(sqrt(world.maxx * world.maxx + world.maxy * world.maxy) * 0.5) + 1
+
+	// The front advances `speed` tiles per tick, so a map-sized radius at the
+	// default of 2 would take the better part of a minute to finish arriving.
+	// Scale it so the wave crosses the map in about two seconds and reads as a
+	// single impact closing the cinematic.
+	var/speed = max(2, round(radius / 20))
+
+	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], reaching [crash_z_reach] levels each way from [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
 
 	shockwave(
 		epicenter,
 		radius,
-		power,
+		1,
 		speed,
 		FALSE,
 		null,
-		z_reach
+		crash_z_reach,
+		list(
+			"amplitude base" = 80,
+			"amplitude gain" = 80,
+			// The default only distorts within 30 tiles of the epicentre, which
+			// on a map this size is nobody - the blast is centred on the middle
+			// of the level. Everything the wave reaches should see it.
+			"range tiles" = radius,
+		),
+		list(
+			/*
+			 * Walls stop attenuating this one.
+			 *
+			 * The energy model is per sector: a wall that fails to break keeps
+			 * only `wall hold` of that direction's energy. Underground the crash
+			 * is boxed in by rock on every side, and stone needs 1800 damage
+			 * against the 600 this deals - so every sector meets a wall it
+			 * cannot break, loses 65% of its energy, and the wave is gone within
+			 * three tiles. Correct for a normal blast, wrong for the one moment
+			 * the whole map is supposed to feel.
+			 */
+			"wall hold" = 1,
+			"wall absorb scale" = 1000000,
+		)
 	)
 
 

@@ -20,6 +20,8 @@
 
 /datum/status_effect/fractal_maptext
 	id = "fractal_maptext"
+	/// Purely visual, so no HUD alert - the base alert would show "Curse of Mundanity".
+	alert_type = null
 
 	duration = 12 SECONDS
 

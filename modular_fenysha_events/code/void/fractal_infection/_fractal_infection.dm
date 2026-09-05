@@ -483,9 +483,12 @@
 			return
 
 		if(4)
+			// The lance may or may not appear; see update_fractal_abilities.
+			update_fractal_abilities(new_stage)
 			return
 
 		if(5)
+			update_fractal_abilities(new_stage)
 			return
 
 
@@ -998,6 +1001,7 @@
 
 /datum/status_effect/fractal_infection/on_remove()
 	remove_all_bodypart_mutations()
+	clear_fractal_abilities()
 
 	return ..()
 

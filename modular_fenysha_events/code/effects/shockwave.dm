@@ -28,6 +28,10 @@ GLOBAL_LIST_EMPTY(shockwave_targets)
 		"amplitude gain" = 40,
 		"band falloff" = 0.5,
 		"duration ds" = 9,
+		// Floor on the derived duration. A small blast works out to
+		// (radius * 32) / (speed * 32) ticks, so a radius 3 wave at speed 3 is
+		// a single tick and simply cannot be seen. Only ever raises it.
+		"min duration ds" = 4,
 		"end amplitude" = 0.35,
 		"travel px" = 480,
 		"range tiles" = 30,
@@ -153,12 +157,13 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 /**
  * Fires a shockwave. See /datum/shockwave for the arguments.
  *
- * `visuals` overrides individual GLOB.shockwave_visuals keys for this blast
- * only, so a particular source can look different without moving the numbers
- * everyone else uses. Any key from shockwave_visual_defaults() is valid.
+ * `visuals` and `tuning` override individual GLOB.shockwave_visuals and
+ * GLOB.shockwave_damage keys for this blast only, so a particular source can
+ * look or hit differently without moving the numbers everyone else uses. Any
+ * key from the matching defaults proc is valid.
  */
-/proc/shockwave(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1, list/visuals)
-	return new /datum/shockwave(epicenter, radius, power, speed, silent, spare_shake, z_reach, visuals)
+/proc/shockwave(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1, list/visuals, list/tuning)
+	return new /datum/shockwave(epicenter, radius, power, speed, silent, spare_shake, z_reach, visuals, tuning)
 
 /datum/shockwave
 	/// Epicentre, cached as coordinates so we never re-resolve the turf.
@@ -198,6 +203,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/list/throw_rings
 	/// Per-blast overrides layered over GLOB.shockwave_visuals, or null.
 	var/list/visual_overrides
+	/// Tiles out to which viewers get the distortion, honouring any override.
+	var/distort_range
 	/// rings[n] maps each target at that distance to the sector it sits in.
 	var/list/rings
 	/// Same bucketing for mobs, which take different effects.
@@ -215,7 +222,7 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	 */
 	var/client/unshaken
 
-/datum/shockwave/New(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1, list/visuals)
+/datum/shockwave/New(atom/epicenter, radius = 15, power = 1, speed = 2, silent = FALSE, mob/spare_shake, z_reach = 1, list/visuals, list/tuning)
 	set waitfor = FALSE
 
 	var/turf/center = get_turf(epicenter)
@@ -231,8 +238,20 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	unshaken = spare_shake?.client
 	src.z_reach = max(0, round(z_reach))
 	visual_overrides = visuals
+	// Resolved here rather than read from the global at use time, so a blast
+	// that overrides its range actually gets it - stagger() has no view of the
+	// override list otherwise.
+	if(visuals && ("range tiles" in visuals))
+		distort_range = visuals["range tiles"]
+	else
+		distort_range = GLOB.shockwave_visuals["range tiles"]
 
 	var/list/tune = GLOB.shockwave_damage
+	// Copied only when something actually overrides, same as the visuals.
+	if(length(tuning))
+		tune = tune.Copy()
+		for(var/key in tuning)
+			tune[key] = tuning[key]
 	base_damage = tune["base damage"]
 	wall_mult = tune["wall damage mult"]
 	absorb_scale = max(1, tune["wall absorb scale"])
@@ -252,6 +271,7 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	map_z_reach()
 	gather()
 	gather_walls()
+	paint()
 	if(!silent)
 		announce(center)
 	sweep()
@@ -567,8 +587,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 			if(got_through > 0)
 				shockwave_ringing(deafened, strength, ringing_volume, ringing_time)
 
-	if(ring <= GLOB.shockwave_visuals["range tiles"])
-		distort(viewer, strength)
+	// The ripple is not fired here - see paint(). It is one animation started
+	// when the blast does, so it stays locked to the front.
 
 /**
  * Screen-space ripple on the world plane masters.
@@ -578,6 +598,29 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
  * way to anchor it in the world. An atom-level filter cannot do this at all; it
  * would only distort the atom it sits on, not the world behind it.
  */
+/**
+ * Puts the ring on everyone who will see it, at the moment the blast begins.
+ *
+ * Not when the front reaches them: the ring is centred on the epicentre and
+ * expands outward, so one animation started now passes every viewer at their
+ * own correct moment. Firing it per-arrival meant nobody ever saw the wave
+ * coming, only leaving.
+ */
+/datum/shockwave/proc/paint()
+	for(var/ring in 1 to min(distort_range, radius) + 1)
+		var/list/viewers = mob_rings[ring]
+		if(!length(viewers))
+			continue
+		// Falloff by distance only. Sector energy is not spent yet at this
+		// point, and the ring is one continuous animation rather than something
+		// re-evaluated as walls eat into it.
+		var/strength = power * (1 - ((ring - 1) / radius))
+		if(strength <= 0)
+			continue
+		for(var/mob/viewer as anything in viewers)
+			if(!QDELETED(viewer))
+				distort(viewer, strength)
+
 /datum/shockwave/proc/distort(mob/viewer, strength)
 	var/turf/eye = get_turf(viewer)
 	if(!eye)
@@ -660,12 +703,24 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	 * drifting out of step with it. Without those - a bare preview - it falls
 	 * back to the tuned span and duration.
 	 */
-	var/end_radius = reach_px > from_origin ? reach_px : from_origin + tune["travel px"]
+	/*
+	 * The ring starts as a point at the epicentre and grows at exactly the rate
+	 * the front travels, so its radius always equals the front's radius. That
+	 * is what keeps the visual and the damage together: it crosses each person
+	 * at the instant the wave reaches them, and the approach is visible rather
+	 * than the ring appearing on top of them already.
+	 *
+	 * The minimum duration is only for a preview, which has no front to match.
+	 * Applying it to a real blast would slow the ring below the wave and pull
+	 * the two apart - to make a small blast readable, lower its speed instead,
+	 * which slows both together.
+	 */
+	var/end_radius = reach_px > 0 ? reach_px : from_origin + tune["travel px"]
 	var/duration
 	if(front_px_per_tick > 0)
-		duration = (end_radius - from_origin) / front_px_per_tick
+		duration = end_radius / front_px_per_tick
 	else
-		duration = tune["duration ds"]
+		duration = max(tune["min duration ds"], tune["duration ds"])
 	duration = max(1, duration)
 
 	for(var/key in GLOB.shockwave_distorted_planes)
@@ -680,7 +735,7 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		// sets raw down with it.
 		// Identical parameters on every plane, or the layers tear apart.
 		plane.filters += filter(arglist(ripple_filter(
-			radius = from_origin,
+			radius = 0,
 			size = size,
 			falloff = tune["band falloff"],
 			x = offset_x,

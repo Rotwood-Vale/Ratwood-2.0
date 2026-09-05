@@ -7,8 +7,12 @@
 	pixel_x = -120
 
 	resistance_flags = INDESTRUCTIBLE|FIRE_PROOF|FREEZE_PROOF
-	layer =  MASSIVE_OBJ_LAYER
-	plane = GAME_PLANE_HIGHEST
+	// Sits on the normal game plane, high in it, so the gas that pours out of it
+	// renders over the top. The gas is on GAME_PLANE_UPPER, and planes are
+	// resolved before layers, so no layer value here could put the capsule
+	// underneath while it stayed on a higher plane than the smoke.
+	layer = MASSIVE_OBJ_LAYER
+	plane = GAME_PLANE
 
 	var/open_time = 10 MINUTES
 	var/effect_time = 3 SECONDS

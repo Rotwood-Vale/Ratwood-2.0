@@ -71,6 +71,7 @@ const LIMITS: Record<string, Limit> = {
   'band falloff': { min: 0.01, max: 100, step: 0.05 },
   // Only used by Preview now; a real blast derives both from radius and speed.
   'duration ds': { min: 1, max: 600, step: 1 },
+  'min duration ds': { min: 0, max: 100, step: 1 },
   'travel px': { min: 8, max: 20000, step: 16 },
   'end amplitude': { min: 0, max: 10, step: 0.05 },
   'range tiles': { min: 0, max: 1000, step: 1 },

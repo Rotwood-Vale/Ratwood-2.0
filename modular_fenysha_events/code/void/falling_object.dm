@@ -86,8 +86,8 @@
 		explosion(hit_turf, 0, 3, 4, 7, FALSE, FALSE, 3, smoke = TRUE)
 		visible_message(span_userdanger("Ball of fire hits [hit_turf]!"))
 		shockwave(hit_turf, 9, 1, 1, FALSE, null, TRUE, list(
-			"amplitude base" = 80,
-			"amplitude gain" = 80,
+			"amplitude base" = 40,
+			"amplitude gain" = 40,
 		))
 		if(fallen_type)
 			new fallen_type(hit_turf)
@@ -164,11 +164,27 @@
 	if(prob(30))
 		new /obj/effect/particle_effect/smoke(T)
 
-/obj/effect/falling_object/capsule/gas 
+/*
+ * One falling object per landable capsule.
+ *
+ * The base capsule above drops /obj/structure/void_capsule, which opens to
+ * nothing on its own. These name the kinds that actually do something on
+ * opening, so an event can drop a specific one rather than spawning the
+ * structure directly and skipping the descent entirely.
+ *
+ * /obj/structure/void_capsule/fractal_mutants has no entry on purpose: it
+ * carries no creature_type, so its do_effect returns FALSE and it would land
+ * and open onto nothing. Only its two concrete children are worth dropping.
+ */
+
+/obj/effect/falling_object/capsule/gas
+	name = "Falling Capsule (Gas)"
 	fallen_type = /obj/structure/void_capsule/gas
 
-/obj/effect/falling_object/capsule/fractal
+/obj/effect/falling_object/capsule/fractal_mutant
+	name = "Falling Capsule (Mutant)"
 	fallen_type = /obj/structure/void_capsule/fractal_mutants/generic
 
 /obj/effect/falling_object/capsule/fractal_forcer
+	name = "Falling Capsule (Forcer)"
 	fallen_type = /obj/structure/void_capsule/fractal_mutants/forcer

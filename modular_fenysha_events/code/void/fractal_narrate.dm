@@ -61,17 +61,17 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 
 /// Builds the styled chat message. Returns null if the admin cancelled.
 /proc/fractal_narrate_build(mob/user)
-	var/msg = input(user, "Message:", "Fractal Narrate") as text|null
+	var/msg = tgui_input_text(user, "Message:", "Fractal Narrate", multiline = TRUE, encode = FALSE)
 
 	if(!msg)
 		return null
 
-	var/effect_label = input(user, "Text effect:", "Fractal Narrate", "None") as null|anything in GLOB.fractal_narrate_effects
+	var/effect_label = tgui_input_list(user, "Text effect:", "Fractal Narrate", GLOB.fractal_narrate_effects, "None")
 
 	if(isnull(effect_label))
 		return null
 
-	var/frame_label = input(user, "Box frame:", "Fractal Narrate", "None") as null|anything in GLOB.fractal_narrate_frames
+	var/frame_label = tgui_input_list(user, "Box frame:", "Fractal Narrate", GLOB.fractal_narrate_frames, "None")
 
 	if(isnull(frame_label))
 		return null
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 
 /// Asks for an on-screen effect. Returns the chosen label, or null if cancelled.
 /proc/fractal_narrate_pick_screen(mob/user)
-	return input(user, "On-screen effect:", "Fractal Narrate", "None") as null|anything in GLOB.fractal_narrate_screen_effects
+	return tgui_input_list(user, "On-screen effect:", "Fractal Narrate", GLOB.fractal_narrate_screen_effects, "None")
 
 
 
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 		return
 
 	if(!M)
-		M = input(usr, "Fractal narrate to whom?", "Active Players") as null|anything in GLOB.player_list
+		M = tgui_input_list(usr, "Fractal narrate to whom?", "Active Players", GLOB.player_list)
 
 	if(!M)
 		return
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(fractal_narrate_screen_effects, list(
 	if(!A)
 		A = usr
 
-	var/range = input(usr, "Narrate to mobs within how many tiles:", "Range", 7) as num|null
+	var/range = tgui_input_number(usr, "Narrate to mobs within how many tiles:", "Range", 7, 30, 1)
 
 	if(!range)
 		return
