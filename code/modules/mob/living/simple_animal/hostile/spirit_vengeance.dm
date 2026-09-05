@@ -26,7 +26,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 20
 	speak_emote = list("growls")
@@ -92,7 +92,7 @@
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "peck"
 	attack_sound = 'sound/blank.ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 20
 	speak_emote = list("caws")
