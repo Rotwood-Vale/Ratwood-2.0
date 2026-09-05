@@ -8,6 +8,8 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	"blood" = "Connection, protection, and devotion.<BR>She never liked this one.<BR><BR><B>PASSIVE:</B> NONE.<BR><BR><B>ACTIVE:</B> SNARE - USE A FLESHCRAFTING SIGIL TO CREATE A DEADLY TRAP. WEAPONS STUN YOUR FOE. ORGANS POISON THEM. ANYTHING ELSE MAKES THEM BLEED.<BR><BR><B>REMNANT:</B> USE A FLESHCRAFTING RUNE AND TWO BLOOD-FILLED LEECHES TO CONNECT TWO TARGETS. THEY WILL SLOWLY DIE IF APART.",
 	))
 
+GLOBAL_LIST_EMPTY(zizo_portals)
+
 // HELPERS !!!
 
 /proc/is_zizo(mob/M)
@@ -54,13 +56,41 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 
 
-/datum/ritual/transmutation/aspect
+/datum/ritual/strand
+	abstract_type = /datum/ritual/strand
+	required_aspect = "strand"
+
+/datum/ritual/pitch
+	abstract_type = /datum/ritual/pitch
+	required_aspect = "pitch"
+
+/datum/ritual/toil
+	abstract_type = /datum/ritual/toil
+	required_aspect = "toil"
+
+/datum/ritual/bite
+	abstract_type = /datum/ritual/bite
+	required_aspect = "bite"
+
+/datum/ritual/rot
+	abstract_type = /datum/ritual/rot
+	required_aspect = "rot"
+
+/datum/ritual/noise
+	abstract_type = /datum/ritual/noise
+	required_aspect = "noise"
+
+/datum/ritual/blood
+	abstract_type = /datum/ritual/blood
+	required_aspect = "blood"
+
+/datum/ritual/servantry/aspect
 	name = "Bestow Aspect"
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
 
-/datum/ritual/transmutation/aspect/invoke(mob/living/user, turf/center)
+/datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		new /obj/item/necro_relics/necro_crystal(center)
@@ -80,7 +110,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	popup.set_content(contents)
 	popup.open(FALSE)
 
-/datum/ritual/transmutation/aspect/Topic(href, href_list)
+/datum/ritual/servantry/aspect/Topic(href, href_list)
 	var/mob/living/carbon/human/target = locate(href_list["target"])
 	if(!target || usr != target || HAS_TRAIT(target, TRAIT_ASPECTED))
 		return
@@ -155,25 +185,28 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 /datum/status_effect/dream_teleport/recall
 	duration = 3 MINUTES
 
-/datum/ritual/servantry/strandsend
+/datum/ritual/strand/strandsend
 	name = "Passage"
 	center_requirement = /mob/living/carbon/human
 	required_aspect = "strand"
 
-/datum/ritual/servantry/strandsend/invoke(mob/living/user, turf/center)
+/datum/ritual/strand/strandsend/invoke(mob/living/user, turf/center)
 	var/obj/effect/decal/cleanable/sigil/S = locate() in center
 	if(!S)
 		return
-	S.set_sigil_type("Strand")
+	if(do_after(user, 3 SECONDS))
+		S.set_sigil_type("Portal")
+	else
+		return
 	to_chat(user, span_notice("AN EYE IS A PASSAGE."))
 
-/datum/ritual/servantry/strandrecall
+/datum/ritual/strand/strandrecall
 	name = "Curse of Recall"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "strand"
 	keep_center = TRUE
 
-/datum/ritual/servantry/strandrecall/invoke(mob/living/user, turf/center)
+/datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -218,11 +251,11 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	to_chat(target, span_notice("I AM MENDED!"))
 	return TRUE
 
-/datum/ritual/transmutation/mend
+/datum/ritual/toil/mend
 	name = "Mend"
 	required_aspect = "toil"
 
-/datum/ritual/transmutation/mend/invoke(mob/living/user, turf/center)
+/datum/ritual/toil/mend/invoke(mob/living/user, turf/center)
 	for(var/obj/item/I in center)
 		I.obj_integrity = I.max_integrity
 		I.shoddy_repair = FALSE
@@ -247,13 +280,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	target.revive(full_heal = TRUE, admin_revive = TRUE)
 	target.emote("scream")
 
-/datum/ritual/transmutation/cultoffer
+/datum/ritual/toil/cultoffer
 	name = "Curse of Whispers"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "toil"
 	keep_center = TRUE
 
-/datum/ritual/transmutation/cultoffer/invoke(mob/living/user, turf/center)
+/datum/ritual/toil/cultoffer/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -273,12 +306,12 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 // BITE
 
-/datum/ritual/fleshcrafting/raisedeadite
+/datum/ritual/bite/raisedeadite
 	name = "Raise Deadite"
 	center_requirement = /mob/living/carbon/human
 	required_aspect = "bite"
 
-/datum/ritual/fleshcrafting/raisedeadite/invoke(mob/living/user, turf/center)
+/datum/ritual/bite/raisedeadite/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/corpse = locate() in center.contents
 	if(!corpse || corpse.stat != DEAD || !corpse.mind)
 		to_chat(user, span_warning("YOU NEED A CORPSE."))
@@ -440,22 +473,22 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	playsound(src, 'sound/foley/breaksound.ogg', 50, TRUE)
 	return ..()
 
-/datum/ritual/transmutation/blight
+/datum/ritual/rot/blight
 	name = "Blight"
 	center_requirement = /mob/living/carbon/human
 	required_aspect = "rot"
 
-/datum/ritual/transmutation/blight/invoke(mob/living/user, turf/center)
+/datum/ritual/rot/blight/invoke(mob/living/user, turf/center)
 	new /obj/structure/blight_pillar(center)
 	to_chat(user, span_notice("THE LAND ROTS."))
 
-/datum/ritual/transmutation/plague
+/datum/ritual/rot/plague
 	name = "Curse of Black Rot"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "rot"
 	keep_center = TRUE
 
-/datum/ritual/transmutation/plague/invoke(mob/living/user, turf/center)
+/datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -482,12 +515,12 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	forceMove(return_turf || get_turf(holder))
 	qdel(holder)
 
-/datum/ritual/transmutation/ghost_form
+/datum/ritual/noise/ghost_form
 	name = "Spook"
 	center_requirement = /mob/living/carbon/human
 	required_aspect = "noise"
 
-/datum/ritual/transmutation/ghost_form/invoke(mob/living/user, turf/center)
+/datum/ritual/noise/ghost_form/invoke(mob/living/user, turf/center)
 	. = ..()
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target || target.aspect != "noise")
@@ -500,13 +533,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, end_jaunt), holder, origin), 15 SECONDS)
 	return TRUE
 
-/datum/ritual/servantry/forgettongue
+/datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "noise"
 	keep_center = TRUE
 
-/datum/ritual/servantry/forgettongue/invoke(mob/living/user, turf/center)
+/datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -631,12 +664,12 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, end_jaunt), holder), 5 SECONDS)
 	return TRUE
 
-/datum/ritual/fleshcrafting/shadowform
+/datum/ritual/pitch/shadowform
 	name = "Scaduform"
 	center_requirement = /mob/living/carbon/human
 	required_aspect = "pitch"
 
-/datum/ritual/fleshcrafting/shadowform/invoke(mob/living/user, turf/center)
+/datum/ritual/pitch/shadowform/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target || target.aspect != "pitch")
 		to_chat(user, span_warning("NOT FOR THEM."))
@@ -686,13 +719,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	target.Knockdown(5 SECONDS)
 	to_chat(target, span_danger("IT BURNS! IT BURNS! IT STICKS TO MY FLESH AND BURNS!"))
 
-/datum/ritual/fleshcrafting/lightcurse
+/datum/ritual/pitch/lightcurse
 	name = "Curse of Radiance"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "pitch"
 	keep_center = TRUE
 
-/datum/ritual/fleshcrafting/lightcurse/invoke(mob/living/user, turf/center)
+/datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -736,13 +769,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 			L.Jitter(4)
 			L.visible_message(span_danger("BLOODY BLADES RISE FROM THE GROUND AND REND [L]!"))
 
-/datum/ritual/fleshcrafting/bloodsnare
+/datum/ritual/blood/bloodsnare
 	name = "Blood Snare"
 	center_requirement = /obj/item
 	required_aspect = "blood"
 	keep_center = TRUE
 
-/datum/ritual/fleshcrafting/bloodsnare/invoke(mob/living/user, turf/center)
+/datum/ritual/blood/bloodsnare/invoke(mob/living/user, turf/center)
 	var/effect = "bleed"
 	if(locate(/obj/structure/trap/zizo) in center)
 		return FALSE
@@ -790,13 +823,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	desc = "OUR HEARTS BEAT AS ONE. I MUST BE NEAR THEM."
 	icon_state = "debuff"
 
-/datum/ritual/fleshcrafting/bloodbond
+/datum/ritual/blood/bloodbond
 	name = "Curse of Blood"
 	center_requirement = /obj/item/natural/worms/leech
 	required_aspect = "blood"
 	keep_center = TRUE
 
-/datum/ritual/fleshcrafting/bloodbond/invoke(mob/living/user, turf/center)
+/datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
 	var/list/found = list()
 	for(var/obj/item/natural/worms/leech/L in center)
 		if(L.fed_from && L.blood_storage > 0 && !QDELETED(L.fed_from) && L.fed_from.stat != DEAD)

@@ -359,7 +359,11 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
-	target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
+	switch(target.aspect)
+		if("bite")
+			target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
+		else
+			target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
 /datum/ritual/transmutation/summonweapon
@@ -373,11 +377,16 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		return
-	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
-	new /obj/item/rogueweapon/sword/long/zizo(center)
+	switch(target.aspect)
+		if("bite")
+			new /obj/item/rogueweapon/sword/long/zizo(center)
+			target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
+		else
+			new /obj/item/rogueweapon/sword/long/zizo(center)
+			target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
 // FLESH CRAFTING
@@ -689,7 +698,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	icon_state = "center"
 	icon = 'icons/obj/sigils.dmi'
 	var/sigil_type
-	var/static/list/sigil_states = list("Strand" = "strand")
+	var/static/list/sigil_states = list("Portal" = "strand2", "Strand" = "strand", "Toil" = "toil", "Bite" = "bite", "Pitch" = "pitch", "Noise" = "noise", "Blood" = "blood", "Rot" = "rot")
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
 	. = ..()
@@ -702,9 +711,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /obj/effect/decal/cleanable/sigil/proc/set_sigil_type(newtype)
 	sigil_type = newtype
+	if(newtype == "Portal")
+		GLOB.zizo_portals |= src
 	if(icon_state == "center")
 		icon_state = sigil_states[newtype] || "center"
 		update_icon()
+
+/obj/effect/decal/cleanable/sigil/Destroy()
+	GLOB.zizo_portals -= src
+	return ..()
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)
 	for(var/atom/A in get_step(src, NORTH))
@@ -734,10 +749,10 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	. = ..()
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
 		return
-	if(sigil_type == "Strand")
+	if(sigil_type == "Portal")
 		var/obj/effect/decal/cleanable/sigil/dest
-		for(var/obj/effect/decal/cleanable/sigil/S in world)
-			if(S == src || S.sigil_type != "Strand")
+		for(var/obj/effect/decal/cleanable/sigil/S in GLOB.zizo_portals)
+			if(S == src)
 				continue
 			dest = S
 			break
@@ -748,8 +763,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		for(var/mob/living/L in range(1, src))
 			do_teleport(L, T)
 		return
-	if(icon_state != "center")
-		return
 	var/list/rituals_pre = list()
 	switch(sigil_type)
 		if("Transmutation")
@@ -758,12 +771,29 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 			rituals_pre = subtypesof(/datum/ritual/fleshcrafting)
 		if("Servantry")
 			rituals_pre = subtypesof(/datum/ritual/servantry)
+		if("Strand")
+			rituals_pre = subtypesof(/datum/ritual/strand)
+		if("Pitch")
+			rituals_pre = subtypesof(/datum/ritual/pitch)
+		if("Toil")
+			rituals_pre = subtypesof(/datum/ritual/toil)
+		if("Bite")
+			rituals_pre = subtypesof(/datum/ritual/bite)
+		if("Rot")
+			rituals_pre = subtypesof(/datum/ritual/rot)
+		if("Noise")
+			rituals_pre = subtypesof(/datum/ritual/noise)
+		if("Blood")
+			rituals_pre = subtypesof(/datum/ritual/blood)
 	if(!length(rituals_pre))
 		return
 	var/list/rituals = list()
 	for(var/datum/ritual/ritual as anything in rituals_pre)
 		if(ritual_available(user, ritual))
 			rituals += initial(ritual.name)
+	if(!length(rituals))
+		to_chat(user, span_warning("I've no clue how to use this."))
+		return
 
 	var/ritualnameinput = input(user, "Rituals", "ZIZO") as null|anything in rituals
 	if(!ritualnameinput)
@@ -896,9 +926,11 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/list/runes = list()
 	for(var/cat in cats)
 		for(var/datum/ritual/ritual as anything in subtypesof(cats[cat]))
-			if(ritual_available(src, ritual))
+			if(!initial(ritual.required_aspect) && ritual_available(src, ritual))
 				runes += cat
 				break
+	if(aspect)
+		runes += capitalize(aspect)
 	if(!runes.len)
 		to_chat(src, span_warning("I know no rites."))
 		return
