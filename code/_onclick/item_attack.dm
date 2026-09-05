@@ -122,6 +122,10 @@
 		to_chat(user, span_warning("I don't want to harm other living beings!"))
 		return
 
+	if(ishuman(M) && ishuman(user) && user.mind && user != M)
+		var/mob/living/carbon/human/H = M
+		H.process_tempo_attack(user)
+
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 	M.lastattacker_weakref = WEAKREF(user)

@@ -52,6 +52,9 @@
 			if(bless.is_blessed)
 				// Apply multiplier if the blessing is active.
 				intdamage = round(intdamage * bless.cursed_item_intdamage)
+		var/tempo_bonus = get_tempo_bonus(TEMPO_TAG_ARMOR_INTEGFACTOR)
+		if(tempo_bonus)
+			intdamage *= tempo_bonus
 
 		if(consume_debuff)	//If this is FALSE, then this is a penetrative hit -- we consume these in bodypart_attacked_by.
 			if(has_status_effect(/datum/status_effect/debuff/exposed))

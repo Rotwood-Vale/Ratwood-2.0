@@ -391,6 +391,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define UNARMED_DAMAGE_DEFAULT		12
 
+// Tempo defines
+///Interval for checking our tempo lists
+#define TEMPO_CULL_DELAY 12 SECONDS
+#define TEMPO_DELAY_ONE 20 SECONDS
+#define TEMPO_DELAY_TWO	10 SECONDS
+#define TEMPO_DELAY_MAX	6 SECONDS
+#define TEMPO_CAP 7
+#define TEMPO_MAX 4
+#define TEMPO_TWO 3
+#define TEMPO_ONE 2
+
+#define TEMPO_TAG_STAMLOSS_PARRY "parry"
+#define TEMPO_TAG_STAMLOSS_DODGE "dodge"
+#define TEMPO_TAG_ARMOR_INTEGFACTOR "integ"
+#define TEMPO_TAG_NOLOS_PARRY "nolosparry"
+#define TEMPO_TAG_DEF_SHARPNESSFACTOR "sharpness"
+#define TEMPO_TAG_DEF_INTEGFACTOR "parryinteg"
+#define TEMPO_TAG_PARRYCD_BONUS	"parrycd"
+#define TEMPO_TAG_RCLICK_CD_BONUS "rclickcd"
+#define TEMPO_TAG_DEF_BONUS	"defbonus"
+
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
 

@@ -226,6 +226,10 @@
 			return FALSE
 		if(!UH?.mind) // For NPC, reduce the drained to 5 stamina
 			drained = drained_npc
+
+		//Tempo bonus
+		drained -= H.get_tempo_bonus(TEMPO_TAG_STAMLOSS_DODGE)
+
 		if(!H.stamina_add(max(drained,5)))
 			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
