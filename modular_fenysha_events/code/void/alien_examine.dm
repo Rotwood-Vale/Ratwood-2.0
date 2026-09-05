@@ -811,11 +811,12 @@
 		return
 
 	var/intensity_multiplier = count * intensity
+	SEND_SOUND(H, pick(list('modular_fenysha_events/sound/fractal_glitch1.ogg', 'modular_fenysha_events/sound/fractal_glitch2.ogg')))
 
 	if(count >= 1 && prob(50))
 		shake_camera(H, min(2 + count, 10), 1)
 
-		H.hallucination = max(H.hallucination, 20 * intensity_multiplier)
+		H.hallucination = max(H.hallucination, 5 * intensity_multiplier)
 
 	if(count >= 2 && prob(35 + min(count * 5, 30)))
 		H.blur_eyes(2 + round(count / 2))
@@ -825,7 +826,7 @@
 		H.adjustStaminaLoss(damage * 1.5)
 
 		if(prob(40 + min(count * 5, 30)))
-			H.adjust_disgust(max(H.disgust, 10 + count * 2))
+			H.set_disgust(max(H.disgust, 10 + count * 2))
 
 			var/eye_message = format_fractal_text(pick(eye_messages))
 			to_chat(H, span_userdanger(eye_message))
@@ -883,11 +884,6 @@
 	if(!effect)
 		effect = H.apply_status_effect(/datum/status_effect/fractal_screen)
 
-	if(!effect)
-		return
-
-	effect.infection_stage = clamp(ceil(count / 2), 1, 5)
-	effect.play_effect()
 
 
 

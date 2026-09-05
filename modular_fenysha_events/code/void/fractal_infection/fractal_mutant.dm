@@ -25,7 +25,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	
 	atmos_requirements = null
-	faction = list("void")
+	faction = list("void", "fractal")
 
 	stop_automated_movement_when_pulled = FALSE	
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
@@ -49,7 +49,7 @@
 	ai_controller = /datum/ai_controller/fractal_mutant
 
 	attack_sound = 'modular_fenysha_events/sound/fractal_attack.ogg'
-	var/static/list/footstep_sounds = list(
+	VAR_PRIVATE/static/list/footstep_sounds = list(
 		'modular_fenysha_events/sound/fractal_footstep/heavy_1.ogg',
 		'modular_fenysha_events/sound/fractal_footstep/heavy_2.ogg',
 		'modular_fenysha_events/sound/fractal_footstep/heavy_3.ogg',
@@ -57,6 +57,15 @@
 		'modular_fenysha_events/sound/fractal_footstep/heavy_5.ogg',
 		'modular_fenysha_events/sound/fractal_footstep/heavy_6.ogg',
 	)
+
+	var/list/scream_sounds = list(
+		'modular_fenysha_events/sound/fractal_scream1.ogg',
+		'modular_fenysha_events/sound/fractal_scream2.ogg', 
+		'modular_fenysha_events/sound/fractal_scream3.ogg', 
+	)
+
+	COOLDOWN_DECLARE(scream_cd)
+	COOLDOWN_DECLARE(fractal_effect_cd)
 
 /datum/ai_controller/fractal_mutant
 	movement_delay = 0.8 SECONDS
@@ -80,11 +89,10 @@
 
 
 
-
 /mob/living/simple_animal/hostile/fractal_mutant/Initialize(mapload)
 	. = ..()
 	setup_visual()
-
+	AddComponent(/datum/component/alien_examine)
 
 
 /mob/living/simple_animal/hostile/fractal_mutant/proc/setup_visual()
@@ -122,3 +130,23 @@
 			continue
 		shake_camera(L, 1, 0.5)
 	playsound(get_turf(src), pick(footstep_sounds), 50, TRUE)
+
+/mob/living/simple_animal/hostile/fractal_mutant/Life()
+	. = ..()
+
+	if(COOLDOWN_FINISHED(src, fractal_effect_cd))
+		for(var/mob/living/L in get_hearers_in_view(7, src))
+			if(L == src || L.faction == "void" || L.faction == "fractal")
+				continue
+			if(!L.has_status_effect(/datum/status_effect/fractal_screen))
+				L.apply_status_effect(/datum/status_effect/fractal_screen)
+		COOLDOWN_START(src, fractal_effect_cd, 3 SECONDS)
+
+
+/mob/living/simple_animal/hostile/fractal_mutant/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	
+	if(COOLDOWN_FINISHED(src, scream_cd))
+		emote("scream")
+		playsound(get_turf(src), pick(scream_sounds), 50, TRUE)
+		COOLDOWN_START(src, scream_cd, 6 SECONDS)

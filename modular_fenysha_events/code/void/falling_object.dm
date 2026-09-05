@@ -49,7 +49,7 @@
 /obj/effect/falling_object/Initialize(mapload, ...)
 	. = ..()
 	fall_effect()
-	fall_timer = addtimer(CALLBACK(src, PROC_REF(hit)), fall_time, TIMER_STOPPABLE | TIMER_UNIQUE)
+	fall_timer = addtimer(CALLBACK(src, PROC_REF(hit)), fall_time + 0.5 SECONDS, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /obj/effect/falling_object/Destroy()
 	if(fall_timer)
@@ -83,9 +83,9 @@
 /obj/effect/falling_object/proc/hit()
 	var/turf/hit_turf = get_turf(src)
 	if(hit_turf)
-		explosion(hit_turf, 0, 5, 9, 15, FALSE, FALSE, 3, smoke = TRUE)
+		explosion(hit_turf, 0, 3, 4, 7, FALSE, FALSE, 3, smoke = TRUE)
 		visible_message(span_userdanger("Ball of fire hits [hit_turf]!"))
-
+		shockwave(hit_turf, 9, 1, 1, FALSE, null, TRUE)
 		if(fallen_type)
 			new fallen_type(hit_turf)
 
@@ -113,7 +113,7 @@
 
 	var/impact_radius = 4
 	for(var/r = 1 to impact_radius)
-		for(var/turf/T in RANGE_TURFS(r, epicenter))
+		for(var/turf/T in circle_range(epicenter, r))
 			if(get_dist(epicenter, T) != r)
 				continue
 			
@@ -135,7 +135,7 @@
 		if(!current_trail_center)
 			break
 
-		for(var/turf/T in RANGE_TURFS(trail_width, current_trail_center))
+		for(var/turf/T in circle_range(current_trail_center, trail_width))
 			destroy_and_change_turf(T)
 
 		sleep(1)
