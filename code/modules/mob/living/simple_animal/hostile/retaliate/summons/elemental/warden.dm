@@ -40,7 +40,7 @@
 	food = 0
 	rapid = TRUE
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 	STACON = 15

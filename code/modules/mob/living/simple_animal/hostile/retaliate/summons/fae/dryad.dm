@@ -39,7 +39,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = "plantcross"
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS
 	ranged = FALSE

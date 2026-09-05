@@ -43,7 +43,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = list('sound/misc/lava_death.ogg')
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 	ranged = TRUE
 	rapid = TRUE

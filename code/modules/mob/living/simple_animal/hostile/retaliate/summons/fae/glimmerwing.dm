@@ -42,7 +42,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/blank.ogg'
-	dodgetime = 40
+	dodgetime = 4 SECONDS
 	aggressive = 1
 	var/drug_cd
 

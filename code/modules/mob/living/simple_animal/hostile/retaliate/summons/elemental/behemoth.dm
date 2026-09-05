@@ -39,7 +39,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 	STACON = 17

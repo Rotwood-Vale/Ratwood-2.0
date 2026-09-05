@@ -265,22 +265,8 @@
 	var/list/attack_grunts = null
 	var/list/takedamage_grunts = null
 
-	var/mob_can_parry = FALSE
-	var/mob_can_dodge = FALSE
-
-	var/dodge_sound = 'sound/combat/dodge.ogg'
-	var/parry_sound = "unarmparry"
-
-	var/dodgecd = FALSE
-
-	var/setparrytime = 12
-	var/dodgetime = 12
 	var/magearmor = 0
 	var/scalearmor = 0
-
-	var/last_dodge = 0
-	/// Cooldown before it's possible to parry again
-	COOLDOWN_DECLARE(last_parry)
 
 	var/last_used_double_attack = 0 //Used for Dual Wielder virtue, holds the timer since the double attack was last used
 	var/next_emote = 0

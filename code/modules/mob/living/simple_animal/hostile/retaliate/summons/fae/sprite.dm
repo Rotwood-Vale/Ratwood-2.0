@@ -45,7 +45,7 @@
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
 	attack_verb_continuous = "jabs"
 	attack_verb_simple = "jab"
-	dodgetime = 60
+	dodgetime = 6 SECONDS
 	aggressive = 1
 	var/drug_cd
 

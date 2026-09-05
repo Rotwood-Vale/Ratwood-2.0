@@ -90,8 +90,6 @@
 
 	mob_can_parry = TRUE
 	mob_can_dodge = TRUE
-
-	dodgecd = FALSE
 	dodgetime = 0
 
 	var/list/possibleclass

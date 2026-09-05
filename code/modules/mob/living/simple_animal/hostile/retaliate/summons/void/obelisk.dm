@@ -69,7 +69,7 @@
 	defprob = 35
 	retreat_health = 0.2
 	food = 0
-	dodgetime = 17
+	dodgetime = 1.7 SECONDS
 	aggressive = 1
 	var/beam_cooldown = 0
 	var/beam_range = 10

@@ -46,7 +46,7 @@
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp/Initialize(mapload)
