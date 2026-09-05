@@ -115,7 +115,7 @@
 		<a class="menu_button" href='byond://?src=[menu_ref];character_setup=1'>SETUP CHARACTER</a>
 		<a class="menu_button" href='byond://?src=[menu_ref];game_options=1'>SETTINGS</a>
 		<a id="be_antag" class="menu_button" href='byond://?src=[menu_ref];toggle_antag=1'>[client?.prefs?.be_special ? "<span class='checked'>☑</span> BE SPECIAL" : "<span class='unchecked'>☒</span> BE SPECIAL"]</a>
-		<a id="body_horror" class="menu_button" href='byond://?src=[menu_ref];toggle_bodyhorror=1'>[(client?.prefs?.toggles & BODY_HORROR) ? "<span class='checked'>☑</span> BODY HORROR" : "<span class='unchecked'>☒</span> BODY HORROR"]</a>
+		<a id="body_horror" class="menu_button" onclick="toggle_body_horror();" href='byond://?src=[menu_ref];toggle_bodyhorror=1'>[(client?.prefs?.toggles & BODY_HORROR) ? "<span class='checked'>☑</span> BODY HORROR" : "<span class='unchecked'>☒</span> BODY HORROR"]</a>
 	"}
 
 	if(!IsGuestKey(key))
@@ -160,16 +160,23 @@
 			}
 		}
 
-		var horror_mark = document.getElementById("body_horror");
+		var horror_int = [(client?.prefs?.toggles & BODY_HORROR) ? 1 : 0];
+		var horror_marks = \[ "<span class='unchecked'>☒</span> BODY HORROR", "<span class='checked'>☑</span> BODY HORROR" \];
 		function toggle_body_horror(setHorror) {
+			// Looked up on call rather than cached, so a rebuilt page cannot
+			// leave this bound to an element that is no longer on it.
+			var horror_mark = document.getElementById("body_horror");
 			if(!horror_mark) { return; }
-			// Loose compare on purpose: output() arrives as a string, and "0"
-			// is truthy, so a plain if() would read off as on.
-			if(setHorror == 1) {
-				horror_mark.innerHTML = "<span class='checked'>☑</span> BODY HORROR";
+			// Two callers, the same way toggle_antag has two. The button's own
+			// onclick passes nothing and just flips, so the label answers the
+			// click instead of waiting on the server. The server passes the
+			// saved value afterwards and that one wins.
+			if(setHorror === undefined || setHorror === "") {
+				horror_int = horror_int ? 0 : 1;
 			} else {
-				horror_mark.innerHTML = "<span class='unchecked'>☒</span> BODY HORROR";
+				horror_int = (setHorror == 1) ? 1 : 0;
 			}
+			horror_mark.innerHTML = horror_marks\[horror_int\];
 		}
 
 		var character_name_slot = document.getElementById("character_slot");

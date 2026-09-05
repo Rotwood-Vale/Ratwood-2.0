@@ -141,7 +141,7 @@
 	if(!player?.prefs)
 		return
 	player.toggle_bodyhorror()
-	player << output((player.prefs.toggles & BODY_HORROR) ? 1 : 0, "[TITLE_BROWSER_ID]:toggle_body_horror")
+	player << output((player.prefs.toggles & BODY_HORROR) ? "1" : "0", "[TITLE_BROWSER_ID]:toggle_body_horror")
 
 /datum/fenysha_title_menu/proc/toggle_ready(mob/dead/new_player/owner)
 	if(SSticker.current_state > GAME_STATE_PREGAME)
