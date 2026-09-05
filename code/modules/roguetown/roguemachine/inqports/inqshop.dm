@@ -232,7 +232,6 @@
 	new /obj/item/paper/inqslip/accusation(src)
 	new /obj/item/paper/inqslip/accusation(src)
 
-/*
 /datum/inqports/articles/indexers
 	name = "3 INDEXERs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/indexers
@@ -243,8 +242,7 @@
 	new /obj/item/inqarticles/indexer(src)
 	new /obj/item/inqarticles/indexer(src)
 	new /obj/item/inqarticles/indexer(src)
-*/
-/*
+
 /datum/inqports/articles/accusations
 	name = "3 Accusations"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/articles/accusations
@@ -255,7 +253,6 @@
 	new /obj/item/paper/inqslip/accusation(src)
 	new /obj/item/paper/inqslip/accusation(src)
 	new /obj/item/paper/inqslip/accusation(src)
-*/
 
 /datum/inqports/articles/confessions
 	name = "3 Confessions"
