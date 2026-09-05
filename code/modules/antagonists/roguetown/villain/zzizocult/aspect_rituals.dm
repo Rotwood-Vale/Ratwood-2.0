@@ -60,12 +60,15 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 /datum/ritual/transmutation/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
+		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	if(!is_zizo(target))
 		to_chat(user, span_warning("THEIR MIND IS CLOSED."))
+		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	if(HAS_TRAIT(target, TRAIT_ASPECTED))
 		to_chat(user, span_warning("THEY ARE ALREADY AN INITIATE."))
+		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	var/contents = "THESE ARE THE SIGNS BY WHICH YOU WILL KNOW ME.<BR>--------------<BR>"
 	for(var/key in GLOB.zizo_aspects)

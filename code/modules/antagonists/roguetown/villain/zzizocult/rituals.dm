@@ -62,31 +62,31 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/atom/req
 	if(center_requirement)
 		req = center_requirement
-		if(istype(req, /mob/living/carbon/human))
+		if(req == /mob/living/carbon/human)
 			parts += "Center - Humanoid"
 		else
 			parts += "Center - [initial(req.name)]"
 	if(n_req)
 		req = n_req
-		if(istype(req, /mob/living/carbon/human))
+		if(req == /mob/living/carbon/human)
 			parts += "North - Humanoid"
 		else
 			parts += "North - [initial(req.name)]"
 	if(e_req)
 		req = e_req
-		if(istype(req, /mob/living/carbon/human))
+		if(req == /mob/living/carbon/human)
 			parts += "East - Humanoid"
 		else
 			parts += "East - [initial(req.name)]"
 	if(s_req)
 		req = s_req
-		if(istype(req, /mob/living/carbon/human))
+		if(req == /mob/living/carbon/human)
 			parts += "South - Humanoid"
 		else
 			parts += "South - [initial(req.name)]"
 	if(w_req)
 		req = w_req
-		if(istype(req, /mob/living/carbon/human))
+		if(req == /mob/living/carbon/human)
 			parts += "West - Humanoid"
 		else
 			parts += "West - [initial(req.name)]"
