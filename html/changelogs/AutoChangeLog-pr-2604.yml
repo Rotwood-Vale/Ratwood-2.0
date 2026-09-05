@@ -1,0 +1,5 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - code_imp: "Cleans up and improves a lot of code related to dodging, parrying and weapon intents"
+  - bugfix: "Fixed almost every NPC being harder to parry than intended"
