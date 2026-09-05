@@ -184,6 +184,7 @@
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, datum/preferences/pref_load = null)
 	if(pref_load)
 		skin_tone = pref_load.skin_tone
+		mutant_skin = pref_load.mutant_skin
 	..()
 	if(icon_update)
 		update_body()

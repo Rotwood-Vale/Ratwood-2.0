@@ -551,6 +551,20 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/decorative_mentorsuit
+	name = "decorative mentor robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/sewing/decorative_captainrobe
+	name = "decorative flowery robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/sewing/jesterchest
 	name = "jester's tunick"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/jester)

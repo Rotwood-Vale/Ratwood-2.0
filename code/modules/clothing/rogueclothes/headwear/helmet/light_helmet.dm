@@ -218,6 +218,12 @@
 	flags_inv = HIDEEARS
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
 
+/obj/item/clothing/head/roguetown/mentorhat/decorative
+	name = "decorative bamboo hat"
+	desc = "A bamboo hat woven for style rather than protection."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	max_integrity = 100
+
 /obj/item/clothing/head/roguetown/horsey
 	name = "head bit"
 	desc = "A restraining head piece made of reinforced leather."

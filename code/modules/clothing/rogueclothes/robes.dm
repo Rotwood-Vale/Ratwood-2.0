@@ -245,7 +245,7 @@
 	item_state = "monkcloth"
 	boobed_detail = FALSE
 	color = null
-	detail_color = null
+	detail_color = CLOTHING_RED
 	detail_tag = "_detail"
 	naledicolor = TRUE
 	r_sleeve_status = SLEEVE_NOMOD

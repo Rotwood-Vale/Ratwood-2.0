@@ -791,6 +791,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!voice_pitch)
 		voice_pitch = 1
 	S["skin_tone"]			>> skin_tone
+	S["mutant_skin"]		>> mutant_skin
 	S["hairstyle_name"]		>> hairstyle
 	S["facial_style_name"]	>> facial_hairstyle
 	S["accessory"]			>> accessory
@@ -1060,6 +1061,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/skin_tone in pref_species.get_skin_list())
 		valid_skin_colors += valid_skin_tones[skin_tone]
 	skin_tone = sanitize_inlist(skin_tone, valid_skin_colors, valid_skin_colors[1])
+	mutant_skin = pref_species.mutant_skin_option && sanitize_integer(mutant_skin, FALSE, TRUE, FALSE)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -1123,6 +1125,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["mutant_skin"]			, mutant_skin)
 	WRITE_FILE(S["hairstyle_name"]		, hairstyle)
 	WRITE_FILE(S["facial_style_name"]	, facial_hairstyle)
 	WRITE_FILE(S["accessory"]			, accessory)
