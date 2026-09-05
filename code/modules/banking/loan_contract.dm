@@ -108,7 +108,7 @@
 
 /obj/item/loan_contract/indenture
 	name = "Writ of Indenture"
-	desc = "A binding indenture between two institutions of Azuria. Only the named target's authorised hand may seal it."
+	desc = "A binding indenture between two institutions of Ferentia. Only the named target's authorised hand may seal it."
 	icon_state = "paper_prep"
 	var/target_fund_id
 
