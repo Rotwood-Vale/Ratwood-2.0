@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
@@ -42,6 +42,10 @@ const EmButtons = (props: {
   );
 };
 
+const chatHtml = (text: string, empty?: string) => ({
+  __html: text ? `<span class="Chat">${text}</span>` : (empty ?? ''),
+});
+
 export const FlavorTextPage = (props: FlavorTextPageProps) => {
   const { collapsed = false } = props;
   const { data } = useBackend<ExaminePanelData>();
@@ -71,34 +75,6 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
 
   const showLeft = collapsed || !hideLeft;
 
-  const flavorHTML = useMemo(
-    () => ({
-      __html: `<span className='Chat'>${flavor_text}</span>`,
-    }),
-    [flavor_text],
-  );
-
-  const nsfwHTML = useMemo(
-    () => ({
-      __html: `<span className='Chat'>${flavor_text_nsfw}</span>`,
-    }),
-    [flavor_text_nsfw],
-  );
-
-  const oocHTML = useMemo(
-    () => ({
-      __html: `<span className='Chat'>${ooc_notes}</span>`,
-    }),
-    [ooc_notes],
-  );
-
-  const oocnsfwHTML = useMemo(
-    () => ({
-      __html: `<span className='Chat'>${ooc_notes_nsfw}</span>`,
-    }),
-    [ooc_notes_nsfw],
-  );
-
   return (
     <Stack fill>
       {showLeft && (
@@ -110,7 +86,15 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
           <Stack fill vertical>
             {showHeadshot && (
               <Stack.Item align="center">
-                <img src={resolveAsset(headshot)} width="350px" height="350px" />
+                <img
+                  src={resolveAsset(headshot)}
+                  style={{
+                    width: '100%',
+                    maxWidth: '350px',
+                    height: 'auto',
+                    aspectRatio: '1',
+                  }}
+                />
               </Stack.Item>
             )}
             <Stack.Item grow>
@@ -158,17 +142,16 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
                 {oocNotesIndex === 'SFW' && (
                   <Box
                     style={{ zoom: oocEm.SFW }}
-                    dangerouslySetInnerHTML={{
-                      __html: ooc_notes
-                        ? `<span class='Chat'>${ooc_notes}</span>`
-                        : '<i>No OOC notes provided.</i>',
-                    }}
+                    dangerouslySetInnerHTML={chatHtml(
+                      ooc_notes,
+                      '<i>No OOC notes provided.</i>',
+                    )}
                   />
                 )}
                 {oocNotesIndex === 'NSFW' && (
                   <Box
                     style={{ zoom: oocEm.NSFW }}
-                    dangerouslySetInnerHTML={oocnsfwHTML}
+                    dangerouslySetInnerHTML={chatHtml(ooc_notes_nsfw)}
                   />
                 )}
               </Section>
@@ -222,31 +205,24 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
             }
           >
             {flavorTextIndex === 'SFW' && (
-              <>
+              <Box style={{ zoom: flavorEm.SFW }}>
                 <Box
-                  style={{ zoom: flavorEm.SFW }}
-                  dangerouslySetInnerHTML={{
-                    __html: flavor_text
-                      ? `<span class='Chat'>${flavor_text}</span>`
-                      : '<i>No flavor text provided.</i>',
-                  }}
+                  dangerouslySetInnerHTML={chatHtml(
+                    flavor_text,
+                    '<i>No flavor text provided.</i>',
+                  )}
                 />
                 {ooc_extra_image && (
                   <Box
                     mt={1}
-                    dangerouslySetInnerHTML={{
-                      __html: ooc_extra_image,
-                    }}
+                    dangerouslySetInnerHTML={{ __html: ooc_extra_image }}
                   />
                 )}
-              </>
+              </Box>
             )}
             {flavorTextIndex === 'NSFW' && (
-              <>
-                <Box
-                  style={{ zoom: flavorEm.NSFW }}
-                  dangerouslySetInnerHTML={nsfwHTML}
-                />
+              <Box style={{ zoom: flavorEm.NSFW }}>
+                <Box dangerouslySetInnerHTML={chatHtml(flavor_text_nsfw)} />
                 {nsfw_ooc_extra_image && (
                   <Box
                     mt={1}
@@ -255,7 +231,7 @@ export const FlavorTextPage = (props: FlavorTextPageProps) => {
                     }}
                   />
                 )}
-              </>
+              </Box>
             )}
           </Section>
         </Stack.Item>

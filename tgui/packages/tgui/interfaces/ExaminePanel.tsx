@@ -15,8 +15,14 @@ enum Page {
 
 const DEFAULT_WIDTH = 1000;
 const DEFAULT_HEIGHT = 700;
-// Headshot is 350px; leftover covers Window content padding.
 const COLLAPSED_WIDTH = 450;
+
+const setWindowSize = (width: number, height: number) => {
+  const ratio = window.devicePixelRatio || 1;
+  Byond.winset(Byond.windowId, {
+    size: `${width * ratio}x${height * ratio}`,
+  });
+};
 
 export const ExaminePanel = (props) => {
   const { act, data } = useBackend<ExaminePanelData>();
@@ -30,37 +36,28 @@ export const ExaminePanel = (props) => {
   } = data;
   const [currentPage, setCurrentPage] = useState(Page.FlavorText);
   const [collapsed, setCollapsed] = useState(false);
-  const [expandedSize, setExpandedSize] = useState({
-    width: DEFAULT_WIDTH,
-    height: DEFAULT_HEIGHT,
-  });
+  const [expandedWidth, setExpandedWidth] = useState(DEFAULT_WIDTH);
 
   const hasGallery = img_gallery.length > 0 || nsfw_img_gallery.length > 0;
   const showTabs = hasGallery && !collapsed;
+  const showGallery = !collapsed && currentPage === Page.ImageGallery;
 
   const toggleCollapse = () => {
     if (!collapsed) {
-      setExpandedSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setExpandedWidth(window.innerWidth);
       setCurrentPage(Page.FlavorText);
+      setWindowSize(COLLAPSED_WIDTH, window.innerHeight);
+    } else {
+      setWindowSize(expandedWidth, window.innerHeight);
     }
     setCollapsed(!collapsed);
   };
 
-  const pageContents =
-    collapsed || currentPage === Page.FlavorText ? (
-      <FlavorTextPage collapsed={collapsed} />
-    ) : (
-      <ImageGalleryPage />
-    );
-
   return (
     <Window
       title={character_name}
-      width={collapsed ? COLLAPSED_WIDTH : expandedSize.width}
-      height={expandedSize.height}
+      width={DEFAULT_WIDTH}
+      height={DEFAULT_HEIGHT}
       buttons={
         <>
           {!!is_vet}
@@ -115,7 +112,10 @@ export const ExaminePanel = (props) => {
             overflowX="hidden"
             overflowY="auto"
           >
-            {pageContents}
+            <div style={{ display: showGallery ? 'none' : 'contents' }}>
+              <FlavorTextPage collapsed={collapsed} />
+            </div>
+            {showGallery && <ImageGalleryPage />}
           </Stack.Item>
         </Stack>
       </Window.Content>
