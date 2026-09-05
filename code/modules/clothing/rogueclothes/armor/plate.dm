@@ -705,22 +705,26 @@
 	body_parts_covered = CHEST | VITALS | LEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
 
-//----------------- INFAREDBARON SPRITEWORK/ARMOR.DM ---------------------
+//----------------- Citywatch Armor ---------------------
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "citywatch armor"
-	desc = "Heavy, well worn armour. Incredibly resilient to all forms of damage. Issued to the Citywatch."
-	icon = 'icons/roguetown/clothing/licensed-infraredbaron/armor.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/armor.dmi'
+	desc = "Heavy, well worn armour. Resilient to damage. Issued to the Citywatch."
+	icon = 'icons/roguetown/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	icon_state = "citywatch"
 	item_state = "citywatch"
 	blocksound = PLATEHIT
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50 //need to make it cover arms so that it displays the sprite properly. Still, giving it atypically good integrity
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
 	armor_class = ARMOR_CLASS_MEDIUM
 	smelt_bar_num = 2
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
-	sleevetype = null
-	sleeved = null
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
+	name = "watch captain armor"
+	desc = "Heavy, well worn armour featuring simple greys. Justice is impartial. Are you?"
+	icon_state = "sheriffarmor"
+	item_state = "sheriffarmor"
