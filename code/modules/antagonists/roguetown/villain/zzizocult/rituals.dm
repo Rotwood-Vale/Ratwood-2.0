@@ -711,10 +711,11 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /obj/effect/decal/cleanable/sigil/proc/set_sigil_type(newtype)
 	sigil_type = newtype
-	if(newtype == "Portal")
-		GLOB.zizo_portals |= src
 	if(icon_state == "center")
 		icon_state = sigil_states[newtype] || "center"
+	if(newtype == "Portal")
+		GLOB.zizo_portals |= src
+		icon_state = "strand2"
 		update_icon()
 
 /obj/effect/decal/cleanable/sigil/Destroy()
