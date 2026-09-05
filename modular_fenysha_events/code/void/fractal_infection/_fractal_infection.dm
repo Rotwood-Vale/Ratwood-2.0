@@ -7,6 +7,7 @@
  */
 /datum/status_effect/fractal_screen
 	id = "fractal_screen"
+	alert_type = null
 
 	duration = 6 SECONDS
 
@@ -286,6 +287,7 @@
 
 /datum/status_effect/fractal_infection
 	id = "fractal_infection"
+	alert_type = null
 
 	var/infection_stage = 0
 	var/max_stage = 5
@@ -308,9 +310,9 @@
 	 *	BODY_ZONE_*
 	 *
 	 * Value:
-	 *	mutable_appearance
+	 *	/datum/bodypart_feature/fractal_mutation
 	 */
-	var/list/mutable_appearance/body_effects
+	var/list/datum/bodypart_feature/fractal_mutation/body_effects
 
 	/*
 	 * Already mutated bodyparts.
@@ -705,55 +707,36 @@
 
 
 
-/obj/effect/abstract/fractal_mutation
+/*
+ * Bodypart features are drawn as part of the limb's own icon stack, so the
+ * mutation inherits the body sprite's dir and sits above the bodyparts layer
+ * but below worn equipment.
+ */
+/datum/bodypart_feature/fractal_mutation
 	name = "fractal mutation"
-	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = KEEP_TOGETHER
+	feature_slot = BODYPART_FEATURE_FRACTAL_MUTATION
 
-	var/mob/living/carbon/owner
-	var/zone
+	/// Icon state on fractal_mutation.dmi, one per body zone.
+	var/mutation_icon_state
 
-/obj/effect/abstract/fractal_mutation/proc/setup(
-	mob/living/carbon/new_owner,
-	new_zone,
-	new_icon_state
-)
-	owner = new_owner
-	zone = new_zone
+/*
+ * Limb appearances are shared between mobs through limb_icon_cache, so the key
+ * has to describe the mutation.
+ */
+/datum/bodypart_feature/fractal_mutation/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return "fractalmutation-[mutation_icon_state]"
 
-	icon = 'modular_fenysha_events/icons/effects/fractal_mutation.dmi'
-	icon_state = new_icon_state
-	layer = MUTATIONS_LAYER
 
-	add_filter(
-		"fractal_wave",
-		1,
-		list(
-			"type" = "wave",
-			"size" = 2,
-			"x" = 10,
-			"y" = 10,
-			"offset" = 0
-		)
+
+/datum/bodypart_feature/fractal_mutation/get_bodypart_overlay(obj/item/bodypart/bodypart)
+	if(!mutation_icon_state)
+		return null
+
+	return mutable_appearance(
+		'modular_fenysha_events/icons/effects/fractal_mutation.dmi',
+		mutation_icon_state,
+		layer = -FRONT_MUTATIONS_LAYER
 	)
-
-	var/filter = get_filter("fractal_wave")
-
-	if(filter)
-		animate(filter, offset = 100, time = 30, loop = -1, flags = ANIMATION_PARALLEL)
-
-	var/matrix/M1 = matrix()
-	M1.Scale(1.05, 0.95)
-
-	var/matrix/M2 = matrix()
-	M2.Scale(0.95, 1.05)
-
-	var/matrix/M_reset = matrix()
-
-	animate(src, transform = M1, time = 2, loop = -1, easing = JUMP_EASING, flags = ANIMATION_PARALLEL)
-	animate(transform = M2, time = 2, easing = JUMP_EASING)
-	animate(transform = M_reset, time = 4)
 
 
 
@@ -772,10 +755,12 @@
 	if(!icon_state)
 		return FALSE
 
-	var/obj/effect/abstract/fractal_mutation/mutation = new
-	mutation.setup(owner, zone, icon_state)
+	var/datum/bodypart_feature/fractal_mutation/mutation = new
+	mutation.body_zone = part.body_zone
+	mutation.mutation_icon_state = icon_state
 
-	if(!mutation)
+	if(!part.add_bodypart_feature(mutation))
+		qdel(mutation)
 		return FALSE
 
 	/*
@@ -783,11 +768,6 @@
 	 */
 	mutated_bodyparts[zone] = infection_stage
 	body_effects[zone] = mutation
-
-	/*
-	 * Attach visual mutation to the owner.
-	 */
-	owner.vis_contents += mutation
 
 	/*
 	 * Apply gameplay impairment.
@@ -805,16 +785,18 @@
 
 
 /datum/status_effect/fractal_infection/proc/remove_bodypart_mutation(zone)
-	var/mutable_appearance/mutation = body_effects[zone]
+	var/datum/bodypart_feature/fractal_mutation/mutation = body_effects[zone]
+
+	body_effects -= zone
+	mutated_bodyparts -= zone
 
 	if(!mutation)
 		return
 
-	if(owner)
-		owner.cut_overlay(mutation)
+	var/obj/item/bodypart/part = owner?.get_bodypart(zone)
+	part?.remove_bodypart_feature(mutation)
 
-	body_effects -= zone
-	mutated_bodyparts -= zone
+	qdel(mutation)
 
 
 
@@ -831,10 +813,60 @@
  * EVENT EFFECTS
  */
 
+/**
+ * Applies at most one subtle treatment to an infection line, scaled by stage.
+ *
+ * Most messages are left completely alone on purpose. The infection talks for five
+ * stages of eight minutes; a distortion the player sees on every line stops
+ * registering long before the end, whereas an occasional wrong one keeps working.
+ *
+ * Nothing here sets or animates colour - the hypnophrase voice already cycles its
+ * own, and a second colour animation on top of it just reads as mud.
+ */
+/datum/status_effect/fractal_infection/proc/distort_message(text)
+	if(infection_stage < 2 || !prob(infection_stage * 12))
+		return text
+
+	var/list/treatments = list("fractal_whisper")
+
+	if(infection_stage >= 3)
+		treatments += "fractal_faint_echo"
+
+	if(infection_stage >= 4)
+		treatments += "fractal_faint_blur"
+
+	return "<span class='[pick(treatments)]'>[degrade_words(text)]</span>"
+
+
+
+/// One or two words slipping into the abyssal alphabet. Font only, so it composes
+/// with whatever voice the line is about to be wrapped in.
+/datum/status_effect/fractal_infection/proc/degrade_words(text)
+	if(infection_stage < 3)
+		return text
+
+	var/list/words = splittext(text, " ")
+
+	if(!length(words))
+		return text
+
+	for(var/i in 1 to (infection_stage >= 5 ? 2 : 1))
+		var/index = rand(1, length(words))
+		var/word = words[index]
+
+		if(!length(word) || findtext(word, "<"))
+			continue
+
+		words[index] = "<span class='fractal_glyph'>[word]</span>"
+
+	return jointext(words, " ")
+
+
+
 /datum/status_effect/fractal_infection/proc/do_fractal_message()
 	to_chat(
 		owner,
-		span_hypnophrase(pick(possible_fractal_messages))
+		span_hypnophrase(distort_message(pick(possible_fractal_messages)))
 	)
 
 	if(ishuman(owner) && prob(15))
@@ -889,7 +921,7 @@
 			part_name = "chest"
 
 	if(part_name)
-		to_chat(owner, span_warning("Something feels deeply wrong with your [part_name]."))
+		to_chat(owner, span_warning(distort_message("Something feels deeply wrong with your [part_name].")))
 	reset_body_mutation_message_cooldown()
 
 

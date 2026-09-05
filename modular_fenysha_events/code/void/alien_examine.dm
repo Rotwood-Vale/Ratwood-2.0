@@ -279,9 +279,38 @@
 	var/examine_escalation_time = 5 SECONDS
 	var/screen_effect_cooldown = 8 SECONDS
 
+	/// Minimum gap between escalations, per examiner. Kept under
+	/// examine_escalation_time so a player looking at the honest pace still climbs.
+	var/examine_effect_cooldown = 3 SECONDS
+
 	var/list/examine_cooldowns = list()
 	var/list/examine_counts = list()
 	var/list/screen_cooldowns = list()
+	var/list/effect_cooldowns = list()
+
+	/// Per-examiner layout seed. See seed_pattern().
+	var/list/examine_seeds = list()
+
+	/// Line effect class -> the examine count that unlocks it. Drawn without
+	/// replacement, so a single block never shows the same distortion twice.
+	var/static/list/line_effects = list(
+		"fractal_echo" = 1,
+		"fractal_depth" = 2,
+		"fractal_anaglyph" = 3,
+		"fractal_echo_sym" = 4,
+		"fractal_depth_grow" = 4,
+		"fractal_squeeze" = 5,
+		"fractal_anaglyph_live" = 5,
+		"fractal_noise" = 6,
+		"fractal_noise_hard" = 7
+	)
+
+	/// Effects that paint through attr(data-text). They cannot wrap a line
+	/// containing markup, so they only ever land on lines this component wrote.
+	var/static/list/plaintext_effects = list(
+		"fractal_noise",
+		"fractal_noise_hard"
+	)
 
 	var/static/list/fractal_messages = list(
 		"The geometry of %OWNER% defies human comprehension.",
@@ -367,11 +396,29 @@
 		"You can no longer tell whether the object has one shape or many."
 	)
 
+	/// Fires from two sites and lands in userdanger, so it needs the depth to not
+	/// repeat inside one encounter. Runs through format_fractal_text().
 	var/static/list/critical_messages = list(
 		"YOUR MIND CANNOT RESOLVE ITS SHAPE.",
 		"STOP LOOKING.",
 		"THE PATTERN HAS NO TERMINATION.",
-		"THERE IS NO CORRECT WAY TO PERCEIVE THIS."
+		"THERE IS NO CORRECT WAY TO PERCEIVE THIS.",
+		"YOU ARE COUNTING SOMETHING THAT DOES NOT END.",
+		"%OWNER% WAS NEVER ONE OBJECT.",
+		"EVERY EDGE IN THIS ROOM LEADS BACK TO IT.",
+		"THERE IS NO ANGLE THAT MAKES THIS CORRECT.",
+		"YOUR EYES HAVE AGREED ON SOMETHING FALSE.",
+		"IT HAS ALREADY FINISHED LOOKING AT YOU.",
+		"THE GEOMETRY HAS YOUR NAME IN IT.",
+		"%OWNER% IS NOT WHERE YOU ARE LOOKING.",
+		"YOU HAVE BEEN LOOKING LONGER THAN YOU THINK.",
+		"THE INSIDE IS LARGER AND YOU ARE IN IT.",
+		"SOMETHING HAS COUNTED YOU.",
+		"THIS IS THE PART YOU WILL FORGET.",
+		"YOU WILL NOT REMEMBER LOOKING AWAY.",
+		"IT IS STILL UNFOLDING BEHIND YOUR EYES.",
+		"NOTHING HERE HAS AGREED TO HAVE A SHAPE.",
+		"YOU CANNOT PUT IT DOWN. YOU NEVER PICKED IT UP."
 	)
 
 	var/static/list/extreme_messages = list(
@@ -408,6 +455,8 @@
 	examine_cooldowns.Cut()
 	examine_counts.Cut()
 	screen_cooldowns.Cut()
+	effect_cooldowns.Cut()
+	examine_seeds.Cut()
 
 
 
@@ -424,10 +473,17 @@
 
 	var/ref_id = REF(examiner)
 	var/last_time = examine_cooldowns[ref_id] || 0
+	var/last_effect = effect_cooldowns[ref_id]
 	var/current_count = examine_counts[ref_id] || 0
 
+	// Re-examining inside the cooldown still returns a distorted description, but it
+	// neither climbs the counter nor fires anything at the examiner - clicking faster
+	// must not buy a faster escalation.
+	var/rate_limited = last_effect && (world.time - last_effect < examine_effect_cooldown)
+
 	if(world.time - last_time <= examine_escalation_time)
-		current_count++
+		if(!rate_limited)
+			current_count++
 	else
 		current_count = max(1, current_count - 1)
 
@@ -436,104 +492,306 @@
 	examine_cooldowns[ref_id] = world.time
 	examine_counts[ref_id] = current_count
 
-	apply_examine_distortion(examine_text, current_count)
+	apply_examine_distortion(examine_text, current_count, examiner)
+
+	if(rate_limited)
+		return
+
+	effect_cooldowns[ref_id] = world.time
 
 	INVOKE_ASYNC(src, PROC_REF(apply_fractal_effects), examiner, current_count)
 
 
 
-/datum/component/alien_examine/proc/apply_examine_distortion(list/examine_text, count)
-	if(!examine_text || !examine_text.len)
+/**
+ * Rebuilds the examine as a layered composition rather than a pile of independent
+ * rolls. Four passes, in order:
+ *
+ * 1. Content - the intrusive lines are written into the description.
+ * 2. Grammar - at most one visual effect per line, drawn without replacement, so a
+ *    single block never shows the same distortion twice.
+ * 3. Focus - depth of field assigned by line position rather than by chance.
+ * 4. Frame - wrapper classes on the box itself.
+ *
+ * Lines this component wrote are tracked against their unstyled text, because the
+ * effects that render through attr(data-text) cannot wrap a line containing markup.
+ */
+/datum/component/alien_examine/proc/apply_examine_distortion(list/examine_text, count, mob/living/carbon/human/examiner)
+	if(!length(examine_text))
 		return
 
-	var/text
+	var/seeded = seed_pattern(examiner, count)
 
-	if(count >= 1 && prob(55))
-		text = format_fractal_text(pick(fractal_messages))
-		examine_text += span_phobia(text)
+	var/list/authored = list()
+	var/list/effected = list()
 
-	if(count == 1 && prob(30))
-		text = pick(low_effect_messages)
-		examine_text += span_notice(text)
+	insert_fractal_content(examine_text, count, authored)
+	compose_lines(examine_text, count, authored, effected)
+	apply_depth_of_field(examine_text, count, effected)
+	wrap_fractal_block(examine_text, count, examiner)
 
-	if(count >= 2 && prob(35))
-		text = pick(fractal_intrusions)
-		examine_text.Insert(rand(1, examine_text.len), span_hypnophrase(text))
+	if(seeded)
+		rand_seed(world.timeofday + world.time)
 
-	if(count >= 2 && prob(30))
-		text = pick(mid_effect_messages)
-		examine_text += span_phobia(text)
 
-	if(count >= 3 && prob(40))
-		text = format_fractal_text(pick(list(
-			"%OWNER% does not appear to have a single shape.",
-			"You cannot reconcile the different shapes of %OWNER%.",
-			"%OWNER% seems to continue beyond its visible boundaries."
-		)))
-		examine_text.Insert(rand(1, examine_text.len), span_hypnophrase(text))
 
-	if(count >= 3 && prob(30))
-		text = pick("...", "Wait.", "No.", "That is not right.")
-		examine_text.Insert(rand(1, examine_text.len), span_userdanger(text))
+/**
+ * Below count 4 the layout is generated from a seed stored per examiner, so looking
+ * again renders a byte-identical block - the object has not changed, and the component's
+ * own "YOU HAVE SEEN THIS BEFORE" is literally true. From count 4 the seed is dropped
+ * and every look composes differently, which is the point at which the object stops
+ * being a fixed thing. Returns TRUE if the global RNG needs restoring afterwards.
+ */
+/datum/component/alien_examine/proc/seed_pattern(mob/examiner, count)
+	if(count >= 4)
+		return FALSE
 
-	if(count >= 4 && prob(40))
-		var/index = rand(1, examine_text.len)
+	var/ref_id = REF(examiner)
+
+	if(!examine_seeds[ref_id])
+		examine_seeds[ref_id] = rand(1, 32767)
+
+	rand_seed(examine_seeds[ref_id])
+	return TRUE
+
+
+
+/// Writes the intrusive lines. Each is recorded against its unstyled text in `authored`,
+/// marking it safe for the effects that need a plain copy of the line.
+/datum/component/alien_examine/proc/insert_fractal_content(list/examine_text, count, list/authored)
+	var/list/queued = list()
+
+	// Body lines all share one voice, chosen per block. Mixing phobia red, notice
+	// yellow and warning orange inside a single examine is a colour pile, not dread.
+	var/body_voice = prob(50) ? "phobia" : "notice"
+	var/body_budget = count >= 5 ? 2 : 1
+
+	var/list/body_pool = fractal_messages.Copy()
+
+	switch(count)
+		if(1 to 2)
+			body_pool += low_effect_messages
+		if(3 to 4)
+			body_pool += mid_effect_messages
+		else
+			body_pool += high_effect_messages
+			body_pool += "The description continues somewhere beyond the visible text."
+
+	for(var/i in 1 to body_budget)
+		if(!length(body_pool))
+			break
+
+		var/picked = pick(body_pool)
+		body_pool -= picked
+
+		var/text = format_fractal_text(picked)
+		queued[apply_voice(text, body_voice)] = text
+
+	// Exactly one accent line on top of the body, never two. A critical outranks the
+	// hypnotic intrusion rather than stacking with it.
+	if(count >= 6)
+		var/text = format_fractal_text(pick(critical_messages))
+		queued[span_userdanger(text)] = text
+
+	else if(count >= 3 && prob(45))
+		var/text = count >= 5 && prob(30) ? generate_fractal_noise() : pick(fractal_intrusions)
+		queued[span_hypnophrase(text)] = text
+
+	for(var/line in queued)
+		authored[line] = queued[line]
+
+		if(length(examine_text) > 1 && prob(50))
+			examine_text.Insert(rand(2, length(examine_text)), line)
+		else
+			examine_text += line
+
+
+
+/// Assigns effects against a deliberately small budget: one distorted line below
+/// count 5 and two above it, plus at most two lines taking the quieter alphabet
+/// degrade. Never more, however high the count climbs - a block where every line is
+/// doing something reads as noise, and the reader stops hunting for what changed.
+/// Escalation past this point is carried by the frame and by which effects unlock,
+/// not by how many fire at once. Effects are drawn without replacement, and no line
+/// ever takes two.
+/datum/component/alien_examine/proc/compose_lines(list/examine_text, count, list/authored, list/effected)
+	var/list/pool = build_effect_pool(count)
+	var/list/spent = list()
+
+	var/effect_budget = count >= 5 ? 2 : 1
+	var/degrade_budget = clamp(round(count / 3), 0, 2)
+
+	for(var/i in 1 to effect_budget)
+		if(!length(pool))
+			break
+
+		var/index = pick_unused_line(examine_text, spent)
+		if(!index)
+			break
+
 		var/line = examine_text[index]
+		var/plain = authored[line]
+		var/effect = pick(pool)
 
-		if(istext(line))
-			examine_text[index] = corrupt_examine_line(line)
+		if(!plain && (effect in plaintext_effects))
+			var/list/safe = pool - plaintext_effects
+			if(!length(safe))
+				continue
+			effect = pick(safe)
 
-	if(count >= 4 && prob(40))
-		text = format_fractal_text(pick(list(
-			"The geometry of %OWNER% appears to change when you try to describe it.",
-			"You feel as though %OWNER% is becoming more complex as you observe it.",
-			"Your thoughts simplify %OWNER%, then immediately lose the result."
-		)))
-		examine_text += span_hypnophrase(text)
+		pool -= effect
+		spent += index
+		effected += index
+		examine_text[index] = wrap_effect(line, effect, plain)
 
-	if(count >= 5 && prob(50))
-		text = generate_fractal_noise()
-		examine_text.Insert(rand(1, examine_text.len), span_userdanger(text))
+	for(var/i in 1 to degrade_budget)
+		var/index = pick_unused_line(examine_text, spent)
+		if(!index)
+			break
 
-	if(count >= 5 && prob(45))
-		text = "The description continues somewhere beyond the visible text."
-		examine_text += span_warning(text)
-
-	if(count >= 6 && prob(45))
-		text = pick(critical_messages)
-		examine_text += span_userdanger(text)
-
-	if(count >= 6 && prob(40))
-		text = generate_fractal_noise()
-		examine_text.Insert(rand(1, examine_text.len), span_hypnophrase(text))
-
-	if(count >= 7 && prob(55))
-		text = format_fractal_text(pick(list(
-			"%OWNER% %OWNER% %OWNER%.",
-			"THE SHAPE IS REPEATING.",
-			"YOU HAVE SEEN THIS BEFORE.",
-			"YOU WILL SEE THIS AGAIN."
-		)))
-		examine_text += span_userdanger(text)
-
-	if(count >= 7 && prob(35))
-		text = generate_fractal_noise()
-		examine_text.Insert(rand(1, examine_text.len), span_danger(text))
+		spent += index
+		examine_text[index] = degrade_line(examine_text[index], count)
 
 
 
-/datum/component/alien_examine/proc/corrupt_examine_line(text)
-	if(!text)
+/// The body voice is picked once per block, so every body line shares it.
+/datum/component/alien_examine/proc/apply_voice(text, voice)
+	if(voice == "notice")
+		return span_notice(text)
+
+	return span_phobia(text)
+
+
+
+/// Effect classes unlocked at this count.
+/datum/component/alien_examine/proc/build_effect_pool(count)
+	var/list/pool = list()
+
+	for(var/effect in line_effects)
+		if(count >= line_effects[effect])
+			pool += effect
+
+	return pool
+
+
+
+/// A line index nothing has claimed yet, or null if the block is full.
+/datum/component/alien_examine/proc/pick_unused_line(list/examine_text, list/spent)
+	var/list/free = list()
+
+	for(var/index in 1 to length(examine_text))
+		if(index in spent)
+			continue
+
+		if(istext(examine_text[index]))
+			free += index
+
+	if(!length(free))
+		return null
+
+	return pick(free)
+
+
+
+/// The interference effects paint clipped copies of the line through attr(data-text),
+/// so they need the text a second time with the markup stripped back out.
+/datum/component/alien_examine/proc/wrap_effect(text, effect, plain)
+	if(plain && (effect in plaintext_effects))
+		return "<span class='[effect]' data-text='[html_encode(plain)]'>[text]</span>"
+
+	return "<span class='[effect]'>[text]</span>"
+
+
+
+/// Focus is positional, never random: the outer lines of the block sit off the focal
+/// plane and the middle stays sharp, so the examine reads as having depth instead of
+/// being a flat list. Skips interference lines, which want to stay crisp.
+/datum/component/alien_examine/proc/apply_depth_of_field(list/examine_text, count, list/effected)
+	if(count < 3)
+		return
+
+	var/last = length(examine_text)
+
+	if(last < 4)
+		return
+
+	blur_line(examine_text, 1, "fractal_far", effected)
+	blur_line(examine_text, last, "fractal_far", effected)
+
+	if(count < 5)
+		return
+
+	blur_line(examine_text, 2, "fractal_near", effected)
+	blur_line(examine_text, last - 1, "fractal_near", effected)
+
+
+
+/// Never blurs a line that already carries an effect - softening an anaglyph or an
+/// extrusion just makes both illegible.
+/datum/component/alien_examine/proc/blur_line(list/examine_text, index, class, list/effected)
+	var/line = examine_text[index]
+
+	if(!istext(line) || (index in effected))
+		return
+
+	examine_text[index] = "<span class='[class]'>[line]</span>"
+
+
+
+/// Swaps whole words into the abyssal alphabet. Word length, spacing and punctuation
+/// all survive, so the sentence stays visibly a sentence and the reader can see exactly
+/// how much is being withheld - which character substitution destroys.
+/datum/component/alien_examine/proc/degrade_line(text, count)
+	if(!text || count < 2)
 		return text
 
-	var/list/characters = splittext(text, "")
-	var/corruption_count = max(1, round(characters.len * 0.06))
+	var/chance = min(count * 3, 22)
+	var/list/words = splittext(text, " ")
+	var/degraded = FALSE
 
-	for(var/i in 1 to corruption_count)
-		var/index = rand(1, characters.len)
-		characters[index] = pick(fractal_corruption)
+	for(var/i in 1 to length(words))
+		var/word = words[i]
 
-	return jointext(characters, "")
+		if(!length(word) || findtext(word, "<") || findtext(word, ">"))
+			continue
+
+		if(!prob(chance))
+			continue
+
+		words[i] = "<span class='fractal_glyph'>[word]</span>"
+		degraded = TRUE
+
+	return degraded ? jointext(words, " ") : text
+
+
+
+/// The frame escalates on its own track: tilt, then a drifting ground, then corner
+/// glyphs, scanlines, and finally a doubled border that will not hold still. The box
+/// is core's .examine_block, restyled through :has() on these classes rather than by
+/// touching the core stylesheet.
+///
+/// Skipped for players who turned examine blocks off - there is no box to line up with,
+/// and the wrapper's negative margins assume the block's padding is there to cancel.
+/datum/component/alien_examine/proc/wrap_fractal_block(list/examine_text, count, mob/examiner)
+	if(count < 2 || examiner?.client?.prefs?.no_examine_blocks)
+		return
+
+	var/list/classes = list("fractal_examine", "fractal_askew")
+
+	if(count >= 3)
+		classes += "fractal_drift"
+
+	if(count >= 4)
+		classes += "fractal_corners"
+
+	if(count >= 5)
+		classes += "fractal_scan"
+
+	if(count >= 6)
+		classes += "fractal_deep"
+
+	examine_text.Insert(1, "<div class='[jointext(classes, " ")]'>")
+	examine_text += "</div>"
 
 
 
@@ -576,7 +834,7 @@
 		H.Paralyze(20)
 		H.Knockdown(10)
 
-		var/critical_message = pick(critical_messages)
+		var/critical_message = format_fractal_text(pick(critical_messages))
 		to_chat(H, span_userdanger(critical_message))
 
 	if(count >= 7)
@@ -637,6 +895,8 @@
 	examine_cooldowns.Cut()
 	examine_counts.Cut()
 	screen_cooldowns.Cut()
+	effect_cooldowns.Cut()
+	examine_seeds.Cut()
 	atom_owner = null
 
 	return ..()

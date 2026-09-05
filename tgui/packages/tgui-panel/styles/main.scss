@@ -32,6 +32,7 @@
 
 // tgchat styles
 @include meta.load-css('./tgchat/chat-dark.scss');
+@include meta.load-css('./components/fenysha-fractal.scss'); //FENYSHA EDIT: fractal examine composition classes
 
 :root {
   --chat-text-color: #c9c1ba;

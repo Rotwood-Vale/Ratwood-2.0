@@ -1,0 +1,370 @@
+/**
+ * Fenysha events - fractal examine composition classes.
+ *
+ * Drives /datum/component/alien_examine. The DM side guarantees at most one
+ * fractal_* line effect lands on any given line; the alphabet, focus and frame
+ * layers are separate and do stack on top of it.
+ *
+ * Self-contained on purpose - the only core hook is a single @include in main.scss.
+ */
+
+/* abyssal.ttf already ships in /datum/asset/simple/roguefonts, it just had no face. */
+@font-face {
+  font-family: 'Abyssal';
+  src: url('~roguefont/languages/abyssal.ttf') format('truetype');
+}
+
+/* ── alphabet ──────────────────────────────────────────────────────────
+   Whole words swapped out. Word length and spacing survive, so the reader
+   can see how much of the description is being withheld from them. */
+.fractal_glyph {
+  font-family: 'Abyssal', 'Pterra';
+}
+
+/* ── frame ─────────────────────────────────────────────────────────────
+   The box is core's .examine_block, so it is reached with :has() on the wrapper
+   this component nests inside it - no core stylesheet edit, and a browser without
+   :has() simply keeps the stock box rather than breaking. chat-dark.scss already
+   relies on hsl(from ...), which lands well past :has() in support terms.
+
+   The wrapper's negative margins cancel the block's padding so the scanline
+   layer reaches its borders. */
+.fractal_examine {
+  position: relative;
+  display: block;
+  margin: -0.5em -0.75em;
+  padding: 0.5em 0.75em;
+}
+
+/* Base frame. Stock is a #a4bad6 hairline on flat #1b1c1e. */
+.examine_block:has(> .fractal_examine) {
+  position: relative;
+  border-color: #6b4fa8;
+  background: #17151d;
+  box-shadow:
+    inset 0 0 0 1px #2a1f3d,
+    inset 0 0 22px rgba(122, 79, 196, 0.15),
+    0 0 12px rgba(122, 79, 196, 0.25);
+}
+
+/* Every other block in the log is square. This one is not, and it is subtle
+   enough that nobody will be certain. */
+.examine_block:has(> .fractal_askew) {
+  transform: rotate(0.35deg);
+}
+
+.examine_block:has(> .fractal_drift) {
+  background: linear-gradient(135deg, #1b1c1e 0%, #241b2e 45%, #1b1c1e 100%);
+  background-size: 300% 300%;
+  animation: fractal_drift 14s ease-in-out infinite;
+}
+
+@keyframes fractal_drift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Decoration the real examine box does not have. Corner glyphs sit on the box
+   itself; the scanline layer stays on the wrapper, so the two never contend for
+   the same pseudo-element. */
+.examine_block:has(> .fractal_corners)::before,
+.examine_block:has(> .fractal_corners)::after {
+  position: absolute;
+  font-family: 'Abyssal';
+  font-size: 150%;
+  color: #7a4fc4;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.examine_block:has(> .fractal_corners)::before {
+  content: '\221E';
+  top: -3px;
+  left: 4px;
+}
+
+.examine_block:has(> .fractal_corners)::after {
+  content: '\2234';
+  right: 6px;
+  bottom: -3px;
+}
+
+/* A shape inside the shape, on a frame that will not settle. Deep only ever
+   occurs alongside drift, so this restates that animation rather than losing it. */
+.examine_block:has(> .fractal_deep) {
+  border-style: double;
+  border-width: 4px;
+  animation:
+    fractal_drift 14s ease-in-out infinite,
+    fractal_frame_breathe 6s ease-in-out infinite;
+}
+
+@keyframes fractal_frame_breathe {
+  0%, 100% {
+    border-color: #6b4fa8;
+    box-shadow:
+      inset 0 0 0 1px #2a1f3d,
+      inset 0 0 22px rgba(122, 79, 196, 0.15),
+      0 0 12px rgba(122, 79, 196, 0.25);
+  }
+  50% {
+    border-color: #8b5fd6;
+    box-shadow:
+      inset 0 0 0 1px #3d2d55,
+      inset 0 0 30px rgba(139, 95, 214, 0.3),
+      0 0 22px rgba(139, 95, 214, 0.5);
+  }
+}
+
+/* The examine stops being text and becomes a transmission of text. */
+.fractal_examine.fractal_scan {
+  overflow: hidden;
+}
+
+.fractal_examine.fractal_scan::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.32) 0 1px,
+    transparent 1px 3px
+  );
+  animation: fractal_scanroll 8s linear infinite;
+}
+
+@keyframes fractal_scanroll {
+  from { background-position: 0 0; }
+  to { background-position: 0 60px; }
+}
+
+/* ── focus ─────────────────────────────────────────────────────────────
+   Tilt-shift. Assigned by line position, never by chance: the block's outer
+   lines sit off the focal plane and the middle stays sharp, so the examine
+   reads as having depth rather than being a flat list. */
+.fractal_far {
+  filter: blur(1.9px);
+  opacity: 0.85;
+}
+
+.fractal_near {
+  filter: blur(1.2px);
+  opacity: 0.9;
+}
+
+/* ── line effects ──────────────────────────────────────────────────────
+   Exclusive: the DM side draws these without replacement, so one block never
+   shows the same distortion twice. Each owns text-shadow outright, which is
+   why they all clear the body's outline shadow. */
+.fractal_echo,
+.fractal_echo_sym,
+.fractal_depth,
+.fractal_depth_grow,
+.fractal_anaglyph,
+.fractal_anaglyph_live,
+.fractal_squeeze,
+.fractal_noise,
+.fractal_noise_hard {
+  display: inline-block;
+  position: relative;
+  text-shadow: none;
+}
+
+/* An effect owns the whole line it lands on. The content layer has usually already
+   wrapped that line in a span of its own, and leaving both to paint gave anaglyph
+   fringing over userdanger pink - two treatments arguing rather than one reading. */
+.fractal_echo *,
+.fractal_echo_sym *,
+.fractal_depth *,
+.fractal_depth_grow *,
+.fractal_anaglyph *,
+.fractal_anaglyph_live *,
+.fractal_noise *,
+.fractal_noise_hard * {
+  color: inherit;
+  text-shadow: inherit;
+  animation: none;
+}
+
+/* echo - "The shape repeats somewhere behind your vision." */
+.fractal_echo {
+  color: #e8e0ff;
+  text-shadow:
+    4px 0 rgba(160, 120, 255, 0.55),
+    9px 0 rgba(140, 100, 240, 0.38),
+    15px 0 rgba(120, 80, 220, 0.24),
+    22px 0 rgba(100, 60, 200, 0.14);
+}
+
+/* Copies on both sides, so there is no original - "There is no center." */
+.fractal_echo_sym {
+  color: #c8b8ff;
+  text-shadow:
+    -14px 0 rgba(120, 80, 220, 0.3),
+    -7px 0 rgba(150, 110, 240, 0.45),
+    7px 0 rgba(150, 110, 240, 0.45),
+    14px 0 rgba(120, 80, 220, 0.3),
+    -22px 0 rgba(100, 60, 200, 0.16),
+    22px 0 rgba(100, 60, 200, 0.16);
+}
+
+/* depth - "The object seems to occupy more space than it should." */
+.fractal_depth {
+  color: #efe8ff;
+  text-shadow:
+    1px 1px 0 #6f4fb0,
+    2px 2px 0 #64459f,
+    3px 3px 0 #5a3d8f,
+    4px 4px 0 #503580,
+    5px 5px 0 #462d70,
+    6px 6px 8px rgba(0, 0, 0, 0.85);
+}
+
+/* The extrusion grows while you read it. */
+.fractal_depth_grow {
+  color: #efe8ff;
+  animation: fractal_depthgrow 4.5s ease-in-out infinite;
+}
+
+@keyframes fractal_depthgrow {
+  0%, 100% {
+    text-shadow:
+      1px 1px 0 #6f4fb0,
+      2px 2px 0 #5a3d8f,
+      3px 3px 6px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    text-shadow:
+      1px 1px 0 #6f4fb0,
+      2px 2px 0 #64459f,
+      3px 3px 0 #5a3d8f,
+      4px 4px 0 #503580,
+      5px 5px 0 #462d70,
+      6px 6px 0 #3c2560,
+      7px 7px 0 #321d51,
+      8px 8px 0 #281541,
+      10px 10px 0 #1e0f31,
+      12px 12px 16px rgba(0, 0, 0, 0.9);
+  }
+}
+
+/* anaglyph - the literal render of "Your eyes refuse to agree on the shape." */
+.fractal_anaglyph {
+  color: #e4e4e4;
+  text-shadow:
+    -2.5px 0 #ff0044,
+    2.5px 0 #00e5ff;
+}
+
+.fractal_anaglyph_live {
+  color: #e4e4e4;
+  animation: fractal_anasplit 3.5s ease-in-out infinite;
+}
+
+@keyframes fractal_anasplit {
+  0%, 100% { text-shadow: -1px 0 #ff0044, 1px 0 #00e5ff; }
+  50% { text-shadow: -6px 0 #ff0044, 6px 0 #00e5ff; }
+}
+
+/* The line will not hold still long enough to be read. */
+.fractal_squeeze {
+  animation: fractal_squeeze 7s ease-in-out infinite;
+}
+
+@keyframes fractal_squeeze {
+  0%, 100% { letter-spacing: -1px; }
+  50% { letter-spacing: 6px; }
+}
+
+/* ── infection ─────────────────────────────────────────────────────────
+   Deliberately quieter than everything above. The examine is a burst the player
+   reads once; the infection speaks across five stages of eight minutes, so a
+   treatment loud enough to notice twice is wallpaper by stage three. Most of its
+   messages arrive clean, and the ones that do not are only slightly wrong.
+
+   None of these touch colour. The infection's voice is span_hypnophrase, which is
+   already running its own 1.5s colour cycle - a second one on top only muddies it.
+   Opacity, spacing, shadow, blur and font all compose with it cleanly. */
+
+/* Further away than it was. */
+.fractal_whisper {
+  opacity: 0.78;
+  letter-spacing: 0.4px;
+}
+
+/* A single soft copy, a quarter of the weight of the examine's echo. */
+.fractal_faint_echo {
+  text-shadow: 3px 0 rgba(150, 110, 240, 0.28);
+}
+
+/* Slips out of focus about once every eleven seconds. Easy to blame on your eyes. */
+.fractal_faint_blur {
+  animation: fractal_faint_blur 11s ease-in-out infinite;
+}
+
+@keyframes fractal_faint_blur {
+  0%, 100% { filter: blur(0); }
+  50% { filter: blur(0.7px); }
+}
+
+/* ── interference ──────────────────────────────────────────────────────
+   Clipped copies jumping out of register. These paint through
+   attr(data-text), so the DM side only ever puts them on lines it wrote
+   itself - a line carrying markup would render its own tags. */
+.fractal_noise,
+.fractal_noise_hard {
+  color: #ded4ff;
+}
+
+.fractal_noise::before,
+.fractal_noise::after,
+.fractal_noise_hard::before,
+.fractal_noise_hard::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fractal_noise::before { color: #ff0044; animation: fractal_noise_r 2.6s steps(1, end) infinite; }
+.fractal_noise::after { color: #00e5ff; animation: fractal_noise_c 2.6s steps(1, end) infinite; }
+
+/* Sits still, then tears itself apart for a quarter of a second. Rare bursts
+   read as a fault in the display; constant motion reads as decoration. */
+@keyframes fractal_noise_r {
+  0%, 72%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  74% { clip-path: inset(12% 0 62% 0); transform: translate(-7px); }
+  78% { clip-path: inset(48% 0 28% 0); transform: translate(5px); }
+  82% { clip-path: inset(74% 0 8% 0); transform: translate(-4px); }
+  86% { clip-path: inset(26% 0 52% 0); transform: translate(8px); }
+  90% { clip-path: inset(60% 0 18% 0); transform: translate(-3px); }
+}
+
+@keyframes fractal_noise_c {
+  0%, 72%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  74% { clip-path: inset(58% 0 22% 0); transform: translate(6px); }
+  78% { clip-path: inset(18% 0 66% 0); transform: translate(-5px); }
+  82% { clip-path: inset(38% 0 44% 0); transform: translate(4px); }
+  86% { clip-path: inset(80% 0 4% 0); transform: translate(-8px); }
+  90% { clip-path: inset(8% 0 74% 0); transform: translate(3px); }
+}
+
+/* Count 7 - the burst never stops. */
+.fractal_noise_hard {
+  animation: fractal_noisejump 0.35s steps(1, end) infinite;
+}
+
+.fractal_noise_hard::before { color: #ff0044; animation: fractal_noise_r 0.9s steps(1, end) infinite; }
+.fractal_noise_hard::after { color: #00e5ff; animation: fractal_noise_c 0.9s steps(1, end) infinite; }
+
+@keyframes fractal_noisejump {
+  0%, 100% { transform: translate(0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 1px); }
+}
