@@ -110,7 +110,7 @@
 /obj/effect/falling_object/capsule/proc/create_impact_wave(turf/epicenter)
 	if(!epicenter)
 		return
-
+	outdoor_light_strobe(3, 10, 4, COLOR_ASSEMBLY_BEIGE)
 	var/impact_radius = 4
 	for(var/r = 1 to impact_radius)
 		for(var/turf/T in circle_range(epicenter, r))

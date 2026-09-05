@@ -124,3 +124,26 @@
 	qdel(looping_sound) 
 
 	return TRUE
+
+
+/obj/structure/void_capsule/fractal_mutants
+	open_postfix = "capsule_open_monster"
+	var/creature_type
+
+/obj/structure/void_capsule/fractal_mutants/do_effect()
+	if(!creature_type)
+		return FALSE
+	
+	var/list/possible_turfs = circle_view(src)
+	possible_turfs = shuffle(possible_turfs)
+	for(var/turf/open/OT in possible_turfs)
+		if(OT.is_blocked_turf())
+			continue
+		new creature_type(OT)
+		return TRUE
+
+/obj/structure/void_capsule/fractal_mutants/generic
+	creature_type = /mob/living/simple_animal/hostile/fractal_mutant
+
+/obj/structure/void_capsule/fractal_mutants/forcer
+	creature_type = /mob/living/simple_animal/hostile/fractal_mutant/forcer

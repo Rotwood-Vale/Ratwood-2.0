@@ -10,6 +10,13 @@ GLOBAL_LIST_INIT(fenysha_fun_verbs, list(
 	/client/proc/fenysha_mandelbrot,
 	/client/proc/fenysha_shockwave,
 	/client/proc/fenysha_shockwave_settings,
+	/client/proc/void_out_cinematic, 
+	/client/proc/outdoor_set_time, 
+	/client/proc/outdoor_freeze_time,
+	/client/proc/outdoor_set_lighting, 
+	/client/proc/outdoor_unfreeze_time, 
+	/client/proc/outdoor_light_flash, 
+	/client/proc/outdoor_strobe,
 ))
 
 /client/add_admin_verbs()
