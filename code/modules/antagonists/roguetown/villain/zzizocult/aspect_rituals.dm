@@ -27,6 +27,9 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 /proc/find_remnant(mob/user, turf/center)
 	for(var/obj/item/natural/worms/leech/L in center)
 		if(L.fed_from && !QDELETED(L.fed_from) && L.fed_from.stat != DEAD)
+			if(istype(L.fed_from.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+				to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+				return FALSE
 			return L
 	to_chat(user, span_warning("Empty."))
 
@@ -130,7 +133,7 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 		send_to_dream(user.pulling)
 	return TRUE
 
-/proc/send_to_dream(mob/living/carbon/human/target)
+/proc/send_to_dream(mob/living/carbon/human/target, status_type = /datum/status_effect/dream_teleport/strand)
 	var/area/dream_area = GLOB.areas_by_type[/area/rogue/underworld/dream]
 	var/turf/origin = get_turf(target)
 	if(!dream_area || !origin)
@@ -144,10 +147,13 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	GLOB.players_in_dream |= target
 	origin.visible_message(span_danger("[target] vanishes!"))
 	playsound(origin, 'sound/misc/area.ogg')
-	target.apply_status_effect(/datum/status_effect/dream_teleport/strand, origin)
+	target.apply_status_effect(status_type, origin)
 
 /datum/status_effect/dream_teleport/strand
 	duration = 30 SECONDS
+
+/datum/status_effect/dream_teleport/recall
+	duration = 3 MINUTES
 
 /datum/ritual/servantry/strandsend
 	name = "Passage"
@@ -174,10 +180,19 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 	if(remnant.fed_from == SSticker.rulermob)
 		to_chat(user, span_danger("The Sun Queen protects this soul!"))
 		return
-	do_teleport(remnant.fed_from, center)
-	to_chat(user, span_notice("ALL MEN OBEY THE DREAMCALL."))
-	remnant.fed_from.electrocute_act(1, src, 1, SHOCK_NOSTUN)
+	var/mob/living/carbon/human/victim = remnant.fed_from
 	qdel(remnant)
+	to_chat(user, span_notice("ALL MEN OBEY THE DREAMCALL. I HAVE 1 MINUTE TO PREPARE. ANYONE I AM GRABBING WILL BE BROUGHT WITH ME."))
+	to_chat(victim, span_userdanger("I FEEL SOMETHING HORRIBLE COMING. I HAVE 1 MINUTE TO PREPARE. ANYONE I AM GRABBING WILL BE BROUGHT WITH ME."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamcall), user, victim), 1 MINUTES)
+
+/proc/dreamcall(mob/living/user, mob/living/victim)
+	for(var/mob/living/M in list(user, victim))
+		if(QDELETED(M) || !ishuman(M))
+			continue
+		send_to_dream(M, /datum/status_effect/dream_teleport/recall)
+		if(ishuman(M.pulling))
+			send_to_dream(M.pulling, /datum/status_effect/dream_teleport/recall)
 
 // TOIL
 
