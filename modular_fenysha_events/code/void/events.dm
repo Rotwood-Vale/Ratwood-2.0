@@ -82,7 +82,12 @@
 	 * surface. On Rockhill the surface is z3 and z2 down is underground.
 	 */
 	var/crash_z = 3
-	/// Linked levels the wave carries through, up and down from the crash.
+	/**
+	 * Linked levels the wave carries through, up and down from the crash.
+	 *
+	 * Only matters if the blast is ever given destruction back. As it stands it
+	 * reaches every player on every level regardless, so this changes nothing.
+	 */
 	var/crash_z_reach = 4
 
 /datum/cinematic/void_ship_crash/content()
@@ -134,7 +139,7 @@
 	// single impact closing the cinematic.
 	var/speed = max(2, round(radius / 20))
 
-	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], reaching [crash_z_reach] levels each way from [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
+	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], visual only, every player on every level [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
 
 	shockwave(
 		epicenter,
@@ -147,25 +152,12 @@
 		list(
 			"amplitude base" = 80,
 			"amplitude gain" = 80,
-			// The default only distorts within 30 tiles of the epicentre, which
-			// on a map this size is nobody - the blast is centred on the middle
-			// of the level. Everything the wave reaches should see it.
 			"range tiles" = radius,
 		),
 		list(
-			/*
-			 * Walls stop attenuating this one.
-			 *
-			 * The energy model is per sector: a wall that fails to break keeps
-			 * only `wall hold` of that direction's energy. Underground the crash
-			 * is boxed in by rock on every side, and stone needs 1800 damage
-			 * against the 600 this deals - so every sector meets a wall it
-			 * cannot break, loses 65% of its energy, and the wave is gone within
-			 * three tiles. Correct for a normal blast, wrong for the one moment
-			 * the whole map is supposed to feel.
-			 */
-			"wall hold" = 1,
-			"wall absorb scale" = 1000000,
+			"destroy" = 0,
+			"reach all players" = 1,
+			"strength floor" = 0.4,
 		)
 	)
 

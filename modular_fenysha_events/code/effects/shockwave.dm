@@ -67,6 +67,16 @@ GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
 		"throw objects" = 0,
 		"throw range" = 5,
 		"throw speed" = 2,
+		// Off makes a wave visual only: nothing is gathered to break and the
+		// wall scan is skipped entirely, so only the player pass runs. Every
+		// effect in stagger() still lands - the map just does not change.
+		"destroy" = 1,
+		// Ignores z linkage and the radius when deciding who is caught, so an
+		// event wide blast reaches every player wherever they are standing.
+		"reach all players" = 0,
+		// Floor under the distance falloff. Normally the rim gets nothing;
+		// raise it when everyone is meant to feel the wave regardless of range.
+		"strength floor" = 0,
 	)
 
 GLOBAL_LIST_INIT(shockwave_damage, shockwave_damage_defaults())
@@ -199,6 +209,12 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/throw_objects
 	var/throw_range
 	var/throw_speed
+	/// Whether the wave touches the map at all. Off leaves only player effects.
+	var/destroy
+	/// Whether every player is caught, ignoring z linkage and radius.
+	var/reach_all
+	/// Lower bound on the distance falloff, so the rim is not always nothing.
+	var/strength_floor
 	/// Loose movables by ring, mapped to the sector they sit in.
 	var/list/throw_rings
 	/// Per-blast overrides layered over GLOB.shockwave_visuals, or null.
@@ -267,6 +283,9 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	throw_objects = tune["throw objects"]
 	throw_range = tune["throw range"]
 	throw_speed = tune["throw speed"]
+	destroy = tune["destroy"]
+	reach_all = tune["reach all players"]
+	strength_floor = tune["strength floor"]
 
 	map_z_reach()
 	gather()
@@ -328,27 +347,30 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		mob_rings[i] = list()
 		throw_rings[i] = list()
 
-	for(var/atom/movable/target as anything in GLOB.shockwave_targets)
-		if(QDELETED(target))
-			continue
-		var/turf/spot = get_turf(target)
-		if(!spot)
-			continue
-		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
-		if(isnull(z_cost))
-			continue
-		// What is left of the radius once the climb between levels is paid for.
-		var/reach = radius - z_cost
-		if(reach < 1)
-			continue
-		var/dx = spot.x - cx
-		var/dy = spot.y - cy
-		var/spread = dx * dx + dy * dy
-		// Reject on the square first; sqrt only for what actually landed.
-		if(spread > reach * reach)
-			continue
-		var/list/bucket = rings[round(sqrt(spread) + z_cost) + 1]
-		bucket[target] = sector_of(dx, dy)
+	// Skipped wholesale for a visual only wave. Leaving the buckets empty is
+	// what makes it free: strike() finds nothing to hit and never looks again.
+	if(destroy)
+		for(var/atom/movable/target as anything in GLOB.shockwave_targets)
+			if(QDELETED(target))
+				continue
+			var/turf/spot = get_turf(target)
+			if(!spot)
+				continue
+			var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+			if(isnull(z_cost))
+				continue
+			// What is left of the radius once the climb between levels is paid for.
+			var/reach = radius - z_cost
+			if(reach < 1)
+				continue
+			var/dx = spot.x - cx
+			var/dy = spot.y - cy
+			var/spread = dx * dx + dy * dy
+			// Reject on the square first; sqrt only for what actually landed.
+			if(spread > reach * reach)
+				continue
+			var/list/bucket = rings[round(sqrt(spread) + z_cost) + 1]
+			bucket[target] = sector_of(dx, dy)
 
 	for(var/mob/viewer as anything in GLOB.player_list)
 		if(QDELETED(viewer))
@@ -356,18 +378,26 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		var/turf/spot = get_turf(viewer)
 		if(!spot)
 			continue
-		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
-		if(isnull(z_cost))
-			continue
-		var/reach = radius - z_cost
-		if(reach < 1)
-			continue
 		var/dx = spot.x - cx
 		var/dy = spot.y - cy
 		var/spread = dx * dx + dy * dy
-		if(spread > reach * reach)
-			continue
-		var/list/bucket = mob_rings[round(sqrt(spread) + z_cost) + 1]
+		var/index
+		if(reach_all)
+			// Nobody is rejected and no level costs anything. Clamped to the
+			// rim so someone standing past the radius still lands in a bucket
+			// and is swept when the front finishes, rather than being dropped.
+			index = min(round(sqrt(spread)), radius) + 1
+		else
+			var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+			if(isnull(z_cost))
+				continue
+			var/reach = radius - z_cost
+			if(reach < 1)
+				continue
+			if(spread > reach * reach)
+				continue
+			index = round(sqrt(spread) + z_cost) + 1
+		var/list/bucket = mob_rings[index]
 		bucket[viewer] = sector_of(dx, dy)
 
 /**
@@ -379,6 +409,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
  * fall near the epicentre anyway, so the cap costs nothing visible.
  */
 /datum/shockwave/proc/gather_walls()
+	if(!destroy)
+		return
 	var/range = min(radius, min(wall_range_cap, round(wall_range_per_power * power)))
 	if(range < 1)
 		return
@@ -426,11 +458,19 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		var/turf/spot = get_turf(listener)
 		if(!spot)
 			continue
-		var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
-		if(isnull(z_cost))
-			continue
-		var/distance = get_dist(spot, center) + z_cost
-		var/volume = 100 * power * (1 - (distance / max(radius, 1)) * 0.7)
+		var/distance
+		if(reach_all)
+			// get_dist is no use across unlinked levels, so measure flat. The
+			// bang has to arrive for the same people the wave does.
+			var/dx = spot.x - cx
+			var/dy = spot.y - cy
+			distance = min(round(sqrt(dx * dx + dy * dy)), radius)
+		else
+			var/z_cost = (spot.z >= 1 && spot.z <= length(z_costs)) ? z_costs[spot.z] : null
+			if(isnull(z_cost))
+				continue
+			distance = get_dist(spot, center) + z_cost
+		var/volume = 100 * power * max(1 - (distance / max(radius, 1)) * 0.7, strength_floor)
 		if(volume <= 0)
 			continue
 		listener.playsound_local(center, 'sound/misc/explode/explosion.ogg', volume, TRUE)
@@ -449,8 +489,9 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		stoplag(1)
 
 /datum/shockwave/proc/strike(ring)
-	// Linear falloff, so power is what lands at the centre and nothing at the rim.
-	var/falloff = 1 - ((ring - 1) / radius)
+	// Linear falloff, so power is what lands at the centre and nothing at the
+	// rim - unless a floor is set, in which case the rim gets that much.
+	var/falloff = max(1 - ((ring - 1) / radius), strength_floor)
 	if(falloff <= 0)
 		return
 
@@ -614,7 +655,7 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 		// Falloff by distance only. Sector energy is not spent yet at this
 		// point, and the ring is one continuous animation rather than something
 		// re-evaluated as walls eat into it.
-		var/strength = power * (1 - ((ring - 1) / radius))
+		var/strength = power * max(1 - ((ring - 1) / radius), strength_floor)
 		if(strength <= 0)
 			continue
 		for(var/mob/viewer as anything in viewers)
