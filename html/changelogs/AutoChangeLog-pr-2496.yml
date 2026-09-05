@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - bugfix: "fixed projectiles passing their entire scaled damage when doing any amount of penetrating damage."

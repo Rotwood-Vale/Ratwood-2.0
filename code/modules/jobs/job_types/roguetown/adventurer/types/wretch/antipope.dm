@@ -41,6 +41,7 @@
 	)
 	subclass_stashed_items = list(
 		"Lexicon of Her Truth" = /obj/item/book/rogue/bibble/zizo,
+    "Sewing Kit" = /obj/item/repair_kit,
 	)
 	extra_context = "Inhumen-exclusive. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 

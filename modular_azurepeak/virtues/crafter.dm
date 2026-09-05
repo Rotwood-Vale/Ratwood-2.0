@@ -9,6 +9,10 @@
 						list(/datum/skill/craft/blacksmithing, 2, 2),
 						list(/datum/skill/craft/smelting, 2, 2)
 	)
+	added_stashed_items = list(
+		"Hammer" = /obj/item/rogueweapon/hammer/iron,
+		"Tongs" = /obj/item/rogueweapon/tongs
+	)
 
 /datum/virtue/utility/tailor
 	name = "Tailor's Apprentice"
