@@ -1746,7 +1746,7 @@
 	if(spread_to.fire_stacks < 2)// don't spread fire if you have less than two stacks
 		return
 
-	if(!(spread_to.mobility_flags & MOBILITY_STAND))// same as above, but we're rubbing our buring face on their leg
+	if(!(spread_to.mobility_flags & MOBILITY_STAND))// same as above, but we're rubbing our burning face on their leg
 		return
 
 	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
