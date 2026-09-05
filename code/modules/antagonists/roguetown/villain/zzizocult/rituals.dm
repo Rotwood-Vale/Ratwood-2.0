@@ -491,15 +491,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	victim.set_species(/datum/species/human/northern)
 	ADD_TRAIT(user, TRAIT_NOPAIN, TRAIT_GENERIC)
-	ADD_TRAIT(user, TRAIT_NOLIMBDISABLE, TRAIT_GENERIC)
-	ADD_TRAIT(user, TRAIT_NODISMEMBER, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_NODEATH, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_PACIFISM, TRAIT_GENERIC)
-	ADD_TRAIT(user, TRAIT_NOHARDCRIT, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_NOSOFTCRIT, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 	to_chat(target, span_notice("ZIZO EMPOWERS ME!! SOMETHING HAS GONE WRONG, THE RITUAL FAILED BUT WHAT IT LEFT ME WITH IS STILL POWER!!"))
@@ -519,6 +516,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	is_cultist_ritual = TRUE
 	needs_aspect = TRUE
 
+/obj/effect/proc_holder/spell/bloodcrawl/ascendant
+	recharge_time = 5 MINUTES
+	invocations = list("Kri'tha mak!")
+	invocation_type = "shout"
+	gesture_required = TRUE
+
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/cultist = locate() in center.contents
 	if(!cultist || cultist != user)
@@ -533,27 +536,31 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	SSmapping.retainer.cult_ascended = TRUE
 	to_chat(cultist, span_userdanger("I HAVE DONE IT! I HAVE REACHED A HIGHER FORM! ZIZO SMILES UPON ME WITH MALICE IN HER EYES TOWARD THE ONES WHO LACK KNOWLEDGE AND UNDERSTANDING!"))
 	ADD_TRAIT(cultist, TRAIT_NOPAIN, TRAIT_GENERIC)
-	ADD_TRAIT(cultist, TRAIT_NOLIMBDISABLE, TRAIT_GENERIC)
-	ADD_TRAIT(cultist, TRAIT_NODISMEMBER, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_NODEATH, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
-	ADD_TRAIT(cultist, TRAIT_NOHARDCRIT, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_NOSOFTCRIT, TRAIT_GENERIC)
 	ADD_TRAIT(cultist, TRAIT_NOFIRE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
+	ADD_TRAIT(cultist, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
+	cultist.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER)
+	cultist.change_stat(STATKEY_STR, 10)
+	cultist.change_stat(STATKEY_CON, 10)
+	cultist.change_stat(STATKEY_WIL, 10)
 	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/cleave)
 	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/ascended_heal)
 	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/true_resurrection)
 	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/self/regenerate)
-	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl)
+	cultist.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl/ascendant)
 	if(cultist.head)
 		cultist.dropItemToGround(cultist.head, TRUE)
 	var/obj/item/clothing/head/roguetown/crown/zizo/crown = new(cultist)
 	cultist.equip_to_slot_or_del(crown, SLOT_HEAD)
 	ADD_TRAIT(crown, TRAIT_NODROP, TRAIT_GENERIC)
-	priority_announce("The sky blackens, a dark day for Grimoria.", "Ascension")
+	priority_announce("The sky blackens, a dark day for Grimoria.", title = "Ascension", sound = 'sound/misc/excomm.ogg')
 	for(var/mob/living/carbon/human/V in GLOB.human_list)
 		if(V.mind in SSmapping.retainer.cultists)
 			V.add_stress(/datum/stressevent/lovezizo)
@@ -575,6 +582,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	hand_path = /obj/item/melee/touch_attack/cleave
 	cost = 0
 	hide_charge_effect = TRUE
+	gesture_required = TRUE
 
 /obj/item/melee/touch_attack/cleave
 	name = "reaping hand"
@@ -587,16 +595,17 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	attached_spell.remove_hand()
 
 /obj/item/melee/touch_attack/cleave/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!isliving(target))
+	if(!ishuman(target))
 		return
-	var/mob/living/spelltarget = target
-	if(!do_after(user, 2 SECONDS, target = spelltarget))
+	var/mob/living/carbon/human/spelltarget = target
+	if(istype(spelltarget.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
-	if(ishuman(spelltarget))
-		var/mob/living/carbon/human/H = spelltarget
-		var/obj/item/bodypart/head/head = H.get_bodypart("head")
-		if(head)
-			head.dismember()
+	if(!do_after(user, 3 SECONDS, target = spelltarget))
+		return
+	var/obj/item/bodypart/head/head = spelltarget.get_bodypart("head")
+	if(head)
+		head.dismember()
 	spelltarget.visible_message(span_danger("[user] makes a horizontal cut with their hand and [spelltarget]'s head pops off!"))
 	attached_spell.remove_hand()
 
@@ -610,6 +619,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	hand_path = /obj/item/melee/touch_attack/ascended_heal
 	cost = 0
 	hide_charge_effect = TRUE
+	gesture_required = TRUE
 
 /obj/item/melee/touch_attack/ascended_heal
 	name = "mending hand"
@@ -628,7 +638,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(spelltarget.stat == DEAD)
 		to_chat(user, span_warning("They're dead. Resurrect them."))
 		return
-	if(!do_after(user, 2 SECONDS, target = spelltarget))
+	if(!do_after(user, 3 SECONDS, target = spelltarget))
 		return
 	spelltarget.revive(full_heal = TRUE, admin_revive = TRUE)
 	spelltarget.visible_message(span_notice("[user] mends [spelltarget] in a flash of light!"))
@@ -645,6 +655,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	hand_path = /obj/item/melee/touch_attack/true_resurrection
 	cost = 0
 	hide_charge_effect = TRUE
+	gesture_required = TRUE
 
 /obj/item/melee/touch_attack/true_resurrection
 	name = "reviving hand"
@@ -663,7 +674,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(spelltarget.stat != DEAD)
 		to_chat(user, span_warning("They still live."))
 		return
-	if(!do_after(user, 2 SECONDS, target = spelltarget))
+	if(!do_after(user, 3 SECONDS, target = spelltarget))
 		return
 	spelltarget.revive(full_heal = TRUE, admin_revive = TRUE)
 	ADD_TRAIT(spelltarget, TRAIT_ROTMAN, TRAIT_GENERIC)
@@ -906,7 +917,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	antimagic_allowed = TRUE
 	ignore_cockblock = TRUE
 
-	recharge_time = 1 MINUTES
+	recharge_time = 3 MINUTES
 
 /obj/effect/proc_holder/spell/self/regenerate/cast(mob/living/user = usr)
 	. = ..()
