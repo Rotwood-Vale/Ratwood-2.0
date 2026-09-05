@@ -571,9 +571,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (statpack_type && ispath(statpack_type))
 		statpack = new statpack_type()
 	else
-		statpack = pick(GLOB.statpacks)
-		statpack = GLOB.statpacks[statpack]
-		//statpack = new statpack
+		statpack = new /datum/statpack/wildcard/fated()
 
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type

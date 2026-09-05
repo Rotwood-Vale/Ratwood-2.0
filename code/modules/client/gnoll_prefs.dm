@@ -73,8 +73,7 @@
 	if (statpack_type && ispath(statpack_type))
 		gnoll_statpack = new statpack_type()
 	else
-		gnoll_statpack = pick(GLOB.statpacks - /datum/statpack/wildcard/virtuous)
-		gnoll_statpack = GLOB.statpacks[gnoll_statpack]
+		gnoll_statpack = new /datum/statpack/wildcard/fated()
 
 /datum/gnoll_prefs/proc/get_descriptor_options(slot)
 	var/static/list/descriptor_options_by_slot = list(
