@@ -1,4 +1,4 @@
-/datum/cinematic/void_consume_stars 
+/datum/cinematic/void_consume_stars
 	id = "void_consume_stars"
 	cleanup_time = 3 SECONDS
 
@@ -122,32 +122,32 @@
 /client/proc/void_out_cinematic()
 	set category = "Fun"
 	set name = "Run event cinematic"
-	set desc = "Chose on the void out cinematics and run it "
-	
-	
+	set desc = "Choose one of the void out cinematics and run it "
+
+
 	if(!check_rights(R_FUN))
 		return
 	var/list/possible_cinematics = list(
-		"Stars dafe down", 
-		"Void capsule open", 
-		"Eyesh in the sky",
-		"Void ship crash", 
+		"Stars fade down",
+		"Void capsule open",
+		"Eyes in the sky",
+		"Void ship crash",
 	)
-	var/chosed = tgui_input_list(usr, "Chose cinematic", "Void out", possible_cinematics)
-	
-	if(!chosed)
+	var/chosen = tgui_input_list(usr, "Choose cinematic", "Void out", possible_cinematics)
+
+	if(!chosen)
 		return
 
-	switch(chosed)
-		if("Stars dafe down")
+	switch(chosen)
+		if("Stars fade down")
 			Cinematic("void_consume_stars", world)
 		if("Void capsule open")
 			Cinematic("void_capsules_open", world)
-		if("Eyesh in the sky")
+		if("Eyes in the sky")
 			Cinematic("eyes_in_the_sky", world)
 		if("Void ship crash")
 			Cinematic("void_ship_crash", world)
-	message_admins("[key_name_admin(usr)], play void out cinematic [chosed].")
+	message_admins("[key_name_admin(usr)], played void out cinematic [chosen].")
 
 
 /**

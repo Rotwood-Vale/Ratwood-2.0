@@ -17,6 +17,9 @@ GLOBAL_LIST_INIT(fenysha_fun_verbs, list(
 	/client/proc/outdoor_unfreeze_time, 
 	/client/proc/outdoor_light_flash, 
 	/client/proc/outdoor_strobe,
+	/client/proc/fenysha_narrate_direct,
+	/client/proc/fenysha_narrate_local,
+	/client/proc/fenysha_narrate_global,
 ))
 
 /client/add_admin_verbs()

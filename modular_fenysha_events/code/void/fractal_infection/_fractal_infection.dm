@@ -601,6 +601,30 @@
 
 
 
+/datum/status_effect/fractal_infection/proc/get_zone_name(zone)
+	switch(zone)
+		if(BODY_ZONE_L_ARM)
+			return "left arm"
+
+		if(BODY_ZONE_R_ARM)
+			return "right arm"
+
+		if(BODY_ZONE_L_LEG)
+			return "left leg"
+
+		if(BODY_ZONE_R_LEG)
+			return "right leg"
+
+		if(BODY_ZONE_HEAD)
+			return "head"
+
+		if(BODY_ZONE_CHEST)
+			return "chest"
+
+	return null
+
+
+
 /datum/status_effect/fractal_infection/proc/get_mutation_icon_state(zone)
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
@@ -709,8 +733,9 @@
 
 /*
  * Bodypart features are drawn as part of the limb's own icon stack, so the
- * mutation inherits the body sprite's dir and sits above the bodyparts layer
- * but below worn equipment.
+ * mutation inherits the body sprite's dir. Every overlays_standing entry ends
+ * up in the mob's own overlays, so BODY_FRONT_LAYER sorts the mutation above
+ * all worn equipment.
  */
 /datum/bodypart_feature/fractal_mutation
 	name = "fractal mutation"
@@ -735,7 +760,7 @@
 	return mutable_appearance(
 		'modular_fenysha_events/icons/effects/fractal_mutation.dmi',
 		mutation_icon_state,
-		layer = -FRONT_MUTATIONS_LAYER
+		layer = -BODY_FRONT_LAYER
 	)
 
 
@@ -773,6 +798,7 @@
 	 * Apply gameplay impairment.
 	 */
 	apply_mutation_impairment(part, zone, infection_stage)
+	update_examine_text()
 
 	return TRUE
 
@@ -797,6 +823,29 @@
 	part?.remove_bodypart_feature(mutation)
 
 	qdel(mutation)
+	update_examine_text()
+
+
+
+/*
+ * status_effect_examines() reads examine_text off the effect at examine time,
+ * so it only has to be rebuilt when the mutated bodyparts change.
+ */
+/datum/status_effect/fractal_infection/proc/update_examine_text()
+	var/list/part_names = list()
+
+	for(var/zone in mutated_bodyparts)
+		var/part_name = get_zone_name(zone)
+
+		if(part_name)
+			part_names += part_name
+
+	if(!part_names.len)
+		examine_text = null
+		return
+
+	/// "SUBJECTPRONOUN is" must stay contiguous - status_effect_examines() fixes verb agreement by matching that pair.
+	examine_text = span_boldwarning("<span class='fractal_growth'>SUBJECTPRONOUN is covered in <span class='fractal_glyph'>warped, endlessly repeating</span> growths across the [english_list(part_names)].</span>")
 
 
 
@@ -899,26 +948,7 @@
 		reset_body_mutation_message_cooldown()
 		return
 
-	var/part_name
-
-	switch(zone)
-		if(BODY_ZONE_L_ARM)
-			part_name = "left arm"
-
-		if(BODY_ZONE_R_ARM)
-			part_name = "right arm"
-
-		if(BODY_ZONE_L_LEG)
-			part_name = "left leg"
-
-		if(BODY_ZONE_R_LEG)
-			part_name = "right leg"
-
-		if(BODY_ZONE_HEAD)
-			part_name = "head"
-
-		if(BODY_ZONE_CHEST)
-			part_name = "chest"
+	var/part_name = get_zone_name(zone)
 
 	if(part_name)
 		to_chat(owner, span_warning(distort_message("Something feels deeply wrong with your [part_name].")))

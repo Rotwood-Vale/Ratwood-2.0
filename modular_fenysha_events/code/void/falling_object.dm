@@ -27,14 +27,14 @@
 					return NORTH
 				if(-1)
 					return SOUTH
-					
+
 	return 0
 
 /obj/effect/falling_object
 	name = "Falling Object"
 	desc = ""
 	icon_state = "mist"
-	alpha = 200 
+	alpha = 200
 
 	var/fall_time = 10 SECONDS
 	var/atom/movable/fallen_type = null
@@ -75,7 +75,7 @@
 
 	if(fractal)
 		add_filter("fractal_wave", 1, list("type" = "wave", "size" = 2, "x" = 10, "y" = 10, "offset" = 0))
-		
+
 		var/filter = get_filter("fractal_wave")
 		animate(filter, offset = 100, time = 30, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(offset = 15, time = 30)
@@ -85,7 +85,10 @@
 	if(hit_turf)
 		explosion(hit_turf, 0, 3, 4, 7, FALSE, FALSE, 3, smoke = TRUE)
 		visible_message(span_userdanger("Ball of fire hits [hit_turf]!"))
-		shockwave(hit_turf, 9, 1, 1, FALSE, null, TRUE)
+		shockwave(hit_turf, 9, 1, 1, FALSE, null, TRUE, list(
+			"amplitude base" = 80,
+			"amplitude gain" = 80,
+		))
 		if(fallen_type)
 			new fallen_type(hit_turf)
 
@@ -101,7 +104,7 @@
 
 /obj/effect/falling_object/capsule/hit()
 	var/turf/epicenter = get_turf(src)
-	
+
 	if(epicenter)
 		INVOKE_ASYNC(src, PROC_REF(create_impact_wave), epicenter)
 
@@ -116,7 +119,7 @@
 		for(var/turf/T in circle_range(epicenter, r))
 			if(get_dist(epicenter, T) != r)
 				continue
-			
+
 			destroy_and_change_turf(T)
 
 		sleep(1)
@@ -124,9 +127,9 @@
 
 	var/dir_x = (start_x > 0) ? 1 : ((start_x < 0) ? -1 : 0)
 	var/dir_y = (start_y > 0) ? 1 : ((start_y < 0) ? -1 : 0)
-	
+
 	var/trail_length = 6
-	var/trail_width = 3 
+	var/trail_width = 3
 
 	var/turf/current_trail_center = epicenter
 

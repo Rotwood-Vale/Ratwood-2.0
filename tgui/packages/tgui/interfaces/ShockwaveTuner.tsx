@@ -26,43 +26,56 @@ type Data = {
 
 type Limit = { min: number; max: number; step: number };
 
-// Editing bounds per setting, keyed by the name DM sends. Anything not listed
-// falls back to a wide default rather than being locked out.
+// Editing bounds per setting, keyed by the name DM sends. This is an admin
+// tool, so these are deliberately generous - they exist to give sane step sizes
+// and to stop typos, not to hold anyone back. The two exceptions are called out
+// below, and they are the only ones that can actually hurt the server.
 const LIMITS: Record<string, Limit> = {
-  // blast. Maps run to 255x450 per z-level, so a corner to corner wave needs
-  // a radius over 500 - the ceiling is well clear of that rather than snug.
-  radius: { min: 1, max: 1024, step: 5 },
-  power: { min: 0.1, max: 20, step: 0.1 },
-  // A big radius needs a matching speed or the front takes minutes to arrive:
-  // the sweep advances `speed` tiles per tick.
-  speed: { min: 1, max: 64, step: 1 },
-  'z reach': { min: 0, max: 8, step: 1 },
+  // blast. Maps run to 255x450 per z-level, so corner to corner is ~520 tiles.
+  // Radius itself is cheap - it only allocates one bucket list per ring - but
+  // it is not free, hence a high ceiling rather than none at all.
+  radius: { min: 1, max: 10000, step: 5 },
+  power: { min: 0.1, max: 1000, step: 0.1 },
+  // The sweep advances `speed` tiles per tick, and now drives the ripple too.
+  speed: { min: 1, max: 512, step: 1 },
+  'z reach': { min: 0, max: 32, step: 1 },
+
   // destruction
-  'base damage': { min: 0, max: 2000, step: 10 },
-  'wall damage mult': { min: 0, max: 40, step: 0.5 },
-  'wall absorb scale': { min: 100, max: 40000, step: 100 },
-  'wall hold': { min: 0, max: 1, step: 0.05 },
-  'wall range per power': { min: 0, max: 128, step: 1 },
+  'base damage': { min: 0, max: 100000, step: 10 },
+  'wall damage mult': { min: 0, max: 1000, step: 0.5 },
+  'wall absorb scale': { min: 1, max: 1000000, step: 100 },
+  // Above 1 a wall that holds *adds* energy to its sector instead of taking it,
+  // so the wave feeds itself. Allowed, because it is a fun thing to try, but
+  // that is why it is not open ended.
+  'wall hold': { min: 0, max: 5, step: 0.05 },
+  // DANGEROUS - these two are the only real footgun here. Wall scanning costs
+  // (2*range+1)^2 turfs per z-level, so it grows quadratically: 64 is ~17k
+  // turfs, 255 is ~261k, and past that it will visibly hitch the server no
+  // matter how the work is spread. Capped on purpose.
+  'wall range per power': { min: 0, max: 255, step: 1 },
   'wall range cap': { min: 0, max: 255, step: 1 },
-  'z cost': { min: 0, max: 64, step: 1 },
-  'knockdown floor': { min: 0, max: 2, step: 0.05 },
-  'knockdown time ds': { min: 0, max: 300, step: 5 },
-  'body damage': { min: 0, max: 100, step: 1 },
+  'z cost': { min: 0, max: 1000, step: 1 },
+  'knockdown floor': { min: 0, max: 100, step: 0.05 },
+  'knockdown time ds': { min: 0, max: 6000, step: 5 },
+  'body damage': { min: 0, max: 10000, step: 1 },
+  // BYOND treats sound volume as 0-100, so higher would simply do nothing.
   'ringing volume': { min: 0, max: 100, step: 5 },
-  'ringing time ds': { min: 0, max: 600, step: 10 },
+  'ringing time ds': { min: 0, max: 6000, step: 10 },
   'throw objects': { min: 0, max: 1, step: 1 },
-  'throw range': { min: 1, max: 32, step: 1 },
-  'throw speed': { min: 1, max: 10, step: 1 },
-  // visuals
-  'amplitude base': { min: 0, max: 128, step: 1 },
-  'amplitude gain': { min: 0, max: 256, step: 1 },
-  'band falloff': { min: 0.05, max: 4, step: 0.05 },
-  'duration ds': { min: 1, max: 60, step: 1 },
-  'end amplitude': { min: 0, max: 2, step: 0.05 },
-  'travel px': { min: 32, max: 1024, step: 16 },
-  'range tiles': { min: 0, max: 128, step: 1 },
-  'origin x px': { min: -480, max: 480, step: 8 },
-  'origin y px': { min: -480, max: 480, step: 8 },
+  'throw range': { min: 1, max: 255, step: 1 },
+  'throw speed': { min: 1, max: 50, step: 1 },
+
+  // visuals. All client side, so none of it can hurt the server.
+  'amplitude base': { min: 0, max: 1000, step: 1 },
+  'amplitude gain': { min: 0, max: 1000, step: 1 },
+  'band falloff': { min: 0.01, max: 100, step: 0.05 },
+  // Only used by Preview now; a real blast derives both from radius and speed.
+  'duration ds': { min: 1, max: 600, step: 1 },
+  'travel px': { min: 8, max: 20000, step: 16 },
+  'end amplitude': { min: 0, max: 10, step: 0.05 },
+  'range tiles': { min: 0, max: 1000, step: 1 },
+  'origin x px': { min: -4000, max: 4000, step: 8 },
+  'origin y px': { min: -4000, max: 4000, step: 8 },
 };
 
 const FALLBACK: Limit = { min: 0, max: 512, step: 1 };

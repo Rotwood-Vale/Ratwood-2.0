@@ -19,6 +19,10 @@
    can see how much of the description is being withheld from them. */
 .fractal_glyph {
   font-family: 'Abyssal', 'Pterra';
+  /* Abyssal sits small against Pterra at a matched size, the same way hellspeak and
+     reptile do - chat-dark.scss already bumps both for exactly this reason. Without
+     it the degraded words read as shrunken rather than as another alphabet. */
+  font-size: 115%;
 }
 
 /* ── frame ─────────────────────────────────────────────────────────────
@@ -297,6 +301,33 @@
 /* A single soft copy, a quarter of the weight of the examine's echo. */
 .fractal_faint_echo {
   text-shadow: 3px 0 rgba(150, 110, 240, 0.28);
+}
+
+/* The infection's examine line, seen on the infected body by everyone else. That
+   string is cached on the status effect and rebuilt only when a bodypart mutates, so
+   a bystander rereads this exact treatment for the whole infection - hence fixed,
+   slow, and never random.
+
+   The echo makes "endlessly repeating" literal and the 17s swell keeps the growths
+   alive without ever being quick enough to pull focus off the rest of the examine.
+   Sets no colour, so the boldwarning red underneath survives. */
+.fractal_growth {
+  font-size: 106%;
+  animation: fractal_growth 17s ease-in-out infinite;
+}
+
+@keyframes fractal_growth {
+  0%, 100% {
+    text-shadow:
+      3px 0 rgba(150, 110, 240, 0.3),
+      7px 0 rgba(130, 90, 225, 0.16);
+  }
+  50% {
+    text-shadow:
+      4px 0 rgba(160, 120, 255, 0.42),
+      9px 0 rgba(140, 100, 240, 0.26),
+      15px 0 rgba(120, 80, 220, 0.14);
+  }
 }
 
 /* Slips out of focus about once every eleven seconds. Easy to blame on your eyes. */

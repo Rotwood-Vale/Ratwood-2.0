@@ -23,5 +23,6 @@
 #include "code\void\falling_object.dm"
 #include "code\void\void_armor.dm"
 #include "code\void\alien_examine.dm"
+#include "code\void\fractal_narrate.dm"
 #include "code\void\capsules.dm"
 #include "code\void\events.dm"
