@@ -127,7 +127,7 @@
 
 
 /obj/structure/void_capsule/fractal_mutants
-	open_postfix = "capsule_open_monster"
+	open_postfix = "monster"
 	var/creature_type
 
 /obj/structure/void_capsule/fractal_mutants/do_effect()

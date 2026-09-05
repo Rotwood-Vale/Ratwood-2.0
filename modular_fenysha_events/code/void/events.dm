@@ -29,6 +29,96 @@
 			flags = ANIMATION_END_NOW
 		)
 
+/datum/cinematic/void_capsules_open
+	id = "void_capsules_open"
+	cleanup_time = 1 SECONDS
+
+/datum/cinematic/void_capsules_open/content()
+	screen.icon_state = null
+	flick("capsules_open",screen)
+	sleep(30)
+	cinematic_sound(sound('modular_fenysha_events/sound/capsule_open.ogg'))
+	sleep(20)
+	special()
+
+/datum/cinematic/void_capsules_open/special()
+	for(var/obj/structure/void_capsule/capsule in world)
+		capsule.open()
+
+
+/datum/cinematic/eyes_in_the_sky
+	id = "eyes_in_the_sky"
+	cleanup_time = 0 SECONDS
+
+/datum/cinematic/eyes_in_the_sky/content()
+	screen.icon_state = null
+	cinematic_sound(sound('modular_fenysha_events/sound/streets_sound.ogg'))
+	flick("streets_up",screen)
+	sleep(65)
+	cinematic_sound(sound('modular_fenysha_events/sound/eyes_in_the_sky.ogg'))
+	flick("eyes_in_the_sky", screen)
+	sleep(60)
+	special()
+
+
+/datum/cinematic/eyes_in_the_sky/special()
+	for(var/mob/living/living in GLOB.player_list)
+		if(istype(living) && !living.stat == DEAD)
+			living.apply_status_effect(/datum/status_effect/fractal_screen)
+			living.apply_status_effect(/datum/status_effect/fractal_maptext)
+
+
+
+/datum/cinematic/void_ship_crash
+	id = "void_ship_crash"
+	cleanup_time = 0 SECONDS
+
+/datum/cinematic/void_ship_crash/content()
+	screen.icon_state = null
+	cinematic_sound(sound('modular_fenysha_events/sound/void_ship_land.ogg'))
+	flick("void_ship_descend",screen)
+
+	sleep(75)
+
+	flick("void_ship_shot",screen)
+	sleep(10)
+	cinematic_sound(sound('modular_fenysha_events/sound/beam_attack.ogg'))
+	sleep(35)
+
+	cinematic_sound(sound('modular_fenysha_events/sound/void_ship_damage.ogg'))
+	flick("void_ship_explosion",screen)
+	sleep(30)
+	cinematic_sound(sound('modular_fenysha_events/sound/glass_crack.ogg'))
+	sleep(30)
+	cinematic_sound(sound('modular_fenysha_events/sound/void_ship_destroy.ogg'))
+	sleep(158)
+	special()
+
+/datum/cinematic/void_ship_crash/special()
+	var/turf/epicenter = locate(
+		round(world.maxx * 0.5),
+		round(world.maxy * 0.5),
+		world.maxz
+	)
+
+	if(!epicenter)
+		return
+	var/dx = max(epicenter.x - 1, world.maxx - epicenter.x)
+	var/dy = max(epicenter.y - 1, world.maxy - epicenter.y)
+	var/radius = world.maxy * 2
+	var/z_reach = max(0, world.maxz - 1)
+	var/power = 1
+	var/speed = 2
+
+	shockwave(
+		epicenter,
+		radius,
+		power,
+		speed,
+		FALSE,
+		null,
+		z_reach
+	)
 
 
 /client/proc/void_out_cinematic()
@@ -54,11 +144,11 @@
 		if("Stars dafe down")
 			Cinematic("void_consume_stars", world)
 		if("Void capsule open")
-			return
+			Cinematic("void_capsules_open", world)
 		if("Eyesh in the sky")
-			return
+			Cinematic("eyes_in_the_sky", world)
 		if("Void ship crash")
-			return
+			Cinematic("void_ship_crash", world)
 	message_admins("[key_name_admin(usr)], play void out cinematic [chosed].")
 
 
