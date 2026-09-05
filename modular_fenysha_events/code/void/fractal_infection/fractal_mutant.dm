@@ -32,7 +32,7 @@
 	base_intents = list(/datum/intent/simple/claw)
 	icon_state = "fractal_mutant"
 	icon_living = "fractal_mutant"
-	
+
 	wander = FALSE
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -42,20 +42,20 @@
 	maxHealth = 750
 	health = 750
 	healable = FALSE
-	
+
 	obj_damage = 200
 	melee_damage_lower = 50
 	melee_damage_upper = 50
 	harm_intent_damage = 50
 	armor_penetration = 40
 	damage_coeff = list(BRUTE = 0.8, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	
+
 	atmos_requirements = null
 	faction = list("void", "fractal")
 
-	stop_automated_movement_when_pulled = FALSE	
+	stop_automated_movement_when_pulled = FALSE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	canparry = TRUE
+	// canparry = TRUE
 	d_intent = INTENT_PARRY
 
 	robust_searching = TRUE
@@ -64,7 +64,7 @@
 	minimum_distance = 1
 	limb_destroyer = TRUE
 	defprob = 60
-	
+
 	STASTR = 20
 	STAPER = 13
 	STACON = 14
@@ -89,8 +89,8 @@
 
 	var/list/scream_sounds = list(
 		'modular_fenysha_events/sound/fractal_scream1.ogg',
-		'modular_fenysha_events/sound/fractal_scream2.ogg', 
-		'modular_fenysha_events/sound/fractal_scream3.ogg', 
+		'modular_fenysha_events/sound/fractal_scream2.ogg',
+		'modular_fenysha_events/sound/fractal_scream3.ogg',
 	)
 
 	var/list/inntacte_actions = list(
@@ -115,7 +115,7 @@
 
 /mob/living/simple_animal/hostile/fractal_mutant/proc/setup_visual()
 	add_filter("fractal_wave", 1, list("type" = "wave", "size" = 2, "x" = 10, "y" = 10, "offset" = 0))
-	
+
 	var/filter = get_filter("fractal_wave")
 	animate(filter, offset = 100, time = 30, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(offset = 15, time = 30)
@@ -126,10 +126,10 @@
 /mob/living/simple_animal/hostile/fractal_mutant/proc/start_fractal_pulse()
 	var/matrix/M1 = matrix()
 	M1.Scale(1.05, 0.95)
-	
+
 	var/matrix/M2 = matrix()
 	M2.Scale(0.95, 1.05)
-	
+
 	var/matrix/M_reset = matrix()
 
 	animate(src, transform = M1, time = 2, loop = -1, easing = JUMP_EASING, flags = ANIMATION_PARALLEL)
@@ -163,7 +163,7 @@
 
 /mob/living/simple_animal/hostile/fractal_mutant/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	
+
 	if(COOLDOWN_FINISHED(src, scream_cd))
 		emote("scream")
 		playsound(get_turf(src), pick(scream_sounds), 100, TRUE)
@@ -186,7 +186,7 @@
 	maxHealth = 1200
 	health = 1200
 	healable = FALSE
-	
+
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -201,7 +201,7 @@
 	ai_controller = /datum/ai_controller/fractal_mutant/forcer
 	inntacte_actions = list(
 		/datum/action/cooldown/mob_cooldown/fractal_finish = "bb_fractal_finish",
-		/datum/action/cooldown/mob_cooldown/simple_charge = "bb_fractal_charge", 
+		/datum/action/cooldown/mob_cooldown/simple_charge = "bb_fractal_charge",
 		/datum/action/cooldown/mob_cooldown/fractal_roar = "bb_fractal_roar",
 		/datum/action/cooldown/mob_cooldown/fractal_repulse = "bb_fractal_repulse",
 	)
