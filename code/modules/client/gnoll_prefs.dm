@@ -261,7 +261,6 @@
 		var/toggle_action = genitals[genital_id] ? "disable" : "enable"
 		dat += "&nbsp;&nbsp;[genital_label]: [status] "
 		dat += "<a href='?_src_=gnoll_prefs;action=toggle_genital;genital=[genital_id];toggle=[toggle_action]'>[toggle_action == "enable" ? "Enable" : "Disable"]</a><br>"
-	// dat += "<br>"
 
 	// Height section
 	var/list/height_options = get_descriptor_options("height")
@@ -820,6 +819,7 @@
 					info = "a video."
 			to_chat(user, "<span class='notice'>Successfully updated gnoll OOC Extra Image with [info]</span>")
 			log_game("[user] has set their gnoll OOC Extra Image to '[link]'.")
+			gnoll_show_ui(user)
 
 		if("nsfw_ooc_extra_img")
 			to_chat(user, "<span class='notice'>Add a link to NSFW images/videos (jpg, png, gif, mp4) that will be displayed in your NSFW Flavor Text.</span>")
@@ -857,6 +857,7 @@
 					info = "a video."
 			to_chat(user, "<span class='notice'>Successfully updated gnoll NSFW OOC Extra Image with [info]</span>")
 			log_game("[user] has set their gnoll NSFW OOC Extra Image to '[link]'.")
+			gnoll_show_ui(user)
 
 		if("gnoll_statpack")
 			// Build statpack list
@@ -873,13 +874,13 @@
 				statpacks_available[display_name] = SP
 			
 			statpacks_available = sort_list(statpacks_available)
-			var/choice = tgui_input_list(usr, "Choose your gnoll statpack:", "Statpack Selection", statpacks_available)
+			var/choice = tgui_input_list(user, "Choose your gnoll statpack:", "Statpack Selection", statpacks_available)
 			
 			if(choice)
 				var/datum/statpack/selected = statpacks_available[choice]
 				gnoll_statpack = selected
-				to_chat(usr, span_notice("Selected [choice] gnoll statpack."))
-				to_chat(usr, "<span class='info'>[selected.description_string()]</span>")
+				to_chat(user, span_notice("Selected [choice] gnoll statpack."))
+				to_chat(user, "<span class='info'>[selected.description_string()]</span>")
 			gnoll_show_ui(user)
 
 		if("voice_color")
