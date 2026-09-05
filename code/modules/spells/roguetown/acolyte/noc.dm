@@ -36,14 +36,39 @@
 	req_items = list (/obj/item/clothing/neck/roguetown/psicross/naledi)
 	associated_skill = /datum/skill/magic/arcane
 
+/atom/movable/screen/fullscreen/magical_blindness
+	icon_state = "oxydamageoverlay9"
+	layer = BLIND_LAYER
+	
+/datum/status_effect/debuff/magical_blindness
+	id = "magic_blind"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/magical_blindness
+	duration = 100
+	var/effect_strength = 0
+
+/datum/status_effect/debuff/magical_blindness/on_creation(mob/living/new_owner, strength)
+	if (isnum(strength))
+		effect_strength = strength
+		effectedstats = list(STATKEY_PER = -(round(strength / 2)))
+		duration = (strength * 3) SECONDS
+		new_owner.overlay_fullscreen("magical_blindness", /atom/movable/screen/fullscreen/magical_blindness)
+	return ..()
+
+/datum/status_effect/debuff/magical_blindness/on_remove()
+	owner.clear_fullscreen("magical_blindness")
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/debuff/magical_blindness
+	name = "Magically Blinded"
+	desc = "A mote of darkness clouds my eyes! It's harder to see, and my weapon strikes are less accurate."
+
 /obj/effect/proc_holder/spell/invoked/blindness/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		target.visible_message(span_warning("[user] points at [target]'s eyes!"),span_warning("My eyes are covered in darkness!"))
-		var/strength = min(user.get_skill_level(associated_skill) * 4, 4)
-		target.blind_eyes(strength)
+		target.apply_status_effect(/datum/status_effect/debuff/magical_blindness, user.get_skill_level(associated_skill))
 		return TRUE
 	revert_cast()
 	return FALSE

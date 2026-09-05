@@ -39,6 +39,10 @@
 	if(HAS_TRAIT(user, TRAIT_CURSE_RAVOX))
 		chance2hit -= 40
 
+	var/datum/status_effect/debuff/magical_blindness/magic_blind = user.has_status_effect(/datum/status_effect/debuff/magical_blindness)
+	if (magic_blind)
+		chance2hit -= magic_blind.effect_strength * 5 // 5% accuracy loss per level of the caster's miracles/arcyne for magic blindness (max 30% at 6)
+    
 	if(target.pulledby || target.pulling)
 		chance2hit += target.pulledby?.grab_state > GRAB_PASSIVE ? ACC_AGGRESSIVE_GRAB_BONUS : ACC_GRABBED_BONUS
 
