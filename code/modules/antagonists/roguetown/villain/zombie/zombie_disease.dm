@@ -37,15 +37,18 @@
 		message_cooldown_time = world.time + message_cooldown_amount
 	if(world.time > transformation_time)
 		var/mob/living/carbon/human/H = owner
-		if(!iscarbon(H))
+		if(!ishuman(H)) //zombie_check_can_convert is human only, and without the return this fell through and runtimed
 			owner.remove_status_effect(/datum/status_effect/zombie_infection)
+			return
 
 		if(H.stat == DEAD || infected_wake)
 			H.zombie_check_can_convert()
 			var/datum/antagonist/zombie/zombie_antag = H.mind?.has_antag_datum(/datum/antagonist/zombie)
 			if(zombie_antag && !zombie_antag.has_turned)
 				zombie_antag.wake_zombie(infected_wake)
-				owner.remove_status_effect(/datum/status_effect/zombie_infection)
+			// Clear whether or not the rise happened. A refused conversion (vampire, werewolf, skeleton,
+			// immune, no mind) otherwise leaves this ticking and spamming messages for the rest of the round
+			owner.remove_status_effect(/datum/status_effect/zombie_infection)
 
 /datum/status_effect/zombie_infection/on_apply()
 	. = ..()
@@ -55,8 +58,9 @@
 	else
 		to_chat(owner, span_danger("[warning_message]"))
 	var/mob/living/carbon/human/H = owner
-	if(!iscarbon(H))
+	if(!ishuman(H)) //without the return this dereferenced the very owner it just rejected
 		owner.remove_status_effect(/datum/status_effect/zombie_infection)
+		return TRUE
 	H.vomit(1, blood = TRUE, stun = FALSE)
 	return TRUE
 
@@ -67,8 +71,7 @@
 
 // Updated proc to use status effect
 /mob/living/carbon/human/proc/attempt_zombie_infection(mob/living/carbon/human/source, infection_type, wake_delay = 0)
-	var/datum/antagonist/zombie/zombie_antag = source?.mind?.has_antag_datum(/datum/antagonist/zombie)
-	if(!zombie_antag || !zombie_antag.has_turned)
+	if(!ishuman(source) || !source.is_risen_deadite()) //covers mindless NPC deadites as well as players
 		return FALSE
 
 	if(mind?.has_antag_datum(/datum/antagonist/zombie))

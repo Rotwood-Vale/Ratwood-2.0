@@ -187,10 +187,19 @@
 			message_admins(death_admin_message)
 			log_admin(death_admin_message)
 
-/mob/living/carbon/human/revive(full_heal, admin_revive)
+/mob/living/carbon/human/revive(full_heal, admin_revive, bypass_foreign_brain_check)
+	// A foreign brain refuses mundane revival in become_alive(), the Fulmenor chair pierces it.
+	// Either way a successful revival of one remakes the flesh for the soul that now owns it
+	var/needs_binding = (stat == DEAD) && has_foreign_brain()
 	. = ..()
 	if(!.)
 		return
+	if(needs_binding && mind?.player_card)
+		visible_message(span_danger("[src]'s flesh ripples and reshapes as the soul within claims it for its own!"))
+		mind.player_card.apply_identity_to(src)
+		// The conversion regenerates organs and replaces the brain, so re-fetch rather than reuse a stale ref
+		var/obj/item/organ/brain/new_brain = getorganslot(ORGAN_SLOT_BRAIN)
+		new_brain?.original_body_ref = WEAKREF(src)
 	switch(job)
 		if("Grand Duke", "Grand Duchess")
 			removeomen(OMEN_NOLORD)

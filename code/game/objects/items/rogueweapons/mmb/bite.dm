@@ -131,9 +131,7 @@
 			/*
 				ZOMBIE INFECTION VIA BITE
 			*/
-			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
-			if(zombie_antag && zombie_antag.has_turned)
-				zombie_antag.last_bite = world.time
+			if(user.is_risen_deadite()) //NPC deadites have no mind, a datum-only gate exempted them and runtimed on user.mind
 				if(bite_victim.zombie_infect_attempt())   // infect_attempt on bite
 					to_chat(user, span_danger("You feel your gift trickling from your mouth into [bite_victim]'s wound..."))
 
@@ -267,10 +265,9 @@
 			/*
 				ZOMBIE CHEW. ZOMBIFICATION
 			*/
-			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
-			if(zombie_antag && zombie_antag.has_turned)
-				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
-				if(!existing_zombie && caused_wound?.zombie_infect_attempt())   // infect_attempt on wound
+			if(user.is_risen_deadite()) //NPC deadites have no mind, a datum-only gate exempted them and runtimed on user.mind
+				var/existing_zombie = C.is_risen_deadite() || C.mind?.has_antag_datum(/datum/antagonist/zombie) //already risen, or already pending
+				if(!existing_zombie && caused_wound?.zombie_infect_attempt(user))   // infect_attempt on wound
 					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
 
 			/*

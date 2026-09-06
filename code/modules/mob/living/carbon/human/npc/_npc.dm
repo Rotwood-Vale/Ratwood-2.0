@@ -191,6 +191,11 @@
 		emote("idle")
 
 /mob/living/carbon/human/proc/deaggrodel()
+	if(!isturf(loc))
+		return FALSE //stored in a shapeshift holder or carried, not loose scenery to clean up
+	if(mind || key) //a player owns this body, never despawn it. Checked here so every path that can seat a player is covered
+		del_on_deaggro = null
+		return FALSE
 	if(aggressive)
 		for(var/mob/living/L in view(3)) // scan for enemies
 			if( should_target(L) && (L != src))

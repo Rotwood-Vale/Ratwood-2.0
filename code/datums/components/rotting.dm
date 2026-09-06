@@ -1,5 +1,4 @@
-#define DEAD_TO_ZOMBIE_TIME 5 MINUTES	//Time before death -> raised as zombie (when outside of the city)
-										//(This might not be the exact time)
+//DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
 
 /datum/component/rot
 	var/amount = 0
@@ -157,5 +156,3 @@
 	mid_length = 60
 	volume = 50
 	extra_range = 0
-
-#undef DEAD_TO_ZOMBIE_TIME

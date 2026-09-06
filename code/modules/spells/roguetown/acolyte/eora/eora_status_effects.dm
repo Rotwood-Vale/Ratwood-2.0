@@ -168,6 +168,13 @@
 
 		new /obj/effect/temp_visual/heal(get_turf(M), "#8A2BE2")
 
+		if(iscarbon(M))	//check before the spirit gets consumed below, or a refused revival strands the player with no afterlife mob
+			var/mob/living/carbon/balm_target = M
+			if(balm_target.has_foreign_brain())
+				M.visible_message(span_warning("[M]'s body shudders, but the soul within does not know this flesh!"))
+				M.remove_status_effect(src)
+				return
+
 		var/mob/dead/observer/spirit = M.get_spirit()
 		//GET OVER HERE!
 		if(spirit)

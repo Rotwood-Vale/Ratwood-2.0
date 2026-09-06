@@ -43,7 +43,7 @@
 		human_target.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		human_target.heal_wounds(INFINITY)
 		human_target.zombie_check_can_convert()
-		var/datum/antagonist/zombie/Z = human_target.mind.has_antag_datum(/datum/antagonist/zombie)
+		var/datum/antagonist/zombie/Z = human_target.mind?.has_antag_datum(/datum/antagonist/zombie) //mindless corpses are valid targets, zombie_check_can_convert just no-ops on them
 		if(Z)
 			Z.wake_zombie(TRUE)
 		human_target.emote("scream")

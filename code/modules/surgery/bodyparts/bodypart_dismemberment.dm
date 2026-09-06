@@ -527,6 +527,10 @@
 
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay
 
+	// Has to happen before ..(), the brain transfer inside it moves the mind to brainmob and nulls owner.mind
+	if(!special && owner?.mind)
+		owner.mind.severed_head_ref = WEAKREF(src)
+
 	name = "[owner.real_name]'s head"
 	. = ..()
 
@@ -642,6 +646,9 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	if(C.mind?.severed_head_ref?.resolve() == src)
+		C.mind.severed_head_ref = null
 
 	return ..()
 

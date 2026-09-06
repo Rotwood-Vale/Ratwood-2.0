@@ -36,6 +36,24 @@
 	chair_skill_level = 2
 	current_brew = 48
 
+/obj/structure/chair/frankenstein/debug
+	name = "Fulmenor chair (debug)"
+	desc = "A testing copy of the ZRONK device. It fills its own tank and winds its own crank, so the only things left to fail are the surgeon and the soul."
+
+/obj/structure/chair/frankenstein/debug/Initialize(mapload)
+	. = ..()
+	top_up()
+
+/obj/structure/chair/frankenstein/debug/MiddleClick(mob/user)
+	. = ..()
+	top_up() //so a foreign binding can be run again without brewing a second tank
+
+///Refills the tank and the crank. Every skill, consent and foreign brain gate is deliberately left alone
+/obj/structure/chair/frankenstein/debug/proc/top_up()
+	current_brew = max_brew
+	charge = max_charge
+	update_icon()
+
 /obj/structure/chair/frankenstein/Initialize(mapload)
 	. = ..()
 	update_icon()
@@ -73,6 +91,7 @@
 /obj/structure/chair/frankenstein/attackby(obj/item/I, mob/user)
 	if(!ishuman(user))
 		to_chat(user, span_warning("I have no idea how to operate this."))
+		return //without this a non-human falls through and every H deref below runtimes
 	var/mob/living/carbon/human/H = user
 	// Handle filling with brew containers
 	if(istype(I, /obj/item/reagent_containers))
@@ -142,8 +161,11 @@
 	. = ..()
 	. += span_info("Fluid level: [current_brew]/[max_brew] units")
 	. += span_info("Charge level: [charge]/[max_charge]")
-	. += span_info("Useful leaflet: To charge, use the crank affixed on the right.")
-	. += span_info("There's a big juicy lever in the middle on the backside that looks enticing to pull.")
+	. += span_info("Useful leaflet: Strap the departed into the seat and pour the elixir in, then charge it with the crank affixed on the right. Someone has etched 'RMB' into the handle.")
+	. += span_info("There's a big juicy lever in the middle on the backside that looks enticing to pull, and that is the one that does the waking. This one is etched 'MMB'.")
+	. += span_info("RMB. MMB. Huh. Must be the initials of two brothers or something.")
+	. += span_info("Leaflet, in smaller print: should the skull upon the shoulders be none of its own, this mends no body but takes one, unmaking whoever it was to clothe another soul in it. It drinks the tank dry, no hand below a master physician's should attempt it, and the artificers accept no blame for what the Undermaiden's faithful will name sacrilege.")
+	. += span_info("Someone has scratched a reply beneath it in a cramped hand, the ink a sickly green: <i><font color='#8ea63a'>'PESTRAN HERE. As much as I enjoy worms, flesh left to rot serves nobody, and turning away a soul you had the means to seat is the greater sin by far.'</font></i>")
 
 	if(current_brew > 0)
 		. += span_notice("The fluid tank contains a glowing green liquid.")
@@ -201,6 +223,7 @@
 /obj/structure/chair/frankenstein/attack_right(mob/user)
 	if(!ishuman(user))
 		to_chat(user, span_warning("I have no idea how to operate this."))
+		return //without this a non-human falls through and every H deref below runtimes
 	var/mob/living/carbon/human/H = user
 
 	if(cranking)
@@ -293,8 +316,21 @@
 		charge = 0
 	//OV edit end
 
+	// Soul-binding: a foreign brain revives only here, at a full tank and a master's hand
+	var/binding_foreign = FALSE
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/human_occupant = occupant
+		binding_foreign = human_occupant.has_foreign_brain()
+	if(binding_foreign)
+		if(H.get_skill_level(/datum/skill/misc/medicine) < SKILL_LEVEL_MASTER)
+			to_chat(H, span_warning("Binding a soul to stranger's flesh is beyond my skill. Only a master of medicine could attempt it."))
+			return
+		if(current_brew < max_brew)
+			to_chat(H, span_warning("Binding a stranger's soul to this flesh would drink the entire tank. It must be filled to the brim!"))
+			return
+
 	// Check if occupant is valid
-	if(!occupant.check_revive(user))
+	if(!occupant.check_revive(user, bypass_foreign_brain_check = binding_foreign))
 		return
 
 	// Prompt ghost
@@ -304,6 +340,19 @@
 	// Verify occupant is still valid
 	if(occupant.stat != DEAD || occupant.loc != get_turf(src) || !occupant.buckled)
 		to_chat(H, span_warning("The subject is no longer properly buckled to the chair!"))
+		return
+
+	// The alert above blocks on the occupant's player, so anything checked before it can be stale
+	var/still_foreign = FALSE
+	if(ishuman(occupant))
+		var/mob/living/carbon/human/rechecked_occupant = occupant
+		still_foreign = rechecked_occupant.has_foreign_brain()
+	if(still_foreign && !binding_foreign)	//became foreign mid-prompt, the binding gates above never ran
+		to_chat(H, span_warning("The flesh's bond shifted while the spirit deliberated! It must begin anew."))
+		return
+	binding_foreign = still_foreign	//the rightful brain returning mid-prompt downgrades this to an ordinary revival
+	if(current_brew < (binding_foreign ? max_brew : brew_required) || charge < max_charge)
+		to_chat(H, span_warning("The chair's reserves dwindled while the spirit deliberated!"))
 		return
 
 	if(alert_result != "I need to wake up")
@@ -317,15 +366,16 @@
 
 	// Revive process
 	occupant.adjustOxyLoss(-occupant.getOxyLoss())
-	if(occupant.revive(full_heal = FALSE))
+	// The flag pierces only the foreign brain gate, the conversion itself keys on state
+	if(occupant.revive(full_heal = FALSE, bypass_foreign_brain_check = binding_foreign))
 		// Restore consciousness
 		occupant.grab_ghost(force = TRUE)
 		occupant.emote("gasp")
 		occupant.Jitter(100)
 		occupant.electrocute_act(100, src, 1)
-		occupant.visible_message(span_notice("[occupant] jerks awake with a gasp!"), 
+		occupant.visible_message(span_notice("[occupant] jerks awake with a gasp!"),
 								span_userdanger("You awaken with agonizing pain as unnatural energy courses through your veins!"))
-		current_brew -= brew_required
+		current_brew -= (binding_foreign ? max_brew : brew_required)
 		charge = 0
 		update_icon()
 
