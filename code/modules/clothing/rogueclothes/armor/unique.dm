@@ -43,14 +43,21 @@
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
 	name = "decorated dopo robe"
-	desc = "A dopo robe with a red tassel. Leather inlays are sewn in. It looks sturdier than a simple robe."
+	desc = "A dopo robe with a red tassel. Leather inlays have been sewn in, increasing its durability."
 	icon_state = "eastsuit2"
 	item_state = "eastsuit2"
-	armor = ARMOR_LEATHER_STUDDED // Makes it the equivalence of studded with less integrity and better armor 
+	armor = ARMOR_LEATHER_STUDDED // Makes it the equivalence of studded with less integrity and better armor
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
 //craftable variation of eastsuit, essentially requiring the presence of a tailor with relevant materials
 //still weak against blunt
+
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/mastercraft
+	name = "fortified dopo robe"
+	desc = "A dopo robe sporting a red tassel. This one has been masterfully reinforced with layers of silk and hardened leather, granting it increased durability at no cost to comfort or protection."
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+
+// T3 dopo robe. Requires a Master skill leatherworker which is somewhat rarer than a tailor/smith. Upgrade to Studded Leather Armor, sidegrade to Light Brigantine.
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 	name = "old dopo robe"
@@ -58,7 +65,7 @@
 	icon_state = "eastsuit1"
 	item_state = "eastsuit1"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
-	armor = ARMOR_LEATHER_STUDDED 
+	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
