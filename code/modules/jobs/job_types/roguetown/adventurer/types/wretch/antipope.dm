@@ -10,35 +10,40 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS //The Inhumen discriminate not.
 	outfit = /datum/outfit/job/roguetown/wretch/antipope
+	subclass_languages = list(/datum/language/undead, /datum/language/thievescant)
 	cmode_music = 'sound/music/combat_cult.ogg'
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 //Seer to see other Inhumen.
-	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
-//Support class statline, somewhat better than Bishop's. No armour traits, DE or CR, so needs good stats desperately.
+	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC, TRAIT_GODHAND)
+//Support class statline.
 	subclass_stats = list(
-		STATKEY_INT = 4,
+		STATKEY_INT = 3,
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
+		STATKEY_SPD = 1,
 	)
 	maximum_possible_slots = 1//THERE CAN BE ONLY ONE GOD HAND.
-	subclass_skills = list(//Has Expert in two comparatively bad weapon types, otherwise supposed to be a support rather than a frontliner.
+	subclass_skills = list(//Supposed to be a support rather than a frontliner.
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //For self-defence, no STR so can't grab well, only resist
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, //You are Ascendants' chosen.
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Sewing Kit" = /obj/item/repair_kit,
+		"Lexicon of Her Truth" = /obj/item/book/rogue/bibble/zizo,
+    "Sewing Kit" = /obj/item/repair_kit,
 	)
-	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
+	extra_context = "Inhumen-exclusive. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
 /datum/outfit/job/roguetown/wretch/antipope
 	has_loadout = TRUE
@@ -83,6 +88,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)//Shut that guy up!
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/baothavice)//Trivial but great roleplaying potential.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
@@ -233,9 +239,9 @@
 	if(!H.stat)
 		var/static/list/faith_lines = list(
 			"THE TRUTH SHALL SET YOU FREE!",
-			"WHO IS YOUR GOD!?",
-			"ARE YOU FAITHFUL!?",
-			"WHO IS YOUR SHEPHERD!?",
+			"WHO IS YOUR MASTER!?",
+			"WHOM DO YOU FEAR!?",
+			"WHO IS YOUR LORD!?",
 		)
 		src.visible_message(span_warning("[src] shoves [S] into [H]'s lux!"))
 		say(pick(faith_lines), spans = list("torture"))
