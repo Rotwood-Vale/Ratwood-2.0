@@ -446,7 +446,11 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
+	throwforce = 28
+	armor_penetration = 50
+	icon_state = "throw_knifebs"
+	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 0)
+	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/matthios/Initialize(mapload)
 	. = ..()
