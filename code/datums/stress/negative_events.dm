@@ -440,13 +440,13 @@
 	timer = INFINITY
 
 /datum/stressevent/excommunicated
-	stressadd = 5
+	stressadd = 10
 	desc = span_boldred("The Ten have forsaken me!")
 	timer = INFINITY
 
 /datum/stressevent/apostasy
-	stressadd = 3
-	desc = span_boldred("The apostasy's mark is upon me!")
+	stressadd = 20
+	desc = span_boldred("The apostates mark is upon me!")
 	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon

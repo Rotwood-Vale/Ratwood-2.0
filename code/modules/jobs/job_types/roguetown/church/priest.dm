@@ -368,18 +368,6 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
 
-	//Flavor messages for cursing certain god's faithful.
-	//Dendor works in mysterious ways.
-	if (istype(H.patron, /datum/patron/divine/dendor))
-		to_chat(src, span_warning("The mad god Dendor is felt strongly. The wolf in this one balks and trashes as it is faintly restrained."))
-		//If we check this here there's no need to apply this trait preemtively to a bunch of people, and allows for greater fluff feedback.
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
-
-	//Abyssor's clergy are gripped by his dream.
-	if (istype(H.patron, /datum/patron/divine/abyssor))
-		to_chat(src, span_warning("The Dreamer, Abyssor has his clutches grasped firmly around this one. The light of the ten only barely penetrates the depths."))
-		ADD_TRAIT(H, TRAIT_CURSE_RESIST, TRAIT_GENERIC)
-
 	//Let's not curse heretical antags.
 	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
