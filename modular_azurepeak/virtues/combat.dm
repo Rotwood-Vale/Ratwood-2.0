@@ -124,10 +124,10 @@
 
 /datum/virtue/combat/crossbowman
 	name = "Crossbow Levy"
-	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've always kept a crossbow and some bolts around, just in case."
+	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've always kept an extra supply of special bolts around, just in case."
 	custom_text = "+1 to Crossbows, Up to Legendary, Minimum Apprentice"
-	added_stashed_items = list("Crossbow" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-								"Quiver (Bolts)" = /obj/item/quiver/bolts
+	added_stashed_items = list("Quiver (Heavy Bolts)" = /obj/item/quiver/heavybluntbolts,
+								"Quiver (Regular Bolts)" = /obj/item/quiver/bolts
 	)
 
 /datum/virtue/combat/crossbowman/apply_to_human(mob/living/carbon/human/recipient)
