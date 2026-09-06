@@ -100,7 +100,7 @@
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
-		var/weapons = list("Psydonic Whip", "Psydonic Rapier")
+		var/weapons = list("Psydonic Whip", "Psydonic Rapier", "Psydonic Urumi (11 STR Minimum)")
 		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
 		switch(weapon_choice)
 			if("Psydonic Whip")
@@ -110,6 +110,9 @@
 				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
 				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			if("Psydonic Urumi (11 STR Minimum)")
+				H.put_in_hands(new /obj/item/rogueweapon/whip/urumi/silver/psydonic(get_turf(H)), forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 
 /datum/outfit/job/roguetown/psyaltrist
 	job_bitflag = BITFLAG_HOLY_WARRIOR

@@ -65,7 +65,7 @@
 				beltr = /obj/item/quiver/sling/iron
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 				
-		var/weapons2 = list("Scimitar","Whip","Club")
+		var/weapons2 = list("Scimitar","Whip","Urumi","Club")
 		var/weapon_choice2 = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in weapons2
 		switch(weapon_choice2)
 			if("Scimitar")
@@ -73,6 +73,8 @@
 				l_hand = /obj/item/rogueweapon/sword/sabre/iron
 			if("Whip") // They can head down to the armory to sideshift into one of the other bows.
 				beltl = /obj/item/rogueweapon/whip
+			if("Urumi")
+				beltl = /obj/item/rogueweapon/whip/urumi
 			if("Club")
 				beltl = /obj/item/rogueweapon/mace/cudgel
 
