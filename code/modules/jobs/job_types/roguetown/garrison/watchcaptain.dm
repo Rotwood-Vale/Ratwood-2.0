@@ -22,7 +22,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_citywatch.ogg'
-	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
+	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH) // No evil shall escape my sight
 	job_subclasses = list(
 		/datum/advclass/watchcaptain/watchcaptain
 	)
@@ -53,9 +53,9 @@
 	category_tags = list(CTAG_SHERIFF)
 	subclass_stats = list(
 		STATKEY_STR = 1,//will people accept a combat roll with less than +2 in strength? Who knows
-		STATKEY_INT = 2,
+		STATKEY_INT = 1,
 		STATKEY_CON = 1,
-		STATKEY_PER = 3, //eye for Crime
+		STATKEY_PER = 2, //eye for Crime
 		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(

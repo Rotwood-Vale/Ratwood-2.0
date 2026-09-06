@@ -38,7 +38,7 @@
 //All skills/traits are on the loadouts. All are identical. Welcome to the stupid way we have to make sub-classes...
 /datum/outfit/job/roguetown/sergeant
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -58,7 +58,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 1,
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_PER = 1, //Gets bow-skills, so give a SMALL tad of perception to aid in bow draw.
 		STATKEY_WIL = 1,
 	)
@@ -66,10 +66,10 @@
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
