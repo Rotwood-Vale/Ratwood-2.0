@@ -974,6 +974,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["char_accent"]		>> char_accent
 	if (!char_accent)
 		char_accent = "No accent"
+	S["char_mannerism"]			>> char_mannerism
+	if (!char_mannerism)
+		char_mannerism = "No mannerism"
 
 	S["pronouns"] >> pronouns
 	S["voice_type"] >> voice_type
@@ -1195,6 +1198,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["song_artist"] , song_artist)
 	WRITE_FILE(S["song_title"] , song_title)
 	WRITE_FILE(S["char_accent"] , char_accent)
+	WRITE_FILE(S["char_mannerism"] , char_mannerism)
 	WRITE_FILE(S["voice_type"] , voice_type)
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
