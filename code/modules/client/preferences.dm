@@ -2666,8 +2666,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/accent_preview = apply_accent_preview(char_accent, test_message)
 						var/preview_message = accent_preview ? "[accent_preview]" : test_message
 						var/preview_text = apply_mannerism_preview(selected_mannerism, preview_message)
-						if(!accent_preview)
-							preview_text += " (this accent uses no text replacements)"
 
 						var/list/accent_preview_spans = GLOB.accent_spans?[char_accent]
 						if(accent_preview_spans?.len)
