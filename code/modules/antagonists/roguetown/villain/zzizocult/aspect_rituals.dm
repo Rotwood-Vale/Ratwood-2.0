@@ -55,7 +55,6 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	return input(H, title, "DEADITE") as null|anything in choices
 
 
-
 /datum/ritual/strand
 	abstract_type = /datum/ritual/strand
 	required_aspect = "strand"
@@ -147,7 +146,7 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	desc = "Bring yourself and whoever you hold into the dream."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "gravemark"
+	overlay_state = "jaunt"
 	range = 0
 	movement_interrupt = FALSE
 	chargedloop = null
@@ -232,7 +231,9 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 /obj/effect/proc_holder/spell/invoked/toil_mend
 	name = "Progress"
 	desc = "Heals the target and mends their equipment."
-	overlay_state = "lightning"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "toil"
 	sound = 'sound/magic/lightning.ogg'
 	range = 7
 	recharge_time = 10 SECONDS
@@ -413,7 +414,9 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 /obj/effect/proc_holder/spell/self/rot_transfuse
 	name = "Transfuse"
 	desc = "Transfuse all reagents in your bloodstream to the target you're holding."
-	overlay_state = "snuff_lights"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "transfuse"
 	recharge_time = 5 SECONDS
 	chargedloop = null
 
@@ -585,6 +588,11 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 		owner.adjustFireLoss(-5)
 	for(var/obj/item/I in owner.get_equipped_items() + owner.held_items)
 		I.fire_act()
+	for(var/obj/item/grabbing/G in owner.held_items)
+		if(isliving(G.grabbed))
+			var/mob/living/victim = G.grabbed
+			victim.fire_act(2, 20)
+			victim.adjustFireLoss(10)
 
 /atom/movable/screen/alert/status_effect/shadowform
 	name = "SCADUFORM"
@@ -595,6 +603,9 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	name = "Snuff"
 	desc = "Snuff out a fire or light."
 	range = 7
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "zizocandle"
 	recharge_time = 2 SECONDS
 	chargedloop = null
 
@@ -610,30 +621,6 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 		O.extinguish()
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/sear
-	name = "Sear"
-	desc = "Engulf your target in flame. Requires aggressive grab."
-	overlay_state = "snuff_lights"
-	recharge_time = 10 SECONDS
-	chargedloop = null
-
-/obj/effect/proc_holder/spell/self/sear/cast(list/targets, mob/user = usr)
-	. = ..()
-	var/obj/item/grabbing/G = user.get_active_held_item()
-	if(!istype(G) || !isliving(G.grabbed))
-		return FALSE
-	if(!G)
-		to_chat(user, span_warning("Must be grabbing someone."))
-		revert_cast()
-		return FALSE
-	var/mob/living/victim = G.grabbed
-	if(isbodypart(G.limb_grabbed))
-		var/obj/item/bodypart/BP = G.limb_grabbed
-		BP.receive_damage(0, 85)
-	victim.fire_act(15, 40)
-	victim.visible_message(span_danger("[user] engulfs [victim] in flame!"))
-	return TRUE
-
 /obj/effect/dummy/phased_mob/slaughter/shadow/relaymove(mob/user, direction)
 	var/turf/dest = get_step(src, direction)
 	if(!dest || dest.get_lumcount() >= 0.75)
@@ -644,7 +631,9 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 /obj/effect/proc_holder/spell/self/shadow_jaunt
 	name = "Scadu Jaunt"
 	desc = "Turn invisible and move through walls. Only functions in darkness."
-	overlay_state = "gravemark"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "zizocloud"
 	recharge_time = 30 SECONDS
 	chargedloop = null
 
@@ -695,7 +684,6 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	target.update_body_parts()
 	target.apply_status_effect(/datum/status_effect/shadowform)
 	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadow_snuff)
-	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/sear)
 	target.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_jaunt)
 	target.AddComponent(/datum/component/light_vulnerability)
 	for(var/obj/item/I in target.get_equipped_items() + target.held_items)
