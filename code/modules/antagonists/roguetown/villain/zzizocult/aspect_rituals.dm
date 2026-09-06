@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 
 /datum/ritual/servantry/aspect
-	name = "Bestow Aspect"
+	name = "Bestow Aspect (UNLOCKS ASCENSION)"
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
