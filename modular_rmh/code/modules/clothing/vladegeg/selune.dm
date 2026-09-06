@@ -6,6 +6,7 @@
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/selune.dmi'
 	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/selune_sleeves.dmi'
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
+	fiber_salvage = FALSE
 
 //CRAFTING
 

@@ -801,7 +801,7 @@ GLOBAL_LIST(teleport_runes)
 	if(summoning)
 		REMOVE_TRAIT(summoned_mob, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned_mob.status_flags -= GODMODE//remove godmode
-		summoned_mob.candodge = TRUE
+		summoned_mob.mob_can_dodge = TRUE
 		summoned_mob.binded = FALSE
 		summoned_mob.move_resist = MOVE_RESIST_DEFAULT
 		summoned_mob.SetParalyzed(0)
@@ -819,7 +819,7 @@ GLOBAL_LIST(teleport_runes)
 		animate(summoned_mob, color = null,time = 5)
 		REMOVE_TRAIT(summoned_mob, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned_mob.status_flags -= GODMODE//remove godmode
-		summoned_mob.candodge = TRUE
+		summoned_mob.mob_can_dodge = TRUE
 		summoned_mob.binded = FALSE
 		summoned_mob.move_resist = MOVE_RESIST_DEFAULT
 		summoned_mob.SetParalyzed(0)

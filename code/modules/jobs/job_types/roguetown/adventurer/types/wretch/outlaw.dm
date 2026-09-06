@@ -32,7 +32,9 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,		//why did these guys not even have SOME crafting experience?
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 
 /datum/outfit/job/roguetown/wretch/outlaw/pre_equip(mob/living/carbon/human/H)
 	..()

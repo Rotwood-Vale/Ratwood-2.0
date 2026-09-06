@@ -19,7 +19,7 @@
 /mob/living/carbon/human/species/goblin/npc
 	aggressive=1
 	mode = NPC_AI_IDLE
-	dodgetime = 30 //they can dodge easily, but have a cooldown on it
+	dodgetime = 3 SECONDS //they can dodge easily, but have a cooldown on it
 	flee_in_pain = TRUE
 	npc_jump_chance = 60
 	npc_jump_distance = 3 // this might make them concheck more often, but it'll also mean it's easier to kick their legs out from under them
