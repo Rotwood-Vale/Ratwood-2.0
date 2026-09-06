@@ -63,7 +63,7 @@
 		icon_state = "pouch0"
 
 /obj/item/ammopouch/bullets/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bullet/A = new()
 		bullets += A

@@ -397,7 +397,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			blade_int = max_blade_int
 
-/obj/item/Destroy()
+/obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -1788,6 +1788,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(src.anvilrepair)
+		if(src.smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)

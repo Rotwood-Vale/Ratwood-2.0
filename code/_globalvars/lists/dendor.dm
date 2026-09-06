@@ -1,1 +1,1 @@
-GLOBAL_LIST_EMPTY(wildshapes)
+GLOBAL_LIST_INIT(wildshapes, init_wildshapes())

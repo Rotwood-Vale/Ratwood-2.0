@@ -23,7 +23,7 @@
 /obj/structure/curtain/directional/Initialize(mapload)
 	closedir = dir
 	update_icon()
-	..()
+	return ..()
 
 //Crafted directional curtain - only openable from one side
 /obj/structure/curtain/directional/crafted
