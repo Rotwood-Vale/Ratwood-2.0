@@ -78,7 +78,6 @@
 		H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT)
-	H.mind.special_items["Dark Crystal"] += /obj/item/necro_relics/necro_crystal
 	H.grant_language(/datum/language/undead)
 	greet()
 
@@ -118,8 +117,8 @@
 
 /datum/objective/zizo
 	name = "ASCEND"
-	explanation_text = "Ensure that I ascend. Use the dark crystal in your stash to obtain an aspect."
-	team_explanation_text = "Ensure that I ascend. Use the dark crystal in your stash to obtain an aspect."
+	explanation_text = "Ensure that I ascend. I must bestow an aspect upon myself to unlock my ascension rite."
+	team_explanation_text = "Ensure that I ascend. I must bestow an aspect upon myself to unlock my ascension rite."
 	triumph_count = 5
 
 /datum/objective/zizo/check_completion()

@@ -41,6 +41,29 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return FALSE
 	return TRUE
 
+GLOBAL_LIST_EMPTY(zizo_targets)
+GLOBAL_VAR_INIT(zizo_target_cd, 0)
+
+/proc/reroll_targets()
+	GLOB.zizo_targets = list()
+	var/list/weighted = list()
+	for(var/mob/living/carbon/human/H in GLOB.human_list)
+		if(!H.mind || !H.client || H.stat == DEAD || is_zizo(H))
+			continue
+		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+		if(!J || (J.type in list(KING_QUEEN_ROLES)))
+			continue
+		if(J.type in (list(PEASANT_ROLES) + list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES)))
+			weighted[H] = 5
+		else
+			weighted[H] = 1
+	for(var/i in 1 to 5)
+		if(!weighted.len)
+			break
+		var/mob/living/carbon/human/chosen = pickweight(weighted)
+		GLOB.zizo_targets += chosen
+		weighted -= chosen
+
 /datum/ritual
 	abstract_type = /datum/ritual
 	var/name = "DVRK AND EVIL RITVAL"
@@ -53,43 +76,35 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/required_aspect
 	var/needs_aspect = FALSE
 	var/keep_center = FALSE
+	var/center_desc
+	var/n_desc
+	var/e_desc
+	var/s_desc
+	var/w_desc
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
 	return
 
+/datum/ritual/proc/req_label(req, desc)
+	if(desc)
+		return desc
+	if(req == /mob/living/carbon/human)
+		return "a humanoid"
+	var/atom/A = req
+	return initial(A.name)
+
 /datum/ritual/proc/hugbox()
 	var/list/parts = list()
-	var/atom/req
 	if(center_requirement)
-		req = center_requirement
-		if(req == /mob/living/carbon/human)
-			parts += "Center - Humanoid"
-		else
-			parts += "Center - [initial(req.name)]"
+		parts += "Center - [req_label(center_requirement, center_desc)]"
 	if(n_req)
-		req = n_req
-		if(req == /mob/living/carbon/human)
-			parts += "North - Humanoid"
-		else
-			parts += "North - [initial(req.name)]"
+		parts += "North - [req_label(n_req, n_desc)]"
 	if(e_req)
-		req = e_req
-		if(req == /mob/living/carbon/human)
-			parts += "East - Humanoid"
-		else
-			parts += "East - [initial(req.name)]"
+		parts += "East - [req_label(e_req, e_desc)]"
 	if(s_req)
-		req = s_req
-		if(req == /mob/living/carbon/human)
-			parts += "South - Humanoid"
-		else
-			parts += "South - [initial(req.name)]"
+		parts += "South - [req_label(s_req, s_desc)]"
 	if(w_req)
-		req = w_req
-		if(req == /mob/living/carbon/human)
-			parts += "West - Humanoid"
-		else
-			parts += "West - [initial(req.name)]"
+		parts += "West - [req_label(w_req, w_desc)]"
 	return jointext(parts, ", ")
 
 // SERVANTRY
@@ -99,17 +114,20 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/convert
 	name = "Convert"
 	center_requirement = /mob/living/carbon/human
+	center_desc = "a sacrifice"
 	is_cultist_ritual = TRUE
 
 /datum/ritual/servantry/convert/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target)
-		return
-	if(target == user)
+	if(!target || target == user)
+		to_chat(user, span_warning("A sacrifice must lie in the center. The sacrifice must be desired by ZIZO, which can be tracked by heartaches."))
 		return
 	if(is_zizocultist(target.mind) || is_zizolackey(target.mind))
 		return
 	if(!target.client)
+		return
+	if(!(target in GLOB.zizo_targets))
+		to_chat(user, span_warning("She does not want this one."))
 		return
 	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
@@ -127,26 +145,57 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 			to_chat(user, span_warning("[target] has no lux left to give."))
 		else
 			to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
+	GLOB.zizo_targets -= target
 
 /datum/ritual/servantry/sacrifice
 	name = "Sacrifice"
 	center_requirement = /mob/living/carbon/human
+	center_desc = "a sacrifice"
+	is_cultist_ritual = TRUE
 
 /datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target || target == user)
+		to_chat(user, span_warning("A sacrifice must lie in the center. I also need another cultist on the rune with a knife in their hand. The sacrifice must be desired by ZIZO, which can be tracked by heartaches."))
 		return
-	if(is_zizocultist(target.mind) || is_zizolackey(target.mind))
+	if(is_zizo(target))
+		to_chat(user, span_warning("This is a cultist."))
 		return
 	if(!target.client)
+		return
+	if(!(target in GLOB.zizo_targets))
+		to_chat(user, span_warning("She does not want this one."))
 		return
 	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
+	var/mob/living/carbon/human/assistant
+	for(var/mob/living/carbon/human/H in range(1, center))
+		if(H == user || H == target)
+			continue
+		for(var/obj/item/I in H.held_items)
+			if(istype(I, /obj/item/rogueweapon/huntingknife))
+				assistant = H
+				break
+		if(assistant)
+			break
+	if(!assistant)
+		to_chat(user, span_warning("I need another cultist on the rune with a knife in their hand."))
+		return
+	to_chat(user, span_notice("You and [assistant] begin the sacrifice..."))
+	if(!do_after(user, 10 SECONDS, target = target) && !do_after(assistant, 10 SECONDS, target = target))
+		return
+	if(QDELETED(target) || !(target in center.contents) || QDELETED(assistant))
+		return
 	if(!absorb_lux(target, center))
 		to_chat(user, span_warning("[target] has no lux left to give."))
 		return
-	to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
+	var/datum/job/J = target.mind?.assigned_role
+	if(J && (J.type in (list(NOBLE_ROLES) + list(CHURCH_ROLES) + list(GARRISON_ROLES) + list(INQUISITION_ROLES))))
+		new /obj/item/necro_relics/necro_crystal(center)
+	GLOB.zizo_targets -= target
+	target.visible_message(span_danger("[assistant] tears open [target]'s chest and rips free their lux!"))
+	to_chat(user, span_notice("The sacrifice is accepted!"))
 
 /datum/ritual/servantry/heartache
 	name = "Heartaches"
@@ -154,32 +203,66 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/servantry/heartache/invoke(mob/user, turf/center)
 	new /obj/item/corruptedheart(center)
-	to_chat(user, span_notice("A corrupted heart. When used on a non-enlightened mortal their heart shall ache and they will be immobilized and too stunned to speak. Perfect for getting new soon-to-be enlightened. Now, just don't use it at the combat ready."))
+	to_chat(user, span_notice("Use this item to seek your sacrifices."))
+
+/datum/ritual/servantry/marktargets
+	name = "Divine Sacrifices"
+	center_requirement = /obj/item/organ/eyes
+	center_desc = "eyes"
+	is_cultist_ritual = TRUE
+	keep_center = TRUE
+
+/datum/ritual/servantry/marktargets/invoke(mob/living/user, turf/center)
+	if(world.time < GLOB.zizo_target_cd)
+		to_chat(user, span_warning("It is too soon, you must wait."))
+		return
+	var/obj/item/organ/heart/heart = locate() in center
+	if(heart)
+		qdel(heart)
+	GLOB.zizo_target_cd = world.time + 20 MINUTES
+	reroll_targets()
+	to_chat(user, span_notice("You feel a shiver down your spine. Seek your new sacrifices with heartaches."))
 
 /obj/item/corruptedheart
 	name = "corrupted heart"
-	desc = "It sparkles with forbidden magic energy. It makes all the heart aches go away."
+	desc = "It sparkles with forbidden magic energy. Can be used to locate sacrifices."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown
 
-/obj/item/corruptedheart/attack(mob/living/target, mob/living/user, list/modifiers)
-	if(!istype(user.patron, /datum/patron/inhumen/zizo))
+/obj/item/corruptedheart/attack_self(mob/user)
+	if(!is_zizo(user))
 		return
-	if(istype(target.patron, /datum/patron/inhumen/zizo) && target.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		target.set_blood_volume(BLOOD_VOLUME_NORMAL)
-		to_chat(target, span_notice("My elixir of life is stagnant once again."))
-		qdel(src)
+	if(!length(GLOB.zizo_targets))
+		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
 		return
-	if(!do_after(user, 2 SECONDS, target))
+	if(world.time < cooldown)
+		to_chat(user, span_warning("Too soon!"))
 		return
-	if(target.cmode)
-		user.electrocute_act(30)
-	target.Stun(10 SECONDS)
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.adjust_silence(30 SECONDS)
-	qdel(src)
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	var/mob/living/carbon/human/prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
+	if(!prey || !prey.z)
+		return
+	if(istype(prey.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+		return
+	var/dir_text = dir2text(get_dir(user, prey))
+	var/dist = get_dist(user, prey)
+	var/proximity_text = "far away"
+	if(dist <= 5)
+		proximity_text = "very close"
+	else if(dist <= 15)
+		proximity_text = "nearby"
+	var/z_text = ""
+	if(prey.z > user.z)
+		z_text = ", somewhere above"
+	else if(prey.z < user.z)
+		z_text = ", somewhere below"
+	to_chat(user, span_danger("The heart beats faster toward the [dir_text]. [prey.real_name] feels [proximity_text][z_text]."))
+	cooldown = world.time + 2 MINUTES
+
 
 /datum/ritual/servantry/darksunmark
 	name = "Dark Sun's Mark"
@@ -517,11 +600,16 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
-	center_requirement = /mob/living/carbon/human // cult leader
-	n_req = /mob/living/carbon/human // the ruler
-	s_req = /obj/item/necro_relics/necro_crystal
-	e_req = /obj/item/necro_relics/necro_crystal
-	w_req = /obj/item/necro_relics/necro_crystal
+	center_requirement = /mob/living/carbon/human
+	center_desc = "the cult leader"
+	n_req = /mob/living/carbon/human
+	n_desc = "the ruler"
+	s_req = /mob/living/carbon/human
+	s_desc = "a cleric"
+	e_req = /mob/living/carbon/human
+	e_desc = "a cultist"
+	w_req = /mob/living/carbon/human
+	w_desc = "a cultist"
 	is_cultist_ritual = TRUE
 	needs_aspect = TRUE
 
@@ -532,16 +620,69 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	gesture_required = TRUE
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
-	var/mob/living/carbon/human/cultist = locate() in center.contents
-	if(!cultist || cultist != user)
+	if(!istype(get_area(center), /area/rogue/indoors/town/manor))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A cleric must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
-	if(!is_zizocultist(cultist.mind))
+	var/mob/living/carbon/human/cultist = locate() in center.contents
+	if(!cultist || cultist != user || !is_zizocultist(cultist.mind))
 		return
 	var/mob/living/carbon/human/RULER = locate() in get_step(center, NORTH)
-	if(RULER != SSticker.rulermob && RULER.stat != DEAD)
-		to_chat(user, span_danger("The sacrifice must be the ruler of this realm."))
+	if(RULER != SSticker.rulermob)
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A cleric must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
-	RULER.gib()
+	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
+	if(!cleric || !cleric.devotion || cleric.stat == DEAD)
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A cleric must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		return
+	var/mob/living/carbon/human/east = locate() in get_step(center, EAST)
+	var/mob/living/carbon/human/west = locate() in get_step(center, WEST)
+	if(!is_zizo(east) || !is_zizo(west))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A cleric must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		return
+	cleric.visible_message(span_danger("[cleric] withers and dies!"))
+	cleric.death()
+	RULER.Unconscious(6 MINUTES)
+	priority_announce("Incomprehensible evil arises from within the keep! To arms, the end is near!", title = "ZIZO", sound = 'sound/villain/seen_wonder.ogg')
+	var/datum/particle_weather/storm = new /datum/particle_weather/blood_rain_storm
+	SSParticleWeather.runningWeather = storm
+	storm.start()
+	RULER.apply_status_effect(/datum/status_effect/zizo_ascension, cultist)
+	to_chat(user, span_boldnotice("The ruler must remain upon the rune for five minutes. Guard them, do not move them from the rune."))
+
+/datum/status_effect/zizo_ascension
+	id = "zizo_ascension"
+	duration = -1
+	tick_interval = 5 SECONDS
+	var/mob/living/carbon/human/cultist
+	var/elapsed = 0
+
+/datum/status_effect/zizo_ascension/on_creation(mob/living/new_owner, mob/living/carbon/human/leader)
+	cultist = leader
+	. = ..()
+
+/datum/status_effect/zizo_ascension/tick()
+	if(QDELETED(cultist) || cultist.stat == DEAD)
+		ascension_fail()
+		return
+	if(!istype(get_area(owner), /area/rogue/indoors/town/manor))
+		ascension_fail()
+		return
+	if(!(locate(/obj/effect/decal/cleanable/sigil) in get_turf(owner)))
+		ascension_fail()
+		return
+	elapsed += 5
+	if(elapsed >= 300)
+		zizo_ascend(cultist)
+		owner.gib()
+		qdel(src)
+
+/datum/status_effect/zizo_ascension/proc/ascension_fail()
+	priority_announce("The sky brightens! The ritual is foiled!", title = "PEACE", sound = 'sound/misc/triumph.ogg')
+	qdel(src)
+
+/proc/zizo_ascend(mob/living/carbon/human/cultist)
+	if(QDELETED(cultist) || !cultist.mind)
+		return
 	SSmapping.retainer.cult_ascended = TRUE
 	to_chat(cultist, span_userdanger("I HAVE DONE IT! I HAVE REACHED A HIGHER FORM! ZIZO SMILES UPON ME WITH MALICE IN HER EYES TOWARD THE ONES WHO LACK KNOWLEDGE AND UNDERSTANDING!"))
 	ADD_TRAIT(cultist, TRAIT_NOPAIN, TRAIT_GENERIC)
@@ -569,7 +710,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/obj/item/clothing/head/roguetown/crown/zizo/crown = new(cultist)
 	cultist.equip_to_slot_or_del(crown, SLOT_HEAD)
 	ADD_TRAIT(crown, TRAIT_NODROP, TRAIT_GENERIC)
-	priority_announce("The sky blackens, a dark day for Grimoria.", title = "Ascension", sound = 'sound/misc/excomm.ogg')
+	priority_announce("The sky blackens, a dark day for Grimoria.", title = "Ascension", sound = 'sound/villain/dreamer_win.ogg')
 	SSvote.initiate_vote("endround", "ZIZO", null, forced = TRUE)
 	for(var/mob/living/carbon/human/V in GLOB.human_list)
 		if(V.mind in SSmapping.retainer.cultists)

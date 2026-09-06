@@ -19,9 +19,15 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
-	target.Unconscious(2 MINUTES)
+	target.Unconscious(4 MINUTES)
 	target.Jitter(4)
-	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 2 minutes, they shall wake."))
+	target.emote("scream")
+	target.visible_message(span_danger("[target]'s memory is wiped clean! They will completely forget what happened and who did it to them. In 4 minutes, they shall wake."))
+	var/obj/item/bodypart/chest/torso = target.get_bodypart(BODY_ZONE_CHEST)
+	if(torso)
+		torso.receive_damage(85)
+		torso.add_wound(/datum/wound/puncture)
+	playsound(target, 'sound/gore/flesh_eat_04.ogg', 60, TRUE)
 	to_chat(target, span_danger("THE LUX IS TORN FROM YOUR SOUL. YOUR MEMORY BECOMES A BLUR. YOU CAN'T REMEMBER WHO DID THIS TO YOU, OR ANY DETAILS ABOUT HOW IT HAPPENED."))
 	new /obj/item/necro_relics/necro_crystal(T)
 	return TRUE
@@ -83,6 +89,46 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	abstract_type = /datum/ritual/blood
 	required_aspect = "blood"
 
+GLOBAL_LIST_EMPTY(zizo_bestow_areas)
+
+/proc/refill_bestow_areas()
+	if(!GLOB.zizo_bestow_areas)
+		GLOB.zizo_bestow_areas = list()
+	var/list/pool = list(
+		/area/rogue/indoors/town/shop,
+		/area/rogue/indoors/town/tavern,
+		/area/rogue/indoors/town/church,
+		/area/rogue/indoors/town/bath,
+		/area/rogue/indoors/town/physician,
+		/area/rogue/indoors/town/academy,
+		/area/rogue/indoors/town/garrison,
+		/area/rogue/indoors/town/warden,
+		/area/rogue/outdoors/town/graveyard,
+	) - GLOB.zizo_bestow_areas
+	while(GLOB.zizo_bestow_areas.len < 3 && pool.len)
+		var/chosen = pick(pool)
+		GLOB.zizo_bestow_areas += chosen
+		pool -= chosen
+
+/proc/zizo_bestow_alert(area/where)
+	for(var/mob/living/carbon/human/H in GLOB.human_list)
+		if(H.mind && H.get_skill_level(/datum/skill/magic/arcane) > 0)
+			to_chat(H, span_userdanger("Vile magick ripples out from [where.name]! Something evil has happened!"))
+	priority_announce("An inhumen ritual has been completed! Vile cultists seek the power of the Gods!", title = "Omen", sound = 'sound/villain/dreamer_warning.ogg')
+	var/datum/particle_weather/gentle = new /datum/particle_weather/blood_rain_gentle
+	SSParticleWeather.runningWeather = gentle
+	gentle.start()
+
+/obj/structure/reality_rend
+	name = "reality rend"
+	desc = "A wound in the world."
+	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
+	icon_state = "energy_ball"
+	color = "#000000"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE
+
 /datum/ritual/servantry/aspect
 	name = "Bestow Aspect"
 	center_requirement = /mob/living/carbon/human
@@ -102,6 +148,25 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 		to_chat(user, span_warning("THEY ARE ALREADY AN INITIATE."))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
+	refill_bestow_areas()
+	var/area/here = get_area(center)
+	if(!(here.type in GLOB.zizo_bestow_areas))
+		to_chat(user, span_warning("THIS PLACE IS NOT RIGHT. SEEK:"))
+		for(var/atype in GLOB.zizo_bestow_areas)
+			var/area/A = atype
+			to_chat(user, span_notice("- [initial(A.name)]"))
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
+	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
+	if(!do_after(user, 20 SECONDS, target = target))
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
+	if(HAS_TRAIT(target, TRAIT_ASPECTED))
+		return
+	new /obj/structure/reality_rend(center)
+	GLOB.zizo_bestow_areas -= here.type
+	refill_bestow_areas()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
 	var/contents = "THESE ARE THE SIGNS BY WHICH YOU WILL KNOW ME.<BR>--------------<BR>"
 	for(var/key in GLOB.zizo_aspects)
 		contents += "<b><a href='?src=[REF(src)];pick=[key];target=[REF(target)]'>[uppertext(key)]</a></b><BR>[GLOB.zizo_aspects[key]]<BR><BR>"
