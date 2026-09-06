@@ -75,12 +75,7 @@
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
 		return TRUE
-	var/adf = user.used_intent.clickcd
-	if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-		adf = round(adf * CLICK_CD_MOD_AIMED)
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-	user.changeNext_move(adf)
+	user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 	for(var/obj/item/clothing/worn_thing in get_equipped_items(include_pockets = TRUE))//checks clothing worn by src.
 	// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
@@ -168,15 +163,9 @@
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
 					user.do_attack_animation(M, user.used_intent.animname, used_item = src, used_intent = user.used_intent, simplified = TRUE)
 			return
-	var/rmb_stam_penalty = 0
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-		rmb_stam_penalty = EXTRA_STAMDRAIN_SWIFSTRONG
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		if(user.used_intent.clickcd > CLICK_CD_INTENTCAP)	//If we're on Swift and our intent is not already at the cap by default, we consume extra stamina.
-			rmb_stam_penalty = EXTRA_STAMDRAIN_SWIFSTRONG
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
-	user.stamina_add(user.used_intent.releasedrain + rmb_stam_penalty)
+	user.stamina_add(user.used_intent.releasedrain + user._get_swifstrong_stam_penalty())
 	var/bad_guard = FALSE
 	//We have Guard / Clash active, and are hitting someone who doesn't. Cheesing a 'free' hit with a defensive buff is a no-no. You get punished.
 	if(user.has_status_effect(/datum/status_effect/buff/clash) && !M.has_status_effect(/datum/status_effect/buff/clash))
@@ -630,21 +619,11 @@
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	if(force_dynamic && !user.used_intent.tranged && !user.used_intent.tshield)
 		if(proximity_flag && isopenturf(target) && !user.used_intent?.noaa)
-			var/adf = user.used_intent.clickcd
-			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * CLICK_CD_MOD_AIMED)
-			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-				adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-			user.changeNext_move(adf)
+			user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 		if(!proximity_flag && ismob(target) && !user.used_intent?.noaa) //this block invokes miss cost clicking on seomone who isn't adjacent to you
-			var/adf = user.used_intent.clickcd
-			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * CLICK_CD_MOD_AIMED)
-			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-				adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-			user.changeNext_move(adf)
+			user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 
