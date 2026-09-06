@@ -584,8 +584,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type
 	var/virtuetwo_type
+	var/list/virtue_choices
+	var/list/virtuetwo_choices
 	S["virtue"] >> virtue_type
 	S["virtuetwo"] >> virtuetwo_type
+	S["virtue_choices"] >> virtue_choices
+	S["virtuetwo_choices"] >> virtuetwo_choices
 
 	// Only instantiate if valid type path exists, otherwise use none
 	if (virtue_type && ispath(virtue_type))
@@ -597,6 +601,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none
+
+	if(islist(virtue_choices))
+		virtue.picked_choices = virtue_choices.Copy()
+	virtue.sanitize_choices()
+
+	if(islist(virtuetwo_choices))
+		virtuetwo.picked_choices = virtuetwo_choices.Copy()
+	virtuetwo.sanitize_choices()
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -1217,6 +1229,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	WRITE_FILE(S["virtue_choices"], virtue?.picked_choices?.Copy())
+	WRITE_FILE(S["virtuetwo_choices"], virtuetwo?.picked_choices?.Copy())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

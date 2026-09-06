@@ -260,6 +260,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack,
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
+		"virtue_choices" = virtue?.picked_choices?.Copy(),
+		"virtuetwo_choices" = virtuetwo?.picked_choices?.Copy(),
 		"vice1" = vice1,
 		"vice2" = vice2,
 		"vice3" = vice3,
@@ -328,6 +330,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
+	if(virtue)
+		var/list/restored_choices = snapshot["virtue_choices"]
+		virtue.picked_choices = restored_choices ? restored_choices.Copy() : list()
+	if(virtuetwo)
+		var/list/restored_choices_two = snapshot["virtuetwo_choices"]
+		virtuetwo.picked_choices = restored_choices_two ? restored_choices_two.Copy() : list()
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
@@ -390,6 +398,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
+		"virtue_choices" = virtue?.picked_choices?.Copy(),
+		"virtuetwo_choices" = virtuetwo?.picked_choices?.Copy(),
 		"vice1" = vice1?.type,
 		"vice2" = vice2?.type,
 		"vice3" = vice3?.type,
@@ -467,12 +477,20 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		virtue = new virtue_type()
 	else
 		virtue = new /datum/virtue/none()
+	if(islist(preset["virtue_choices"]))
+		var/list/preset_choices = preset["virtue_choices"]
+		virtue.picked_choices = preset_choices.Copy()
+	virtue.sanitize_choices()
 	
 	var/virtuetwo_type = string_to_typepath(preset["virtuetwo"])
 	if(virtuetwo_type && ispath(virtuetwo_type, /datum/virtue))
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none()
+	if(islist(preset["virtuetwo_choices"]))
+		var/list/preset_choices_two = preset["virtuetwo_choices"]
+		virtuetwo.picked_choices = preset_choices_two.Copy()
+	virtuetwo.sanitize_choices()
 	
 	var/vice1_type = string_to_typepath(preset["vice1"])
 	if(vice1_type && ispath(vice1_type, /datum/charflaw))
@@ -657,6 +675,27 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		summary += " | [loadout_count] item[loadout_count > 1 ? "s" : ""]"
 	
 	return summary
+
+/// Renders the sub-choice ("bonus") picker for a virtue, if it has any. `slot` is "primary" or "secondary".
+/datum/preferences/proc/generate_subvirtue_html(datum/virtue/V, slot)
+	if(!V || !V.max_choices || !LAZYLEN(V.extra_choices))
+		return ""
+
+	var/html = "<div class='statpack-stats' style='margin-top: 8px;'><strong>Bonuses ([LAZYLEN(V.picked_choices)]/[V.max_choices]):</strong><br>"
+
+	for(var/i = 1 to LAZYLEN(V.picked_choices))
+		var/choice = V.picked_choices[i]
+		html += "• <a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=remove;slot=[slot];index=[i]'>[choice]</a>"
+		if(V.choice_tooltips[choice])
+			html += " <a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=tooltip;slot=[slot];choice=[url_encode(choice)]'>(?)</a>"
+		html += "<br>"
+
+	if(LAZYLEN(V.picked_choices) < V.max_choices)
+		var/cost = V.next_choice_cost()
+		html += "<a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=input;slot=[slot]'>Pick Bonus[cost ? " ([cost] TRIUMPH)" : ""]</a><br>"
+
+	html += "</div>"
+	return html
 
 /datum/preferences/proc/open_vices_menu(mob/user)
 	if(!user || !user.client)
@@ -1046,6 +1085,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "• [item_name]<br>"
 		html += "</div>"
 	
+	html += generate_subvirtue_html(virtue, "primary")
+	
 	html += "</div>"
 	
 	if(statpack && statpack.name == "Virtuous" && virtuetwo)
@@ -1086,6 +1127,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			for(var/item_name in virtuetwo.added_stashed_items)
 				html += "• [item_name]<br>"
 			html += "</div>"
+		
+		html += generate_subvirtue_html(virtuetwo, "secondary")
 	
 	html += {"
 			<div class="actions">
@@ -1515,7 +1558,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
 					continue
-				// Basic filtering can be added here if needed
+				// Check if restricted by species
+				if(length(pref_species.restricted_virtues))
+					if(V.type in pref_species.restricted_virtues)
+						continue
+				if(!V.can_be_picked_by(pref_species))
+					continue
 				virtues_available[V.name] = V
 			
 			virtues_available = sort_list(virtues_available)
@@ -1523,7 +1571,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			if(choice)
 				var/datum/virtue/selected = virtues_available[choice]
-				virtue = selected
+				// Instantiate rather than sharing the GLOB singleton, so picked_choices stay per-character
+				virtue = new selected.type()
 				to_chat(usr, span_notice("Selected [choice] as primary virtue."))
 				to_chat(usr, "<span class='info'>[selected.desc]</span>")
 				open_vices_menu(usr)
@@ -1547,6 +1596,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_virtues))
 					if(V.type in pref_species.restricted_virtues)
 						continue
+				if(!V.can_be_picked_by(pref_species))
+					continue
 				// Skip if already selected as primary virtue
 				if(virtue && V.type == virtue.type)
 					continue
@@ -1563,9 +1614,54 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			
 			if(choice)
 				var/datum/virtue/selected = virtues_available[choice]
-				virtuetwo = selected
+				virtuetwo = new selected.type()
 				to_chat(usr, span_notice("Selected [choice] as second virtue."))
 				to_chat(usr, "<span class='info'>[selected.desc]</span>")
+				open_vices_menu(usr)
+			return
+		
+		if(action == "subvirtue")
+			var/datum/virtue/target = (href_list["slot"] == "secondary") ? virtuetwo : virtue
+			if(!target || !target.max_choices)
+				return
+			
+			var/task = href_list["task"]
+			
+			if(task == "tooltip")
+				var/tooltip = target.choice_tooltips[href_list["choice"]]
+				if(tooltip)
+					to_chat(usr, span_notice(tooltip))
+				return
+			
+			if(task == "remove")
+				var/index = text2num(href_list["index"])
+				if(!index || index < 1 || index > length(target.picked_choices))
+					return
+				save_to_history()
+				target.picked_choices.Cut(index, index + 1)
+				open_vices_menu(usr)
+				return
+			
+			if(task == "input")
+				if(length(target.picked_choices) >= target.max_choices)
+					to_chat(usr, span_warning("I can't take any more bonuses from [target.name]!"))
+					return
+				var/list/subchoices = target.extra_choices - target.picked_choices
+				if(!length(subchoices))
+					return
+				var/picked = tgui_input_list(usr, "Choose a bonus for [target.name]:", "Virtue Bonus", subchoices)
+				// Re-validate: the input above sleeps, so the virtue may have been swapped meanwhile.
+				if(target != ((href_list["slot"] == "secondary") ? virtuetwo : virtue))
+					return
+				if(!picked || !(picked in target.extra_choices) || (picked in target.picked_choices))
+					return
+				if(length(target.picked_choices) >= target.max_choices)
+					return
+				save_to_history()
+				target.picked_choices += picked
+				var/tooltip = target.choice_tooltips[picked]
+				if(tooltip)
+					to_chat(usr, span_notice(tooltip))
 				open_vices_menu(usr)
 			return
 	
@@ -1600,7 +1696,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(statpack.name == "Virtuous")
 					// Keep virtuetwo if we have it
 				else
-					virtuetwo = GLOB.virtues[/datum/virtue/none]
+					virtuetwo = new /datum/virtue/none()
 				
 				open_vices_menu(usr)
 			return

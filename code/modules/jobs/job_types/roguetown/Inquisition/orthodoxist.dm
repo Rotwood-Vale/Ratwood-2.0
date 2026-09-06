@@ -24,6 +24,9 @@
 	give_bank_account = 15
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_OUTLANDER, TRAIT_STEELHEARTED, TRAIT_INQUISITION)
+
+	//Someone who survived being turned by an Inquisitor themselves? Not a chance.
+	virtue_restrictions = list(/datum/virtue/combat/second_chance)
 	job_subclasses = list(
 		/datum/advclass/psydoniantemplar,
 		/datum/advclass/disciple,

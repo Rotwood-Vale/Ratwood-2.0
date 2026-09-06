@@ -724,7 +724,7 @@
 		var/override_color = rotted ? SKIN_COLOR_ROT : null
 		if(is_organic && should_draw_greyscale && !skeletonized)
 			var/draw_color = mutation_color || species_color || skin_tone
-			if(rotted || (owner && HAS_TRAIT(owner, TRAIT_ROTMAN)))
+			if(rotted)
 				draw_color = SKIN_COLOR_ROT
 			if(draw_color)
 				limb.color = "#[draw_color]"

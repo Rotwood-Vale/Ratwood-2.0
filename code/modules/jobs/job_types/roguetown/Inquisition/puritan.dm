@@ -21,6 +21,9 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
+
+	//Someone who survived being turned by an Inquisitor themselves? Not a chance.
+	virtue_restrictions = list(/datum/virtue/combat/second_chance)
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
 		/datum/advclass/puritan/ordinator,

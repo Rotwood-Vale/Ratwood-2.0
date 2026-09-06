@@ -164,15 +164,86 @@
 	desc = "I've spent years shoring up my weakspots, and have become difficult to wound with critical blows."
 	added_traits = list(TRAIT_CRITICAL_RESISTANCE)*/
 
-/datum/virtue/combat/rotcured
-	name = "Rotcured"
-	desc = "I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe..."
-	custom_text = "Colors your body a distinct, sickly green."
-	// below is functionally equivalent to dying and being resurrected via astrata T4 - yep, this is what it gives you.
-	added_traits = list(TRAIT_EASYDISMEMBER, TRAIT_NOPAIN, TRAIT_NOPAINSTUN, TRAIT_NOBREATH, TRAIT_TOXIMMUNE, TRAIT_ZOMBIE_IMMUNE, TRAIT_ROTMAN, TRAIT_SILVER_WEAK)
+#define SC_ROTCURED "Rotcured"
+#define SC_PALLID "Pallid"
+#define SC_BLACKBLOOD "Blackblood"
 
-/datum/virtue/combat/rotcured/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.update_body() // applies the rot skin tone stuff
+/datum/virtue/combat/second_chance
+	name = "Second Chance"
+	desc = "Not many are given second chances. Somehow, you're among the lucky bastards who were. What foul, cruel fate did you narrowly escape, changed yet still living?"
+	max_choices = 1
+	restricted = TRUE
+	races = list(/datum/species/construct/metal, /datum/species/gnoll, /datum/species/dullahan, /datum/species/ooze)
+
+	extra_choices = list(
+		SC_ROTCURED,
+		SC_PALLID,
+		SC_BLACKBLOOD,
+	)
+	choice_tooltips = list(
+		SC_ROTCURED = "<font color='#4a8d48'>I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe.<br><br><font color=red>(Grants Easy Dismember, Painless, Breathless, Deathless, Poison Immune, Deadite Immune, Silver Weakness.)<font color=white><br><br>(Additionally, you can eat brains, you don't suffer nausea, and your heart does not beat.)</font>",
+		SC_PALLID = "<font color='#8d4848'>I was once afflicted with vampirism, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time.<br><br><font color=red>(Grants Darkvision, Breathless, Deadite Immunity and Silver Weakness.)<br><br><font color=white>(Additionally, being outdoors causes stress.)</font>",
+		SC_BLACKBLOOD = "<font color='#8b488d'>I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darkvision, Leaden Lux, Strong Bite, Inhumen Digestion, and Silver Weakness.)<br><br><font color=white>(Additionally, consuming any food will grant a minor healing buff. You bleed slower and passively recover from wounds (while not hungry). You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition. You are somewhat resistant to Lycanthropy and the Deadite plague, but not immune.)",
+	)
+
+/datum/virtue/combat/second_chance/apply_to_human(mob/living/carbon/human/recipient)
+	// Delayed so antag datums have been handed out by the time we check them. Choices are snapshotted
+	// because src is the player's prefs virtue, which they can still edit during the delay.
+	addtimer(CALLBACK(src, .proc/apply_second_chance, recipient, picked_choices.Copy()), 8 SECONDS)
+
+/datum/virtue/combat/second_chance/proc/apply_second_chance(mob/living/carbon/human/recipient, list/chosen)
+	if(QDELETED(recipient) || !recipient.mind || !length(chosen))
+		return
+
+	if(recipient.mind.has_antag_datum(/datum/antagonist/skeleton) || recipient.mind.has_antag_datum(/datum/antagonist/lich) || recipient.mind.has_antag_datum(/datum/antagonist/vampire) || recipient.mind.has_antag_datum(/datum/antagonist/vampire/lord) || recipient.mind.has_antag_datum(/datum/antagonist/werewolf) || recipient.mind.has_antag_datum(/datum/antagonist/zombie))
+		to_chat(recipient, span_warning("Second Chance cannot be applied to your role, so it has not been applied."))
+		return
+
+	for(var/choice in chosen)
+		switch(choice)
+			if(SC_ROTCURED)
+				ADD_TRAIT(recipient, TRAIT_ROTMAN, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_EASYDISMEMBER, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_NOPAIN, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_NOBREATH, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_NOHUNGER, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_TOXIMMUNE, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_ZOMBIE_IMMUNE, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
+				to_chat(recipient, span_notice("You are no longer a rotting corpse, at least not a dying one."))
+
+			if(SC_PALLID)
+				ADD_TRAIT(recipient, TRAIT_PALLID, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_DARKVISION, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_NOBREATH, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_ZOMBIE_IMMUNE, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
+				to_chat(recipient, span_notice("You are no longer one scorned by Astrata, by the mercy of the gods."))
+
+			if(SC_BLACKBLOOD)
+				ADD_TRAIT(recipient, TRAIT_BLACKBLOOD, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_HALFHEAL, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_STRONGBITE, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_NASTY_EATER, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_DARKVISION, TRAIT_VIRTUE)
+				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
+				to_chat(recipient, span_notice("You are no longer one among the nite creechers, by the ingenuinity of HIS followers."))
+
+				// Want to use this in future, but out of scope of this port
+				//recipient.dna.species.blood_color = "#530000"
+
+				// AP grants an "averse to Inquisition" flaw here; we have no averse flaw system, so this is just done through stress events and minor flavour
+				if(recipient.patron?.type == /datum/patron/old_god)
+					to_chat(recipient, span_blue("<i>You recall your horrid experiences with the Inquisition... But through your newfound faith in HIM, you ENDURE. You were but one wrong righted, after all.</i>"))
+				else
+					to_chat(recipient, span_blue("<i>You recall your horrid experiences with the Inquisition... It is rather traumatic. Best to avoid them.</i>"))
+				to_chat(recipient, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
+
+	recipient.update_sight() // sight was already set when we spawned, so darkvision needs a refresh
+
+#undef SC_ROTCURED
+#undef SC_BLACKBLOOD
+#undef SC_PALLID
 
 /datum/virtue/combat/dualwielder
 	name = "Dual Wielder"

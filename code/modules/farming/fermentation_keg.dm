@@ -605,6 +605,34 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		keg.beer_left = 0
 		keg.clear_keg(TRUE)
 
+
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/mead
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/spidermead
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/jack_wine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/plum_wine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/tangerine_wine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/blackberry_wine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/whipwine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/luxintenebre
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/winespiced
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/voddena
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/nocmash
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/nocshine
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/beer
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/beer_oat
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/cider
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/gin
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/ricespirit
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/limoncello
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/rum
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/aqua_vitae
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/brandy
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/brandy_plum
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/brandy_pear
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/fermentedcrab
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/calendula_tea
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/valerian_tea
+
 /obj/structure/fermentation_keg/distiller
 	name = "copper distiller"
 

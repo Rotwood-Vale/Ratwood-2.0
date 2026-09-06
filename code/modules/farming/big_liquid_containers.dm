@@ -149,3 +149,15 @@
 /obj/structure/fermentation_keg/rose_tea/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water/rosewater, 900)
+
+/obj/structure/fermentation_keg/spicedwine
+	name = "fragrant barrel"
+	desc = "A barrel that marinates with the alluring aroma of spice. Branded on the side is an unfamiliar brewery's marking, denoting it as a casket for spiced wine."
+
+/obj/structure/fermentation_keg/zarum
+	name = "overwhelmingly fishy barrel"
+	desc = "A barrel that reeks of a horrid stench, as if someone had poured the entrails of Abyssor's bounty into a casket and left it to ferment for centuries. </br>..wait, what do you mean that's exactly what it is?"
+
+/obj/structure/fermentation_keg/zarum/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/medicine/healthpot/zarum, 513)

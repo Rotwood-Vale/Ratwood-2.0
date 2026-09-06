@@ -33,6 +33,7 @@
 #define TRAIT_MAGEARMOR "Magic Barrier"
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
+#define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
 #define TRAIT_SHATTER_WEAKNESS "Brittle Form"
 #define TRAIT_DNR "Bane of Existence"
@@ -246,7 +247,6 @@
 #define TRAIT_NOBREATH	"Breathless"
 #define TRAIT_TOXIMMUNE	"Poison Immune"
 #define TRAIT_GRABIMMUNE "Unstoppable"
-#define TRAIT_ROTMAN "Rotman"
 #define TRAIT_ZOMBIE_IMMUNE "Deadite Immunity" //immune to deadite infection
 #define TRAIT_NOHUNGER	"Foodless"
 #define TRAIT_DARKVISION "Darksight"
@@ -329,6 +329,14 @@
 
 #define TRAIT_TRIBAL "Island Tribe-member"
 
+// Second Chance Traits
+#define TRAIT_ROTMAN "Rotman"
+#define TRAIT_PALLID "Pallid"
+#define TRAIT_BLACKBLOOD "Blackblooded"
+#define TRAIT_NOHEAL "Laden Soul" // Only affects magic healing, such as miracle or supernatural heals.
+#define TRAIT_NOREGEN "Laden Body" // Only affects natural healing, such as resting, campfires, potions, etc.
+#define TRAIT_HALFHEAL "Laden Lux" // -50% Magic Heal.
+
 // If you want description to show up you gotta have the trait name defined BEFORE this lol
 
 GLOBAL_LIST_INIT(roguetraits, list(
@@ -388,6 +396,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MAGEARMOR = span_info("My magics can protect me from a blow every so often."),
 	TRAIT_DECEIVING_MEEKNESS = span_info("People look at me and think I am a weakling. They are mistaken. I've learned how to hide my vices and true beliefs from others."),
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few criitical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
+	TRAIT_BLOOD_RESISTANCE = span_info("My body is taut, and my blood runs slower. I bleed far less than others."),
 	TRAIT_CRITICAL_WEAKNESS = span_danger("I am weak to wounds that others could survive."),
 	TRAIT_SHATTER_WEAKNESS = span_danger("My form is especially brittle and frail. A critical, shattering blow to my chest or spine will kill me instantly."),
 	TRAIT_DNR = span_danger("My lux' vigor is weak. There is no hope for me. This lyfe is all I have."),
@@ -477,7 +486,6 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_JUSTICARSIGHT = span_info("I am able to remember someone's crimes by looking at them, and how much their bounty is."),
 	TRAIT_CICERONE = span_info("I am well-versed in the differences of brews and spirits, and can tell them apart at a glance."),
 	TRAIT_BETTER_SLEEP = span_info("I recover more energy when sleeping."),
-	TRAIT_ROTMAN = span_info("I am partially undead. My heart does not beat."),
 	TRAIT_EASYDISMEMBER = span_info("My limbs are frail and fragile. They can be dismembered with greater ease, including my neck."),
 	TRAIT_HARDDISMEMBER = span_info("My body is strong and endurant. My limbs are not easily dismembered."),
 	TRAIT_EASYDECAPITATION = span_info("I often find my head rolling from my shoulders."),
@@ -589,7 +597,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	
+	//Second chance traits
+	TRAIT_ROTMAN = span_artery("I am partially undead. My heart does not beat."),
+	TRAIT_PALLID = span_artery("I was once a nite-creacher, be it lycanthrope or vampyre, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time."),
+	TRAIT_BLACKBLOOD = span_artery("I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul."),
+	TRAIT_NOHEAL = span_artery("I cannot be healed by supernatural means. Healing magic has no effect."),
+	TRAIT_NOREGEN = span_artery("I cannot be healed by natural means. Rest and potions have no effect."),
+	TRAIT_HALFHEAL = span_artery("I have some spiritual oddity to my Lux. Healing magic effectiveness is halved."),
 ))
 
 // trait accessor defines

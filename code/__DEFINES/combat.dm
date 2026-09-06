@@ -410,6 +410,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define DIAMOND_CAST_TIME_REDUCTION 0.35
 #define RIDDLE_OF_STEEL_CAST_TIME_REDUCTION 0.4
 
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
+
 //melee accuracy bonus and penlties used by melee_accuracy_check() and resolve_aimed_zone() in accuracy_checks.dm
 #define ACC_MAJOR_ZONE_BONUS 10			//Aiming at a major limb rather than one of its precise subzones.
 #define ACC_FACE_SUBZONE_PENALTY 24		//Aiming at a face subzone on a player.

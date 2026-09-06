@@ -44,17 +44,23 @@
 	/obj/item/needle/pestra //Gets the special needle!
 	)
 
-/obj/item/storage/belt/rogue/surgery_bag/full/improv
-	populate_contents = list(
-		/obj/item/rogueweapon/surgery/saw/improv,
-		/obj/item/rogueweapon/surgery/hemostat/improv,
-		/obj/item/rogueweapon/surgery/retractor/improv,
-		/obj/item/natural/bundle/cloth/bandage/full,
-		/obj/item/needle/decrepit
-	)
-
 /obj/item/storage/belt/rogue/surgery_bag/empty
 	populate_contents = list(
+	)
+
+/obj/item/storage/belt/rogue/surgery_bag/full/improv
+	populate_contents = list(
+	/obj/item/rogueweapon/surgery/scalpel/improv,
+	/obj/item/rogueweapon/surgery/saw/improv,
+	/obj/item/rogueweapon/surgery/hemostat/improv,
+	/obj/item/rogueweapon/surgery/hemostat/improv,
+	/obj/item/rogueweapon/surgery/retractor/improv,
+	/obj/item/rogueweapon/surgery/retractor/improv,
+	/obj/item/rogueweapon/surgery/hammer,
+	/obj/item/reagent_containers/glass/bottle/rogue/beer,
+	/obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab,
+	/obj/item/reagent_containers/glass/bottle/rogue/healthpot/zarum,
+	/obj/item/needle/thorn
 	)
 
 /obj/item/storage/belt/rogue/pouch/medicine
@@ -64,6 +70,4 @@
 	/obj/item/reagent_containers/glass/bottle/alchemical/healthpot
 	)
 
-/obj/item/storage/belt/rogue/surgery_bag/empty
-	populate_contents = list(
-	)
+

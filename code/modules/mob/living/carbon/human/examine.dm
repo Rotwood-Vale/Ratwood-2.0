@@ -355,6 +355,12 @@
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
 
+		if(HAS_TRAIT(src, TRAIT_ROTMAN))
+			. += span_small("Their skin is cold and clammy, the faint smell of rot follows them...")
+
+		if(HAS_TRAIT(src, TRAIT_PALLID))
+			. += span_small("Their skin is drained of colour...")
+
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(family_datum == H.family_datum && family_datum)
@@ -394,6 +400,23 @@
 					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		//Blackblood Inquisition trauma
+		if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(user, TRAIT_BLACKBLOOD))
+			var/mob/living/carbon/carbs = user
+			if(HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) || HAS_TRAIT(user, TRAIT_NOMOOD))
+				return
+			if(!carbs.has_stress_event(/datum/stressevent/inq_trauma))
+				carbs.add_stress(/datum/stressevent/inq_trauma)
+				if(prob(20))
+					carbs.stress_freakout()
+				else if(prob(40))
+					carbs.freak_out()
+				else
+					carbs.emote("gulp")
+			if(!HAS_TRAIT(user, TRAIT_STEELHEARTED))
+				carbs.Jitter(10)
+				carbs.stuttering += 25
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)

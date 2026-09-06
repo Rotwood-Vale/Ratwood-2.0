@@ -16,6 +16,9 @@
 		return
 	if(human_owner.stat >= DEAD) //forget it
 		return
+	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD) && prob(40)) // since WWs are harder to infect, reducing this to just a fraction of the normal chance
+		to_chat(human_owner, span_danger("I feel something churning within my body... No, not again...! Not this time!"))
+		return
 	to_chat(human_owner, span_danger("I feel horrible... REALLY horrible..."))
 	human_owner.mob_timers["puke"] = world.time
 	human_owner.vomit(1, blood = TRUE, stun = FALSE)

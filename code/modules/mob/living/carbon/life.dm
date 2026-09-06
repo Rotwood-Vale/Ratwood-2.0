@@ -572,6 +572,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Healing while sleeping in a bed
 	if(IsSleeping())
 		SEND_SIGNAL(src, COMSIG_CARBON_HANDLE_SLEEP)
+		if(HAS_TRAIT(src, TRAIT_NOREGEN))
+			return
 		var/sleepy_mod = 0.5
 		var/doesnt_hunger = HAS_TRAIT(src, TRAIT_NOHUNGER)
 		if(HAS_TRAIT(src, TRAIT_BETTER_SLEEP))
