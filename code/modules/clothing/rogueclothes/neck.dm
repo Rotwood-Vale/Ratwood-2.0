@@ -1064,6 +1064,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MOUTH
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	fiber_salvage = FALSE
 	color = CLOTHING_BLACK
 	muteinmouth = FALSE
 	spitoutmouth = FALSE

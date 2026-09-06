@@ -1080,6 +1080,30 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Amulet of Ten"
 	path = /obj/item/clothing/neck/roguetown/psicross/ten
 
+/datum/loadout_item/psicross/gronngraggar
+	name = "Amulet of the Moose"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+
+/datum/loadout_item/psicross/gronnmatthios
+	name = "Amulet of the Bear"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+
+/datum/loadout_item/psicross/gronnzizo
+	name = "Amulet of the Wolf"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+
+/datum/loadout_item/psicross/gronnmbaotha
+	name = "Amulet of the Leopard"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+
+/datum/loadout_item/psicross/gronnabyssor
+	name = "Amulet of the Kraken"
+	path = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+
+/datum/loadout_item/psicross/gronndendor
+	name = "Amulet of the Volfskinned Man"
+	path = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
 	path = /obj/item/clothing/ring/band

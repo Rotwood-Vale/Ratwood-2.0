@@ -1,10 +1,10 @@
 /datum/language/hellspeak
 	name = "Infernal"
-	desc = "(Spoken with ,h) The dark and sinister language of the hells, spoken by demons and those who deal with infernal powers. Its words carry an unnatural weight."
+	desc = "(Spoken with ,z) The dark and sinister language of the hells, spoken by demons and those who deal with infernal powers. Its words carry an unnatural weight."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"
-	key = "h"
+	key = "z"
 	space_chance = 66
 	default_priority = 80
 	icon_state = "infernal"

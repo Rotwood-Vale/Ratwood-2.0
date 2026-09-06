@@ -166,6 +166,19 @@
 /datum/team/prebels
 	name = "Peasant Rebels"
 	var/list/offers2join = list()
+	/// Handle for the objective refresh loop, so it can be stopped and restarted.
+	var/objective_timer
+
+/datum/team/prebels/Destroy(force, ...)
+	if(objective_timer)
+		deltimer(objective_timer)
+		objective_timer = null
+	return ..()
+
+/datum/team/prebels/add_member(datum/mind/new_member)
+	. = ..()
+	if(!objective_timer)
+		update_objectives()
 
 /datum/objective/prebel
 	name = "Rebellion"
@@ -183,7 +196,11 @@
 			R = M.has_antag_datum(/datum/antagonist/prebel/head)
 		R.objectives |= objectives
 
-	addtimer(CALLBACK(src,PROC_REF(update_objectives)),INGAME_ROLE_HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	if(!length(members))
+		objective_timer = null
+		return
+
+	objective_timer = addtimer(CALLBACK(src,PROC_REF(update_objectives)),INGAME_ROLE_HEAD_UPDATE_PERIOD,TIMER_UNIQUE|TIMER_STOPPABLE)
 
 
 /datum/team/prebels/roundend_report()
