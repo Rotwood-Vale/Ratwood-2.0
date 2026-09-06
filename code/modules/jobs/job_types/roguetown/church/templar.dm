@@ -388,6 +388,7 @@
 		ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/ravox)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon) // Deprive not a warrior of their blade.
 	if(H.patron?.type == /datum/patron/divine/xylix)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
