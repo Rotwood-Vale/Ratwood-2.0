@@ -143,6 +143,16 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
 
+/datum/supply_pack/rogue/Knave/krisdag
+	name = "Kris Dagger"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/kris)
+
+/datum/supply_pack/rogue/Knave/rondeldag
+	name = "Rondel Dagger"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/rondel)
+
 /datum/supply_pack/rogue/Knave/saildagger
 	name = "Etruscan Sail Dagger"
 	cost = 30
