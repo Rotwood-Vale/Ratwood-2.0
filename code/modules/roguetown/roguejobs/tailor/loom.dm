@@ -48,15 +48,20 @@
 	var/weavetime = 2 SECONDS //time to weave a cloth, duh
 	var/skilltimemod = 0.2 SECONDS //how much each level of skill lowers the time to weave
 	var/skill = weaver.get_skill_level(/datum/skill/craft/sewing)
+	var/required_fibers = 2
+	var/efficiently_text = ""
 	if(isliving(user) && weaver.stat == CONSCIOUS)
-		if(src.storedfiber < 2)
+		if(HAS_TRAIT(user, TRAIT_EFFICIENT_WEAVER)) // tailor
+			required_fibers = 1
+			efficiently_text = " with practiced hands"
+		if(src.storedfiber < required_fibers)
 			to_chat(user, "You don't have enough fiber to do this.")
 		else
-			to_chat(user, "You start weaving some cloth...")
-			while(src.storedfiber > 1)
-				if(!do_after(weaver, (weavetime - (skilltimemod*skill)),target = src) || src.storedfiber < 2)
+			to_chat(user, "You start weaving some cloth[efficiently_text]...")
+			while(src.storedfiber >= required_fibers)
+				if(!do_after(weaver, (weavetime - (skilltimemod*skill)),target = src) || src.storedfiber < required_fibers)
 					break
-				src.storedfiber -= 2
+				src.storedfiber -= required_fibers
 				new /obj/item/natural/cloth(get_turf(src))
 				weaver.mind.add_sleep_experience(/datum/skill/craft/sewing, (weaver.STAINT*0.5))//you get less exp from using the loom
 
