@@ -157,7 +157,7 @@
 	return max(round(hud_bleed_rate, 0.1), 0)
 
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied
-/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon)
+/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon, armor_penetration)
 	RETURN_TYPE(/datum/wound)
 	if(!bclass || !dam || !owner || (owner.status_flags & GODMODE))
 		return null
@@ -170,7 +170,8 @@
 			acheck_dflag = "slash"
 		if(BCLASS_PICK, BCLASS_STAB)
 			acheck_dflag = "stab"
-	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
+		//More AP means the less effective bleed clamping is.
+	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0, armor_penetration = armor_penetration)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		if(human_owner.checkcritarmor(zone_precise, bclass))
