@@ -47,6 +47,8 @@
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun = 1, 
+
 		)
 	H.merctype = 9
 
