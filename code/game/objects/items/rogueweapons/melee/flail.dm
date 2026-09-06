@@ -106,6 +106,16 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/flail/bronze
+	force = 27
+	throwforce = 20
+	max_integrity = 125
+	icon_state = "bronzeflail"
+	name = "bronze flail"
+	desc = "A studded weight and a whittled handle, linked together with a length of bronze chain. It can be spun around to smash armored opponents with tremendous force, cracking plate and bone alike with unflinching impunity."
+	smeltresult = /obj/item/ingot/bronze
+	minstr = 7
+
 /obj/item/rogueweapon/flail/sflail
 	force = 30
 	icon_state = "flail"
@@ -226,7 +236,7 @@
 	name = "militia thresher"
 	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
 	icon_state = "peasantwarflail"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -254,18 +264,64 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
+/obj/item/rogueweapon/flail/peasantwarflail/steel
+	name = "greatflail"
+	desc = "The lucerne's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
+	icon_state = "greatflail"
+	wdefense = 6
+	minstr = 12
+	max_integrity = 300//+50 over iron warflail
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/flail/peasantwarflail/silver
+	name = "silver greatflail"
+	desc = "PSLM 81:59... AND HE COMMANDED; \"SHATTER THEM APART, LIKE A POTTER'S VESSEL AGAINST THE STONES!\" AND SO, WE STRUCK!"
+	icon_state = "silver_greatflail"
+	wdefense = 6
+	minstr = 13
+	max_integrity = 300
+	is_silver = TRUE
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/flail/peasantwarflail/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/flail/peasantwarflail/blacksteel
+	name = "blacksteel greatflail"
+	desc = "An elegant flail of blacksteel that - once spun - can devastate anything caught in its way."
+	icon_state = "bs_greatflail"
+	wdefense = 7
+	minstr = 12
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	max_integrity = 500
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/blacksteel
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
+
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."
 	icon_state = "matthiosflail"
 	sellprice = 250
-	smeltresult = /obj/item/ingot/steel
+	smeltresult = /obj/item/ingot/gold
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()

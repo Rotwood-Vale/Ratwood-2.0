@@ -364,13 +364,11 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	// these sprites are currently missing
-	// icon = 'icons/roguetown/weapons/64.dmi'
-	// icon_state = "cfork"
-	// pixel_y = -16
-	// pixel_x = -16
-	// inhand_x_dimension = 64
-	// inhand_y_dimension = 64
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "cpitchfork"
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/pitchfork/blacksteel
