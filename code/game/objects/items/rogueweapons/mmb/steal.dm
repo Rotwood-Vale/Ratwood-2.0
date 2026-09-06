@@ -180,7 +180,7 @@
 	if(!isnum(range_add))
 		range_add = 0
 	var/steal_radius = 1 + range_add
-	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand", "r_leg", "l_leg")
+	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand", "r_leg", "l_leg", "l_arm", "r_arm")
 	// Pickpocketting checks
 	if(get_dist(thief, victim) > steal_radius)
 		to_chat(thief, span_warning("[victim] is too far away."))
@@ -254,8 +254,12 @@
 	var/list/stealpos = list()
 	switch(thief.zone_selected)
 		if("chest")
+			if(victim.get_item_by_slot(SLOT_CLOAK))
+				stealpos.Add(victim.get_item_by_slot(SLOT_CLOAK))
+		if("l_arm")
 			if(victim.get_item_by_slot(SLOT_BACK_L))
 				stealpos.Add(victim.get_item_by_slot(SLOT_BACK_L))
+		if("r_arm")
 			if(victim.get_item_by_slot(SLOT_BACK_R))
 				stealpos.Add(victim.get_item_by_slot(SLOT_BACK_R))
 		if("neck")
@@ -295,7 +299,7 @@
 		thief.changeNext_move(clickcd)
 		return
 
-	if(istype(target, /obj/item/storage))
+	if(istype(target, /obj/item/storage) || istype(target, /obj/item/clothing/cloak))
 		var/obj/item/storage/container = target
 		var/datum/component/storage/storage = container.GetComponent(/datum/component/storage)
 		if(!storage || !length(storage.contents()))
