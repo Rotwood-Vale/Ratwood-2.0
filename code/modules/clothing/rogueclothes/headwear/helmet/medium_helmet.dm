@@ -736,6 +736,29 @@
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
 	dropshrink = null
+	detail_tag = "_detail"
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/Initialize(mapload)
+	. = ..()
+	if(GLOB.lordprimary)
+		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+	GLOB.lordcolor += src
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/lordcolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_head()
 
 /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	name = "watch captain helmet"

@@ -722,6 +722,29 @@
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
+	detail_tag = "_detail"
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/Initialize(mapload)
+	. = ..()
+	if(GLOB.lordprimary)
+		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+	GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/lordcolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
