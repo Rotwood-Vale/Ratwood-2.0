@@ -887,6 +887,10 @@
 		else
 			. += "ø ------------ ø"
 
+	if(HAS_TRAIT(src, TRAIT_MONSTROUS))
+		. += span_userdanger("A MONSTER! INHUMEN!")
+		to_chat(user, span_danger("[uppertext(m1)] IS INHUMEN! THE GODS DESPISE THIS HERESY!"))
+
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
