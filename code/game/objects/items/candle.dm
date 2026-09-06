@@ -134,6 +134,7 @@
 	desc = "The parent candlestick that gave all of the little, real candlesticks their traits. You should not be seeing this, report this."
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit) //so you can bash someone's head in with a candlestick
 	force = 12 //slightly higher than a silver goblet, good improvised weapon, it even has a handle!
+	display_category = ITEM_CAT_DECORATION //This item has no recipe and must be labeled seperately
 
 /obj/item/candle/candlestick/gold
 	name = "three-stick gold candlestick"

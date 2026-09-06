@@ -17,8 +17,6 @@
 	var/always_destroy = FALSE
 	/// If TRUE, this item is not allowed to be minted. May be useful for other things later.
 	var/is_important = FALSE
-	var/unmintable = FALSE
-	var/atc_sealed = FALSE
 	var/was_crafted = FALSE
 	var/is_carved = FALSE
 //#else

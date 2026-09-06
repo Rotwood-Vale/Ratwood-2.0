@@ -10,7 +10,6 @@
 	slot_flags = ITEM_SLOT_MOUTH
 	dropshrink = 0.4
 	drop_sound = 'sound/items/gem.ogg'
-	sellprice = 1
 	static_price = FALSE
 	resistance_flags = FIRE_PROOF
 
@@ -55,7 +54,7 @@
 /obj/item/roguegem/green
 	name = "gemerald"
 	icon_state = "emerald_cut"
-	sellprice = 42
+	sellprice = SELLPRICE_GEMERALD
 	desc = "Glints with verdant brilliance."
 
 /obj/item/roguegem/green/Initialize(mapload)
@@ -70,7 +69,7 @@
 /obj/item/roguegem/blue
 	name = "blortz"
 	icon_state = "quartz_cut"
-	sellprice = 88
+	sellprice = SELLPRICE_BLORTZ
 	desc = "Pale blue, like a frozen tear."
 
 /obj/item/roguegem/blue/Initialize(mapload)
@@ -91,7 +90,7 @@
 /obj/item/roguegem/yellow
 	name = "toper"
 	icon_state = "topaz_cut"
-	sellprice = 34
+	sellprice = SELLPRICE_TOPER
 	desc = "Its amber hues remind you of the sunset."
 
 /obj/item/roguegem/yellow/Initialize(mapload)
@@ -106,7 +105,7 @@
 /obj/item/roguegem/violet
 	name = "saffira"
 	icon_state = "sapphire_cut"
-	sellprice = 56
+	sellprice = SELLPRICE_SAFFIRA
 	desc = "This gem is admired by many wizards."
 
 /obj/item/roguegem/violet/Initialize(mapload)
@@ -136,7 +135,7 @@
 /obj/item/roguegem/diamond
 	name = "dorpel"
 	icon_state = "diamond_cut"
-	sellprice = 121
+	sellprice = SELLPRICE_DORPEL
 	desc = "Beautifully clear, it demands respect."
 
 /obj/item/roguegem/onyxa
@@ -144,14 +143,14 @@
 	desc = "A sinister, glimmering stone. Valuable to the drow, it is sometimes used in necromantic rituals. Mirrors made of this are said to never show your own face."
 	icon = 'icons/roguetown/gems/gem_onyxa.dmi'
 	icon_state = "raw_onyxa"
-	sellprice = 30
+	sellprice = SELLPRICE_ONYXA
 
 /obj/item/roguegem/jade
 	name = "jade"
-	desc = "A dull green gem prized in Lingyue and Kazengun alike. Lingyuese tradition holds that jade is the essence of Psydon, protecting both soul and flesh from decay and corruption."
+	desc = "A dull green gem prized in Kazengun. Xinyi tradition holds that jade is the essence of Psydon, protecting both soul and flesh from decay and corruption."
 	icon = 'icons/roguetown/gems/gem_jade.dmi'
 	icon_state = "raw_jade"
-	sellprice = 50
+	sellprice = SELLPRICE_JADE
 
 /obj/item/roguegem/oyster
 	name = "fossilized clam"
@@ -165,28 +164,28 @@
 	desc = "Jagged like a hound's tooth. Heartstone is speculated to be the crystallized blood of fallen sailors. It is sacred to Abyssorites and is used in numerous Abyssorite rituals."
 	icon = 'icons/roguetown/gems/gem_coral.dmi'
 	icon_state = "raw_coral"
-	sellprice = 60
+	sellprice = SELLPRICE_HEARTSTONE
 
 /obj/item/roguegem/turq
 	name = "cerulite"
 	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi's astrologer-mages in divination."
 	icon = 'icons/roguetown/gems/gem_turq.dmi'
 	icon_state = "raw_turq"
-	sellprice = 75
+	sellprice = SELLPRICE_CERULITE
 
 /obj/item/roguegem/amber
 	name = "amber"
 	desc = "A chunk of fossilized sunlight. Believed to have been shed during the shattering of the First Sun, its remnants are prized among Astratans. Raaneshi sometimes use fragments as currency, instead of mammon."
 	icon = 'icons/roguetown/gems/gem_amber.dmi'
 	icon_state = "raw_amber"
-	sellprice = 50
+	sellprice = SELLPRICE_AMBER
 
 /obj/item/roguegem/opal
 	name = "opal"
 	desc = "A dazzling gem of great value. Opal is widely speculated to be the crystallized essence left behind by rainbows."
 	icon = 'icons/roguetown/gems/gem_opal.dmi'
 	icon_state = "raw_opal"
-	sellprice = 80
+	sellprice = SELLPRICE_OPAL
 
 /obj/item/roguegem/chitin
 	name = "beetle chitin plate"

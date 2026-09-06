@@ -95,6 +95,11 @@
 /obj/item/var/pottery_fragile = FALSE
 /obj/item/var/pottery_baked_at = 0
 /obj/item/var/pottery_shatter_chance = 100
+/obj/item/var/glazed = FALSE
+/obj/item/var/glaze_suffix = "glazed"
+/obj/item/var/glaze_bonus_pct = 0
+/// Randomised bonus price for glazing.
+/obj/item/var/glaze_bonus_flat = 0
 
 /obj/item/examine(mob/user)
 	. = ..()
@@ -107,6 +112,25 @@
 			. += span_green("It's been nicely polished.")
 	if(shoddy_repair)
 		. += span_warning("This item has been field-repaired and needs to be fixed by a proper craftsman.")
+
+/obj/item/get_mechanics_examine(mob/user)
+	. = ..()
+	if(glaze_bonus_pct > 0)
+		if(glazed)
+			. += span_info("Glazed in a dyebin - its value is increased by [glaze_bonus_pct]%.")
+		else
+			. += span_info("Can be glazed in a dyebin to increase its value by [glaze_bonus_pct]%.")
+	if(glazed && glaze_bonus_flat > 0)
+		. += span_info("Glazed - its value is increased by [glaze_bonus_flat] mammon.")
+	else if(!glazed && icon && icon_exists(icon, "[icon_state]_glazed"))
+		. += span_info("Can be glazed with a dye brush to increase its value.")
+
+/obj/item/get_real_price()
+	. = ..()
+	if(glazed && glaze_bonus_pct > 0)
+		. = max(1, round(. * (1 + glaze_bonus_pct / 100)))
+	if(glazed && glaze_bonus_flat > 0)
+		. += glaze_bonus_flat
 
 /obj/item/polishing_cream
 	icon = 'icons/roguetown/items/misc.dmi'

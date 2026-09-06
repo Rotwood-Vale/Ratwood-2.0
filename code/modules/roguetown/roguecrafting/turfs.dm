@@ -94,7 +94,7 @@
 /datum/crafting_recipe/roguetown/turfs/carpet
 	name = "carpet(inn)"
 	result = /turf/open/floor/carpet/inn
-	reqs = list(/obj/item/natural/silk= 2)	
+	reqs = list(/obj/item/natural/silk= 2)
 	skillcraft = /datum/skill/craft/carpentry
 	verbage_simple = "construct"
 	verbage = "constructs"
@@ -349,6 +349,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /// WINDOWS
 
@@ -361,6 +362,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/turfs/fancywindow/openclose
 	name = "window (fancy) (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
@@ -376,6 +378,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 3
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/turfs/reinforcedwindow/openclose
 	name = "window (reinforced) (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
@@ -391,7 +394,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
-	
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 /// HAY, TWIG AND TENT
 
 /datum/crafting_recipe/roguetown/turfs/hay
@@ -445,7 +448,7 @@
 	reqs = list(/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/cloth = 1)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "set up"	
+	verbage_simple = "set up"
 	verbage = "sets up"
 	craftdiff = 1
 
@@ -482,6 +485,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 	/*
 	By the way, glass windows needing Masonry and Carpentry instead of Ceramics isn't an oversight.

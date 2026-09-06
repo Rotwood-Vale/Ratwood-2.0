@@ -48,7 +48,6 @@
 	armor = ARMOR_PADDED_BAD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	prevent_crits = null // It won't help, like, at all.
-	sellprice = 10
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	name = "padded gambeson"
@@ -57,7 +56,6 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	sellprice = 25
 	color = "#b49679"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -100,7 +98,6 @@
 	icon_state = "royalgamb"
 	color = "#FFFFFF"
 	allowed_race = NON_DWARVEN_RACE_TYPES
-	sellprice = 50
 	boobed = TRUE
 	nodismemsleeves = TRUE
 	sleeved_detail = TRUE
@@ -146,7 +143,6 @@
 	detail_color = "#e98738"
 	detail_tag = "_detail"
 	shiftable = FALSE
-	sellprice = 30
 	dropshrink = 0.9
 	var/picked = FALSE
 
@@ -247,7 +243,6 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	color = "#1d1d22"
 	detail_color = "#FFFFFF"
-	sellprice = 40
 	shiftable = FALSE
 	var/picked = FALSE
 

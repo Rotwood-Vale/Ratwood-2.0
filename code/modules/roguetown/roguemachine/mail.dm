@@ -134,10 +134,10 @@
 	if(inqcoins)
 		to_chat(user, span_warning("The machine doesn't respond."))
 		return
-	var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+	var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
 	if(!send2place)
 		return
-	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
+	var/sentfrom = sanitize(input(user, "Who is this letter from?", "ROGUETOWN", null))
 	if(!sentfrom)
 		sentfrom = "Anonymous"
 	var/sender_ckey = user.ckey
@@ -178,7 +178,6 @@
 		if(found)
 			visible_message(span_warning("[user] sends something."))
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-			SStreasury.give_money_treasury(coin_loaded, "Mail Income")
 			coin_loaded = FALSE
 			update_icon()
 			return
@@ -213,7 +212,6 @@
 			return
 		visible_message(span_warning("[user] sends something."))
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-		SStreasury.give_money_treasury(coin_loaded, "Mail")
 		coin_loaded = FALSE
 		update_icon()
 
@@ -548,8 +546,8 @@
 			to_chat(user, span_warning("The machine doesn't respond."))
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
-			var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
-			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
+			var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
+			var/sentfrom = sanitize(input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null))
 			if(!sentfrom)
 				sentfrom = "Anonymous"
 			var/sender_ckey = user.ckey
@@ -695,15 +693,6 @@
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
 	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag]"
-
-/obj/structure/roguemachine/mail/Topic(href, href_list)
-	..()
-
-	if(!usr)
-		return
-
-	if(href_list["directory"])
-		view_directory(usr)
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
@@ -865,6 +854,9 @@
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
 	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+	if(href_list["directory"])
+		view_directory(usr)
 		return
 	if(href_list["eject"])
 		if(inqcoins <= 0)

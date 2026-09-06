@@ -300,7 +300,7 @@
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 3,
 	)
-
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 // DIE
 
 /datum/crafting_recipe/roguetown/survival/d4
@@ -353,6 +353,7 @@
 		/obj/item/natural/fur = 1
 		)
 	craftdiff = 1
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 
 /datum/crafting_recipe/roguetown/survival/whetstone
 	name = "whetstone"

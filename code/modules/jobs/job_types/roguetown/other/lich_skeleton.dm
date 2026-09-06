@@ -19,6 +19,7 @@ LICH SKELETONS
 
 	REMOVE_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_LICHLAIR, TRAIT_GENERIC) //Ability to leave/enter the lich's lair without being softlocked inside.
+	H.taints_loot = TRUE
 
 // Melee goon w/ throwables. All-rounder.
 /datum/advclass/greater_skeleton/lich/legionnaire

@@ -5,6 +5,7 @@
 	abstract_type = /datum/crafting_recipe/roguetown/tallow
 	subtype_reqs = FALSE
 	skillcraft = /datum/skill/craft/cooking
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 
 /datum/crafting_recipe/roguetown/tallow/hearth_tallow
 	name = "render tallow over the hearth (x4) (1 fat)"

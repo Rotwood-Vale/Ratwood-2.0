@@ -401,7 +401,7 @@
 	quality = DRINK_NICE
 
 /datum/reagent/consumable/ethanol/rtoper
-	name = "Lirvas Toper"
+	name = "Rockhill Toper"
 	boozepwr = 40
 	taste_description = "overwhelming tartness"
 	color = "#e0a400"

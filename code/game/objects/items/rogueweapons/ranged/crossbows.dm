@@ -1,5 +1,6 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	has_item_quality = TRUE
 	name = "crossbow"
 	desc = "A deadly weapon that shoots a bolt with terrific power."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
@@ -214,6 +215,84 @@
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
 	damage_from_perception = TRUE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
+	name = "siegebow"
+	desc = "A heavier weight crossbow - the basis of a mounted ballista, made fit for handheld usage. Integrated just \
+	beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic draw-strength. It loads \
+	heavier, full-length bolts; purpose-made to pulverize. </br>Assembled in the Grenzelhoft clientstate Vakra and \
+	used extensively in the vakra civilwar, it is foreign to most lands."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "heavycrossbow0"
+	item_state = "heavycrossbow"
+	possible_item_intents = list(/datum/intent/shoot/crossbow/heavy, /datum/intent/arc/crossbow/heavy, /datum/intent/buttstroke/heavy, /datum/intent/effect/daze) //Remember, this is quite heavy.
+	load_sound = 'sound/foley/doors/lockmetal.ogg'
+	fire_sound = 'sound/combat/Ranged/crossbow_big_shot.ogg'
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
+	minstr = 12 //Should only affect melee damage. Sells the impression that you're hauling some serious artillery around.
+	force = 20
+	wdefense = 4
+	max_integrity = 150
+	chargingspeed = 60 //+20, or a little over +50% the standard charging speed.
+	reloadtime = 160 //Roughly sixteen seconds, or +200% the standard reloading speed.
+	accfactor = 0.5 //Hey, I'd like to see you try to aim a siege weapon while standing up!
+	equip_delay_self = 3 SECONDS
+	unequip_delay_self = 3 SECONDS
+	inv_storage_delay = 2 SECONDS
+
+
+/datum/intent/shoot/crossbow/heavy
+	basetime = 60
+	chargetime = 1
+	chargedrain = 1 //Takes 50% longer to properly aim and fire. Imparts a stamina drain and audio cue, too.
+	charging_slowdown = 2 //Slows down movement, on par with a dedicated longbow. You can probably guess why.
+
+/datum/intent/arc/crossbow/heavy
+	basetime = 60
+	chargetime = 1.5
+	chargedrain = 1 //Ditto.
+	charging_slowdown = 2.5 //Little more than before, with the assumption that you're taking your time for a more precise shot.
+
+/datum/intent/shoot/crossbow/heavy/prewarning()
+	if(mastermob)
+		mastermob.visible_message(span_warning("[mastermob] readies [masteritem]!"))
+		playsound(mastermob, pick('sound/combat/Ranged/crossbow_medium_reload-02.ogg'), 100, FALSE)
+
+/datum/intent/arc/crossbow/heavy/prewarning()
+	if(mastermob)
+		mastermob.visible_message(span_warning("[mastermob] readies [masteritem] for a precise shot!"))
+		playsound(mastermob, pick('sound/combat/Ranged/crossbow_medium_reload-02.ogg'), 100, FALSE)
+
+/datum/intent/buttstroke/heavy
+	name = "heavy buttstroke"
+	damfactor = 1.15
+	swingdelay = 6
+	icon_state = "instrike"
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR - 0.45 //Reduces integrity damage modifier to +15%.
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/paalloy
+	name = "ancient siegebow"
+	desc = "A heavier weight crossbow from another tyme - the basis of a mounted ballista, made fit for handheld \
+	usage. Integrated just beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic \
+	draw-strength. It loads heavier, full-length bolts; purpose-made to pulverize. </br>'Rudmarsch's walls broke \
+	beneath the volley, and Her sickness petered through the cracks..'"
+	item_state = "ancientheavybow"
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic
+	name = "\"Providence\""
+	desc = "In the hands of Saint Augustere, this specially-hewn siegebow felled the traitorous Archbishop of Vespermill; \
+	mere moments before the completion of a terrible ritual. Decades later, it has been called into action once more \
+	to destroy those who'd seek to sacrifice His greatest works. May thy aim be true, childe o' God - and thy judgement, unfettered."
+	minstr = 10 //X STR. Intended for use by the Inquisitor, or as a purchased alternative.
+	max_integrity = 200
+	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
+	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
+	icon_state = "relicpsyheavycrossbow0"
+	item_state = "relicpsyheavycrossbow"
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic/marque
+	name = "\"Epistle\""
+	desc = "'I cannot explain what happened in those halls, your eminence..' </br>'..I can only have faith that I did the right thing.'"
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
 //Retains an identical damage to the standard crossbow. The pen is what makes this.
@@ -223,8 +302,8 @@
 	desc = "An incredibly heavy crossbow, designed for a dedicated arbalist to wield. \
 	Modified to be loaded by hand. A tedious affair."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
-	icon_state = "heavycrossbow0"
-	item_state = "heavycrossbow"
+	icon_state = "psyheavycrossbow0"
+	item_state = "psyheavycrossbow"
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20

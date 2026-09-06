@@ -13,3 +13,4 @@
 		)
 	tools = list(/obj/item/needle)
 	craftdiff = 3
+	display_category = ITEM_CAT_ARMOR_LIGHT
