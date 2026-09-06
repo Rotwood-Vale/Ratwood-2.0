@@ -735,7 +735,7 @@
 				if(vomitrelay && blood_volume > 0)
 					var/mob/living/carbon/human/parent = vomitrelay.loc
 					var/amt = 5 * parent.physiology.bleed_mod
-					blood_volume = max(blood_volume - amt, 0)
+					set_blood_volume(blood_volume - amt)
 					GLOB.azure_round_stats[STATS_BLOOD_SPILT] += amt
 					if(isturf(vomit_source.loc))
 						add_drip_floor(vomit_source.loc, amt)
@@ -820,6 +820,7 @@
 		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
+	mark_blood_hud_dirty()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon
