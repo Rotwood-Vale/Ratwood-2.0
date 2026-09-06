@@ -43,7 +43,7 @@
 	faction = list("rogueanimal", "neutral")
 	speed = 0.8
 	breedchildren = 0 //Yeah no, I'm not falling for this one.
-	dodgetime = 20
+	dodgetime = 2 SECONDS
 	held_items = list(null, null)
 	pooptype = null
 	footstep_type = FOOTSTEP_MOB_BAREFOOT

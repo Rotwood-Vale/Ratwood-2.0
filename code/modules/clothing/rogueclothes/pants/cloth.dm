@@ -8,7 +8,7 @@
 
 /obj/item/clothing/under/roguetown/tights/random/Initialize(mapload)
 	color = pick("#544236", "#435436", "#543836", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/under/roguetown/tights/black
 	color = CLOTHING_BLACK
@@ -37,7 +37,7 @@
 
 /obj/item/clothing/under/roguetown/tights/vagrant/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/under/roguetown/tights/sailor
 	name = "sailor's pants"

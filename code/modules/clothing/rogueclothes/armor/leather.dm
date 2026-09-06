@@ -241,7 +241,7 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
