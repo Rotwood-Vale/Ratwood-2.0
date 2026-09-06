@@ -187,11 +187,6 @@
 				if((arrears_viewer.job in GLOB.garrison_positions) || (arrears_viewer.job in GLOB.courtier_positions) || (arrears_viewer.job in GLOB.noble_positions))
 					. += span_smallred("Destitute..")
 
-		//For tennite schism god-event
-		if(length(GLOB.tennite_schisms))
-			var/datum/tennite_schism/S = GLOB.tennite_schisms[1]
-			var/user_side = (WEAKREF(user) in S.supporters_astrata) ? "astrata" : (WEAKREF(user) in S.supporters_challenger) ? "challenger" : null
-			var/mob_side = (WEAKREF(src) in S.supporters_astrata) ? "astrata" : (WEAKREF(src) in S.supporters_challenger) ? "challenger" : null
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_shirt)]. "
 		str += "[wear_shirt.integrity_check(is_smart)]"
