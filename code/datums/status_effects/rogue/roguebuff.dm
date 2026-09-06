@@ -2039,17 +2039,37 @@
 
 /datum/status_effect/buff/griefflower/on_apply()
 	. = ..()
-	to_chat(owner, span_notice("The Rosa's ring draws blood, but it's the memories that truly wound. Failure after failure surging through you like thorns blooming inward."))
 	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/griefflower/on_remove()
 	. = ..()
-	to_chat(owner, span_notice("You part from the Rosa's touch. The ache retreats..."))
+	to_chat(owner, span_notice("You part from the ring's touch. The pain returns..."))
 	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/buff/griefflower
 	name = "Rosa Ring"
-	desc = "The Rosa's ring draws blood, but it's the memories that truly wound. Failure after failure surging through you like thorns blooming inward."
+	desc = "The past hurts no more."
+	icon_state = "buff"
+
+/datum/status_effect/buff/lessergriefflower
+	id = "lessergriefflower"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/lessergriefflower
+	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
+
+/datum/status_effect/buff/lessergriefflower/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/evilgriefflower)
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/buff/lessergriefflower/on_remove()
+	. = ..()
+	to_chat(owner, span_notice("You part from the ring's touch. The pain fades..."))
+	owner.remove_stress(/datum/stressevent/evilgriefflower)
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
+
+/atom/movable/screen/alert/status_effect/buff/lessergriefflower
+	name = "Rosa Ring"
+	desc = "The past stands tall over you. You steel your heart."
 	icon_state = "buff"
 
 /atom/movable/screen/alert/status_effect/buff/adrenaline_rush
