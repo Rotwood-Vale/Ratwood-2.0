@@ -1863,6 +1863,7 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\rogue.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\warrior.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\avar.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\drow.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\eastern.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\etrusca.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\combat\foreigner\grenzelhoft.dm"

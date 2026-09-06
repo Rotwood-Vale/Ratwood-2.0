@@ -143,6 +143,20 @@
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants/maille
+	name = "silk-wreathed maille tights"
+	desc = "Form-fitting silk tights layered over fine drowsmithed maille."
+	armor = ARMOR_MAILLE
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_LEG_HARDLEATHER + 25//slight boost cause it's maille or something
+	blocksound = CHAINHIT
+	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	sewrepair = FALSE//only the silk part is sewable, sire.
+	resistance_flags = FIRE_PROOF
+	anvilrepair = /datum/skill/craft/armorsmithing
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
 	name = "bronze chain skirt"
 	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."

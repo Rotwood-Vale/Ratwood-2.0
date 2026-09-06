@@ -97,6 +97,22 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	item_d_type = "blunt"
 
+/datum/intent/mace/smash/flailchop
+	name = "pendulous chop"
+	icon_state = "inchop"
+	attack_verb = list("chops", "hacks")
+	chargetime = 1.2 SECONDS
+	recovery = 40
+	damfactor = 1.3
+	reach = 2
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	chargedloop = /datum/looping_sound/flailswing
+	keep_looping = TRUE
+	blade_class = BCLASS_CHOP
+	item_d_type = "slash"
+	blunt_chipping = FALSE
+
 /obj/item/rogueweapon/flail/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -266,10 +282,40 @@
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
+	special = /datum/special_intent/greatflail_swing
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker
+	name = "spined drow greatflail"
+	desc = "A pendulous, bladed, and spined orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails. The spikes have a nasty habit of gumming up with gore; this is intentional."
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "drowgreatflail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/dagger/sucker_punch)//always be punching
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop)
+	associated_skill = /datum/skill/combat/whipsflails
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	minstr = 12
+	wdefense = 5
+	max_integrity = 200
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	special = /datum/special_intent/greatsword_swing// put that blade to use
+	bigboy = TRUE
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker/alt
+	name = "drow greatflail"
+	desc = "A pendulous orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails."
+	icon_state = "drowgreatflailb"
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	minstr = 13// no jaluck twinks allowed!
+	wdefense = 4// not as scary looking so worse defense idk
+	special = /datum/special_intent/greatflail_swing// greatflail special tho!
+	bigboy = TRUE
 
 /obj/item/rogueweapon/flail/militia
 	name = "militia flail"

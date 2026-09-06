@@ -214,6 +214,40 @@
 	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
 	damage_from_perception = TRUE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
+	name = "gilded drow crossbow"
+	desc = "A stripped-down crossbow specifically made for the small engagement ranges of the Underdark and caverns. A practical tool of the Drow assassin - \
+	a lady's friend is a man's end. The machining is finely tuned, and the whole of the bow is ornamented in gold - a symbol of rank among drow markswomen."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "drowcrossbowgilded0"
+	item_state = "drowcrossbowgilded"
+	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
+	damfactor = 0.7
+	accfactor = 1.3
+	reloadtime = 20
+	hasloadedsprite = TRUE
+	movingreload = TRUE
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
+	penfactor = 0.6
+	damage_from_perception = TRUE
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser
+	name = "drow crossbow"
+	desc = "A stripped-down crossbow specifically made for the small engagement ranges of the Underdark and caverns. The body is well worn \
+	and lacks the gilding one commonly sees on the equipment of established Drow warriors."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "drowcrossbow0"
+	item_state = "drowcrossbow"
+	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
+	chargingspeed = 20
+	damfactor = 0.6
+	accfactor = 1.3
+	reloadtime = 20
+	hasloadedsprite = TRUE
+	movingreload = TRUE
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
+	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
+	damage_from_perception = TRUE
 
 //Pseudo-Arbalest. This thing is intended to be fuckhuge, but it's using a temp sprite.
 //Retains an identical damage to the standard crossbow. The pen is what makes this.
