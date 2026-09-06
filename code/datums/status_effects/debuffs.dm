@@ -90,7 +90,7 @@
 		SSdroning.kill_droning(owner.client)
 		SSdroning.kill_loop(owner.client)
 		SSdroning.kill_rain(owner.client)
-		owner.clear_typing_indicator("fell asleep")
+		owner.clear_typing_indicator()
 		if(iscarbon(owner)) //to avoid repeated istypes
 			carbon_owner = owner
 		if(ishuman(owner))

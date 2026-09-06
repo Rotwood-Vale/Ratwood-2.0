@@ -9,9 +9,12 @@
 	return FALSE
 
 /datum/mob_descriptor/prominent/custom
+	var/custom_index
 
 /datum/mob_descriptor/prominent/custom/can_describe(mob/living/described)
-	return length(described.custom_descriptors) >= custom_index
+	if(length(described.custom_descriptors) < custom_index)
+		return FALSE
+	return TRUE
 
 /datum/mob_descriptor/prominent/custom/get_description(mob/living/described)
 	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
@@ -20,20 +23,30 @@
 /datum/mob_descriptor/prominent/custom/get_pre_string(mob/living/described)
 	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
 	switch(entry.prefix_type)
+		if(CUSTOM_PREFIX_HAS)
+			return null
 		if(CUSTOM_PREFIX_HAS_A)
 			return "a "
 		if(CUSTOM_PREFIX_HAS_AN)
 			return "an "
-	return null
+		if(CUSTOM_PREFIX_IS)
+			return null
+		if(CUSTOM_PREFIX_LOOKS)
+			return null
 
 /datum/mob_descriptor/prominent/custom/get_verbage(mob/living/described)
 	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
 	switch(entry.prefix_type)
+		if(CUSTOM_PREFIX_HAS)
+			return "%HAVE%"
+		if(CUSTOM_PREFIX_HAS_A)
+			return "%HAVE%"
+		if(CUSTOM_PREFIX_HAS_AN)
+			return "%HAVE%"
 		if(CUSTOM_PREFIX_IS)
 			return "%ARE%"
 		if(CUSTOM_PREFIX_LOOKS)
 			return "%LOOK%"
-	return "%HAVE%"
 
 /datum/mob_descriptor/prominent/custom/one
 	name = "Custom #1"
@@ -42,14 +55,6 @@
 /datum/mob_descriptor/prominent/custom/two
 	name = "Custom #2"
 	custom_index = 2
-
-/datum/mob_descriptor/prominent/custom/three
-	name = "Custom #3"
-	custom_index = 3
-
-/datum/mob_descriptor/prominent/custom/four
-	name = "Custom #4"
-	custom_index = 4
 
 /datum/mob_descriptor/prominent/hunched_over
 	name = "Hunched Over"

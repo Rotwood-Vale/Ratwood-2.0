@@ -62,7 +62,7 @@
 	max_integrity = 200
 	fuel = 10 MINUTES
 
-/obj/item/flashlight/flare/light/getonmobprop(tag)
+/obj/item/flashlight/flare/light5e/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
@@ -73,14 +73,9 @@
 
 /obj/item/flashlight/flare/light/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, FALSE)
+	soundloop = new(list(src), FALSE)
 	on = TRUE
 	START_PROCESSING(SSobj, src)
-
-/obj/item/flashlight/flare/light/Destroy(force)
-	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(soundloop)
-	return ..()
 
 /obj/item/flashlight/flare/light/update_brightness(mob/user = null)
 	..()

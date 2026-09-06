@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/Destroy()
 	_remove_self_from_lobbies()
-	QDEL_NULL(soundloop)
+	qdel(soundloop)
 	. = ..()
 
 /obj/item/rogue/instrument/dropped(mob/living/user, silent)
@@ -308,10 +308,6 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/attack_self(mob/living/user)
 	var/stressevent = /datum/stressevent/music
-	var/can_play_with_occupied_offhand = FALSE
-	if(ishuman(user))
-		var/mob/living/carbon/human/bard = user
-		can_play_with_occupied_offhand = bard.inspiration?.level >= BARD_T2
 	. = ..()
 	if(.)
 		return
@@ -382,7 +378,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					continue
 				break
 			
-			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
+			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
 				return
 				
 			if(choice == "Upload New Song" || choice == "upload")
@@ -394,7 +390,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 				if(!infile)
 					return
-				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
+				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
 					return
 
 				var/filename = "[infile]"
@@ -440,7 +436,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			soundloop.stress2give = stressevent
 			if(!(src in user.held_items) && !(not_held))
 				return
-			if(user.get_inactive_held_item() && !can_play_with_occupied_offhand)
+			if(user.get_inactive_held_item())
 				playing = FALSE
 				soundloop.stop(user)
 				user.remove_status_effect(/datum/status_effect/buff/playing_music)

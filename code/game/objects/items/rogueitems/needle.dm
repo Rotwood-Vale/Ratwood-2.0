@@ -278,7 +278,7 @@
 
 /obj/item/needle/decrepit
 	name = "decrepit needle"
-	icon_state = "needle" // "aneedle" // currently missing the sprite
+	icon_state = "aneedle"
 	desc = "This decrepit old needle doesn't seem helpful for much."
 	stringamt = 5
 	maxstring = 5

@@ -23,7 +23,7 @@
 	icon_state = "inthresh"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
+	candodge = FALSE
 	misscost = 0
 	no_attack = TRUE
 
@@ -297,7 +297,7 @@
 	icon_state = "inhoe"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
+	candodge = FALSE
 	misscost = 0
 
 /*
@@ -364,13 +364,12 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	// these sprites are currently missing
-	// icon = 'icons/roguetown/weapons/64.dmi'
-	// icon_state = "cfork"
-	// pixel_y = -16
-	// pixel_x = -16
-	// inhand_x_dimension = 64
-	// inhand_y_dimension = 64
+	icon = 'icons/roguetown/weapons/64.dmi'
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "cfork"
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/pitchfork/blacksteel
@@ -387,7 +386,7 @@
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
+	candodge = FALSE
 	misscost = 0
 	no_attack = TRUE
 

@@ -150,7 +150,7 @@
 	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 
 /obj/structure/chair/comfy/Destroy()
-	armrest = null
+	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)

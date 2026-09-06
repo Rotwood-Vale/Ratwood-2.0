@@ -26,8 +26,10 @@
 	var/list/spawn_locs = GLOB.hauntstart.Copy()
 	if(LAZYLEN(GLOB.hauntstart))
 		for(var/i in 1 to spawncount)
-			var/turf/_T = pick_n_take(spawn_locs)
-			if(isfloorturf(_T))
-				new /mob/living/carbon/human/species/skeleton/npc(_T)
+			var/obj/effect/landmark/events/haunts/_T = pick_n_take(spawn_locs)
+			if(_T)
+				_T = get_turf(_T)
+				if(isfloorturf(_T))
+					new /mob/living/carbon/human/species/skeleton/npc(_T)
 
 	return

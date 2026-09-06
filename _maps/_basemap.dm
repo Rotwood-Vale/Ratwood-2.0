@@ -3,15 +3,10 @@
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
-		// just the basic map, none of the extra levels
-		#include "map_files\roguetest\roguetest.dmm"
-		#include "map_files\deserttown\deserttown.dmm"
-		#include "map_files\dun_world\dun_world.dmm"
-		#include "map_files\rockhill\rockhill.dmm"
-		#include "map_files\byos\byos.dmm"
-	#endif
+		#include "map_files\Roguetown\roguetown.dmm"
 
-	#ifdef ALL_TEMPLATES
-		#include "templates.dm"
+		#ifdef TRAVISBUILDING
+			#include "templates.dm"
+		#endif
 	#endif
 #endif

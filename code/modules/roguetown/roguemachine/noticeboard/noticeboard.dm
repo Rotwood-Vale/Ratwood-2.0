@@ -16,10 +16,6 @@
 	. = ..()
 	SSroguemachine.noticeboards += src
 
-/obj/structure/roguemachine/noticeboard/Destroy()
-	SSroguemachine.noticeboards -= src
-	return ..()
-
 /datum/noticeboardpost
 	var/title
 	var/truepostername

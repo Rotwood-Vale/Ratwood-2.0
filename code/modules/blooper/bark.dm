@@ -3,14 +3,18 @@ GLOBAL_LIST_INIT(bark_random_list, init_random_bark_list())
 
 /proc/init_bark_list()
 	. = list()
-	for(var/datum/bark/path as anything in subtypesof(/datum/bark))
-		.[path::id] = path
+	for(var/path in subtypesof(/datum/bark))
+		var/datum/bark/B = new path()
+		.[B.id] = path
+		qdel(B)
 
 /proc/init_random_bark_list()
 	. = list()
-	for(var/datum/bark/path as anything in subtypesof(/datum/bark))
-		if(path::allow_random)
-			.[path::id] = path
+	for(var/path in subtypesof(/datum/bark))
+		var/datum/bark/B = new path()
+		if(B.allow_random)
+			.[B.id] = path
+		qdel(B)
 
 //Datums for barks and bark accessories
 /datum/bark

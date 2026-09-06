@@ -63,8 +63,8 @@ Malum's tool
 	icon_state = "inforge"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
-	parriable_intent = FALSE
+	candodge = FALSE
+	canparry = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
@@ -75,8 +75,8 @@ Malum's tool
 	icon_state = "insmelt"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
-	parriable_intent = FALSE
+	candodge = FALSE
+	canparry = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
@@ -868,10 +868,59 @@ Necra's Censer (by ARefrigerator)
 		"clamp_limbs" = FALSE
 	)
 
+	var/tmp/_pending_delete = FALSE
+	var/tmp/_staple_timer = null
+
+
 /obj/item/surgery_staple/proc/start_staple_timer()
-	QDEL_IN(src, SURGERY_STAPLE_LIFETIME)
-	item_flags |= DROPDEL // as soon as we're removed from the organ, we vanish
+	if(_staple_timer)
+		deltimer(_staple_timer)
+
+	_staple_timer = addtimer(CALLBACK(src, PROC_REF(expire_staple)), SURGERY_STAPLE_LIFETIME, TIMER_STOPPABLE)
+
 	return TRUE
+
+
+/obj/item/surgery_staple/proc/expire_staple()
+	if(_pending_delete)
+		return
+
+	if(QDELETED(src))
+		return
+
+	_pending_delete = TRUE
+	qdel(src)
+
+
+/obj/item/surgery_staple/Moved(oldloc, dir, forced = FALSE)
+	. = ..()
+
+	if(_pending_delete)
+		return
+
+	if(isnull(loc))
+		return
+
+	if(!istype(loc, /obj/item/bodypart))
+		_pending_delete = TRUE
+		qdel(src)
+
+
+/obj/item/surgery_staple/attack_hand(mob/living/user)
+	if(!_pending_delete)
+		_pending_delete = TRUE
+		qdel(src)
+
+	return
+
+
+/obj/item/surgery_staple/Destroy()
+	if(_staple_timer)
+		deltimer(_staple_timer)
+		_staple_timer = null
+
+	return ..()
+
 
 /obj/item/surgery_staple/hemostat
 	name = "hemostat staple"

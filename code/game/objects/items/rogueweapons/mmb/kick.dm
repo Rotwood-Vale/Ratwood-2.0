@@ -1,5 +1,7 @@
 /datum/intent/kick
 	name = "kick"
+	candodge = TRUE
+	canparry = TRUE
 	chargetime = 0
 	chargedrain = 0
 	noaa = FALSE

@@ -1,5 +1,4 @@
 /datum/species/human
-	abstract_type = /datum/species/human
 	name = "Humanb"
 	id = "human"
 

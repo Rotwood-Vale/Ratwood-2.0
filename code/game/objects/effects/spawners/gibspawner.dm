@@ -92,3 +92,9 @@
 	if(!gibdirections.len)
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, list())
 	return ..()
+
+/obj/effect/gibspawner/robot/Initialize(mapload)
+	if(!gibdirections.len)
+		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
+	gibamounts[6] = pick(0, 1, 2)
+	return ..()

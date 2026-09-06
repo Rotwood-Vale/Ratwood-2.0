@@ -46,9 +46,9 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	. = ..()
 
 /obj/item/dmusicbox/Destroy()
-	GLOB.musicboxes -= src
+	GLOB.musicboxes.Remove(src)
 	playing = FALSE
-	QDEL_NULL(soundloop)
+	soundloop.stop()
 	return ..()
 
 /obj/item/dmusicbox/update_icon()

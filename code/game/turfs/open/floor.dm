@@ -4,7 +4,7 @@
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
-	baseturfs = /turf/baseturf_openspace
+	baseturfs = /turf/open/transparent/openspace
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

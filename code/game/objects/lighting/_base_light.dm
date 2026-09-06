@@ -119,8 +119,6 @@
 	var/area/A = get_area(src)
 	if(A)
 		on = FALSE
-	if(istype(fog_parter_effect))
-		QDEL_NULL(fog_parter_effect)
 	return ..()
 
 /obj/machinery/light/update_icon()

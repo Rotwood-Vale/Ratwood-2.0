@@ -140,4 +140,6 @@
 	chargetime = 20
 	penfactor = 10
 	swingdelay = 3
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "stab"

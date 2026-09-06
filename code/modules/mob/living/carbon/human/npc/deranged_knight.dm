@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(hedgeknight_aggro, world.file2list("strings/rt/hedgeknightaggro
 	mode = NPC_AI_IDLE
 	faction = list("dundead")
 	ambushable = FALSE
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	flee_in_pain = TRUE
 	possible_rmb_intents = list(
 		/datum/rmb_intent/feint,\

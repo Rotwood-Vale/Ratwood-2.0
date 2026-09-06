@@ -35,6 +35,7 @@
 	melee_damage_upper = 25
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
+	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_DODGE
 	speak_emote = list("laments", "cries", "whimpers")
@@ -48,8 +49,8 @@
 	footstep_type = null
 	defprob = 20 //ghost attack
 //	defdrain = 8
-	dodgetime = 1 SECONDS
-	parriable_intent = TRUE
+	dodgetime = 10
+	canparry = TRUE
 	retreat_health = null
 	can_buckle = TRUE
 	patron = /datum/patron/inhumen/zizo		//So they can be hurt by holy fire/healing

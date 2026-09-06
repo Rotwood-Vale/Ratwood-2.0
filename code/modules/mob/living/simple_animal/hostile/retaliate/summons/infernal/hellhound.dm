@@ -37,12 +37,12 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
-	mob_can_dodge = TRUE
+	candodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = list('sound/vo/mobs/vw/attack (1).ogg','sound/vo/mobs/vw/attack (2).ogg','sound/vo/mobs/vw/attack (3).ogg','sound/vo/mobs/vw/attack (4).ogg')
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	aggressive = 1
 	var/flame_cd
 

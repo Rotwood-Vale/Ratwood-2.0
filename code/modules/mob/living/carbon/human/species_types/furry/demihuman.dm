@@ -65,7 +65,6 @@
 	)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = TRUE
-	mutant_skin_option = TRUE
 	possible_ages = ALL_AGES_LIST
 	disliked_food = NONE
 	liked_food = NONE

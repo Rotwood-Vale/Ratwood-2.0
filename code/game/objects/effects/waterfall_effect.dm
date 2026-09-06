@@ -10,8 +10,8 @@
 	var/turf/open = get_turf(src)
 	if(istransparentturf(open))
 		return
-	color = water_reagent::color
-	var/obj/particle_emitter/effect = MakeParticleEmitter(/particles/mist/waterfall, particle_color = color)
+	color = initial(water_reagent.color)
+	var/obj/particle_emitter/effect = MakeParticleEmitter(/particles/mist/waterfall)
 	effect.layer = 5
 	effect.alpha = 175
 

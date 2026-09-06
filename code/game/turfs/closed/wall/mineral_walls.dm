@@ -6,4 +6,3 @@
 	var/active = null
 	canSmoothWith = null
 	smooth = SMOOTH_TRUE
-	baseturfs = /turf/open/floor/rogue/dirt/road

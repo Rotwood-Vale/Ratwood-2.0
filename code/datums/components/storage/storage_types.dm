@@ -114,9 +114,6 @@
 	allow_quick_gather = FALSE
 	allow_quick_empty = FALSE
 
-/datum/component/storage/concrete/roguetown/book
-	max_items = 1
-
 /datum/component/storage/concrete/grid/meatsack // our rucksack is different from
 // Vanderlin so we use a separate one for meatsack
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -292,8 +289,3 @@
 /datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/dice))
-
-/datum/component/storage/concrete/grid/anvil_bin
-	max_w_class = WEIGHT_CLASS_HUGE
-	screen_max_rows = 8
-	screen_max_columns = 4

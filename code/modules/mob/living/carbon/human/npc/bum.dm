@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(bum_aggro, world.file2list("strings/rt/bumaggrolines.txt"))
 	mode = NPC_AI_IDLE
 	faction = list("bums", "station")
 	ambushable = FALSE
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	wander = FALSE

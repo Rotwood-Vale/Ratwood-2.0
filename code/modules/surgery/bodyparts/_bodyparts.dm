@@ -189,7 +189,6 @@
 		owner.bodyparts -= src
 		owner.bodyparts_by_zone -= body_zone
 		owner = null
-	original_owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
 	for(var/datum/wound/wound as anything in wounds)
@@ -570,7 +569,7 @@
 	body_gender = H.gender
 	should_draw_gender = S.sexes
 
-	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits) || (S.mutant_skin_option && H.mutant_skin))
+	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
 		if(S.fixed_mut_color)
 			species_color = S.fixed_mut_color
 		else

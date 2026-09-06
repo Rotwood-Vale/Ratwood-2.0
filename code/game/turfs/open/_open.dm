@@ -1,5 +1,4 @@
 /turf/open
-	abstract_type = /turf/open
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
@@ -11,7 +10,7 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 	var/footstepstealth = FALSE
-	baseturfs = /turf/baseturf_openspace
+	baseturfs = /turf/open/transparent/openspace
 
 	damage_deflection = INFINITY //TODO: Find a better method for breakable turf system
 

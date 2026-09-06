@@ -300,12 +300,12 @@
 	if(!can_see_cone(user))
 		return FALSE
 	// Respect parry cooldown inherited from hostile.dm (setparrytime = 30).
-	if(!COOLDOWN_FINISHED(src, last_parry))
+	if(world.time < last_parry + setparrytime)
 		return FALSE
 	// Some incoming intents cannot be parried (e.g. grab, jump).
-	if(intenty && !intenty.parriable_intent)
+	if(intenty && !intenty.canparry)
 		return FALSE
-	COOLDOWN_START(src, last_parry, setparrytime)
+	last_parry = world.time
 	// Expert unarmed (rank 4) = 48% base. Each attacker skill level costs 7%.
 	var/prob2defend = get_skill_level(/datum/skill/combat/unarmed) * 12
 	var/attacker_skill = intenty?.masteritem ? user.get_skill_level(intenty.masteritem.associated_skill) \

@@ -37,11 +37,10 @@
 
 	category_tags = list(CTAG_GUILDSMEN)
 	subclass_stats = list(
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = 2,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1 // general skillbuff to bring them in line with the architech
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
@@ -53,7 +52,7 @@
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy to insist you're worse at smelting than smithing
-		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE, // 2 engineering as most engineering crafts were increased in skill
+		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE, // 1 Engineering to allow them to sub for Artificer role occaisonally
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
 
@@ -103,13 +102,14 @@
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
 /datum/advclass/guildsman/artificer
-	name = "Guild Engineer"
-	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
-	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
+	name = "Architech"
+	tutorial = "You are an Architech. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
+	But your true calling is the creation of arcyne machines, alongside feats of engineering, constructing, and creating mechanical and magical wonders whose art of creation has been passed down\
+	from a certain elven Artificer..."
 	outfit = /datum/outfit/job/roguetown/guildsman/artificer
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER)
+	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list( // alchemy expert upon request
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -123,17 +123,15 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // this will allow an architech to use a portable bombard
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // can fill in for a blacksmith but can now actually repair equipment if needed
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER, 
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE, // can fill in for a blacksmith 
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
