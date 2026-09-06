@@ -246,3 +246,5 @@
 
 	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
 	var/no_redflash = FALSE
+	/// Cache of client.prefs.chastenable for frequent observer/listener checks.
+	var/chastity_content_enabled = FALSE

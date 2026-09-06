@@ -432,6 +432,7 @@
 	if(prefs)
 		prefs.chastenable = !prefs.chastenable
 		prefs.save_preferences()
+		mob.update_chastity_content_pref(prefs.chastenable)
 		if(prefs.chastenable)
 			to_chat(src, "Chastity content enabled.")
 		else
