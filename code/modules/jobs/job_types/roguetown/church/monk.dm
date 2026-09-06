@@ -271,6 +271,7 @@
 	if(H.patron?.type == /datum/patron/divine/ravox) // Justice and Honor - athletics and probably a bit better at handling the horrors of war
 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 3, TRUE) //Who even plays Ravoxian acolyte? Whatever, this isn't a huge buff.
 		H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE) //On par with an Adventuring Monk. Seems quite fitting.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/xylix)  // Trickery and Inspiration - muxic and rogueish skills
 		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)

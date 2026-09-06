@@ -65,6 +65,7 @@
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.suppress_grants = TRUE
 		C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/orison)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/lesser_heal)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blood_heal)
