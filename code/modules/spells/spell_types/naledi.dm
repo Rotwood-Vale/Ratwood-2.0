@@ -295,7 +295,7 @@
 		else
 			target.simple_remove_wound(wound)
 	for(var/effect in purged_effects)
-		human.remove_status_effect(effect)
+		target.remove_status_effect(effect)
 	target.set_resting(position, TRUE)
 
 	playsound(target.loc, 'sound/magic/timereverse.ogg', 100, FALSE)
