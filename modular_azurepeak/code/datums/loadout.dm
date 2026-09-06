@@ -1080,6 +1080,30 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Amulet of Ten"
 	path = /obj/item/clothing/neck/roguetown/psicross/ten
 
+/datum/loadout_item/psicross/gronngraggar
+	name = "Amulet of the Moose"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+
+/datum/loadout_item/psicross/gronnmatthios
+	name = "Amulet of the Bear"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+
+/datum/loadout_item/psicross/gronnzizo
+	name = "Amulet of the Wolf"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+
+/datum/loadout_item/psicross/gronnmbaotha
+	name = "Amulet of the Leopard"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+
+/datum/loadout_item/psicross/gronnabyssor
+	name = "Amulet of the Kraken"
+	path = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+
+/datum/loadout_item/psicross/gronndendor
+	name = "Amulet of the Volfskinned Man"
+	path = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
 	path = /obj/item/clothing/ring/band
@@ -1226,9 +1250,17 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Eastern Flowery Robe"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
 
+/datum/loadout_item/decorative_captain_robe
+	name = "Decorative Flowery Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative
+
 /datum/loadout_item/mentor_suit
 	name = "Eastern Mentor Suit"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+
+/datum/loadout_item/decorative_mentor_suit
+	name = "Decorative Mentor Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
 
 /datum/loadout_item/crafteast
 	name = "Eastern Craft Robe"
@@ -1272,6 +1304,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/mentorhat
 	name = "conical mentor hat"
 	path = /obj/item/clothing/head/roguetown/mentorhat
+
+/datum/loadout_item/decorative_mentorhat
+	name = "decorative bamboo hat"
+	path = /obj/item/clothing/head/roguetown/mentorhat/decorative
 
 // ROBES - ASTRATA
 /datum/loadout_item/robe_astrata

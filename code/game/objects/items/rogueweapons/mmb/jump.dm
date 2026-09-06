@@ -1,7 +1,7 @@
 /datum/intent/jump
 	name = "jump"
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE

@@ -6,7 +6,7 @@
 	mode = NPC_AI_IDLE
 	faction = list("neutral")
 	ambushable = FALSE
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	var/is_silent = TRUE /// Determines whether or not we will scream our funny lines at people.
