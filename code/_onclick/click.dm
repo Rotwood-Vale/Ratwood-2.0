@@ -25,6 +25,21 @@
 /mob/proc/changeNext_move(num, hand, override = FALSE)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/proc/get_rmb_clickcd(base_clickcd)
+	var/adf = base_clickcd
+	if(istype(rmb_intent, /datum/rmb_intent/aimed))
+		adf = round(adf * CLICK_CD_MOD_AIMED)
+	else if(istype(rmb_intent, /datum/rmb_intent/swift))
+		adf = min(adf, max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP))
+	return adf
+
+/mob/proc/_get_swifstrong_stam_penalty()
+	if(istype(rmb_intent, /datum/rmb_intent/strong))
+		return EXTRA_STAMDRAIN_SWIFSTRONG
+	if(istype(rmb_intent, /datum/rmb_intent/swift) && used_intent.clickcd > CLICK_CD_INTENTCAP)
+		return EXTRA_STAMDRAIN_SWIFSTRONG
+	return 0
+
 /mob/living/changeNext_move(num, hand, override = FALSE)
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
@@ -136,12 +151,7 @@
 				return
 		if(used_intent.get_chargetime())
 			if(used_intent.no_early_release && client?.chargedprog < 100)
-				var/adf = used_intent.clickcd
-				if(istype(rmb_intent, /datum/rmb_intent/aimed))
-					adf = round(adf * CLICK_CD_MOD_AIMED)
-				else if(istype(rmb_intent, /datum/rmb_intent/swift))
-					adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-				changeNext_move(adf,used_hand)
+				changeNext_move(get_rmb_clickcd(used_intent.clickcd), used_hand)
 				return
 	if(modifiers["right"] && oactive && atkswinging == "right")
 		if(active_hand_index == 1)
@@ -311,12 +321,7 @@
 						changeNext_move(CLICK_CD_RAPID)
 						if(get_dist(my_turf, T) <= used_intent.reach)
 							do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
-						var/adf = used_intent.clickcd
-						if(istype(rmb_intent, /datum/rmb_intent/aimed))
-							adf = round(adf * CLICK_CD_MOD_AIMED)
-						if(istype(rmb_intent, /datum/rmb_intent/swift))
-							adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-						changeNext_move(adf)
+						changeNext_move(get_rmb_clickcd(used_intent.clickcd))
 						if(W)
 							playsound(my_turf, pick(W.swingsound), 100, FALSE)
 						else
@@ -360,12 +365,7 @@
 						offh.melee_attack_chain(src, A, params)
 	else
 		if(ismob(A))
-			var/adf = used_intent.clickcd
-			if(istype(rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * CLICK_CD_MOD_AIMED)
-			else if(istype(rmb_intent, /datum/rmb_intent/swift))
-				adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-			changeNext_move(adf)
+			changeNext_move(get_rmb_clickcd(used_intent.clickcd))
 		UnarmedAttack(A,1,params)
 
 	break_invisibility()
