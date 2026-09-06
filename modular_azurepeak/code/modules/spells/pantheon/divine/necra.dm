@@ -63,14 +63,14 @@
 /obj/effect/proc_holder/spell/targeted/abrogation
 	name = "Abrogation"
 	desc = "Debuffs targeted undead as long as they remain near you, slowly getting set on fire if they stay."
-	range = 8
+	range = 5
 	overlay_state = "necra"
 	releasedrain = 30
 	chargedloop = /datum/looping_sound/invokeholy
 	chargetime = 50
 	chargedrain = 0.5
-	recharge_time = 30 SECONDS
-	max_targets = 0
+	recharge_time = 45 SECONDS
+	max_targets = 3
 	cast_without_targets = TRUE
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/churn.ogg'
