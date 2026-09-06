@@ -113,6 +113,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 	)
+	
 
 // Ronin subclass requires the character to be from Kazengun
 /datum/advclass/baron_retainer/ronin/check_requirements(mob/living/carbon/human/H)
@@ -132,11 +133,25 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
-	r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	beltr = /obj/item/rogueweapon/scabbard/sheath/kazengun
 	backl = /obj/item/rogueweapon/scabbard/sword/kazengun/gold
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1)
+	if(H.mind)
+		var/weapons = list("Naginata", "Ruma Hwando", "Miaodao")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Naginata")
+				r_hand = /obj/item/rogueweapon/spear/naginata
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+			if("Ruma Hwando")
+				r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			if("Miaodao")
+				r_hand = /obj/item/rogueweapon/greatsword/miaodao
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 
 /datum/outfit/job/roguetown/baron_retainer/ronin/choose_loadout(mob/living/carbon/human/H)
 	. = ..()

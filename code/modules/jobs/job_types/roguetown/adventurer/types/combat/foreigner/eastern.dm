@@ -42,7 +42,7 @@
 		)
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Naginata","Quarterstaff","Hwando")
+		var/weapons = list("Naginata","Quarterstaff","Hwando","Miaodao")
 		var/weapon_choice = input(H, "Choose your weapon", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Naginata")
@@ -60,6 +60,11 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			if("Miaodao")
+				r_hand = /obj/item/rogueweapon/greatsword/miaodao
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+				armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 
 /datum/advclass/foreigner/yoruku
 	name = "Eastern Assassin"
