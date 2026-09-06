@@ -93,19 +93,19 @@
 								visible_message(span_info("[src] audibly grits their teeth. ENDURING through their pain."), span_info("Through my faith in HIM, I ENDURE."))
 							else
 								visible_message(span_info("[src] trembled for a moment, but they remain stood."), span_info("My strong constitution keeps me upright."))
-							stuttering += 5
+							//stuttering += 5
 							emote("painmoan")
 							return
 					if(prob(probby) && !HAS_TRAIT(src, TRAIT_NOPAINSTUN) && !has_status_effect(/datum/status_effect/buff/psyhealing))
 						Immobilize(10)
 						emote("painscream")
-						stuttering += 5
+						//stuttering += 5
 						addtimer(CALLBACK(src, PROC_REF(Stun), 110), 10)
 						addtimer(CALLBACK(src, PROC_REF(Knockdown), 110), 10)
 						mob_timers["painstun"] = world.time + 160
 					else
 						emote("painmoan")
-						stuttering += 5
+						//stuttering += 5
 				else
 					if(painpercent >= 80)
 						if(probby)
