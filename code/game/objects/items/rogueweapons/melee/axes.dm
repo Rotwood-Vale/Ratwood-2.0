@@ -315,6 +315,15 @@
 /datum/intent/axe/chop/long
 	reach = 2
 
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/decorated
+	name = "decorated axe"
+	icon_state = "nsapo"
+	desc = "Traditionally referred to as a 'nsapo', this beautifully decorated axe traces its roots back to the earliest daes of Psydonian \
+	civilization. Such makes it a favorite amongst the nobility of both Naledi and Zybantine."
+	max_integrity = 300
+	smeltresult = /obj/item/ingot/gold
+	wdefense = 5
+
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	name = "woodcutter's axe"
 	icon = 'icons/roguetown/weapons/64.dmi'

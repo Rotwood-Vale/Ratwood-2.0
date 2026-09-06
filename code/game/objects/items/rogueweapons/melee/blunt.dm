@@ -205,6 +205,46 @@
 		added_def = 2,\
 	)
 
+/obj/item/rogueweapon/mace/steel/silver/decorated
+	name = "decorated mace"
+	desc = "An ornate mace, inlaid with silver and decorated with golden heraldry. Formally known as a 'gada' amongst the nobility of Naledi, this heftsome scepter \
+	will force anyone to bend the knee; if not through respect, then through a shattered femur."
+	icon_state = "gada"
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	sellprice = 150
+	is_silver = TRUE
+
+/obj/item/rogueweapon/mace/steel/silver/decorated/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/mace/gold
+	name = "golden mace"
+	desc = "A heavenly staff of besilked rosawood, crested with the golden sigil of royalty. Like the plump-bellied aristocrats who've surely commissioned this article's design, it is overbearingly heavy."
+	icon_state = "goldmace"
+	force = 35
+	force_wielded = 40
+	max_integrity = 50
+	anvilrepair = null //Ceremonial. This should break comedically easily, but still have just enough toughness to work with a few strikes.
+	minstr = 11
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/mace/gold/king
+	name = "royal golden mace"
+	desc = "A heavenly staff of besilked rosawood, crested with the golden sigil of royalty and socketed with a dorpel. Like the plump-bellied aristocrats who've surely commissioned this article's design, it is overbearingly heavy."
+	icon_state = "goldmaceking"
+	max_integrity = 75
+	sellprice = 300
+
 /obj/item/rogueweapon/mace/woodclub
 	force = 15
 	force_wielded = 18
