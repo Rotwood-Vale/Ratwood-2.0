@@ -144,6 +144,9 @@
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
 		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
+		list("id" = "pubes", "label" = "Enable Pubic Hair Descriptors", "enabled" = !!owner.prefs.pubes, "desc" = "See pubic hair descriptors on examining someone with exposed pubic hair (if present)."),
+		list("id" = "pits", "label" = "Enable Armpit Hair Descriptors", "enabled" = !!owner.prefs.pits, "desc" = "See armpit hair descriptors on examining someone with exposed underarms (if present)."),
+		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 	)
 
@@ -250,6 +253,12 @@
 				owner.toggle_facial_brands()
 			if("sensitive_branding")
 				owner.toggle_sensitive_brands()
+			if("pubes")
+				owner.toggle_pubes()
+			if("pits")
+				owner.toggle_pits()
+			if("descriptor_color")
+				owner.toggle_descriptor_color()
 			if("cursed_collars")
 				owner.toggle_cursed_collars()
 			if("voting_popup")
@@ -536,6 +545,42 @@
 			to_chat(src, "Your genital and breast organs can now be branded by others.")
 		else
 			to_chat(src, "Your genital and breast organs can no longer be branded by others.")
+
+/client/verb/toggle_pubes()
+	set category = "Options"
+	set name = "Toggle Pubic Hair Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.pubes = !prefs.pubes
+		prefs.save_preferences()
+		if(prefs.pubes)
+			to_chat(src, "Pubic hair descriptors are now visible when examining exposed players.")
+		else
+			to_chat(src, "You will no longer see pubic hair descriptions when examining exposed players.")
+
+/client/verb/toggle_pits()
+	set category = "Options"
+	set name = "Toggle Armpit Hair Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.pits = !prefs.pits
+		prefs.save_preferences()
+		if(prefs.pits)
+			to_chat(src, "Armpit hair descriptors are now visible when examining exposed players.")
+		else
+			to_chat(src, "You will no longer see armpit hair descriptors when examining players.")
+
+/client/verb/toggle_descriptor_color()
+	set category = "Options"
+	set name = "Toggle Colored Descriptors"
+	set hidden = 1
+	if(prefs)
+		prefs.descriptor_color = !prefs.descriptor_color
+		prefs.save_preferences()
+		if(prefs.descriptor_color)
+			to_chat(src, "Genital and body hair descriptor colors are now visible.")
+		else
+			to_chat(src, "Genital and body hair descriptor colors are no longer visible.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"

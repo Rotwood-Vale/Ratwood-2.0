@@ -566,3 +566,100 @@
   picklewilly83:
   - rscadd: Added "a2 Untitled" by Lotchek as a selectable combat track, under the
       name, "Psydonite".
+2026-08-27:
+  Yuckuza:
+  - balance: Bronze cogs and lamps, craftable with one ingot thats yielding 2 cogs
+      and 3 lamps, respectively, are no longer smeltable. No more duping your bronze.
+  ophaq:
+  - bugfix: Changes some single letter variables for the arachnid race code-wise.
+  - rscadd: Gives arachnids two new abilities which let them spin a thin gossamer
+      type of web that can be seen through and a thicker one that blocks visibility.
+      Added two new icons for the abilities as well.
+2026-08-28:
+  zoktiik:
+  - bugfix: Fixed "This was their only chance at lyfe." not being appropriately displayed.
+      It was checking if YOUR mob is "dead", not the DNR person, so examining the
+      (living) Duke as a ghost would show that message.
+2026-08-29:
+  CameronWoof:
+  - image: Restored the majority of our prior food sprites
+  Ephemeralis:
+  - qol: Towner thug subclasses now show properly on examine.
+  - bugfix: Miscreant thugs who take magical brick specialization have been given
+      arcyne T1 to make it function properly with Arcyne Potential.
+  - balance: WEEP now transfers wounds instead of remaking them, meaning that partly-healed
+      wounds will be moved to the absolver/stigmata instead of being reset back to
+      full severity.
+  - qol: The messaging and visual effect for the WEEP spell has been vastly improved,
+      making it clearer when someone is benefitting from the spell and who is using
+      it on them.
+  NPC1314:
+  - rscadd: brazier heat hands on r-click (+temp)
+  - rscdel: hypothermia no longer progress to frostbite
+  - qol: several weathers tweaked average temp per tick effect
+  - balance: firestacks slower to raise temp and caps out before the max on their
+      own, still give mega heatstroke but less time to cool down
+  - code_imp: bumping into mobs while on fire, and walking over burning mobs now 50%
+      chance to spread not 100
+  RadiantFlash7:
+  - bugfix: crafted book sprite fix
+  - bugfix: disabled bood detailing on qaba and kandy to stop it stealing all dye
+      color from dyed naledi clothes
+2026-08-30:
+  CameronWoof:
+  - bugfix: Pork can now be chopped into bacon
+  IronDragoon:
+  - rscadd: Dust Runner gives a daily explosive/drug delivery and can recognise other
+      runners, bathhouse and matthiosans can recognise you
+  - rscadd: Pyromaniac, Under-dweller and Ranger/Bombardier classes given some form
+      of these trait
+  - rscadd: Bombstrap reworked, holds 10 now and requires explosive specialist trait
+      to remove bombs quickly
+  SirSwagmeyer:
+  - rscadd: Added Clipped Wings to wildkin and drakian options.
+  - rscadd: Added eyeliner and eye sockets to the character customization pool.
+  Yuckuza:
+  - rscadd: Added an arousal preview toggle that allows players to see the different
+      erection states of their chosen pintle in the lobby.
+  - rscadd: Added a sheath toggle. All pintles can now be sheathed, slitted, or floppy-free
+      to bounce about as it pleases.
+  - rscadd: Added pubic and pit-hair body features. Includes six pubic styles and
+      four pit-hair styles
+  - rscadd: Genital descriptors on examine are now colored depending on arousal state.
+      Default is pink, which gradually turns red as arousal rises.
+  - balance: Jarhelm now tolerated by nudists.
+  - rscadd: Ported bronze weapons and armor from Azure Peak.
+  - rscadd: Ported bronze armor from Azure Peak.  Also ported duelist goggles, maille
+      masks, tailored masks, steel bascinets, aventail neck protection, aventailed
+      helms, steel hose + cloth hose with two color zones, cuirassed hauberk in ancient
+      alloy and steel variants, padded hose, padded gloves, leather/cloth footwraps,
+      arming jacket variations, and chain sleeves.
+  - rscadd: Gold/silverface now have categories for bronze armor and weapons. Existing
+      weapon/armor categories have also been updated with new and existing items.
+  - rscadd: Thespian Errant advclass. A wandering warrior clad in bronze that gives
+      players access to every new bronze item.
+  - rscadd: Ported other bronze tools and valuables from Azure Peak.
+  - rscadd: Ported gold armor from Azure Peak. Ornamental armor with very low integrity
+      but incredibly high resistances. Also ported decorated steel armor.
+  - rscadd: Ported bronze armor from Azure Peak.  Also ported duelist goggles and
+      chainsleeves + their bronze variants.
+  - balance: Targeting face carries a heavier accuracy malus on fully-able player
+      targets.
+  - balance: Guaranteed limb accuracies on hits in certain situations now replaced
+      with high % bonuses
+  - balance: Pure unarmed punch intent has a 10% bonus, much the same as short-length
+      weapons.
+  - balance: Attacking exposed/vulnerable targets, such as those off balance, feinted,
+      baited, riposted, stamina stunned, etc., grants a 20% bonus to accuracy.
+  - balance: The perception bonus to accuracy is now capped at 40%, or 15 PER.
+  zoktiik:
+  - bugfix: Fixed crippling willpower loss bug affecting Gnolls. Previously, every
+      time a gnoll raised their guard, and someone hit that guard with a weapon, the
+      gnoll would permanently lose 1 WIL.
+  - balance: Gnolls weren't benefiting from any mechanics of Adrenaline Rush when
+      they hit a riposte. Now, they get +1 WIL for its duration & stamina refilled
+      to 50% (if below), just like everybody else. Unlike everybody else, they still
+      do NOT get blood replenished (as they can get health potion from biting people).
+2026-08-31:
+  SirSwagmeyer:
+  - rscadd: Adds inhumen revival spells.
