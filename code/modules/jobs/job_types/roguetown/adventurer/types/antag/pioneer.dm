@@ -17,7 +17,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,//He works with explosives. And firearms are otherwise unobtanium. Just fluff.
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//Bare minimum for dedicated classes. Here because handyman Joe wrastling is funny.
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,//Bare minimum for dedicated classes. Here because handyman Joe wrastling is funny.
 		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,//For the shovel...
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,//For the backup knives.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,//For when his backup knives run out of backups.

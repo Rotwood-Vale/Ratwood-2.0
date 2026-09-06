@@ -83,7 +83,7 @@
 		/datum/skill/combat/polearms = 3,
 		/datum/skill/combat/axes = 3,
 		/datum/skill/combat/whipsflails = 3,
-		/datum/skill/combat/wrestling = 4,
+		/datum/skill/combat/wrestling = 3,
 		/datum/skill/combat/unarmed = 4,
 		/datum/skill/combat/knives = 3,
 		/datum/skill/combat/shields = 4,

@@ -21,7 +21,7 @@
 		/datum/skill/combat/crossbows = 3,
 		/datum/skill/combat/bows = 2,
 		/datum/skill/combat/slings = 2,
-		/datum/skill/combat/wrestling = 3,
+		/datum/skill/combat/wrestling = 2,
 		/datum/skill/combat/knives = 3,
 		/datum/skill/combat/maces = 3,
 		/datum/skill/combat/swords = 3,

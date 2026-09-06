@@ -11,7 +11,7 @@
 /mob/living/carbon/human/species/wildshape/fox/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
 		src.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)

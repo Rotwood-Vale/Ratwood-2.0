@@ -11,7 +11,7 @@
 /mob/living/carbon/human/species/wildshape/spider/gain_inherent_skills()
 	. = ..()
 	if(src.mind)
-		src.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+		src.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 		src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 		src.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE) //For the bog mainly
 		src.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)

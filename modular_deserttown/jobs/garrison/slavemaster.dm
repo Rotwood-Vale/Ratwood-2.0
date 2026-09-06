@@ -62,7 +62,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,//slave whippin
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER, //slave wranglin
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //slave wranglin
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT, //slave beatin
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
