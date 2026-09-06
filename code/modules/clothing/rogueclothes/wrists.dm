@@ -240,10 +240,10 @@
 	body_parts_covered = ARMS
 	icon_state = "splintarms"
 	item_state = "splintarms"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = SOFTHIT
-	max_integrity = ARMOR_INT_SIDE_IRON
+	max_integrity = ARMOR_INT_SIDE_STEEL
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	w_class = WEIGHT_CLASS_NORMAL
@@ -259,8 +259,7 @@
 	body_parts_covered = ARMS
 	icon_state = "ironsplintarms"
 	item_state = "ironsplintarms"
-	armor = ARMOR_LEATHER_STUDDED //not plate armor, is leather + iron bits
-	max_integrity = ARMOR_INT_SIDE_LEATHER
+	max_integrity = ARMOR_INT_SIDE_IRON
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/wrists/roguetown/bracers/iron
@@ -277,7 +276,7 @@
 	desc = "Thin strips of steel attached to small shoulder and elbow plates, worn on the outside of the arms to protect against slashes."
 	icon_state = "jackchain"
 	item_state = "jackchain"
-	armor = ARMOR_LEATHER_STUDDED // Please help me make this make sense this has the same stab protection vro.
+	armor = ARMOR_BRIGANDINE
 	max_integrity = ARMOR_INT_SIDE_LEATHER // Make it slightly worse
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
