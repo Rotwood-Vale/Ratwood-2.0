@@ -1,25 +1,9 @@
 /datum/sex_action/chastityplay/fondle_cage
 	name = "Fondle their chastity device"
 	user_sex_part = SEX_PART_NULL
+	target_sex_part = SEX_PART_GROIN
+	target_needs_chastity = TRUE
 	category = SEX_CATEGORY_HANDS
-
-/datum/sex_action/chastityplay/fondle_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!target_has_cage(target))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/chastityplay/fondle_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!target_has_cage(target))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	return TRUE
 
 /datum/sex_action/chastityplay/fondle_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))

@@ -1,21 +1,10 @@
 /datum/sex_action/masturbate_anus
 	name = "Finger butt"
 	category = SEX_CATEGORY_HANDS
+	// use user part instead of target part so it doesn't get blocked by self-targeting restrictions
 	user_sex_part = SEX_PART_ANUS
-	target_sex_part = SEX_PART_ANUS
 	subtle_supported = TRUE
-
-/datum/sex_action/masturbate_anus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_anus/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	return TRUE
+	solo = TRUE
 
 /datum/sex_action/masturbate_anus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts fingering [user.p_their()] butt..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))

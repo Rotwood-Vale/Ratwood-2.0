@@ -340,10 +340,10 @@
 	dat += "<tr><td><hr></td></tr>"
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		dat += "<tr><td><BR><B>Legwear:</B> <A href='?src=[REF(src)];legwearsthing=1'>[!legwear_socks ? "Nothing" : "Remove"]</A></td></tr>"
-		var/modular_chastity_row = modular_strippanel_chastity_row()
-		if(modular_chastity_row)
+		var/chastity_row = modular_strippanel_chastity_row()
+		if(chastity_row)
 			dat += "<tr><td><hr></td></tr>"
-			dat += modular_chastity_row
+			dat += chastity_row
 #endif
 
 	dat += {"</table>"}

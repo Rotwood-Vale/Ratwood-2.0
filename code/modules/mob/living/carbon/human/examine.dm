@@ -631,9 +631,9 @@
 		else if(do_we_know_chat)
 			. += span_italics("[m1] covertly secured in [chastity_name]. ")
 	
-	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
-	if(modular_chastity_toy_line)
-		. += modular_chastity_toy_line
+	var/chastity_toy_line = human_chastity_toy_examine_line(user, m2, m3)
+	if(chastity_toy_line)
+		. += chastity_toy_line
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))

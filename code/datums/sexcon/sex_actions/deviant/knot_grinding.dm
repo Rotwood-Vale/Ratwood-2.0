@@ -5,24 +5,32 @@
 	subtle_supported = TRUE
 
 /datum/sex_action/knot_grinding/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
-	if(user.sexcon.knotted_status == KNOTTED_AS_TOP)
-		return target == user.sexcon.knotted_recipient
-	if(user.sexcon.knotted_status == KNOTTED_AS_BTM)
-		return user.sexcon.knotted_forced_by_bottom && target == user.sexcon.knotted_owner
-	return FALSE
+	// no reason not to check this here, it's cheap as dirt
+	if(!(user.sexcon.knotted_part_partner & ALL_KNOTTABLE_SEX_PARTS))
+		return FALSE
+	switch(user.sexcon.knotted_status)
+		if(KNOTTED_AS_TOP)
+			return target == user.sexcon.knotted_recipient
+		if(KNOTTED_AS_BTM)
+			return user.sexcon.knotted_forced_by_bottom && target == user.sexcon.knotted_owner
+		else
+			return FALSE
 
 /datum/sex_action/knot_grinding/can_perform(mob/living/user, mob/living/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
-	if(!(user.sexcon.knotted_status == KNOTTED_AS_TOP || (user.sexcon.knotted_status == KNOTTED_AS_BTM && user.sexcon.knotted_forced_by_bottom)))
-		return FALSE
-	if(user.sexcon.knotted_status == KNOTTED_AS_TOP && target != user.sexcon.knotted_recipient)
-		return FALSE
-	if(user.sexcon.knotted_status == KNOTTED_AS_BTM && target != user.sexcon.knotted_owner)
-		return FALSE
-	if(!(user.sexcon.knotted_part_partner&(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_JAWS|SEX_PART_SLIT_SHEATH))) // if we're not knotted anyone of these, abort
+	switch(user.sexcon.knotted_status)
+		if(KNOTTED_AS_TOP)
+			if(target != user.sexcon.knotted_recipient)
+				return FALSE
+		if(KNOTTED_AS_BTM)
+			if(!user.sexcon.knotted_forced_by_bottom || target != user.sexcon.knotted_owner)
+				return FALSE
+		else
+			return FALSE
+	if(!(user.sexcon.knotted_part_partner & ALL_KNOTTABLE_SEX_PARTS)) // if we're not knotted inside, abort
 		return FALSE
 	return TRUE
 

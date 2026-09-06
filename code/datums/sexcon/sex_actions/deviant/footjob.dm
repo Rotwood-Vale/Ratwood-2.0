@@ -1,27 +1,8 @@
 /datum/sex_action/footjob
 	name = "Jerk them off with feet"
 	check_same_tile = FALSE
+	user_sex_part = SEX_PART_FEET
 	target_sex_part = SEX_PART_COCK
-
-/datum/sex_action/footjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/footjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
 
 /datum/sex_action/footjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] puts [user.p_their()] feet on [target]'s cock..."))

@@ -2,24 +2,7 @@
 	name = "Suck their nipples"
 	check_same_tile = FALSE
 	user_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/suck_nipples/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/suck_nipples/can_perform(mob/living/user, mob/living/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
+	target_sex_part = SEX_PART_BREASTS
 
 /datum/sex_action/suck_nipples/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts sucking [target]'s nipples..."))

@@ -68,7 +68,7 @@
 	chastity_row += "</A></td></tr>"
 	return chastity_row
 
-/mob/living/carbon/human/proc/modular_chastity_attached_toy_overlay()
+/mob/living/carbon/human/proc/chastity_attached_toy_overlay()
 	if(!istype(chastity_device?.attached_toy, /obj/item/dildo))
 		return null
 

@@ -27,7 +27,7 @@
 
 	return lines
 
-/mob/living/carbon/human/proc/human_modular_chastity_toy_examine_line(mob/user, m2, m3)
+/mob/living/carbon/human/proc/human_chastity_toy_examine_line(mob/user, m2, m3)
 	if(!chastity_device?.attached_toy)
 		return null
 	var/perception_level = 15
