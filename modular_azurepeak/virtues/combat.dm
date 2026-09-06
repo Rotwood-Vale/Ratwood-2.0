@@ -125,7 +125,7 @@
 /datum/virtue/combat/crossbowman
 	name = "Crossbow Levy"
 	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've always kept an extra supply of special bolts around, just in case."
-	custom_text = "+1 to Crossbows, Up to Legendary, Minimum Apprentice"
+	custom_text = "+1 to Crossbows, Up to Expert, Minimum Apprentice"
 	added_stashed_items = list("Quiver (Heavy Bolts)" = /obj/item/quiver/heavybluntbolts,
 								"Quiver (Regular Bolts)" = /obj/item/quiver/bolts
 	)
@@ -134,7 +134,7 @@
 	if(recipient.get_skill_level(/datum/skill/combat/crossbows) < SKILL_LEVEL_APPRENTICE)
 		recipient.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, silent = TRUE)
 	else
-		added_skills = list(list(/datum/skill/combat/crossbows, 1, 6))
+		added_skills = list(list(/datum/skill/combat/crossbows, 1, 4))
 
 /datum/virtue/combat/shepherd
 	name = "Capable Shepherd"
