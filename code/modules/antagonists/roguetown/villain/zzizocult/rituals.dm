@@ -151,7 +151,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	name = "Sacrifice"
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
-	is_cultist_ritual = TRUE
 
 /datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -209,7 +208,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	name = "Divine Sacrifices"
 	center_requirement = /obj/item/organ/eyes
 	center_desc = "eyes"
-	is_cultist_ritual = TRUE
 	keep_center = TRUE
 
 /datum/ritual/servantry/marktargets/invoke(mob/living/user, turf/center)
