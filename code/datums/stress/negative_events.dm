@@ -446,7 +446,7 @@
 
 /datum/stressevent/apostasy
 	stressadd = 20
-	desc = span_boldred("The apostates mark is upon me!")
+	desc = span_boldred("I have been decreed an apostate! My connection to the Divine is SEVERED!")
 	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon
