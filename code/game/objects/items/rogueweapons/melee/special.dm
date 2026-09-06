@@ -488,6 +488,7 @@
 	thrown_bclass = BCLASS_BLUNT
 	throwforce = 10
 	resistance_flags = FLAMMABLE
+	is_tool = TRUE
 
 /obj/item/rogueweapon/scythe/getonmobprop(tag)
 	. = ..()
@@ -519,6 +520,7 @@
 	wdefense = 2
 	wdefense_wbonus = 4
 	wbalance = WBALANCE_NORMAL
+	is_tool = FALSE//no legendary parry chance for you chudsciple
 
 /obj/item/rogueweapon/pick/militia/steel
 	force = 25

@@ -39,6 +39,9 @@
 	/// Icon for sheathing. Only null for weapons that are unsheathable.
 	var/sheathe_icon = null
 
+	// whether this is actually a tool, like hoes and hammers, not a weapon proper. used to allow TRAIT_WEAPONLESS users to conduct repairs and such
+	var/is_tool = FALSE
+
 	/// Special datum holder
 	var/datum/special_intent/special
 
