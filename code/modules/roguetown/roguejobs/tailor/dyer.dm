@@ -87,7 +87,8 @@ GLOBAL_LIST_INIT(pridelist, list(
 			/obj/item/roguestatue/clay,
 			/obj/item/roguestatue/glass,
 			/obj/item/reagent_containers/glass/bottle/blown,
-			/obj/item/reagent_containers/glass/bottle/alchemical/blown
+			/obj/item/reagent_containers/glass/bottle/alchemical/blown,
+			/obj/item/codpiece
 			)
 	var/list/used_colors
 

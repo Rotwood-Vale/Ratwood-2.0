@@ -635,6 +635,10 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/under/roguetown/platelegs/skirt
 
+/datum/anvil_recipe/armor/steel/codpiece
+	name = "Codpiece, Steel"
+	created_item = /obj/item/codpiece/metal
+
 /datum/anvil_recipe/armor/steel/platelegs
 	name = "Plated Chausses, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)

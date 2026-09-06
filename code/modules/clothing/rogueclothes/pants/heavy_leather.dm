@@ -61,6 +61,7 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+	update_codpiece_item_overlay()
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize(mapload)
 	. = ..()
@@ -103,6 +104,7 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+	update_codpiece_item_overlay()
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
 	name = "cut-throat's pants"
