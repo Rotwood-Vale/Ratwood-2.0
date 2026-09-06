@@ -78,6 +78,15 @@
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
 
+/datum/intent/spear/cut/bardiche/cleave
+	name = "cleaving cut"
+	icon_state = "incleave"
+	attack_verb = list("cleaves", "carves through")
+	clickcd = CLICK_CD_MASSIVE
+	damfactor = 1.0
+	cleave = /datum/cleave_pattern/forward_cleave
+	desc = "A cleave that cuts through a second target behind the first."
+
 /datum/intent/spear/cut/bardiche
 	damfactor = 1.2
 	chargetime = 0
@@ -85,6 +94,14 @@
 /datum/intent/spear/cut/glaive
 	damfactor = 1.2
 	chargetime = 0
+
+/datum/intent/spear/cut/glaive/sweep
+	name = "sweeping cut"
+	icon_state = "insweep"
+	attack_verb = list("sweeps through", "cuts across")
+	clickcd = CLICK_CD_GLACIAL
+	cleave = /datum/cleave_pattern/horizontal_sweep
+	desc = "A sweep that cuts through targets to the front."
 
 /datum/intent/spear/cast
 	name = "cast"
@@ -98,11 +115,38 @@
 	damfactor = 1.2
 	chargetime = 0
 
+/datum/intent/spear/cut/naginata/sweep
+	name = "sweeping cut"
+	icon_state = "insweep"
+	attack_verb = list("sweeps through", "cuts across")
+	clickcd = CLICK_CD_GLACIAL
+	cleave = /datum/cleave_pattern/horizontal_sweep
+	desc = "A sweep that cuts through targets to the front."
+
 /datum/intent/sword/cut/zwei
 	reach = 2
 
 /datum/intent/sword/thrust/zwei
 	reach = 2
+
+/datum/intent/sword/cut/zwei/cleave
+	name = "cleaving cut"
+	icon_state = "incleave"
+	desc = "A cleave that cuts through a second target behind the first."
+	attack_verb = list("cleaves", "carves through")
+	clickcd = CLICK_CD_HEAVY
+	damfactor = 1.0
+	reach = 1 // No!!
+	cleave = /datum/cleave_pattern/forward_cleave
+
+/datum/intent/sword/cut/zwei/sweep
+	name = "sweeping cut"
+	icon_state = "insweep"
+	desc = "A heavy sweep that cuts through targets to the front."
+	attack_verb = list("sweeps through", "cuts across")
+	reach = 1
+	clickcd = CLICK_CD_MASSIVE
+	cleave = /datum/cleave_pattern/horizontal_sweep
 
 /datum/intent/sword/thrust/estoc
 	name = "thrust"
@@ -227,14 +271,18 @@
 	penfactor = BLUNT_DEFAULT_PENFACTOR // Not a mistake, to prevent it from nuking through armor.
 	chargetime = 4 SECONDS
 	damfactor = 4 // 80 damage on hit. It is gonna hurt.
-	reach = 3 // Yep! 3 tiles
+	reach = 2// extra range comes from your cleave aoe
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
+	cleave = /datum/cleave_pattern/lance
 
 /datum/intent/lance/onehand
-	chargetime = 5 SECONDS
+	chargetime = 4 SECONDS
+	swingdelay = 1 SECONDS
+	damfactor = 4 // 25% less damage
+	cleave = /datum/cleave_pattern/lance
 
 //polearm objs ฅ^•ﻌ•^ฅ
 
@@ -802,7 +850,7 @@
 
 /obj/item/rogueweapon/halberd/bardiche
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/cut/bardiche, /datum/intent/axe/chop, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/cut, /datum/intent/spear/cut/bardiche/cleave, /datum/intent/spear/cut/glaive/sweep, SPEAR_BASH)
 	name = "bardiche"
 	desc = "A beautiful variant of the halberd. Its reinforced shaft provides it with greater durability against attacks."
 	icon_state = "bardiche"
@@ -894,7 +942,7 @@
 	name = "summer scythe"
 	desc = "Summer's verdancy runs through the head of this scythe. All the more to sow."
 	icon_state = "dendorscythe"
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/cut/bardiche, /datum/intent/axe/chop/scythe, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/cut/bardiche, /datum/intent/spear/cut/bardiche/cleave, /datum/intent/spear/cut/glaive/sweep, /datum/intent/axe/chop/scythe)
 	force_wielded = 33 // +3
 	max_integrity = 300 // +50
 
@@ -936,8 +984,8 @@
 	)
 
 /obj/item/rogueweapon/halberd/glaive
-	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, SPEAR_BASH)
+	possible_item_intents = list(/datum/intent/spear/thrust/oneh, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/spear/cut/glaive/sweep, SPEAR_BASH)
 	name = "glaive"
 	desc = "A curved blade on a pole, specialised in defence, but expensive to manufacture."
 	icon_state = "glaive"
@@ -1111,8 +1159,8 @@
 	force = 14
 	force_wielded = 35
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
-	// Design Intent: I have a big fucking sword and I want to rend people in half.
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
+	// Design Intent: I have a big fucking sword and I want to cut everything in sight.
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/cut/zwei/cleave, /datum/intent/sword/cut/zwei/sweep)
 	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 	name = "greatsword"
 	desc = "Might be able to chop anything in half!"
@@ -1255,7 +1303,8 @@
 	name = "Apocrypha"
 	desc = "In the Otavan mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is often depicted wielding such an imposing greatweapon against the Dark Star, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength will nevertheless command even the greatest foes to fall."
 	icon_state = "psygsword"
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/strike/bad)
+	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/exe, /datum/intent/sword/chop/heavy, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/exe, /datum/intent/sword/chop/cleave)
 
 /obj/item/rogueweapon/greatsword/psygsword/relic/ComponentInitialize()
 	AddComponent(\
@@ -1727,7 +1776,7 @@
 	force = 16
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/cut/naginata, SPEAR_BASH) // no stab for you little chuddy, it's a slashing weapon
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL_BAD, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, /datum/intent/spear/cut/naginata/sweep, SPEAR_BASH)
 	icon_state = "naginata"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	minstr = 7
@@ -1748,7 +1797,7 @@
 
 /obj/item/rogueweapon/halberd/capglaive
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh, SPEAR_BASH)
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/spear/cut/glaive/sweep, SPEAR_BASH)
 	name = "'Deliverer'"
 	desc = "As if glaives weren't hard enough to produce, this one in particular is made out of blacksteel. A piece of art made for the captain of the guard, it's a tool to deliver justice and help those weaker than the wielder."
 	force = 17
@@ -1815,10 +1864,11 @@
 	icon_state = "inimpale"
 	penfactor = 55
 	attack_verb = list("impales", "runs through")
-	reach = 3
+	reach = 2
 	damfactor = 1.25
 	clickcd = 55
 	swingdelay = 15
+	cleave = /datum/cleave_pattern/lance
 
 /datum/intent/sword/chop/dragonslayer
 	name = "eviscerate"
@@ -1877,29 +1927,40 @@
 	item_d_type = "slash"
 	peel_divisor = 1
 
+/datum/intent/sword/cut/exe/sweep/dragonslayer
+	name = "vorpal sweep"
+	icon_state = "insweep"
+	attack_verb = list("sweeps through", "cuts across")
+	clickcd = CLICK_CD_GLACIAL
+	reach = 2
+	damfactor = 2 // Hits harder but clunkier
+	cleave = /datum/cleave_pattern/frontal_arc
+	desc = "A heavy sweep that cuts through targets to the front."
+
 //
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer
+/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
 	name = "\"Daemonslayer\""
 	desc = "'That thing was too big to be called a sword. Too big, too thick, too heavy, and too rough. No, it was more like a large hunk of silver.' </br>Intimidatingly massive, unfathomably powerful, and - above all else - a testament to one's guts."
 	icon_state = "machaslayer"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/swords64.dmi'
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_BULKY
-	possible_item_intents = list(/datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/sucker_punch/dragonslayer)
-	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer, /datum/intent/sword/flay/dragonslayer)
+	possible_item_intents = list(/datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/sucker_punch/dragonslayer, /datum/intent/sword/flay/dragonslayer)
+	gripped_intents = list(/datum/intent/sword/chop/dragonslayer, /datum/intent/sword/thrust/estoc/dragonslayer, /datum/intent/sword/smash/dragonslayer, /datum/intent/sword/cut/exe/sweep/dragonslayer)
 	force = 35
 	force_wielded = 55
 	minstr = 15
 	minstr_req = TRUE//You MUST have the required strength. No exceptions.
 	wdefense = 15
+	var/coverage = 65//greatsword ds3 has 65 physical def. This is completely arbitrary but should be funny
 	max_integrity = 555
 	max_blade_int = 555
 	alt_intents = null
 	is_silver = TRUE
-	smeltresult = /obj/item/rogueweapon/sword/long/kriegmesser/silver //Too thick to completely melt.
+	smeltresult = /obj/item/rogueweapon/sword/long/exe/berserk//Too thick to completely melt.
 
-/obj/item/rogueweapon/greatsword/psygsword/dragonslayer/ComponentInitialize()
+/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_PSYDONIAN,\
@@ -1910,6 +1971,30 @@
 		added_def = 0,\
 	)
 
+//snowflake coverage passive blocking for the funny super sword
+/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the projectile", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
+	var/mob/attacker
+	var/obj/item/I
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		if(istype(hitby, /obj/item))
+			I = hitby
+		if(I?.thrownby)
+			attacker = I.thrownby
+	if(attack_type == PROJECTILE_ATTACK)
+		var/obj/projectile/P = hitby
+		if(P?.firer)
+			attacker = P.firer
+	if(attacker && istype(attacker))
+		if (!owner.can_see_cone(attacker))
+			return FALSE
+		if(obj_broken)
+			return FALSE
+		if(prob(coverage))
+			owner.visible_message(span_danger("[owner] swings [src] forward in an arc, swatting the [hitby] away!"))
+			playsound(src, BLADEWOOSH_LARGE, 100, TRUE, -1) //HOME RUN!!!
+			return TRUE
+	return FALSE
 
 //Elven weapons sprited and added by Jam
 

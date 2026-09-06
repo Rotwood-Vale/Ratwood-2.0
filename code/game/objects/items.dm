@@ -157,6 +157,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/dropshrink = 0
 	/// Force value that is force or force_wielded, with any added bonuses from external sources. (Mainly components for enchantments)
 	var/force_dynamic = 0
+	/// Temporary multiplier applied to sharpness decay for cleave secondary hits. Reset to 1 after use.
+	var/tmp/cleave_sharpness_mult = 1
 	/// Weapon's length. Indicates what limbs it can target without extra circumstances (like grabs / on a prone target).
 	var/wlength = WLENGTH_NORMAL
 	/// Weapon's balance. Swift uses SPD difference between attacker and defender to increase hit%. Heavy increases parry stamina drain based on STR diff.

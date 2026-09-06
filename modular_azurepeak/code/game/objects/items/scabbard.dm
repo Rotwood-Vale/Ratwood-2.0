@@ -508,7 +508,12 @@
 	invalid_blades = list(
 		/obj/item/rogueweapon/sword/long/exe,
 		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/long/martyr
+		/obj/item/rogueweapon/sword/long/exe/cloth,
+		/obj/item/rogueweapon/sword/long/martyr,
+		/obj/item/rogueweapon/sword/long/exe/silver,
+		/obj/item/rogueweapon/sword/long/exe/psy,
+		/obj/item/rogueweapon/sword/long/exe/berserk,
+		/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
 	)
 
 	force = 7

@@ -211,6 +211,7 @@
 	icon_state = "blood"
 	sellprice = 188
 	desc = "Something about this gem just doesn't sit right with you. Holding it makes the blood leave your fingertips."
+	smeltresult = /obj/item/ingot/component/glutcrystal
 
 /obj/item/roguegem/blood_diamond/examine(mob/user)
 	. = ..()

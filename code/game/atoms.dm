@@ -1083,7 +1083,7 @@
  * 5 is any additional text, which will be appended to the rest of the log line
  * severe marks crits, dismemberment and death so they are colour coded in the individual log panel
  */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, severe = FALSE)
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, zone=null, intent=null, damtype=null, severe = FALSE)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -1096,8 +1096,11 @@
 	var/saddition = ""
 	if(addition)
 		saddition = " [addition]"
+	var/sintent = intent ? " (INTENT: [uppertext(intent)])" : ""
+	var/sdamtype = damtype ? " (DAMTYPE: [uppertext(damtype)])" : ""
+	var/szone = zone ? " (ZONE: [uppertext(zone)])" : ""
 
-	var/postfix = "[sobject][saddition][hp]"
+	var/postfix = "[sobject][saddition][sintent][sdamtype][szone][hp]"
 
 	var/message = "has [what_done] [starget][postfix]"
 	// one id shared by all three writes below, so the panels can tell three renderings of one hit from three hits.

@@ -164,7 +164,7 @@
 		return
 	if((M.mobility_flags & MOBILITY_STAND))
 		if(M.checkmiss(user))
-			if(!swingdelay)
+			if(!swingdelay && !user.used_intent?.cleave)
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
 					user.do_attack_animation(M, user.used_intent.animname, used_item = src, used_intent = user.used_intent, simplified = TRUE)
 			return
@@ -263,6 +263,9 @@
 				playsound(M.loc,  "nodmg", 100, FALSE, -1)
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)]) (AIMED: [uppertext(parse_zone(user.zone_selected))])")
+
+	execute_cleave(user, get_turf(M), M)
+
 	add_fingerprint(user)
 
 //the equivalent of the standard version of attack() but for object targets.
@@ -277,11 +280,61 @@
 		return TRUE
 
 /obj/item/proc/attack_turf(turf/T, mob/living/user, multiplier)
+	execute_cleave(user, T)
 	if(T.max_integrity)
 		if(T.attacked_by(src, user, multiplier))
 			user.mob_timers[MT_SNEAKATTACK] = world.time
 			user.do_attack_animation(T, simplified = TRUE)
 			return TRUE
+
+/// Executes cleave secondary attacks around an origin turf. Primary is excluded from targets (if any).
+/obj/item/proc/execute_cleave(mob/living/user, turf/origin, mob/living/primary)
+	var/datum/cleave_pattern/cleave = user.used_intent?.cleave
+	if(!cleave)
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))//no force argument since there are no zero-force cleaves. Add force if someone adds a pillow fight cleave or something
+		return
+	if(primary && QDELETED(primary))
+		return
+	var/list/cleave_turfs = cleave.get_cleave_turfs(user, origin)
+	cleave_sharpness_mult = 0.5
+	// Collect targets, living first then dead
+	var/list/living_targets = list()
+	var/list/dead_targets = list()
+	for(var/turf/T in cleave_turfs)
+		for(var/mob/living/L in T)
+			if(L == primary || L == user)
+				continue
+			if(L.stat == DEAD)
+				dead_targets += L
+			else
+				living_targets += L
+	var/cleave_targets_hit = 0
+	for(var/mob/living/L in living_targets + dead_targets)
+		if(cleave.max_targets && cleave_targets_hit >= cleave.max_targets)
+			break
+		var/cleave_override
+		var/_receiver_signal = SEND_SIGNAL(L, COMSIG_MOB_ITEM_BEING_ATTACKED, L, user, src)
+		if(_receiver_signal & COMPONENT_ITEM_NO_ATTACK)
+			continue
+		else if(_receiver_signal & COMPONENT_ITEM_NO_DEFENSE)
+			cleave_override = ATTACK_OVERRIDE_NODEFENSE
+		if(cleave_override != ATTACK_OVERRIDE_NODEFENSE && L.checkdefense(user.used_intent, user))
+			continue
+
+		L.lastattacker = user.real_name//we want to know who attacked what, sire.
+		L.lastattackerckey = user.ckey
+		L.lastattacker_weakref = WEAKREF(user)
+		if(L.mind)
+			L.mind.attackedme[user.real_name] = world.time
+
+		if(L.attacked_by(src, user))
+			cleave_targets_hit++
+			var/tempsound = user.used_intent?.hitsound
+			if(tempsound)
+				playsound(L.loc, tempsound, 100, FALSE, -1)
+			log_combat(user, L, "cleaved", src.name, zone = user.zone_selected, intent = user.used_intent.name)
+	cleave_sharpness_mult = 1
 
 /atom/movable/proc/attacked_by()
 	return FALSE
