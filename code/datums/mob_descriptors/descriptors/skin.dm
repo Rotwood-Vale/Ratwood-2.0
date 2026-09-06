@@ -45,6 +45,18 @@
 /datum/mob_descriptor/skin/ashen
 	name = "Ashen Skin"
 
+/datum/mob_descriptor/skin/custom
+	name = "Custom Skin"
+	suffix = "skin"
+	custom_index = 11
+
+/datum/mob_descriptor/skin/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/skin/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text
+
 /datum/mob_descriptor/scales
 	abstract_type = /datum/mob_descriptor/scales
 	slot = MOB_DESCRIPTOR_SLOT_SKIN

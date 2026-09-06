@@ -36,7 +36,7 @@
 	melee_damage_upper = 34
 	health = WOLF_HEALTH_UNDEAD
 	maxHealth = WOLF_HEALTH_UNDEAD
-	dodgetime = 40
+	dodgetime = 4 SECONDS
 	vision_range = 7
 	aggro_vision_range = 9
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -92,7 +92,7 @@
 		stat = CONSCIOUS
 		update_icon()
 		// If you don't kill it, it will become a threat again.
-		addtimer(CALLBACK(src, .proc/reanimation), reinimation_timer)
+		addtimer(CALLBACK(src, PROC_REF(reanimation)), reinimation_timer)
 		return
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead/proc/reanimation()

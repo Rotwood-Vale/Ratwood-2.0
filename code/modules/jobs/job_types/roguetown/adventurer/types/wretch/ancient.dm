@@ -32,7 +32,9 @@
 		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	) //No Swimming because skeletons in water is bad.
-
+	subclass_stashed_items = list(
+		"Armor Plates" =  /obj/item/repair_kit/metal,
+	)
 /datum/outfit/job/roguetown/wretch/ancientchampion
 	has_loadout = TRUE
 
@@ -116,8 +118,10 @@
 /obj/effect/proc_holder/spell/invoked/bonemend
 	name = "Bone Mend"
 	desc = "Mend the chosen target's bones with a burst of necrotic magick. Requires standing still for a few seconds"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	cost = 3
-	overlay_state = "rituos"
+	overlay_state = "bonemend"
 	releasedrain = 50
 	chargetime = 5 SECONDS // Make in combat usage harder
 	range = 2
