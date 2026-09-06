@@ -2638,6 +2638,7 @@
 #include "code\modules\roguetown\roguejobs\tailor\dyer.dm"
 #include "code\modules\roguetown\roguejobs\tailor\loom.dm"
 #include "code\modules\roguetown\roguejobs\tailor\tanning.dm"
+#include "code\modules\roguetown\roguejobs\tailor\veilofveronica.dm"
 #include "code\modules\roguetown\roguemachine\_roguemachine.dm"
 #include "code\modules\roguetown\roguemachine\ATM.dm"
 #include "code\modules\roguetown\roguemachine\blackmarket.dm"
