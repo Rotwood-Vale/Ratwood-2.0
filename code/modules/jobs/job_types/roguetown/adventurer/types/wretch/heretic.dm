@@ -339,12 +339,20 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/corroded/zizo, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/matthios, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/combat/messer/graggar, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/divine/astrata)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)

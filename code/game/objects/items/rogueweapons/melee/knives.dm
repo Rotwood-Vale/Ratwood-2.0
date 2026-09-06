@@ -294,9 +294,9 @@
 	throwforce = 16
 	minstr = 9
 	wdefense = 4
-	slot_flags = ITEM_SLOT_HIP
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	thrown_bclass = BCLASS_CHOP
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 1.1
 
@@ -353,7 +353,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
 	name = "rondel dagger"
 	desc = "This is the traditional sidearm of a knight: a lightweight dagger of solid steel, well-balanced for delivering rapid thrusts that can shuck grapplers like oysters."
-	icon_state = "rondeldagger"
+	icon_state = "rondel"
 	sheathe_icon = "dagger_trainer"
 	possible_item_intents = list(/datum/intent/dagger/thrust/quick, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
 	wdefense = 4 //Slightly more defense than a regular dagger. Intended to function as a tool for countering grapplers or finishing off armored opponents with broken pieces.
