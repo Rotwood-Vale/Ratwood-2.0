@@ -542,3 +542,44 @@
 	skillcraft = /datum/skill/craft/ceramics
 	req_table = TRUE
 	craftdiff = 2
+
+///Repair Kits///
+/datum/crafting_recipe/roguetown/survival/repairkitclothbad
+	name = "fabric patch" //9 fiber
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/repair_kit/bad
+	reqs = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 2,
+		/obj/item/rope = 1,
+		)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetalingot
+	name = "empty metal repair kit (iron bar)"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/ingot/iron = 1,
+		)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetalscrap
+	name = "empty metal repair kit (iron scrap)"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/scrap = 3,
+		)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/survival/repairkitcloth
+	name = "sewing kit"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/repair_kit
+	reqs = list(
+		/obj/item/natural/cloth = 4,
+		/obj/item/natural/hide/cured = 2,
+		)
+	skillcraft = /datum/skill/craft/sewing
+	craftdiff = 4 //Expert

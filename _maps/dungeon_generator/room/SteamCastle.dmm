@@ -1089,7 +1089,7 @@
 	STACON = 14;
 	STAWIL = 14;
 	STALUC = 12;
-	candodge = 0
+	mob_can_dodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
@@ -1175,7 +1175,7 @@
 	STACON = 14;
 	STAWIL = 14;
 	STALUC = 12;
-	candodge = 0
+	mob_can_dodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/suit/roguetown/armor/plate/half/ancient,
@@ -2862,7 +2862,7 @@
 	STACON = 14;
 	STAWIL = 14;
 	STALUC = 12;
-	candodge = 0
+	mob_can_dodge = 0
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/suit/roguetown/armor/plate/half/ancient,

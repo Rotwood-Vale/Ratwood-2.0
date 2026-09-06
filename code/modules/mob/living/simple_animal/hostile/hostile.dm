@@ -64,7 +64,7 @@
 
 	cmode = 1
 	setparrytime = 30
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 
 
 
