@@ -36,33 +36,35 @@
 	set category = "OOC"
 	do_subtlelooc(msg)
 
+/// Takes raw text and sanitizes it on the first line, before anything else in here can read it.
+/// Callers must pass the message unsanitized, encoding it twice turns apostrophes into a
+/// literal &#39; in chat.
 /client/proc/do_subtlelooc(msg as text)
+
+	// Sanitizes here. IDK why it was just randomly all the way down there.
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+
+	if(!msg)
+		return
 
 	if(GLOB.say_disabled)
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	if(prefs.muted & MUTE_LOOC)
-		to_chat(src, span_danger("I cannot use LOOC (temp muted)."))
-		return
-
-	if(is_banned_from(ckey, "LOOC"))
-		to_chat(src, span_danger("I cannot use LOOC (perma muted)."))
-		return
-
-	if(isobserver(mob) && !holder)
-		to_chat(src, span_danger("I cannot use LOOC while dead."))
+	// SLOOC has its own mute, the LOOC one doesn't reach it and this one doesn't reach LOOC
+	if(prefs.muted & MUTE_SLOOC)
+		to_chat(src, span_danger("I cannot use SLOOC (temp muted)."))
 		return
 
 	if(!holder && istype(mob, /mob/dead/new_player))
 		to_chat(src, span_danger("I cannot use LOOC while in the lobby. Join the round or observe first."))
 		return
 
-	if(!mob)
+	if(isobserver(mob) && !(holder && istype(mob, /mob/dead/observer/admin)))
+		to_chat(src, span_danger("I cannot use SLOOC while ghosted."))
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if(!msg)
+	if(!mob)
 		return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
@@ -83,12 +85,13 @@
 	var/list/hearers = get_hearers_in_view(distance, S)
 	var/list/recipient_choices = list("1-Tile Range", "Same Tile")
 
+	// L.client, so NPCs and disconnected bodies stay out of the picker
 	for(var/mob/living/L in hearers)
-		if(L.stat == CONSCIOUS && L != S)
+		if(L.client && L.stat == CONSCIOUS && L != S)
 			if(!L.rogue_sneaking && L.name != "Unknown")
 				recipient_choices += L
 
-	var/recipient_choice = input(src, "Pick a target?", "Subtle Emote") in recipient_choices
+	var/recipient_choice = input(src, "Pick a target?", "SLOOC") in recipient_choices
 	if(!recipient_choice)
 		return
 
@@ -110,7 +113,10 @@
 		else
 			recipient_admin_label = recipient_label
 
-	var/admin_info = " ([s_ckey]) [ADMIN_FLW(S)] <A href='?_src_=holder;[HrefToken()];mute=[s_ckey];mute_type=[MUTE_LOOC]'><font color='[(prefs.muted & MUTE_LOOC) ? "red" : "blue"]'>\[MUTE\]</font></a>"
+	// Both links, so a SLOOC line can shut down SLOOC alone or LOOC alongside it
+	var/mute_slooc_link = "<A href='?_src_=holder;[HrefToken()];mute=[s_ckey];mute_type=[MUTE_SLOOC]'><font color='[(prefs.muted & MUTE_SLOOC) ? "red" : "blue"]'>\[MUTE SLOOC\]</font></a>"
+	var/mute_looc_link = "<A href='?_src_=holder;[HrefToken()];mute=[s_ckey];mute_type=[MUTE_LOOC]'><font color='[(prefs.muted & MUTE_LOOC) ? "red" : "blue"]'>\[MUTE LOOC\]</font></a>"
+	var/admin_info = " ([s_ckey]) [ADMIN_FLW(S)] [mute_slooc_link] [mute_looc_link]"
 	var/prefix_text = span_prefix("[pfx]:")
 
 	var/msg_reg = "<font color='#9DCCFF'><b>[prefix_text] <EM>[s_name] → [recipient_label]:</EM> <span class='message'>[msg]</span></b></font>"
@@ -154,16 +160,20 @@
 		to_chat(C, msg_rem)
 
 /client/proc/do_looc(msg as text, wp)
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 
-	// If LOOC message starts with @, treat as SLOOC
+	// If LOOC message starts with @, treat as SLOOC. Hand over the raw text, do_subtlelooc
+	// sanitizes its own input and encoding it a second time here would mangle apostrophes
 	if(copytext(msg, 1, 2) == "@")
 		var/slooc_msg = copytext(msg, 2)
 		if(length(slooc_msg) && copytext(slooc_msg, 1, 2) == " ")
 			slooc_msg = copytext(slooc_msg, 2)
 		do_subtlelooc(slooc_msg)
+		return
+
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)
 		return
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -178,13 +188,15 @@
 		to_chat(src, span_danger("I cannot use LOOC (perma muted)."))
 		return
 
-	if(isobserver(mob) && !holder)
-		to_chat(src, span_danger("I cannot use LOOC while dead."))
-		return
-
 	// Lobby restriction: disable LOOC for normal players still in the lobby (new_player)
-	if(!holder && istype(mob, /mob/dead/new_player))
-		to_chat(src, span_danger("I cannot use LOOC while in the lobby. Join the round or observe first."))
+	if(istype(mob, /mob/dead/new_player))
+		if(!holder)
+			to_chat(src, span_danger("I cannot use LOOC while in the lobby. Join the round or observe first."))
+			return
+
+	else if((mob?.stat == DEAD || isobserver(mob)) && !(holder && istype(mob, /mob/dead/observer/admin)))
+		var/refusal = isobserver(mob) ? "I cannot use LOOC while ghosted." : "I cannot use LOOC while dead, only SLOOC."
+		to_chat(src, span_danger(refusal))
 		return
 
 	if(!mob)
