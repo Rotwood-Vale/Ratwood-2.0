@@ -125,18 +125,6 @@
 	effectedstats = list(STATKEY_INT = 5,STATKEY_SPD = 3,STATKEY_LCK = -5)
 	duration = 2 MINUTES
 
-/datum/status_effect/buff/druqks/baotha
-	id = "baothadruqks"
-
-/datum/status_effect/buff/druqks/baotha/on_apply()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
-
-/datum/status_effect/buff/druqks/baotha/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_STATUS_EFFECT(id))
-	owner.visible_message("[owner]'s eyes appear to return to normal.")
-
 /datum/status_effect/buff/druqks/on_apply()
 	. = ..()
 	if(owner?.client)
@@ -167,6 +155,42 @@
 	desc = ""
 	icon_state = "acid"
 
+/datum/status_effect/buff/baothablessing
+	id = "druqks"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/baothablessing
+	duration = 2 MINUTES
+
+/datum/status_effect/buff/baothablessing/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_MIRACLE)
+	if(owner?.client)
+		if(owner.client.screen && owner.client.screen.len)
+			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_fov_hidden) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_above) in owner.client.screen
+			PM.backdrop(owner)
+			owner.add_stress(/datum/stressevent/high)
+
+/datum/status_effect/buff/baothablessing/on_remove()
+	if(owner?.client)
+		if(owner.client.screen && owner.client.screen.len)
+			var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_fov_hidden) in owner.client.screen
+			PM.backdrop(owner)
+			PM = locate(/atom/movable/screen/plane_master/game_world_above) in owner.client.screen
+			PM.backdrop(owner)
+			owner.remove_stress(/datum/stressevent/high)
+
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/buff/baothablessing
+	name = "Baothan Blessing"
+	desc = "Baotha has blessed you with immunity to overdose. Rejoice!"
+	icon_state = "acid"
+
 /datum/status_effect/buff/ozium
 	id = "ozium"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks
@@ -188,9 +212,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks
 	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2, STATKEY_INT = -2)
 	duration = 30 SECONDS
-
-/datum/status_effect/buff/moondust/nextmove_modifier()
-	return 0.8
 
 /datum/status_effect/buff/moondust/on_apply()
 	. = ..()
@@ -216,21 +237,18 @@
 	duration = 80 SECONDS
 	var/originalcmode = ""
 
-/datum/status_effect/buff/herozium/nextmove_modifier()
-	return 1.2
-
 /datum/status_effect/buff/herozium/on_apply()
 	. = ..()
 	owner.add_stress(/datum/stressevent/ozium)
 	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id))
-	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	originalcmode = owner.cmode_music
 	owner.cmode_music = 'sound/music/combat_ozium.ogg'
 
 /datum/status_effect/buff/herozium/on_remove()
 	owner.remove_stress(/datum/stressevent/ozium)
 	REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id))
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.cmode_music = originalcmode
 	. = ..()
 
@@ -240,9 +258,6 @@
 	effectedstats = list(STATKEY_SPD = 4, STATKEY_WIL = 4, STATKEY_INT = -3, STATKEY_CON = -3)
 	duration = 80 SECONDS
 	var/originalcmode = ""
-
-/datum/status_effect/buff/starsugar/nextmove_modifier()
-	return 0.7
 
 /datum/status_effect/buff/starsugar/on_apply()
 	. = ..()
