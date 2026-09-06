@@ -477,6 +477,8 @@
 	desc = "Leather sandals, with steel ankle-protectors and socks of sturdy cloth."
 	icon_state = "kazengunboots"
 	item_state = "kazengunboots"
+	max_integrity = ARMOR_INT_SIDE_STEEL
+	armor = ARMOR_PLATE
 	detail_tag = "_detail"
 	color = "#FFFFFF"
 	detail_color = "#FFFFFF"
