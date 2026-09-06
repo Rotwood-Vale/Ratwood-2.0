@@ -263,6 +263,26 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	to_chat(user, span_danger("The heart beats faster toward the [dir_text]. [prey.real_name] feels [proximity_text][z_text]."))
 	cooldown = world.time + 2 MINUTES
 
+/datum/ritual/servantry/gutted
+	name = "Gutted Fish"
+	center_requirement = /mob/living/carbon/human // One to be gutted.human
+
+/datum/ritual/servantry/gutted/invoke(mob/living/user, turf/center)
+	var/mob/living/carbon/human/target = locate() in center.contents
+	if(!target)
+		return
+	if(target.stat != DEAD)
+		return
+	if(target.mind)
+		to_chat(user, span_danger("The sacrifice must be mindless."))
+		return
+	center.visible_message(span_danger("[target] is lifted up into the air and multiple scratches, incisions and deep cuts start etching themselves into their skin as all of their internal organs spill on the floor below!"))
+	var/atom/drop_location = target.drop_location()
+	for(var/obj/item/organ/organ as anything in target.internal_organs)
+		organ.Remove(target)
+		organ.forceMove(drop_location)
+	for(var/obj/item/bodypart/part as anything in target.bodyparts)
+		part.drop_limb()
 
 /datum/ritual/servantry/darksunmark
 	name = "Dark Sun's Mark"
@@ -475,28 +495,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 // FLESH CRAFTING
 /datum/ritual/fleshcrafting
 	abstract_type = /datum/ritual/fleshcrafting
-
-/datum/ritual/fleshcrafting/gutted
-	name = "Gutted Fish"
-	center_requirement = /mob/living/carbon/human // One to be gutted.human
-	needs_aspect = TRUE
-
-/datum/ritual/fleshcrafting/gutted/invoke(mob/living/user, turf/center)
-	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target)
-		return
-	if(target.stat != DEAD)
-		return
-	if(target.mind)
-		to_chat(user, span_danger("The sacrifice must be mindless."))
-		return
-	center.visible_message(span_danger("[target] is lifted up into the air and multiple scratches, incisions and deep cuts start etching themselves into their skin as all of their internal organs spill on the floor below!"))
-	var/atom/drop_location = target.drop_location()
-	for(var/obj/item/organ/organ as anything in target.internal_organs)
-		organ.Remove(target)
-		organ.forceMove(drop_location)
-	for(var/obj/item/bodypart/part as anything in target.bodyparts)
-		part.drop_limb()
 
 /datum/ritual/fleshcrafting/bunnylegs
 	name = "Saliendo Pedes"
