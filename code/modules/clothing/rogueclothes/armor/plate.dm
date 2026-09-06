@@ -746,6 +746,10 @@
 		var/mob/L = loc
 		L.update_inv_armor()
 
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
+
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
 	desc = "Heavy, well worn armour featuring simple greys. Justice is impartial. Are you?"

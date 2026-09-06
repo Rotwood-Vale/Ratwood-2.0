@@ -760,6 +760,10 @@
 		var/mob/L = loc
 		L.update_inv_head()
 
+/obj/item/clothing/head/roguetown/helmet/citywatch/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
+
 /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	name = "watch captain helmet"
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
