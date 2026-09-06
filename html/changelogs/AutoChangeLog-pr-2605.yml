@@ -1,0 +1,4 @@
+author: "rockliz"
+delete-after: True
+changes:
+  - bugfix: "Infernal now uses ,z to avoid conflicting with Hammerholdian's ,h shortcut."

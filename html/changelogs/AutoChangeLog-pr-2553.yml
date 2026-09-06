@@ -1,0 +1,8 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Added Gronnic Patron list, a subtype of inhumen that also includes Abyssor and Dendor."
+  - rscadd: "Gronnic roles (Atgervi, Fjall Járnklæddur, and Gronn Itinerant) now permit Abyssor and Dendor as valid patrons."
+  - rscadd: "Added Gronnic Patron amulets from Azure Peak for all 6 of the Gronnic Patron Spirits."
+  - image: "added missing patron cross wrist on mob icons for the majority of patron amulets."
+  - image: "added missing bevor down icon_state for the dreamwalker bevor"

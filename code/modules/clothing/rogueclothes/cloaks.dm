@@ -1965,7 +1965,7 @@
 	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/cotehardie/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/cloak/cotehardie/MiddleClick(mob/user)

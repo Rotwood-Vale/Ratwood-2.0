@@ -16,7 +16,7 @@
 		summoned = new mob_to_summon(loc)
 		ADD_TRAIT(summoned, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned.status_flags += GODMODE//It's not meant to be killable until released from it's planar binding.
-		summoned.candodge = FALSE
+		summoned.mob_can_dodge = FALSE
 		animate(summoned, color = "#ff0000",time = 5)
 		summoned.move_resist = MOVE_FORCE_EXTREMELY_STRONG
 		summoned.binded = TRUE

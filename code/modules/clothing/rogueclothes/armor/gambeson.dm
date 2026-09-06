@@ -116,6 +116,10 @@
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Destroy()
+	. = ..()
+	GLOB.lordcolor -= src
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
