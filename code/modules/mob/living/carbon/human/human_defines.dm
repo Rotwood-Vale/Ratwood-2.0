@@ -209,3 +209,5 @@
 	var/hypothermia_timer_id
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
+
+	var/list/deadites_controlled

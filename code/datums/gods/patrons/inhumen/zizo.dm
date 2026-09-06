@@ -6,6 +6,7 @@
 	virtues = "Ambition, Domination, Undeath"
 	sins = "Humility, Ignorance, Stagnation"
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
+	added_verbs = list(/mob/living/carbon/human/proc/praise, /mob/living/carbon/human/proc/draw_sigil)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
