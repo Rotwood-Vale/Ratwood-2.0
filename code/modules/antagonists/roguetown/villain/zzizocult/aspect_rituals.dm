@@ -634,7 +634,7 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "zizocloud"
-	recharge_time = 30 SECONDS
+	recharge_time = 3 MINUTES
 	chargedloop = null
 
 /obj/effect/proc_holder/spell/self/shadow_jaunt/cast(list/targets, mob/user = usr)
@@ -702,6 +702,7 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 	ADD_TRAIT(target, TRAIT_NOMETABOLISM, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_MONSTROUS, TRAIT_GENERIC)
 	target.dna.species.name = "???"
 	target.emote("scream")
 	target.Knockdown(5 SECONDS)
