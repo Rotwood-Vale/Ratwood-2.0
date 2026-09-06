@@ -144,6 +144,7 @@
 	icon_state = "nun"
 	item_state = "nun"
 	allowed_sex = list(MALE, FEMALE)
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/wizard
 	name = "wizard's robe"
