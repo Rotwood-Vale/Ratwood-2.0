@@ -1859,8 +1859,8 @@
 	clickcd = 55
 	recovery = 15
 	item_d_type = "blunt"
-	parriable_intent = FALSE
-	dodgeable_intent = FALSE
+	canparry = FALSE
+	candodge = FALSE
 
 /datum/intent/sword/flay/dragonslayer
 	name = "flay"

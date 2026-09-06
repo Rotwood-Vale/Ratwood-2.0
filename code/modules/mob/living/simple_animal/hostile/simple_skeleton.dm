@@ -27,7 +27,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	mob_can_parry = TRUE
+	canparry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	speak_emote = list("grunts")

@@ -946,7 +946,6 @@
 	anvilrepair = /datum/skill/craft/ceramics
 	smeltresult = /obj/item/natural/brick//why not
 	block2add = FOV_RIGHT|FOV_LEFT//I CANT SEE SHIT
-	nudist_approved = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/jar/equipped(mob/living/user, slot)
 	. = ..()

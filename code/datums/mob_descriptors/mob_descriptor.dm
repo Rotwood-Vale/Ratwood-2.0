@@ -13,7 +13,6 @@
 	/// colors genital descriptor depending on arousal state
 	var/aroused_descriptor_color
 	var/aroused_descriptor_threshold = 30
-	var/custom_index
 
 /datum/mob_descriptor/New()
 	. = ..()

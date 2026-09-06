@@ -1,0 +1,6 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Dust Runner gives a daily explosive/drug delivery and can recognise other runners, bathhouse and matthiosans can recognise you"
+  - rscadd: "Pyromaniac, Under-dweller and Ranger/Bombardier classes given some form of these trait"
+  - rscadd: "Bombstrap reworked, holds 10 now and requires explosive specialist trait to remove bombs quickly"

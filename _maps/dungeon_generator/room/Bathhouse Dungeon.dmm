@@ -1707,9 +1707,7 @@
 /area/rogue/under/tomb/indoors)
 "Jp" = (
 /obj/item/natural/poo/horse,
-/obj/structure/bars/pipe{
-	dir = 9
-	},
+/obj/structure/bars/pipe/left,
 /turf/open/water/sewer,
 /area/rogue/under/tomb/sewer)
 "Jz" = (

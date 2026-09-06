@@ -209,6 +209,8 @@
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 20
+	candodge = TRUE
+	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
@@ -225,6 +227,8 @@
 	name = "cutting claw"
 	hitsound = "genslash"
 	penfactor = 60
+	candodge = TRUE
+	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "incut"
@@ -238,9 +242,3 @@
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")
-
-
-/obj/item/storage/backpack/rogue/satchel/gnoll 
-	name = "stained satchel"
-	desc = "A fetid sack fashioned into a storage accessory. Whatever's put there inevitably comes out twice the bloody."
-	mob_overlay_icon = null

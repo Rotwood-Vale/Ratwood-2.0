@@ -1317,7 +1317,7 @@
 	STASTR = 15;
 	STACON = 12;
 	STAWIL = 12;
-	mob_can_dodge = 0
+	candodge = 0
 	},
 /obj/item/rogueweapon/sword/decorated,
 /obj/item/rogueweapon/shield/buckler/ancient,

@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(searaider_aggro, world.file2list("strings/rt/searaideraggroline
 	mode = NPC_AI_IDLE
 	faction = list("viking", "station")
 	ambushable = FALSE
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.

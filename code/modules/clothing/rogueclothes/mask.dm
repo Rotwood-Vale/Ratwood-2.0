@@ -54,7 +54,7 @@
 /obj/item/clothing/mask/rogue/spectacles
 	name = "spectacles"
 	icon_state = "glasses"
-	break_sound = 'sound/combat/hits/onglass/glasses_break.ogg'
+	break_sound = "glassbreak"
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 20
 	integrity_failure = 0.5
@@ -70,6 +70,7 @@
 	name = "otavan nocshade lens-pair"
 	icon_state = "bglasses"
 	desc = "Made to both ENDURE and incite debate within those few Noc-Sainted within Otava. Noc-lit walks, yae or nae? The lenses look like they can be brushed aside with a carefully guided right-pointer finger led motion."
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 300
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
@@ -121,6 +122,8 @@
 /obj/item/clothing/mask/rogue/spectacles/golden
 	name = "golden spectacles"
 	icon_state = "goggles"
+	break_sound = "glassbreak"
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 35
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
@@ -161,7 +164,7 @@
 		to_chat(user, span_notice("Time to stop working"))
 
 /obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
-	. = ..()
+	..()
 	AddComponent(/datum/component/spill, null, 'sound/blank.ogg')
 
 /obj/item/clothing/mask/rogue/spectacles/Crossed(mob/crosser)
@@ -173,6 +176,8 @@
 	name = "sand goggles"
 	icon_state = "goggles_sandstorm"
 	desc = "A set of goggles of an older design, made to protect the wearer from sandstorms."
+	break_sound = "glassbreak"
+	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 35
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF

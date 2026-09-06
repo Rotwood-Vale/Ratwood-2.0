@@ -34,12 +34,12 @@
 	STASPD = 4
 	deaggroprob = 0
 	defprob = 40
-	mob_can_parry = TRUE
+	canparry = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = "plantcross"
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS
 	ranged = FALSE

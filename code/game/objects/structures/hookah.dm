@@ -119,7 +119,7 @@
 	icon_state = "insmoke"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
+	candodge = FALSE
 	misscost = 0
 	no_attack = TRUE
 

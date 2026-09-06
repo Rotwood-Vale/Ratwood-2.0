@@ -288,7 +288,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/clothing/suit/roguetown/shirt/robe{
+/obj/item/clothing/suit/roguetown/shirt/robe/white{
 	pixel_y = -1;
 	pixel_x = 9
 	},

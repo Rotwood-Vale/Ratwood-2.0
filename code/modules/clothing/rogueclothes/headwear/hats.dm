@@ -463,7 +463,7 @@
 
 /obj/item/clothing/head/roguetown/wizhat/random/Initialize(mapload)
 	icon_state = pick("wizardhatred", "wizardhatyellow", "wizardhatgreen", "wizardhat")
-	return ..()
+	..()
 
 /obj/item/clothing/head/roguetown/witchhat
 	name = "witch hat"

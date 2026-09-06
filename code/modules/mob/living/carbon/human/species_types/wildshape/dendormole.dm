@@ -57,7 +57,6 @@
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
 	organs = list(
@@ -120,6 +119,8 @@
 	animname = "cut"
 	hitsound = "genslash"
 	penfactor = 15
+	candodge = TRUE
+	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "slash"
@@ -135,6 +136,8 @@
 	animname = "cut"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
+	candodge = TRUE
+	canparry = TRUE
 	miss_text = "smashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "blunt"

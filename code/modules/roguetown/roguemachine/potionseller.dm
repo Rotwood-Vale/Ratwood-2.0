@@ -38,6 +38,9 @@
 	update_icon()
 
 /obj/structure/roguemachine/potionseller/Destroy()
+	if(reagents)
+		qdel(reagents)
+		reagents = null
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null

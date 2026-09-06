@@ -28,6 +28,7 @@
 	melee_damage_upper = 45
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
+	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_PARRY
 	speak_emote = list("growls")
@@ -39,7 +40,7 @@
 	faction = list("undead")
 	footstep_type = null
 	defprob = 50 //decently skilled
-	mob_can_parry = TRUE
+	canparry = TRUE
 	retreat_health = null
 
 	can_have_ai = FALSE //disable native ai

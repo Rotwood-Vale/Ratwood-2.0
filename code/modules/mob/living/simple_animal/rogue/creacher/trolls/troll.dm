@@ -69,7 +69,7 @@
 	del_on_deaggro = 99 SECONDS
 	retreat_health = 0
 	food = 0
-	dodgetime = 2 SECONDS
+	dodgetime = 20
 	aggressive = TRUE
 //	stat_attack = UNCONSCIOUS
 	remains_type = /obj/effect/decal/remains/troll

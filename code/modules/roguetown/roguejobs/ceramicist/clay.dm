@@ -85,7 +85,7 @@
 /obj/item/natural/clay/Initialize(mapload)
 	if(cooked_type)
 		cooktime = 30 SECONDS
-	return ..() // The ..() refers to calling the parent class's (obj/item/natural) Initialize() proc.
+	..() // The ..() refers to calling the parent class's (obj/item/natural) Initialize() proc.
 
 /obj/item/natural/clay/refined
 	name = "refined clay"

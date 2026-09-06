@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(statpacks, init_statpacks())
+GLOBAL_LIST_EMPTY(statpacks)
 
 /datum/statpack
 	/// Name of the statpack

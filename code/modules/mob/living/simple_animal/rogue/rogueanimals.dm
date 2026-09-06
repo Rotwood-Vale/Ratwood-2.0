@@ -36,12 +36,13 @@
 	tame_chance = 0
 	retreat_distance = 10
 	minimum_distance = 10
+	dodge_sound = 'sound/combat/dodge.ogg'
 	dodge_prob = 0
 
 	var/deaggroprob = 10
 	var/eat_forever
 	
-	mob_can_dodge = TRUE
+	candodge = TRUE
 
 	var/summon_tier = 0 // Tier of summoning
 	var/summon_primer = null // The message they get when summoned

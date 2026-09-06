@@ -5,7 +5,7 @@
 	var/smooth_icon = null
 	var/prettifyturf = FALSE
 	icon = 'icons/turf/roguefloor.dmi'
-	baseturfs = /turf/baseturf_openspace
+	baseturfs = list(/turf/open/transparent/openspace)
 	neighborlay = ""
 
 /turf/open/floor/rogue/break_tile()
@@ -1727,7 +1727,7 @@
 
 /turf/open/floor/rogue/carpet/lord/center/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
-	. = ..()
+	..()
 
 /turf/open/floor/rogue/carpet/lord/left
 	icon_state = "carpet_l"

@@ -37,7 +37,6 @@
 	var/detail_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone
-	var/mutant_skin = FALSE	//If TRUE, use mutant color as skin color instead of skin_tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
@@ -89,8 +88,10 @@
 	var/last_fire_update
 	var/account_id
 
-	mob_can_parry = TRUE
-	mob_can_dodge = TRUE
+	canparry = TRUE
+	candodge = TRUE
+
+	dodgecd = FALSE
 	dodgetime = 0
 
 	var/list/possibleclass

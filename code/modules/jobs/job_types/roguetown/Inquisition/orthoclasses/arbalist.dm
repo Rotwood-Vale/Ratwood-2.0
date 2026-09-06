@@ -15,7 +15,6 @@
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
-		TRAIT_SLEUTH,
 	)
 	subclass_stats = list(//You get PER/STR for the crossbow.
 		STATKEY_PER = 3,

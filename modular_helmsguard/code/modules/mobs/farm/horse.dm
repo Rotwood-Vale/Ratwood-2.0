@@ -303,7 +303,7 @@
 			return pick('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg','sound/vo/mobs/saiga/idle (7).ogg')
 
 /mob/living/simple_animal/hostile/retaliate/rogue/horse/Initialize(mapload)
-	. = ..()
+	..()
 	if(tame)
 		tamed()
 
@@ -399,6 +399,8 @@
 	chargetime = 0
 	penfactor = 10
 	swingdelay = 0
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "blunt"
 	clickcd = SAIGA_ATTACK_SPEED
 

@@ -16,7 +16,6 @@
 
 /obj/structure/roguemachine/withdraw/Destroy()
 	SSroguemachine.stock_machines -= src
-	QDEL_NULL(withdraw_tab)
 	return ..()
 
 /obj/structure/roguemachine/withdraw/attackby(obj/item/P, mob/user, params)

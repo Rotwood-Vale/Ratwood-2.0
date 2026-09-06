@@ -105,7 +105,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "P" = (
-/obj/item/ash,
+/obj/effect/decal/cleanable/ash/large,
 /turf/closed/mineral/rogue,
 /area/rogue/under/town/sewer)
 "Q" = (

@@ -33,14 +33,14 @@
 	pooptype = null
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	mob_can_parry = TRUE
+	canparry = TRUE
 	defprob = 30
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	rapid = TRUE
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
-	dodgetime = 3 SECONDS
+	dodgetime = 30
 	aggressive = 1
 
 	STACON = 15

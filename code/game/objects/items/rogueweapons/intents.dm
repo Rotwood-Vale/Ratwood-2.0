@@ -17,90 +17,55 @@
 	var/blade_class = BCLASS_BLUNT
 	var/accuracy_modifier = 0
 	var/list/hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
-	/// Used in `checkdefense()` to see if the mob is able to parry this intent
-	var/parriable_intent = TRUE
-	/// Used in `checkdefense()` to see if the mob is able to dodge this intent
-	var/dodgeable_intent = TRUE
-	/// if above 0, this attack must be charged to reach full damage
-	var/chargetime = 0
-	/// how much fatigue is removed every second when at max charge
-	var/chargedrain = 0
-	/// drain when we go off, regardless
-	var/releasedrain = 1
-	/// extra drain from missing only, ALSO APPLIED IF ENEMY DODGES
-	var/misscost = 1
+	var/canparry = TRUE
+	var/candodge = TRUE
+	var/chargetime = 0 //if above 0, this attack must be charged to reach full damage
+	var/chargedrain = 0 //how mcuh fatigue is removed every second when at max charge
+	var/releasedrain = 1 //drain when we go off, regardless
+	var/misscost = 1	//extra drain from missing only, ALSO APPLIED IF ENEMY DODGES
 	var/tranged = 0
-	/// turns off auto aiming, also turns off the 'swooshes'
-	var/noaa = FALSE
+	var/noaa = FALSE //turns off auto aiming, also turns off the 'swooshes'
 	var/warnie = ""
 	var/pointer = 'icons/effects/mousemice/human_attack.dmi'
-	/// Simple unique charge icon
-	var/charge_pointer = null
-	/// Simple unique charged icon
-	var/charged_pointer = null
-	/// the cd invoked clicking on stuff with this intent
-	var/clickcd = CLICK_CD_MELEE
-	/// RTD unable to move for this duration after an attack without becoming off balance
-	var/recovery = 0
-	/// list of stuff to say while charging
-	var/list/charge_invocation
-	/// we can't shoot off early
-	var/no_early_release = FALSE
-	/// we cancel charging when changing mob direction, for concentration spells
-	var/movement_interrupt = FALSE
-	/// we execute a proc with the same name when rmbing at range with no offhand intent selected
-	var/rmb_ranged = FALSE
-	/// probably needed or something
-	var/tshield = FALSE
+	var/charge_pointer = null // Simple unique charge icon
+	var/charged_pointer = null // Simple unique charged icon
+	var/clickcd = CLICK_CD_MELEE //the cd invoked clicking on stuff with this intent
+	var/recovery = 0		//RTD unable to move for this duration after an attack without becoming off balance
+	var/list/charge_invocation //list of stuff to say while charging
+	var/no_early_release = FALSE //we can't shoot off early
+	var/movement_interrupt = FALSE //we cancel charging when changing mob direction, for concentration spells
+	var/rmb_ranged = FALSE //we execute a proc with the same name when rmbing at range with no offhand intent selected
+	var/tshield = FALSE //probably needed or something
 	var/datum/looping_sound/chargedloop = null
 	var/keep_looping = TRUE
-	/// multiplied by weapon's force for damage
-	var/damfactor = 1
-	/// see armor_penetration
-	var/penfactor = 0
-	/// Whether the intent itself has integrity damage modifier. Used for rend.
-	var/intent_intdamage_factor = 1
-	/// changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
-	var/item_d_type = "blunt"
+	var/damfactor = 1 //multiplied by weapon's force for damage
+	var/penfactor = 0 //see armor_penetration
+	var/intent_intdamage_factor = 1 // Whether the intent itself has integrity damage modifier. Used for rend.
+	var/item_d_type = "blunt" // changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
 	var/charging_slowdown = 0
 	var/warnoffset = 0
 	var/swingdelay = 0
-	///causes a return in /attack() but still allows to be used in attackby(
-	var/no_attack = FALSE
-	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
-	var/reach = 1
-	///THESE ARE FOR UNARMED MISSING ATTACKS
-	var/miss_text
-	///THESE ARE FOR UNARMED MISSING ATTACKS
-	var/miss_sound
-	/// Do I need my offhand free while using this intent?
-	var/allow_offhand = TRUE
-	/// How many consecutive peel hits this intent requires to peel a piece of coverage? May be overriden by armor thresholds if they're higher.
-	var/peel_divisor = 0
-	/// How much glow this intent has. Used for spells
-	var/glow_intensity = null
-	/// The color of the glow. Used for spells
-	var/glow_color = null
-	/// tracking mob_light
-	var/mob_light = null
-	/// The effect to be added (on top) of the mob while it is charging
-	var/obj/effect/mob_charge_effect = null
-	/// Custom icon for its swingdelay.
-	var/custom_swingdelay = null
+	var/no_attack = FALSE //causes a return in /attack() but still allows to be used in attackby(
+	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
+	var/miss_text //THESE ARE FOR UNARMED MISSING ATTACKS
+	var/miss_sound //THESE ARE FOR UNARMED MISSING ATTACKS
+	var/allow_offhand = TRUE	//Do I need my offhand free while using this intent?
+	var/peel_divisor = 0		//How many consecutive peel hits this intent requires to peel a piece of coverage? May be overriden by armor thresholds if they're higher.
+	var/glow_intensity = null	//How much glow this intent has. Used for spells
+	var/glow_color = null // The color of the glow. Used for spells
+	var/mob_light = null // tracking mob_light
+	var/obj/effect/mob_charge_effect = null // The effect to be added (on top) of the mob while it is charging
+	var/custom_swingdelay = null	//Custom icon for its swingdelay.
 	/// Effective range for penfactor to apply fully.
 	var/effective_range = null
-	/**
-	 * Effective range type. Can be Exact, Below or Above. Be sure to set this if you use effective_range!
-	 * Only use this with reach is >1 because otherwise like... why.
-	 */
+	///	Effective range type. Can be Exact, Below or Above. Be sure to set this if you use effective_range!
+	/// Only use this with reach is >1 because otherwise like... why.
 	var/effective_range_type = EFF_RANGE_NONE
 	/// Extra sharpness drain per successful & parried hit.
 	var/sharpness_penalty = 0
-	//--The below is for chipping on intents. Damage applied through armour, as a mechanic.
-	/// If the weapon is able to blunt chip at all
-	var/blunt_chipping = FALSE
-	/// Effectiveness of the blunt chipping
-	var/blunt_chip_strength = null
+	//The below is for chipping on intents. Damage applied through armour, as a mechanic.
+	var/blunt_chipping = FALSE//Is this even capable of it?
+	var/blunt_chip_strength = null//How strong?
 
 	var/static/list/bonk_animation_types = list(
 		BCLASS_BLUNT,
@@ -115,9 +80,10 @@
 		BCLASS_PICK,
 	)
 
+
 /datum/intent/Destroy()
 	if(chargedloop)
-		QDEL_NULL(chargedloop)
+		chargedloop.stop()
 	if(mob_light)
 		QDEL_NULL(mob_light)
 	if(mob_charge_effect)
@@ -317,8 +283,8 @@
 	icon_state = "inuse"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
-	parriable_intent = FALSE
+	candodge = FALSE
+	canparry = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
@@ -326,8 +292,8 @@
 
 /datum/intent/give
 	name = "give"
-	dodgeable_intent = FALSE
-	parriable_intent = FALSE
+	candodge = FALSE
+	canparry = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE
@@ -504,6 +470,8 @@
 	swingdelay = 0
 	clickcd = 10
 	rmb_ranged = TRUE
+	candodge = TRUE
+	canparry = TRUE
 	blade_class = BCLASS_PUNCH
 	miss_text = "swing a fist at the air"
 	miss_sound = "punchwoosh"
@@ -548,6 +516,8 @@
 	releasedrain = 4	//More than punch cus pen factor.
 	swingdelay = 0
 	penfactor = 10
+	candodge = TRUE
+	canparry = TRUE
 	blade_class = BCLASS_CUT
 	miss_text = "claw at the air"
 	miss_sound = "punchwoosh"
@@ -589,6 +559,8 @@
 	rmb_ranged = TRUE
 	releasedrain = 10
 	misscost = 8
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "blunt"
 
 /datum/intent/unarmed/grab/rmb_ranged(atom/target, mob/user)
@@ -612,7 +584,7 @@
 	icon_state = "intouch"
 	chargetime = 0
 	noaa = TRUE
-	dodgeable_intent = FALSE
+	candodge = FALSE
 	misscost = 0
 	releasedrain = 0
 	rmb_ranged = TRUE
@@ -641,6 +613,8 @@
 	chargetime = 0
 	penfactor = 10
 	swingdelay = 0
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "blunt"
 
 /datum/intent/simple/claw
@@ -653,6 +627,8 @@
 	chargetime = 0
 	penfactor = 0
 	swingdelay = 3
+	candodge = TRUE
+	canparry = TRUE
 	miss_text = "slash the air"
 	item_d_type = "slash"
 
@@ -666,6 +642,8 @@
 	chargetime = 0
 	penfactor = 0
 	swingdelay = 3
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "stab"
 
 
@@ -679,6 +657,8 @@
 	chargetime = 0
 	penfactor = 0
 	swingdelay = 3
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "slash"
 
 /datum/intent/simple/spear
@@ -691,19 +671,23 @@
 	chargetime = 0
 	penfactor = 0
 	swingdelay = 3
+	candodge = TRUE
+	canparry = TRUE
 	item_d_type = "stab"
 
 /datum/intent/bless
 	name = "bless"
 	icon_state = "inbless"
 	no_attack = TRUE
+	candodge = TRUE
+	canparry = TRUE
 
 /datum/intent/weep
 	name = "weep"
 	icon_state = "inweep"
 	no_attack = TRUE
-	dodgeable_intent = FALSE
-	parriable_intent = FALSE
+	candodge = FALSE
+	canparry = FALSE
 
 /datum/intent/effect
 	blade_class = BCLASS_EFFECT

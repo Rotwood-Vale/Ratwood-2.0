@@ -37,7 +37,7 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 50
-	mob_can_parry = TRUE
+	canparry = TRUE
 	// defdrain = 10
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3

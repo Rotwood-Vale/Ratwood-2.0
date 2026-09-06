@@ -35,7 +35,8 @@
 /mob/living/carbon/human/species/skeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
-	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
+	spawn(10)
+		after_creation()
 
 /mob/living/carbon/human/species/skeleton/after_creation()
 	..()

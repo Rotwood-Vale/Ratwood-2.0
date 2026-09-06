@@ -34,20 +34,19 @@
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
-	if(length(thing.baseturfs))
-		var/list/baseturf_cache = thing.baseturfs.Copy()
+	var/list/baseturf_cache = thing.baseturfs
+	if(length(baseturf_cache))
 		for(var/i in baseturf_cache)
 			if(baseturf_to_replace[i])
 				baseturf_cache -= i
-		thing.baseturfs = baseturfs_string_list(baseturf_cache, thing)
 		if(!baseturf_cache.len)
 			thing.assemble_baseturfs(baseturf)
 		else
-			thing.PlaceOnBottom(baseturf)
+			thing.PlaceOnBottom(null, baseturf)
 	else if(baseturf_to_replace[thing.baseturfs])
 		thing.assemble_baseturfs(baseturf)
 	else
-		thing.PlaceOnBottom(baseturf)
+		thing.PlaceOnBottom(null, baseturf)
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
@@ -137,10 +136,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/landmark/map_load_mark/Initialize(mapload)
 	. = ..()
-	if(!SSminor_mapping.initialized) // the var is on SSmapping but it's done in SSminor_mapping init
-		LAZYADD(SSmapping.map_load_marks,src)
-	else
-		CRASH("Attempted to spawn map load landmark after SSminor_mapping init!")
+	LAZYADD(SSmapping.map_load_marks,src)
 
 /obj/effect/mapping_helpers/access
 	name = "access helper parent"

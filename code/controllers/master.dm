@@ -9,7 +9,7 @@
 
 //This is the ABSOLUTE ONLY THING that should init globally like this
 //2019 update: the failsafe,config and Global controllers also do it
-GLOBAL_REAL(Master, /datum/controller/master)
+GLOBAL_REAL(Master, /datum/controller/master) = new
 
 //THIS IS THE INIT ORDER
 //Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
@@ -392,8 +392,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS.queue_next = null
 		SS.queue_prev = null
 		SS.state = SS_IDLE
-		// we only handle non-background ticker subsystems here
-		if ((SS.flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
+		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
 			// Timer subsystems aren't allowed to bunch up, so we offset them a bit
 			timer += world.tick_lag * rand(0, 1)
@@ -485,39 +484,29 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		else
 			subsystems_to_check = tickersubsystems
 
-		if (CheckQueue(subsystems_to_check) <= 0) //error processing queue
-			stack_trace("MC: CheckQueue failed. Current error_level is [round(error_level, 0.25)]")
+		if (CheckQueue(subsystems_to_check) <= 0)
 			if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
-				error_level++
-				CRASH("MC: SoftReset() failed, exiting loop()")
-
-			if (error_level < 2) //except for the first strike, stop incrementing our iteration so failsafe enters defcon
+				log_world("MC: SoftReset() failed, crashing")
+				return
+			if (!error_level)
 				iteration++
-			else
-				cached_runlevel = null //3 strikes, Lets reset the runlevel lists
+			error_level++
 			current_ticklimit = TICK_LIMIT_RUNNING
-			sleep((1 SECONDS) * error_level)
+			sleep(10)
 			continue
 
 		if (queue_head)
-			if (RunQueue() <= 0) //error running queue
-				stack_trace("MC: RunQueue failed. Current error_level is [round(error_level, 0.25)]")
-				if (error_level > 1) //skip the first error,
-					if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
-						error_level++
-						CRASH("MC: SoftReset() failed, exiting loop()")
-
-					if (error_level <= 2) //after 3 strikes stop incrmenting our iteration so failsafe enters defcon
-						iteration++
-					else
-						cached_runlevel = null //3 strikes, Lets also reset the runlevel lists
-					current_ticklimit = TICK_LIMIT_RUNNING
-					sleep((1 SECONDS) * error_level)
-					error_level++
-					continue
+			if (RunQueue() <= 0)
+				if (!SoftReset(tickersubsystems, runlevel_sorted_subsystems))
+					log_world("MC: SoftReset() failed, crashing")
+					return
+				if (!error_level)
+					iteration++
 				error_level++
-		if (error_level > 0)
-			error_level = max(MC_AVERAGE_SLOW(error_level-1, error_level), 0)
+				current_ticklimit = TICK_LIMIT_RUNNING
+				sleep(10)
+				continue
+		error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
 			queue_priority_count = 0
 			queue_priority_count_bg = 0
@@ -561,8 +550,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	. = 1
 
 
-/// RunQueue - Run thru the queue of subsystems to run, running them while balancing out their allocated tick percentage
-/// Returns 0 if runtimed, a negitive number for logic errors, and a positive number if the operation completed without errors
+// Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /datum/controller/master/proc/RunQueue()
 	. = 0
 	var/datum/controller/subsystem/queue_node
@@ -606,29 +594,16 @@ GLOBAL_REAL(Master, /datum/controller/master)
 					queue_node = queue_node.queue_next
 					continue
 
-			if ((queue_node_flags & SS_BACKGROUND))
-				if (!bg_calc)
-					current_tick_budget = queue_priority_count_bg
-					bg_calc = TRUE
-			else if (bg_calc)
-				//error state, do sane fallback behavior
-				if (. == 0)
-					log_world("MC: Queue logic failure, non-background subsystem queued to run after a background subsystem: [queue_node] queue_prev:[queue_node.queue_prev]")
-				. = -1
-				current_tick_budget = queue_priority_count //this won't even be right, but is the best we have.
-				bg_calc = FALSE
+			if ((queue_node_flags & SS_BACKGROUND) && !bg_calc)
+				current_tick_budget = queue_priority_count_bg
+				bg_calc = TRUE
 
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
-			if (queue_node_priority >= 0 && current_tick_budget > 0 && current_tick_budget >= queue_node_priority)
-				//Give the subsystem a precentage of the remaining tick based on the remaining priority
+			if (current_tick_budget > 0 && queue_node_priority > 0)
 				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
 			else
-				//error state
-				if (. == 0)
-					log_world("MC: tick_budget sync error. [json_encode(list(current_tick_budget, queue_priority_count, queue_priority_count_bg, bg_calc, queue_node, queue_node_priority))]")
-				. = -1
-				tick_precentage = tick_remaining //just because we lost track of priority calculations doesn't mean we can't try to finish off the run, if the error state persists, we don't want to stop ticks from happening
+				tick_precentage = tick_remaining
 
 			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
 
@@ -702,19 +677,17 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 			queue_node = queue_node.queue_next
 
-	// only return 1 if we aren't returning a negative number that signals a logic error
-	if (. == 0)
-		. = 1
+	. = 1
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 //	called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
 	. = 0
-	stack_trace("MC: SoftReset called, resetting MC queue state.")
+	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(runlevel_SS))
 		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[runlevel_SS]'")
 		return
-	var/subsystemstocheck = subsystems | ticker_SS
+	var/subsystemstocheck = subsystems + ticker_SS
 	for(var/I in runlevel_SS)
 		subsystemstocheck |= I
 
