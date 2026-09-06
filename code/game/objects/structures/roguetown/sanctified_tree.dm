@@ -898,7 +898,7 @@
 	to_chat(user, span_green("[BA.name] rises from the ritual — the Treefather has blessed this armor with living power."))
 	// 50% chance: random wood armor piece from elven black oak mercenaries (excluding chest).
 	if(prob(50))
-		var/list/bonus_pool = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic, /obj/item/clothing/gloves/roguetown/elven_gloves/druidic, /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic, /obj/item/clothing/cloak/forrestercloak/blessed)
+		var/list/bonus_pool = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic, /obj/item/clothing/gloves/roguetown/elven_gloves/druidic, /obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic, /obj/item/clothing/cloak/forrestercloak/blessed)
 		var/bonus_type = pick(bonus_pool)
 		var/obj/item/bonus = new bonus_type(T)
 		to_chat(user, span_green("The roots also yield [bonus.name] — an additional gift."))
