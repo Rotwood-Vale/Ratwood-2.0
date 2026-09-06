@@ -1739,7 +1739,7 @@
 /datum/status_effect/buff/clash
 	id = "clash"
 	duration = 4 SECONDS
-	var/dur
+	var/expired_naturally = FALSE
 	var/sfx_on_apply = 'sound/combat/clash_initiate.ogg'
 	var/swingdelay_mod = 5
 	alert_type = /atom/movable/screen/alert/status_effect/buff/clash
@@ -1761,8 +1761,8 @@
 	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_disrupted))
 	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_disrupted))
 	RegisterSignal(new_owner, COMSIG_LIVING_ONJUMP, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_ITEM_GUN_PROCESS_FIRE, PROC_REF(guard_disrupted_cheesy))
+	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_cancelled))
+	RegisterSignal(new_owner, COMSIG_ITEM_GUN_PROCESS_FIRE, PROC_REF(guard_cancelled))
 	RegisterSignal(new_owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(guard_struck_by_projectile))
 	RegisterSignal(new_owner, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(guard_struck_by_projectile))
 	RegisterSignal(new_owner, COMSIG_LIVING_SWINGDELAY_MOD, PROC_REF(guard_swingdelay_mod))	//I dunno if a signal is better here rather than theoretically cycling through _all_ status effects to apply a var'd swingdelay mod.
@@ -1791,31 +1791,30 @@
 		HM.process_clash(user, IM, IU)
 		return COMPONENT_NO_ATTACK
 	if(bad_guard)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.bad_guard(span_suicide("I tried to strike while focused on defense whole! It drains me!"), cheesy = TRUE)
+		guard_cancelled()
 
 //Mostly here so the child (limbguard) can have special behaviour.
 /datum/status_effect/buff/clash/proc/guard_struck_by_projectile()
 	guard_disrupted()
 
-//Our guard was disrupted by normal means.
+//Our guard was disrupted by normal means. Big red balloon alert to exemplify that this was due to combatant intervention.
 /datum/status_effect/buff/clash/proc/guard_disrupted()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
+		owner.balloon_alert_to_viewers("<font color = '#bb2b2b'><b>Guard DISRUPTED!</b></font>")
 		H.bad_guard("My focus was disrupted!")
 
-//We tried to cheese it. Generally reserved for egregious things, like attacking / casting while its active.
-/datum/status_effect/buff/clash/proc/guard_disrupted_cheesy()
+//We cancelled guard ourselves (swapping hands, attacking, etc) instead of it expiring or another player disrupting it. More punishing since it's deliberate.
+/datum/status_effect/buff/clash/proc/guard_cancelled()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.bad_guard("My focus was <b>heavily</b> disrupted!")
+		owner.balloon_alert_to_viewers("<font color = '#bb2b2b'><b>Guard CANCELLED!</b></font>")
+		H.bad_guard(span_warning("I carelessly dropped my focus!"), cheesy = TRUE)
 
 /datum/status_effect/buff/clash/on_apply()
 	. = ..()
 	if(!ishuman(owner))
 		return
-	dur = world.time
 	var/mob/living/carbon/human/H = owner
 	if(sfx_on_apply)
 		playsound(H, sfx_on_apply, 100, TRUE)
@@ -1825,13 +1824,16 @@
 		var/mob/living/carbon/human/H = owner
 		H.bad_guard()
 
+/datum/status_effect/buff/clash/process(wait)
+	if(duration != -1 && duration < world.time)
+		expired_naturally = TRUE
+	return ..()
+
 /datum/status_effect/buff/clash/on_remove()
 	. = ..()
 	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
-	var/newdur = world.time - dur
-	var/mob/living/carbon/human/H = owner
-	if(newdur > (initial(duration) - 0.2 SECONDS))	//Not checking exact duration to account for lag and any other tick / timing inconsistencies.
-		H.bad_guard(span_warning("I held my focus for too long. It's left me drained."))
+	if(expired_naturally)
+		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)

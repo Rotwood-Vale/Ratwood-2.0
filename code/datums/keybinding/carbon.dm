@@ -101,6 +101,23 @@
 	C.mmb_intent_change(QINTENT_GIVE)
 	return TRUE*/
 
+/datum/keybinding/carbon/guard
+	hotkey_keys = list("G")
+	name = "guard"
+	full_name = "Guard"
+	description = "Enter a defensive stance while in combat mode, guaranteeing the next hit is defended against. Works without going through the Defend RMB stance first."
+	category = CATEGORY_CARBON
+
+/datum/keybinding/carbon/guard/down(client/user)
+	if(!ishuman(user.mob))
+		return FALSE
+	var/mob/living/carbon/human/H = user.mob
+	if(!H.cmode)
+		H.balloon_alert(H, "<font color = '#ffffff'>Turn on combat mode!</font>")
+		return FALSE
+	H.try_guard()
+	return TRUE
+
 /datum/keybinding/carbon/bite_intent
 	hotkey_keys = list("H")
 	name = "intent_bite"
