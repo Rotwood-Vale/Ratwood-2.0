@@ -41,8 +41,14 @@
 		// AP weapons will break armor slower on average, but not "five intdamage per stab" slower as before.
 		if((damage + armor_penetration) > protection && d_type != "blunt")
 			consume_debuff = FALSE
-			intdamage = (damage + armor_penetration) - protection
-			intdamage = protection - armor_penetration
+			// WE TAUGHT THIS MONKEY ARMOR PIERCING CODE AND IT KILLED ITSELF IMMEDIATELY.
+			// I'm going to try and explain this to the best of my ability after banging my head against it.
+			// AP effectively strips away armor. Forty five AP hitting fifty armor turns that to effectively five armor.
+			// The remaining armor will reduce the damage of any incoming attack, so fifty damage is dampened to forty five.
+			// Damage that got dampened is what gets dealt to the armor as intdamage.
+			// A fifty damage attack is dampened to forty five, with five being dealt as intdamage.
+			// That's really low, so we generate a number that's forty percent of your total force.
+			intdamage = max(protection - armor_penetration, damage * 0.4) // This number serves as an intdamage floor, we use it instead if your intdamage would've otherwise been lower than it.
 			if(armor_penetration >= protection) // If you get COMPLETELY penetrated, half of the damage will be dealt to the armor as well. Your gear shouldn't stay pristine after being totally cleaved.
 				intdamage = damage / 2
 		if(intdamfactor != 1)
