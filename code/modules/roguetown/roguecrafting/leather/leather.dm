@@ -1,5 +1,6 @@
 /datum/crafting_recipe/roguetown/leather
 	abstract_type = /datum/crafting_recipe/roguetown/leather
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	tools = list(/obj/item/needle)
 	structurecraft = /obj/machinery/tanningrack
 	skillcraft = /datum/skill/craft/tanning
@@ -217,3 +218,11 @@
 	result = /obj/item/clothing/mask/rogue/physician
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/bone = 1)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/leathermask
+	name = "leather mask"
+	display_category = ITEM_CAT_ARMOR_MASKS
+	result = /obj/item/clothing/mask/rogue/facemask/leather
+	reqs = list(/obj/item/natural/hide/cured = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 1

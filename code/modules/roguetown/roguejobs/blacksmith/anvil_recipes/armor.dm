@@ -41,6 +41,11 @@
 	req_blade = /obj/item/blade/steel_plate
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
+/datum/anvil_recipe/armor/decorated
+	abstract_type = /datum/anvil_recipe/armor/decorated
+	req_bar = /obj/item/ingot/gold
+	craftdiff = SKILL_LEVEL_EXPERT
+
 /datum/anvil_recipe/armor/silver
 	abstract_type = /datum/anvil_recipe/armor/silver
 	craftdiff = SKILL_LEVEL_EXPERT
@@ -466,7 +471,18 @@
 /datum/anvil_recipe/armor/iron/duelist
 	name = "Duelist Goggles, Iron"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist
+	display_category = ITEM_CAT_ARMOR_MASKS
 	createditem_num = 2
+
+/datum/anvil_recipe/armor/iron/maskmaille
+	name = "Maille Mask, Iron"
+	created_item = /obj/item/clothing/mask/rogue/facemask/maille
+	display_category = ITEM_CAT_ARMOR_MASKS
+
+/datum/anvil_recipe/armor/iron/maskmaillefluted
+	name = "Fluted Maille Mask, Iron"
+	created_item = /obj/item/clothing/mask/rogue/facemask/maille/fluted
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/iron/splintarms
 	name = "Splinted Bracers (+1 Leather Bracers)" //you modify the bracers to have splints and cover the arm way more
@@ -693,6 +709,13 @@
 /datum/anvil_recipe/armor/steel/sgorget
 	name = "Gorget, Steel"
 	created_item = /obj/item/clothing/neck/roguetown/gorget/steel
+	display_category = ITEM_CAT_ARMOR_NECK
+
+/datum/anvil_recipe/armor/steel/saventail
+	name = "Aventail, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/neck/roguetown/gorget/aventail
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/armor/iron/cursed_collar
 	name = "Lesser Cursed Collar"
@@ -706,11 +729,30 @@
 	name = "Visored Sallet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/helmetbarbute
+	name = "Barbute, Steel"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/barbute
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/helmetbarbutevisor
+	name = "Barbute, Visored, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/helmetbarbutedunk
+	name = "Barbute, Great, Steel (+1 Steel, +1 Cured Leather)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/great
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/steel/helmetbuc
 	name = "Bucket Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/steel/helmetpig
 	name = "Pigface Helmet, Steel (+1 Steel)"
@@ -730,11 +772,25 @@
 	name = "Etruscan Bascinet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/aventailbascinet
+	name = "Bascinet, Aventailed, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/aventail
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/heavyaventailbascinet
+	name = "Visored Bascinet, Aventailed, Steel (+2 Steel, +1 Cured Leather)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/aventail
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/steel/helmetknight
 	name = "Knight's Helmet, Steel (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/steel/helmetarmet
 	name = "Armet, Steel (+1 Steel)"
@@ -772,6 +828,24 @@
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
 	i_type = "Armor"
 
+/datum/anvil_recipe/armor/steel/helmetowl
+	name = "Strigidae Armet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/owl
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/helmetknightarmetgreatplume
+	name = "Knight's Greatplumed Armet, Steel (+1 Steel)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/steel/frogmouthgreatplume
+	name = "Froggemund Helmet With Greatplume, Steel (+2 Steel)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
 /datum/anvil_recipe/armor/steel/plateboot
 	name = "Plated Boots, Steel"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor
@@ -787,7 +861,18 @@
 /datum/anvil_recipe/armor/steel/duelist
 	name = "Duelist Goggles, Steel"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist/steel
+	display_category = ITEM_CAT_ARMOR_MASKS
 	createditem_num = 2
+
+/datum/anvil_recipe/armor/steel/maillemask
+	name = "Maille Mask, Steel"
+	created_item = /obj/item/clothing/mask/rogue/facemask/steel/maille
+	display_category = ITEM_CAT_ARMOR_MASKS
+
+/datum/anvil_recipe/armor/steel/maillemask
+	name = "Fluted Maille Mask, Steel"
+	created_item = /obj/item/clothing/mask/rogue/facemask/steel/maille/fluted
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/steel/astratahelm
 	name = "Astratan Helmet (+1 Steel)"
@@ -985,15 +1070,77 @@
 /datum/anvil_recipe/armor/blessedsilver/psyfullplatealt/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
-// GOLD
+// DECORATED
 
-/datum/anvil_recipe/armor/gold/belt
+/datum/anvil_recipe/armor/decorated/belt
 	name = "Plated Belt, Gold"
 	created_item = /obj/item/storage/belt/rogue/leather/plaquegold
+	display_category = ITEM_CAT_ARMOR_BELTS
 
-/datum/anvil_recipe/armor/gold/mask
+/datum/anvil_recipe/armor/decorated/mask
 	name = "Mask, Gold"
 	created_item = /obj/item/clothing/mask/rogue/facemask/goldmask
+	display_category = ITEM_CAT_ARMOR_MASKS
+
+/datum/anvil_recipe/armor/decorated/gilded_sallet
+	name = "Sallet, Decorated (+1 Steel Sallet, +1 Silk)"
+	additional_items = list(/obj/item/clothing/head/roguetown/helmet/sallet, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/gilded
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/decorated/gilded_knighthelm
+	name = "Knight's Helmet, Decorated (+1 Steel Knight's Helmet, +1 Silk)"
+	additional_items = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gilded
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/decorated/gilded_chestplate
+	name = "Fencer Cuirass, Decorated (+1 Steel Cuirass, +1 Steel, +2 Silk)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half, /obj/item/ingot/steel, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_cuirass
+	name = "Fluted Cuirass, Decorated (+1 Steel Cuirass, +1 Steel)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_halfplate
+	name = "Fluted Halfplate, Decorated (+1 Steel Halfplate, +1 Steel)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_fullplate
+	name = "Fluted Plate Armor, Decorated (+1 Steel Plate Armor, +1 Steel)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/full, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_chestplatefluted
+	name = "Fencer Cuirass, Decorated (+1 Fencer's Cuirass)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fencer)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_cuirassfluted
+	name = "Fluted Cuirass, Decorated (+1 Fluted Cuirass)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_halfplatefluted
+	name = "Fluted Halfplate, Decorated (+1 Fluted Halfplate)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/armor/decorated/gilded_fullplatefluted
+	name = "Fluted Plate Armor, Decorated (+1 Fluted Plate Armor)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/full/fluted)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted/decorated
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 // BLACKSTEEL
 

@@ -107,16 +107,18 @@
 
 /datum/outfit/job/roguetown/mercenary/blackoak_ranger/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/elven
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
+	H.adjust_blindness(-3)
+	has_loadout = TRUE
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/full
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/trophyfur
+	beltl = /obj/item/quiver/arrows
 	beltr = /obj/item/rogueweapon/scabbard/sword
 	r_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
 	l_hand = /obj/item/rogueweapon/sword/short/elf
-	beltl = /obj/item/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
 	cloak = /obj/item/clothing/cloak/forrestercloak
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	gloves = /obj/item/clothing/gloves/roguetown/elven_gloves
 	belt = /obj/item/storage/belt/rogue/leather/black
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -129,5 +131,15 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/flashlight/flare/torch = 1
 		)
-
 	H.merctype = 2
+
+/datum/outfit/job/roguetown/mercenary/blackoak_ranger/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+	var/helmets = list("Elven Barbute", "Winged Elven Barbute")
+	var/helmet_choice = input(H, "Choose your HELMET.", "LEAVES OVER STEEL.") as anything in helmets
+	switch(helmet_choice)
+		if("Elven Barbute")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak, SLOT_HEAD, TRUE)
+		if("Winged Elven Barbute")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak, SLOT_HEAD, TRUE)
+
