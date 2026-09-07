@@ -10,6 +10,11 @@
 	soundenv = 5
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
+	// Inherited by the whole tree. These rooms are generated dungeon pieces and each one already
+	// chooses the sound it wants, beach for the lake, cave water for the sewer, basement here;
+	// river voices would layer under all of it rather than replace it. 461 river tiles across the
+	// generator's rooms, none of them a river anyone came to listen to.
+	river_ambience = FALSE
 	spookysounds = SPOOKY_DUNGEON
 	spookynight = SPOOKY_DUNGEON
 	droning_sound = 'sound/music/area/catacombs.ogg'

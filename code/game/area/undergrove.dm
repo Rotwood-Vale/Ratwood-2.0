@@ -80,5 +80,12 @@
 	name = "Cave River"
 	icon_state = "river"
 	first_time_text = null
-	ambientsounds = AMB_RIVERDAY
-	ambientnight = AMB_RIVERNIGHT
+	// No ambientsounds of its own, so it takes the parent's AMB_CAVEWATER like every other wet cave,
+	// and that is the whole of its water sound: /area/rogue/under sets river_ambience = FALSE, so
+	// the river turfs here register no point sources. It used to set AMB_RIVERDAY/NIGHT, which is
+	// the surface recording, birds included, over 3252 tiles of cavern.
+	//
+	// Point sources would attenuate where the area layer does not, so a cave river could sound
+	// better than it ever has. It would need its own category carrying AMB_CAVEWATER, since the
+	// clip set lives on the category and the surface one is wrong down here. Not worth a category
+	// and a channel for a sound the area layer already covers.
