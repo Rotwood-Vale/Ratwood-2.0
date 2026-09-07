@@ -196,6 +196,14 @@
 	item_state = "chap_alt"
 	color = "#7dcea0"
 
+/obj/item/clothing/head/roguetown/tophat/steward
+	name = "fancy top hat"
+	desc = "A fine hat worn by the most wealthiest of nobility."
+	icon = 'icons\roguetown\clothing\special\steward.dmi'
+	mob_overlay_icon = 'icons\roguetown\clothing\special\onmob\steward.dmi'
+	icon_state = "stewardtophat"
+	item_state = "stewardtophat"
+
 /obj/item/clothing/head/roguetown/chaperon/greyscale/elder
 	name = "elder's chaperon hat"
 	color = "#007fff"

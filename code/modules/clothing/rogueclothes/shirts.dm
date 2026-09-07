@@ -818,3 +818,37 @@
 		src.visible_message(span_notice("The [src] begin to swirl, repairing their integrity..."), vision_distance = 1)
 		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
 	..()
+
+//Some vanderlin ports, steward clothes and Hand coats//
+
+/obj/item/clothing/suit/roguetown/shirt/dress/steward
+	name = "ornate dark dress"
+	desc = "A modest yet decorated dress made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
+	icon = 'icons\roguetown\clothing\special\steward.dmi'
+	mob_overlay_icon = 'icons\roguetown\clothing\special\onmob\steward.dmi'
+	icon_state = "stewarddress"
+	item_state = "stewarddress"
+
+/obj/item/clothing/suit/roguetown/shirt/coat/steward
+	name = "ornate dark tailcoat"
+	desc = "A modest yet decorated tailcoat made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
+	icon = 'icons\roguetown\clothing\special\steward.dmi'
+	mob_overlay_icon = 'icons\roguetown\clothing\special\onmob\steward.dmi'
+	icon_state = "stewardtailcoat"
+	item_state = "stewardtailcoat"
+
+/obj/item/clothing/suit/roguetown/shirt/coat/hand
+	name = "noble coat"
+	desc = "A fine coat made out of expensive fabrics decorated with golden trims. Fit for a high noble."
+	icon = 'icons\roguetown\clothing\special\hand.dmi'
+	mob_overlay_icon = 'icons\roguetown\clothing\special\onmob\hand.dmi'
+	icon_state = "handcoat"
+	item_state = "handcoat"
+
+/obj/item/clothing/suit/roguetown/shirt/noble/hand
+	name = "noble shirt"
+	desc = "A silken shirt worn by the upper classes."
+	icon = 'icons\roguetown\clothing\special\hand.dmi'
+	mob_overlay_icon = 'icons\roguetown\clothing\special\onmob\hand.dmi'
+	icon_state = "fancyshirt"
+	item_state = "fancyshirt"
