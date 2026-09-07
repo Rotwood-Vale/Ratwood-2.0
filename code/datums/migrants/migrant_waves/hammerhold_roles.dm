@@ -58,9 +58,9 @@
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
-	if(!H.has_language(/datum/language/dwarvish))
-		H.grant_language(/datum/language/dwarvish)
-		to_chat(H, span_info("I can speak Dwarvish with ,d before my speech."))
+	if(!H.has_language(/datum/language/hammerholdian))
+		H.grant_language(/datum/language/hammerholdian)
+		to_chat(H, span_info("I can speak Hammerholdian with ,h before my speech."))
 
 //Tideweaver. T3 miraclist and some minor magics.
 /datum/migrant_role/hammerhold/tideweaver
@@ -132,9 +132,9 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)	//T3. We are NOT giving you Abyssal Infusion.
 
-	if(!H.has_language(/datum/language/dwarvish))
-		H.grant_language(/datum/language/dwarvish)
-		to_chat(H, span_info("I can speak Dwarvish with ,d before my speech."))
+	if(!H.has_language(/datum/language/hammerholdian))
+		H.grant_language(/datum/language/hammerholdian)
+		to_chat(H, span_info("I can speak Hammerholdian with ,h before my speech."))
 
 //Volfskin. CritResist+Enduring guy with two axes.
 /datum/migrant_role/hammerhold/volfskin
@@ -195,9 +195,9 @@
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
-	if(!H.has_language(/datum/language/dwarvish))
-		H.grant_language(/datum/language/dwarvish)
-		to_chat(H, span_info("I can speak Dwarvish with ,d before my speech."))
+	if(!H.has_language(/datum/language/hammerholdian))
+		H.grant_language(/datum/language/hammerholdian)
+		to_chat(H, span_info("I can speak Hammerholdian with ,h before my speech."))
 
 //Tribal
 /datum/migrant_role/hammerhold/huscarl
@@ -227,7 +227,7 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/flashlight/flare/torch = 1
+		/obj/item/flashlight/flare/torch/lantern = 1
 		)
 
 	H.adjust_skillrank(/datum/skill/combat/axes, 4, TRUE)
@@ -256,9 +256,9 @@
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
-	if(!H.has_language(/datum/language/dwarvish))
-		H.grant_language(/datum/language/dwarvish)
-		to_chat(H, span_info("I can speak Dwarvish with ,d before my speech."))
+	if(!H.has_language(/datum/language/hammerholdian))
+		H.grant_language(/datum/language/hammerholdian)
+		to_chat(H, span_info("I can speak Hammerholdian with ,h before my speech."))
 
 
 //Thrall. Same as Gronn Wave's Slave, just with better clothes. Not required to be an Abyssorite like the rest of them.
@@ -292,9 +292,9 @@
 
 	H.cmode_music = 'sound/music/combat_vagarian.ogg'
 
-	if(!H.has_language(/datum/language/dwarvish))
-		H.grant_language(/datum/language/dwarvish)
-		to_chat(H, span_info("I can speak Dwarvish with ,d before my speech."))
+	if(!H.has_language(/datum/language/hammerholdian))
+		H.grant_language(/datum/language/hammerholdian)
+		to_chat(H, span_info("I can speak Hammerholdian with ,h before my speech."))
 
 	if(H.mind)
 		var/classes = list("Captured Worker", "Captured Artisan", "Captured Noble", "Captured Bard")
