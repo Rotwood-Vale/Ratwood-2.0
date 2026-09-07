@@ -54,6 +54,10 @@
 	H.STAPER = rand(1, 21)
 	H.STALUC = rand(1, 21)
 	H.cmode_music = 'sound/music/combat_jester.ogg'
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick) // hilarious
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
 	if(H.mind)
 		// Mime vs Jester.
 		// As a mute jester you cannot cast Tell Joke/Tragedy, so why even have them?
