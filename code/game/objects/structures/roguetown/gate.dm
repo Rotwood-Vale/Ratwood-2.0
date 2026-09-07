@@ -94,7 +94,9 @@ GLOBAL_LIST_EMPTY(biggates)
 	if(isSwitchingStates || !density)
 		return
 	isSwitchingStates = TRUE
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// A token, not a one-shot: you are guaranteed to be walking through a gate while it plays, and
+	// playsound would fix pan and volume at the instant it fired. Range is what playsound gave it.
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_opening",src)
 	layer = initial(layer)
 	sleep(15)
@@ -113,7 +115,9 @@ GLOBAL_LIST_EMPTY(biggates)
 	isSwitchingStates = TRUE
 	update_icon()
 	layer = ABOVE_MOB_LAYER
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// A token, not a one-shot: you are guaranteed to be walking through a gate while it plays, and
+	// playsound would fix pan and volume at the instant it fired. Range is what playsound gave it.
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_closing",src)
 	sleep(10)
 	for(var/turf/T in turfsy)

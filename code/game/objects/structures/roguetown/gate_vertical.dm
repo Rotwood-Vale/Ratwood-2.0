@@ -54,7 +54,9 @@
 	if(isSwitchingStates || !density)
 		return
 	isSwitchingStates = TRUE
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// See the gate above: a token so it re-pans as you walk through, self-deleting on the file's
+	// end so an idle gate costs nothing. Range is SOUND_RANGE plus the old extrarange.
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_opening", src)
 	layer = initial(layer)
 	sleep(15)
@@ -71,7 +73,9 @@
 	isSwitchingStates = TRUE
 	update_gate_icon()
 	layer = ABOVE_MOB_LAYER
-	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
+	// See the gate above: a token so it re-pans as you walk through, self-deleting on the file's
+	// end so an idle gate costs nothing. Range is SOUND_RANGE plus the old extrarange.
+	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_closing", src)
 	sleep(10)
 

@@ -197,7 +197,7 @@
 	if(drilltime >= drillgoal) // Our timer's cap. Drillgoal is the number we're aiming for.
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The [src] hisses open, <b>finally broken.</b>"))
-		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 		icon_state = "[initial(icon_state)]_empty"
 		budget2change(SStreasury.treasury_value, null)
 		SStreasury.treasury_value -= SStreasury.treasury_value
@@ -227,7 +227,7 @@
 			send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: The Vault", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 
-	playsound(src, 'sound/misc/TheDrill.ogg', 50, TRUE)
+	playsoundtoken(src, 'sound/misc/TheDrill.ogg', 50, SOUND_RANGE + 1, vary = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
 
 /obj/structure/roguemachine/vaultbank/proc/drill_payout()
