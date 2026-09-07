@@ -821,6 +821,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Virgin"
 	desc = "I was never good with the opposite gender..."
 	var/last_check = 0
+	var/is_virgin = TRUE
 
 /datum/charflaw/virgin/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -829,30 +830,37 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/virgin/flaw_on_life(mob/user)
 	. = ..()
-	if(world.time < last_check + 10 SECONDS)
+	if(world.time < last_check + 1 MINUTES)
 		return
 	if(!user)
 		return
+	var/mob/living/carbon/P = user
+	if(is_virgin == FALSE)
+		return
+	if(P.virginity == FALSE)
+		to_chat(user, span_notice("I feel more confident!"))
+		is_virgin = FALSE
+		return
 	last_check = world.time
 	var/foid = FALSE
-	var/mob/living/carbon/P = user
 	for(var/mob/living/carbon/human/L in hearers(7, user))
 		if(L == user)
 			continue
 		if(L.stat == DEAD)
 			continue
-		if(L.pronouns != P.pronouns)
+		if(HAS_TRAIT(L, TRAIT_BEAUTIFUL))
 			foid = TRUE
 			break
 	if(foid == TRUE)
 		P.add_stress(/datum/stressevent/foid)
+		to_chat(user, span_notice("I'm surrounded by beautiful people! I feel nervous!"))
 		P.Jitter(2)
 		P.stuttering = 1
 
 /datum/stressevent/foid
-	timer = 2 MINUTES
+	timer = 1 MINUTES
 	stressadd = 2
-	desc = "<span class='red'>Oh gosh! The opposite gender makes me nervous!</span>"
+	desc = "<span class='red'>Oh gosh! They're so attractive it makes me nervous!</span>"
 
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"

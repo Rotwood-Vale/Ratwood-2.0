@@ -688,13 +688,13 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
-	desc = "Sacrifice the ruler on the north side, a virgin on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
+	desc = "Sacrifice the ruler on the north side, a person with a pure heart on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "the cult leader"
 	n_req = /mob/living/carbon/human
 	n_desc = "the ruler"
 	s_req = /mob/living/carbon/human
-	s_desc = "a virgin"
+	s_desc = "one of pure heart"
 	e_req = /mob/living/carbon/human
 	e_desc = "a cultist"
 	w_req = /mob/living/carbon/human
@@ -709,23 +709,23 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
 	if(!istype(get_area(center), /area/rogue/indoors/town/manor))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A virgin must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/cultist = locate() in center.contents
 	if(!cultist || cultist != user || !is_zizocultist(cultist.mind))
 		return
 	var/mob/living/carbon/human/RULER = locate() in get_step(center, NORTH)
 	if(RULER != SSticker.rulermob)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A virgin must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
 	if(!cleric || cleric.virginity == FALSE || cleric.stat == DEAD)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A virgin must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/east = locate() in get_step(center, EAST)
 	var/mob/living/carbon/human/west = locate() in get_step(center, WEST)
 	if(!is_zizo(east) || !is_zizo(west))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A virgin must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	cleric.visible_message(span_danger("[cleric] withers and dies!"))
 	cleric.death()
