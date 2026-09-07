@@ -124,7 +124,7 @@
 		H.social_rank = subclass_social_rank
 
 	if(pure_heart)
-		H.virginity = TRUE
+		H.purity = TRUE
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 

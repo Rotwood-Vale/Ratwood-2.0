@@ -99,11 +99,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			continue
 		if(J.type in (list(PEASANT_ROLES) + list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES) + list(GARRISON_ROLES) + list(CHURCH_ROLES)))
 			weighted[H] = 5
-			if(H.virginity == TRUE)
+			if(H.purity == TRUE)
 				weighted[H] = 10
 		else
 			weighted[H] = 1
-			if(H.virginity == TRUE)
+			if(H.purity == TRUE)
 				weighted[H] = 5
 	for(var/i in 1 to 7)
 		if(!weighted.len)
@@ -723,7 +723,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
-	if(!cleric || cleric.virginity == FALSE || cleric.stat == DEAD)
+	if(!cleric || cleric.purity == FALSE || cleric.stat == DEAD)
 		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/east = locate() in get_step(center, EAST)

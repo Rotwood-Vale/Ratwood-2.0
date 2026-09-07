@@ -821,12 +821,11 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Virgin"
 	desc = "I was never good with the opposite gender..."
 	var/last_check = 0
-	var/is_virgin = TRUE
 
 /datum/charflaw/virgin/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "You're a virgin!")
-	H.virginity = TRUE
+	H.purity = TRUE
 
 /datum/charflaw/virgin/flaw_on_life(mob/user)
 	. = ..()
@@ -835,12 +834,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!user)
 		return
 	var/mob/living/carbon/P = user
-	if(is_virgin == FALSE)
-		return
-	if(P.virginity == FALSE)
-		to_chat(user, span_notice("I feel more confident!"))
-		is_virgin = FALSE
-		return
 	last_check = world.time
 	var/foid = FALSE
 	for(var/mob/living/carbon/human/L in hearers(7, user))
