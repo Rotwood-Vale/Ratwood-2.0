@@ -554,8 +554,8 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate
 
 /datum/anvil_recipe/armor/steel/halfplate/fluted
-	name = "Fluted Half-Plate, Steel (+1 Fluted Cuirass, Steel +1 Iron, +2 Cured Leather)"
-	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted, /obj/item/natural/hide/cured, /obj/item/ingot/iron, /obj/item/natural/hide/cured)
+	name = "Fluted Half-Plate, Steel (+1 Fluted Cuirass, Steel, +1 Steel, +2 Cured Leather)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted, /obj/item/natural/hide/cured, /obj/item/ingot/steel, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/fluted
 
 /datum/anvil_recipe/armor/steel/fullplate
@@ -564,8 +564,8 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full
 
 /datum/anvil_recipe/armor/steel/fullplate/fluted
-	name = "Fluted Full-Plate, Steel (+1 Fluted Half-Plate, Steel, +1 Iron, +2 Cured Leather)"
-	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted, /obj/item/natural/hide/cured, /obj/item/ingot/iron, /obj/item/natural/hide/cured)
+	name = "Fluted Full-Plate, Steel (+1 Fluted Half-Plate, Steel, +1 Steel, +2 Cured Leather)"
+	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted, /obj/item/natural/hide/cured, /obj/item/ingot/steel, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/fluted
 
 /datum/anvil_recipe/armor/steel/platebikini
@@ -653,8 +653,8 @@
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
 
 /datum/anvil_recipe/armor/steel/cuirass/fluted
-	name = "Fluted Cuirass, Steel (+1 Steel, +1 Iron)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron)
+	name = "Fluted Cuirass, Steel (+2 Steel)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
 
 /datum/anvil_recipe/armor/steel/scalemail

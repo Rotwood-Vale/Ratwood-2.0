@@ -1964,7 +1964,7 @@
 	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/cotehardie/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/cloak/cotehardie/MiddleClick(mob/user)
@@ -2061,8 +2061,8 @@
 /obj/item/clothing/cloak/citywatchcaptain
 	name = "citywatch captain's cloak"
 	desc = "A most handsome cloak, denoting a certain superlative cosmipolitan authority"
-	icon_state = "shortcloak"
-	item_state = "shortcloak"
+	icon_state = "sheriffcloak"
+	item_state = "sheriffcloak"
 	alternate_worn_layer = CLOAK_BEHIND_LAYER
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	boobed = TRUE

@@ -23,7 +23,7 @@
 /obj/item/clothing/head/roguetown/crown/serpcrown/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.crown)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 	else
 		SSroguemachine.crown = src
 		SSroguemachine.scomm_machines += src
@@ -31,8 +31,6 @@
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/proc/anti_stall()
 	src.visible_message(span_warning("The Crown of [SSmapping.map_adjustment.realm_name] crumbles to dust, the ashes spiriting away in the direction of the Keep."))
-	SSroguemachine.scomm_machines -= src
-	SSroguemachine.crown = null //Do not harddel.
 	qdel(src) //Anti-stall
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/attack_right(mob/living/carbon/human/user)
@@ -130,5 +128,7 @@
 		send_speech(message, hearrange, src, , spans, message_language=language)
 
 /obj/item/clothing/head/roguetown/crown/serpcrown/Destroy()
+	SSroguemachine.crown = null
+	SSroguemachine.scomm_machines -= src
 	lose_hearing_sensitivity()
 	return ..()
