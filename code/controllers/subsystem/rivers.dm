@@ -37,4 +37,7 @@ SUBSYSTEM_DEF(rivers)
 
 /turf/open/water/river/Destroy()
 	STOP_PROCESSING(SSrivers, src)
+	if(ambience_source)
+		SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/river)
+		hand_off_ambience()
 	..()

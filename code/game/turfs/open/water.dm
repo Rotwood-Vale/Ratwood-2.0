@@ -416,9 +416,6 @@
 			returned -= 1
 	return max(returned, 0.5)
 
-//turf/open/water/Initialize()
-//	dir = pick(NORTH,SOUTH,WEST,EAST)
-//	. = ..()
 
 
 /turf/open/water/bath
@@ -602,6 +599,8 @@
 	wash_in = TRUE
 	swim_skill = TRUE
 	swimdir = TRUE
+	/// Whether this turf is the one speaking for its stretch of river. One in every few tiles.
+	var/ambience_source = FALSE
 
 /turf/open/water/river/muddy
 	water_color = "#705a43"
@@ -632,9 +631,61 @@
 		water_top_overlay.icon_state = "rivertop"
 		water_top_overlay.dir = dir
 
+/// A river is thousands of turfs and one continuous sound, so one turf every RIVER_SPREAD speaks
+/// for its stretch and the rest are silent. Voices are claimed by distance from each other, so
+/// this IS the maximum a river tile can be from the nearest voice.
+///
+/// It must stay at or under the river category's range minus one: a tile can sit a full spread
+/// from its voice and a listener stands a tile off the water, so the worst case is spread + 1 and
+/// the range has to cover it. At range 8 that is a ceiling of 7, and 6 leaves a tile in hand.
+///
+/// Two earlier values were wrong for reasons worth not repeating. Eight on a GRID bounds spacing
+/// at 2*spread-1 = 15, because the first turf to ask claims a whole block and can sit anywhere in
+/// it. Eight by distance is bounded correctly at 8, but 8 was picked against a line model, voices
+/// evenly spaced with the listener halfway between two of them, which gives roughly twice the
+/// coverage greedy 2D claiming actually delivers.
+#define RIVER_SPREAD 6
+/// Louder than the water category's 35, which fountains use, because a river's voice sits
+/// mid-water and spends part of its falloff getting to the bank: at 55 over range 8 a listener
+/// three or four tiles off the water hears about 45, still above a fountain's peak.
+#define RIVER_VOLUME 55
+
 /turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
 	.  = ..()
+	// A turf's loc is its area. Areas that hold water as scenery opt out, so a generated dungeon
+	// room does not babble at you.
+	var/area/our_area = loc
+	if(our_area && !our_area.river_ambience)
+		return
+	// Unregistered from the Destroy in rivers.dm, which this type already has. No file of its own:
+	// the category carries the clip set and each listener advances through it independently.
+	if(SSpoint_ambience.register_spread_source(src, /datum/point_ambience_category/river, RIVER_SPREAD, volume_override = RIVER_VOLUME))
+		ambience_source = TRUE
+
+/// This turf is one of the river's voices and is going away, leaving a hole a spread wide. Claiming
+/// happens once, at mapload, and nothing re-runs it, so without a hand-off that stretch of bank is
+/// silent for the rest of the round. Passes the claim to the first neighbour near enough to cover
+/// the same water and far enough from every other voice to be granted one; if none qualifies, the
+/// remaining voices already reach here and there was no hole to fill.
+/// Must run AFTER the unregister, or this turf is still in the index and refuses every candidate.
+/turf/open/water/river/proc/hand_off_ambience()
+	ambience_source = FALSE
+	// Typed loop, never `as anything`: range() returns each turf's CONTENTS alongside it, so the
+	// istype filter is what keeps a mob standing in the water out of the river's voice list.
+	for(var/turf/open/water/river/neighbour in range(RIVER_SPREAD, src))
+		if(neighbour == src || neighbour.ambience_source)
+			continue
+		// The same opt-out Initialize honours: areas holding water as scenery stay quiet.
+		var/area/their_area = neighbour.loc
+		if(their_area && !their_area.river_ambience)
+			continue
+		if(SSpoint_ambience.register_spread_source(neighbour, /datum/point_ambience_category/river, RIVER_SPREAD, volume_override = RIVER_VOLUME))
+			neighbour.ambience_source = TRUE
+			return
+
+#undef RIVER_SPREAD
+#undef RIVER_VOLUME
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
