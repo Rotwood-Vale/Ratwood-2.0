@@ -110,6 +110,56 @@
 					span_notice("I kick open [src]!"))
 			force_open()
 
+/obj/structure/mineral_door/MiddleClick(mob/user, params)
+	if(!user?.client)
+		return
+	if(user.m_intent != MOVE_INTENT_SNEAK)
+		return
+	if(user.keyhole_peeking)
+		return
+	if(!keylock || brokenstate)
+		return
+	if(get_dist(src, user) != 1)
+		return
+
+	var/user_dir = get_dir(src, user)
+	if(!(user_dir in GLOB.cardinals))
+		return
+
+	var/turf/keyhole_turf = get_step(src, turn(user_dir, 180))
+	if(!keyhole_turf)
+		return
+
+	return start_keyhole_peek(user, keyhole_turf)
+
+/obj/structure/mineral_door/proc/start_keyhole_peek(mob/user, turf/keyhole_turf)
+	if(!user?.client || user.keyhole_peeking)
+		return FALSE
+	if(user.m_intent != MOVE_INTENT_SNEAK)
+		return FALSE
+
+	var/turf/original_turf = get_turf(user)
+	var/atom/old_eye = user.client.eye
+	var/old_perspective = user.client.perspective
+
+	user.keyhole_peeking = TRUE
+	user.client.perspective = EYE_PERSPECTIVE
+	user.client.eye = keyhole_turf
+	to_chat(user, span_notice("I peer through the keyhole..."))
+
+	spawn(0)
+		while(user?.client && user.keyhole_peeking)
+			if(get_turf(user) != original_turf || user.m_intent != MOVE_INTENT_SNEAK || QDELETED(src))
+				break
+			sleep(1)
+
+		if(user?.client)
+			user.keyhole_peeking = FALSE
+			user.client.eye = old_eye
+			user.client.perspective = old_perspective
+
+	return TRUE
+
 /obj/structure/mineral_door/proc/force_open()
 	isSwitchingStates = TRUE
 	if(!windowed)
@@ -674,7 +724,7 @@
 
 		if(lockdifficulty > 2 && P.picklvl < 1) //disallowing lesser knock and poor locks from being used
 			to_chat(user, "<span class='warning'>my lockpick is too poor to handle this lock</span>")
-			playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
+			playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE, -5)
 			I.take_damage(1, BRUTE, "blunt")
 			to_chat(user, "<span class='warning'>Clack.</span>")
 			return
@@ -687,7 +737,7 @@
 				break
 			if(prob(pickchance))
 				lockprogress += moveup
-				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
+				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE, -5)
 				to_chat(user, "<span class='warning'>Click...</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
@@ -707,7 +757,7 @@
 				else
 					continue
 			else
-				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
+				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE, -5)
 				I.take_damage(1, BRUTE, "blunt")
 				to_chat(user, "<span class='warning'>Clack.</span>")
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
@@ -1063,6 +1113,10 @@
 	return
 
 /obj/structure/mineral_door/wood/donjon/stone/MiddleClick(mob/user, params)
+	if(user.m_intent == MOVE_INTENT_SNEAK && !user.get_active_held_item())
+		if(..())
+			return
+
 	if(user.get_active_held_item())
 		return ..()
 	if(door_opened || isSwitchingStates)
@@ -1082,6 +1136,10 @@
 	. = ..()
 
 /obj/structure/mineral_door/wood/donjon/MiddleClick(mob/user, params)
+	if(user.m_intent == MOVE_INTENT_SNEAK && !user.get_active_held_item())
+		if(..())
+			return
+
 	if(user.get_active_held_item())
 		return ..()
 
