@@ -49,6 +49,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/praise
 	H.verbs |= /mob/living/carbon/human/proc/communicate
 	H.verbs |= /mob/living/carbon/human/proc/draw_sigil
+	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
 
 	if(change_stats)
 		H.change_stat(STATKEY_STR, 2)
@@ -190,3 +191,8 @@
 			SSmapping.retainer.cultists -= choice.mind
 
 #undef LIST_PRAISE_ZIZO
+
+/mob/living/carbon/human/proc/zizo_lore()
+	set name = "Research"
+	set category = "ZIZO"
+	GLOB.zizo_research.open(src)

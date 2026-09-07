@@ -115,6 +115,15 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
 
+	var/list/zizo_researched = list(
+		/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
+		/datum/ritual/servantry/heartache, /datum/ritual/servantry/marktargets,
+		/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
+		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
+		/datum/ritual/transmutation/summonoutfit
+		)
+	var/zizo_points = 0
+
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src

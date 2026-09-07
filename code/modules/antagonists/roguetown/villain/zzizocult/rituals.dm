@@ -33,16 +33,59 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /proc/ritual_available(mob/living/carbon/human/user, datum/ritual/ritual)
 	if(initial(ritual.abstract_type) == ritual)
 		return FALSE
+	if(!(ritual in user.mind.zizo_researched))
+		return FALSE
 	if(initial(ritual.is_cultist_ritual) && !is_zizo(user))
 		return FALSE
-	if(initial(ritual.required_aspect) && initial(ritual.required_aspect) != user.aspect)
-		return FALSE
-	if(initial(ritual.needs_aspect) && !user.aspect)
+	if(ritual.passive == TRUE)
 		return FALSE
 	return TRUE
 
 GLOBAL_LIST_EMPTY(zizo_targets)
 GLOBAL_VAR_INIT(zizo_target_cd, 0)
+
+/proc/zizo_award(mob/M, amt)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	H.mind.zizo_points += amt
+	to_chat(M, span_boldnotice("SECRETS UNVEILED. (+[amt])"))
+
+/datum/zizo_research/proc/open(mob/living/carbon/human/user)
+	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
+	var/any = FALSE
+	for(var/ritualtype in GLOB.zizo_researchable)
+		if(ritualtype in user.mind.zizo_researched)
+			continue
+		any = TRUE
+		var/datum/ritual/R = ritualtype
+		if(R.is_cultist_ritual && !is_zizo(user))
+			continue
+		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>"
+	if(!any)
+		contents += "There is nothing left to uncover.<BR>"
+	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 400, 500)
+	popup.set_content(contents)
+	popup.open(FALSE)
+
+/datum/zizo_research/Topic(href, href_list)
+	var/mob/living/carbon/human/user = usr
+	if(!ishuman(user))
+		return
+	var/ritualtype = text2path(href_list["buy"])
+	if(!ritualtype || (ritualtype in user.mind.zizo_researched) || !(ritualtype in GLOB.zizo_researchable))
+		return
+	var/datum/ritual/R = new ritualtype
+	if(user.mind.zizo_points < initial(R.research_cost))
+		to_chat(user, span_warning("NOT ENOUGH SECRETS."))
+		return
+	user.mind.zizo_points -= initial(R.research_cost)
+	user.mind.zizo_researched |= ritualtype
+	if(R.passive)
+		R.apply_passive(user)
+	to_chat(user, span_boldnotice("EUREKA! I DISCOVER [uppertext(R.name)]!"))
+	qdel(R)
+	open(user)
 
 /proc/reroll_targets()
 	GLOB.zizo_targets = list()
@@ -73,7 +116,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/s_req
 	var/w_req
 	var/is_cultist_ritual = FALSE
-	var/required_aspect
+	var/research_cost = 5
 	var/needs_aspect = FALSE
 	var/keep_center = FALSE
 	var/center_desc
@@ -81,8 +124,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/e_desc
 	var/s_desc
 	var/w_desc
+	var/passive = FALSE
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
+	return
+
+/datum/ritual/proc/apply_passive(mob/living/carbon/human/H)
 	return
 
 /datum/ritual/proc/req_label(req, desc)
@@ -120,7 +167,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /datum/ritual/servantry/convert/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target || target == user)
-		to_chat(user, span_warning("A sacrifice must lie in the center. The sacrifice must be desired by ZIZO, which can be tracked by heartaches."))
+		to_chat(user, span_warning("A sacrifice must lie in the center. The sacrifice must be desired by ZIZO, which can be tracked by heartaches. If you have more than 2 lackeys, you require an assistant cultist on the sigil to perform this rite."))
 		return
 	if(is_zizocultist(target.mind) || is_zizolackey(target.mind))
 		return
@@ -132,19 +179,39 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
-	var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist)
+	var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist, TRUE)
+	var/lackeys = 0
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		if(is_zizolackey(M))
+			lackeys++
+	if(lackeys > 2)
+		var/mob/living/carbon/human/assistant
+		for(var/mob/living/carbon/human/H in range(1, center))
+			if(H == user || H == target || !is_zizo(H))
+				continue
+			assistant = H
+			break
+		if(!assistant)
+			to_chat(user, span_warning("FOR THE CULT TO GROW LARGER, YOU MUST PERFORM THIS RITE WITH AN ASSISTANT CULTIST ON THE SIGIL."))
+			return
 	var/alert = tgui_alert(target, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST?", "???", list("Yield", "Resist"))
 	target.Immobilize(3 SECONDS)
 	if(alert == "Yield")
 		to_chat(target, span_notice("I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!"))
 		PR.add_cultist(target.mind)
 		target.praise()
+		for(var/datum/mind/M in SSmapping.retainer.cultists)
+			if(M.current)
+				zizo_award(M.current, 2)
+		zizo_award(user, 3)
+		zizo_award(target, 3)
 	else
 		target.visible_message(span_danger("[target] thrashes around, unyielding!"))
 		if(!absorb_lux(target, get_turf(target)))
 			to_chat(user, span_warning("[target] has no lux left to give."))
 		else
 			to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
+			zizo_award(user, 5)
 	GLOB.zizo_targets -= target
 
 /datum/ritual/servantry/sacrifice
@@ -189,10 +256,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!absorb_lux(target, center))
 		to_chat(user, span_warning("[target] has no lux left to give."))
 		return
-	var/datum/job/J = target.mind?.assigned_role
+	var/datum/job/J = SSjob.GetJob(target.mind?.assigned_role)
 	if(J && (J.type in (list(NOBLE_ROLES) + list(CHURCH_ROLES) + list(GARRISON_ROLES) + list(INQUISITION_ROLES))))
 		new /obj/item/necro_relics/necro_crystal(center)
 	GLOB.zizo_targets -= target
+	zizo_award(user, 5)
+	zizo_award(assistant, 5)
 	target.visible_message(span_danger("[assistant] tears open [target]'s chest and rips free their lux!"))
 	to_chat(user, span_notice("The sacrifice is accepted!"))
 
@@ -320,6 +389,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	name = "All-seeing Eye"
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/organ/eyes
+	n_req = /obj/item/necro_relics/necro_crystal
 
 /datum/ritual/transmutation/allseeingeye/invoke(mob/living/user, turf/center)
 	new /obj/item/scrying/eye(center)
@@ -351,6 +421,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
 	s_req = /obj/item/natural/feather
+	research_cost = 3
 
 /datum/ritual/transmutation/propaganda/invoke(mob/living/user, turf/center)
 	new /obj/item/natural/worms/leech/propaganda(center)
@@ -447,7 +518,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	n_req = /obj/item/necro_relics/necro_crystal
 	w_req = /obj/item/ingot/steel
 	e_req = /obj/item/ingot/steel
-	is_cultist_ritual = TRUE
 
 /datum/ritual/transmutation/summonarmor/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -472,7 +542,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	s_req = /obj/item/ingot/steel
-	is_cultist_ritual = TRUE
 
 /datum/ritual/transmutation/summonweapon/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -499,8 +568,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/bodypart/l_leg
 	e_req = /obj/item/bodypart/r_leg
-	is_cultist_ritual = TRUE
-	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/bunnylegs/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -514,13 +581,13 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
 	var/heal_tick = 30
-	needs_aspect = TRUE
+	research_cost = 3
 
 /datum/ritual/fleshcrafting/fleshmend/greater
 	name = "Greater Fleshmend"
 	is_cultist_ritual = TRUE
 	heal_tick = 70
-	needs_aspect = TRUE
+	research_cost = 7
 
 /datum/ritual/fleshcrafting/fleshmend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -535,7 +602,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/organ/eyes
 	e_req = /obj/item/organ/eyes
-	needs_aspect = TRUE
+	research_cost = 3
 
 /datum/ritual/fleshcrafting/darkeyes/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -552,24 +619,22 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /datum/ritual/fleshcrafting/nopain
 	name = "Painless Battle"
 	center_requirement = /mob/living/carbon/human
+	n_req = /obj/item/necro_relics/necro_crystal
 	w_req = /obj/item/organ/heart
 	e_req = /obj/item/organ/brain
-	needs_aspect = TRUE
 
 /datum/ritual/fleshcrafting/nopain/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		return
 	ADD_TRAIT(user, TRAIT_NOPAIN, TRAIT_GENERIC)
-	to_chat(target, span_notice("I no longer feel pain, but it has come at a terrible cost."))
-	target.change_stat(STATKEY_STR, -2)
-	target.change_stat(STATKEY_CON, -3)
+	to_chat(target, span_notice("I no longer feel pain."))
 
 /datum/ritual/fleshcrafting/immortality
 	name = "Flawed Immortality"
 	center_requirement = /mob/living/carbon/human
 	n_req = /mob/living/carbon/human
-	needs_aspect = TRUE
+	research_cost = 10
 
 /datum/ritual/fleshcrafting/immortality/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -607,7 +672,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	w_req = /mob/living/carbon/human
 	w_desc = "a cultist"
 	is_cultist_ritual = TRUE
-	needs_aspect = TRUE
 
 /obj/effect/proc_holder/spell/bloodcrawl/ascendant
 	recharge_time = 5 MINUTES
@@ -1024,11 +1088,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			to_chat(M, span_warning("There is already something here."))
 			return
 	var/isblood = FALSE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		isblood = (H.aspect == "blood")
 	var/draw_time = 5 SECONDS
-	if(isblood)
+	if(HAS_TRAIT(M, TRAIT_BLOODBOUND))
 		draw_time = 1 SECONDS
 	if(do_after(M, draw_time))
 		if(!isblood)
@@ -1057,18 +1118,16 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	set category = "ZIZO"
 	if(incapacitated() || stat >= UNCONSCIOUS)
 		return
-	if(aspect != "blood" && !bloody_hands && !get_bleed_rate())
+	if(!HAS_TRAIT(src, TRAIT_BLOODBOUND) && !bloody_hands && !get_bleed_rate())
 		to_chat(src, span_danger("My hands aren't bloody enough."))
 		return
-	var/static/list/cats = list("Servantry" = /datum/ritual/servantry, "Transmutation" = /datum/ritual/transmutation, "Fleshcrafting" = /datum/ritual/fleshcrafting)
+	var/static/list/cats = list("Servantry" = /datum/ritual/servantry, "Transmutation" = /datum/ritual/transmutation, "Fleshcrafting" = /datum/ritual/fleshcrafting, "Strand" = /datum/ritual/strand, "Pitch" = /datum/ritual/pitch, "Toil" = /datum/ritual/toil, "Bite" = /datum/ritual/bite, "Rot" = /datum/ritual/rot, "Blood" = /datum/ritual/blood, "Noise" = /datum/ritual/noise)
 	var/list/runes = list()
 	for(var/cat in cats)
 		for(var/datum/ritual/ritual as anything in subtypesof(cats[cat]))
-			if(!initial(ritual.required_aspect) && ritual_available(src, ritual))
+			if(ritual_available(src, ritual))
 				runes += cat
 				break
-	if(aspect)
-		runes += capitalize(aspect)
 	if(!runes.len)
 		to_chat(src, span_warning("I know no rites."))
 		return

@@ -10,6 +10,18 @@ GLOBAL_LIST_INIT(zizo_aspects, list(
 
 GLOBAL_LIST_EMPTY(zizo_portals)
 
+GLOBAL_LIST_INIT(zizo_researchable, list(
+	/datum/ritual/servantry/darksunmark, /datum/ritual/transmutation/allseeingeye,
+	/datum/ritual/fleshcrafting/bunnylegs, /datum/ritual/fleshcrafting/fleshmend,
+	/datum/ritual/fleshcrafting/fleshmend/greater, /datum/ritual/fleshcrafting/darkeyes,
+	/datum/ritual/fleshcrafting/nopain, /datum/ritual/fleshcrafting/immortality,
+	/datum/ritual/transmutation/summonarmor, /datum/ritual/transmutation/summonweapon,
+	/datum/ritual/servantry/aspect,
+	))
+
+GLOBAL_LIST_EMPTY(zizo_bestowed)
+GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
+
 // HELPERS !!!
 
 /proc/is_zizo(mob/M)
@@ -63,31 +75,24 @@ GLOBAL_LIST_EMPTY(zizo_portals)
 
 /datum/ritual/strand
 	abstract_type = /datum/ritual/strand
-	required_aspect = "strand"
 
 /datum/ritual/pitch
 	abstract_type = /datum/ritual/pitch
-	required_aspect = "pitch"
 
 /datum/ritual/toil
 	abstract_type = /datum/ritual/toil
-	required_aspect = "toil"
 
 /datum/ritual/bite
 	abstract_type = /datum/ritual/bite
-	required_aspect = "bite"
 
 /datum/ritual/rot
 	abstract_type = /datum/ritual/rot
-	required_aspect = "rot"
 
 /datum/ritual/noise
 	abstract_type = /datum/ritual/noise
-	required_aspect = "noise"
 
 /datum/ritual/blood
 	abstract_type = /datum/ritual/blood
-	required_aspect = "blood"
 
 GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
@@ -130,10 +135,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 
 /datum/ritual/servantry/aspect
-	name = "Bestow Aspect (UNLOCKS ASCENSION)"
+	name = "Open Gate (UNLOCKS ASCENSION)"
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
+	var/gate_count
 
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -142,10 +148,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	if(!is_zizo(target))
 		to_chat(user, span_warning("THEIR MIND IS CLOSED."))
-		new /obj/item/necro_relics/necro_crystal(center)
-		return
-	if(HAS_TRAIT(target, TRAIT_ASPECTED))
-		to_chat(user, span_warning("THEY ARE ALREADY AN INITIATE."))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	refill_bestow_areas()
@@ -161,14 +163,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(!do_after(user, 20 SECONDS, target = target))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
-	if(HAS_TRAIT(target, TRAIT_ASPECTED))
-		return
 	new /obj/structure/reality_rend(center)
 	GLOB.zizo_bestow_areas -= here.type
 	refill_bestow_areas()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
 	var/contents = "THESE ARE THE SIGNS BY WHICH YOU WILL KNOW ME.<BR>--------------<BR>"
 	for(var/key in GLOB.zizo_aspects)
+		if(key in GLOB.zizo_bestowed)
+			continue
 		contents += "<b><a href='?src=[REF(src)];pick=[key];target=[REF(target)]'>[uppertext(key)]</a></b><BR>[GLOB.zizo_aspects[key]]<BR><BR>"
 	var/datum/browser/popup = new(target, "aspectmenu", "ZIZO", 420, 520)
 	popup.set_content(contents)
@@ -176,30 +178,22 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/servantry/aspect/Topic(href, href_list)
 	var/mob/living/carbon/human/target = locate(href_list["target"])
-	if(!target || usr != target || HAS_TRAIT(target, TRAIT_ASPECTED))
+	if(!target || usr != target)
 		return
 	var/choice = href_list["pick"]
 	if(!choice || !GLOB.zizo_aspects[choice])
 		return
-	target.aspect = choice
-	ADD_TRAIT(target, TRAIT_ASPECTED, TRAIT_GENERIC)
-	switch(choice)
-		if("strand")
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dream_jaunt)
-		if("rot")
-			ADD_TRAIT(target, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rot_transfuse)
-		if("bite")
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
-		if("pitch")
-			ADD_TRAIT(target, TRAIT_NOFIRE, TRAIT_GENERIC)
-		if("noise")
-			ADD_TRAIT(target, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
-		if("toil")
-			target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/toil_mend)
-	to_chat(target, span_boldnotice("Zizo grants me the mysteries of [choice]!"))
+	if(choice in GLOB.zizo_bestowed)
+		return
+	GLOB.zizo_bestowed += choice
+	for(var/rt in subtypesof(text2path("/datum/ritual/[choice]")))
+		GLOB.zizo_researchable |= rt
+	gate_count++
+	if(gate_count < 3)
+		to_chat(target, span_boldnotice("Gate opened! [3 - gate_count] more to unlock Ascension!"))
+	if(gate_count == 3)
+		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
+	to_chat(target, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
 	target.Jitter(4)
 	playsound(target, 'sound/villain/male_talk1.ogg', 60, TRUE)
 	target << browse(null, "window=aspectmenu")
@@ -249,10 +243,18 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/status_effect/dream_teleport/recall
 	duration = 3 MINUTES
 
+/datum/ritual/strand/dream_jaunt
+	name = "Dream Jaunt"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/strand/dream_jaunt/apply_passive(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dream_jaunt)
+	return
+
 /datum/ritual/strand/strandsend
 	name = "Passage"
 	center_requirement = /mob/living/carbon/human
-	required_aspect = "strand"
 
 /datum/ritual/strand/strandsend/invoke(mob/living/user, turf/center)
 	var/obj/effect/decal/cleanable/sigil/S = locate() in center
@@ -267,7 +269,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/strand/strandrecall
 	name = "Curse of Recall"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "strand"
 	keep_center = TRUE
 
 /datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
@@ -309,6 +310,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/carbon/human/target = targets[1]
 	if(!ishuman(target))
 		return FALSE
+	if(target == user)
+		to_chat(user, span_notice("ALL THINGS MAY BE REPAIRED, BUT NOT YOUR OWN BODY. FOOL."))
+		return FALSE
 	target.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 	playsound(target, 'sound/magic/lightning.ogg', 60, TRUE)
 	target.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
@@ -317,9 +321,17 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	to_chat(target, span_notice("I AM MENDED!"))
 	return TRUE
 
+/datum/ritual/toil/progress
+	name = "Progress"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/toil/progress/apply_passive(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/toil_mend)
+	return
+
 /datum/ritual/toil/mend
 	name = "Mend"
-	required_aspect = "toil"
 
 /datum/ritual/toil/mend/invoke(mob/living/user, turf/center)
 	for(var/obj/item/I in center)
@@ -349,7 +361,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/toil/cultoffer
 	name = "Curse of Whispers"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "toil"
 	keep_center = TRUE
 
 /datum/ritual/toil/cultoffer/invoke(mob/living/user, turf/center)
@@ -372,10 +383,19 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 // BITE
 
+/datum/ritual/bite/necromancy
+	name = "Necromancy"
+	passive = TRUE
+
+/datum/ritual/bite/necromancy/apply_passive(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
+	return
+
 /datum/ritual/bite/raisedeadite
 	name = "Raise Deadite"
 	center_requirement = /mob/living/carbon/human
-	required_aspect = "bite"
 
 /datum/ritual/bite/raisedeadite/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/corpse = locate() in center.contents
@@ -500,6 +520,16 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	to_chat(user, span_notice("I transfuse into [victim]."))
 	return TRUE
 
+/datum/ritual/rot/transfuse
+	name = "Transfuse"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/rot/transfuse/apply_passive(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rot_transfuse)
+	ADD_TRAIT(H, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	return
+
 /turf/open/floor/rogue/naturalstone/rot
 	color = "#30c307"
 
@@ -544,7 +574,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/rot/blight
 	name = "Blight"
 	center_requirement = /mob/living/carbon/human
-	required_aspect = "rot"
 
 /datum/ritual/rot/blight/invoke(mob/living/user, turf/center)
 	new /obj/structure/blight_pillar(center)
@@ -553,7 +582,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/rot/plague
 	name = "Curse of Black Rot"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "rot"
 	keep_center = TRUE
 
 /datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
@@ -583,10 +611,18 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	forceMove(return_turf || get_turf(holder))
 	qdel(holder)
 
+/datum/ritual/noise/thermalvis
+	name = "True Sight"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/noise/thermalvis/apply_passive(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_THERMAL_VISION, TRAIT_GENERIC)
+	return
+
 /datum/ritual/noise/ghost_form
 	name = "Spook"
 	center_requirement = /mob/living/carbon/human
-	required_aspect = "noise"
 
 /datum/ritual/noise/ghost_form/invoke(mob/living/user, turf/center)
 	. = ..()
@@ -604,7 +640,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "noise"
 	keep_center = TRUE
 
 /datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
@@ -718,10 +753,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, end_jaunt), holder), 5 SECONDS)
 	return TRUE
 
-/datum/ritual/pitch/shadowform
-	name = "Scaduform"
-	center_requirement = /mob/living/carbon/human
-	required_aspect = "pitch"
+/datum/ritual/pitch/fireresist
+	name = "Fire Resistance"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/pitch/fireresist/apply_passive(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_NOFIRE, TRAIT_GENERIC)
+	return
 
 /datum/ritual/pitch/shadowform/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -776,7 +815,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/pitch/lightcurse
 	name = "Curse of Radiance"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "pitch"
 	keep_center = TRUE
 
 /datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
@@ -823,10 +861,18 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			L.Jitter(4)
 			L.visible_message(span_danger("BLOODY BLADES RISE FROM THE GROUND AND REND [L]!"))
 
+/datum/ritual/blood/transfuse
+	name = "Sigil Expertise"
+	passive = TRUE
+	research_cost = 3
+
+/datum/ritual/blood/transfuse/apply_passive(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_BLOODBOUND, TRAIT_GENERIC)
+	return
+
 /datum/ritual/blood/bloodsnare
 	name = "Blood Snare"
 	center_requirement = /obj/item
-	required_aspect = "blood"
 	keep_center = TRUE
 
 /datum/ritual/blood/bloodsnare/invoke(mob/living/user, turf/center)
@@ -880,7 +926,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/blood/bloodbond
 	name = "Curse of Blood"
 	center_requirement = /obj/item/natural/worms/leech
-	required_aspect = "blood"
 	keep_center = TRUE
 
 /datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
