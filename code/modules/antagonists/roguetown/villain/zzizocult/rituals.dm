@@ -60,12 +60,15 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(ritualtype in user.mind.zizo_researched)
 			contents += "<B>[initial(R.name)]</B> - LEARNED<BR>'<I>[R.desc]</I>'<BR>"
 			continue
+		if(R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
+			contents += "<B>[initial(R.name)]</B> - LOCKED - <B>OPEN [R.needs_aspect] GATE.</B><BR>'<I>[R.desc]</I>'<BR>"
+			continue
 		if(R.is_cultist_ritual && !is_zizo(user))
 			continue
 		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>'<I>[R.desc]</I>'<BR>"
 	if(!any)
 		contents += "There is nothing left to uncover.<BR>"
-	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 400, 500)
+	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 500, 500)
 	popup.set_content(contents)
 	popup.open(FALSE)
 
@@ -123,7 +126,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/w_req
 	var/is_cultist_ritual = FALSE
 	var/research_cost = 5
-	var/needs_aspect = FALSE
+	var/needs_aspect
 	var/keep_center = FALSE
 	var/center_desc
 	var/n_desc
@@ -385,6 +388,29 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		organ.forceMove(drop_location)
 	for(var/obj/item/bodypart/part as anything in target.bodyparts)
 		part.drop_limb()
+
+/datum/ritual/servantry/sleepcurse
+	name = "Curse of Sleep"
+	desc = "Curse your target to fall asleep after a minute. They are warned. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+
+/datum/ritual/servantry/sleepcurse/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	qdel(remnant)
+	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 1 MINUTE."))
+	victim.playsound_local(victim, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
+	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 1 MINUTE TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 1 MINUTES)
+
+/proc/sleepcurse(mob/living/user, mob/living/victim)
+	if(QDELETED(victim) || !ishuman(victim))
+		return
+	victim.Unconscious(2 MINUTES)
+		
 
 /datum/ritual/servantry/darksunmark
 	name = "Dark Sun's Mark"

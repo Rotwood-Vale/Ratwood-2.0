@@ -1,13 +1,3 @@
-GLOBAL_LIST_INIT(zizo_aspects, list(
-	"strand" = "Dreams, prophecy, and passage between realms.<BR>Through its signs, She gathered her faithful.<BR><BR><B>PASSIVE:</B> DREAM JAUNT - BRING YOURSELF AND ANY YOU GRAB INTO THE DREAM.<BR><BR><B>ACTIVE:</B> PASSAGE - TRANSFORM A SERVANTRY RUNE INTO A PORTAL.<BR><BR><B>REMNANT:</B> CURSE OF RECALL - USE A SERVANTRY RUNE TO SUMMON YOUR TARGET.",
-	"pitch" = "Fire, shadow, and chaos.<BR>The tool to split the land for Her coming.<BR><BR><B>PASSIVE:</B> IMMUNITY TO FLAME.<BR><BR><B>ACTIVE:</B> SCADUFORM - USE A FLESHCRAFTING SIGIL TO TRANSCEND INTO A DARK FORM. PERMANENT.<BR><BR><B>REMNANT:</B> CURSE OF RADIANCE - USE A FLESHCRAFTING SIGIL TO CURSE YOUR TARGET WITH FLESH THAT BURNS IN LIGHT.",
-	"toil" = "Lightning, labor, and lyfe.<BR>What prepares and preserves us from Her coming.<BR><BR><B>PASSIVE:</B> PROGRESS - HEAL THE TARGET AND MEND THEIR ITEMS.<BR><BR><B>ACTIVE:</B> MEND - USE A TRANSMUTATION SIGIL TO FIX ITEMS AND PEOPLE. CONSUMES A DARK CRYSTAL ON THE NORTH SIDE TO REVIVE.<BR><BR><B>REMNANT:</B> CURSE OF WHISPERS - USE A TRANSMUTATION SIGIL TO INVITE THE TARGET INTO THE CULT.",
-	"bite" = "Winter, bone, and death.<BR>The eternal life She promised us.<BR><BR><B>PASSIVE:</B> ACCESS TO NECROMANCY SPELLS.<BR><BR><B>ACTIVE:</B> RAISE DEADITE - RAISE A CORPSE INTO A PALE DEADITE THAT CAN USE TOOLS, BUT NOT WEAPONS. CAN BE REMOTELY VIEWED AND DETONATED FOR DEVASTATING AREA OF EFFECT DAMAGE.<BR><BR><B>REMNANT:</B> NONE.",
-	"rot" = "Infection, hatred, and murder.<BR>With this, She will kill the world.<BR><BR><B>PASSIVE:</B> IMMUNITY TO POISON. TRANSFUSE - GRAB SOMEONE TIGHTLY AND TRANSFUSE ALL REAGENTS FROM YOUR BLOODSTREAM INTO THEM.<BR><BR><B>ACTIVE:</B> BLIGHT - PETRIFY THE NEARBY AREA INTO STONE THAT DAMAGES NON-CULTISTS WHO STEP UPON IT.<BR><BR><B>REMNANT:</B> CURSE OF BLACK ROT - MAKE THE TARGET DEATHLY ILL.",
-	"noise" = "Sound, knowledge, and madness.<BR>What will come after Her.<BR><BR><B>PASSIVE:</B> SEE THE LIVING THROUGH WALLS.<BR><BR><B>ACTIVE:</B> SPOOK - BECOME INVISIBLE AND ETHEREAL TO MOVE THROUGH WALLS AND OBSERVE FOR A SHORT TIME. RETURNS YOU TO THE SIGIL AFTER.<BR><BR><B>REMNANT:</B> CURSE OF BABEL - THE TARGET FORGETS THE COMMON TONGUE.",
-	"blood" = "Connection, protection, and devotion.<BR>She never liked this one.<BR><BR><B>PASSIVE:</B> NONE.<BR><BR><B>ACTIVE:</B> SNARE - USE A FLESHCRAFTING SIGIL TO CREATE A DEADLY TRAP. WEAPONS STUN YOUR FOE. ORGANS POISON THEM. ANYTHING ELSE MAKES THEM BLEED.<BR><BR><B>REMNANT:</B> USE A FLESHCRAFTING RUNE AND TWO BLOOD-FILLED LEECHES TO CONNECT TWO TARGETS. THEY WILL SLOWLY DIE IF APART.",
-	))
-
 GLOBAL_LIST_EMPTY(zizo_portals)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
@@ -21,7 +11,17 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
 	/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 	/datum/ritual/transmutation/summonoutfit, /datum/ritual/servantry/aspect,
-	/datum/ritual/transmutation/propaganda,
+	/datum/ritual/transmutation/propaganda, /datum/ritual/servantry/sleepcurse,
+	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
+	/datum/ritual/strand/strandrecall, /datum/ritual/toil/progress,
+	/datum/ritual/toil/mend, /datum/ritual/toil/cultoffer,
+	/datum/ritual/bite/necromancy, /datum/ritual/bite/raisedeadite,
+	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
+	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
+	/datum/ritual/noise/ghost_form, /datum/ritual/noise/forgettongue,
+	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
+	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
+	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
 	))
 
 GLOBAL_LIST_EMPTY(zizo_bestowed)
@@ -81,24 +81,31 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 
 /datum/ritual/strand
 	abstract_type = /datum/ritual/strand
+	needs_aspect = "STRAND"
 
 /datum/ritual/pitch
 	abstract_type = /datum/ritual/pitch
+	needs_aspect = "PITCH"
 
 /datum/ritual/toil
 	abstract_type = /datum/ritual/toil
+	needs_aspect = "TOIL"
 
 /datum/ritual/bite
 	abstract_type = /datum/ritual/bite
+	needs_aspect = "BITE"
 
 /datum/ritual/rot
 	abstract_type = /datum/ritual/rot
+	needs_aspect = "ROT"
 
 /datum/ritual/noise
 	abstract_type = /datum/ritual/noise
+	needs_aspect = "NOISE"
 
 /datum/ritual/blood
 	abstract_type = /datum/ritual/blood
+	needs_aspect = "BLOOD"
 
 GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
@@ -173,44 +180,27 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			to_chat(user, span_notice("- [initial(A.name)]"))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
+	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")
+	var/choice = tgui_input_list(src, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
+	new /obj/effect/temp_visual/recall_smoke(center)
+	playsound(target, 'sound/villain/littlescary.ogg', 100, TRUE)
 	if(!do_after(user, 20 SECONDS, target = target))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
-	new /obj/structure/reality_rend(center)
-	GLOB.zizo_bestow_areas -= here.type
-	refill_bestow_areas()
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
-	var/contents = "THESE ARE THE SIGNS BY WHICH YOU WILL KNOW ME.<BR>--------------<BR>"
-	for(var/key in GLOB.zizo_aspects)
-		if(key in GLOB.zizo_bestowed)
-			continue
-		contents += "<b><a href='?src=[REF(src)];pick=[key];target=[REF(target)]'>[uppertext(key)]</a></b><BR>[GLOB.zizo_aspects[key]]<BR><BR>"
-	var/datum/browser/popup = new(target, "aspectmenu", "ZIZO", 420, 520)
-	popup.set_content(contents)
-	popup.open(FALSE)
-
-/datum/ritual/servantry/aspect/Topic(href, href_list)
-	var/mob/living/carbon/human/target = locate(href_list["target"])
-	if(!target || usr != target)
-		return
-	var/choice = href_list["pick"]
-	if(!choice || !GLOB.zizo_aspects[choice])
-		return
-	if(choice in GLOB.zizo_bestowed)
-		return
 	GLOB.zizo_bestowed += choice
-	for(var/rt in subtypesof(text2path("/datum/ritual/[choice]")))
-		GLOB.zizo_researchable |= rt
+	to_chat(target, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
+	target.Jitter(4)
 	gate_count++
 	if(gate_count < 3)
 		to_chat(target, span_boldnotice("Gate opened! [3 - gate_count] more to unlock Ascension!"))
 	if(gate_count == 3)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
-	to_chat(target, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
-	target.Jitter(4)
-	playsound(target, 'sound/villain/male_talk1.ogg', 60, TRUE)
-	target << browse(null, "window=aspectmenu")
+	playsound(target, 'sound/villain/hall_attack4.ogg', 100, TRUE)
+	new /obj/structure/reality_rend(center)
+	GLOB.zizo_bestow_areas -= here.type
+	refill_bestow_areas()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
 
 // STRAND
 
@@ -286,14 +276,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Recall"
 	desc = "Teleport yourself and your target into a pocket dimension for 3 minutes. Anyone you or your target grabs is brought with. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
-		return
-	if(remnant.fed_from == SSticker.rulermob)
-		to_chat(user, span_danger("The Sun Queen protects this soul!"))
 		return
 	var/mob/living/carbon/human/victim = remnant.fed_from
 	qdel(remnant)
@@ -381,7 +367,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Whispers"
 	desc = "Perform a rite that offers your target a chance to remotely join the cult, without having to drag them to a conversion sigil. Works on anyone, even if they aren't a sacrifice target. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/toil/cultoffer/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -607,7 +592,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Black Rot"
 	desc = "Curse your target with the black rot. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -668,7 +652,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Babel"
 	desc = "Curse your target to forget the common tongue and become illiterate. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -850,7 +833,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Radiance"
 	desc = "Curse a target to burn in the light. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -964,7 +946,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Blood"
 	desc = "Curse two targets to slowly die when apart from eachother. Requires two leeches that fed from seperate targets."
 	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
 
 /datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
 	var/list/found = list()
