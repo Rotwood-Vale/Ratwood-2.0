@@ -69,6 +69,15 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
+// Always running, unlike the lights, so it registers once rather than on a state change.
+/obj/structure/well/fountain/Initialize(mapload)
+	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
+
+/obj/structure/well/fountain/Destroy()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/water)
+	return ..()
+
 /obj/structure/well/fountain/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/W = I

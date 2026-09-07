@@ -22,6 +22,9 @@
 	fueluse = 0
 	no_refuel = TRUE
 	heat_level = 4
+	// A real fire: it cooks, it spreads, and it burns at heat level 4, so it belongs on the hearth's
+	// category and channel, where a brazier beside a campfire is one crackle rather than two.
+	point_ambience_category = /datum/point_ambience_category/fire
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -90,6 +93,10 @@
 	crossfire = FALSE
 	density = FALSE
 	heat_level = 3
+	// The TORCH sound, 30 over four tiles with a rolled pitch, rather than the hearth's 60 over six:
+	// this is a candle on a stand, it does not cook, does not spread, and burns a level cooler than
+	// the brazier it inherits from. Chosen on sound alone; cost between the two is a wash.
+	point_ambience_category = /datum/point_ambience_category/torch
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -347,7 +354,7 @@
 	var/obj/item/flashlight/flare/torch/torchy
 	fueluse = FALSE //we use the torch's fuel
 	no_refuel = TRUE
-	soundloop = null
+	point_ambience_category = /datum/point_ambience_category/torch
 	crossfire = FALSE
 	plane = GAME_PLANE_UPPER
 	cookonme = FALSE
@@ -416,6 +423,8 @@
 		on = FALSE
 		set_light(0)
 		update_icon()
+		// Torch removal skips update(), so the index needs its own poke.
+		update_point_ambience()
 		playsound(src.loc, 'sound/foley/torchfixturetake.ogg', 70)
 
 /obj/machinery/light/rogue/torchholder/update_icon()
@@ -512,7 +521,7 @@
 	climb_offset = 14
 	on = FALSE
 	cookonme = TRUE
-	soundloop = /datum/looping_sound/fireloop
+	point_ambience_category = /datum/point_ambience_category/fire
 	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
@@ -746,7 +755,7 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.is_active())
 					boilloop.start()
 				else
 					boilloop.stop()
@@ -777,7 +786,7 @@
 	no_refuel = TRUE
 	status = LIGHT_BURNED
 	crossfire = FALSE
-	soundloop = /datum/looping_sound/blank  //datum path is a blank.ogg
+	point_ambience_category = null // silent, as it was when it opted out of the old fireloop
 
 /obj/machinery/light/rogue/hearth/mobilestove/MiddleClick(mob/user, params)
 	. = ..()
@@ -871,7 +880,7 @@
 	bulb_colour = "#da5e21"
 	cookonme = TRUE
 	max_integrity = 30
-	soundloop = /datum/looping_sound/fireloop
+	point_ambience_category = /datum/point_ambience_category/fire
 	heat_level = 5
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)

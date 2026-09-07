@@ -596,26 +596,25 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
-	var/datum/looping_sound/clockloop/soundloop
 	drag_slowdown = 3
 	metalizer_result = /obj/item/roguegear/bronze
 
 /obj/structure/fluff/clock/Initialize(mapload)
-	soundloop = new(src, FALSE)
-	soundloop.start()
 	. = ..()
+	// Was a looping_sound. It keeps that loop's quiet volume 10 and gains what the loop never had:
+	// the tick fades as you cross the room rather than only on replay, and a wall now stops it.
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/fluff/clock/Destroy()
-	if(soundloop)
-		soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	..()
 
 /obj/structure/fluff/clock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
-	if(soundloop)
-		soundloop.stop()
+	// A broken clock does not tick.
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
 
@@ -674,7 +673,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	max_integrity = 100
 	integrity_failure = 0.5
-	var/datum/looping_sound/clockloop/soundloop
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -698,8 +696,7 @@
 			return
 
 /obj/structure/fluff/wallclock/Destroy()
-	if(soundloop)
-		soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	..()
 
 /obj/structure/fluff/wallclock/examine(mob/user)
@@ -729,14 +726,13 @@
 //				. += span_warning("The last boat will leave in [round(SSshuttle.emergency.timeLeft()/600)] minutes.")
 
 /obj/structure/fluff/wallclock/Initialize(mapload)
-	soundloop = new(src, FALSE)
-	soundloop.start()
 	. = ..()
+	// As the grandfather clock above. The /l, /r and /vampire subtypes inherit this.
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 
 /obj/structure/fluff/wallclock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
-	if(soundloop)
-		soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
 

@@ -5,7 +5,7 @@
 	fueluse = 60 MINUTES
 	bulb_colour = "#f9ad80"
 	bulb_power = 1
-	var/datum/looping_sound/soundloop = null // = /datum/looping_sound/fireloop
+	var/datum/looping_sound/soundloop = null // e.g. /datum/looping_sound/boilloop
 	pass_flags = LETPASSTHROW
 	flags_1 = NODECONSTRUCT_1
 	var/no_refuel = FALSE // For special holder that don't actually refuel
@@ -13,6 +13,20 @@
 	var/crossfire = TRUE
 	var/can_damage = FALSE
 	var/heat_level = 0
+	/// Category typepath: while lit, this light sits in SSpoint_ambience's index for that
+	/// category and sounds to nearby clients. Replaces the per-fire fireloop; the light owns
+	/// no loop, timer or channel of its own. Null means silent.
+	var/point_ambience_category
+
+/// Membership in SSpoint_ambience's index tracks (on && a category && on a turf). Called
+/// from every site that changes one of those; safe to call redundantly.
+/obj/machinery/light/rogue/proc/update_point_ambience()
+	if(!point_ambience_category)
+		return
+	if(on && !QDELETED(src) && isturf(loc))
+		SSpoint_ambience.register_source(src, point_ambience_category)
+	else
+		SSpoint_ambience.unregister_source(src, point_ambience_category)
 
 /obj/machinery/light/rogue/proc/update_turf_heat()
 	if(!heat_level)
@@ -27,6 +41,7 @@
 
 /obj/machinery/light/rogue/Moved(atom/OldLoc, Dir)
 	. = ..()
+	update_point_ambience()
 	if(!heat_level)
 		return
 	if(isfloorturf(OldLoc))
@@ -44,6 +59,7 @@
 	update_icon()
 	seton(TRUE)
 	update_turf_heat()
+	update_point_ambience()
 	. = ..()
 
 /obj/machinery/light/rogue/weather_trigger(W)
@@ -84,6 +100,10 @@
 		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
 	..()
 	update_icon()
+	// The base burn_out() flips on without ever reaching update(), so the index needs its
+	// own poke here, where the old explicit soundloop.stop() lived. Covers fuel running
+	// out, rain and every extinguish() path.
+	update_point_ambience()
 
 /obj/machinery/light/rogue/update_icon()
 	if(on)
@@ -98,9 +118,12 @@
 	else
 		GLOB.fires_list -= src
 	update_turf_heat()
+	update_point_ambience()
 
 /obj/machinery/light/rogue/Destroy()
 	QDEL_NULL(soundloop)
+	if(point_ambience_category)
+		SSpoint_ambience.unregister_source(src, point_ambience_category)
 	GLOB.fires_list -= src
 	if(heat_level && isfloorturf(loc))
 		var/turf/open/floor/T = loc
@@ -213,6 +236,10 @@
 				set_light(0)
 				update_icon()
 				update_turf_heat()
+				// This path snuffs without going through update(), so the index needs its own poke.
+				update_point_ambience()
+				if(soundloop)
+					soundloop.stop()
 				qdel(W)
 				src.visible_message("<span class='warning'>[user] snuffs the fire.</span>")
 				return

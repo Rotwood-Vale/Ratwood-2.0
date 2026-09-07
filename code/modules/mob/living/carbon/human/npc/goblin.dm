@@ -382,15 +382,13 @@
 	layer = BELOW_OBJ_LAYER
 	var/gobs = 0
 	var/maxgobs = 3
-	var/datum/looping_sound/boneloop/soundloop
 	var/spawning = FALSE
 	var/moon_goblins = 0
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
 /obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, FALSE)
-	soundloop.start()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
 	spawn_gob()
 
 /obj/structure/gob_portal/attack_ghost(mob/dead/observer/user)
@@ -440,5 +438,5 @@
 	addtimer(CALLBACK(src, PROC_REF(creategob)), 2 SECONDS)
 
 /obj/structure/gob_portal/Destroy()
-	soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/misc)
 	. = ..()

@@ -103,11 +103,10 @@
 /obj/structure/flora/tree/evil/Initialize(mapload)
 	. = ..()
 	icon_state = "wv[rand(1,2)]"
-	soundloop = new(src, FALSE)
-	soundloop.start()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
 
 /obj/structure/flora/tree/evil/Destroy()
-	soundloop.stop()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/misc)
 	if(controller)
 		controller.endvines()
 		controller.tree = null
@@ -115,7 +114,6 @@
 	. = ..()
 
 /obj/structure/flora/tree/evil
-	var/datum/looping_sound/boneloop/soundloop
 	var/datum/vine_controller/controller
 
 //grass

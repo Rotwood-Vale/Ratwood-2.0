@@ -4,7 +4,8 @@
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
-	var/datum/looping_sound/fliesloop/soundloop
+	/// Whether this corpse is currently registered as a point ambience source.
+	var/flies_playing = FALSE
 
 /datum/component/rot/Initialize(new_amount)
 	..()
@@ -14,14 +15,43 @@
 	if(new_amount)
 		amount = new_amount
 
-	soundloop = new(parent, FALSE)
-
 	START_PROCESSING(SSroguerot, src)
 
 /datum/component/rot/Destroy()
-	if(soundloop)
-		soundloop.stop()
+	set_flies(FALSE)
 	. = ..()
+
+/**
+ * Registers or drops this corpse as the buzzing-flies ambience source.
+ *
+ * POINT AMBIENCE, not a sound token. A token re-sends every listener for every source whenever
+ * either moves, so ten bodies at a battle site with ten people among them is a hundred pairs per
+ * step, measured at ~30x this and landing on the ticks a fight already loads. Point ambience serves
+ * only the nearest, so ten corpses are one send and nine range rejects.
+ *
+ * Gated on SIZE, not biotype: a rat earns flies and a butterfly does not. `rot_type` defaults to
+ * /rot/simple on EVERY /mob/living with only humans and goblins overriding it, so without that gate
+ * every cockroach a lizard eats becomes a registered source. Non-mob parents fall through, since
+ * /rot/gibs is a pile of viscera and earns them.
+ *
+ * Arguments:
+ * * state - TRUE registers the source, FALSE drops it. TRUE is downgraded to FALSE for a mob at or
+ *   under MOB_SIZE_TINY, so a caller cannot force flies onto a butterfly.
+ */
+/datum/component/rot/proc/set_flies(state)
+	if(state)
+		var/mob/living/rotting_mob = parent
+		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
+			state = FALSE
+	if(!state)
+		if(flies_playing)
+			flies_playing = FALSE
+			SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+		return
+	// Re-registered every call, not just on the transition: a body gets DRAGGED and the index caches
+	// the turf it registered from. register_source() updates in place, so this is cheap.
+	flies_playing = TRUE
+	SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
 
 /datum/component/rot/process()
 
@@ -116,21 +146,17 @@
 		var/turf/open/T = C.loc
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-			if(soundloop && !soundloop.is_active() && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		else
-			if(soundloop && soundloop.is_active())
-				soundloop.stop()
+			set_flies(FALSE)
 	else
-		if(soundloop && soundloop.is_active())
-			soundloop.stop()
+		set_flies(FALSE)
 	if(shouldupdate)
 		if(findonerotten)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.skin_tone = "878f79" //elf ears
-			if(soundloop && !soundloop.is_active() && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		C.update_body()
 
 /datum/component/rot/simple/process()
@@ -140,9 +166,10 @@
 		qdel(src)
 		return
 	if(amount > 15 MINUTES)
-		if(soundloop && !soundloop.is_active())
-			soundloop.start()
 		var/turf/open/T = get_turf(L)
+		// Gated on an open turf like the full component, or this branch has no way back off: it
+		// started the flies once and a carcass nobody clears held the sound all round.
+		set_flies(istype(T))
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
 	if(amount > 25 MINUTES)
@@ -151,11 +178,5 @@
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
-
-/datum/looping_sound/fliesloop
-	mid_sounds = list('sound/misc/fliesloop.ogg')
-	mid_length = 60
-	volume = 50
-	extra_range = 0
 
 #undef DEAD_TO_ZOMBIE_TIME
