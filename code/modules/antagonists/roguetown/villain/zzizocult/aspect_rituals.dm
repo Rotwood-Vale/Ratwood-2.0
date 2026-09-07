@@ -160,7 +160,13 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	refill_bestow_areas()
 	var/area/here = get_area(center)
-	if(!(here.type in GLOB.zizo_bestow_areas))
+	var/valid_area = FALSE
+	for(var/atype in GLOB.zizo_bestow_areas)
+		if(istype(here, atype))
+			valid_area = TRUE
+			break
+
+	if(!valid_area)
 		to_chat(user, span_warning("THIS PLACE IS NOT RIGHT. SEEK:"))
 		for(var/atype in GLOB.zizo_bestow_areas)
 			var/area/A = atype
