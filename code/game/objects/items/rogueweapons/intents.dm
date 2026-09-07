@@ -82,8 +82,10 @@
 
 
 /datum/intent/Destroy()
-	if(chargedloop)
-		chargedloop.stop()
+	// chargedloop holds a typepath until update_chargeloop()/on_charge_start() instantiates it,
+	// so istype rather than a truthiness check. Every un-qdeleted loop keeps an SSsounds channel.
+	if(istype(chargedloop, /datum/looping_sound))
+		QDEL_NULL(chargedloop)
 	if(mob_light)
 		QDEL_NULL(mob_light)
 	if(mob_charge_effect)
@@ -299,35 +301,46 @@
 	noaa = TRUE
 	pointer = 'icons/effects/mousemice/human_give.dmi'
 
+// The spell charge loops are token-driven. As plain loops these were the worst attenuation
+// offenders in the game: volume frozen for 13s (32s for the two below) across a 10-12 tile
+// range, so a caster charging at you sounded exactly as loud from ten tiles as from one.
+// The token exists only while the charge is held. on_charge_start() starts the loop and
+// on_mouse_up() stops it, so the channel is held for the duration of a cast, nothing more.
+// Native repeat also removes the silent gap these had whenever a charge outlasted the file.
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokefire
 	mid_sounds = list('sound/magic/charging_fire.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokelightning
 	mid_sounds = list('sound/magic/charging_lightning.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeholy
 	mid_sounds = list('sound/magic/holycharging.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeascendant
 	mid_sounds = list('sound/magic/chargingold.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/flailswing
 	mid_sounds = list('sound/combat/wooshes/flail_swing.ogg')

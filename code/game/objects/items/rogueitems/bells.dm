@@ -84,8 +84,7 @@
 	if(ringing)
 		return
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
-		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
-		ring_bell()	//sound effect for players within 150 tiles
+		ring_bell()	//sound effect for players within 150 tiles, near and far alike
 		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
 		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
 		ringing = TRUE
@@ -97,19 +96,35 @@
 
 /obj/structure/stationary_bell/proc/ring_bell()
 	var/turf/origin_turf = get_turf(src)
+	// Picked once for the whole ring. playsound() does this internally, but we call
+	// playsound_local per listener, and vary alone would roll a different pitch for each
+	// of them, so one bell would sound like forty slightly different bells.
+	var/ring_frequency = get_rand_frequency()
 
-	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat == DEAD)
-			continue
-		if(isbrain(player))
-			continue
+	for(var/mob/player in GLOB.player_list)
+		// Observers are admitted deliberately. This proc used to cover only listeners beyond
+		// 8 tiles, with a plain playsound() alongside it for everyone closer, and playsound()
+		// gathers RECURSIVE_CONTENTS_CLIENT_MOBS, which includes ghosts. Folding both halves
+		// into this one loop silently dropped them, because an observer is neither /mob/living
+		// nor alive. Dead BODIES still hear nothing.
+		if(!isobserver(player))
+			if(player.stat == DEAD)
+				continue
+			if(isbrain(player))
+				continue
 
 		var/distance = get_dist(player, origin_turf)
-		if(distance <= 7)
-			continue
 		if(distance <= 150)
-			player.playsound_local(get_turf(player), 'sound/misc/bell.ogg', 35, FALSE, pressure_affected = FALSE)
-			continue
+			// One curve across the whole carry, passing the bell's turf so playsound_local does
+			// the falloff and panning. This was once split into a near positional sound and a
+			// flat one beyond it, which made the bell get LOUDER as you crossed the boundary.
+			// Do not reintroduce that; the volume here matches the other bell in the game, and
+			// the lower value it used to have was only the near half of that split.
+			// Walking the player list is what keeps a sound this long-ranged cheap, where a
+			// playsound would sweep the spatial grid instead.
+			// No falloff arguments on purpose: the range alone puts this in the long-carry band,
+			// so retuning that model retunes the bell with it.
+			player.playsound_local(origin_turf, 'sound/misc/bell.ogg', 100, TRUE, ring_frequency, max_distance = 150, pressure_affected = FALSE)
 
 /obj/item/jingle_bells
 	name = "jingling bells"
