@@ -328,7 +328,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	else if(prey.z < user.z)
 		z_text = ", somewhere below"
 	to_chat(user, span_danger("The heart beats faster toward the [dir_text]. [prey.real_name] feels [proximity_text][z_text]."))
-	cooldown = world.time + 2 MINUTES
+	cooldown = world.time + 1 MINUTES
 
 /datum/ritual/servantry/gutted
 	name = "Gutted Fish"
