@@ -839,13 +839,15 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	for(var/mob/living/carbon/human/L in hearers(7, user))
 		if(L == user)
 			continue
-		if(L.stat)
+		if(L.stat == DEAD)
 			continue
 		if(L.pronouns != P.pronouns)
 			foid = TRUE
 			break
 	if(foid == TRUE)
 		P.add_stress(/datum/stressevent/foid)
+		P.Jitter(2)
+		P.stuttering = 1
 
 /datum/stressevent/foid
 	timer = 2 MINUTES

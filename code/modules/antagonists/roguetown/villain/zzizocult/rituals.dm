@@ -162,7 +162,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/convert
 	name = "Convert"
-	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants knowledge. If they refuse, it sacrifices them. Requires an assistant on the rune if you have more than 2 lackeys already. Must use targets obtained by Divine Sacrifices."
+	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. If they refuse, it sacrifices them. Requires an assistant on the rune if you have more than 2 lackeys already. Must use targets obtained by Divine Sacrifices."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 	is_cultist_ritual = TRUE
@@ -219,7 +219,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/sacrifice
 	name = "Sacrifice"
-	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants knowledge and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function. Must use targets obtained by Divine Sacrifices."
+	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants SECRETS and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function. Must use targets obtained by Divine Sacrifices."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 
