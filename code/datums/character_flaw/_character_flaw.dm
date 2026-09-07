@@ -982,3 +982,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			break
 	if(foid == TRUE)
 		P.add_stress(/datum/stressevent/foid)
+
+/datum/stressevent/foid
+	timer = 2 MINUTES
+	stressadd = 2
+	desc = "<span class='red'>Oh gosh! The opposite gender makes me nervous!</span>"

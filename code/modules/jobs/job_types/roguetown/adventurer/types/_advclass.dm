@@ -96,9 +96,6 @@
 
 	if(noble_income)
 		SStreasury.noble_incomes[H] = noble_income
-	
-	if(virgin)
-		H.virginity = TRUE
 
 	if(adaptive_name)
 		H.adaptive_name = TRUE
@@ -125,6 +122,9 @@
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank
+
+	if(virgin)
+		H.virginity = TRUE
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 

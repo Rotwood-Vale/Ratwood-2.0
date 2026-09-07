@@ -276,11 +276,6 @@
 	stressadd = 2
 	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
 
-/datum/stressevent/foid
-	timer = 2 MINUTES
-	stressadd = 2
-	desc = "<span class='red'>Oh gosh! The opposite gender makes me nervous!</span>"
-
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
 	stressadd = 5
