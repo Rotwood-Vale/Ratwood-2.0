@@ -1,6 +1,6 @@
 //Higher health, mixed stat dreamfiend.
 /mob/living/simple_animal/hostile/rogue/spirit_respite
-	name = "Warden of Zizo"
+	name = "Avatar of Ambition"
 	desc = ""
 	icon = 'modular_helmsguard/icons/mob/gravelord.dmi'
 	icon_state = "glord"
