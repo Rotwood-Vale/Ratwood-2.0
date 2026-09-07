@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	/// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/use_skintones = 0
+	/// If TRUE (and use_skintones is also on), add toggle to use mcolor as their skin color instead of using the color of their skin_tone
+	var/mutant_skin_option = FALSE
 	/// If my race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_blood = ""
 	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
