@@ -445,7 +445,7 @@
 	timer = INFINITY
 
 /datum/stressevent/apostasy
-	stressadd = 20
+	stressadd = 15
 	desc = span_boldred("I have been decreed an apostate! My connection to the Divine is SEVERED!")
 	timer = INFINITY
 
