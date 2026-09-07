@@ -140,6 +140,10 @@
 	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
+	// Sent the way round the player thinks about it, since the flags are stored inverted so that an
+	// existing savefile without them reads as on.
+	data["point_ambience"] = !(owner.prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
+	data["point_ambience_torch"] = !(owner.prefs.toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data
 
 /datum/volume_power_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -153,6 +157,23 @@
 		var/setting_id = params["id"]
 		var/volume_value = text2num(params["value"])
 		owner.apply_volume_power_setting(setting_id, volume_value)
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(action == "toggle")
+		var/flag
+		switch(params["id"])
+			if("point_ambience")
+				flag = SOUND_DISABLE_POINT_AMBIENCE
+			if("point_ambience_torch")
+				flag = SOUND_DISABLE_TORCH_AMBIENCE
+			else
+				return FALSE
+		owner.prefs.toggles ^= flag
+		owner.prefs.save_preferences()
+		// Either direction, and it has to happen here: nothing else will service them again to stop
+		// what is playing, and a listener standing still would not pick a re-enabled category up.
+		SSpoint_ambience.listener_prefs_changed(owner)
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -219,6 +240,7 @@
 
 		if(isnewplayer(mob))
 			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+
 /*
 /client/verb/help_rpguide()
 	set category = "Options"

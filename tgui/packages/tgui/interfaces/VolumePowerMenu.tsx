@@ -1,6 +1,6 @@
 import { useBackend } from 'tgui/backend';
 import { Window } from 'tgui/layouts';
-import { NumberInput, Section, Stack } from 'tgui-core/components';
+import { Button, NumberInput, Section, Stack } from 'tgui-core/components';
 
 type Data = {
   master: number;
@@ -8,6 +8,42 @@ type Data = {
   combat: number;
   ambience: number;
   lobby: number;
+  point_ambience: boolean;
+  point_ambience_torch: boolean;
+};
+
+type ToggleRowProps = {
+  label: string;
+  enabled: boolean;
+  id: string;
+  description: string;
+};
+
+const ToggleRow = ({ label, enabled, id, description }: ToggleRowProps) => {
+  const { act } = useBackend<Data>();
+
+  return (
+    <Stack align="center" mb={1.5}>
+      <Stack.Item basis="50%">
+        <b>{label}</b>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Button
+          fluid
+          textAlign="center"
+          icon={enabled ? 'volume-up' : 'volume-mute'}
+          color={enabled ? 'good' : 'bad'}
+          onClick={() => act('toggle', { id })}
+        >
+          {enabled ? 'On' : 'Off'}
+        </Button>
+      </Stack.Item>
+      <Stack.Item basis="10%" />
+      <Stack.Item basis="100%">
+        <span className="color-label">{description}</span>
+      </Stack.Item>
+    </Stack>
+  );
 };
 
 type VolumeRowProps = {
@@ -55,6 +91,8 @@ export const VolumePowerMenu = () => {
     combat,
     ambience,
     lobby,
+    point_ambience,
+    point_ambience_torch,
   } = data;
 
   const masterValue = master ?? 100;
@@ -62,11 +100,13 @@ export const VolumePowerMenu = () => {
   const combatValue = combat ?? 50;
   const ambienceValue = ambience ?? 100;
   const lobbyValue = lobby ?? 100;
+  const pointAmbienceOn = point_ambience ?? true;
+  const torchAmbienceOn = point_ambience_torch ?? true;
 
   return (
-    <Window width={470} height={390}>
+    <Window width={470} height={560}>
       <Window.Content>
-        <Section title="Volume Levels" fill>
+        <Section title="Volume Levels">
           <VolumeRow
             label="Master"
             value={masterValue}
@@ -96,6 +136,20 @@ export const VolumePowerMenu = () => {
             value={lobbyValue}
             id="lobby"
             description="Title/lobby music playback volume."
+          />
+        </Section>
+        <Section title="Point Ambience">
+          <ToggleRow
+            label="Point Ambience"
+            enabled={pointAmbienceOn}
+            id="point_ambience"
+            description="Sounds from things you can walk up to: hearths, fountains, rivers, sconces."
+          />
+          <ToggleRow
+            label="Torchlight Ambience"
+            enabled={torchAmbienceOn}
+            id="point_ambience_torch"
+            description="Wall sconces, standing firebowls and a torch in your own hand. Hearths, campfires and floor firebowls are not this and keep crackling."
           />
         </Section>
       </Window.Content>
