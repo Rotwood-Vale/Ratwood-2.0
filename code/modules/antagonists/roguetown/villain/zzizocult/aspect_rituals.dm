@@ -16,7 +16,11 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/fleshcrafting/fleshmend/greater, /datum/ritual/fleshcrafting/darkeyes,
 	/datum/ritual/fleshcrafting/nopain, /datum/ritual/fleshcrafting/immortality,
 	/datum/ritual/transmutation/summonarmor, /datum/ritual/transmutation/summonweapon,
-	/datum/ritual/servantry/aspect,
+	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
+	/datum/ritual/servantry/heartache, /datum/ritual/servantry/marktargets,
+	/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
+	/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
+	/datum/ritual/transmutation/summonoutfit, /datum/ritual/servantry/aspect,
 	))
 
 GLOBAL_LIST_EMPTY(zizo_bestowed)
@@ -135,8 +139,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	resistance_flags = INDESTRUCTIBLE
 
 /datum/ritual/servantry/aspect
-	name = "Open Gate (UNLOCKS ASCENSION)"
+	name = "Open Gate"
+	desc = "REQUIRED TO UNLOCK ASCENSION. Activate the ritual to learn the locations it must be performed. Requires a dark crystal. It unlocks an Aspect that grants new research for the cult. MUST BE PERFORMED 3 TIMES TO UNLOCK ASCENSION."
 	center_requirement = /mob/living/carbon/human
+	center_desc = "a cultist"
 	n_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
 	var/gate_count
@@ -245,6 +251,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/strand/dream_jaunt
 	name = "Dream Jaunt"
+	desc = "Learn a spell to teleport yourself and whoever you're holding into a pocket dimension for 30 seconds."
 	passive = TRUE
 	research_cost = 3
 
@@ -254,6 +261,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/strand/strandsend
 	name = "Passage"
+	desc = "Perform a rite to create a teleportation sigil. Activating it will teleport everything on the sigil to another teleportation sigil."
 	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/strand/strandsend/invoke(mob/living/user, turf/center)
@@ -268,6 +276,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/strand/strandrecall
 	name = "Curse of Recall"
+	desc = "Teleport yourself and your target into a pocket dimension for 3 minutes. Anyone you or your target grabs is brought with. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
@@ -323,6 +332,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/toil/progress
 	name = "Progress"
+	desc = "Learn a spell that heals others and repairs their equipment. Does not work on yourself."
 	passive = TRUE
 	research_cost = 3
 
@@ -332,6 +342,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/toil/mend
 	name = "Mend"
+	desc = "Perform a rite that fully heals and fully repairs anyone or anything in the center of the sigil. Can revive if a dark crystal is used."
 
 /datum/ritual/toil/mend/invoke(mob/living/user, turf/center)
 	for(var/obj/item/I in center)
@@ -360,6 +371,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/toil/cultoffer
 	name = "Curse of Whispers"
+	desc = "Perform a rite that offers your target a chance to remotely join the cult, without having to drag them to a conversion sigil. Works on anyone, even if they aren't a sacrifice target. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
@@ -385,6 +397,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/bite/necromancy
 	name = "Necromancy"
+	desc = "Learn necromancy spells and the ability to use dark crystals to summon sentient skeletons."
 	passive = TRUE
 
 /datum/ritual/bite/necromancy/apply_passive(mob/living/carbon/human/H)
@@ -395,6 +408,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/bite/raisedeadite
 	name = "Raise Deadite"
+	desc = "Perform a rite that raises a corpse into a pale deadite. It can use tools, but is a pacifist. You are able to see through its eyes and remotely detonate it for massive collateral damage."
 	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/bite/raisedeadite/invoke(mob/living/user, turf/center)
@@ -522,6 +536,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/rot/transfuse
 	name = "Transfuse"
+	desc = "Learn a spell to transfuse all reagents in your bloodstream to whoever you're grabbing. Makes you immune to poison."
 	passive = TRUE
 	research_cost = 3
 
@@ -573,6 +588,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/rot/blight
 	name = "Blight"
+	desc = "Perform a rite that petrifies the area around you. Non-cultists will take damage when stepping upon the petrified land. It transforms walls into mineable rock."
 	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/rot/blight/invoke(mob/living/user, turf/center)
@@ -581,6 +597,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/rot/plague
 	name = "Curse of Black Rot"
+	desc = "Curse your target with the black rot. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
@@ -613,6 +630,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/noise/thermalvis
 	name = "True Sight"
+	desc = "Obtain the ability to see the living through walls."
 	passive = TRUE
 	research_cost = 3
 
@@ -622,6 +640,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/noise/ghost_form
 	name = "Spook"
+	desc = "Perform a rite that transforms you into an incorporeal observer for 20 seconds. You can move through walls and listen into conversations."
 	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/noise/ghost_form/invoke(mob/living/user, turf/center)
@@ -634,11 +653,12 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/effect/dummy/phased_mob/slaughter/noise/holder = new(origin)
 	target.visible_message(span_warning("[target] fades into nothing."))
 	target.forceMove(holder)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, end_jaunt), holder, origin), 15 SECONDS)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, end_jaunt), holder, origin), 20 SECONDS)
 	return TRUE
 
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
+	desc = "Curse your target to forget the common tongue and become illiterate. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
@@ -755,12 +775,18 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/pitch/fireresist
 	name = "Fire Resistance"
+	desc = "Become immune to fire."
 	passive = TRUE
 	research_cost = 3
 
 /datum/ritual/pitch/fireresist/apply_passive(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_NOFIRE, TRAIT_GENERIC)
 	return
+
+/datum/ritual/pitch/shadowform
+	name = "Scaduform"
+	desc = "Transform into a dark shadow that takes damage in the light. You can jaunt through darkness and remotely snuff lights. Your body becomes inhumen, recognizably monstrous, but non-living and immune to bloodloss. Anything you touch is lit aflame, including equipment on the body. And people you grab."
+	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/pitch/shadowform/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -814,6 +840,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/pitch/lightcurse
 	name = "Curse of Radiance"
+	desc = "Curse a target to burn in the light. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
@@ -821,7 +848,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
-	remnant.fed_from.AddComponent(/datum/component/light_vulnerability, 10, 5 MINUTES)
+	remnant.fed_from.AddComponent(/datum/component/light_vulnerability, 10, 10 MINUTES)
 	to_chat(remnant.fed_from, span_danger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
 	remnant.fed_from.emote("scream")
 	qdel(remnant)
@@ -863,6 +890,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/blood/transfuse
 	name = "Sigil Expertise"
+	desc = "Draw sigils much faster, and without bloody hands."
 	passive = TRUE
 	research_cost = 3
 
@@ -872,6 +900,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/blood/bloodsnare
 	name = "Blood Snare"
+	desc = "Create a translucent sigil trap that harms whoever steps onto it. Organs create a poison trap, weapons create a stunning trap, and anything else creates a bleeding trap."
 	center_requirement = /obj/item
 	keep_center = TRUE
 
@@ -925,6 +954,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/blood/bloodbond
 	name = "Curse of Blood"
+	desc = "Curse two targets to slowly die when apart from eachother. Requires two leeches that fed from seperate targets."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 

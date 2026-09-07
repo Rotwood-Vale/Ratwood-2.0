@@ -55,13 +55,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
 	var/any = FALSE
 	for(var/ritualtype in GLOB.zizo_researchable)
-		if(ritualtype in user.mind.zizo_researched)
-			continue
 		any = TRUE
 		var/datum/ritual/R = ritualtype
+		if(ritualtype in user.mind.zizo_researched)
+			contents += "<B>[initial(R.name)]</B> - LEARNED<BR>'<I>[R.desc]</I>'<BR>"
+			continue
 		if(R.is_cultist_ritual && !is_zizo(user))
 			continue
-		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>"
+		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>'<I>[R.desc]</I>'<BR>"
 	if(!any)
 		contents += "There is nothing left to uncover.<BR>"
 	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 400, 500)
@@ -110,6 +111,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /datum/ritual
 	abstract_type = /datum/ritual
 	var/name = "DVRK AND EVIL RITVAL"
+	var/desc
 	var/center_requirement
 	var/n_req
 	var/e_req
@@ -160,6 +162,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/convert
 	name = "Convert"
+	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants knowledge. If they refuse, it sacrifices them. Requires an assistant on the rune if you have more than 2 lackeys already. Must use targets obtained by Divine Sacrifices."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 	is_cultist_ritual = TRUE
@@ -216,6 +219,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/sacrifice
 	name = "Sacrifice"
+	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants knowledge and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function. Must use targets obtained by Divine Sacrifices."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 
@@ -267,6 +271,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/heartache
 	name = "Heartaches"
+	desc = "Create a heart to track your sacrifice targets."
 	center_requirement = /obj/item/organ/heart
 
 /datum/ritual/servantry/heartache/invoke(mob/user, turf/center)
@@ -275,6 +280,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/marktargets
 	name = "Divine Sacrifices"
+	desc = "Locate new targets to sacrifice and convert. Can use every 20 minutes."
 	center_requirement = /obj/item/organ/eyes
 	center_desc = "eyes"
 	keep_center = TRUE
@@ -332,6 +338,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/gutted
 	name = "Gutted Fish"
+	desc = "Place a mindless humanoid in the center of the sigil to rip out its organs."
 	center_requirement = /mob/living/carbon/human // One to be gutted.human
 
 /datum/ritual/servantry/gutted/invoke(mob/living/user, turf/center)
@@ -353,6 +360,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/darksunmark
 	name = "Dark Sun's Mark"
+	desc = "Mark someone for death by Graggar Assassins."
 	center_requirement = /obj/item/rogueweapon/huntingknife/idagger
 
 /datum/ritual/servantry/darksunmark/invoke(mob/living/user, turf/center)
@@ -387,6 +395,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/allseeingeye
 	name = "All-seeing Eye"
+	desc = "Create an eye to scry through. Requires a dark crystal."
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/organ/eyes
 	n_req = /obj/item/necro_relics/necro_crystal
@@ -397,6 +406,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/cross
 	name = "Summon Amulet of Zizo"
+	desc = "Create a Zizo Amulet."
 	center_requirement = /obj/item/clothing/neck/roguetown/psicross
 
 /datum/ritual/transmutation/cross/invoke(mob/living/user, turf/center)
@@ -405,6 +415,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/criminalstool
 	name = "Criminal's Tool"
+	desc = "Create soap to clean runes with."
 	center_requirement = /obj/item/natural/cloth
 
 /datum/ritual/transmutation/criminalstool/invoke(mob/living/user, turf/center)
@@ -418,6 +429,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/propaganda
 	name = "Remnant Leech"
+	desc = "Create a leech that attaches silently onto targets. Used for curses."
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
 	s_req = /obj/item/natural/feather
@@ -474,6 +486,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/invademind
 	name = "Invade Mind"
+	desc = "Send an anonymous message into someone's head."
 	center_requirement = /obj/item/natural/feather
 
 /datum/ritual/transmutation/invademind/invoke(mob/living/user, turf/center)
@@ -487,6 +500,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/summonoutfit
 	name = "Summon Cult Outfit"
+	desc = "Conjure an ominous outfit that provides some defense."
 	center_requirement = /obj/item/natural/cloth
 
 /datum/ritual/transmutation/summonoutfit/invoke(mob/living/user, turf/center)
@@ -514,6 +528,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/summonarmor
 	name = "Summon Darksteel Armor"
+	desc = "Conjure a set of unremovable darksteel plate. Trains you in heavy armor and grants mending. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	w_req = /obj/item/ingot/steel
@@ -539,6 +554,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/summonweapon
 	name = "Summon Weapons"
+	desc = "Conjure an avantyne blade. Teaches you expert swordsmanship. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	s_req = /obj/item/ingot/steel
@@ -565,6 +581,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/bunnylegs
 	name = "Saliendo Pedes"
+	desc = "Use a pair of legs to permanently increase your jump height."
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/bodypart/l_leg
 	e_req = /obj/item/bodypart/r_leg
@@ -578,6 +595,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/fleshmend
 	name = "Fleshmend"
+	desc = "Use a piece of raw meat to heal yourself."
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
 	var/heal_tick = 30
@@ -585,6 +603,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/fleshmend/greater
 	name = "Greater Fleshmend"
+	desc = "Use a piece of raw meat to heal yourself, but better."
 	is_cultist_ritual = TRUE
 	heal_tick = 70
 	research_cost = 7
@@ -599,6 +618,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/darkeyes
 	name = "Darkened Eyes"
+	desc = "Use a pair of eyes to permanently see in the dark."
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/organ/eyes
 	e_req = /obj/item/organ/eyes
@@ -618,6 +638,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/nopain
 	name = "Painless Battle"
+	desc = "Use a heart and a brain to become immune to pain. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	w_req = /obj/item/organ/heart
@@ -632,6 +653,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/immortality
 	name = "Flawed Immortality"
+	desc = "Sacrifice an Aasimar to obtain a flawed version of immortality. Not as useful as you might expect."
 	center_requirement = /mob/living/carbon/human
 	n_req = /mob/living/carbon/human
 	research_cost = 10
@@ -661,6 +683,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
+	desc = "Sacrifice the ruler on the north side, a cleric on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "the cult leader"
 	n_req = /mob/living/carbon/human

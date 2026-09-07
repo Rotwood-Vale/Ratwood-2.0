@@ -118,8 +118,8 @@
 
 /datum/objective/zizo
 	name = "ASCEND"
-	explanation_text = "Ensure that I ascend. I must bestow an aspect upon myself to unlock my ascension rite."
-	team_explanation_text = "Ensure that I ascend. I must bestow an aspect upon myself to unlock my ascension rite."
+	explanation_text = "Ensure that I ascend. I can look at my research menu to familiarize myself with my rituals."
+	team_explanation_text = "Ensure that I ascend. I can look at my research menu to familiarize myself with my rituals."
 	triumph_count = 5
 
 /datum/objective/zizo/check_completion()
@@ -128,8 +128,8 @@
 
 /datum/objective/zizoserve
 	name = "Serve your Leader"
-	explanation_text = "Serve your leader and ensure that they ascend."
-	team_explanation_text = "Serve your leader and ensure that they ascend."
+	explanation_text = "Serve your leader and ensure that they ascend. You can look at your research menu to familiarize myself with your rituals."
+	team_explanation_text = "Serve your leader and ensure that they ascend. You can look at your research menu to familiarize myself with your rituals."
 	triumph_count = 3
 
 /datum/objective/zizoserve/check_completion()
