@@ -13,7 +13,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_CON = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -200,7 +200,7 @@
 		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
@@ -619,7 +619,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -790,7 +790,7 @@
 		STATKEY_SPD = 1,
 		STATKEY_STR = -2,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,

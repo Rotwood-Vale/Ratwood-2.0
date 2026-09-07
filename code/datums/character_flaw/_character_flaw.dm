@@ -855,7 +855,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		P.add_stress(/datum/stressevent/foid)
 		to_chat(user, span_notice("I'm surrounded by beautiful people! I feel nervous!"))
 		P.Jitter(2)
-		P.stuttering = 1
 
 /datum/stressevent/foid
 	timer = 1 MINUTES

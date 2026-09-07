@@ -61,7 +61,7 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_NOVICE,
@@ -115,7 +115,7 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
@@ -178,7 +178,7 @@
 		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,

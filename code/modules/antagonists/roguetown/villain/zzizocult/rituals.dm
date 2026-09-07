@@ -95,12 +95,16 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(!H.mind || !H.client || H.stat == DEAD || is_zizo(H))
 			continue
 		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-		if(!J || (J.type in list(KING_QUEEN_ROLES)))
+		if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
 			continue
-		if(J.type in (list(PEASANT_ROLES) + list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES)))
+		if(J.type in (list(PEASANT_ROLES) + list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES) + list(GARRISON_ROLES) + list(CHURCH_ROLES)))
 			weighted[H] = 5
+			if(H.virginity == TRUE)
+				weighted[H] = 10
 		else
 			weighted[H] = 1
+			if(H.virginity == TRUE)
+				weighted[H] = 5
 	for(var/i in 1 to 7)
 		if(!weighted.len)
 			break
@@ -335,7 +339,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	else if(prey.z < user.z)
 		z_text = ", somewhere below"
 	to_chat(user, span_danger("The heart beats faster toward the [dir_text]. [prey.real_name] feels [proximity_text][z_text]."))
-	cooldown = world.time + 1 MINUTES
+	cooldown = world.time + 10 SECONDS
 
 /datum/ritual/servantry/gutted
 	name = "Gutted Fish"

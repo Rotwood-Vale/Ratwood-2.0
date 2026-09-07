@@ -77,7 +77,7 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 	)
-	virgin = TRUE
+	pure_heart = TRUE
 	adv_stat_ceiling = list(STAT_STRENGTH = 6)
 
 /datum/job/roguetown/keeper/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

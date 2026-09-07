@@ -95,7 +95,7 @@
 	outfit = /datum/outfit/job/roguetown/monk/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_ACOLYTE)
-	virgin = TRUE
+	pure_heart = TRUE
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
