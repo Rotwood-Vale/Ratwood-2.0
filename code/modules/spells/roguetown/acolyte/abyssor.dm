@@ -87,8 +87,8 @@
 	sound = 'sound/magic/abyssor_splash.ogg'
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	invocations = list("What is drowned shall rise anew!")
-	invocation_type = "shout"
+	invocations = list("is lifted up by spectral waves!")
+	invocation_type = "emote"
 	recharge_time = 120 SECONDS
 	devotion_cost = 30
 	miracle = TRUE
@@ -99,10 +99,13 @@
 		revert_cast()
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.IsStun() || H.IsImmobilized() || H.IsOffBalanced())
+	if(H.IsStun()||H.IsParalyzed())
 		to_chat(user, span_warning("I am too incapacitated!"))
 		revert_cast()
 		return FALSE
+	H.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
+	H.remove_status_effect(/datum/status_effect/incapacitating/off_balanced)
+	H.remove_status_effect(/datum/status_effect/incapacitating/immobilized)
 	var/msg = span_warning("[user] ")
 	if(H.resting)
 		H.set_resting(FALSE, FALSE)
