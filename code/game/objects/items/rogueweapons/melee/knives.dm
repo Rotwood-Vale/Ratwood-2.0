@@ -420,7 +420,7 @@
 	max_blade_int = 300
 	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/zizo/Initialize(mapload)
+/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "DAGGER")
 
