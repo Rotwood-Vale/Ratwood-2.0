@@ -1107,7 +1107,7 @@
 			else
 				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
 
-		if(src.virginity == TRUE && is_zizo(user))
+		if(src.purity == TRUE && is_zizo(user))
 			. += span_greentext("<b>[m1] pure of heart!</b>")
 
 		if(name in GLOB.court_agents)
