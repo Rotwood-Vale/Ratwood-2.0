@@ -271,7 +271,7 @@
 	movement_interrupt = FALSE
 	sound = 'sound/magic/zizo_snuff.ogg'
 	spell_tier = 0
-	invocations = list("Silence!")
+	invocations = list("Lunaria Silentium!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 50
