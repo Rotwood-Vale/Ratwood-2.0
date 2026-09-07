@@ -54,7 +54,7 @@
 		)
 
 	race_bonus = list(STAT_CONSTITUTION = -3, STAT_STRENGTH = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
-	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_STRONGBITE) // hahahahahh
+	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_WOODWALKER, TRAIT_STRONGBITE) // hahahahahh
 	inherent_skills = list(
 		/datum/skill/misc/music = 3,
 	)
