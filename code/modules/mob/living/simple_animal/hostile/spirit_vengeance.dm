@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/rogue/spirit_vengeance
-	name = "Rancor Spirit"
+	name = "Wretched Soul"
 	desc = ""
 	icon = 'modular_hearthstone/icons/mob/spirit_vengeance.dmi'
 	icon_state = "spirit_vengeance"
@@ -15,8 +15,8 @@
 	maxHealth = 50
 	health = 50
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 7
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	vision_range = 7
 	aggro_vision_range = 9
 	retreat_distance = 0
@@ -26,7 +26,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	mob_can_parry = TRUE
+	canparry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 20
 	speak_emote = list("growls")
