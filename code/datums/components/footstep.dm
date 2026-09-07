@@ -128,8 +128,16 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
-	// this is fine without an explicit copy because it doesn't mutate the existing list
-	used_sound = pick(used_footsteps - last_sound) || last_sound
+	// Step past the last sound rather than subtracting it. `list - item` builds a whole new list, and
+	// this runs on every footstep of every mob on the map, NPCs included.
+	var/count = length(used_footsteps)
+	if(count > 1)
+		var/index = rand(1, count)
+		if(used_footsteps[index] == last_sound)
+			index = (index % count) + 1
+		used_sound = used_footsteps[index]
+	else
+		used_sound = used_footsteps[1]
 	last_sound = used_sound
 	playsound(step_location, used_sound,
 		volume * used_volume,
