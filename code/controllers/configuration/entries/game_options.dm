@@ -64,6 +64,36 @@
 
 /datum/config_entry/flag/disable_peaceborg
 
+/datum/config_entry/flag/disable_music_wall_muffle	// music sources (instruments, bands, music boxes) play through walls unmuffled, as they did before sound tokens
+
+/datum/config_entry/keyed_list/silence_point_ambience	// point ambience categories that make NO sound at all, one config_name per line
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/number/point_ambience_mode	// 0 off, 1 live, 2 fallback loops; seeds SSpoint_ambience at boot. The Point Ambience Mode verb switches 0 and 1 live but cannot enter or return to 2, so fallback is a boot-time choice only
+	config_entry_value = 1
+	min_val = 0
+	max_val = 2
+
+/datum/config_entry/number/point_ambience_move_interval	// deciseconds between move-hook services of one client, 0 serves every step
+	config_entry_value = 0
+	min_val = 0
+
+/datum/config_entry/number/point_ambience_move_interval_running_override	// replaces the interval above for a RUNNING client; 0 means no override, not "uncapped"
+	config_entry_value = 0
+	min_val = 0
+
+
+/// Tiles of effective distance a floor adds between a source and a listener. 0 keeps the old
+/// behaviour exactly: crossing a floor is a flat halving that costs the same directly overhead as
+/// it does at the edge of range. Above 0 the floor also counts as distance, so a listener walks out
+/// of a sound from upstairs instead of only ever hearing it at half. Cached into GLOB at Initialize
+/// rather than read per send, since playsound_local runs on every footstep in the game.
+/datum/config_entry/number/sound_storey_tiles
+	config_entry_value = 4
+	min_val = 0
+	max_val = 20
+
 /datum/config_entry/flag/economy	//money money money money money money money money money money money money
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors

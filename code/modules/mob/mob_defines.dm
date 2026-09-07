@@ -288,6 +288,12 @@
 
 	var/mobid = 0 //incremented on spawn
 
+	/// Lazy list of active /datum/sound_token that consider this mob a listener
+	var/list/sound_tokens
+	/// An ambient source only this mob hears, at distance 0, outside SSpoint_ambience's index:
+	/// a lit torch in hand. Set and cleared through the subsystem.
+	var/atom/point_ambience_self_source
+
 	var/cmode = 0
 	var/d_intent = INTENT_DODGE
 	var/islatejoin = FALSE

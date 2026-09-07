@@ -29,7 +29,6 @@
 	volume = 100
 	extra_range = -2
 	vary = TRUE
-	sound_group = /datum/sound_group/fire_loop
 
 /datum/looping_sound/boilloop
 	mid_sounds = list('sound/misc/boiling.ogg')

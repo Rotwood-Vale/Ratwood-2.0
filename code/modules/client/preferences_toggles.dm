@@ -233,9 +233,6 @@
 			if("hear_instruments")
 				owner.prefs.toggles ^= SOUND_INSTRUMENTS
 				owner.prefs.save_preferences()
-				for(var/datum/looping_sound/persistent_loop in GLOB.persistent_sound_loops)
-					owner.update_persistent_sound_loop(persistent_loop)
-				owner.update_sounds()
 				owner.sync_instrument_audio_toggle()
 			if("animal_emotes")
 				owner.mute_animal_emotes()
@@ -951,7 +948,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_instruments)()
 	set hidden = 1
 	usr.client.prefs.toggles ^= SOUND_INSTRUMENTS
 	usr.client.prefs.save_preferences()
-	usr.client.update_sounds()
 	usr.client.sync_instrument_audio_toggle()
 	if(usr.client.prefs.toggles & SOUND_INSTRUMENTS)
 		to_chat(usr, "You will now hear people playing musical instruments.")

@@ -78,7 +78,9 @@
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 			continue
-		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
+		// max_distance matches the get_hearers_in_view(15) gather above; without it the
+		// note plays at flat volume to everyone in that 15-tile radius.
+		M.playsound_local(source, null, 100, S = music_played, max_distance = 15)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise

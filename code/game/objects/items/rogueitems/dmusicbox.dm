@@ -6,18 +6,21 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	mid_sounds = list()
 	mid_length = 12000 // 20 minutes to force a loop. File size determines server load, not audio length. Low bitrate .ogg files can run long and have their uses as ambient sound.
 	volume = 100
-	falloff = 2
 	extra_range = 10	// Up from 5, fill a room.
+	// Token-driven: per-token reserved channels replace the fixed CMUSIC1-4 set, and the
+	// upload repeats natively client-side while following listeners around.
+	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
-	persistent_loop = TRUE
-	channel = CHANNEL_CMUSIC1
 
-/datum/looping_sound/dmusloop/on_hear_sound(mob/M)
-	. = ..()
-	if(stress2give)
-		if(isliving(M))
-			var/mob/living/carbon/L = M
-			L.add_stress(stress2give)
+/datum/looping_sound/dmusloop/configure_token(datum/sound_token/token)
+	token.respect_instrument_pref = TRUE
+	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
+
+/datum/looping_sound/dmusloop/proc/give_stress(mob/M)
+	if(stress2give && isliving(M))
+		var/mob/living/carbon/L = M
+		L.add_stress(stress2give)
 
 /obj/item/dmusicbox
 	name = "dwarven music box"
@@ -48,7 +51,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 /obj/item/dmusicbox/Destroy()
 	GLOB.musicboxes.Remove(src)
 	playing = FALSE
-	soundloop.stop()
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/item/dmusicbox/update_icon()
@@ -151,8 +154,12 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(!playing)
 		if(curfile)
-			var/new_channel = find_free_channel()
-			if(!new_channel)
+			// Same four-at-once cap as the old fixed-channel set, now just a headcount.
+			var/boxes_playing = 0
+			for(var/obj/item/dmusicbox/musicbox in GLOB.musicboxes)
+				if(musicbox.playing && musicbox.soundloop.is_active())
+					boxes_playing++
+			if(boxes_playing >= 4)
 				to_chat(user, span_warning("TOO MANY MUSIC BOXES IN USE AT THE SAME TIME IN THE WORLD."))
 				return
 			if(world.time < GLOB.musicboxes_last_play + 10 SECONDS)
@@ -160,9 +167,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 				return
 			GLOB.musicboxes_last_play = world.time
 			playing = TRUE
-			soundloop.channel = new_channel
 			soundloop.set_mid_sounds(list(curfile))
-			soundloop.cursound = null
 			soundloop.start()
 			user.log_message("played jukebox song: [curfile]", LOG_GAME)
 	else
@@ -172,29 +177,3 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 			user.log_message("stopped jukebox song: [curfile]", LOG_GAME)
 	update_icon()
 
-/obj/item/dmusicbox/proc/find_free_channel()
-	var/free_channel = 1|2|4|8
-	for(var/obj/item/dmusicbox/musicbox in GLOB.musicboxes)
-		if(!musicbox.playing || musicbox.soundloop.stopped)
-			continue
-		switch(musicbox.soundloop.channel)
-			if(CHANNEL_CMUSIC1)
-				free_channel &= ~1
-			if(CHANNEL_CMUSIC2)
-				free_channel &= ~2
-			if(CHANNEL_CMUSIC3)
-				free_channel &= ~4
-			if(CHANNEL_CMUSIC4)
-				free_channel &= ~8
-	if(!free_channel) // no channels free, abort
-		return 0
-
-	if(free_channel&1)
-		return CHANNEL_CMUSIC1
-	if(free_channel&2)
-		return CHANNEL_CMUSIC2
-	if(free_channel&4)
-		return CHANNEL_CMUSIC3
-	if(free_channel&8)
-		return CHANNEL_CMUSIC4
-	return 0

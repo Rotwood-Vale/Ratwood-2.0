@@ -1,19 +1,24 @@
 /datum/looping_sound/musloop
 	mid_sounds = list()
-	mid_length = 2400 // Whoever wrote this is giving me an aneurism
+	mid_length = 2400
 	volume = 70
 	extra_range = 8
-	falloff = 0
-	persistent_loop = TRUE
+	// Token-driven: the song repeats natively client-side and follows listeners as they
+	// move, replacing the old persistent_loop/CHANNEL_JUKEBOX machinery wholesale.
+	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
-	channel = CHANNEL_JUKEBOX
 
-/datum/looping_sound/musloop/on_hear_sound(mob/M)
-	. = ..()
-	if(stress2give)
-		if(isliving(M))
-			var/mob/living/carbon/L = M
-			L.add_stress(stress2give)
+/datum/looping_sound/musloop/configure_token(datum/sound_token/token)
+	token.respect_instrument_pref = TRUE
+	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+	// Stress lands when a listener first comes into earshot rather than on every replay
+	// of the track, which is what per-replay on_hear_sound amounted to in practice.
+	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
+
+/datum/looping_sound/musloop/proc/give_stress(mob/M)
+	if(stress2give && isliving(M))
+		var/mob/living/carbon/L = M
+		L.add_stress(stress2give)
 
 /obj/structure/roguemachine/musicbox
 	name = "wax music device"
@@ -24,7 +29,22 @@
 	anchored = TRUE
 	max_integrity = 0
 	var/datum/looping_sound/musloop/soundloop
-	var/list/init_curfile = list('sound/music/jukeboxes/gen/tavern1.ogg') // A list of songs that curfile is set to on init. MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
+	/// Rolled once per device in Initialize(), so boxes across a map are not all playing the same
+	/// thing. Rotating a single box mid-track would need a timer and a real track length, and the
+	/// token restart it takes to change file is an audible cut for everyone in range.
+	/// MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
+	var/list/init_curfile = list(
+		'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
+		'sound/music/jukeboxes/oldschool/Fanfare.ogg',
+		'sound/music/jukeboxes/oldschool/Greatness.ogg',
+		'sound/music/jukeboxes/oldschool/Medieval.ogg',
+		'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
+		'sound/music/jukeboxes/oldschool/Shine.ogg',
+		'sound/music/jukeboxes/oldschool/Spirit.ogg',
+		'sound/music/jukeboxes/oldschool/Still_Night.ogg',
+		'sound/music/jukeboxes/oldschool/Venture.ogg',
+		'sound/music/jukeboxes/oldschool/Yesteryear.ogg',
+	)
 	var/curfile // The current track that is playing right now
 	var/playing = FALSE // If music is playing or not. playmusic() deals with this don't mess with it.
 	var/curvol = 50 // The current volume at which audio is played. MAPPERS MAY TOUCH THIS.
@@ -68,8 +88,8 @@
 		start_playing()
 
 /obj/structure/roguemachine/musicbox/Destroy()
-	. = ..()
-	qdel(soundloop) //jesus fuck who is using hard dels in this day and age
+	QDEL_NULL(soundloop) // before ..(): the parent call tears down our datum half
+	return ..()
 
 /obj/structure/roguemachine/musicbox/update_icon()
 	icon_state = "music[playing]"
@@ -85,7 +105,6 @@
 	soundloop.set_mid_sounds(list(curfile))
 	soundloop.volume = curvol
 	soundloop.start()
-	testing("Music: V[soundloop.volume] C[soundloop.cursound] T[soundloop.thingshearing]")
 	update_icon()
 
 /obj/structure/roguemachine/musicbox/proc/stop_playing()

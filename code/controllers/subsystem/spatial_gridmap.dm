@@ -247,6 +247,39 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return .
 
+/**
+ * Cheap "is it even worth searching" probe: returns TRUE if any grid cell intersecting the search
+ * box around center holds a client mob. Allocation free and bails on the first hit, unlike
+ * orthogonal_range_search() which builds and returns the full contents list.
+ *
+ * Answers at whole-cell granularity, so it over-reports: a TRUE means "maybe in range", a FALSE
+ * means "definitely nobody in range". Only use it to skip work, never as the range check itself.
+ */
+/datum/controller/subsystem/spatial_grid/proc/any_client_in_range(atom/center, range)
+	var/turf/center_turf = get_turf(center)
+	if(!center_turf)
+		return FALSE
+
+	// Loops can start playing while the map is still being brought up, before every z has a grid.
+	if(center_turf.z > length(grids_by_z_level))
+		return FALSE
+
+	var/list/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
+	if(!grid_level)
+		return FALSE
+
+	var/center_x = center_turf.x//used inside the macros
+	var/center_y = center_turf.y
+
+	for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
+		var/list/grid_row = grid_level[row]
+		for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
+			var/datum/spatial_grid_cell/cell = grid_row[x_index]
+			if(length(cell.client_contents))
+				return TRUE
+
+	return FALSE
+
 ///get the grid cell encomapassing targets coordinates
 /datum/controller/subsystem/spatial_grid/proc/get_cell_of(atom/target)
 	var/turf/target_turf = get_turf(target)
