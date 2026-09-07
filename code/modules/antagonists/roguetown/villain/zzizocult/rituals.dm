@@ -207,9 +207,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		to_chat(target, span_notice("I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!"))
 		PR.add_cultist(target.mind)
 		target.praise()
+		target.purity = FALSE
 		for(var/datum/mind/M in SSmapping.retainer.cultists)
 			if(M.current)
 				zizo_award(M.current, 2)
+		if(target.purity == TRUE)
+			new /obj/item/necro_relics/necro_crystal(center)
+			zizo_award(user, 3)
+			zizo_award(target, 3)
 		zizo_award(user, 3)
 		zizo_award(target, 3)
 	else
@@ -218,6 +223,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			to_chat(user, span_warning("[target] has no lux left to give."))
 		else
 			to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
+			if(target.purity == TRUE)
+				new /obj/item/necro_relics/necro_crystal(center)
+				zizo_award(user, 3)
 			zizo_award(user, 5)
 	GLOB.zizo_targets -= target
 
@@ -267,6 +275,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/datum/job/J = SSjob.GetJob(target.mind?.assigned_role)
 	if(J && (J.type in (list(NOBLE_ROLES) + list(CHURCH_ROLES) + list(GARRISON_ROLES) + list(INQUISITION_ROLES))))
 		new /obj/item/necro_relics/necro_crystal(center)
+	if(target.purity == TRUE)
+		new /obj/item/necro_relics/necro_crystal(center)
+		zizo_award(user, 3)
+		zizo_award(assistant, 3)
 	GLOB.zizo_targets -= target
 	zizo_award(user, 5)
 	zizo_award(assistant, 5)
@@ -367,6 +379,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	name = "Dark Sun's Mark"
 	desc = "Mark someone for death by Graggar Assassins."
 	center_requirement = /obj/item/rogueweapon/huntingknife/idagger
+	research_cost = 2
 
 /datum/ritual/servantry/darksunmark/invoke(mob/living/user, turf/center)
 	var/target_name = input(user, "Who do you wish to die?", "GRAGGAR")
@@ -400,10 +413,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/allseeingeye
 	name = "All-seeing Eye"
-	desc = "Create an eye to scry through. Requires a dark crystal."
+	desc = "Create an eye to scry through."
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/organ/eyes
-	n_req = /obj/item/necro_relics/necro_crystal
 
 /datum/ritual/transmutation/allseeingeye/invoke(mob/living/user, turf/center)
 	new /obj/item/scrying/eye(center)
@@ -438,7 +450,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
 	s_req = /obj/item/natural/feather
-	research_cost = 3
+	research_cost = 2
 
 /datum/ritual/transmutation/propaganda/invoke(mob/living/user, turf/center)
 	new /obj/item/natural/worms/leech/propaganda(center)
@@ -528,6 +540,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /obj/item/clothing/cloak/half/shadowcloak/cult
 	name = "ominous cloak"
+	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
+	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
+	icon_state = "shadowcloak"
+	sleeved = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	desc = "Those who wear, thy should beware, for those who do; never come back as who they once were again."
 	body_parts_covered = ARMS|CHEST
 
@@ -563,6 +579,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	s_req = /obj/item/ingot/steel
+	research_cost = 3
 
 /datum/ritual/transmutation/summonweapon/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -604,14 +621,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
 	var/heal_tick = 30
-	research_cost = 3
+	research_cost = 2
 
 /datum/ritual/fleshcrafting/fleshmend/greater
 	name = "Greater Fleshmend"
 	desc = "Use a piece of raw meat to heal yourself, but better."
 	is_cultist_ritual = TRUE
 	heal_tick = 70
-	research_cost = 7
+	research_cost = 5
 
 /datum/ritual/fleshcrafting/fleshmend/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -644,6 +661,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /datum/ritual/fleshcrafting/nopain
 	name = "Painless Battle"
 	desc = "Use a heart and a brain to become immune to pain. Requires a dark crystal."
+	research_cost = 3
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
 	w_req = /obj/item/organ/heart
@@ -692,13 +710,13 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
-	desc = "Sacrifice the ruler on the north side, a person with a pure heart on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
+	desc = "Sacrifice the ruler on the north side, a person with pure lux on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
 	center_requirement = /mob/living/carbon/human
-	center_desc = "the cult leader"
+	center_desc = "the one to ascend"
 	n_req = /mob/living/carbon/human
 	n_desc = "the ruler"
 	s_req = /mob/living/carbon/human
-	s_desc = "one of pure heart"
+	s_desc = "one of pure lux"
 	e_req = /mob/living/carbon/human
 	e_desc = "a cultist"
 	w_req = /mob/living/carbon/human
@@ -713,23 +731,23 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
 	if(!istype(get_area(center), /area/rogue/indoors/town/manor))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/cultist = locate() in center.contents
-	if(!cultist || cultist != user || !is_zizocultist(cultist.mind))
+	if(!cultist || cultist != user || !is_zizo(cultist))
 		return
 	var/mob/living/carbon/human/RULER = locate() in get_step(center, NORTH)
 	if(RULER != SSticker.rulermob)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
 	if(!cleric || cleric.purity == FALSE || cleric.stat == DEAD)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	var/mob/living/carbon/human/east = locate() in get_step(center, EAST)
 	var/mob/living/carbon/human/west = locate() in get_step(center, WEST)
 	if(!is_zizo(east) || !is_zizo(west))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with a pure heart must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
 		return
 	cleric.visible_message(span_danger("[cleric] withers and dies!"))
 	cleric.death()

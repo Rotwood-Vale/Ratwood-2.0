@@ -45,6 +45,7 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		torso.receive_damage(85)
 		torso.add_wound(/datum/wound/puncture)
 	playsound(target, 'sound/gore/flesh_eat_04.ogg', 60, TRUE)
+	target.purity = FALSE
 	to_chat(target, span_danger("THE LUX IS TORN FROM YOUR SOUL. YOUR MEMORY BECOMES A BLUR. YOU CAN'T REMEMBER WHO DID THIS TO YOU, OR ANY DETAILS ABOUT HOW IT HAPPENED."))
 	new /obj/item/necro_relics/necro_crystal(T)
 	return TRUE
@@ -647,7 +648,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/noise/ghost_form/invoke(mob/living/user, turf/center)
 	. = ..()
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target || target.aspect != "noise")
+	if(!target)
 		to_chat(user, span_warning("NOT FOR THEM."))
 		return
 	var/turf/origin = get_turf(target)
@@ -791,7 +792,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/pitch/shadowform/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target || target.aspect != "pitch")
+	if(!target)
 		to_chat(user, span_warning("NOT FOR THEM."))
 		return
 	if(target.has_status_effect(/datum/status_effect/shadowform))

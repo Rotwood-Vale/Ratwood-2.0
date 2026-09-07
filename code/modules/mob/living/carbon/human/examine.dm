@@ -1108,7 +1108,7 @@
 				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
 
 		if(src.purity == TRUE && is_zizo(user))
-			. += span_greentext("<b>[m1] pure of heart!</b>")
+			. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
 
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)

@@ -50,6 +50,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/communicate
 	H.verbs |= /mob/living/carbon/human/proc/draw_sigil
 	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
+	H.purity = FALSE
 
 	if(change_stats)
 		H.change_stat(STATKEY_STR, 2)

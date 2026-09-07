@@ -9,6 +9,7 @@
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_CIVILIZEDBARBARIAN,
 	)
