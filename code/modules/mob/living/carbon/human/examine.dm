@@ -20,6 +20,8 @@
 			user.add_stress(/datum/stressevent/unseemly)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING) && user != src)
+		user.add_stress(/datum/stressevent/uncanny)
 	// Apply Xylix buff when examining someone with the beautiful trait
 	if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy) && user.has_stress_event(/datum/stressevent/beautiful))
 		user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
