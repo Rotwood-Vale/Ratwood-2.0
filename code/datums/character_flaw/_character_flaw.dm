@@ -817,6 +817,41 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	..()
 	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 
+/datum/charflaw/virgin
+	name = "Virgin"
+	desc = "I was never good with the opposite gender..."
+	var/last_check = 0
+
+/datum/charflaw/virgin/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You're a virgin!")
+	H.virginity = TRUE
+
+/datum/charflaw/virgin/flaw_on_life(mob/user)
+	. = ..()
+	if(world.time < last_check + 10 SECONDS)
+		return
+	if(!user)
+		return
+	last_check = world.time
+	var/foid = FALSE
+	var/mob/living/carbon/P = user
+	for(var/mob/living/carbon/human/L in hearers(7, user))
+		if(L == user)
+			continue
+		if(L.stat)
+			continue
+		if(L.pronouns != P.pronouns)
+			foid = TRUE
+			break
+	if(foid == TRUE)
+		P.add_stress(/datum/stressevent/foid)
+
+/datum/stressevent/foid
+	timer = 2 MINUTES
+	stressadd = 2
+	desc = "<span class='red'>Oh gosh! The opposite gender makes me nervous!</span>"
+
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"
 	desc = "I'm sensitive to silver — it burns and injures me more than it should."
@@ -952,38 +987,3 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "You are unluckier than most")
 	H.change_stat(STATKEY_LCK, -4)
-
-/datum/charflaw/virgin
-	name = "Virgin"
-	desc = "I was never good with the opposite gender..."
-	var/last_check = 0
-
-/datum/charflaw/virgin/apply_post_equipment(mob/user)
-	var/mob/living/carbon/human/H = user
-	to_chat(user, "You're a virgin!")
-	H.virginity = TRUE
-
-/datum/charflaw/virgin/flaw_on_life(mob/user)
-	. = ..()
-	if(world.time < last_check + 10 SECONDS)
-		return
-	if(!user)
-		return
-	last_check = world.time
-	var/foid = FALSE
-	var/mob/living/carbon/P = user
-	for(var/mob/living/carbon/human/L in hearers(7, user))
-		if(L == user)
-			continue
-		if(L.stat)
-			continue
-		if(L.pronouns != P.pronouns)
-			foid = TRUE
-			break
-	if(foid == TRUE)
-		P.add_stress(/datum/stressevent/foid)
-
-/datum/stressevent/foid
-	timer = 2 MINUTES
-	stressadd = 2
-	desc = "<span class='red'>Oh gosh! The opposite gender makes me nervous!</span>"
