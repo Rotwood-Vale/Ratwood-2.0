@@ -12,6 +12,7 @@
 		STATKEY_CON = -1,
 		STATKEY_WIL = -1
 	)
+	virgin = TRUE
 	subclass_spellpoints = 9
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,

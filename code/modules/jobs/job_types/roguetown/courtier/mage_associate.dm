@@ -168,6 +168,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
 	)
+	virgin = TRUE
 	subclass_spellpoints = 18
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,

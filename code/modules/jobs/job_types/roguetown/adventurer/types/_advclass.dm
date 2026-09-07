@@ -22,6 +22,8 @@
 
 	var/noble_income = FALSE //Passive income every day from noble estate
 
+	var/virgin = FALSE
+
 	/// This class is immune to species-based swapped gender locks
 	var/immune_to_genderswap = FALSE
 
@@ -94,6 +96,9 @@
 
 	if(noble_income)
 		SStreasury.noble_incomes[H] = noble_income
+	
+	if(virgin)
+		H.virginity = TRUE
 
 	if(adaptive_name)
 		H.adaptive_name = TRUE

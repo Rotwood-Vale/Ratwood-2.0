@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Doddering"=/datum/charflaw/slow,
 	"Nimrodded"=/datum/charflaw/dull,
 	"Unlucky"=/datum/charflaw/unlucky,
+	"Virgin"=/datum/charflaw/virgin,
 	))
 
 /datum/charflaw
@@ -951,3 +952,33 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "You are unluckier than most")
 	H.change_stat(STATKEY_LCK, -4)
+
+/datum/charflaw/virgin
+	name = "Virgin"
+	desc = "I was never good with the opposite gender..."
+	var/last_check = 0
+
+/datum/charflaw/virgin/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You're a virgin!")
+	H.virginity = TRUE
+
+/datum/charflaw/virgin/flaw_on_life(mob/user)
+	. = ..()
+	if(world.time < last_check + 10 SECONDS)
+		return
+	if(!user)
+		return
+	last_check = world.time
+	var/foid = FALSE
+	var/mob/living/carbon/P = user
+	for(var/mob/living/carbon/human/L in hearers(7, user))
+		if(L == user)
+			continue
+		if(L.stat)
+			continue
+		if(L.pronouns != P.pronouns)
+			foid = TRUE
+			break
+	if(foid == TRUE)
+		P.add_stress(/datum/stressevent/foid)

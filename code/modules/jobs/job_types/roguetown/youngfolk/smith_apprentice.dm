@@ -38,6 +38,7 @@
 		STATKEY_WIL = 1,
 		STATKEY_CON = 1
 	)
+	virgin = TRUE
 	subclass_skills = list(//apprentice levels in all smithing/engineering section. Journeyman in smelting.
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

@@ -39,6 +39,7 @@
 		STATKEY_INT = 1,
 		STATKEY_LCK = 1
 	)
+	virgin = TRUE
 	subclass_skills = list(
 		//worse skills than a normal peasant, generally, with random bad combat skill
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,

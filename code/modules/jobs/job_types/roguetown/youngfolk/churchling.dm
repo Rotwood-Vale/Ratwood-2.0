@@ -41,6 +41,7 @@
 		STATKEY_SPD = 2,
 		STATKEY_PER = 1,
 	)
+	virgin = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
@@ -112,6 +113,7 @@
 		STATKEY_STR = 1,
 		STATKEY_WIL = 1,
 	)
+	virgin = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_NOVICE,

@@ -16,6 +16,7 @@
 		STATKEY_PER = 1,
 		STATKEY_CON = -1
 	)
+	virgin = TRUE
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -107,6 +108,7 @@
 		STATKEY_PER = -1,
 		STATKEY_CON = -1
 	)
+	virgin = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
@@ -203,6 +205,7 @@
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 	)
+	virgin = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
