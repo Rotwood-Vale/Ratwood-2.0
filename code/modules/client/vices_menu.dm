@@ -37,6 +37,14 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Socialite virtue conflicts with Ugly vice!"))
 				return TRUE
+
+    // Socialite vs Unsettling 
+	if(virtue_type == /datum/virtue/utility/socialite)
+		for(var/datum/charflaw/vice in vice_list)
+			if(vice && vice.type == /datum/charflaw/unsettling)
+				if(show_message && user)
+					to_chat(user, span_warning("Socialite virtue conflicts with Unsettling vice!"))
+				return TRUE
 	
 	// Deathless (no hunger/breath) vs any food/breathing related vices
 	// Deathless conflicts with nothing currently, but kept for future reference
@@ -251,6 +259,20 @@
 		if(/datum/charflaw/mute in selected_vices)
 			if(show_message && user)
 				to_chat(user, span_warning("Unintelligible vice conflicts with Mute vice - you can't have both speech impediments!"))
+			return TRUE
+    
+	// Unsettling conflicts with: Ugly
+	if(vice_type == /datum/charflaw/unsettling)
+		if(/datum/charflaw/ugly in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Unsettling vice conflicts with Ugly vice - you can't look both ugly and unsettling!"))
+			return TRUE
+
+	// Ugly conflicts with: Unsettling
+	if(vice_type == /datum/charflaw/ugly)
+		if(/datum/charflaw/unsettling in selected_vices)
+			if(show_message && user)
+				to_chat(user, span_warning("Ugly vice conflicts with Unsettling vice - you can't look both ugly and unsettling!"))
 			return TRUE
 
 	return FALSE
