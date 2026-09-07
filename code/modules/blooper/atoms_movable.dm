@@ -71,13 +71,5 @@
 	volume = min(volume, 100)
 	var/turf/T = get_turf(src)
 	for(var/mob/M in hearers)
-		// Uncomment if you ever modernize the playsound procs
-		// M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), S = vocal_bark, distance_multiplier = 1)
-		M.playsound_local(
-						turf_source = T,
-						vol = volume,
-						vary = TRUE,
-						frequency = pitch,
-						falloff = 1,
-						S = vocal_bark,
-		)
+		// The modernized call this comment block was waiting for; the procs match TG now.
+		M.playsound_local(T, vol = volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BARK_SOUND_FALLOFF_EXPONENT(distance), S = vocal_bark, distance_multiplier = 1)

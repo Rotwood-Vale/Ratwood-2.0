@@ -33,7 +33,7 @@
 				vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, M, icon_path, overlay_name, offset_list)
 				if(soundin)
 					var/turf/T = get_turf(src)
-					M.playsound_local(T, soundin, 100, FALSE)
+					M.playsound_local(T, soundin, 100, FALSE, max_distance = world.view)
 
 		if(ispath(private, /datum/patron))	//Patron signs.
 			var/icon_plane = WEATHER_EFFECT_PLANE	//Will show up through the cone.
@@ -48,7 +48,7 @@
 						pass = TRUE
 					if(soundin && pass)
 						var/turf/T = get_turf(src)
-						H.playsound_local(T, soundin, 100, FALSE)
+						H.playsound_local(T, soundin, 100, FALSE, max_distance = world.view)
 			else
 				for(var/mob/living/carbon/human/H in viewers(world.view, src))
 					if(H.patron?.type == private)
@@ -58,7 +58,7 @@
 							vis_contents += new /obj/effect/temp_visual/stress_event/invisible(null, H, icon_path, "sign_[H.patron.name]", offset_list, y_offset, icon_plane)
 						if(soundin)
 							var/turf/T = get_turf(src)
-							H.playsound_local(T, soundin, 100, FALSE)
+							H.playsound_local(T, soundin, 100, FALSE, max_distance = world.view)
 
 ///A simplified version of the proc that adds an overlay to the src and returns a reference to the appearance.
 ///Has no offset adjustment for bodies / sprite size. Make sure to account for that if using it on carbons!
