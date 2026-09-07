@@ -973,16 +973,6 @@
 	craftdiff = 4
 	sellprice = 30
 
-/datum/crafting_recipe/roguetown/sewing/stewardhat
-	name = "fany tophat"
-	result = list(/obj/item/clothing/head/roguetown/tophat/steward)
-	reqs = list(/obj/item/natural/cloth = 1,
-				/obj/item/natural/fibers = 1,
-				/obj/item/natural/silk = 1)
-	tools = list(/obj/item/needle)
-	craftdiff = 4
-	sellprice = 20
-
 /datum/crafting_recipe/roguetown/sewing/handcoat
 	name = "noble coat"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/coat/hand)
