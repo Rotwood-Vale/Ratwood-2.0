@@ -339,7 +339,7 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/corroded/zizo, SLOT_IN_BACKPACK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo, SLOT_IN_BACKPACK, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
