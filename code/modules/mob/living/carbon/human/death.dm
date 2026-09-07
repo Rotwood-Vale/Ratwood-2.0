@@ -177,7 +177,11 @@
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
-		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
+		var/death_message = "has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
+		log_message(death_message, LOG_ATTACK, color = LOG_COLOR_SEVERE)
+		// without this a death appears only on the victim's own log, never in a witness's POV. No event id on purpose:
+		// one would make the offscreen pass file every death in the round into everyone's timeline
+		log_seen_viewers(src, null, death_message, SEEN_LOG_ATTACK)
 		if(client || mind)
 			var/death_admin_message = "[key_name(src)] [loc_name(src)] [ADMIN_FLW(src)] has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
 			message_admins(death_admin_message)

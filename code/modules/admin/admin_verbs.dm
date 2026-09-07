@@ -784,7 +784,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!message)
 		return
 
-	L.say(message)
+	L.say(message, forced = "admin speech")
 	log_admin("[key_name(usr)] forced [key_name(L)] at [AREACOORD(L)] to say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(L)] at [AREACOORD(L)] to say \"[message]\""))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 	var/list/used_colors
 
 /obj/machinery/gear_painter/Initialize(mapload)
-	..()
+	. = ..()
 	used_colors = GLOB.colorlist
 
 /obj/machinery/gear_painter/Destroy()

@@ -170,6 +170,26 @@
 
 	var/datum/component/personal_crafting/craftingthing
 
+	//-- Dodge variables
+	/// If this mob can parry at all
+	var/mob_can_parry = FALSE
+	/// Cooldown before it's possible to dodge again
+	COOLDOWN_DECLARE(last_dodge)
+	/// Amount of time added to the cooldown before the mob can dodge again
+	var/dodgetime = 1.2 SECONDS
+	/// Sanity boolean. Prevents you from dodging multiple times during a single loop. Not sure if this is actually needed but I aint touching it
+	var/dodge_sanity = FALSE
+
+	//-- Parry variables
+	/// If this mob can dodge at all
+	var/mob_can_dodge = FALSE
+	/// Cooldown before it's possible to parry again
+	COOLDOWN_DECLARE(last_parry)
+	/// Amount of time added to the cooldown before the mob can parry again
+	var/setparrytime = 1.2 SECONDS
+	/// Sound that plays when you parry unarmed
+	var/parry_sound = "unarmparry"
+
 	/// Cooldown when you break out of a grab before you can be grabbed again
 	COOLDOWN_DECLARE(broke_free)
 

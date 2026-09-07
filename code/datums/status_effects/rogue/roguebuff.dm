@@ -497,7 +497,7 @@
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.warden_area))
+	if(!istype(our_area) || !(our_area.warden_area))
 		owner.remove_status_effect(/datum/status_effect/buff/wardenbuff)
 
 /datum/status_effect/buff/wardenbuff/on_apply()
@@ -522,7 +522,7 @@
 /datum/status_effect/buff/barkeepbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.tavern_area))
+	if(!istype(our_area) || !(our_area.tavern_area))
 		owner.remove_status_effect(/datum/status_effect/buff/barkeepbuff)
 
 /atom/movable/screen/alert/status_effect/buff/barkeepbuff
@@ -539,7 +539,7 @@
 /datum/status_effect/buff/guardbuffone/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.town_area))
+	if(!istype(our_area) || !(our_area.town_area))
 		owner.remove_status_effect(/datum/status_effect/buff/guardbuffone)
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
@@ -556,7 +556,7 @@
 /datum/status_effect/buff/dungeoneerbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.cell_area))
+	if(!istype(our_area) || !(our_area.cell_area))
 		owner.remove_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 
 /datum/status_effect/buff/dungeoneerbuff/on_apply()
@@ -581,7 +581,7 @@
 /datum/status_effect/buff/viewingbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.viewing_area))
+	if(!istype(our_area) || !(our_area.viewing_area))
 		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
@@ -606,7 +606,7 @@
 /datum/status_effect/debuff/holy_blessing/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
+	if(!istype(our_area) || !(our_area.holy_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
 
 /atom/movable/screen/alert/status_effect/holy_empowerement

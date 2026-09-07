@@ -84,8 +84,9 @@
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
 				return
-		var/full_print = md5(H.dna.uni_identity)
-		LAZYSET(fingerprints, full_print, full_print)
+		if(H.dna)
+			var/full_print = md5(H.dna.uni_identity)
+			LAZYSET(fingerprints, full_print, full_print)
 	return TRUE
 
 /datum/component/forensics/proc/add_fiber_list(list/_fibertext)		//list(text)

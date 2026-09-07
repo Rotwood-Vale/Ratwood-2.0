@@ -1244,7 +1244,7 @@
 		tree_data.wedding_officiant_ckey = null
 		return
 
-	var/surname = input(user, "Enter a shared surname for the couple:", "Nature's Union") as text|null
+	var/surname = reject_bad_name(input(user, "Enter a shared surname for the couple:", "Nature's Union") as text|null)
 	if(QDELETED(src) || QDELETED(user))
 		return
 	if(!surname || !length(trim(surname)))

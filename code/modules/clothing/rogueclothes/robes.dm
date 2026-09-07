@@ -144,6 +144,7 @@
 	icon_state = "nun"
 	item_state = "nun"
 	allowed_sex = list(MALE, FEMALE)
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/wizard
 	name = "wizard's robe"
@@ -245,7 +246,7 @@
 	item_state = "monkcloth"
 	boobed_detail = FALSE
 	color = null
-	detail_color = null
+	detail_color = CLOTHING_RED
 	detail_tag = "_detail"
 	naledicolor = TRUE
 	r_sleeve_status = SLEEVE_NOMOD
