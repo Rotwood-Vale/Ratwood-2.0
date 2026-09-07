@@ -22,6 +22,20 @@
 	var/nomsg = FALSE
 	var/soundping = TRUE
 	var/ignore_silent = FALSE
+	///Whether this emote's sound carries to the floors above and below. TRUE for almost
+	///everything, because hearing a scream through a ceiling matters. FALSE for the ones that should
+	///stay in the room they happen in.
+	var/cross_z_audible = TRUE
+	///How this emote's sound gets past a barrier: a SOUND_TRAVEL_* class, the same vocabulary every
+	///other system uses. Set LEAKING or CONTAINED per emote and nothing else changes; a call may name
+	///its own class and override this. Floors stay on cross_z_audible above, deliberately: the two
+	///axes come apart here, and an emote wants ordinary attenuation through a ceiling.
+	///
+	///CARRYING on all 96: dulled through anything, full range, never stopped. A PARKED default, not a
+	///verdict. One knob over 96 datums and no evidence yet, on the crowd path, where CARRYING is one
+	///line walk and the graded classes are up to three; CONTAINED would also silence things a listener
+	///may need to hear. Categorise them once the Occlusion Bench prices a walk in a full room.
+	var/snd_travel = SOUND_TRAVEL_CARRYING
 	var/snd_vol = 100
 	var/snd_range = -1
 	var/mute_time = 30//time after where someone can't do another emote
@@ -57,7 +71,10 @@
 /datum/emote/proc/adjacentaction(mob/user, mob/target)
 	return
 
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, animal = FALSE)
+/// travel overrides the emote's own snd_travel for this one call. Null leaves the emote's own
+/// setting alone; any other class takes over, because groan, painmoan and scream are shared
+/// between combat and sex and only the caller knows which this is.
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, animal = FALSE, travel = null, erp = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
@@ -118,7 +135,17 @@
 			else// if(!vision.viewing_head)
 				emotelocation = user
 
-		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal)
+		// travel: emote TEXT already respects walls (get_hearers_in_view in emote.dm), but the audio
+		// did not. A groan at volume 100 carried through any number of closed doors at full strength.
+		// The datum's snd_travel decides, CARRYING by default so it still crosses floors and you can
+		// tell something is happening, just plainly through something.
+		// Anything else keeps the emote's own settings. Soundproof areas are handled inside playsound.
+		// A caller naming a class speaks for the floors too, since the classes that do so are the ones
+		// with a reason: sex audio is held quiet through a ceiling. Otherwise the emote's own two
+		// knobs apply, and cross_z_audible keeps its ordinary attenuation.
+		var/sound_travel = isnull(travel) ? snd_travel : travel
+		var/floor_volume = isnull(travel) ? (cross_z_audible ? null : SOUND_FLOOR_NEVER) : SOUND_TRAVEL_FLOOR(travel)
+		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal, travel = sound_travel, floor_volume = floor_volume, erp = erp)
 	if(!nomsg)
 		user.log_message(msg, LOG_EMOTE)
 		var/pre_color_msg = msg

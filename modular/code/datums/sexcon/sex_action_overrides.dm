@@ -19,7 +19,7 @@
 		return FALSE
 	return check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE)
 
-/datum/sex_action/chastityplay/proc/modular_play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
+/datum/sex_action/chastityplay/proc/modular_play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, extrarange = -1) // lands in playsound's extrarange slot; named for what it does
 	if(!target || !sound_to_play)
 		return FALSE
 	if(chance < 100 && !prob(chance))
@@ -27,9 +27,9 @@
 	if(islist(sound_to_play))
 		if(!length(sound_to_play))
 			return FALSE
-		playsound(get_turf(target), pick(sound_to_play), volume, vary, frequency)
+		playsound_erp(get_turf(target), pick(sound_to_play), volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 		return TRUE
-	playsound(get_turf(target), sound_to_play, volume, vary, frequency)
+	playsound_erp(get_turf(target), sound_to_play, volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 	return TRUE
 
 /mob/living/carbon/human/proc/modular_handle_werewolf_transform_chastity()

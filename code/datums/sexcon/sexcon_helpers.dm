@@ -1,39 +1,3 @@
-/datum/looping_sound/femhornylite
-	mid_sounds = list('sound/vo/female/gen/se/horny1loop (1).ogg')
-	mid_length = 470
-	volume = 20
-	extra_range = -4
-
-/datum/looping_sound/femhornylitealt
-	mid_sounds = list('sound/vo/female/gen/se/horny1loop (2).ogg')
-	mid_length = 360
-	volume = 20
-	extra_range = -4
-
-/datum/looping_sound/femhornymed
-	mid_sounds = list('sound/vo/female/gen/se/horny2loop (1).ogg')
-	mid_length = 420
-	volume = 20
-	extra_range = -4
-
-/datum/looping_sound/femhornymedalt
-	mid_sounds = list('sound/vo/female/gen/se/horny2loop (2).ogg')
-	mid_length = 350
-	volume = 20
-	extra_range = -4
-
-/datum/looping_sound/femhornyhvy
-	mid_sounds = list('sound/vo/female/gen/se/horny3loop (1).ogg')
-	mid_length = 440
-	volume = 20
-	extra_range = -4
-
-/datum/looping_sound/femhornyhvyalt
-	mid_sounds = list('sound/vo/female/gen/se/horny3loop (2).ogg')
-	mid_length = 390
-	volume = 20
-	extra_range = -4
-
 /mob/living
 	var/can_do_sex = TRUE
 	var/virginity = FALSE
@@ -79,67 +43,67 @@
 	if (!user || QDELETED(user) || !istype(user))
 		return
 	if(user.gender == FEMALE)
-		playsound(user, pick('sound/misc/mat/girlmouth (1).ogg','sound/misc/mat/girlmouth (2).ogg'), 25, TRUE, ignore_walls = FALSE)
+		playsound_erp(user, pick('sound/misc/mat/girlmouth (1).ogg','sound/misc/mat/girlmouth (2).ogg'), 25, TRUE, extrarange = 0)
 	else
-		playsound(user, pick('sound/misc/mat/guymouth (1).ogg','sound/misc/mat/guymouth (2).ogg','sound/misc/mat/guymouth (3).ogg','sound/misc/mat/guymouth (4).ogg','sound/misc/mat/guymouth (5).ogg'), 35, TRUE, ignore_walls = FALSE)
+		playsound_erp(user, pick('sound/misc/mat/guymouth (1).ogg','sound/misc/mat/guymouth (2).ogg','sound/misc/mat/guymouth (3).ogg','sound/misc/mat/guymouth (4).ogg','sound/misc/mat/guymouth (5).ogg'), 35, TRUE, extrarange = 0)
 
 /datum/sex_controller/proc/generic_sex_noise()
 	if (!user || QDELETED(user) || !istype(user))
 		return
-	playsound(user, 'sound/misc/mat/fingering.ogg', 30, TRUE, -2, ignore_walls = FALSE)
+	playsound_erp(user, 'sound/misc/mat/fingering.ogg', 30, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 
 /datum/sex_controller/proc/intercourse_noise(atom/movable/target)
 	if(!user || QDELETED(user) || !istype(user))
 		return
 	switch(force)
 		if(SEX_FORCE_LOW)
-			playsound(target, pick('sound/misc/mat/intercourse/gentle (1).ogg','sound/misc/mat/intercourse/gentle (2).ogg','sound/misc/mat/intercourse/gentle (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/gentle (1).ogg','sound/misc/mat/intercourse/gentle (2).ogg','sound/misc/mat/intercourse/gentle (3).ogg'), 50, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_MID)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 10, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/intercourse/firm (1).ogg','sound/misc/mat/intercourse/firm (2).ogg','sound/misc/mat/intercourse/firm (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 10, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/firm (1).ogg','sound/misc/mat/intercourse/firm (2).ogg','sound/misc/mat/intercourse/firm (3).ogg'), 50, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_HIGH)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 			var/datum/sex_action/action = SEX_ACTION(current_action)
 			if(do_knot_action && action?.knot_on_finish)
-				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 			else
-				playsound(target, pick('sound/misc/mat/intercourse/rough (1).ogg','sound/misc/mat/intercourse/rough (2).ogg','sound/misc/mat/intercourse/rough (3).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/intercourse/rough (1).ogg','sound/misc/mat/intercourse/rough (2).ogg','sound/misc/mat/intercourse/rough (3).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 			var/datum/sex_action/action = SEX_ACTION(current_action)
 			if(do_knot_action && action?.knot_on_finish)
-				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 			else
-				playsound(target, pick('sound/misc/mat/intercourse/brutal (1).ogg','sound/misc/mat/intercourse/brutal (2).ogg','sound/misc/mat/intercourse/brutal (3).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/intercourse/brutal (1).ogg','sound/misc/mat/intercourse/brutal (2).ogg','sound/misc/mat/intercourse/brutal (3).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		else
-			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2)
 
 /datum/sex_controller/proc/outercourse_noise(atom/movable/target, wetness_layer = FALSE)
 	if(!user || QDELETED(user) || !istype(user))
 		return
 	switch(force)
 		if(SEX_FORCE_LOW)
-			playsound(target, pick('sound/misc/mat/outercourse/gentle (1).ogg','sound/misc/mat/outercourse/gentle (2).ogg','sound/misc/mat/outercourse/gentle (3).ogg'), 10, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, pick('sound/misc/mat/outercourse/gentle (1).ogg','sound/misc/mat/outercourse/gentle (2).ogg','sound/misc/mat/outercourse/gentle (3).ogg'), 10, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_MID)
 			if(wetness_layer)
-				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 10, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/firm (1).ogg','sound/misc/mat/outercourse/firm (2).ogg','sound/misc/mat/outercourse/firm (3).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 10, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
+			playsound_erp(target, pick('sound/misc/mat/outercourse/firm (1).ogg','sound/misc/mat/outercourse/firm (2).ogg','sound/misc/mat/outercourse/firm (3).ogg'), 30, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_HIGH)
 			if(wetness_layer)
-				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 20, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/rough (1).ogg','sound/misc/mat/outercourse/rough (2).ogg','sound/misc/mat/outercourse/rough (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 20, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
+			playsound_erp(target, pick('sound/misc/mat/outercourse/rough (1).ogg','sound/misc/mat/outercourse/rough (2).ogg','sound/misc/mat/outercourse/rough (3).ogg'), 50, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			if(wetness_layer)
-				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/brutal (1).ogg','sound/misc/mat/outercourse/brutal (2).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+				playsound_erp(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 30, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
+			playsound_erp(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
+			playsound_erp(target, pick('sound/misc/mat/outercourse/brutal (1).ogg','sound/misc/mat/outercourse/brutal (2).ogg'), 60, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 		else
-			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2)
 
 /datum/sex_controller/proc/oralcourse_noise(atom/movable/target)
 	if(!user || QDELETED(user) || !istype(user))
 		return
-	playsound(target, pick('sound/misc/mat/oral (1).ogg','sound/misc/mat/oral (2).ogg','sound/misc/mat/oral (3).ogg','sound/misc/mat/oral (4).ogg','sound/misc/mat/oral (5).ogg','sound/misc/mat/oral (6).ogg','sound/misc/mat/oral (7).ogg'), 40, TRUE, -2, ignore_walls = FALSE)
+	playsound_erp(target, pick('sound/misc/mat/oral (1).ogg','sound/misc/mat/oral (2).ogg','sound/misc/mat/oral (3).ogg','sound/misc/mat/oral (4).ogg','sound/misc/mat/oral (5).ogg','sound/misc/mat/oral (6).ogg','sound/misc/mat/oral (7).ogg'), 40, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 	var/volume_layer = 1
 	switch(force)
 		if(SEX_FORCE_LOW)
@@ -149,7 +113,7 @@
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			volume_layer = 3
 	volume_layer *= speed // speed is always between 1-5 (SEX_SPEED_MIN-SEX_SPEED_MAX)
-	playsound(target, pick('sound/misc/mat/saliva (1).ogg','sound/misc/mat/saliva (2).ogg','sound/misc/mat/saliva (3).ogg'), volume_layer, TRUE, -2, ignore_walls = FALSE)
+	playsound_erp(target, pick('sound/misc/mat/saliva (1).ogg','sound/misc/mat/saliva (2).ogg','sound/misc/mat/saliva (3).ogg'), volume_layer, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 
 /datum/sex_controller/proc/chastitycourse_noise(mob/living/carbon/human/action_target) // for actions that involve moving a chastity device. Chance increases with force and speed.
 	modular_chastitycourse_noise(action_target)
@@ -173,9 +137,9 @@
 	// Male masochists moan in pleasure rather than screaming in pure agony.
 	// Masochism is a charflaw addiction, not a trait — use has_flaw() instead of HAS_TRAIT().
 	if(action_target.has_flaw(/datum/charflaw/addiction/masochist) && action_target.gender == MALE)
-		playsound(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 1)
+		playsound_erp(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 0, travel = SOUND_TRAVEL_CARRYING) // range 0 = SOUND_RANGE; it stands in for a scream, so it carries like one
 		return
-	action_target.emote("scream", forced = TRUE)
+	action_target.emote_erp("scream", travel = SOUND_TRAVEL_CARRYING)
 	
 /mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)

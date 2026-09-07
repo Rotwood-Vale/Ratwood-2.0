@@ -38,7 +38,7 @@
 	if(!do_subtle)
 		user.sexcon.generic_sex_noise()
 	if(data["jingle"])
-		playsound(user, SFX_JINGLE_BELLS, 30, TRUE, -2, ignore_walls = FALSE)
+		playsound_erp(user, SFX_JINGLE_BELLS, 30, TRUE, -2)
 
 	var/skill_level = max(user.get_skill_level(/datum/skill/magic/holy), 1)
 	user.sexcon.perform_sex_action(target, (data["arousal_mult"] * skill_level), data["pain"], TRUE)

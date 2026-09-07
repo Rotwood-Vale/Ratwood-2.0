@@ -881,7 +881,7 @@
 				to_chat(C, span_warning("I try to scream but my voice fails me."))
 				. = FALSE
 
-/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional, targetted)
+/datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional, targetted, animal, travel, erp)
 	. = ..()
 	if(. && user.mind)
 		record_featured_stat(FEATURED_STATS_SCREAMERS, user)
@@ -997,7 +997,7 @@
 	show_runechat = FALSE
 	needs_emotion = TRUE
 
-/datum/emote/living/paincrit/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/paincrit/run_emote(mob/user, params, type_override, intentional, targetted, animal, travel, erp)
 	. = ..()
 	if(.)
 		for(var/mob/living/carbon/human/L in viewers(7,user))

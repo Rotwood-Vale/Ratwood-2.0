@@ -24,6 +24,7 @@
 
 /datum/emote/living/carbon/human/sexmoanlight
 	key = "sexmoanlight"
+	cross_z_audible = FALSE // stays on its own floor; see sexcon.dm
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	needs_emotion = TRUE
@@ -37,6 +38,7 @@
 
 /datum/emote/living/carbon/human/sexmoanhvy
 	key = "sexmoanhvy"
+	cross_z_audible = FALSE // stays on its own floor; see sexcon.dm
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	needs_emotion = TRUE

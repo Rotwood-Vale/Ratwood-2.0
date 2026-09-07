@@ -96,8 +96,8 @@
 	return FALSE
 
 // Unified sound helper: supports single sound or list input with optional chance gating.
-/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
-	var/modular_result = modular_play_chastity_impact_sound(target, sound_to_play, volume, chance, vary, frequency)
+/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, extrarange = -1)
+	var/modular_result = modular_play_chastity_impact_sound(target, sound_to_play, volume, chance, vary, extrarange)
 	if(!isnull(modular_result))
 		return modular_result
 

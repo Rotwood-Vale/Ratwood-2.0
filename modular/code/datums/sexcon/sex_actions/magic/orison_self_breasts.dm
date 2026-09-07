@@ -37,7 +37,7 @@
 
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] cups and strokes [user.p_their()] breasts, fondling them with a divine energy [message_suffix]"), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(data["jingle"])
-		playsound(user, SFX_JINGLE_BELLS, 30, TRUE, -2, ignore_walls = FALSE)
+		playsound_erp(user, SFX_JINGLE_BELLS, 30, TRUE, -2)
 
 	var/skill_level = max(user.get_skill_level(/datum/skill/magic/holy), 1)
 	user.sexcon.perform_sex_action(user, max(1, (data["arousal_mult"] * skill_level * 0.5)), data["pain"], TRUE)

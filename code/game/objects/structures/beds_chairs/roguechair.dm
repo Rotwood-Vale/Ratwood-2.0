@@ -341,7 +341,7 @@
 
 /obj/structure/bed/rogue/proc/damage_bed(dam_value)
 	if(broken_matress)
-		playsound(src, pick(list('sound/misc/mat/table (1).ogg','sound/misc/mat/table (2).ogg','sound/misc/mat/table (3).ogg','sound/misc/mat/table (4).ogg')), 30, TRUE, ignore_walls = FALSE)
+		playsound_erp(src, pick(list('sound/misc/mat/table (1).ogg','sound/misc/mat/table (2).ogg','sound/misc/mat/table (3).ogg','sound/misc/mat/table (4).ogg')), 30, TRUE, travel = SOUND_TRAVEL_LEAKING)
 		return
 	if(sleepy <= 2) // the bed is already pretty awful and broken (i.e: straw bed/bedroll), so don't break it even further
 		return
@@ -351,12 +351,12 @@
 		broken_matress = TRUE
 		sleepy = 1 //Worse than a bedroll, better than nothing
 		visible_message(span_warning("\The [src] gives an violent snap. It looks broken!"))
-		playsound(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, ignore_walls = FALSE)
+		playsound_erp(src, 'sound/misc/mat/bed break.ogg', 50, TRUE, travel = SOUND_TRAVEL_LEAKING)
 		desc += " The bed looks stained and has seen better daes."
 	else
-		playsound(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, ignore_walls = FALSE)
+		playsound_erp(src, pick(list('sound/misc/mat/bed squeak (1).ogg','sound/misc/mat/bed squeak (2).ogg','sound/misc/mat/bed squeak (3).ogg')), 25, TRUE, travel = SOUND_TRAVEL_LEAKING)
 		if(broken_percentage > 10)
-			playsound(src, 'sound/misc/mat/bed damage.ogg', broken_percentage>>2, TRUE, ignore_walls = FALSE)
+			playsound_erp(src, 'sound/misc/mat/bed damage.ogg', broken_percentage>>2, TRUE, travel = SOUND_TRAVEL_LEAKING)
 
 /obj/structure/bed/rogue/OnCrafted(dirin)
 	dirin = turn(dirin, 180)
