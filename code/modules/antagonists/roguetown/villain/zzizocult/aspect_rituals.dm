@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")
-	var/choice = tgui_input_list(src, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
+	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
 	new /obj/effect/temp_visual/recall_smoke(center)
 	playsound(target, 'sound/villain/littlescary.ogg', 100, TRUE)
