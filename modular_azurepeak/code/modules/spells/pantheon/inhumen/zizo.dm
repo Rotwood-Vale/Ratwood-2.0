@@ -607,7 +607,7 @@
 	overlay_state = "vengeful_spirit"
 	action_icon_state = "vengeful_spirit"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
-	invocations = list("Zizo, loose the rancor of the restless!")
+	invocations = list("Woe to the restless who spite Her name!")
 	invocation_type = "shout"
 
 /obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance/cast(list/targets, mob/living/user)
@@ -651,7 +651,7 @@
 	overlay_state = "aspect"
 	action_icon_state = "aspect"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
-	invocations = list("Spite of Zizo, rise and help!")
+	invocations = list("Pallida dominae, vocat!")
 	invocation_type = "shout"
 
 /obj/effect/proc_holder/spell/invoked/raise_spirit_respite/cast(list/targets, mob/living/user)
