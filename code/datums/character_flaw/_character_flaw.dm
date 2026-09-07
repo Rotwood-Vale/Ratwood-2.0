@@ -819,7 +819,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/virgin
 	name = "Virgin"
-	desc = "I was never good with the opposite gender..."
+	desc = "I've never had a turn among the cabbages."
 	var/last_check = 0
 
 /datum/charflaw/virgin/apply_post_equipment(mob/user)
