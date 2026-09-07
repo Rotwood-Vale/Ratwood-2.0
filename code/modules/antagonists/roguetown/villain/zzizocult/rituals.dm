@@ -101,7 +101,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			weighted[H] = 5
 		else
 			weighted[H] = 1
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 7)
 		if(!weighted.len)
 			break
 		var/mob/living/carbon/human/chosen = pickweight(weighted)
@@ -283,6 +283,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	desc = "Locate new targets to sacrifice and convert. Can use every 20 minutes."
 	center_requirement = /obj/item/organ/eyes
 	center_desc = "eyes"
+	is_cultist_ritual = TRUE
 	keep_center = TRUE
 
 /datum/ritual/servantry/marktargets/invoke(mob/living/user, turf/center)

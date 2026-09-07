@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
 	/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 	/datum/ritual/transmutation/summonoutfit, /datum/ritual/servantry/aspect,
+	/datum/ritual/transmutation/propaganda,
 	))
 
 GLOBAL_LIST_EMPTY(zizo_bestowed)
@@ -754,7 +755,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "zizocloud"
-	recharge_time = 3 MINUTES
+	recharge_time = 1 MINUTES
 	chargedloop = null
 
 /obj/effect/proc_holder/spell/self/shadow_jaunt/cast(list/targets, mob/user = usr)
