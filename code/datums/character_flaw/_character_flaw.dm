@@ -46,7 +46,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Malodorous"=/datum/charflaw/malodorous,
 	"Ugly"=/datum/charflaw/ugly,
 	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Unsettling"=/datum/charflaw/unsettling,
 	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
 	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
@@ -579,23 +578,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/carbon/human/H = user
 	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
-
-/datum/charflaw/unsettling
-	name = "Unsettling"
-	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features that disturbs those who look upon me. Incompatible with Socialite virtue."
-
-/datum/charflaw/unsettling/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_UNSETTLING, TRAIT_GENERIC)
-
-/datum/charflaw/unsettling/on_removal(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_UNSETTLING, TRAIT_GENERIC)
-			
 /datum/charflaw/scarred
 	name = "Scarred"
 	desc = "My face bears terrible scars that make identification difficult, but not impossible."

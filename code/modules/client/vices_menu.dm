@@ -90,14 +90,6 @@
 				if(show_message && user)
 					to_chat(user, span_warning("Ugly vice conflicts with Socialite virtue!"))
 				return TRUE
-
-    // Unsettling vs Socialite (Beautiful)
-	if(vice_type == /datum/charflaw/unsettling)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/socialite)
-				if(show_message && user)
-					to_chat(user, span_warning("Unsettling vice conflicts with Socialite virtue!"))
-				return TRUE
 	
 	// Mute vs Second Voice (can't have second voice if you're mute)
 	if(vice_type == /datum/charflaw/mute)
