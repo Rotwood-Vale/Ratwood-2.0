@@ -1,6 +1,6 @@
 //Higher health, mixed stat dreamfiend.
 /mob/living/simple_animal/hostile/rogue/spirit_respite
-	name = "Aspect of Respite"
+	name = "Warden of Zizo"
 	desc = ""
 	icon = 'modular_helmsguard/icons/mob/gravelord.dmi'
 	icon_state = "glord"
@@ -12,12 +12,12 @@
 	move_to_delay = 3
 	STACON = 18
 	STASTR = 17
-	STASPD = 4
+	STASPD = 10
 	health = RESPITE_ASPECT_HEALTH
 	maxHealth = RESPITE_ASPECT_HEALTH
 	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 40
+	melee_damage_lower = 35
+	melee_damage_upper = 50
 	vision_range = 7
 	aggro_vision_range = 9
 	retreat_distance = 0
@@ -27,7 +27,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	mob_can_parry = TRUE
+	canparry = TRUE
 	defprob = 30
 	speak_emote = list("rattles")
 	del_on_death = TRUE
