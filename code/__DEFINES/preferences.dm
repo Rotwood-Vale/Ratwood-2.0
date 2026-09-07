@@ -23,6 +23,16 @@
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
 
+///Point ambience, per listener: hearths, fountains, rivers, sconces. INVERTED, like the rattles
+///above, because `toggles` loads straight out of the savefile with no migration: a bit meaning
+///"enabled" reads as 0 for everyone who already has a savefile, which would silence the lot of them.
+///Unset is on, which is what every existing player and every new one gets.
+#define SOUND_DISABLE_POINT_AMBIENCE	(1<<18)
+///Just the torch category: wall sconces, STANDING firebowls and a torch in your own hand. Not
+///hearths, campfires or floor firebowls, which are the fire category and keep playing. It is by far
+///the most numerous kind and the one most likely to be found grating, so it turns off alone.
+#define SOUND_DISABLE_TORCH_AMBIENCE	(1<<19)
+
 #define TOGGLE_FULLSCREEN		(1<<20)
 #define SCHIZO_VOICE			(1<<21)
 #define ROLEPLAY_ADS			(1<<22)
