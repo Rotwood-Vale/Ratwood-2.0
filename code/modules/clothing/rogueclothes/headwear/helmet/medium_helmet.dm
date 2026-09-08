@@ -449,6 +449,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak
 	desc = "An elven barbute with a thin gold plating designed for Elven Woodland guardians."
+	color = COLOR_ASSEMBLY_GOLD
 	detail_color = COLOR_ASSEMBLY_GOLD
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak/Initialize(mapload)
@@ -457,6 +458,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak
 	desc = "A winged version of the elven barbute with a thin gold plating designed for Elven Woodland guardians."
+	color = COLOR_ASSEMBLY_GOLD
 	detail_color = COLOR_ASSEMBLY_GOLD
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak/Initialize(mapload)

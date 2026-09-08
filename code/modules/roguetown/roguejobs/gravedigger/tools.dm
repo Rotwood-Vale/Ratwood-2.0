@@ -21,6 +21,7 @@
 	max_blade_int = 300
 	grid_width = 32
 	grid_height = 96
+	is_tool = TRUE
 
 /obj/item/rogueweapon/shovel/Destroy()
 	if(heldclod)
