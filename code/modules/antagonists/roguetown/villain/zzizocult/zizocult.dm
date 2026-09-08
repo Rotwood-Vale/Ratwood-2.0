@@ -1,7 +1,7 @@
 #define LIST_PRAISE_ZIZO list("Praise Zizo!", "Hail Zizo!", "Glory to the Pale Lady!", "ZIZO! ZIZO! ZIZO!")
 
 /datum/antagonist/zizocultist
-	name = "Zizoid Lackey"
+	name = "Zizoid Cultist"
 	roundend_category = "Zizoid Cultists"
 	antagpanel_category = "Zizoid Cult"
 	job_rank = ROLE_ZIZOIDCULTIST
@@ -52,39 +52,18 @@
 	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
 	H.purity = FALSE
 
-	if(change_stats)
-		H.change_stat(STATKEY_STR, 2)
-		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN)
-
-	if(islesser)
-		owner.special_role = "Zizoid Lackey"
-		add_objective(/datum/objective/zizoserve)
-		if(change_stats)
-			H.change_stat(STATKEY_INT, -2)
-			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE)
-		H.grant_language(/datum/language/undead)
-		greet()
-		return
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN)
 
 	owner.special_role = ROLE_ZIZOIDCULTIST
 	add_objective(/datum/objective/zizo)
 	H.verbs |= /mob/living/carbon/human/proc/release_minion
-	if(change_stats)
-		H.change_stat(STATKEY_STR, 4)
-		H.change_stat(STATKEY_CON, 3)
-		H.change_stat(STATKEY_SPD, 4)
-		H.change_stat(STATKEY_INT, 5)
-		H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT)
-		H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
-		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
-		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
 	H.grant_language(/datum/language/undead)
+	new /datum/antag_setup(owner.current)
 	greet()
 
 /datum/antagonist/zizocultist/greet()
-	to_chat(owner, span_danger("I'm a lackey to the LEADER. A new future begins."))
+	to_chat(owner, span_danger("I'm a cultist to the ALMIGHTY. They call it the UNSPEAKABLE. A new future begins."))
 	owner.announce_objectives()
 
 /datum/antagonist/zizocultist/leader/greet()
@@ -95,7 +74,7 @@
 	if(istype(examined_datum, /datum/antagonist/zizocultist/leader))
 		return span_boldnotice("OUR LEADER!")
 	if(istype(examined_datum, /datum/antagonist/zizocultist))
-		return span_boldnotice("A lackey for the future.")
+		return span_boldnotice("A cultist of ZIZO.")
 	if(istype(examined_datum, /datum/antagonist/assassin))
 		return span_boldnotice("A GRAGGAROID! A CULTIST OF GRAGGAR!")
 
@@ -119,8 +98,8 @@
 
 /datum/objective/zizo
 	name = "ASCEND"
-	explanation_text = "Ensure that I ascend. I can look at my research menu to familiarize myself with my rituals."
-	team_explanation_text = "Ensure that I ascend. I can look at my research menu to familiarize myself with my rituals."
+	explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
+	team_explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
 	triumph_count = 5
 
 /datum/objective/zizo/check_completion()
@@ -129,8 +108,8 @@
 
 /datum/objective/zizoserve
 	name = "Serve your Leader"
-	explanation_text = "Serve your leader and ensure that they ascend. You can look at your research menu to familiarize myself with your rituals."
-	team_explanation_text = "Serve your leader and ensure that they ascend. You can look at your research menu to familiarize myself with your rituals."
+	explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
+	team_explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
 	triumph_count = 3
 
 /datum/objective/zizoserve/check_completion()

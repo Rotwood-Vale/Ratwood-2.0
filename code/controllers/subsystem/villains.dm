@@ -90,7 +90,7 @@
 	var/list/stats = list()
 	var/list/defaults = list()
 	var/chosen_trait
-	var/budget = 12
+	var/budget = 16
 	var/static/list/stat_keys = list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD)
 
 /datum/antag_setup/New(mob/living/carbon/human/H)
@@ -100,7 +100,7 @@
 	while(!H.advjob)
 		sleep(1 SECONDS)
 		waited += 1 SECONDS
-		if(QDELETED(H) || waited > 60 SECONDS)
+		if(QDELETED(H) || waited > 120 SECONDS)
 			qdel(src)
 			return
 	for(var/key in stat_keys)
@@ -128,7 +128,7 @@
 	contents += "--------------<BR>"
 	contents += "<b>Choose a trait:</b><BR>"
 	contents += "<a href='?src=[REF(src)];trait=dodge'>Dodge Expert</a><BR>"
-	contents += "<a href='?src=[REF(src)];trait=heavy'>Heavy Armor</a><BR>"
+	contents += "<a href='?src=[REF(src)];trait=heavy'>Critical Resistance</a><BR>"
 	contents += "Chosen: [chosen_trait]<BR>"
 	contents += "--------------<BR>"
 	contents += "<center><a href='?src=[REF(src)];confirm=1'>\[CONFIRM\]</a></center>"
@@ -153,7 +153,7 @@
 		if(href_list["trait"] == "dodge")
 			chosen_trait = TRAIT_DODGEEXPERT
 		if(href_list["trait"] == "heavy")
-			chosen_trait = TRAIT_HEAVYARMOR
+			chosen_trait = TRAIT_CRITICAL_RESISTANCE
 		open_menu()
 	if(href_list["confirm"])
 		if(!chosen_trait)

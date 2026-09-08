@@ -41,10 +41,5 @@
 	antag_datum = /datum/antagonist/zizocultist
 
 /datum/round_event/antagonist/solo/zizo_cult/start()
-	var/leader_assigned = FALSE
 	for(var/datum/mind/antag_mind as anything in setup_minds)
-		if(!leader_assigned)
-			antag_mind.add_antag_datum(/datum/antagonist/zizocultist/leader)
-			leader_assigned = TRUE
-		else
-			antag_mind.add_antag_datum(/datum/antagonist/zizocultist)
+		antag_mind.add_antag_datum(/datum/antagonist/zizocultist)
