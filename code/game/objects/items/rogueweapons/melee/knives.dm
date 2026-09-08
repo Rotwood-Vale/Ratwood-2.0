@@ -122,6 +122,7 @@
 	unequip_delay_self = 1 SECONDS
 	inv_storage_delay = 1 SECONDS
 	edelay_type = 1
+	is_tool = TRUE
 
 	//flipping knives has a cooldown on to_chat to reduce chatspam
 	COOLDOWN_DECLARE(flip_cooldown)
@@ -229,6 +230,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 0.8
+	is_tool = TRUE
 
 /obj/item/rogueweapon/huntingknife/cleaver/getonmobprop(tag)
 	. = ..()
@@ -274,6 +276,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 0.9
+	is_tool = TRUE
 
 /obj/item/rogueweapon/huntingknife/combat
 	force = 20
@@ -293,6 +296,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 1.1
+	is_tool = FALSE
 
 /obj/item/rogueweapon/huntingknife/combat/getonmobprop(tag)
 	. = ..()
@@ -326,6 +330,7 @@
 	sheathe_icon = "idagger"
 	smeltresult = /obj/item/ingot/iron
 	picklvl = 1.0
+	is_tool = FALSE
 
 /obj/item/rogueweapon/huntingknife/idagger/virtue
 	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch)
@@ -531,6 +536,12 @@
 	sheathe_icon = "tanto"
 	picklvl = 1.2
 
+/obj/item/rogueweapon/huntingknife/idagger/steel/elvish
+	name = "elvish dirk"
+	desc = "A wave-bladed dagger of Elven design, whose elegant steel craftsmanship is only rivaled by its deceptive lethality."
+	icon_state = "elfsdagger"
+	sheathe_icon = "elfdagger"
+
 /obj/item/rogueweapon/huntingknife/idagger/silver
 	name = "silver dagger"
 	desc = "A dagger of pure silver; the bane of vampyres, verevolves, deadites, and all other unsaintly nitecreechers. Errant light transforms into a blinding glare, when cast along the blade's edge."
@@ -613,6 +624,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	sellprice = 70
 	picklvl = 1.1
+	is_tool = TRUE//let disciples use this for utility, TRAIT_WEAPONLESS prevents combat use of "tools" regardless.
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger/ComponentInitialize()
 	AddComponent(\
@@ -813,6 +825,7 @@
 	sellprice = 1
 	thrown_damage_flag = "piercing"		//Checks piercing type like an arrow.
 	picklvl = 0.8
+	is_tool = FALSE
 
 /obj/item/rogueweapon/huntingknife/throwingknife/getonmobprop(tag)
 	. = ..()
@@ -936,6 +949,7 @@
 	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 75, "embedded_fall_chance" = 10)
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/snip, /datum/intent/dagger/sucker_punch)
 	picklvl = 0.8
+	is_tool = TRUE//has snip for whatever reason so lets let them use it.
 
 /obj/item/rogueweapon/huntingknife/scissors
 	possible_item_intents = list(/datum/intent/snip, /datum/intent/dagger/thrust, /datum/intent/dagger/cut)
@@ -945,6 +959,7 @@
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "iscissors"
 	inv_storage_delay = null
+	is_tool = TRUE
 
 /obj/item/rogueweapon/huntingknife/scissors/steel
 	force = 14
