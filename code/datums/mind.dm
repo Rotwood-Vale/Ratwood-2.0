@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
 		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 		/datum/ritual/transmutation/summonoutfit, /datum/ritual/transmutation/raiseshrine,
-		/datum/ritual/transmutation/guidance,
+		/datum/ritual/servantry/guidance,
 		)
 	var/zizo_points = 0
 
