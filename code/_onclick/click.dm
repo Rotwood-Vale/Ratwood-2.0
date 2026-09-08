@@ -33,7 +33,7 @@
 		adf = min(adf, max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP))
 	return adf
 
-/mob/proc/_get_swifstrong_stam_penalty()
+/mob/proc/get_swifstrong_stam_penalty()
 	if(istype(rmb_intent, /datum/rmb_intent/strong))
 		return EXTRA_STAMDRAIN_SWIFSTRONG
 	if(istype(rmb_intent, /datum/rmb_intent/swift) && used_intent.clickcd > CLICK_CD_INTENTCAP)
