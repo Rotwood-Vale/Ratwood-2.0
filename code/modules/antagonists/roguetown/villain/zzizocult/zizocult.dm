@@ -158,7 +158,7 @@
 	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/cultist = src
-	if(!cultist.zizo_goals)
+	if(!length(cultist.zizo_goals))
 		reroll_goals(cultist)
 	for(var/datum/zizogoal/gl in cultist.zizo_goals)
 		to_chat(cultist, span_notice("<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B>"))
