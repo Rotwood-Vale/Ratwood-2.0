@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/psyaxophone
 	name = "psyaxophone"
-	desc = "A long brass tube twisted around with a flared end. It has a few valves to press on the top. Psyalterists commonly use this instrument to combat evil and inspire allies with SOULFUL music."
+	desc = "A long brass tube twisted upwards with a wide flared end. It has many valves across its body. Psyalterists commonly use this instrument to combat evil and inspire allies with SOULFUL music."
 	icon_state = "psyaxophone"
 	song_list = list("The Heretic's Downfall" = 'sound/music/instruments/psyaxophone (1).ogg',
 	"Psy Suite No.1 Courante" = 'sound/music/instruments/psyaxophone (2).ogg',
