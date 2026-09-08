@@ -16,10 +16,6 @@
 	cost = 160
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/elven_plate)
 
-/datum/supply_pack/rogue/rosawood/elven_boots
-	name = "Woad Elven Boots"
-	cost = 35
-	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots)
 
 /datum/supply_pack/rogue/rosawood/elven_gloves
 	name = "Woad Elven Gloves"
