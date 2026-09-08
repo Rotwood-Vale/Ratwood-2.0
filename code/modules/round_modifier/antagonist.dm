@@ -101,8 +101,8 @@
 /datum/round_modifier/zizocult
 	name = "Cultists"
 	desc = "Vile heretics steal the power of gods!"
-	cost = 0
-	min_chaos = 0
+	cost = 4
+	min_chaos = 2
 	weight = 1000
 	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
 

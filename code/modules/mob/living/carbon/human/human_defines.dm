@@ -212,3 +212,5 @@
 
 	var/list/deadites_controlled
 	var/purity = FALSE
+	var/zizo_targets
+	var/zizo_target_cd = 0

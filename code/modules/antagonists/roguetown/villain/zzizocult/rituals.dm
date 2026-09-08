@@ -91,7 +91,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	qdel(R)
 	open(user)
 
-/proc/reroll_targets()
+/proc/reroll_targets(mob/living/carbon/human/user)
 	GLOB.zizo_targets = list()
 	var/list/weighted = list()
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
@@ -108,12 +108,20 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			weighted[H] = 1
 			if(H.purity == TRUE)
 				weighted[H] = 5
-	for(var/i in 1 to 7)
-		if(!weighted.len)
-			break
-		var/mob/living/carbon/human/chosen = pickweight(weighted)
-		GLOB.zizo_targets += chosen
-		weighted -= chosen
+	if(is_zizo(user))
+		for(var/i in 1 to 7)
+			if(!weighted.len)
+				break
+			var/mob/living/carbon/human/chosen = pickweight(weighted)
+			GLOB.zizo_targets += chosen
+			weighted -= chosen
+	else
+		for(var/i in 1 to 5)
+			if(!weighted.len)
+				break
+			var/mob/living/carbon/human/chosen = pickweight(weighted)
+			user.zizo_targets += chosen
+			weighted -= chosen
 
 /datum/ritual
 	abstract_type = /datum/ritual
@@ -257,9 +265,17 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	if(!target.client)
 		return
-	if(!(target in GLOB.zizo_targets))
-		to_chat(user, span_warning("She does not want this one."))
+	if(!ishuman(user))
 		return
+	var/mob/living/carbon/human/cultist = user
+	if(is_zizo(user))
+		if(!(target in GLOB.zizo_targets))
+			to_chat(user, span_warning("She does not want this one."))
+			return
+	else
+		if(!(target in cultist.zizo_targets))
+			to_chat(user, span_warning("She does not want this one."))
+			return
 	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
@@ -313,18 +329,28 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	desc = "Locate new targets to sacrifice and convert. Can use every 20 minutes."
 	center_requirement = /obj/item/organ/eyes
 	center_desc = "eyes"
-	is_cultist_ritual = TRUE
 	keep_center = TRUE
 
 /datum/ritual/servantry/marktargets/invoke(mob/living/user, turf/center)
-	if(world.time < GLOB.zizo_target_cd)
-		to_chat(user, span_warning("It is too soon, you must wait."))
+	if(!ishuman(user))
 		return
+	var/mob/living/carbon/human/cultist = user
+	if(is_zizo(cultist))
+		if(world.time < GLOB.zizo_target_cd)
+			to_chat(user, span_warning("It is too soon, you must wait."))
+			return
+	else
+		if(world.time < cultist.zizo_target_cd)
+			to_chat(user, span_warning("It is too soon, you must wait."))
+			return
 	var/obj/item/organ/heart/heart = locate() in center
 	if(heart)
 		qdel(heart)
-	GLOB.zizo_target_cd = world.time + 20 MINUTES
-	reroll_targets()
+	if(is_zizo(user))
+		GLOB.zizo_target_cd = world.time + 20 MINUTES
+	else
+		cultist.zizo_target_cd = world.time + 20 MINUTES
+	reroll_targets(cultist)
 	to_chat(user, span_notice("You feel a shiver down your spine. Seek your new sacrifices with heartaches."))
 
 /obj/item/corruptedheart
@@ -346,7 +372,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
-	var/mob/living/carbon/human/prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/prey
+	if(is_zizo(user))
+		prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
+	else
+		prey = input("Choose a target.") as null|anything in H.zizo_targets
 	if(!prey || !prey.z)
 		return
 	if(istype(prey.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
@@ -1037,6 +1070,22 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
 			qdel(A)
 
+/obj/effect/temp_visual/teleportcult
+	icon = 'icons/effects/clan.dmi'
+	icon_state = "teleport"
+	dir = SOUTH
+	randomdir = FALSE
+	duration = 2 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/teleportcult1
+	icon = 'icons/effects/clan.dmi'
+	icon_state = "teleport_trigger"
+	dir = SOUTH
+	randomdir = FALSE
+	duration = 0.5 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
 /obj/effect/decal/cleanable/sigil/attack_hand(mob/living/user)
 	. = ..()
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
@@ -1051,7 +1100,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(!dest)
 			to_chat(user, span_warning("Nothing connected."))
 			return
+		var/turf/effect_turf = get_turf(user)
+		var/poo = new /obj/effect/temp_visual/teleportcult(effect_turf)
+		playsound(user, 'sound/villain/newheart.ogg', 60, TRUE)
+		if(!do_after(user, 2 SECONDS))
+			qdel(poo)
+			return
 		var/turf/T = get_turf(dest)
+		new /obj/effect/temp_visual/teleportcult1(effect_turf)
 		for(var/mob/living/L in range(1, src))
 			do_teleport(L, T)
 		return

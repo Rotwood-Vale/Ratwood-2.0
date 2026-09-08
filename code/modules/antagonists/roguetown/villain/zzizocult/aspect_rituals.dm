@@ -146,6 +146,52 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	density = FALSE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
+	var/radius = 3
+	var/list/turf_data = list()
+
+/datum/stressevent/saw_wonder/cult
+	timer = 1 MINUTES
+
+/obj/structure/reality_rend/examine(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	H.overlay_fullscreen("cult", /atom/movable/screen/fullscreen/druqks)
+	H.add_stress(/datum/stressevent/saw_wonder/cult)
+	H.emote("scream")
+	H.Paralyze(2 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_cult_fullscreen), H), 2 SECONDS)
+
+/proc/clear_cult_fullscreen(mob/user)
+	user.clear_fullscreen("cult")
+
+/turf/closed/wall/mineral/rogue/stone/unbreakable/space
+	name = "???"
+	desc = "???"
+	icon = 'icons/turf/roguefloor.dmi'
+	icon_state = "undervoid"
+
+/turf/open/floor/rogue/underworld/space/quiet/cult
+	slowdown = 0
+
+/obj/structure/reality_rend/Initialize(mapload)
+	. = ..()
+	var/turf/center = get_turf(src)
+	for(var/turf/T in range(radius, center))
+		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+			turf_data[T] = T.type
+			T.ChangeTurf(/turf/closed/wall/mineral/rogue/stone/unbreakable/space, flags = CHANGETURF_IGNORE_AIR)
+		else if(isopenturf(T) && !istype(T, /turf/open/floor/rogue/underworld/space/quiet/cult))
+			turf_data[T] = T.type
+			T.ChangeTurf(/turf/open/floor/rogue/underworld/space/quiet/cult, flags = CHANGETURF_IGNORE_AIR)
+
+/obj/structure/reality_rend/Destroy()
+	for(var/turf/T in turf_data)
+		T.ChangeTurf(turf_data[T], flags = CHANGETURF_IGNORE_AIR)
+	turf_data.Cut()
+	visible_message(span_danger("Lux fills the barren stone and returns lyfe to the land!"))
+	playsound(src, 'sound/foley/breaksound.ogg', 50, TRUE)
+	return ..()
 
 /datum/ritual/servantry/aspect
 	name = "Open Gate"
@@ -155,6 +201,17 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	n_req = /obj/item/necro_relics/necro_crystal
 	is_cultist_ritual = TRUE
 	var/gate_count
+
+/obj/effect/temp_visual/opengate
+	icon = 'icons/effects/clan.dmi'
+	icon_state = "summoning"
+	dir = SOUTH
+	randomdir = FALSE
+	duration = 15 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/opengate/fivesec
+	duration = 5 SECONDS
 
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
@@ -183,9 +240,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")
 	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
-	new /obj/effect/temp_visual/recall_smoke(center)
+	var/poo = new /obj/effect/temp_visual/opengate(center)
 	playsound(target, 'sound/villain/littlescary.ogg', 100, TRUE)
-	if(!do_after(user, 20 SECONDS, target = target))
+	if(!do_after(user, 15 SECONDS, target = target))
+		qdel(poo)
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	GLOB.zizo_bestowed += choice
@@ -266,10 +324,12 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/effect/decal/cleanable/sigil/S = locate() in center
 	if(!S)
 		return
-	if(do_after(user, 3 SECONDS))
-		S.set_sigil_type("Portal")
-	else
+	var/poo = new /obj/effect/temp_visual/opengate/fivesec(center)
+	playsound(user, 'sound/villain/littlescary2.ogg', 60, TRUE)
+	if(!do_after(user, 5 SECONDS))
+		qdel(poo)
 		return
+	S.set_sigil_type("Portal")
 	to_chat(user, span_notice("AN EYE IS A PASSAGE."))
 
 /datum/ritual/strand/strandrecall
@@ -585,6 +645,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	center_requirement = /mob/living/carbon/human
 
 /datum/ritual/rot/blight/invoke(mob/living/user, turf/center)
+	var/poo = new /obj/effect/temp_visual/opengate/fivesec(center)
+	playsound(user, 'sound/villain/littlescary2.ogg', 60, TRUE)
+	if(!do_after(user, 5 SECONDS))
+		qdel(poo)
+		return
 	new /obj/structure/blight_pillar(center)
 	to_chat(user, span_notice("THE LAND ROTS."))
 
@@ -640,6 +705,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(!target)
 		to_chat(user, span_warning("NOT FOR THEM."))
+		return
+	var/poo = new /obj/effect/temp_visual/opengate/fivesec(center)
+	playsound(user, 'sound/villain/littlescary2.ogg', 60, TRUE)
+	if(!do_after(user, 5 SECONDS))
+		qdel(poo)
 		return
 	var/turf/origin = get_turf(target)
 	var/obj/effect/dummy/phased_mob/slaughter/noise/holder = new(origin)
@@ -787,6 +857,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(target.has_status_effect(/datum/status_effect/shadowform))
 		return
 	if(!target.dna)
+		return
+	var/poo = new /obj/effect/temp_visual/opengate/fivesec(center)
+	playsound(user, 'sound/villain/littlescary2.ogg', 60, TRUE)
+	if(!do_after(user, 5 SECONDS))
+		qdel(poo)
 		return
 	target.dna.species.species_traits |= MUTCOLORS
 	target.dna.species.fixed_mut_color = "000000"
