@@ -129,27 +129,26 @@
 	if(!ishuman(src))
 		return
 	var/mob/living/carbon/human/cultist = src
-	if((/datum/zizogoal/worshipzizo in cultist.zizo_goals) || (/datum/zizogoal/worshipzizo_church in cultist.zizo_goals))
-		var/turf/churchcheck = get_turf(cultist)
-		if(istype(churchcheck, /area/rogue/indoors/town/church))
-			complete_zgoal(cultist, /datum/zizogoal/worshipzizo_church)
-		var/observers = 0
-		var/complete = FALSE
-		for(var/mob/living/carbon/human/L in hearers(7, cultist))
-			if(observers > 2)
-				complete = TRUE
-				break
-			if(L == cultist)
-				continue
-			if(L.stat == DEAD)
-				continue
-			if(!L.mind)
-				continue
-			if(is_zizo(L))
-				continue
-			observers++
-		if(complete == TRUE)
-			complete_zgoal(cultist, /datum/zizogoal/worshipzizo)
+	var/area/churchcheck = get_area(cultist)
+	if(istype(churchcheck, /area/rogue/indoors/town/church))
+		complete_zgoal(cultist, /datum/zizogoal/worshipzizo_church)
+	var/observers = 0
+	var/complete = FALSE
+	for(var/mob/living/carbon/human/L in hearers(7, cultist))
+		if(observers > 2)
+			complete = TRUE
+			break
+		if(L == cultist)
+			continue
+		if(L.stat == DEAD)
+			continue
+		if(!L.mind)
+			continue
+		if(is_zizo(L))
+			continue
+		observers++
+	if(complete == TRUE)
+		complete_zgoal(cultist, /datum/zizogoal/worshipzizo)
 
 /mob/living/carbon/human/proc/zizo_objectives()
 	set name = "Secret Objectives"
@@ -159,9 +158,13 @@
 		return
 	var/mob/living/carbon/human/cultist = src
 	if(!length(cultist.zizo_goals))
-		reroll_goals(cultist)
-	for(var/datum/zizogoal/gl in cultist.zizo_goals)
-		to_chat(cultist, span_notice("<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B>"))
+		reroll_goals(user = cultist)
+	for(var/item in cultist.zizo_goals)
+		var/datum/zizogoal/gl = item
+		if(gl.complete)
+			to_chat(cultist, "<B>[gl.name]:</B> [gl.desc]<BR><B>COMPLETED.</B><BR>")
+		else
+			to_chat(cultist, "<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B><BR>")
 
 /mob/living/carbon/human/proc/communicate()
 	set name = "Communicate with Cult"

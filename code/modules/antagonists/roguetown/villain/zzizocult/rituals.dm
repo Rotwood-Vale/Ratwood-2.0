@@ -86,28 +86,29 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	name = "Create Shrine in Graveyard"
 	desc = "Use the 'Raise Profane Shrine' rite inside of the church graveyard."
 
-/proc/complete_zgoal(mob/living/carbon/human/user, datum/zizogoal/goal)
+/proc/complete_zgoal(mob/living/carbon/human/user, goal_type)
 	for(var/datum/zizogoal/gl in user.zizo_goals)
-		if(gl == goal)
-			if(gl.complete)
-				continue
-			gl.complete = TRUE
-			user.zizo_goals_complete |= gl
-			zizo_award(user, gl.reward)
+		if(gl.type != goal_type)
+			continue
+		if(gl.complete)
+			continue
+		gl.complete = TRUE
+		user.zizo_goals_complete |= gl.type
+		zizo_award(user, gl.reward)
 
 /proc/reroll_goals(mob/living/carbon/human/user)
 	user.zizo_goals = list()
 	var/list/weighted = list()
-	for(var/datum/zizogoal/zg in GLOB.zizo_goals)
-		if(zg in user.zizo_goals_complete)
+	for(var/item in GLOB.zizo_goals)
+		if(item in user.zizo_goals_complete)
 			continue
-		weighted[zg] = zg.weight
+		weighted[item] = initial(item:weight)
 	for(var/i in 1 to 3)
 		if(!weighted.len)
 			break
-		var/datum/zizogoal/chosen = pickweight(weighted)
-		user.zizo_goals += chosen
-		weighted -= chosen
+		var/chosen_type = pickweight(weighted)
+		weighted -= chosen_type
+		user.zizo_goals += new chosen_type()
 
 /datum/zizo_research/proc/open(mob/living/carbon/human/user)
 	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
@@ -405,7 +406,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		GLOB.zizo_target_cd = world.time + 20 MINUTES
 	else
 		cultist.zizo_target_cd = world.time + 20 MINUTES
-	reroll_targets(cultist)
+	reroll_targets(user = cultist)
 	to_chat(user, span_notice("You feel a shiver down your spine. Seek your new sacrifices with heartaches."))
 
 /datum/ritual/servantry/guidance
@@ -584,16 +585,17 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	to_chat(user, span_notice("The wooden log is transmuted into an inverted psycross."))
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/cultist
-	if(istype(center, /area/rogue/indoors/town/church))
+	var/mob/living/carbon/human/cultist = user
+	var/area/A = get_area(center)
+	if(istype(A, /area/rogue/indoors/town/church))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_church)
-	if(istype(center, /area/rogue/indoors/town/tavern))
+	if(istype(A, /area/rogue/indoors/town/tavern))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_tavern)
-	if(istype(center, /area/rogue/indoors/town/bath))
+	if(istype(A, /area/rogue/indoors/town/bath))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_bath)
-	if(istype(center, /area/rogue/indoors/town/academy))
+	if(istype(A, /area/rogue/indoors/town/academy))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_academy)
-	if(istype(center, /area/rogue/outdoors/town/graveyard))
+	if(istype(A, /area/rogue/outdoors/town/graveyard))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_graveyard)
 
 /datum/ritual/transmutation/criminalstool
