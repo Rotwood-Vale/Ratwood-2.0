@@ -531,6 +531,12 @@
 	sheathe_icon = "tanto"
 	picklvl = 1.2
 
+/obj/item/rogueweapon/huntingknife/idagger/steel/elvish
+	name = "elvish dirk"
+	desc = "A wave-bladed dagger of Elven design, whose elegant steel craftsmanship is only rivaled by its deceptive lethality."
+	icon_state = "elfsdagger"
+	sheathe_icon = "elfdagger"
+
 /obj/item/rogueweapon/huntingknife/idagger/silver
 	name = "silver dagger"
 	desc = "A dagger of pure silver; the bane of vampyres, verevolves, deadites, and all other unsaintly nitecreechers. Errant light transforms into a blinding glare, when cast along the blade's edge."

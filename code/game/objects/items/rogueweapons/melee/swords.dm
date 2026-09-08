@@ -1201,7 +1201,7 @@
 	force = 25
 	force_wielded = 25
 	minstr = 7
-	wdefense = 9
+	wdefense = 7
 	last_used = 0
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/gold
@@ -2283,8 +2283,11 @@
 //Elven weapons sprited and added by Jam
 /obj/item/rogueweapon/sword/short/elf
 	name = "elven shortsword"
-	desc = "This flowing sword is of classic elven design."
+	desc = "This flowing sword is of classic elven design. Durable metallurgy create a fine parrying blade."
 	icon_state = "elfsword"
+	wdefense = 9 // Better defense than the elven saber.
+	max_integrity = 200 
+	max_blade_int = 300 // High integrity and higher sharpness than a shortsword to parry longer without significant damage decay.
 	sellprice = 40
 	sheathe_icon = "elfsword"
 
@@ -2293,5 +2296,6 @@
 	desc = "This mighty flowing sword is of classic elven design."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "elflongsword"
+	max_blade_int = 330
 	sellprice = 50
 	sheathe_icon = "elfsword"

@@ -459,6 +459,11 @@
 	desc = "A short recurve warbow made for the express purpose of shooting on saigaback, a skill every archer in Aavnr takes much more seriously than their Northern counterparts. Every seasoned Druzhina is themselves a good bowyer and usually makes their own bow, this one is made with the purpure-ish crimson wood of a Vörötslevé tree."
 	icon_state = "recurve_riding"
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
+	name = "woad recurve bow"
+	desc = "A medium length composite bow of glued horn, wood, and sinew with fine shooting characteristics. Hewn from a living Black Oak branch, it carries the quiet strength of untouched groves; unyielding, unbroken, and fiercely guarded from the hands of Man."
+	icon_state = "blackoakrecurve_bow"
+
 /datum/intent/shoot/bow/short
 	chargetime = 0.75
 	chargedrain = 1.5
