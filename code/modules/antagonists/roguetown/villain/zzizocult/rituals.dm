@@ -508,6 +508,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	desc = "Curse your target to fall asleep after a minute. They are warned. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
+	keep_center = TRUE
 
 /datum/ritual/servantry/sleepcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)

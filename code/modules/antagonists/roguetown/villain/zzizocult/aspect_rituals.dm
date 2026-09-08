@@ -349,6 +349,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Recall"
 	desc = "Teleport yourself and your target into a pocket dimension for 3 minutes. Anyone you or your target grabs is brought with. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/strand/strandrecall/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -440,6 +441,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Whispers"
 	desc = "Perform a rite that offers your target a chance to remotely join the cult, without having to drag them to a conversion sigil. Works on anyone, even if they aren't a sacrifice target. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/toil/cultoffer/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -671,6 +673,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Black Rot"
 	desc = "Curse your target with the black rot. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/rot/plague/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -736,6 +739,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Babel"
 	desc = "Curse your target to forget the common tongue and become illiterate. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/noise/forgettongue/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -922,6 +926,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Radiance"
 	desc = "Curse a target to burn in the light. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/pitch/lightcurse/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
@@ -1035,6 +1040,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Curse of Blood"
 	desc = "Curse two targets to slowly die when apart from eachother. Requires two leeches that fed from seperate targets."
 	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 
 /datum/ritual/blood/bloodbond/invoke(mob/living/user, turf/center)
 	var/list/found = list()
