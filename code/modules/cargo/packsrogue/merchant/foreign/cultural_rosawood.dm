@@ -15,7 +15,7 @@
 	name = "Woad Elven Plate"
 	cost = 160
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/elven_plate)
-
+	
 
 /datum/supply_pack/rogue/rosawood/elven_gloves
 	name = "Woad Elven Gloves"

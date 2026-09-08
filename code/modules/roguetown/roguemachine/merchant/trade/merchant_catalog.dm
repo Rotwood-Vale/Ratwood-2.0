@@ -20,7 +20,6 @@
 	stock = list(
 		/datum/supply_pack/rogue/rosawood/woad_helm = 2,
 		/datum/supply_pack/rogue/rosawood/woad_plate = 1,
-		/datum/supply_pack/rogue/rosawood/elven_boots = 3,
 		/datum/supply_pack/rogue/rosawood/elven_gloves = 3,
 		/datum/supply_pack/rogue/rosawood/forrester_cloak = 2,
 		/datum/supply_pack/rogue/rosawood/woad_furcloak = 2,
