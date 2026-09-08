@@ -1365,7 +1365,7 @@
 /mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE)
 	var/datum/job/mob_job
 	var/target_job = SSrole_class_handler.get_advclass_by_name(advjob)
-	var/player_key = key || mind?.key
+	var/player_key = key ? key : mind?.key
 	if(mind)
 		mob_job = SSjob.GetJob(mind.assigned_role)
 		if(mob_job)

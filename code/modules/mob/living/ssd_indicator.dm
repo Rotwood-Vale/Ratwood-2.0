@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(ssd_indicator, /mutable_appearance, mutable_appearance('icons/
 /mob/living/proc/get_ssd_examine_text(m3)
 	if(client || !last_logout_time || stat == DEAD || HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
 		return
-	return span_warning("[m3] been disconnected for [DisplayTimeText(world.time - last_logout_time, 1)].")
+	return span_warning("[m3] been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)].")
 
 /mob/living/proc/queue_disconnected_admin_alert()
 	cancel_disconnected_admin_alert()
@@ -31,7 +31,7 @@ GLOBAL_DATUM_INIT(ssd_indicator, /mutable_appearance, mutable_appearance('icons/
 		return
 	disconnected_admin_alert_sent = TRUE
 	var/fartravel_link = "(<a href='?_src_=holder;[HrefToken(TRUE)];ssd_sendbacktolobby=[REF(src)]'>Fartravel</a>)"
-	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(src)] has been disconnected for [DisplayTimeText(world.time - last_logout_time, 1)]. [fartravel_link]"))
+	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(src)] has been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)]. [fartravel_link]"))
 
 #undef DISCONNECTED_ADMIN_ALERT_TIME
 

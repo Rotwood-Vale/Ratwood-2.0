@@ -802,12 +802,12 @@
 			to_chat(usr, span_warning("This can only be used on instances of type /mob/living/carbon/human."))
 			return
 		if(H.client || !H.last_logout_time)
-			to_chat(usr, span_warning("[H] is no longer disconnected."))
+			to_chat(usr, span_warning("[H] is no longer in a deep slumber."))
 			return
-		if(alert(usr, "Fartravel disconnected [key_name(H)] and delete their character?", "Message", "Yes", "No") != "Yes")
+		if(alert(usr, "Fartravel slumbering [key_name(H)] and delete their character?", "Message", "Yes", "No") != "Yes")
 			return
-		log_admin("[key_name(usr)] has fartraveled disconnected [key_name(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] disconnected.")
-		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled disconnected [key_name_admin(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] disconnected."))
+		log_admin("[key_name(usr)] has fartraveled slumbering [key_name(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber.")
+		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled slumbering [key_name_admin(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber."))
 		H.admin_send_back_to_lobby(usr, TRUE)
 
 	else if(href_list["revive"])

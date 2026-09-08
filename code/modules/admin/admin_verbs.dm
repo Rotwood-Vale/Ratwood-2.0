@@ -437,6 +437,9 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/icon/new_icon = input(src, "Choose an image to use for your admin ghost.", "Set Ghost Image") as null|icon
 	if(!new_icon)
 		return
+	if(new_icon.Width() != world.icon_size || new_icon.Height() != world.icon_size)
+		to_chat(src, span_warning("Admin ghost images must be [world.icon_size]x[world.icon_size]."))
+		return
 	prefs.admin_ghost_icon = new_icon
 	prefs.save_preferences()
 	apply_admin_ghost_image()
