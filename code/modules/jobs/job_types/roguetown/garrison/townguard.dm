@@ -54,9 +54,9 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/black
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	beltr = /obj/item/rogueweapon/mace/cudgel
-	belt = /obj/item/storage/belt/rogue/leather/citywatch
+	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone/bad/garrison
 
@@ -109,7 +109,7 @@
 		switch(weapon_choice)
 			if("Stunmace & Shield")
 				r_hand = /obj/item/rogueweapon/mace/stunmace
-				backl = /obj/item/rogueweapon/shield/iron/citywatch
+				backl = /obj/item/rogueweapon/shield/iron
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 			if("Polehammer")
@@ -143,20 +143,3 @@
 			)
 
 	H.verbs |= /mob/proc/haltyell
-
-
-#define CLOTHING_CITYWATCH		"#557d8f"
-#define CLOTHING_CITYWATCHLIGHT	"#60a0dbbb"
-
-/obj/item/storage/belt/rogue/leather/citywatch
-	name = "watchman's belt"
-	color = CLOTHING_CITYWATCHLIGHT
-
-/obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/clothing/wrists/roguetown/bracers/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/rogueweapon/shield/iron/citywatch
-	color = CLOTHING_CITYWATCHLIGHT
