@@ -59,22 +59,10 @@
 		if("Remove Bounty")
 			remove_bounty(H)
 
-		if("Collect Change")
-			budget2change(budget)
-			budget = 0
-
 /obj/structure/roguemachine/bounty/attackby(obj/item/P, mob/user, params)
 
 	if(!(ishuman(user))) return
 
-	if(istype(P, /obj/item/roguecoin))
-		budget += P.get_real_price()
-		qdel(P)
-		update_icon()
-		playsound(loc, 'sound/misc/gold_misc.ogg', 100, TRUE, -1)
-		say("The amount loaded is now [budget].")
-		return attack_hand(user)
-	..()
 
 ///Shows all active bounties to the user.
 /obj/structure/roguemachine/bounty/proc/consult_bounties(mob/living/carbon/human/user)
@@ -355,7 +343,7 @@
 		return
 
 	if(SStreasury.get_balance(user) < cost)
-		say("Insufficient funds. [cost] mammons required.")
+		say("Insufficient funds in account. [cost] mammons required.")
 		return
 
 	SStreasury.transfer(SStreasury.get_account(user), SStreasury.discretionary_fund, cost, "bounty scroll fee")

@@ -112,7 +112,7 @@
 	else if(treasury_state == TREASURY_IN_ARREARS)
 		reason = "Arrears repayment - Burghers of Rotwood Vale"
 	else
-		reason = "ETC loan repayment"
+		reason = "FTC loan repayment"
 	log_fund_entry(new /datum/treasury_entry("burn", to_fund, null, skim, reason))
 	if(treasury_debt <= 0)
 		treasury_debt = 0

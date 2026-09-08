@@ -83,10 +83,10 @@
 	icon_state = "quest_marker_mid"
 	quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RECOVERY)
 
-/obj/effect/landmark/quest_spawner/hard
+/obj/effect/landmark/quest_spawner/hard// Meant for the cursed mire- no blockade.
 	name = "hard quest landmark"
 	icon_state = "quest_marker_high"
-	quest_type = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY, QUEST_BLOCKADE_DEFENSE, QUEST_TOWNER_SMITH_CARAVAN, QUEST_TOWNER_MINER_OREVEIN)
+	quest_type = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOUNTY, QUEST_RECOVERY)
 
 /obj/effect/landmark/quest_spawner/proc/is_available_for_quest()
 	if(claimed_by?.resolve())

@@ -201,6 +201,9 @@
 			new_mob.faction |= faction.faction_tag
 		new_mob.mark_contract_spawned()
 		new_mob.AddComponent(/datum/component/quest_object/kill, src)
+		if(ishuman(new_mob))
+			var/mob/living/carbon/human/human = new_mob
+			human.flee_in_pain = FALSE	//Fleeing into the dark, often through water or reeds is not very fun for players.
 		// Suppress AI scanning while dormant inside the spawn_effect — without this the AI tries
 		// to build a proximity field while not on a turf, fails, and stays catatonic forever.
 		ADD_TRAIT(new_mob, TRAIT_FRESHSPAWN, "[type]")

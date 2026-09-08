@@ -11,7 +11,7 @@
 /// arrears advance can cover the day's wages, or sequestration can suspend them, before they
 /// are paid out. This is the automatic driver of the same ladder the admin panel's Force
 /// Arrears / Force Bankruptcy buttons trigger by hand: from NORMAL, the first shortfall raises
-/// arrears (unless a drawn ETC loan already forfeited the grace); a second consecutive shortfall
+/// arrears (unless a drawn FTC loan already forfeited the grace); a second consecutive shortfall
 /// escalates to sequestration.
 /datum/controller/subsystem/treasury/proc/evaluate_payroll_solvency()
 	if(!steward_machine || !steward_machine.daily_payments || !steward_machine.daily_payments.len)
@@ -23,7 +23,7 @@
 		return // the Purse can meet the day's payroll
 	switch(treasury_state)
 		if(TREASURY_NORMAL)
-			// A drawn ETC loan forfeits the arrears grace -> straight to sequestration.
+			// A drawn FTC loan forfeits the arrears grace -> straight to sequestration.
 			if(atc_loan_arrears_consumed)
 				enter_bankruptcy()
 			else
@@ -120,7 +120,7 @@
 				atc_loan_arrears_consumed = FALSE
 				priority_announce(
 					"The Crown's debt to the Ferentian Trading Company is settled. The Burghers' grace stands restored.",
-					"ETC LOAN SETTLED",
+					"FTC LOAN SETTLED",
 					'sound/misc/royal_decree2.ogg',
 					"Captain",
 				)
@@ -268,7 +268,7 @@
 	atc_loan_arrears_consumed = TRUE
 	// Direct credit so principal isn't immediately skimmed against the debt we just registered.
 	discretionary_fund.balance += amount
-	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, amount, "ETC emergency loan (principal)"))
+	log_fund_entry(new /datum/treasury_entry("mint", null, discretionary_fund, amount, "FTC emergency loan (principal)"))
 	priority_announce(
 		"The Crown takes an advance of [amount]m from the Ferentian Trading Company at the customary one-quarter interest, registering a debt of [debt_owed]m. The arrears grace stands forfeit; should the Crown miss its next payroll, the realm enters sequestration without warning.",
 		"THE CROWN BORROWS",

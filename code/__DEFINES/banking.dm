@@ -40,7 +40,7 @@
 #define BANKRUPTCY_RECOVERY_RESET 1500
 
 // Charters force-suspended when the Crown enters sequestration (item 6 decrees). The Golden
-// Bull is deliberately absent - the ETC keeps the burghers' compact (and their pledge) alive.
+// Bull is deliberately absent - the FTC keeps the burghers' compact (and their pledge) alive.
 #define BANKRUPTCY_SUSPENDED_DECREES list( \
 	DECREE_NOC_PESTRA_COVENANT, \
 	DECREE_GREAT_WRIT, \

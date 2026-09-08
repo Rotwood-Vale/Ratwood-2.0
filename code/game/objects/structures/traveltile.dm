@@ -175,12 +175,16 @@
 	return
 
 /obj/structure/fluff/traveltile/proc/has_access(atom/movable/AM)
+	var/has_job = FALSE
+	var/has_trait = FALSE
 	if(required_jobs && ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		return (H.job in required_jobs)
+		if(H.job in required_jobs)
+			has_job = TRUE
 	if(required_trait && isliving(AM))
-		return HAS_TRAIT(AM, required_trait)
-	return TRUE
+		if(HAS_TRAIT(AM, required_trait))
+			has_trait = TRUE
+	return (has_job || has_trait)
 
 /obj/structure/fluff/traveltile/proc/can_go(atom/movable/AM)
 	if(AM.recent_travel)
@@ -285,9 +289,9 @@
 /obj/structure/fluff/traveltile/bathhouse_passage// this is IN the bathhouse
 	name = "suspicious passage"
 	desc = "A crevice in the wall. It looks like it leads somewhere."
-	required_trait = "bathhouse_passage_seen"
+	required_trait = TRAIT_AGENT_BATHHOUSE
 	required_jobs = list("Bathmaster", "Bathhouse Attendant")
-	travel_time = 30 SECONDS // If there's an active chase you basically cannot use it to escape quickly
+	travel_time = 15 SECONDS // If there's an active chase you basically cannot use it to escape quickly
 	travel_message = "I begin to squeeze through the passage..."
 	travel_deny_message = "You're not supple enough to use this passage."
 	watchable = FALSE

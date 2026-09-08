@@ -21,7 +21,7 @@
 	var/round_bathhouse_tithe_total = 0
 	/// Banditry damage accumulated this round; skimmed from incoming Crown mint.
 	var/banditry_debt = 0
-	/// ETC/burgher loan outstanding; skimmed from incoming Crown mint above the operating floor.
+	/// FTC/burgher loan outstanding; skimmed from incoming Crown mint above the operating floor.
 	var/treasury_debt = 0
 	/// TREASURY_NORMAL / TREASURY_IN_ARREARS / TREASURY_BANKRUPTCY state machine.
 	var/treasury_state = TREASURY_NORMAL
@@ -32,9 +32,9 @@
 	var/list/bankruptcy_suspended_decree_ids = list()
 	/// Remaining concession slots after sequestration lift.
 	var/bankruptcy_concession_picks = 0
-	/// TRUE once the ETC arrears advance has been consumed (no second loan until repaid).
+	/// TRUE once the FTC arrears advance has been consumed (no second loan until repaid).
 	var/atc_loan_arrears_consumed = FALSE
-	/// How many ETC loans have been drawn this round.
+	/// How many FTC loans have been drawn this round.
 	var/atc_loans_drawn_this_round = 0
 	/// Full transaction ledger (list of datum/treasury_entry).
 	var/list/ledger = list()
