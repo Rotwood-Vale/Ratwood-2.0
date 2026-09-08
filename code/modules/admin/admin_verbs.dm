@@ -13,6 +13,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/hearglobalLOOC,
 	/client/proc/togglespawnmessages,
 	/client/proc/toggle_aghost_invis,
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,
 	/client/proc/admin_move_oasis,
 	/datum/admins/proc/start_vote,
@@ -81,6 +83,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/toggle_aghost_invis, /* lets us choose whether our in-game mob goes visible when we aghost (off by default) */
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/hearallasghost,
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
@@ -424,6 +428,35 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 	aghost_toggle = !aghost_toggle
 	to_chat(src, aghost_toggle ? "Aghosting will now turn your mob invisible." : "Aghost will no longer turn your mob invisible.")
+
+/client/proc/set_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "set ghost image"
+	if(!holder || !prefs)
+		return
+	var/icon/new_icon = input(src, "Choose an image to use for your admin ghost.", "Set Ghost Image") as null|icon
+	if(!new_icon)
+		return
+	prefs.admin_ghost_icon = new_icon
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image saved."))
+
+/client/proc/clear_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "clear ghost"
+	if(!holder || !prefs)
+		return
+	prefs.admin_ghost_icon = null
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image cleared."))
+
+/client/proc/apply_admin_ghost_image()
+	var/mob/dead/observer/admin/admin_ghost = mob
+	if(!istype(admin_ghost))
+		return
+	admin_ghost.apply_admin_ghost_image()
 
 /client/proc/admin_ghost()
 	set category = "-Admin-"

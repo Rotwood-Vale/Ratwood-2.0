@@ -10,6 +10,9 @@
 
 	if(IsAdminGhost(src))
 		has_unlimited_silicon_privilege = 1
+	if(istype(src, /mob/dead/observer/admin))
+		var/mob/dead/observer/admin/admin_ghost = src
+		admin_ghost.apply_admin_ghost_image()
 
 	if(client.prefs.unlock_content)
 		preferred_form = client.prefs.ghost_form
