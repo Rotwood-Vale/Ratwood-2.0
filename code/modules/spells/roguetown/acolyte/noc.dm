@@ -300,7 +300,7 @@
 
 
 /obj/effect/proc_holder/spell/invoked/magicshield
-	name = "Magic Shield"
+	name = "Moonlit Ward"
 	desc = "Wrap a target in a ward of anti-magic."
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
