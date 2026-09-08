@@ -64,7 +64,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inspire)//CtA, but blood cost and... kind of worse.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
-		var/instruments = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+		var/instruments = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Harpsichord","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Psyaxophone","Shamisen","Trumpet","Viola","Vocal Talisman","Xylixaphone")
 		var/instrument_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", instruments)
 		H.set_blindness(0)
 		switch(instrument_choice)
@@ -84,6 +84,8 @@
 				backr = /obj/item/rogue/instrument/harmonica
 			if("Harp")
 				backr = /obj/item/rogue/instrument/harp
+			if("Harpsichord")
+				backr = /obj/item/rogue/instrument/harpsichord
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
 			if("Jaw Harp")
@@ -92,6 +94,8 @@
 				backr = /obj/item/rogue/instrument/lute
 			if("Psyaltery")
 				backr = /obj/item/rogue/instrument/psyaltery
+			if("Psyaxophone")
+				backr = /obj/item/rogue/instrument/psyaxophone
 			if("Shamisen")
 				backr = /obj/item/rogue/instrument/shamisen
 			if("Trumpet")
@@ -100,6 +104,8 @@
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
+			if("Xylixaphone")
+				backr = /obj/item/rogue/instrument/xylixaphone
 		var/weapons = list("Psydonic Whip", "Psydonic Rapier")
 		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
 		switch(weapon_choice)
