@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	mode = NPC_AI_IDLE
 	faction = list("drow")
 	ambushable = FALSE
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.

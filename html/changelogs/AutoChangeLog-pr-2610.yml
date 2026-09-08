@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "Makes medical EXP scale with wound severity and the time spent sewing."

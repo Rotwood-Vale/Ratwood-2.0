@@ -1,0 +1,6 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "Removed the fifty-fifty when bumping someone on fire to avoid getting lit on fire."
+  - balance: "You need more than two firestacks to halve and pass them to another person, making it so you can't infinitely pass firestacks, e.g. (10 / 2 = 5 / 2 = 2.5 / 2 = 1.25 / 2 = 0.625 / 2 = 0.31... etc) If you are below two firestacks, they just won't pass when you bump into someone."
+  - balance: "If someone is lying down, they can't ignite you by bumping into you. You also step over them if they're on fire and you walk over them, avoiding getting ignited. Sprinting over their body will still ignite you however."

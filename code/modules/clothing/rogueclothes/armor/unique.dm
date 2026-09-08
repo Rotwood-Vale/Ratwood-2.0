@@ -61,6 +61,12 @@
 	armor = ARMOR_LEATHER_STUDDED 
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
+	name = "decorative mentor robe"
+	desc = "An old dopo robe worn purely for its eastern style."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = null
+
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
 	name = "foreign robes"
@@ -70,6 +76,12 @@
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 25 // Head Honcho gets a buff
 	sellprice = 25
+
+/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative
+	name = "decorative flowery robe"
+	desc = "Flower-styled robes worn purely for their eastern style."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = null
 
 // this robe spawns on a role that offers no leg protection nor further upgrades to the loadout, in exchange for better roundstart gear
 

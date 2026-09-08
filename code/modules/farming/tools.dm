@@ -23,7 +23,7 @@
 	icon_state = "inthresh"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 
@@ -297,7 +297,7 @@
 	icon_state = "inhoe"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /*
@@ -387,7 +387,7 @@
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 

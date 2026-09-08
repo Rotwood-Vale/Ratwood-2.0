@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - refactor: "Swapped around how the examine block is formatted, putting the headshot & supplementary buttons / info at the bottom. You can toggle this in the toggles menu."

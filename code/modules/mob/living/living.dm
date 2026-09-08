@@ -1722,17 +1722,21 @@
 	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE) || HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 
-	if(prob(50))	// 50% chance you don´t catch fire from a bump or walking over a burning corpse. Cause people don´t often bathe in gasoline.
-		return
-
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(fire_status && fire_status.on_fire)
+		if(fire_stacks < 2)// don't spread fire if you have less than two stacks
+			return
+
 		if(their_fire_status && their_fire_status.on_fire)
 			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2
 			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
 			set_fire_stacks(firesplit, fire_type)
 			spread_to.set_fire_stacks(firesplit, fire_type)
+			return
+
+		if(!(mobility_flags & MOBILITY_STAND) && spread_to.m_intent == MOVE_INTENT_WALK)// don't ignite because we stepped over someone burning unless we are sprinting
+			to_chat(spread_to, span_notice("You step over [src]'s burning body."))
 			return
 
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
@@ -1742,6 +1746,12 @@
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	if(spread_to.fire_stacks < 2)// don't spread fire if you have less than two stacks
+		return
+
+	if(!(spread_to.mobility_flags & MOBILITY_STAND))// same as above, but we're rubbing our burning face on their leg
 		return
 
 	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)

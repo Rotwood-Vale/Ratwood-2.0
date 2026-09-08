@@ -165,8 +165,6 @@
 	animname = "cut"
 	hitsound = "genslash"
 	penfactor = 5
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air with its fangs!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "slash"

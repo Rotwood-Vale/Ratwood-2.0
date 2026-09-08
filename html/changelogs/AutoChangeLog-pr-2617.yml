@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - bugfix: "Fixes some material duplication exploits that involve scissors refunding more material than the item cost to make."
