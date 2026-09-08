@@ -17,6 +17,7 @@
 	throw_speed = 1
 	throw_range = 3
 	dropshrink = 0.8
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()

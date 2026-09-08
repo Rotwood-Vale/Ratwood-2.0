@@ -1,0 +1,4 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Fixes naledi mask looking weird when worn on belt slot. Now it is hidden completely."

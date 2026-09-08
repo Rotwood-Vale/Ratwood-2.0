@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - bugfix: "fixes humans having an unconditional plus fifty to all their parry roles"
