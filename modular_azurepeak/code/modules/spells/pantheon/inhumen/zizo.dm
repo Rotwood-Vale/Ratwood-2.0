@@ -592,7 +592,7 @@
 	sound = list('sound/magic/magnet.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	releasedrain = 40
-	chargetime = 30
+	chargetime = 3
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	charging_slowdown = 1
@@ -603,10 +603,10 @@
 	hide_charge_effect = TRUE
 	miracle = TRUE
 	devotion_cost = 50
-	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "vengeful_spirit"
-	action_icon_state = "vengeful_spirit"
-	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "spirits"
+	action_icon_state = "spirits"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	invocations = list("Woe to the restless who spite Her name!")
 	invocation_type = "shout"
 
@@ -636,7 +636,7 @@
 	sound = list('sound/magic/necra_sight.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	releasedrain = 40
-	chargetime = 30
+	chargetime = 3
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	charging_slowdown = 1
@@ -647,10 +647,10 @@
 	hide_charge_effect = TRUE
 	miracle = TRUE
 	devotion_cost = 100
-	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "aspect"
-	action_icon_state = "aspect"
-	action_icon = 'icons/mob/actions/necramiracles.dmi'
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "raise_avatar"
+	action_icon_state = "raise_avatar"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	invocations = list("Pallida dominae, vocat!")
 	invocation_type = "shout"
 
@@ -668,12 +668,24 @@
 	revert_cast()
 	return FALSE
 
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo
+	name = "Profane Silence"
+	desc = "Fill their throat with profane silence - ensure neither mage-nor-man shall interrupt you, be it invocation or insult."
+	overlay_state = "silencezizo"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "silencezizo"
+
 /obj/effect/proc_holder/spell/invoked/cascade
-	name = "Flensing Cascade"
+	name = "Flensing Cataclysm"
 	desc = "Woe to the despairing in the face of Ambition. Unleash a cascade of unholy devotion upon the unbeliever - the more devotion they've consumed, the stronger the effect."
 	range = 7
 	sound = list('sound/magic/churn.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "cataclysm"
 	releasedrain = 40
 	chargedrain = 0
 	chargetime = 30
@@ -703,10 +715,12 @@
 		revert_cast()
 		return FALSE
 
-	var/current_devotion = target.devotion
-	var/maximum_devotion = CLERIC_T4
+	// target.devotion is the devotion DATUM, not a number - the numeric values are on the datum itself.
+	var/datum/devotion/target_devotion = target.devotion
+	var/current_devotion = target_devotion?.devotion
+	var/maximum_devotion = target_devotion?.max_devotion
 
-	if(!isnum(current_devotion) || !isnum(maximum_devotion) || maximum_devotion <= 0)
+	if(!isnum(current_devotion) || maximum_devotion <= 0)
 		to_chat(user, span_warning("[target] has no devotion for Zizo to measure."))
 		revert_cast()
 		return FALSE
@@ -718,47 +732,49 @@
 		revert_cast()
 		return FALSE
 
-	if(missing_devotion <= 30)
+	if(missing_devotion <= 250)
 		user.say("Yield to the Pale Damsel!")
 		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of dark ambition!"))
 		target.adjustFireLoss(30)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
-	if(missing_devotion <= 60)
+	if(missing_devotion <= 500)
 		user.say("Falter in the face of TRUE FAITH!")
 		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters under searing aspiration!"))
 		target.adjustFireLoss(60)
+		target.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/divine)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
-	if(missing_devotion <= 100)
+	if(missing_devotion <= 600)
 		user.say("PALE IN THE PATH OF MY DAMSEL'S PROGRESS!!")
 		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles, a burning pain engulfing me!"))
 		target.adjustFireLoss(80)
-		target.Stun(20)
-		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
-		return TRUE
-
-	if(missing_devotion <= 200)
-		user.say("KNEEL! KNEEL AND WEEP FOR MY LADY!!")
-		target.visible_message(span_danger("[target] is consumed by cascading holy force!"), span_userdanger("My devotion is weakened as a looming, burning darkness fills the gap!"))
-		target.adjustFireLoss(100)
 		target.adjust_fire_stacks(7, /datum/status_effect/fire_handler/fire_stacks/divine)
 		target.Stun(20)
-		target.ignite_mob()
-		explosion(get_turf(target), heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, smoke = FALSE)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
-	if(missing_devotion <= 500) //something bad happens
-		user.say("YOUR GODS' FAITH ENDS HERE!!")
+	if(missing_devotion <= 750)
+		user.say("KNEEL! KNEEL AND WEEP FOR MY LADY!!")
+		target.visible_message(span_danger("[target] is consumed by a cascading, unholy force!"), span_userdanger("My devotion is weakened as a looming, burning darkness fills the gap!"))
+		target.adjustFireLoss(100)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		target.ignite_mob()
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 800) //something bad happens
+		user.say("YOUR GOD'S FAITH ENDS HERE!!")
 		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("MY SOUL IS NEARLY BURNT ASUNDER - WHERE HAS MY PATRON GONE? IT HURTS."))
 		target.adjustFireLoss(120)
 		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
 		target.ignite_mob()
 		target.Stun(40)
-		explosion(get_turf(target), heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, smoke = FALSE)
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
@@ -775,7 +791,7 @@
 		sleep(80)
 		return TRUE
 
-	if(missing_devotion >= 1001) //This is impossible to hit but I still needed to retroactively code it just in case
+	else //missing_devotion is above the height of Her ambition
 		user.say("ZIZO BLAST!!") //hilarious
 		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
 		target.Stun(80)
@@ -786,6 +802,3 @@
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
 		return TRUE
-
-	revert_cast()
-	return FALSE
