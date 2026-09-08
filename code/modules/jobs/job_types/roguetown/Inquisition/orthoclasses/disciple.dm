@@ -60,7 +60,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)//bite the necromancer's nose and ears off for Psydon.
@@ -69,7 +69,7 @@
 			if("Pugilist - Master Athletics, Pain Resistance")//classic disciple but with the weapon choices not being a noob trap that debuffs you for grabbing a weapon you can make with 1 bullion roundstart.
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				var/pugtype = list("Katar", "Knuckledusters")
 				var/pug_choice = input(H,"Choose your PUGILIST WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in pugtype
