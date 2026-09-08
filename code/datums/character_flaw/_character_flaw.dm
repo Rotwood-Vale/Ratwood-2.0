@@ -819,12 +819,13 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/virgin
 	name = "Virgin"
-	desc = "I've never had a turn among the cabbages."
+	desc = "Dark forces lust after my purity!"
 	var/last_check = 0
 
 /datum/charflaw/virgin/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "You're a virgin!")
+	H.virginity = TRUE
 	H.purity = TRUE
 
 /datum/charflaw/virgin/flaw_on_life(mob/user)

@@ -1066,6 +1066,11 @@
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
+			if((H.patron.type == /datum/patron/inhumen/zizo) || (H.patron.type == /datum/patron/inhumen/baotha))
+				if(src.purity == TRUE)
+					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
+				if(src.virginity == TRUE)
+					. += span_aiprivradio("VIRGIN!")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
@@ -1106,9 +1111,6 @@
 				. += span_greentext("<b>They are my property.</b>")
 			else
 				. += span_greentext("<b>I can see their branding; they are owned by [ownership_info["name"]].</b>")
-
-		if(src.purity == TRUE && is_zizo(user))
-			. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
 
 		if(name in GLOB.court_agents)
 			var/datum/job/J = SSjob.GetJob(user.mind?.assigned_role)

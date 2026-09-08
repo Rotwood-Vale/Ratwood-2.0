@@ -159,7 +159,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 		if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
 			continue
-		if(J.type in (list(PEASANT_ROLES) + list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES) + list(GARRISON_ROLES) + list(CHURCH_ROLES)))
+		if(J.type in (list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES) + list(GARRISON_ROLES) + list(CHURCH_ROLES)))
 			weighted[H] = 5
 			if(H.purity == TRUE)
 				weighted[H] = 10
@@ -600,7 +600,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_tavern)
 	if(istype(A, /area/rogue/indoors/town/bath))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_bath)
-	if(istype(A, /area/rogue/indoors/town/academy))
+	if(istype(A, /area/rogue/indoors/town/academy) || istype(A, /area/rogue/indoors/town/academy))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_academy)
 	if(istype(A, /area/rogue/outdoors/town/graveyard))
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_graveyard)
