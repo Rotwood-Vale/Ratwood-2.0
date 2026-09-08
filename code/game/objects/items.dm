@@ -1788,6 +1788,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(src.anvilrepair)
+		if(src.smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)

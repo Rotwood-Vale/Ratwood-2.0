@@ -89,10 +89,8 @@
 	var/last_fire_update
 	var/account_id
 
-	canparry = TRUE
-	candodge = TRUE
-
-	dodgecd = FALSE
+	mob_can_parry = TRUE
+	mob_can_dodge = TRUE
 	dodgetime = 0
 
 	var/list/possibleclass

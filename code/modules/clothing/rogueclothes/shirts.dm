@@ -128,6 +128,7 @@
 	body_parts_covered = CHEST|VITALS
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -333,6 +334,7 @@
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
 	boobed_detail = FALSE
+	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
 	icon_state = "sailorreds"
@@ -386,6 +388,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/tribalrag
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -426,6 +429,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/green
 	color = CLOTHING_GREEN
@@ -623,6 +627,7 @@
 	desc = "A billowing tunic made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
 	icon_state = "stewardtunic"
 	item_state = "stewardtunic"
+	fiber_salvage = TRUE
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/loudmouth
 	color = null

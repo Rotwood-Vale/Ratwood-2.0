@@ -313,8 +313,6 @@
 	chargetime = 20
 	penfactor = 25
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard/shield/lich
