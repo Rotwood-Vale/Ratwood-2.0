@@ -177,6 +177,8 @@
 /obj/structure/fluff/traveltile/proc/has_access(atom/movable/AM)
 	var/has_job = FALSE
 	var/has_trait = FALSE
+	if(!required_jobs && !required_trait)
+		return TRUE
 	if(required_jobs && ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(H.job in required_jobs)
