@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/avert
 	name = "Borrowed Time"
 	desc = "Shield your fellow man from the Undermaiden's gaze, preventing them from slipping into death for as long as your faith and fatigue may muster."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "borrowtime"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
@@ -63,6 +65,8 @@
 /obj/effect/proc_holder/spell/targeted/abrogation
 	name = "Abrogation"
 	desc = "Debuffs targeted undead as long as they remain near you, slowly getting set on fire if they stay."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 8
 	overlay_state = "necra"
 	releasedrain = 30
@@ -186,6 +190,8 @@
 /obj/effect/proc_holder/spell/invoked/necra_vow
 	name = "Vow to Necra"
 	desc = "Make a vow to Necra. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 1
 	overlay_state = "necra"
 	releasedrain = 30
@@ -254,6 +260,8 @@
 /obj/effect/proc_holder/spell/invoked/necras_sight
 	name = "Necra's Sight"
 	desc = "Mark a psycross or a grave marker, and peer through them."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	releasedrain = 30
 	chargetime = 0 SECONDS
 	recharge_time = 10 SECONDS
@@ -261,9 +269,7 @@
 	invocation_type = "whisper"
 	invocations = list("Undermaiden guide my gaze...")
 	associated_skill = /datum/skill/magic/holy
-	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necraeye"
-	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	action_icon_state = "necraeye"
 	miracle = TRUE
 	devotion_cost = 30
