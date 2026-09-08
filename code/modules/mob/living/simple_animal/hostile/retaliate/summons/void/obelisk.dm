@@ -7,6 +7,10 @@
 	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC)
 
+/mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/Destroy()
+	QDEL_LIST(beam_parts)
+	return ..()
+
 /mob/living/simple_animal/hostile/retaliate/rogue/voidstoneobelisk/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//no wounding the obelisk
 	return
 
@@ -65,7 +69,7 @@
 	defprob = 35
 	retreat_health = 0.2
 	food = 0
-	dodgetime = 17
+	dodgetime = 1.7 SECONDS
 	aggressive = 1
 	var/beam_cooldown = 0
 	var/beam_range = 10
@@ -91,8 +95,6 @@
 	chargetime = 0
 	penfactor = 20
 	swingdelay = 0
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 

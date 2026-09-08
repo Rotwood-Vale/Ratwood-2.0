@@ -6,6 +6,7 @@
 	tutorial = "Investigators and diplomats, oft-selected from Confessors who've shown their aptitude in a variety of skills. A precise strike is all that's needed to forward the Orthodoxy's missive; whether it's struck with a diplomat's charm or a rapier's tip, however, is up to you."
 	outfit = /datum/outfit/job/roguetown/puritan/inspector
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,

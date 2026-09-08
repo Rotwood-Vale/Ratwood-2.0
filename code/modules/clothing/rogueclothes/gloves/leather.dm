@@ -16,6 +16,9 @@
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/gloves/roguetown/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/gloves/roguetown/leather/black
 	color = CLOTHING_BLACK
 

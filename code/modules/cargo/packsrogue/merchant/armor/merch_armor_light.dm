@@ -143,6 +143,16 @@
 	cost = 60 // Base sellprice of 30
 	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex)
 
+/datum/supply_pack/rogue/light_armor/import/hierophantshawl
+	name = "Hierophant Shawl"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant)
+
+/datum/supply_pack/rogue/light_armor/import/hierophanthijab
+	name = "Hierophant Hijab"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/roguehood/hierophant)
+
 /datum/supply_pack/rogue/light_armor/import/naleditrou
 	name = "Naledian Hardened Leather Chaqchur (Pants)"
 	cost = 40 // Base sellprice of 20

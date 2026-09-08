@@ -46,6 +46,17 @@
 				icon_state = "[base_state]0"
 			return
 
+/obj/machinery/light/rogue/firebowl/attack_right(mob/user)	// warm your hands a little at a more accessible spot than fireplaces
+	if(isliving(user))
+		var/mob/living/L = user
+		if(on)
+			L.visible_message(span_info("[user] starts to warm their hands."), span_info("You warm your hands."))
+			if(do_after(L, 4 SECONDS, target = src))
+				if(L.bodytemperature < BODYTEMP_NORMAL_MIN)
+					L.adjust_bodytemperature(10)
+		return
+
+
 /obj/machinery/light/rogue/firebowl/off
 	icon_state = "stonefire0"
 	base_state = "stonefire"
@@ -369,6 +380,11 @@
 	torchy.spark_act()
 	torchy.weather_resistant = TRUE
 	. = ..()
+
+/obj/machinery/light/rogue/torchholder/Destroy()
+	if(torchy)
+		QDEL_NULL(torchy)
+	return ..()
 
 /obj/machinery/light/rogue/torchholder/OnCrafted(dirin, user)
 	dirin = turn(dirin, 180)

@@ -78,11 +78,19 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	. = ..()
 	if(attached_toy)
 		. += "[span_notice("\An [attached_toy] appears attached to \the [initial(name)]. Alt+RMB to remove it.")]"
-	if(chastity_cursed)
-		if(received_cum_count == 1)
-			. += span_notice("1 tally mark is etched into the chastity device's metal surface.")
-		else if(received_cum_count > 1)
-			. += span_notice("[received_cum_count] tally marks are etched into the chastity device's metal surface.")
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		. += span_notice("[tally_text] are etched into the chastity device's metal surface.")
+
+/obj/item/chastity/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the chastity device's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
 
 /obj/item/chastity/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/dildo))
@@ -196,10 +204,10 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(chastity_feature)
 		return TRUE
 	var/datum/bodypart_feature/chastity/chastity_new = new /datum/bodypart_feature/chastity()
-	// Use the base accessory setter so we don't spawn a second hidden chastity item.
-	call(chastity_new, /datum/bodypart_feature/proc/set_accessory_type)(sprite_acc, null, H)
 	chastity_new.chastity_item = src
-	chastity_feature = chastity_new
+	// Use the base accessory setter so we don't spawn a second hidden chastity item.
+	// ^ DON'T DO THAT, IF YOU DO THAT YOU WROTE YOUR CODE WRONG
+	chastity_new.set_accessory_type(sprite_acc, null, H)
 	return TRUE
 
 // Attaches the prepared chastity bodypart feature to the chest bodypart.

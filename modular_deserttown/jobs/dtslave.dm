@@ -4,8 +4,8 @@
 	flag = SLAVE
 	department_flag = YOUNGFOLK
 	faction = "Station"
-	total_positions = 8//need more slaves!!
-	spawn_positions = 8
+	total_positions = 0
+	spawn_positions = 0
 
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST

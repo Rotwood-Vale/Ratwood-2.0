@@ -61,7 +61,7 @@ There are several things that need to be remembered:
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
 	if(body_overlay_cache_key != new_cache_key)
-		dna.species.handle_body(src)
+		dna?.species?.handle_body(src)
 		body_overlay_cache_key = new_cache_key
 	..() // always do update_body_parts when we call this
 
@@ -267,11 +267,12 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
+	if(!dna?.species)
+		return // Huh??
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
-		if(dna.species)
-			if(dna.species.regenerate_icons(src))
-				return
+		if(dna?.species?.regenerate_icons(src))
+			return
 		update_body()
 		update_hair()
 //		update_inv_w_uniform()
@@ -1606,11 +1607,9 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
-	clear_alert("legcuffed")
 	if(legcuffed)
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/roguetown/mob/bodies/cuffed.dmi', "[legcuffed.icon_state]down", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
@@ -1989,9 +1988,11 @@ generate/load female uniform sprites matching all previously decided variables
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
+	if(!dna?.species)
+		return "UNINITIALIZED"
 	. = list(dna.species.limbs_id)
 
-	if(dna.species.use_skintones)
+	if(dna.species.use_skintones && !(dna.species.mutant_skin_option && mutant_skin))
 		. += "coloured"
 		. += skin_tone
 	else if(dna.species.fixed_mut_color)

@@ -108,7 +108,8 @@
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 		target.mind.remove_antag_datum(/datum/antagonist/zombie)
 		target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
-		target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
+		if(debuff_type)
+			target.apply_status_effect(debuff_type)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 		//Due to an increased cost and cooldown, these revival types heal quite a bit.
 		target.apply_status_effect(/datum/status_effect/buff/healing, 14)
 		consume_items(target)
@@ -272,6 +273,9 @@
 /obj/effect/proc_holder/spell/invoked/resurrect/pestra
 	name = "Putrid Revival"
 	desc = "Revive the target by consuming heartblood. Self cast for more information."
+	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
+	action_icon = 'icons/mob/actions/pestramiracles.dmi'
+	overlay_state = "resurrect"
 	sound = 'sound/magic/slimesquish.ogg'
 	required_items = list(
 		/obj/item/heart_blood_canister/filled = 1,
@@ -280,14 +284,14 @@
 	alt_required_items = list(
 		/obj/item/heart_blood_vial/filled = 2
 	)
-	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
-	action_icon = 'icons/mob/actions/pestramiracles.dmi'
-	overlay_state = "resurrect"
 
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
 	//Does heartfelt even exist?
 	name = "Heartfelt Revival"
 	desc = "Revive the target at a cost, cast on yourself to check.<br>The target will get hungry faster for a time."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	overlay_state = "resurrect"
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/rogue/breadslice/toast = 5
 	)

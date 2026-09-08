@@ -47,7 +47,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = list('sound/gore/flesh_eat_01.ogg','sound/gore/flesh_eat_02.ogg','sound/gore/flesh_eat_03.ogg')
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS
 	remains_type = null

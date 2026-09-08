@@ -1185,3 +1185,53 @@ GLOBAL_LIST_EMPTY(string_lists)
 		else
 			return TRUE
 
+/**
+ * Returns a newline-separated list that counts equal-ish items, outputting count and item names, optionally with icons. (ported from AP by IronDragoon)
+ */
+/proc/counting_english_list(list/input, output_icons = TRUE, nothing_text = "nothing", line_prefix = "\t", first_item_prefix = "\n", last_item_suffix = "\n", and_text = "\n", comma_text = "\n", final_comma_text = "")
+	// Counted input items.
+	var/list/counts = list()
+	// Actual objects for later reference (for icons and formatting).
+	var/list/items = list()
+	// Count items.
+	for(var/item in input)
+		// Index items by name; usually works fairly well for loose equality.
+		var/name = "[item]"
+		if(name in counts)
+			counts[name]++
+		else
+			counts[name] = 1
+			items.Add(item)
+
+	// Assemble the output list.
+	var/list/out = list()
+	var/i = 0
+	for(var/item in items)
+		var/name = "[item]"
+		var/count = counts[name]
+		var/item_str = line_prefix
+
+		if(count > 1)
+			item_str += "[count]x&nbsp;"
+
+		// Atoms use special string conversion rules.
+		if(isatom(item))
+			// atoms/items/objects can be pretty and whatnot.
+			var/atom/A = item
+			// Mobs tend to have unusable icons.
+			if(output_icons && isicon(A.icon) && !ismob(A))
+				item_str += "[icon2html(A, viewers(get_turf(A)))]&nbsp;"
+			item_str += name
+
+		if(i == 0)
+			item_str = first_item_prefix + item_str
+		if(i == items.len - 1)
+			item_str = item_str + last_item_suffix
+
+		out.Add(item_str)
+		i++
+
+	// Finally return the list using regular english_list builder.
+	return english_list(out, nothing_text, and_text, comma_text, final_comma_text)
+
+

@@ -18,7 +18,6 @@
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/slave,
-		/datum/job/roguetown/adventurer/courtslave,
 		/datum/job/roguetown/dtchaplain,
 		
 		/datum/job/roguetown/tribalchieftain,
@@ -30,6 +29,7 @@
 	slot_adjust = list(
 		/datum/job/roguetown/manorguard = 4,//split with watchmen
 		/datum/job/roguetown/warden = 4,//split with vanguard
+		/datum/job/roguetown/adventurer/courtslave = 2,
 	)
 	title_adjust = list(
 		/datum/job/roguetown/lord = list(display_title = "Duke", f_title = "Duchess"),
@@ -47,10 +47,7 @@
 			its protectors and its subjects. While primarily a resident of the keep in the manors medical wing, you also have access \
 			to the local hightown clinic, where lesser licensed apothecaries ply their trade under your occasional passing tutelage.",
 		// /datum/job/roguetown/archivist = "CHANGE THIS!! - Teach people skills, whether DIRECTLY or by writing SKILLBOOKS. You and the Veteran next door teach people shit."
-		/datum/job/roguetown/warden = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. \
-				Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. \
-				You are subordinate to the Master Warden, and may be called upon as members of the garrison by the Marshal and Crown.\
-				Serve their will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you.",
+		/datum/job/roguetown/warden = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. You are subordinate to the Master Warden, whom in turn serves the baron and may be called upon as members of the garrison by the Marshal and Crown. Serve the baron's will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you.",
 		/datum/job/roguetown/manorguard = "Having proven yourself loyal and capable, you are entrusted to defend the keep and enforce its will throughout the city and duchy. \
 				Trained regularly in combat and siege warfare, you deal with threats - both within and without. \
 				Obey your Marshal, Knight-captain and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier..",

@@ -175,7 +175,7 @@
 
 /obj/item/organ/ears/tiefling
 	name = "tiefling ears"
-	accessory_type = /datum/sprite_accessory/ears
+	accessory_type = /datum/sprite_accessory/ears/elf
 
 /obj/item/organ/ears/akula
 	name = "axian ears"

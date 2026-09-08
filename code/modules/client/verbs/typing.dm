@@ -36,7 +36,7 @@
 	if(!mob)
 		return FALSE
 	REMOVE_TRAIT(mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
-	mob.clear_typing_indicator()
+	mob.clear_typing_indicator("cleared input")
 
 /**
  * Handles the user typing. After a brief period of inactivity,

@@ -65,6 +65,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	mask = /obj/item/clothing/mask/rogue/spectacles/duelist
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
 	backpack_contents = list(
@@ -122,6 +123,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	mask = /obj/item/clothing/mask/rogue/spectacles/duelist
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 
 	backpack_contents = list(

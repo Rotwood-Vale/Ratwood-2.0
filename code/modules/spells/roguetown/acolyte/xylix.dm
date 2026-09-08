@@ -30,6 +30,7 @@
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "ventril"
+	mute_allowed = TRUE
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -53,6 +54,7 @@
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "disguise"
+	mute_allowed = TRUE
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -95,7 +97,7 @@
 	mob_biotypes = MOB_HUMANOID
 	maxHealth = 20
 	health = 20
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	footstep_type = FOOTSTEP_MOB_BAREFOOT

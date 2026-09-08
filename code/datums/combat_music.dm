@@ -444,6 +444,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Poacher"
 	musicpath = list('sound/music/combat_poacher.ogg')
 
+/datum/combat_music/psydonite
+	name = "Psydonite"
+	desc = "WEEP for Him. Fight for Him. Kill for Him."
+	shortname = "Psydonite"
+	credits = "Lotchek - a2 Untitled"
+	musicpath = list('sound/music/psydonite.ogg')
+
 /datum/combat_music/reckoning
 	name = "Reckoning (Clergy, Offense)"
 	desc = ""

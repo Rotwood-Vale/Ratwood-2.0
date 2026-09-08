@@ -11,9 +11,11 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/arbalist
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
+		TRAIT_SLEUTH,
 	)
 	subclass_stats = list(//You get PER/STR for the crossbow.
 		STATKEY_PER = 3,

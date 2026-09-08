@@ -1,4 +1,4 @@
-// Withdraw Price used to be designed to match export price. 
+// Withdraw Price used to be designed to match export price.
 // However this meant that food were often too expensive to buy as raw materials
 // Now for food the withdraw price is set to be the same as the payout price
 // Theoretically this does create a perverse incentive to export food instead of selling it locally
@@ -111,8 +111,8 @@
 	remote_limit = 8
 
 /datum/roguestock/stockpile/pork
-	name = "Pig meat"
-	desc = "Piggy meat"
+	name = "Pig Meat"
+	desc = "Edible flesh harvested from hogs."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/fatty
 	held_items = list(0, 3)
 	payout_price = 4
@@ -212,7 +212,7 @@
 	stockpile_limit = 25
 	passive_generation = 1
 	category = "Foodstuffs"
-	generation_price = 4 
+	generation_price = 4
 
 /datum/roguestock/stockpile/onion
 	name = "Onion"

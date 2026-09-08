@@ -8,6 +8,14 @@
 /datum/customizer/organ/penis/is_allowed(datum/preferences/prefs)
 	return TRUE
 
+/proc/sheath_type_preference_label(sheath_type)
+	switch(sheath_type)
+		if(SHEATH_TYPE_NORMAL)
+			return "Sheath"
+		if(SHEATH_TYPE_SLIT)
+			return "Slit"
+	return "None"
+
 /datum/customizer_choice/organ/penis
 	abstract_type = /datum/customizer_choice/organ/penis
 	name = "Penis"
@@ -20,6 +28,7 @@
 	..()
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	penis_entry.penis_size = sanitize_integer(penis_entry.penis_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
+	penis_entry.sheath_type = sanitize_integer(penis_entry.sheath_type, SHEATH_TYPE_NONE, SHEATH_TYPE_SLIT, SHEATH_TYPE_NONE)
 
 /datum/customizer_choice/organ/penis/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
 	..()
@@ -27,12 +36,14 @@
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	penis_dna.penis_size = penis_entry.penis_size
 	penis_dna.functional = penis_entry.functional
+	penis_dna.sheath_type = penis_entry.sheath_type
 
 /datum/customizer_choice/organ/penis/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	dat += "<br>Penis size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=penis_size''>[find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)]</a>"
 	dat += "<br>Functional: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=functional''>[penis_entry.functional ? "YES" : "NO"]</a>"
+	dat += "<br>Sheath: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=sheath_type''>[sheath_type_preference_label(penis_entry.sheath_type)]</a>"
 
 /datum/customizer_choice/organ/penis/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
@@ -46,10 +57,19 @@
 			penis_entry.penis_size = sanitize_integer(new_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 		if("functional")
 			penis_entry.functional = !penis_entry.functional
+		if("sheath_type")
+			switch(penis_entry.sheath_type)
+				if(SHEATH_TYPE_NONE)
+					penis_entry.sheath_type = SHEATH_TYPE_NORMAL
+				if(SHEATH_TYPE_NORMAL)
+					penis_entry.sheath_type = SHEATH_TYPE_SLIT
+				else
+					penis_entry.sheath_type = SHEATH_TYPE_NONE
 
 /datum/customizer_entry/organ/penis
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
+	var/sheath_type = SHEATH_TYPE_NONE
 
 /datum/customizer/organ/penis/human
 	customizer_choices = list(/datum/customizer_choice/organ/penis/human)

@@ -179,19 +179,6 @@
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
 	duration = 30 SECONDS
 
-/datum/status_effect/debuff/netted/on_apply()
-		. = ..()
-		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, multiplicative_slowdown = 3)
-
-/datum/status_effect/debuff/netted/on_remove()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.legcuffed = null
-		C.update_inv_legcuffed()
-		C.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN)
-
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	name = "Tired"
 	desc = "I should get some rest."
@@ -836,10 +823,11 @@
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = TRUE
 	init_signals()
+	if(isnull(harpy.buckled_mobs))
+		return
 	var/mob/buckled_rider = harpy.buckled_mobs[1]
-	if(!isnull(buckled_rider))
-		buckled_mob = WEAKREF(buckled_rider)
-		buckled_rider.movement_type |= FLYING
+	buckled_mob = WEAKREF(buckled_rider)
+	buckled_rider.movement_type |= FLYING
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -885,7 +873,7 @@
 		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
-	var/mob/buckled_rider = buckled_mob.resolve()
+	var/mob/buckled_rider = buckled_mob?.resolve()
 	if(!isnull(buckled_rider))
 		buckled_rider.movement_type &= ~FLYING
 	buckled_mob = null

@@ -811,6 +811,11 @@
 	start_time = world.time
 	owner.overlay_fullscreen("hypothermia", /atom/movable/screen/fullscreen/hypothermia)
 
+
+// If warmed up, remove hypothermia, check once every minute for 50% removing wound if normal temp
+/datum/wound/hypothermia
+	var/next_removal_check = 0
+
 /datum/wound/hypothermia/on_life()
 	. = ..()
 
@@ -819,22 +824,16 @@
 
 	var/mob/living/carbon/C = owner
 
-	// If warmed up, remove hypothermia
-	if(C.bodytemperature >= BODYTEMP_NORMAL_MIN)
-		to_chat(C, span_notice("Feeling returns to my body as I warm up."))
-		C.clear_fullscreen("hypothermia")
-		qdel(src)
-		return
+	if(C.bodytemperature >= BODYTEMP_NORMAL_MIN && world.time >= next_removal_check)
+		next_removal_check = world.time + 1 MINUTES
+
+		if(prob(50))
+			to_chat(C, span_notice("Feeling returns to my body as I warm up."))
+			C.clear_fullscreen("hypothermia")
+			qdel(src)
+			return
 
 	// Occasional discomfort message
 	if(!C.stat && prob(5))
 		to_chat(C, span_warning("I can't stop shivering..."))
 
-	// After 2 minutes, convert to frostbite
-	if(world.time >= start_time + duration)
-		var/obj/item/bodypart/BP = bodypart_owner
-		if(BP)
-			to_chat(C, span_userdanger("I feel pins and needles in [BP]!"))
-			BP.add_wound(/datum/wound/frostbite)
-			C.clear_fullscreen("hypothermia")
-		qdel(src)

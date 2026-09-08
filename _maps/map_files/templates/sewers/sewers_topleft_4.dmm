@@ -11,7 +11,7 @@
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/town/sewer)
 "g" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/sewer)
 "h" = (
@@ -29,7 +29,7 @@
 "q" = (
 /obj/structure/closet/crate/chest,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/sewer)
 "t" = (
@@ -63,7 +63,7 @@
 /area/rogue/under/town/sewer)
 "R" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/sewer)
 "S" = (

@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	/// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/use_skintones = 0
+	/// If TRUE (and use_skintones is also on), add toggle to use mcolor as their skin color instead of using the color of their skin_tone
+	var/mutant_skin_option = FALSE
 	/// If my race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_blood = ""
 	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
@@ -230,6 +232,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 //Used for expanded lore blurbs on species.
 	var/expanded_desc
+
+	/**
+	 * Was on_species_gain ever actually called?
+	 * Species code is really odd...
+	 **/
+	var/properly_gained = FALSE
+
 ///////////
 // PROCS //
 ///////////
@@ -569,6 +578,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.grant_language(language_type, source = LANGUAGE_SOURCE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
+
+	properly_gained = TRUE
 
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
@@ -1326,7 +1337,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "attempted to punch")
 			return FALSE
 */
-		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 
@@ -1358,7 +1369,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
-		log_combat(user, target, "punched")
+		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 		if(ishuman(user) && user.mind)
 			var/text = "[bodyzone2readablezone(selzone)]..."
 			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
@@ -1489,7 +1500,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user
 				)
 				to_chat(user, span_danger("I shove [target.name], knocking them down!"))
-				log_combat(user, target, "shoved", "knocking them down")
+				log_combat(user, target, "shoved", null, "knocking them down")
 
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
@@ -1502,7 +1513,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				)
 				to_chat(user, span_danger("I shove [target.name] onto \the [target_table]!"))
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-				log_combat(user, target, "shoved", "onto [target_table] (table)")
+				log_combat(user, target, "shoved", null, "onto [target_table] (table)")
 
 			else if(target_collateral_mob)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
@@ -1515,7 +1526,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user
 				)
 				to_chat(user, span_danger("I shove [target.name] into [target_collateral_mob.name]!"))
-				log_combat(user, target, "shoved", "into [target_collateral_mob.name]")
+				log_combat(user, target, "shoved", null, "into [target_collateral_mob.name]")
 
 		else
 			target.visible_message(
@@ -1584,7 +1595,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					target.stop_pulling(TRUE)
 					playsound(target.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 
-			log_combat(user, target, "shoved", append_message)
+			log_combat(user, target, "shoved", null, append_message)
 
 //shameless copypaste
 /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -1612,7 +1623,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.lastattacker_weakref = WEAKREF(user)
 			if(target.mind)
 				target.mind.attackedme[user.real_name] = world.time
-			var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+			var/selzone = user.zone_selected
 			var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 			var/damage = user.get_punch_dmg() * 1.4
 			var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT, damage = damage)
@@ -1623,7 +1634,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 			else
 				if(affecting)
-					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, user.zone_selected, crit_message = TRUE)
+					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone, crit_message = TRUE)
 					if(!HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						target.visible_message(span_danger("[user] stomps [target]![target.next_attack_msg.Join()]"), \
 						span_danger("I'm stomped by [user]![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
@@ -1633,7 +1644,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						span_danger("[user] crushes me underneath them![target.next_attack_msg.Join()]"), span_hear("I hear a sickening kick!"), COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, span_danger("I crush [target] underneath myself![target.next_attack_msg.Join()]"))
 			target.next_attack_msg.Cut()
-			log_combat(user, target, "kicked")
+			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 			if(ishuman(user) && user.mind)
 				var/text = "[bodyzone2readablezone(selzone)]..."
@@ -1761,10 +1772,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.visible_message(span_danger("[user.name] tailslams [target.name]!"),
 								span_danger("I'm tailslammed by [user.name]!"), span_hear("I hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, span_danger("I slam [target.name] with my tail!"))
-			log_combat(user, target, "kicked")
+			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 
-		var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 		if(!affecting)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
@@ -1836,7 +1847,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/hit_area
 
-	selzone = accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
+	selzone = melee_accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
 	affecting = H.get_bodypart(check_zone(selzone))
 
 	if(!affecting)
@@ -2332,16 +2343,18 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(!Canignite_mob(H))
 		return TRUE
-
+	
+	// Stops maxing out temp from firestacks alone
+	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	
+		return
 	var/thermal_protection = H.get_thermal_protection()
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
-
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 		H.adjust_bodytemperature(1)
 	else
-		H.adjust_bodytemperature(5)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 30 seconds of being on fire to heatstroke
+		H.adjust_bodytemperature(2)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 50 seconds of being on fire to top out at lvl 2
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
@@ -2621,3 +2634,9 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 	var/datum/browser/popup = new(src.mob, "species_info", "<center>BESTIARY</center>", 460, 550)
 	popup.set_content(species_info)
 	popup.open()
+
+/datum/species/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Gained / Owned: [properly_gained ? "Yes" : "No"]"

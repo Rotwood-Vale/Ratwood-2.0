@@ -2,7 +2,7 @@
 	mode = NPC_AI_IDLE
 	faction = list("thieves")
 	ambushable = FALSE
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	flee_in_pain = TRUE
 	a_intent = INTENT_HELP
 	m_intent = MOVE_INTENT_SNEAK

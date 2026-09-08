@@ -17,6 +17,9 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/head/roguetown/paddedcap/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/leather
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	name = "leather helmet"
@@ -34,7 +37,7 @@
 	salvage_result = /obj/item/natural/hide/cured
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	
+
 /obj/item/clothing/head/roguetown/helmet/leather/chapeau
 	name = "Chapeau a Naled"
 	desc = "A leather cap, armored with layers of especially crafted armored coins each baring wards against supernatural forces. The heavy closeable, face-obscuring flaps are both practical, to protect from sand and dust and frigid nights--and to ensure the Otavan aids were not violating Naledi customs with their uncovered faces.</br>They are heavily associated with the Poet-Historian Aalis Petit and her writings and songs about the campaign into Naledi and through her, adventurous bards of Otava. "
@@ -214,6 +217,12 @@
 	blocksound = SOFTHIT
 	flags_inv = HIDEEARS
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|EYES
+
+/obj/item/clothing/head/roguetown/mentorhat/decorative
+	name = "decorative bamboo hat"
+	desc = "A bamboo hat woven for style rather than protection."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	max_integrity = 100
 
 /obj/item/clothing/head/roguetown/horsey
 	name = "head bit"

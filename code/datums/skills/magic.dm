@@ -8,7 +8,7 @@
 
 /datum/skill/magic/holy
 	name = "Miracles"
-	desc = "Gives you access to higher tier of miracles from your patrons."
+	desc = "Increases the effectiveness of the miracles granted by your patron."
 	expert_name = "Devotee"
 
 /datum/skill/magic/blood

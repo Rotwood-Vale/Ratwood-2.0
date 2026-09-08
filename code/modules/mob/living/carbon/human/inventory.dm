@@ -1,5 +1,5 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
+	return dna?.species?.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
@@ -381,6 +381,8 @@
 	..()
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+	if(QDELING(src))
+		return // nice try
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))

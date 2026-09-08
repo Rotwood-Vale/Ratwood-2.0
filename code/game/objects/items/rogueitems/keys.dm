@@ -793,6 +793,37 @@
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
+//Rockhill Slaver/Baron and Related Keys
+/obj/item/roguekey/baron
+	name = "Lowtown Manor Key"
+	desc = "A key to the Lowtown Manor, home of the Baron"
+	icon_state = "brownkey"
+	lockid = "BaronManor"
+
+/obj/item/roguekey/baronguest
+	name = "Lowtown Manor Guest Key"
+	desc = "A key to the guest rooms of the Lowtown Manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorGuest"
+
+/obj/item/roguekey/slaverhouse
+	name = "Slaver's Office Key"
+	desc = "A key to the Slaver Office in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaverHome"
+
+/obj/item/roguekey/slaverdungeon
+	name = "Slaver's Dungeon Key"
+	desc = "A key to the Slaver Dungeon in Lowtown"
+	icon_state = "spikekey"
+	lockid = "DTManorCells"
+
+/obj/item/roguekey/slaverpillory
+	name = "Auction Pillory Key"
+	desc = "A key to the Slaver Pillories in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaveAuction"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"
@@ -801,7 +832,7 @@
 
 /obj/item/roguekey/custom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = (input(user, "What would you name this key?", "", "") as text)
+		var/input = stripped_input(user, "What would you name this key?", "", "", MAX_NAME_LEN)
 		if(input)
 			name = input + " key"
 			to_chat(user, span_notice("You rename the key to [name]."))
@@ -913,7 +944,7 @@
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		src.holdname = stripped_input(user, "What would you like to name this?", "", "", MAX_NAME_LEN)
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))
 	else

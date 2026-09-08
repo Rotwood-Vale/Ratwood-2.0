@@ -11,7 +11,7 @@
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
 	to_chat(usr, span_notice("The power of the spell dissipates from my hand."))
-	..()
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)

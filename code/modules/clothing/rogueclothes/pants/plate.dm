@@ -25,6 +25,7 @@
 /obj/item/clothing/under/roguetown/platelegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/under/roguetown/platelegs/iron
 	name = "iron plate chausses"
