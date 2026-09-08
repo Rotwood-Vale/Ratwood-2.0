@@ -99,3 +99,37 @@
   zeroisthebiggay:
   - balance: (steel) fluted armor (made of steel) now requires steel instead of iron
   - rscadd: adds hammer and tongs to blacksmith apprentice stash
+2026-09-07:
+  Arturlang:
+  - bugfix: rebel team datum making constant timers
+  Yuckuza:
+  - rscadd: Added Gronnic Patron list, a subtype of inhumen that also includes Abyssor
+      and Dendor.
+  - rscadd: "Gronnic roles (Atgervi, Fjall J\xE1rnkl\xE6ddur, and Gronn Itinerant)\
+      \ now permit Abyssor and Dendor as valid patrons."
+  - rscadd: Added Gronnic Patron amulets from Azure Peak for all 6 of the Gronnic
+      Patron Spirits.
+  - image: added missing patron cross wrist on mob icons for the majority of patron
+      amulets.
+  - image: added missing bevor down icon_state for the dreamwalker bevor
+  rockliz:
+  - bugfix: Infernal now uses ,z to avoid conflicting with Hammerholdian's ,h shortcut.
+  zeroisthebiggay:
+  - balance: Removed the fifty-fifty when bumping someone on fire to avoid getting
+      lit on fire.
+  - balance: You need more than two firestacks to halve and pass them to another person,
+      making it so you can't infinitely pass firestacks, e.g. (10 / 2 = 5 / 2 = 2.5
+      / 2 = 1.25 / 2 = 0.625 / 2 = 0.31... etc) If you are below two firestacks, they
+      just won't pass when you bump into someone.
+  - balance: If someone is lying down, they can't ignite you by bumping into you.
+      You also step over them if they're on fire and you walk over them, avoiding
+      getting ignited. Sprinting over their body will still ignite you however.
+  - refactor: Swapped around how the examine block is formatted, putting the headshot
+      & supplementary buttons / info at the bottom. You can toggle this in the toggles
+      menu.
+  - balance: Makes medical EXP scale with wound severity and the time spent sewing.
+  - rscadd: the clap once emote
+  - rscadd: the slow clap emote
+  zoktiik:
+  - bugfix: Fixes some material duplication exploits that involve scissors refunding
+      more material than the item cost to make.
