@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		/area/rogue/indoors/town/church,
 		/area/rogue/indoors/town/bath,
 		/area/rogue/indoors/town/physician,
-		/area/rogue/indoors/town/academy,
+		/area/rogue/indoors/town/magician,
 		/area/rogue/indoors/town/garrison,
 		/area/rogue/indoors/town/warden,
 		/area/rogue/outdoors/town/graveyard,
