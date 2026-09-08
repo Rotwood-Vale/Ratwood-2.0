@@ -153,6 +153,17 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/shoes/roguetown/boots/hand/thigh
+	name = "thigh boots"
+	desc = "Leather boots that reach up to the thighs. Comfortable for both riding and standing in court all dae."
+	gender = PLURAL
+	icon = 'icons/roguetown/clothing/special/hand.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	icon_state = "thighboot"
+	item_state = "thighboot"
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/hide/cured
+
 ///obj/item/clothing/shoes/roguetown/ridingboots/Initialize()
 //	. = ..()
 //	AddComponent(/datum/component/squeak, list('sound/foley/spurs (1).ogg'sound/blank.ogg'=1), 50)
