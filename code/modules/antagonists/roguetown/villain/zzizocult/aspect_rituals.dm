@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	density = FALSE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
-	var/radius = 3
+	var/radius = 2
 	var/list/turf_data = list()
 
 /datum/stressevent/saw_wonder/cult
@@ -207,7 +207,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a cultist"
 	n_req = /obj/item/necro_relics/necro_crystal
-	is_cultist_ritual = TRUE
 	var/gate_count
 
 /obj/effect/temp_visual/opengate
@@ -258,10 +257,16 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	to_chat(target, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
 	target.Jitter(4)
 	gate_count++
+	if(gate_count > 0)
+		is_cultist_ritual = TRUE
 	if(gate_count < 3)
 		to_chat(target, span_boldnotice("Gate opened! [3 - gate_count] more to unlock Ascension!"))
 	if(gate_count == 3)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		if(M.current)
+			zizo_award(M.current, 5)
+	zizo_award(user, 5)
 	playsound(target, 'sound/villain/hall_attack4.ogg', 100, TRUE)
 	new /obj/structure/reality_rend(center)
 	GLOB.zizo_bestow_areas -= here.type

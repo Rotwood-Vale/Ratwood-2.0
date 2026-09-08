@@ -352,7 +352,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		to_chat(user, span_warning("I need another cultist on the rune with a knife in their hand."))
 		return
 	to_chat(user, span_notice("You and [assistant] begin the sacrifice..."))
-	if(!do_after(user, 10 SECONDS, target = target) && !do_after(assistant, 10 SECONDS, target = target))
+	assistant.Immobilize(10 SECONDS)
+	if(!do_after(user, 10 SECONDS, target = target))
+		assistant.SetImmobilized(0)
 		return
 	if(QDELETED(target) || !(target in center.contents) || QDELETED(assistant))
 		return
