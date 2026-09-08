@@ -621,8 +621,15 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_ancient.ogg')
 
 /datum/combat_music/herald
-	name = "Herad of Progress"
+	name = "Herald of Progress"
 	desc = "You cannot stop change."
-	shortname = "Ancient"
+	shortname = "Herald"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/cryomancer
+	name = "Cold Wizza"
+	desc = "Whip a tome out and flip it to the right page; send your ass right back to the ice age."
+	shortname = "Cryomancer"
+	credits = "Burialgoods - Cold Wizza (https://youtu.be/c5jeNi9pFKo?si=P0KG3ND6L1CT-fAl)"
+	musicpath = list('sound/music/combat_wizza.ogg')
