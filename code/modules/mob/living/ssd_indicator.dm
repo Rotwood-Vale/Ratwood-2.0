@@ -1,6 +1,9 @@
 GLOBAL_DATUM_INIT(ssd_indicator, /mutable_appearance, mutable_appearance('icons/mob/ssd_indicator.dmi', "default0", FLY_LAYER))
+GLOBAL_LIST_INIT(disconnected_admin_alert_role_times, list(
+	// "Grand Duke" = 10 MINUTES,
+))
 
-#define DISCONNECTED_ADMIN_ALERT_TIME 15 MINUTES
+#define DEFAULT_DISCONNECTED_ADMIN_ALERT_TIME 15 MINUTES
 
 /mob/living/proc/set_ssd_indicator(state)
 	if(state && stat != DEAD)
@@ -16,7 +19,10 @@ GLOBAL_DATUM_INIT(ssd_indicator, /mutable_appearance, mutable_appearance('icons/
 
 /mob/living/proc/queue_disconnected_admin_alert()
 	cancel_disconnected_admin_alert()
-	disconnected_admin_alert_timer = addtimer(CALLBACK(src, PROC_REF(disconnected_admin_alert)), DISCONNECTED_ADMIN_ALERT_TIME, TIMER_STOPPABLE)
+	var/alert_time = get_disconnected_admin_alert_time()
+	if(!alert_time)
+		return
+	disconnected_admin_alert_timer = addtimer(CALLBACK(src, PROC_REF(disconnected_admin_alert)), alert_time, TIMER_STOPPABLE)
 
 /mob/living/proc/cancel_disconnected_admin_alert()
 	if(disconnected_admin_alert_timer)
@@ -31,7 +37,26 @@ GLOBAL_DATUM_INIT(ssd_indicator, /mutable_appearance, mutable_appearance('icons/
 		return
 	disconnected_admin_alert_sent = TRUE
 	var/fartravel_link = "(<a href='?_src_=holder;[HrefToken(TRUE)];ssd_sendbacktolobby=[REF(src)]'>Fartravel</a>)"
-	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(src)] has been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)]. [fartravel_link]"))
+	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(src)] ([get_disconnected_admin_alert_job_name()]) has been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)]. [fartravel_link]"))
 
-#undef DISCONNECTED_ADMIN_ALERT_TIME
+/mob/living/proc/get_disconnected_admin_alert_time()
+	var/role_name = get_disconnected_admin_alert_role_name()
+	if(role_name in GLOB.disconnected_admin_alert_role_times)
+		return GLOB.disconnected_admin_alert_role_times[role_name]
+	return DEFAULT_DISCONNECTED_ADMIN_ALERT_TIME
+
+/mob/living/proc/get_disconnected_admin_alert_role_name()
+	return mind?.assigned_role ? mind.assigned_role : job
+
+/mob/living/proc/get_disconnected_admin_alert_job_name()
+	var/role_name = get_disconnected_admin_alert_role_name()
+	if(advjob && role_name && advjob != role_name)
+		return "[role_name] / [advjob]"
+	if(role_name)
+		return role_name
+	if(advjob)
+		return advjob
+	return "Unknown job"
+
+#undef DEFAULT_DISCONNECTED_ADMIN_ALERT_TIME
 
