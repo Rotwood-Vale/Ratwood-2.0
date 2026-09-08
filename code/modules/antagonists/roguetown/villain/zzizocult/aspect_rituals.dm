@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	var/obj/item/bodypart/chest/torso = target.get_bodypart(BODY_ZONE_CHEST)
 	if(torso)
 		torso.receive_damage(85)
-		torso.add_wound(/datum/wound/puncture)
+		torso.add_wound(/datum/wound/fracture)
 	playsound(target, 'sound/gore/flesh_eat_04.ogg', 60, TRUE)
 	target.purity = FALSE
 	to_chat(target, span_danger("THE LUX IS TORN FROM YOUR SOUL. YOUR MEMORY BECOMES A BLUR. YOU CAN'T REMEMBER WHO DID THIS TO YOU, OR ANY DETAILS ABOUT HOW IT HAPPENED."))
