@@ -669,8 +669,8 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/cascade
-	name = "Cascade"
-	desc = "Invoke Zizo, Dame of Progress, to turn a cleric's weakened faith into a violent cascade of progress."
+	name = "Flensing Cascade"
+	desc = "Woe to the despairing in the face of Ambition. Unleash a cascade of unholy devotion upon the unbeliever - the more devotion they've consumed, the stronger the effect."
 	range = 7
 	sound = list('sound/magic/churn.ogg')
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
@@ -688,8 +688,6 @@
 	movement_interrupt = FALSE
 	miracle = TRUE
 	devotion_cost = 100
-	invocations = list("Clerics and gods alike shall yield to Z progress!")
-	invocation_type = "shout"
 
 /obj/effect/proc_holder/spell/invoked/cascade/cast(list/targets, mob/living/user)
 	. = ..()
@@ -721,30 +719,30 @@
 		return FALSE
 
 	if(missing_devotion <= 30)
-		user.say("Faith yields!")
-		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of progress!"))
+		user.say("Yield to the Pale Damsel!")
+		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of dark ambition!"))
 		target.adjustFireLoss(30)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
 	if(missing_devotion <= 60)
-		user.say("Old faith breaks!")
-		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters as progress tears through it!"))
+		user.say("Falter in the face of TRUE FAITH!")
+		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters under searing aspiration!"))
 		target.adjustFireLoss(60)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
 	if(missing_devotion <= 100)
-		user.say("Progress will not kneel!")
-		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles before Zizo's progress!"))
+		user.say("PALE IN THE PATH OF MY DAMSEL'S PROGRESS!!")
+		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles, a burning pain engulfing me!"))
 		target.adjustFireLoss(80)
 		target.Stun(20)
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
 	if(missing_devotion <= 200)
-		user.say("The gods must yield!")
-		target.visible_message(span_danger("[target] is consumed by cascading holy force!"), span_userdanger("My weakened devotion collapses before progress!"))
+		user.say("KNEEL! KNEEL AND WEEP FOR MY LADY!!")
+		target.visible_message(span_danger("[target] is consumed by cascading holy force!"), span_userdanger("My devotion is weakened as a looming, burning darkness fills the gap!"))
 		target.adjustFireLoss(100)
 		target.adjust_fire_stacks(7, /datum/status_effect/fire_handler/fire_stacks/divine)
 		target.Stun(20)
@@ -754,8 +752,8 @@
 		return TRUE
 
 	if(missing_devotion <= 500) //something bad happens
-		user.say("Your god cannot stop progress!")
-		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("My faith is overwhelmed by relentless progress!"))
+		user.say("YOUR GODS' FAITH ENDS HERE!!")
+		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("MY SOUL IS NEARLY BURNT ASUNDER - WHERE HAS MY PATRON GONE? IT HURTS."))
 		target.adjustFireLoss(120)
 		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
 		target.ignite_mob()
@@ -764,9 +762,9 @@
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		return TRUE
 
-	if(missing_devotion <= 1000) //barely possible anyway
-		user.say("Faith shall yield to progress!")
-		target.visible_message(span_danger("[target] is struck by a violent cascade of Zizo's power!"), span_userdanger("My weakened faith erupts under the march of progress!"))
+	if(missing_devotion <= 900) //barely possible anyway
+		user.say("ZIZO!! ZIZO!! ZIZO!!")
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
 		target.Stun(60)
 		target.emote("agony")
 		target.adjustFireLoss(140)
@@ -774,11 +772,12 @@
 		target.ignite_mob()
 		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
 		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		sleep(80)
 		return TRUE
 
-	if(missing_devotion >= 1001) //
-		user.say("Clerics and gods alike shall yield to progress!") //i have no idea what to put here so there a main idea that your gods bow before the progress
-		target.visible_message(span_danger("[target] is shattered by Zizo's impossible cascade!"), span_userdanger("My faith collapses beneath something greater than gods!"))
+	if(missing_devotion >= 1001) //This is impossible to hit but I still needed to retroactively code it just in case
+		user.say("ZIZO BLAST!!") //hilarious
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
 		target.Stun(80)
 		target.emote("agony")
 		target.adjustFireLoss(160)
