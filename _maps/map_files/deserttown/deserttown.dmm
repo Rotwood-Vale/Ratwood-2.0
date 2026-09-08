@@ -34332,6 +34332,10 @@
 /obj/item/storage/belt/rogue/pouch/coins/rich,
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/under/cave/licharena/bossroom)
+"jKq" = (
+/obj/structure/roguemachine/noticeboard/wall,
+/turf/open/floor/rogue/lightpath,
+/area/rogue/outdoors/desert)
 "jKy" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -75569,6 +75573,10 @@
 /obj/effect/spawner/lootdrop/general_loot_low,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/desert/warden)
+"vhR" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/sandbrick,
+/area/rogue/outdoors/desert)
 "vid" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -366118,7 +366126,7 @@ kvr
 kvr
 eMy
 eMy
-eMy
+sHC
 eMy
 eMy
 eMy
@@ -372348,7 +372356,7 @@ eMy
 eMy
 vah
 btq
-eMy
+sHC
 eMy
 liL
 eMy
@@ -377385,7 +377393,7 @@ cRY
 cRY
 cRY
 cRY
-eMy
+sHC
 eMy
 eMy
 eMy
@@ -383231,7 +383239,7 @@ qBA
 sdd
 eMy
 eMy
-eMy
+sHC
 eMy
 eMy
 eMy
@@ -383285,7 +383293,7 @@ eMy
 sYX
 adk
 adk
-adk
+vhR
 adk
 adk
 eMy
@@ -393540,6 +393548,7 @@ eMy
 eMy
 eMy
 eMy
+sHC
 eMy
 eMy
 eMy
@@ -393556,8 +393565,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
-eMy
+sHC
 eMy
 eMy
 eMy
@@ -404804,7 +404812,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+sHC
 eMy
 eMy
 eMy
@@ -426345,7 +426353,7 @@ cOY
 gqF
 uNy
 atX
-cRY
+jKq
 cRY
 cRY
 cRY
@@ -438479,7 +438487,7 @@ eMy
 eMy
 eMy
 eMy
-eMy
+sHC
 eMy
 eMy
 eMy
