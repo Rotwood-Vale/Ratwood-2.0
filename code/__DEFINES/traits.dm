@@ -76,6 +76,7 @@
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"
+#define TRAIT_WEAPONLESS "Abboteer's Vow"//used by disciples to lock pure unarmed combat while allowing tool use.
 #define TRAIT_GOODTRAINER "Good Trainer"
 #define TRAIT_BADTRAINER "Bad Trainer"
 #define TRAIT_OUTDOORSMAN "Outdoorsman"
@@ -294,7 +295,7 @@
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
-#define TRAIT_RACISMISBAD "Heritage Vision"
+#define TRAIT_BLACKOAK "Heritage Vision"
 #define TRAIT_VENOMOUS "Venomous"
 #define TRAIT_OVERTHERETIC "Overt Heretic"//Applied on someone who has rites buffs. Armour, rituos, etc.
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
@@ -345,6 +346,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_RITUALIST = span_info("I am skilled in the holy arts. Using ritual chalk, I can more deftly channel my God's powers via runes."),
 	TRAIT_INSPIRING_MUSICIAN = span_info("The flow of battle dances to my song!"),
 	TRAIT_INQUISITION = span_info("I serve the Holy Otavan Inquisition. From a passing glance, I can recognize all other adherents within the local sect."),
+	TRAIT_WEAPONLESS = span_info("My vows forbid me from using weaponry... but they did not forbid me from using my fists!"),
 	TRAIT_CHOSEN = "Astrata choose you to represent her glory.",
 	TRAIT_WEBWALK = "I can move freely between webs.",
 	TRAIT_NOSTINK = span_dead("My nose is numb to the smell of decay."),
@@ -540,7 +542,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
-	TRAIT_RACISMISBAD = span_warning("The Black Oaks can spot ANY Foreigners and Outsiders, no matter how long they've lived in the realm. This is an easy skill to master, as it is simply identifying who isn't an elf."),
+	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
 	TRAIT_NODEF = span_warning("I expose myself in battle completely."),
 	TRAIT_LEYLINE_HASTE = span_warning("I can fully see and use the threads which bind the world together! Spell casting time and cooldowns are 25% faster now."),

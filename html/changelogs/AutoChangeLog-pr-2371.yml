@@ -1,0 +1,7 @@
+author: "kimesik"
+delete-after: True
+changes:
+  - balance: "Bandit classes skill adjustments (too many to list)."
+  - balance: "Bandit classes stat rebalance (everyone is weighted +10 now, or +13 if visible bounty)."
+  - balance: "Iconoclast devotion regen is Minor, down from Major."
+  - balance: "Bandit-Sellsword no longer has subclasses. They get Expert in almost every weapon type instead."

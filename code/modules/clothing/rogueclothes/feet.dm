@@ -288,30 +288,38 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
-/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots
+/obj/item/clothing/shoes/roguetown/boots/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
-	armor = list("blunt" = 100, "slash" = 10, "stab" = 100, "piercing" = 20, "fire" = 0, "acid" = 0) //Resistant to blunt and stab, but very weak to slash.
+	armor = ARMOR_BLACKOAK //Resistant to blunt and stab, but very weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
+	max_integrity = ARMOR_INT_SIDE_IRON
+	resistance_flags = FIRE_PROOF
+	blocksound = SOFTHIT
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfshoes"
 	item_state = "welfshoes"
 	anvilrepair = /datum/skill/craft/carpentry
+	smeltresult = /obj/item/rogueore/coal
+
+/obj/item/clothing/shoes/roguetown/boots/elven_boots/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_WOOD_ARMOR, 10)
 
 /// Dendor ritual variant of the woad elven boots — blessed by the Treefather's Nature's Temper ritual.
-/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic
+/obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic
 	name = "blessed druid boots"
 	desc = "Boots shaped from consecrated root-wood, still pulsing with the Treefather's vigour. They offer firm footing and resist both thrust and cut slightly better than common elven craft."
 	armor = list("blunt" = 100, "slash" = 65, "stab" = 130, "piercing" = 20, "fire" = 0, "acid" = 0)
-	max_integrity = 200
+	max_integrity = ARMOR_INT_SIDE_IRON
 
-/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/Initialize(mapload)
+/obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic/Initialize(mapload)
 	. = ..()
 	set_light(1, 1, 2, l_color = "#58C86A")
 	add_filter("druid_blessed_glow", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
 
-/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic/pickup(mob/user)
+/obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic/pickup(mob/user)
 	. = ..()
 	if(!istype(user, /mob/living/carbon/human))
 		return
