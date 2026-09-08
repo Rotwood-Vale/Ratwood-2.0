@@ -467,6 +467,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	passive = TRUE
 
 /datum/ritual/bite/necromancy/apply_passive(mob/living/carbon/human/H)
+	H.mind.current.faction += "[H.name]_faction"
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
