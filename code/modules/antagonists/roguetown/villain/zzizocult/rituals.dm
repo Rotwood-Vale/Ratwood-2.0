@@ -98,10 +98,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /proc/reroll_goals(mob/living/carbon/human/user)
 	user.zizo_goals = list()
 	var/list/weighted = list()
-	for(var/datum/zizogoal/subtype in subtypesof(/datum/zizogoal))
-		if(subtype in user.zizo_goals_complete)
+	for(var/datum/zizogoal/zg in GLOB.zizo_goals)
+		if(zg in user.zizo_goals_complete)
 			continue
-		weighted[subtype] = subtype.weight
+		weighted[zg] = zg.weight
 	for(var/i in 1 to 3)
 		if(!weighted.len)
 			break

@@ -25,6 +25,13 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/transmutation/raiseshrine, /datum/ritual/servantry/guidance,
 	))
 
+GLOBAL_LIST_INIT(zizo_goals, list(
+	/datum/zizogoal/worshipzizo, /datum/zizogoal/worshipzizo_church,
+	/datum/zizogoal/profaneshrine_church, /datum/zizogoal/profaneshrine_tavern,
+	/datum/zizogoal/profaneshrine_bath, /datum/zizogoal/profaneshrine_academy,
+	/datum/zizogoal/profaneshrine_graveyard,
+	))
+
 GLOBAL_LIST_EMPTY(zizo_bestowed)
 GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 

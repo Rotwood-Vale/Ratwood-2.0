@@ -215,5 +215,5 @@
 	var/zizo_targets
 	var/zizo_target_cd = 0
 	var/zizo_goals_cd = 0
-	var/list/zizo_goals
-	var/list/zizo_goals_complete
+	var/list/zizo_goals = list()
+	var/list/zizo_goals_complete = list()
