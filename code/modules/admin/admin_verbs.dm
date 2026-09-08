@@ -434,9 +434,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "set ghost image"
 	if(!holder || !prefs)
 		return
-	var/icon/new_icon = input(src, "Choose an image to use for your admin ghost.", "Set Ghost Image") as null|icon
-	if(!new_icon)
+	var/uploaded_file = input(src, "Choose a 32x32 image or gif to use for your admin ghost.", "Set Ghost Image") as null|file
+	if(!uploaded_file)
 		return
+	var/icon/new_icon = new(uploaded_file)
 	if(new_icon.Width() != 32 || new_icon.Height() != 32)
 		new_icon.Scale(32, 32)
 	prefs.admin_ghost_icon = new_icon
