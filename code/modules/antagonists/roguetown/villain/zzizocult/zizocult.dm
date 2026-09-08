@@ -50,6 +50,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/communicate
 	H.verbs |= /mob/living/carbon/human/proc/draw_sigil
 	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
+	H.verbs |= /mob/living/carbon/human/proc/zizo_objectives
 	H.purity = FALSE
 
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN)
@@ -125,6 +126,42 @@
 	say(pick(LIST_PRAISE_ZIZO), spans = list("god_zizo"), sanitize = FALSE, language = /datum/language/undead)
 	playsound(src, 'sound/vo/cult/praise.ogg', 45, 1)
 	log_say("[src] has praised zizo! (zizo cultist verb)")
+	if(!ishuman(src))
+		return
+	var/mob/living/carbon/human/cultist = src
+	if((/datum/zizogoal/worshipzizo in cultist.zizo_goals) || (/datum/zizogoal/worshipzizo_church in cultist.zizo_goals))
+		var/turf/churchcheck = get_turf(cultist)
+		if(istype(churchcheck, /area/rogue/indoors/town/church))
+			complete_zgoal(cultist, /datum/zizogoal/worshipzizo_church)
+		var/observers = 0
+		var/complete = FALSE
+		for(var/mob/living/carbon/human/L in hearers(7, cultist))
+			if(observers > 2)
+				complete = TRUE
+				break
+			if(L == cultist)
+				continue
+			if(L.stat == DEAD)
+				continue
+			if(!L.mind)
+				continue
+			if(is_zizo(L))
+				continue
+			observers++
+		if(complete == TRUE)
+			complete_zgoal(cultist, /datum/zizogoal/worshipzizo)
+
+/mob/living/carbon/human/proc/zizo_objectives()
+	set name = "Secret Objectives"
+	set category = "ZIZO"
+
+	if(!ishuman(src))
+		return
+	var/mob/living/carbon/human/cultist = src
+	if(!cultist.zizo_goals)
+		reroll_goals(cultist)
+	for(var/datum/zizogoal/gl in cultist.zizo_goals)
+		to_chat(cultist, span_notice("<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B>"))
 
 /mob/living/carbon/human/proc/communicate()
 	set name = "Communicate with Cult"

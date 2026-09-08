@@ -51,6 +51,64 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	H.mind.zizo_points += amt
 	to_chat(M, span_boldnotice("SECRETS UNVEILED. (+[amt])"))
 
+/datum/zizogoal
+	var/name = "Goal"
+	var/desc = "How to do it!"
+	var/reward = 2
+	var/weight = 10
+	var/complete = FALSE
+
+/datum/zizogoal/worshipzizo
+	name = "Worship Zizo"
+	desc = "Worship Zizo in with three non-cultists in sight."
+
+/datum/zizogoal/worshipzizo_church
+	name = "Worship Zizo at Church"
+	desc = "Worship Zizo inside of the Church."
+
+/datum/zizogoal/profaneshrine_church
+	name = "Create Shrine in Church"
+	desc = "Use the 'Raise Profane Shrine' rite inside of the church."
+
+/datum/zizogoal/profaneshrine_tavern
+	name = "Create Shrine in Tavern"
+	desc = "Use the 'Raise Profane Shrine' rite inside of the tavern."
+
+/datum/zizogoal/profaneshrine_bath
+	name = "Create Shrine in Bathhouse"
+	desc = "Use the 'Raise Profane Shrine' rite inside of the bathhouse."
+
+/datum/zizogoal/profaneshrine_academy
+	name = "Create Shrine in Academy"
+	desc = "Use the 'Raise Profane Shrine' rite inside of the academy."
+
+/datum/zizogoal/profaneshrine_graveyard
+	name = "Create Shrine in Graveyard"
+	desc = "Use the 'Raise Profane Shrine' rite inside of the church graveyard."
+
+/proc/complete_zgoal(mob/living/carbon/human/user, datum/zizogoal/goal)
+	for(var/datum/zizogoal/gl in user.zizo_goals)
+		if(gl == goal)
+			if(gl.complete)
+				continue
+			gl.complete = TRUE
+			user.zizo_goals_complete |= gl
+			zizo_award(user, gl.reward)
+
+/proc/reroll_goals(mob/living/carbon/human/user)
+	user.zizo_goals = list()
+	var/list/weighted = list()
+	for(var/datum/zizogoal/subtype in subtypesof(/datum/zizogoal))
+		if(subtype in user.zizo_goals_complete)
+			continue
+		weighted[subtype] = subtype.weight
+	for(var/i in 1 to 3)
+		if(!weighted.len)
+			break
+		var/datum/zizogoal/chosen = pickweight(weighted)
+		user.zizo_goals += chosen
+		weighted -= chosen
+
 /datum/zizo_research/proc/open(mob/living/carbon/human/user)
 	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
 	var/any = FALSE
@@ -343,15 +401,31 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(world.time < cultist.zizo_target_cd)
 			to_chat(user, span_warning("It is too soon, you must wait."))
 			return
-	var/obj/item/organ/heart/heart = locate() in center
-	if(heart)
-		qdel(heart)
 	if(is_zizo(user))
 		GLOB.zizo_target_cd = world.time + 20 MINUTES
 	else
 		cultist.zizo_target_cd = world.time + 20 MINUTES
 	reroll_targets(cultist)
 	to_chat(user, span_notice("You feel a shiver down your spine. Seek your new sacrifices with heartaches."))
+
+/datum/ritual/servantry/guidance
+	name = "Divine Guidance"
+	desc = "Obtain guidance from ZIZO to receive SECRETS. Can use every 20 minutes."
+	center_requirement = /obj/item/organ/eyes
+	center_desc = "eyes"
+	keep_center = TRUE
+
+/datum/ritual/servantry/guidance/invoke(mob/living/user, turf/center)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/cultist = user
+	if(world.time < cultist.zizo_goals_cd)
+		to_chat(user, span_warning("It is too soon, you must wait."))
+		return
+	cultist.zizo_goals_cd = world.time + 20 MINUTES
+	reroll_goals(cultist)
+	for(var/datum/zizogoal/gl in cultist.zizo_goals)
+		to_chat(cultist, span_notice("<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B>"))
 
 /obj/item/corruptedheart
 	name = "corrupted heart"
@@ -499,6 +573,28 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /datum/ritual/transmutation/cross/invoke(mob/living/user, turf/center)
 	new /obj/item/clothing/neck/roguetown/psicross/inhumen(center)
 	to_chat(user, span_notice("The psycross is transmuted into an amulet of Zizo."))
+
+/datum/ritual/transmutation/raiseshrine
+	name = "Raise Profane Shrine"
+	desc = "Raise an inverted cross as a shrine to ZIZO. Used in completing objectives."
+	center_requirement = /obj/item/grown/log/tree/small
+
+/datum/ritual/transmutation/raiseshrine/invoke(mob/living/user, turf/center)
+	new /obj/structure/fluff/psycross/zizocross(center)
+	to_chat(user, span_notice("The wooden log is transmuted into an inverted psycross."))
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/cultist
+	if(istype(center, /area/rogue/indoors/town/church))
+		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_church)
+	if(istype(center, /area/rogue/indoors/town/tavern))
+		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_tavern)
+	if(istype(center, /area/rogue/indoors/town/bath))
+		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_bath)
+	if(istype(center, /area/rogue/indoors/town/academy))
+		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_academy)
+	if(istype(center, /area/rogue/outdoors/town/graveyard))
+		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_graveyard)
 
 /datum/ritual/transmutation/criminalstool
 	name = "Criminal's Tool"
