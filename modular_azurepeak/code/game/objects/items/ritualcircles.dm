@@ -1310,6 +1310,12 @@
 			spawn(120)
 				icon_state = "zizo_chalky"
 		if("Rite of the Dark Crystal")
+			if(!user.mind)
+				return
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				var/confirm = alert(user, "Your pact with Zizo allows no more relics while your existing ones remain bound. Sever your oldest crystal - and the dead bound to it - to forge a new one?", "Rite of the Dark Crystal", "Sever and Replace", "Cancel")
+				if(confirm != "Sever and Replace")
+					return
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
@@ -1321,12 +1327,16 @@
 			user.say("ZIZO! ZIZO! THE DARK CRYSTAL TO COMMAND THE DEAD!!")
 			if(!do_after(user, 5 SECONDS))
 				return
+			// re-check cap right before committing, in case circumstances changed during the chant
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				user.mind.necro_retire_oldest_crystal()
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			new /obj/item/necro_relics/necro_crystal(loc)
+			var/obj/item/necro_relics/necro_crystal/new_crystal = new /obj/item/necro_relics/necro_crystal(loc)
+			user.mind.necro_register_crystal(new_crystal)
 			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
 			spawn(120)
-				icon_state = "zizo_chalky"
+			icon_state = "zizo_chalky"
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")

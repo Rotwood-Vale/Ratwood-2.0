@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - sound: "Added a short sound effect heard when you send or recieve a message in Subtle LOOC."

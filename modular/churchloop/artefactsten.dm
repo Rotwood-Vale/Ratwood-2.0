@@ -63,8 +63,8 @@ Malum's tool
 	icon_state = "inforge"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
@@ -75,8 +75,8 @@ Malum's tool
 	icon_state = "insmelt"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 	releasedrain = 0
