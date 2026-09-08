@@ -6,17 +6,11 @@
 
 /datum/virtue/pack/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
-	// Apply all virtues in the pack
+	// Apply all virtues in the pack without checking triumphs (pack already cost triumphs)
 	for(var/virtue_path in granted_virtues)
 		var/datum/virtue/V = GLOB.virtues[virtue_path]
 		if(V)
-			// Apply the virtue's effects without checking triumphs (pack already cost triumphs)
-			V.apply_to_human(recipient)
-			V.handle_traits(recipient)
-			V.handle_skills(recipient)
-			V.handle_stashed_items(recipient)
-			V.handle_added_languages(recipient)
-			V.handle_stats(recipient)
+			V.apply_generic_effects(recipient)
 
 // Bronze Golem Pack: Both Bronze Arms
 // For those who have replaced both arms with mechanical prosthetics
@@ -36,18 +30,16 @@
 // Enchanting Performer Pack: Socialite + Performer + Second Voice
 // For entertainers, bards, and charismatic performers
 /datum/virtue/pack/enchanter
-	name = "Enchanting Performer (-12 TRI)"
-	desc = "I am a master of the stage and salon alike - beautiful, talented, and able to become anyone through voice and charm. My performances captivate audiences, and my social graces open every door."
-	triumph_cost = 12
+	name = "Enchanting Performer (-6 TRI)"
+	desc = "I am a master of the stage and salon alike - beautiful, talented, and charming. My performances captivate audiences, and my social graces open every door."
+	triumph_cost = 6
 	granted_virtues = list(
 		/datum/virtue/utility/socialite,
-		/datum/virtue/utility/performer,
-		/datum/virtue/utility/secondvoice
+		/datum/virtue/utility/performer
 	)
-	custom_text = "Grants three virtues for the perfect entertainer:\n\
+	custom_text = "Grants two virtues for the perfect entertainer:\n\
 	- Socialite: Beautiful, empathic, good lover traits + hand mirror stashed\n\
-	- Performer: Choose stashed instrument, +4 Music skill, nutcracker.\n\
-	- Second Voice: Ability to perfectly mimic a second voice and switch between them"
+	- Performer: Choose stashed instrument, +4 Music skill, nutcracker."
 
 // Traveling Scholar Pack: Linguist + Rich and Shrewd + Equestrian
 // For worldly scholars who have traveled extensively and accumulated wealth and knowledge
@@ -90,6 +82,7 @@
 	custom_text = "Grants two virtues for the aristocrat:\n\
 	- Nobility: Noble status, Reading skill, +15 noble income, Heirloom Amulet & Hefty Coinpurse stashed\n\
 	- Socialite: Beautiful, empathic, good lover traits + hand mirror stashed"
+	incompatible_vices = list(/datum/charflaw/lawless, /datum/charflaw/ugly)
 
 // Trusted Housekeeper Pack: Resident + Cunning Provisioner
 /datum/virtue/pack/housekeeper
@@ -104,17 +97,15 @@
 	- Resident: City residency, treasury account, home in the city\n\
 	- Cunning Provisioner: Cooking & Fishing skills, food bag stashed (HOMESTEAD_EXPERT)"
 
-// Broken Soul Pack: Ugly + Tolerant + Deadened
+// Broken Soul Pack: Tolerant + Deadened
 /datum/virtue/pack/brokensoul
-	name = "Broken Soul (-3 TRI)"
-	desc = "Life has been cruel to me. My appearance drives others away, I've learned to endure what most cannot, and I've felt nothing for so long I can barely remember what emotions were like. I am a walking testament to survival through suffering."
-	triumph_cost = 3
+	name = "Broken Soul (-2 TRI)"
+	desc = "Life has been cruel to me. I've learned to endure what most cannot, and I've felt nothing for so long I can barely remember what emotions were like. I am a walking testament to survival through suffering."
+	triumph_cost = 2
 	granted_virtues = list(
-		/datum/virtue/utility/ugly,
 		/datum/virtue/utility/tolerant,
 		/datum/virtue/utility/deadened
 	)
-	custom_text = "Grants three virtues for the outcast:\n\
-	- Ugly: Unseemly appearance, immune to corpse stink (UNSEEMLY + NOSTINK traits)\n\
+	custom_text = "Grants two virtues for the outcast:\n\
 	- Tolerant: No stress from certain species, broad acceptance\n\
 	- Deadened: Completely emotionless (NOMOOD trait)"

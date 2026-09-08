@@ -60,6 +60,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/name
 	var/desc
 	var/ephemeral = FALSE // This flaw is currently disabled and will not process
+	var/flavor_only = FALSE // For quirks. Designates a vice as not counting towards unlocking quirks, usually for insignificant or flavor vices.
 
 /datum/charflaw/proc/on_mob_creation(mob/user)
 	return
@@ -135,10 +136,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/eznoflaw
 	name = "No Flaw"
 	desc = "I'm a normal person, how rare!"
+	flavor_only = TRUE // Not a flaw.
 
 /datum/charflaw/noflaw
 	name = "No Flaw (-3 TRI)"
 	desc = "I'm a normal person, how rare! (Consumes 3 triumphs or gives a random flaw.)"
+	flavor_only = TRUE // Not a flaw.
 
 /datum/charflaw/noflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -426,12 +429,14 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
 	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
 	var/logged = FALSE
+	flavor_only = TRUE // Opt-in encounter hook. Not a flaw.
 
 /datum/charflaw/hunted
 	name = "Marked by Gnolls"
 	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
 	<small>This virtue will encourage Gnolls to hunt you down. You may potentially be killed in the process.</small>"
 	var/logged = FALSE
+	flavor_only = TRUE // Opt-in encounter hook. Not a flaw.
 
 /datum/charflaw/ugly
 	name = "Ugly"
@@ -532,6 +537,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/annoying_face
 	name = "Annoying Face"
 	desc = "I am cursed with an odd voice and appearance."
+	flavor_only = TRUE // Not really a flaw.
 
 /datum/charflaw/annoying_face/on_mob_creation(mob/user)
 	..()

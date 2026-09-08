@@ -1,119 +1,84 @@
-/datum/preferences/proc/check_virtue_vice_conflict(virtue_type, show_message = FALSE, mob/user = null)
-	// Check if selected virtue conflicts with any selected vice
-	var/list/vice_list = list()
-	for(var/i = 1 to 5)
-		var/datum/charflaw/v = vars["vice[i]"]
-		if(v)
-			vice_list += v
-	
-	// Bronze Arm (R) vs Wood Arm (R)
-	if(virtue_type == /datum/virtue/utility/bronzearm_r)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/limbloss/arm_r)
+/datum/preferences/proc/get_customization_pick(typepath)
+	if(!typepath)
+		return null
+	return GLOB.virtues[typepath] || GLOB.quirks[typepath]
+
+// Virtue packs should count for every virtue they contain when considering incompatibilities.
+/datum/preferences/proc/get_virtue_effective_types(virtue_typepath)
+	var/list/types = list()
+	if(!virtue_typepath)
+		return types
+	types += virtue_typepath
+	if(ispath(virtue_typepath, /datum/virtue/pack))
+		var/datum/virtue/pack/P = GLOB.virtues[virtue_typepath]
+		if(P)
+			types += P.granted_virtues
+	return types
+
+/datum/preferences/proc/check_pick_virtue_conflict(pick_type, existing_type, show_message = FALSE, mob/user = null)
+	if(!pick_type || !existing_type)
+		return FALSE
+	var/datum/customization_trait/pick = get_customization_pick(pick_type)
+	var/datum/customization_trait/existing = get_customization_pick(existing_type)
+	if(!pick || !existing)
+		return FALSE
+	var/list/pick_effective = get_virtue_effective_types(pick_type)
+	var/list/existing_effective = get_virtue_effective_types(existing_type)
+	if(length(pick.incompatible_virtues))
+		for(var/t in existing_effective)
+			if(t in pick.incompatible_virtues)
 				if(show_message && user)
-					to_chat(user, span_warning("Bronze Arm (R) virtue conflicts with Wood Arm (R) vice!"))
+					to_chat(user, span_warning("[pick.name] conflicts with [existing.name]!"))
 				return TRUE
-	
-	// Bronze Arm (L) vs Wood Arm (L)
-	if(virtue_type == /datum/virtue/utility/bronzearm_l)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/limbloss/arm_l)
+	if(length(existing.incompatible_virtues))
+		for(var/t in pick_effective)
+			if(t in existing.incompatible_virtues)
 				if(show_message && user)
-					to_chat(user, span_warning("Bronze Arm (L) virtue conflicts with Wood Arm (L) vice!"))
+					to_chat(user, span_warning("[pick.name] conflicts with [existing.name]!"))
 				return TRUE
-	
-	// Night-eyed vs Colorblind
-	if(virtue_type == /datum/virtue/utility/night_vision)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/colorblind)
-				if(show_message && user)
-					to_chat(user, span_warning("Night-eyed virtue conflicts with Colorblind vice!"))
-				return TRUE
-	
-	// Socialite (Beautiful) vs Ugly
-	if(virtue_type == /datum/virtue/utility/socialite)
-		for(var/datum/charflaw/vice in vice_list)
-			if(vice && vice.type == /datum/charflaw/ugly)
-				if(show_message && user)
-					to_chat(user, span_warning("Socialite virtue conflicts with Ugly vice!"))
-				return TRUE
-	
-	// Deathless (no hunger/breath) vs any food/breathing related vices
-	// Deathless conflicts with nothing currently, but kept for future reference
-	
 	return FALSE
 
-/datum/preferences/proc/check_virtue_virtue_conflict(virtue_type, other_virtue_type, show_message = FALSE, mob/user = null)
-	if(!virtue_type || !other_virtue_type)
+/datum/preferences/proc/check_pick_vice_conflict(pick_type, show_message = FALSE, mob/user = null)
+	var/datum/customization_trait/pick = get_customization_pick(pick_type)
+	if(!pick || !length(pick.incompatible_vices))
 		return FALSE
-	if(virtue_type == /datum/virtue/utility/bronzearm_r && other_virtue_type == /datum/virtue/utility/bronzearm_l)
-		if(show_message && user)
-			to_chat(user, span_warning("Bronze Arm (R) virtue conflicts with Bronze Arm (L) virtue - you can't have both bronze arms!"))
-		return TRUE
-	if(virtue_type == /datum/virtue/utility/bronzearm_l && other_virtue_type == /datum/virtue/utility/bronzearm_r)
-		if(show_message && user)
-			to_chat(user, span_warning("Bronze Arm (L) virtue conflicts with Bronze Arm (R) virtue - you can't have both bronze arms!"))
-		return TRUE
+	for(var/i = 1 to 5)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice && (vice.type in pick.incompatible_vices))
+			if(show_message && user)
+				to_chat(user, span_warning("[pick.name] conflicts with [vice.name] vice!"))
+			return TRUE
+	return FALSE
 
-/datum/preferences/proc/check_vice_virtue_conflict(vice_type, show_message = FALSE, mob/user = null)
-	// Check if selected vice conflicts with any selected virtue
-	var/list/virtue_list = list(virtue, virtuetwo)
-	
-	// Wood Arm (R) vs Bronze Arm (R)
-	if(vice_type == /datum/charflaw/limbloss/arm_r)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/bronzearm_r)
-				if(show_message && user)
-					to_chat(user, span_warning("Wood Arm (R) vice conflicts with Bronze Arm (R) virtue!"))
-				return TRUE
-	
-	// Wood Arm (L) vs Bronze Arm (L)
-	if(vice_type == /datum/charflaw/limbloss/arm_l)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/bronzearm_l)
-				if(show_message && user)
-					to_chat(user, span_warning("Wood Arm (L) vice conflicts with Bronze Arm (L) virtue!"))
-				return TRUE
-	
-	// Colorblind vs Night-eyed
-	if(vice_type == /datum/charflaw/colorblind)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/night_vision)
-				if(show_message && user)
-					to_chat(user, span_warning("Colorblind vice conflicts with Night-eyed virtue!"))
-				return TRUE
-	
-	// Ugly vs Socialite (Beautiful)
-	if(vice_type == /datum/charflaw/ugly)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/socialite)
-				if(show_message && user)
-					to_chat(user, span_warning("Ugly vice conflicts with Socialite virtue!"))
-				return TRUE
-	
-	// Mute vs Second Voice (can't have second voice if you're mute)
-	if(vice_type == /datum/charflaw/mute)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/secondvoice)
-				if(show_message && user)
-					to_chat(user, span_warning("Mute vice conflicts with Second Voice virtue - you can't have a second voice if you're mute!"))
-				return TRUE
-	
-	// Unintelligible vs Second Voice (second voice won't help if you're unintelligible)
-	if(vice_type == /datum/charflaw/unintelligible)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/secondvoice)
-				if(show_message && user)
-					to_chat(user, span_warning("Unintelligible vice conflicts with Second Voice virtue!"))
-				return TRUE
-	// Lawless conflicts with: Nobility and High Society
-	if(vice_type == /datum/charflaw/lawless)
-		for(var/datum/virtue/virt in virtue_list)
-			if(virt && virt.type == /datum/virtue/utility/noble || virt.type == /datum/virtue/pack/highsociety)
-				if(show_message && user)
-					to_chat(user, span_warning("Lawless vice conflicts with the Nobility and High Society virtues - you can't be an outlaw and keep Astrata's grace!"))
-				return TRUE
+/datum/preferences/proc/check_vice_pick_conflict(vice_type, show_message = FALSE, mob/user = null)
+	if(!vice_type)
+		return FALSE
+	var/list/held = list()
+	if(virtue)
+		held += virtue
+	if(virtuetwo)
+		held += virtuetwo
+	if(quirk)
+		held += quirk
+	if(quirktwo)
+		held += quirktwo
+	for(var/datum/customization_trait/pick in held)
+		if(length(pick.incompatible_vices) && (vice_type in pick.incompatible_vices))
+			if(show_message && user)
+				to_chat(user, span_warning("This vice conflicts with [pick.name]!"))
+			return TRUE
+	return FALSE
 
+/datum/preferences/proc/check_quirk_virtue_conflict(quirk_type, show_message = FALSE, mob/user = null)
+	for(var/datum/virtue/virt in list(virtue, virtuetwo))
+		if(virt && check_pick_virtue_conflict(quirk_type, virt.type, show_message, user))
+			return TRUE
+	return FALSE
+
+/datum/preferences/proc/check_virtue_quirk_conflict(virtue_type, show_message = FALSE, mob/user = null)
+	for(var/datum/quirk/Q in list(quirk, quirktwo))
+		if(Q && check_pick_virtue_conflict(virtue_type, Q.type, show_message, user))
+			return TRUE
 	return FALSE
 
 /datum/preferences/proc/check_vice_vice_conflict(vice_type, list/selected_vices, show_message = FALSE, mob/user = null)
@@ -260,6 +225,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack,
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
+		"quirk" = quirk,
+		"quirktwo" = quirktwo,
 		"vice1" = vice1,
 		"vice2" = vice2,
 		"vice3" = vice3,
@@ -328,6 +295,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
+	quirk = snapshot["quirk"]
+	quirktwo = snapshot["quirktwo"]
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
@@ -390,6 +359,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
+		"quirk" = quirk?.type,
+		"quirktwo" = quirktwo?.type,
 		"vice1" = vice1?.type,
 		"vice2" = vice2?.type,
 		"vice3" = vice3?.type,
@@ -473,7 +444,19 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none()
-	
+
+	var/quirk_type = string_to_typepath(preset["quirk"])
+	if(quirk_type && ispath(quirk_type, /datum/quirk))
+		quirk = new quirk_type()
+	else
+		quirk = new /datum/quirk/none()
+
+	var/quirktwo_type = string_to_typepath(preset["quirktwo"])
+	if(quirktwo_type && ispath(quirktwo_type, /datum/quirk))
+		quirktwo = new quirktwo_type()
+	else
+		quirktwo = new /datum/quirk/none()
+
 	var/vice1_type = string_to_typepath(preset["vice1"])
 	if(vice1_type && ispath(vice1_type, /datum/charflaw))
 		vice1 = new vice1_type()
@@ -636,7 +619,16 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		var/datum/virtue/v_temp = new virtue_path()
 		if(v_temp.name != "None")
 			summary += " | [v_temp.name]"
-	
+
+	// Quirks
+	var/quirk_count = 0
+	for(var/preset_key in list("quirk", "quirktwo"))
+		var/quirk_path = string_to_typepath(preset[preset_key])
+		if(ispath(quirk_path, /datum/quirk) && quirk_path != /datum/quirk/none)
+			quirk_count++
+	if(quirk_count > 0)
+		summary += " | [quirk_count] quirk[quirk_count > 1 ? "s" : ""]"
+
 	// Count vices
 	var/vice_count = 0
 	for(var/i = 1 to 5)
@@ -1016,14 +1008,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	
 	if(virtue && virtue.custom_text)
 		html += "<div class='statpack-stats' style='margin-top: 4px;'>" + virtue.custom_text + "</div>"
-	
+
 	// Display traits granted
 	if(virtue && LAZYLEN(virtue.added_traits))
 		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
 		for(var/trait in virtue.added_traits)
 			html += "• [trait]<br>"
 		html += "</div>"
-	
+
 	// Display skills granted
 	if(virtue && LAZYLEN(virtue.added_skills))
 		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
@@ -1038,16 +1030,16 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/skill_name = initial(S.name)
 				html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
 		html += "</div>"
-	
+
 	// Display stashed items
 	if(virtue && LAZYLEN(virtue.added_stashed_items))
 		html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
 		for(var/item_name in virtue.added_stashed_items)
 			html += "• [item_name]<br>"
 		html += "</div>"
-	
+
 	html += "</div>"
-	
+
 	if(statpack && statpack.name == "Virtuous" && virtuetwo)
 		html += {"
 		<div class=\"statpack-current\" style='margin-top: 10px;'>
@@ -1090,18 +1082,92 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	html += {"
 			<div class="actions">
 				<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_primary'>Change Primary Virtue</a>"}
-	
+
+	if(!istype(virtue, /datum/virtue/none))
+		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_primary'>Clear Primary Virtue</a>"
+
 	if(statpack.name == "Virtuous")
 		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=change_secondary'>Change Second Virtue</a>"
-	
+		if(!istype(virtuetwo, /datum/virtue/none))
+			html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=clear_secondary'>Clear Second Virtue</a>"
+
 	html += {"
 			</div>
 		</div>
-		
+
+		<div class="statpack-section">
+			<h2>Quirk Selection</h2>
+	"}
+
+	var/unlocked_quirk_slots = get_unlocked_quirk_slots()
+	var/list/quirk_action_buttons = list()
+	for(var/i = 1 to 2)
+		var/slot_var = i == 1 ? "quirk" : "quirktwo"
+		var/slot_label = i == 1 ? "Primary Quirk" : "Second Quirk"
+		var/datum/quirk/current_quirk = vars[slot_var]
+		var/quirk_selected = current_quirk && !istype(current_quirk, /datum/quirk/none)
+		var/quirk_locked = i > unlocked_quirk_slots
+
+		html += i == 1 ? "<div class=\"statpack-current\">" : "<div class=\"statpack-current\" style='margin-top: 10px;'>"
+
+		if(quirk_locked)
+			html += "<div class='statpack-name'>[slot_label]: Locked</div>"
+			html += "<div class='statpack-desc'>Requires [i + 1] vices (excluding flavor only vices). You have [get_real_vice_count()].</div>"
+		else
+			html += "<div class='statpack-name'>[slot_label]: [quirk_selected ? current_quirk.name : "None"]</div>"
+			html += "<div class='statpack-desc'>[quirk_selected ? current_quirk.desc : "No quirk chosen."]</div>"
+
+			if(quirk_selected && current_quirk.custom_text)
+				html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
+
+			// Display traits granted
+			if(quirk_selected && LAZYLEN(current_quirk.added_traits))
+				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
+				for(var/trait in current_quirk.added_traits)
+					html += "• [trait]<br>"
+				html += "</div>"
+
+			// Display skills granted
+			if(quirk_selected && LAZYLEN(current_quirk.added_skills))
+				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
+				for(var/skill in current_quirk.added_skills)
+					if(!islist(skill))
+						var/datum/skill/S = skill
+						var/skill_name = initial(S.name)
+						html += "• [skill_name]: +[current_quirk.added_skills[skill]]<br>"
+					else
+						var/list/skill_block = skill
+						var/datum/skill/S = skill_block[1]
+						var/skill_name = initial(S.name)
+						html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
+				html += "</div>"
+
+			// Display stashed items
+			if(quirk_selected && LAZYLEN(current_quirk.added_stashed_items))
+				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
+				for(var/item_name in current_quirk.added_stashed_items)
+					html += "• [item_name]<br>"
+				html += "</div>"
+
+		html += "</div>"
+
+		if(!quirk_locked)
+			quirk_action_buttons += "<a class='btn btn-select' href='byond://?src=\ref[src];quirk_action=[quirk_selected ? "change" : "select"];slot=[i]'>[quirk_selected ? "Change" : "Select"] [slot_label]</a>"
+			if(quirk_selected)
+				quirk_action_buttons += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=clear;slot=[i]'>Clear [slot_label]</a>"
+
+	html += "<div class=\"actions\">"
+	for(var/button in quirk_action_buttons)
+		html += button
+	html += "</div>"
+
+	html += {"
+		</div>
+
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
 		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 5 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
 	"}
-	
+
 	// Generate 5 vice slots
 	for(var/i = 1 to 5)
 		var/slot_var = "vice[i]"
@@ -1512,8 +1578,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			var/list/virtues_available = list()
 			for(var/path as anything in GLOB.virtues)
 				var/datum/virtue/V = GLOB.virtues[path]
+				if(!V.name)
+					continue
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				// Check for conflicting quirks
+				if(check_virtue_quirk_conflict(V.type, TRUE, usr))
 					continue
 				// Basic filtering can be added here if needed
 				virtues_available[V.name] = V
@@ -1551,10 +1622,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(virtue && V.type == virtue.type)
 					continue
 				// Check for conflicting vices
-				if(check_virtue_vice_conflict(V.type, TRUE, usr))
+				if(check_pick_vice_conflict(V.type, TRUE, usr))
 					continue
 				// Check for conflicting virtues (with primary virtue)
-				if(virtue && check_virtue_virtue_conflict(V.type, virtue.type, TRUE, usr))
+				if(virtue && check_pick_virtue_conflict(V.type, virtue.type, TRUE, usr))
+					continue
+				// Check for conflicting quirks
+				if(check_virtue_quirk_conflict(V.type, TRUE, usr))
 					continue
 				virtues_available[V.name] = V
 			
@@ -1568,7 +1642,70 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				to_chat(usr, "<span class='info'>[selected.desc]</span>")
 				open_vices_menu(usr)
 			return
-	
+
+		if(action == "clear_primary")
+			save_to_history()
+			virtue = GLOB.virtues[/datum/virtue/none]
+			to_chat(usr, span_notice("Cleared your primary virtue."))
+			open_vices_menu(usr)
+			return
+
+		if(action == "clear_secondary")
+			save_to_history()
+			virtuetwo = GLOB.virtues[/datum/virtue/none]
+			to_chat(usr, span_notice("Cleared your second virtue."))
+			open_vices_menu(usr)
+			return
+
+	if(href_list["quirk_action"])
+		var/action = href_list["quirk_action"]
+		var/slot = text2num(href_list["slot"])
+
+		if(!slot || slot < 1 || slot > 2)
+			return
+
+		var/slot_var = slot == 1 ? "quirk" : "quirktwo"
+		var/slot_label = slot == 1 ? "Primary Quirk" : "Second Quirk"
+
+		switch(action)
+			if("select", "change")
+				save_to_history()
+
+				var/list/quirks_available = list()
+				var/datum/quirk/other_quirk = vars[slot == 1 ? "quirktwo" : "quirk"]
+				for(var/path as anything in GLOB.quirks)
+					var/datum/quirk/Q = GLOB.quirks[path]
+					if(!Q.name || istype(Q, /datum/quirk/none))
+						continue
+					// Skip if already selected in the other quirk slot
+					if(other_quirk && Q.type == other_quirk.type)
+						continue
+					// Check for conflicting virtues
+					if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
+						continue
+					// Check for conflicting vices
+					if(check_pick_vice_conflict(Q.type, TRUE, usr))
+						continue
+					quirks_available[Q.name] = Q
+
+				quirks_available = sort_list(quirks_available)
+				var/choice = tgui_input_list(usr, "Choose your [slot_label]:", "Quirk Selection", quirks_available)
+
+				if(choice)
+					var/datum/quirk/selected = quirks_available[choice]
+					vars[slot_var] = selected
+					to_chat(usr, span_notice("Selected [choice] as your [slot_label]."))
+					if(selected.desc)
+						to_chat(usr, "<span class='info'>[selected.desc]</span>")
+					open_vices_menu(usr)
+				return
+
+			if("clear")
+				save_to_history()
+				vars[slot_var] = GLOB.quirks[/datum/quirk/none]
+				open_vices_menu(usr)
+				return
+
 	if(href_list["statpack_action"])
 		if(href_list["statpack_action"] == "change")
 			// Save state before change
@@ -1637,14 +1774,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					if(vice_type in selected_vices && current_vice?.type != vice_type)
 						continue
 					
-					// Check for conflicting virtues
-					if(check_vice_virtue_conflict(vice_type, TRUE, usr))
+					if(check_vice_pick_conflict(vice_type, TRUE, usr))
 						continue
-					
+
 					// Check for conflicting vices (eye-related)
 					if(check_vice_vice_conflict(vice_type, selected_vices, TRUE, usr))
 						continue
-					
+
 					vices_available[vice_name] = vice_type
 				
 				vices_available = sort_list(vices_available)

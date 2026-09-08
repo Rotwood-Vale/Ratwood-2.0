@@ -85,6 +85,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
+	var/datum/quirk/quirk = new /datum/quirk/none
+	var/datum/quirk/quirktwo = new /datum/quirk/none
 	var/selected_title = "None"
 	var/age = AGE_ADULT						//age of character
 	var/datum/origin/origin
@@ -162,6 +164,17 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		if(vars["vice[i]"])
 			points++
 	return points
+
+/datum/preferences/proc/get_real_vice_count()
+	var/count = 0
+	for(var/i = 1 to 5)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice && !vice.flavor_only)
+			count++
+	return count
+
+/datum/preferences/proc/get_unlocked_quirk_slots()
+	return CLAMP(get_real_vice_count() - 1, 0, 2)
 
 // Points spent on selected loadout items (uses triumph_cost as point cost)
 /datum/preferences/proc/get_loadout_points_spent()

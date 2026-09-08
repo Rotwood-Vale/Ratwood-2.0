@@ -600,6 +600,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		virtuetwo = new /datum/virtue/none
 
+/datum/preferences/proc/_load_quirks(S)
+	var/quirk_type
+	var/quirktwo_type
+	S["quirk"] >> quirk_type
+	S["quirktwo"] >> quirktwo_type
+
+	if(quirk_type && ispath(quirk_type))
+		quirk = new quirk_type()
+	else
+		quirk = new /datum/quirk/none
+
+	if(quirktwo_type && ispath(quirktwo_type))
+		quirktwo = new quirktwo_type()
+	else
+		quirktwo = new /datum/quirk/none
+
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
 	S["loadout"] >> loadout_type
@@ -879,6 +895,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_virtue(S)
+	_load_quirks(S)
 	_load_flaw(S)
 
 	_load_culinary_preferences(S)
@@ -1219,6 +1236,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	var/quirk_typepath = preferences_typepath_or_null(quirk)
+	if(!quirk_typepath)
+		quirk_typepath = /datum/quirk/none
+	WRITE_FILE(S["quirk"], quirk_typepath)
+	var/quirktwo_typepath = preferences_typepath_or_null(quirktwo)
+	if(!quirktwo_typepath)
+		quirktwo_typepath = /datum/quirk/none
+	WRITE_FILE(S["quirktwo"], quirktwo_typepath)
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

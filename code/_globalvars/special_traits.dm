@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
 	apply_prefs_virtue(character, player)
+	apply_prefs_quirks(character, player)
 	apply_prefs_origin(character, player)
 	apply_prefs_race_bonus(character, player)
 	apply_voicepacks(character, player)
@@ -110,6 +111,20 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 			apply_virtue(character, virtuetwo_type)
 		else
 			to_chat(character, "Incorrect Second Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
+
+/proc/apply_prefs_quirks(mob/living/carbon/human/character, client/player)
+	if(!player)
+		player = character.client
+	if(!player)
+		return
+	if(!player.prefs)
+		return
+
+	var/unlocked_slots = player.prefs.get_unlocked_quirk_slots()
+	if(unlocked_slots >= 1)
+		apply_quirk(character, player.prefs.quirk)
+	if(unlocked_slots >= 2)
+		apply_quirk(character, player.prefs.quirktwo)
 
 /proc/apply_prefs_race_bonus(mob/living/carbon/human/character, client/player)
 	if (!player)
