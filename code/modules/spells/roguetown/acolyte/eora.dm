@@ -63,6 +63,8 @@
 /obj/effect/proc_holder/spell/invoked/bud
 	name = "Eoran Bloom"
 	desc = "Tries to grow an Eoran bud on the target tile or on the targets head, forcing their thoughts away from violence until removed."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	clothes_req = FALSE
 	range = 7
 	overlay_state = "love"
@@ -101,7 +103,9 @@
 /obj/effect/proc_holder/spell/invoked/eoracurse
 	name = "Eora's Curse"
 	desc = "Makes the target both high and drunk."
-	overlay_state = "curse2"
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	overlay_state = "curse"
 	releasedrain = 50
 	chargetime = 30
 	range = 7
@@ -251,6 +255,8 @@
 /obj/effect/proc_holder/spell/invoked/heartweave
 	name = "Heartweave"
 	desc = "Forge a symbiotic bond between two souls."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	overlay_state = "bliss"
 	range = 1
 	chargetime = 0.5 SECONDS
@@ -357,8 +363,10 @@
 
 /obj/effect/proc_holder/spell/invoked/bless_food
 	name = "Bless Food"
-	invocations = list("Eora, nourish this offering!")
 	desc = "Bless a food item. Items that take longer to eat heal slower. Skilled clergy can bless food more often. Finer food heals more. Eoran masters can make food a golden hue."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	invocations = list("Eora, nourish this offering!")
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 25
@@ -400,8 +408,10 @@
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
 	name = "Amaranth Sanctuary"
-	invocations = list("Eora, provide sanctuary for your beauty!")
 	desc = "Grow a pomegranate tree that, when tended to, grows Aurils with a variety of effects. Additionally heals beautiful people and HEAVILY debuffs both STR and PER for everyone in visible range."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	invocations = list("Eora, provide sanctuary for your beauty!")
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 500
@@ -1365,6 +1375,8 @@
 /obj/effect/proc_holder/spell/invoked/eora_blessing
 	name = "Eora's Blessing"
 	desc = "Bestow a person with Eora's calm, if only for a little while."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	sound = 'sound/magic/eora_bless.ogg'
 	devotion_cost = 80
 	recharge_time = 5 MINUTES

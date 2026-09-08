@@ -70,6 +70,8 @@
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
 	dropshrink = null
+	salvage_amount = 1
+	fiber_salvage = FALSE
 
 /obj/item/clothing/under/roguetown/loincloth/brown
 	color = CLOTHING_BROWN
