@@ -165,7 +165,7 @@
 			return
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
-	user.stamina_add(user.used_intent.releasedrain + user._get_swifstrong_stam_penalty())
+	user.stamina_add(user.used_intent.releasedrain + user.get_swifstrong_stam_penalty())
 	var/bad_guard = FALSE
 	//We have Guard / Clash active, and are hitting someone who doesn't. Cheesing a 'free' hit with a defensive buff is a no-no. You get punished.
 	if(user.has_status_effect(/datum/status_effect/buff/clash) && !M.has_status_effect(/datum/status_effect/buff/clash))
