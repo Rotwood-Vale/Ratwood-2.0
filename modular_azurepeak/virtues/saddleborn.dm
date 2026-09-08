@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	// if they do it from town or centcomm, give the horse a healing effect
 
 	var/area/rogue/place = get_area(user.loc)
-	var/should_heal = (is_centcom_level(user.loc.z) || place.town_area || place.keep_area)
+	var/should_heal = (is_centcom_level(user.loc.z) || !istype(place) || place.town_area || place.keep_area)
 	user.visible_message(span_info("[user] starts fussing with [honse], preparing to send them away..."), span_notice("I start preparing to send [honse] away to roam freely and safely for a time..."))
 	honse.Immobilize(11 SECONDS)
 	honse.unbuckle_all_mobs(TRUE)
@@ -270,24 +270,25 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		callback_time += 10 SECONDS
 		dangerous_summon = TRUE
 		to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
-	if (place.warden_area)
-		callback_time += 5 SECONDS
-		to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
-		dangerous_summon = TRUE
-	if (istype(place, /area/rogue/under/underdark))
-		callback_time += 30 SECONDS
-		to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
-		dangerous_summon = TRUE
-	if (place.keep_area)
-		if (HAS_TRAIT(user, TRAIT_NOBLE))
-			to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
-			callback_time = 3 SECONDS
-		else
-			callback_time -= 3 SECONDS
-			to_chat(user, span_info("Your mount is trained to linger around town, and the gatekeepers are used to letting lone mounts in these days, helping you fetch it quicker."))
-	if (place.town_area)
-		callback_time -= 5 SECONDS
-		to_chat(user, span_info("Your mount is trained to linger around town, helping you fetch it quicker."))
+	if(istype(place, /area/rogue))
+		if (place.warden_area)
+			callback_time += 5 SECONDS
+			to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
+			dangerous_summon = TRUE
+		if (istype(place, /area/rogue/under/underdark))
+			callback_time += 30 SECONDS
+			to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
+			dangerous_summon = TRUE
+		if (place.keep_area)
+			if (HAS_TRAIT(user, TRAIT_NOBLE))
+				to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
+				callback_time = 3 SECONDS
+			else
+				callback_time -= 3 SECONDS
+				to_chat(user, span_info("Your mount is trained to linger around town, and the gatekeepers are used to letting lone mounts in these days, helping you fetch it quicker."))
+		if (place.town_area)
+			callback_time -= 5 SECONDS
+			to_chat(user, span_info("Your mount is trained to linger around town, helping you fetch it quicker."))
 	if (callback_time <= 0)
 		callback_time = 1 SECONDS
 

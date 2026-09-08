@@ -17,7 +17,7 @@
 
 /obj/item/rogueore/gold/Initialize(mapload)
 	icon_state = "oregold[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/silver
@@ -29,7 +29,7 @@
 
 /obj/item/rogueore/silver/Initialize(mapload)
 	icon_state = "oresilv[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/iron
@@ -41,7 +41,7 @@
 
 /obj/item/rogueore/iron/Initialize(mapload)
 	icon_state = "oreiron[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/copper
@@ -53,7 +53,7 @@
 
 /obj/item/rogueore/copper/Initialize(mapload)
 	icon_state = "orecop[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/tin
 	name = "raw tin"
@@ -64,7 +64,7 @@
 
 /obj/item/rogueore/tin/Initialize(mapload)
 	icon_state = "oretin[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/coal
 	name = "coal"
@@ -99,7 +99,7 @@
 
 /obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/coal/charcoal
 	name = "charcoal"
@@ -185,7 +185,7 @@
 		var/obj/machinery/anvil/A = loc
 		A.current_workpiece = null
 		A.update_icon()
-	..()
+	return ..()
 
 /obj/item/ingot/gold
 	name = "gold bar"

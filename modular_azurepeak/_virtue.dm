@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(virtues)
+GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 
 /datum/virtue
 	/// What the virtue's called.

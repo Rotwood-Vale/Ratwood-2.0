@@ -778,6 +778,8 @@
 
 /obj/item/roguemachine/mastermail/Destroy()
 	set_light(0)
+	if(SSroguemachine.hermailermaster == src)
+		SSroguemachine.hermailermaster = null
 	SSroguemachine.hermailers -= src
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)

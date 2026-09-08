@@ -362,6 +362,26 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/clothing/neck/roguetown/gorget/gold
+	name = "golden gorget"
+	desc = "A series of resplendant golden plates designed to protect the neck, traditionally worn atop a jacket or cuirass. The holy sigil between its buckled halves promises to carry the flame of its wearer, no matter what strike's poised its way."
+	icon_state = "goldgorget"
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	grid_height = 96
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/neck/roguetown/gorget/gold/king
+	name = "royal golden gorget"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	sellprice = 300
+	unenchantable = TRUE
+
 /obj/item/clothing/neck/roguetown/gorget/bronze
 	name = "bronze neckguard"
 	desc = "An interlinked veil of bronze plates, shielding the throat from terrible wounds since the dawn of tyme. Piercing blows may sunder the plate, but - as long as the alloy persists - so shall you."
@@ -903,7 +923,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/equipped(mob/living/user, slot)
@@ -946,7 +966,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/equipped(mob/living/user, slot)
@@ -1051,6 +1071,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MOUTH
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	fiber_salvage = FALSE
 	color = CLOTHING_BLACK
 	muteinmouth = FALSE
 	spitoutmouth = FALSE

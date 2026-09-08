@@ -250,7 +250,7 @@
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
 	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color=LOG_COLOR_RECEIPT, meta = list(LOG_META_RECEIPT = TRUE))
 
 	return BULLET_ACT_HIT
 

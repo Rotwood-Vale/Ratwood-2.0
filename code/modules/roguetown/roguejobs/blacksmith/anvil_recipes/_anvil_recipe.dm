@@ -22,7 +22,6 @@
 	var/bar_health = 100 // Current material bar health, reduced by failures. At 0 HP it is deleted.
 	var/numberofhits = 0 // Increased every time you hit the bar, the more you have to hit the bar the less quality of the product.
 	var/numberofbreakthroughs = 0 // How many good hits we got on the metal, advances recipes 50% faster, reduces number of hits total, and restores bar_health
-	var/datum/parent
 	// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE
 	var/req_trait = null

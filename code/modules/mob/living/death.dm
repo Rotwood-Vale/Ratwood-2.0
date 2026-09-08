@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(last_words)
 //	if(mind)
 //		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
-	if(!gibbed && !was_dead_before)
+	if(!QDELETED(src) && !gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 
 //	stop_all_loops()
@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(last_words)
 	if(!gibbed && !QDELETED(src) && rot_type)
 		LoadComponent(rot_type)
 
-	clear_typing_indicator()
+	clear_typing_indicator("died")
 
 	// AZURE EDIT BEGIN: necra acolyte/priest deathsight trait
 	// this was a player that just died, so do the honors

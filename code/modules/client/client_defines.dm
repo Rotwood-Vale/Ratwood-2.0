@@ -27,6 +27,13 @@
 	///Internal counter for clients sending irc relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/ircreplyamount = 0
 
+	///Built POV timelines, keyed by pov_cache_key(). Oldest first, oldest dropped when full
+	var/list/pov_log_cache
+	///Highlighted actor classes per timeline, same keying as the cache
+	var/list/pov_log_highlights
+	///Filter state per timeline, three characters: attacks, highlighted, faded
+	var/list/pov_log_filters
+
 		/////////
 		//OTHER//
 		/////////

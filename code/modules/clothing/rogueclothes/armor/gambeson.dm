@@ -116,6 +116,10 @@
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Destroy()
+	. = ..()
+	GLOB.lordcolor -= src
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
@@ -224,6 +228,14 @@
 	name = "padded caftan"
 	desc = "A long overcoat commonly worn in Naledi, Kazengun, Gronn and Aavnr - but mostly associated with steppesmen and raiders. This specific kind rivals a gambeson in protection."
 	icon_state = "chargah"
+	color = "#ffffff"
+	boobed = TRUE
+	shiftable = FALSE
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hatanga
+	name = "beast-hide coat"
+	desc = "Layered robes reinforced with quilted padding and stitched hides from formidable beasts."
+	icon_state = "hatanga"
 	color = "#ffffff"
 	boobed = TRUE
 	shiftable = FALSE

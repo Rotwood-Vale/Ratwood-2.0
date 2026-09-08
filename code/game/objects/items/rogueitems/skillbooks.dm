@@ -17,7 +17,7 @@
 /obj/item/skillbook/Initialize(mapload)
 	iconval = rand(0,9)//lets us randomize from all our books from books.dmi
 	update_icon()
-	..()
+	return ..()
 
 
 /obj/item/skillbook/update_icon()
