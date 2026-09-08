@@ -75,7 +75,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/admin
 	hud_type = /datum/hud/adminghost
 
-/mob/dead/observer/admin/proc/apply_admin_ghost_image()
+/mob/dead/observer/proc/apply_admin_ghost_image()
+	if(!client?.holder)
+		return
 	if(client?.prefs?.admin_ghost_icon)
 		icon = client.prefs.admin_ghost_icon
 		icon_state = ""
