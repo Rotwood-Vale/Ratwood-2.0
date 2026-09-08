@@ -10372,6 +10372,10 @@
 /obj/structure/bed/rogue/inn/wool,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/warden)
+"cgi" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors/woodsrat/south)
 "cgj" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grassgrey,
@@ -94234,10 +94238,6 @@
 	},
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/indoors/town/tavern)
-"tKZ" = (
-/obj/effect/landmark/quest_spawner/generic,
-/turf/open/floor/rogue/grassgrey,
-/area/rogue/outdoors/bograt/sunken)
 "tLa" = (
 /obj/structure/mineral_door/wood/red{
 	locked = 1;
@@ -97818,6 +97818,10 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/grove)
+"uyE" = (
+/obj/effect/landmark/quest_spawner/generic,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/outdoors/woodsrat/south)
 "uyH" = (
 /obj/structure/rack/rogue,
 /obj/item/natural/bundle/stick{
@@ -250306,7 +250310,7 @@ iJc
 bca
 hMX
 hMX
-tKZ
+hMX
 hMX
 bca
 bca
@@ -250738,7 +250742,7 @@ iJc
 bca
 hMX
 hMX
-hMX
+oGc
 hMX
 uLJ
 bca
@@ -251589,7 +251593,7 @@ hMX
 jsj
 jsj
 jsj
-hMX
+oGc
 hMX
 hMX
 hMX
@@ -252021,7 +252025,7 @@ jsv
 hMX
 hMX
 hMX
-tKZ
+hMX
 hMX
 hMX
 hMX
@@ -412227,7 +412231,7 @@ osh
 osh
 cqm
 cqm
-osh
+vyI
 pUK
 rKu
 osh
@@ -418315,7 +418319,7 @@ osh
 mBL
 dtw
 dtw
-dtw
+uyE
 keg
 mBL
 mBL
@@ -419632,7 +419636,7 @@ cqm
 cqm
 osh
 osh
-cqm
+cgi
 cqm
 cqm
 cqm
@@ -421709,7 +421713,7 @@ mBL
 osh
 osh
 wov
-rKu
+tZU
 mBL
 kqc
 lOT
@@ -425195,7 +425199,7 @@ pKo
 bpD
 oNE
 tfU
-aaf
+cCX
 aaf
 aaf
 upe
@@ -435578,7 +435582,7 @@ cqm
 osh
 cqm
 cqm
-cqm
+cgi
 cqm
 cqm
 cqm
@@ -443328,7 +443332,7 @@ egX
 rKu
 pUK
 rKu
-rKu
+tZU
 osh
 osh
 kAe

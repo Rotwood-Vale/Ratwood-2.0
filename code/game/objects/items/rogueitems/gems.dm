@@ -246,12 +246,20 @@
 
 /obj/item/roguegem/random/Initialize(mapload)
 	..()
-	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3, /obj/item/roguegem/blood_diamond = 1, /obj/item/roguegem/onyxa = 5, /obj/item/roguegem/jade = 3, /obj/item/roguegem/coral = 3, /obj/item/roguegem/turq = 3, /obj/item/roguegem/amber = 3, /obj/item/roguegem/opal = 3)
+	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3, /obj/item/roguegem/blood_diamond = 1 )
 	var/pickgem = pickweight(newgem)
 	new pickgem(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
-
+/obj/item/roguegem/randomgeode	//For carvable gems that are worth much less then standard gems. Should be more frequently found.
+	name = "random geode gem"
+	desc = "You shouldn't be seeing this."
+/obj/item/roguegem/randomgeode/Initialize(mapload)
+	..()
+	var/newgem = list(/obj/item/roguegem/onyxa = 5, /obj/item/roguegem/jade = 3, /obj/item/roguegem/coral = 3, /obj/item/roguegem/turq = 3, /obj/item/roguegem/amber = 3, /obj/item/roguegem/opal = 3)
+	var/pickgem = pickweight(newgem)
+	new pickgem(get_turf(src))
+	return INITIALIZE_HINT_QDEL
 /// riddle
 
 

@@ -3,6 +3,7 @@
 // (per-class poll tax / subsidy) - both live in treasury_poll_tax.dm.
 
 /datum/taxsetter
+	var/mob/living/requesting_steward
 	var/good_announcement_text = "The Generous Lord Decrees"
 	var/bad_announcement_text = "The Tyrannical Lord Dictates"
 
@@ -70,10 +71,18 @@
 		return TRUE
 	switch(action)
 		if("set_rates")
-			SStreasury.apply_rate_adjustments(params["categoryRates"], good_announcement_text, bad_announcement_text)
+			var/lord = find_lord()
+			if(lord)
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(lord_tax_rates_requested), requesting_steward, lord, params["categoryRates"], good_announcement_text, bad_announcement_text)
+			else
+				SStreasury.apply_rate_adjustments(params["categoryRates"], requesting_steward, good_announcement_text, bad_announcement_text)
 			return TRUE
 		if("set_poll_rates")
-			SStreasury.apply_poll_rate_adjustments(params["pollTaxRates"], good_announcement_text, bad_announcement_text)
+			var/lord = find_lord()
+			if(lord)
+				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(lord_poll_tax_rates_requested), requesting_steward, lord, params["pollTaxRates"], good_announcement_text, bad_announcement_text)
+			else
+				SStreasury.apply_poll_rate_adjustments(params["pollTaxRates"], requesting_steward, good_announcement_text, bad_announcement_text)
 			return TRUE
 
 /datum/taxsetter/ui_state(mob/user)

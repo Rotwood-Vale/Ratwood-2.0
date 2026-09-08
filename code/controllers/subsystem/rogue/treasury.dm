@@ -600,9 +600,9 @@ SUBSYSTEM_DEF(treasury)
 	poll_projection_dirty = TRUE
 	return TRUE
 
-/datum/controller/subsystem/treasury/proc/apply_rate_adjustments(list/adjustments, good_announcement_text, bad_announcement_text)
+/datum/controller/subsystem/treasury/proc/apply_rate_adjustments(list/adjustments, mob/requester, good_announcement_text, bad_announcement_text)
 	if(GLOB.dayspassed <= levy_rates_changed_day)
-		to_chat(usr, span_warning("Crown levies have already been adjusted today - come back tomorrow."))
+		to_chat(requester, span_warning("Crown levies have already been adjusted today - come back tomorrow."))
 		return
 	var/datum/decree/concordat = get_decree(DECREE_ZENITSTADT_CONCORDAT)
 	var/concordat_active = concordat?.active ? TRUE : FALSE
@@ -632,7 +632,7 @@ SUBSYSTEM_DEF(treasury)
 		lines += "[pretty] [verb] from [old_pct]% to [new_pct]%."
 
 	if(rejected_concordat)
-		to_chat(usr, span_warning("The Concordat of Zenitstadt forbids any levy below [round(CONCORDAT_TITHE_RATE * 100)]% while in force - the Church's tithe must be honoured."))
+		to_chat(requester, span_warning("The Concordat of Zenitstadt forbids any levy below [round(CONCORDAT_TITHE_RATE * 100)]% while in force - the Church's tithe must be honoured."))
 
 	if(!length(lines))
 		return
@@ -643,7 +643,7 @@ SUBSYSTEM_DEF(treasury)
 		final_text += "<br><i>By the Concordat of Zenitstadt, [round(CONCORDAT_TITHE_RATE * 100)]% of every taxed transaction is tithed to the Church of the Ten, drawn from the Crown's share.</i>"
 	var/final_announcement_text = bad_guy ? bad_announcement_text : good_announcement_text
 	priority_announce(final_text, final_announcement_text, pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain", strip_html = FALSE)
-	log_game("TAX RATES: [usr ? key_name(usr) : "system"] changed levy rates - [jointext(lines, " | ")]")
+	log_game("TAX RATES: [requester ? key_name(requester) : "system"] changed levy rates - [jointext(lines, " | ")]")
 
 /// Phrasing helper for poll-rate change announcements. Distinguishes positive tax adjustments
 /// from crossing-the-zero (tax → subsidy or vice versa) so the announcement reads correctly.
@@ -662,9 +662,9 @@ SUBSYSTEM_DEF(treasury)
 	var/verb = new_rate > old_rate ? "raised" : "reduced"
 	return "tax [verb] from [old_rate]m/day to [new_rate]m/day"
 
-/datum/controller/subsystem/treasury/proc/apply_poll_rate_adjustments(list/adjustments, good_announcement_text, bad_announcement_text)
+/datum/controller/subsystem/treasury/proc/apply_poll_rate_adjustments(list/adjustments, mob/requester, good_announcement_text, bad_announcement_text)
 	if(GLOB.dayspassed <= poll_rates_changed_day)
-		to_chat(usr, span_warning("Poll tax rates have already been adjusted today - come back tomorrow."))
+		to_chat(requester, span_warning("Poll tax rates have already been adjusted today - come back tomorrow."))
 		return
 	if(!islist(adjustments))
 		return
@@ -697,7 +697,7 @@ SUBSYSTEM_DEF(treasury)
 	var/final_text = jointext(lines, "<br>")
 	var/final_announcement_text = bad_guy ? bad_announcement_text : good_announcement_text
 	priority_announce(final_text, final_announcement_text, pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain", strip_html = FALSE)
-	log_game("POLL TAX RATES: [usr ? key_name(usr) : "system"] changed poll tax rates - [jointext(lines, " | ")]")
+	log_game("POLL TAX RATES: [requester ? key_name(requester) : "system"] changed poll tax rates - [jointext(lines, " | ")]")
 
 /datum/controller/subsystem/treasury/proc/get_tax_category_pretty_name(category)
 	switch(category)
