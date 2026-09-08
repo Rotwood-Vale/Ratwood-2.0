@@ -212,7 +212,7 @@
 
 	var/list/deadites_controlled
 	var/purity = FALSE
-	var/zizo_targets
+	var/list/zizo_targets = list()
 	var/zizo_target_cd = 0
 	var/zizo_goals_cd = 0
 	var/list/zizo_goals = list()

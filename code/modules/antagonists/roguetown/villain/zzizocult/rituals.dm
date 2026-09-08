@@ -370,7 +370,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		new /obj/item/necro_relics/necro_crystal(center)
 		zizo_award(user, 3)
 		zizo_award(assistant, 3)
-	GLOB.zizo_targets -= target
+	if(is_zizo(user))
+		GLOB.zizo_targets -= target
+	else
+		cultist.zizo_targets -= target
 	zizo_award(user, 5)
 	zizo_award(assistant, 5)
 	target.visible_message(span_danger("[assistant] tears open [target]'s chest and rips free their lux!"))
@@ -439,8 +442,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/cooldown
 
 /obj/item/corruptedheart/attack_self(mob/user)
-	if(!is_zizo(user))
-		return
 	if(!length(GLOB.zizo_targets))
 		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
 		return
@@ -456,6 +457,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(is_zizo(user))
 		prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
 	else
+		if(!H.zizo_targets)
+			to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
+			return
 		prey = input("Choose a target.") as null|anything in H.zizo_targets
 	if(!prey || !prey.z)
 		return
