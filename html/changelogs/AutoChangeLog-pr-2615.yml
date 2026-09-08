@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - qol: "Did you know that hearts needed you to \"squeeze\" them (use the heart item in-hand) before you inserted them, or else they wouldn't work again? Now they get restarted from the \"stopped\" state (where possible) if you surgically insert them back in, or revive your dead-but-rehearted patient through any means."
