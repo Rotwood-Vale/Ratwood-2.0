@@ -724,7 +724,7 @@
 
 		if(lockdifficulty > 2 && P.picklvl < 1) //disallowing lesser knock and poor locks from being used
 			to_chat(user, "<span class='warning'>my lockpick is too poor to handle this lock</span>")
-			playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE, -5)
+			playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 			I.take_damage(1, BRUTE, "blunt")
 			to_chat(user, "<span class='warning'>Clack.</span>")
 			return
@@ -737,7 +737,7 @@
 				break
 			if(prob(pickchance))
 				lockprogress += moveup
-				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE, -5)
+				playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 				to_chat(user, "<span class='warning'>Click...</span>")
 				if(L.mind)
 					add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/2)
@@ -757,7 +757,7 @@
 				else
 					continue
 			else
-				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE, -5)
+				playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 				I.take_damage(1, BRUTE, "blunt")
 				to_chat(user, "<span class='warning'>Clack.</span>")
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
