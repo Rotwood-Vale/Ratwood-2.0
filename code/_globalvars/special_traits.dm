@@ -140,6 +140,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_charflaw_equipment(mob/living/carbon/human/character, client/player)
 	// Apply multiple vices system (vice1-vice5)
 	var/applied_new_system = FALSE
+	var/additional_major_count = 0
 	if(player?.prefs)
 		for(var/i = 1 to 5)
 			var/datum/charflaw/vice = player.prefs.vars["vice[i]"]
@@ -147,6 +148,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 				vice.apply_post_equipment(character)
 				record_featured_object_stat(FEATURED_STATS_VICES, vice.name)
 				applied_new_system = TRUE
+				if(i > 1 && vice.major && !istype(vice, /datum/charflaw/noflaw))
+					additional_major_count++
+	if(additional_major_count)
+		character.adjust_triumphs(additional_major_count)
 	
 	// Legacy single vice support (deprecated) - only apply if new system wasn't used
 	if(character.charflaw && !applied_new_system)

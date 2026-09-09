@@ -7,15 +7,15 @@ GLOBAL_LIST_INIT(charflaw_singletons, init_charflaw_singletons())
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
 	"Annoying Face"=/datum/charflaw/annoying_face,
-	"Asundered Mind (+1 TRI)"=/datum/charflaw/mind_broken,
-	"Bad Sight (+1 TRI)"=/datum/charflaw/badsight,
-	"Blindness (+1 TRI)"=/datum/charflaw/noeyeall,
+	"Asundered Mind"=/datum/charflaw/mind_broken,
+	"Bad Sight"=/datum/charflaw/badsight,
+	"Blindness"=/datum/charflaw/noeyeall,
 	"Clingy"=/datum/charflaw/clingy,
-	"Colorblind (+1 TRI)"=/datum/charflaw/colorblind,
+	"Colorblind"=/datum/charflaw/colorblind,
 	"Compliant"=/datum/charflaw/compliant,
-	"Critical Weakness (+1 TRI)"=/datum/charflaw/critweakness,
-	"Cyclops (L) (+1 TRI)"=/datum/charflaw/noeyel,
-	"Cyclops (R) (+1 TRI)"=/datum/charflaw/noeyer,
+	"Critical Weakness"=/datum/charflaw/critweakness,
+	"Cyclops (L)"=/datum/charflaw/noeyel,
+	"Cyclops (R)"=/datum/charflaw/noeyer,
 	"Devout Follower"=/datum/charflaw/addiction/godfearing,
 	"Greedy"=/datum/charflaw/greedy,
 	"Marked for Death"=/datum/charflaw/assassintarget,
@@ -25,12 +25,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
-	"Leper (+1 TRI)"=/datum/charflaw/leprosy,
+	"Leper"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Mute (+1 TRI)"=/datum/charflaw/mute,
-	"Narcoleptic (+1 TRI)"=/datum/charflaw/narcoleptic,
+	"Mute"=/datum/charflaw/mute,
+	"Narcoleptic"=/datum/charflaw/narcoleptic,
 	"No Flaw (-3 TRI)"=/datum/charflaw/noflaw,
 	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
 	"Nudist"=/datum/charflaw/nudist,
@@ -41,14 +41,14 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Sadist"=/datum/charflaw/addiction/sadist,
 	"Scarred"=/datum/charflaw/scarred,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Sleepless (+1 TRI)"=/datum/charflaw/sleepless,
+	"Sleepless"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
 	"Malodorous"=/datum/charflaw/malodorous,
 	"Ugly"=/datum/charflaw/ugly,
-	"Unintelligible (+1 TRI)"=/datum/charflaw/unintelligible,
-	"Wood Arm (L) (+1 TRI)"=/datum/charflaw/limbloss/arm_l,
-	"Wood Arm (R) (+1 TRI)"=/datum/charflaw/limbloss/arm_r,
-	"Hemophage (+1 TRI)"=/datum/charflaw/hemophage,
+	"Unintelligible"=/datum/charflaw/unintelligible,
+	"Wood Arm (L)"=/datum/charflaw/limbloss/arm_l,
+	"Wood Arm (R)"=/datum/charflaw/limbloss/arm_r,
+	"Hemophage"=/datum/charflaw/hemophage,
 	"Feeble-bodied"=/datum/charflaw/weak,
 	"Frail"=/datum/charflaw/frail,
 	"Doddering"=/datum/charflaw/slow,
@@ -199,23 +199,15 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/badsight/proc/apply_reading_skill(mob/living/carbon/human/H)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_triumphs(1)
 
 /datum/charflaw/malodorous
 	name = "Malodorous"
-	desc = "My body odor is unbearable without regular baths, and others can tell."
+	desc = "My body odor is strong and distinct, without regular bathing it will be hard to hide from others..."
 	var/scent_type = "Neutral"
 	var/scent = ""
 	var/last_aura_tick = 0
 	var/aura_tick_delay = 5 SECONDS
 	var/suppressed_until = 0
-
-/datum/charflaw/malodorous/on_mob_creation(mob/living/carbon/human/user)
-	switch(scent_type)
-		if("Gross")
-			user.adjust_triumphs(1)
-		if("Pleasant")
-			user.adjust_triumphs(-1)
 
 /datum/charflaw/malodorous/proc/is_reeking()
 	return world.time >= suppressed_until
@@ -249,6 +241,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/malodorous/proc/apply_pleasant_visual_effect(mob/living/carbon/human/H)
 	new /obj/effect/temp_visual/pleasant_scent(get_turf(H))
+
+/datum/charflaw/malodorous/proc/apply_contact_stink(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, scent_type, scent)
 
 /datum/charflaw/malodorous/on_bath(mob/living/user)
 	if(!ishuman(user))
@@ -409,7 +404,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	head?.add_wound(/datum/wound/facial/eyes/right/permanent)
 	H.update_fov_angles()
-	H.adjust_triumphs(1)
 
 /datum/charflaw/noeyel
 	name = "Cyclops (L)"
@@ -426,7 +420,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	head?.add_wound(/datum/wound/facial/eyes/left/permanent)
 	H.update_fov_angles()
-	H.adjust_triumphs(1)
 
 /datum/charflaw/noeyeall
 	name = "Blindness"
@@ -444,7 +437,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!H.wear_mask)
 		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/blindfold(H), SLOT_WEAR_MASK)
 	H.overlay_fullscreen("blind_flaw", /atom/movable/screen/fullscreen/impaired, 2)
-	H.adjust_triumphs(1)
 
 /datum/charflaw/colorblind
 	name = "Colorblind"
@@ -454,9 +446,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/colorblind/on_mob_creation(mob/user)
 	..()
 	user.add_client_colour(/datum/client_colour/monochrome)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
 
 /datum/charflaw/compliant
 	name = "Compliant"
@@ -679,7 +668,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	user.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL)
 	user.adjust_skillrank(/datum/skill/misc/reading, -6, TRUE)
-	user.adjust_triumphs(1)
 
 /datum/charflaw/greedy
 	name = "Greedy"
@@ -779,9 +767,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/narcoleptic/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_FASTSLEEP, "[type]")
 	reset_timer()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
 
 /datum/charflaw/narcoleptic/proc/reset_timer()
 	do_sleep = FALSE
@@ -844,9 +829,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/sleepless/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_NOSLEEP, TRAIT_GENERIC)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
 
 /datum/charflaw/sleepless/on_removal(mob/user)
 	..()
@@ -859,9 +841,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/mute/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_PERMAMUTE, TRAIT_GENERIC)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
 
 /datum/charflaw/mute/on_removal(mob/user)
 	..()
@@ -874,9 +853,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/critweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.adjust_triumphs(1)
 
 /datum/charflaw/critweakness/on_removal(mob/user)
 	..()
@@ -910,7 +886,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	H.change_stat(STATKEY_WIL, -1)
 	H.change_stat(STATKEY_SPD, -1)
 	H.change_stat(STATKEY_LCK, -1)
-	H.adjust_triumphs(1)
 
 /datum/charflaw/mind_broken
 	name = "Asundered Mind"
@@ -920,7 +895,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
 	ADD_TRAIT(insane_fool, TRAIT_PSYCHOSIS, TRAIT_GENERIC)
-	insane_fool.adjust_triumphs(1)
 
 /datum/charflaw/marked_by_baotha
 	name = "Marked by Baotha"
@@ -964,7 +938,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/hemophage/on_mob_creation(mob/living/carbon/human/vamp_wannabe)
 	ADD_TRAIT(vamp_wannabe, TRAIT_HEMOPHAGE, TRAIT_GENERIC)
 	ADD_TRAIT(vamp_wannabe, TRAIT_VAMPBITE, TRAIT_GENERIC)
-	vamp_wannabe.adjust_triumphs(1)
 
 /datum/charflaw/silverweakness/on_removal(mob/user)
 	..()

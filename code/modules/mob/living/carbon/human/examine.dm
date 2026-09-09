@@ -112,7 +112,9 @@
 				if(malodorous_flaw)
 					. += malodorous_flaw.get_examine_text()
 				else
-					. += span_greentext("They reek.")
+					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
+					if(contact_stink)
+						. += contact_stink.get_examine_text()
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))

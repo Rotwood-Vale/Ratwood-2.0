@@ -1630,9 +1630,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			return
 
 		var/list/scent_types = list(
-			"Gross (+1 Triumph)" = "Gross",
-			"Neutral (No Triumph change)" = "Neutral",
-			"Pleasant (-1 Triumph)" = "Pleasant"
+			"Gross" = "Gross",
+			"Neutral" = "Neutral",
+			"Pleasant" = "Pleasant"
 		)
 		var/type_choice = tgui_input_list(usr, "Choose how others perceive your scent:", "Malodorous", scent_types)
 		if(!type_choice)
