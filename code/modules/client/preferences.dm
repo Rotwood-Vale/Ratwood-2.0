@@ -164,10 +164,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			return "wildflowers and clean rain"
 	return "earth and sweat"
 
-// Points gained from selected vices (+1 per selected vice)
+// Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
-	for(var/i = 1 to 5)
+	for(var/i = 2 to 5)
 		if(vars["vice[i]"])
 			points++
 	return points

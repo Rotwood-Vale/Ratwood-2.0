@@ -1130,10 +1130,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		if(is_required)
 			html += "<span class='slot-required'>REQUIRED</span>"
 		
-		if(current_vice)
-			// Every selected vice contributes one loadout point.
+		if(current_vice && i > 1)
+			// Every additional selected vice contributes one loadout point.
 			html += "<span class='slot-cost'>+1 Loadout Point</span>"
-			if(i > 1 && current_vice.major && !istype(current_vice, /datum/charflaw/noflaw))
+			if(current_vice.major && !istype(current_vice, /datum/charflaw/noflaw))
 				html += "<span class='slot-triumph'>+1 Triumph</span>"
 		
 		html += "</div>"
