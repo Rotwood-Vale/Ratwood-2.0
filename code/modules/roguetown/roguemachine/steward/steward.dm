@@ -148,8 +148,6 @@
 		if(!D)
 			return
 		var/amt = D.get_import_price()
-		// Ratwood deviation, fund-API-backed (was a raw treasury_value -= that desynced from the
-		// Crown's Purse, letting the next mint/burn resurrect the spent money)
 		if(!SStreasury.burn(SStreasury.discretionary_fund, amt, "Import: [D.name]"))
 			say("Insufficient mammon.")
 			return
