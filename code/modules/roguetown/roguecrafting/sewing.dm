@@ -551,6 +551,20 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/sewing/decorative_mentorsuit
+	name = "decorative mentor robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/sewing/decorative_captainrobe
+	name = "decorative flowery robe"
+	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 1
+
 /datum/crafting_recipe/roguetown/sewing/jesterchest
 	name = "jester's tunick"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/jester)
@@ -959,6 +973,49 @@
 	tools = list(/obj/item/needle)
 	craftdiff = 5
 	sellprice = 30
+
+///Ported Steward and Hand sprites from vanderlin///
+/datum/crafting_recipe/roguetown/sewing/stewarddress
+	name = "ornate dark dress"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/steward)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 2,
+				/obj/item/natural/silk = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+	sellprice = 30
+
+/datum/crafting_recipe/roguetown/sewing/stewardtailcoat
+	name = "ornate dark tailcoat"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/coat/steward)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 2,
+				/obj/item/natural/silk = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+	sellprice = 30
+
+/datum/crafting_recipe/roguetown/sewing/handcoat
+	name = "noble coat"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/coat/hand)
+	reqs = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2,
+				/obj/item/natural/silk = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+	sellprice = 40
+
+/datum/crafting_recipe/roguetown/sewing/fancyshirt
+
+	name= "noble shirt"
+	result = list(/obj/item/clothing/suit/roguetown/shirt/noble/hand)
+	reqs = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 2,
+				/obj/item/natural/silk = 3)
+	tools = list(/obj/item/needle)
+	craftdiff = 4
+	sellprice = 45
+
 
 /datum/crafting_recipe/roguetown/sewing/archivist
 	name = "scholar's robes"
