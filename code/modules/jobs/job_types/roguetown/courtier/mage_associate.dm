@@ -197,8 +197,6 @@
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 
-/obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet
-
 /obj/item/clothing/neck/roguetown/skullamulet/alchemist
 	name = "sulphur amulet"
 	desc = "This yellow skull is the sigil of alchemists across Ferentia.<br>It reeks with a rotten odor."
@@ -212,7 +210,6 @@
 		var/mob/living/carbon/human/H = user
 		active_item = TRUE
 		to_chat(user, span_green("'..all the world is a fluid; it takes but one hand to make a ripple..'"))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet)
 	return
 
 /obj/item/clothing/neck/roguetown/skullamulet/alchemist/dropped(mob/living/user)
@@ -220,6 +217,5 @@
 	if(active_item && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		to_chat(user, span_green("'..the air is clean and still once more.'"))
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/aerosolize/wave/amulet)
 		active_item = FALSE
 	return
