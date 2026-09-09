@@ -7,17 +7,17 @@
 	var/static/list/university_jobs = list(
 		"Court Magician",
 		"Archivist",
-		"Magos Thrall", // ES job name
+		"Magicians Associate", 
 	)
 	/// Jobs covered by the healing half of the covenant (Pestra's mantle).
 	var/static/list/apothecary_jobs = list(
 		"Apothecary",
-		"Court Physician", // ES job name
+		"Court Physician", 
 	)
 	var/static/list/wage_floors = list(
 		"Court Magician" = 40,
 		"Archivist" = 20,
-		"Magos Thrall" = 10,
+		"Magicians Associate" = 10,
 		"Court Physician" = 80,
 		"Apothecary" = 40,
 	)
