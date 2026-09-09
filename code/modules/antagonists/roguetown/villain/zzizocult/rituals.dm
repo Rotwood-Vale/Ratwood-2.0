@@ -700,7 +700,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	S.set_up(1, 1, center)
 	S.start()
 	new /obj/item/clothing/head/roguetown/helmet/skullcap/cult(center)
-	new /obj/item/clothing/cloak/half/shadowcloak/cult(center)
+	new /obj/item/clothing/cloak/half/cult(center)
 	new /obj/item/rope/chain(center)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
@@ -713,11 +713,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 
-/obj/item/clothing/cloak/half/shadowcloak/cult
+/obj/item/clothing/cloak/half/cult
 	name = "ominous cloak"
 	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
-	icon_state = "shadowcloak"
+	icon_state = "cultcloak"
 	sleeved = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	desc = "Those who wear, thy should beware, for those who do; never come back as who they once were again."
 	body_parts_covered = ARMS|CHEST
