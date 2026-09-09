@@ -282,7 +282,5 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 	chargetime = 0
 	penfactor = 10
 	swingdelay = 0
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "blunt"
 	clickcd = SAIGA_ATTACK_SPEED

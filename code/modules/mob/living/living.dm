@@ -169,65 +169,6 @@
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
 
-	// If this bump is a potential mounted charge attempt, don't early-return through mob-swap/push.
-	var/skip_mob_swap_for_charge = FALSE
-	if(m_intent == MOVE_INTENT_RUN && dir == get_dir(src, M) && isliving(M))
-		var/mob/living/charger_probe = src
-		if(istype(src, /mob/living/simple_animal))
-			var/mob/living/simple_animal/src_mount_probe = src
-			for(var/mob/living/rider_probe in src_mount_probe.buckled_mobs)
-				charger_probe = rider_probe
-				break
-		if(charger_probe?.cmode)
-			skip_mob_swap_for_charge = TRUE
-
-	if(!skip_mob_swap_for_charge && !M.buckled && !M.has_buckled_mobs())
-		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
-		if(istype(M,/mob/living/simple_animal/hostile/retaliate))
-			if(!M:aggressive)
-				mob_swap = TRUE
-		if(!they_can_move) //we have to physically move them
-			if(!too_strong)
-				mob_swap = FALSE
-		else
-			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
-				mob_swap = FALSE
-			else if(
-				!( HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP) ) &&\
-				( (M.restrained() && !too_strong) ) &&\
-				( restrained() )
-				)
-				mob_swap = FALSE
-		if(mob_swap)
-			//switch our position with M
-			if(loc && !loc.Adjacent(M.loc))
-				return TRUE
-			now_pushing = 1
-			var/oldloc = loc
-			var/oldMloc = M.loc
-
-			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-			var/src_passmob = (pass_flags & PASSMOB)
-			M.pass_flags |= PASSMOB
-			pass_flags |= PASSMOB
-
-			var/move_failed = FALSE
-			if(!M.Move(oldloc) || !Move(oldMloc))
-				M.forceMove(oldMloc)
-				forceMove(oldloc)
-				move_failed = TRUE
-			if(!src_passmob)
-				pass_flags &= ~PASSMOB
-			if(!M_passmob)
-				M.pass_flags &= ~PASSMOB
-
-			now_pushing = 0
-
-			if(!move_failed)
-				return TRUE
-
 	// LANCE / TWO-HANDED SPEAR CHARGE
 	// Triggered by: rider or mount run bump + combat mode + intent-gated weapon use.
 	if(isliving(M))
