@@ -105,6 +105,7 @@
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
+	extra_context = "This class gains Master skill in their weapon of choice."
 
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
