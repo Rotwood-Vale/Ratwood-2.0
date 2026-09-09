@@ -1,11 +1,7 @@
 /*
  * SOUND OCCLUSION: whether anything stands between a listener and what they are hearing.
  *
- * Ours, not TG's. What the port inherited was three lines in playsound_local (environment 11, the
- * falloff exponent times 1.5, the volume times 0.75) reachable only by a dullahan whose detached
- * head was in a closet: the parameter that would have let anything else set it had no live callers,
- * and the list of muffled listeners beside it was never populated. Everything that decides WHETHER
- * to muffle was built afterwards, and grew in whichever file the caller happened to be in.
+ * Ours, not TG's. So, it's not quite proven.
  *
  * Three callers, deliberately not identical:
  *   SSpoint_ambience  turf opacity only, graded, silence for enclosed sources. A listener standing
@@ -16,14 +12,13 @@
  *                     shot. occlusion_muffle_for() below is its whole decision.
  *
  * WHAT DOES the muffling stays where it is applied, in playsound_local and slim_send. Those two are
- * hand-maintained mirrors held together by the Send Diff verb, and a shared proc would put a call on
- * every listener of every sound in the game to save duplicating four lines.
+ * hand-maintained mirrors and nothing in the repo checks that they agree, so change them together;
+ * a shared proc would put a call on every listener of every sound in the game to save duplicating
+ * four lines.
  */
 
-/// Tiles the last opacity_between() walked, for callers pricing the walk. Written per tile rather
-/// than at each of the proc's nine exits, which is one datum var write against the locate() that
-/// dominates the same iteration. Valid only until the NEXT call from anywhere, so read it straight
-/// after the call that set it and never across one.
+/// Tiles the last opacity_between() walked, for callers pricing the walk. Valid only until the
+/// NEXT call from anywhere, so read it straight after the call that set it and never across one.
 GLOBAL_VAR_INIT(opacity_walk_tiles, 0)
 
 /// Where the last opacity_between() was blocked, and the tile it stepped from to get there. Written
@@ -64,8 +59,7 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  *   rather than a second implementation of it
  */
 /proc/opacity_between(turf/start, turf/target, steps_allowed, check_contents = FALSE, list/trace)
-	// Cleared before either early return below, which used to leave the PREVIOUS call's count for the
-	// caller to read and add to its total.
+	// Cleared before either early return, or a caller reads the previous call's count.
 	GLOB.opacity_walk_tiles = 0
 	if(!start || !target || start.z != target.z)
 		return OCCLUSION_CLEAR
@@ -82,9 +76,8 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 	var/step_y = (y < target_y) ? 1 : -1
 	var/err = dx + dy
 	var/steps = 0
-	// ONE exit, so the tile count is written once rather than on every iteration of every walk. The
-	// corner probes made that three writes a tile, and the value is only ever read straight after
-	// the call.
+	// ONE exit, so the tile count is written once rather than per iteration; it is only ever read
+	// straight after the call.
 	. = OCCLUSION_CLEAR
 	while(TRUE)
 		steps++
@@ -134,11 +127,11 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 /**
  * Whether a blocked line has a way round it, which is what separates a corner from an enclosure.
  *
- * BESIDE THE OBSTRUCTION, not beside the listener, which is what the first version got wrong. Where
- * a diagonal step lands on a wall, the two tiles it cut between are where the corner opens, and they
- * can be nowhere near the listener; probing perpendicular to the source instead missed a fire two
- * tiles away that was plainly visible. Where the step was straight on, the sideways neighbours of
- * the blocking tile stand in: a lone pillar has open ground either side, a wall run does not.
+ * BESIDE THE OBSTRUCTION, not beside the listener. Where a diagonal step lands on a wall, the two
+ * tiles it cut between are where the corner opens, and they can be nowhere near the listener; probing
+ * beside the listener misses a fire in plain view round a corner. Where the step was straight on,
+ * the sideways neighbours of the blocking tile stand in: a lone pillar has open ground either side,
+ * a wall run does not.
  *
  * Testing the flanks for openness alone is NOT enough, and is why each one is walked. The flank on
  * the listener's side of a wall is open by definition, since they are standing next to it, so a
@@ -221,9 +214,10 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 /**
  * What playsound_local should be told about one listener, from the caller's SOUND_TRAVEL_* class.
  *
- * SOUND_MUFFLE_NONE, SOFT or ENCLOSED, or NULL for "do not send", which only STOP can return. MUFFLE
- * is one opacity_between() and anything on the line is SOFT. LEAK and STOP grade, one walk when the
- * line is clear and up to three when it is not, and differ only in what an enclosure becomes.
+ * SOUND_MUFFLE_NONE, SOFT or ENCLOSED, or NULL for "do not send", which only CONTAINED can return.
+ * CARRYING is one opacity_between() and anything on the line is SOFT. LEAKING and CONTAINED grade,
+ * one walk when the line is clear and up to three when it is not, and differ only in what an
+ * enclosure becomes.
  *
  * The caller has already decided this listener is worth walking to: same floor, not adjacent, mode
  * not NONE. Those gates stay in playsound so the common case costs no proc call at all. Contents are

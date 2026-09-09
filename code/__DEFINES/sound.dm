@@ -158,8 +158,8 @@
 
 //SSsounds builds its pool as 1 to this, so every number ABOVE it is reserved by hand and every
 //number at or below it can be handed to any one-shot playsound(channel = 0), token or instrument.
-//1004 to 1024 is 21 numbers and all 21 are taken, so there is no free reserved channel left:
-//claiming one means LOWERING THIS FIRST. Take 1003 without lowering it and the pool still hands
+//1004 to 1024 is 21 numbers and 20 are taken, 1016 being the only one left. Claiming a SECOND one
+//means LOWERING THIS FIRST. Take 1003 without lowering it and the pool still hands
 //1003 out, so the new sound and whatever borrowed it cut each other off only when both happen to
 //play, which is the kind of fault that survives a whole round of testing.
 #define CHANNEL_HIGHEST_AVAILABLE 1003
@@ -229,15 +229,16 @@
 ///Below 1 the drop is back-loaded: gentle near the source, accelerating toward the edge.
 ///Above 1 it inverts, front-loading the drop and then easing onto the floor.
 ///
-///Room scale, and the overwhelming majority of sounds: 100 98 92 82 68 49 27 1 over tiles 0-7.
+///Room scale, and the overwhelming majority of sounds: 100 98 92 82 68 50 28 2 over tiles 0-7,
+///for a volume 100 source landing on the default floor.
 #define SOUND_FALLOFF_EXPONENT 0.5
 ///Carries across a hall or a street rather than a room. Below 1 for the same reason the short
 ///curve is: the drop stays gentle near the source and steepens toward the edge, so the falloff
 ///lands where the sound is leaving earshot rather than while it is still filling the room.
-///At range 17: 100 97 93 89 84 79 73 67 61 55 49 43 36 29 22 15 8 1.
+///At range 17, roughly: 100 97 93 89 84 79 73 68 62 56 50 43 37 30 23 16 9, then the floor.
 #define SOUND_FALLOFF_EXPONENT_MEDIUM 0.8
-///Carries across the map. In practice only the church bell: 100 at the bell, 77 at 8 tiles,
-///43 at 50, 15 at 110, 1 at the edge.
+///Carries across the map. In practice only the church bell: about 100 at the bell, 77 at 8 tiles,
+///43 at 50, 15 at 110, and the floor at the edge.
 #define SOUND_FALLOFF_EXPONENT_LONG 2
 
 ///Range at which each band takes over. Nearly every call site lands in the short band.
@@ -346,16 +347,11 @@
 ///preset outright, so this is the preset OR the filter and not both.
 #define SOUND_ERP_MUFFLE_ENVIRONMENT 22
 
-///What a line between a listener and a source ran into, counted in OPAQUE TILES CROSSED.
-///
-///One wall is a building's edge, a doorway you are standing beside, a single partition: there is
-///effectively an open path and the sound should arrive dulled, so it is served MUFFLED. Two or more
-///means properly enclosed, and it is not served at all.
-///
-///This replaced a rule that tested whether the line grazed the exact meeting point of two wall
-///tiles. That fired 0 times in 36,007 checks, because it needs a diagonal step squeezing between two
-///tiles touching corner to corner, which a Bresenham line almost never does. It cost a little and
-///delivered nothing.
+///What a line between a listener and a source ran into. CLEAR: nothing opaque on it. SOLID: blocked,
+///and no open line from either tile beside the obstruction, so the source is enclosed and not served.
+///MUFFLED: blocked on the direct line but open from a tile beside the obstruction, a corner, so it is
+///served dulled. A test for a diagonal step slipping between two corner-to-corner walls was measured
+///and never fired; the line lands on walls rather than between them.
 #define OCCLUSION_CLEAR 0
 #define OCCLUSION_SOLID 1
 #define OCCLUSION_MUFFLED 2
@@ -374,9 +370,8 @@
 ///one positional list per category: what the source decided when it last changed, the volume
 ///last sent, and the timer that advances a set of clips.
 ///
-///A list PER CATEGORY, not one flat list with an offset. Flattening it was built and measured on
-///2026-09-06 and reverted: it moved no per-call figure, and an offset a caller has to carry can
-///read the neighbouring category's fields where a sublist simply cannot.
+///A list PER CATEGORY, not one flat list with an offset: flattening was measured and moved nothing,
+///and an offset a caller carries can read the neighbouring category's fields where a sublist cannot.
 #define POINT_AMBIENCE_SLOT_TURF 1
 #define POINT_AMBIENCE_SLOT_VOLUME 2
 #define POINT_AMBIENCE_SLOT_CONTINUOUS 3
@@ -397,10 +392,6 @@
 ///lets more bass through, which is what a wall actually does. You hear the thump, not the
 ///detail. 0.25 is the EAX default.
 #define SOUND_MUFFLE_OCCLUSION_LF 0.25
-
-///Point-source ambience (fire crackle, bone rattle, sconce torches) is served per client by
-///SSpoint_ambience rather than per source; each kind's volume, range and file live on its
-////datum/point_ambience_category, which reproduce the old loops' numbers.
 
 ///Reverb used when the listener's area does not set its own soundenv, which is nearly all of
 ///them. Previously that case fell through to SOUND_ENVIRONMENT_NONE, which kills reverb outright
