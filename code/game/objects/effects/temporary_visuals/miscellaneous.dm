@@ -426,19 +426,14 @@
 
 /obj/effect/temp_visual/heart/sex_effects/invisible/Initialize(mapload, mob/seers, custom_state = "redheart")
 	. = ..()
-	var/random_pixel_w = rand(5, 15)
-	var/random_time = rand(2, 7) * 0.1 SECONDS
-	var/random_time2 = random_time + rand(5, 15) * 0.1 SECONDS
 	layer = prob(50) ? ABOVE_MOB_LAYER : BELOW_MOB_LAYER
 	var/image/I = image(icon = 'icons/effects/erpeffects.dmi', icon_state = custom_state, layer = layer, loc = src)
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/People, "erp_effect", I, seers)
 	I.alpha = 255
 	I.appearance_flags = RESET_ALPHA
-	animate(I, time = 5 SECONDS, transform = transform.Scale(0.1), flags = ANIMATION_PARALLEL)
-	animate(I, time = random_time, pixel_w = random_pixel_w, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
-	animate(time = random_time2, pixel_w = -random_pixel_w, easing = CIRCULAR_EASING, flags = ANIMATION_RELATIVE)
-	animate(time = random_time, pixel_w = -random_pixel_w, easing = CIRCULAR_EASING, flags = ANIMATION_RELATIVE)
-	animate(time = random_time2, pixel_w = random_pixel_w, easing = CIRCULAR_EASING, flags = ANIMATION_RELATIVE, loop = -1)
+	I.pixel_x = rand(-10, 10)
+	I.pixel_y = rand(-10, 10)
+	animate(I, pixel_x = I.pixel_x + rand(-5, 5), pixel_y = I.pixel_y + rand(28, 40), alpha = 0, time = duration)
 
 /obj/effect/temp_visual/pleasant_scent
 	name = "pleasant scent"
