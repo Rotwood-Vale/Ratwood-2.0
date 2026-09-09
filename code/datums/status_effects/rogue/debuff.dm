@@ -1222,6 +1222,8 @@
 	else
 		to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
 	inherited_flaw?.apply_visual_effect(owner)
+	if(inherited_flaw?.scent_type != "Pleasant")
+		owner.apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
 	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
 		switch(inherited_flaw?.scent_type)
 			if("Neutral")
@@ -1233,6 +1235,8 @@
 
 /datum/status_effect/debuff/stinky_contact/on_remove()
 	to_chat(owner, span_notice("The lingering scent finally fades off me."))
+	if(!owner.has_flaw(/datum/charflaw/malodorous))
+		owner.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
 	switch(inherited_flaw?.scent_type)
 		if("Neutral")
 			owner.remove_stress(/datum/stressevent/prominent_scent)
