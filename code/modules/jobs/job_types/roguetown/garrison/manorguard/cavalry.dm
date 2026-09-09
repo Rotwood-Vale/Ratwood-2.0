@@ -42,11 +42,8 @@
 
 /datum/outfit/job/roguetown/manorguard/cavalry/pre_equip(mob/living/carbon/human/H)
 	..()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
-	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
@@ -90,6 +87,21 @@
 			)
 		H.verbs |= /mob/proc/haltyell
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
+
+		var/armor_options = list("Brigandine Set", "Maille Set")
+		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+
+		switch(armor_choice)
+			if("Brigandine Set")
+				armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
+				wrists = /obj/item/clothing/wrists/roguetown/splintarms
+				pants = /obj/item/clothing/under/roguetown/splintlegs
+
+			if("Maille Set")
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale
+				wrists = /obj/item/clothing/wrists/roguetown/bracers
+				pants = /obj/item/clothing/under/roguetown/chainlegs
+
 
 		var/helmets = list(
 		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
