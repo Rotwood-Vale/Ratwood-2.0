@@ -275,6 +275,19 @@
 /obj/item/clothing/wrists/roguetown/splintarms/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/wrists/roguetown/bracers/zizo
+	name = "avantyne bracers"
+	desc = "Clasped yet practical, these avantyne wristguards are reinforced for the rite without binding themselves to the wearer forever."
+	icon_state = "zizobracers"
+	item_state = "zizobracers"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	peel_threshold = 5
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
 /obj/item/clothing/wrists/roguetown/splintarms/iron
 	name = "splint bracers"
 	desc = "A pair of leather sleeves backed with iron splints, couters, and shoulderpieces that protect your arms and remain decently light."

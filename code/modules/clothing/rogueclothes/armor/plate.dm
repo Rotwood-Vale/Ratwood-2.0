@@ -335,6 +335,19 @@
 		return
 	qdel(src)
 
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+	name = "avantyne-threaded maille"
+	desc = "Pauldrons lyke that of fire, crested atop a veil of otherworldly maille - impossibly tough, warm to the touch, \
+    and crackling with insidious energies."
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
+	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoplatechest_med"
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
 	name = "full-plate corset"
