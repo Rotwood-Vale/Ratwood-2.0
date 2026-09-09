@@ -138,7 +138,7 @@
 	for(var/i in 1 to rand(1, 3))
 		new /obj/effect/temp_visual/heart/sex_effects/invisible(get_turf(spawn_target), seers, icon_state_name)
 	for(var/mob/seer in seers)
-		spawn_target.balloon_alert(seer, "Plap!", rand(-15, 15), rand(0, 25))
+		spawn_target.balloon_alert(seer, "plap!", rand(-15, 15), rand(0, 25))
 
 /datum/sex_controller/proc/do_thrust_animate(atom/movable/target, pixels = 4, time = 2.7)
 	var/oldx = user.pixel_x
