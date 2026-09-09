@@ -21,7 +21,7 @@
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
-	recharge_time = 15 SECONDS
+	recharge_time = 30 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 	cost = 3
@@ -67,7 +67,7 @@
 	sound = 'sound/misc/fade.ogg'
 	associated_skill = /datum/skill/magic/arcane
 	antimagic_allowed = TRUE
-	hide_charge_effect = TRUE
+	hide_charge_effect = FALSE
 	cost = 3 // Very useful
 
 /obj/effect/proc_holder/spell/invoked/invisibility/miracle
@@ -274,7 +274,7 @@
 	invocations = list("Lunaria Silentium!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
-	devotion_cost = 50
+	devotion_cost = 100 //Doubled devotion cost, because it's essentitally their Ultimate Move
 	recharge_time = 30 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
@@ -317,7 +317,7 @@
 	invocations = list("No spell shall touch thee!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
-	devotion_cost = 50
+	devotion_cost = 100
 	recharge_time = 60 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
