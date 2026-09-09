@@ -231,3 +231,25 @@
       cast of second wind
   - bugfix: You should no longer have to worry about instantly falling down after
       using the second wind
+2026-09-09:
+  Shadow-Quill:
+  - rscadd: Eoran buds are now valid for Nudism wear.
+  ophaq:
+  - bugfix: Fixes naledi mask looking weird when worn on belt slot. Now it is hidden
+      completely.
+  sippykot:
+  - rscadd: Added Skincrafting Journeyman to sheltered princess, Novice to inbred
+      princess to match their Sewing skills
+  - rscadd: Gives the sheltered princess a needle, scissors and some fibers
+  - rscadd: Gives the sneaky and inbred princess steel daggers and noble sheathes
+  zeroisthebiggay:
+  - bugfix: you can swift intent objects
+  - bugfix: strong intenting objects now drains stamina
+  - bugfix: fixes humans having an unconditional plus fifty to all their parry roles
+  zoktiik:
+  - sound: Added a short sound effect heard when you send or recieve a message in
+      Subtle LOOC.
+  - qol: Did you know that hearts needed you to "squeeze" them (use the heart item
+      in-hand) before you inserted them, or else they wouldn't work again? Now they
+      get restarted from the "stopped" state (where possible) if you surgically insert
+      them back in, or revive your dead-but-rehearted patient through any means.
