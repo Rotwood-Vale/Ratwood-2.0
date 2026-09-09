@@ -1395,6 +1395,7 @@
 #include "code\modules\admin\verbs\check_timer_sources.dm"
 #include "code\modules\admin\verbs\check_sound_tokens.dm"
 #include "code\modules\admin\verbs\check_sound_area.dm"
+#include "code\modules\admin\verbs\point_ambience_counters.dm"
 #include "code\modules\admin\verbs\point_ambience_mode.dm"
 #include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\deadsay.dm"

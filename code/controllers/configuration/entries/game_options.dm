@@ -83,6 +83,23 @@
 	config_entry_value = 0
 	min_val = 0
 
+/datum/config_entry/number/point_ambience_max_services_per_tick	// ceiling on move-hook ambience services in one tick across all clients; 0 is none and also turns off the tick-usage gate
+	config_entry_value = 8
+	min_val = 0
+
+/datum/config_entry/number/point_ambience_queue	// 1: a step marks the client and the tick serves everyone marked back to back, up to the cap; 0: service inline inside Move() with the cap and tick gate
+	config_entry_value = 1
+	min_val = 0
+	max_val = 1
+
+/datum/config_entry/number/point_ambience_standing_skip	// deciseconds within which the once-a-second walk passes over a client a step already served; 0 never skips and is smoothest for a moving listener, 3 skips about half, 5 matches the move interval and skips most
+	config_entry_value = 0
+	min_val = 0
+
+/datum/config_entry/number/point_ambience_cross_floor	// 1 also ranks the floor above and below, served muffled; 0 ranks the listener's own floor only. Off by design, and it is also most of a town walk's cost
+	config_entry_value = 0
+	min_val = 0
+	max_val = 1
 
 /// Tiles of effective distance a floor adds between a source and a listener. 0 keeps the old
 /// behaviour exactly: crossing a floor is a flat halving that costs the same directly overhead as

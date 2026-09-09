@@ -381,6 +381,12 @@
 #define POINT_AMBIENCE_SLOT_TIMER 7
 #define POINT_AMBIENCE_SLOT_FIELDS 7
 
+///Densest candidate box SSpoint_ambience.drain_density_count gives its own bucket, anything denser
+///landing in the last one. The list is one longer, an empty cell taking the first bucket. Twice the
+///densest box on any shipped map, measured, leaving room for the corpses and dropped torches that
+///register on top; lower it and a busy tile's percentiles read low.
+#define POINT_AMBIENCE_DENSITY_MAX 64
+
 ///sound.echo is the 18-slot EAX property array; slot 7 is Occlusion, in millibels (-10000..0).
 ///It low-passes the direct path, which is the only thing here that genuinely alters the sound
 ///rather than its level. -1500 is roughly a closed door.

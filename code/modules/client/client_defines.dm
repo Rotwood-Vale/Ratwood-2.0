@@ -51,14 +51,18 @@
 	/// torch state changed still gets the loop.
 	var/atom/point_ambience_cache_self
 	/// Whether the mob can hear and whether the slim send may serve it, held until
-	/// point_ambience_profile_until: can_hear() is three user procs and an organ walk on a carbon,
-	/// and neither answer can change in a way a tick would not catch.
+	/// point_ambience_profile_until: can_hear() is three user procs and an organ walk on a carbon.
+	/// Refreshed only by a service that walks or sends, never by the standing shortcut, so a
+	/// listener standing still keeps the last answer until they step.
 	var/point_ambience_hearing = FALSE
 	var/point_ambience_slim = TRUE
 	var/point_ambience_profile_until = 0
 	/// world.time before which the move hook will not service this client again, when
 	/// SSpoint_ambience.move_service_interval is set.
 	var/point_ambience_next_service = 0
+	/// world.time a step last ran a service for this client. The standing walk passes over anyone
+	/// served within SSpoint_ambience.standing_skip of now; the step that is coming will serve them.
+	var/point_ambience_last_service = 0
 	/// The last full ambience scan, reused while the client stands still and nothing in the index
 	/// changed: the turf, SSpoint_ambience.static_version and master volume it was taken at, and the
 	/// nearest source per category. The walk ranks straight into this list, so it allocates nothing.
