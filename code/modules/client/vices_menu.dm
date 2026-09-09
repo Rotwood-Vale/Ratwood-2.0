@@ -806,6 +806,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				font-size: 0.65em;
 				font-weight: bold;
 			}
+			.slot-triumph {
+				background: #D4AF37;
+				color: #1C0000;
+				padding: 1px 5px;
+				font-size: 0.65em;
+				font-weight: bold;
+			}
 			.vice-display {
 				display: flex;
 				align-items: flex-start;
@@ -1107,7 +1114,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		</div>
 		
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
-		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 5 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
+		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>You must select a major vice for slot one. Any further major vices give one additional loadout point and a triumph, minor vices will grant just loadout points.</p>			<div class="vices-grid">
 	"}
 	
 	// Generate 5 vice slots
@@ -1124,8 +1131,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "<span class='slot-required'>REQUIRED</span>"
 		
 		if(current_vice)
-			// In point-buy, every vice contributes +1 point
-			html += "<span class='slot-cost'>+1 Point</span>"
+			// Every selected vice contributes one loadout point.
+			html += "<span class='slot-cost'>+1 Loadout Point</span>"
+			if(i > 1 && current_vice.major && !istype(current_vice, /datum/charflaw/noflaw))
+				html += "<span class='slot-triumph'>+1 Triumph</span>"
 		
 		html += "</div>"
 		
