@@ -120,10 +120,9 @@
 	//receiving = list()
 	. = ..()
 
-/datum/sex_controller/proc/do_visual_effects(atom/movable/effect_target)
+/datum/sex_controller/proc/do_visual_effects(atom/movable/effect_target, datum/sex_action/action)
 	if(do_subtle_action)
 		return
-	var/datum/sex_action/action = SEX_ACTION(current_action)
 	if(!action || !(action.category & SEX_CATEGORY_PENETRATE))
 		return
 	var/list/seers = list()
@@ -1450,7 +1449,7 @@
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
-		do_visual_effects(target)
+		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
