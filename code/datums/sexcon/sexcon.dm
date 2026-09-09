@@ -123,6 +123,9 @@
 /datum/sex_controller/proc/do_visual_effects(atom/movable/effect_target)
 	if(do_subtle_action)
 		return
+	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action || !(action.category & SEX_CATEGORY_PENETRATE))
+		return
 	var/list/seers = list()
 	if(user?.client?.prefs && user.client.prefs.erp_visuals)
 		seers += user
