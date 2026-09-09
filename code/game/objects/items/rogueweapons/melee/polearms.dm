@@ -1953,8 +1953,8 @@
 	pickup_sound = 'sound/foley/equip/swordlarge1.ogg'
 	minstr = 4
 	thrown_bclass = BCLASS_PIERCE
-	max_blade_int = 400
-	max_integrity = 400
+	max_blade_int = 250
+	max_integrity = 300
 	throwforce = 45 //Pierce the heavens!
 	wdefense = 4
 	wdefense_wbonus = 5
