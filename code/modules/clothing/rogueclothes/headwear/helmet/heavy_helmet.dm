@@ -974,7 +974,7 @@
 	armor = ARMOR_ASCENDANT
 	peel_threshold = 5
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
+	armor_class = ARMOR_CLASS_MEDIUM
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "HELMET")
