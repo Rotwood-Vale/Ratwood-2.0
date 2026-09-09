@@ -5,12 +5,12 @@
 
 /datum/supply_pack/rogue/blackmarket_drugs/ozium
 	name = "Ozium"
-	cost = 35
+	cost = 25
 	contains = list(/obj/item/reagent_containers/powder/ozium)
 
 /datum/supply_pack/rogue/blackmarket_drugs/moondust
 	name = "Moon Dust"
-	cost = 50
+	cost = 40
 	contains = list(/obj/item/reagent_containers/powder/moondust)
 
 /datum/supply_pack/rogue/blackmarket_drugs/spice
@@ -20,15 +20,15 @@
 
 /datum/supply_pack/rogue/blackmarket_drugs/swampzig
 	name = "Zigarette, Swampweed"
-	cost = 15
+	cost = 10
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/cannabis)
 
 /datum/supply_pack/rogue/blackmarket_drugs/pipezig
 	name = "Zigarette, Pipeweed"
-	cost = 10
+	cost = 5
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/nicotine)
 
 /datum/supply_pack/rogue/blackmarket_drugs/soap
 	name = "Bar of Soap"
-	cost = 20
+	cost = 15
 	contains = list(/obj/item/soap)

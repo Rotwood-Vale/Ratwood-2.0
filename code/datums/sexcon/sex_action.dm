@@ -11,6 +11,9 @@
 	var/check_same_tile = TRUE
 	/// Whether the same tile check can be bypassed by an aggro grab on the person
 	var/aggro_grab_instead_same_tile = TRUE
+	/// If TRUE, skips adjacency and instead requires direct line of sight within ranged_los_distance tiles
+	var/ranged_los_action = FALSE
+	var/ranged_los_distance = 7
 	/// Whether the action is forbidden from being done while incapacitated (stun, handcuffed)
 	var/check_incapacitated = TRUE
 	/// Whether the action requires an aggressive grab on the victim

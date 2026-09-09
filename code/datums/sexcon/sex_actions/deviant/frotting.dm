@@ -29,7 +29,7 @@
 	user.visible_message(span_warning("[user] shoves [user.p_their()] cock against [target]'s own!"))
 
 /datum/sex_action/frotting/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] frots cocks together with [target]."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] frots cocks together with [target]."))
 	user.sexcon.outercourse_noise(target, TRUE)
 
 	user.sexcon.perform_sex_action(user, 1, 4, TRUE)

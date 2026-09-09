@@ -35,12 +35,12 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 50
-	candodge = TRUE
+	mob_can_dodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = null
-	dodgetime = 40
+	dodgetime = 4 SECONDS
 	aggressive = 1
 	ranged = TRUE
 	rapid = 3
@@ -131,3 +131,7 @@
 			return FALSE
 		treeguy.create_shroom(targets[1])
 		treeguy.shroom_cd = world.time
+
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/awaken_summon(mob/living/carbon/human/master, ckey)
+	..()
+	ranged_cooldown = 6 SECONDS

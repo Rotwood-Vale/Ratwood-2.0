@@ -19,6 +19,7 @@
 	var/max_storage = 20
 	var/list/arrows = list()
 	sewrepair = TRUE
+	dropshrink = 0.9
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -107,49 +108,56 @@
 		icon_state = "quiver0"
 
 /obj/item/quiver/arrows/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/iron/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bluntarrows/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/blunt/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bolts/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bluntbolts/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in  1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/blunt/A = new()
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/heavybluntbolts/Initialize(mapload)
+	. = ..()
+	for(var/i in  1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt/A = new()
+		arrows += A
+	update_icon()
+	
 /obj/item/quiver/holybolts/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/holy/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/heavybolts/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/Wbolts/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/water/A = new()
 		arrows += A
@@ -180,31 +188,31 @@
 /obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
 
-/obj/item/quiver/bolts/paalloy/Initialize(mapload)
-	..()
+/obj/item/quiver/boltsancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bolt/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/Warrows/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/water/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bodkin/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/paalloy/Initialize(mapload)
-	..()
+/obj/item/quiver/ancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -215,6 +223,7 @@
 	item_state = "javelinbag"
 	max_storage = 4
 	sellprice = 10
+	dropshrink = 0.85
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -262,23 +271,23 @@
 		icon_state = "javelinbag0"
 
 /obj/item/quiver/javelin/iron/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/javelin/steel/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/javelin/paalloy/Initialize(mapload)
-	..()
+/obj/item/quiver/javelin/ancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -347,10 +356,10 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/sling/paalloy/Initialize(mapload)
+/obj/item/quiver/sling/ancient/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient/A = new()
 		arrows += A
 	update_icon()
 
@@ -365,6 +374,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.5
 
 /obj/item/quiver/zigs/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/clothing/mask/cigarette/rollie))

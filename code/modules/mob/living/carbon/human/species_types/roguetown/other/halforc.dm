@@ -12,7 +12,7 @@
 	being born in these rough places otherwise devoid of a fairer sex. Your mother-clan is in thrall \
 	to the Ironmask. True orcs would kill you on sight, seeing you as a mongrel dog, and non-orcish \
 	people cannot decide between regarding you with either mere distrust or outright disgust. Yet \
-	somehow your wandering feet came to the vale, where half-orcs ply muscle and their hardiness \
+	somehow your wandering feet came to these lands, where half-orcs ply muscle and their hardiness \
 	in the rough underbelly or outer reaches of society.<br>\
 	(+1 Strength, Big Guy Trait, Bed Breaker Trait)"
 
@@ -42,7 +42,7 @@
 	OFFSET_FACE_F = list(0,1), OFFSET_BELT_F = list(0,1), OFFSET_BACK_F = list(0,1), \
 	OFFSET_NECK_F = list(0,1), OFFSET_MOUTH_F = list(0,1), OFFSET_PANTS_F = list(0,1), \
 	OFFSET_SHIRT_F = list(0,1), OFFSET_ARMOR_F = list(0,1), OFFSET_UNDIES_F = list(0,1))
-	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_BIGGUY, TRAIT_DEATHBYSNUSNU)
+	inherent_traits = list(TRAIT_BIGGUY, TRAIT_DEATHBYSNUSNU)
 	race_bonus = list(STAT_STRENGTH = 1)
 	enflamed_icon = "widefire"
 	organs = list(
@@ -71,7 +71,16 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/tonage,
+		/datum/body_marking/womb_tattoo,
+		/datum/body_marking/butterfly,
+		/datum/body_marking/waist,
+		/datum/body_marking/diagonal_eyes,
+		/datum/body_marking/wide_eyes,
+		/datum/body_marking/stripes,
 	)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
@@ -85,6 +94,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
 		/datum/customizer/organ/horns/tusks,
 		/datum/customizer/organ/ears/halforc,
 		)

@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	38
 
 // Safely extract a type path from datums or type values; returns null if unset/invalid.
 /proc/preferences_typepath_or_null(value)
@@ -225,6 +225,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
+	S["hud_colorblind_palette"] >> hud_colorblind_palette
 	S["hotkeys"]			>> hotkeys
 	S["chat_on_map"]		>> chat_on_map
 	S["showrolls"]			>> showrolls
@@ -239,18 +240,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
 	S["anonymize"]			>> anonymize
+	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["top_examine"]		>> top_examine
+	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
 	S["autoconsume"]		>> autoconsume
+	S["autowoodcut"]		>> autowoodcut
+	S["autopicking"]		>> autopicking
 	S["no_examine_blocks"]	>> no_examine_blocks
 	S["no_autopunctuate"]	>> no_autopunctuate
 	S["no_language_fonts"]	>> no_language_fonts
 	S["no_language_icon"]	>> no_language_icon
+	S["hide_unavailable_emotes"] >> hide_unavailable_emotes
+	S["hide_tongue_noise_warnings"] >> hide_tongue_noise_warnings
 	S["crt"]				>> crt
 	S["grain"]				>> grain
 	S["sexable"]			>> sexable
@@ -258,7 +267,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
 	S["edging"]				>> edging
+	S["sensitive_brands"] 	>> sensitive_brands
+	S["facial_brands"] 		>> facial_brands
+	S["pubes"]				>> pubes
+	S["pits"]				>> pits
+	S["descriptor_color"]	>> descriptor_color
+	S["cursed_collarable"] 	>> cursed_collarable
 	S["shake"]				>> shake
+	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
@@ -307,10 +323,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
+	if(!is_hud_colorblind_palette(hud_colorblind_palette))
+		hud_colorblind_palette = initial(hud_colorblind_palette)
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	chat_on_map		= sanitize_integer(chat_on_map, 0, 1, initial(chat_on_map))
 	showrolls		= sanitize_integer(showrolls, 0, 1, initial(showrolls))
 	chatheadshot	= sanitize_integer(chatheadshot, 0, 1, initial(chatheadshot))
+	show_mouseover_role = sanitize_integer(show_mouseover_role, 0, 1, initial(show_mouseover_role))
 	chastity_hardmode = sanitize_integer(chastity_hardmode, CHASTITY_HARDMODE_DISABLED, CHASTITY_HARDMODE_ENABLED, initial(chastity_hardmode))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
 	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
@@ -338,6 +357,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
+	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	if(!isnum(combatmusicvol))
+		combatmusicvol = musicvol
+	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
+	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
+	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
+	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
+	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -358,6 +385,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			key_bindings -= key
 	// End
 
+/client/verb/export_savefile()
+	set name = "Export Preferences"
+	set desc = "Export your preferences to a file."
+	set category = "OOC"
+	if(!prefs.path)
+		return
+
+	if(alert("Are you sure you want to export your preferences? This will create a file on your computer that contains your preferences.", "Export Preferences", "Yes", "No") == "No")
+		return
+
+	if(!fexists(prefs.path))
+		to_chat(src, span_warning("No savefile, what?!"))
+		return
+
+	var/file_name = "[ckey].sav"
+	var/exportable_file = file(prefs.path)
+
+	DIRECT_OUTPUT(src, ftp(exportable_file, file_name))
+
 /datum/preferences/proc/save_preferences()
 	if(!path)
 		return FALSE
@@ -374,30 +420,45 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["top_examine"], top_examine)
+	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
 	WRITE_FILE(S["autoconsume"], autoconsume)
+	WRITE_FILE(S["autowoodcut"], autowoodcut)
+	WRITE_FILE(S["autopicking"], autopicking)
 	WRITE_FILE(S["no_examine_blocks"], no_examine_blocks)
 	WRITE_FILE(S["no_autopunctuate"], no_autopunctuate)
 	WRITE_FILE(S["no_language_fonts"], no_language_fonts)
 	WRITE_FILE(S["no_language_icon"], no_language_icon)
+	WRITE_FILE(S["hide_unavailable_emotes"], hide_unavailable_emotes)
+	WRITE_FILE(S["hide_tongue_noise_warnings"], hide_tongue_noise_warnings)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["sexable"], sexable)
 	WRITE_FILE(S["chastenable"], chastenable)
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["edging"], edging)
+	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
+	WRITE_FILE(S["facial_brands"], facial_brands)
+	WRITE_FILE(S["pubes"], pubes)
+	WRITE_FILE(S["pits"], pits)
+	WRITE_FILE(S["descriptor_color"], descriptor_color)
+	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
 	WRITE_FILE(S["shake"], shake)
+	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
+	WRITE_FILE(S["hud_colorblind_palette"], hud_colorblind_palette)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["chat_on_map"], chat_on_map)
 	WRITE_FILE(S["showrolls"], showrolls)
@@ -415,6 +476,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
 	WRITE_FILE(S["floating_text_toggles"], floating_text_toggles)
 	WRITE_FILE(S["admin_chat_toggles"], admin_chat_toggles)
+	WRITE_FILE(S["ghost_protection"], ghost_protection)
 	WRITE_FILE(S["ghost_form"], ghost_form)
 	WRITE_FILE(S["ghost_orbit"], ghost_orbit)
 	WRITE_FILE(S["ghost_accs"], ghost_accs)
@@ -454,15 +516,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 			if(!spec_check())
-				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species].")
-				pref_species = new default_species.type()
+				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species::name].")
+				pref_species = new default_species
 			else
 				testing("spec_check() succeeded on type [newtype] and name [species_name].")
 		else
-			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species].")
-			pref_species = new default_species.type()
+			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species::name].")
+			pref_species = new default_species
 	else
-		pref_species = new default_species.type()
+		pref_species = new default_species
 	if(pref_species.custom_selection)
 		S["race_bonus"] >> race_bonus
 
@@ -698,7 +760,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
-	hear_barks = TRUE
+	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
 		bark_id = pick(GLOB.bark_random_list)
@@ -722,6 +784,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["xenophobe_pref"]		>> xenophobe_pref
 	S["restricted_species_pref"]	>> restricted_species_pref
 	S["extra_language"]		>> extra_language
+	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
 	S["extra_language_1"]	>> extra_language_1
 	S["extra_language_2"]	>> extra_language_2
@@ -730,6 +793,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!voice_pitch)
 		voice_pitch = 1
 	S["skin_tone"]			>> skin_tone
+	S["mutant_skin"]		>> mutant_skin
 	S["hairstyle_name"]		>> hairstyle
 	S["facial_style_name"]	>> facial_hairstyle
 	S["accessory"]			>> accessory
@@ -761,6 +825,34 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["familiar_ooc_notes"]				>> familiar_prefs.familiar_ooc_notes
 	S["familiar_ooc_extra"]				>> familiar_prefs.familiar_ooc_extra
 	S["familiar_ooc_extra_link"]		>> familiar_prefs.familiar_ooc_extra_link
+
+/datum/preferences/proc/_load_gnoll_prefs(S)
+	S["gnoll_name"]						>> gnoll_prefs.gnoll_name
+	S["gnoll_pronouns"]					>> gnoll_prefs.gnoll_pronouns
+	S["gnoll_pelt_type"]				>> gnoll_prefs.pelt_type
+	if(!gnoll_prefs.pelt_type)
+		gnoll_prefs.pelt_type = "firepelt"
+	S["gnoll_genitals_penis"]			>> gnoll_prefs.genitals["penis"]
+	S["gnoll_genitals_vagina"]			>> gnoll_prefs.genitals["vagina"]
+	S["gnoll_genitals_breasts"]			>> gnoll_prefs.genitals["breasts"]
+	S["gnoll_descriptor_height"]		>> gnoll_prefs.descriptor_height
+	if(!ispath(gnoll_prefs.descriptor_height, /datum/mob_descriptor/height))
+		gnoll_prefs.descriptor_height = /datum/mob_descriptor/height/moderate
+	S["gnoll_descriptor_body"]			>> gnoll_prefs.descriptor_body
+	if(!ispath(gnoll_prefs.descriptor_body, /datum/mob_descriptor/body))
+		gnoll_prefs.descriptor_body = /datum/mob_descriptor/body/muscular
+	S["gnoll_descriptor_fur"]			>> gnoll_prefs.descriptor_fur
+	if(!ispath(gnoll_prefs.descriptor_fur, /datum/mob_descriptor/fur))
+		gnoll_prefs.descriptor_fur = /datum/mob_descriptor/fur/coarse
+	S["gnoll_descriptor_voice"]			>> gnoll_prefs.descriptor_voice
+	if(!ispath(gnoll_prefs.descriptor_voice, /datum/mob_descriptor/voice))
+		gnoll_prefs.descriptor_voice = /datum/mob_descriptor/voice/growly
+	S["gnoll_descriptor_muzzle"]		>> gnoll_prefs.descriptor_muzzle
+	if(!ispath(gnoll_prefs.descriptor_muzzle, /datum/mob_descriptor/face/gnoll))
+		gnoll_prefs.descriptor_muzzle = /datum/mob_descriptor/face/gnoll/long_muzzle
+	S["gnoll_descriptor_expression"]	>> gnoll_prefs.descriptor_expression
+	if(!ispath(gnoll_prefs.descriptor_expression, /datum/mob_descriptor/face_exp/gnoll))
+		gnoll_prefs.descriptor_expression = /datum/mob_descriptor/face_exp/gnoll/alert
 
 /datum/preferences/proc/load_character(slot)
 	if(!path)
@@ -825,6 +917,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_appearence(S)
 	_load_height(S)
 	_load_familiar_prefs(S)
+	_load_gnoll_prefs(S)
 
 	var/patron_typepath
 	S["selected_patron"]	>> patron_typepath
@@ -970,6 +1063,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/skin_tone in pref_species.get_skin_list())
 		valid_skin_colors += valid_skin_tones[skin_tone]
 	skin_tone = sanitize_inlist(skin_tone, valid_skin_colors, valid_skin_colors[1])
+	mutant_skin = pref_species.mutant_skin_option && sanitize_integer(mutant_skin, FALSE, TRUE, FALSE)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -980,6 +1074,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	S["customizer_entries"] >> customizer_entries
+
+	var/save_version = savefile_needs_update(S)
+	if(save_version > 0 && save_version < 38)
+	// Here's the plan, we save the old type and the old color, then re-apply them after validation. Should be seamless
+		var/old_accessory_type
+		var/old_selected_color
+		testing("Save version < 37, updating wings.")
+		var/list/wing_types = subtypesof(/datum/sprite_accessory/wings)
+		for(var/datum/customizer_entry/old_entry as anything in customizer_entries)
+			if(!(old_entry.accessory_type in wing_types))
+				continue
+			old_accessory_type = old_entry.accessory_type
+			old_selected_color = old_entry.accessory_colors
+			validate_customizer_entries() // Here we do validation which rebuilds the customizers
+			var/datum/customizer_entry/organ/wings/new_wing_entry = locate(/datum/customizer_entry/organ/wings) in customizer_entries
+			if(!istype(new_wing_entry))
+				continue
+			new_wing_entry.wings_color = old_selected_color
+			new_wing_entry.accessory_type = old_accessory_type
+
 	validate_customizer_entries()
 
 	return TRUE
@@ -1006,12 +1120,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
 	WRITE_FILE(S["eye_color"]			, eye_color)
 	WRITE_FILE(S["extra_language"]		, extra_language)
+	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
 	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
 	WRITE_FILE(S["extra_language_2"]	, extra_language_2)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["mutant_skin"]			, mutant_skin)
 	WRITE_FILE(S["hairstyle_name"]		, hairstyle)
 	WRITE_FILE(S["facial_style_name"]	, facial_hairstyle)
 	WRITE_FILE(S["accessory"]			, accessory)
@@ -1167,6 +1283,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["familiar_ooc_notes"] , familiar_prefs?.familiar_ooc_notes)
 	WRITE_FILE(S["familiar_ooc_extra"] , familiar_prefs?.familiar_ooc_extra)
 	WRITE_FILE(S["familiar_ooc_extra_link"] , familiar_prefs?.familiar_ooc_extra_link)
+	//Gnoll Files
+	WRITE_FILE(S["gnoll_name"] , gnoll_prefs?.gnoll_name)
+	WRITE_FILE(S["gnoll_pronouns"] , gnoll_prefs?.gnoll_pronouns)
+	WRITE_FILE(S["gnoll_pelt_type"] , gnoll_prefs?.pelt_type)
+	WRITE_FILE(S["gnoll_genitals_penis"] , gnoll_prefs?.genitals["penis"])
+	WRITE_FILE(S["gnoll_genitals_vagina"] , gnoll_prefs?.genitals["vagina"])
+	WRITE_FILE(S["gnoll_genitals_breasts"] , gnoll_prefs?.genitals["breasts"])
+	WRITE_FILE(S["gnoll_descriptor_height"] , gnoll_prefs?.descriptor_height)
+	WRITE_FILE(S["gnoll_descriptor_body"] , gnoll_prefs?.descriptor_body)
+	WRITE_FILE(S["gnoll_descriptor_fur"] , gnoll_prefs?.descriptor_fur)
+	WRITE_FILE(S["gnoll_descriptor_voice"] , gnoll_prefs?.descriptor_voice)
+	WRITE_FILE(S["gnoll_descriptor_muzzle"] , gnoll_prefs?.descriptor_muzzle)
+	WRITE_FILE(S["gnoll_descriptor_expression"] , gnoll_prefs?.descriptor_expression)
 
 	return TRUE
 

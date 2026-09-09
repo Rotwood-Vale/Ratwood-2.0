@@ -24,6 +24,8 @@
 				new item(L)
 		user.visible_message(span_warning("[user] sorts through [src]."), span_warning("You sort through [src]."))
 		qdel(src)
+/obj/effect/decal/remains/human/grave
+	turf_loc_check = FALSE
 /obj/effect/decal/remains/plasma
 	icon_state = "remainsplasma"
 

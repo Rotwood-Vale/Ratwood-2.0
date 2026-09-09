@@ -209,7 +209,7 @@
 
 /obj/item/scrying/proc/failure_break(mob/living/user)
 	visible_message("\The [src] shatters!")
-	user.flash_fullscreen("redflash1")
+	user.fullscreen_redflash("redflash1")
 	new /obj/item/magic/obsidian(get_turf(src))
 	playsound(src, "shatter", 70, TRUE)
 	qdel(src)
@@ -344,7 +344,7 @@
 		user.apply_damage(25, BURN, user.get_bodypart(BODY_ZONE_L_ARM))
 	else
 		user.apply_damage(25, BURN, user.get_bodypart(BODY_ZONE_R_ARM))
-	user.flash_fullscreen("redflash1")
+	user.fullscreen_redflash("redflash1")
 	user.emote("scream")
 
 /////////////////////////////////////////Crystal ball ghsot vision///////////////////
@@ -389,51 +389,3 @@ Necra's Censer
 		var/datum/effect_system/smoke_spread/smoke/necra_censer/S = new
 		S.set_up(2, user.loc)
 		S.start()
-
-/obj/item/circuitus_scroll
-	name = "Circuitus Scroll"
-	desc = "A scroll prepared for use in the art of Circuitus. Write an incantation upon this scroll and perform Circuitus while holding it to perform the spell written."
-	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "scroll"
-	w_class = WEIGHT_CLASS_TINY
-	max_integrity = 30
-	pickup_sound = 'sound/blank.ogg'
-	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
-	grind_results = list(/datum/reagent/cellulose = 3)
-	color = "#A7C7E7"
-	throw_range = 1
-	throw_speed = 1
-	throwforce = 0
-	grid_height = 64
-	grid_width = 32
-	dropshrink = 0.6
-	resistance_flags = FLAMMABLE
-	var/spell_info
-
-/obj/item/circuitus_scroll/attack_self(mob/living/user)
-	if(!spell_info)
-		spell_info = stripped_input(user, "Write words of power.", "Incantation", "", 512)
-		return
-
-	if(alert("Read or re-write scroll?",,"Read","Re-Write")!="Read")
-		spell_info = stripped_input(user, "Write words of power.", "Incantation", "", 512)
-		return
-	else
-		to_chat(user, "The scroll reads: [spell_info]")
-
-/obj/item/memory_string
-	name = "memory string"
-	icon = 'icons/roguetown/items/natural.dmi'
-	icon_state = "fibers"
-	possible_item_intents = list(/datum/intent/use)
-	desc = "A memory string. For use in the art of circuitus, as a means to store iotas."
-	force = 0
-	throwforce = 0
-	obj_flags = null
-	color = "#A7C7E7"
-	firefuel = 5 MINUTES
-	resistance_flags = FLAMMABLE
-	max_integrity = 20
-	w_class = WEIGHT_CLASS_TINY
-	sellprice = 2
-	var/iota

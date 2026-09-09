@@ -19,15 +19,17 @@
 	RegisterSignal(get_turf(target), COMSIG_TURF_ENTERED, PROC_REF(on_add), override = TRUE)
 	RegisterSignal(target, COMSIG_MOB_OVERLAY_FORCE_REMOVE, PROC_REF(on_remove), override = TRUE)
 	RegisterSignal(target, COMSIG_MOB_OVERLAY_FORCE_UPDATE, PROC_REF(on_add), override = TRUE)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(remove_all), override = TRUE)
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_all), override = TRUE)
 
 /datum/element/mob_overlay_effect/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(get_turf(source), list(
 		COMSIG_TURF_EXITED,
-		COMSIG_TURF_ENTERED,
+		COMSIG_TURF_ENTERED))
+	UnregisterSignal(source, list(
 		COMSIG_MOB_OVERLAY_FORCE_REMOVE,
-		COMSIG_MOB_OVERLAY_FORCE_UPDATE
+		COMSIG_MOB_OVERLAY_FORCE_UPDATE,
+		COMSIG_QDELETING
 	))
 
 /datum/element/mob_overlay_effect/proc/on_remove(datum/source, datum/target)
@@ -48,9 +50,9 @@
 /datum/element/mob_overlay_effect/proc/on_add(datum/source, datum/target)
 	SIGNAL_HANDLER
 	var/mob/mob = target
-	for(var/obj/structure/S in get_turf(target))
-		if(S.obj_flags & BLOCK_Z_OUT_DOWN)
-			return
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.platform_atom_count > 0)
+		return
 
 	if(isobj(target))
 		var/obj/obj = target

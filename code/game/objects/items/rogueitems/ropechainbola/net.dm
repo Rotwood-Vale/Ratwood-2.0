@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "net"
 	slipouttime = 2 SECONDS //ideally you're using this to catch a dodger, not in the middle of combat
+	legcuff_slowdown = 3
 	gender = NEUTER
 	throw_speed = 2
 	var/knockdown = 0
@@ -24,9 +25,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, TRUE)
-			M.update_inv_legcuffed()
+			M.set_legcuffed(null)
 			if(M.has_status_effect(/datum/status_effect/debuff/netted))
 				M.remove_status_effect(/datum/status_effect/debuff/netted)
 		forceMove(M.loc)
@@ -39,17 +38,16 @@
 /obj/item/net/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	ensnare(hit_atom)
+	ensnare(hit_atom, throwingdatum?.thrower)
 	// Nets always fall off after 10 seconds resist or not, so that the advantage it brings you is limited
 	// Being hit by a net and instalossing isn't fun for anyone because removing can be interrupted
 	addtimer(CALLBACK(src, PROC_REF(remove_effect)), 10 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/obj/item/net/proc/ensnare(mob/living/carbon/C)
+/obj/item/net/proc/ensnare(mob/living/carbon/C, mob/user)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		C.legcuffed = src
 		forceMove(C)
-		C.update_inv_legcuffed()
+		C.set_legcuffed(src, user)
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='danger'>\The [src] entraps you!</span>")
 		C.Knockdown(knockdown)

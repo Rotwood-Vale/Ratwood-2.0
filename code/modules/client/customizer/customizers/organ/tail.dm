@@ -120,6 +120,7 @@
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
 		/datum/sprite_accessory/tail/pinecone,
+		/datum/sprite_accessory/tail/manticore,
 		/datum/sprite_accessory/tail/large_snake,
 		/datum/sprite_accessory/tail/large_snake_plain
 	)
@@ -206,7 +207,14 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
-		/datum/sprite_accessory/tail/pinecone
+		/datum/sprite_accessory/tail/pinecone,
+		/datum/sprite_accessory/tail/scorpian,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 	allows_accessory_color_customization = TRUE
 
@@ -292,8 +300,15 @@
 		/datum/sprite_accessory/tail/haven,
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/zorzor,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
 		/datum/sprite_accessory/tail/large_snake,
-		/datum/sprite_accessory/tail/large_snake_plain
+		/datum/sprite_accessory/tail/large_snake_plain,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 
 /datum/customizer/organ/tail/anthro
@@ -368,8 +383,17 @@
 		/datum/sprite_accessory/tail/haven,
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/zorzor,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
 		/datum/sprite_accessory/tail/large_snake,
-		/datum/sprite_accessory/tail/large_snake_plain
+		/datum/sprite_accessory/tail/large_snake_plain,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes,
+		/datum/sprite_accessory/tail/shadekin,
+		/datum/sprite_accessory/tail/shadekin/short,
 		)
 
 /datum/customizer/organ/tail/dullahan
@@ -438,7 +462,14 @@
 		/datum/sprite_accessory/tail/lizard/ltiger,
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
-		/datum/sprite_accessory/tail/lynx
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
+		/datum/sprite_accessory/tail/lynx,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 	allows_accessory_color_customization = TRUE
 

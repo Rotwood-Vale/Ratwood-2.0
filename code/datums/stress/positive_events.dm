@@ -4,17 +4,17 @@
 	desc = span_green("The Gods smile upon me.")
 
 /datum/stressevent/chastity_devout
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("This restraint steadies my spirit.")
 
 /datum/stressevent/chastity_masochist
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("The spikes keep me pleasantly focused.")
 
 /datum/stressevent/chastity_church
-	timer = 999 MINUTES
+	timer = INFINITY
 	stressadd = -1
 	desc = span_green("My vows feel stronger in this restraint.")
 
@@ -43,6 +43,11 @@
 	stressadd = -2
 	desc = span_green("I feel a soothing presence.")
 
+/datum/stressevent/gnoll_graggar
+	timer = 1 MINUTES
+	stressadd = -2
+	desc = span_green("A Gnoll! Graggar's blessing is upon me!")
+
 /datum/stressevent/triumph
 	timer = 10 MINUTES
 	stressadd = -5
@@ -58,10 +63,69 @@
 	stressadd = -2
 	desc = list(span_green("A relaxing smoke."),span_green("A flavorful smoke."))
 
+// Effects for zigs
+
 /datum/stressevent/menthasmoke
 	timer = 1 MINUTES
 	stressadd = -1
-	desc = list(span_blue("A cooling feeling in my throat."))
+	desc = list(span_boldgreen("A cooling feeling in my throat."))
+
+/datum/stressevent/blackberrysmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A sweet-tart sensation on the tongue."))
+	
+/datum/stressevent/applesmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A feeling of sourness and coolness on the tongue."))
+
+/datum/stressevent/chocolatesmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_purple("A pleasant feeling of rawness and bitterness on the tongue."))
+	
+/datum/stressevent/strawberrysmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A pleasant feeling of sourness and sweetness on the tongue."))
+	
+/datum/stressevent/carrotsmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A pleasant feeling of very carrot on the tongue."))
+	
+/datum/stressevent/limesmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A pleasant feeling of sweet and refreshing on the tongue."))
+	
+/datum/stressevent/salviasmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A pleasant feeling spicy, earthy and bitter on the tongue."))
+	
+/datum/stressevent/valerianasmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("A pleasant feeling bitter-spicy and tart on the tongue."))
+	
+/datum/stressevent/zweed
+	timer = 5 MINUTES
+	stressadd = -2
+	desc = list(span_blue("You feel a pleasant bitterness that burns and scratches your throat. Nicotine and the taste of oak bark leave a pleasant aftertaste in your mouth."))
+
+/datum/stressevent/jacksberriessmoke
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = list(span_blue("You feel a pleasant slight sourness and sweetnesson the tongue."))
+
+/datum/stressevent/abysssmoke
+	timer = 1 MINUTES
+	stressadd = 0
+	desc = list(span_blue("A pleasant feeling slight sourness and sweetnesson... and salty on the tongue? You feel an unpleasant chill run down your spine. You can't shake the feeling of someone staring from behind you..."))
+
+//
 
 /datum/stressevent/weed
 	timer = 5 MINUTES
@@ -113,35 +177,40 @@
 	stressadd = -5
 	desc = span_boldgreen("Down with the tyranny!")
 
+/datum/stressevent/fresh_haircut
+	timer = 60 MINUTES
+	stressadd = -2
+	desc = span_green("My hair has been freshly cut and tended to.")
+
 /datum/stressevent/music
 	timer = 1 MINUTES
 	stressadd = -1
-	desc = span_green("This music is relaxing.")
+	desc = span_green("A pleasant tune relaxes me.")
 
 /datum/stressevent/music/two
 	stressadd = -2
-	desc = span_green("This music is very relaxing.")
+	desc = span_green("The melody brings a gentle calm to my mind.")
 	timer = 2 MINUTES
 
 /datum/stressevent/music/three
 	stressadd = -2
-	desc = span_green("This music drains away my stress.")
+	desc = span_green("A skilled hand plays nearby, soothing my nerves.")
 	timer = 4 MINUTES
 
 /datum/stressevent/music/four
 	stressadd = -3
-	desc = span_green("This music is great.")
+	desc = span_green("Expertly played music makes the world feel lighter.")
 	timer = 6 MINUTES
 
 /datum/stressevent/music/five
 	stressadd = -3
 	timer = 8 MINUTES
-	desc = span_green("This music is wonderful!")
+	desc = span_boldgreen("A masterful performance! I am moved beyond words.")
 
 /datum/stressevent/music/six
 	stressadd = -4
 	timer = 10 MINUTES
-	desc = span_boldgreen("This music is exceptional!")
+	desc = span_boldgreen("Legendary music fills the air. It strikes awe into my soul!")
 
 /datum/stressevent/vblood
 	stressadd = -5
@@ -152,6 +221,16 @@
 	stressadd = -1
 	desc = span_blue("Relaxing.")
 	timer = 1 MINUTES
+
+/datum/stressevent/sakura_view
+	stressadd = -2
+	timer = 30 MINUTES
+	desc = span_green("The cherry blossom's beauty fills me with peace.")
+
+/datum/stressevent/flower_view
+	stressadd = -1
+	timer = 15 MINUTES
+	desc = span_green("Seeing the pretty flowers lifted my spirits!")
 
 /datum/stressevent/bathwater/on_apply(mob/living/user)
 	. = ..()
@@ -330,6 +409,14 @@
 /datum/stressevent/noble_bowed_to/can_apply(mob/living/user)
 	return HAS_TRAIT(user, TRAIT_NOBLE)
 
+/datum/stressevent/noble_bowed_at
+	timer = 10 MINUTES
+	stressadd = -5
+	desc = span_green("A noble bowed to me! I am truly respected!")
+
+/datum/stressevent/noble_bowed_at/can_apply(mob/living/user)
+	return !HAS_TRAIT(user, TRAIT_NOBLE)
+
 /datum/stressevent/perfume
 	stressadd = -1
 	desc = span_green("A soothing fragrance envelops me.")
@@ -363,7 +450,7 @@
 /datum/stressevent/gazeuponme
 	stressadd = -5
 	desc = span_green("I am a heretic under Ten's gaze... My patron is proud of me!")
-	timer = 999 MINUTES
+	timer = INFINITY
 
 /datum/stressevent/sermon
 	stressadd = -5
@@ -399,7 +486,7 @@
 
 /datum/stressevent/blessed_weapon
 	stressadd = -3
-	timer = 999 MINUTES
+	timer = INFINITY
 	desc = span_green("I'm wielding a BLESSED weapon!")
 
 /datum/stressevent/hand_fed_fruit
@@ -446,3 +533,8 @@
 	timer = 10 MINUTES
 	stressadd = -5
 	desc = span_boldgreen("What wonderious fireflies...")
+
+/datum/stressevent/xylixian_fate
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = span_green("Xylix spun the thread of fate in my favour! Truly, I am blessed!")

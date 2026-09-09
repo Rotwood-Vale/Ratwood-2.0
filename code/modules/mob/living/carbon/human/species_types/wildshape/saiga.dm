@@ -51,6 +51,7 @@
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
@@ -111,8 +112,6 @@
 	animname = "strike"
 	hitsound = "punch_hard"
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "kicks the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "blunt"
@@ -155,8 +154,15 @@
 
 /obj/item/rogueweapon/saiga_hoof/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
+
+/obj/item/rogueweapon/saiga_hoof/attack_self(mob/living/user)
+	var/obj/item/rogueweapon/saiga_hoof/active = user.get_active_held_item()
+	var/obj/item/rogueweapon/saiga_hoof/inactive = user.get_inactive_held_item()
+	if(active)
+		user.dropItemToGround(active, TRUE)
+	if(inactive && inactive != active)
+		user.dropItemToGround(inactive, TRUE)
 
 // SAIGA SPELLS //
 /obj/effect/proc_holder/spell/self/saigahoofs
@@ -172,22 +178,20 @@
 	..()
 	var/obj/item/rogueweapon/saiga_hoof/left/l
 	var/obj/item/rogueweapon/saiga_hoof/right/r
+	var/active = user.get_active_held_item()
+	var/inactive = user.get_inactive_held_item()
 
-	l = user.get_active_held_item()
-	r = user.get_inactive_held_item()
-	if(extended)
-		if(istype(l, /obj/item/rogueweapon/saiga_hoof))
-			user.dropItemToGround(l, TRUE)
-			qdel(l)
-		if(istype(r, /obj/item/rogueweapon/saiga_hoof))
-			user.dropItemToGround(r, TRUE)
-			qdel(r)
-		//user.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")
+	if(istype(active, /obj/item/rogueweapon/saiga_hoof) || istype(inactive, /obj/item/rogueweapon/saiga_hoof))
+		if(istype(active, /obj/item/rogueweapon/saiga_hoof))
+			user.dropItemToGround(active, TRUE)
+		if(istype(inactive, /obj/item/rogueweapon/saiga_hoof) && inactive != active)
+			user.dropItemToGround(inactive, TRUE)
+		to_chat(user, span_notice("My hooves unsteady themselves."))
 		extended = FALSE
 	else
-		l = new(user,1)
-		r = new(user,2)
+		l = new(user, 1)
+		r = new(user, 2)
 		user.put_in_hands(l, TRUE, FALSE, TRUE)
 		user.put_in_hands(r, TRUE, FALSE, TRUE)
-		//user.visible_message("Your claws extend.", "You feel your claws extending.", "You hear a sound of claws extending.")
+		to_chat(user, span_notice("My hooves are ready."))
 		extended = TRUE

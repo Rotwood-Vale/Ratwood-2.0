@@ -48,7 +48,7 @@
 	else
 		playsound(M, 'sound/blank.ogg', 50, TRUE)
 
-	if(ishuman(M) || ismonkey(M))
+	if(ishuman(M))
 		if(prob(10))
 			M.Paralyze(40)
 	update_icon()
@@ -103,6 +103,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = NONE
 	max_integrity = 300
+	dropshrink = 0.8
 	component_type = /datum/component/storage/concrete/grid/meatsack
 
 /obj/item/storage/meatbag/attack_right(mob/user)

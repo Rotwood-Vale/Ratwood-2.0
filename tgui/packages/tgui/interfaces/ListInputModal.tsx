@@ -8,10 +8,12 @@ import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
 type ListInputData = {
+  enable_preview: boolean;
   init_value: string;
   items: string[];
   large_buttons: boolean;
   message: string;
+  previewing: boolean;
   timeout: number;
   title: string;
 };
@@ -25,6 +27,8 @@ export const ListInputModal = (props) => {
     large_buttons,
     timeout,
     title,
+    enable_preview,
+    previewing,
   } = data;
   const [selected, setSelected] = useState(items.indexOf(init_value));
   const [searchBarVisible, setSearchBarVisible] = useState(items.length > 9);
@@ -175,7 +179,27 @@ export const ListInputModal = (props) => {
             )}
             {!searchBarVisible && <Divider />}
             <Stack.Item>
-              <InputButtons input={filteredItems[selected]} />
+              <Stack align="center" fill justify="space-around">
+                {!!enable_preview && (
+                  <Stack.Item>
+                    <Button
+                      color="transparent"
+                      className={previewing ? 'input-button__cancel' : 'input-button__submit'}
+                      disabled={!filteredItems.length || selected === null || selected < 0}
+                      m={0.5}
+                      onClick={() =>
+                        act('preview_toggle', { entry: filteredItems[selected] })
+                      }
+                      textAlign="center"
+                    >
+                      {previewing ? 'STOP' : 'LISTEN'}
+                    </Button>
+                  </Stack.Item>
+                )}
+                <Stack.Item>
+                  <InputButtons input={filteredItems[selected]} />
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
           </Stack>
         </Section>

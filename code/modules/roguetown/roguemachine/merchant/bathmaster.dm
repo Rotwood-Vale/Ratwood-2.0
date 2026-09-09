@@ -23,6 +23,7 @@
 		"Instruments",
 		"Cosmetics",
 		"Roguery",
+		"Toys",
 		)
 
 /obj/structure/roguemachine/bathvend/Initialize(mapload)

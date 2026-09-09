@@ -5,7 +5,7 @@
 	mob_overlay_icon = null
 	icon_state = "pouch"
 	item_state = "pouch"
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_CLOAK
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("whips", "lashes")
 	max_integrity = 300
@@ -17,19 +17,8 @@
 	grid_height = 64
 	grid_width = 32
 	component_type = /datum/component/storage/concrete/roguetown/coin_pouch
-
-/obj/item/storage/belt/rogue/pouch/coins
-
-/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize(mapload)
-	. = ..()
-	var/obj/item/roguecoin/silver/pile/H = new(loc)
-	if(istype(H))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
-			qdel(H)
-	var/obj/item/roguecoin/copper/pile/C = new(loc)
-	if(istype(C))
-		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
-			qdel(C)
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/fibers
 
 /obj/item/storage/belt/rogue/pouch/coins/poor/Initialize(mapload)
 	. = ..()
@@ -43,13 +32,20 @@
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
 
-/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
+/obj/item/storage/belt/rogue/pouch/coins/mid/Initialize(mapload)
 	. = ..()
 	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
-	H = new(loc)
+	var/obj/item/roguecoin/copper/pile/C = new(loc)
+	if(istype(C))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, C, null, TRUE, TRUE))
+			qdel(C)
+
+/obj/item/storage/belt/rogue/pouch/coins/rich/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/silver/pile/H = new(loc)
 	if(istype(H))
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
@@ -58,6 +54,15 @@
 		if(istype(H))
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 				qdel(H)
+	var/obj/item/roguecoin/gold/pile/G = new(loc)
+	if(istype(G))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, G, null, TRUE, TRUE))
+			qdel(G)
+	if(prob(50))
+		G = new(loc)
+		if(istype(G))
+			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, G, null, TRUE, TRUE))
+				qdel(G)
 
 /obj/item/storage/belt/rogue/pouch/coins/veryrich/Initialize(mapload)
 	. = ..()
@@ -89,11 +94,57 @@
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
 			qdel(H)
 
+/obj/item/storage/belt/rogue/pouch/coins/gilbranze/Initialize(mapload)
+	. = ..()
+	var/obj/item/roguecoin/gilbranze/pile/H = new(loc)
+	if(istype(H))
+		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, H, null, TRUE, TRUE))
+			qdel(H)
+
 /obj/item/storage/belt/rogue/pouch/food/PopulateContents()
 	new /obj/effect/spawner/lootdrop/roguetown/dungeon/food(src)
 
 /obj/item/storage/belt/rogue/pouch/treasure/PopulateContents()
 	new /obj/effect/spawner/lootdrop/mobtreasure(src)
+	new /obj/item/reagent_containers/food/snacks/rogue/crackerscooked(src)
+
+/obj/item/storage/belt/rogue/pouch/healing
+
+/obj/item/storage/belt/rogue/pouch/healing/PopulateContents()
+	new /obj/item/reagent_containers/glass/bottle/alchemical/healthpot(src)
+	new /obj/item/reagent_containers/glass/bottle/alchemical/healthpot(src)
+	new /obj/item/needle(src)
+
+/obj/item/storage/belt/rogue/pouch/alchemy
+
+/obj/item/storage/belt/rogue/pouch/alchemy/PopulateContents()
+	new /obj/item/reagent_containers/glass/bottle/alchemical(src)
+	new /obj/item/reagent_containers/glass/bottle/alchemical(src)
+	new /obj/item/reagent_containers/glass/bottle/alchemical(src)
+	new /obj/item/needle(src)
+
+/obj/item/storage/belt/rogue/pouch/zigarrete
+	name = "zig box"
+	desc = "Used to hold someone's zigs and flints."
+	icon_state = "smokebox"
+	item_state = "smokebox"
+	component_type = /datum/component/storage/concrete/grid/zigbox
+
+/obj/item/storage/belt/rogue/pouch/zigarrete/nicotine/PopulateContents()
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+	new /obj/item/clothing/mask/cigarette/rollie/nicotine(src)
+
+/obj/item/storage/belt/rogue/pouch/zigarrete/trippy/PopulateContents()
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+	new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
 
 /obj/item/storage/belt/rogue/pouch/treasure/lucky/PopulateContents()
 	new /obj/effect/spawner/lootdrop/mobtreasure/lucky(src)

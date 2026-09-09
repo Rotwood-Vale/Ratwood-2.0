@@ -25,6 +25,17 @@
 		if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 			to_chat(user, span_warning("...What?"))
 			return
+		// FAR less aggressive version of chunkyfingers, designed to be used with nudist. Shrimply lets the user still use neat stuff like orison without letting them weaponize.
+		if(HAS_TRAIT(user, TRAIT_GNARLYDIGITS))
+			if(istype(src, /obj/item/rogueweapon) && !istype(src, /obj/item/rogueweapon/werewolf_claw) && !istype(src, /obj/item/rogueweapon/surgery/cautery/branding))
+				to_chat(user, span_warning("My fingers are too misshapen to use this puny implement."))
+				return
+		if(HAS_TRAIT(user, TRAIT_WEAPONLESS))//allows tool use, but not weapons. For disciple aurafarmers who go true unarmed.
+			var/obj/item/rogueweapon/weapon = src
+			var/placing_on_furniture = !user.cmode && (istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))//differentiate between placing a weapon on a table or using it to murder someone. Disciple did not forget how to be tidy when they took their oath.
+			if(istype(weapon) && (!weapon.is_tool || ismob(target)) && !placing_on_furniture)
+				to_chat(user, span_warning("I cannot properly wield this weapon."))
+				return
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return
 	if(pre_attack(target, user, params))
@@ -70,12 +81,7 @@
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
 		return TRUE
-	var/adf = user.used_intent.clickcd
-	if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-		adf = round(adf * CLICK_CD_MOD_AIMED)
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-	user.changeNext_move(adf)
+	user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 	for(var/obj/item/clothing/worn_thing in get_equipped_items(include_pockets = TRUE))//checks clothing worn by src.
 	// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
@@ -86,12 +92,6 @@
 			continue
 		worn_thing.hit_response(src, user) //checks if clothing has hit response. Refer to Items.dm
 	return I.attack(src, user)
-
-/mob/living
-	var/tempatarget = null
-	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
-	var/construct = 0
-	var/burialrited = FALSE
 
 #define ATTACK_OVERRIDE_NODEFENSE 2
 
@@ -133,13 +133,15 @@
 			if(!user.used_intent.noaa)
 				playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			if(user.used_intent.no_attack) //BYE!!!
+				log_combat(user, M, "used a non-damaging intent on", src.name, "(INTENT: [uppertext(user.used_intent.name)])", log_seen = FALSE)
+				add_fingerprint(user)
 				return
 	else
 		return
 
 //	if(force)
 //		user.emote("attackgrunt")
-
+	user.mob_timers[MT_SNEAKATTACK] = world.time
 	var/swingdelay = user.used_intent.swingdelay
 	var/_swingdelay_mod = SEND_SIGNAL(src, COMSIG_LIVING_SWINGDELAY_MOD)
 	if(_swingdelay_mod)
@@ -167,15 +169,9 @@
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
 					user.do_attack_animation(M, user.used_intent.animname, used_item = src, used_intent = user.used_intent, simplified = TRUE)
 			return
-	var/rmb_stam_penalty = 0
-	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-		rmb_stam_penalty = EXTRA_STAMDRAIN_SWIFSTRONG
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		if(user.used_intent.clickcd > CLICK_CD_INTENTCAP)	//If we're on Swift and our intent is not already at the cap by default, we consume extra stamina.
-			rmb_stam_penalty = EXTRA_STAMDRAIN_SWIFSTRONG
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
-	user.stamina_add(user.used_intent.releasedrain + rmb_stam_penalty)
+	user.stamina_add(user.used_intent.releasedrain + user.get_swifstrong_stam_penalty())
 	var/bad_guard = FALSE
 	//We have Guard / Clash active, and are hitting someone who doesn't. Cheesing a 'free' hit with a defensive buff is a no-no. You get punished.
 	if(user.has_status_effect(/datum/status_effect/buff/clash) && !M.has_status_effect(/datum/status_effect/buff/clash))
@@ -261,11 +257,12 @@
 			else
 				playsound(M.loc,  "nodmg", 100, FALSE, -1)
 
-	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)]) (AIMED: [uppertext(parse_zone(user.zone_selected))])")
 	add_fingerprint(user)
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
+	user.mob_timers[MT_SNEAKATTACK] = world.time
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
 	if(item_flags & NOBLUDGEON)
@@ -277,6 +274,7 @@
 /obj/item/proc/attack_turf(turf/T, mob/living/user, multiplier)
 	if(T.max_integrity)
 		if(T.attacked_by(src, user, multiplier))
+			user.mob_timers[MT_SNEAKATTACK] = world.time
 			user.do_attack_animation(T, simplified = TRUE)
 			return TRUE
 
@@ -441,7 +439,10 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = (get_complex_damage(I, user, blade_dulling) * I.demolition_mod)
+	var/newforce = get_complex_damage(I, user, blade_dulling)
+	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
+		newforce = min(newforce, 5)
+	newforce *= I.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0
@@ -624,21 +625,11 @@
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	if(force_dynamic && !user.used_intent.tranged && !user.used_intent.tshield)
 		if(proximity_flag && isopenturf(target) && !user.used_intent?.noaa)
-			var/adf = user.used_intent.clickcd
-			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * CLICK_CD_MOD_AIMED)
-			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-				adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-			user.changeNext_move(adf)
+			user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 		if(!proximity_flag && ismob(target) && !user.used_intent?.noaa) //this block invokes miss cost clicking on seomone who isn't adjacent to you
-			var/adf = user.used_intent.clickcd
-			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * CLICK_CD_MOD_AIMED)
-			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-				adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
-			user.changeNext_move(adf)
+			user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 

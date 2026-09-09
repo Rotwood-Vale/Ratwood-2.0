@@ -71,6 +71,7 @@
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
 		/datum/customizer/bodypart_feature/underwear,
+		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/snout/anthro/dullahan,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/wings/anthro,
@@ -82,6 +83,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
 
 		)
 	body_marking_sets = list(
@@ -94,6 +97,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/tonage,
 		/datum/body_marking/socklonger,
 		/datum/body_marking/tips,
@@ -101,6 +107,12 @@
 		/datum/body_marking/bangs,
 		/datum/body_marking/bun,
 		/datum/body_marking/plain,
+		/datum/body_marking/womb_tattoo,
+		/datum/body_marking/butterfly,
+		/datum/body_marking/waist,
+		/datum/body_marking/diagonal_eyes,
+		/datum/body_marking/wide_eyes,
+		/datum/body_marking/stripes,
 	)
 	descriptor_choices = list(
 		/datum/descriptor_choice/trait,
@@ -128,6 +140,12 @@
 	var/headless = FALSE
 	var/obj/item/bodypart/head/dullahan/my_head
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/species/dullahan/Destroy(force, ...)
+	UnregisterSignal(my_head, COMSIG_QDELETING)
+	my_head = null
+	soul_light_off()
+	return ..()
 
 /datum/species/dullahan/check_roundstart_eligible()
 	return TRUE
@@ -236,7 +254,6 @@
 	UnregisterSignal(my_head, COMSIG_QDELETING)
 	my_head = null
 	soul_light_off()
-	mob_light_obj = null
 
 /datum/species/dullahan/proc/on_aheal(datum/source, full_heal, admin_revive)
 	if(!admin_revive)
@@ -268,7 +285,7 @@
 		mob_light_obj = user.mob_light(soul_accessory.accessory_colors, 2, 2)
 
 /datum/species/dullahan/proc/soul_light_off()
-	qdel(mob_light_obj)
+	QDEL_NULL(mob_light_obj)
 
 /datum/species/dullahan/proc/on_say_postprocess(datum/source, list/speech_args)
 	var/mob/living/carbon/human/human = my_head.original_owner

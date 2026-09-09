@@ -96,7 +96,7 @@
 /datum/crafting_recipe/roguetown/leather/armor/hidearmor
 	name = "hide armor"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/hide
-	reqs = list(/obj/item/natural/hide/cured = 2,
+	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fur = 1)
 	craftdiff = 2
 
@@ -104,7 +104,7 @@
 	name = "hardened leather armor"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	reqs = list(
-		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/hide/cured = 3,
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 1)
 	craftdiff = 4
@@ -123,7 +123,7 @@
 	name = "hardened leather coat"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	reqs = list(
-		/obj/item/natural/hide/cured = 3,
+		/obj/item/natural/hide/cured = 4,
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 1)
 	craftdiff = 5
@@ -142,3 +142,19 @@
 	result = /obj/item/clothing/head/roguetown/helmet/leather
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/leather/studhood
+	name = "leather padded hood"
+	result = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
+	reqs = list(/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/leather/armor/duelcoat
+	name = "leather coat"
+	result = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	reqs = list(
+		/obj/item/natural/hide/cured = 4,
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		/obj/item/natural/fibers = 1)
+	craftdiff = 5

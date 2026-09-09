@@ -34,6 +34,22 @@
 	var/area/A = get_area(src)
 	dna?.species?.stop_wagging_tail(src)
 
+	//OV edit
+	if(isooze(src))
+		var/obj/shapeshift_holder/ooze_death/H = locate() in src
+		if(!H)
+			var/shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering
+			var/mob/living/shape = new shapeshift_type(src.loc)
+			shape.color = "#[dna.features["mcolor"]]"
+
+			H = new(shape,src)
+			shape.name = "[shape]"
+
+			shape.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
+
+			return
+	//OV edit end
+
 	if(client)
 		SSdroning.kill_droning(client)
 		SSdroning.kill_loop(client)
@@ -161,7 +177,15 @@
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
-		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
+		var/death_message = "has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
+		log_message(death_message, LOG_ATTACK, color = LOG_COLOR_SEVERE)
+		// without this a death appears only on the victim's own log, never in a witness's POV. No event id on purpose:
+		// one would make the offscreen pass file every death in the round into everyone's timeline
+		log_seen_viewers(src, null, death_message, SEEN_LOG_ATTACK)
+		if(client || mind)
+			var/death_admin_message = "[key_name(src)] [loc_name(src)] [ADMIN_FLW(src)] has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
+			message_admins(death_admin_message)
+			log_admin(death_admin_message)
 
 /mob/living/carbon/human/revive(full_heal, admin_revive)
 	. = ..()

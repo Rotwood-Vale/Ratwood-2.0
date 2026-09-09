@@ -1,6 +1,6 @@
 /datum/language/elvish
 	name = "Elvish"
-	desc = "The elegant and flowing language of the elven people, known for its melodic quality and ancient heritage. Spoken with grace and precision."
+	desc = "(Spoken with ,e) The elegant and flowing language of the elven people, known for its melodic quality and ancient heritage. Spoken with grace and precision."
 	speech_verb = "states"
 	ask_verb = "questions"
 	exclaim_verb = "shouts"

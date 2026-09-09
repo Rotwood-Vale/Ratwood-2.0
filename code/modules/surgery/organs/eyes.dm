@@ -74,7 +74,7 @@
 			eye_color = HMN.eye_color
 		if(HAS_TRAIT(HMN, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-	for(var/datum/wound/facial/eyes/eye_wound as anything in M.get_wounds())
+	for(var/datum/wound/facial/eyes/eye_wound in M.get_wounds())
 		qdel(eye_wound)
 	M.update_tint()
 	owner.update_sight()
@@ -155,7 +155,7 @@
 	name = "construct eyes"
 	desc = "Some beast's eyes, preserved through artifice and with magical rock embedded in their back. Seems to fit a construct's head."
 	icon_state = "eyeball-con"
-	
+
 /obj/item/organ/eyes/night_vision/zombie/on_life()
 	. = ..()
 	if (!(owner.mob_biotypes & MOB_UNDEAD))
@@ -208,6 +208,15 @@
 			weather_plane?.alpha = 255
 			sight_flags &= ~SEE_BLACKNESS
 	owner.update_sight()
+	update_vampire_sight()
+
+/obj/item/organ/eyes/night_vision/vampire/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
+	. = ..()
+	update_vampire_sight()
+
+/obj/item/organ/eyes/night_vision/vampire/Remove(mob/living/carbon/M, special = 0)
+	. = ..()
+	vampire_sight?.disable()
 
 /obj/item/organ/eyes/elf
 	name = "elf eyes"
@@ -405,7 +414,7 @@
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
-		if(scanning.opacity || scanning.has_opaque_atom)
+		if(scanning.opacity || (scanning.opaque_atom_count > 0))
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
 		if(stop)
@@ -487,3 +496,85 @@
 	if(eyes.owner)
 		eyes.owner.update_body_parts(TRUE)
 
+/obj/item/organ/eyes/t1
+	name = "Eyes of the Scholar of Noс."
+	desc = "In the past, it was an honor for many students to be blessed with such eyes - proof that you had found knowledge…"
+	icon_state = "burning_eyes"
+	eye_color = "#24128a"
+	see_in_dark = 4
+
+/obj/item/organ/eyes/t2
+	name = "Blessed dendorite eyes"
+	desc = "Eyes, that will allow you to see your prey... Be blessed, hunter..."
+	color = "#c2ae40"
+	eye_color = "#864896"
+	see_in_dark = 5
+
+/obj/item/organ/eyes/t3
+	name = "Cursed necran eyes"
+	desc = "Pair of eyes that been stolen from one of Her hounds..."
+	icon_state = "burning_eyes"
+	color = "#c2ae40"
+	eye_color = "#3c6696"
+	see_in_dark = 10
+
+
+/obj/item/organ/eyes/t1/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t1eyes)
+
+/obj/item/organ/eyes/t1/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M && M.has_status_effect(/datum/status_effect/buff/t1eyes))
+		M.remove_status_effect(/datum/status_effect/buff/t1eyes)
+
+
+/obj/item/organ/eyes/t2/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t2eyes)
+
+/obj/item/organ/eyes/t2/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M && M.has_status_effect(/datum/status_effect/buff/t2eyes))
+		M.remove_status_effect(/datum/status_effect/buff/t2eyes)
+
+
+/obj/item/organ/eyes/t3/Insert(mob/living/carbon/M)
+	..()
+	if(M)
+		M.apply_status_effect(/datum/status_effect/buff/t3eyes)
+
+/obj/item/organ/eyes/t3/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M && M.has_status_effect(/datum/status_effect/buff/t3eyes))
+		M.remove_status_effect(/datum/status_effect/buff/t3eyes)
+
+
+/datum/status_effect/buff/t1eyes
+	id = "t1eyes"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t1eyes
+	effectedstats = list(STATKEY_INT = 2, STATKEY_LCK = 2)
+
+/atom/movable/screen/alert/status_effect/buff/t1eyes
+	name = "Eyes of the Scholar"
+	desc = "The knowledge stares back."
+
+/datum/status_effect/buff/t2eyes
+	id = "t2eyes"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t2eyes
+	effectedstats = list(STATKEY_PER = 2, STATKEY_SPD = 1)
+
+/atom/movable/screen/alert/status_effect/buff/t2eyes
+	name = "Blessed dendorite eyes"
+	desc = "The hunt becomes clearer."
+
+/datum/status_effect/buff/t3eyes
+	id = "t3eyes"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/t3eyes
+	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1, STATKEY_STR = 1)
+
+/atom/movable/screen/alert/status_effect/buff/t3eyes
+	name = "Cursed necran eyes"
+	desc = "Something stolen now sees through you."

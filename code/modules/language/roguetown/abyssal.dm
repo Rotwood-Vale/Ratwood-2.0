@@ -1,6 +1,6 @@
 /datum/language/abyssal
 	name = "Abyssal" // literally greek
-	desc = "The language of the inhabitants of the sea depths, still in use by those who have moved inland."
+	desc = "(Spoken with ,p) The language of the inhabitants of the sea depths, still in use by those who have moved inland."
 	speech_verb = "states"
 	ask_verb = "ponders"
 	exclaim_verb = "exclaims"

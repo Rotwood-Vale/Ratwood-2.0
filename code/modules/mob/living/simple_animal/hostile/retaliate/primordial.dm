@@ -41,8 +41,6 @@
 	hitsound = "smallslash"
 	chargetime = 0
 	penfactor = 0
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slash the air"
 	item_d_type = "slash"
 	clickcd = 12
@@ -51,9 +49,18 @@
 	icon = 'icons/roguetown/mob/monster/primordial.dmi'
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
+	aggressive = FALSE
+	attack_same = FALSE
 	faction = list("neutral")
 	var/next_ability_use
 	var/ability_cooldown = 30 SECONDS
+
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/CanAttack(atom/the_target)
+	if(!isliving(the_target))
+		return FALSE
+	if(istype(the_target, /mob/living/simple_animal))
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/primordial/death()
 	..()

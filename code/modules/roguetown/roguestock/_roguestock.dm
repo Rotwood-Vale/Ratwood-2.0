@@ -20,7 +20,16 @@
 	var/export_only = FALSE
 	var/stable_price = FALSE
 	var/percent_bounty = FALSE
-	var/passive_generation = 0 //How much to generate in the remote section each firing of the treasury system.
+	/// How much to generate in the remote section each firing of the treasury system.
+	var/passive_generation = 0
+	/// How much does it cost us to generate this item passively
+	var/generation_price = 1 
+	/// Maximum rate at which we can passively import, to avoid buying 999 gold every 6 minutes
+	var/generation_max = 5 
+	/// Do we block passive importing from this?
+	var/no_passive = FALSE
+	/// Limit on how much the remote stockpile can hold, important resources should be higher.
+	var/remote_limit = 10 
 	var/category = "Raw Materials" // Category for the stockpile
 
 /datum/roguestock/New()

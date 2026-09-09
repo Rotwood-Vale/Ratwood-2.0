@@ -10,7 +10,7 @@
  * * default - If an option is already preselected on the UI. Current values, etc.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, strict_modern = FALSE, ui_state = GLOB.tgui_always_state)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, strict_modern = FALSE, ui_state = GLOB.tgui_always_state, enable_combat_music_preview = FALSE)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -28,7 +28,7 @@
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.tgui_pref && !strict_modern)
 		return input(user, message, title, default) as null|anything in items
-	var/datum/tgui_list_input/input = new(user, message, title, items, default, timeout, ui_state)
+	var/datum/tgui_list_input/input = new(user, message, title, items, default, timeout, ui_state, enable_combat_music_preview)
 	if(input.invalid)
 		qdel(input)
 		return
@@ -67,14 +67,25 @@
 	var/datum/ui_state/state
 	/// Whether the tgui list input is invalid or not (i.e. due to all list entries being null)
 	var/invalid = FALSE
+	/// Enables an extra preview control button for combat music lists.
+	var/enable_combat_music_preview = FALSE
+	/// Current preview state for the list button label.
+	var/previewing = FALSE
+	/// The currently previewed key from items_map.
+	var/current_preview_entry
+	/// Owning client for preview actions.
+	var/client/preview_owner
 
-/datum/tgui_list_input/New(mob/user, message, title, list/items, default, timeout, ui_state)
+/datum/tgui_list_input/New(mob/user, message, title, list/items, default, timeout, ui_state, enable_preview)
 	src.title = title
 	src.message = message
 	src.items = list()
 	src.items_map = list()
 	src.default = default
 	src.state = ui_state
+	src.enable_combat_music_preview = !!enable_preview
+	if(src.enable_combat_music_preview)
+		src.preview_owner = user?.client
 	var/list/repeat_items = list()
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
@@ -117,6 +128,7 @@
 
 /datum/tgui_list_input/ui_close(mob/user)
 	. = ..()
+	stop_preview()
 	closed = TRUE
 
 /datum/tgui_list_input/ui_state(mob/user)
@@ -130,12 +142,14 @@
 	data["message"] = message
 	data["swapped_buttons"] = FALSE // !user.read_preference(/datum/preference/toggle/tgui_swapped_buttons)
 	data["title"] = title
+	data["enable_preview"] = enable_combat_music_preview
 	return data
 
 /datum/tgui_list_input/ui_data(mob/user)
 	var/list/data = list()
 	if(timeout)
 		data["timeout"] = clamp((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS), 0, 1)
+	data["previewing"] = previewing
 	return data
 
 /datum/tgui_list_input/ui_act(action, list/params)
@@ -146,14 +160,37 @@
 		if("submit")
 			if (!(params["entry"] in items))
 				return
+			stop_preview()
 			set_choice(items_map[params["entry"]])
 			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
+			stop_preview()
 			closed = TRUE
 			SStgui.close_uis(src)
+			return TRUE
+		if("preview_toggle")
+			if(!enable_combat_music_preview || !(params["entry"] in items))
+				return TRUE
+			if(previewing)
+				stop_preview()
+				SStgui.update_uis(src)
+				return TRUE
+
+			var/entry_key = items_map[params["entry"]]
+			if(preview_owner?.start_combat_music_preview(entry_key))
+				previewing = TRUE
+				current_preview_entry = entry_key
+			SStgui.update_uis(src)
 			return TRUE
 
 /datum/tgui_list_input/proc/set_choice(choice)
 	src.choice = choice
+
+/datum/tgui_list_input/proc/stop_preview()
+	if(!previewing)
+		return
+	preview_owner?.stop_combat_music_preview()
+	previewing = FALSE
+	current_preview_entry = null

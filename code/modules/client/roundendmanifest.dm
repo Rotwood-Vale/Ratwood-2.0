@@ -4,7 +4,7 @@
 	for(var/X in GLOB.character_list)
 		dat += "[GLOB.character_list[X]]"
 
-	var/datum/browser/popup = new(src, "actors", "<center>Inhabitants of Rotwood Vale</center>", 387, 420)
+	var/datum/browser/popup = new(src, "actors", "<center>Inhabitants of the Realm</center>", 387, 420)
 	popup.set_content(dat)
 	popup.open(FALSE)
 

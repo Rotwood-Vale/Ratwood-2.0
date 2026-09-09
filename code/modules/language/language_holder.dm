@@ -1,5 +1,7 @@
 /datum/language_holder
+	/// Assoc list of language path -> list of sources that granted it. Subtypes declare a plain list of paths.
 	var/list/languages = list(/datum/language/common)
+	/// As languages, but only speakable while the holder is a body's holder rather than a mind's.
 	var/list/shadow_languages = list()
 	var/only_speaks_language = null
 	var/selected_default_language = null
@@ -11,8 +13,33 @@
 /datum/language_holder/New(owner)
 	src.owner = owner
 
-	languages = typecacheof(languages)
-	shadow_languages = typecacheof(shadow_languages)
+	languages = build_language_cache(languages)
+	shadow_languages = build_language_cache(shadow_languages)
+
+/// typecacheof() with source lists for values, so is_type_in_typecache() still reads them as truthy.
+/datum/language_holder/proc/build_language_cache(list/paths)
+	var/list/cache = typecacheof(paths)
+	for(var/language_path in cache)
+		cache[language_path] = list(LANGUAGE_SOURCE_INNATE)
+	return cache
+
+/// Deep copies a language cache so the copy does not share source lists with the original.
+/datum/language_holder/proc/copy_language_cache(list/cache)
+	var/list/copied = list()
+	for(var/language_path in cache)
+		var/list/sources = cache[language_path]
+		copied[language_path] = sources.Copy()
+	return copied
+
+/// Languages may be passed as a name string rather than a path. Normalise to a path.
+/datum/language_holder/proc/resolve_language(datum/language/dt)
+	if(!length(GLOB.all_languages) || !isnull(GLOB.language_datum_instances[dt]))
+		return dt
+	var/language_name = replacetext("[dt]", "/datum/language/", "")
+	for(var/datum/language/candidate as anything in GLOB.all_languages)
+		if(language_name == LOWER_TEXT(initial(candidate.name)))
+			return candidate
+	return dt
 
 /datum/language_holder/Destroy()
 	owner = null
@@ -23,7 +50,7 @@
 
 /datum/language_holder/proc/copy(newowner)
 	var/datum/language_holder/copy = new(newowner)
-	copy.languages = src.languages.Copy()
+	copy.languages = copy_language_cache(src.languages)
 	// shadow languages are not copied.
 	copy.only_speaks_language = src.only_speaks_language
 	copy.selected_default_language = src.selected_default_language
@@ -31,22 +58,24 @@
 	copy.omnitongue = src.omnitongue
 	return copy
 
-/datum/language_holder/proc/grant_language(datum/language/dt, shadow = FALSE)
-	if(GLOB.all_languages.len && isnull(GLOB.language_datum_instances[dt])) // If a non-language datum is passed, we take it as a string.
-		dt = replacetext(dt, "/datum/language/", "")
-		for(var/ld in GLOB.all_languages)
-			var/datum/language/LD = ld
-			if(dt == LOWER_TEXT(initial(LD.name)))
-				dt = LD
-				break
-	if(shadow)
-		shadow_languages[dt] = TRUE
-	else
-		languages[dt] = TRUE
+/// Adds source to the language's source list, granting it if this is the first source.
+/datum/language_holder/proc/grant_language(datum/language/dt, shadow = FALSE, source = LANGUAGE_SOURCE_GENERIC)
+	dt = resolve_language(dt)
+	if(!dt)
+		return FALSE
+	var/list/cache = shadow ? shadow_languages : languages
+	var/list/sources = cache[dt]
+	if(!sources)
+		cache[dt] = list(source)
+		return TRUE
+	if(source in sources)
+		return FALSE
+	sources += source
+	return TRUE
 
-/datum/language_holder/proc/grant_all_languages(omnitongue=FALSE)
+/datum/language_holder/proc/grant_all_languages(omnitongue = FALSE, source = LANGUAGE_SOURCE_GENERIC)
 	for(var/la in GLOB.all_languages)
-		grant_language(la)
+		grant_language(la, source = source)
 
 	if(omnitongue)
 		src.omnitongue = TRUE
@@ -57,14 +86,34 @@
 		possible += dt
 	. = safepick(possible)
 
-/datum/language_holder/proc/remove_language(datum/language/dt, shadow = FALSE)
-	if(shadow)
-		shadow_languages -= dt
-	else
-		languages -= dt
+/// Drops source from the language's source list, forgetting it only once no source is left.
+/// Pass LANGUAGE_SOURCE_ALL to forget it regardless of who granted it.
+/datum/language_holder/proc/remove_language(datum/language/dt, shadow = FALSE, source = LANGUAGE_SOURCE_GENERIC)
+	dt = resolve_language(dt)
+	var/list/cache = shadow ? shadow_languages : languages
+	var/list/sources = cache[dt]
+	if(!sources)
+		return FALSE
+	if(source != LANGUAGE_SOURCE_ALL)
+		sources -= source
+		if(length(sources))
+			return FALSE
+	cache -= dt
+	if(!shadow && selected_default_language == dt)
+		selected_default_language = null
+	return TRUE
 
-/datum/language_holder/proc/remove_all_languages()
-	languages.Cut()
+/datum/language_holder/proc/remove_all_languages(source = LANGUAGE_SOURCE_ALL, shadow = FALSE)
+	if(source == LANGUAGE_SOURCE_ALL)
+		if(shadow)
+			shadow_languages.Cut()
+		else
+			languages.Cut()
+			selected_default_language = null
+		return
+	var/list/cache = shadow ? shadow_languages : languages
+	for(var/language_path in cache.Copy())
+		remove_language(language_path, shadow, source)
 
 /datum/language_holder/proc/has_language(datum/language/dt)
 	if(is_type_in_typecache(dt, languages))
@@ -91,8 +140,9 @@
 	if(replace)
 		src.remove_all_languages()
 
-	for(var/l in other.languages)
-		src.grant_language(l)
+	for(var/language_path in other.languages)
+		for(var/source in other.languages[language_path])
+			src.grant_language(language_path, source = source)
 
 
 /datum/language_holder/proc/open_language_menu(mob/user)
@@ -110,9 +160,6 @@
 
 /datum/language_holder/alien
 	languages = list(/datum/language/xenocommon)
-
-/datum/language_holder/monkey
-	languages = list(/datum/language/monkey)
 
 /datum/language_holder/swarmer
 	languages = list(/datum/language/swarmer)

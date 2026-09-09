@@ -8,11 +8,66 @@
 GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	"Rogue" = 'icons/mob/roguehud.dmi')))
 
-/proc/ui_style2icon(ui_style)
+/proc/ui_style2icon(ui_style, datum/preferences/prefs)
+	if(ui_style == "Rogue" && prefs)
+		return prefs.get_roguehud_icon()
 	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[GLOB.available_ui_styles[1]]
+
+/proc/roguehud_icon_for_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return 'icons/mob/roguehud_deuten.dmi'
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return 'icons/mob/roguehud_protan.dmi'
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return 'icons/mob/roguehud_tritan.dmi'
+	return 'icons/mob/roguehud.dmi'
+
+/proc/rogueheat_icon_for_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return 'icons/mob/rogueheat_deuten.dmi'
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return 'icons/mob/rogueheat_protan.dmi'
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return 'icons/mob/rogueheat_tritan.dmi'
+	return 'icons/mob/rogueheat.dmi'
+
+/proc/is_hud_colorblind_palette(palette)
+	switch(palette)
+		if(HUD_COLORBLIND_NONE)
+			return TRUE
+		if(HUD_COLORBLIND_DEUTERANOPIA)
+			return TRUE
+		if(HUD_COLORBLIND_PROTANOPIA)
+			return TRUE
+		if(HUD_COLORBLIND_TRITANOPIA)
+			return TRUE
+	return FALSE
+
+/proc/is_roguehud_palette_icon(hud_icon)
+	return hud_icon == 'icons/mob/roguehud.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_deuten.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_protan.dmi' \
+		|| hud_icon == 'icons/mob/roguehud_tritan.dmi'
+
+/proc/is_rogueheat_palette_icon(hud_icon)
+	return hud_icon == 'icons/mob/rogueheat.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_deuten.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_protan.dmi' \
+		|| hud_icon == 'icons/mob/rogueheat_tritan.dmi'
+
+/proc/hud_colorblind_palette_options()
+	return list(
+		list("value" = HUD_COLORBLIND_NONE, "label" = "Default"),
+		list("value" = HUD_COLORBLIND_DEUTERANOPIA, "label" = "Deuteranopia"),
+		list("value" = HUD_COLORBLIND_PROTANOPIA, "label" = "Protanopia"),
+		list("value" = HUD_COLORBLIND_TRITANOPIA, "label" = "Tritanopia"),
+	)
 
 /datum/hud
 	var/mob/mymob
+	var/mob/living/carbon/human/human_owner
 
 	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
 	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
@@ -82,10 +137,12 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 /datum/hud/New(mob/owner)
 	mymob = owner
+	if(ishuman(owner))
+		human_owner = owner
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style)
+		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style, owner.client?.prefs)
 
 //	hide_actions_toggle = new
 //	hide_actions_toggle.InitialiseIcon(src)
@@ -149,8 +206,17 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	QDEL_LIST(screenoverlays)
 	mymob = null
+	human_owner = null
 
 	return ..()
+
+/datum/hud/proc/get_human_owner()
+	return human_owner
+
+/datum/hud/proc/claim_screen(atom/movable/screen/screen_object)
+	if(screen_object)
+		screen_object.set_new_hud(src)
+	return screen_object
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -166,6 +232,9 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	var/mob/screenmob = viewmob || mymob
 	if(!screenmob.client)
 		return FALSE
+
+	// Mutates the shared hud objects, so follow the owner's prefs, not the viewer's (observers would rewrite our UI)
+	update_colorblind_hud_palette(mymob?.client?.prefs)
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
@@ -241,10 +310,22 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+		//A rebuild empties the screen of the watcher, so hand back the overlays and alerts we lend them.
+		var/mob/dead/observer/watcher = viewmob
+		if(istype(watcher) && watcher.observetarget == mymob)
+			watcher.sync_observed_screens()
 
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
+	//A watcher borrows the planes of the mob it observes. Filters, render targets and pulses on those planes then reach it too.
+	var/mob/dead/observer/watcher = mymob
+	if(istype(watcher) && watcher.observetarget?.hud_used)
+		for(var/thing in plane_masters)
+			mymob.client?.screen -= plane_masters[thing]
+		watcher.sync_observed_planes()
+		return
+
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
@@ -278,6 +359,35 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	build_hand_slots()
 //	hide_actions_toggle.InitialiseIcon(src)
 
+/datum/hud/proc/update_colorblind_hud_palette(datum/preferences/prefs)
+	if(!prefs)
+		prefs = mymob?.client?.prefs
+	if(!prefs)
+		return
+
+	var/list/screen_objects = static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots
+	if(hand_slots)
+		for(var/held_index in hand_slots)
+			screen_objects += hand_slots[held_index]
+	if(mymob?.client)
+		screen_objects += mymob.client.screen
+
+	for(var/screen_item as anything in screen_objects)
+		var/atom/movable/screen/screen_object = screen_item
+		if(istype(screen_object))
+			screen_object.apply_colorblind_hud_palette(prefs)
+
+/client/proc/refresh_colorblind_hud_palette()
+	if(!prefs || !mob?.hud_used)
+		return
+	var/datum/hud/used_hud = mob.hud_used
+	used_hud.update_ui_style(ui_style2icon(prefs.UI_style, prefs))
+	used_hud.update_colorblind_hud_palette(prefs)
+	mob.update_a_intents()
+	if(used_hud.rmb_intent)
+		used_hud.rmb_intent.update_icon()
+	used_hud.show_hud(used_hud.hud_version)
+
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
 	set name = "F12"
@@ -308,12 +418,16 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
+		if(isliving(mymob))
+			var/mob/living/liv_mymob = mymob
+			if(i == liv_mymob.domhand)
+				hand_box.icon_state += "_dom"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
-		hand_box.hud = src
+		claim_screen(hand_box)
 		static_inventory += hand_box
-		hand_box.update_icon()
+		hand_box.update_hand_vis()
 
 	var/i = 1
 	for(var/atom/movable/screen/swap_hand/SH in static_inventory)

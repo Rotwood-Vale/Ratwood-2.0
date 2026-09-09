@@ -17,7 +17,7 @@
 
 /obj/item/rogueore/gold/Initialize(mapload)
 	icon_state = "oregold[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/silver
@@ -29,7 +29,7 @@
 
 /obj/item/rogueore/silver/Initialize(mapload)
 	icon_state = "oresilv[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/iron
@@ -41,7 +41,7 @@
 
 /obj/item/rogueore/iron/Initialize(mapload)
 	icon_state = "oreiron[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/copper
@@ -53,7 +53,7 @@
 
 /obj/item/rogueore/copper/Initialize(mapload)
 	icon_state = "orecop[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/tin
 	name = "raw tin"
@@ -64,7 +64,7 @@
 
 /obj/item/rogueore/tin/Initialize(mapload)
 	icon_state = "oretin[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/coal
 	name = "coal"
@@ -99,7 +99,7 @@
 
 /obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/coal/charcoal
 	name = "charcoal"
@@ -130,6 +130,7 @@
 	var/quality = SMELTERY_LEVEL_NORMAL
 	grid_width = 64
 	grid_height = 32
+	dropshrink = 0.8
 
 /obj/item/ingot/examine()
 	. += ..()
@@ -184,7 +185,7 @@
 		var/obj/machinery/anvil/A = loc
 		A.current_workpiece = null
 		A.update_icon()
-	..()
+	return ..()
 
 /obj/item/ingot/gold
 	name = "gold bar"
@@ -199,23 +200,6 @@
 	icon_state = "ingotiron"
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 15
-
-/obj/item/ingot/iron/Initialize(mapload, smelt_quality)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/structure/plough,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork,
-		/datum/crafting_recipe/roguetown/survival/quarterstaff_iron,
-		/datum/crafting_recipe/roguetown/survival/mantrap,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
 
 /obj/item/ingot/copper
 	name = "copper bar"
@@ -271,35 +255,34 @@
 	name = "blessed silver bar"
 	desc = "This bar radiates a divine purity. Treasured by the realms and commonly found in Psydonic weaponry."
 	icon_state = "ingotsilvblessed"
-	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
+	smeltresult = /obj/item/ingot/silverblessed/
 	sellprice = 100
 
 /obj/item/ingot/silverblessed/bullion
 	name = "blessed silver bullion"
 	desc = "This bar radiates a divine purity. The Psycross and the words casted into the surface denotes the Otavan Inquisition as the point of it's origin."
 	icon_state = "ingotsilvblessed_psy"
-	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
+	smeltresult = /obj/item/ingot/silverblessed/bullion //no smelting your psydonic silver for blacksteel
 	sellprice = 100
 
-/obj/item/ingot/aalloy
+/obj/item/ingot/decrepit
 	name = "decrepit ingot"
-	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'progress commands sacrifice'."
+	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'ambition commands sacrifice'."
 	icon_state = "ingotancient"
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 33
 
-
-/obj/item/ingot/purifiedaalloy
-	name = "ancient alloy"
-	desc = "An ingot of polished gilbranze, teeming with forbidden knowledge. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
+/obj/item/ingot/gilbranze
+	name = "gilbranze ingot"
+	desc = "A timeless alloy of gold and bronze, hence the name gilbranze. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
 	icon_state = "ingotancient"
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/gilbranze
 	sellprice = 111
 
-/obj/item/ingot/purifiedaalloy/eahasir
+/obj/item/ingot/gilbranze/eahasir
 	name = "EA-Hasir high-quality gold ingot"
-	desc = "Solid wealth in your hand- Hey wait a minute, this isn't gold."
+	desc = "Solid wealth in your hand- Hey, wait a minute, this isn't gold!"
 
 /obj/item/ingot/aaslag
 	name = "glimmering slag"

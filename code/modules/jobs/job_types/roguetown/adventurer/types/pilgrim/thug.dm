@@ -24,12 +24,13 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-	var/classes = list("Goon", "Miscreant", "Big Man", "Longshoreman")
+	var/classes = list("Goon", "Miscreant", "Muscle", "Longshoreman")
 	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes
 
 	switch(classchoice)
 
 		if("Goon")
+			H.mind.cosmetic_class_title = "Goon"
 			to_chat(H, span_warning("You're a goon, a low-lyfe thug in a painful world - not good enough for war, not smart enough for peace. What you lack in station you make up for in daring."))
 			H.set_blindness(0)
 
@@ -65,17 +66,17 @@
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/knuckles
 				if("Navaja")
-					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
 				if("Bare Hands")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 		if("Miscreant")
+			H.mind.cosmetic_class_title = "Miscreant"
 			to_chat(H, span_warning("You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."))
 			H.set_blindness(0)
 
-			H.change_stat(STATKEY_WIL, -2)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, 2)
 			H.change_stat(STATKEY_INT, 2)
@@ -85,13 +86,14 @@
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/crafting, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -109,14 +111,16 @@
 				if("Magic Bricks")
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
+					ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 				if("Lockpicking Equipment")
 					H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_EXPERT, TRUE)
-					H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_LIGHT_STEP, TRAIT_GENERIC)
 					r_hand = /obj/item/lockpickring/mundane
 
-		if("Big Man")
+		if("Muscle")
+			H.mind.cosmetic_class_title = "Muscle"
 			to_chat(H, span_warning("More akin to a corn-fed monster than a normal man, your size and strength are your greatest weapons; though they hardly supplement what's missing of your brains."))
 			H.set_blindness(0)
 
@@ -140,12 +144,12 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-			var/options = list("Hands-On", "Big Axe")
+			var/options = list("Hands-On", "Big Axe", "Big Stick")
 			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
 
 			switch(option_choice)
 				if("Hands-On")
-					ADD_TRAIT(H, TRAIT_BASHDOORS, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				if("Big Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -155,6 +159,7 @@
 					r_hand = /obj/item/rogueweapon/mace
 
 		if("Longshoreman")
+			H.mind.cosmetic_class_title = "Longshoreman"
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
 	pilaging for treasury from anyone who'd cross your path. Now your captain retires from a life of crime, \
 	settling down as do you. Still, there is coin to be made on land."))

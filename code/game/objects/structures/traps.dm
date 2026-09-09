@@ -17,7 +17,7 @@
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
 
 
-	var/list/static/ignore_typecache
+	var/static/list/ignore_typecache
 	var/list/mob/immune_minds = list() //unused and a bit weird, helpful for making mobs immune to the traps without TRAIT_LIGHT_STEP
 
 	var/sparks = TRUE
@@ -61,13 +61,13 @@
 	if(iscarbon(user) && armed && isturf(loc))
 		if(!BP)
 			return FALSE
-		if(C.get_skill_level(/datum/skill/craft/traps) < 1)
+		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
 			C.visible_message(span_notice("I don't know how to disarm \the [src]."))
 			return FALSE
 		else
 			used_time = 14 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 				C.visible_message(span_notice("[C] begins disarming \the [src]."), \
 						span_notice("I start disarming \the [src]."))
 			if(do_after(user, used_time, target = src))
@@ -80,13 +80,13 @@
 	if(iscarbon(user) && !armed && isturf(loc))
 		if(!BP)
 			return FALSE
-		if(C.get_skill_level(/datum/skill/craft/traps) < 1)
+		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
 			C.visible_message(span_notice("I don't know how to arm \the [src]."))
 			return FALSE
 		else
 			used_time = 8 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 			if(do_after(user, used_time, target = src))
 				armed = TRUE
 				update_icon()
@@ -160,6 +160,12 @@
 	time_between_triggers = 10
 	flare_message = span_warning("[src] snaps shut!")
 
+/obj/structure/trap/stun/hunter/Destroy()
+	if(stored_item && !QDELING(stored_item))
+		qdel(stored_item)
+	stored_item = null
+	return ..()
+
 /obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
 	caught = TRUE
 	. = ..()
@@ -203,7 +209,9 @@
 	forceMove(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
-	qdel(stored_trap)
+	if(stored_trap && !QDELING(stored_trap))
+		qdel(stored_trap)
+	stored_trap = null
 	QDEL_NULL(spark_system)
 	. = ..()
 

@@ -6,7 +6,7 @@
 	releasedrain = 50
 	chargedrain = 1
 	chargetime = 5
-	recharge_time = 25 SECONDS
+	recharge_time = 30 SECONDS
 	human_req = TRUE
 	ignore_los = TRUE
 	warnie = "spellwarning"

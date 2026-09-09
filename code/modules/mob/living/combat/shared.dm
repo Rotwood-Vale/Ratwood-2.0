@@ -29,3 +29,8 @@
 					if(status.effectedstats[stat] > 0)
 						fakestat -= status.effectedstats[stat]
 	return fakestat
+
+/// Weapon faced and zone aimed at, for dodge and parry logs. Built at the log site, so misses cost nothing.
+/proc/defense_log_note(mob/user)
+	var/obj/item/attacker_weapon = user?.used_intent?.masteritem
+	return "[attacker_weapon ? "(against [attacker_weapon]) " : ""](AIMED: [uppertext(parse_zone(user?.zone_selected))])"

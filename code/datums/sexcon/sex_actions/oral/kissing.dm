@@ -22,7 +22,7 @@
 	user.visible_message(span_warning("[user] starts making out with [target]..."))
 
 /datum/sex_action/kissing/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] makes out with [target]..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] makes out with [target]..."))
 	if(user.sexcon.force > SEX_FORCE_MID)
 		user.sexcon.oralcourse_noise(target)
 	else

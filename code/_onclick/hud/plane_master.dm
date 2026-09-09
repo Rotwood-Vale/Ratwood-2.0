@@ -16,6 +16,34 @@
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /atom/movable/screen/plane_master/proc/backdrop(mob/mymob)
 
+/atom/movable/screen/plane_master/proc/apply_vampire_sight(mob/mymob)
+	var/obj/item/organ/eyes/night_vision/vampire/eyes = mymob?.getorganslot(ORGAN_SLOT_EYES)
+	if(!istype(eyes))
+		return
+	if(eyes.sight_owns_planes())
+		render_target = VAMPIRE_SIGHT_TARGET(plane)
+		return
+	if(render_target == VAMPIRE_SIGHT_TARGET(plane))
+		render_target = null
+
+/atom/movable/screen/plane_master/vampire_sight
+	name = "blood-sight plane master"
+	plane = GAME_PLANE_HIGHEST
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/blood_glow
+	name = "blood glow plane master"
+	plane = BLOOD_GLOW_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 0
+
+/atom/movable/screen/plane_master/blood_glow/backdrop(mob/mymob)
+	clear_filters()
+	filters += filter(type = "alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+
 /atom/movable/screen/plane_master/openspace
 	name = "open space plane master"
 	plane = OPENSPACE_BACKDROP_PLANE
@@ -56,6 +84,7 @@
 	filters = list()
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world
 	name = "game world plane master"
@@ -76,7 +105,8 @@
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
 			if(L.has_status_effect(/datum/status_effect/debuff/vampbite))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
-				
+	apply_vampire_sight(mymob)
+
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
@@ -141,6 +171,7 @@
 			if(L.has_status_effect(/datum/status_effect/buff/druqks))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
 	filters += filter(type = "alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world_above
 	name = "above game world plane master"
@@ -158,6 +189,7 @@
 			var/mob/living/L = mymob
 			if(L.has_status_effect(/datum/status_effect/buff/druqks))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
+	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world_below
 	name = "lowest game world plane master"
@@ -245,6 +277,7 @@
 					filters += filter(type="color", color = list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0))
 					F1 = filters[filters.len-1]
 					animate(F1, size=50, radius=480, time=10, loop=-1, flags=ANIMATION_PARALLEL)
+	apply_vampire_sight(mymob)
 
 
 /atom/movable/screen/plane_master/game_world_walls
@@ -269,6 +302,7 @@
 					filters += filter(type="color", color = list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0))
 					F1 = filters[filters.len-1]
 					animate(F1, size=50, radius=480, time=10, loop=-1, flags=ANIMATION_PARALLEL)
+	apply_vampire_sight(mymob)
 
 //Contains all weather overlays
 /atom/movable/screen/plane_master/weather_overlay

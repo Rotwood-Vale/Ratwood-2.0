@@ -1,7 +1,7 @@
 /datum/intent/jump
 	name = "jump"
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE
@@ -48,6 +48,10 @@
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount && animal_mount.has_buckled_mobs() && animal_mount.buckled_mobs.len > 1)
 		to_chat(src, span_warning("[animal_mount] is carrying too much weight to jump."))
+		return FALSE
+
+	if(has_status_effect(/datum/status_effect/debuff/exposed))
+		to_chat(src, span_warning("I'm exposed and lost my footing! I can't jump!"))
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_ONJUMP, A)

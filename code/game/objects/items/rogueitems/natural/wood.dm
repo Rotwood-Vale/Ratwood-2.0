@@ -19,16 +19,32 @@
 	var/lumber = /obj/item/grown/log/tree/small //These are solely for lumberjack calculations
 	var/lumber_amount = 1
 	metalizer_result = /obj/item/rogueore/iron
+	var/blessed = FALSE
+
+/obj/item/grown/log/tree/proc/bless_log()
+	if(blessed)
+		return FALSE
+	blessed = TRUE
+	name = "blessed log"
+	add_atom_colour("#88ffaa", FIXED_COLOUR_PRIORITY)
+	add_filter("blessed_log_outline", 2, list("type" = "outline", "color" = "#58C86A", "alpha" = 95, "size" = 1))
+	return TRUE
+
+/obj/item/grown/log/tree/Destroy()
+	remove_filter("blessed_log_outline")
+	return ..()
+
+/obj/item/grown/log/tree/examine(mob/user)
+	. = ..()
+	if(blessed)
+		. += span_green("This log bears Dendor's blessing.")
+		. += span_info("Blessed timber has a big chance to yield 1 extra small log, and a smaller chance to yield 2 extra small logs when chopped.")
 
 /obj/item/grown/log/tree/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/woodstaff,
 		/datum/crafting_recipe/roguetown/survival/quarterstaff,
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
-		/datum/crafting_recipe/roguetown/survival/oar,
-		/datum/crafting_recipe/roguetown/survival/boat,
 		)
 
 	AddElement(
@@ -48,6 +64,8 @@
 			new /obj/item/grown/log/tree/small(get_turf(src.loc))
 			if(prob(skill_level + user.goodluck(2)))	// when sawing instead of essence you get extra small log
 				new /obj/item/grown/log/tree/small(get_turf(src.loc))
+			if(prob(skill_level + user.goodluck(2)))	// same rate as chopping for lumber essence
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
 			if(user.is_holding(src))
 				user.dropItemToGround(src)
 			user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -68,11 +86,19 @@
 			new lumber(get_turf(src))
 				// Scaling is less steep than tanning as lumberjacking is easier to level and get
 			if(prob(skill_level + user.goodluck(2)))
-				new /obj/item/natural/cured/essence(get_turf(user))
+				new /obj/item/grown/log/tree/small/essence(get_turf(user))
 				if(!sound_played)
 					sound_played = TRUE
 					to_chat(user, span_warning("Dendor weeps..."))
 					playsound(src,pick('sound/items/gem.ogg'), 100, FALSE)
+		if(blessed)
+			if(prob(50))
+				to_chat(user, span_notice("Dendor's blessing preserves abundant timber, nearly doubling my yield."))
+				new /obj/item/grown/log/tree/small(get_turf(src))
+				new /obj/item/grown/log/tree/small(get_turf(src))
+			else if(prob(80))
+				to_chat(user, span_notice("Dendor's blessing preserves more usable timber for my efforts."))
+				new /obj/item/grown/log/tree/small(get_turf(src))
 		if(!skill_level)
 			to_chat(user, span_info("Due to inexperience, I ruin some of the timber..."))
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
@@ -112,8 +138,6 @@
 		/datum/crafting_recipe/roguetown/survival/fishingcage,
 		/datum/crafting_recipe/roguetown/survival/rod,
 		/datum/crafting_recipe/roguetown/survival/bowpartial,
-		/datum/crafting_recipe/roguetown/survival/recurvepartial,
-		/datum/crafting_recipe/roguetown/survival/longbowpartial,
 		/datum/crafting_recipe/roguetown/survival/billhook,
 		/datum/crafting_recipe/roguetown/survival/goedendag,
 		/datum/crafting_recipe/roguetown/survival/woodsword,
@@ -129,22 +153,7 @@
 		/datum/crafting_recipe/roguetown/survival/pipe,
 		/datum/crafting_recipe/roguetown/survival/mantrap,
 		/datum/crafting_recipe/roguetown/survival/paperscroll,
-		/datum/crafting_recipe/roguetown/survival/boneaxe,
-		/datum/crafting_recipe/roguetown/survival/prosthetic/woodleftarm,
-		/datum/crafting_recipe/roguetown/survival/prosthetic/woodrightarm,
-		/datum/crafting_recipe/roguetown/survival/prosthetic/woodleftleft,
-		/datum/crafting_recipe/roguetown/survival/prosthetic/woodrightleg,
-		/datum/crafting_recipe/roguetown/survival/tarot_deck,
-		/datum/crafting_recipe/roguetown/survival/heatershield,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork/whetstone,
-		/datum/crafting_recipe/roguetown/survival/peasantry/peasantwarflail,
-		/datum/crafting_recipe/roguetown/survival/peasantry/waraxe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warspear_hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/warspear_pitchfork,
-		/datum/crafting_recipe/roguetown/survival/peasantry/scythe,)
+		/datum/crafting_recipe/roguetown/survival/boneaxe,)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -185,6 +194,11 @@
 				user.dropItemToGround(src)
 			for(var/i=1, i<=woodtotal, ++i)
 				new /obj/item/natural/wood/plank(get_turf(src.loc))
+			var/lumber_skill = user.get_skill_level(/datum/skill/labor/lumberjacking)
+			if(prob(lumber_skill + user.goodluck(2)))
+				new /obj/item/grown/log/tree/small/essence(get_turf(src.loc))
+				to_chat(user, span_warning("Dendor weeps..."))
+				playsound(src, pick('sound/items/gem.ogg'), 100, FALSE)
 			user.mind.add_sleep_experience(/datum/skill/craft/carpentry, (user.STAINT*0.5))
 			new /obj/effect/decal/cleanable/debris/woody(get_turf(src))
 			qdel(src)
@@ -276,7 +290,7 @@
 
 /obj/item/grown/log/tree/stick/Initialize(mapload)
 	icon_state = "stick[rand(1,2)]"
-	..()
+	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/fishingcage,
 		/datum/crafting_recipe/roguetown/survival/woodspade,
@@ -285,14 +299,7 @@
 		/datum/crafting_recipe/roguetown/survival/broom,
 		/datum/crafting_recipe/roguetown/survival/woodcross,
 		/datum/crafting_recipe/roguetown/survival/dye_brush,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork,
-		/datum/crafting_recipe/roguetown/survival/wickercloak,
 		/datum/crafting_recipe/roguetown/survival/torch,
-		/datum/crafting_recipe/roguetown/survival/stonearrow,
-		/datum/crafting_recipe/roguetown/survival/stonearrow_five,
 		/datum/crafting_recipe/roguetown/survival/wood_stake
 		)
 
@@ -398,6 +405,18 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
 
+/obj/item/grown/log/tree/stake/attack_obj(obj/O, mob/living/user)
+	if(!isitem(O))
+		return
+	var/obj/item/I = O
+	if(I.anvilrepair)
+		if(I.smeltresult == /obj/item/ingot/iron)
+			if(!do_after(user, 4 SECONDS, target = I))
+				return
+			to_chat(user, span_warning("The [user] breaks an [I] using stake into small parts!"))
+			new /obj/item/scrap(get_turf(I))
+			qdel(I)
+
 //................	Lumber essence	............... //
 /obj/item/grown/log/tree/small/essence
 	name = "essence of lumber"
@@ -409,6 +428,7 @@
 	metalizer_result = /obj/item/rogueore/gold
 	grid_height = 32
 	grid_width = 32
+	dropshrink = 0.6
 
 /////////////
 // Planks //

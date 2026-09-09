@@ -11,12 +11,10 @@
 	var/has_rot = FALSE
 	var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
 
-	if (was_zombie)
+	if (was_zombie || target.infected || target.has_status_effect(/datum/status_effect/zombie_infection))
 		has_rot = TRUE
-	else if (istype(target, /mob/living/carbon))
+	else
 		has_rot = check_bodyparts_for_rot(target)
-	else if (target.has_status_effect(/datum/status_effect/zombie_infection))
-		has_rot = TRUE
 
 	// Remove rot component
 	remove_rot_component(target)

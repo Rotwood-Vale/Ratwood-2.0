@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Window } from 'tgui/layouts';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
@@ -56,7 +56,9 @@ export const TextInputModal = (props) => {
     disable_paste,
   } = data;
 
-  const [input, setInput] = useState(placeholder || '');
+  // Only initialize input from placeholder on first mount
+  const initialInput = useRef(placeholder || '');
+  const [input, setInput] = useState(initialInput.current);
 
   const onType = (value: string) => {
     if (value === input) {

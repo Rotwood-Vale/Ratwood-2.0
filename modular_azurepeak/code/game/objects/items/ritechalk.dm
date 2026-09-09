@@ -5,6 +5,7 @@
 	icon = 'icons/roguetown/misc/rituals.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	experimental_inhand = FALSE
+	dropshrink = 0.6
 
 /obj/item/ritechalk/attack_self(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))

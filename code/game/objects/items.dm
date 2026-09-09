@@ -89,8 +89,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/edelay_type = 1 //if 1, can be moving while equipping (for helmets etc)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
-	var/breakouttime = 0 // greater than 15 str get this isnstead
+	var/breakouttime = 0 // str 20 breaks out on this instead of struggling for slipouttime
 	var/slipouttime = 0
+	var/legcuff_slowdown = 0 //movespeed slowdown while worn as legcuffs, 0 = none
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -148,6 +149,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/altgripped = FALSE
 	var/list/alt_intents //these replace main intents
 	var/list/gripped_intents //intents while gripped, replacing main intents
+	var/isaltgripsharp = FALSE //In the edge case an alt gripped weapon should remain sharp, then change this to true
 	var/force_wielded = 0
 	var/gripsprite = FALSE //use alternate grip sprite for inhand
 	var/wieldsound = FALSE
@@ -219,7 +221,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/examine_effects = list()
 
 	///played when an item that is equipped blocks a hit
-	var/list/blocksound
+	var/blocksound
 
 	var/thrown_damage_flag = "blunt"
 
@@ -255,6 +257,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/bell = FALSE //Does item have bell in it, used for attachables
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
+
+	/// Makes this item impossible to enchant, for temporary item
+	var/unenchantable = FALSE
 
 	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
@@ -395,7 +400,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			blade_int = max_blade_int
 
-/obj/item/Destroy()
+/obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -600,6 +605,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name] <span class='info'><a href='?src=[REF(src)];explainskill=1'>{?}</a></span>"
 
+		if(istype(src, /obj/item/rogueweapon))
+			var/obj/item/rogueweapon/W = src
+			if(W.special)
+				inspec += "[W.special.get_examine()]"
+
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
 
@@ -686,6 +696,110 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/get_inspect_button()
 	return " <span class='info'><a href='?src=[REF(src)];inspect=1'>{?}</a></span>"
+
+/obj/item/proc/show_examine_hover_tooltip()
+	if(has_customized_identity() || always_show_examine_link)
+		return TRUE
+	if(minstr || minstr_req)
+		return TRUE
+	if(force >= 5)
+		return TRUE
+	if(gripped_intents && force_wielded)
+		return TRUE
+	if(wbalance)
+		return TRUE
+	if(wlength != WLENGTH_NORMAL)
+		return TRUE
+	if(alt_intents || gripped_intents || twohands_required)
+		return TRUE
+	if(can_parry || max_blade_int)
+		return TRUE
+	if(associated_skill && associated_skill.name)
+		return TRUE
+	if(intdamage_factor != 1 || demolition_mod != 1)
+		return TRUE
+	return FALSE
+
+/obj/item/proc/get_true_durability_percent_text()
+	if(!max_integrity)
+		return null
+	var/percent = round(((obj_integrity / max_integrity) * 100), 1)
+	return "[percent]% ([floor(obj_integrity)])"
+
+/obj/item/proc/get_hover_examine_description()
+	if(!desc)
+		return null
+	return html_encode(desc)
+
+/obj/item/proc/get_hover_examine_condition_text()
+	return null
+
+/obj/item/proc/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
+	var/list/lines = list()
+	if(minstr)
+		lines += "<b>MIN.STR:</b> [minstr]"
+	if(minstr_req)
+		lines += "<b>NO HALVING ON WIELD</b>"
+	if(force)
+		lines += "<b>FORCE:</b> [get_force_string(force)]"
+	if(gripped_intents && force_wielded)
+		lines += "<b>WIELDED FORCE:</b> [get_force_string(force_wielded)]"
+	if(wbalance)
+		var/balance_text = ""
+		if(wbalance == WBALANCE_HEAVY)
+			balance_text = "Heavy"
+		if(wbalance == WBALANCE_SWIFT)
+			balance_text = "Swift"
+		if(balance_text)
+			lines += "<b>BALANCE:</b> [balance_text]"
+	if(wlength != WLENGTH_NORMAL)
+		var/length_text = ""
+		switch(wlength)
+			if(WLENGTH_SHORT)
+				length_text = "Short"
+			if(WLENGTH_LONG)
+				length_text = "Long"
+			if(WLENGTH_GREAT)
+				length_text = "Great"
+		if(length_text)
+			lines += "<b>LENGTH:</b> [length_text]"
+	if(alt_intents)
+		lines += "<b>ALT-GRIP:</b> Right click while in hand"
+	var/shaft_text = get_blade_dulling_text(src, verbose = TRUE)
+	if(shaft_text)
+		lines += "<b>SHAFT:</b> [html_encode(shaft_text)]"
+	if(gripped_intents)
+		lines += "<b>TWO-HANDED</b>"
+	if(twohands_required)
+		lines += "<b>BULKY</b>"
+	if(can_parry)
+		lines += "<b>DEFENSE:</b> [wdefense_dynamic]"
+	if(max_blade_int)
+		var/blade_percent = round(((blade_int / max_blade_int) * 100), 1)
+		lines += "<b>SHARPNESS:</b> [blade_percent]% ([blade_int])"
+	if(associated_skill && associated_skill.name)
+		lines += "<b>SKILL:</b> [html_encode(associated_skill.name)]"
+	if(intdamage_factor != 1 && force >= 5)
+		lines += "<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]%"
+	if(demolition_mod != 1 && force >= 5)
+		lines += "<b>ANTI-OBJECT MOD:</b> [demolition_mod * 100]%"
+	if(self_examine)
+		var/true_durability = get_true_durability_percent_text()
+		if(true_durability)
+			lines += "<b>Durability:</b> [true_durability]"
+	return lines
+
+/obj/item/proc/get_hover_examine_html(mob/user, self_examine = FALSE)
+	var/list/sections = list()
+	var/description_text = get_hover_examine_description()
+	if(description_text)
+		sections += description_text
+	var/list/stat_lines = get_hover_examine_stat_lines(user, self_examine)
+	if(length(stat_lines))
+		sections += stat_lines.Join("<br>")
+	if(original_name && original_name != name)
+		sections += "<font color='#888888'>Originally: [html_encode(original_name)]</font>"
+	return sections.Join("<br>")
 
 
 /obj/item/interact(mob/user)
@@ -788,25 +902,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
-/obj/item/attack_paw(mob/user)
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
-
-	if(throwing)
-		throwing.finalize(FALSE)
-	if(loc == user)
-		if(!user.temporarilyRemoveItemFromInventory(src))
-			return
-
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
-		user.dropItemToGround(src)
-
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
 
@@ -840,7 +935,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
 			animate(src, pixel_y = oldy, time = 0.5)
-	if(altgripped || wielded)
+	if(altgripped)
+		if(isaltgripsharp == FALSE)
+			sharpness = IS_SHARP
+		ungrip(user,FALSE)
+	else if(wielded)
 		ungrip(user, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
@@ -898,7 +997,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	user.update_equipment_speed_mods()
 
 	if(!user.is_holding(src))
-		if(altgripped || wielded)
+		if(altgripped)
+			if(isaltgripsharp == FALSE)
+				sharpness = IS_SHARP
+			ungrip(user,FALSE)
+		else if(wielded)
 			ungrip(user, FALSE)
 	if(twohands_required)
 		if(slot == ITEM_SLOT_HANDS)
@@ -1479,6 +1582,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(altgripped)
 		altgripped = FALSE
 		wielded = FALSE
+		if(isaltgripsharp == FALSE)
+			sharpness = IS_SHARP
 		if(force_wielded)
 			update_force_dynamic()
 		wdefense_dynamic = wdefense
@@ -1518,6 +1623,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				update_force_dynamic()
 			wdefense_dynamic = (wdefense + wdefense_wbonus)
 			user.update_inv_hands()
+			if(isaltgripsharp == TRUE)
+				return
+			sharpness = IS_BLUNT
 
 /obj/item/proc/wield(mob/living/carbon/user, show_message = TRUE)
 	if(wielded)
@@ -1649,6 +1757,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
+	lose_polish()//call to remove polish bonus on armor/weaps when broken. lives in /blacksmith/items.dm
 	..()
 
 	update_damaged_state()
@@ -1664,8 +1773,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/obj_fix(mob/user, full_repair = TRUE)
 	..()
 	update_damaged_state()
+	if (shoddy_repair) // if we've been jury-rig repaired, ensure our integrity is only restored to 60%
+		obj_integrity = max_integrity * 0.6
 
 /obj/item/obj_destruction(damage_flag)
+	if (obj_flags & PREVENTS_DESTRUCTION)
+		return FALSE
 	if (damage_flag == "acid")
 		obj_destroyed = TRUE
 		acid_melt()
@@ -1674,10 +1787,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_destroyed = TRUE
 		burn()
 		return TRUE
-	if (ismob(loc) && !always_destroy)
+	if (!always_destroy && (ismob(loc) || isclothing(src) || istype(src, /obj/item/rogueweapon)))
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(src.anvilrepair)
+		if(src.smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)
@@ -1714,6 +1832,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/list/peeledpart = body_parts_covered2organ_names(coveragezone, precise = TRUE)
 
 		if(peel_count < peel_goal)
+			if(last_peel_stack_time == world.time)
+				return
+			last_peel_stack_time = world.time
 			peel_count++
 
 		if(peel_count >= peel_goal)
@@ -1823,3 +1944,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
 
+/obj/item/proc/has_customized_identity()
+	if(renamedByPlayer)
+		return TRUE
+	if(original_name && original_name != name)
+		return TRUE
+	if(desc != initial(desc))
+		return TRUE
+	return FALSE

@@ -108,6 +108,7 @@
 
 /obj/structure/flora/tree/evil/Destroy()
 	soundloop.stop()
+	QDEL_NULL(soundloop)
 	if(controller)
 		controller.endvines()
 		controller.tree = null
@@ -124,6 +125,7 @@
 	desc = ""
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
+	plane = FLOOR_PLANE
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -155,6 +157,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
+	max_integrity = 30
 
 /obj/structure/flora/bush/Initialize(mapload)
 	icon_state = "snowbush[rand(1, 6)]"
@@ -167,6 +170,7 @@
 	desc = ""
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
+	max_integrity = 30
 
 /obj/structure/flora/ausbushes/Initialize(mapload)
 	if(icon_state == "firstbush_1")
@@ -238,31 +242,71 @@
 
 /obj/structure/flora/ausbushes/lavendergrass
 	icon_state = "lavendergrass_1"
+	max_integrity = 100
+	blade_dulling = DULLING_CUT
+	destroy_sound = "plantcross"
+	debris = list(/obj/item/natural/fibers = 1)
 
 /obj/structure/flora/ausbushes/lavendergrass/Initialize(mapload)
 	icon_state = "lavendergrass_[rand(1, 4)]"
 	. = ..()
 
+/obj/structure/flora/ausbushes/lavendergrass/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/flower_view)
+		to_chat(user, span_green("The soft haze of lavender soothes my mind."))
+
 /obj/structure/flora/ausbushes/ywflowers
 	icon_state = "ywflowers_1"
+	max_integrity = 100
+	blade_dulling = DULLING_CUT
+	destroy_sound = "plantcross"
+	debris = list(/obj/item/natural/fibers = 1)
 
 /obj/structure/flora/ausbushes/ywflowers/Initialize(mapload)
 	icon_state = "ywflowers_[rand(1, 3)]"
 	. = ..()
 
+/obj/structure/flora/ausbushes/ywflowers/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/flower_view)
+		to_chat(user, span_green("The cheerful yellow blooms lift my mood."))
+
 /obj/structure/flora/ausbushes/brflowers
 	icon_state = "brflowers_1"
+	max_integrity = 100
+	blade_dulling = DULLING_CUT
+	destroy_sound = "plantcross"
+	debris = list(/obj/item/natural/fibers = 1)
 
 /obj/structure/flora/ausbushes/brflowers/Initialize(mapload)
 	icon_state = "brflowers_[rand(1, 3)]"
 	. = ..()
 
+/obj/structure/flora/ausbushes/brflowers/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/flower_view)
+		to_chat(user, span_green("The vivid blooms catch my eye and brighten my spirit."))
+
 /obj/structure/flora/ausbushes/ppflowers
 	icon_state = "ppflowers_1"
+	max_integrity = 100
+	blade_dulling = DULLING_CUT
+	destroy_sound = "plantcross"
+	debris = list(/obj/item/natural/fibers = 1)
 
 /obj/structure/flora/ausbushes/ppflowers/Initialize(mapload)
 	icon_state = "ppflowers_[rand(1, 3)]"
 	. = ..()
+
+/obj/structure/flora/ausbushes/ppflowers/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/flower_view)
+		to_chat(user, span_green("The delicate purple and pink petals bring me a quiet joy."))
 
 /obj/structure/flora/ausbushes/sparsegrass
 	icon_state = "sparsegrass_1"
@@ -298,7 +342,7 @@
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon_state = "random_plant"
-	var/list/static/states
+	var/static/list/states
 
 /obj/item/twohanded/required/kirbyplants/random/Initialize(mapload)
 	. = ..()

@@ -119,7 +119,7 @@
 				var/total_chance = 7 * user.get_skill_level(forging_comp.current_recipe.appro_skill) * user.STAPER/10 * hammer.quality
 				var/breakthrough = 0
 				if(prob((1 + total_chance)*advance_multiplier))
-					user.flash_fullscreen("whiteflash")
+					user.fullscreen_redflash("whiteflash")
 					var/datum/effect_system/spark_spread/S = new()
 					var/turf/front = get_turf(src)
 					S.set_up(1, 1, front)

@@ -33,7 +33,7 @@
     user.visible_message(span_warning("[user] maneuvers close and presses [user.p_their()] bare cunt flush against the face of [target]'s chastity belt."))
 
 /datum/sex_action/chastityplay/scissor_cage/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] bare cunt against the hard plate of [target]'s belt in a slow, grinding roll, chasing friction the metal refuses to give..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] bare cunt against the hard plate of [target]'s belt in a slow, grinding roll, chasing friction the metal refuses to give..."))
     user.sexcon.outercourse_noise(target, TRUE)
     user.sexcon.do_thrust_animate(target)
     user.sexcon.perform_sex_action(user, 1.8, 0, TRUE)

@@ -38,6 +38,11 @@
 	target_trait = PARTICLEWEATHER_SAND
 	COOLDOWN_DECLARE(dustdevil)
 
+/turf/proc/is_town_turf()
+	return istype(get_area(src), /area/rogue/outdoors/town)
+/turf/proc/is_town_building_turf()
+	return istype(get_area(src), /area/rogue/indoors/town)
+
 /datum/particle_weather/sand_gentle/weather_act(mob/living/L)
 	if(HAS_TRAIT(L, TRAIT_SANDSTORM_IMMUNE))
 		return
@@ -109,6 +114,10 @@
 			if(!T.outdoor_effect || T.outdoor_effect.weatherproof)
 				continue
 			if(T.density)
+				continue
+			if(T.is_town_turf())
+				continue
+			if(T.is_town_building_turf())
 				continue
 			turfs += T
 
@@ -231,6 +240,10 @@
 			if(!T.outdoor_effect || T.outdoor_effect.weatherproof)
 				continue
 			if(T.density)
+				continue
+			if(T.is_town_turf())
+				continue
+			if(T.is_town_building_turf())
 				continue
 			turfs += T
 

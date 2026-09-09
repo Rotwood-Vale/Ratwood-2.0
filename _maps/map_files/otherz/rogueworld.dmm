@@ -281,7 +281,7 @@
 /obj/structure/closet/crate/chest/gold,
 /obj/item/rogueweapon/hoe,
 /obj/item/rogueweapon/pick,
-/obj/item/rogueweapon/hammer,
+/obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
 "TS" = (

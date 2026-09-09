@@ -11,10 +11,10 @@
 	advclass_cat_rolls = list(CTAG_ROOKIE = 20)
 	job_traits = list(TRAIT_SQUIRE_REPAIR, TRAIT_GUARDSMAN)
 
-	tutorial = "Odd-jobs, running messages, fixing dents and talking to locals; the City Guard can always use a spare pair of hands, eyes and ears. Assist your fellow city guards in dealing with threats - both within and without. \
+	tutorial = "Odd-jobs, running messages, fixing dents and talking to locals; the Guard can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \
 				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
 				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
-	
+
 	outfit = /datum/outfit/job/roguetown/rookie
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE
@@ -34,8 +34,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	belt = /obj/item/storage/belt/rogue/leather
-	head = /obj/item/clothing/head/roguetown/helmet/kettle
-	cloak = /obj/item/clothing/cloak/citywatch
 	id = /obj/item/scomstone/bad/garrison
 	job_bitflag = BITFLAG_GARRISON
 
@@ -55,7 +53,7 @@
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/shields = 2,
@@ -65,15 +63,15 @@
 		/datum/skill/combat/crossbows = 2,
 		/datum/skill/combat/wrestling = 2,
 		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/knives = 1,
+		/datum/skill/combat/knives = 2,
 		/datum/skill/misc/swimming = 2,
 		/datum/skill/misc/climbing = 3,
 		/datum/skill/misc/athletics = 3,
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/footman/pre_equip(mob/living/carbon/human/H)
@@ -84,6 +82,16 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
+	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/
+	if(SSmapping.current_map.map_name == "Rockhill")
+		cloak = /obj/item/clothing/cloak/citywatch
+		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
+	if(SSmapping.current_map.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/citywatch/janissary
+		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger,
 		/obj/item/storage/belt/rogue/pouch,
@@ -117,25 +125,25 @@
 	subclass_stats = list(
 		STATKEY_SPD = 1,
 		STATKEY_PER = 1,
-		STATKEY_END = 1,
+		STATKEY_WIL = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/bows = 3,
 		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/slings = 2,
+		/datum/skill/combat/slings = 3,
 		/datum/skill/combat/wrestling = 1,
 		/datum/skill/combat/unarmed = 1,
 		/datum/skill/combat/swords = 2,
 		/datum/skill/combat/maces = 2,//clobbering criminals
-		/datum/skill/combat/knives = 3,
+		/datum/skill/combat/knives = 2,
 		/datum/skill/misc/swimming = 2,
 		/datum/skill/misc/climbing = 4,
 		/datum/skill/misc/athletics = 3,
 		/datum/skill/misc/reading = 1,
 		/datum/skill/misc/medicine = 2,
 		/datum/skill/misc/tracking = 2,
-		/datum/skill/craft/crafting, 1,
-		/datum/skill/craft/cooking, 1,
+		/datum/skill/craft/crafting = 1,
+		/datum/skill/craft/cooking = 1,
 	)
 
 /datum/outfit/job/roguetown/rookie/skirmisher/pre_equip(mob/living/carbon/human/H)
@@ -146,6 +154,16 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
+	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
+	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	if(SSmapping.current_map.map_name == "Rockhill")
+		cloak = /obj/item/clothing/cloak/citywatch
+		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
+	if(SSmapping.current_map.map_name == "Desert Town")
+		cloak = /obj/item/clothing/cloak/citywatch/janissary
+		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
+		shoes = /obj/item/clothing/shoes/roguetown/shalal
+		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/zyb
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger,
 		/obj/item/storage/belt/rogue/pouch,
@@ -169,7 +187,7 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Sling")
 				beltr = /obj/item/quiver/sling/iron
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling 
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 
 		switch(armor_choice)
 			if("Light Armor")

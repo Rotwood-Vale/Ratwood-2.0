@@ -29,13 +29,13 @@
 
 /datum/sex_action/chastityplay/fondle_cage/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs and presses on [target]'s spiked chastity, making each twitch drive spikes inward..."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rubs and presses on [target]'s spiked chastity, making each twitch drive spikes inward..."))
 		user.sexcon.perform_sex_action(target, 0.2, 3.6, TRUE)
 		user.sexcon.try_do_pain_scream(target, 3.6)
 		if(target.sexcon.check_active_ejaculation())
 			target.sexcon.ejaculate()
 		return
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] squeezes and rolls [target]'s [get_chastity_device_name(target)] in [user.p_their()] palms, working the metal deliberately..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] squeezes and rolls [target]'s [get_chastity_device_name(target)] in [user.p_their()] palms, working the metal deliberately..."))
 	// Chastity device sound is handled internally by perform_sex_action via chastitycourse_noise.
 	user.sexcon.perform_sex_action(target, 0.5, 0, TRUE)
 	if(target.sexcon.check_active_ejaculation())

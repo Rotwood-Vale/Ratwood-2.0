@@ -54,7 +54,6 @@
 		/obj/item/clothing/under/roguetown/trou/beltpants,
 		/obj/item/clothing/under/roguetown/trou/padleatherpants,
 		/obj/item/clothing/under/roguetown/splintlegs,
-		/obj/item/clothing/under/roguetown/brayette,
 		/obj/item/clothing/under/roguetown/freipants,
 		/obj/item/clothing/under/roguetown/trou/leather/nordman,
 		)

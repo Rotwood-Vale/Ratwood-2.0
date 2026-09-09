@@ -1,0 +1,19 @@
+{
+	"map_name": "Build Your Own Settlement",
+	"map_path": "map_files/byos",
+	"map_file": ["byos.dmm"],
+	"traits": [{"Up": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Down": true}],
+	"other_z": [
+		"_maps/map_files/otherz/wretchfort.json",
+		"_maps/map_files/otherz/inqboat.json"
+	],
+	"minetype": null,
+	"space_empty_levels": 0,
+	"space_ruin_levels": 0,
+	"shuttles": {
+		"cargo": "cargo_rogue",
+		"ferry": "ferry_base",
+		"whiteship": "whiteship_box",
+		"emergency": "emergency_rogue"
+}	
+}

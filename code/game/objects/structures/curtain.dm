@@ -23,7 +23,7 @@
 /obj/structure/curtain/directional/Initialize(mapload)
 	closedir = dir
 	update_icon()
-	..()
+	return ..()
 
 //Crafted directional curtain - only openable from one side
 /obj/structure/curtain/directional/crafted
@@ -96,6 +96,21 @@
 		if(BURN)
 			playsound(loc, 'sound/blank.ogg', 80, TRUE)
 
+/obj/structure/curtain/attackby(obj/item/dyingbrush, mob/living/user)
+	if(!istype(dyingbrush, /obj/item/dye_brush))
+		. = ..()
+		return
+	var/obj/item/dye_brush/brush = dyingbrush
+	if(!brush.dye)
+		to_chat(user, span_warning("The dye brush has no dye loaded."))
+		return
+	if(do_after(user, 2 SECONDS, target = src))
+		user.visible_message(span_notice("[user] finishes <font color=[brush.dye]>painting</font> [src]."), \
+			span_notice("I finish <font color=[brush.dye]>painting</font> [src].")
+		)
+		playsound(loc, "sound/foley/scrubbing[pick(1,2)].ogg", 60, TRUE)
+		color = brush.dye
+
 /obj/structure/curtain/red
 	color = "#a32121"
 
@@ -116,6 +131,9 @@
 
 /obj/structure/curtain/black
 	color = "#414143"
+
+/obj/structure/curtain/drab
+	color = CLOTHING_DRAB
 
 /obj/structure/curtain/orange
 	color = "#a3622c"
@@ -151,3 +169,6 @@
 
 /obj/structure/curtain/directional/yellow
 	color = "#a18727"
+	
+/obj/structure/curtain/directional/drab
+	color = CLOTHING_DRAB

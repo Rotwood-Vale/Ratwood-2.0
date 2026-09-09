@@ -57,7 +57,8 @@
 			to_chat(user, "I consumes the [sacrifice] to enchant [I] permanently.")
 		if(I.GetComponent(/datum/component/enchanted_weapon))
 			qdel(I.GetComponent(/datum/component/enchanted_weapon))
-		I.AddComponent(/datum/component/enchanted_weapon, enchant_duration, TRUE, /datum/skill/magic/arcane, enchant_type)
+		var/refresh_skill = user.get_skill_level(/datum/skill/magic/arcane) ? /datum/skill/magic/arcane : /datum/skill/magic/holy
+		I.AddComponent(/datum/component/enchanted_weapon, enchant_duration, TRUE, refresh_skill, enchant_type)
 		user.visible_message("[user] enchants the [I], enveloping it in a magical glow.")
 		return TRUE
 	else

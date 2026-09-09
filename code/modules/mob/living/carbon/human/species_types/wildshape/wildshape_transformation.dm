@@ -10,9 +10,6 @@
 	var/obj/item/stored_neck = wear_neck
 	var/obj/item/stored_ring = wear_ring
 
-	for(var/obj/item/I in src)
-		if (I != underwear && I != cloak && I != backr && I != backl && I != legwear_socks) // keep underwear, socks, back and cloak on, even if said cloak or back clothing remains inaccessible.
-			dropItemToGround(I)
 	regenerate_icons()
 	icon = null
 	var/oldinv = invisibility
@@ -74,7 +71,7 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
+	W.set_blood_volume(blood_volume)
 	W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
@@ -93,6 +90,12 @@
 	invisibility = oldinv
 
 	W.gain_inherent_skills()
+
+	// Share devotion bar: beast form inherits the human's current devotion amount.
+	if(devotion && W.devotion)
+		W.devotion.max_devotion = devotion.max_devotion
+		W.devotion.devotion = devotion.devotion
+		W.devotion.update_devotion(0)
 
 /mob/living/carbon/human/proc/wildshape_untransform(dead,gibbed)
 	if(!stored_mob)
@@ -146,7 +149,7 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
+	W.set_blood_volume(blood_volume)
 	W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
@@ -167,5 +170,10 @@
 
 	W.regenerate_icons()
 	to_chat(W, span_userdanger("I return to my old form."))
+
+	// Share devotion bar: return beast form's current devotion amount to human form.
+	if(devotion && W.devotion)
+		W.devotion.devotion = clamp(devotion.devotion, 0, W.devotion.max_devotion)
+		W.devotion.update_devotion(0)
 
 	qdel(src)

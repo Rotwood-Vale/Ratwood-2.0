@@ -37,6 +37,7 @@
 	var/detail_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone
+	var/mutant_skin = FALSE	//If TRUE, use mutant color as skin color instead of skin_tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
@@ -88,15 +89,11 @@
 	var/last_fire_update
 	var/account_id
 
-	canparry = TRUE
-	candodge = TRUE
-
-	dodgecd = FALSE
+	mob_can_parry = TRUE
+	mob_can_dodge = TRUE
 	dodgetime = 0
 
 	var/list/possibleclass
-	var/advsetup = 0
-
 
 //	var/alignment = ALIGNMENT_TN
 
@@ -129,6 +126,7 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null
 	var/ooc_extra
@@ -136,6 +134,7 @@
 	var/ooc_extra_img_link
 	var/rumour = null
 	var/noble_gossip = null
+	var/has_gnoll_scent_this_round = FALSE
 	var/song_title
 	var/song_artist
 	var/received_resident_key = FALSE
@@ -208,3 +207,5 @@
 	var/time_flags = 0
 	var/heatstroke_timer_id
 	var/hypothermia_timer_id
+
+	var/branded = FALSE // Saves time during examine if character hasn't been branded at all

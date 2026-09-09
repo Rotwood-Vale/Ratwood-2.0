@@ -7,7 +7,7 @@
 		/datum/surgery_step/infuse_tick,
 		/datum/surgery_step/cauterize
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/infuse_tick
@@ -15,7 +15,7 @@
 	implements = list(
 		/obj/item/leechtick_bloated = 80,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 10 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
 	skill_min = SKILL_LEVEL_APPRENTICE
@@ -57,6 +57,7 @@
 	if(!target.mind.active)
 		to_chat(user, "Necra is not done with [target], yet.")
 		return
+	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		display_results(user, target, span_notice("The leechtick refuses to meld with [target]'s heart. Their damage must be too severe still."),
 			"[user] works the leechtick into [target]'s innards, but nothing happens.",
@@ -65,7 +66,6 @@
 	display_results(user, target, span_notice("You succeed in restarting [target]'s heart with the infusion of the leechtick's viscera."),
 		"[user] works the leechtick into [target]'s innards.",
 		"[user] works the leechtick into [target]'s innards.")
-	target.adjustOxyLoss(-target.getOxyLoss())
 	target.emote("breathgasp")
 	target.Jitter(100)
 	record_round_statistic(STATS_LUX_REVIVALS)

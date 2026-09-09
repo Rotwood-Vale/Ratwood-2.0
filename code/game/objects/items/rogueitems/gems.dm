@@ -82,6 +82,12 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/roguegem/houndgem
+	name = "houndstone gem"
+	icon_state = "topaz_cut"
+	sellprice = 0
+	desc = "A component to make a Houndstone, it looks like a topaz."
+
 /obj/item/roguegem/yellow
 	name = "toper"
 	icon_state = "topaz_cut"
@@ -163,7 +169,7 @@
 
 /obj/item/roguegem/turq
 	name = "cerulite"
-	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi’s astrologer-mages in divination."
+	desc = "A beautiful teal gem that carves easily. Beloved by mages, its remarkable clarity makes it a favored tool of Naledi's astrologer-mages in divination."
 	icon = 'icons/roguetown/gems/gem_turq.dmi'
 	icon_state = "raw_turq"
 	sellprice = 75
@@ -182,6 +188,14 @@
 	icon_state = "raw_opal"
 	sellprice = 80
 
+/obj/item/roguegem/chitin
+	name = "beetle chitin plate"
+	desc = "A thick, iridescent plate of chitin shaved from a giant woolly chafer beetle. Prized by underdeep artisans for its durability and natural luster."
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "raw_shell"
+	color = "#7B8C5E"
+	sellprice = 15
+
 /obj/item/roguegem/diamond/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/diamond_staff,)
@@ -190,6 +204,22 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+// Do NOT add these to the stockpile treasures list, they have other uses.
+/obj/item/roguegem/blood_diamond
+	name = "glut"
+	icon_state = "blood"
+	sellprice = 188
+	desc = "Something about this gem just doesn't sit right with you. Holding it makes the blood leave your fingertips."
+
+/obj/item/roguegem/blood_diamond/examine(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.patron.type == /datum/patron/inhumen/graggar)
+		. += span_danger("You know this gem well. They are born out of great violence, but only if it involves the mightiest of warriors.")
 
 /obj/item/roguegem/amethyst
 	name = "amythortz"
@@ -212,14 +242,15 @@
 /obj/item/roguegem/random
 	name = "random gem"
 	desc = "You shouldn't be seeing this."
-	icon_state = null
+	icon = 'icons/roguetown/helpers/spawnerhelpers.dmi'
+	icon_state = "roguegem"
 
 /obj/item/roguegem/random/Initialize(mapload)
 	..()
-	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3, /obj/item/roguegem/onyxa = 5, /obj/item/roguegem/jade = 3, /obj/item/roguegem/coral = 3, /obj/item/roguegem/turq = 3, /obj/item/roguegem/amber = 3, /obj/item/roguegem/opal = 3)
+	var/newgem = list(/obj/item/roguegem/ruby = 5, /obj/item/roguegem/green = 15, /obj/item/roguegem/blue = 10, /obj/item/roguegem/yellow = 20, /obj/item/roguegem/violet = 10, /obj/item/roguegem/diamond = 5, /obj/item/riddleofsteel = 1, /obj/item/rogueore/silver = 3, /obj/item/roguegem/blood_diamond = 1, /obj/item/roguegem/onyxa = 5, /obj/item/roguegem/jade = 3, /obj/item/roguegem/coral = 3, /obj/item/roguegem/turq = 3, /obj/item/roguegem/amber = 3, /obj/item/roguegem/opal = 3)
 	var/pickgem = pickweight(newgem)
 	new pickgem(get_turf(src))
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 /// riddle

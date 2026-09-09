@@ -39,7 +39,7 @@
 
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
 		play_chastity_impact_sound(target, 'sound/combat/hits/bladed/genstab (1).ogg', 40, 45)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drags [user.p_their()] cock across [target]'s spiked [get_chastity_device_name(target)] — each stroke on the outside forces the inward spikes across [target.p_their()] skin..."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] drags [user.p_their()] cock across [target]'s spiked [get_chastity_device_name(target)] — each stroke on the outside forces the inward spikes across [target.p_their()] skin..."))
 		user.sexcon.outercourse_noise(target, TRUE)
 		user.sexcon.perform_sex_action(user, 0.8, 0.4, TRUE)
 		user.sexcon.perform_sex_action(target, 0.8, 3.2, TRUE)
@@ -51,7 +51,7 @@
 			target.sexcon.ejaculate()
 		return
 	play_chastity_impact_sound(target, list('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg'), 35, 35)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] slides [user.p_their()] cock along the length of [target]'s [get_chastity_device_name(target)], hips rolling into every pass..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] slides [user.p_their()] cock along the length of [target]'s [get_chastity_device_name(target)], hips rolling into every pass..."))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(user, 1.2, 0, TRUE)
 	user.sexcon.perform_sex_action(target, 1.4, 1, TRUE)

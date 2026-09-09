@@ -358,7 +358,7 @@ GLOBAL_LIST(teleport_runes)
 	name = "Knowledge rune"
 	desc = "arcane symbols pulse upon the ground..."
 	icon_state = "6"
-	invocation = "Thal’ un’vethar!"
+	invocation = "Thal' un'vethar!"
 	color = "#3A0B61"
 	spellbonus = 15
 	scribe_damage = 10
@@ -400,7 +400,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 1
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	invocation = "Thal’miren vek’laris un’vethar!"
+	invocation = "Thal'miren vek'laris un'vethar!"
 	layer = SIGIL_LAYER
 	can_be_scribed = TRUE
 	ritual_number = TRUE
@@ -435,7 +435,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 1
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	invocation = "Ral’kor vek’varun eyn’torath!"
+	invocation = "Ral'kor vek'varun eyn'torath!"
 	layer = SIGIL_LAYER
 	can_be_scribed = TRUE
 	ritual_number = TRUE
@@ -467,7 +467,7 @@ GLOBAL_LIST(teleport_runes)
 	runesize = 2
 	pixel_x = -64 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -64
-	invocation = "Zar’kalthra ul’norak ven’thelis!"
+	invocation = "Zar'kalthra ul'norak ven'thelis!"
 
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wall
@@ -475,7 +475,7 @@ GLOBAL_LIST(teleport_runes)
 	desc = "arcane symbols litter the ground- is that a wall of some sort?"
 	icon_state = "wall"
 	tier = 2
-	invocation = "Fren’aleth ar’quor!"
+	invocation = "Fren'aleth ar'quor!"
 	ritual_number = TRUE
 	can_be_scribed = TRUE
 	color = "#184075"
@@ -584,7 +584,7 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "wall"
 	tier = 3
-	invocation = "Thar’morak dul’vorr keth’alor!"
+	invocation = "Thar'morak dul'vorr keth'alor!"
 	ritual_number = FALSE
 	runesize = 2
 	pixel_x = -64 //So the big ol' 96x96 sprite shows up right
@@ -597,6 +597,49 @@ GLOBAL_LIST(teleport_runes)
 	var/list/barriers = list()
 	associated_ritual = /datum/runeritual/other/wall/t3
 
+/obj/effect/decal/cleanable/roguerune/arcyne/wallgreater/proc/clear_fortress_area(turf/deploy_location)
+	if(!template)
+		return
+
+	// Load parsed map (same way load() does)
+	var/datum/parsed_map/parsed = template.cached_map || new(file(template.mappath))
+	if(!parsed?.bounds)
+		return
+
+	var/list/b = parsed.bounds
+
+	var/z_offset_min = b[MAP_MINZ]
+	var/z_offset_max = b[MAP_MAXZ]
+
+	var/half_w = round(template.width / 2)
+	var/half_h = round(template.height / 2)
+
+	var/start_x = max(1, deploy_location.x - half_w - 6)
+	var/end_x   = min(world.maxx, deploy_location.x + half_w + 6)
+	var/start_y = max(1, deploy_location.y - half_h - 6)
+	var/end_y   = min(world.maxy, deploy_location.y + half_h + 6)
+
+	// Iterate exact Z range the template will use
+	for(var/z_offset in z_offset_min to z_offset_max)
+		var/z = deploy_location.z + (z_offset - z_offset_min)
+
+		if(z < 1 || z > world.maxz)
+			continue
+
+		for(var/x in start_x to end_x)
+			for(var/y in start_y to end_y)
+				var/turf/T = locate(x, y, z)
+				if(!T)
+					continue
+
+				// Delete structures
+				for(var/obj/structure/S in T)
+					qdel(S)
+
+				// Delete dense blockers
+				for(var/obj/O in T)
+					if(O.density && !istype(O, /obj/effect))
+						qdel(O)
 
 /obj/effect/decal/cleanable/roguerune/arcyne/wallgreater/proc/get_template(/datum/map_template/arcyne_fortress/fortress)
 
@@ -616,9 +659,8 @@ GLOBAL_LIST(teleport_runes)
 		return
 	var/turf/deploy_location = get_turf(src)
 	get_template(template)
-
+	clear_fortress_area(deploy_location)
 	template.load(deploy_location, centered = TRUE)
-	to_chat(usr, span_hierophant_warning("template.load complete"))
 	if(ritual_result)
 		pickritual.cleanup_atoms(selected_atoms)
 
@@ -639,8 +681,7 @@ GLOBAL_LIST(teleport_runes)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "portal"
 	tier = 2
-	req_invokers = 2
-	invocation = "Xel’tharr un’korel!"
+	invocation = "Xel'tharr un'korel!"
 	ritual_number = FALSE
 	req_keyword = TRUE
 	runesize = 2
@@ -657,7 +698,7 @@ GLOBAL_LIST(teleport_runes)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
 	LAZYADD(GLOB.teleport_runes, src)
 
-/obj/effect/rune/teleport/Destroy()
+/obj/effect/decal/cleanable/roguerune/arcyne/teleport/Destroy()
 	LAZYREMOVE(GLOB.teleport_runes, src)
 	return ..()
 
@@ -684,7 +725,7 @@ GLOBAL_LIST(teleport_runes)
 	if(isnull(potential_runes[input_rune_key]))
 		fail_invoke()
 		return
-	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
+	var/obj/effect/decal/cleanable/roguerune/arcyne/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!Adjacent(user) || QDELETED(src) || !actual_selected_rune)
 		fail_invoke()
 		return
@@ -760,7 +801,7 @@ GLOBAL_LIST(teleport_runes)
 	if(summoning)
 		REMOVE_TRAIT(summoned_mob, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned_mob.status_flags -= GODMODE//remove godmode
-		summoned_mob.candodge = TRUE
+		summoned_mob.mob_can_dodge = TRUE
 		summoned_mob.binded = FALSE
 		summoned_mob.move_resist = MOVE_RESIST_DEFAULT
 		summoned_mob.SetParalyzed(0)
@@ -778,7 +819,7 @@ GLOBAL_LIST(teleport_runes)
 		animate(summoned_mob, color = null,time = 5)
 		REMOVE_TRAIT(summoned_mob, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned_mob.status_flags -= GODMODE//remove godmode
-		summoned_mob.candodge = TRUE
+		summoned_mob.mob_can_dodge = TRUE
 		summoned_mob.binded = FALSE
 		summoned_mob.move_resist = MOVE_RESIST_DEFAULT
 		summoned_mob.SetParalyzed(0)

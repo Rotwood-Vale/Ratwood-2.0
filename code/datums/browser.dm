@@ -27,7 +27,7 @@
 	if(!nuser)
 		return
 	user = nuser
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(user_deleted))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	window_id = nwindow_id
 	if(!no_close_movement)
 		if(ismob(nuser))
@@ -44,7 +44,7 @@
 		height = nheight
 	if (nref)
 		ref = nref
-		RegisterSignal(ref, COMSIG_PARENT_QDELETING, PROC_REF(ref_deleted))
+		RegisterSignal(ref, COMSIG_QDELETING, PROC_REF(ref_deleted))
 
 /datum/browser/proc/user_deleted(datum/source)
 	SIGNAL_HANDLER

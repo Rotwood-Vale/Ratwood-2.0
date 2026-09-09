@@ -32,6 +32,8 @@
 	var/static/list/accessory_icon_cache = list()
 	/// Whether this specific accessory doesn't allow for coloring
 	var/color_disabled = FALSE
+	/// Which gradient dmi file this uses
+	var/gradient_icon = 'icons/mob/sprite_accessory/hair/hair_gradients32x32.dmi'
 
 /datum/sprite_accessory/New()
 	if(color_keys > 1)
@@ -45,7 +47,7 @@
 	return TRUE
 
 /datum/sprite_accessory/proc/generic_gender_feature_adjust(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner, feature_male_key, feature_female_key)
-	if(!ishuman(owner))
+	if(!ishuman(owner) || !owner.dna?.species)
 		return
 	var/mob/living/carbon/human/humie = owner
 	var/datum/species/species = owner.dna.species
@@ -226,7 +228,7 @@
 	sources[KEY_MUT_COLOR_TWO] = features["mcolor2"]
 	sources[KEY_MUT_COLOR_THREE] = features["mcolor3"]
 	/// Read specific organ entries to deduce eye, hair and facial hair color
-	if(MUTCOLORS in prefs.pref_species.species_traits)
+	if((MUTCOLORS in prefs.pref_species.species_traits) || (prefs.pref_species.mutant_skin_option && prefs.mutant_skin))
 		sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
 	else
 		sources[KEY_SKIN_COLOR] = prefs.skin_tone
@@ -250,7 +252,7 @@
 	/// Read specific organ DNA entries to deduce eye, hair and facial hair color
 	if(ishuman(carbon))
 		var/mob/living/carbon/human/human = carbon
-		if(MUTCOLORS in species.species_traits)
+		if((MUTCOLORS in species.species_traits) || (species.mutant_skin_option && human.mutant_skin))
 			sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
 		else
 			sources[KEY_SKIN_COLOR] = human.skin_tone

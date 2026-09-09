@@ -31,6 +31,7 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 100
 	anvilrepair = /datum/skill/craft/carpentry
+	dropshrink = 0.9
 	COOLDOWN_DECLARE(shield_bang)
 
 
@@ -112,6 +113,8 @@
 	dropshrink = 0.8
 	anvilrepair = /datum/skill/craft/carpentry
 	coverage = 30
+	smeltresult = /obj/item/ash
+	dropshrink = 0.8
 
 /obj/item/rogueweapon/shield/attack_right(mob/user)
 	if(overlays.len)
@@ -167,6 +170,7 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/shield/tower/holysee
 	name = "see shield"
@@ -186,6 +190,7 @@
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 330
 	sellprice = 30
+	smeltresult = /obj/item/ingot/steelholy
 
 /obj/item/rogueweapon/shield/tower/holysee/MiddleClick(mob/user, params)
 	. = ..()
@@ -228,6 +233,7 @@
 	max_integrity = 300
 	sellprice = 30
 	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/shield/tower/metal/getonmobprop(tag)
 	if(tag)
@@ -237,6 +243,59 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
+
+/obj/item/rogueweapon/shield/tower/metal/ancient
+	name = "ancient shield"
+	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her ambition cannot be stopped."
+	icon_state = "ancientsh"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/shield/tower/metal/ancient/getonmobprop(tag)
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.8,"sx" = -5,"sy" = -1,"nx" = 6,"ny" = -1,"wx" = 0,"wy" = -2,"ex" = 0,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.8,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+	return ..()
+
+/obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
+	name = "decrepit shield"
+	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
+	max_integrity = 120
+	wdefense = 9
+	blade_dulling = DULLING_SHAFT_CONJURED
+	color = "#bb9696"
+	anvilrepair = null
+
+/obj/item/rogueweapon/shield/tower/metal/gold
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshield"
+	force = 25
+	throwforce = 35
+	throw_speed = 1
+	throw_range = 3
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
+	wlength = WLENGTH_NORMAL
+	resistance_flags = null
+	flags_1 = CONDUCT_1
+	wdefense = 14
+	coverage = 90
+	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	max_integrity = 50
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/shield/tower/metal/gold/king
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil socketed with a dorpel. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshieldking"
+	max_integrity = 75
+	sellprice = 300
 
 /obj/item/rogueweapon/shield/tower/metal/psy
 	name = "Covenant"
@@ -256,7 +315,7 @@
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 350
 	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silver
+	smeltresult = /obj/item/ingot/silverblessed
 
 /obj/item/rogueweapon/shield/tower/metal/psy/ComponentInitialize()
 	AddComponent(\
@@ -269,23 +328,6 @@
 		added_def = 1,\
 	)
 
-/obj/item/rogueweapon/shield/tower/metal/alloy
-	name = "decrepit shield"
-	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
-	max_integrity = 120
-	wdefense = 9
-	icon_state = "ancientsh"
-	blade_dulling = DULLING_SHAFT_CONJURED
-	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
-	anvilrepair = null
-
-/obj/item/rogueweapon/shield/tower/metal/palloy
-	name = "ancient shield"
-	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her progress cannot be stopped."
-	icon_state = "ancientsh"
-	smeltresult = /obj/item/ingot/purifiedaalloy
-
 /obj/item/rogueweapon/shield/tower/zyb
 	name = "rider shield"
 	desc = "A shield of Zybantine design. Clever usage of wood, iron, and leather make an impressive match for any weapon."
@@ -296,6 +338,8 @@
 	wdefense = 11
 	max_integrity = 220 //not fully metal but not fully wood either
 	anvilrepair = /datum/skill/craft/carpentry
+	smeltresult = /obj/item/ingot/iron
+	dropshrink = 0.75
 
 /obj/item/rogueweapon/shield/tower/zyb/getonmobprop(tag)
 	. = ..()
@@ -313,7 +357,7 @@
 	coverage = 55
 
 /obj/item/rogueweapon/shield/buckler
-	name = "buckler shield"
+	name = "buckler"
 	desc = "A sturdy buckler shield. Will block anything you can imagine."
 	icon_state = "bucklersh"
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -331,26 +375,28 @@
 	grid_width = 32
 	grid_height = 64
 	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/shield/buckler/equipped(mob/user, slot, initial)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_GNARLYDIGITS))
+		to_chat(user, span_danger("Woe! the handle of the [src] is too small for me to hold onto!"))
+		forceMove(user.loc)
 
 /obj/item/rogueweapon/shield/buckler/examine(mob/living/user)
 	. = ..()
 	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
 
-/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/user)
-	if(!ishuman(user))
+/// Returns the associated skill to be used to parry with. Changes based on the associated_skill of the main hand so long as it's a combat skill
+/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/blocker)
+	if(!ishuman(blocker))
 		return
-	var/mob/living/carbon/bucklerer = user
-	var/obj/item/mainhand = bucklerer.get_active_held_item()
-	var/weapon_parry = FALSE
-	if(mainhand)
-		if(mainhand.can_parry)
-			weapon_parry = TRUE
-	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
-		associated_skill = /datum/skill/combat/shields
-	if(weapon_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
+	associated_skill = /datum/skill/combat/shields
+	var/obj/item/mainhand = blocker.get_active_held_item()
+	if(!isitem(mainhand) || istype(mainhand, /obj/item/rogueweapon/shield/buckler))
+		return
+	if(mainhand.can_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
 		associated_skill = mainhand.associated_skill
-	else
-		associated_skill = /datum/skill/combat/shields
 
 /obj/item/rogueweapon/shield/buckler/getonmobprop(tag)
 	. = ..()
@@ -361,13 +407,20 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/rogueweapon/shield/buckler/palloy
+/obj/item/rogueweapon/shield/buckler/ancient
 	name = "ancient buckler"
+	desc = "A rounded parrying shield, cast from polished gilbranze. Despite its unseemly, brittle appearance, the scars inflicted by \
+	reflected blades only faintly mar the unnatural craftsmanship."
+	icon_state = "ancient_buckler"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/rogueweapon/shield/buckler/ancient/decrepit
+	name = "decrepit buckler"
 	desc = "An object once before its time, now out of it. The artisan's hammerstrikes are still visible in the mottled surface, yet \
 	the encroach of rust and rot threatens even this memory."
-	icon_state = "ancient_buckler"
-	max_integrity = 85
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	force = 12
+	throwforce = 6
+	max_integrity = 40
 
 /obj/item/rogueweapon/shield/heater
 	name = "heater shield"
@@ -380,6 +433,7 @@
 	attacked_sound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 220
+	smeltresult = /obj/item/ash
 
 /obj/item/rogueweapon/shield/heater/getonmobprop(tag)
 	. = ..()
@@ -404,6 +458,7 @@
 	possible_item_intents = list(SHIELD_SMASH_METAL, SHIELD_BLOCK) // No SHIELD_BASH. Too heavy to swing quickly, or something.
 	max_integrity = 220
 	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/shield/iron/getonmobprop(tag)
 	. = ..()
@@ -441,7 +496,7 @@
 
 /obj/item/rogueweapon/shield/capbuckler // unique, better buckler for knight captain
 	name = "'Order'"
-	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the vale's crest."
+	desc = "A special buckler shield made out of blacksteel for the captain of the guard, adorned with the realm's crest."
 	icon_state = "capbuckler"
 	icon = 'icons/roguetown/weapons/special/captain.dmi'
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
@@ -491,6 +546,18 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
+/obj/item/rogueweapon/shield/tower/metal/blacksteel
+	name = "blacksteel shield"
+	desc = "A magnificent kite shield of blacksteel. Be it knight-or-knave, those who have the strength to lift it shall yet stand against perdition."
+	icon_state = "blacksteelsh"
+	max_integrity = 400
+	force = 25
+	throwforce = 30 // Funny. in a perfect world I would set this to 50
+	coverage = 60
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL, /datum/intent/effect/daze)
+	minstr = 11
+	wdefense = 14
 
 /obj/item/rogueweapon/shield/steam
 	name = "steam shield"

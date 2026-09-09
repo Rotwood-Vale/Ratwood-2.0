@@ -291,6 +291,7 @@
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 200, 4)
+		new /datum/magic_throw_slip_watcher(L)
 	else
 		if(isitem(target))
 			var/obj/item/I = target
@@ -300,6 +301,65 @@
 				if (carbon_firer?.can_catch_item())
 					throw_target = get_turf(firer)
 			I.throw_at(throw_target, 200, 3)
+
+/// One-shot watcher for fetch/repel throws:
+/// 1) Checks every moved tile while being thrown, so crossing a slick square can trigger a slip.
+/// 2) Falls back to impact check for landing on a slick tile.
+/datum/magic_throw_slip_watcher
+	var/datum/weakref/mob_ref
+
+/datum/magic_throw_slip_watcher/New(mob/living/L)
+	mob_ref = WEAKREF(L)
+	RegisterSignal(L, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(L, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
+	addtimer(CALLBACK(src, PROC_REF(poll_for_slip)), 0)
+
+/datum/magic_throw_slip_watcher/proc/try_apply_slip(mob/living/L)
+	var/turf/open/T = get_turf(L)
+	var/datum/component/slippery/slippy = T?.GetComponent(/datum/component/slippery)
+	if(!slippy)
+		return FALSE
+	if(L.throwing)
+		QDEL_NULL(L.throwing)
+	return L.slip(slippy.knockdown_time, T, slippy.lube_flags, slippy.paralyze_time, slippy.force_drop_items)
+
+/datum/magic_throw_slip_watcher/proc/on_moved(atom/movable/AM, atom/last_loc, dir)
+	var/mob/living/L = mob_ref?.resolve()
+	if(!L)
+		qdel(src)
+		return
+	if(!L.throwing)
+		qdel(src)
+		return
+	if(try_apply_slip(L))
+		qdel(src)
+
+/datum/magic_throw_slip_watcher/proc/poll_for_slip()
+	var/mob/living/L = mob_ref?.resolve()
+	if(!L)
+		qdel(src)
+		return
+	if(try_apply_slip(L))
+		qdel(src)
+		return
+	if(!L.throwing)
+		qdel(src)
+		return
+	addtimer(CALLBACK(src, PROC_REF(poll_for_slip)), 1)
+
+/datum/magic_throw_slip_watcher/proc/on_impact(datum/source)
+	var/mob/living/L = mob_ref?.resolve()
+	if(L)
+		try_apply_slip(L)
+	qdel(src)
+
+/datum/magic_throw_slip_watcher/Destroy()
+	var/mob/living/L = mob_ref?.resolve()
+	if(L)
+		UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(L, COMSIG_MOVABLE_IMPACT)
+	mob_ref = null
+	return ..()
 
 /obj/projectile/magic/sickness
 	name = "Bolt of Sickness"

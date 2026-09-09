@@ -21,7 +21,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/kurche
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/scabbard/sheath
+	beltl = /obj/item/rogueweapon/scabbard/sheath/royal
 	beltr = /obj/item/rogueweapon/stoneaxe/battle
 	r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	l_hand = /obj/item/quiver/arrows
@@ -139,7 +139,7 @@
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/huntingknife
 	beltr = /obj/item/rogueweapon/stoneaxe/handaxe
-	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
+	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath/noble)
 	var/weaponroll = rand(1, 80)  //did I tell you guys I like gambling?
 	switch(weaponroll)
 		if(1 to 20)
@@ -147,7 +147,7 @@
 		if(21 to 40)
 			r_hand = /obj/item/rogueweapon/greataxe
 		if(41 to 60)
-			r_hand = /obj/item/rogueweapon/halberd/bardiche/paalloy  // Literally just a cooler bardiche.
+			r_hand = /obj/item/rogueweapon/halberd/bardiche/ancient  // Literally just a cooler bardiche.
 		if(61 to 80)
 			r_hand = /obj/item/rogueweapon/greataxe  //50/50 between greataxe or a bardiche.
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)

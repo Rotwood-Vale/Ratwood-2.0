@@ -91,6 +91,91 @@
 					/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried,
 				)
 
+/datum/supply_pack/rogue/food/poppies
+	name = "Poppies"
+	cost = 20
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/rogue/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/rogue/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/rogue/poppy,
+	)
+
+/datum/supply_pack/rogue/food/sugarcane
+	name = "Sugarcane"
+	cost = 15
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/sugarcane,
+					/obj/item/reagent_containers/food/snacks/grown/sugarcane,
+					/obj/item/reagent_containers/food/snacks/grown/sugarcane,
+					)
+
+
+/datum/supply_pack/rogue/food/rocknut
+	name = "Rocknut"
+	cost = 15
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/nut,
+					/obj/item/reagent_containers/food/snacks/grown/nut,
+					/obj/item/reagent_containers/food/snacks/grown/nut,)
+
+/datum/supply_pack/rogue/food/rare_veggies
+	name = "Sorted Imported Vegetables"
+	cost = 40
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/garlick/rogue,
+					/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip,
+					/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip,
+					/obj/item/reagent_containers/food/snacks/grown/cucumber,
+					/obj/item/reagent_containers/food/snacks/grown/cucumber,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/eggplant,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					/obj/item/reagent_containers/food/snacks/grown/carrot,
+					)
+
+/datum/supply_pack/rogue/food/rare_grain
+	name = "Sorted Imported Grains"
+	cost = 25
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/oat,
+					/obj/item/reagent_containers/food/snacks/grown/oat,
+					/obj/item/reagent_containers/food/snacks/grown/oat,
+					/obj/item/reagent_containers/food/snacks/grown/rice,
+					/obj/item/reagent_containers/food/snacks/grown/rice,
+					/obj/item/reagent_containers/food/snacks/grown/rice,
+					)
+
+/datum/supply_pack/rogue/food/rare_fruit
+	name = "Sorted Imported Fruits"
+	cost = 45
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/fruit/pear,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/pear,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/lemon,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/lime,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/plum,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/plum,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/tomato,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/tomato,
+					/obj/item/natural/shellplant/pumpkin,)
+
+/datum/supply_pack/rogue/food/rare_berry
+	name = "Sorted Imported Berries"
+	cost = 35
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry,
+					/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry,
+					)
+
 /datum/supply_pack/rogue/food/pepper
 	name = "Pepper"
 	cost = 30
@@ -107,12 +192,57 @@
 
 /datum/supply_pack/rogue/food/honey
 	name = "Honey"
-	cost = 50
+	cost = 30
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/rogue/honey,
+					/obj/item/reagent_containers/food/snacks/rogue/honey,
+					/obj/item/reagent_containers/food/snacks/rogue/honey,
+				)
+
+/datum/supply_pack/rogue/food/spiderhoney
+	name = "Spider Honey"
+	cost = 40
 	contains = list(
 					/obj/item/reagent_containers/food/snacks/rogue/honey/spider,
 					/obj/item/reagent_containers/food/snacks/rogue/honey/spider,
-					/obj/item/reagent_containers/food/snacks/rogue/honey,
-					/obj/item/reagent_containers/food/snacks/rogue/honey,
+					/obj/item/reagent_containers/food/snacks/rogue/honey/spider,
+				)
+
+/datum/supply_pack/rogue/food/Pepperberries
+	name = "Pepperberries"
+	cost = 45
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/grown/pepperseed, 
+					/obj/item/reagent_containers/food/snacks/grown/pepperseed,
+					/obj/item/reagent_containers/food/snacks/grown/pepperseed,
+					/obj/item/reagent_containers/food/snacks/grown/pepperseed,
+					/obj/item/reagent_containers/food/snacks/grown/pepperseed,
+				) // Not wrong item
+
+/datum/supply_pack/rogue/food/sugar
+	name = "Sugar"
+	cost = 45
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/sugar,
+					/obj/item/reagent_containers/food/snacks/sugar,
+					/obj/item/reagent_containers/food/snacks/sugar,
+					/obj/item/reagent_containers/food/snacks/sugar,
+					/obj/item/reagent_containers/food/snacks/sugar,
+				)
+
+/datum/supply_pack/rogue/food/allspice
+	name = "Allspice"
+	cost = 50 //about double the price of its crafting ingredients
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/allspice,
+				)
+
+/datum/supply_pack/rogue/food/chocolate
+	name = "Chocolate"
+	cost = 30
+	contains = list(
+					/obj/item/reagent_containers/food/snacks/chocolate,
+					/obj/item/reagent_containers/food/snacks/chocolate,
 				)
 
 /datum/supply_pack/rogue/food/eel

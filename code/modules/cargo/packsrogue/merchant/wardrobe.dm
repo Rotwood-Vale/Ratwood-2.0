@@ -33,6 +33,20 @@
 					/obj/item/clothing/head/roguetown/bardhat,
 				)
 
+/datum/supply_pack/rogue/wardrobe/hat/articap
+	name = "Artificer's Cap"
+	cost = 10
+	contains = list(
+					/obj/item/clothing/head/roguetown/articap,
+				)
+
+/datum/supply_pack/rogue/wardrobe/suits/artijacket
+	name = "Artificer Jacket"
+	cost = 30
+	contains = list(
+					/obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket,
+				)
+
 /datum/supply_pack/rogue/wardrobe/masks/specs
 	name = "Spectacles"
 	cost = 25

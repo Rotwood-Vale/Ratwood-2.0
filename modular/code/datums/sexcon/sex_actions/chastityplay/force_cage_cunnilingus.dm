@@ -27,7 +27,7 @@
     user.visible_message(span_warning("[user] seizes [target] and drags [target.p_their()] face firmly against [user.p_their()] chastity belt!"))
 
 /datum/sex_action/chastityplay/force_cage_cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [target]'s mouth against the front of [user.p_their()] belt, using [target.p_their()] tongue as [user.p_their()] own..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] grinds [target]'s mouth against the front of [user.p_their()] belt, using [target.p_their()] tongue as [user.p_their()] own..."))
     user.sexcon.oralcourse_noise(target)
     user.sexcon.perform_sex_action(user, 1.8, 0, TRUE)
     user.sexcon.perform_sex_action(target, 0, 2, FALSE)

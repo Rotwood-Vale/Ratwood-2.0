@@ -6,10 +6,13 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	mode = NPC_AI_IDLE
 	faction = list("drow")
 	ambushable = FALSE
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.
+
+	//Whilst smart, they prefer to not take risks and instead will utilize their weapons for special means of attack.
+	special_attacker = TRUE
 
 /mob/living/carbon/human/species/elf/dark/drowraider/ambush
 	aggressive = 1
@@ -57,7 +60,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 						/datum/sprite_accessory/hair/head/countryponytailalt, 
 						/datum/sprite_accessory/hair/head/stacy, 
 						/datum/sprite_accessory/hair/head/kusanagi_alt))
-	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailyeager, 
+	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailwitcher, 
 						/datum/sprite_accessory/hair/head/dave, 
 						/datum/sprite_accessory/hair/head/emo, 
 						/datum/sprite_accessory/hair/head/sabitsuki,
@@ -130,13 +133,15 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	belt = /obj/item/storage/belt/rogue/leather/black
 	if(prob(5))
 		beltl = /obj/item/storage/belt/rogue/pouch/medicine
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		if(prob(20))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
-		else
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = null
+		if(51 to 85)
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(86 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	if(prob(60))
 		id = /obj/item/clothing/ring/silver
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron

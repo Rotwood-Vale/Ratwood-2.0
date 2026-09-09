@@ -3,8 +3,8 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
-	spawn_positions = 5
+	total_positions = 0
+	spawn_positions = 0
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "At some point in your lyfe, you'd fallen to the wrong side of the carriage. Whether by butchery or finesse, you're known throughout the land. \
@@ -20,16 +20,17 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
-	allowed_patrons = ALL_INHUMEN_PATRONS//YEAH!!! MURDER!!!
+	vice_restrictions = list(/datum/charflaw/assassintarget)
+	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	PQ_boost_divider = 10
 
 	wanderer_examine = TRUE
 	advjob_examine = TRUE
-	always_show_on_latechoices = TRUE
+	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE //no endless stream of bandits, unless the migration waves deem it so
-	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED, TRAIT_KNOWNCRIMINAL)
+	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED)
 	same_job_respawn_delay = 1 MINUTES
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
 	job_subclasses = list(
@@ -66,12 +67,16 @@
 
 // Changed up proc from Wretch to suit bandits bit more
 /proc/bandit_select_bounty(mob/living/carbon/human/H)
-	var/wanted = input(H, "Are you wanted by the kingdom?", "You will be more skilled from your experience") as anything in list("Yes", "No")
-	if(wanted == "No") 
-		to_chat(H, span_warning("I am still relatively new to the gang. My crimes have gone unnoticed so far, but I lack experience."))
-		return null
-	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of Rotwood", "The Grenzelhoftian Holy See")
-	var/bounty_severity = input(H, "How notorious are you?", "Bounty Amount") as anything in list("Small Game", "Highwayman", "Vale Boogeyman")
+	var/wanted = list("Yes", "No")
+	var/wanted_choice = input(H, "Are you wanted by the kingdom?", "You will be more skilled from your experience") as anything in wanted
+	switch(wanted_choice)
+		if("Yes")
+			ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, TRAIT_GENERIC)
+		if("No") 
+			to_chat(H, span_warning("I am still relatively new to the gang. My crimes have gone unnoticed so far, but I lack experience."))
+			return null
+	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See")
+	var/bounty_severity = input(H, "How notorious are you?", "Bounty Amount") as anything in list("Small Game", "Highwayman", "Realm Boogeyman")
 	var/race = H.dna.species
 	var/gender = H.gender
 	var/list/d_list = H.get_mob_descriptors()
@@ -110,22 +115,3 @@
 			if("Speed")
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Bandit, you are expected to actively create conflict with other players regardless of bounty status. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
-
-/proc/update_bandit_slots()
-	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
-	if(!bandit_job)
-		return
-
-	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
-
-	//Add 1 slot for every 12 players over 30.
-	if(player_count > 42)
-		var/extra = floor((player_count - 42) / 12)
-		slots += extra
-
-	//5 slots minimum, 7 maximum.
-	slots = min(slots, 9)
-
-	bandit_job.total_positions = slots
-	bandit_job.spawn_positions = slots

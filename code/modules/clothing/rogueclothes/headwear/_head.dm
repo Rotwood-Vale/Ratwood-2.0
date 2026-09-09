@@ -12,7 +12,6 @@
 	experimental_onhip = FALSE
 	var/mask_override = FALSE //override if we want to always respect our inv flags if the helm is in a mask slot
 	experimental_inhand = FALSE
-	var/hidesnoutADJ = FALSE
 	var/overarmor = TRUE
 
 /obj/item/clothing/head/roguetown/equipped(mob/user, slot)

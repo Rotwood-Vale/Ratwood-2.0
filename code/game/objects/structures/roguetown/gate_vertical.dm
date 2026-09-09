@@ -32,8 +32,13 @@
 	GLOB.biggates += src
 
 /obj/structure/gate_vertical/Destroy()
-	for(var/A in blockers)
-		qdel(A)
+	GLOB.biggates -= src
+	QDEL_LIST(blockers)
+	if(istype(attached_to, /obj/structure/winch))
+		var/obj/structure/winch/attached_winch = attached_to
+		if(attached_winch.attached_gate == src)
+			attached_winch.attached_gate = null
+		attached_to = null
 	return ..()
 
 /obj/structure/gate_vertical/proc/update_gate_icon()
@@ -100,3 +105,20 @@
 		B.opacity = TRUE
 	isSwitchingStates = FALSE
 	update_gate_icon()
+
+//oh right this would take a while to sprite...
+// /obj/structure/gate/vertical/bars
+// 	icon_state = "bar1"
+// 	base_state = "bar"
+// 	opacity = FALSE
+
+// /obj/structure/gate/vertical/bars/Initialize(mapload)
+// 	. = ..()
+// 	INVOKE_ASYNC(src, PROC_REF(close))
+
+// /obj/structure/gate/vertical/bars/preopen
+// 	icon_state = "bar0"
+
+// /obj/structure/gate/vertical/bars/preopen/Initialize(mapload)
+// 	. = ..()
+// 	INVOKE_ASYNC(src, PROC_REF(open))

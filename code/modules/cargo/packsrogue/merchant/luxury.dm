@@ -18,6 +18,11 @@
 	cost = 120
 	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver)
 
+/datum/supply_pack/rogue/luxury/silvertencross
+	name = "Silver amulet of the Ten"
+	cost = 120
+	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver/undivided)
+
 /datum/supply_pack/rogue/luxury/silverdagger
 	name = "Silver Dagger"
 	cost = 120 //Silver weapons have been made much less powerful but much more common over time
@@ -93,3 +98,38 @@
 	name = "Dust of Disguise (Gender only)"
 	cost = 135
 	contains = list(/obj/item/alch/transisdust)
+
+/datum/supply_pack/rogue/adventure_supplies/scabbard/noble
+	name = "Noble Scabbard"
+	cost = 65
+	contains = list(
+					/obj/item/rogueweapon/scabbard/sword/noble
+				)
+
+/datum/supply_pack/rogue/adventure_supplies/scabbard/royal
+	name = "Royal Scabbard"
+	cost = 120
+	contains = list(
+					/obj/item/rogueweapon/scabbard/sword/royal
+				)
+
+/datum/supply_pack/rogue/adventure_supplies/sheath/noble
+	name = "Noble Sheath"
+	cost = 65
+	contains = list(
+					/obj/item/rogueweapon/scabbard/sheath/noble
+				)
+
+/datum/supply_pack/rogue/adventure_supplies/sheath/royal
+	name = "Royal Sheath"
+	cost = 120
+	contains = list(
+					/obj/item/rogueweapon/scabbard/sheath/royal
+				)
+
+/datum/supply_pack/rogue/luxury/sandstormgoggle
+	name = "Sandstorm Goggles"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/mask/rogue/spectacles/goggles
+				)

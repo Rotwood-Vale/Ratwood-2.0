@@ -126,3 +126,53 @@
 					/obj/item/seeds/tea,
 					/obj/item/seeds/tea,
 				)
+
+/datum/supply_pack/rogue/seeds/rare_veggies
+	name = "Imported Vegetable Seeds"
+	cost = 15
+	contains = list(
+					/obj/item/seeds/garlick,
+					/obj/item/seeds/turnip,
+					/obj/item/seeds/cucumber,
+					/obj/item/seeds/eggplant,
+					/obj/item/seeds/carrot,
+					/obj/item/seeds/sugarcane,
+					/obj/item/seeds/nut,
+					)
+
+/datum/supply_pack/rogue/seeds/rare_fruit
+	name = "Imported Fruit Seeds"
+	cost = 15
+	contains = list(
+					/obj/item/seeds/pear,
+					/obj/item/seeds/lemon,
+					/obj/item/seeds/lime,
+					/obj/item/seeds/tangerine,
+					/obj/item/seeds/plum,
+					/obj/item/seeds/tomato,
+					/obj/item/seeds/pumpkin
+					)
+
+/datum/supply_pack/rogue/seeds/rare_berry
+	name = "Imported Berry Seeds"
+	cost = 15
+	contains = list(/obj/item/seeds/strawberry,
+					/obj/item/seeds/strawberry,
+					/obj/item/seeds/blackberry,
+					/obj/item/seeds/blackberry,
+					/obj/item/seeds/raspberry,
+					/obj/item/seeds/raspberry,
+					)
+
+
+/datum/supply_pack/rogue/seeds/rare_grain
+	name = "Imported Grain Seeds"
+	cost = 15
+	contains = list(
+					/obj/item/seeds/wheat/oat,
+					/obj/item/seeds/wheat/oat,
+					/obj/item/seeds/wheat/oat,
+					/obj/item/seeds/rice,
+					/obj/item/seeds/rice,
+					/obj/item/seeds/rice
+					)

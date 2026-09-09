@@ -13,7 +13,6 @@
 	cost = 50
 	contains = list(/obj/item/reagent_containers/powder/herozium)
 
-
 /datum/supply_pack/rogue/drugs/moondust
 	name = "Moon Dust"
 	cost = 10
@@ -66,7 +65,7 @@
 	
 /datum/supply_pack/rogue/drugs/emberwine
 	name = "Emberwine"
-	cost = 120
+	cost = 80
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
 
 /datum/supply_pack/rogue/drugs/zigbox
@@ -81,10 +80,35 @@
 
 /datum/supply_pack/rogue/drugs/zigbox_swampzig
 	name = "Zigbox (Swampweed)"
-	cost = 55
+	cost = 45
 	contains = list(/obj/item/quiver/zigs/cannabis)
 
 /datum/supply_pack/rogue/drugs/fermented_crab
 	name = "Fermented Crab"
-	cost = 50
+	cost = 45
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab)
+
+/datum/supply_pack/rogue/drugs/shhig
+	name = "Shhig brand zigs (pack of 6)"
+	cost = 35
+	contains = list(/obj/item/storage/fancy/shhig)
+
+/datum/supply_pack/rogue/drugs/suidust
+	name = "Dust of Disguise (Gender only)"
+	cost = 60
+	contains = list(/obj/item/alch/transisdust)
+
+/datum/supply_pack/rogue/drugs/swampleaf
+	name = "Swampweeed leaf (dried)"
+	cost = 5
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry)
+
+/datum/supply_pack/rogue/drugs/pipeleaf
+	name = "Pipeweed leaf (dried)"
+	cost = 2
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry)
+
+/datum/supply_pack/rogue/drugs/hookah
+	name = "Shisha Pipe (Handheld)"
+	cost = 50
+	contains = list(/obj/item/portable_hookah)

@@ -14,12 +14,15 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	color = "#ad977d"
+	color = "#c5ab8c"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	armor_class = ARMOR_CLASS_LIGHT
-	cold_protection = CHEST
+	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 	color = "#646464"
@@ -29,7 +32,7 @@
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	allowed_sex = list(MALE, FEMALE)
-	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
@@ -55,42 +58,41 @@
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sellprice = 25
-	color = "#976E6B"
-	sewrepair = TRUE
+	color = "#b49679"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	var/shiftable = TRUE
 	var/shifted = FALSE
-	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
-	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/attack_right(mob/user)
-	if(!shiftable)
+	if(!shiftable || !user)
 		return
+
 	if(shifted)
-		if(alert("Would you like to wear your gambeson normally? -Restores greyscaling, new style.",, "Yes", "No") != "No")
-			icon_state = "gambesonp"
-			color = "#976E6B"
-			update_icon()
-			shifted = FALSE
-			if(user)
-				if(ishuman(user))
-					var/mob/living/carbon/H = user
-					H.update_inv_shirt()
-					H.update_inv_armor()
+		if(alert("Would you like to wear your gambeson normally? -Restores greyscaling, new style.",, "Yes", "No") != "Yes")
 			return
-	else
-		if(alert("Would you like to wear your gambeson traditionally? -Removes Greyscaling, old style.",, "Yes", "No") != "No")
-			icon_state = "gambesonpold"
-			color = null
-			update_icon()
-			shifted = TRUE
-			if(user)
-				if(ishuman(user))
-					var/mob/living/carbon/H = user
-					H.update_inv_shirt()
-					H.update_inv_armor()
-			return
+		icon_state = "gambesonp"
+		color = "#976E6B"
+		update_icon()
+		shifted = FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_shirt()
+			H.update_inv_armor()
+		return
+
+	if(alert("Would you like to wear your gambeson traditionally? -Removes Greyscaling, old style.",, "Yes", "No") != "Yes")
+		return
+	icon_state = "gambesonpold"
+	color = null
+	update_icon()
+	shifted = TRUE
+	if(ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_shirt()
+		H.update_inv_armor()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 	name = "royal gambeson"
@@ -113,6 +115,10 @@
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Destroy()
+	. = ..()
+	GLOB.lordcolor -= src
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/update_icon()
 	cut_overlays()
@@ -141,6 +147,7 @@
 	detail_tag = "_detail"
 	shiftable = FALSE
 	sellprice = 30
+	dropshrink = 0.9
 	var/picked = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/attack_right(mob/user)
@@ -198,7 +205,7 @@
 			H.update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/Initialize(mapload)
-	. = ..()		
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/update_icon()
@@ -225,6 +232,14 @@
 	boobed = TRUE
 	shiftable = FALSE
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hatanga
+	name = "beast-hide coat"
+	desc = "Layered robes reinforced with quilted padding and stitched hides from formidable beasts."
+	icon_state = "hatanga"
+	color = "#ffffff"
+	boobed = TRUE
+	shiftable = FALSE
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	name = "grenzelhoftian hip-shirt"
@@ -241,8 +256,8 @@
 	color = "#1d1d22"
 	detail_color = "#FFFFFF"
 	sellprice = 40
-	var/picked = FALSE
 	shiftable = FALSE
+	var/picked = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/attack_right(mob/user)
 	..()
@@ -266,6 +281,12 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/zyb
+	name = "desert coat"
+	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate."
+	icon_state = "sherwani"
+	color = CLOTHING_DARKDRAB
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
 	name = "padded desert coat"
 	desc = "A slim-fitting sherwani, a Zybantine-styled coat meant to endure in the desert's climate. This one is heavily padded, meant for a warrior to wear."
@@ -274,7 +295,7 @@
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
@@ -282,11 +303,12 @@
 	icon_state = "desertrobe"
 	item_state = "desertrobe"
 	desc = "A thick robe intervowen with spell-laced fabrics. Thick and protective while remaining light and breezy; the perfect gear for protecting one from the threats of the sun, the desert and the daemons, yet still allowing one to cast spells aptly."
+	color = null
 	naledicolor = TRUE
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
@@ -297,7 +319,7 @@
 	shiftable = FALSE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
+	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq

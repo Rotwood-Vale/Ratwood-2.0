@@ -28,7 +28,6 @@
 	melee_damage_upper = 45
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
-	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_PARRY
 	speak_emote = list("growls")
@@ -40,7 +39,7 @@
 	faction = list("undead")
 	footstep_type = null
 	defprob = 50 //decently skilled
-	canparry = TRUE
+	mob_can_parry = TRUE
 	retreat_health = null
 
 	can_have_ai = FALSE //disable native ai
@@ -158,3 +157,43 @@
 	penfactor = 10
 	swingdelay = 3
 	clickcd = DRAGGER_ATTACK_SPEED
+
+/mob/living/simple_animal/hostile/rogue/dragger/flesh
+	name = "FLESH HOMUNCULUS"
+	desc = null
+	icon = 'icons/roguetown/mob/monster/flesh.dmi'
+	icon_state = "FLESH"
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	maxHealth = 666
+	health = 666
+	melee_damage_lower = 33
+	melee_damage_upper = 66
+	STACON = 15
+	STASTR = 16
+	STASPD = 2
+	STAWIL = 16
+	pixel_x = 0
+
+// /mob/living/simple_animal/hostile/rogue/dragger/ascended
+// 	name = "???"
+// 	desc = ""
+// 	icon = "icons/roguetown/mob/monster/32x64.dmi"
+// 	icon_state = "ascend"
+// 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+// 	melee_damage_lower = 250
+// 	melee_damage_upper = 550
+// 	health = 66666
+// 	maxHealth = 66666
+// 	STACON = 66
+// 	STASTR = 66
+// 	STASPD = 66
+// 	STAWIL = 66
+// 	pixel_x = 0
+
+// /mob/living/simple_animal/hostile/retaliate/rogue/dragger/ascended/examine(mob/user)
+// 	. = ..()
+// 	. += "<span class='narsiesmall'>It is impossible to comprehend such a thing.</span>"
+	
+// /mob/living/simple_animal/hostile/retaliate/rogue/dragger/ascended/Initialize()
+// 	. = ..()
+// 	set_light(5,5, LIGHT_COLOR_RED)

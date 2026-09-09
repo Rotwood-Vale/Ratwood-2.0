@@ -13,9 +13,10 @@
 	var/prob2fail = 5
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.7
 
 /obj/item/bomb/Initialize(mapload)
-	..()
+	. = ..()
 	fuze = rand(40,60)
 
 /obj/item/bomb/spark_act()
@@ -91,7 +92,7 @@
 
 	qdel(I)
 
-	if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+	if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 		to_chat(user, span_warning("I stop preparing [src]."))
 		new /obj/item/natural/fibers(user.loc)
 		if(prob(10))
@@ -136,14 +137,14 @@
 	var/list/obj/item/tripwire/wire_trigger = list()
 
 /obj/item/bomb/tripbomb/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = b_type.icon_state
 
 /obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop slicing [src]."))
-			if(!prob(user.get_skill_level(/datum/skill/craft/traps) * 10))
+			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
 				to_chat(user, span_warningbig("Oh no."))
 				light()
 		for(var/list/obj/item/tripwire/t_wire in wire_trigger)
@@ -152,17 +153,14 @@
 		QDEL_NULL(src)
 		return ..()
 	if(istype(I, /obj/item/natural/dirtclod))
-		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
 		qdel(I)
 	..()
 
 /obj/item/bomb/tripbomb/Destroy()
-	..()
-
-	if(wire_trigger.len)
-		for(var/list/obj/item/tripwire/wire in wire_trigger)
-			QDEL_NULL(wire)
+	QDEL_LIST(wire_trigger)
+	return ..()
 
 /obj/item/bomb/tripbomb/light()
 	var/obj/item/bomb/bomb = new b_type (loc)
@@ -179,14 +177,14 @@
 	var/obj/item/bomb/tripbomb/payload
 
 /obj/item/tripwire/Destroy()
-	..()
 	new /obj/item/natural/fibers(loc)
+	. = ..()
 
 /obj/item/tripwire/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop slicing [src]."))
-			if(!prob(user.get_skill_level(/datum/skill/craft/traps) * 10))
+			if(!prob(user.get_skill_level(/datum/skill/craft/crafting) * 10))
 				to_chat(user, span_warningbig("Oh no."))
 				payload.light()
 
@@ -197,7 +195,7 @@
 		return ..()
 	
 	if(istype(I, /obj/item/natural/dirtclod))
-		var/skill = user.get_skill_level(/datum/skill/craft/traps)
+		var/skill = user.get_skill_level(/datum/skill/craft/crafting)
 		alpha = (90 - skill * 5)
 		qdel(I)
 
@@ -205,7 +203,7 @@
 		if(payload.wire_trigger.len == 2)
 			to_chat(user, span_warning("I can not extend [src] anymore."))
 			return ..()
-		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/traps), TRUE, src))
+		if(!do_after(user, 7 SECONDS - user.get_skill_level(/datum/skill/craft/crafting), TRUE, src))
 			to_chat(user, span_warning("I stop extending [src]."))
 			return ..()
 
@@ -284,10 +282,6 @@
 	new /obj/item/ash(T)
 	qdel(src)
 
-/obj/item/grenade/smokebomb
-	parent_type = /obj/item/bomb/smoke
-
-
 /obj/item/tntstick
 	name = "blastpowder stick"
 	desc = "A bit of blastpowder in paper shell..."
@@ -298,8 +292,8 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
 	throw_speed = 0.5
-	throw_range = 3
-	var/fuze = 7.5 SECONDS
+	throw_range = 6
+	var/fuze = 5.5 SECONDS
 	var/lit = FALSE
 	var/prob2fail = 1
 
@@ -348,7 +342,7 @@
 			if(!skipprob && prob(prob2fail))
 				snuff()
 			else
-				explosion(T, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+				explosion(T, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 				loud_message("A muted explosion echos in the ears of those whom hear it", hearing_distance = 14)
 				qdel(src) //IMPORTANT!! go into walls /turf/closed/wall/ and see /turf/closed/wall/ex_act. Its bounded with /proc/explosion. Same for /obj/structure and /obj/structure/ex_act because if you going to fuck intergity or whatever this shit called players will skin you alive for breaking their equipment and keys
 		else //also /turf/open/floor/ex_act for comment above
@@ -371,6 +365,7 @@
 	throw_range = 2
 	slot_flags = ITEM_SLOT_HIP
 	throw_speed = 0.3
+	dropshrink = 0.8
 	var/fuze = 15 SECONDS
 	var/lit = FALSE
 	var/prob2fail = 1
@@ -421,7 +416,7 @@
 			if(!skipprob && prob(prob2fail))
 				snuff()
 			else
-				explosion(T, devastation_range = 3, light_impact_range = 10, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+				explosion(T, devastation_range = 5, heavy_impact_range = 6, light_impact_range = 10, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 				loud_message("A loud explosion rings in the ears of those whom hear it", hearing_distance = 28)
 				qdel(src)
 
@@ -445,9 +440,7 @@
 	throw_speed = 1
 	grid_width = 32
 	grid_height = 32
-
-/obj/item/impact_grenade/Initialize(mapload)
-	. = ..()
+	dropshrink = 0.75
 
 // Define a base explodes() proc that subtypes can override because its now explodes proc
 /obj/item/impact_grenade/proc/explodes()

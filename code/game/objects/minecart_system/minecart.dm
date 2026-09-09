@@ -236,7 +236,7 @@
 	if(!on_rails || momentum > 0)
 		return
 
-	obj_flags |= BLOCK_Z_OUT_DOWN
+	set_is_platform(TRUE)
 	var/movedir = bumped_atom.dir
 	var/turf/next_turf = get_step(src, movedir)
 	if(!can_travel_on_turf(next_turf, movedir))
@@ -278,7 +278,7 @@
 	if(momentum <= 0)
 		stack_trace("Mine cart moving on 0 momentum!")
 		SSmove_manager.stop_looping(src, SSminecarts)
-		obj_flags &= ~BLOCK_Z_OUT_DOWN
+		set_is_platform(FALSE)
 		momentum = 0
 		return MOVELOOP_SKIP_STEP
 	// Forced to not move
@@ -332,7 +332,7 @@
 
 	// Can't go straight and cant turn = STOP
 	SSmove_manager.stop_looping(src, SSminecarts)
-	obj_flags &= ~BLOCK_Z_OUT_DOWN
+	set_is_platform(FALSE)
 	if(momentum >= 12)
 		visible_message(span_warning("[src] comes to a violent halt!"))
 		INVOKE_ASYNC(src, PROC_REF(throw_contents))
@@ -353,7 +353,7 @@
 			else
 				visible_message(span_notice("[src] comes to a stop."))
 			SSmove_manager.stop_looping(src, SSminecarts)
-			obj_flags &= ~BLOCK_Z_OUT_DOWN
+			set_is_platform(FALSE)
 			momentum = 0
 			return
 
@@ -363,7 +363,7 @@
 	// No more momentum = STOP
 	if(momentum <= 0)
 		SSmove_manager.stop_looping(src, SSminecarts)
-		obj_flags &= ~BLOCK_Z_OUT_DOWN
+		set_is_platform(FALSE)
 		momentum = 0
 		visible_message(span_notice("[src] comes to a slow stop."))
 		return

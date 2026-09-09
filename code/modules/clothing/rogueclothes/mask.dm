@@ -51,26 +51,25 @@
 /obj/item/clothing/mask/rogue/examine()
 	. = ..()
 
-	. += "[span_notice("Alt+RMB while on face to swap sprites between snout and standard variant, if it exists.")]"
-
 /obj/item/clothing/mask/rogue/spectacles
 	name = "spectacles"
 	icon_state = "glasses"
-	break_sound = "glassbreak"
+	break_sound = 'sound/combat/hits/onglass/glasses_break.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 20
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	nudist_approved = TRUE
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 //	block2add = FOV_BEHIND
 
 /obj/item/clothing/mask/rogue/spectacles/inq
 	name = "otavan nocshade lens-pair"
 	icon_state = "bglasses"
 	desc = "Made to both ENDURE and incite debate within those few Noc-Sainted within Otava. Noc-lit walks, yae or nae? The lenses look like they can be brushed aside with a carefully guided right-pointer finger led motion."
-	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 300
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
@@ -122,13 +121,12 @@
 /obj/item/clothing/mask/rogue/spectacles/golden
 	name = "golden spectacles"
 	icon_state = "goggles"
-	break_sound = "glassbreak"
-	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 35
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	anvilrepair = /datum/skill/craft/armorsmithing
+	adjustable = CAN_CADJUST
 	var/active_item = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden/equipped(mob/user, slot)
@@ -149,7 +147,8 @@
 	else
 		return
 
-
+/obj/item/clothing/mask/rogue/spectacles/golden/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
 
 /obj/item/clothing/mask/rogue/spectacles/golden/dropped(mob/user, slot)
 	..()
@@ -162,7 +161,7 @@
 		to_chat(user, span_notice("Time to stop working"))
 
 /obj/item/clothing/mask/rogue/spectacles/Initialize(mapload)
-	..()
+	. = ..()
 	AddComponent(/datum/component/spill, null, 'sound/blank.ogg')
 
 /obj/item/clothing/mask/rogue/spectacles/Crossed(mob/crosser)
@@ -174,8 +173,6 @@
 	name = "sand goggles"
 	icon_state = "goggles_sandstorm"
 	desc = "A set of goggles of an older design, made to protect the wearer from sandstorms."
-	break_sound = "glassbreak"
-	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	max_integrity = 35
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
@@ -216,6 +213,7 @@
 	icon_state = "lmask"
 	sellprice = 50
 	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/mask/rogue/lordmask/l
@@ -233,7 +231,7 @@
 	blocksound = SOFTHIT
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	max_integrity = 200
+	max_integrity = ARMOR_INT_MASK_CLOTH
 	prevent_crits = list(BCLASS_BLUNT)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEEARS
@@ -254,7 +252,7 @@
 	name = "strange mask"
 	desc = "It is said that the original version of this mask was used for obscure rituals prior to the fall of the Empire of the Holy Celestia, and now it has been repurposed as a veil for the cunning hand of the Otavan Orthodoxy.<br> <br>Others say it is a piece of heresy, a necessary evil, capable of keeping its user safe from left-handed magicks. You can taste copper whenever you draw breath."
 	icon_state = "confessormask"
-	max_integrity = 200
+	max_integrity = ARMOR_INT_MASK_STEEL
 	equip_sound = 'sound/items/confessormaskon.ogg'
 	smeltresult = /obj/item/ingot/steel
 	var/worn = FALSE
@@ -325,7 +323,7 @@
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	max_integrity = 100
+	max_integrity = ARMOR_INT_MASK_IRON
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -335,11 +333,12 @@
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/facemask
 	name = "iron mask"
 	icon_state = "imask"
-	max_integrity = 100
+	max_integrity = ARMOR_INT_MASK_IRON
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -353,27 +352,74 @@
 	experimental_onhip = TRUE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	sewrepair = FALSE
+
+/obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/facemask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_fov_angles()
 
 /obj/item/clothing/mask/rogue/facemask/shadowfacemask
 	name = "spider rider's mask"
 	desc = "A metal mask adorned with arachnid iconography. A grim visage crafted by a grim race."
 	icon_state = "shadowfacemask"
 
-/obj/item/clothing/mask/rogue/facemask/aalloy
+/obj/item/clothing/mask/rogue/facemask/ancient
+	name = "ancient mask"
+	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
+	max_integrity = 200
+	icon_state = "ancientmask"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
 	desc = "Frayed bronze, molded into an unblinking visage. Only the statues, buried within the innards of Mount Decapitation, share its wrinkled lip and sneer of cold command."
-	icon_state = "ancientmask"
 	max_integrity = 75
 	color = "#bb9696"
-	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = null
 
 /obj/item/clothing/mask/rogue/facemask/copper
 	name = "copper mask"
 	icon_state = "cmask"
 	desc = "A heavy copper mask that conceals and protects the face, though not very effectively."
-	armor = ARMOR_PLATE_BAD
+	armor = ARMOR_BRONZE
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/clothing/mask/rogue/facemask/bronze
+	name = "bronze mask"
+	desc = "Glimmering bronze, curved to veil its wearer's face from both judgement and harm."
+	armor = ARMOR_BRONZE
+	armor_class = ARMOR_CLASS_LIGHT
+	icon_state = "bronzemask"
+	item_state = "bronzemask"
+	max_integrity = ARMOR_INT_MASK_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/clothing/mask/rogue/facemask/bronze/classic
+	name = "bronze death mask"
+	icon_state = "bronzemask_legacy"
+	item_state = "bronzemask_legacy"
+	desc = "Glimmering bronze, meticuliusly shaped to mimic the guise of another. One of civilization's oldest superstitions is the belief that donning such masks would impart a sliver of the mimicked facebearer's power unto its wearer."
+
+/obj/item/clothing/mask/rogue/facemask/bronze/anthro
+	name = "bronze mask"
+	icon_state = "bronzemask_snout"
+	item_state = "bronzemask_snout"
+
+/obj/item/clothing/mask/rogue/facemask/bronze/classic/anthro
+	name = "bronze death mask"
+	icon_state = "bronzemask_legacy_snout"
+	item_state = "bronzemask_legacy_snout"
 
 /obj/item/clothing/mask/rogue/facemask/hound
 	name = "hound mask"
@@ -461,15 +507,8 @@
 /obj/item/clothing/mask/rogue/facemask/steel
 	name = "steel mask"
 	icon_state = "smask"
-	max_integrity = 200
+	max_integrity = ARMOR_INT_MASK_STEEL
 	smeltresult = /obj/item/ingot/steel
-
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy
-	name = "ancient mask"
-	desc = "Polished gilbranze, molded into an intimidating visage. Touch the cheek; it is warm, like flesh. But it is not flesh. Not yet."
-	icon_state = "ancientmask"
-	smeltresult = /obj/item/ingot/aaslag
-
 
 /obj/item/clothing/mask/rogue/facemask/steel/hound
 	name = "steel hound mask"
@@ -479,7 +518,7 @@
 /obj/item/clothing/mask/rogue/facemask/steel/steppesman
 	name = "steppesman war mask"
 	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
-	max_integrity = 250
+	max_integrity = ARMOR_INT_MASK_STEEL + 50
 	icon_state = "steppemask"
 	layer = HEAD_LAYER
 
@@ -488,22 +527,10 @@
 	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
 	icon_state = "steppemask_snout"
 
-/obj/item/clothing/mask/rogue/facemask/steel/steppesman
-	name = "steppesman war mask"
-	desc = "A steel mask shaped like the face of a rather charismatic fellow! Pronounced cheeks, a nose, and a large mustache. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
-	max_integrity = 250
-	icon_state = "steppemask"
-	layer = HEAD_LAYER
-
-/obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro
-	name = "steppesman beast mask"
-	desc = "A steel mask shaped like the face of a rather charismatic beastman! Pronounced cheeks, a nose, and small spikes for whiskers. Well, people outside of Aavnr don't think you'd look charismatic at all wearing this."
-	icon_state = "steppebeast"
-
 /obj/item/clothing/mask/rogue/facemask/goldmask
 	name = "Gold Mask"
 	icon_state = "goldmask"
-	max_integrity = 150
+	max_integrity = ARMOR_INT_MASK_GOLD
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
 
@@ -521,13 +548,15 @@
 	name = "soldier's half-mask"
 	desc = "\"The first lesson of war is that it would be better to live in peace.\""
 	block2add = null
-	armor = ARMOR_PLATE_BAD // because it's only half
+	armor = ARMOR_PLATE
+	max_integrity = ARMOR_INT_MASK_IRON
 	icon_state = "kazengunmouthguard"
 	item_state = "kazengunmouthguard"
 
 /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
 	name = "ogre mask"
 	desc = "\"The second lesson: Rich men have dreams. Poor men die to make them come true.\""
+	max_integrity = ARMOR_INT_MASK_IRON
 	icon_state = "kazengunfaceguard"
 	item_state = "kazengunfaceguard"
 
@@ -579,7 +608,7 @@
 	name = "skull mask"
 	desc = "A mask in the shape of a skull, designed to terrify."
 	icon_state = "skullmask"
-	max_integrity = 100
+	max_integrity = ARMOR_INT_MASK_BONE
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
@@ -595,6 +624,7 @@
 	salvage_result = /obj/item/natural/bone
 	salvage_amount = 1
 	nudist_approved = TRUE
+	sewrepair = FALSE
 
 /obj/item/clothing/mask/rogue/ragmask
 	name = "rag mask"
@@ -625,18 +655,55 @@
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Armored to protect the wearer's face."
-	max_integrity = 100
+	max_integrity = ARMOR_INT_MASK_IRON
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
+/obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(default_layer == BELT_LAYER)
+		return
+	return ..()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/living/user, slot)
+	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+		flags_inv = initial(flags_inv)
+	else
+		flags_inv = NONE
+	user.rebuild_obscured_flags()
+	user.update_fov_angles()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/living/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	flags_inv = initial(flags_inv)
+	user.update_fov_angles()
+
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	name = "sojourner's mask"
 	item_state = "naledimask"
 	icon_state = "naledimask"
 	desc = "A golden mask, gnarled by the sustained agonies of djinnic corruption; yet as long as its Naledian hexes endure, so too will its wearer. Hand-fitted shingles flank the sides to repel incoming strikes. </br>'..Clad with the stereotype of abruptly disappearing without any forewarning, the typical Sojourner is in constant pursuit of diversifying their erudition. One might arrive to learn the local witch's recipe of sanctifying atropa extract and spend yils in the community trying to master it, while another might work alongside the region's Orthodoxic chapter to slay a lycker lord in exchange for his archive, only to vanish the very next day..'"
-	max_integrity = 150
+	max_integrity = ARMOR_INT_MASK_IRON + 50
+	armor = ARMOR_PLATE
+	flags_inv = HIDEFACE|HIDESNOUT
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
+	sellprice = 0
+
+/obj/item/clothing/mask/rogue/lordmask/zizite
+	name = "fateful visage"
+	item_state = "zizomask"
+	icon_state = "zizomask"
+	desc = "To advance, at any cost."
+	alternate_worn_layer = HOOD_LAYER
+	max_integrity = ARMOR_INT_MASK_IRON + 50
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
@@ -686,15 +753,12 @@
 	sewrepair = TRUE
 	nudist_approved = TRUE
 
-/obj/item/clothing/mask/rogue/hblinders
+/obj/item/clothing/mask/rogue/horsey
 	name = "head blinders"
 	desc = "Keeps the wearer focused ahead. Made of reinforced leather."
 	icon_state = "hblinders"
 	item_state = "hblinders"
 	body_parts_covered = HEAD
-	max_integrity = 400
-	armor = list("blunt" = 80, "slash" = 90, "stab" = 80, "piercing" = 80, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
 	sewrepair = TRUE
 
 //gemcarved masks from Vanderlin
@@ -703,7 +767,7 @@
 	name = "carved mask"
 	icon_state = "ancientmask"
 	desc = "You shouldn't be seeing this."
-	max_integrity = 50
+	max_integrity = ARMOR_INT_MASK_STONE
 	blocksound = PLATEHIT
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -772,3 +836,148 @@
 	icon_state = "mask_opal"
 	desc = "An opal mask that both conceals and protects the face."
 	sellprice = 100
+
+/obj/item/clothing/mask/rogue/xylixmask
+	name = "jester mask"
+	item_state = "xylixmask"
+	icon_state = "xylixmask"
+	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
+	max_integrity = ARMOR_INT_MASK_STONE
+	armor = null
+	flags_inv = HIDEFACE|HIDESNOUT
+	body_parts_covered = FACE
+	block2add = null
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
+	smeltresult = null
+	anvilrepair = /datum/skill/craft/ceramics
+	sewrepair = FALSE
+	sellprice = 0
+	var/hide_identity = TRUE
+	var/next_honk = 0
+	var/static/list/xylixmask_base_states = list("xylixmask", "xylixmask2", "xylixmask3", "xylixmask4", "xylixmask5", "xylixmask6")
+	var/static/list/xylixmask_snout_states = list("xylixmask_snout", "xylixmask_snout2", "xylixmask_snout3", "xylixmask_snout4", "xylixmask_snout5", "xylixmask_snout6")
+	var/static/list/xylixmask_special_states = list("xylixmask3", "xylixmask4", "xylixmask_snout3", "xylixmask_snout4")
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/is_special_state()
+	return (icon_state in xylixmask_special_states)
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/update_identity_flags(mob/user)
+	flags_inv = hide_identity ? (HIDEFACE|HIDESNOUT) : NONE
+	block2add = hide_identity ? FOV_BEHIND : null
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_wear_mask()
+		H.update_fov_angles()
+		H.update_vision_cone()
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/toggle_identity(mob/user)
+	hide_identity = !hide_identity
+	update_identity_flags(user)
+	to_chat(user, span_notice("I [hide_identity ? "conceal" : "reveal"] my identity with \the [src]."))
+	return TRUE
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/apply_mask_style(style, mob/user)
+	if(!style)
+		return
+	icon_state = style
+	item_state = style
+	update_icon()
+	update_identity_flags(user)
+
+
+/obj/item/clothing/mask/rogue/xylixmask/proc/open_style_menu(mob/user)
+	var/list/states = xylixmask_base_states
+	var/list/radial_choices = list()
+	for(var/state in states)
+		radial_choices[state] = icon(icon = 'icons/roguetown/clothing/masks.dmi', icon_state = state)
+
+	var/choice = show_radial_menu(user, src, radial_choices, require_near = TRUE, tooltips = TRUE)
+	if(!choice)
+		return
+	apply_mask_style(choice, user)
+
+/obj/item/clothing/mask/rogue/xylixmask/AltRightClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	open_style_menu(user)
+
+/obj/item/clothing/mask/rogue/xylixmask/ShiftRightClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	if(findtext(icon_state, "_snout"))
+		var/snout_index = xylixmask_snout_states.Find(icon_state)
+		if(!snout_index)
+			return ..()
+		var/base_state = xylixmask_base_states[snout_index]
+		apply_mask_style(base_state, user)
+		return
+	var/base_index = xylixmask_base_states.Find(icon_state)
+	if(!base_index)
+		return ..()
+	var/snout_state = xylixmask_snout_states[base_index]
+	apply_mask_style(snout_state, user)
+	return
+
+/obj/item/clothing/mask/rogue/xylixmask/attack_right(mob/user)
+	if(!is_special_state())
+		return ..()
+	if(world.time < next_honk)
+		return
+	next_honk = world.time + 1 SECONDS
+	playsound(src, 'sound/misc/honkmask.ogg', 70, TRUE)
+	to_chat(user, span_notice("The mask's nose is squeezed! It emits a squeaky honk."))
+/obj/item/clothing/mask/rogue/xylixmask/dropped(mob/user)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		hide_identity = initial(hide_identity)
+		block2add = initial(block2add)
+		H.update_fov_angles()
+		H.update_vision_cone()
+/obj/item/clothing/mask/rogue/xylixmask/MiddleClick(mob/user, params)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		if(toggle_identity(user))
+			return
+	return ..()
+
+/obj/item/clothing/mask/rogue/xylixmask/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt+RMB opens the style radial menu.")
+	. += span_notice("Shift+RMB toggles the snout version of the selected style.")
+	. += span_notice("Shift+MMB toggles identity concealment.")
+	. += span_notice("When using the harlequin styles: Right-click to honk.")
+
+// Duelist Goggles = New invention that protects your eyes against critical hits +  doesn't hide your identity
+
+/obj/item/clothing/mask/rogue/spectacles/duelist
+	name = "iron duelist goggles"
+	desc = "A rigid pair of protective goggles made for fencing bouts, shielding the eyes without concealing the face."
+	icon_state = "iduelist"
+	break_sound = "garrote_snap"
+	blocksound = PLATEHIT
+	max_integrity = ARMOR_INT_MASK_IRON_MAILLE
+	body_parts_inherent = EYES//no peeling these
+	armor = ARMOR_PLATE
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	anvilrepair = /datum/skill/craft/armorsmithing
+	smeltresult = /obj/item/ash
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))	//Standard mask
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/steel
+	name = "steel duelist goggles"
+	desc = "Steel duelist goggles forged for the most punishing exchanges. They guard the eyes while leaving pride and identity uncovered."
+	icon_state = "sduelist"
+	max_integrity = ARMOR_INT_MASK_STEEL_MAILLE
+
+/obj/item/clothing/mask/rogue/spectacles/duelist/bronze
+	name = "bronze duelist goggles"
+	desc = "Bronze duelist goggles offering modest protection without obscuring one's features. Every victory deserves a witness."
+	icon_state = "bduelist"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_MASK_BRONZE + 50//worse protection than iron goggles so it gets a slight buff

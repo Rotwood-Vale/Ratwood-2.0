@@ -63,6 +63,27 @@
 	default_color = "FF0000"
 	affected_bodyparts = HEAD
 
+/datum/body_marking/tall_eyes
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Tall Eyes"
+	icon_state = "tall_eyes"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/outer_tall_eyes
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Outer Tall Eyes"
+	icon_state = "outer_eyes"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/blank_face
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Blank Face"
+	icon_state = "blank_face"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD
+
 /datum/body_marking/plain
 	icon = 'icons/mob/body_markings/plain_markings.dmi'
 	name = "Plain"

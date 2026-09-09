@@ -45,6 +45,7 @@
 	default_disabled = TRUE
 	customizer_choices = list(
 		/datum/customizer_choice/organ/neck_feature/anthro_fluff,
+		/datum/customizer_choice/organ/neck_feature/moth_fluff,
 		)
 
 /datum/customizer_choice/organ/neck_feature/anthro_fluff

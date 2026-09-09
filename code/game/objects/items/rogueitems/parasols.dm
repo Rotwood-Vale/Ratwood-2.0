@@ -19,7 +19,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32
 	grid_height = 64
-	dropshrink = 0.8
+	dropshrink = 0.75
 
 /obj/item/rogueweapon/mace/parasol/New()
 	..()

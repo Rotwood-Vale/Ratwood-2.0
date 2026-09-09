@@ -27,8 +27,12 @@
 	/obj/item/needle,
 	/obj/item/natural/worms/leech,
 	/obj/item/reagent_containers/lux,
+	/obj/item/reagent_containers/lux_impure,
+	/obj/item/leechtick,
+	/obj/item/leechtick_bloated,
 	/obj/item/natural/bundle/cloth/bandage,
-	/obj/item/natural/cloth))
+	/obj/item/natural/cloth,
+	))
 
 /datum/component/storage/concrete/roguetown/messkit
 	screen_max_rows = 3
@@ -63,7 +67,7 @@
 
 /datum/component/storage/concrete/roguetown/keyring/New(datum/P, ...)
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/roguekey))
+	can_hold = typecacheof(list(/obj/item/roguekey, /obj/item/seal))
 
 /datum/component/storage/concrete/roguetown/belt/knife_belt
 	screen_max_rows = 3		//Lets you hold a regular knife + keys basically.
@@ -109,6 +113,9 @@
 	click_gather = FALSE
 	allow_quick_gather = FALSE
 	allow_quick_empty = FALSE
+
+/datum/component/storage/concrete/roguetown/book
+	max_items = 1
 
 /datum/component/storage/concrete/grid/meatsack // our rucksack is different from
 // Vanderlin so we use a separate one for meatsack
@@ -173,6 +180,7 @@
 	allow_dump_out = TRUE
 	dump_time = 40
 	collection_mode = COLLECT_SAME
+	does_not_spill = TRUE
 
 /datum/component/storage/concrete/tray/New(datum/P, ...)
 	. = ..()
@@ -255,8 +263,8 @@
 			/obj/item/ingot/blacksteel,
 			/obj/item/ingot/steelholy,
 			/obj/item/ingot/silverblessed,
-			/obj/item/ingot/aalloy,
-			/obj/item/ingot/purifiedaalloy,
+			/obj/item/ingot/decrepit,
+			/obj/item/ingot/gilbranze,
 			/obj/item/ingot/aaslag,
 			/obj/item/roguegem,
 			/obj/item/roguegem/green,
@@ -284,3 +292,8 @@
 /datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/dice))
+
+/datum/component/storage/concrete/grid/anvil_bin
+	max_w_class = WEIGHT_CLASS_HUGE
+	screen_max_rows = 8
+	screen_max_columns = 4

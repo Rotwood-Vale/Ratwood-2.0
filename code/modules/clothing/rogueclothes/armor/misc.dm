@@ -41,7 +41,7 @@
 	name = "striped tunic"
 	desc = "This cheap tunic is often used by sturdy laborous men and women."
 	icon_state = "workervest"
-	armor = null
+	armor = ARMOR_PADDED_BAD
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	body_parts_covered = COVERAGE_VEST
@@ -59,7 +59,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/workervest/Initialize(mapload)
 	color = pick("#94b4b6", "#ba8f9e", "#bd978c", "#92bd8c", "#c7c981")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/armor/silkcoat
 	name = "silk coat"

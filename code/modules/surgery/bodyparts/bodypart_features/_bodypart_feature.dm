@@ -10,6 +10,12 @@
 	/// Slot of the bodypart feature
 	var/feature_slot
 
+/datum/bodypart_feature/proc/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return jointext(list(
+		accessory_type,
+		accessory_colors
+	), "-")
+
 /// Proc to customize the base icon of the organ.
 /datum/bodypart_feature/proc/bodypart_icon(mutable_appearance/standing)
 	return

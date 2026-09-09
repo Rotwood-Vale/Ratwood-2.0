@@ -26,7 +26,7 @@
 		to_chat(user, span_warning("This leech is already blessed by Abyssor!"))
 		return FALSE
 
-	if(user.blood_volume < BLOOD_VOLUME_BAD)
+	if(user.get_blood_volume() < BLOOD_VOLUME_BAD)
 		to_chat(user, span_warning("You don't have enough blood to sacrifice!"))
 		return FALSE
 
@@ -41,11 +41,11 @@
 		to_chat(user, span_warning("You must keep holding the leech during the ritual!"))
 		return FALSE
 
-	if(user.blood_volume < BLOOD_VOLUME_BAD)
+	if(user.get_blood_volume() < BLOOD_VOLUME_BAD)
 		to_chat(user, span_warning("You don't have enough blood to complete the ritual!"))
 		return FALSE
 
-	user.blood_volume = max(user.blood_volume - 70, 0)
+	user.set_blood_volume(max(user.get_blood_volume() - 70, 0))
 	var/obj/item/natural/worms/leech/abyssoid/new_leech = new(user.drop_location())
 	qdel(target)
 	user.put_in_hands(new_leech)

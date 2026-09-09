@@ -290,7 +290,7 @@
 	smooth_fences()
 
 /obj/structure/fluff/railing/fence/Destroy()
-	..()
+	. = ..()
 	smooth_fences()
 
 /obj/structure/fluff/railing/fence/OnCrafted(dirin)
@@ -323,6 +323,12 @@
 	if(get_dir(loc, target) == dir)
 		return 0
 	return 1
+
+/obj/structure/fluff/railing/fence/flimsy
+	name = "weak palisade"
+	desc = "A rudimentary barrier that might keep the monsters at bay. This one looks old, weathered, and hastily constructed."
+	max_integrity = 180
+	color = "#cccac5"
 
 /obj/structure/bars
 	name = "bars"
@@ -357,6 +363,12 @@
 /obj/structure/bars/shop
 	icon_state = "barsbent"
 	layer = BELOW_OBJ_LAYER
+
+/obj/structure/bars/rusty
+	name = "rusty bars"
+	desc = "these look fragile"
+	color ="#ffcd9f"
+	max_integrity = 200
 
 /obj/structure/bars/shop/bronze
 	color = "#ff9c1a"
@@ -415,6 +427,10 @@
 		icon_state = "passage0"
 		density = TRUE
 
+/obj/structure/bars/passage/preopen
+	density = FALSE
+	icon_state = "passage1"
+
 /obj/structure/bars/passage/shutter
 	icon_state = "shutter0"
 	density = TRUE
@@ -463,7 +479,7 @@
 		user.visible_message("<span class='info'>[user] Carves a name into the passage.</span>")
 		if(do_after(user, 10))
 			var/passagename
-			passagename = input("What name would you like to carve into the passage?")
+			passagename = stripped_input(user, "What name would you like to carve into the passage?", "", "", MAX_NAME_LEN)
 			if (passagename)
 				name = passagename + "(passage)"
 				desc = "a passage with a name carved into it"
@@ -507,7 +523,8 @@
 	if(togg)
 		testing("togge1")
 		icon_state = "floorgrilleopen"
-		obj_flags = CAN_BE_HIT
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/mob/living/M in loc)
@@ -515,7 +532,8 @@
 	else
 		testing("togge2")
 		icon_state = "floorgrille"
-		obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/bars/grille/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -528,7 +546,7 @@
 		user.visible_message("<span class='info'>[user] Carves a name into the grille.</span>")
 		if(do_after(user, 10))
 			var/grillename
-			grillename = input("What name would you like to carve into the grille?")
+			grillename = stripped_input(user, "What name would you like to carve into the grille?", "", "", MAX_NAME_LEN)
 			if (grillename)
 				name = grillename + "(grille)"
 				desc = "a grille with a name carved into it"
@@ -539,6 +557,12 @@
 		return
 	else if(istype(item, /obj/item/rogueweapon/chisel/assembly))
 		to_chat(user, span_warning("You most use both hands to rename the grille."))
+
+/obj/structure/bars/grille/rusty
+	name = "rusty grille"
+	desc = "A few good hits ought to smash it open."
+	max_integrity = 70
+	color = "#d9c8c1"
 
 /obj/structure/bars/pipe
 	name = "bronze pipe"
@@ -585,8 +609,8 @@
 
 /obj/structure/fluff/clock/Destroy()
 	if(soundloop)
-		soundloop.stop()
-	..()
+		QDEL_NULL(soundloop)
+	return ..()
 
 /obj/structure/fluff/clock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
@@ -675,8 +699,8 @@
 
 /obj/structure/fluff/wallclock/Destroy()
 	if(soundloop)
-		soundloop.stop()
-	..()
+		QDEL_NULL(soundloop)
+	return ..()
 
 /obj/structure/fluff/wallclock/examine(mob/user)
 	. = ..()
@@ -743,7 +767,7 @@
 	pixel_y = 0
 	pixel_x = 32
 
-/obj/structure/fluff/signage
+/obj/structure/fluff/signage//these are a bit of a pain
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
@@ -753,22 +777,24 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	blade_dulling = DULLING_BASHCHOP
-	max_integrity = 500
+	max_integrity = 200
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 
 /obj/structure/fluff/signage/examine(mob/user)
 	. = ..()
+	var/realmname = SSmapping.map_adjustment.realm_name
 	if(!user.is_literate())
 		. += "I have no idea what it says."
 	else
-		. += "It says \"ROTWOOD VALE\""
+		. += "It says \"[realmname]\""
 
 /obj/structure/fluff/buysign
 	icon_state = "signwrote"
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
 /obj/structure/fluff/buysign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -781,6 +807,59 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'
+
+// icon signs
+
+/obj/structure/fluff/iconsign
+	icon_state = "sign"
+	name = "icon sign"
+	desc = "you shouldn't be seeing this."
+	icon = 'icons/roguetown/misc/signs.dmi'
+	max_integrity = 200
+	blade_dulling = DULLING_BASHCHOP
+
+/obj/structure/fluff/iconsign/zizosign
+	icon_state = "signdeath"
+	name = "inverted psycross sign"
+	desc = "A sign with a inverted psycross."
+
+/obj/structure/fluff/iconsign/psycrosssign
+	icon_state = "signlife"
+	name = "psycross sign"
+	desc = "A sign with a psycross."
+
+/obj/structure/fluff/iconsign/eaglesign
+	icon_state = "signeagle"
+	name = "eagle sign"
+	desc = "A sign with a heraldic eagle on it."
+
+/obj/structure/fluff/iconsign/spidersign
+	icon_state ="signspider"
+	name = "spider sign"
+	desc = "A sign with a spider on it."
+
+/obj/structure/fluff/iconsign/smithsign
+	icon_state = "signdwarf"
+	name = "hammer sign"
+	desc = "A sign with a hammer on it."
+
+/obj/structure/fluff/iconsign/innsign
+	icon_state = "signmug"
+	name = "mug sign"
+	desc = "A sign with a cup on it."
+
+/obj/structure/fluff/iconsign/elksign
+	icon_state = "signelk"
+	name = "elk sign"
+	desc = "A sign with an elk on it."
+
+/obj/structure/fluff/iconsign/skullsign
+	icon_state = "signskull"
+	name = "skull sign"
+	desc = "A sign with a skull on it."
+
+// it should be noted that icon signs may be able to be written on but hopefully this'll prevent that
+
 /obj/structure/fluff/sellsign/examine(mob/user)
 	. = ..()
 	if(!user.is_literate())
@@ -788,15 +867,15 @@
 	else
 		. += "I can read this sign."
 
-
 /obj/structure/fluff/customsign
 	name = "sign"
 	desc = ""
 	icon_state = "sign"
 	var/wrotesign
-	max_integrity = 500
+	max_integrity = 200//these don't need to be so tough
 	blade_dulling = DULLING_BASHCHOP
 	icon = 'icons/roguetown/misc/structure.dmi'
+	pixel_y = 3
 
 /obj/structure/fluff/customsign/examine(mob/user)
 	. = ..()
@@ -805,6 +884,12 @@
 			. += "I have no idea what it says."
 		else
 			. += "It says \"[wrotesign]\"."
+
+/obj/structure/fluff/customsign/arrow
+	icon_state = "shitsign"
+
+/obj/structure/fluff/customsign/wrote //For mapped in signs and not player-made signs
+	icon_state = "signwrote"
 
 /obj/structure/fluff/customsign/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
@@ -848,10 +933,30 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
+/obj/structure/fluff/alch/folding
+	name = "folding alchemical lab"
+	desc = "A compact laboratory. Laid out and ready to work."
+	icon = 'icons/roguetown/misc/gadgets.dmi'
+	icon_state = "foldingAlchstationDeployed"
+	max_integrity = 350
+	debris = list(/obj/item/grown/log/tree/small = 2)
+	climbable = TRUE
+	climb_offset = 10
+
+/obj/structure/fluff/alch/folding/examine()
+	. = ..()
+	. += span_blue("Right-Click to fold the lab.")
+
+/obj/structure/fluff/alch/folding/attack_right(mob/user)
+	if(do_after(user, 5 SECONDS, target = src))
+		user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+		new /obj/item/folding_table_stored/alchstation(drop_location())
+		qdel(src)
+		return ..()
 
 /obj/structure/fluff/statue
-	name = "statue"
-	desc = ""
+	name = "angel statue"
+	desc = "The angels of death are known to visit those whose time draws near, to offer them a less painful way to their final destination."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bstatue"
 	density = FALSE
@@ -892,82 +997,110 @@
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/fluff/statue/gargoyle
+	name = "gargoyle statue"
+	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
 	icon_state = "gargoyle"
 
 /obj/structure/fluff/statue/aasimar
+	name = "crumbling statue"
+	desc = "Carvings of heroes from before your time in this world, the faces and names have become lost, they will likely be naught but dust soon enough."
 	icon_state = "aasimar"
 
 /obj/structure/fluff/statue/gargoyle/candles
 	icon_state = "gargoyle_candles"
 
 /obj/structure/fluff/statue/gargoyle/moss
+	name = "gargoyle statue"
+	desc = "Since before the first empires, ancient men would carve statues of horrific beasts to scare off angry and tormented spirits from their places of rest."
 	icon_state = "mgargoyle"
 
 /obj/structure/fluff/statue/gargoyle/moss/candles
 	icon_state = "mgargoyle_candles"
 
 /obj/structure/fluff/statue/knight
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "knightstatue_l"
 
 /obj/structure/fluff/statue/astrata
 	name = "astrata statue"
-	desc = "A stone statue of the sun Goddess Astrata. Bless."
+	desc = "Astrata saw humanity as undisciplined for letting the world become so cruel and terrible, and became a radiant shepherd over the flock of mankind. The Church of the Sun believes that all mortals require guidance and protection from the terrors of the world."
 	icon_state = "astrata"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
 
 /obj/structure/fluff/statue/astrata/gold
-	name = "ornamental astrata statue"
-	desc = "An ornamental stone statue of the sun Goddess Astrata, decorated with golden jewelry. Bless."
+	name = "decorated astrata statue"
+	desc = "In the wild eyes of the carving you can see the fire that commands fear and respect, the light of daybreak that gives hope in an endless night, the scorching fury of templars that burns heretics and undead alike."
 	icon_state = "astrata_bling"
 
 //Why are all of these in one giant file.
 /obj/structure/fluff/statue/abyssor
 	name = "abyssor statue"
-	desc = "A slate statue of the ancient god abyssor. One of many depictions drawn from a dream no doubt. This particular one is horrifying to look at."
+	desc = "An ephemeral cerulean dream, carved by those who seek to understand unspoken truths."
 	icon_state = "abyssor"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
 	pixel_x = -16
 
 /obj/structure/fluff/statue/abyssor/dolomite
 	name = "abyssor statue"
-	desc = "A rare dolomite statue of the ancient god abyssor. Hewn from bleached rock as if the shimmer makes his faceless gaze any less terrifying."
+	desc = "An ephemeral cerulean dream, carved by those who seek to understand unspoken truths."
 	icon_state = "abyssor_dolomite"
 
 /obj/structure/fluff/statue/knight/r
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "knightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "oknightstatue_l"
 
 /obj/structure/fluff/statue/knight/interior/r
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	icon_state = "oknightstatue_r"
 
 /obj/structure/fluff/statue/knight/interior/r/bronze
+	name = "templar statue"
+	desc = "This man stands staunch amongst the sands of time, a testament to his unending faith towards his divine masters. He will stand even when we are all dust."
 	color = "#ff9c1a"
 
 /obj/structure/fluff/statue/knightalt
+	name = "knight statue"
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
 	icon_state = "knightstatue2_l"
 
 /obj/structure/fluff/statue/knightalt/r
+	name = "knight statue"
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
 	icon_state = "knightstatue2_r"
 
 
 /obj/structure/fluff/statue/myth
+	name = "warrior statue"
+	desc = "The name has long since faded from this statue, but one can still see the incredible detail in their steady stance and barely restrained muscular strength."
 	icon_state = "myth"
 	density = TRUE
 
 /obj/structure/fluff/statue/psy
+	name = "psydon statue"
+	desc = "The All-Father watched over Psydonia, once a paradise for his flourishing creations, without intervening upon the land. This would change one fateful day as the Arch-Enemy's ascension threatened mankind, narrowly stopped by Psydon. He wept for three daes and three nights after, and vanished from the realm."
 	icon_state = "psy"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 /obj/structure/fluff/statue/psybloody
+	name = "psydon statue"
+	desc = "And thus he wept, not for you, not for I; but for it all."
 	icon_state = "psy_bloody"
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	pixel_x = -32
 
 
 /obj/structure/fluff/statue/small
+	name = "elven statue"
+	desc =  "Elves have long been seen as symbols of beauty and long life, and some believe statues of them will bring some luck, or at least make a place more bearable to look at."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "elfs"
 
@@ -976,35 +1109,45 @@
 	icon_state = "pillar"
 
 /obj/structure/fluff/statue/femalestatue
+	name = "temptress statue"
+	desc = "Artistic depiction of the mortal form, or an exploitation of mortal desire? One thing is known for sure, these statues are not often put up in charity houses or temples."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "1"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue1
+	name = "queen alexia statue"	
+	desc = "A modest depiction of the Queen Alexia the Righteous, lacking her usual armors or finery, many were constructed as a show of her humility and piety by prisoners of the crown."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "2"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue2
+	name = "forest spirit statue"
+	desc = "Dendor's Wild is protected by many a forest spirit more than glad to drown or throttle travelers who cut one too many trees, depictions of them are often made by his followers in his places as warnings of this for those who might forget the natural balance of things."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "5"
 	pixel_x = -32
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue/zizo
+	name = "zizo statue"
+	desc = "With her mortal form destroyed and now chained in the underworld, she still whispers to her disciples, guiding them to act in her name and rebuild her powers."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "4"
 	pixel_x = -32
-	pixel_y = -16
+	// pixel_y = -16
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
+	desc = "Guardian of the harvest, and a harpy's worst nightmare."
 	icon_state = "td"
 
 /obj/structure/fluff/statue/tdummy
 	name = "practice dummy"
+	desc = "A squire's best friend; take care it doesn't knock you on your arse."
 	icon_state = "p_dummy"
 	icon = 'icons/roguetown/misc/structure.dmi'
 
@@ -1048,7 +1191,8 @@
 	..()
 
 /obj/structure/fluff/statue/spider
-	name = "mother"
+	name = "idol of baotha"
+	desc = "The temptress has been depicted in many forms, but a common shape is that of the spider, ensnaring the victims who call themselves her followers ever tighter in her web."
 	icon_state = "spidercore"
 
 /obj/structure/fluff/statue/spider/attackby(obj/item/W, mob/user, params)
@@ -1066,7 +1210,7 @@
 	..()
 
 /obj/structure/fluff/statue/evil
-	name = "idol"
+	name = "idol of matthios"
 	desc = "An idol, built to the many-faced Matthios. Though none can argue his hatred of the Tyrant's Order and nobility, \
 	they certainly can't imagine what he actually looks like. \
 	This is but one of many depictions to the many-faced god, and yet it appears ready to receive tribute all the same."
@@ -1125,7 +1269,8 @@
 		/obj/item/reagent_containers/glass/bowl/carved,
 		/obj/item/reagent_containers/glass/bucket/pot/carved,
 		/obj/item/clothing/mask/rogue/facemask/carved,
-		/obj/item/cooking/platter/carved
+		/obj/item/cooking/platter/carved,
+		/obj/item/detroyt_toll
 	)
 
 /obj/structure/fluff/statue/evil/attackby(obj/item/W, mob/user, params)
@@ -1234,6 +1379,11 @@
 	max_integrity = 80
 	chance2hear = 10
 
+/obj/structure/fluff/psycross/crafted/necra
+	name = "necran pantheon cross"
+	icon_state = "cross_necra"
+	max_integrity = 120
+
 /obj/structure/fluff/psycross/psycrucifix
 	name = "wooden psydonic crucifix"
 	desc = "A rarely seen symbol of absolute and devoted certainty, more common in Otava: HE yet lyves. HE yet breathes."
@@ -1261,6 +1411,62 @@
 	desc = "An unholy symbol. Blasphemy for most, reverence for few."
 	icon_state = "invertedcross"
 	divine = FALSE
+
+/obj/structure/fluff/psycross/zizocross/stone
+	name = "stone inverted cross"
+	desc = "An unholy symbol, the knowledge that something so sturdy was able to be put up in reverence of the dark star, completely unattended... is a difficult anchovy to swallow for many."
+	icon_state = "cross_zizo"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/zizocross/golden
+	name = "golden inverted cross"
+	desc = "An unholy symbol meticilously plated with leaf gold. It stands in defiance to order. The dead will rise."
+	icon_state = "cross_zizo_u"
+	divine = FALSE
+	max_integrity = 350
+	
+/obj/structure/fluff/psycross/graggar
+	name = "vicious cross"
+	desc = "An unholy symbol wrought from stone. It promises glory to the conqueror and chains to the conquered."
+	icon_state = "cross_graggar"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/graggar/decorated
+	name = "revered vicious cross"
+	desc = "An unholy symbol wrought from stone. Meat impaled on spikes and flesh dangling like ribbons off hooks, an offering, proof of conquest, but does he listen?"
+	icon_state = "cross_graggar_u"
+	divine = FALSE
+	max_integrity = 350
+
+/obj/structure/fluff/psycross/matthios
+	name = "grinning cross"
+	desc = "An unholy stone cross bearing the likeness of drawn daggers and a grinning visage."
+	icon_state = "cross_matthios"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/matthios/decorated
+	name = "ornate cross"
+	desc = "Golden scales dangle from rags and balance the scales. A monument to wealth."
+	icon_state = "cross_matthios_u"
+	divine = FALSE
+	max_integrity = 350
+
+/obj/structure/fluff/psycross/baotha
+	name = "spider cross"
+	desc = "A gnarled stone cross from which carved spider legs unfurl. You feel like you're being beckoned faintly, like a whisper in your ear."
+	icon_state = "cross_baotha"
+	divine = FALSE
+	max_integrity = 200
+
+/obj/structure/fluff/psycross/baotha/decorated
+	name = "webbed spider cross"
+	desc = "The spider spreads its legs, the web unfurls. Just looking at it makes bad memories surface."
+	icon_state = "cross_baotha_u"
+	divine = FALSE
+	max_integrity = 350
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(user.mind)
@@ -1305,7 +1511,7 @@
 								break
 						if(!excomm_found)
 							// Prompt priest for surname
-							var/surname = input(user, "Enter a surname for the couple:", "Marriage Ceremony") as text|null
+							var/surname = reject_bad_name(input(user, "Enter a surname for the couple:", "Marriage Ceremony") as text|null)
 							if(!surname || !length(trim(surname)))
 								surname = thegroom.dna.species.random_surname()
 							priority_announce("[thegroom.real_name] has married [thebride.real_name]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
@@ -1358,7 +1564,7 @@
 
 /obj/structure/fluff/psycross/copper/Destroy()
 	addomen("psycross")
-	..()
+	return ..()
 
 /obj/structure/fluff/psycross/proc/AOE_flash(mob/user, range = 15, power = 5, targeted = FALSE)
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
@@ -1386,6 +1592,96 @@
 	if(M.flash_act())
 		var/diff = power - M.confused
 		M.confused += min(power, diff)
+
+// Port of Martyr stuff from AP - IronDragoon
+/obj/structure/fluff/psycross/proc/summon_martyr_weapon_tgui(mob/user)
+	if(!user.mind)
+		return
+
+	var/list/weapon_choices = list(
+		"Sword" = CALLBACK(src, PROC_REF(summon_and_equip_sword), user),
+		"Axe" = CALLBACK(src, PROC_REF(summon_and_equip_axe), user),
+		"Mace" = CALLBACK(src, PROC_REF(summon_and_equip_mace), user),
+		"Trident" = CALLBACK(src, PROC_REF(summon_and_equip_spear), user)
+	)
+
+	var/result = tgui_input_list(user, "Choose a martyr weapon to summon:", "Martyr Weapon", weapon_choices)
+
+	if(result && weapon_choices[result])
+		var/datum/callback/selected_callback = weapon_choices[result]
+		selected_callback.Invoke()
+	else
+		to_chat(user, span_warning("No weapon was chosen."))
+
+/obj/structure/fluff/psycross/proc/summon_and_equip_sword(mob/user)
+	var/obj/item/rogueweapon/sword/long/martyr/I = SSroguemachine.martyrweapon
+
+	if(I)
+		I.anti_stall()
+
+	I = new /obj/item/rogueweapon/sword/long/martyr(src.loc)
+
+	if(user.put_in_hands(I))
+		to_chat(user, span_notice("The martyr sword appears in your hand."))
+	else
+		to_chat(user, span_warning("Your hands are full! The sword falls to the ground."))
+
+	return I
+
+/obj/structure/fluff/psycross/proc/summon_and_equip_axe(mob/user)
+	var/obj/item/rogueweapon/greataxe/steel/doublehead/martyr/I = SSroguemachine.martyrweapon
+
+	if(I)
+		I.anti_stall()
+
+	I = new /obj/item/rogueweapon/greataxe/steel/doublehead/martyr(src.loc)
+
+	if(user.put_in_hands(I))
+		to_chat(user, span_notice("The martyr axe appears in your hand."))
+	else
+		to_chat(user, span_warning("Your hands are full! The axe falls to the ground."))
+
+	return I
+
+/obj/structure/fluff/psycross/proc/summon_and_equip_mace(mob/user)
+	var/obj/item/rogueweapon/mace/goden/martyr/I = SSroguemachine.martyrweapon
+
+	if(I)
+		I.anti_stall()
+
+	I = new /obj/item/rogueweapon/mace/goden/martyr(src.loc)
+
+	if(user.put_in_hands(I))
+		to_chat(user, span_notice("The martyr mace appears in your hand."))
+	else
+		to_chat(user, span_warning("Your hands are full! The mace falls to the ground."))
+
+	return I
+
+/obj/structure/fluff/psycross/proc/summon_and_equip_spear(mob/user)
+	var/obj/item/rogueweapon/spear/partizan/martyr/I = SSroguemachine.martyrweapon
+
+	if(I)
+		I.anti_stall()
+
+	I = new /obj/item/rogueweapon/spear/partizan/martyr(src.loc)
+
+	if(user.put_in_hands(I))
+		to_chat(user, span_notice("The martyr trident appears in your hand."))
+	else
+		to_chat(user, span_warning("Your hands are full! The spear falls to the ground."))
+
+	return I
+
+/obj/structure/fluff/psycross/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(user.job != "Martyr")
+		return
+	if((HAS_TRAIT(user, TRAIT_NOPAIN) && HAS_TRAIT(user, TRAIT_STRENGTH_UNCAPPED) && HAS_TRAIT(user, TRAIT_BLOODLOSS_IMMUNE))) // So that the martyr could not change weapons during his special ability... I do not know how to make it smarter.
+		return
+	summon_martyr_weapon_tgui(user)
 
 /obj/structure/fluff/beach_umbrella/security
 	icon_state = "hos_brella"
@@ -1487,3 +1783,29 @@
 	stake.forceMove(drop_location())
 	stake = null
 	qdel(src)
+
+/obj/structure/fluff/statue/noc
+	name = "noc statue"
+	desc = "This statue is a depiction of Noc the Wise who guides those who seek a greater understanding of the arcane sciences."
+	icon_state = "noc"
+	icon = 'icons/roguetown/misc/statues/statue_noc.dmi'
+	pixel_x = -16
+
+/obj/structure/fluff/statue/noc/guard
+	name = "lit noc statue"
+	desc = "In the cold light of the statue's staff you can see a brief glimpse into the truth of this world, the mad and uncontrolled change of the last thousand years, of how little hope remains. And as you look away, you forget."
+	icon_state = "noc_guard"
+
+/obj/structure/fluff/statue/eora
+	name = "eora statue"
+	desc = "Despite the numerous misconceptions of drunken warriors; the Hearth Mother is not solely concerned with carnal love. To practice charity with the less fortunate and protect the vulnerable is love as well."
+	icon_state = "eora"
+	icon = 'icons/roguetown/misc/statues/statue_eora.dmi'
+	pixel_x = -16
+
+/obj/structure/fluff/statue/valmora
+	name = "saint valmora statue"
+	desc = "A statue of Valmora the Sword-Saint, who led the dark elves in the city-state of Llurth Dreir to slaughter the cruel lords and priests of the Arch-Enemy and begin an exodus to the surface. The dark elves of Otava praise her as a redeemer and savior."
+	icon_state = "zaelorian_crynsaris"
+	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
+	pixel_x = -16

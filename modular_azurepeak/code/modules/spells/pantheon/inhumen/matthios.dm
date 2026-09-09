@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/appraise
 	name = "Appraise"
 	desc = "Tells you how many mammons someone has on them and in the nervelock."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "appraise"
 	releasedrain = 10
 	chargedrain = 0
@@ -21,6 +23,8 @@
 
 /obj/effect/proc_holder/spell/invoked/appraise/secular
 	name = "Secular Appraise"
+	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
+	action_icon = 'icons/mob/actions/genericmiracles.dmi'
 	overlay_state = "appraise"
 	range = 2
 	associated_skill = /datum/skill/misc/reading // idk reading is like Accounting right
@@ -46,6 +50,8 @@
 /obj/effect/proc_holder/spell/invoked/transact
 	name = "Transact"
 	desc = "Sacrifice an item in your hand, applying a heal over time to yourself with strength depending on its value."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "transact"
 	releasedrain = 30
 	chargedrain = 0
@@ -103,9 +109,10 @@
 /obj/effect/proc_holder/spell/invoked/equalize
 	name = "Equalize"
 	desc = "Create equality, with a thumb on the scales, with your target. Siphon strength, speed, and constitution from them."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "equalize"
 	clothes_req = FALSE
-	overlay_state = "equalize"
 	associated_skill = /datum/skill/magic/holy
 	chargedloop = /datum/looping_sound/invokeascendant
 	sound = 'sound/magic/swap.ogg'
@@ -180,8 +187,10 @@
 /obj/effect/proc_holder/spell/invoked/churnwealthy
 	name = "Churn Wealthy"
 	desc = "Attacks the target by weight of their greed, dealing increased damage and effects depending on how wealthy they are."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "churn_wealthy"
 	clothes_req = FALSE
-	overlay_state = "churnwealthy"
 	associated_skill = /datum/skill/magic/holy
 	chargedloop = /datum/looping_sound/invokeascendant
 	chargedrain = 0
@@ -286,7 +295,7 @@
 				if(limb)
 					possible_limbs += limb
 				var/limbs_to_gib = min(rand(1, 4), possible_limbs.len)
-				for(var/i in 1 to limbs_to_gib)
+				for(var/limb_index in 1 to limbs_to_gib)
 					var/obj/item/bodypart/selected_limb = pick(possible_limbs)
 					possible_limbs -= selected_limb
 					if(selected_limb?.drop_limb())
@@ -294,5 +303,142 @@
 						if(limb_turf)
 							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf)
 
-			target.death()
 			return
+
+/// - MATTHIOS REVIVAL - ///
+
+
+/obj/effect/proc_holder/spell/invoked/resurrect/matthios
+	name = "Rekindled Exchange"
+	desc = "Revives the target by invoking a deal with Matthios. In exchange for their lyfe returned, they will be placed\
+	in a lasting debt to Him. Any coins within their hands will be spent paying off said debt. Blood for gold."
+	debuff_type = /datum/status_effect/debuff/debt_indicator
+	alt_required_items = list()
+	required_items = list()
+	sound = 'sound/magic/slimesquish.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	harms_undead = FALSE
+	recharge_time = 2 MINUTES //Anastasis Equivalent
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "revival"
+	action_icon_state = "revival"
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	required_structure = /obj/structure/fluff/psycross/matthios
+
+
+#define NOBLE_MULTIPLIER 2.5
+
+/datum/component/debt_collector
+	var/debt_remaining = 0
+	/// There's a couple instances where on_equip() is called twice incorrectly. I'm applying a small cooldown to prevent abuse of this...
+	COOLDOWN_DECLARE(next_payment_time)
+/datum/component/debt_collector/Initialize(start_debt = 200)
+	if(!ishuman(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	var/mob/living/carbon/human/human = parent
+	if(HAS_TRAIT(human, TRAIT_NOBLE))
+		debt_remaining = start_debt * NOBLE_MULTIPLIER
+	else
+		debt_remaining = start_debt
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+
+/datum/component/debt_collector/proc/on_equip(mob/living/carbon/human/human, obj/item/equipped_item, slot)
+	SIGNAL_HANDLER
+
+	if(slot != ITEM_SLOT_HANDS)
+		return
+
+	if(world.time < next_payment_time)
+		return
+
+	// Set the cooldown immediately to "lock" this tick
+	next_payment_time = world.time + 1
+
+	// Only interact with standard currency, so no marques or psila
+	if(istype(equipped_item, /obj/item/roguecoin/gold) || istype(equipped_item, /obj/item/roguecoin/silver) || istype(equipped_item, /obj/item/roguecoin/copper) || istype(equipped_item, /obj/item/roguecoin/gilbranze))
+		addtimer(CALLBACK(src, PROC_REF(process_payment), human, equipped_item), 1)
+
+/datum/component/debt_collector/proc/process_payment(mob/living/carbon/human/human, obj/item/roguecoin/coin)
+	var/total_real_value = coin.get_real_price()
+	if(debt_remaining <= 0)
+		clear_debt(human)
+		return
+
+	if(total_real_value > debt_remaining)
+		var/refund_budget = total_real_value - debt_remaining
+		refund_budget = max(0, floor(refund_budget))
+		to_chat(human, span_warning("A golden hand claims [coin] and manifest the remainder."))
+
+		qdel(coin)
+		// We need a delay to stop the old coin pile from merging with the refund prematurely. Delay one tick :D
+		// I love coin code!!
+		spawn(1)
+			var/obj/structure/roguemachine/temp_ref = new /obj/structure/roguemachine()
+			temp_ref.budget2change(refund_budget, human)
+			qdel(temp_ref)
+
+		debt_remaining = 0
+		clear_debt(human)
+
+	else
+		debt_remaining -= total_real_value
+		to_chat(human, span_warning("As you grasp [coin], [total_real_value] worth of debt vanishes. Remaining: [debt_remaining]."))
+		playsound(human, 'sound/foley/coins1.ogg', 50, TRUE)
+		qdel(coin)
+		if(debt_remaining <= 0)
+			clear_debt(human)
+
+/datum/component/debt_collector/proc/clear_debt(mob/living/carbon/human/human)
+	to_chat(human, span_nicegreen("The weight of your debt has lifted!"))
+	human.remove_status_effect(/datum/status_effect/debuff/debt_indicator)
+	qdel(src)
+
+#undef NOBLE_MULTIPLIER
+
+/atom/movable/screen/alert/status_effect/debuff/debt_indicator
+	name = "Indentured Spirit"
+	desc = "A spiritual debt weighs heavy on your soul, sapping your vitality. Standard coins you touch are consumed to appease Matthios."
+	icon_state = "pom_regret"
+
+/atom/movable/screen/alert/status_effect/debuff/debt_indicator/examine_ui(mob/user)
+	var/list/inspec = list("----------------------")
+	inspec += "<br><span class='notice'><b>[name]</b></span>"
+	if(desc)
+		inspec += "<br>[desc]"
+
+	// Find the component to show the live debt count
+	var/datum/component/debt_collector/DC = user.GetComponent(/datum/component/debt_collector)
+	if(DC)
+		inspec += "<br><span class='boldwarning'>Current Debt: [DC.debt_remaining] mammon.</span>"
+
+	// Stat penalties logic from the base proc
+	for(var/S in attached_effect?.effectedstats)
+		if(attached_effect.effectedstats[S] > 0)
+			inspec += "<br><span class='purple'>[S]</span> \Roman [attached_effect.effectedstats[S]]"
+		else if(attached_effect.effectedstats[S] < 0)
+			var/newnum = attached_effect.effectedstats[S] * -1
+			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
+
+	inspec += "<br>----------------------"
+	to_chat(user, "[inspec.Join()]")
+
+/datum/status_effect/debuff/debt_indicator
+	id = "debt_indicator"
+	// You should pay off the debt!
+	duration = 45 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/debt_indicator
+	effectedstats = list(
+		STATKEY_STR = -2,
+		STATKEY_PER = -4,
+		STATKEY_CON = -2
+	)
+
+/datum/status_effect/debuff/debt_indicator/on_apply()
+	. = ..()
+	owner.AddComponent(/datum/component/debt_collector, 200)
+	to_chat(owner, span_userdanger("A cold, crushing weight settles over your limbs... you are indentured."))
+
+/datum/status_effect/debuff/debt_indicator/on_remove()
+	. = ..()
+	to_chat(owner, span_nicegreen("The crushing weight lifts from your soul. You are free!"))

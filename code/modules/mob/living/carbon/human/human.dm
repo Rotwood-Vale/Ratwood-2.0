@@ -111,9 +111,39 @@
 	. = ..()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
+	update_tongue_noise_verbs()
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/on_keen_ears_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_keen_ears_verb()
+
+/mob/living/carbon/human/proc/update_keen_ears_verb()
+	var/verb_path = /mob/living/carbon/human/verb/toggle_keen_ears_ic
+	verbs -= verb_path
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		verbs += verb_path
+
+/mob/living/carbon/human/proc/toggle_keen_ears()
+	if(!HAS_TRAIT(src, TRAIT_KEENEARS))
+		to_chat(src, span_warning("I do not possess keen ears."))
+		return FALSE
+	keen_ears_disabled = !keen_ears_disabled
+	if(keen_ears_disabled)
+		to_chat(src, span_notice("Your keen ears are now dulled."))
+	else
+		to_chat(src, span_notice("Your keen ears are now sharp again."))
+	return !keen_ears_disabled
+
+/mob/living/carbon/human/verb/toggle_keen_ears_ic()
+	set name = "Toggle Keen Ears"
+	set category = "IC"
+	toggle_keen_ears()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/obj/item/bodypart/affecting
@@ -497,75 +527,12 @@
 		hud_used.clock.update_icon()
 
 /mob/living/carbon/human/update_health_hud()
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(dna.species.update_health_hud())
 		return
 	else
-		if(hud_used.bloods)
-			var/bloodloss = ((BLOOD_VOLUME_NORMAL - blood_volume) / BLOOD_VOLUME_NORMAL) * 100
-
-			var/toxloss = getToxLoss()
-			var/oxyloss = getOxyLoss()
-			var/painpercent = get_complex_pain() / pain_threshold
-			painpercent = painpercent * 100
-
-			var/usedloss = 0
-			if(bloodloss > 0)
-				usedloss = bloodloss
-
-			hud_used.bloods.cut_overlays()
-			if(usedloss <= 0)
-				hud_used.bloods.icon_state = "dam0"
-				if(toxloss > 0)
-					var/toxoverlay
-					switch(toxloss)
-						if(1 to 20)
-							toxoverlay = "toxloss20"
-						if(21 to 49)
-							toxoverlay = "toxloss40"
-						if(50 to 79)
-							toxoverlay = "toxloss60"
-						if(80 to 99)
-							toxoverlay = "toxloss80"
-						if(100 to 999)
-							toxoverlay = "toxloss100"
-					hud_used.bloods.add_overlay(toxoverlay)
-
-				if(oxyloss > 0)
-					var/oxyoverlay
-					switch(oxyloss)
-						if(1 to 20)
-							oxyoverlay = "oxyloss20"
-						if(21 to 49)
-							oxyoverlay = "oxyloss40"
-						if(50 to 79)
-							oxyoverlay = "oxyloss60"
-						if(80 to 99)
-							oxyoverlay = "oxyloss80"
-						if(100 to 999)
-							oxyoverlay = "oxyloss100"
-					hud_used.bloods.add_overlay(oxyoverlay)
-			else
-				var/used = round(usedloss, 10)
-				if(used <= 80)
-					hud_used.bloods.icon_state = "dam[used]"
-				else
-					hud_used.bloods.icon_state = "damelse"
-			if(painpercent > 0)
-				var/painoverlay
-				switch(painpercent)
-					if(1 to 29)
-						painoverlay = "painloss20"
-					if(30 to 59)
-						painoverlay = "painloss40"
-					if(60 to 79)
-						painoverlay = "painloss60"
-					if(80 to 99)
-						painoverlay = "painloss80"
-					if(100 to 999)
-						painoverlay = "painloss100"
-				hud_used.bloods.add_overlay(painoverlay)
+		update_blood_hud()
 
 /*		if(hud_used.healthdoll)
 			hud_used.healthdoll.cut_overlays()
@@ -596,72 +563,112 @@
 					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]7"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"*/
+		. = update_stamina_hud() || update_energy_hud() || update_temperature_hud()
 
-		if(hud_used.stamina)
-			if(stat != DEAD)
-				. = 1
-				if(stamina >= max_stamina)
-					hud_used.stamina.icon_state = "stam0"
-				else if(stamina > max_stamina*0.90)
-					hud_used.stamina.icon_state = "stam10"
-				else if(stamina > max_stamina*0.80)
-					hud_used.stamina.icon_state = "stam20"
-				else if(stamina > max_stamina*0.70)
-					hud_used.stamina.icon_state = "stam30"
-				else if(stamina > max_stamina*0.60)
-					hud_used.stamina.icon_state = "stam40"
-				else if(stamina > max_stamina*0.50)
-					hud_used.stamina.icon_state = "stam50"
-				else if(stamina > max_stamina*0.40)
-					hud_used.stamina.icon_state = "stam60"
-				else if(stamina > max_stamina*0.30)
-					hud_used.stamina.icon_state = "stam70"
-				else if(stamina > max_stamina*0.20)
-					hud_used.stamina.icon_state = "stam80"
-				else if(stamina > max_stamina*0.10)
-					hud_used.stamina.icon_state = "stam90"
-				else if(stamina >= 0)
-					hud_used.stamina.icon_state = "stam100"
-		if(hud_used.energy)
-			if(stat != DEAD)
-				. = 1
-				if(energy <= 0)
-					hud_used.energy.icon_state = "energy0"
-				else if(energy > max_energy*0.90)
-					hud_used.energy.icon_state = "energy100"
-				else if(energy > max_energy*0.80)
-					hud_used.energy.icon_state = "energy90"
-				else if(energy > max_energy*0.70)
-					hud_used.energy.icon_state = "energy80"
-				else if(energy > max_energy*0.60)
-					hud_used.energy.icon_state = "energy70"
-				else if(energy > max_energy*0.50)
-					hud_used.energy.icon_state = "energy60"
-				else if(energy > max_energy*0.40)
-					hud_used.energy.icon_state = "energy50"
-				else if(energy > max_energy*0.30)
-					hud_used.energy.icon_state = "energy40"
-				else if(energy > max_energy*0.20)
-					hud_used.energy.icon_state = "energy30"
-				else if(energy > max_energy*0.10)
-					hud_used.energy.icon_state = "energy20"
-				else if(energy > 0)
-					hud_used.energy.icon_state = "energy10"
-		if(hud_used.temperature)
-			if(stat != DEAD)
-				. = 1
-				if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
-					hud_used.temperature.icon_state = "tempnormal"
-				else if(bodytemperature < BODYTEMP_NORMAL_MIN && bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempcold"
-				else if(bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempverycold"
-				else if(bodytemperature >= BODYTEMP_NORMAL_MAX && bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "temphot"
-				else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
-					hud_used.temperature.icon_state = "tempveryhot"
-		if(hud_used.zone_select)
-			hud_used.zone_select.update_icon()
+
+/mob/living/carbon/human/proc/update_temperature_hud()
+	if(isnull(hud_used?.temperature) || stat == DEAD)
+		return FALSE
+	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
+		hud_used.temperature.icon_state = "tempnormal"
+	else if(bodytemperature < BODYTEMP_NORMAL_MIN && bodytemperature >= BODYTEMP_COLD_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempcold"
+	else if(bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempverycold"
+	else if(bodytemperature >= BODYTEMP_NORMAL_MAX && bodytemperature <= BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "temphot"
+	else if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+		hud_used.temperature.icon_state = "tempveryhot"
+	var/atom/movable/screen/temperature/tempicon = hud_used.temperature
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		if(!tempicon.heated_tile)
+			tempicon.heated_tile = TRUE
+			tempicon.add_overlay("tempheated")
+	else if(tempicon.heated_tile)
+		tempicon.heated_tile = FALSE
+		tempicon.cut_overlay("tempheated")
+
+/mob/living/carbon/human/update_stamina_hud()
+	if(!hud_used || stat == DEAD || !hud_used.stamina)
+		return FALSE
+	var/ratio = max_stamina ? (1 - (stamina / max_stamina)) : 0
+	hud_used.stamina.set_meter_fill(ratio, "stam100", "stam20", "stam10")
+	return TRUE
+
+/mob/living/carbon/human/update_energy_hud()
+	if(!hud_used || stat == DEAD || !hud_used.energy)
+		return FALSE
+	var/ratio = max_energy ? (energy / max_energy) : 0
+	hud_used.energy.set_meter_fill(ratio, "energy100", "energy20", "energy10")
+	return TRUE
+
+/mob/living/carbon/human/update_blood_hud()
+	if(!hud_used?.bloods)
+		return FALSE
+	var/bloodloss = ((BLOOD_VOLUME_NORMAL - blood_volume) / BLOOD_VOLUME_NORMAL) * 100
+
+	var/toxloss = getToxLoss()
+	var/oxyloss = getOxyLoss()
+	var/painpercent = get_complex_pain() / pain_threshold
+	painpercent = painpercent * 100
+
+	var/usedloss = 0
+	if(bloodloss > 0)
+		usedloss = bloodloss
+
+	var/toxoverlay = null
+	var/oxyoverlay = null
+	var/painoverlay = null
+	if(usedloss <= 0)
+		hud_used.bloods.icon_state = "dam0"
+		if(toxloss > 0)
+			switch(toxloss)
+				if(1 to 20)
+					toxoverlay = "toxloss20"
+				if(21 to 49)
+					toxoverlay = "toxloss40"
+				if(50 to 79)
+					toxoverlay = "toxloss60"
+				if(80 to 99)
+					toxoverlay = "toxloss80"
+				if(100 to 999)
+					toxoverlay = "toxloss100"
+
+		if(oxyloss > 0)
+			switch(oxyloss)
+				if(1 to 20)
+					oxyoverlay = "oxyloss20"
+				if(21 to 49)
+					oxyoverlay = "oxyloss40"
+				if(50 to 79)
+					oxyoverlay = "oxyloss60"
+				if(80 to 99)
+					oxyoverlay = "oxyloss80"
+				if(100 to 999)
+					oxyoverlay = "oxyloss100"
+	else
+		var/used = round(usedloss, 10)
+		if(used <= 80)
+			hud_used.bloods.icon_state = "dam[used]"
+		else
+			hud_used.bloods.icon_state = "damelse"
+	if(painpercent > 0)
+		switch(painpercent)
+			if(1 to 29)
+				painoverlay = "painloss20"
+			if(30 to 59)
+				painoverlay = "painloss40"
+			if(60 to 79)
+				painoverlay = "painloss60"
+			if(80 to 99)
+				painoverlay = "painloss80"
+			if(100 to 999)
+				painoverlay = "painloss100"
+	var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
+	if(istype(blood_hud))
+		blood_hud.update_indicator_states(toxoverlay, oxyoverlay, painoverlay)
+	return TRUE
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -671,7 +678,8 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
-	return ..()
+	. = ..()
+	mark_zone_selector_hud_dirty()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -795,7 +803,14 @@
 			return
 		if(!client || !client.prefs)
 			return
-		client.prefs.copy_to(src, TRUE, FALSE)
+		//make reapply prefs work for gnolls
+		if(dna?.species?.id == "gnoll")
+			if(!apply_gnoll_preferences(FALSE))
+				reapply_live_preferences()
+			set_blindness(0)
+			regenerate_icons()
+		else
+			reapply_live_preferences()
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1207,6 +1222,10 @@
 
 	return final_delta
 
+/mob/living/carbon/human/adjust_bodytemperature(amount, min_temp = 0, max_temp = 600)
+	. = ..()
+	update_temperature_hud()
+
 /*/mob/living/carbon/human/proc/update_heretic_commune()
 	if(HAS_TRAIT(src, TRAIT_COMMIE) || HAS_TRAIT(src, TRAIT_CABAL) || HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_DEPRAVED))
 		verbs |= /mob/living/carbon/human/verb/commune
@@ -1216,6 +1235,46 @@
 		verbs -= /mob/living/carbon/human/verb/commune
 		verbs -= /mob/living/carbon/human/verb/show_heretics
 		verbs -= /mob/living/carbon/human/verb/bad_omen*/
+
+/mob/living/carbon/human/proc/reapply_live_preferences()
+	if(!client?.prefs)
+		return FALSE
+
+	var/datum/language_holder/language_holder = get_language_holder()
+	var/list/preserved_languages = language_holder?.languages?.Copy()
+	var/selected_default_language = language_holder?.selected_default_language
+
+	client.prefs.copy_to(src, TRUE, FALSE)
+	refresh_live_vocal_preferences()
+
+	if(language_holder && length(preserved_languages))
+		for(var/language_type in preserved_languages)
+			grant_language(language_type)
+		language_holder.selected_default_language = selected_default_language
+
+	return TRUE
+
+/mob/living/carbon/human/proc/refresh_live_vocal_preferences()
+	if(!client?.prefs)
+		return FALSE
+
+	if(dna?.species)
+		var/default_soundpack_m = initial(dna.species.soundpack_m)
+		var/default_soundpack_f = initial(dna.species.soundpack_f)
+		if(default_soundpack_m)
+			dna.species.soundpack_m = new default_soundpack_m()
+		if(default_soundpack_f)
+			dna.species.soundpack_f = new default_soundpack_f()
+
+	voice_color = client.prefs.voice_color
+	voice_pitch = client.prefs.voice_pitch
+	voice_type = client.prefs.voice_type
+	set_bark(client.prefs.bark_id)
+	vocal_speed = client.prefs.bark_speed
+	vocal_pitch = client.prefs.bark_pitch
+	vocal_pitch_range = client.prefs.bark_variance
+	apply_voicepacks(src, client)
+	return TRUE
 
 /mob/living/carbon/human/Topic(href, href_list)
 	..()

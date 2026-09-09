@@ -27,7 +27,6 @@
 	melee_damage_upper = 25
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
-	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_PARRY
 	speak_emote = list("growls")
@@ -39,11 +38,11 @@
 	faction = list("undead")
 	footstep_type = null
 	defprob = 50 //decently skilled
-	canparry = TRUE
+	mob_can_parry = TRUE
 	retreat_health = null
 	var/obj/structure/bonepile/slavepile
 
-	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)	
+	food_type = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart)
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/haunt
@@ -140,6 +139,7 @@
 		return
 	if(!spawning)
 		return
+
 	spawning = FALSE
 	var/mob/living/simple_animal/hostile/rogue/haunt/H = new (get_turf(src))
 	H.slavepile = src
@@ -156,11 +156,10 @@
 	addtimer(CALLBACK(src, PROC_REF(createhaunt)), 4 SECONDS)
 
 /obj/structure/bonepile/Destroy()
-	soundloop.stop()
+	QDEL_NULL(soundloop)
 	spawning = FALSE
-	for(var/H in haunts)
-		var/mob/living/simple_animal/hostile/rogue/haunt/D = H
-		D.death()
+	for(var/mob/living/simple_animal/hostile/rogue/haunt/ghost in haunts)
+		INVOKE_ASYNC(ghost, TYPE_PROC_REF(/mob/living/simple_animal/hostile/rogue/haunt, death))
 	var/spawned = pick(/obj/item/reagent_containers/powder/spice)
 	new spawned(get_turf(src))
 	. = ..()

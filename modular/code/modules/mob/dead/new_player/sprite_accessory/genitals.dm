@@ -4,6 +4,8 @@
 /// penis-type anatomy. Cursed modes 1 and 3 expose front access regardless.
 /// Falls through to the upstream visibility check (underwear, HIDEJUMPSUIT, HIDECROTCH) if not blocked.
 /datum/sprite_accessory/penis/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner?.sexcon?.hide_pintle_visuals)
+		return FALSE
 	var/obj/item/chastity/device = owner?.chastity_device
 	if(device)
 		if(device.chastity_cursed)
@@ -43,6 +45,8 @@
 	return (device.sprite_acc == /datum/sprite_accessory/chastity/cage) || (device.sprite_acc == /datum/sprite_accessory/chastity/flat)
 
 /datum/sprite_accessory/testicles/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner?.sexcon?.hide_pintle_visuals)
+		return FALSE
 	var/obj/item/organ/penis/pp = owner.getorganslot(ORGAN_SLOT_PENIS)
 	if(pp && pp.sheath_type == SHEATH_TYPE_SLIT)
 		return FALSE
@@ -60,6 +64,8 @@
 /// Respects cursed mode: modes 2 and 3 expose the vagina regardless of the device being worn.
 /// Falls through to the upstream visibility check (underwear, HIDECROTCH, HIDEJUMPSUIT) if not blocked.
 /datum/sprite_accessory/vagina/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner?.sexcon?.hide_pintle_visuals)
+		return FALSE
 	var/obj/item/chastity/device = owner?.chastity_device
 	if(device)
 		if(device.chastity_cursed)

@@ -79,4 +79,7 @@
 				else
 					L.apply_status_effect(/datum/status_effect/buff/frost)
 			new /obj/effect/temp_visual/snap_freeze(get_turf(L))
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				H.apply_weather_temperature(-35)	//checks for cold protection before applying temp
 	qdel(src)

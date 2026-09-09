@@ -3,6 +3,8 @@
 	domain = "Death, The Afterlife, Rebirth"
 	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
 	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
+	virtues = "Respecting the Dead, Sloth, Fatalism"
+	sins = "Undeath, Humor, Revival"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight				= CLERIC_T0,
@@ -12,7 +14,7 @@
 					/obj/effect/proc_holder/spell/invoked/avert						= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/speakwithdead				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/abrogation				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/self/necra_spirits				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/necra_crows				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T3,//This was bad enough at T1. No, thanks. Cool as it is.
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)

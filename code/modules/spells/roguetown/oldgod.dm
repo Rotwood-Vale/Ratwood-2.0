@@ -1,5 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/psydonlux_tamper
 	name = "WEEP"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "WEEP"
 	releasedrain = 20
 	chargedrain = 0
@@ -46,42 +48,36 @@
 			revert_cast()
 			return FALSE
 
-		//Transfer wounds from each bodypart.
+		playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
+		C_caster.visible_message(span_warning("A thread of silvery lux spools out from [C_caster] and attaches to [C_target], softly aglow..."), span_warning("You begin twining your lux together with [C_target], drawing forth their wounds unto yourself..."))
+		var/static/list/disallowed_wounds = typecacheof(list(/datum/wound/dismemberment, /datum/wound/facial, /datum/wound/fracture/head, /datum/wound/fracture/neck, /datum/wound/cbt/permanent, /datum/wound/grievous/pre_decapitation, /datum/wound/grievous/pre_skullshatter))
 		for(var/datum/wound/targetwound in tw_List)
-			if (istype(targetwound, /datum/wound/dismemberment))
+			if (disallowed_wounds[targetwound.type])
 				continue
-			if (istype(targetwound, /datum/wound/facial))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/head))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/neck))
-				continue
-			if (istype(targetwound, /datum/wound/cbt/permanent))
-				continue
-			var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
-			c_BP.add_wound(targetwound.type)
-			var/obj/item/bodypart/t_BP = C_target.get_bodypart(targetwound.bodypart_owner.body_zone)
-			t_BP.remove_wound(targetwound.type)
+			if (move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
+				if (!targetwound) // it's possible they might've healed on or advanced
+					continue
+				var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
+				// instead of recreating a new wound of the same type as the victims, we can just transfer theirs (includes any existing healing/clotting) over to us
+				var/pre_bleeding = targetwound.bleed_rate
+				targetwound.apply_to_bodypart(c_BP, silent = TRUE, crit_message = FALSE)
+				targetwound.set_bleed_rate(pre_bleeding) // but we have to manually force a bleed_rate reset for it to cache properly
+				if (targetwound.severity >= WOUND_SEVERITY_SEVERE)
+					C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
+				new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
+				new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
+				C_target.Beam(C_caster, icon_state="heal_psycross", icon='modular_azurepeak/icons/effects/miracle-healing.dmi', time = 5)
 
 	// Transfer blood
 	var/blood_transfer = 0
-	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-		blood_transfer = BLOOD_VOLUME_NORMAL - H.blood_volume
-		H.blood_volume = BLOOD_VOLUME_NORMAL
-		user.blood_volume -= blood_transfer
-		to_chat(user, span_warning("You feel your blood drain into [H]!"))
+	if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
+		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
+		user.adjust_blood_volume(-(blood_transfer))
 		to_chat(H, span_notice("You feel your blood replenish!"))
-
-	// Visual effects
-	user.visible_message(span_danger("[user] purifies [H]'s wounds!"))
-	playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
-
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
+		user.visible_message(span_warning("A sudden pallor overtakes [user] as [user.p_their()] lyfeblood flees [user.p_their()] pores and into [H]!"), span_warning("You feel your blood drain into [H]!"))
+		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
+		new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))
@@ -91,6 +87,8 @@
 /obj/effect/proc_holder/spell/self/psydonrespite
 	name = "RESPITE"
 	desc = "At the cost of some lyfe sustaining blood, I can stand still to focus on mending my injuries."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "RESPITE"
 	releasedrain = 20
 	chargedrain = 0
@@ -121,11 +119,11 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
-				if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
@@ -133,7 +131,7 @@
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7
-				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 					zcross_trigger = TRUE
 	if(brute > 100)
 		sit_bonus1 = -2
@@ -180,7 +178,7 @@
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#e4e4e4")
 		H.adjustBruteLoss(bruthealval)
 		H.adjustFireLoss(burnhealval)
-		H.blood_volume = max(H.blood_volume-6, 0)//Don't sit here and heal all day. Thanks.
+		H.set_blood_volume(max(H.get_blood_volume()-6, 0))//Don't sit here and heal all day. Thanks.
 		if (conditional_buff)
 			to_chat(user, span_info("My pain gives way to a sense of furthered clarity before returning again, dulled."))
 		user.devotion?.update_devotion(-20)
@@ -195,6 +193,8 @@
 /obj/effect/proc_holder/spell/self/psydonpersist
 	name = "PERSIST"
 	desc = "Stand still to focus on mending your injuries. You shall PERSIST."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "PERSIST"
 	releasedrain = 20
 	chargedrain = 0
@@ -225,11 +225,11 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
-				if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
@@ -237,7 +237,7 @@
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7
-				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+				if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 					zcross_trigger = TRUE
 	if(brute > 100)
 		sit_bonus1 = -2
@@ -297,6 +297,8 @@
 
 /obj/effect/proc_holder/spell/invoked/psydonabsolve
 	name = "ABSOLVE"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ABSOLVE"
 	desc = "Absolve the target, taking their damage as your own, potentially even shouldering their death at the cost of your Lyfe."
 	releasedrain = 20
@@ -333,7 +335,7 @@
 		if(!H.check_revive(user))
 			revert_cast()
 			return FALSE
-		if(alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "YES", "NO") != "YES")
+		if(alert(user, "REACH OUT AND PULL?", "THERE'S NO LUX IN THERE", "NO", "YES") != "YES")
 			revert_cast()
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
@@ -406,6 +408,8 @@
 // Weaker absolve for the Stigmata adventurer
 /obj/effect/proc_holder/spell/invoked/psydonamend	
 	name = "AMEND"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ABSOLVE"
 	desc = "A lesser form of the mighty art of ABSOLUTION, bereft of its means to revive. Transfers the wounds from your target to you. Use carefully."
 	releasedrain = 20

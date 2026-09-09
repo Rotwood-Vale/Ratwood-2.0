@@ -1,8 +1,10 @@
 /datum/patron/inhumen/graggar
 	name = "Graggar"
-	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Rape"
+	domain = "Conquest, Cruelty, Kinslaying, Slaughter, Cannibalism, Domination"
 	desc = "The Gorebound Star was a half-orc warlord who sought to strike Ravox down in rage at the cruel fate of His lover. He was decapitated, and His head revived as a mutilated aberration of blue flesh and sickening tendrils. Gazing upon the Star will drive anyone mad."
 	worshippers = "Fallen Warriors, Cannibals, Serial Killers, The Cruel"
+	virtues = "Martial Prowess, Dominance, Violence"
+	sins = "Weakness, Servility, Cowardice"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
@@ -11,6 +13,7 @@
 					/obj/effect/proc_holder/spell/self/call_to_slaughter 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/projectile/blood_net 			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
 	)
 	confess_lines = list(
 		"GRAGGAR IS THE BEAST I WORSHIP!",

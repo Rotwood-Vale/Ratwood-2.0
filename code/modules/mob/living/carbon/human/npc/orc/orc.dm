@@ -26,6 +26,7 @@
 	mode = NPC_AI_IDLE
 	wander = FALSE
 	cmode_music = FALSE
+	special_attacker = TRUE
 
 /mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
@@ -102,10 +103,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = null
+		if(51 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/gold
 

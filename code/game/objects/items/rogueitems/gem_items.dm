@@ -984,3 +984,126 @@
 	grid_height = 64
 	grid_width = 64
 	sellprice = 105
+
+//.....................Chitin......................//
+
+/obj/item/carvedgem/chitin
+	name = "chitin base"
+	desc = "if you are seeing this, it's a bug, report it to coders"
+	icon = 'icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "raw_shell"
+	color = "#7B8C5E"
+	grid_height = 32
+	grid_width = 32
+
+/obj/item/carvedgem/chitin/rawchitin
+	name = "carved chitin"
+	desc = "A piece of beetle chitin that has been carved into a workable shape. Underdeep dwellers use it as a substitute for bone and shell."
+	icon_state = "raw_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 10
+
+/obj/item/carvedgem/chitin/cameo
+	name = "chitin cameo"
+	desc = "A cameo carved out of beetle chitin depicting...someone? Use your imagination on who it could be."
+	icon_state = "cameo_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 15
+
+/obj/item/carvedgem/chitin/figurine
+	name = "chitin figurine"
+	desc = "A small figurine carved out of beetle chitin."
+	icon_state = "figurine_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 20
+
+/obj/item/carvedgem/chitin/fish
+	name = "chitin fish figurine"
+	desc = "A small fish figurine carved out of beetle chitin."
+	icon_state = "fish_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 20
+
+/obj/item/carvedgem/chitin/vase
+	name = "chitin vase"
+	desc = "A vase carved out of beetle chitin."
+	icon_state = "vase_shell"
+	grid_height = 64
+	grid_width = 32
+	sellprice = 20
+
+/obj/item/carvedgem/chitin/tablet
+	name = "chitin tablet"
+	desc = "A tablet carved out of beetle chitin."
+	icon_state = "tablet_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 20
+
+/obj/item/carvedgem/chitin/bust
+	name = "chitin bust"
+	desc = "A bust carved out of beetle chitin."
+	icon_state = "bust_shell"
+	grid_height = 64
+	grid_width = 64
+	sellprice = 25
+
+/obj/item/carvedgem/chitin/fancyvase
+	name = "fancy chitin vase"
+	desc = "A fancy vase carved out of beetle chitin."
+	icon_state = "fancyvase_shell"
+	grid_height = 64
+	grid_width = 32
+	sellprice = 25
+
+/obj/item/carvedgem/chitin/comb
+	name = "chitin comb"
+	desc = "A luxurious comb carved out of beetle chitin."
+	icon_state = "comb_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 25
+
+/obj/item/carvedgem/chitin/duck
+	name = "chitin duck"
+	desc = "An adorable little duck carved out of beetle chitin."
+	icon_state = "duck_shell"
+	grid_height = 32
+	grid_width = 32
+	sellprice = 25
+
+/obj/item/carvedgem/chitin/urn
+	name = "chitin urn"
+	desc = "A large decorative urn carved out of beetle chitin."
+	icon_state = "urn_shell"
+	grid_height = 64
+	grid_width = 64
+	sellprice = 30
+
+/obj/item/carvedgem/chitin/statue
+	name = "chitin statue"
+	desc = "A statue carved out of beetle chitin."
+	icon_state = "statue_shell"
+	grid_height = 64
+	grid_width = 32
+	sellprice = 30
+
+/obj/item/carvedgem/chitin/obelisk
+	name = "chitin obelisk"
+	desc = "An obelisk carved out of beetle chitin."
+	icon_state = "obelisk_shell"
+	grid_height = 64
+	grid_width = 32
+	sellprice = 30
+
+/obj/item/carvedgem/chitin/beetle
+	name = "chitin beetle sculpture"
+	desc = "A detailed sculpture of a woolly chafer beetle carved from its own chitin. A common trinket among underdeep settlers."
+	icon_state = "turtle_shell" // reusing turtle sprite with green tint
+	grid_height = 64
+	grid_width = 64
+	sellprice = 35

@@ -38,9 +38,6 @@
 	update_icon()
 
 /obj/structure/roguemachine/potionseller/Destroy()
-	if(reagents)
-		qdel(reagents)
-		reagents = null
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null
@@ -78,7 +75,7 @@
 		return attack_hand(user)
 
 /obj/structure/roguemachine/potionseller/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return

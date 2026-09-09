@@ -30,6 +30,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ExaminePanel")
+		ui.set_autoupdate(FALSE) // this would not really ever need to autoupdate aside from maybe obscured stuff, but just re-examine at that point
 		ui.open()
 
 /datum/examine_panel/ui_data(mob/user)

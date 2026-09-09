@@ -66,10 +66,9 @@
 
 	COOLDOWN_DECLARE(thunder)
 
-/datum/particle_weather/rain_storm/tick()
+/datum/particle_weather/rain_storm/proc/lightning_check()
 	if(!COOLDOWN_FINISHED(src, thunder))
 		return
-
 
 	var/lightning_strikes = 6
 	for(var/i = 1 to lightning_strikes)
@@ -109,7 +108,7 @@
 		new /obj/effect/temp_visual/lightning/storm(get_turf(lightning_destination))
 		COOLDOWN_START(src, thunder, rand(5, 40) * 1 SECONDS)
 
-
+/datum/particle_weather/rain_storm/proc/tornado_check()
 	var/max_tornadoes = 2
 	var/min_distance_between = 30
 	var/min_spawn_distance = 8
@@ -178,6 +177,10 @@
 
 	new /obj/effect/weather/tornado(spawn_turf)
 
+/datum/particle_weather/rain_storm/tick()
+	lightning_check()
+	tornado_check()
+
 //Makes you a bit chilly
 /datum/particle_weather/rain_storm/weather_act(mob/living/L)
 	if(L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 5)
@@ -224,7 +227,7 @@
 
 	COOLDOWN_DECLARE(thunder)
 
-/datum/particle_weather/hurricane/tick()
+/datum/particle_weather/hurricane/proc/lightning_check()
 	if(!COOLDOWN_FINISHED(src, thunder))
 		return
 
@@ -267,6 +270,7 @@
 		new /obj/effect/temp_visual/lightning/storm(get_turf(lightning_destination))
 		COOLDOWN_START(src, thunder, rand(5, 40) * 1 SECONDS)
 
+/datum/particle_weather/hurricane/proc/tornado_check()
 	var/max_tornadoes = 2
 	var/min_distance_between = 30
 	var/min_spawn_distance = 8
@@ -335,6 +339,11 @@
 		return
 
 	new /obj/effect/weather/tornado/abyssors_rage(spawn_turf)
+
+/datum/particle_weather/hurricane/tick()
+	lightning_check()
+	tornado_check()
+
 //Makes you a bit chilly
 /datum/particle_weather/rain_storm/weather_act(mob/living/L)
 	if(L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 5)

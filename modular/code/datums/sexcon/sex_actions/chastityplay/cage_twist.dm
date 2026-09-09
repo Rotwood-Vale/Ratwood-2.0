@@ -31,7 +31,7 @@
 
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
         play_chastity_impact_sound(target, 'sound/combat/fracture/fracturedry (1).ogg', 50)
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] corkscrews [target]'s spiked [get_chastity_device_name(target)], driving the inward spikes in a slow, terrible circle..."))
+        user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] corkscrews [target]'s spiked [get_chastity_device_name(target)], driving the inward spikes in a slow, terrible circle..."))
         user.sexcon.perform_sex_action(target, 0.2, 8.8, TRUE)
         user.sexcon.try_do_pain_scream(target, 8.8)
         target.sexcon.handle_passive_ejaculation(user)
@@ -40,7 +40,7 @@
             _try_spiked_catastrophe(user, target, "twist")
         return
     play_chastity_impact_sound(target, list('sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 42, 50)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] torques [target]'s [get_chastity_device_name(target)] against its mount, metal grinding as the whole device rolls against trapped skin..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] torques [target]'s [get_chastity_device_name(target)] against its mount, metal grinding as the whole device rolls against trapped skin..."))
     user.sexcon.perform_sex_action(target, 0.4, 6, TRUE)
     user.sexcon.try_do_pain_scream(target, 6)
     target.sexcon.handle_passive_ejaculation(user)

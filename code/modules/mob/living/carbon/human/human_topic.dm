@@ -23,6 +23,9 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		mob_examine_panel.ui_interact(usr)
 		return
 
+	if(href_list["task"] == "gnoll_view_tracked")
+		gnoll_view_tracked_char()
+
 	if(href_list["inspect_limb"] && (observer_privilege || usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)))
 		var/list/msg = list()
 		var/mob/user = usr
@@ -511,7 +514,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			rumour_display = html_encode(rumour_display)
 			rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
 			msg += "<b>You recall what you heard around Town about [src]...</b><br>[rumour_display]"
-		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || observer_privilege) && length(noble_gossip))
+		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || (HAS_TRAIT(usr, TRAIT_SLEUTH)) || observer_privilege) && length(noble_gossip))
 			if(msg)
 				msg += "<br><br>"
 			var/gossip_display = noble_gossip

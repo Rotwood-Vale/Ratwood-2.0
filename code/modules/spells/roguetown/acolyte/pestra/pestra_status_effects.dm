@@ -18,14 +18,14 @@
 	desc = "I have channeled too much of Pestra's power, and cannot harbor much of her divine infestation."
 	icon_state = "divine_exhaustion"
 
-// The healing of this is equivalent 3x pestra's heal, or 2x fortified pestra's heal. It wanes but lasts a long time.
+// The ultimate healing miracle
 /datum/status_effect/buff/divine_rebirth_healing
 	id = "divine_rebirth_healing"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/divine_rebirth_healing
 	duration = 30 SECONDS // Gradual healing
 	tick_interval = 3 SECONDS
 	var/time_left
-	var/healing_strength = 45 // Starts strong
+	var/healing_strength = 45
 	var/limbs_regenerated = 0
 	var/max_limbs_to_regenerate = 3
 	var/outline_colour = "#FFD700"
@@ -49,15 +49,13 @@
 /datum/status_effect/buff/divine_rebirth_healing/tick()
 	var/time_progress = (duration - time_left) / duration
 	time_left -= tick_interval
-	// This shouldn't ever dip below 5, but let's use MAX for safety anyways
-	healing_strength = max(5, healing_strength - (time_progress * (healing_strength - 5)))
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = outline_colour
 	do_sprite_shake(owner, 3, 3, 15, 1)
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
@@ -131,8 +129,8 @@
 	H.color = effect_colour
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
@@ -296,7 +294,7 @@
 						break
 		else
 			if((owner.get_stat(S) + effectedstats[S]) > 20)
-				effectedstats[S] = max(((owner.get_stat(S) + effectedstats[S]) - 20), 0)
+				effectedstats[S] = 20 - owner.get_stat(S)
 		owner.change_stat(S, effectedstats[S])
 
 /datum/status_effect/black_rot/tick()

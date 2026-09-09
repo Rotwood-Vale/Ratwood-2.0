@@ -58,9 +58,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/events/haunts/Initialize(mapload)
 	. = ..()
-	GLOB.hauntstart += src
+	GLOB.hauntstart += get_turf(src)
 	icon_state = ""
-
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/events/testportal
 	name = "testserverportal"
@@ -152,7 +152,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/sheriff
-	name = "Town Sheriff"
+	name = "Watch Captain"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/guard_captain
@@ -183,10 +183,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Head Physician"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/chaplain
+	name = "Court Chaplain"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/guardsman
 	name = "City Guard"
 	icon_state = "arrow"
-	
+
 /obj/effect/landmark/start/rookie
 	name = "Rookie"
 	icon_state = "arrow"
@@ -196,12 +200,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/bogmaster
-	name = "Bog Master"
+	name = "Master Warden"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/bogguardsman
 	name = "Bog Guard"
 	icon_state = "arrow"
+	jobspawn_override = list("Bog Guard", "Vanguard")
 
 /obj/effect/landmark/start/warden
 	name = "Warden"
@@ -278,6 +283,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/absolver
 	name = "Absolver"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/inqlate
+	name = "Inquisition Late"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Absolver", "Orthodoxist", "Inquisitor")
 
 /obj/effect/landmark/start/sergeant
 	name = "Sergeant"
@@ -457,26 +467,75 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/sapprentice
-	name = "Smithy Apprentice"
+	name = "Guild Apprentice"
 	icon_state = "arrow"
 
-//goblin
-
-/obj/effect/landmark/start/goblinking
-	name = "Goblin King"
+/obj/effect/landmark/start/rockhillslaver
+	name = "Rockhill Slaver"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblincook
-	name = "Goblin Cook"
+/obj/effect/landmark/start/rockhillslavelate
+	name = "Rockhill Slaver Late"
+	jobspawn_override = list("Slaver", "Slave")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/rockhillslave
+	name = "Rockhill Slave"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblinguard
-	name = "Goblin Guard"
+/obj/effect/landmark/start/baron
+	name = "Baron"
 	icon_state = "arrow"
 
-/obj/effect/landmark/start/goblinsmith
-	name = "Goblin Smith"
+/obj/effect/landmark/start/baronlate
+	name = "Baron Late"
+	jobspawn_override = list("Baron")
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/retainer
+	name = "Retainer"
 	icon_state = "arrow"
+
+/obj/effect/landmark/start/retainerlate
+	name = "Retainer Late"
+	jobspawn_override = list("Retainer")
+	delete_after_roundstart = FALSE
+	
+/obj/effect/landmark/start/lich
+	name = "lich"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/lich/Initialize(mapload)
+	. = ..()
+	GLOB.lich_starts += loc
+
+//tribal
+
+/obj/effect/landmark/start/tribalchieftain
+	name = "Chieftain"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribalshaman
+	name = "Tribal Shaman"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribalguard
+	name = "Tribal Guard"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribalrabble
+	name =  "Tribal Rabble"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribalvillager
+	name = "Tribal"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/tribelate
+	name = "Tribal Late"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Chieftain", "Tribal Shaman", "Tribal Guard", "Tribal Rabble", "Tribal Villager")
 
 //Antagonist spawns
 
@@ -529,6 +588,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 	delete_after_roundstart = FALSE
 	jobspawn_override = list("Wretch")
+
+/obj/effect/landmark/start/gnoll
+	name = "gnoll"
+	icon_state = "arrow"
+	jobspawn_override = list("Gnoll")
+
+/obj/effect/landmark/start/gnolllate
+	name = "gnoll"
+	icon_state = "arrow"
+	delete_after_roundstart = FALSE
+	jobspawn_override = list("Gnoll")
 
 /obj/effect/landmark/start/nukeop_leader
 	name = "nukeop leader"

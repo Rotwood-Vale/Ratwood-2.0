@@ -63,6 +63,49 @@
 			H.remove_status_effect(/datum/status_effect/ugotmail)
 	if(!ishuman(user))
 		return
+	if (user.mind?.has_bomb) //for TRAIT_EXPLOSIVE_SUPPLY. One bomb per one day.
+		var/mob/living/carbon/human/H = user
+		H.mind?.has_bomb = FALSE
+		var/bomb_type
+		var/static/list/bomb_type_list = list(/obj/item/tntstick,
+		/obj/item/impact_grenade/explosion,
+		/obj/item/impact_grenade/smoke/poison_gas,
+		/obj/item/impact_grenade/smoke/fire_gas,
+		/obj/item/impact_grenade/smoke/healing_gas,
+		)
+		var/bonus = 0
+		if(H.STALUC > 10)
+			bonus = 10 * (H.STALUC - 10)
+		if(prob(90 - bonus))
+			bomb_type = /obj/item/bomb
+		else
+			bomb_type = pick(bomb_type_list)
+		var/obj/item/S = new bomb_type(get_turf(H))
+		H.put_in_hands(S)
+		if(HAS_TRAIT(H, TRAIT_BOMBER_EXPERT))	//additional random second bomb.
+			bomb_type_list |= /obj/item/bomb
+			bomb_type = pick(bomb_type_list)
+			var/obj/item/B = new bomb_type(get_turf(H))
+			H.put_in_hands(B)
+	if(user.mind?.has_drug_delivery) //for TRAIT_DRUG_SUPPLY. One delivery per day.
+		var/mob/living/carbon/human/H = user
+		H.mind.has_drug_delivery = FALSE
+		var/static/list/common_drug_list = list(
+			/obj/item/reagent_containers/powder/spice,
+			/obj/item/reagent_containers/powder/moondust,
+			/obj/item/reagent_containers/powder/starsugar
+		)
+		var/static/list/rare_drug_list = list(
+			/obj/item/reagent_containers/powder/moondust_purest,
+			/obj/item/reagent_containers/powder/herozium
+		)
+		var/drug_type
+		if(prob(20))
+			drug_type = pick(rare_drug_list)
+		else
+			drug_type = pick(common_drug_list)
+		var/obj/item/D = new drug_type(get_turf(H))
+		H.put_in_hands(D)
 	if(HAS_TRAIT(user, TRAIT_INQUISITION))
 		if(!coin_loaded && !inqcoins)
 			to_chat(user, span_notice("It needs a Marque."))
@@ -97,6 +140,13 @@
 	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
 	if(!sentfrom)
 		sentfrom = "Anonymous"
+	var/sender_ckey = user.ckey
+	var/recipient_ckey = null
+	if(!findtext(send2place, "#"))
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H.real_name == send2place)
+				recipient_ckey = H.ckey
+				break
 	var/t = stripped_multiline_input("Write Your Letter", "ROGUETOWN", no_trim=TRUE)
 	if(t)
 		if(length(t) > 2000)
@@ -120,6 +170,7 @@
 				P.mailer = sentfrom
 				P.mailedto = send2place
 				P.update_icon()
+				GLOB.fax_panel.register_player_letter(sentfrom, send2place, t)
 				P.forceMove(X.loc)
 				X.say("New mail!")
 				playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
@@ -138,9 +189,15 @@
 			return
 		if(SSroguemachine.hermailermaster)
 			var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
+			if(!recipient_ckey)
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.real_name == send2place)
+						recipient_ckey = H.ckey
+						break
 			P.mailer = sentfrom
 			P.mailedto = send2place
 			P.update_icon()
+			GLOB.fax_panel.register_player_letter(sentfrom, send2place, t, sender_ckey, recipient_ckey)
 			P.forceMove(X.loc)
 			var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
 			STR.handle_item_insertion(P, prevent_warning=TRUE)
@@ -368,120 +425,123 @@
 			return
 
 	if(istype(P, /obj/item/paper/inqslip/arrival))
-		if((HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
-			var/obj/item/paper/inqslip/arrival/I = P
-			if(I.signee && I.signed)
-				message_admins("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
-				log_game("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
-				budget2change(I.marquevalue, user, "MARQUE")
-				record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-				qdel(I)
-				visible_message(span_warning("[user] sends something."))
-				playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
-				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+		if(!(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
+			to_chat(user, span_warning("Only the Inquisition can submit arrival slips."))
 			return
+		var/obj/item/paper/inqslip/arrival/I = P
+		if(I.signee && I.signed)
+			message_admins("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
+			log_game("INQ ARRIVAL: [user.real_name] ([user.ckey]) has just arrived as a [user.job], earning [I.marquevalue] Marques.")
+			budget2change(I.marquevalue, user, "MARQUE")
+			record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+			qdel(I)
+			visible_message(span_warning("[user] sends something."))
+			playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
+			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+		return
 
 	if(istype(P, /obj/item/paper/inqslip/accusation))
-		if((HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
-			var/obj/item/paper/inqslip/accusation/I = P
-			if(I.paired)
-				if(I.signee && I.paired.full && I.paired.subject)
-					var/no
-					var/specialno
-					var/stopfarming
-					var/indexed
-					var/bonuses = 2
-					var/correct
-					var/cursedblood
-					var/selfreport
-					if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
-						selfreport = TRUE
-					if(HAS_TRAIT(I.paired.subject, TRAIT_CABAL) || HAS_TRAIT(I.paired.subject, TRAIT_HORDE) || HAS_TRAIT(I.paired.subject, TRAIT_DEPRAVED) || HAS_TRAIT(I.paired.subject, TRAIT_COMMIE))
-						correct = TRUE
-					if(I.paired.subject.name in GLOB.excommunicated_players)
-						correct = TRUE
-					if(GLOB.indexed && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
-							indexed = TRUE
-						if(!indexed && !selfreport)
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_INDEXED, "mail")
-							if(GLOB.indexed.len)
-								GLOB.indexed += ", [I.paired.subject]"
-							else
-								GLOB.indexed += "[I.paired.subject]"
-					if(I.paired.cursedblood)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
-							stopfarming = TRUE
-						if(!stopfarming)
-							cursedblood = TRUE
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD, "mail")
-							if(GLOB.cursedsamples.len)
-								GLOB.cursedsamples += ", [I.paired.subject.mind]"
-							else
-								GLOB.cursedsamples += "[I.paired.subject.mind]"
-					if(GLOB.accused && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED))
-							no = TRUE
-						if(!no)
-							ADD_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED, "mail")
-							if(GLOB.accused.len)
-								GLOB.accused += ", [I.paired.subject]"
-							else
-								GLOB.accused += "[I.paired.subject]"
-					if(GLOB.confessors && !selfreport)
-						if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CONFESSED))
-							no = TRUE
-							specialno = TRUE
-					if(cursedblood)
-						bonuses = bonuses + bonuses * I.paired.cursedblood
-						if(I.waxed)
-							bonuses += 2
-						budget2change(bonuses, user, "MARQUE")
-						record_round_statistic(STATS_MARQUES_MADE, bonuses)
-					if(no || selfreport || stopfarming)
-						qdel(I.paired)
-						qdel(I)
-						visible_message(span_warning("[user] sends something."))
-						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-						if(!cursedblood)
-							visible_message(span_warning("[user] recieves something."))
-							var/obj/item/inqarticles/indexer/replacement = new /obj/item/inqarticles/indexer/
-							user.put_in_hands(replacement)
-							if(specialno)
-								to_chat(user, span_notice("They've confessed."))
-							else if(selfreport)
-								to_chat(user, span_notice("Why are we accusing our own? What have we come to?"))
-							else if(stopfarming)
-								to_chat(user, span_notice("We've already collected a sample of their accursed blood."))
-							else
-								to_chat(user, span_notice("They've already been accused."))
-						return
-					else
-						if(!indexed && !correct && !cursedblood)
-							(I.marquevalue -= 4) += bonuses
-							budget2change(I.marquevalue, user, "MARQUE")
-							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-						if(correct)
-							if(!indexed)
-								I.marquevalue += bonuses
-							budget2change(I.marquevalue, user, "MARQUE")
-							record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
-						qdel(I.paired)
-						qdel(I)
-						visible_message(span_warning("[user] sends something."))
-						playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
-						playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-						return
+		if(!(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_PURITAN)))
+			to_chat(user, span_warning("Only the Inquisition can submit accusation slips."))
+			return
+		var/obj/item/paper/inqslip/accusation/I = P
+		if(I.paired)
+			if(I.signee && I.paired.full && I.paired.subject)
+				var/no
+				var/specialno
+				var/stopfarming
+				var/indexed
+				var/bonuses = 2
+				var/correct
+				var/cursedblood
+				var/selfreport
+				if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
+					selfreport = TRUE
+				if(HAS_TRAIT(I.paired.subject, TRAIT_CABAL) || HAS_TRAIT(I.paired.subject, TRAIT_HORDE) || HAS_TRAIT(I.paired.subject, TRAIT_DEPRAVED) || HAS_TRAIT(I.paired.subject, TRAIT_COMMIE))
+					correct = TRUE
+				if(I.paired.subject.name in GLOB.excommunicated_players)
+					correct = TRUE
+				if(GLOB.indexed && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
+						indexed = TRUE
+					if(!indexed && !selfreport)
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_INDEXED, "mail")
+						if(GLOB.indexed.len)
+							GLOB.indexed += ", [I.paired.subject]"
+						else
+							GLOB.indexed += "[I.paired.subject]"
+				if(I.paired.cursedblood)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD))
+						stopfarming = TRUE
+					if(!stopfarming)
+						cursedblood = TRUE
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_CBLOOD, "mail")
+						if(GLOB.cursedsamples.len)
+							GLOB.cursedsamples += ", [I.paired.subject.mind]"
+						else
+							GLOB.cursedsamples += "[I.paired.subject.mind]"
+				if(GLOB.accused && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED))
+						no = TRUE
+					if(!no)
+						ADD_TRAIT(I.paired.subject.mind, TRAIT_ACCUSED, "mail")
+						if(GLOB.accused.len)
+							GLOB.accused += ", [I.paired.subject]"
+						else
+							GLOB.accused += "[I.paired.subject]"
+				if(GLOB.confessors && !selfreport)
+					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_CONFESSED))
+						no = TRUE
+						specialno = TRUE
+				if(cursedblood)
+					bonuses = bonuses + bonuses * I.paired.cursedblood
+					if(I.waxed)
+						bonuses += 2
+					budget2change(bonuses, user, "MARQUE")
+					record_round_statistic(STATS_MARQUES_MADE, bonuses)
+				if(no || selfreport || stopfarming)
+					qdel(I.paired)
+					qdel(I)
+					visible_message(span_warning("[user] sends something."))
+					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+					if(!cursedblood)
+						visible_message(span_warning("[user] recieves something."))
+						var/obj/item/inqarticles/indexer/replacement = new /obj/item/inqarticles/indexer/
+						user.put_in_hands(replacement)
+						if(specialno)
+							to_chat(user, span_notice("They've confessed."))
+						else if(selfreport)
+							to_chat(user, span_notice("Why are we accusing our own? What have we come to?"))
+						else if(stopfarming)
+							to_chat(user, span_notice("We've already collected a sample of their accursed blood."))
+						else
+							to_chat(user, span_notice("They've already been accused."))
+					return
 				else
-					if(!I.paired.full)
-						to_chat(user, span_warning("[I.paired] needs to be full of the accused's blood."))
-						return
-					else
-						to_chat(user, span_warning("[I] is missing a signature."))
-						return
+					if(!indexed && !correct && !cursedblood)
+						(I.marquevalue -= 4) += bonuses
+						budget2change(I.marquevalue, user, "MARQUE")
+						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					if(correct)
+						if(!indexed)
+							I.marquevalue += bonuses
+						budget2change(I.marquevalue, user, "MARQUE")
+						record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					qdel(I.paired)
+					qdel(I)
+					visible_message(span_warning("[user] sends something."))
+					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+					return
 			else
-				to_chat(user, span_warning("[I] is missing an INDEXER."))
+				if(!I.paired.full)
+					to_chat(user, span_warning("[I.paired] needs to be full of the accused's blood."))
+					return
+				to_chat(user, span_warning("[I] is missing a signature."))
 				return
+		else
+			to_chat(user, span_warning("[I] is missing an INDEXER."))
+			return
 
 	if(istype(P, /obj/item/paper) || istype(P, /obj/item/smallDelivery))
 		if(inqcoins)
@@ -492,6 +552,13 @@
 			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
 			if(!sentfrom)
 				sentfrom = "Anonymous"
+			var/sender_ckey = user.ckey
+			var/recipient_ckey = null
+			if(!findtext(send2place, "#"))
+				for(var/mob/living/carbon/human/H in GLOB.human_list)
+					if(H.real_name == send2place)
+						recipient_ckey = H.ckey
+						break
 			if(findtext(send2place, "#"))
 				var/box2find = text2num(copytext(send2place, findtext(send2place, "#")+1))
 				testing("box2find [box2find]")
@@ -502,6 +569,17 @@
 						P.mailer = sentfrom
 						P.mailedto = send2place
 						P.update_icon()
+						var/letter_text = ""
+						var/obj/item/paper/letter_paper = null
+						var/obj/item/smallDelivery/letter_package = null
+						if(istype(P, /obj/item/paper))
+							letter_paper = P
+							letter_text = letter_paper.info
+						else if(istype(P, /obj/item/smallDelivery))
+							letter_package = P
+							if(letter_package.note)
+								letter_text = letter_package.note.info
+						GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
 						P.forceMove(X.loc)
 						X.say("New mail!")
 						playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
@@ -519,6 +597,8 @@
 				for(var/mob/living/carbon/human/H in GLOB.human_list)
 					if(H.real_name == send2place)
 						mailrecipient = H
+						recipient_ckey = H.ckey
+						break
 				if(!mailrecipient && (alert("Could not find recipient [send2place]. Still send the letter?", "", "YES", "NO") == "NO")) // ask player if they still want to send a letter to a non-found character
 					return
 				var/findmaster
@@ -528,6 +608,17 @@
 					P.mailer = sentfrom
 					P.mailedto = send2place
 					P.update_icon()
+					var/letter_text = ""
+					var/obj/item/paper/letter_paper = null
+					var/obj/item/smallDelivery/letter_package = null
+					if(istype(P, /obj/item/paper))
+						letter_paper = P
+						letter_text = letter_paper.info
+					else if(istype(P, /obj/item/smallDelivery))
+						letter_package = P
+						if(letter_package.note)
+							letter_text = letter_package.note.info
+					GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
 					P.forceMove(X.loc)
 					var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
 					STR.handle_item_insertion(P, prevent_warning=TRUE)
@@ -545,7 +636,7 @@
 						mailrecipient.playsound_local(mailrecipient, 'sound/misc/mail.ogg', 100, FALSE, -1)
 					return
 
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 
 	if(istype(P, /obj/item/roguecoin/inqcoin))
@@ -687,6 +778,8 @@
 
 /obj/item/roguemachine/mastermail/Destroy()
 	set_light(0)
+	if(SSroguemachine.hermailermaster == src)
+		SSroguemachine.hermailermaster = null
 	SSroguemachine.hermailers -= src
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)

@@ -24,6 +24,10 @@
 		return TRUE
 	. = ..()
 
+/obj/item/reagent_containers/food/snacks/fish/get_mechanics_examine(mob/user)
+    . = ..()
+    . += span_info("Chopping fish on a table with a knife, cleaver, or dagger turns it into mince. Mince can be used for advanced recipes, or used to make 'more out of less' in a stew's broth.")
+
 /obj/item/reagent_containers/food/snacks/fish/clam
 	name = "clam"
 	desc = "A beastye built by Abyssor in the image of a knight. Hard shell, squishy interior."
@@ -67,7 +71,7 @@
 	trash = /obj/item/oystershell
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
-/obj/item/reagent_containers/food/snacks/fish/oyster/Initialize(mapload)
+/obj/item/reagent_containers/food/snacks/fish/oyster/Initialize()
 	. = ..()
 	var/pearl_weight
 	switch(name) //checks the rarity of the oyster via the name
@@ -129,13 +133,14 @@
 	grid_height = 32
 	grid_width = 32
 
-/obj/item/reagent_containers/food/snacks/rogue/crabcake
-	name = "crab cake"
+// Close enough crab cake is raw shellfish
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/crabcakeraw
+	name = "raw crab cake"
 	desc = "A variant of the handpie filled with buttery, savory shellfish meat and made with a buttered slice of dough."
-	icon_state = "crab_cake"
-	eat_effect = /datum/status_effect/buff/greatsnackbuff
-	bitesize = 4
-	list_reagents = list(/datum/reagent/consumable/nutriment = SMALLDOUGH_NUTRITION + MEATSLAB_NUTRITION)
-	tastes = list("crispy butterdough and shellfish meat" = 1)
-	rotprocess = null
+	icon = 'modular/Neu_Food/icons/raw/raw_fish.dmi' // I guess it is a raw fish meal
+	icon_state = "crab_cake_raw"
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/crabcake
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/crabcake
+	cooked_smell = /datum/pollutant/food/fried_crab_cake
+	w_class = WEIGHT_CLASS_NORMAL
 	dropshrink = 0.8

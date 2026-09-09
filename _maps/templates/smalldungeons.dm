@@ -59,7 +59,7 @@
 		/obj/item/paper/scroll = 3,
 		/obj/item/rope = 3,
 		/obj/item/rope/chain = 3,
-		/obj/item/storage/roguebag/crafted = 3,
+		/obj/item/storage/roguebag = 3,
 		/obj/item/clothing/mask/cigarette/pipe = 3,
 		/obj/item/paper = 3,
 		/obj/item/reagent_containers/glass/bowl = 3,
@@ -112,6 +112,10 @@
 		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
 		/obj/item/rogueweapon/pick = 3,
+		/obj/item/repair_kit/bad = 3,
+		/obj/item/repair_kit/metal/bad = 2,
+		/obj/item/repair_kit = 1,
+		/obj/item/repair_kit/metal = 1,
 
 		//armor
 		/obj/item/clothing/suit/roguetown/armor/leather/studded = 2,
@@ -121,7 +125,6 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini = 2,
 		/obj/item/clothing/suit/roguetown/armor/gambeson = 2,
 		/obj/item/clothing/under/roguetown/chainlegs = 2,
-		/obj/item/clothing/under/roguetown/brayette = 2,
 		/obj/item/clothing/under/roguetown/platelegs = 1,
 		/obj/item/clothing/under/roguetown/chainlegs/skirt = 2,
 		/obj/item/clothing/gloves/roguetown/chain = 2,
@@ -249,7 +252,7 @@
 		/obj/item/paper/scroll = 3,
 		/obj/item/rope = 3,
 		/obj/item/rope/chain = 3,
-		/obj/item/storage/roguebag/crafted = 3,
+		/obj/item/storage/roguebag = 3,
 		/obj/item/clothing/mask/cigarette/pipe = 3,
 		/obj/item/clothing/mask/cigarette/rollie = 3,
 		/obj/item/paper = 3,
@@ -319,6 +322,10 @@
 		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
 		/obj/item/rogueweapon/pick = 3,
+		/obj/item/repair_kit/bad = 3,
+		/obj/item/repair_kit/metal/bad = 2,
+		/obj/item/repair_kit = 1,
+		/obj/item/repair_kit/metal = 1,
 		/obj/item/rogueweapon/sickle = 3,
 		/obj/item/rogueweapon/huntingknife = 2,
 		/obj/item/rogueweapon/huntingknife/scissors = 3,
@@ -338,7 +345,6 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini = 2,
 		/obj/item/clothing/suit/roguetown/armor/gambeson = 2,
 		/obj/item/clothing/under/roguetown/chainlegs = 2,
-		/obj/item/clothing/under/roguetown/brayette = 2,
 		/obj/item/clothing/under/roguetown/platelegs = 1,
 		/obj/item/clothing/under/roguetown/chainlegs/skirt = 2,
 		/obj/item/clothing/gloves/roguetown/chain = 2,
@@ -379,11 +385,11 @@
 		/obj/item/reagent_containers/food/snacks/rogue/cheddar = 1,
 		/obj/item/reagent_containers/food/snacks/rogue/cheddarwedge = 4,
 		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
-		
+
 	)
 	lootcount = 2
 
-	
+
 
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells
 	icon_state = "spells"
@@ -394,7 +400,6 @@
 		/obj/item/book/granter/spell/blackstone/bonechill = 5,
 		/obj/item/book/granter/spell/blackstone/featherfall = 5,
 		/obj/item/book/granter/spell/blackstone/sicknessray = 5,
-		/obj/item/book/granter/spell/blackstone/aerosolize = 5,
 		/obj/item/book/granter/spell/blackstone/frostbolt = 5,
 		/obj/item/book/granter/spell/blackstone/forcewall_weak = 4,
 		/obj/item/book/granter/spell/blackstone/guidance = 4,

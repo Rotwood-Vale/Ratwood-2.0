@@ -264,5 +264,7 @@
 			var/obj/item/lockpick/L = I
 			L.picklvl = modifier
 
+		user?.log_message("forged [I.name] ([current_recipe.type]) (QUALITY: [skill_quality]) (HITS: [numberofhits])", LOG_GAME)
+
 	// Clean up the original workpiece
 	qdel(parent)

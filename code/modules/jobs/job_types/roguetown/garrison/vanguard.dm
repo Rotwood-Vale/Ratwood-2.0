@@ -10,10 +10,7 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned to the lowtown bastion. \
-	You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond.\
-	While typically under less supervision than the Men at Arms stationed in hightown, you will be called upon as members of the garrison by the Marshal or the Crown. \
-	Serve their will as the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day."
+	tutorial = "Either a fresh lowborn recruit with something to prove or paying off your crimes with a mandated tour of duty, you have been assigned under the lowtown baron. You have a roof over your head, meagre coin in your pocket, and a thankless job protecting the outskirts of town against what lurks beyond. You are subordinate to the baron, but often are led by the master warden or the retainer and may be called upon as members of the garrison by the Marshal and Crown. Protect lowtown's interests and be the first line of defence from threats beyond the borders of civilisation, hold the vanguard bastion, and try to survive another day. Maybe you'll make it into the Wardens some day."
 	display_order = JDO_TOWNGUARD
 	whitelist_req = TRUE
 
@@ -24,7 +21,7 @@
 	min_pq = 0
 	max_pq = null
 	round_contrib_points = 2
-	cmode_music = 'sound/music/combat_vigilante.ogg'
+	cmode_music = 'sound/music/combat_blackoak.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_SURVIVAL_EXPERT)
 	job_subclasses = list(
@@ -32,16 +29,23 @@
 		/datum/advclass/vanguard/archer
 	)
 
+/datum/job/roguetown/vanguard/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(istype(H.cloak, /obj/item/clothing/cloak/shadowcloak/vanguard))
+			var/obj/item/clothing/S = H.cloak
+			var/index = findtext(H.real_name, " ")
+			if(index)
+				index = copytext(H.real_name, 1,index)
+			if(!index)
+				index = H.real_name
+			S.name = "vanguard cloak ([index])"
+
 /datum/outfit/job/roguetown/vanguard
-	// armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
-	// cloak = /obj/item/clothing/cloak/wardencloak
-	// shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	// belt = /obj/item/storage/belt/rogue/leather
-	// backr = /obj/item/storage/backpack/rogue/satchel
-	// wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
 	head = /obj/item/clothing/head/roguetown/helmet/skullcap
-	cloak = /obj/item/clothing/cloak/half/shadowcloak
+	cloak = /obj/item/clothing/cloak/shadowcloak/vanguard
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
@@ -92,7 +96,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	id = /obj/item/scomstone/bad/garrison
 	backpack_contents = list(
-		/obj/item/storage/keyring/guard = 1,
+		/obj/item/roguekey/walls = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,

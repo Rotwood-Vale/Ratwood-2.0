@@ -3,7 +3,7 @@
 	category = "Reinforcement"
 
 /datum/crafting_recipe/roguetown/leather/reinforcement/crafteast
-	name = "decorated dobo robe"
+	name = "decorated dopo robe"
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,

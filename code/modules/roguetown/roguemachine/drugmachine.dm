@@ -49,7 +49,7 @@
 		if(!right_key)
 			to_chat(user, span_warning("Wrong key."))
 			return
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return

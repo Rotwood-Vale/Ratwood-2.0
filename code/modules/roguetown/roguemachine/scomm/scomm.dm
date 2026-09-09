@@ -1,7 +1,4 @@
-#define GARRISON_SCOM_COLOR "#FF4242"
-#define NORMAL_SCOM_TRANSMISSION_DELAY 15 SECONDS
-#define NORMAL_SCOM_PER_MESSAGE_DELAY 15 SECONDS
-#define CHEESE_QUIET_TIME 2 MINUTES // How long stuffing a slice of cheese in quieten the SCOM
+
 
 /obj/structure/roguemachine/scomm
 	name = "SCOM"
@@ -176,7 +173,7 @@
 /obj/structure/roguemachine/scomm/MiddleClick(mob/living/carbon/human/user)
 	if(.)
 		return
-	if((HAS_TRAIT(user, TRAIT_GUARDSMAN) || (user.job == "Watchman") || (user.job == "Warden") || (user.job == "Councillor") || (user.job == "Squire") || (user.job == "Marshal") || (user.job == "Grand Duke") || (user.job == "Knight Captain") || (user.job == "Grand Duchess") || (user.job == "Hand")))
+	if((HAS_TRAIT(user, TRAIT_GUARDSMAN) || (user.job == "Watchman") || (user.job == "Warden") || (user.job == "Master Warden") || (user.job == "Councillor") || (user.job == "Squire") || (user.job == "Marshal") || (user.job == "Grand Duke") || (user.job == "Knight Captain") || (user.job == "Grand Duchess") ||(user.job == "Hand") ||(user.job == "Vizier") || (user.job == "Sheikh") || (user.job == "Azeb") || (user.job == "Azebagha")))
 		if(alert("Would you like to swap lines or connect to a jabberline?",, "swap", "jabberline") != "jabberline")
 			garrisonline = !garrisonline
 			to_chat(user, span_info("I [garrisonline ? "connect to the garrison SCOMline" : "connect to the general SCOMLINE"]"))

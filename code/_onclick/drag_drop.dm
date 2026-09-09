@@ -38,6 +38,10 @@
 	return
 
 /atom/proc/MiddleMouseDrop_T(atom/dropping, mob/user)
+	if(dropping == user && isliving(user))
+		var/mob/living/L = user
+		if(L.try_handle_middle_targeted_spell(src))
+			return
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 
@@ -68,9 +72,6 @@
 
 /atom
 	var/blockscharging = FALSE
-
-/atom/movable/screen
-	blockscharging = TRUE
 
 /client/MouseDown(object, location, control, params)
 	charge_was_blocked_by_cooldown = FALSE
@@ -192,8 +193,10 @@
 	var/datum/intent/curplaying
 
 /client/MouseUp(object, location, control, params)
+	var/was_charging
 	if(charging && isliving(mob))
 		update_to_mob(mob, 0)
+		was_charging = TRUE
 
 	charging = 0
 
@@ -202,9 +205,11 @@
 	if(mob.curplaying)
 		mob.curplaying.on_mouse_up()
 
-	if(!mob.fixedeye)
+	if(mob.tempfixeye)
 		mob.tempfixeye = FALSE
-		mob.nodirchange = FALSE
+
+		if(!mob.fixedeye)
+			mob.nodirchange = FALSE
 
 	if(mob.hud_used)
 		for(var/atom/movable/screen/eye_intent/eyet in mob.hud_used.static_inventory)
@@ -236,7 +241,7 @@
 
 	if(tcompare)
 		var/atom/target_atom = object
-		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || (mob.atkswinging && object != tcompare)))
+		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || mob.used_intent?.tranged || (mob.atkswinging && object != tcompare)))
 			target_atom.Click(location, control, params)
 		tcompare = null
 
@@ -244,8 +249,8 @@
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
 
-	if(!isliving(mob))
-		return
+	if(was_charging)
+		mob.stop_attack()
 
 /client/proc/updateprogbar(atom/clicked_object)
 	if(!mob)

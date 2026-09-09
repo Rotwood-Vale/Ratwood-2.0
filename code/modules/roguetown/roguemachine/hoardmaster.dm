@@ -3,6 +3,7 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "Hoardmaster"
+	pixel_x = -32
 	density = TRUE
 	blade_dulling = DULLING_BASH
 	max_integrity = 0

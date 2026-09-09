@@ -3,7 +3,9 @@
 /obj/effect/proc_holder/spell/invoked/baothablessings
 	name = "Baotha's Blessings"
 	desc = "Gets the target drunk and stops them from overdosing for a time."
-	overlay_state = "lesserheal"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "blessing"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -37,7 +39,10 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/blowingdust
 	name = "Enrapturing Powder"
-	desc = "Blows dust of a potent painkilling drug at the target."
+	desc = "Blows dust of a potent painkilling drug at the target, potentially causing overdoses with repeated use."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "powder"
 	clothes_req = FALSE
 	range = 3	//It's literally blowing coke in their face, basically.
 	associated_skill = /datum/skill/magic/holy
@@ -71,8 +76,10 @@
 //Numbing Pleasure - T3, removes all pain from self for a period of time. (Similar to Ravox's without any blood-clotting and better pain suppression + good mood buff.)
 /obj/effect/proc_holder/spell/invoked/painkiller
 	name = "Numbing Pleasure"
-	desc = "Numbs the targets pain and improves their mood."
-	overlay_state = "astrata"
+	desc = "Numbs the target's pain and improves their mood."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "pleasure"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -100,11 +107,13 @@
 		target.apply_status_effect(/datum/status_effect/buff/vitae)					//+2 Fortune and mood buff
 		return TRUE
 
-//T0 that tells the user the person's vice.
+// T0 that tells the user the person's vices. If they have Deceiving Meekness (and you're a low-level cleric), this spell will lie to you instead.
 /obj/effect/proc_holder/spell/invoked/baothavice
-	name = "Tell Vice"
-	desc = "Tells you the targets Vice."
-	overlay_state = "baotha_vice"
+	name = "Tell Vices"
+	desc = "Attempts to discern the target's vices. Depending on the target and your Miracles skill, some vices could be incorrect."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "vice"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -117,33 +126,164 @@
 	recharge_time = 5 SECONDS 
 	miracle = TRUE
 	devotion_cost = 10
-	var/list/fake_vices = list()
+	/// Assoc list matching human mobs to a list of faked vice names, for consistency in presentation.
+	var/list/fake_vices_cache = list()
 
 /obj/effect/proc_holder/spell/invoked/baothavice/cast(list/targets, mob/living/user)
-	if(ishuman(targets[1]))
-		var/vice_found
-		var/mob/living/carbon/human/H = targets[1]
-		if(HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
-			if(!(H in fake_vices))
-				fake_vices[H] = pick(GLOB.character_flaws)
-				vice_found = fake_vices[H]
-			else
-				vice_found = fake_vices[H]
-			if(prob(50 + ((H.STAPER - 10) * 10)))
-				to_chat(H, span_warning("A pair of prying eyes were laid on me..."))
-		if(!vice_found)
-			vice_found = H.charflaw.name
-		to_chat(user, span_info("They are... [span_warning("a [vice_found]")]"))
-		return TRUE
-	revert_cast()
-	return FALSE
+	if(!ishuman(targets[1]))
+		revert_cast()
+		return FALSE
+	var/mob/living/carbon/human/target = targets[1]
+	
+	if(!length(target.vices))
+		to_chat(user, span_warning("They have no vices."))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/our_human
+	if(ishuman(user))
+		our_human = user
+
+	var/list/vice_names
+
+	// If you fail this check, the spell will try to convincingly lie to you about the vices you don't already know.
+	if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && user.get_skill_level(/datum/skill/magic/holy) <= SKILL_LEVEL_NOVICE)
+		if(!fake_vices_cache[target])
+			
+			// Gather up what vices the caster knows to be true, then randomize the rest.
+			var/list/vice_paths = generate_vice_paths(target, our_human)
+
+			// Now convert all the typepaths to presentable names that will be shown and saved.
+			vice_names = list()
+			for(var/vice in vice_paths)
+				var/datum/charflaw/vice_ref = GLOB.charflaw_singletons[vice]
+				vice_names += vice_ref.name
+			vice_names = shuffle(vice_names) // hiding the fact that we copied traits first, in generate_vice_paths
+
+			fake_vices_cache[target] = vice_names.Copy()
+		else
+			var/list/fakey = fake_vices_cache[target]
+			vice_names = fakey.Copy()
+
+		if(prob(50 + ((target.STAPER - 10) * 10)))
+			to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
+
+	if(!vice_names) // if the caster actually passed the check, show real vices instead. 
+		vice_names = list()
+		for(var/datum/charflaw/charflaw in target.vices)
+			vice_names += charflaw.name
+
+	if(!length(vice_names)) // very necessary failsafe, especially if faking one vice and the roll fails FIVE TIMES
+		to_chat(user, span_warning("They have no vices."))
+		revert_cast() // shhh, they do have vices but we don't want you to know that
+		return FALSE
+
+	var/vices_string = english_list(vice_names)
+	var/prefix = "Their vices are... "
+	if(length(vice_names) == 1)
+		prefix = "Their vice is... "
+	to_chat(user, span_info("[prefix]") + span_warning("[vices_string]."))
+	return TRUE
+
+/// Generate a convincing lie (or half-truth) about the target's vices, both to be displayed, and to be saved for later in our copy of the spell.
+/// Returns a list of charflaw datum typepaths.
+/obj/effect/proc_holder/spell/invoked/baothavice/proc/generate_vice_paths(mob/living/carbon/human/target, mob/living/carbon/human/our_human)
+	RETURN_TYPE(/list)
+	var/list/vice_paths = list()
+	var/vices_to_gen = max(length(target.vices), 1) // We decrement this when we're guaranteeed to know a vice. 
+	var/baothamarked_nympho_check = FALSE
+
+	// First, we'll copy vices that are readily apparent to the caster, so as to make the readout convincing. Thankfully, we will only have to do this once per person.
+	for(var/datum/charflaw/vice_to_get in target.vices)
+		// Special cases first, since they're quick to check. These can't just fit in a list.
+		switch(vice_to_get.type)
+			// Sadists and masochists already get messages when they examine *each other*.
+			if(/datum/charflaw/addiction/sadist)
+				if(our_human.has_flaw(/datum/charflaw/addiction/masochist))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			if(/datum/charflaw/addiction/masochist)
+				if(our_human.has_flaw(/datum/charflaw/addiction/sadist))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			// Empaths already get messages when they examine mutes.
+			if(/datum/charflaw/mute)
+				if(HAS_TRAIT(our_human, TRAIT_EMPATH))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+			// And Baothans can already tell if someone is Marked by Baotha.
+			// Having it also implies Nymphomaniac, since that vice gets added by Marked if it doesn't already exist.
+			if(/datum/charflaw/marked_by_baotha)
+				if(HAS_TRAIT(our_human, TRAIT_DEPRAVED)) // Just making sure...
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					// Now to add Nympho, regardless of whether the caster has it themselves.
+					var/nympho_check = FALSE
+					for(var/path in vice_paths)
+						if(path == /datum/charflaw/addiction/lovefiend)
+							nympho_check = TRUE
+							break
+					if(!nympho_check)
+						baothamarked_nympho_check = TRUE
+						vice_paths += /datum/charflaw/addiction/lovefiend
+						vices_to_gen--
+					continue
+			if(/datum/charflaw/addiction/lovefiend)
+				if(baothamarked_nympho_check) // Since we don't have duplicate checking until later.
+					continue
+		// These vices have direct mutually-shared-vice examine messages. We will copy these if the caster shares them.
+		if(vice_to_get.type in CHARFLAWS_MUTUAL_TYPES)
+			for(var/datum/charflaw/vice in our_human.vices)
+				if(istype(vice, vice_to_get.type))
+					vice_paths += vice_to_get.type
+					vices_to_gen--
+					continue
+		// These vices have an obvious physical presence, at least when unmasked.
+		// We will try to copy these if they're on the target, and later skip any fake vices that are on this list.
+		if(vice_to_get.type in CHARFLAWS_PHYSICAL_TYPES)
+			vice_paths += vice_to_get.type
+			vices_to_gen--
+			continue
+
+	// Now generate the rest, if applicable. However many real vices the target has is our maximum.
+	if(vices_to_gen > 0)
+		for(var/i in 1 to vices_to_gen)
+			for(var/t in 1 to 5) // We'll put up with 5 rejections, and it'll otherwise be ok if we just skip this one.
+				var/vice_roll = pick_assoc(GLOB.character_flaws)
+				if(plausible_vice_filter(vice_roll, vice_paths))
+					vice_paths += vice_roll
+					break
+	
+	return vice_paths
+
+/// Filter randomly-picked fake vices that the target could not plausibly have. A false result means the vice will not be picked.
+/obj/effect/proc_holder/spell/invoked/baothavice/proc/plausible_vice_filter(vice_type, list/vice_paths)
+	//No duplicates
+	if(vice_type in vice_paths)
+		return FALSE
+	// Exclude "Random or None" and "No Flaw"
+	if(vice_type in CHARFLAWS_RANDNONE_TYPES)
+		return FALSE
+	// We already grabbed the physical vices the target has.
+	if(vice_type in CHARFLAWS_PHYSICAL_TYPES)
+		return FALSE
+	// We already know if you're marked by Baotha.
+	if(vice_type == /datum/charflaw/marked_by_baotha)
+		return FALSE
+
+	return TRUE
 
 // T0, orison inspired healing spell that pours a drink called Lover's Ruin. Works like a red for baotha blessed, poisons non-blessed.
 /obj/effect/proc_holder/spell/targeted/touch/loversruin
 	name = "Lover's Ruin"
 	desc = "A toast to passion that ends in ash.\n \
 		Beseech Baotha to pour wine onto a container. Poisons the unfaithful, rewards Her blessed with healing."
-	overlay_state = "aerosolize"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "ruin"
 	chargedrain = 0
 	chargetime = 0
 	releasedrain = 5
@@ -177,25 +317,25 @@
 	color = "#9c2745"
 	taste_description = "sin"
 
-/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
+/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_CRACKHEAD))
 		if(volume >= 60)
-			M.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+40, BLOOD_VOLUME_MAXIMUM)
-		var/list/wCount = M.get_wounds()
+			affected_mob.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
+		if(affected_mob.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			affected_mob.set_blood_volume(min(affected_mob.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
+		var/list/wCount = affected_mob.get_wounds()
 		if(wCount.len > 0)
-			M.heal_wounds(4.5)
+			affected_mob.heal_wounds(4.5)
 		if(volume > 0.99)
-			M.adjustBruteLoss(-2*REM, 0)
-			M.adjustFireLoss(-2*REM, 0)
-			M.adjustOxyLoss(-2, 0)
-			M.adjustToxLoss(-2, 0)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-			M.adjustCloneLoss(-4*REM, 0)
+			affected_mob.adjustBruteLoss(-2*REM, 0)
+			affected_mob.adjustFireLoss(-2*REM, 0)
+			affected_mob.adjustOxyLoss(-2, 0)
+			affected_mob.adjustToxLoss(-2, 0)
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+			affected_mob.adjustCloneLoss(-4*REM, 0)
 	else
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(1, 0)
+		affected_mob.adjustToxLoss(3, 0)
+		affected_mob.adjustOxyLoss(1, 0)
 	..()
 
 /obj/item/melee/touch_attack/loversruin/proc/create_ichor(atom/thing, mob/living/carbon/human/user)
@@ -239,9 +379,11 @@
 /obj/effect/proc_holder/spell/invoked/griefflower
 	name = "False Serenity Bloom"
 	desc = "A gift for those whom you have chosen as worthy of Her grace, to be able to imbibe in Her gifts as you do."
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "bloom"
 	clothes_req = FALSE
 	range = 7
-	overlay_state = "love"
 	sound = list('sound/magic/magnet.ogg')
 	releasedrain = 40
 	chargetime = 10
@@ -253,9 +395,9 @@
 	recharge_time = 30 MINUTES //To avoid spamming this shit and giving all heretics florida-man crackhead superpowers. No Bro.
 
 /obj/effect/proc_holder/spell/invoked/griefflower/cast(mob/living/user)
-	var/turf/T = get_turf(user)
-	if(!isclosedturf(T))
-		new /obj/item/clothing/ring/griefflower(T)
+	var/turf/spawn_turf = get_turf(user)
+	if(!isclosedturf(spawn_turf))
+		new /obj/item/clothing/ring/griefflower(spawn_turf)
 		return TRUE
 
 	to_chat(user, span_warning("The targeted location is blocked. Her gift cannot be invoked."))
@@ -265,10 +407,13 @@
 /obj/item/clothing/ring/griefflower
 	name = "rosa ring"
 	desc = "Once a flower of love, now touched by Baotha's hand. Its petals whisper of desire, despair, and the kind of longing that never dies. Worn by those who cannot let go."
-	icon_state = "peaceflower"
-	item_state = "peaceflower"
+	icon_state = "baothaflower"
+	item_state = "baothaflower"
 	icon = 'icons/roguetown/items/produce.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+
+/obj/item/clothing/ring/griefflower/show_examine_hover_tooltip()
+	return FALSE
 
 /obj/item/clothing/ring/griefflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -284,7 +429,9 @@
 /obj/effect/proc_holder/spell/invoked/joyride
 	name = "Joyride"
 	desc = "A frenzy for two to partake in."
-	overlay_state = "bliss"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "joyride"
 	range = 2
 	chargetime = 0.5 SECONDS
 	invocations = list("By Baotha's mercy, an ecstasy trance for two!")
@@ -325,7 +472,9 @@
 /obj/effect/proc_holder/spell/invoked/lasthigh
 	name = "Last High"
 	desc = "Pleasure's perfume, just before the fall."
-	overlay_state = "astrata"
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "last_high"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -358,3 +507,113 @@
 	timer = 10 MINUTES
 	stressadd = -99
 	desc = span_hypnophrase("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.") 
+
+// - BAOTHA REVIVAL - //
+
+/obj/effect/proc_holder/spell/invoked/resurrect/baotha
+	name = "Drive the Thorns Deep"
+	desc = "Revives the target by afflicting them with a lasting addiction."
+	debuff_type = /datum/status_effect/debuff/baotha_addiction
+	alt_required_items = list(/obj/item/natural/thorn = 3)
+	required_items = list(/obj/item/natural/thorn = 7)
+	sound = 'sound/magic/slimesquish.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	harms_undead = FALSE
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "revival"
+	action_icon_state = "revival"
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	required_structure = /obj/structure/fluff/psycross/baotha
+
+/datum/stressevent/baotha_withdrawal_severe
+	timer = 999 MINUTES
+	stressadd = 10
+	desc = span_userdanger("Everything is loud and grey. Where is the dust?!")
+
+/datum/status_effect/debuff/baotha_addiction
+	id = "baotha_addiction"
+	duration = 15 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/baotha_addiction
+	var/last_sniff_time = 0
+	var/withdrawal_active = FALSE
+	COOLDOWN_DECLARE(current_cooldown)
+	/// Cooldown for the message being sent
+	COOLDOWN_DECLARE(regretmessage_cooldown)
+	var/list/regret_msgs = list(
+		span_italics("The face of someone you failed drifts through your vision, their expression frozen in disappointment."),
+		span_warning("A sudden, cold weight settles in your chest as you remember a door you should never have opened."),
+		span_userdanger("The air tastes like copper and old dust. You can almost hear the screams from that day again."),
+		span_italics("You feel a phantom touch on your shoulder—a hand that belonged to someone long since gone."),
+		span_warning("A memory of a choice made in haste burns in your mind like a hot coal."),
+		span_italics("A voice that sounds like a dying fire whispers, 'You could have saved them.'")
+	)
+
+/datum/status_effect/debuff/baotha_addiction/proc/send_creepy_message()
+	var/mob/living/L = owner
+	if(!L)
+		return
+	to_chat(L, pick(regret_msgs))
+
+/datum/status_effect/debuff/baotha_addiction/on_apply()
+	. = ..()
+	// We apply withdrawals immediately
+	last_sniff_time = world.time - (5 MINUTES)
+	COOLDOWN_START(src, current_cooldown, 2 MINUTES)
+	RegisterSignal(owner, COMSIG_DRUG_SNIFFED, PROC_REF(on_sniff))
+
+/datum/status_effect/debuff/baotha_addiction/proc/on_sniff()
+	SIGNAL_HANDLER
+	last_sniff_time = world.time
+	if(withdrawal_active)
+		stop_withdrawal()
+
+/datum/status_effect/debuff/baotha_addiction/process(delta_time)
+	if(world.time > last_sniff_time + 5 MINUTES)
+		if(!withdrawal_active)
+			start_withdrawal()
+	else
+		if(withdrawal_active)
+			stop_withdrawal()
+
+	if(COOLDOWN_FINISHED(src, current_cooldown))
+		send_creepy_message()
+		COOLDOWN_START(src, current_cooldown, 2 MINUTES)
+/datum/status_effect/debuff/baotha_addiction/proc/start_withdrawal()
+	withdrawal_active = TRUE
+	owner.apply_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
+	var/mob/living/carbon/human/human = owner
+	human.add_stress(/datum/stressevent/baotha_withdrawal_severe)
+	to_chat(owner, span_userdanger("The craving for dust becomes unbearable..."))
+
+/datum/status_effect/debuff/baotha_addiction/proc/stop_withdrawal()
+	withdrawal_active = FALSE
+	owner.remove_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
+	var/mob/living/carbon/human/human = owner
+	human.remove_stress(/datum/stressevent/baotha_withdrawal_severe)
+	to_chat(owner, span_nicegreen("The sweet sting of the drugs calms your nerves. Relief."))
+
+/datum/status_effect/debuff/baotha_addiction/on_remove()
+	UnregisterSignal(owner, COMSIG_DRUG_SNIFFED)
+	stop_withdrawal()
+	. = ..()
+
+/datum/status_effect/debuff/baotha_withdrawal_stats
+	id = "baotha_withdrawal_stats"
+	duration = -1
+	alert_type = /atom/movable/screen/alert/status_effect/baotha_withdrawal
+	// Mild debuff because it's mixed with a mood debuff!
+	effectedstats = list(
+		STATKEY_STR = -2,
+		STATKEY_SPD = -2,
+		STATKEY_WIL = -2,
+	)
+
+/atom/movable/screen/alert/status_effect/baotha_addiction
+	name = "Endless Addiction"
+	desc = "Baotha's gifts come with a price. Your body now craves drugs. Tick tock..."
+
+/atom/movable/screen/alert/status_effect/baotha_withdrawal
+	name = "Withdrawal"
+	desc = "You are weak, slow, and miserable. Sniff something quickly to restore your strength!"
+
+

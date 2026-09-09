@@ -35,7 +35,7 @@
 	if(!wolfy)
 		return FALSE
 	werewolf_infection_timer = null
-	owner.flash_fullscreen("redflash3")
+	owner.fullscreen_redflash("redflash3")
 	to_chat(owner, span_danger("It hurts... Is this really the end for me?"))
 	owner.emote("scream") // heres your warning to others bro
 	owner.Knockdown(1)

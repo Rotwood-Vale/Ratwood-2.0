@@ -62,6 +62,10 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(heated)
 		START_PROCESSING(SSobj, src)
 
+/obj/structure/fermentation_keg/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
 /obj/structure/fermentation_keg/update_overlays()
 	. = ..()
 	if(length(overlays))
@@ -233,6 +237,8 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		var/datum/brewing_recipe/recipe = path
 		var/prereq = initial(recipe.pre_reqs)
 		if(!heated && initial(recipe.heat_required))
+			continue
+		if(initial(recipe.req_species) && !is_species(user, initial(recipe.req_species)))
 			continue
 		if((!ready_to_bottle && prereq == null) || (selected_recipe?.reagent_to_brew == prereq && ready_to_bottle))
 			options[initial(recipe.name)] = recipe

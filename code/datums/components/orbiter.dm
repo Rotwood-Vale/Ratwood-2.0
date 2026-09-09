@@ -9,13 +9,15 @@
 //rotation_speed: how fast to rotate (how many ds should it take for a rotation to complete)
 //rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
 //pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
-/datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+//pixel_orbit: Animate pixel offsets instead of a spin. A transform turns around the center of the orbiter sprite,
+//and wide overlays move that center off the tile.
+/datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, pixel_orbit)
 	if(!istype(orbiter) || !isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	orbiters = list()
 
-	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, pixel_orbit)
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent))
@@ -57,7 +59,7 @@
 		return COMPONENT_INCOMPATIBLE
 	move_react()
 
-/datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+/datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, pixel_orbit)
 	if(orbiter.orbiting)
 		if(orbiter.orbiting == src)
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
@@ -69,20 +71,23 @@
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 	var/matrix/initial_transform = matrix(orbiter.transform)
 
-	// Head first!
-	if(pre_rotation)
-		var/matrix/M = matrix(orbiter.transform)
-		var/pre_rot = 90
-		if(!clockwise)
-			pre_rot = -90
-		M.Turn(pre_rot)
-		orbiter.transform = M
+	if(pixel_orbit)
+		animate_pixel_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments)
+	else
+		// Head first!
+		if(pre_rotation)
+			var/matrix/M = matrix(orbiter.transform)
+			var/pre_rot = 90
+			if(!clockwise)
+				pre_rot = -90
+			M.Turn(pre_rot)
+			orbiter.transform = M
 
-	var/matrix/shift = matrix(orbiter.transform)
-	shift.Translate(0, radius)
-	orbiter.transform = shift
+		var/matrix/shift = matrix(orbiter.transform)
+		shift.Translate(0, radius)
+		orbiter.transform = shift
 
-	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
+		orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
 	if(ismob(orbiter))
 		var/mob/M = orbiter
 		M.updating_glide_size = FALSE
@@ -94,6 +99,26 @@
 	orbiter.forceMove(get_turf(parent))
 	if(!istype(orbiter, /mob/dead/observer/screye))
 		to_chat(orbiter, span_notice("Now orbiting [parent]."))
+
+///Move the orbiter in a circle with pixel offsets. The sprite size does not shift the circle.
+/datum/component/orbiter/proc/animate_pixel_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments)
+	rotation_segments = max(rotation_segments, 3)
+	var/step_angle = 360 / rotation_segments
+	if(!clockwise)
+		step_angle = -step_angle
+	var/step_time = rotation_speed / rotation_segments
+
+	//Start at the top of the circle. The first loop then does not jump out of the center.
+	orbiter.pixel_x = 0
+	orbiter.pixel_y = radius
+	for(var/segment in 1 to rotation_segments)
+		var/angle = step_angle * segment
+		var/new_x = radius * sin(angle)
+		var/new_y = radius * cos(angle)
+		if(segment == 1)
+			animate(orbiter, pixel_x = new_x, pixel_y = new_y, time = step_time, loop = -1)
+		else //stacks onto the animation above
+			animate(pixel_x = new_x, pixel_y = new_y, time = step_time)
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiters[orbiter])
@@ -145,11 +170,11 @@
 
 /////////////////////
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, pixel_orbit = FALSE)
 	if(!istype(A) || !get_turf(A) || A == src)
 		return
 
-	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, pixel_orbit)
 
 /atom/movable/proc/stop_orbit(datum/component/orbiter/orbits)
 	return // We're just a simple hook

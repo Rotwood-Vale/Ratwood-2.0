@@ -112,6 +112,9 @@
 	/// This job is a "wanderer" on examine
 	var/wanderer_examine = FALSE
 
+	/// This job is a "lowlife" on examine
+	var/lowlife_examine = FALSE
+
 	/// This job uses adventurer classes on examine
 	var/advjob_examine = FALSE
 
@@ -236,8 +239,19 @@
 
 		if(H.mind)
 			H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
-
+			if (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR))
+				H.mind?.special_items["Metal Scrap (Repair kit)"] = /obj/item/repair_kit/metal/bad
+			else
+				H.mind?.special_items["Fabric Patch (Repair kit)"] = /obj/item/repair_kit/bad
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
+
+	if(HAS_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY))
+		H.mind.has_bomb = TRUE
+		to_chat(H.mind, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+
+	if(HAS_TRAIT(H, TRAIT_DRUG_SUPPLY))
+		H.mind.has_drug_delivery = TRUE
+		to_chat(H.mind, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
 
 	if(H.islatejoin && announce_latejoin)
 		var/used_title = display_title || title
@@ -285,20 +299,6 @@
 		hugboxify_for_class_selection(H)
 
 	log_admin("[department] >> [H.key]/([H.real_name]) has joined as [H.mind.assigned_role].")
-
-/client/verb/set_mugshot()
-	set category = "OOC"
-	set name = "Set Credits Mugshot"
-	set hidden = FALSE
-	if(mob && ishuman(mob) && mob.mind)
-		var/mob/living/carbon/human/H = mob
-		if(!H.mind.mugshot_set)
-			to_chat(src, "Updating mugshot...")
-			H.mind.mugshot_set = TRUE
-			H.add_credit(TRUE)
-			to_chat(src, "Mugshot updated.")
-		else
-			to_chat(src, "Mugshots are resource intensive. You are limited to one per character.")
 
 /mob/living/carbon/human/proc/add_credit(generate_for_adv_class = FALSE) //Evil code to get the proper image for adv classes after they spawn in.
 	if(!mind || !client)
@@ -412,6 +412,12 @@
 /datum/job/proc/config_check()
 	return TRUE
 
+
+/datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)//gives the desert language to all the desert people!
+	. = ..()
+	if(SSmapping.current_map.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
+		H.grant_language(/datum/language/celestial)
+
 /datum/outfit/job
 	name = "Standard Gear"
 
@@ -490,11 +496,17 @@
 		var/list/dat = list()
 		var/show_job_traits = TRUE
 		var/sclass_count = 0
+		var/list/subclasses_to_show = job_subclasses
+		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
+			subclasses_to_show = list()
+			for(var/ctag in advclass_cat_rolls)
+				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+					subclasses_to_show += ctag_class.type
 		if(length(job_subclasses) && length(job_stats))
 			CRASH("[REF(src)] has definitions for both class and subclass stats. Likely not intended, and they will stack!")
-		if(length(job_subclasses))
+		if(length(subclasses_to_show))
 			dat += "This class has the following subclasses: "
-			for(var/sclass in job_subclasses)
+			for(var/sclass in subclasses_to_show)
 				sclass_count++
 				var/datum/advclass/adv = sclass
 				var/datum/advclass/adv_ref = SSrole_class_handler.get_advclass_by_name(initial(adv.name))
@@ -609,7 +621,13 @@
 			winset(usr, "classhelp", "focus=true")
 	if(href_list["jobsubclassinfo"])
 		var/list/dat = list()
-		for(var/adv in job_subclasses)
+		var/list/subclasses_to_show = job_subclasses
+		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
+			subclasses_to_show = list()
+			for(var/ctag in advclass_cat_rolls)
+				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+					subclasses_to_show += ctag_class.type
+		for(var/adv in subclasses_to_show)
 			var/datum/advclass/advpath = adv
 			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
 			if(subclass.maximum_possible_slots != -1)

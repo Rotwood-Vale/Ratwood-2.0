@@ -75,8 +75,9 @@
 	if(bonded_health_percent <= emergency_threshold)
 		to_chat(parent_mob, span_danger("You feel a sharp pain in your chest - [bonded_with] is in serious danger!"))
 		// Add a subtle screen effect
-		parent_mob.overlay_fullscreen("familial_pain", /atom/movable/screen/fullscreen/painflash, 1)
-		addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "familial_pain"), 3 SECONDS)
+		if(!parent_mob.no_redflash)
+			parent_mob.overlay_fullscreen("familial_pain", /atom/movable/screen/fullscreen/painflash, 1)
+			addtimer(CALLBACK(parent_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "familial_pain"), 3 SECONDS)
 
 	// Mutual health awareness at close range
 	if(get_dist(parent_mob, bonded_with) <= 7 && parent_mob.z == bonded_with.z)

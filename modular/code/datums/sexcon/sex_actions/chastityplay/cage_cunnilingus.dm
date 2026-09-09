@@ -25,7 +25,7 @@
     user.visible_message(span_warning("[user] drops to [user.p_their()] knees and brings [user.p_their()] mouth level with [target]'s chastity belt."))
 
 /datum/sex_action/chastityplay/cage_cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] tongue through the front slits of [target]'s belt, finding what little skin it can reach..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] tongue through the front slits of [target]'s belt, finding what little skin it can reach..."))
     user.sexcon.oralcourse_noise(target)
 
     user.sexcon.perform_sex_action(target, 1.8, 0, TRUE)

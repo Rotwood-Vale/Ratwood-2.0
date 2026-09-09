@@ -1,0 +1,6 @@
+{
+	"map_name": "The Purity",
+	"map_path": "map_files/otherz",
+	"map_file": "inqboat.dmm",
+	"traits": [{"Name": "inqboat", "Up": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Up": true, "Down": true}, {"Down": true}]
+}

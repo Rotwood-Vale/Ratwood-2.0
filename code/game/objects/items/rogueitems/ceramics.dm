@@ -415,6 +415,14 @@
 	icon_state = "claystatueraw5"
 	cooked_type = /obj/item/roguestatue/clay/design5
 
+/obj/item/natural/clay/jarhelm
+	name = "uncooked large jar"
+	desc = "A large, upturned, and uncooked jar. It still needs to be cooked in a kiln."
+	icon = 'icons/roguetown/clothing/special/jar.dmi'
+	icon_state = "rawjar"
+	obj_flags = UNIQUE_RENAME
+	cooked_type = /obj/item/clothing/head/roguetown/helmet/heavy/jar
+
 /obj/item/roguestatue/clay
 	name = "ceramic statue"
 	desc = "A ceramic statue, shining in its elegance!"

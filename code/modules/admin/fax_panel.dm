@@ -8,35 +8,86 @@
 
 GLOBAL_DATUM_INIT(fax_panel_state, /datum/ui_state/fax_panel_state, new)
 GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
+GLOBAL_LIST_EMPTY(player_letter_history)
 
 /datum/fax_panel
+	/// Cached UI payload sections to avoid rebuilding large lists every tgui update tick.
+	var/list/cached_hermes_list = list()
+	var/list/cached_player_list = list()
+	var/cached_master_exists = FALSE
+	var/hermes_cache_expires = 0
+	var/player_cache_expires = 0
+
+/datum/fax_panel/proc/refresh_ui_cache(force = FALSE)
+	if(force || world.time >= hermes_cache_expires)
+		var/list/new_hermes_list = list()
+		for(var/obj/structure/roguemachine/mail/H in SSroguemachine.hermailers)
+			new_hermes_list += list(list(
+				"num" = H.ournum,
+				"tag" = H.mailtag || "",
+			))
+		cached_hermes_list = new_hermes_list
+		hermes_cache_expires = world.time + 20
+
+	if(force || world.time >= player_cache_expires)
+		var/list/new_player_list = list()
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H.real_name && H.client)
+				new_player_list |= H.real_name
+		cached_player_list = new_player_list
+		player_cache_expires = world.time + 20
+
+	cached_master_exists = SSroguemachine.hermailermaster ? TRUE : FALSE
 
 /datum/fax_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "FaxPanel", "Admin Letter Panel")
+		ui.set_autoupdate(FALSE)
 		ui.open()
+
+/datum/fax_panel/proc/register_player_letter(sender, recipient, body, sender_ckey = null, recipient_ckey = null)
+	var/clean_sender = sanitize(copytext(sender || "Anonymous", 1, MAX_NAME_LEN))
+	if(!clean_sender)
+		clean_sender = "Anonymous"
+
+	var/clean_recipient = sanitize(copytext(recipient || "Unknown", 1, MAX_NAME_LEN))
+	if(!clean_recipient)
+		clean_recipient = "Unknown"
+
+	var/clean_sender_ckey = sanitize(copytext(sender_ckey || "unknown", 1, MAX_NAME_LEN))
+	if(!clean_sender_ckey)
+		clean_sender_ckey = "unknown"
+
+	var/clean_recipient_ckey = sanitize(copytext(recipient_ckey || "unknown", 1, MAX_NAME_LEN))
+	if(!clean_recipient_ckey)
+		clean_recipient_ckey = "unknown"
+
+	var/clean_body = body || ""
+	clean_body = html_decode(clean_body)
+	clean_body = replacetext(clean_body, ascii2text(13), "")
+	clean_body = replacetext(clean_body, "\n", "<br>")
+	clean_body = copytext(clean_body, 1, 4000)
+
+	var/list/entry = list(
+		"sender" = clean_sender,
+		"recipient" = clean_recipient,
+		"sender_ckey" = clean_sender_ckey,
+		"recipient_ckey" = clean_recipient_ckey,
+		"body" = clean_body,
+	)
+	GLOB.player_letter_history = list(entry) + GLOB.player_letter_history
+	if(GLOB.player_letter_history.len > 200)
+		GLOB.player_letter_history.Cut(201)
 
 /datum/fax_panel/ui_data(mob/user)
 	var/list/data = list()
+	refresh_ui_cache()
 
-	// Build HERMES machine list
-	var/list/hermes_list = list()
-	for(var/obj/structure/roguemachine/mail/H in SSroguemachine.hermailers)
-		hermes_list += list(list(
-			"num" = H.ournum,
-			"tag" = H.mailtag || "",
-		))
-	data["hermes_list"] = hermes_list
-
-	// Build online player list (by real_name)
-	var/list/player_list = list()
-	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(H.real_name && H.client)
-			player_list |= H.real_name
-	data["player_list"] = player_list
-
-	data["master_exists"] = SSroguemachine.hermailermaster ? TRUE : FALSE
+	data["hermes_list"] = cached_hermes_list
+	data["player_list"] = cached_player_list
+	data["master_exists"] = cached_master_exists
+	data["letter_history"] = GLOB.player_letter_history
 
 	return data
 
@@ -45,6 +96,10 @@ GLOBAL_DATUM_INIT(fax_panel, /datum/fax_panel, new)
 		return TRUE
 
 	switch(action)
+		if("refresh")
+			refresh_ui_cache(TRUE)
+			return TRUE
+
 		if("send")
 			var/mob/user = ui.user
 			if(!check_rights_for(user.client, R_ADMIN))

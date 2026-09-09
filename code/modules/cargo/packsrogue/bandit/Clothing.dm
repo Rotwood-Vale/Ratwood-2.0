@@ -23,6 +23,11 @@
 	cost = 20
 	contains = list(/obj/item/clothing/head/roguetown/roguehood/reinforced)
 
+/datum/supply_pack/rogue/Clothing/bandithood
+	name = "Bandit Hood"
+	cost = 5
+	contains = list(/obj/item/clothing/head/roguetown/menacing/bandit)
+
 /datum/supply_pack/rogue/Clothing/keffiyeh
 	name = "Keffiyeh"
 	cost = 5
@@ -161,9 +166,14 @@
 	contains = list(/obj/item/clothing/head/roguetown/chef)
 
 /datum/supply_pack/rogue/Clothing/maidband
-	name = "Maid's Headbad"
+	name = "Maid's Headband"
 	cost = 5
 	contains = list(/obj/item/clothing/head/roguetown/maidband)
+
+/datum/supply_pack/rogue/Clothing/maiddress
+	name = "Maid's Dress"
+	cost = 5
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/dress/maid)
 
 /datum/supply_pack/rogue/Clothing/maidapron
 	name = "Maid's Apron"

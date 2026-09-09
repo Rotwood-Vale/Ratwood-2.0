@@ -20,6 +20,13 @@
 	var/list/statindex = list()
 	var/datum/patron/patron = /datum/patron/godless
 
+/// Print our stat block to someone watching us, such as an observer on our HUD.
+/mob/living/proc/print_stats(mob/user)
+	if(!user)
+		return
+	to_chat(user, "<span class='info'>STR: \Roman [STASTR] | PER: \Roman [STAPER] | INT: \Roman [STAINT] | CON: \Roman [STACON]</span>")
+	to_chat(user, "<span class='info'>WIL: \Roman [STAWIL] | SPD: \Roman [STASPD] | FOR: \Roman [STALUC] | PATRON: [patron]</span>")
+
 /mob/living/proc/init_faith()
 	set_patron(/datum/patron/godless)
 
@@ -71,7 +78,7 @@
 				change_stat(STATKEY_SPD, -2)
 				change_stat(STATKEY_PER, -1)
 				change_stat(STATKEY_CON, -2)
-				change_stat(STATKEY_INT, 2)
+				change_stat(STATKEY_INT, 3)
 				change_stat(STATKEY_LCK, 1)
 		if(key)
 			if(check_blacklist(ckey(key)))
@@ -165,7 +172,8 @@
 				newamt--
 				BUFPER++
 			STAPER = newamt
-
+			see_override = initial(src.see_invisible) + (STAPER/3.25) //PER is far easier to get in Rogueslop 2.0
+			update_sight() //This also fixes a few new bugs that have come and gone.
 			update_fov_angles()
 
 		if(STATKEY_INT)
@@ -271,7 +279,7 @@
 
 /// Calculates a luck value in the range [1, 400] (calculated as STALUC^2), then maps the result linearly to the given range
 /// min must be >= 0, max must be <= 100, and min must be <= max
-/// For giving 
+/// For giving
 /mob/living/proc/get_scaled_sq_luck(min, max)
 	if (min < 0)
 		min = 0
@@ -296,13 +304,37 @@
 	if(ignore_effects)
 		var/truefor = get_true_stat(STATKEY_LCK)
 		if(truefor < 10)
-			return prob((10 - truefor) * multi)
+			var/failed = prob((10 - truefor) * multi)
+			// if we failed, but we're a xylixian devotee, we get another shot
+			if(failed && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+				failed = prob((10 - truefor) * multi)
+				// if xylix twisted fate into our favour, get a little jingle from them
+				if(!failed)
+					play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+					add_stress(/datum/stressevent/xylixian_pity)
+			return failed
 	else if(STALUC < 10)
-		return prob((10 - STALUC) * multi)
+		var/failed = prob((10 - STALUC) * multi)
+		// if we failed, but we're a xylixian devotee, we get another shot
+		if(failed && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+			failed = prob((10 - STALUC) * multi)
+			// if xylix twisted fate into our favour, get a little jingle from them
+			if(!failed)
+				play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+				add_stress(/datum/stressevent/xylixian_pity)
+		return failed
 
 /mob/living/proc/goodluck(multi = 3)
 	if(STALUC > 10)
-		return prob((STALUC - 10) * multi)
+		var/succeeded = prob((STALUC - 10) * multi)
+		// if we didn't succeed, but we're a xylixian devotee, we get another shot
+		if(!succeeded && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
+			succeeded = prob((STALUC - 10) * multi)
+			// if xylix twisted fate into our favour, get a little jingle from them
+			if(succeeded)
+				play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
+				add_stress(/datum/stressevent/xylixian_fate)
+		return succeeded
 
 /mob/living/proc/get_stat_level(stat_keys)
 	switch(stat_keys)
@@ -348,3 +380,13 @@
 		return isnull(dee_cee) ? prob(tocheck * chance_per_point) : prob(clamp((dee_cee - tocheck) * chance_per_point,0,100))
 	else
 		return isnull(dee_cee) ? prob(tocheck * chance_per_point) : prob(clamp((tocheck - dee_cee) * chance_per_point,0,100))
+
+/mob/living/proc/reset_stats()
+	STASTR = 10
+	STAPER = 10
+	STAINT = 10
+	STACON = 10
+	STAWIL = 10
+	STASPD = 10
+	STALUC = 10
+	return

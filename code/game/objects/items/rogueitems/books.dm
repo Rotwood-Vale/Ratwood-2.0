@@ -175,7 +175,7 @@
 	title = "The Verses and Acts of the Ten"
 	dat = "gott.json"
 	possible_item_intents = list(
-		/datum/intent/use, 
+		/datum/intent/use,
 		/datum/intent/bless,
 	)
 
@@ -299,7 +299,7 @@
 
 /obj/item/book/rogue/law
 	name = "Tome of Justice"
-	desc = "The Tome of Laws, as passed from the Holy See to its many Ten-worshipping communities."
+	desc = "Issued by the Crown of the Kingdom of Ferentia to serve as the legal framework for the realm."
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
@@ -487,21 +487,21 @@
 	var/is_in_round_player_generated
 	var/list/book_icons = list(
 	"Sickly green with embossed bronze" = "book8",
-	"White with embossed obsidian" = "book7",
-	"Black with embossed quartz" = "book6",
-	"Blue with embossed ruby" = "book5",
-	"Green with embossed amethyst" = "book4",
-	"Purple with embossed emerald" = "book3",
-	"Red with embossed sapphire" = "book2",
-	"Brown with embossed gold" = "book1",
-	"Brown without embossed material" = "basic_book")
+	"Red with embossed toper" = "book7",
+	"Purple with embossed obsidian" = "book6",
+	"Brown with embossed obsidian" = "book5",
+	"Yellow without embossed material" = "book4",
+	"Blue without embossed material" = "book3",
+	"Red without embossed material" = "book2",
+	"Black without embossed material" = "book",
+	"Green without embossed material" = "basic_book")
 	name = "unknown title"
 	desc = "Penned by an unknown author."
 	icon_state = "basic_book_0"
 	base_icon_state = "basic_book"
 	override_find_book = TRUE
 
-/obj/item/book/rogue/playerbook/Initialize(mapload, loc, in_round_player_generated, mob/living/in_round_player_mob, text)
+/obj/item/book/rogue/playerbook/Initialize(mapload, in_round_player_generated, mob/living/in_round_player_mob, text)
 	. = ..()
 	is_in_round_player_generated = in_round_player_generated
 	if(is_in_round_player_generated)
@@ -555,6 +555,7 @@
 	resistance_flags = FLAMMABLE
 	grid_width = 32
 	grid_height = 64
+	dropshrink = 0.8
 	var/number_of_pages = 2
 	var/compiled_pages = null
 	var/list/page_texts = list()
@@ -698,6 +699,7 @@
 	desc = "Apply on a written manuscript to create a book."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "book_crafting_kit"
+	dropshrink = 0.7
 
 /obj/item/book/rogue/swatchbook
 	name = "Tailor's Swatchbook"
@@ -721,3 +723,35 @@
 			updateUsrDialog()
 	else
 		return
+
+/obj/item/book/rogue/bibble/zizo
+	name = "Lexicon of Her Truth"
+	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Ambition - or at least the version recounted by the cultists of her 'Salvation'."
+	icon = 'icons/roguetown/items/bookszizo.dmi'
+	icon_state = "zizoble_0"
+	base_icon_state = "zizoble"
+	title = "Lexicon of Her Truth"
+	dat = "gott.json"
+
+/obj/item/book/rogue/bibble/zizo/attack(mob/living/M, mob/user)
+	return
+
+/obj/item/book/rogue/bibble/zizo/MiddleClick(mob/user, params)
+	return
+
+/obj/item/book/rogue/bibble/zizo/read(mob/living/carbon/human/user)
+	if(!open)
+		to_chat(user, span_info("Open it first."))
+		return FALSE
+	if(!user.client || !user.hud_used)
+		return
+	if(!user.hud_used.reads)
+		return
+	if(!user.can_read(src))
+		return
+	if(in_range(user, src) || isobserver(user))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/m
+		var/list/verses = world.file2list("strings/zizobibble.txt")
+		m = pick(verses)
+		user.say(m)

@@ -25,13 +25,13 @@
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/M)
 	if(last_added)
-		M.blood_volume -= last_added
+		M.adjust_blood_volume(-(last_added))
 		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double my effective blood level.
-		var/amount_to_add = min(M.blood_volume, volume*5)
-		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - M.blood_volume
-		M.blood_volume = new_blood_level
+	if(M.get_blood_volume() < maximum_reachable)	//Can only up to double my effective blood level.
+		var/amount_to_add = min(M.get_blood_volume(), volume*5)
+		var/new_blood_level = min(M.get_blood_volume() + amount_to_add, maximum_reachable)
+		last_added = new_blood_level - M.get_blood_volume()
+		M.set_blood_volume(new_blood_level)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
@@ -52,3 +52,29 @@
 		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
 	..()
+
+/datum/reagent/medicine/vital_essence
+	name = "Vital Essence"
+	description = "A stolen essence of blood that restores flesh, stamina, and thirst."
+	reagent_state = LIQUID
+	color = "#7a0000"
+	taste_description = "warm vital essence"
+	overdose_threshold = 0
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+
+/datum/reagent/medicine/vital_essence/on_mob_life(mob/living/carbon/M)
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		M.set_blood_volume(min(M.get_blood_volume() + 5, BLOOD_VOLUME_NORMAL))
+	if(!HAS_TRAIT(M, TRAIT_INFINITE_STAMINA))
+		M.energy_add(10)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(5) // something between red and strong red. We cannot drink water 
+	if(volume > 0.99)
+		M.adjustBruteLoss(-1 * REM, 0)
+		M.adjustFireLoss(-1 * REM, 0)
+		M.adjustOxyLoss(-1, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * REM)
+		M.adjustCloneLoss(-1 * REM, 0)
+	return ..()

@@ -35,12 +35,14 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 // form the full /obj/item/chastity type; this split is purely a compile-order requirement.
 /obj/item/chastity
 	name = "chastity belt"
+	always_show_examine_link = TRUE
 	desc = "A unisex metal device designed to prevent penetrative sex. It has a lock on the front, and encloses the groin area behind robust iron bars. For the devout."
 	icon = 'modular/icons/obj/lewd/chastity.dmi'
 	icon_state = "cage_belt"
 	mob_overlay_icon = "cage_belt"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = INDESTRUCTIBLE
+	dropshrink = 0.9
 	var/datum/bodypart_feature/chastity/chastity_feature // snowflake slot for chastity items, belt's dont work as clothing equippables
 	var/chastity_type = 0 // 0 = full, 1 = cage, 2 = cage with anal, 3 = spiked cage, 4 = spiked cage with anal, 5 = insertable, 6 = insertable with anal, 7 = spiked insertable, 8 = spiked insertable with anal, 9 = spiked intersex device
 	var/chastity_organtype = 0 // 0 = neuter, 1 = penis required, 2 = vagina required, 3 = both required
@@ -50,6 +52,8 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	var/chastity_cursed = FALSE // if the device works like a cursed collar
 	var/mob/living/carbon/human/chastity_victim = null // variable for anyone currently caged
 	var/datum/mind/chastity_master = null // varient of the collar master variable but for specifically cages
+	/// Round-persistent counter for non-self ejaculation events received by the current cursed wearer.
+	var/received_cum_count = 0
 	var/obj/item/dildo/attached_toy = null // dildo mounted directly onto this chastity device
 	lockid = null
 	lockhash = null
@@ -74,6 +78,19 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	. = ..()
 	if(attached_toy)
 		. += "[span_notice("\An [attached_toy] appears attached to \the [initial(name)]. Alt+RMB to remove it.")]"
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		. += span_notice("[tally_text] are etched into the chastity device's metal surface.")
+
+/obj/item/chastity/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(chastity_cursed && received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the chastity device's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
 
 /obj/item/chastity/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/dildo))
@@ -187,10 +204,10 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(chastity_feature)
 		return TRUE
 	var/datum/bodypart_feature/chastity/chastity_new = new /datum/bodypart_feature/chastity()
-	// Use the base accessory setter so we don't spawn a second hidden chastity item.
-	call(chastity_new, /datum/bodypart_feature/proc/set_accessory_type)(sprite_acc, null, H)
 	chastity_new.chastity_item = src
-	chastity_feature = chastity_new
+	// Use the base accessory setter so we don't spawn a second hidden chastity item.
+	// ^ DON'T DO THAT, IF YOU DO THAT YOU WROTE YOUR CODE WRONG
+	chastity_new.set_accessory_type(sprite_acc, null, H)
 	return TRUE
 
 // Attaches the prepared chastity bodypart feature to the chest bodypart.
@@ -400,5 +417,5 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 
 	if(chastity_flat)
 		var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
-		if(penis?.penis_size >= DEFAULT_PENIS_SIZE)
+		if(penis?.penis_size >= DEFAULT_PENIS_SIZE && penis?.sheath_type == SHEATH_TYPE_NONE)
 			H.add_stress(/datum/stressevent/chastity_flat_cramped)

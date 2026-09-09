@@ -1269,3 +1269,117 @@
 	result = /obj/item/rogueweapon/huntingknife/stoneknife/opalknife
 	reqs = list(/obj/item/roguegem/opal = 1)
 	craftdiff = SKILL_LEVEL_MASTER
+
+//.....................Chitin......................//
+
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/rawchitin
+	name = "carved chitin (x2)"
+	result = list (
+		/obj/item/carvedgem/chitin/rawchitin,
+		/obj/item/carvedgem/chitin/rawchitin
+	)
+	reqs = list(/obj/item/roguegem/chitin = 1)
+	craftdiff = SKILL_LEVEL_NOVICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/cameo
+	name = "chitin cameo"
+	result = /obj/item/carvedgem/chitin/cameo
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_NOVICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/ring
+	name = "chitin ring"
+	result = /obj/item/clothing/ring/chitin
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/figurine
+	name = "chitin figurine"
+	result = /obj/item/carvedgem/chitin/figurine
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/tablet
+	name = "chitin tablet"
+	result = /obj/item/carvedgem/chitin/tablet
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/fish
+	name = "chitin fish figurine"
+	result = /obj/item/carvedgem/chitin/fish
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/vase
+	name = "chitin vase"
+	result = /obj/item/carvedgem/chitin/vase
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/amulet
+	name = "chitin amulet"
+	result = /obj/item/clothing/neck/roguetown/carved/chitinamulet
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_APPRENTICE
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/bust
+	name = "chitin bust"
+	result = /obj/item/carvedgem/chitin/bust
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/bracelet
+	name = "chitin bracelets"
+	result = /obj/item/clothing/wrists/roguetown/gem/chitinbracelet
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/circlet
+	name = "chitin circlet"
+	result = /obj/item/clothing/head/roguetown/circlet/carvedgem/chitin
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/fancyvase
+	name = "fancy chitin vase"
+	result = /obj/item/carvedgem/chitin/fancyvase
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/comb
+	name = "chitin comb"
+	result = /obj/item/carvedgem/chitin/comb
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/duck
+	name = "chitin duck"
+	result = /obj/item/carvedgem/chitin/duck
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_JOURNEYMAN
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/urn
+	name = "chitin urn"
+	result = /obj/item/carvedgem/chitin/urn
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_EXPERT
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/statue
+	name = "chitin statue"
+	result = /obj/item/carvedgem/chitin/statue
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_EXPERT
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/obelisk
+	name = "chitin obelisk"
+	result = /obj/item/carvedgem/chitin/obelisk
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_EXPERT
+
+/datum/crafting_recipe/roguetown/gemcarving/chitin/beetle
+	name = "chitin beetle sculpture"
+	result = /obj/item/carvedgem/chitin/beetle
+	reqs = list(/obj/item/carvedgem/chitin/rawchitin = 1)
+	craftdiff = SKILL_LEVEL_MASTER

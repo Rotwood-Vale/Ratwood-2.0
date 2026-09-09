@@ -28,7 +28,7 @@
 	user.visible_message(span_warning("[user] grabs [target]'s cock and shoves it between [user.p_their()] tits!"))
 
 /datum/sex_action/force_titjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] shoves [target]'s cock between [user.p_their()] tits."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] shoves [target]'s cock between [user.p_their()] tits."))
 	user.sexcon.outercourse_noise(user)
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)

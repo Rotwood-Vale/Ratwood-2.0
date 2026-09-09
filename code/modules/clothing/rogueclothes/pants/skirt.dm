@@ -15,7 +15,7 @@
 
 /obj/item/clothing/under/roguetown/skirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)
-	..()
+	return ..()
 
 /obj/item/clothing/under/roguetown/skirt/blue
 	color = CLOTHING_BLUE

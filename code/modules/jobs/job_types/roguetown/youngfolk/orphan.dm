@@ -18,6 +18,7 @@
 	max_pq = null
 	round_contrib_points = 2
 	advjob_examine = TRUE
+	lowlife_examine = TRUE
 
 	cmode_music = 'sound/music/combat_bum.ogg'
 	job_subclasses = list(
@@ -31,7 +32,8 @@
 		/datum/advclass/vagabond_runner,
 		/datum/advclass/vagabond_scholar,
 		/datum/advclass/vagabond_wanted,
-		/datum/advclass/vagabond_unraveled
+		/datum/advclass/vagabond_unraveled,
+		/datum/advclass/vagabond_busker
 	)
 
 /datum/job/roguetown/orphan/New()

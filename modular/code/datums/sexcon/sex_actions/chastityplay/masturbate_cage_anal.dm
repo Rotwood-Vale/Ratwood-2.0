@@ -23,7 +23,7 @@
     user.visible_message(span_warning("[user] reaches back to press [user.p_their()] fingers against [user.p_their()] belt's rear shield."))
 
 /datum/sex_action/chastityplay/masturbate_cage_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] fingers against the rear plate of [user.p_their()] belt, pressing where the shield rides closest to skin..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works [user.p_their()] fingers against the rear plate of [user.p_their()] belt, pressing where the shield rides closest to skin..."))
     user.sexcon.perform_sex_action(user, 1.2, 1, TRUE)
     user.sexcon.handle_passive_ejaculation()
 

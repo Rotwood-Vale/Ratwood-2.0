@@ -4,8 +4,8 @@
 	flag = WRETCH
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 5
+	total_positions = 9
+	spawn_positions = 9
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Somewhere in your lyfe, you fell to the wrong side of civilization. Hounded by the consequences of your actions, you spend your daes prowling the roads for easy marks and loose purses, scraping to get by."
 	outfit = null
@@ -14,6 +14,7 @@
 	show_in_credits = FALSE
 	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
 	max_pq = null
+	vice_restrictions = list(/datum/charflaw/assassintarget)
 
 	obsfuscated_job = TRUE
 	class_categories = TRUE
@@ -25,7 +26,7 @@
 	announce_latejoin = FALSE
 	wanderer_examine = TRUE
 	advjob_examine = TRUE
-	always_show_on_latechoices = TRUE
+	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE
 	same_job_respawn_delay = 1 MINUTES
 	virtue_restrictions = list(/datum/virtue/heretic/zchurch_keyholder) //all wretch classes automatically get this
@@ -40,14 +41,19 @@
 		/datum/advclass/wretch/necromancer,
 		/datum/advclass/wretch/heretic,
 		/datum/advclass/wretch/heretic/spy,
+		/datum/advclass/wretch/heretic/monk,
 		/datum/advclass/wretch/outlaw,
 		/datum/advclass/wretch/outlaw/marauder,
+		/datum/advclass/wretch/lunacyembracer,
 		/datum/advclass/wretch/poacher,
 		/datum/advclass/wretch/plaguebearer,
 		/datum/advclass/wretch/pyromaniac,
 		/datum/advclass/wretch/vigilante,
+		/datum/advclass/wretch/herald_of_progress,
 		/datum/advclass/wretch/blackoakwyrm,
 		/datum/advclass/wretch/antipope,
+		/datum/advclass/wretch/wretchedtoiler,
+		/datum/advclass/wretch/ancientchampion,
 	)
 
 /datum/job/roguetown/wretch/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
@@ -61,9 +67,9 @@
 
 // Proc for wretch to select a bounty
 /proc/wretch_select_bounty(mob/living/carbon/human/H)
-	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of The Vale", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
+	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
 	// Felinid said we should gate it at 100 or so on at the lowest, so that wretch cannot ezmode it.
-	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe", "Horrific atrocities")
+	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe (+1 FOR)", "Horrific atrocities (+1 ALL STATS)")
 	var/race = H.dna.species
 	var/gender = H.gender
 	var/list/d_list = H.get_mob_descriptors()
@@ -74,11 +80,19 @@
 	switch(bounty_severity)
 		if("Misdeed")
 			bounty_total = rand(100, 200)
-		if("Harm towards lyfe")
+		if("Harm towards lyfe (+1 FOR)")
 			bounty_total = rand(200, 300)
-		if("Horrific atrocities")
+			H.change_stat("fortune", 1)
+		if("Horrific atrocities (+1 ALL STATS)")
 			bounty_total = rand(300, 400) // Let's not make it TOO profitable
-			if(bounty_poster == "The Justiciary of The Vale")
+			H.change_stat("strength", 1)
+			H.change_stat("perception", 1)
+			H.change_stat("intelligence", 1)
+			H.change_stat("constitution", 1)
+			H.change_stat("willpower", 1)
+			H.change_stat("speed", 1)
+			H.change_stat("fortune", 1)
+			if(bounty_poster == "The Justiciary of [SSmapping.map_adjustment.realm_name]")
 				GLOB.outlawed_players += H.real_name
 			else
 				GLOB.excommunicated_players += H.real_name
@@ -87,22 +101,4 @@
 		my_crime = "crimes against the Crown"
 	add_bounty(H.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, bounty_total, FALSE, my_crime, bounty_poster)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Wretch, you are expected to actively create conflict with other players. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
-
-/proc/update_wretch_slots()
-	var/datum/job/wretch_job = SSjob.GetJob("Wretch")
-	if(!wretch_job)
-		return
-
-	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
-
-	//Add 1 slot for every 10 players over 30. Less than 40 players, 5 slots. 40 or more players, 6 slots. 50 or more players, 7 slots - etc.
-	if(player_count > 40)
-		var/extra = floor((player_count - 40) / 10)
-		slots += extra
-
-	//5 slots minimum, 10 maximum.
-	slots = min(slots, 10)
-
-	wretch_job.total_positions = slots
-	wretch_job.spawn_positions = slots
+	H.playsound_local(get_turf(H), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)

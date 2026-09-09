@@ -50,7 +50,6 @@
 	var/no_update = 0
 	var/species_icon = ""
 
-	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
 	var/prosthetic_prefix = "pr" // for unique prosthetic icons on mob
 	var/dismemberable = 1 //whether it can be dismembered with a weapon.
 	var/disableable = 1
@@ -114,6 +113,12 @@
 
 	/// Branded writing on body part
 	var/branded_writing = ""
+	/// Branded enslavement mark
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this part, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this part, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 64
@@ -182,7 +187,9 @@
 /obj/item/bodypart/Destroy()
 	if(owner)
 		owner.bodyparts -= src
+		owner.bodyparts_by_zone -= body_zone
 		owner = null
+	original_owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
 	for(var/datum/wound/wound as anything in wounds)
@@ -248,7 +255,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(HAS_TRAIT(C, TRAIT_LIMBATTACHMENT))
-			if(!H.get_bodypart(body_zone) && !animal_origin)
+			if(!H.get_bodypart(body_zone))
 				if(H == user)
 					H.visible_message(span_warning("[H] jams [src] into [H.p_their()] empty socket!"),\
 					span_notice("I force [src] into my empty socket, and it locks into place!"))
@@ -345,6 +352,8 @@
 //Cannot apply negative damage
 /obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null)
 	update_HP()
+	var/old_brute_dam = brute_dam
+	var/old_burn_dam = burn_dam
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -380,11 +389,11 @@
 
 	if(owner)
 		if((brute + burn) < 10)
-			owner.flash_fullscreen("redflash1")
+			owner.fullscreen_redflash("redflash1")
 		else if((brute + burn) < 20)
-			owner.flash_fullscreen("redflash2")
+			owner.fullscreen_redflash("redflash2")
 		else if((brute + burn) >= 20)
-			owner.flash_fullscreen("redflash3")
+			owner.fullscreen_redflash("redflash3")
 
 	if(owner && updating_health)
 		owner.updatehealth()
@@ -394,6 +403,8 @@
 			. = TRUE
 	consider_processing()
 	update_disabled()
+	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
+		owner.mark_zone_selector_hud_dirty()
 	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -403,6 +414,8 @@
 	if((HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC)) && owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || owner.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		return
 	update_HP()
+	var/old_brute_dam = brute_dam
+	var/old_burn_dam = burn_dam
 	if(required_status && (status != required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 	if(owner && owner.has_status_effect(/datum/status_effect/buff/fortify))
@@ -418,6 +431,8 @@
 	consider_processing()
 	update_disabled()
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
+	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
+		owner.mark_zone_selector_hud_dirty()
 	return update_bodypart_damage_state()
 
 //Returns total damage.
@@ -471,6 +486,8 @@
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
+	if(!max_damage) // can't do anything boss, we aren't set up yet
+		return FALSE
 	var/tbrute = round((brute_dam / max_damage) * 3, 1)
 	var/tburn = round((burn_dam / max_damage) * 3, 1)
 	if((tbrute != brutestate) || (tburn != burnstate))
@@ -531,44 +548,40 @@
 	if(no_update)
 		return
 
-	if(!animal_origin)
-		var/mob/living/carbon/human/H = C
-		should_draw_greyscale = FALSE
-		if(!H.dna || !H.dna.species)
-			return
-		var/datum/species/S = H.dna.species
-		species_id = S.limbs_id
-		if(H.gender == MALE)
-			species_icon = S.limbs_icon_m
+	var/mob/living/carbon/human/H = C
+	should_draw_greyscale = FALSE
+	if(!H.dna || !H.dna.species)
+		return
+	var/datum/species/S = H.dna.species
+	species_id = S.limbs_id
+	if(H.gender == MALE)
+		species_icon = S.limbs_icon_m
+	else
+		species_icon = S.limbs_icon_f
+	species_flags_list = H.dna.species.species_traits
+
+
+	if(S.use_skintones)
+		skin_tone = H.skin_tone
+		should_draw_greyscale = TRUE
+	else
+		skin_tone = ""
+
+	body_gender = H.gender
+	should_draw_gender = S.sexes
+
+	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits) || (S.mutant_skin_option && H.mutant_skin))
+		if(S.fixed_mut_color)
+			species_color = S.fixed_mut_color
 		else
-			species_icon = S.limbs_icon_f
-		species_flags_list = H.dna.species.species_traits
+			species_color = H.dna.features["mcolor"]
+		should_draw_greyscale = TRUE
+	else
+		species_color = ""
 
+	mutation_color = ""
 
-		if(S.use_skintones)
-			skin_tone = H.skin_tone
-			should_draw_greyscale = TRUE
-		else
-			skin_tone = ""
-
-		body_gender = H.gender
-		should_draw_gender = S.sexes
-
-		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
-			if(S.fixed_mut_color)
-				species_color = S.fixed_mut_color
-			else
-				species_color = H.dna.features["mcolor"]
-			should_draw_greyscale = TRUE
-		else
-			species_color = ""
-
-		mutation_color = ""
-
-		dmg_overlay_type = S.damage_overlay_type
-
-	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
-		dmg_overlay_type = animal_origin
+	dmg_overlay_type = S.damage_overlay_type
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
@@ -597,7 +610,7 @@
 
 	var/list/bodypart_organs
 	for(var/obj/item/organ/organ_check as anything in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
-		if(check_zone(organ_check.zone) == body_zone)
+		if(organ_check.zone_checked == body_zone)
 			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
 
 	return bodypart_organs
@@ -605,12 +618,14 @@
 /// Generates a cache key for this limb's base appearance
 /obj/item/bodypart/proc/generate_limb_cache_key(dropped, hideaux)
 	var/list/key_parts = list(
+		type,
+		icon,
+		species_icon,
 		body_zone,
 		body_gender,
 		dropped,
 		hideaux,
 		skeletonized,
-		animal_origin,
 		species_id,
 		use_digitigrade,
 		status,
@@ -624,6 +639,28 @@
 		skin_tone,
 		limb_material
 	)
+	// todo: cache these on the bodypart and update in set_species
+	var/draw_organ_features = TRUE
+	var/draw_bodypart_features = TRUE
+	if(owner?.dna?.species)
+		var/datum/species/owner_species = owner.dna.species
+		if(NO_ORGAN_FEATURES in owner_species.species_traits)
+			draw_organ_features = FALSE
+		if(NO_BODYPART_FEATURES in owner_species.species_traits)
+			draw_bodypart_features = FALSE
+	// Organ overlays
+	if(!skeletonized && draw_organ_features)
+		// i don't know if this will actually work since these aren't sorted?
+		for(var/obj/item/organ/organ as anything in get_organs())
+			if(organ.is_visible())
+				var/extra_keys = organ.get_icon_cache_key(src)
+				key_parts += extra_keys
+
+	if(!skeletonized && draw_bodypart_features)
+		for(var/datum/bodypart_feature/feature as anything in bodypart_features)
+			var/extra_keys = feature.get_icon_cache_key(src)
+			if(extra_keys)
+				key_parts += extra_keys
 	return key_parts.Join("-")
 
 /// Invalidates the cached limb appearance
@@ -659,17 +696,6 @@
 		var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 		var/image/aux
 		. += limb
-
-		if(animal_origin)
-			if(is_organic_limb())
-				limb.icon = 'icons/mob/animal_parts.dmi'
-				limb.icon_state = species_id == "husk" ? "[animal_origin]_husk_[body_zone]" : "[animal_origin]_[body_zone]"
-			else
-				limb.icon = 'icons/mob/augmentation/augments.dmi'
-				limb.icon_state = "[animal_origin]_[body_zone]"
-			cached_base_appearances = .
-			limb_appearance_cache_key = new_cache_key
-			return
 
 		should_draw_gender = TRUE
 		var/skel = skeletonized ? "_s" : ""
@@ -715,7 +741,6 @@
 			if(marking_overlays)
 				. += marking_overlays
 
-	// These are not cached as they can change independently
 	var/draw_organ_features = TRUE
 	var/draw_bodypart_features = TRUE
 	if(owner?.dna?.species)
@@ -724,7 +749,8 @@
 			draw_organ_features = FALSE
 		if(NO_BODYPART_FEATURES in owner_species.species_traits)
 			draw_bodypart_features = FALSE
-
+	
+	// Organ overlays
 	if(!skeletonized && draw_organ_features)
 		for(var/obj/item/organ/organ as anything in get_organs())
 			if(organ.is_visible())
@@ -761,8 +787,8 @@
 	offset_f = OFFSET_ARMOR_F
 	dismemberable = FALSE
 
-	/// Branded writing unique for chest so it can be applied to buttocks
 	var/branded_writing_on_buttocks = ""
+	var/branded_writing_on_stomach = ""
 
 	grid_width = 64
 	grid_height = 96
@@ -784,16 +810,6 @@
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	..()
-
-/obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "default_monkey_chest"
-	animal_origin = MONKEY_BODYPART
-
-/obj/item/bodypart/chest/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
@@ -838,19 +854,7 @@
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
-			L.update_icon()
-
-/obj/item/bodypart/l_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "default_monkey_l_arm"
-	animal_origin = MONKEY_BODYPART
-	px_x = -5
-	px_y = -3
-
-/obj/item/bodypart/l_arm/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
+			L.update_hand_vis()
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
@@ -895,19 +899,7 @@
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
-			R.update_icon()
-
-/obj/item/bodypart/r_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "default_monkey_r_arm"
-	animal_origin = MONKEY_BODYPART
-	px_x = 5
-	px_y = -3
-
-/obj/item/bodypart/r_arm/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
+			R.update_hand_vis()
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -947,17 +939,6 @@
 	name = "left digitigrade leg"
 	use_digitigrade = FULL_DIGITIGRADE
 
-/obj/item/bodypart/l_leg/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "default_monkey_l_leg"
-	animal_origin = MONKEY_BODYPART
-	px_y = 4
-
-/obj/item/bodypart/l_leg/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
-
 /obj/item/bodypart/r_leg
 	name = "right leg"
 	desc = ""
@@ -996,14 +977,3 @@
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
 	use_digitigrade = FULL_DIGITIGRADE
-
-/obj/item/bodypart/r_leg/monkey
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "default_monkey_r_leg"
-	animal_origin = MONKEY_BODYPART
-	px_y = 4
-
-/obj/item/bodypart/r_leg/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART

@@ -1,4 +1,4 @@
-/obj/item/clothing/shirt/dress/skyrim_taven
+/obj/item/clothing/suit/roguetown/shirt/dress/skyrim_taven
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	name = "waitress dress"
 	desc = "A simple green dress with a corset, its skirt has slits for easy movement."
@@ -16,7 +16,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/skyrim_taven
 	name = "waitress dress"
-	result = /obj/item/clothing/shirt/dress/skyrim_taven
+	result = /obj/item/clothing/suit/roguetown/shirt/dress/skyrim_taven
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
 	tools = list(/obj/item/needle)
@@ -27,4 +27,4 @@
 
 /datum/loadout_item/dress/skyrim_taven
 	name = "waitress dress"
-	path = /obj/item/clothing/shirt/dress/skyrim_taven
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/skyrim_taven

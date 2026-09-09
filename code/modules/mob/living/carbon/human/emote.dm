@@ -6,6 +6,7 @@
 	key_third_person = "cries"
 	message = "cries."
 	emote_type = EMOTE_AUDIBLE
+	needs_emotion = TRUE
 
 /mob/living/carbon/human/verb/emote_cry()
 	set name = "Cry"
@@ -25,7 +26,7 @@
 	key = "sexmoanlight"
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
-	only_forced_audio = TRUE
+	needs_emotion = TRUE
 
 /datum/emote/living/carbon/human/sexmoanlight/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
@@ -38,7 +39,7 @@
 	key = "sexmoanhvy"
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
-	only_forced_audio = TRUE
+	needs_emotion = TRUE
 
 /datum/emote/living/carbon/human/sexmoanhvy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()

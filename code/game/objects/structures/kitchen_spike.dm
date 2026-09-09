@@ -21,9 +21,6 @@
 	can_buckle = 1
 	max_integrity = 250
 
-/obj/structure/kitchenspike/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
 		to_chat(user, span_warning("I can't do that while something's on the spike!"))
@@ -108,7 +105,7 @@
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())
 		for(var/mob/living/L in buckled_mobs)
-			release_mob(L)
+			INVOKE_ASYNC(src, PROC_REF(release_mob), L)
 	return ..()
 
 #undef VIABLE_MOB_CHECK

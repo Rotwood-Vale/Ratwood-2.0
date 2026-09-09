@@ -44,9 +44,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for(var/cc in client_colours)
 		qdel(cc)
 	if(used_intent)
-		qdel(used_intent)
-	if(a_intent && a_intent.mastermob == src)
-		a_intent.mastermob = null
+		QDEL_NULL(used_intent)
+	if(mmb_intent)
+		QDEL_NULL(mmb_intent)
+	if(rmb_intent)
+		QDEL_NULL(rmb_intent)
+	a_intent = null // this SHOULD be in possible_a_intents, so don't qdel it
+	o_intent = null // ditto but for possible_offhand_intents
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
 	SStreasury.remove_person(src) // Call me overly cautious I dunno when they giving dogs bank account
@@ -56,8 +60,24 @@ GLOBAL_VAR_INIT(mobids, 1)
 		QDEL_NULL(skills)
 	client_colours = null
 	ghostize(drawskip=TRUE)
+	// spell/action removal must go after ghostize, so we only delete the ones not transferred by a mind
+	// remove innate spells before we remove any potentially-associated actions
+	RemoveAllSpells()
+	// avoid deleting client-managed actions, just remove them to avoid hung references
+	// if the mob is destroyed due to player logout client will be null
+	var/datum/player_details/details = client ? client.player_details : (GLOB.player_details[ckey || ckey(mind?.key)])
+	if(details?.player_actions)
+		for(var/datum/action/action in details.player_actions)
+			action.Remove(src)
+	// remove any actions not transferred in ghostize or removed above
+	QDEL_LIST(actions)
 	..()
 	return QDEL_HINT_QUEUE
+
+/mob/New()
+	// This needs to happen IMMEDIATELY. I'm sorry :(
+	GenerateTag()
+	return ..()
 
 /**
  * Intialize a mob
@@ -107,6 +127,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * This is simply "mob_"+ a global incrementing counter that goes up for every mob
  */
 /mob/GenerateTag()
+	. = ..()
 	tag = "mob_[next_mob_id++]"
 
 /**
@@ -186,7 +207,12 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	var/list/hidden_ghosts = null
+	if(has_ghost_protection(src))
+		hidden_ghosts = get_hidden_ghosts_for_target(src)
+		if(length(hidden_ghosts))
+			ignored_mobs += hidden_ghosts
+	var/list/hearers = hearers(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
@@ -221,8 +247,11 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null)
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs)
+	var/list/hearers = hearers(hearing_distance, src) // get_hearers_in_view is slower because we don't care about SCOMs and etc here
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+	hearers -= ignored_mobs
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
@@ -242,7 +271,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 
 /atom/proc/loud_message(message, hearing_distance = DEFAULT_MESSAGE_RANGE, directional = TRUE)
-	var/list/listening = get_hearers_in_view(hearing_distance, src)
+	var/list/listening = hearers(hearing_distance, src)
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(!M.client) //client is so that ghosts don't have to listen to mice
@@ -257,14 +286,17 @@ GLOBAL_VAR_INIT(mobids, 1)
 					continue
 		if(!is_in_zweb(src.z,M.z))
 			continue
-		listening |= M
+		if(M in listening)
+			continue
+		var/mob/living/L = M
+		if(istype(L) && L.STAPER <= 8)
+			to_chat(L, span_warning("You hear something... somewhere!"))
+			continue
+		listening += M
 
 	for(var/mob/living/L in listening)
 		var/strz
 		var/strdir
-		if(L.STAPER <= 8 && !(L in viewers(world.view, src)))
-			to_chat(L, span_warning("You hear something... somewhere!"))
-			continue
 		if(L.z != src.z)
 			var/zdiff = abs(L.z - src.z)
 			if(L.z > src.z)
@@ -299,8 +331,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null)
-	. = ..()
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs)
+	. = ..(message, deaf_message, hearing_distance, self_message, runechat_message, log_seen, log_seen_msg, ignored_mobs)
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
@@ -589,7 +621,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/memory()
 	set name = "Notes"
-	set category = "Memory"
+	set category = "IC"
 	set desc = ""
 	if(mind)
 		mind.show_memory(src)
@@ -601,7 +633,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/add_memory(msg as message)
 	set name = "AddNote"
-	set category = "Memory"
+	set category = "IC"
 	if(mind)
 		if (world.time < memory_throttle_time)
 			return
@@ -785,8 +817,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(client)
 		if(statpanel("RoundInfo"))
-			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
-			var/datum/map_config/cached = SSmapping.next_map_config
+			stat(null, "MAP: [SSmapping.current_map?.map_name || "Loading..."]")
+			var/datum/map_config/cached = SSmap_vote.next_map_config
 			if(cached)
 				stat(null, "Next Map: [cached.map_name]")
 			stat(null, "ROUND ID: [GLOB.rogue_round_id ? GLOB.rogue_round_id : "NULL"]")
@@ -801,6 +833,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 			stat(null, "IC Time: [station_time_timestamp()] [station_time()]")
 			stat(null, "PING: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 			stat(null, "TIME DILATION: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
+			if(!CONFIG_GET(flag/disable_memory_stats))
+				stat(null, "Memory: [SSmemory_stats.last_rss_mb ? "[SSmemory_stats.last_rss_mb] MB/3900 MB" : "sampling..."]")
 			if(check_rights(R_ADMIN,0))
 				stat(null, SSmigrants.get_status_line())
 				stat(null, "Player count: [GLOB.clients.len]") // If someone deletes this again I will slap your balls
@@ -809,7 +843,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 		if(statpanel("MC"))
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
-			stat("CPU:", "[world.cpu]")
+			stat("CPU:", "[world.cpu] ([world.map_cpu] map + [world.cpu - world.map_cpu] process)")
+			stat("Maptick Percent:", "[round((world.map_cpu/world.cpu) * 100)]%")
+			if(!CONFIG_GET(flag/disable_memory_stats))
+				stat("Memory:", SSmemory_stats.last_rss_mb ? "[SSmemory_stats.last_rss_mb] MB/3900 MB" : "sampling...")
 			stat("Instances:", "[num2text(world.contents.len, 10)]")
 			stat("World Time:", "[world.time]")
 			GLOB.stat_entry()
@@ -854,8 +891,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 					continue
 				if(overrides.len && (A in overrides))
 					continue
-				if(A.IsObscured())
-					continue
 				statpanel(listed_turf.name, null, A)
 
 
@@ -892,7 +927,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * no transform not set
  * * we are not restrained
  */
-/mob/proc/canface(atom/A)
+/mob/proc/can_face(atom/A)
 	if(client)
 		if(world.time < client.last_turn)
 			return FALSE
@@ -906,7 +941,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(stat != CONSCIOUS)
 		return FALSE
-	if(buckled && !get_buckled_animal_mount())
+	if(buckled && !get_buckled_animal_mount() && !HAS_TRAIT(buckled, TRAIT_ALLOWS_BUCKLED_FACING))
 		return FALSE
 	return TRUE
 
@@ -933,9 +968,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 	setDir(direction)
 
 ///Checks mobility move as well as parent checks
-/mob/living/canface(atom/A)
+/mob/living/can_face(atom/A)
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
-	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE))
+	var/is_dinghy_buckled = istype(buckled, /obj/vehicle/ridden/dinghy)
+	if(!animal_mount && !(mobility_flags & MOBILITY_MOVE) && !is_dinghy_buckled)
 		return FALSE
 	var/turn_cooldown = animal_mount ? 2 : 5
 	if(world.time < last_dir_change + turn_cooldown)
@@ -970,17 +1006,15 @@ GLOBAL_VAR_INIT(mobids, 1)
 		for(var/obj/item/grabbing/G in grabbedby) // only chokeholds prevent turning
 			if(G.chokehold)
 				return FALSE
-	if(!animal_mount && IsImmobilized())
-		return FALSE
 	return ..()
 
-/mob/dead/observer/canface()
+/mob/dead/observer/can_face()
 	return TRUE
 
 ///Hidden verb to turn east
 /mob/verb/eastface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount)
@@ -994,7 +1028,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn west
 /mob/verb/westface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount)
@@ -1008,7 +1042,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn north
 /mob/verb/northface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount)
@@ -1022,7 +1056,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Hidden verb to turn south
 /mob/verb/southface()
 	set hidden = TRUE
-	if(!canface())
+	if(!can_face())
 		return FALSE
 	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
 	if(animal_mount)
@@ -1075,6 +1109,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 			mob_spell_list -= S
 			qdel(S)
 
+/mob/proc/RemoveAllSpells()
+	QDEL_LIST(mob_spell_list)
+
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	if(!magic && !holy && !tinfoil)
@@ -1097,6 +1134,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(M.buckled)
+		return 0
+	if(buckled == M) // mutual buckling makes every Move() recurse between the two of us until the server dies
 		return 0
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
@@ -1352,7 +1391,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Show the language menu for this mob
 /mob/verb/open_language_menu()
 	set name = "Open Language Menu"
-	set category = "Memory"
+	set category = "IC"
 	set hidden = 0
 
 	var/datum/language_holder/H = get_language_holder()

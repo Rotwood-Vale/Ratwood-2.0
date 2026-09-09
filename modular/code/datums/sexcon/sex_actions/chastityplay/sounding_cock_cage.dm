@@ -41,12 +41,12 @@
         user.sexcon.try_pelvis_crush(target)
 
     if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))
-        user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] advances the probe through the spiked [get_chastity_device_name(target)], each tiny flinch from [target] pressing the cage's spikes deeper inward..."))
+        user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] advances the probe through the spiked [get_chastity_device_name(target)], each tiny flinch from [target] pressing the cage's spikes deeper inward..."))
         user.sexcon.perform_sex_action(target, 0.2, 10.2, TRUE)
         user.sexcon.try_do_pain_scream(target, 10.2)
         target.sexcon.handle_passive_ejaculation(user)
         return
-    user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works the probe deeper into [target]'s urethra through the opening of [target.p_their()] [get_chastity_device_name(target)], slow and deliberate..."))
+    user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] works the probe deeper into [target]'s urethra through the opening of [target.p_their()] [get_chastity_device_name(target)], slow and deliberate..."))
     user.sexcon.perform_sex_action(target, 0.5, 8.5, TRUE)
     user.sexcon.try_do_pain_scream(target, 8.5)
     target.sexcon.handle_passive_ejaculation(user)

@@ -4,7 +4,7 @@
 
 /mob/living
 	/// ass list [id] = /datum/status_effect. ATTENTION THE CODER IS A RETARD THIS IS NOT SUPPOSED TO BE HERE I REPEART!!!!!!
-	var/list/status_effects_by_id
+	var/alist/status_effects_by_id
 
 /datum/status_effect
 	/// The ID of the effect. ID is used in adding and removing effects to check for duplicates, among other things.
@@ -59,7 +59,8 @@
 	if(owner)
 		// ass list
 		LAZYINITLIST(owner.status_effects)
-		LAZYINITLIST(owner.status_effects_by_id)
+		if(!length(owner.status_effects_by_id))
+			owner.status_effects_by_id = alist()
 		LAZYADD(owner.status_effects, src)
 		owner.status_effects_by_id[id] = src
 
@@ -112,6 +113,9 @@
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
+		return
+	if(linked_alert && duration != -1)
+		linked_alert.update_countdown(max(duration - world.time, 0))
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
 	for(var/S in effectedstats)
@@ -123,7 +127,7 @@
 						break
 		else
 			if((owner.get_stat(S) + effectedstats[S]) > 20)	//We check for overflow as well.
-				effectedstats[S] = max(((owner.get_stat(S) + effectedstats[S]) - 20), 0)
+				effectedstats[S] = 20 - owner.get_stat(S)
 		owner.change_stat(S, effectedstats[S])
 	return TRUE
 
@@ -183,6 +187,18 @@
 			var/newnum = attached_effect.effectedstats[S] * -1
 			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
 
+	if(attached_effect && attached_effect.duration != -1 && attached_effect.duration > world.time)
+		var/remaining = attached_effect.duration - world.time
+		var/total_secs = round(remaining / (1 SECONDS))
+		var/timestring
+		if(total_secs >= 60)
+			var/mins = round(total_secs / 60)
+			var/secs = total_secs % 60
+			timestring = "[mins]:[secs < 10 ? "0[secs]" : "[secs]"]"
+		else
+			timestring = "[total_secs]s"
+		inspec += "<br><span class='smallnotice'>Time remaining: [timestring]</span>"
+
 	inspec += "<br>----------------------"
 	to_chat(user, "[inspec.Join()]")
 
@@ -198,7 +214,8 @@
 /mob/living/proc/apply_status_effect(effect, ...)
 	. = FALSE
 	LAZYINITLIST(status_effects)
-	LAZYINITLIST(status_effects_by_id)
+	if(!length(status_effects_by_id))
+		status_effects_by_id = alist()
 
 	var/datum/status_effect/template = effect
 	var/effect_id = initial(template.id)

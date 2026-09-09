@@ -335,6 +335,13 @@
 /datum/mob_descriptor/stature/widower
 	name = "Widower/Widow"
 
+// Gnoll stature — always returns "gnoll" regardless of pronouns
+/datum/mob_descriptor/stature/gnoll
+	name = "Gnoll"
+
+/datum/mob_descriptor/stature/gnoll/get_description(mob/living/described)
+	return "gnoll"
+
 /datum/mob_descriptor/stature/widower/get_description(mob/living/described)
 	switch(described.pronouns)
 		if(SHE_HER)
@@ -415,3 +422,14 @@
 
 /datum/mob_descriptor/stature/socialite
 	name = "Socialite"
+
+/datum/mob_descriptor/stature/custom
+	name = "Custom Stature"
+	custom_index = 6
+
+/datum/mob_descriptor/stature/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/stature/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text

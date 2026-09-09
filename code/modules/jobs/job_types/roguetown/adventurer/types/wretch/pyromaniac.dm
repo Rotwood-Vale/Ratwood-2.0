@@ -1,6 +1,6 @@
 /datum/advclass/wretch/pyromaniac
 	name = "Pyromaniac"
-	tutorial = "A notorious arsonist with a penchant for fire, you wield your own personal vendetta against the chaotic forces within the vale. Bring mayhem and destruction with flame and misfortune! Just... try not to hit yourself with your explosives - you aren't fireproof, after all."
+	tutorial = "A notorious arsonist with a penchant for fire, you wield your own personal vendetta against the chaotic forces within the realm. Bring mayhem and destruction with flame and misfortune! Just... try not to hit yourself with your explosives - you aren't fireproof, after all."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/pyromaniac
@@ -23,13 +23,14 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/engineering = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_NOVICE,
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 /datum/outfit/job/roguetown/wretch/pyromaniac/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff //wear protection :)
 	mask = /obj/item/clothing/mask/rogue/facemask/
@@ -53,7 +54,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Archery", "Crossbows", "LET THERE BE FLAME!!!")
+		var/weapons = list("Archery", "Crossbows", "LET THERE BE FLAME!!!", "BOMBS")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -74,4 +75,11 @@
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin) // To not be instapaincritted if you accidentally hit yourself
+			if("BOMBS") //30 bombs. 18 fire, 4 tnt, 4 impacts, 4 firegas.
+				ADD_TRAIT(H, TRAIT_BOMBER_EXPERT, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE)
+				backr = /obj/item/bmbstrap/firebomb
+				r_hand = /obj/item/bmbstrap/bomb_and_fire
+				l_hand = /obj/item/bmbstrap/bomb_and_fire
 		wretch_select_bounty(H)

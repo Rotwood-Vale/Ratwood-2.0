@@ -93,7 +93,7 @@
 										M = GLOB.animal_to_undead[M]
 							new M(T)
 							if(prob(66))
-								new /obj/item/storage/roguebag/crafted(T)
+								new /obj/item/storage/roguebag(T)
 							else
 								new /obj/item/natural/cloth(T)
 							qdel(src)
@@ -108,6 +108,7 @@
 	attracted_types = list(/mob/living/simple_animal/hostile/retaliate/rogue/goat = 33,
 							/mob/living/simple_animal/hostile/retaliate/rogue/goatmale = 33,
 							/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit = 40, 	// Rabbits love sweet things
+							/mob/living/simple_animal/hostile/retaliate/rogue/beetle = 25,
 							/mob/living/simple_animal/hostile/retaliate/rogue/saiga = 20,
 							/mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck = 20,
 							/mob/living/simple_animal/hostile/retaliate/rogue/fox = 20,				//Scavenger, so lower chance

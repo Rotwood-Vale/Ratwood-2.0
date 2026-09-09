@@ -16,10 +16,11 @@
 
 /obj/structure/roguemachine/withdraw/Destroy()
 	SSroguemachine.stock_machines -= src
+	QDEL_NULL(withdraw_tab)
 	return ..()
 
 /obj/structure/roguemachine/withdraw/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 
 	if(istype(P, /obj/item/roguecoin/inqcoin))	

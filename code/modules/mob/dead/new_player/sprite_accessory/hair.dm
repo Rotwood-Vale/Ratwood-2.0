@@ -101,6 +101,10 @@
 	name = "Bobcurl"
 	icon_state = "bobcurl"
 
+/datum/sprite_accessory/hair/head/bob_mane
+	name = "Bob (Mane)"
+	icon_state = "bob_mane"
+
 /datum/sprite_accessory/hair/head/boddicker
 	name = "Boddicker"
 	icon_state = "boddicker"
@@ -417,6 +421,10 @@
 	name = "Long Side Part"
 	icon_state = "longsidepart"
 
+/datum/sprite_accessory/hair/head/lizbeth
+	name = "Lizbeth"
+	icon_state = "lizbeth"
+
 /datum/sprite_accessory/hair/head/mediumbraid
 	name = "Medium Braid"
 	icon_state = "mediumbraid"
@@ -461,10 +469,6 @@
 /datum/sprite_accessory/hair/head/nitori
 	name = "Nitori"
 	icon_state = "nitori"
-
-/datum/sprite_accessory/hair/head/newyou
-	name = "New You"
-	icon_state = "newyou"
 
 /datum/sprite_accessory/hair/head/odango
 	name = "Odango"
@@ -570,13 +574,13 @@
 	name = "Ponytail (Country Alt)"
 	icon_state = "countryalt"
 
-/datum/sprite_accessory/hair/head/ponytailyeager
-	name = "Ponytail (Yeager)"
-	icon_state = "ponytail_yeager"
-
 /datum/sprite_accessory/hair/head/ponytailwitcher
 	name = "Ponytail (Witcher)"
 	icon_state = "ponytail_witcher"
+
+/datum/sprite_accessory/hair/head/ponytailwitcheralt
+	name = "Ponytail (Witcher Alt)"
+	icon_state = "ponytail_witcheralt"
 
 /datum/sprite_accessory/hair/head/fringetail
 	name = "Ponytail (Fringe)"
@@ -722,6 +726,10 @@
 	name = "Swept Back Hair 2"
 	icon_state = "swept2"
 
+/datum/sprite_accessory/hair/head/taro
+	name = "Taro"
+	icon_state = "taro"
+
 /datum/sprite_accessory/hair/head/thinning
 	name = "Thinning"
 	icon_state = "thinning"
@@ -806,9 +814,17 @@
 	name = "Wisp"
 	icon_state = "wisp"
 
+/datum/sprite_accessory/hair/head/wispy
+	name = "Wispy"
+	icon_state = "wispy"
+
 /datum/sprite_accessory/hair/head/hyenamane
 	name = "Hyena Mane"
 	icon_state = "hyenamane"
+
+/datum/sprite_accessory/hair/head/hyenamaneshort
+	name = "Hyena Mane Short"
+	icon_state = "hyenamaneshort"
 
 /datum/sprite_accessory/hair/head/forelock
 	name = "Forelock"
@@ -846,10 +862,6 @@
 	name = "Bog"
 	icon_state = "bog"
 
-/datum/sprite_accessory/hair/head/scout
-	name = "Scout"
-	icon_state = "scout"
-
 /datum/sprite_accessory/hair/head/son2
 	name = "Son (Alt)"
 	icon_state = "son2"
@@ -861,10 +873,6 @@
 /datum/sprite_accessory/hair/head/amazon
 	name = "Amazon"
 	icon_state = "amazon"
-
-/datum/sprite_accessory/hair/head/longstraightponytail
-	name = "Long Ponytail"
-	icon_state = "longstraightponytail"
 
 /datum/sprite_accessory/hair/head/barmaid
 	name = "Barmaid"
@@ -961,6 +969,10 @@
 /datum/sprite_accessory/hair/head/fluffy
 	name = "Fluffy"
 	icon_state = "fluffy"
+
+/datum/sprite_accessory/hair/head/fluffyovereye
+	name = "Fluffy (Over Eye)"
+	icon_state = "fluffy_overeye"
 
 /datum/sprite_accessory/hair/head/fluffyshort
 	name = "Fluffy (Short)"
@@ -1180,23 +1192,23 @@
 
 /datum/sprite_accessory/hair/head/mcsqueeb
 	name = "Ye Old McSqueeb"
-	icon_state = "mcsqueeb"	
+	icon_state = "mcsqueeb"
 
 /datum/sprite_accessory/hair/head/highlander
 	name = "Highlander"
-	icon_state = "highlander"	
+	icon_state = "highlander"
 
 /datum/sprite_accessory/hair/head/royalcurls
 	name = "Royal Curls"
-	icon_state = "royalcurls"	
+	icon_state = "royalcurls"
 
 /datum/sprite_accessory/hair/head/dreadlocksmessy
 	name = "Dreadlocks Messy"
-	icon_state = "dreadlong"	
+	icon_state = "dreadlong"
 
 /datum/sprite_accessory/hair/head/suave
 	name = "Suave"
-	icon_state = "suave"	
+	icon_state = "suave"
 
 /datum/sprite_accessory/hair/head/kusanagi_alt
 	name = "Kusanagi (Alt)"
@@ -1562,10 +1574,6 @@
 	name = "Emperor"
 	icon_state = "emperor"
 
-/datum/sprite_accessory/hair/head/female
-	name = "Female"
-	icon_state = "female"
-
 /datum/sprite_accessory/hair/head/empress
 	name = "Empress"
 	icon_state = "empress"
@@ -1590,10 +1598,6 @@
 	name = "Martyr"
 	icon_state = "martyr"
 
-/datum/sprite_accessory/hair/head/neuter
-	name = "Neuter"
-	icon_state = "neuter"
-
 /datum/sprite_accessory/hair/head/hprotagonist
 	name = "Hprotagonist"
 	icon_state = "hprotagonist"
@@ -1609,7 +1613,7 @@
 /datum/sprite_accessory/hair/head/lakkaribun
 	name = "Lakkaribun"
 	icon_state = "lakkaribun"
-	
+
 /datum/sprite_accessory/hair/head/lakkaricut
 	name = "Lakkaricut"
 	icon_state = "lakkaricut"
@@ -1697,6 +1701,54 @@
 /datum/sprite_accessory/hair/head/beachwave
 	name = "Beach Wave"
 	icon_state = "beachwave"
+
+/datum/sprite_accessory/hair/head/wolfcut
+	name = "Wolfcut"
+	icon_state = "wolfcut"
+
+/datum/sprite_accessory/hair/head/triplebuns
+	name = "Triple Buns"
+	icon_state = "triplebuns"
+
+/datum/sprite_accessory/hair/head/nest
+	name = "Nest"
+	icon_state = "nest"
+
+/datum/sprite_accessory/hair/head/strand
+	name = "Strand"
+	icon_state = "strand"
+
+/datum/sprite_accessory/hair/head/sodden
+	name = "Sodden"
+	icon_state = "sodden"
+
+/datum/sprite_accessory/hair/head/indigozap
+	name = "Reckless"
+	icon_state = "indigo_zap"
+
+/datum/sprite_accessory/hair/head/rainbowdash
+	name = "Loyal"
+	icon_state = "rainbow_dash"
+	
+/datum/sprite_accessory/hair/head/renard
+	name = "Renard"
+	icon_state = "renard"
+
+/datum/sprite_accessory/hair/head/willowtree
+	name = "Willowtree"
+	icon_state = "willowtree"
+
+/datum/sprite_accessory/hair/head/nimue
+	name = "Nimue"
+	icon_state = "nimue"
+
+/datum/sprite_accessory/hair/head/willow
+	name = "Willow"
+	icon_state = "willow"
+
+/datum/sprite_accessory/hair/head/aki
+	name = "Aki"
+	icon_state = "aki"
 
 /datum/sprite_accessory/hair/head/vulpkian
 	abstract_type = /datum/sprite_accessory/hair/head/vulpkian

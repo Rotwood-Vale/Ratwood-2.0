@@ -233,6 +233,8 @@
 	if(ismob(AM))
 		var/mob/user = AM
 		if(HAS_TRAIT(user, TRAIT_BASHDOORS))
+			// Throwing your weight through a door is not a subtle act, so it should break invisibility
+			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
 				take_damage(200, "brute", "blunt", 1)
@@ -254,9 +256,6 @@
 				else
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), 25)
 
-
-/obj/structure/mineral_door/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
 	. = ..()
@@ -420,7 +419,7 @@
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			user.visible_message("<span class='info'>[user] Carves a name into the door.</span>")
 			if(do_after(user, 10))
-				doorname = input("What name would you like to carve into the door?")
+				doorname = stripped_input(user, "What name would you like to carve into the door?", "", "", MAX_NAME_LEN)
 				if (doorname)
 					name = doorname + "(door)"
 					desc = "a door with a name carved into it"
@@ -852,7 +851,7 @@
 				icon_state = "wcr"
 	if(over_state)
 		add_overlay(mutable_appearance(icon, "[over_state]", ABOVE_MOB_LAYER))
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/blue
 	icon_state = "wcb"
@@ -1080,7 +1079,7 @@
 /obj/structure/mineral_door/wood/donjon/Initialize(mapload)
 	viewportdir = dir
 	icon_state = base_state
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/donjon/MiddleClick(mob/user, params)
 	if(user.get_active_held_item())
@@ -1124,9 +1123,22 @@
 	repairable = FALSE
 
 /obj/structure/mineral_door/wood/donjon/stone/broken/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = "stonebr" // Weird override otherwise
 
+/obj/structure/mineral_door/wood/donjon/stone/tough
+	name = "tough stone door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
+
+/obj/structure/mineral_door/wood/donjon/tough
+	name = "tough reinforced door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
 
 /obj/structure/mineral_door/bars
 	name = "iron door"
@@ -1154,6 +1166,13 @@
 	repair_cost_first = /obj/item/ingot/iron
 	repair_cost_second = /obj/item/ingot/iron
 	repair_skill = /datum/skill/craft/blacksmithing
+
+/obj/structure/mineral_door/bars/tough
+	name = "tough bars"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
 
 /obj/structure/mineral_door/barsold
 	name = "iron door"
@@ -1191,6 +1210,14 @@
 	grant_resident_key = TRUE
 	resident_key_type = /obj/item/roguekey/townie
 	resident_role = /datum/job/roguetown/villager
+	lockid = null //Will be randomized
+
+/obj/structure/mineral_door/wood/mercenary
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie
+	resident_role = /datum/job/roguetown/mercenary
 	lockid = null //Will be randomized
 
 /obj/structure/mineral_door/wood/towner/generic
@@ -1244,3 +1271,12 @@
 
 /obj/structure/mineral_door/wood/bath/courtesan
 	resident_advclass = list(/datum/advclass/nightmaiden/concubine, /datum/advclass/nightmaiden/courtesan, /datum/advclass/nightmaiden/dominatrix)
+
+/obj/structure/mineral_door/wood/wretched
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie// should be every wretch class - ideally we can get resident_role to accept lists but until then this'll do
+	resident_advclass = list(/datum/advclass/witch, /datum/advclass/wretch/licker, /datum/advclass/wretch/deserter, /datum/advclass/wretch/deserter/maa, /datum/advclass/wretch/berserker, /datum/advclass/wretch/hedgemage, /datum/advclass/wretch/necromancer, /datum/advclass/wretch/heretic, /datum/advclass/wretch/heretic/spy, /datum/advclass/wretch/outlaw, /datum/advclass/wretch/poacher, /datum/advclass/wretch/plaguebearer, /datum/advclass/wretch/pyromaniac, /datum/advclass/wretch/vigilante, /datum/advclass/wretch/blackoakwyrm, /datum/advclass/wretch/antipope, /datum/advclass/wretch/ancientchampion)
+	lockid = null //Will be randomized
+
