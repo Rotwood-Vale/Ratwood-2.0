@@ -718,6 +718,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	icon_state = "cultcloak"
+	color = null
 	sleeved = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	desc = "Those who wear, thy should beware, for those who do; never come back as who they once were again."
 	body_parts_covered = ARMS|CHEST
