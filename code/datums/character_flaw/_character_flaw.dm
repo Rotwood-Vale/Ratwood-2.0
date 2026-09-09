@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	return world.time >= suppressed_until
 
 /datum/charflaw/malodorous/proc/get_aura_tick_delay()
-	return scent_type == "Neutral" ? 10 SECONDS : 5 SECONDS
+	return scent_type == "Neutral" ? 20 SECONDS : 5 SECONDS
 
 /datum/charflaw/malodorous/proc/get_examine_text()
 	var/scent_text = html_encode(scent || "an unusual scent")
