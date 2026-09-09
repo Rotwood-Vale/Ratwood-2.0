@@ -1113,7 +1113,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			</div>
 		</div>
 		
-		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
+		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection <span style='font-size: 0.7em; font-weight: normal;'>Current Triumphs: [user ? user.get_triumphs() : 0]</span></h2>
 		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>You must select a major vice for slot one. Any further major vices give one additional loadout point and a triumph, minor vices will grant just loadout points.</p>			<div class="vices-grid">
 	"}
 	
