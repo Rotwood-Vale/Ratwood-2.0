@@ -4,6 +4,7 @@
 	name = "Zizoid Cultist"
 	roundend_category = "Zizoid Cultists"
 	antagpanel_category = "Zizoid Cult"
+	rogue_enabled = TRUE
 	job_rank = ROLE_ZIZOIDCULTIST
 	confess_lines = list(
 		"DEATH TO THE TEN!",
