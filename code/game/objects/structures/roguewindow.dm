@@ -286,7 +286,7 @@
 					break
 				if(prob(pickchance))
 					lockprogress += moveup
-					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE, -5)
+					playsound(src.loc, pick('sound/items/pickgood1.ogg','sound/items/pickgood2.ogg'), 5, TRUE)
 					to_chat(user, "<span class='warning'>Click... [pickchance]% chance to succeed...</span>")
 					if(user.mind)
 						add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/2)
@@ -298,7 +298,7 @@
 					else
 						continue
 				else
-					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE, -5)
+					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 					obj_integrity = break_me
 					held_knife.take_damage(10, BRUTE, "blunt")
 					to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
