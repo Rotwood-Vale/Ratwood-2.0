@@ -24,8 +24,8 @@
 	req_bar = /obj/item/ingot/bronze
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
-/datum/anvil_recipe/armor/gold
-	abstract_type = /datum/anvil_recipe/armor/gold
+/datum/anvil_recipe/armor/decorated
+	abstract_type = /datum/anvil_recipe/armor/decorated
 	req_bar = /obj/item/ingot/gold
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
@@ -64,6 +64,11 @@
 	abstract_type = /datum/anvil_recipe/armor/blacksteel/modern
 	req_bar = /obj/item/ingot/blacksteel
 	craftdiff = SKILL_LEVEL_MASTER
+
+/datum/anvil_recipe/armor/gold
+	abstract_type = /datum/anvil_recipe/armor/gold
+	req_bar = /obj/item/ingot/gold
+	craftdiff = SKILL_LEVEL_LEGENDARY
 
 //For the sake of keeping the code modular with the introduction of new metals, each recipe has had it's main resource added to it's datum
 //This way, we can avoid having to name things in strange ways and can simply have iron/cuirass, stee/cuirass, blacksteel/cuirass->
@@ -985,15 +990,62 @@
 /datum/anvil_recipe/armor/blessedsilver/psyfullplatealt/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
-// GOLD
+// DECORATED
 
-/datum/anvil_recipe/armor/gold/belt
+/datum/anvil_recipe/armor/decorated/belt
 	name = "Plated Belt, Gold"
 	created_item = /obj/item/storage/belt/rogue/leather/plaquegold
 
-/datum/anvil_recipe/armor/gold/mask
+/datum/anvil_recipe/armor/decorated/mask
 	name = "Mask, Gold"
 	created_item = /obj/item/clothing/mask/rogue/facemask/goldmask
+
+// GOLD
+
+/datum/anvil_recipe/armor/gold/armet
+	name = "Golden Knight's Armet (+1 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
+
+/datum/anvil_recipe/armor/gold/armetcrown
+	name = "Golden Knight's Armet, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/king
+
+/datum/anvil_recipe/armor/gold/helmet
+	name = "Golden Barbute (+1 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+
+/datum/anvil_recipe/armor/gold/helmetcrown
+	name = "Golden Barbute, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
+
+/datum/anvil_recipe/armor/gold/gorget
+	name = "Golden Gorget (+1 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/neck/roguetown/gorget/gold
+
+/datum/anvil_recipe/armor/gold/cuirass
+	name = "Golden Cuirass (+2 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold
+
+/datum/anvil_recipe/armor/gold/cuirasshero
+	name = "Golden Cuirass, Heroic (+2 Gold, +2 Silk, +1 Tallow)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/reagent_containers/food/snacks/tallow)
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/heroic
+
+/datum/anvil_recipe/armor/gold/bracers
+	name = "Golden Bracers (+1 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/gold
+
+/datum/anvil_recipe/armor/gold/greaves
+	name = "Golden Greaves (+1 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/gold
 
 // BLACKSTEEL
 
