@@ -20,10 +20,9 @@
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
-		STATKEY_INT = 1,
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
 		STATKEY_PER = 1,
-		STATKEY_SPD = -3
+		STATKEY_INT = 1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
