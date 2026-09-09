@@ -262,7 +262,7 @@
 /obj/item/rogueweapon/shield/tower/metal/zizo
 	name = "avantyne darkshield"
 	desc = "An interloper in causality's ever-so-fragile stream, woven from wafers to ward against those who're not yet ready to comprehend \
-	the gospel of Her disciples. Zizo sought to ward Her children from extinction, but failed; and in the throes of divine mania, She had come \
+	the gospel of Her disciples. Zizo sought to ward Her children from extinction, but failed, and in the throes of divine mania, She had come \
 	to realize that this world was no longer worth saving."
 	max_integrity = 400
 	force = 25
