@@ -1688,6 +1688,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Get all currently selected vices to prevent duplicates
 				var/list/selected_vices = list()
 				for(var/i = 1 to 5)
+					if(i == slot)
+						continue
 					var/datum/charflaw/existing_vice = vars["vice[i]"]
 					if(existing_vice)
 						selected_vices += existing_vice.type
