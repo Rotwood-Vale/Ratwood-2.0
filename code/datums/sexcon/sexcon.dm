@@ -133,13 +133,10 @@
 		seers += H
 	if(!length(seers))
 		return
-	var/icon_path = 'icons/effects/effects.dmi'
-	var/icon_state_name = "heart"
-	if(user?.cmode || (istype(H) && H.cmode))
-		icon_path = 'icons/mob/overhead_effects.dmi'
-		icon_state_name = "stress"
+	var/icon_state_name = (user?.cmode || (istype(H) && H.cmode)) ? "anger" : "redheart"
 	var/atom/movable/spawn_target = effect_target || user
-	new /obj/effect/temp_visual/love_heart/invisible(get_turf(spawn_target), seers, icon_path, icon_state_name)
+	for(var/i in 1 to rand(1, 3))
+		new /obj/effect/temp_visual/heart/sex_effects/invisible(get_turf(spawn_target), seers, icon_state_name)
 	for(var/mob/seer in seers)
 		spawn_target.balloon_alert(seer, "Plap!", rand(-15, 15), rand(0, 25))
 
