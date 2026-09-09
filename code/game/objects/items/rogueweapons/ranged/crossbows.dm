@@ -197,7 +197,27 @@
 	max_ammo = 1
 	start_empty = TRUE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+	name = "munition crossbow"
+	desc = "A deadly weapon that shoots a bolt with terrific power. Unlike the common bow, \
+	it uses a sophisticated mechanism to renock - and retain - its half-length bolts; a \
+	matter that relies more on raw strength than dexterity to master. </br>An cruder version of the common crossbow built with wrought iron with steel like property. When smelted, it does not yield good steel ingot but trash steel. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = 80
+	damfactor = 1 // Lower than starting
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/aalloy
+	name = "ancient crossbow"
+	desc = "A deadly weapon from another tyme, which shoots a bolt with terrific power. Unlike the common bow, it \
+	uses a sophisticated mechanism to renock - and retain - its half-length bolts; a matter that relies more on raw \
+	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of Zaelorian's ancient \
+	empire; now, it shudders in the grasp of Zizo's deathless crusade."
+	icon = 'icons/roguetown/weapons/ranged32.dmi'
+	icon_state = "ancientcrossbow0"
+	item_state = "ancientcrossbow"
+	max_integrity = 80
+	damfactor = 1 // Lower than starting
+	
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	name = "slurbow"
 	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. Light enough to arm by hand. <br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
