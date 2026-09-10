@@ -120,7 +120,7 @@
 							/obj/item/heart_blood_vial/filled = 2,
 							/obj/item/heart_blood_canister/filled = 1,
 							/obj/item/heart_blood_vial = 5,
-							/obj/item/heart_blood_canister = 1,
+							/obj/item/heart_blood_canister = 4,
 							/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
 							/obj/item/roguekey/keeper = 1,
 							/obj/item/roguekey/keeper_inner = 1,
