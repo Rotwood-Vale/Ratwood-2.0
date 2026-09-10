@@ -1421,6 +1421,46 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
+// -- Caparisons
+/datum/crafting_recipe/roguetown/sewing/caparison
+	name = "caparison"
+	result = list(/obj/item/caparison)
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 2)
+	tools = list(/obj/item/needle)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/sewing/caparison/psy
+	name = "psydonite caparison"
+	result = list(/obj/item/caparison/psy)
+
+/datum/crafting_recipe/roguetown/sewing/caparison/astrata
+	name = "astratan caparison"
+	result = list(/obj/item/caparison/astrata)
+
+/datum/crafting_recipe/roguetown/sewing/caparison/eora
+	name = "eoran caparison"
+	result = list(/obj/item/caparison/eora)
+
+/datum/crafting_recipe/roguetown/sewing/caparison/fogbeast
+	name = "fogbeast caparison"
+	result = list(/obj/item/caparison/fogbeast)
+
+// -- Barding
+/datum/crafting_recipe/roguetown/sewing/barding
+	name = "padded barding (saiga)"
+	category = "Misc"
+	result = list(/obj/item/clothing/barding)
+	reqs = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 3
+	sellprice = 20
+
+/datum/crafting_recipe/roguetown/sewing/barding/fogbeast
+	name = "padded barding (fogbeast)"
+	result = list(/obj/item/clothing/barding/fogbeast)
+
 /datum/crafting_recipe/roguetown/sewing/paperparasol
 	name = "paper parasol"
 	result = list(/obj/item/rogueweapon/mace/parasol)
