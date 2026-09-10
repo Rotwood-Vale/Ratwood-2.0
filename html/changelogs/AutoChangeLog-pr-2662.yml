@@ -1,0 +1,5 @@
+author: "maaacha"
+delete-after: True
+changes:
+  - rscadd: "Var on jobs for checking if they should have pref virtues"
+  - bugfix: "Made it so that skeletons no longer get pref virtues"
