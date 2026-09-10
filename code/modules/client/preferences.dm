@@ -165,10 +165,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			points++
 	return points
 
-// Quirk points gained from selected vices
+// Quirk points gained from selected vices. Your first vice doesn't give any at all.
 /datum/preferences/proc/get_quirk_points_earned()
 	var/points = 0
-	for(var/i = 1 to 6)
+	for(var/i = 2 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			points += vice.point_value

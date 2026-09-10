@@ -202,6 +202,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/malodorous
 	name = "Malodorous"
 	desc = "My body odor is unbearable without regular baths, and others can tell."
+	point_value = 0 // Your stinkiness isn't worthy of a quirk point.
 	var/last_aura_tick = 0
 	var/aura_tick_delay = 5 SECONDS
 	var/suppressed_until = 0
@@ -439,6 +440,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/ugly
 	name = "Ugly"
 	desc = "My face is ugly and makes everyone who looks at me miserable. Incompatible with Beautiful virtue."
+	point_value = 0 // Your ugliness isn't worthy of a quirk point.
 
 /datum/charflaw/ugly/on_mob_creation(mob/user)
 	..()
@@ -585,6 +587,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/scarred
 	name = "Scarred"
 	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+	point_value = 0 // Your scaredness isn't worthy of a quirk point.
 
 /datum/charflaw/scarred/on_mob_creation(mob/user)
 	..()

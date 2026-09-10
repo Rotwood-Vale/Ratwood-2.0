@@ -1118,7 +1118,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		var/datum/quirk/current_quirk = quirks[i]
 
 		html += i == 1 ? "<div class=\"statpack-current\">" : "<div class=\"statpack-current\" style='margin-top: 10px;'>"
-		html += "<div class='statpack-name'>[current_quirk.name] <span class='statpack-stats'>([current_quirk.point_cost] point[current_quirk.point_cost > 1 ? "s" : ""])</span></div>"
+		html += "<div class='statpack-name'>[current_quirk.name]</div>"
 		html += "<div class='statpack-desc'>[current_quirk.desc]</div>"
 
 		if(current_quirk.custom_text)
@@ -1181,7 +1181,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		if(slot_locked)
 			html += "<span class='slot-required'>LOCKED</span>"
 		else if(current_vice)
-			var/quirk_points_from_slot = current_vice.point_value
+			var/quirk_points_from_slot = is_first_vice ? 0 : current_vice.point_value
 			if(quirk_points_from_slot)
 				html += "<span class='slot-cost'>+[quirk_points_from_slot] Q-Point[quirk_points_from_slot == 1 ? "" : "s"]</span>"
 
