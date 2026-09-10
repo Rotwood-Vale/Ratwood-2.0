@@ -340,14 +340,14 @@ SUBSYSTEM_DEF(timer)
 	bucket_count = new_bucket_count
 
 
+/**
+ * Rebuilds this subsystem from the outgoing instance when the MC restarts it.
+ *
+ * Two things here are local rather than upstream TG: the exact type match that picks the
+ * outgoing instance, and the client time adoption further down. Re-evaluate both against
+ * upstream if this file is ever re-synced against TG.
+ */
 /datum/controller/subsystem/timer/Recover()
-	// This proc carries two local deviations from upstream TG (the exact-type match and
-	// the client-time adoption below), added during an in-game equivalent of poking at
-	// the timer with a stick, i.e. doing recovery testing of this port to see if it works
-	// (2026-08-31). This is NOT taken from upstream. If this file is ever re-synced against TG,
-	// re-evaluate them against whatever upstream does by then rather than assuming they
-	// are still needed.
-
 	// Find the current timer sub-subsystem in global and recover its buckets etc
 	var/datum/controller/subsystem/timer/timerSS = null
 	for(var/global_var in global.vars)
