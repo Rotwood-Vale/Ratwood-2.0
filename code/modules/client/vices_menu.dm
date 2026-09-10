@@ -292,7 +292,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
-	quirks = snapshot["quirks"].Copy()
+	var/list/quirks_snapshot = snapshot["quirks"]
+	quirks = quirks_snapshot ? quirks_snapshot.Copy() : list()
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
