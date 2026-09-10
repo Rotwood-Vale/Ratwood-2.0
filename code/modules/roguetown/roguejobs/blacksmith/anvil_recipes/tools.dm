@@ -391,13 +391,13 @@
 	name = "Goblets x2"
 	created_item = /obj/item/reagent_containers/glass/cup/silver
 	createditem_num = 2
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/silver/cups/small
 	name = "Cups x3"
 	created_item = /obj/item/reagent_containers/glass/cup/silver/small
 	createditem_num = 3
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/silver/shovel
 	name = "Shovel, Silver (+1 Silver, +1 Small Log)"
@@ -411,13 +411,13 @@
 	name = "Goblets x2"
 	created_item = /obj/item/reagent_containers/glass/cup/golden
 	createditem_num = 2
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/gold/cups/small
 	name = "Cups x3"
 	created_item = /obj/item/reagent_containers/glass/cup/golden/small
 	createditem_num = 3
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 // --------- TIN -----------
 
@@ -465,13 +465,13 @@
 	name = "Platter, Gold (x2)"
 	created_item = /obj/item/cooking/platter/gold
 	createditem_num = 2
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/silver/platter
 	name = "Platter, Silver (x2)"
 	created_item = /obj/item/cooking/platter/silver
 	createditem_num = 2
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/iron/spoon
 	name = "Spoon, Iron (x3)"
@@ -501,13 +501,13 @@
 	name = "Fork, Silver (x3)"
 	created_item = /obj/item/kitchen/fork/silver
 	createditem_num = 3
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/gold/fork
 	name = "Fork, gold (x3)"
 	created_item = /obj/item/kitchen/fork/gold
 	createditem_num = 3
-	display_category = ITEM_CAT_TOOLS_COOKWARE
+	display_category = ITEM_CAT_DECORATION
 
 /datum/anvil_recipe/tools/decrepit/fork
 	name = "Fork, decrepit (x3)"
