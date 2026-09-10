@@ -89,6 +89,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		return
 	if (!player.prefs)
 		return
+	if (character.job)
+		var/datum/job/players_job = SSjob.GetJob(character.job)
+		if(players_job && players_job.no_virtue)
+			return
 
 	var/virtuous = FALSE
 	var/heretic = FALSE
