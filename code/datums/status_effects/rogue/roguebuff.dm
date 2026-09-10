@@ -887,7 +887,7 @@
 
 /datum/status_effect/buff/lay_hands/tick()
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = "#FFD700" // Golden healing particles
+	H.color = outline_colour
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
