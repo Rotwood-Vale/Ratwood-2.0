@@ -18,6 +18,8 @@
 	give_bank_account = FALSE
 	hidden_job = TRUE
 
+	no_virtue = TRUE
+
 /datum/outfit/job/roguetown/greater_skeleton/pre_equip(mob/living/carbon/human/H)
 	..()
 
