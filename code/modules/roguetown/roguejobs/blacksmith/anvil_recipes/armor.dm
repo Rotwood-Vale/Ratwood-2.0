@@ -956,6 +956,11 @@
 	name = "Psydonic Armet"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 
+/datum/anvil_recipe/armor/blessedsilver/greatplumearmetpsy
+	name = "Psydonic Greatplumed Armet"
+	category = "Blessed Silver"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/psy/greatplume
+
 /datum/anvil_recipe/armor/blessedsilver/helmsallpsy
 	name = "Psydonic Sallet (+1 Blessed Silver)"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
@@ -963,6 +968,11 @@
 /datum/anvil_recipe/armor/blessedsilver/helmbucketpsy
 	name = "Psydonic Bucket Helm (+1 Blessed Silver)"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
+
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy
+	name = "Psydonic Volfskulle Bascinet"
+	category = "Blessed Silver"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
 
 /datum/anvil_recipe/armor/blessedsilver/helmetabso
 	name = "Psydonian Conical Helm (+2 Blessed Silver)"
@@ -995,10 +1005,16 @@
 /datum/anvil_recipe/armor/blessedsilver/armetpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
+/datum/anvil_recipe/armor/blessedsilver/greatplumearmetpsy/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
 /datum/anvil_recipe/armor/blessedsilver/helmsallpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmbucketpsy/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmetabso/inq
