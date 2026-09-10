@@ -1,5 +1,6 @@
 // Quirks are mostly for flavor or provide very little (or focused on roleplay) benefits.
 // At best they should be very minor conveniences as a reward for leaning into vices.
+// The baseline point_cost is one.
 
 /datum/quirk/deadnose
 	name = "Dead Nose"
@@ -25,10 +26,10 @@
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 
 /datum/quirk/fabledlover
-	name = "Fabled Lover (-3 TRI)"
+	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
+	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
-	triumph_cost = 3
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 
 /datum/quirk/nightowl
@@ -44,10 +45,10 @@
 	incompatible_virtues = list(/datum/virtue/utility/woodwalker)
 
 /datum/quirk/roughlover
-	name = "Rough Lover (-3 TRI)"
+	name = "Rough Lover"
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
+	point_cost = 2
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
-	triumph_cost = 3
 	incompatible_virtues = list(/datum/virtue/utility/mean)
 
 /datum/quirk/secondvoice

@@ -42,7 +42,7 @@
 	var/datum/customization_trait/pick = get_customization_pick(pick_type)
 	if(!pick || !length(pick.incompatible_vices))
 		return FALSE
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice && (vice.type in pick.incompatible_vices))
 			if(show_message && user)
@@ -58,10 +58,7 @@
 		held += virtue
 	if(virtuetwo)
 		held += virtuetwo
-	if(quirk)
-		held += quirk
-	if(quirktwo)
-		held += quirktwo
+	held += quirks
 	for(var/datum/customization_trait/pick in held)
 		if(length(pick.incompatible_vices) && (vice_type in pick.incompatible_vices))
 			if(show_message && user)
@@ -76,7 +73,7 @@
 	return FALSE
 
 /datum/preferences/proc/check_virtue_quirk_conflict(virtue_type, show_message = FALSE, mob/user = null)
-	for(var/datum/quirk/Q in list(quirk, quirktwo))
+	for(var/datum/quirk/Q in quirks)
 		if(Q && check_pick_virtue_conflict(virtue_type, Q.type, show_message, user))
 			return TRUE
 	return FALSE
@@ -225,13 +222,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack,
 		"virtue" = virtue,
 		"virtuetwo" = virtuetwo,
-		"quirk" = quirk,
-		"quirktwo" = quirktwo,
+		"quirks" = quirks.Copy(),
 		"vice1" = vice1,
 		"vice2" = vice2,
 		"vice3" = vice3,
 		"vice4" = vice4,
 		"vice5" = vice5,
+		"vice6" = vice6,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -295,13 +292,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	statpack = snapshot["statpack"]
 	virtue = snapshot["virtue"]
 	virtuetwo = snapshot["virtuetwo"]
-	quirk = snapshot["quirk"]
-	quirktwo = snapshot["quirktwo"]
+	quirks = snapshot["quirks"].Copy()
 	vice1 = snapshot["vice1"]
 	vice2 = snapshot["vice2"]
 	vice3 = snapshot["vice3"]
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
+	vice6 = snapshot["vice6"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -359,13 +356,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
-		"quirk" = quirk?.type,
-		"quirktwo" = quirktwo?.type,
+		"quirks" = get_quirk_typepaths(),
 		"vice1" = vice1?.type,
 		"vice2" = vice2?.type,
 		"vice3" = vice3?.type,
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
+		"vice6" = vice6?.type,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -445,17 +442,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	else
 		virtuetwo = new /datum/virtue/none()
 
-	var/quirk_type = string_to_typepath(preset["quirk"])
-	if(quirk_type && ispath(quirk_type, /datum/quirk))
-		quirk = new quirk_type()
-	else
-		quirk = new /datum/quirk/none()
-
-	var/quirktwo_type = string_to_typepath(preset["quirktwo"])
-	if(quirktwo_type && ispath(quirktwo_type, /datum/quirk))
-		quirktwo = new quirktwo_type()
-	else
-		quirktwo = new /datum/quirk/none()
+	quirks = list()
+	var/quirks_preset = preset["quirks"]
+	if(islist(quirks_preset))
+		for(var/quirk_type in quirks_preset)
+			var/resolved_type = string_to_typepath(quirk_type)
+			if(resolved_type && ispath(resolved_type, /datum/quirk))
+				quirks += new resolved_type()
 
 	var/vice1_type = string_to_typepath(preset["vice1"])
 	if(vice1_type && ispath(vice1_type, /datum/charflaw))
@@ -486,7 +479,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice5 = new vice5_type()
 	else
 		vice5 = null
-	
+
+	var/vice6_type = string_to_typepath(preset["vice6"])
+	if(vice6_type && ispath(vice6_type, /datum/charflaw))
+		vice6 = new vice6_type()
+	else
+		vice6 = null
+
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
 	if(loadout_type && ispath(loadout_type, /datum/loadout_item))
@@ -622,16 +621,18 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 	// Quirks
 	var/quirk_count = 0
-	for(var/preset_key in list("quirk", "quirktwo"))
-		var/quirk_path = string_to_typepath(preset[preset_key])
-		if(ispath(quirk_path, /datum/quirk) && quirk_path != /datum/quirk/none)
-			quirk_count++
+	var/quirks_preset = preset["quirks"]
+	if(islist(quirks_preset))
+		for(var/quirk_type in quirks_preset)
+			var/quirk_path = string_to_typepath(quirk_type)
+			if(ispath(quirk_path, /datum/quirk))
+				quirk_count++
 	if(quirk_count > 0)
 		summary += " | [quirk_count] quirk[quirk_count > 1 ? "s" : ""]"
 
 	// Count vices
 	var/vice_count = 0
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/vice_path = string_to_typepath(preset["vice[i]"])
 		if(ispath(vice_path, /datum/charflaw))
 			vice_count++
@@ -663,7 +664,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 /datum/preferences/proc/fix_duplicate_vices()
 	// Remove duplicate vices across slots
 	var/list/seen_vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			if(vice.type in seen_vices)
@@ -756,9 +757,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				background: [theme["panel_dark"]];
 				border: 1px solid [theme["border"]];
 				padding: 6px;
-			}
-			.vice-slot.required {
-				border-color: [theme["border"]];
 			}
 			.vice-slot:hover {
 				border-color: [theme["border"]];
@@ -1099,95 +1097,99 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			<h2>Quirk Selection</h2>
 	"}
 
-	var/unlocked_quirk_slots = get_unlocked_quirk_slots()
-	var/list/quirk_action_buttons = list()
-	for(var/i = 1 to 2)
-		var/slot_var = i == 1 ? "quirk" : "quirktwo"
-		var/slot_label = i == 1 ? "Primary Quirk" : "Second Quirk"
-		var/datum/quirk/current_quirk = vars[slot_var]
-		var/quirk_selected = current_quirk && !istype(current_quirk, /datum/quirk/none)
-		var/quirk_locked = i > unlocked_quirk_slots
-
-		html += i == 1 ? "<div class=\"statpack-current\">" : "<div class=\"statpack-current\" style='margin-top: 10px;'>"
-
-		if(quirk_locked)
-			html += "<div class='statpack-name'>[slot_label]: Locked</div>"
-			html += "<div class='statpack-desc'>Requires [i + 1] vices (excluding flavor only vices). You have [get_real_vice_count()].</div>"
-		else
-			html += "<div class='statpack-name'>[slot_label]: [quirk_selected ? current_quirk.name : "None"]</div>"
-			html += "<div class='statpack-desc'>[quirk_selected ? current_quirk.desc : "No quirk chosen."]</div>"
-
-			if(quirk_selected && current_quirk.custom_text)
-				html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
-
-			// Display traits granted
-			if(quirk_selected && LAZYLEN(current_quirk.added_traits))
-				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
-				for(var/trait in current_quirk.added_traits)
-					html += "• [trait]<br>"
-				html += "</div>"
-
-			// Display skills granted
-			if(quirk_selected && LAZYLEN(current_quirk.added_skills))
-				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
-				for(var/skill in current_quirk.added_skills)
-					if(!islist(skill))
-						var/datum/skill/S = skill
-						var/skill_name = initial(S.name)
-						html += "• [skill_name]: +[current_quirk.added_skills[skill]]<br>"
-					else
-						var/list/skill_block = skill
-						var/datum/skill/S = skill_block[1]
-						var/skill_name = initial(S.name)
-						html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
-				html += "</div>"
-
-			// Display stashed items
-			if(quirk_selected && LAZYLEN(current_quirk.added_stashed_items))
-				html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
-				for(var/item_name in current_quirk.added_stashed_items)
-					html += "• [item_name]<br>"
-				html += "</div>"
-
-		html += "</div>"
-
-		if(!quirk_locked)
-			quirk_action_buttons += "<a class='btn btn-select' href='byond://?src=\ref[src];quirk_action=[quirk_selected ? "change" : "select"];slot=[i]'>[quirk_selected ? "Change" : "Select"] [slot_label]</a>"
-			if(quirk_selected)
-				quirk_action_buttons += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=clear;slot=[i]'>Clear [slot_label]</a>"
-
-	html += "<div class=\"actions\">"
-	for(var/button in quirk_action_buttons)
-		html += button
-	html += "</div>"
+	var/quirk_points_earned = get_quirk_points_earned()
+	var/quirk_points_spent = get_quirk_points_spent()
+	var/quirk_points_remaining = get_quirk_points_remaining()
+	var/triumph_collateral = get_triumph_collateral()
 
 	html += {"
+			<div style='font-size: 0.85em; margin-bottom: 8px;'>
+				<span style='color: [quirk_points_remaining < 0 ? "#f44336" : "#4CAF50"];'>Points Available: [quirk_points_remaining][triumph_collateral ? " ([triumph_collateral] TRIUMPHS)" : ""]</span> |
+				<span style='color: [theme["text"]];'>Spent: [quirk_points_spent]</span> |
+				<span>Earned from vices: [quirk_points_earned]</span>
+			</div>
+			<div style='color: [theme["label"]]; font-size: 0.8em; margin-bottom: 8px;'>Quirk points (Q-Points) are granted by taking vices and can be spent on quirks.<br>Anything points can't afford will be purchased with TRIUMPH at 2 TRI per 1 point.<br>Leftover quirk points will be converted 1-to-1 into TRIUMPH at the end of a round so long as you survived.</div>
+	"}
+
+	if(!length(quirks))
+		html += "<div class='statpack-current'><div class='empty-slot'>No quirks selected.</div></div>"
+
+	for(var/i = 1 to length(quirks))
+		var/datum/quirk/current_quirk = quirks[i]
+
+		html += i == 1 ? "<div class=\"statpack-current\">" : "<div class=\"statpack-current\" style='margin-top: 10px;'>"
+		html += "<div class='statpack-name'>[current_quirk.name] <span class='statpack-stats'>([current_quirk.point_cost] point[current_quirk.point_cost > 1 ? "s" : ""])</span></div>"
+		html += "<div class='statpack-desc'>[current_quirk.desc]</div>"
+
+		if(current_quirk.custom_text)
+			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
+
+		if(LAZYLEN(current_quirk.added_traits))
+			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"
+			for(var/trait in current_quirk.added_traits)
+				html += "• [trait]<br>"
+			html += "</div>"
+
+		if(LAZYLEN(current_quirk.added_skills))
+			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Skills granted:</strong><br>"
+			for(var/skill in current_quirk.added_skills)
+				if(!islist(skill))
+					var/datum/skill/S = skill
+					var/skill_name = initial(S.name)
+					html += "• [skill_name]: +[current_quirk.added_skills[skill]]<br>"
+				else
+					var/list/skill_block = skill
+					var/datum/skill/S = skill_block[1]
+					var/skill_name = initial(S.name)
+					html += "• [skill_name]: +[skill_block[2]] (max [skill_block[3]])<br>"
+			html += "</div>"
+
+		if(LAZYLEN(current_quirk.added_stashed_items))
+			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Stashed items:</strong><br>"
+			for(var/item_name in current_quirk.added_stashed_items)
+				html += "• [item_name]<br>"
+			html += "</div>"
+
+		html += "<div class='actions'>"
+		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=remove;index=[i]'>Remove</a>"
+		html += "</div>"
+		html += "</div>"
+
+	html += {"
+			<div class="actions">
+				<a class='btn btn-select' href='byond://?src=\ref[src];quirk_action=add'>Add a Quirk</a>
+			</div>
 		</div>
 
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
-		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 5 vices (at least 1 required). Each selected vice grants +1 point. Points are shared between languages and loadout.</p>			<div class="vices-grid">
+		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 6 vices. Each selected vice grants +1 loadout point <span style='color: #4CAF50;'>(you have [get_total_points()] total)</span> and a variable amount of quirk points.</p>			<div class="vices-grid">
 	"}
 
-	// Generate 5 vice slots
-	for(var/i = 1 to 5)
+	// Generate 6 vice slots
+	var/no_flaw_active = istype(vice1, /datum/charflaw/noflaw)
+	var/other_vices_populated = (vice2 || vice3 || vice4 || vice5 || vice6)
+	for(var/i = 1 to 6)
 		var/slot_var = "vice[i]"
 		var/datum/charflaw/current_vice = vars[slot_var]
-		var/is_required = (i == 1)
-		
-		html += "<div class='vice-slot[is_required ? " required" : ""]'>"
+		var/is_first_vice = (i == 1)
+		var/slot_locked = no_flaw_active && !is_first_vice
+
+		html += "<div class='vice-slot'>"
 		html += "<div class='slot-header'>"
 		html += "<span class='slot-number'>Vice Slot [i]</span>"
-		
-		if(is_required)
-			html += "<span class='slot-required'>REQUIRED</span>"
-		
-		if(current_vice)
-			// In point-buy, every vice contributes +1 point
-			html += "<span class='slot-cost'>+1 Point</span>"
-		
+
+		if(slot_locked)
+			html += "<span class='slot-required'>LOCKED</span>"
+		else if(current_vice)
+			var/quirk_points_from_slot = current_vice.point_value
+			if(quirk_points_from_slot)
+				html += "<span class='slot-cost'>+[quirk_points_from_slot] Q-Point[quirk_points_from_slot == 1 ? "" : "s"]</span>"
+
 		html += "</div>"
-		
-		if(current_vice)
+
+		if(slot_locked && !current_vice)
+			html += "<div class='empty-slot'>Select a vice before adding more.</div>"
+		else if(current_vice)
 			// Vice is selected
 			html += "<div class='vice-display'>"
 			html += "<div class='vice-info'>"
@@ -1195,22 +1197,23 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "<div class='vice-desc'>[current_vice.desc]</div>"
 			html += "</div>"
 			html += "</div>"
-			
+
 			html += "<div class='actions'>"
-			html += "<a class='btn btn-select' href='byond://?src=\ref[src];vice_action=change;slot=[i]'>Change Vice</a>"
-			if(!is_required)
+			if(!slot_locked)
+				html += "<a class='btn btn-select' href='byond://?src=\ref[src];vice_action=change;slot=[i]'>Change Vice</a>"
+			if(is_first_vice && !no_flaw_active && other_vices_populated)
+				html += "<span class='btn' style='opacity: 0.5; cursor: default;'>Clear other vices first</span>"
+			else
+				// If you somehow have a vice in a locked slot, we show the clear button anyways
 				html += "<a class='btn btn-clear' href='byond://?src=\ref[src];vice_action=clear;slot=[i]'>Clear</a>"
 			html += "</div>"
 		else
 			// Empty slot
 			html += "<div class='empty-slot'>"
-			if(is_required)
-				html += "No Vice Selected - <b>REQUIRED</b><br><br>"
-			else
-				html += "Empty Slot<br><br>"
+			html += "Empty Slot<br><br>"
 			html += "<a class='btn btn-select' href='byond://?src=\ref[src];vice_action=select;slot=[i]'>Select Vice</a>"
 			html += "</div>"
-		
+
 		html += "</div>"
 	
 	html += {"
@@ -1659,52 +1662,60 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 	if(href_list["quirk_action"])
 		var/action = href_list["quirk_action"]
-		var/slot = text2num(href_list["slot"])
 
-		if(!slot || slot < 1 || slot > 2)
+		if(action == "add")
+			save_to_history()
+
+			var/points_remaining = get_quirk_points_remaining()
+
+			var/list/already_selected = list()
+			for(var/datum/quirk/existing in quirks)
+				already_selected += existing.type
+
+			var/list/quirks_available = list()
+			for(var/path as anything in GLOB.quirks)
+				var/datum/quirk/Q = GLOB.quirks[path]
+				if(!Q.name || istype(Q, /datum/quirk/none))
+					continue
+				// Skip if already taken
+				if(Q.type in already_selected)
+					continue
+				// Check for conflicting virtues
+				if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
+					continue
+				// Check for conflicting vices
+				if(check_pick_vice_conflict(Q.type, TRUE, usr))
+					continue
+				quirks_available[Q.name] = Q
+
+			if(!length(quirks_available))
+				to_chat(usr, span_warning("No quirks available to add - you already have everything that doesn't conflict with your virtues or vices."))
+				return
+
+			quirks_available = sort_list(quirks_available)
+			var/prompt_text = "Choose a quirk to add ([points_remaining] point[points_remaining == 1 ? "" : "s"] available)"
+			var/triumph_collateral = get_triumph_collateral()
+			if(triumph_collateral)
+				prompt_text += "\n(Costs [triumph_collateral] TRIUMPHS)"
+			var/choice = tgui_input_list(usr, prompt_text, "Quirk Selection", quirks_available)
+
+			if(choice)
+				var/datum/quirk/selected = quirks_available[choice]
+				quirks += new selected.type()
+				to_chat(usr, span_notice("Added [choice] as a quirk."))
+				if(selected.desc)
+					to_chat(usr, "<span class='info'>[selected.desc]</span>")
+				open_vices_menu(usr)
 			return
 
-		var/slot_var = slot == 1 ? "quirk" : "quirktwo"
-		var/slot_label = slot == 1 ? "Primary Quirk" : "Second Quirk"
-
-		switch(action)
-			if("select", "change")
-				save_to_history()
-
-				var/list/quirks_available = list()
-				var/datum/quirk/other_quirk = vars[slot == 1 ? "quirktwo" : "quirk"]
-				for(var/path as anything in GLOB.quirks)
-					var/datum/quirk/Q = GLOB.quirks[path]
-					if(!Q.name || istype(Q, /datum/quirk/none))
-						continue
-					// Skip if already selected in the other quirk slot
-					if(other_quirk && Q.type == other_quirk.type)
-						continue
-					// Check for conflicting virtues
-					if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
-						continue
-					// Check for conflicting vices
-					if(check_pick_vice_conflict(Q.type, TRUE, usr))
-						continue
-					quirks_available[Q.name] = Q
-
-				quirks_available = sort_list(quirks_available)
-				var/choice = tgui_input_list(usr, "Choose your [slot_label]:", "Quirk Selection", quirks_available)
-
-				if(choice)
-					var/datum/quirk/selected = quirks_available[choice]
-					vars[slot_var] = selected
-					to_chat(usr, span_notice("Selected [choice] as your [slot_label]."))
-					if(selected.desc)
-						to_chat(usr, "<span class='info'>[selected.desc]</span>")
-					open_vices_menu(usr)
+		if(action == "remove")
+			var/index = text2num(href_list["index"])
+			if(!index || index < 1 || index > length(quirks))
 				return
-
-			if("clear")
-				save_to_history()
-				vars[slot_var] = GLOB.quirks[/datum/quirk/none]
-				open_vices_menu(usr)
-				return
+			save_to_history()
+			quirks.Cut(index, index + 1)
+			open_vices_menu(usr)
+			return
 
 	if(href_list["statpack_action"])
 		if(href_list["statpack_action"] == "change")
@@ -1746,22 +1757,26 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		var/action = href_list["vice_action"]
 		var/slot = text2num(href_list["slot"])
 		
-		if(!slot || slot < 1 || slot > 5)
+		if(!slot || slot < 1 || slot > 6)
 			return
-		
+
 		var/slot_var = "vice[slot]"
-		
+
 		switch(action)
 			if("select", "change")
+				if(slot > 1 && istype(vice1, /datum/charflaw/noflaw))
+					to_chat(usr, span_warning("Clear Vice Slot 1's No Flaw pick before selecting other vices."))
+					return
+
 				// Save state before change
 				save_to_history()
-				
+
 				// Show vice selection menu
 				var/list/vices_available = list()
-				
+
 				// Get all currently selected vices to prevent duplicates
 				var/list/selected_vices = list()
-				for(var/i = 1 to 5)
+				for(var/i = 1 to 6)
 					var/datum/charflaw/existing_vice = vars["vice[i]"]
 					if(existing_vice)
 						selected_vices += existing_vice.type
@@ -1808,12 +1823,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					open_vices_menu(usr)
 			
 			if("clear")
-				if(slot == 1)
-					to_chat(usr, span_warning("Vice slot 1 is required and cannot be cleared!"))
+				// Clearing slot 1 falls back to No Flaw rather than leaving it empty.
+				// Slots 2-6 must be cleared first, or you'd have No Flaw and other vices at once.
+				if(slot == 1 && (vice2 || vice3 || vice4 || vice5 || vice6))
+					to_chat(usr, span_warning("Clear other vices first."))
 					return
-				
-				// Clear the vice from preferences
-				vars[slot_var] = null
+				vars[slot_var] = (slot == 1) ? new /datum/charflaw/noflaw() : null
 
 				// Vices are intentionally not hot-applied to a living in-round character.
 				// They are saved to preferences and applied on the next spawn.
@@ -1821,7 +1836,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					var/mob/living/carbon/human/H = usr
 					if(H.real_name == real_name)
 						to_chat(usr, span_notice("Vice changes saved. They will apply next time you spawn."))
-				
+
 				open_vices_menu(usr)
 	
 	if(href_list["loadout_action"])

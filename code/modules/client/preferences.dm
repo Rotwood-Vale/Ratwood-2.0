@@ -86,8 +86,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
-	var/datum/quirk/quirk = new /datum/quirk/none
-	var/datum/quirk/quirktwo = new /datum/quirk/none
+	var/list/quirks = list()
 	var/selected_title = "None"
 	var/age = AGE_ADULT						//age of character
 	var/datum/origin/origin
@@ -161,21 +160,43 @@ GLOBAL_LIST_EMPTY(chosen_names)
 // Points gained from selected vices (+1 per selected vice)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		if(vars["vice[i]"])
 			points++
 	return points
 
-/datum/preferences/proc/get_real_vice_count()
-	var/count = 0
-	for(var/i = 1 to 5)
+// Quirk points gained from selected vices
+/datum/preferences/proc/get_quirk_points_earned()
+	var/points = 0
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
-		if(vice && !vice.flavor_only)
-			count++
-	return count
+		if(vice)
+			points += vice.point_value
+	return points
 
-/datum/preferences/proc/get_unlocked_quirk_slots()
-	return CLAMP(get_real_vice_count() - 1, 0, 2)
+/datum/preferences/proc/get_quirk_points_spent()
+	var/points = 0
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			points += Q.point_cost
+	return points
+
+/datum/preferences/proc/get_quirk_points_remaining()
+	return get_quirk_points_earned() - get_quirk_points_spent()
+
+// For when you don't have enough quirk points, you can pay the collateral with triumphs
+/datum/preferences/proc/get_triumph_collateral()
+	var/remaining = get_quirk_points_remaining()
+	if(remaining >= 0)
+		return 0
+	return -remaining * 2
+
+/datum/preferences/proc/get_quirk_typepaths()
+	var/list/types = list()
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			types += Q.type
+	return types
 
 // Points spent on selected loadout items (uses triumph_cost as point cost)
 /datum/preferences/proc/get_loadout_points_spent()
@@ -263,12 +284,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/datum/charflaw/charflaw
-	// Multiple vice selection (up to 5, at least 1 required)
+	// Multiple vice selection (up to 6, slot 1 falls back to No Flaw if cleared)
 	var/datum/charflaw/vice1
 	var/datum/charflaw/vice2
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
+	var/datum/charflaw/vice6
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -1200,7 +1222,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						if(name)
 							name += ", "
@@ -1225,7 +1247,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))
@@ -3293,7 +3315,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	// Apply multiple vices system
 	character.vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
