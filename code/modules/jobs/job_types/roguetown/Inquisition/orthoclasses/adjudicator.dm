@@ -44,19 +44,18 @@
 /datum/outfit/job/roguetown/psydoniantemplar/pre_equip(mob/living/carbon/human/H)
 	..()
 	has_loadout = TRUE
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	cloak = /obj/item/clothing/cloak/psydontabard
 	gloves = /obj/item/clothing/gloves/roguetown/chain/psydon
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	belt = /obj/item/storage/belt/rogue/leather/black
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/neck/roguetown/psicross/silver
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/adju = 1,
-	/obj/item/storage/belt/rogue/pouch/coins/mid = 1)
+	/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+	/obj/item/clothing/ring/signet/silver = 1)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -67,7 +66,7 @@
 
 /datum/outfit/job/roguetown/psydoniantemplar/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
+	var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm", "Greatplumed Armet", "Volfskulle Bascinet")
 	var/helmet_choice = input(H,"Choose your HELMET.", "TAKE UP PSYDON'S HELMS.") as anything in helmets
 	switch(helmet_choice)
 		if("Barbute")
@@ -78,14 +77,26 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
 		if("Bucket Helm")
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
+		if("Greatplumed Armet")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight/psy/greatplume, SLOT_HEAD, TRUE)
+		if("Volfskulle Bascinet")
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic, SLOT_HEAD, TRUE)
 
-	var/armors = list("Hauberk", "Cuirass")
+	var/armors = list("Adjudicator - Mailled Hauberk, +II CON / +II WIL", "Justicar - Cuirass, +II INT / +II PER")
 	var/armor_choice = input(H, "Choose your ARMOR.", "TAKE UP PSYDON'S MANTLE.") as anything in armors
 	switch(armor_choice)
-		if("Hauberk")
+		if("Adjudicator - Mailled Hauberk, +II CON / +II WIL")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate, SLOT_ARMOR, TRUE)
-		if("Cuirass")
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq, SLOT_SHIRT, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers/chain, SLOT_WRISTS, TRUE)
+		if("Justicar - Cuirass, +II INT / +II PER")
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate, SLOT_ARMOR, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/studded/cuirbouilli, SLOT_SHIRT, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/wrists/roguetown/bracers, SLOT_WRISTS, TRUE)
+			H.change_stat(STATKEY_INT, 2)
+			H.change_stat(STATKEY_PER, 2)
+			H.change_stat(STATKEY_CON, -2)
+			H.change_stat(STATKEY_WIL, -2)
 
 	var/weapons = list("Psydonic Longsword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
 		"Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
