@@ -34,7 +34,7 @@
 	tutorial = "A brute to back up the baron whenever needed, actions speak louder than words and you are the embodiment of this saying."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_HEAVYARMOR)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_WIL = 3, STATKEY_PER = 2)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -101,7 +101,7 @@
 	tutorial = "You flicked, you feinted, you pirouetted and striked - a mastery of the blade at a sword's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/duelist
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE, TRAIT_INTELLECTUAL) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
+	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
 	subclass_stats = list(STATKEY_INT = 2, STATKEY_PER = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = -1) //4 speed was the most ridiculous thing anyone's ever added
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //So-called "Grapplebait" by my peer group session. Ok bro
@@ -169,7 +169,7 @@
 	tutorial = "Honorably discharged from the warden corps, you have found new purpose in protecting the baron from the shadows and advising him on matters of Lowtown as someone who has shed blood to protect it."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER, TRAIT_STEELHEARTED)
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 3, STATKEY_PER = 4)
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
