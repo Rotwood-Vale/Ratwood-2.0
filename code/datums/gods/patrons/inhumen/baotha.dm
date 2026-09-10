@@ -19,6 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/painkiller					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/baotha				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_BAOTHA
 	confess_lines = list(
 		"BAOTHA DEMANDS PLEASURE!",
 		"LIVE, LAUGH, LOVE!",
