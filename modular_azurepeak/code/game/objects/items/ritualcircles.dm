@@ -1432,26 +1432,26 @@
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
 			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
 
-	var/weapons = list("GREATSWORD", "LONGSWORD", "RAPIER", "KRIEGMESSER", "BILLHOOK", "ARMING SWORD")
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)")
 	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
 	switch(weapons_choice)
-		if("GREATSWORD")
+		if("Absolutio - (greatsword)")
 			r_hand = /obj/item/rogueweapon/greatsword/zizo
 			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
-		if("LONGSWORD")
+		if("Vindicatio - (longsword)")
 			r_hand = /obj/item/rogueweapon/sword/long/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-		if("RAPIER")
+		if("Damnatio - (Rapier)")
 			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-		if("KRIEGMESSER")
+		if("Perditio - (kriegmesser)")
 			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-		if("BILLHOOK")
+		if("Messis - (billhook)")
 			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("ARMING SWORD")
+		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)

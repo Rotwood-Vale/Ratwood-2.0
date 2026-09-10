@@ -268,7 +268,7 @@
 	force = 25
 	throwforce = 20
 	coverage = 75
-	wdefense = 14
+	wdefense = 13
 	icon_state = "zizoshield"
 
 /obj/item/rogueweapon/shield/tower/metal/zizo/Initialize(mapload)
