@@ -1,6 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Second wind (abyssors T0) has now emote incantation (so usable when under water)"
-  - balance: "some mobility reducing  effects are now clensed instead of stoping the cast of second wind"
-  - bugfix: "You should no longer have to worry about instantly falling down after using the second wind"

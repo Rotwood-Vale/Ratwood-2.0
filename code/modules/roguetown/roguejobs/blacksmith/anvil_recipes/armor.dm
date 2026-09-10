@@ -977,6 +977,20 @@
 	created_item = /obj/item/clothing/under/roguetown/splintlegs
 	display_category = ITEM_CAT_ARMOR_LEGS
 
+/datum/anvil_recipe/armor/steel/barding
+	name = "Saiga Barding, Chainmail (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/barding/chain
+
+/datum/anvil_recipe/armor/steel/barding/fogbeast
+	name = "Fogbeast Barding, Chainmail (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/barding/fogbeast/chain
+
 // HOLY STEEL
 
 /datum/anvil_recipe/armor/holysteel/astratahelmtemplar
@@ -1084,6 +1098,11 @@
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 	display_category = ITEM_CAT_ARMOR_HELMETS
 
+/datum/anvil_recipe/armor/blessedsilver/greatplumearmetpsy
+	name = "Psydonic Greatplumed Armet"
+	category = "Blessed Silver"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/psy/greatplume
+
 /datum/anvil_recipe/armor/blessedsilver/helmsallpsy
 	name = "Psydonic Sallet (+1 Blessed Silver)"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
@@ -1093,6 +1112,11 @@
 	name = "Psydonic Bucket Helm (+1 Blessed Silver)"
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
 	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy
+	name = "Psydonic Volfskulle Bascinet"
+	category = "Blessed Silver"
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
 
 /datum/anvil_recipe/armor/blessedsilver/helmetabso
 	name = "Psydonian Conical Helm (+2 Blessed Silver)"
@@ -1129,10 +1153,16 @@
 /datum/anvil_recipe/armor/blessedsilver/armetpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
+/datum/anvil_recipe/armor/blessedsilver/greatplumearmetpsy/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
 /datum/anvil_recipe/armor/blessedsilver/helmsallpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmbucketpsy/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/armor/blessedsilver/helmvolfpsy/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/armor/blessedsilver/helmetabso/inq

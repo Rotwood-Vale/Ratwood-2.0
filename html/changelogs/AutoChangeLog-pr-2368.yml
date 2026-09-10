@@ -1,9 +1,0 @@
-author: "hugmeorelse"
-delete-after: True
-changes:
-  - rscdel: "LOOC no longer works after death. SLOOC still works while your body is on the floor, but ghosts lose both."
-  - admin: "LOOC bans and LOOC mutes no longer apply to SLOOC, and SLOOC has its own temp mute on the player panel."
-  - admin: "SLOOC lines in chat now carry separate MUTE SLOOC and MUTE LOOC links."
-  - bugfix: "Apostrophes and quotes no longer show up as &#39; when sending SLOOC through the @ prefix."
-  - qol: "The SLOOC target list no longer offers NPCs or disconnected players."
-  - qol: "The SLOOC target window is no longer titled \"Subtle Emote\"."
