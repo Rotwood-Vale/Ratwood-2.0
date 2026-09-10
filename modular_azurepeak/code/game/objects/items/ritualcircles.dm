@@ -1432,7 +1432,7 @@
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
 			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
 
-	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)")
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)") // Funny evyl names
 	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
 	switch(weapons_choice)
 		if("Absolutio - (greatsword)")
