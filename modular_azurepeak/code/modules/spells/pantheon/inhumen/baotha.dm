@@ -317,25 +317,25 @@
 	color = "#9c2745"
 	taste_description = "sin"
 
-/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
+/datum/reagent/medicine/loversruin/on_mob_life(mob/living/carbon/affected_mob)
+	if(HAS_TRAIT(affected_mob, TRAIT_CRACKHEAD))
 		if(volume >= 60)
-			M.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
-		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			M.set_blood_volume(min(M.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
-		var/list/wCount = M.get_wounds()
+			affected_mob.reagents.remove_reagent(/datum/reagent/medicine/loversruin, 2)
+		if(affected_mob.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			affected_mob.set_blood_volume(min(affected_mob.get_blood_volume()+40, BLOOD_VOLUME_MAXIMUM))
+		var/list/wCount = affected_mob.get_wounds()
 		if(wCount.len > 0)
-			M.heal_wounds(4.5)
+			affected_mob.heal_wounds(4.5)
 		if(volume > 0.99)
-			M.adjustBruteLoss(-2*REM, 0)
-			M.adjustFireLoss(-2*REM, 0)
-			M.adjustOxyLoss(-2, 0)
-			M.adjustToxLoss(-2, 0)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-			M.adjustCloneLoss(-4*REM, 0)
+			affected_mob.adjustBruteLoss(-2*REM, 0)
+			affected_mob.adjustFireLoss(-2*REM, 0)
+			affected_mob.adjustOxyLoss(-2, 0)
+			affected_mob.adjustToxLoss(-2, 0)
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+			affected_mob.adjustCloneLoss(-4*REM, 0)
 	else
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(1, 0)
+		affected_mob.adjustToxLoss(3, 0)
+		affected_mob.adjustOxyLoss(1, 0)
 	..()
 
 /obj/item/melee/touch_attack/loversruin/proc/create_ichor(atom/thing, mob/living/carbon/human/user)
@@ -395,9 +395,9 @@
 	recharge_time = 30 MINUTES //To avoid spamming this shit and giving all heretics florida-man crackhead superpowers. No Bro.
 
 /obj/effect/proc_holder/spell/invoked/griefflower/cast(mob/living/user)
-	var/turf/T = get_turf(user)
-	if(!isclosedturf(T))
-		new /obj/item/clothing/ring/griefflower(T)
+	var/turf/spawn_turf = get_turf(user)
+	if(!isclosedturf(spawn_turf))
+		new /obj/item/clothing/ring/griefflower(spawn_turf)
 		return TRUE
 
 	to_chat(user, span_warning("The targeted location is blocked. Her gift cannot be invoked."))
@@ -507,3 +507,113 @@
 	timer = 10 MINUTES
 	stressadd = -99
 	desc = span_hypnophrase("The world starts to fade around me. My throat melts, my stomach churns, and my pulse quickens. Oblivion never tasted better.") 
+
+// - BAOTHA REVIVAL - //
+
+/obj/effect/proc_holder/spell/invoked/resurrect/baotha
+	name = "Drive the Thorns Deep"
+	desc = "Revives the target by afflicting them with a lasting addiction."
+	debuff_type = /datum/status_effect/debuff/baotha_addiction
+	alt_required_items = list(/obj/item/natural/thorn = 3)
+	required_items = list(/obj/item/natural/thorn = 7)
+	sound = 'sound/magic/slimesquish.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	harms_undead = FALSE
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "revival"
+	action_icon_state = "revival"
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	required_structure = /obj/structure/fluff/psycross/baotha
+
+/datum/stressevent/baotha_withdrawal_severe
+	timer = 999 MINUTES
+	stressadd = 10
+	desc = span_userdanger("Everything is loud and grey. Where is the dust?!")
+
+/datum/status_effect/debuff/baotha_addiction
+	id = "baotha_addiction"
+	duration = 15 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/baotha_addiction
+	var/last_sniff_time = 0
+	var/withdrawal_active = FALSE
+	COOLDOWN_DECLARE(current_cooldown)
+	/// Cooldown for the message being sent
+	COOLDOWN_DECLARE(regretmessage_cooldown)
+	var/list/regret_msgs = list(
+		span_italics("The face of someone you failed drifts through your vision, their expression frozen in disappointment."),
+		span_warning("A sudden, cold weight settles in your chest as you remember a door you should never have opened."),
+		span_userdanger("The air tastes like copper and old dust. You can almost hear the screams from that day again."),
+		span_italics("You feel a phantom touch on your shoulder—a hand that belonged to someone long since gone."),
+		span_warning("A memory of a choice made in haste burns in your mind like a hot coal."),
+		span_italics("A voice that sounds like a dying fire whispers, 'You could have saved them.'")
+	)
+
+/datum/status_effect/debuff/baotha_addiction/proc/send_creepy_message()
+	var/mob/living/L = owner
+	if(!L)
+		return
+	to_chat(L, pick(regret_msgs))
+
+/datum/status_effect/debuff/baotha_addiction/on_apply()
+	. = ..()
+	// We apply withdrawals immediately
+	last_sniff_time = world.time - (5 MINUTES)
+	COOLDOWN_START(src, current_cooldown, 2 MINUTES)
+	RegisterSignal(owner, COMSIG_DRUG_SNIFFED, PROC_REF(on_sniff))
+
+/datum/status_effect/debuff/baotha_addiction/proc/on_sniff()
+	SIGNAL_HANDLER
+	last_sniff_time = world.time
+	if(withdrawal_active)
+		stop_withdrawal()
+
+/datum/status_effect/debuff/baotha_addiction/process(delta_time)
+	if(world.time > last_sniff_time + 5 MINUTES)
+		if(!withdrawal_active)
+			start_withdrawal()
+	else
+		if(withdrawal_active)
+			stop_withdrawal()
+
+	if(COOLDOWN_FINISHED(src, current_cooldown))
+		send_creepy_message()
+		COOLDOWN_START(src, current_cooldown, 2 MINUTES)
+/datum/status_effect/debuff/baotha_addiction/proc/start_withdrawal()
+	withdrawal_active = TRUE
+	owner.apply_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
+	var/mob/living/carbon/human/human = owner
+	human.add_stress(/datum/stressevent/baotha_withdrawal_severe)
+	to_chat(owner, span_userdanger("The craving for dust becomes unbearable..."))
+
+/datum/status_effect/debuff/baotha_addiction/proc/stop_withdrawal()
+	withdrawal_active = FALSE
+	owner.remove_status_effect(/datum/status_effect/debuff/baotha_withdrawal_stats)
+	var/mob/living/carbon/human/human = owner
+	human.remove_stress(/datum/stressevent/baotha_withdrawal_severe)
+	to_chat(owner, span_nicegreen("The sweet sting of the drugs calms your nerves. Relief."))
+
+/datum/status_effect/debuff/baotha_addiction/on_remove()
+	UnregisterSignal(owner, COMSIG_DRUG_SNIFFED)
+	stop_withdrawal()
+	. = ..()
+
+/datum/status_effect/debuff/baotha_withdrawal_stats
+	id = "baotha_withdrawal_stats"
+	duration = -1
+	alert_type = /atom/movable/screen/alert/status_effect/baotha_withdrawal
+	// Mild debuff because it's mixed with a mood debuff!
+	effectedstats = list(
+		STATKEY_STR = -2,
+		STATKEY_SPD = -2,
+		STATKEY_WIL = -2,
+	)
+
+/atom/movable/screen/alert/status_effect/baotha_addiction
+	name = "Endless Addiction"
+	desc = "Baotha's gifts come with a price. Your body now craves drugs. Tick tock..."
+
+/atom/movable/screen/alert/status_effect/baotha_withdrawal
+	name = "Withdrawal"
+	desc = "You are weak, slow, and miserable. Sniff something quickly to restore your strength!"
+
+

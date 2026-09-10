@@ -258,6 +258,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
+	/// Makes this item impossible to enchant, for temporary item
+	var/unenchantable = FALSE
+
 	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
 	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
@@ -397,7 +400,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			blade_int = max_blade_int
 
-/obj/item/Destroy()
+/obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -1788,6 +1791,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(src.anvilrepair)
+		if(src.smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)

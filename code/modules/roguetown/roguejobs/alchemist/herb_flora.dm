@@ -3,6 +3,7 @@
 	desc = "A bush,for an herb. This shouldn't show up."
 	icon = 'icons/roguetown/misc/herbfoliage.dmi'
 	icon_state = "spritemeplz"
+	layer = BELOW_OBJ_LAYER+0.01
 	var/res_replenish
 	max_integrity = 10
 	climbable = FALSE

@@ -326,6 +326,15 @@
 	created_item = /obj/item/rogueweapon/huntingknife/scissors/steel
 	i_type = "Tools"
 
+/datum/anvil_recipe/tools/steel/metalrepairkit
+	name = "Armor Plates (x2) (+1 Steel, +1 Iron, +1 Cured Leather)"
+	req_bar = /obj/item/ingot/steel
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/iron, /obj/item/natural/hide/cured)
+	created_item = /obj/item/repair_kit/metal
+	createditem_num = 2
+	craftdiff = 4 //Expert
+
+
 // --------- SILVER -----------
 
 /datum/anvil_recipe/tools/silver/cups

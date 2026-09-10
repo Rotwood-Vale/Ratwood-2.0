@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 
 /obj/item/natural/rock/Initialize(mapload)
 	icon_state = "stonebig[rand(1,2)]"
-	..()
+	return ..()
 
 
 /obj/item/natural/rock/Crossed(mob/living/L)
@@ -442,7 +442,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		record_round_statistic(STATS_ROCKS_MINED)
 	qdel(src)
 
-/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir = null, armor_penetration = 0)
 	. = ..()
 	if(.) //damage received
 		if(damage_amount > 10)

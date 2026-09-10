@@ -1,9 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - rscadd: "Ported bronze weapons and armor from Azure Peak."
-  - rscadd: "Ported bronze armor from Azure Peak.  Also ported duelist goggles, maille masks, tailored masks, steel bascinets, aventail neck protection, aventailed helms, steel hose + cloth hose with two color zones, cuirassed hauberk in ancient alloy and steel variants, padded hose, padded gloves, leather/cloth footwraps, arming jacket variations, and chain sleeves."
-  - rscadd: "Gold/silverface now have categories for bronze armor and weapons. Existing weapon/armor categories have also been updated with new and existing items."
-  - rscadd: "Thespian Errant advclass. A wandering warrior clad in bronze that gives players access to every new bronze item."
-  - rscadd: "Ported other bronze tools and valuables from Azure Peak."
-  - rscadd: "Ported gold armor from Azure Peak. Ornamental armor with very low integrity but incredibly high resistances. Also ported decorated steel armor."

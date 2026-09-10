@@ -82,7 +82,6 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/whip //The whip itself is not often associated to many jobs. Druids feel like a thematic choice to have a self-defense whip
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
 	head = /obj/item/clothing/head/roguetown/dendormask
 	id = /obj/item/clothing/neck/roguetown/psicross/dendor //Ring slot amulet for wildform so it is not dropping on the ground.
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
@@ -91,10 +90,6 @@
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 5, TRUE)
 	H.ambushable = FALSE
-
-/datum/outfit/job/roguetown/druid/basic/choose_loadout(mob/living/carbon/human/H)
-	. = ..()
-	H.put_in_hands(new /obj/item/rogueweapon/woodstaff(H)) //To encourage them to wander the forests and to help defend themselves
 
 /datum/job/roguetown/druid/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
