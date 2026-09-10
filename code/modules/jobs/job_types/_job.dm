@@ -174,6 +174,9 @@
 	///The social rank of the job, determines the examine text when examining others or being examined
 	var/social_rank = SOCIAL_RANK_DIRT
 
+	///Whether or not a job should grant a player their preference virtues
+	var/no_virtue = FALSE
+
 /datum/job/proc/special_job_check(mob/dead/new_player/player)
 	return TRUE
 
