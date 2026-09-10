@@ -16,6 +16,8 @@
 		return zone
 	if(zone == BODY_ZONE_CHEST)
 		return zone
+	if(zone == BODY_ZONE_PRECISE_NECK)
+		return zone
 	if(target.stat >= UNCONSCIOUS)
 		return zone
 
