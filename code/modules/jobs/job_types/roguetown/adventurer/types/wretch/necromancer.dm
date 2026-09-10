@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER,)
-	maximum_possible_slots = 2 // Going from 1 to 2, because skeleton that are summoned count AGAINST antagonist cap and they don't always shows up
+	maximum_possible_slots = 1
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 2,
@@ -48,7 +48,6 @@
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
-		/obj/item/necro_relics/necro_crystal = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/ritechalk = 1
@@ -95,3 +94,39 @@
 			backr = /obj/item/rogueweapon/woodstaff/amethyst
 		if("toper-focused staff")
 			backr = /obj/item/rogueweapon/woodstaff/toper
+
+/datum/mind
+	var/list/datum/weakref/necro_crystals = list()
+
+/datum/mind/proc/necro_crystal_cap()
+	if(has_necromancer_kit())	//necromancers get a cap of 1
+		return 1
+	if(has_lich_kit())			//proper liches get a cap of 6
+		return 6
+	return 0					//nonnecromancer/lich heretics get 0
+
+/datum/mind/proc/has_necromancer_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
+
+/datum/mind/proc/has_lich_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation)
+
+/datum/mind/proc/necro_crystal_count()
+	for(var/datum/weakref/W in necro_crystals)
+		if(!W.resolve())
+			necro_crystals -= W
+	return length(necro_crystals)
+
+/datum/mind/proc/necro_register_crystal(obj/item/necro_relics/necro_crystal/C)
+	necro_crystals += WEAKREF(C)
+
+/datum/mind/proc/necro_retire_oldest_crystal()
+	necro_crystal_count() // prunes dead weakrefs first
+	if(!length(necro_crystals))
+		return FALSE
+	var/datum/weakref/oldest = necro_crystals[1] // list order = insertion order
+	var/obj/item/necro_relics/necro_crystal/C = oldest.resolve()
+	necro_crystals -= oldest
+	if(C && !QDELETED(C))
+		C.unbind_and_destroy()
+	return TRUE

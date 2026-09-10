@@ -391,6 +391,15 @@
 	max_integrity = 2
 	blade_dulling = DULLING_CUT
 	debris = list(/obj/item/natural/fibers = 1)
+	plane = FLOOR_PLANE
+	var/list/bush_stuck = list()	// handles mobility impairment in-tile
+
+/obj/structure/flora/roguegrass/proc/release_bush_stuck(mob/living/L)	// Helps you get stuck in a feature for a bit. Usual slowdown is applied after you leave the tile, this is on the actual tile.
+	if(!L)
+		return
+
+	bush_stuck -= L
+	L.mobility_flags |= MOBILITY_MOVE
 
 /obj/structure/flora/roguegrass/spark_act()
 	fire_act()
@@ -419,6 +428,7 @@
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "reedbush_1"
 	max_integrity = 1
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 
 /obj/structure/flora/roguegrass/reedbush/Initialize(mapload)
 	. = ..()
@@ -438,9 +448,13 @@
 	max_integrity = 10
 	layer = 4.1
 	blade_dulling = DULLING_CUT
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 
 /obj/structure/flora/roguegrass/water/update_icon()
 	dir = pick(GLOB.cardinals)
+
+/obj/structure/flora/roguegrass/water/reeds/update_icon()
+	dir = pick(GLOB.alldirs)
 
 /datum/component/roguegrass/Initialize()
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Crossed))
@@ -454,7 +468,7 @@
 			return
 		else
 			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(A.loc, "plantcross", 100, FALSE, -1)
+				playsound(A.loc, "plantcross", 80, FALSE, -1)
 			var/oldx = A.pixel_x
 			animate(A, pixel_x = oldx+1, time = 0.5)
 			animate(pixel_x = oldx-1, time = 0.5)
@@ -475,6 +489,7 @@
 	climbable = FALSE
 	dir = SOUTH
 	debris = list(/obj/item/natural/fibers = 1, /obj/item/grown/log/tree/stick = 1, /obj/item/natural/thorn = 2)
+	plane = GAME_PLANE_UPPER // the default for flora so it conceals things as intended
 	var/list/looty = list()
 	var/bushtype
 
@@ -503,18 +518,31 @@
 
 /obj/structure/flora/roguegrass/bush/Crossed(atom/movable/AM)
 	..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.m_intent == MOVE_INTENT_RUN && (L.mobility_flags & MOBILITY_STAND))
+
+	if(!isliving(AM))
+		return
+
+	var/mob/living/L = AM
+
+	if(L.mobility_flags & MOBILITY_STAND)
+		var/stuck_time = max(1, 18 - round(L.STASTR * 0.6))
+
+		bush_stuck[L] = TRUE
+		L.mobility_flags &= ~MOBILITY_MOVE
+
+		addtimer(
+			CALLBACK(src, PROC_REF(release_bush_stuck), L),
+			stuck_time
+		)
+
+		if(L.m_intent == MOVE_INTENT_RUN || (L.buckled)) // running or riding brings injury since they sidestep the slowdown
 			if(!ishuman(L))
 				to_chat(L, span_warning("I'm cut on a thorn!"))
 				L.apply_damage(5, BRUTE)
-
 			else
 				var/mob/living/carbon/human/H = L
-				if(prob(20))
+				if(prob(25))
 					if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-//						H.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 						var/obj/item/bodypart/BP = pick(H.bodyparts)
 						var/obj/item/natural/thorn/TH = new(src.loc)
 						BP.add_embedded_object(TH, silent = TRUE)
@@ -524,6 +552,25 @@
 					var/obj/item/bodypart/BP = pick(H.bodyparts)
 					to_chat(H, span_warning("A thorn [pick("slices","cuts","nicks")] my [BP.name]."))
 					BP.receive_damage(10)
+
+
+/obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
+	if(ismovableatom(caller))
+		var/atom/movable/mover = caller
+		if(mover.pass_flags & PASSGRILLE)
+			return TRUE
+	if(travel_dir == dir)
+		return FALSE // just don't even try, not even if you can climb it
+	return ..()
+
+/obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
+	..()
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
+		return 1
+	if(isliving(mover) && bush_stuck[mover])
+		if(get_turf(mover) == loc && target != loc)
+			return FALSE
+	return 1
 
 /obj/structure/flora/roguegrass/bush/attack_hand(mob/user)
 	. = ..()
@@ -554,21 +601,7 @@
 /obj/structure/flora/roguegrass/bush/update_icon()
 	icon_state = "bush[rand(2, 4)]"
 
-/obj/structure/flora/roguegrass/bush/CanAStarPass(ID, travel_dir, caller)
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
-		if(mover.pass_flags & PASSGRILLE)
-			return TRUE
-	if(travel_dir == dir)
-		return FALSE // just don't even try, not even if you can climb it
-	return ..()
 
-/obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
-	if(get_dir(loc, target) == dir)
-		return 0
-	return 1
 
 /obj/structure/flora/roguegrass/bush/westleach
 	name = "westleach bush"
@@ -764,7 +797,70 @@
 
 /obj/structure/flora/roguegrass/thorn_bush/update_icon()
 	icon_state = "thornbush"
-//WIP
+
+/obj/structure/flora/roguegrass/thorn_bush/Crossed(atom/movable/AM)
+	..()
+	if(!isliving(AM))
+		return
+
+	var/mob/living/L = AM
+
+	// Small critters can zoom past.
+	if(L.mob_size <= MOB_SIZE_SMALL)
+		return
+
+	// Dense thorn bushes briefly tangle anything large enough to trigger them.
+	L.Immobilize(max(0, 36 - L.STASTR * 2))
+
+	// Non-carbon mobs just take basic thorn damage. Another size check since the previous doesnt catch damage for some reason.
+	if(!iscarbon(L))
+		to_chat(L, span_warning("I'm cut on a thorn!"))
+		L.apply_damage(5, BRUTE)
+		return
+
+	var/mob/living/carbon/human/H = L
+
+	// Dendor curse causes a guaranteed thorn embedding.
+	if(HAS_TRAIT(H, TRAIT_CURSE_DENDOR))
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		var/obj/item/natural/thorn/TH = new(src.loc)
+		BP.add_embedded_object(TH, silent = TRUE)
+		BP.receive_damage(10)
+		to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+		return
+
+	// Kneestinger immunity prevents the thorn effects unless cursed.
+	if(HAS_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY))
+		return
+	
+	// Riding movestop and extra damage since it sidesteps stun. Galloping through thorn bushes shouldnt be the play. Riding skill gives a chance to escape this fate
+	if(H.buckled)
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		to_chat(H, span_warning("My [BP.name] snags on a thorn."))
+		BP.receive_damage(10)
+		var/riding_level = H.get_skill_level(/datum/skill/misc/riding)
+		if(prob(100 - (riding_level * 5)))
+			to_chat(H, span_danger("My mount goes mad with pain!"))
+			H.unbuckle_mob()
+			H.Paralyze(10)
+
+	// Chance to embed a thorn, reduced by LUCK.
+	if(prob(25 - H.STALUC))
+		if(HAS_TRAIT(H, TRAIT_PIERCEIMMUNE))
+			return
+
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+		var/obj/item/natural/thorn/TH = new(src.loc)
+		BP.add_embedded_object(TH, silent = TRUE)
+		BP.receive_damage(10)
+		to_chat(H, span_danger("\A [TH] impales my [BP.name]!"))
+		return
+
+	// Otherwise, just take a normal cut.
+	var/obj/item/bodypart/BP = pick(H.bodyparts)
+	to_chat(H, span_warning("A thorn [pick("slices", "cuts", "nicks")] my [BP.name]."))
+	BP.receive_damage(10)
+
 
 // fyrituis bush -- STONEKEEP PORT
 /obj/structure/flora/roguegrass/pyroclasticflowers

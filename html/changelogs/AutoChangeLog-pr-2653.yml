@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "TRAIT_IGNOREDAMAGESLOWDOWN lets you ignore the slowdown. from damage. specifically when you take damage"

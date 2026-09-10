@@ -29,6 +29,9 @@
 #define XP_ON_SUCCESS 0.5
 /// The minimum delay between automatic sewing attempts.
 #define AUTO_SEW_DELAY CLICK_CD_MELEE
+#define SEW_HP_EXP_NORMALIZER 600
+#define SEW_EXP_PER_STEP 0.05
+#define SEW_EXP_FINISH 2.5
 
 /obj/item/needle
 	name = "needle"
@@ -232,6 +235,8 @@
 		stringamt >= 1)
 		if(!do_after(doctor, 2 SECONDS, target = patient))
 			break
+		if(doctor.mind)
+			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * SEW_EXP_PER_STEP)
 		playsound(loc, 'sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
 
@@ -249,7 +254,9 @@
 		if(target_wound.sew_progress < target_wound.sew_threshold)
 			continue
 		if(doctor.mind)
-			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * 2.5)
+			var/exp_scale = target_wound.sew_threshold / SEW_HP_EXP_NORMALIZER
+			var/base_exp = doctor.STAINT * SEW_EXP_FINISH
+			doctor.mind.add_sleep_experience(skill_used, base_exp * exp_scale)
 		use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
@@ -298,3 +305,6 @@
 #undef XP_ON_FAIL
 #undef XP_ON_SUCCESS
 #undef AUTO_SEW_DELAY
+#undef SEW_HP_EXP_NORMALIZER
+#undef SEW_EXP_PER_STEP
+#undef SEW_EXP_FINISH

@@ -128,6 +128,7 @@
 	body_parts_covered = CHEST|VITALS
 	heat_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/shadowshirt/elflock
 	allowed_race = NON_DWARVEN_RACE_TYPES
@@ -333,6 +334,7 @@
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BLACK
 	boobed_detail = FALSE
+	salvage_amount = 1
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
 	icon_state = "sailorreds"
@@ -386,6 +388,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/tribalrag
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -426,6 +429,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	flags_inv = HIDECROTCH|HIDEBOOB
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/tunic/green
 	color = CLOTHING_GREEN
@@ -623,6 +627,7 @@
 	desc = "A billowing tunic made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
 	icon_state = "stewardtunic"
 	item_state = "stewardtunic"
+	fiber_salvage = TRUE
 
 /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/loudmouth
 	color = null
@@ -819,3 +824,47 @@
 		src.visible_message(span_notice("The [src] begin to swirl, repairing their integrity..."), vision_distance = 1)
 		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
 	..()
+
+//Some vanderlin ports, steward clothes and Hand coats//
+
+/obj/item/clothing/suit/roguetown/shirt/dress/steward
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	name = "ornate dark dress"
+	desc = "A modest yet decorated dress made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
+	icon = 'icons/roguetown/clothing/special/steward.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	icon_state = "stewarddress"
+	item_state = "stewarddress"
+
+/obj/item/clothing/suit/roguetown/shirt/coat/steward
+	slot_flags = ITEM_SLOT_ARMOR
+	name = "ornate dark tailcoat"
+	desc = "A modest yet decorated tailcoat made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
+	icon = 'icons/roguetown/clothing/special/steward.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	icon_state = "stewardtailcoat"
+	item_state = "stewardtailcoat"
+
+/obj/item/clothing/suit/roguetown/shirt/coat/hand
+	slot_flags = ITEM_SLOT_ARMOR
+	name = "noble coat"
+	desc = "A fine coat made out of expensive fabrics decorated with golden trims. Fit for a high noble."
+	icon = 'icons/roguetown/clothing/special/hand.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	detail_tag = "_detail"
+	detail_color = CLOTHING_BLACK
+	icon_state = "handcoat"
+	item_state = "handcoat"
+
+/obj/item/clothing/suit/roguetown/shirt/noble/hand
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	name = "noble shirt"
+	desc = "A silken shirt worn by the upper classes."
+	icon = 'icons/roguetown/clothing/special/hand.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	icon_state = "fancyshirt"
+	item_state = "fancyshirt"
