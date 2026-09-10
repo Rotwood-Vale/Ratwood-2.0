@@ -1277,13 +1277,13 @@
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/ten
-	name = "amulet of Ten"
+	name = "amulet of the Ten"
 	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
 	icon_state = "undivided"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/silver/undivided
-	name = "silver amulet of Ten"
+	name = "silver amulet of the Ten"
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
