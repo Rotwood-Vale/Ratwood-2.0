@@ -175,4 +175,73 @@
 	.["extreme_popcap"] = CONFIG_GET(number/extreme_popcap) || 0
 	.["popcap"] = max(CONFIG_GET(number/soft_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/extreme_popcap)) //generalized field for this concept for use across ss13 codebases
 
+	.["rogue_round_id"] = GLOB.rogue_round_id
+	.["storyteller"] = SSgamemode?.storyteller_name || "Unknown"
+	.["realm"] = SSticker?.realm_name || ""
+
+	var/living_count = 0
+	var/lobby_count = 0
+	for(var/client/player as anything in GLOB.clients)
+		if(isnewplayer(player.mob))
+			lobby_count++
+		else if(isliving(player.mob) && player.mob.stat != DEAD)
+			living_count++
+	.["living"] = living_count
+	.["lobby"] = lobby_count
+
+/datum/world_topic/whois
+	keyword = "whoIs"
+	require_comms_key = TRUE
+
+/datum/world_topic/whois/Run(list/input)
+	var/list/keys = list()
+	for(var/client/player as anything in GLOB.clients)
+		keys += player.ckey
+	. = list()
+	.["players"] = jointext(keys, ",")
+
+/datum/world_topic/getadmins
+	keyword = "getAdmins"
+	require_comms_key = TRUE
+
+/datum/world_topic/getadmins/Run(list/input)
+	var/list/adm = get_admin_counts()
+	var/list/names = list()
+	for(var/client/admin_client as anything in (adm["present"] + adm["afk"]))
+		names += admin_client.ckey
+	. = list()
+	.["admins"] = jointext(names, ",")
+
+/datum/world_topic/discord_ahelp
+	keyword = "discord_ahelp"
+	require_comms_key = TRUE
+
+/datum/world_topic/discord_ahelp/Run(list/input)
+	var/action = lowertext(input["action"])
+	var/ticket_id = text2num(input["ticket"])
+	var/sender = input["sender"] || "Discord"
+	var/msg = input["msg"]
+	if(!ticket_id)
+		return "Error: No ticket id"
+	var/datum/admin_help/ticket = GLOB.ahelp_tickets.TicketByID(ticket_id)
+	if(!ticket)
+		return "Error: Ticket #[ticket_id] not found"
+	var/irc_tagged = "[sender](Discord)"
+	switch(action)
+		if("reply")
+			if(!msg)
+				return "Error: Empty reply"
+			return IrcPm(ticket.initiator_ckey, msg, sender)
+		if("close")
+			ticket.Close(irc_tagged, sender)
+			return "Ticket #[ticket.id] closed"
+		if("resolve")
+			ticket.Resolve(irc_tagged, sender)
+			return "Ticket #[ticket.id] resolved"
+		if("take")
+			ticket.HandleIssue(irc_tagged, sender)
+			return "Ticket #[ticket.id] taken"
+		else
+			return "Error: Unknown action"
+
 

@@ -234,6 +234,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			log_admin_private("Ticket #[ticket.id]: [key_name(user)] -> [ticket.initiator_key_name]: [log_msg]")
 			// Notify other admins in chat with real identity
 			message_admins(span_adminnotice("<font color='blue'>Ticket #[ticket.id] [ticket.TicketHref("Show Ticket")] - [key_name_admin(user)] replied to [ticket.initiator_key_name]: [log_msg]</font>"))
+			SSredbot.send_ahelp_update(ticket, "reply", user.ckey, log_msg)
 
 			return TRUE
 		
@@ -575,6 +576,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		
 		MessageNoRecipient(msg)
 
+		SSredbot.send_ahelp_new(src, msg)
+
 		//send it to irc if nobody is on and tell us how many were on
 		var/admin_number_present = send2irc_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
@@ -650,6 +653,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/admin_msg = span_adminnotice("<font color='#c87941'><b>Ticket #[id]: [display_name] ([initiator_ckey]) - [TicketHref("Show Ticket", ref_src)][ClosureLinks(ref_src)]</b><br><span class='linkify' style='font-weight:normal;color:#c87941'>[msg]</span></font>")
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+	if(src in GLOB.ahelp_tickets.active_tickets)
+		SSredbot.send_ahelp_update(src, "message", initiator_ckey, msg)
 
 	// Log full player message content in addition to title
 	log_admin_private("Ticket #[id]: [initiator_key_name] -> Admins: [msg]")
@@ -714,6 +719,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.ListInsert(src)
 	to_chat(initiator, span_adminhelp("Ticket closed by [display_name]."))
 	AddInteraction("<font color='purple'>Closed by [display_name].</font>")
+	SSredbot.send_ahelp_update(src, "close", display_name)
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
@@ -732,6 +738,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	AddInteraction("<font color='green'>Resolved by [display_name].</font>")
 	to_chat(initiator, span_adminhelp("Your ticket has been resolved by [display_name]. The Adminhelp verb will be returned to you shortly."))
+	SSredbot.send_ahelp_update(src, "resolve", display_name)
 	if(!silent)
 		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
@@ -791,6 +798,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	message_admins(msg)
 	log_admin_private(msg)
 	AddInteraction("Being handled by [display_name]")
+	SSredbot.send_ahelp_update(src, "take", display_name)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()

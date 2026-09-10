@@ -208,6 +208,7 @@
 	SSblackbox.Seal()
 
 	world.TgsAnnounceRoundEnd()
+	SSredbot.announce_round_end()
 
 	sleep(10 SECONDS)
 	SSvote.initiate_vote("Map", "Actors", null, forced = TRUE)

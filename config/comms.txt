@@ -15,3 +15,10 @@
 
 ## Password for the hub page
 #MEDAL_HUB_PASSWORD
+
+## RedBot cog HTTP listener (host:port). Required for Discord status, round-end, and ahelp tickets.
+## Must match the bot listen port. Game and bot must share COMMS_KEY.
+#BOT_IP 127.0.0.1:8081
+
+## Name of this instance in the RedBot cog. Unique per game server.
+#BOT_SERVER_NAME ratwood

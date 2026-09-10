@@ -1,0 +1,8 @@
+{
+    "author": ["Ratwood"],
+    "min_bot_version": "3.5.0",
+    "short": "Ratwood Discord bridge",
+    "description": "Live status in a Discord channel topic, round-end embeds, and ahelp tickets with Take / Reply / Close buttons. Requires game-side SSredbot and a shared COMMS_KEY.",
+    "tags": ["ss13", "byond", "ratwood"],
+    "requirements": ["aiohttp"]
+}

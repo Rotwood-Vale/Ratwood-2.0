@@ -420,6 +420,7 @@ SUBSYSTEM_DEF(ticker)
 	SSgamemode.current_storyteller?.round_started = TRUE
 
 	world.TgsAnnounceRoundStart()
+	SSredbot.announce_round_start()
 
 	setup_done = TRUE
 

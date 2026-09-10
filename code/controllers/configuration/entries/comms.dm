@@ -26,3 +26,9 @@
 
 /datum/config_entry/string/medal_hub_password
 	protection = CONFIG_ENTRY_HIDDEN
+
+/// IP:port of the RedBot cog HTTP listener used for ahelps, round-end, and status pings.
+/datum/config_entry/string/bot_ip
+
+/// Name of this game server as registered in the RedBot cog.
+/datum/config_entry/string/bot_server_name

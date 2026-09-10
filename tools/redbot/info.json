@@ -1,0 +1,7 @@
+{
+    "author": ["Ratwood"],
+    "install_msg": "Ког Ratwood установлен. Дальше: `[p]load ratwood`, затем `[p]rw` для настройки каналов и ключа.",
+    "name": "Ratwood Cogs",
+    "short": "Статус сервера, конец раунда и ахелпы для Ratwood",
+    "description": "RedBot cogs for Ratwood: live Discord status channel, round-end reports, and ahelp tickets with buttons."
+}
