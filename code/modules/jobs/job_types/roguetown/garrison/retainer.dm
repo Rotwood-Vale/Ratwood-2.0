@@ -35,7 +35,7 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 3)
+	subclass_stats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_WIL = 3, STATKEY_PER = 2)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -98,20 +98,20 @@
 
 /datum/advclass/baron_retainer/duelist
 	name = "Retired Duelist"
-	tutorial = "You flicked, you feinted, you pirouetteed and striked - a mastery of the blade at a sword's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
+	tutorial = "You flicked, you feinted, you pirouetted and striked - a mastery of the blade at a sword's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/duelist
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
+	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE, TRAIT_INTELLECTUAL) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
 	subclass_stats = list(STATKEY_INT = 2, STATKEY_PER = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = -1) //4 speed was the most ridiculous thing anyone's ever added
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //So-called "Grapplebait" by my peer group session. Ok bro
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/baron_retainer/duelist/pre_equip(mob/living/carbon/human/H)
@@ -124,7 +124,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	gloves = /obj/item/clothing/gloves/roguetown/plate
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel //ANTI-GRAPPLER DAGGER, ACTIVATE!!
 	beltr = /obj/item/rogueweapon/scabbard/sheath/noble
 	backl = /obj/item/rogueweapon/scabbard/sword/noble
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1)
