@@ -455,7 +455,6 @@
 
 
 /datum/status_effect/buff/champion/on_creation()
-	// deferred: the ward mind link isn't set yet when this is created
 	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
 

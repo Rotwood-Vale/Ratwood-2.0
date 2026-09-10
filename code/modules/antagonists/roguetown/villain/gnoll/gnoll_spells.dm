@@ -288,8 +288,8 @@
 	H.invisibility = initial(H.invisibility) //Prevent any potential issues with gnolls becoming invisible (THIS SHOULD NEVER BE NECESSARY, but the timer may fail!)
 	if(channeling_abduction && ishuman(parent) && get_recent_damage() >= GNOLL_ABDUCT_DAMAGE_THRESHOLD)
 		// micro stun to break any do_afters
-		// deferred as to not mess with signal behavior! Stun() never sleeps, so INVOKE_ASYNC
-		// would run it inline inside this handler - a 0-delay timer keeps the original deferral.
+		// Defer to preserve signal behavior. Stun() never sleeps, so INVOKE_ASYNC would run it
+		// inline inside this handler. A 0-delay timer preserves the original deferral.
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, Stun), 1), 0)
 		to_chat(H, span_userdanger("The pain interrupts your concentration!"))
 		channeling_abduction = FALSE // Reset channel flag

@@ -159,7 +159,10 @@
 		return
 
 	//actually try to use the Coven on the target
-	INVOKE_ASYNC(src, PROC_REF(async_try_activate), target)
+
+	// Deferred so the power fires after the cancel below lands, and so end_targeting() is not
+	// unregistering this signal from inside its own dispatch. INVOKE_ASYNC runs inline here.
+	addtimer(CALLBACK(src, PROC_REF(async_try_activate), target), 0)
 
 	return COMSIG_MOB_CANCEL_CLICKON
 

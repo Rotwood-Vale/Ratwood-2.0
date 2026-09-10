@@ -163,16 +163,16 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 
 GLOBAL_VAR_INIT(midnight_rollovers, 0)
 GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
+/**
+ * Updates the midnight rollover count and records the current time of day.
+ *
+ * Record the last observed time on every call so the next call can detect midnight.
+ * Without that assignment, the value stays at 0 and REALTIMEOFDAY resets at midnight.
+ * Elapsed-time calculations spanning midnight then become negative, and pending client-time
+ * timers can stall or never fire. Increment the rollover count before returning it so the
+ * first call after midnight includes the new day.
+ */
 /proc/update_midnight_rollover()
-	// The assignment is the whole proc. Without it rollovercheck_last_timeofday stays at its initial
-	// 0 forever, world.timeofday is never below that, the rollover is never counted, and
-	// REALTIMEOFDAY collapses to world.timeofday — which resets at midnight. Every stored stamp then
-	// reads as being in the future: a sound token started before midnight reported an age of minus
-	// twenty-two hours, calculate_offset() seeks to a negative position, and TIMER_CLIENT_TIME
-	// timers, which every sound loop is, have due times the clock can no longer reach.
-	//
-	// Incremented BEFORE returning, not with a post-increment, or the first rollover reports the
-	// count from before it happened.
 	if (world.timeofday < GLOB.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
 		GLOB.midnight_rollovers++
 	GLOB.rollovercheck_last_timeofday = world.timeofday

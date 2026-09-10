@@ -2418,4 +2418,3 @@
 	target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
 	if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 		REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-

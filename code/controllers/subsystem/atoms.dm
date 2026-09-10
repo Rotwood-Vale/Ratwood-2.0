@@ -109,9 +109,9 @@ SUBSYSTEM_DEF(atoms)
 	if(late_loaders.len)
 		for(var/I in late_loaders)
 			var/atom/A = I
-			// An atom can get deleted between queueing and this pass (duplicate culls,
-			// self-qdel in another atom's LateInitialize); running LateInitialize on the
-			// corpse schedules timers on qdeleted objects. Upstream TG has this same guard.
+			// An atom can be deleted between queueing and this pass, by a duplicate cull or by
+			// self-qdel in another atom's LateInitialize. Skip it: running LateInitialize on the
+			// corpse schedules timers on a qdeleted object.
 			if(QDELETED(A))
 				continue
 			A.LateInitialize()

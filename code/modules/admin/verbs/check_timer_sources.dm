@@ -1,5 +1,9 @@
-/// Tallies every live timer by the file:line that created it (recorded by the addtimer
-/// macro), most prolific first. The tool for "the timer count is climbing, who is doing it".
+/**
+ * Tallies live timers by their source, with the most prolific first.
+ *
+ * The source is the file and line recorded by the addtimer macro. Use this to find which
+ * call sites are responsible when the live timer count keeps climbing.
+ */
 /client/proc/check_timer_sources()
 	set category = "Debug"
 	set name = "Check Timer Sources"
@@ -30,12 +34,14 @@
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()
 
-	// Collate all events and figure out what sources are creating the most
 	for (var/_event in events)
 		if (!_event)
 			continue
 		var/datum/timedevent/event = _event
 
+		// Capped like dump_timer_buckets(): the head check only catches a chain that loops back
+		// to where it started, and this verb is run when timers are already misbehaving.
+		var/anti_loop_check = 1000
 		do
 			var/source_key = event.source || "(no source recorded)"
 			if (per_source[source_key] == null)
@@ -43,15 +49,14 @@
 			else
 				per_source[source_key] += 1
 			event = event.next
-		while (event && event != _event)
+			anti_loop_check--
+		while (event && event != _event && anti_loop_check)
 
-	// Now, sort them in order
 	var/list/sorted = list()
 	for (var/source in per_source)
 		sorted += list(list("source" = source, "count" = per_source[source]))
 	sortTim(sorted, GLOBAL_PROC_REF(cmp_timer_data))
 
-	// Now that everything is sorted, compile them into an HTML output
 	var/output = "<table border='1'>"
 
 	for (var/_timer_data in sorted)

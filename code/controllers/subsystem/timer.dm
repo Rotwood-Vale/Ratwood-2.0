@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(timer)
 
 			to_log += "Active timers at index [i]:"
 			var/datum/timedevent/bucket_node = bucket_head
-			var/anti_loop_check = 1000 // TG caps this at 1 (a single node per bucket); 1000 kept from the pre-port file
+			var/anti_loop_check = 1000 // TG caps this at 1, a single node per bucket. 1000 kept from the pre-port file
 			do
 				to_log += get_timer_debug_string(bucket_node)
 				bucket_node = bucket_node.next
@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(timer)
 		WARNING(msg)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
-		dump_timer_buckets(TRUE) // TG gates the full dump behind a config flag (log_timers_on_bucket_reset); always-on kept from the pre-port file
+		dump_timer_buckets(TRUE) // TG gates the full dump behind log_timers_on_bucket_reset. Always-on kept from the pre-port file
 
 	// Process client-time timers
 	if (next_clienttime_timer_index)
@@ -121,9 +121,9 @@ SUBSYSTEM_DEF(timer)
 		var/datum/callback/callBack = ctime_timer.callBack
 		if (!callBack)
 			// Eject before crashing or this same timer aborts the fire on the same index
-			// every tick forever. Upstream TG does not do this; the pre-port local file
+			// every tick forever. Upstream TG does not do this. The pre-port local file
 			// did, and it was kept on that file's evidence when porting, not upstream's.
-			// This path has never been observed firing; it may well be dead weight.
+			// This path has never been observed firing, so it may well be dead weight.
 			clienttime_timers.Cut(next_clienttime_timer_index, next_clienttime_timer_index+1)
 			next_clienttime_timer_index--
 			CRASH("Invalid timer: [get_timer_debug_string(ctime_timer)] world.time: [world.time], \
@@ -361,11 +361,12 @@ SUBSYSTEM_DEF(timer)
 	bucket_list = timerSS.bucket_list
 	second_queue = timerSS.second_queue
 
-	// TG drops client-time timers on recovery; reset_buckets() only reparents the bucket
+	// TG drops client-time timers on recovery, and reset_buckets() only reparents the bucket
 	// and second_queue timers, so these must be adopted and reparented explicitly or they
 	// keep pointing at the qdeleted old subsystem. Verified live in a forced recovery test poke:
 	// with this, an adopted client-time timer survived the rebuild and fired on schedule
-	// Anyways, I have no idea what I'm doing, so probably not needed. Shrug.
+	// Anyways, probably not needed, but redundancy never hurts. I'm still trying to get
+	// familiar with all this.
 	clienttime_timers = timerSS.clienttime_timers
 	for (var/datum/timedevent/ctime_timer as anything in clienttime_timers)
 		ctime_timer.timer_subsystem = src
@@ -583,7 +584,7 @@ SUBSYSTEM_DEF(timer)
  *
  * Deviation from upstream: TG instead snapshots a timer_info list on every bucketJoin (and
  * stringifies via operator""), which also survives callback deletion. The on-demand approach
- * here predates the port and was kept for its lower per-join cost; if syncing with TG,
+ * here predates the port and was kept for its lower per-join cost. If syncing with TG,
  * re-evaluate against their current version.
  */
 /datum/timedevent/proc/get_name()

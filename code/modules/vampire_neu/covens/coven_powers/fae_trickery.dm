@@ -277,7 +277,7 @@
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING)
-			// global: the trap qdels itself immediately below, the un-spin must outlive it
+			// Global: the trap qdels itself immediately below, the un-spin must outlive it
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fae_reset_plane_spin), L), 15 SECONDS)
 			qdel(src)
 

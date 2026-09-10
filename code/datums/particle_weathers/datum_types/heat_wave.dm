@@ -120,9 +120,11 @@
 /obj/effect/temp_visual/heat_ripple/proc/start_ripple()
 	addtimer(CALLBACK(src, PROC_REF(ripple_loop)), rand(0,5))
 
-// The old version of this loop had no sleep; BYOND's infinite loop detector was
-// backgrounding a busy-loop for every shimmer's lifetime, then it runtimed on the
-// deleted src. The sleep matches the combined length of the two animates.
+/**
+ * Animates the heat shimmer until it is deleted.
+ *
+ * Sleep for the combined duration of both animations so each pass starts after they finish.
+ */
 /obj/effect/temp_visual/heat_ripple/proc/ripple_loop()
 	while(!QDELETED(src))
 
