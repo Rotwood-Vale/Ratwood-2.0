@@ -1,12 +1,4 @@
-// Ratwood deviations from AP's stockpile.dm:
-//  - Handcart branch: AP's handcart tracks contents in contained_items with a remove_from()
-//    proc; ES's handcart (code/game/objects/structures/roguetown/handcart.dm) uses stuff_shit
-//    instead and has no remove_from() - forceMove() out + manually clearing stuff_shit/
-//    current_capacity mirrors what ES's own dump_contents() does (same adaptation as
-//    fulfillment_crate.dm).
-//  - I.unmintable is declared on /obj/item but never set in ES (AP sets it on mapload for
-//    town-area items); the town-property mint guard is therefore inert until that marking is
-//    wired up.
+
 /obj/structure/roguemachine/stockpile
 	name = "stockpile"
 	desc = "A magitech device connected to the trade network. Users can buy basic goods, crafting materials, and food for a price from these units, or sell them here for money."

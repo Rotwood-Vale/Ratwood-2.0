@@ -85,7 +85,7 @@
 	trade_good_id = TRADE_GOOD_COPPER_ORE
 	stockpile_amount = 12
 	importexport_amt = 10
-	stockpile_limit = 25
+	stockpile_limit = 50
 
 /datum/roguestock/stockpile/tin
 	passive_generation = 1 // Ratwood passive import
@@ -96,7 +96,7 @@
 	trade_good_id = TRADE_GOOD_TIN_ORE
 	stockpile_amount = 12
 	importexport_amt = 10
-	stockpile_limit = 25
+	stockpile_limit = 50
 
 /datum/roguestock/stockpile/gold
 	generation_price = 80 // Ratwood passive import
@@ -161,7 +161,7 @@
 	item_type = /obj/item/natural/silk
 	trade_good_id = TRADE_GOOD_SILK
 	importexport_amt = 5
-	stockpile_limit = 25
+	stockpile_limit = 50
 
 //natural/hide/cured must be defined/populated in sstreasury before natural/hide, for istype stockpile check to work
 /datum/roguestock/stockpile/cured

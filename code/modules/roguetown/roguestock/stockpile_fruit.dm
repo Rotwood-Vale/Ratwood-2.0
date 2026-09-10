@@ -18,7 +18,7 @@
 	trade_good_id = TRADE_GOOD_PEAR
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/jacksberry
@@ -41,7 +41,7 @@
 	trade_good_id = TRADE_GOOD_BLACKBERRY
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/raspberry
@@ -52,7 +52,7 @@
 	trade_good_id = TRADE_GOOD_RASPBERRY
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/strawberry
@@ -64,7 +64,7 @@
 	trade_good_id = TRADE_GOOD_STRAWBERRY
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/lemon
@@ -75,7 +75,7 @@
 	trade_good_id = TRADE_GOOD_LEMON
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/lime
@@ -86,7 +86,7 @@
 	trade_good_id = TRADE_GOOD_LIME
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/tangerine
@@ -97,7 +97,7 @@
 	trade_good_id = TRADE_GOOD_TANGERINE
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/plum
@@ -108,7 +108,7 @@
 	trade_good_id = TRADE_GOOD_PLUM
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/tomato
@@ -119,7 +119,7 @@
 	trade_good_id = TRADE_GOOD_TOMATO
 	importexport_amt = 5
 	stockpile_amount = 5
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
 
 /datum/roguestock/stockpile/pumpkin
@@ -130,5 +130,5 @@
 	trade_good_id = TRADE_GOOD_PUMPKIN
 	importexport_amt = 5
 	stockpile_amount = 0
-	stockpile_limit = 25
+	stockpile_limit = 40
 	category = "Fruit"
