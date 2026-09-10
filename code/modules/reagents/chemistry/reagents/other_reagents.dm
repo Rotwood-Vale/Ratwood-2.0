@@ -129,7 +129,7 @@
 
 	return ..()
 
-#define WATER_BLOOD_RESTORE 15
+#define WATER_BLOOD_RESTORE 8
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
