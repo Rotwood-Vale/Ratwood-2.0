@@ -1,6 +1,6 @@
 #define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
 #define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcom/shuttles marked as escaped
-// fuck u linters
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
