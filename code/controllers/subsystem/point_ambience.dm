@@ -11,7 +11,8 @@
  *
  * ## A service
  *
- * Runs on every step (the move hook) and every fire(). It reads a fixed box, the listener's cell
+ * Movement requests are throttled and normally queued; a periodic client walk catches missed moves.
+ * A full service reads a fixed box, the listener's cell
  * expanded by max_range, 24x24 tiles, out of the cell buckets; ranks what it finds by squared
  * distance; keeps the nearest per category; then sends or updates that channel. Ranking on distance
  * rather than volume is exact because falloff is monotonic, so the nearest is always the loudest and
@@ -33,8 +34,8 @@
  *
  * ## Cost
  *
- * Billed per service, and a service per player MOVEMENT; source count barely enters it, the box
- * being fixed and one source per category served. Fixed overhead is most of a service, measured, so
+ * Billed per service, from eligible moves and the periodic client walk. Each service searches a
+ * fixed box and serves at most one source per category. Local timings put most cost in overhead, so
  * the lever is FEWER services: move_service_interval halves a walker's at the shipped 5, paid for in
  * spatial resolution. MODES are the bigger hammer: FALLBACK gives every source a plain timer loop
  * instead, billed per source, volume only on replay, torches silent; OFF is silent. The Point
@@ -49,7 +50,8 @@
  *
  * Comments below cite a Survey, Benchmark, Here, Verify and Send Diff verb, and the measured_* vars
  * are written by them. They are kept out of git deliberately, so in a plain checkout those vars stay
- * zero and the figures quoted here cannot be reproduced without them.
+ * zero and the figures quoted here cannot be reproduced without them. Local timing runs used at
+ * most two connected clients; larger population costs are modeled projections, not load tests.
  */
 
 /// Set while a survey is sampling, null otherwise. Declared here rather than with the survey so
@@ -110,9 +112,8 @@ SUBSYSTEM_DEF(point_ambience)
 	/// Moves per second per player, measured by the Survey verb and kept after it stops. Zero until
 	/// one has run; the verbs then fall back to 1.38.
 	var/measured_moves_per_player = 0
-	/// Microseconds per service when services arrive many per tick, as a populated server's do, from
-	/// the Benchmark verb. Zero until one has run. The survey instead times ONE player whose services
-	/// are seconds apart, the coldest case there is, and reads about a third high.
+	/// Microseconds per service in the Benchmark verb's synthetic batch. Zero until one has run.
+	/// This measures the batch, not a populated server; real client movement and delivery can differ.
 	var/measured_batched_service_us = 0
 	/// Microseconds a playsound_local() costs, from the Benchmark verb. Zero until one has run. The
 	/// survey multiplies it by the sends it counted to price the rest of the sound system, which is
@@ -1070,8 +1071,9 @@ SUBSYSTEM_DEF(point_ambience)
 /// client for one standing_walk_interval; turf, area environment and master volume are per service,
 /// and a caller that already has the turf passes it. Runs after the standing shortcut, never before
 /// it: a listener standing still pays nothing here, and one who goes deaf while standing keeps what
-/// is playing until a step, an index change or a volume change. Returns FALSE when there is nothing
-/// to serve, leaving the serving_* vars set otherwise.
+/// is playing until a service passes the shortcut after the hearing cache expires. A step, index
+/// change or volume change before expiry can still reuse the old hearing result. Returns FALSE
+/// when there is nothing to serve, leaving the serving_* vars set otherwise.
 /datum/controller/subsystem/point_ambience/proc/prepare_serving(client/listener_client, mob/listener, turf/listener_turf)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(world.time >= listener_client.point_ambience_profile_until)
@@ -1502,10 +1504,9 @@ SUBSYSTEM_DEF(point_ambience)
 	// the time this fires, and a client that merely changed mobs is still owed a service; a client
 	// that truly left leaves a null key, which drain_dirty() drops on its way past.
 
-/// A full service on every step, so a source starts the moment its radius is entered and sweeps as
-/// the listener closes. Refreshing only the sources already heard would leave discovery to the
-/// tick, slower at walking speed than crossing a 4 tile radius, and the sound would start after
-/// arrival. The walk is a few bucket lookups, cheaper than the sends.
+/// Requests source discovery and positional updates on eligible steps, normally through the queue.
+/// The interval can skip moves; the periodic client walk catches a skipped final step. Discovery
+/// must include new sources, since refreshing only those already heard delays entry into range.
 /datum/controller/subsystem/point_ambience/proc/on_moved(atom/movable/mover)
 	SIGNAL_HANDLER
 	// Before every early return: the survey counts steps taken, which is what a service is billed by.

@@ -1,7 +1,7 @@
 /*
  * WHICH SOUND SYSTEM TO USE
  *
- * Four of them exist and they are not interchangeable. Each is billed by a different thing, which
+ * Five of them exist and they are not interchangeable. Each is billed by a different thing, which
  * is the whole basis for choosing: a design that is free at one population is the dearest at
  * another. Pick by what the sound IS, then check the cost note.
  *
@@ -22,9 +22,10 @@
  * at most one send per listener, and a source nobody is near costs only a range reject.
  *
  * Billed PER MOVING LISTENER, not per source. That is the trade: adding sources is nearly free,
- * adding players is not. Measured at 2 to 7 ms/s at 150 players for every ambient source on the
- * map, against 1.72 ms/s flat for the same sources as plain loops. The two break even somewhere
- * between 39 and 104 players depending on how warm the server is running.
+ * adding players is not. A model based on local timings projected 2 to 7 ms/s for 150 in-round players;
+ * 150 was the assumed population, not a tested player count. Client testing used at most two
+ * clients. The comparison with plain loops and any break-even population depend on movement,
+ * audible sources and batching; neither design's total cost is independent of listener count.
  *
  * Use it when: there are many sources, they are static, and they share a handful of sounds.
  * Do NOT use it for: anything with a per-source melody or a long clip. A category is one channel
