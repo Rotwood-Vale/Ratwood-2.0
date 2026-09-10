@@ -16,7 +16,7 @@
 			return FALSE
 	COOLDOWN_START(src, last_parry, setparrytime)
 
-	var/prob2defend = attacker.defprob
+	var/prob2defend = attacker.mind ? 0 : attacker.defprob
 	if(m_intent == MOVE_INTENT_RUN)
 		prob2defend = max(prob2defend - 15, 0)
 
