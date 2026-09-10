@@ -1,7 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - rscadd: "Ported golden armor from Azure Peak. Armor that protects against everything but with a dreadfully low integrity that is irreparable and unenchantable."
-  - rscadd: "Ported the golden mace, sword, and shield from Azure Peak. These weapons have high force and protective values but possess dreadfully low integrity that is irreparable and unenchantable."
-  - rscadd: "Ported the decorated axe, decorated silver khadga, and decorated silver mace. These 3 weapons of Naledi origin are functionally identical to their undecorated steel and silver counterparts, save for a higher sell price."
-  - code_imp: "Added var/unenchantable, a Boolean item var that prevents enchanting scrolls from being used on items with it set to TRUE."

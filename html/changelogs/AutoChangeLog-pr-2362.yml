@@ -1,8 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - rscadd: "Disciple reworked, +9 weighted statspread with 3 distinct loadout options for pure unarmed, unarmed weapons, and quarterstaffs."
-  - rscadd: "Disciples now get TRAIT_CICERONE and journeyman cooking, allowing them to pursue the time-honored tradition of monastic beer brewing. Additionally, alcoholic disciples get TRAIT_DRUNK_HEALING."
-  - rscadd: "added TRAIT_WEAPONLESS, a less strict version of TRAIT_CHUNKY_FINGERS which allows tool use but prevents the offensive or defensive use of rogueweapon/ class items. Additionally, var/is_tool has been added to the rogueweapon/ parent item."
-  - rscdel: "Removed katar and knuckleduster as distinct loadout options from disciple. Now part of the pugilist loadout."
-  - balance: "Disciple skin armor changed to LEATHER_STUDDED. Layman's terms, it's not just a worse version of the virtue regenerating skin anymore."

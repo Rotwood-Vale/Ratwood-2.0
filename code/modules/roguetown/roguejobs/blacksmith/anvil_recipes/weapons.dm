@@ -524,6 +524,40 @@
 	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
+/datum/anvil_recipe/weapons/steel/daggerrondel
+	name = "Rondel Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
+/datum/anvil_recipe/weapons/steel/daggerkukri
+	name = "Kukri Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/kukri
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
+/datum/anvil_recipe/weapons/steel/daggerkris
+	name = "Kris Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/kris
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
+/datum/anvil_recipe/weapons/steel/combatknife
+	name = "Combat Knife, Steel"
+	req_blade = /obj/item/blade/steel_knife
+	created_item = /obj/item/rogueweapon/huntingknife/combat
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
+/datum/anvil_recipe/weapons/steel/combatknifemesser
+	name = "Combat Knife, Messer, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/combat/messer
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
 /datum/anvil_recipe/weapons/steel/katar
 	name = "Katar, Steel"
 	req_blade = /obj/item/blade/steel_knife
@@ -680,13 +714,6 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/stoneaxe/battle
 	display_category = ITEM_CAT_WEAPONS_AXES
-
-/datum/anvil_recipe/weapons/steel/combatknife
-	name = "Combat Knife, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_knife
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/huntingknife/combat
-	display_category = ITEM_CAT_WEAPONS_DAGGERS
 
 /datum/anvil_recipe/weapons/steel/mace
 	name = "Mace, Steel (+1 Steel)"
