@@ -131,10 +131,10 @@
 
 /datum/outfit/job/roguetown/baron_retainer/duelist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("La Bête (Excutioner)", "El Hombre (Basket-Hilted Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)")
+	var/weapons = list("La Bête (Executioner)", "El Hombre (Basket-Hilted Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
-		if("La Bête (Excutioner)")
+		if("La Bête (Executioner)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/sack, SLOT_WEAR_MASK, TRUE)
 			H.change_stat(STATKEY_STR, 2)
