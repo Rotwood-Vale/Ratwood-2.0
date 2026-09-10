@@ -98,7 +98,7 @@
 
 /datum/advclass/baron_retainer/duelist
 	name = "Retired Duelist"
-	tutorial = "You flicked, you feinted, you pirouetteed and striked - a mastery of the blade at a rapier's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
+	tutorial = "You flicked, you feinted, you pirouetteed and striked - a mastery of the blade at a sword's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/duelist
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
@@ -135,33 +135,33 @@
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("La Bête (Excutioner)")
-			r_hand = /obj/item/rogueweapon/sword/long/exe
-			mask = /obj/item/clothing/mask/rogue/sack
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/sack, SLOT_WEAR_MASK, TRUE)
 			H.change_stat(STATKEY_STR, 2)
 			H.change_stat(STATKEY_SPD, -2)
 		if("El Hombre (Basket-Hilted Longsword)")
-			r_hand = /obj/item/rogueweapon/sword/long/etruscan
-			cloak = /obj/item/clothing/cloak/duelistcape
-			head = /obj/item/clothing/head/roguetown/duelisthat
-		if("El Zorro")
-			r_hand = /obj/item/rogueweapon/sword/rapier/vaquero
-			mask = /obj/item/clothing/mask/rogue/duelmask
-			cloak = /obj/item/clothing/cloak/duelistcape
-			head = /obj/item/clothing/head/roguetown/duelisthat
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/etruscan, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/duelistcape, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/duelisthat, SLOT_HEAD, TRUE)
+		if("El Zorro (Rapier)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/vaquero, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/duelmask, SLOT_WEAR_MASK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/duelistcape, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/duelisthat, SLOT_HEAD, TRUE)
 		if("AAVNIK (Shishka Sabre)")
-			r_hand = /obj/item/rogueweapon/sword/sabre/steppesman
-			l_hand = /obj/item/rogueweapon/shield/buckler
-			mask = /obj/item/clothing/mask/rogue/facemask/steel/steppesman
-			head = /obj/item/clothing/head/roguetown/papakha
-			cloak = /obj/item/clothing/cloak/raincloak/furcloak
+			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/steppesman, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/shield/buckler, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/steppesman, SLOT_WEAR_MASK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/papakha, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/raincloak/furcloak, SLOT_CLOAK, TRUE)
 		if("Mubarizun (Shalal)")
-			r_hand = /obj/item/rogueweapon/sword/long/marlin
-			cloak = /obj/item/clothing/cloak/cape/purple
-			head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/marlin, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/cape/purple, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb, SLOT_HEAD, TRUE)
 		if("Das Schwertkämpfer (Kriegsmesser)")
-			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-			head = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
-			cloak = /obj/item/clothing/cloak/stabard/grenzelhoft
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/caplessgrenzelhofthat, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/stabard/grenzelhoft, SLOT_CLOAK, TRUE)
 
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
