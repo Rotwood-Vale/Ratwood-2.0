@@ -927,6 +927,20 @@
 	additional_items = list(/obj/item/clothing/under/roguetown/trou/leather)//basically you just add a lot of iron bits to the pants
 	created_item = /obj/item/clothing/under/roguetown/splintlegs
 
+/datum/anvil_recipe/armor/steel/barding
+	name = "Saiga Barding, Chainmail (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/barding/chain
+
+/datum/anvil_recipe/armor/steel/barding/fogbeast
+	name = "Fogbeast Barding, Chainmail (+1 Steel)"
+	req_bar = /obj/item/ingot/steel
+	req_blade = /obj/item/blade/steel_plate
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/barding/fogbeast/chain
+
 // HOLY STEEL
 
 /datum/anvil_recipe/armor/holysteel/astratahelmtemplar

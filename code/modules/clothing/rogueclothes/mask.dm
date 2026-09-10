@@ -664,15 +664,25 @@
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
 
-/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
+/obj/item/clothing/mask/rogue/lordmask/naledi/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(default_layer == BELT_LAYER)
+		return
+	return ..()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/living/user, slot)
 	..()
 	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
 		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+		flags_inv = initial(flags_inv)
+	else
+		flags_inv = NONE
+	user.rebuild_obscured_flags()
 	user.update_fov_angles()
 
-/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/living/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	flags_inv = initial(flags_inv)
 	user.update_fov_angles()
 
 

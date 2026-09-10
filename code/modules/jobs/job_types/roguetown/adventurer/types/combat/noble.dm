@@ -63,7 +63,7 @@
 	tutorial = "You are a knight from a distant land, a scion of a noble house visiting these lands for one reason or another."
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 1,
@@ -71,7 +71,7 @@
 		STATKEY_INT = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
@@ -91,6 +91,8 @@
 	virtue_restrictions = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Saiga)" = /obj/item/caparison, "Caparison (Fogbeast)" = /obj/item/caparison/fogbeast)
+	extra_context = "This subclass receives a caparison in its stash. Use the Saiga or Fogbeast version depending on your mount."
 
 /datum/outfit/job/roguetown/adventurer/knighte/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -222,8 +224,12 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
-		/obj/item/rogueweapon/hammer/iron = 1, 
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/rogueweapon/hammer/iron = 1,
+		/obj/item/armor_brush = 1,
+		/obj/item/polishing_cream = 1,
+		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/rogueweapon/scabbard/sheath,
 	)
 	if(H.mind)
 		var/armors = list("Light Armor","Medium Armor")

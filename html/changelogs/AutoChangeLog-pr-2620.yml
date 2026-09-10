@@ -1,0 +1,5 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - rscadd: "Add velvet dress and noble dress crafting recipes."
+  - balance: "The Tailor now gets the \"Efficient Weaver\" trait exclusive to the job, allowing them to make cloth on a loom from 1 fibers instead of 2."

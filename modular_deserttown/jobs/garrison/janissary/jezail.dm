@@ -47,7 +47,7 @@
 	beltr = /obj/item/quiver/bullet/lead//nice to have variety but blunderbus might not fit the vibe
 	r_hand = /obj/item/gun/ballistic/firearm/arquebus
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
