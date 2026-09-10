@@ -1234,7 +1234,7 @@
 	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
 	icon_state = "zizogsw"
 	force = 20
-	force_wielded = 45
+	force_wielded = 40
 	max_blade_int = 500
 	max_integrity = 500
 
