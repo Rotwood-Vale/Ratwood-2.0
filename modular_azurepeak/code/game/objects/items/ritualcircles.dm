@@ -1450,7 +1450,8 @@
 		if("Messis - (billhook)")
 			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			if(HAS_TRAIT(H, TRAIT_RITUALIST))
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
