@@ -1,0 +1,5 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Added examine text to show how long someone was disconnected, and admin warning at certain times"
+  - admin: "lets admins permanently set ghost sprite"

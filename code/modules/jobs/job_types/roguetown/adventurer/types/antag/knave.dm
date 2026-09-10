@@ -61,7 +61,7 @@
 				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow //we really need to make this not a grenade launcher subtype
 				beltr = /obj/item/quiver/bolts
 				cloak = /obj/item/clothing/cloak/raincloak/mortus //cool cloak
-				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
+				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/matthios
 				backr = /obj/item/storage/backpack/rogue/satchel
 				backpack_contents = list(
 							/obj/item/needle/thorn = 1,
