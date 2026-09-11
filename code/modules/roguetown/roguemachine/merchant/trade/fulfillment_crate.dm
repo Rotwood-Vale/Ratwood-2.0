@@ -309,6 +309,24 @@
 			B.update_icon()
 		settle_payout(line["offered_price"] * take, user, ship, line["good_name"], take, message, sound, tally)
 		return
+	var/potion_good_id = identify_potion_trade_good(I)
+	if(potion_good_id)
+		var/list/match = find_demand_match(potion_good_id)
+		if(!match)
+			if(message)
+				to_chat(user, span_warning("No vessel here is buying [I]."))
+			return
+		var/datum/trade_ship/ship = match["ship"]
+		var/list/line = match["line"]
+		if(line["qty_fulfilled"] >= line["qty_target"])
+			if(message)
+				to_chat(user, span_warning("That vessel's hold is full of [line["good_name"]]."))
+			return
+		line["qty_fulfilled"]++
+		qdel(I)
+		settle_payout(line["offered_price"], user, ship, line["good_name"], 1, message, sound, tally)
+		return
+
 	var/good_id = identify_trade_good(I)
 	if(!good_id)
 		if(message)
@@ -445,6 +463,17 @@
 		if(!TG.item_type)
 			continue
 		if(TG.accept_subtypes ? istype(P, TG.item_type) : P.type == TG.item_type)
+			return id
+	return null
+
+/obj/structure/roguemachine/ship_fulfillment/proc/identify_potion_trade_good(obj/item/P)
+	if(!P.reagents || !P.reagents.total_volume)
+		return null
+	for(var/id in GLOB.trade_goods)
+		var/datum/trade_good/TG = GLOB.trade_goods[id]
+		if(!TG.reagent_type || !TG.required_volume)
+			continue
+		if(P.reagents.get_reagent_amount(TG.reagent_type) >= TG.required_volume)
 			return id
 	return null
 

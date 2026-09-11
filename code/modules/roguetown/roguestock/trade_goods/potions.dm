@@ -3,6 +3,11 @@
 	importable = FALSE
 	crown_accepts = TRUE
 	category = TRADE_CATEGORY_POTION
+	display_category = ITEM_CAT_POTION
+	/// The container spawned when this good is purchased. Distinct from item_type, which
+	/// stays unset for potions since they're matched for SALE by reagent content in any
+	/// container, not by a fixed container type.
+	purchase_item_type = /obj/item/reagent_containers/glass/bottle/alchemical
 
 // Each bottle of a standard potion holds 50u. The alchemical fulfillment path counts
 // the delivered reagent by TOTAL volume across all containers at the warehouse (any

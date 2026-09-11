@@ -24,7 +24,9 @@
 	// required_volume units of reagent_type. The container is consumed on fulfillment.
 	var/reagent_type
 	var/required_volume = 0
-
+	//specifically used for potion tradegoods as a container, since reagents clearly can't exist without a container
+	var/purchase_item_type
+	
 /datum/trade_good/New()
 	. = ..()
 	if(isnull(low_price) && !isnull(base_price))

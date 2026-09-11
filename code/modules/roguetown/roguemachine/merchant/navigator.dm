@@ -303,6 +303,21 @@
 		SSmerchant_trade.unregister_market_watcher(src)
 	set_light(0)
 	return ..()
+/proc/get_reagent_trade_value(obj/item/I)
+	if(!I.reagents || !I.reagents.total_volume)
+		return 0
+	var/value = 0
+	for(var/id in GLOB.trade_goods)
+		var/datum/trade_good/TG = GLOB.trade_goods[id]
+		if(!TG.reagent_type || !TG.required_volume)
+			continue
+		var/amt = I.reagents.get_reagent_amount(TG.reagent_type)
+		if(amt <= 0)
+			continue
+		// Scale by fill ratio against the "full bottle" reference volume, rather than requiring
+		// the exact required_volume - a half-full potion should still be worth something.
+		value += round(TG.base_price * (amt / TG.required_volume))
+	return value
 
 /obj/item/roguemachine/navigator/process()
 	if(!anchored)
@@ -337,8 +352,11 @@
 						continue
 					if(IT.unmintable && !accepts_unmintable)
 						continue
+				var/datum/trade_good/reagent_match = get_reagent_trade_good(I)
+				var/category = reagent_match?.display_category || (GLOB.derived_categories && GLOB.derived_categories[I.type]) || ITEM_CAT_MISCELLANEOUS
 				var/base_price = I.get_real_price()
-				var/category = (GLOB.derived_categories && GLOB.derived_categories[I.type]) || ITEM_CAT_MISCELLANEOUS
+				if(reagent_match)
+					base_price += round(reagent_match.base_price * (I.reagents.get_reagent_amount(reagent_match.reagent_type) / reagent_match.required_volume))
 				var/bucket = get_navigator_bucket_for_item(I, category)
 				if(bucket == NAVIGATOR_BUCKET_MISCELLANEOUS)
 					if(GLOB.bulk_trade_item_types && GLOB.bulk_trade_item_types[I.type])

@@ -607,6 +607,26 @@ GLOBAL_LIST_EMPTY(recipe_cost_visiting)
 		for(var/subtype in typesof(proto_type))
 			if(!GLOB.derived_categories[subtype])
 				GLOB.derived_categories[subtype] = proto_cat
+				
+/// Reagent-keyed trade good match for potions/reagent goods sold by volume, in any container.
+/// Returns the /datum/trade_good matched, or null if the item holds no recognized reagent
+/// at sufficient volume.
+/proc/get_reagent_trade_good(obj/item/I)
+	if(!I.reagents || !I.reagents.total_volume)
+		return null
+	var/datum/trade_good/best
+	var/best_amt = 0
+	for(var/id in GLOB.trade_goods)
+		var/datum/trade_good/TG = GLOB.trade_goods[id]
+		if(!TG.reagent_type || !TG.required_volume)
+			continue
+		var/amt = I.reagents.get_reagent_amount(TG.reagent_type)
+		if(amt <= 0)
+			continue
+		if(amt > best_amt)
+			best = TG
+			best_amt = amt
+	return best
 
 /proc/pricing_engine_fingerprint()
 	var/list/parts = list()
