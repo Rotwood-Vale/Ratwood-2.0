@@ -37,8 +37,8 @@
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter
 	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft/freifechter
-	gloves = /obj/item/clothing/gloves/roguetown/angle/freifechter
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
 	backpack_contents = list(
@@ -101,8 +101,8 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft/freifechter
-	gloves = /obj/item/clothing/gloves/roguetown/angle/freifechter
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
 	id = /obj/item/rogueweapon/katar/punchdagger/frei
@@ -161,8 +161,8 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft/freifechter
-	gloves = /obj/item/clothing/gloves/roguetown/angle/freifechter
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain	//Obsessed with arms-hands. Keeping them protected on-spawn.
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	neck = /obj/item/clothing/neck/roguetown/psicross/reform
