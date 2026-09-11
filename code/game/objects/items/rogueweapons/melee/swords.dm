@@ -702,6 +702,7 @@
 /obj/item/rogueweapon/sword/long/fencerguy
 	name = "grenzelhoftian longsword"
 	desc = "A masterfully smithed, perfectly-balanced longsword that makes it easy for even a beginner to perform basic fencing maneuvers."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "germanlong"
 	max_blade_int = 275
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/dagger/sucker_punch, /datum/intent/sword/bash)
@@ -1315,6 +1316,7 @@
 	max_blade_int = 275		//Similarly statted to the longswords
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	wbalance = WBALANCE_HEAVY
 
 /obj/item/rogueweapon/sword/sabre/freifechter/Initialize()
 	. = ..()
