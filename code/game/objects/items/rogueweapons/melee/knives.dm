@@ -414,7 +414,7 @@
 
 // Heretical Knives
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo 
+/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo
 	name = "avantyne dagger"
 	desc = "It is tyme that you finally met your Lord. </br> The very moment of sacrifice; that imperceptable difference between a dagger's edge and a heart's chamber, crystallized into \
 	a scalpel of bleeding darksteel. In the hands of Her trusted disciples, it serves as an unholy countermandate against order and sanity."
