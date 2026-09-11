@@ -170,7 +170,6 @@
 	owner.remove_status_effect(/datum/status_effect/buff/journey_end)
 	return ..()
 
-
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
 	desc = ""

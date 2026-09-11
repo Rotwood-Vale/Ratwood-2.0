@@ -1,21 +1,21 @@
 /datum/advclass/wretch/mistwalker
 	name = "Mistwalker" //works
-	tutorial = "Hailing from Kazengun you were once a sacred guardian, dedicating your lyfe to protecting your chosen shrine of the twelve against brigands and fiends from beyond alike... now? Your sacred home has fallen, claimed by ruinous forces and you are banished to wander the realm. What will you find in your search for purpose?"
+	tutorial = "Hailing from Kazengun you were once a sacred guardian, dedicating your lyfe to protecting your chosen shrine of the gods against brigands and fiends from beyond alike... now? Your sacred home has fallen, claimed by ruinous forces and you are banished to wander the realm. What will you find in your search for purpose?"
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_NO_CONSTRUCT //i wonder if i will regret letting them be revs
-	allowed_patrons = ALL_PATRONS //guardian of the twelve... and saidon but no undivided
+	allowed_races = RACES_NO_CONSTRUCT 
+	allowed_patrons = ALL_PATRONS 
 	outfit = /datum/outfit/job/roguetown/wretch/mistwalker
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END) //no armour, literally made to bleed
-	maximum_possible_slots = 1 //you probably don't want many of these
+	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_DODGEEXPERT) //no armour, literally made to bleed
+	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
-		STATKEY_STR = 2, //8 weighted with weapon buff, same as berserker
+		STATKEY_STR = 2, 
 		STATKEY_CON = 1,
-		STATKEY_WIL = 1
+		STATKEY_SPD = 2
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -69,7 +69,7 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 WIL", "Kodachi +1 SPD")
+		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -88,11 +88,11 @@
 				r_hand = /obj/item/rogueweapon/spear/naginata
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				H.change_stat(STATKEY_PER, 2)
-			if("Hwando +2 WIL")
+			if("Hwando +2 INT")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog
 				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun
-				H.change_stat(STATKEY_WIL, 2)
+				H.change_stat(STATKEY_INT, 2)
 			if("Kodachi +1 SPD") //SPD you can dodge, probably
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/short/kazengun
