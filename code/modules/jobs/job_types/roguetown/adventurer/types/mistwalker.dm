@@ -32,8 +32,8 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE, //social outcast but can still read protective charms
 	)
 	subclass_stashed_items = list(
-        "Sewing Kit" =  /obj/item/repair_kit, //I am sure you'll find a way to repair your bracers
-    )
+		"Sewing Kit" =  /obj/item/repair_kit, //I am sure you'll find a way to repair your bracers
+	)
 
 /datum/advclass/wretch/mistwalker/check_requirements(mob/living/carbon/human/H)
 	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
