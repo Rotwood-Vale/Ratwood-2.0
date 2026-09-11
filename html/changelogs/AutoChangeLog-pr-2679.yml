@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - bugfix: "fixed Matthios dagger penetrating all armor"
