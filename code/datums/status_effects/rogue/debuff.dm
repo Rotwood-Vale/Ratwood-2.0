@@ -135,12 +135,12 @@
 	needs_processing = FALSE
 
 /datum/status_effect/debuff/bleeding/on_apply() //mistwalker shitcode, scaling buff as they bleed out
-	if(HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.apply_status_effect(/datum/status_effect/buff/journey_ending)
 	return ..()
 
 /datum/status_effect/debuff/bleeding/on_remove()
-	if(HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.remove_status_effect(/datum/status_effect/buff/journey_ending)
 	return ..()
 
@@ -157,12 +157,12 @@
 	needs_processing = FALSE
 
 /datum/status_effect/debuff/bleedingworse/on_apply()
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.apply_status_effect(/datum/status_effect/buff/journey_end)
 	return ..()
 
 /datum/status_effect/debuff/bleedingworse/on_remove()
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.remove_status_effect(/datum/status_effect/buff/journey_end)
 	return ..()
 
@@ -179,12 +179,12 @@
 	needs_processing = FALSE
 
 /datum/status_effect/debuff/bleedingworst/on_apply()
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.apply_status_effect(/datum/status_effect/buff/journey_end_final)
 	return ..()
 
 /datum/status_effect/debuff/bleedingworst/on_remove()
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
 		owner.remove_status_effect(/datum/status_effect/buff/journey_end_final)
 	return ..()
 
