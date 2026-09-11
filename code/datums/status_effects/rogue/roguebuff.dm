@@ -1625,7 +1625,7 @@
 /datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
 	id = "journey_end_final"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
-	effectedstats = list(STATKEY_STR = 5, STATKEY_SPD = 8, STATKEY_WIL = 4, STATKEY_CON = 4)
+	effectedstats = list(STATKEY_STR = 5, STATKEY_SPD = 8, STATKEY_WIL = 5, STATKEY_CON = 5)
 	duration = -1
 
 /datum/status_effect/buff/stagehands_silence
