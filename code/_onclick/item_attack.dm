@@ -32,9 +32,9 @@
 				return
 		if(HAS_TRAIT(user, TRAIT_WEAPONLESS))//allows tool use, but not weapons. For disciple aurafarmers who go true unarmed.
 			var/obj/item/rogueweapon/weapon = src
-			var/placing_on_furniture = !user.cmode && (istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))//differentiate between placing a weapon on a table or using it to murder someone. Disciple did not forget how to be tidy when they took their oath.
-			var/using_surgical_tool = !user.cmode && iscarbon(target) && (weapon.item_flags & SURGICAL_TOOL)// lets the disciple sign their slip
 			if(istype(weapon))
+				var/placing_on_furniture = !user.cmode && (istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))//differentiate between placing a weapon on a table or using it to murder someone. Disciple did not forget how to be tidy when they took their oath.
+				var/using_surgical_tool = !user.cmode && iscarbon(target) && (weapon.item_flags & SURGICAL_TOOL)// lets the disciple sign their slip
 				if((!weapon.is_tool || ismob(target)) && !placing_on_furniture && !using_surgical_tool)
 					to_chat(user, span_warning("I cannot properly wield this weapon."))
 					return
