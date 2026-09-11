@@ -449,11 +449,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	if(!ishuman(user))
 		return
+	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/prey
 	if(!length(GLOB.zizo_targets) && !length(H.zizo_targets))
 		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
 		return
-	var/mob/living/carbon/human/H = user
-	var/mob/living/carbon/human/prey
 	if(is_zizo(user))
 		prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
 	else
