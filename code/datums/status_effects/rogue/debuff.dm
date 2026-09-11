@@ -158,14 +158,12 @@
 
 /datum/status_effect/debuff/bleedingworse/on_apply()
 	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.apply_status_effect(/datum/status_effect/buff/journey_end)
+		owner.apply_status_effect(/datum/status_effect/buff/journey_end)
 	return ..()
 
 /datum/status_effect/debuff/bleedingworse/on_remove()
 	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.remove_status_effect(/datum/status_effect/buff/journey_end)
+		owner.remove_status_effect(/datum/status_effect/buff/journey_end)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
@@ -182,14 +180,12 @@
 
 /datum/status_effect/debuff/bleedingworst/on_apply()
 	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.apply_status_effect(/datum/status_effect/buff/journey_end_final)
+		owner.apply_status_effect(/datum/status_effect/buff/journey_end_final)
 	return ..()
 
 /datum/status_effect/debuff/bleedingworst/on_remove()
 	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.remove_status_effect(/datum/status_effect/buff/journey_end_final)
+		owner.remove_status_effect(/datum/status_effect/buff/journey_end_final)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3

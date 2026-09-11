@@ -19,10 +19,10 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //wish there was an oni axe or something
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, 
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
