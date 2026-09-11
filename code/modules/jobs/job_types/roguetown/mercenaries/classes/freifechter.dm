@@ -8,7 +8,7 @@
 	allowed_patrons = list(/datum/patron/old_god)
 	class_select_category = CLASS_CAT_AAVNR
 	category_tags = list(CTAG_MERCENARY)
-	cmode_music = 'sound/music/frei_fencer.ogg'
+	cmode_music = 'sound/music/combat_fencer.ogg'
 	traits_applied = list(TRAIT_BADTRAINER, TRAIT_INTELLECTUAL, TRAIT_LONGSWORDSMAN, TRAIT_FENCERDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,

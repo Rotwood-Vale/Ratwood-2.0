@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_nitecreecher.ogg')
 
 /datum/combat_music/noble
-	name = "Noble (Merchant/Freifechter)"
+	name = "Noble (Merchant)"
 	desc = ""
 	shortname = "Noble"
 	musicpath = list('sound/music/combat_noble.ogg')
@@ -626,6 +626,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Ancient"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/freifechter
+	name = "Freifechter"
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
+	shortname = "Freifechter - Default"
+	credits = "MusicImaginary - Old Church"
+	musicpath = list('sound/music/combat_fencer.ogg')
 
 /datum/combat_music/freifencer
 	name = "Freifechter, Fencer"
