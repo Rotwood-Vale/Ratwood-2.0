@@ -626,3 +626,31 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Ancient"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/freifencer
+	name = "Freifechter, Fencer"
+	desc = "God is dead, yet I follow his word! No fire made by any man will snuff out the Reformation! Paradise awaits!"
+	shortname = "Fencer"
+	credits = "MusicImaginary - Old Church"
+	musicpath = list('sound/music/frei_fencer.ogg')
+
+/datum/combat_music/freilancer
+	name = "Freifechter, Lancer"
+	desc = "Etruscan pike companies are some of Psydonia's most sought-after mercenaries - but you're not one of those. You're a master."
+	shortname = "Lancer"
+	credits = "Lucas Gitano - The Mask of Zorro (Fingerstyle Acoustic Cover)"
+	musicpath = list('sound/music/frei_lancer.ogg')
+
+/datum/combat_music/freisabrist
+	name = "Freifechter, Sabrist"
+	desc = "So long as we still lyve, what the foreign powers have seized from us, we shall recapture with a sabre in hand."
+	shortname = "Sabrist"
+	credits = "MusicImaginary - Lyra"
+	musicpath = list('sound/music/frei_sabre.ogg')
+
+/datum/combat_music/aavshepherd
+	name = "Aavnic Shepherd"
+	desc = "\"No saber in hand, they crush bones with their fokos!\""
+	shortname = "Shepherd"
+	credits = "MusicImaginary - Yendrek"
+	musicpath = list('sound/music/frei_shepherd.ogg')

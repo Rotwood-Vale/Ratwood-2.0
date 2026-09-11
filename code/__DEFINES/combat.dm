@@ -228,6 +228,7 @@
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
 #define BCLASS_SUNDER       "sunder"
+#define BCLASS_HALFSWORD	"stab"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -421,6 +422,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PEEL_BONUS 25
 #define ACC_PICK_BONUS 15
 #define ACC_CUT_BONUS 6
+#define ACC_HALFSWORD_BONUS 20
 #define ACC_BLUNT_PRECISE_PENALTY 10	//Blunt and smash aimed at a precise subzone. A mace can't hit the eyes very well.
 #define ACC_SHORT_WEAPON_BONUS 10		//SHORT weapons, and unarmed, aim better.
 #define ACC_AIMED_BONUS 20				//AIMED stance.

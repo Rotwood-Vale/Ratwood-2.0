@@ -21,13 +21,13 @@
 	var/parriable_intent = TRUE
 	/// Used in `checkdefense()` to see if the mob is able to dodge this intent
 	var/dodgeable_intent = TRUE
-	/// if above 0, this attack must be charged to reach full damage
+	/// If above 0, this attack must be charged to reach full damage.
 	var/chargetime = 0
-	/// how much fatigue is removed every second when at max charge
+	/// Amount of fatigue removed per tick of full charge.
 	var/chargedrain = 0
-	/// drain when we go off, regardless
+	/// Fatigue removed on release.
 	var/releasedrain = 1
-	/// extra drain from missing only, ALSO APPLIED IF ENEMY DODGES
+	/// Extra fatigue removed on missing the target, or if the enemy dodges.
 	var/misscost = 1
 	var/tranged = 0
 	/// turns off auto aiming, also turns off the 'swooshes'
@@ -38,42 +38,45 @@
 	var/charge_pointer = null
 	/// Simple unique charged icon
 	var/charged_pointer = null
-	/// the cd invoked clicking on stuff with this intent
+	/// Invoked clickCD.
 	var/clickcd = CLICK_CD_MELEE
-	/// RTD unable to move for this duration after an attack without becoming off balance
+	/// Amount of time required to stay stationary after attack. Moving during this period incurs off-balance.
 	var/recovery = 0
-	/// list of stuff to say while charging
+	/// String list of chants during invoke.
 	var/list/charge_invocation
-	/// we can't shoot off early
+	/// Allowing shooting during charge.
 	var/no_early_release = FALSE
-	/// we cancel charging when changing mob direction, for concentration spells
+	/// Changing mob direction to cancel charge.
 	var/movement_interrupt = FALSE
-	/// we execute a proc with the same name when rmbing at range with no offhand intent selected
+	/// Executes a ranged RMB proc of the same name, with no off-hand intent selected.
 	var/rmb_ranged = FALSE
-	/// probably needed or something
 	var/tshield = FALSE
 	var/datum/looping_sound/chargedloop = null
 	var/keep_looping = TRUE
-	/// multiplied by weapon's force for damage
+	/// Multiplied damage modifier.
 	var/damfactor = 1
-	/// see armor_penetration
+	/// Multiplied armour penetration modifier.
 	var/penfactor = 0
 	/// Whether the intent itself has integrity damage modifier. Used for rend.
 	var/intent_intdamage_factor = 1
-	/// changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
+	/// Minimum damage from the intent.
+	var/min_intent_damage = 0
+	/// Maximum damage from the intent.
+	var/max_intent_damage = 200
+	/// Changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
 	var/item_d_type = "blunt"
 	var/charging_slowdown = 0
 	var/warnoffset = 0
 	var/swingdelay = 0
-	///causes a return in /attack() but still allows to be used in attackby(
+	/// Causes a return in /attack() but still allows to be used in attackby()
 	var/no_attack = FALSE
-	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
+	/// Range in tiles for melee attacks.
 	var/reach = 1
-	///THESE ARE FOR UNARMED MISSING ATTACKS
+	/// Unarmed miss string.
 	var/miss_text
-	///THESE ARE FOR UNARMED MISSING ATTACKS
+	/// Unarmed sound string.
 	var/miss_sound
-	/// Do I need my offhand free while using this intent?
+	/// Bool to toggle hether off-hand is required to be free or not.
 	var/allow_offhand = TRUE
 	/// How many consecutive peel hits this intent requires to peel a piece of coverage? May be overriden by armor thresholds if they're higher.
 	var/peel_divisor = 0
@@ -81,12 +84,13 @@
 	var/glow_intensity = null
 	/// The color of the glow. Used for spells
 	var/glow_color = null
-	/// tracking mob_light
+	/// Used to store and track mob lights.
 	var/mob_light = null
-	/// The effect to be added (on top) of the mob while it is charging
+	/// The effect to be added (on top) of the mob while it is charging.
 	var/obj/effect/mob_charge_effect = null
 	/// Custom icon for its swingdelay.
 	var/custom_swingdelay = null
+
 	/// Effective range for penfactor to apply fully.
 	var/effective_range = null
 	/**

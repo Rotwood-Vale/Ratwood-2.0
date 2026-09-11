@@ -177,9 +177,12 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+/obj/item/clothing/suit/roguetown/shirt/freifechter
 	name = "padded fencing shirt"
-	desc = "A strong loosely worn quilted shirt that places little weight on the arms, usually worn underneath a strong leather vest. It won't cover your legs."
+	desc = "A strong loosely worn quilted shirt that places little weight on the arms, usually worn underneath a flexible leather vest. It won't cover your legs."
+	icon = 'icons/roguetown/clothing/armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	icon_state = "fencingshirt"
 	color = "#FFFFFF"
@@ -187,10 +190,28 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
-	shiftable = FALSE
+	var/shiftable = FALSE
 	var/picked = FALSE
+	armor = ARMOR_PADDED_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
+	sellprice = 25
+	blocksound = SOFTUNDERHIT
+	blade_dulling = DULLING_BASHCHOP
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	cold_protection = 10
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/attack_right(mob/user)
+/obj/item/clothing/suit/roguetown/shirt/freifechter/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd
+	name = "shepherd's shirt"
+	desc = "A strong loosely worn quilted shirt that places little weight on the arms."
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER - 35
+
+/obj/item/clothing/suit/roguetown/shirt/freifechter/attack_right(mob/user)
 	..()
 	if(!picked)
 		var/choice = input(user, "Choose a color.", "Fencing colors") as anything in GLOB.colorlist
@@ -204,11 +225,11 @@
 			H.update_inv_shirt()
 			H.update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/Initialize(mapload)
+/obj/item/clothing/suit/roguetown/shirt/freifechter/Initialize(mapload)
 	. = ..()
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter/update_icon()
+/obj/item/clothing/suit/roguetown/shirt/freifechter/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
@@ -226,7 +247,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 	name = "padded caftan"
-	desc = "A long overcoat commonly worn in Naledi, Kazengun, Gronn and Aavnr - but mostly associated with steppesmen and raiders. This specific kind rivals a gambeson in protection."
+	desc = "A long overcoat commonly worn in Naledi, Kazengun, and Aavnr - but mostly associated with steppesmen. This specific kind rivals a padded gambeson in protection."
 	icon_state = "chargah"
 	color = "#ffffff"
 	boobed = TRUE

@@ -66,6 +66,9 @@
 	/// Set to FALSE to skip apply_character_post_equipment() which applies virtue, flaw, loadout
 	var/applies_post_equipment = TRUE
 
+	var/list/virtue_limits = list()
+	var/list/vice_limits = list()
+
 /datum/advclass/proc/equipme(mob/living/carbon/human/H, dummy = FALSE)
 	// input sleeps....
 	set waitfor = FALSE
@@ -175,6 +178,17 @@
 
 	if(length(allowed_patrons) && !(H.patron.type in allowed_patrons))
 		return FALSE
+
+	if(length(virtue_limits) && H.client)
+		for(var/virtuetype in virtue_limits)
+			if(istype(H.client.prefs?.virtue, virtuetype) || istype(H.client.prefs?.virtuetwo, virtuetype))
+				return FALSE
+
+	if(length(vice_limits) && H.client)
+		for(var/vicetype in vice_limits)
+			for(var/vice in list(H.client.prefs?.vice1, H.client.prefs?.vice2, H.client.prefs?.vice3, H.client.prefs?.vice4, H.client.prefs?.vice5, H.client.prefs?.charflaw))
+				if(istype(vice, vicetype))
+					return FALSE
 
 	if(maximum_possible_slots > -1)
 		if(total_slots_occupied >= maximum_possible_slots)

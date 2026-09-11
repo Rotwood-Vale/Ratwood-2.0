@@ -101,7 +101,7 @@
 /datum/supply_pack/rogue/light_armor/import/aavnicgambeson
 	name = "Aavnic Fencing Gambeson"
 	cost = 50 // Base sellprice of 30, doesn't cover legs so slightly cheaper
-	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter)
+	contains = list (/obj/item/clothing/suit/roguetown/shirt/freifechter)
 
 /datum/supply_pack/rogue/light_armor/import/caftan
 	name = "Padded Caftan"
