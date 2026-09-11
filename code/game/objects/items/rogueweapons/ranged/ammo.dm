@@ -864,13 +864,14 @@
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
 	desc = "An elegant sphere of blacksteel. This bullet bores through plate and meat like a comet. Once it's reached terminal velocity, you might want to duck."
-	projectile_type = /obj/projectile/bullet/sling_bullet/blacksteel
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/blacksteel
 	icon_state = "bs_sling_bullet"
 
-/obj/projectile/bullet/sling_bullet/blacksteel
+/obj/projectile/bullet/reusable/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
 	damage = 50
 	armor_penetration = 35
 
