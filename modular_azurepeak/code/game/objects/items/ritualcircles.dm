@@ -1441,7 +1441,7 @@
 		if("Vindicatio - (longsword)")
 			r_hand = /obj/item/rogueweapon/sword/long/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-		if("Damnatio - (Rapier)")
+		if("Damnatio - (rapier)")
 			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
 		if("Perditio - (kriegmesser)")
