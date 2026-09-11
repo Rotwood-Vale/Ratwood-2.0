@@ -97,7 +97,7 @@
 	mob_biotypes = MOB_HUMANOID
 	maxHealth = 20
 	health = 20
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	footstep_type = FOOTSTEP_MOB_BAREFOOT

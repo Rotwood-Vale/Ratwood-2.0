@@ -48,7 +48,7 @@
 /area/rogue/outdoors/desert/mirage)
 "p" = (
 /turf/open/floor/rogue/twig{
-	icon = 'modular/DesertTown/icons/alt/roguefloor.dmi'
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/outdoors/desert/mirage)
 "q" = (

@@ -1201,7 +1201,7 @@
 	force = 25
 	force_wielded = 25
 	minstr = 7
-	wdefense = 9
+	wdefense = 7
 	last_used = 0
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/gold
@@ -1678,6 +1678,33 @@
 				"eastabove" = 1,
 				"westabove" = 0,
 				)
+
+/obj/item/rogueweapon/sword/silver/decorated
+	name = "decorated silver khadga" //While ostensibly a sword, it's functionally identical - if a little weaker - than the Silver War Axe.
+	desc = "Beautifully designed for nobility, yet born from an ignoble purpose; to satiate the powers of ancient mythos with sacrificial blood. This Naledian \
+	sword, better known as a 'ram-dao', now serves to satiate the spite of vengeful spirits - not through bloodshed, but through sunderance."
+	icon_state = "ram_dao"
+	sheathe_icon = "scabbard_decsword3"
+	force = 25
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
+	gripped_intents = null
+	minstr = 11
+	max_blade_int = 300
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	wdefense = 5
+	is_silver = TRUE
+
+/obj/item/rogueweapon/sword/silver/decorated/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/long/rhomphaia
 	name = "rhomphaia"
@@ -2197,6 +2224,33 @@
 	sellprice = 100 // lets not make it too profitable
 	smeltresult = /obj/item/ingot/blacksteel
 
+/obj/item/rogueweapon/sword/gold
+	name = "golden arming sword"
+	desc = "A heavenly arming sword, who's golden blade and besilked handle lays separated by a duocruciformic crossguard. This particular weapon \
+	seems to have innovatively combined the lethal cutting prowess of Psydonia's oldest weapon with the psychological damage of knowing that its \
+	wielder could likely bribe the Carriageman himself, and still chose to personally kill you."
+	icon_state = "goldsword"
+	smeltresult = /obj/item/ingot/gold
+	force = 35
+	force_wielded = 40
+	minstr = 10
+	max_integrity = 50 //For reference, regular attacks drain each 'max_' value by one point. Parries will quite literally cause this to explode.
+	max_blade_int = 50
+	anvilrepair = null //Ceremonial. This should break comedically easily, but still have just enough toughness to work with a few strikes.
+	sheathe_icon = "goldsword"
+	wbalance = WBALANCE_HEAVY
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/sword/gold/king
+	name = "royal golden arming sword"
+	desc = "A heavenly arming sword, who's golden blade and besilked handle lays separated by a duocruciformic crossguard ornamented with a dorpel. This particular weapon \
+	seems to have innovatively combined the lethal cutting prowess of Psydonia's oldest weapon with the psychological damage of knowing that its \
+	wielder could likely bribe the Carriageman himself, and still chose to personally kill you."
+	icon_state = "goldswordking"
+	max_integrity = 75
+	max_blade_int = 75
+	sellprice = 300
+
 /obj/item/rogueweapon/sword/blacksteel
 	name = "blacksteel arming sword"
 	desc = "A broad blade of blacksteel, mounted to a rosawooden handle that perfectly compliments its wielder's grasp. It is the culmination of \
@@ -2283,8 +2337,11 @@
 //Elven weapons sprited and added by Jam
 /obj/item/rogueweapon/sword/short/elf
 	name = "elven shortsword"
-	desc = "This flowing sword is of classic elven design."
+	desc = "This flowing sword is of classic elven design. Durable metallurgy create a fine parrying blade."
 	icon_state = "elfsword"
+	wdefense = 9 // Better defense than the elven saber.
+	max_integrity = 200 
+	max_blade_int = 300 // High integrity and higher sharpness than a shortsword to parry longer without significant damage decay.
 	sellprice = 40
 	sheathe_icon = "elfsword"
 
@@ -2293,5 +2350,6 @@
 	desc = "This mighty flowing sword is of classic elven design."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "elflongsword"
+	max_blade_int = 330
 	sellprice = 50
 	sheathe_icon = "elfsword"

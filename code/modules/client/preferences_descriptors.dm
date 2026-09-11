@@ -64,16 +64,25 @@
 			var/datum/descriptor_entry/entry = get_descriptor_entry_for_choice(choice_type)
 			entry.descriptor_type = picked_type
 		if("custom_descriptor_prefix")
-			var/static/list/translation = CUSTOM_PREFIX_TRANSLATION_LIST
-			var/static/list/input_list = CUSTOM_PREFIX_INPUT_LIST
+			var/static/list/full_translation = CUSTOM_PREFIX_TRANSLATION_LIST
+			var/static/list/full_input = CUSTOM_PREFIX_INPUT_LIST
+			var/static/list/article_translation = CUSTOM_ARTICLE_TRANSLATION_LIST
+			var/static/list/article_input = CUSTOM_ARTICLE_INPUT_LIST
+			var/static/list/article_only_types = CUSTOM_DESCRIPTOR_ARTICLE_ONLY
+			var/static/list/custom_descriptor_types = CUSTOM_DESCRIPTOR_TYPE_LIST
+
 			var/index = text2num(href_list["index"])
 			var/datum/custom_descriptor_entry/custom_entry = custom_descriptors[index]
-			var/current_prefix_text = translation["[custom_entry.prefix_type ]"]
+			var/is_article_only = (custom_descriptor_types[index] in article_only_types)
+			var/list/translation = is_article_only ? article_translation : full_translation
+			var/list/input_list = is_article_only ? article_input : full_input
+			var/current_prefix_text = translation["[custom_entry.prefix_type]"]
+			if(!current_prefix_text)
+				current_prefix_text = is_article_only ? "a" : "Has a"
 			var/new_prefix_text = input(user, "Choose the prefix", "Describe myself", current_prefix_text) as null|anything in input_list
 			if(!new_prefix_text)
 				return
-			var/new_prefix_type = input_list[new_prefix_text]
-			custom_entry.prefix_type = new_prefix_type
+			custom_entry.prefix_type = input_list[new_prefix_text]
 		if("custom_descriptor_content")
 			var/index = text2num(href_list["index"])
 			var/datum/custom_descriptor_entry/custom_entry = custom_descriptors[index]
@@ -82,8 +91,11 @@
 				return
 			new_content = STRIP_HTML_SIMPLE(LOWER_TEXT(new_content), CUSTOM_DESCRIPTOR_TEXT_LENGTH)
 			custom_entry.content_text = new_content
+		if("preview_descriptors")
+			preview_descriptors(user)
 
 /datum/preferences/proc/print_descriptors_page()
+	var/static/list/custom_descriptor_types = CUSTOM_DESCRIPTOR_TYPE_LIST
 	var/list/dat = list()
 	for(var/choice_type in pref_species.descriptor_choices)
 		var/datum/descriptor_choice/choice = DESCRIPTOR_CHOICE(choice_type)
@@ -92,27 +104,35 @@
 		dat += "<b>[choice.name]:</b> <a href='?_src_=prefs;descriptor_choice=[choice_type];preference=choose_descriptor;task=change_descriptor'>[descriptor.name]</a><br>"
 
 	for(var/i in 1 to CUSTOM_DESCRIPTOR_AMOUNT)
-		// Ugly, I know
-		if(i == 1)
-			if(!has_descriptor_type_in_entries(/datum/mob_descriptor/prominent/custom/one))
-				continue
-		else if(i == 2)
-			if(!has_descriptor_type_in_entries(/datum/mob_descriptor/prominent/custom/two))
-				continue
-		else
+		if(!has_descriptor_type_in_entries(custom_descriptor_types[i]))
 			continue
 		var/list/custom_data = print_custom_descriptor_customization(i)
 		if(custom_data)
 			dat += custom_data
 
 	dat += "<br><br><center>Descriptors can vary based on gender<br>Some don't appear if you don't match a requirement<center>"
+	dat += "<br><center><a href='?_src_=prefs;preference=preview_descriptors;task=change_descriptor'><b>Preview All Descriptors</b></a></center>"
 	return dat
 
 /datum/preferences/proc/print_custom_descriptor_customization(index)
-	var/static/list/translation = CUSTOM_PREFIX_TRANSLATION_LIST
+	var/static/list/full_translation = CUSTOM_PREFIX_TRANSLATION_LIST
+	var/static/list/article_translation = CUSTOM_ARTICLE_TRANSLATION_LIST
+	var/static/list/custom_descriptor_types = CUSTOM_DESCRIPTOR_TYPE_LIST
+	var/static/list/prefix_support = CUSTOM_DESCRIPTOR_SHOWS_PREFIX
+	var/static/list/article_only_types = CUSTOM_DESCRIPTOR_ARTICLE_ONLY
+
 	var/list/dat = list()
 	var/datum/custom_descriptor_entry/custom_entry = custom_descriptors[index]
-	dat += "<br><b>Custom #[index]:</b> <a href='?_src_=prefs;index=[index];preference=custom_descriptor_prefix;task=change_descriptor'>[translation["[custom_entry.prefix_type]"]]</a><a href='?_src_=prefs;index=[index];preference=custom_descriptor_content;task=change_descriptor'>[custom_entry.content_text]</a>"
+	var/desc_type = custom_descriptor_types[index]
+	var/datum/mob_descriptor/descriptor = MOB_DESCRIPTOR(desc_type)
+
+	var/prefix_html = ""
+	if(desc_type in prefix_support)
+		var/is_article_only = (desc_type in article_only_types)
+		var/translation = is_article_only ? article_translation : full_translation
+		prefix_html = "<a href='?_src_=prefs;index=[index];preference=custom_descriptor_prefix;task=change_descriptor'>[translation["[custom_entry.prefix_type]"]]</a>"
+
+	dat += "<br><b>[descriptor.name]:</b> [prefix_html]<a href='?_src_=prefs;index=[index];preference=custom_descriptor_content;task=change_descriptor'>[custom_entry.content_text]</a>"
 	return dat
 
 /datum/preferences/proc/show_descriptors_ui(mob/user)
@@ -129,6 +149,58 @@
 				continue
 			return TRUE
 	return FALSE
+
+/datum/preferences/proc/preview_descriptors(mob/user)
+	if(!COOLDOWN_FINISHED(src, descriptor_preview))
+		to_chat(user, span_warning("You must wait before previewing descriptors again."))
+		return
+	COOLDOWN_START(src, descriptor_preview, 5 SECONDS)
+	to_chat(user, span_notice("-- Preview of [real_name]'s descriptors --"))
+
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	copy_to(mannequin, FALSE, TRUE, TRUE)
+	apply_descriptors(mannequin)
+
+	// Calculate speaking name
+	to_chat(user, \
+		"[SPAN_TOOLTIP("This will be displayed when you speak when your face is hidden or out of view range.", span_notice("Anonymous Speaking Name"))]: \
+		<font color='[voice_color]'>[get_speaking_name_preview(mannequin)]</font>")
+
+	// Calculate visible name
+	var/list/descriptors = mannequin.get_mob_descriptors(FALSE, null)
+	to_chat(user, \
+		"[SPAN_TOOLTIP("This will be displayed when you emote or are examined when your face is hidden.", span_notice("Anonymous Visible Name"))]: \
+		<font color='[voice_color]'>[get_visible_name_preview(mannequin, descriptors.Copy())]</font>")
+
+	// Calculate descriptor blurb
+	var/list/desc_lines = build_cool_description(descriptors, mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
+	// Output blurb
+	to_chat(user, span_notice("<b>Details</b>"))
+	for(var/line in desc_lines)
+		to_chat(user, span_info(line))
+
+// This should mirror /mob/living/carbon/human/get_alt_name()
+/datum/preferences/proc/get_speaking_name_preview(mob/living/carbon/human/mannequin)
+	var/datum/mob_descriptor/voice/voice_descriptor = mannequin.get_descriptor_type(/datum/mob_descriptor/voice)
+	if(!voice_descriptor)
+		return "Unknown Person"
+	var/voice_gender = "Person"
+	switch(voice_type)
+		if(VOICE_TYPE_FEM)
+			voice_gender = "Woman"
+		if(VOICE_TYPE_MASC)
+			voice_gender = "Man"
+		if(VOICE_TYPE_ANDR)
+			voice_gender = "Person"
+	return voice_descriptor.get_speaking_name(voice_gender, src)
+
+// This should mirror /mob/living/carbon/human/get_visible_name()
+/datum/preferences/proc/get_visible_name_preview(mob/living/carbon/human/mannequin, list/descriptors)
+	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, mannequin, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
+	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(descriptors, mannequin, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"
+	return "[trait_desc] [stature_desc]"
 
 /datum/preferences/proc/get_descriptor_entry_for_choice(choice_type)
 	if(length(descriptor_entries))

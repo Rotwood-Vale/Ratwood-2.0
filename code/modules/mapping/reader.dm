@@ -146,7 +146,7 @@
  * - y_upper: The maximum y coordinate to load
  * - z_lower: The minimum z coordinate to load
  * - z_upper: The maximum z coordinate to load
- * - place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
+ * - place_on_top: Whether to use /turf/proc/LoadOnTop rather than /turf/proc/ChangeTurf
  * - new_z: If true, a new z level will be created for the map
  */
 /proc/load_map(
@@ -949,7 +949,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 		// Note: we make the assertion that the last path WILL be a turf. if it isn't, this will fail.
 		if(placeOnTop)
-			instance = crds.PlaceOnTop(null, members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
+			instance = crds.LoadOnTop(members[index], CHANGETURF_DEFER_CHANGE | (no_changeturf ? CHANGETURF_SKIP : NONE))
 		else if(no_changeturf)
 			instance = create_atom(members[index], crds)//first preloader pass
 		else

@@ -268,6 +268,35 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/rogueweapon/shield/tower/metal/gold
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshield"
+	force = 25
+	throwforce = 35
+	throw_speed = 1
+	throw_range = 3
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
+	wlength = WLENGTH_NORMAL
+	resistance_flags = null
+	flags_1 = CONDUCT_1
+	wdefense = 14
+	coverage = 90
+	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	max_integrity = 50
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/shield/tower/metal/gold/king
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil socketed with a dorpel. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshieldking"
+	max_integrity = 75
+	sellprice = 300
+
 /obj/item/rogueweapon/shield/tower/metal/psy
 	name = "Covenant"
 	desc = "A Psydonian endures. A Psydonian preserves themselves. A Psydonian preserves His flock."
@@ -358,21 +387,16 @@
 	. = ..()
 	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
 
-/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/user)
-	if(!ishuman(user))
+/// Returns the associated skill to be used to parry with. Changes based on the associated_skill of the main hand so long as it's a combat skill
+/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/blocker)
+	if(!ishuman(blocker))
 		return
-	var/mob/living/carbon/bucklerer = user
-	var/obj/item/mainhand = bucklerer.get_active_held_item()
-	var/weapon_parry = FALSE
-	if(mainhand)
-		if(mainhand.can_parry)
-			weapon_parry = TRUE
-	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
-		associated_skill = /datum/skill/combat/shields
-	if(weapon_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
+	associated_skill = /datum/skill/combat/shields
+	var/obj/item/mainhand = blocker.get_active_held_item()
+	if(!isitem(mainhand) || istype(mainhand, /obj/item/rogueweapon/shield/buckler))
+		return
+	if(mainhand.can_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
 		associated_skill = mainhand.associated_skill
-	else
-		associated_skill = /datum/skill/combat/shields
 
 /obj/item/rogueweapon/shield/buckler/getonmobprop(tag)
 	. = ..()

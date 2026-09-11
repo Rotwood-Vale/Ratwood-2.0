@@ -141,6 +141,12 @@
 	var/obj/item/bodypart/head/dullahan/my_head
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 
+/datum/species/dullahan/Destroy(force, ...)
+	UnregisterSignal(my_head, COMSIG_QDELETING)
+	my_head = null
+	soul_light_off()
+	return ..()
+
 /datum/species/dullahan/check_roundstart_eligible()
 	return TRUE
 
@@ -248,7 +254,6 @@
 	UnregisterSignal(my_head, COMSIG_QDELETING)
 	my_head = null
 	soul_light_off()
-	mob_light_obj = null
 
 /datum/species/dullahan/proc/on_aheal(datum/source, full_heal, admin_revive)
 	if(!admin_revive)
@@ -280,7 +285,7 @@
 		mob_light_obj = user.mob_light(soul_accessory.accessory_colors, 2, 2)
 
 /datum/species/dullahan/proc/soul_light_off()
-	qdel(mob_light_obj)
+	QDEL_NULL(mob_light_obj)
 
 /datum/species/dullahan/proc/on_say_postprocess(datum/source, list/speech_args)
 	var/mob/living/carbon/human/human = my_head.original_owner

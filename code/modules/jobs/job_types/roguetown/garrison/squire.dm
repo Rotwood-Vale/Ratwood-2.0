@@ -94,7 +94,9 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
 		)
 
 /datum/advclass/squire/footman
@@ -142,7 +144,9 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
 		)
 
 	H.adjust_blindness(-3)
@@ -207,5 +211,7 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
-		)
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
+	)

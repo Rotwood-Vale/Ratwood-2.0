@@ -60,3 +60,10 @@
 	reqs = list(/obj/item/natural/hide/cured = 3,
 				/obj/item/natural/fur = 1)
 	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/leather/footwear/boots/thigh
+	name = "thigh boots"
+	result = /obj/item/clothing/shoes/roguetown/boots/hand/thigh
+	reqs = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/cloth = 1) ///Padding for comfort ya know?
+	craftdiff = 4

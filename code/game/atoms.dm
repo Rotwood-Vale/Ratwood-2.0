@@ -217,7 +217,7 @@
 			AA.remove_from_hud(src)
 
 	if(reagents)
-		qdel(reagents)
+		QDEL_NULL(reagents)
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
@@ -1010,8 +1010,8 @@
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return SEND_SIGNAL(src, COMSIG_ATOM_ANALYSER_ACT, user, I)
 
-/// Generic logging helper
-/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE)
+/// Generic logging helper. The metadata params exist so atom typed callers compile; only /mob stores them.
+/atom/proc/log_message(message, message_type, color=null, log_globally=TRUE, list/meta=null)
 	if(!log_globally)
 		return
 
@@ -1081,8 +1081,9 @@
  * 3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
  * 4 is a tool with which the action was made (usually an item)
  * 5 is any additional text, which will be appended to the rest of the log line
+ * severe marks crits, dismemberment and death so they are colour coded in the individual log panel
  */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE)
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, severe = FALSE)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -1099,49 +1100,60 @@
 	var/postfix = "[sobject][saddition][hp]"
 
 	var/message = "has [what_done] [starget][postfix]"
-	user.log_message(message, LOG_ATTACK, color="red")
+	// one id shared by all three writes below, so the panels can tell three renderings of one hit from three hits.
+	// Keep these server generated, never built from player input
+	var/static/combat_event_counter = 0
+	var/event_id = "e[++combat_event_counter]"
+	// each line stores the OTHER party's ckey, null when that party is keyless
+	var/mob/user_mob = user
+	var/mob/target_mob = target
+	var/user_ckey = ismob(user) ? user_mob.ckey : null
+	var/target_ckey = ismob(target) ? target_mob.ckey : null
+	// null user: projectiles, falls, the environment. The target's line below is still worth recording
+	user?.log_message(message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : "red", meta = list(LOG_META_EVENT = event_id, LOG_META_TARGET = target_ckey))
 
-	if(log_seen)
-		log_seen_viewers(user, target, message, SEEN_LOG_ATTACK)
+	if(log_seen && user)
+		log_seen_viewers(user, target, message, SEEN_LOG_ATTACK, event = event_id)
 
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
-		target?.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+		target?.log_message(reverse_message, LOG_ATTACK, color = severe ? LOG_COLOR_SEVERE : LOG_COLOR_RECEIPT, log_globally=FALSE, meta = list(LOG_META_EVENT = event_id, LOG_META_ATTACKER = user_ckey, LOG_META_RECEIPT = TRUE))
 
-/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type)
-	var/color
-	switch(seen_type)
-		if(SEEN_LOG_SAY)
-			color = "orange"
-		if(SEEN_LOG_EMOTE)
-			color = "grey"
-		if(SEEN_LOG_ATTACK)
-			color = "red"
-	var/count = 0
-	var/viewer_string = ""
+/// Numpad direction from witness to event: 8 north, 6 east, 3 southeast. One char, appended to a name like ^ v ~
+/proc/seen_direction_tag(atom/witness, atom/happening)
+	var/static/list/tags = list(
+		"[NORTH]" = "8", "[NORTHEAST]" = "9", "[EAST]" = "6", "[SOUTHEAST]" = "3",
+		"[SOUTH]" = "2", "[SOUTHWEST]" = "1", "[WEST]" = "4", "[NORTHWEST]" = "7",
+	)
+	return tags["[get_dir(witness, happening)]"] || "~"
+
+/// Speech arrives TREATED, exactly as listeners read it
+/proc/log_seen(mob/user, atom/target, list/viewers, message, seen_type, event = null)
+	// only /mob keeps one of these; every other atom discards it unread, so do not build the roster at all
+	if(!ismob(user))
+		return
+	var/static/list/seen_colors = list("[SEEN_LOG_SAY]" = SEEN_COLOR_SAY, "[SEEN_LOG_EMOTE]" = SEEN_COLOR_EMOTE, "[SEEN_LOG_ATTACK]" = SEEN_COLOR_ATTACK)
+	var/color = seen_colors["[seen_type]"]
+	var/mob/target_mob = target
+	var/target_ckey = ismob(target) ? target_mob.ckey : null
+	var/list/witness_names = list()
 	for(var/mob/viewer as anything in viewers)
 		if(viewer == user)
 			continue
 		if(!isliving(viewer))
 			continue
-		if(!viewer.client)
+		if(!viewer.client) // clientless mobs are never witnesses
 			continue
-		count++
-		if(count > 1)
-			viewer_string += ", "
-		viewer_string += key_name(viewer)
-	if(target)
-		if(ismob(target))
-			var/mob/mob_target = target
-			message += " [key_name(mob_target)]"
-		else
-			message += " [target]"
-	user.log_message("[message] ([viewer_string])", LOG_SEEN, color=color, log_globally=FALSE)
+		var/witness_dist = (viewer.z == user.z) ? get_dist(user, viewer) : -1
+		// the roster is spatial: who stood in earshot, not who followed it
+		witness_names[viewer.ckey || REF(viewer)] = list("[key_name(viewer)]", witness_dist < 0 ? null : witness_dist, viewers[viewer] || null)
+	user.log_message(message, LOG_SEEN, color=color, log_globally=FALSE, meta = list(LOG_META_EVENT = event, LOG_META_WITNESSES = witness_names, LOG_META_TARGET = target_ckey))
 
-/proc/log_seen_viewers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE)
+/proc/log_seen_viewers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE, event = null)
 	var/list/viewers = get_hearers_in_view(vision_distance, user)
-	log_seen(user, target, viewers, message, seen_type)
+	log_seen(user, target, viewers, message, seen_type, event)
 
+// Might be dead? Seems close to the other thing. Keep an eye on
 /proc/log_seen_hearers(mob/user, mob/target, message, seen_type, vision_distance = DEFAULT_MESSAGE_RANGE)
 	var/list/hearers = get_hearers_in_view(vision_distance, user)
 	log_seen(user, target, hearers, message, seen_type)

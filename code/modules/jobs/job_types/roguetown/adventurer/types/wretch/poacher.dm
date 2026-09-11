@@ -36,7 +36,9 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE, //Even Robin Hood knew how to read n write
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 /datum/outfit/job/roguetown/wretch/poacher/pre_equip(mob/living/carbon/human/H)
 	mask = /obj/item/clothing/mask/rogue/wildguard
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -50,7 +52,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
 		/obj/item/bait = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/rogueweapon/huntingknife/combat/messer = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,

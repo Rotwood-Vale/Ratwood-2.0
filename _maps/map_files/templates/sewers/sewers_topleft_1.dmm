@@ -41,7 +41,7 @@
 /area/rogue/under/town/sewer)
 "l" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "m" = (
@@ -105,7 +105,7 @@
 /obj/structure/table/wood{
 	icon_state = "largetable"
 	},
-/obj/item/keyring,
+/obj/item/storage/keyring,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "z" = (
@@ -121,7 +121,7 @@
 /area/rogue/under/town/sewer)
 "B" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
