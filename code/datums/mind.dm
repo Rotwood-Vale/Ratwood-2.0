@@ -133,6 +133,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	QDEL_NULL(sleep_adv)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
+	RemoveAllSpells()
 	return ..()
 
 /proc/get_minds(role)
@@ -798,7 +799,6 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	var/success = FALSE
 	if(!spell)
 		return FALSE
 	for(var/X in spell_list)
@@ -806,13 +806,15 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(S.name == spell.name && S.type == spell.type) //match by name and type to avoid issues with multiple instances of the same spell
 			spell_list -= S
 			qdel(S)
-			success = TRUE
 			return TRUE // We're deleting only one spell
-	return success
+	return FALSE
 
 /datum/mind/proc/RemoveAllSpells()
-	for(var/obj/effect/proc_holder/S in spell_list)
-		RemoveSpell(S)
+	. = FALSE
+	for(var/obj/effect/proc_holder/S as anything in spell_list)
+		spell_list -= S
+		qdel(S)
+		. = TRUE
 
 //removes spells that have miracle = true on them
 /datum/mind/proc/RemoveAllMiracles()
@@ -840,7 +842,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
 
-/datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
+/datum/mind/proc/disrupt_spells(delay, list/exceptions = new())
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		for(var/type in exceptions)

@@ -319,3 +319,6 @@
 	if(iscarbon(affected))
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.update_disabled_bodyparts()
+
+/datum/wound/fracture/no_bleed
+	bleed_rate = 0

@@ -221,6 +221,22 @@
 	craftdiff = 1
 	skillcraft = /datum/skill/craft/engineering
 
+/datum/crafting_recipe/roguetown/engineering/smokepowder
+	name = "Smokepowder Flask"
+	result = /obj/item/powderflask
+	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/alch/firedust = 2, /obj/item/alch/coaldust = 2)
+	craftdiff = 4
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+
+/datum/crafting_recipe/roguetown/engineering/minershelmet
+	name = "reinforced miners helmet"
+	result = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
+	reqs = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern = 1, /obj/item/clothing/head/roguetown/articap = 1,/obj/item/roguegear/bronze = 1)
+	craftdiff = 2
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+
 /datum/crafting_recipe/roguetown/structure/pressure_plate
 	name = "pressure plate"
 	result = /obj/structure/pressure_plate
@@ -239,11 +255,68 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
+/datum/crafting_recipe/roguetown/engineering/smither
+	name = "Autosmither"
+	result = /obj/structure/autosmither
+	reqs = list(
+		/obj/item/roguegear/bronze = 4,
+		/obj/item/ingot/steel = 2,
+		/obj/item/natural/wood/plank = 4,
+	)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/infernalengine
+	name = "infernal engine"
+	req_table = FALSE
+	result = /obj/structure/infernalengine
+	reqs = list(
+		/obj/item/magic/infernal/core = 1,
+		/obj/item/ingot/steel = 1,
+	)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/autogrinder
+	name = "autogrinder"
+	category = "Rotational"
+	result = /obj/structure/autogrinder
+	reqs = list(
+		/obj/item/roguegear/bronze = 3,
+		/obj/item/ingot/iron = 2,
+		/obj/item/natural/wood/plank = 4,
+		/obj/item/natural/stone = 4,
+	)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/windmill
+	name = "windmill"
+	result = /obj/structure/windmill
+	reqs = list(
+		/obj/item/natural/wood/plank = 4,
+		/obj/item/natural/cloth = 2,
+		/obj/item/grown/log/tree/stick = 2,
+	)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	tools = list(/obj/item/rogueweapon/huntingknife = 1)
+	craftdiff = 4
+
 //rotational and minecart parts
 /datum/crafting_recipe/roguetown/engineering/shaft
-	name = "wooden shaft(4x)"
+	name = "wooden shaft(8x)"
 	category = "Rotational"
 	result = list(/obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft,
 				  /obj/item/rotation_contraption/shaft)
@@ -257,7 +330,8 @@
 /datum/crafting_recipe/roguetown/engineering/stickshaft
 	name = "wooden shaft"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/shaft)
+	result = list(/obj/item/rotation_contraption/shaft,
+				  /obj/item/rotation_contraption/shaft)
 	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
@@ -266,64 +340,73 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/engineering/cog
-	name = "wooden cogwheel(2x)"
+	name = "wooden cogwheel(x6)"
 	category = "Rotational"
-	result = list(/obj/item/rotation_contraption/cog,
-				  /obj/item/rotation_contraption/cog)
-	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/roguegear/bronze = 2, /obj/item/grown/log/tree/stick = 2)
+	result = list(/obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog, /obj/item/rotation_contraption/cog)
+	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/roguegear/wood/basic = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
-	craftdiff = 4
+	craftdiff = 3
 
 
 /datum/crafting_recipe/roguetown/engineering/waterwheel
-	name = "wooden waterwheel"
+	name = "wooden waterwheel (x2)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/waterwheel
-	reqs = list(/obj/item/natural/wood/plank = 3, /obj/item/grown/log/tree/stick = 2)
+	result = list(/obj/item/rotation_contraption/waterwheel, /obj/item/rotation_contraption/waterwheel)
+	reqs = list(/obj/item/natural/wood/plank = 3)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/large_cog
-	name = "large wooden cogwheel"
+	name = "large wooden cogwheel (3x)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/large_cog
-	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/ingot/bronze = 1, /obj/item/grown/log/tree/stick = 1)
+	result = list(/obj/item/rotation_contraption/large_cog, /obj/item/rotation_contraption/large_cog, /obj/item/rotation_contraption/large_cog)
+	reqs = list(/obj/item/grown/log/tree/small = 1, /obj/item/roguegear/wood/basic = 2, /obj/item/natural/wood/plank = 4)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	tools = list(/obj/item/rogueweapon/huntingknife = 1)
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/gearbox
-	name = "gearbox"
+	name = "gearbox (2x)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/horizontal
-	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2,/obj/item/grown/log/tree/stick = 2)
+	result = list(/obj/item/rotation_contraption/horizontal, /obj/item/rotation_contraption/horizontal)
+	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/vertical_gearbox
-	name = "vertical gearbox"
+	name = "vertical gearbox (2x)"
 	category = "Rotational"
-	result = /obj/item/rotation_contraption/vertical
-	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2, /obj/item/grown/log/tree/stick = 2)
+	result = list(/obj/item/rotation_contraption/vertical, /obj/item/rotation_contraption/vertical)
+	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/natural/stoneblock = 2, /obj/item/natural/wood/plank = 2)
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/rails
-	name = "minecart rails (10x)"
+	name = "minecart rails (x20)"
 	category = "Minecarts"
 	result = list(/obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
+				  /obj/item/rotation_contraption/minecart_rail,
 				  /obj/item/rotation_contraption/minecart_rail,
 				  /obj/item/rotation_contraption/minecart_rail,
 				  /obj/item/rotation_contraption/minecart_rail,
@@ -340,9 +423,13 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/railbreak
-	name = "minecart rail break (4x)"
+	name = "minecart rail break (8x)"
 	category = "Minecarts"
 	result = list(/obj/item/rotation_contraption/minecart_rail/railbreak,
+				  /obj/item/rotation_contraption/minecart_rail/railbreak,
+				  /obj/item/rotation_contraption/minecart_rail/railbreak,
+				  /obj/item/rotation_contraption/minecart_rail/railbreak,
+				  /obj/item/rotation_contraption/minecart_rail/railbreak,
 				  /obj/item/rotation_contraption/minecart_rail/railbreak,
 				  /obj/item/rotation_contraption/minecart_rail/railbreak,
 				  /obj/item/rotation_contraption/minecart_rail/railbreak)
@@ -361,7 +448,7 @@
 	verbage_simple = "engineer"
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4
+	craftdiff = 3
 
 
 // ------------ Craftable Traps ----------
@@ -397,13 +484,13 @@
 // Mostly here to avoid having to use spark-generating 6 step recipes around impact grenades and other instant explosives
 
 /datum/crafting_recipe/roguetown/engineering/tntbomb
-	name = "blastsand sticks"
+	name = "blastsand sticks (x3)"
 	category = "Explosives"
-	result = /obj/item/tntstick
-	reqs = list(/obj/item/paper = 2, /obj/item/alch/coaldust = 2, /obj/item/compost = 1, /obj/item/natural/fibers = 1)
+	result = list(/obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick)
+	reqs = list(/obj/item/paper = 3, /obj/item/alch/coaldust = 2, /obj/item/compost = 2, /obj/item/natural/fibers = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4
+	craftdiff = 3
 
 
 /datum/crafting_recipe/roguetown/engineering/satchelbomb
@@ -413,7 +500,7 @@
 	reqs = list(/obj/item/storage/backpack/rogue/satchel  = 1, /obj/item/tntstick = 3, /obj/item/alch/firedust = 1, /obj/item/natural/fibers = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/engineering/impactexplosive
 	name = "impact grenades (x3)"
@@ -503,3 +590,68 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4 
+//------------------ Mortar Shells --------------
+// high explosive shells for the bombard
+
+/datum/crafting_recipe/roguetown/engineering/highexplosiveimpact
+	name = "high explosive impact, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/explosive
+	reqs = list(/obj/item/tntstick = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/engineering/canistershotimpact
+	name = "canister shot, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/canister
+	reqs = list(/obj/item/ammo_casing/caseless/bullet/grapeshot = 3, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/engineering/smokeimpact
+	name = "smoke shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/smoke
+	reqs = list(/obj/item/bomb/smoke = 3, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/engineering/flareimpact
+	name = "flare shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/flare
+	reqs = list(/obj/item/rogueore/cinnabar = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/engineering/incendiaryimpact
+	name = "incendiary shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/incendiary
+	reqs = list(/obj/item/alch/firedust = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+
+/datum/crafting_recipe/roguetown/engineering/ramrod
+	name = "bombard ramrod"
+	category = "Explosives"
+	result = /obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge
+	reqs = list(/obj/item/rogueweapon/woodstaff/quarterstaff = 1, /obj/item/natural/cloth = 2)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/engineering/palantir
+	name = "bombard targeting palantir"
+	category = "Explosives"
+	result = /obj/item/rogueweapon/palantir
+	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/ingot/bronze = 1, /obj/item/paper = 2, /obj/item/rogueore/cinnabar = 1)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 6 // self explanatory why

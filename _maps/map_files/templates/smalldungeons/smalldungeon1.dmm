@@ -36,14 +36,14 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dungeon1)
 "aY" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "bc" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave/dungeon1)
 "bd" = (
@@ -116,7 +116,7 @@
 	dir = 10;
 	icon_state = "tablewood2"
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/item/grown/log/tree/stick,
 /obj/item/natural/bundle/fibers,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
@@ -188,7 +188,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "dA" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -203,7 +203,7 @@
 /area/rogue/under/cave/dungeon1)
 "el" = (
 /obj/structure/closet/crate/chest/crafted,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -246,7 +246,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "fg" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -390,7 +390,7 @@
 /area/rogue/under/cave/dungeon1)
 "jr" = (
 /obj/structure/closet/crate/drawer,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "jt" = (
@@ -415,7 +415,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "kp" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "ks" = (
@@ -527,7 +527,7 @@
 /area/rogue/under/cave/dungeon1)
 "nm" = (
 /obj/structure/rack/rogue/shelf/big,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "nr" = (
@@ -671,7 +671,7 @@
 /area/rogue/under/cave/dungeon1)
 "pF" = (
 /obj/structure/rack/rogue/shelf/big,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -682,8 +682,8 @@
 /area/rogue/under/cave/dungeon1)
 "pK" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/bubblegum,
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "pN" = (
@@ -761,7 +761,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "rC" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/bookcase,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -844,7 +844,7 @@
 /area/rogue/under/cave/dungeon1)
 "tS" = (
 /obj/structure/closet/crate/chest/crafted,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /turf/open/floor/rogue/blocks,
@@ -862,12 +862,12 @@
 /obj/item/chair/rogue/crafted{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "us" = (
 /obj/structure/fluff/statue/knightalt/r,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "uv" = (
@@ -899,7 +899,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "uT" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/rack/rogue/shelf/big,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/blocks,
@@ -1077,7 +1077,7 @@
 /area/rogue/under/cave/dungeon1)
 "yL" = (
 /obj/structure/bookcase,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -1100,7 +1100,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dungeon1)
 "zn" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "zr" = (
@@ -1210,11 +1210,11 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave/dungeon1)
 "Bw" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "BE" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/table/wood{
 	dir = 10;
 	icon_state = "tablewood2"
@@ -1225,7 +1225,7 @@
 /area/rogue/under/cave/dungeon1)
 "BI" = (
 /obj/structure/bed/rogue/inn/hay,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "BP" = (
@@ -1295,7 +1295,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "CW" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -1307,7 +1307,7 @@
 /area/rogue/under/cave/dungeon1)
 "Dl" = (
 /obj/structure/bookcase,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Dr" = (
@@ -1334,7 +1334,7 @@
 /area/rogue/under/cave/dungeon1)
 "DC" = (
 /obj/structure/closet/crate/roguecloset/inn/chest,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
 /turf/open/floor/rogue/blocks,
@@ -1358,7 +1358,7 @@
 	dir = 10
 	},
 /obj/item/paper/scroll,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "DR" = (
@@ -1380,7 +1380,7 @@
 /area/rogue/under/cave/dungeon1)
 "Ey" = (
 /obj/structure/fluff/statue/gargoyle,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave/dungeon1)
 "EB" = (
@@ -1423,8 +1423,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "EW" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "EZ" = (
@@ -1459,7 +1459,7 @@
 /area/rogue/under/cave/dungeon1)
 "FH" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -1470,7 +1470,7 @@
 /area/rogue/under/cave/dungeon1)
 "Gh" = (
 /obj/structure/closet/crate/roguecloset/inn/south,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
 /turf/open/floor/rogue/blocks,
@@ -1509,8 +1509,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "GI" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/blood/old,
 /obj/structure/closet/crate/roguecloset/dark,
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
 /turf/open/floor/rogue/blocks,
@@ -1561,7 +1561,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Il" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/dungeon1)
 "Iu" = (
@@ -1579,11 +1579,11 @@
 /obj/item/grown/log/tree/stick,
 /obj/structure/table/wood/crafted,
 /obj/item/rogueweapon/stoneaxe/woodcut,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Iy" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/roguemap/hauntpile,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -1602,7 +1602,7 @@
 /area/rogue/under/cave/dungeon1)
 "IQ" = (
 /obj/structure/closet/crate/roguecloset/inn/chest,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "IX" = (
@@ -1819,7 +1819,7 @@
 /area/rogue/under/cave/dungeon1)
 "NK" = (
 /obj/structure/bookcase,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "NL" = (
@@ -1841,11 +1841,11 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Of" = (
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
 /turf/closed/wall/mineral/rogue/decostone/mossy/red,
 /area/rogue/under/cave/dungeon1)
 "Ov" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/closet/crate/roguecloset/inn/chest,
 /obj/effect/spawner/lootdrop/roguetown/dungeon,
 /turf/open/floor/rogue/blocks,
@@ -1991,8 +1991,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Ts" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave/dungeon1)
 "Tt" = (
@@ -2019,8 +2019,8 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "Ua" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -2081,7 +2081,7 @@
 /area/rogue/under/cave/dungeon1)
 "Vk" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/decal/cleanable/blood/bubblegum,
+/obj/effect/decal/cleanable/blood/old,
 /mob/living/carbon/human/species/skeleton/npc/medium,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
@@ -2100,7 +2100,7 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/under/cave/dungeon1)
 "Vu" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/structure/fluff/walldeco/rpainting,
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave/dungeon1)
@@ -2277,13 +2277,13 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "ZH" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "ZL" = (
 /obj/structure/rack/rogue/shelf/big,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)

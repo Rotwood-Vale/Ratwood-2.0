@@ -14,6 +14,10 @@
 	soundloop.start()
 	. = ..()
 
+/obj/structure/boatbell/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
 /obj/structure/boatbell/attack_hand(mob/user)
 	if(world.time < last_ring + 50)
 		return

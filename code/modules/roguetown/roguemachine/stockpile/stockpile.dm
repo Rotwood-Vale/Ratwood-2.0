@@ -19,6 +19,7 @@
 
 /obj/structure/roguemachine/stockpile/Destroy()
 	SSroguemachine.stock_machines -= src
+	QDEL_NULL(withdraw_tab)
 	return ..()
 
 /obj/structure/roguemachine/stockpile/examine(mob/user)
