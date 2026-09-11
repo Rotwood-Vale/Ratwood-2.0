@@ -109,9 +109,10 @@
 	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, 4, TRUE) //I lurk in the shadows...
 	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 4, TRUE) //Crafty
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE) // Escape routes
-	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 3, TRUE) //Make your own tinkering tools and smokebombs
+	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE) //Make your own tinkering tools and smokebombs
 	H.adjust_skillrank_up_to(/datum/skill/craft/smelting, 3, TRUE) //Just so your smelted ingots aren't ruined
-	H.change_stat(STATKEY_INT, 3)
+	H.change_stat(STATKEY_CON, 1)
+	H.change_stat(STATKEY_INT, 2)
 	H.change_stat(STATKEY_WIL, 3)
 	H.change_stat(STATKEY_PER, 3)
 	wretch_select_bounty(H)
@@ -129,6 +130,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 1, TRUE)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //Trust the plan.
+	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) // You LITERALLY get no weapon skills. You're throwing shit at enemies.
 	H.change_stat(STATKEY_SPD, 2)
 	H.change_stat(STATKEY_WIL, 1)
