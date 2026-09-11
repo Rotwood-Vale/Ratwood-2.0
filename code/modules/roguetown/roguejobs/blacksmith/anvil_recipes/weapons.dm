@@ -58,6 +58,10 @@
 	req_bar = /obj/item/ingot/blacksteel
 	craftdiff = SKILL_LEVEL_MASTER
 
+/datum/anvil_recipe/weapons/gold
+	abstract_type = /datum/anvil_recipe/weapons/gold
+	req_bar = /obj/item/ingot/gold
+	craftdiff = SKILL_LEVEL_LEGENDARY
 
 // DECREPIT/ANCIENT ALLOY
 
@@ -445,6 +449,35 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
 
+/datum/anvil_recipe/weapons/steel/daggerrondel
+	name = "Rondel Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+
+/datum/anvil_recipe/weapons/steel/daggerkukri
+	name = "Kukri Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/kukri
+
+/datum/anvil_recipe/weapons/steel/daggerkris
+	name = "Kris Dagger, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/kris
+
+/datum/anvil_recipe/weapons/steel/combatknife
+	name = "Combat Knife, Steel"
+	req_blade = /obj/item/blade/steel_knife
+	created_item = /obj/item/rogueweapon/huntingknife/combat
+
+/datum/anvil_recipe/weapons/steel/combatknifemesser
+	name = "Combat Knife, Messer, Steel (+1 Steel)"
+	req_blade = /obj/item/blade/steel_knife
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/rogueweapon/huntingknife/combat/messer
+
 /datum/anvil_recipe/weapons/steel/katar
 	name = "Katar, Steel"
 	req_blade = /obj/item/blade/steel_knife
@@ -576,12 +609,6 @@
 	req_blade = /obj/item/blade/steel_axe
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/rogueweapon/stoneaxe/battle
-
-/datum/anvil_recipe/weapons/steel/combatknife
-	name = "Combat Knife, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_knife
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/huntingknife/combat
 
 /datum/anvil_recipe/weapons/steel/mace
 	name = "Mace, Steel (+1 Steel)"
@@ -749,6 +776,52 @@
 	additional_items = list(/obj/item/rogueweapon/sword/long)
 	created_item = /obj/item/rogueweapon/sword/long/dec
 
+/datum/anvil_recipe/weapons/decorated/axe
+	name = "Axe, Decorated (+1 Steel Axe)"
+	additional_items = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/decorated
+
+/datum/anvil_recipe/weapons/decorated/swordsil
+	name = "Elegant Axesword, Silvered (+1 Silver Arming Sword)"
+	additional_items = list(/obj/item/rogueweapon/sword/silver)
+	created_item = /obj/item/rogueweapon/sword/silver/decorated
+
+/datum/anvil_recipe/weapons/decorated/macesil
+	name = "Elegant Mace, Silvered (+1 Silver Mace)"
+	additional_items = list(/obj/item/rogueweapon/mace/steel/silver)
+	created_item = /obj/item/rogueweapon/mace/steel/silver/decorated
+
+// GOLD
+
+/datum/anvil_recipe/weapons/gold/arming
+	name = "Golden Arming Sword (+2 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/rogueweapon/sword/gold
+
+/datum/anvil_recipe/weapons/gold/mace
+	name = "Golden Mace (+2 Gold, +2 Silk)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
+	created_item = /obj/item/rogueweapon/mace/gold
+
+/datum/anvil_recipe/weapons/gold/shield
+	name = "Golden Shield (+3 Gold, +1 Fur)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/fur)
+	created_item = /obj/item/rogueweapon/shield/tower/metal/gold
+
+/datum/anvil_recipe/weapons/gold/kingarming
+	name = "Golden Arming Sword, Royal (+2 Gold, +2 Silk, +1 Dorpel)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
+	created_item = /obj/item/rogueweapon/sword/gold/king
+
+/datum/anvil_recipe/weapons/gold/kingmace
+	name = "Golden Mace, Royal (+2 Gold, +2 Silk, +1 Dorpel)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
+	created_item = /obj/item/rogueweapon/mace/gold/king
+
+/datum/anvil_recipe/weapons/gold/kingshield
+	name = "Golden Shield, Royal (+3 Gold, +1 Fur, +1 Dorpel)"
+	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/fur, /obj/item/roguegem/diamond)
+	created_item = /obj/item/rogueweapon/shield/tower/metal/gold/king
 
 // SILVER
 

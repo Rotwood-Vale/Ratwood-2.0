@@ -165,6 +165,29 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
+/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+	name = "golden helmet"
+	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
+	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
+	icon_state = "goldbarbute"
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1 //Prevents resmelting to easily recreate.
+	grid_height = 96 //Prevents 'armorstacking'. That, and it's like.. carrying a golden watermelon.
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
+	name = "royal golden helmet"
+	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
+	with a besilked arming cap. The dorpeled crown atop its brow invokes authority, be it misbegotten or endowed."
+	icon_state = "goldbarbute_crown"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	unenchantable = TRUE
+
 /obj/item/clothing/head/roguetown/helmet/heavy/knight
 	name = "knight's helmet"
 	desc = "A noble knight's helm in the current style popular with nobility. Add a feather to show the colors of your family or allegiance."
@@ -230,6 +253,55 @@
 	desc = "A noble knight's helm made of iron."
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
+	name = "golden knight's armet"
+	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
+	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
+	icon_state = "goldknight"
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1 //Prevents resmelting to easily recreate.
+	grid_height = 96 //Prevents 'armorstacking'. That, and it's like.. carrying a golden watermelon.
+	grid_width = 96
+	unenchantable = TRUE
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/king
+	name = "royal golden armet"
+	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
+	with a besilked arming cap. The dorpeled crown atop its brow invokes authority, be it misbegotten or endowed."
+	icon_state = "goldknight_crown"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	unenchantable = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle
 	name = "slitted kettle helm"
@@ -471,6 +543,46 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/psy/greatplume
+	name = "psydonic armet with greatplume"
+	desc = "An ornate helmet, whose visor has been bound shut with blacksteel chains. The Order of Saint Eora often decorates \
+	these armets with flowers - not only as a lucky charm gifted to them by fair maidens and family, but also as a vibrant reminder \
+	that 'happiness has to be fought for.' This particular armet has a wider couplet, for accepting greatplumes."
+	icon_state = "psyknight"
+	item_state = "psyknight"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	adjustable = CAN_CADJUST
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	smeltresult = /obj/item/ingot/silver
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+	smelt_bar_num = 1
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron/greatplume/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/iron/greatplume/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm
 	name = "inquisitorial ordinator's helmet"
 	desc = "A design suggested by a Grenzelhoftian smith, an avid follower of Saint Abyssor - implying to base it on the templar's greathelm design, and it was proved worthy of usage: A steel casket with thin slits that allow for deceptively clear vision. The tainted will drown on the blood you will bring their way."
@@ -539,6 +651,46 @@
 	adjustable = CAN_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 	smeltresult = /obj/item/ingot/silver
+
+/obj/item/clothing/head/roguetown/helmet/heavy/psybucket/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		if(choice in GLOB.pridelist)
+			detail_tag = "_detailp"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+	if(istype(W, /obj/item/clothing/head/roguetown/veiled) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Veil") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/psybucket/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
 	name = "psydonic sallet"
@@ -687,11 +839,23 @@
 	REMOVE_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
 	to_chat(user, span_red("..and like that, the bascinet's visor goes dormant once more - a strange pressure, relieved from your jaw."))
 
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
+	name = "psydonic volfskulle bascinet"
+	desc = "An Otavan re-creation of the generic volfskulle bascinet. Far more protective than a muzzle, that's for certain."
+	icon_state = "psyhelm_s"
+	item_state = "psyhelm_s"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x40/head.dmi'
+	worn_x_dimension = 32
+	worn_y_dimension = 40
+	adjustable = CANT_CADJUST
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	smeltresult = /obj/item/ingot/silver
+
 /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm
 	name = "woad elven helm"
 	desc = "An assembly of woven trunk, kept alive by ancient song, now twisted and warped for battle and scorn."
 	body_parts_covered = FULL_HEAD | NECK
-	armor = list("blunt" = 100, "slash" = 20, "stab" = 110, "piercing" = 40, "fire" = 0, "acid" = 0)//Resistant to blunt & stab, but very weak to slash.
+	armor = ARMOR_BLACKOAK //Resistant to blunt & stab, but very weak to slash.
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
@@ -728,6 +892,18 @@
 	H.electrocute_act(30, src)
 	H.mob_timers["kneestinger"] = world.time
 	to_chat(H, span_warning("[name] rejects my grasp — only the Treefather's faithful may bear such a gift!"))
+
+/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light
+	name = "woad elven barbute"
+	desc = "A helm of woven trunk, kept alive by ancient song and crowned with living leaves of endless verdure. Lighter and more pliant than it's fuller counterpart, it bends with the will of it's bearer, never truly severed from the living grove."
+	body_parts_covered = HEAD|HAIR|NOSE|EARS|NECK
+	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
+	icon_state = "welfheadalt"
+	item_state = "welfheadalt"
+	block2add = null
+	max_integrity = ARMOR_INT_HELMET_IRON
+	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth
 	name = "froggemund helmet"

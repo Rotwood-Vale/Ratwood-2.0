@@ -902,6 +902,8 @@
 	name = "Stigmata"
 	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
+	force = 25
+	force_wielded = 25
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
 	AddComponent(\
@@ -918,7 +920,8 @@
 	name = "psydonic halberd"
 	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
 	icon_state = "silverhalberd"
-	force = 10//Use the spear instead if you're going to one-hand this.
+	force = 15
+	force_wielded = 25
 	minstr = 11
 	wdefense = 7
 	is_silver = TRUE
@@ -1297,6 +1300,8 @@
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
+	force = 25
+	force_wielded = 25
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
@@ -1917,13 +1922,14 @@
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: It is pretty purely a two-handed weapon. In one hand it's a bit clumsy.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
-	alt_intents = list(null)//can't be alt-gripped. Ought to compensate for that.
+	alt_intents = list(null)//can't be alt-gripped. Sharpness is greater to compensate.
 	name = "elven curveblade"
 	desc = "The Elven Curveblade is a traditional weapon, its practice as much a dance as a method of death. Flowing like the water's current, let its path lead to your enemy's throat."
 	icon_state = "elfcurveblade"
 	wlength = WLENGTH_LONG//less reach than greatsword!
 	minstr = 7//lighter
 	wdefense = 8//better defence than greatsword
+	max_blade_int = 350 // 50 more than greatsword.
 	sellprice = 60
 
 
@@ -1931,4 +1937,6 @@
 	name = "elven swordspear"
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
+	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60
