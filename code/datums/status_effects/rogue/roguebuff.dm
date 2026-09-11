@@ -1613,19 +1613,19 @@
 /datum/status_effect/buff/journey_ending
 	id = "journey_ending"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
-	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2)
+	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 2)
 	duration = -1
 
 /datum/status_effect/buff/journey_end
 	id = "journey_end"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
-	effectedstats = list(STATKEY_STR = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = 2)
+	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 5, STATKEY_WIL = 2, STATKEY_CON = 2)
 	duration = -1
 
 /datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
 	id = "journey_end_final"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
-	effectedstats = list(STATKEY_STR = 5, STATKEY_SPD = 6, STATKEY_WIL = 4, STATKEY_CON = 4)
+	effectedstats = list(STATKEY_STR = 5, STATKEY_SPD = 8, STATKEY_WIL = 4, STATKEY_CON = 4)
 	duration = -1
 
 /datum/status_effect/buff/stagehands_silence
