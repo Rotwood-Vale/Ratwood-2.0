@@ -140,9 +140,8 @@
 	return ..()
 
 /datum/status_effect/debuff/bleeding/on_remove()
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.remove_status_effect(/datum/status_effect/buff/journey_ending)
+	if(HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.remove_status_effect(/datum/status_effect/buff/journey_ending)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
