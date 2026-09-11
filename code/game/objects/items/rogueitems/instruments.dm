@@ -752,7 +752,9 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Forever Casted Away" = 'sound/music/instruments/harpsichord (2).ogg',
 	"Dark Pits of Ferentia" = 'sound/music/instruments/harpsichord (3).ogg',
 	"Illuminating Hope" = 'sound/music/instruments/harpsichord (4).ogg',
-	"Our World's Deluge" = 'sound/music/instruments/harpsichord (5).ogg')
+	"Our World's Deluge" = 'sound/music/instruments/harpsichord (5).ogg',
+	"Walking Through Ruins" = 'sound/music/instruments/harpsichord (6).ogg',
+	"March of Life" = 'sound/music/instruments/harpsichord (7).ogg')
 
 /obj/item/rogue/instrument/hurdygurdy
 	name = "hurdy-gurdy"
@@ -995,4 +997,4 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Merry Glad to See You" = 'sound/music/instruments/xylixaphone (4).ogg',
 	"Playing the Fool" = 'sound/music/instruments/xylixaphone (5).ogg',
 	"A-Minor Inconvenience" = 'sound/music/instruments/xylixaphone (6).ogg',
-	"Chime Against Humanity" = 'sound/music/instruments/xylixaphone (7).ogg')
+	"Chime Against Humenity" = 'sound/music/instruments/xylixaphone (7).ogg')
