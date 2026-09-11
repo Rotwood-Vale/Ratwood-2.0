@@ -288,3 +288,14 @@
   - rscadd: Add velvet dress and noble dress crafting recipes.
   - balance: The Tailor now gets the "Efficient Weaver" trait exclusive to the job,
       allowing them to make cloth on a loom from 1 fibers instead of 2.
+2026-09-11:
+  maaacha:
+  - rscadd: Var on jobs for checking if they should have pref virtues
+  - bugfix: Made it so that skeletons no longer get pref virtues
+  wikimody:
+  - rscadd: Visseir stasis now remeber whether you were up or down when spell was
+      cast
+  - balance: 'INCREDIBLE, IMPROPABLE, IMPOSIBLE ABSOLVER UPSCALE: +1 miracle skill'
+  zeroisthebiggay:
+  - bugfix: skeleton voicepacks
+  - bugfix: skeleton vocal barks

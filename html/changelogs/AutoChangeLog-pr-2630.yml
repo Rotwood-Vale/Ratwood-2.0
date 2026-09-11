@@ -1,4 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Visseir stasis now remeber whether you were up or down when spell was cast"
