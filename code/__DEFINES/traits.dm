@@ -316,6 +316,9 @@
 #define TRAIT_HOMESTEAD_EXPERT "Expert Homesteader" // Farming, Mining, Cooking, Fishing, Butchering, Lumberjacking (All Labor), Pottery. Skincraft + Sewing = Jman.
 #define TRAIT_SELF_SUSTENANCE "Self-Sustenance" // Unlocks all gated crafting skills to Jman. Wretches & Antags only.
 
+// Additional trait given to the Tailor job, allowing it to weave cloth on a loom from 1 fibers instead of 2.
+#define TRAIT_EFFICIENT_WEAVER "Efficient Weaver"
+
 // Weaponry Traits
 // Intended for very powerful, very specific or gimmicky weapon skills.
 // Firearms, as an example, is one of them. We do not let someone get above JMAN without it.
@@ -564,6 +567,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ASSASSIN = span_warning("My soul has been tainted by foul spirits, through them I honor my pact."),
 	TRAIT_MASTER_CARPENTER = span_warning("I've been trained to make the most of wood"),
 	TRAIT_MASTER_MASON = span_warning("I've been trained to make the most of stone"),
+	TRAIT_EFFICIENT_WEAVER = span_info("I can weave cloth on a loom more efficiently than others can."),
 	TRAIT_EQUESTRIAN = span_warning("I am a capable rider. My mount is an extension of me."),
 	TRAIT_BLOODPOOL_BORN = span_bloody("I emerged from the bloodpool of a Vampire Lord. There is no possibility for redemption for me in this land."),
 	TRAIT_ROYALSERVANT = span_greentext("I've been serving the royal family for long enough to know their exotic tastes."),
@@ -776,6 +780,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 #define TRAIT_SANDSTORM_GOGGLES "sandstorm_eyeprotection"
+#define TRAIT_NO_VOICEPACK_OVERRIDE "DisablePrefVoicepacks" //Used for roles that should only be using their voicepacks added. MAKE sure you have a Fem+Masq one.
 
 //bodypart traits
 #define TRAIT_PARALYSIS	"paralysis" //Used for limb-based paralysis and full body paralysis

@@ -49,8 +49,10 @@
 	name = "Skeleton"
 	real_name = "Skeleton"
 	voice_type = VOICE_TYPE_MASC //So that "Unknown Man" properly substitutes in with face cover
+	set_bark(pick("sans", "papyrus")) // Hilarious
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
