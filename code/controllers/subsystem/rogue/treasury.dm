@@ -732,7 +732,7 @@ SUBSYSTEM_DEF(treasury)
 		return POLL_TAX_CAT_NOBLE
 	if(H.job in GLOB.inquisition_positions)
 		return POLL_TAX_CAT_INQUISITION
-	if((H.job in GLOB.church_positions) || HAS_TRAIT(H, TRAIT_AGENT_CHURCH))
+	if((H.job in GLOB.church_positions) || HAS_TRAIT(H, TRAIT_AGENT_CHURCH) || H.job == "Churchling")
 		return POLL_TAX_CAT_CLERGY
 	if((H.job in GLOB.courtier_positions) || H.job == "Court Agent")
 		return POLL_TAX_CAT_COURTIER
