@@ -442,15 +442,15 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/cooldown
 
 /obj/item/corruptedheart/attack_self(mob/user)
-	if(!length(GLOB.zizo_targets))
-		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
-		return
 	if(world.time < cooldown)
 		to_chat(user, span_warning("Too soon!"))
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	if(!ishuman(user))
+		return
+	if(!length(GLOB.zizo_targets) && !length(H.zizo_targets))
+		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
 		return
 	var/mob/living/carbon/human/H = user
 	var/mob/living/carbon/human/prey
