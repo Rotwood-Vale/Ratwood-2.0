@@ -135,9 +135,8 @@
 	needs_processing = FALSE
 
 /datum/status_effect/debuff/bleeding/on_apply() //mistwalker shitcode, scaling buff as they bleed out
-	if (!HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		return ..()
-	owner.apply_status_effect(/datum/status_effect/buff/journey_ending)
+	if(HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.apply_status_effect(/datum/status_effect/buff/journey_ending)
 	return ..()
 
 /datum/status_effect/debuff/bleeding/on_remove()
