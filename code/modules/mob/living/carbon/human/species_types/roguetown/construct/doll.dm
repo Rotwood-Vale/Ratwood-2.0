@@ -106,6 +106,7 @@
 		/datum/body_marking/diagonal_eyes,
 		/datum/body_marking/wide_eyes,
 		/datum/body_marking/stripes,
+		/datum/body_marking/plain,
 	)
 
 /datum/species/construct/metal/porcelain/check_roundstart_eligible()
