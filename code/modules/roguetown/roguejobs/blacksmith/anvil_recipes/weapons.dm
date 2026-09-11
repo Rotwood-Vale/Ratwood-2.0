@@ -1241,9 +1241,9 @@
 	createditem_num = 5
 
 /datum/anvil_recipe/weapons/blacksteel/slingbullet
-	name = "Sling Bullet, Blacksteel (x5)"
+	name = "Sling Bullet, Blacksteel (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
-	createditem_num = 5
+	createditem_num = 10
 
 /datum/anvil_recipe/weapons/blacksteel/shield
 	name = "Blacksteel Shield (+2 Blacksteel, +1 Rontz, +1 Silk)"
