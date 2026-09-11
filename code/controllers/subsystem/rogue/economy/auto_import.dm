@@ -11,6 +11,10 @@
 	/// Steward-settable purse floor for auto-import. Auto-import skips a good if
 	/// spending on it would drop the Crown's Purse below this.
 	var/auto_import_purse_floor = AUTO_IMPORT_PURSE_FLOOR_DEFAULT
+	/// Day auto-import bookkeeping was last rolled over for. -1 = never rolled yet.
+	var/auto_import_current_day = -1
+	/// Lines accumulated across all of today's 6-minute auto-import ticks, flushed to history on rollover.
+	var/list/auto_import_today_lines = list()
 
 /datum/controller/subsystem/treasury/proc/is_auto_import_active(good_id)
 	if(!good_id)
@@ -46,30 +50,35 @@
 /datum/controller/subsystem/treasury/proc/set_auto_import_purse_floor(amount)
 	auto_import_purse_floor = CLAMP(round(amount), 0, 99999)
 
-/// Hooked from SSeconomy.daily_tick() after produces_today is reset and events/blockades
-/// have rolled, so auto-import sees fresh daily pace and current price_mods.
+/// Called every TREASURY_TICK_AMOUNT (6 minutes) from fire(), alongside auto_export().
+/// Rolls the daily spend/history bucket over on day change, then always attempts a batch
+/// top-up pass this tick.
 /datum/controller/subsystem/treasury/proc/run_auto_import_tick()
-	auto_import_daily_spent = 0
+	if(auto_import_current_day != GLOB.dayspassed)
+		if(auto_import_current_day != -1)
+			auto_import_daily_history += list(list(
+				"day" = auto_import_current_day,
+				"spent" = auto_import_daily_spent,
+				"lines" = auto_import_today_lines,
+			))
+			if(length(auto_import_daily_history) > AUTO_IMPORT_HISTORY_DAYS)
+				auto_import_daily_history.Cut(1, length(auto_import_daily_history) - AUTO_IMPORT_HISTORY_DAYS + 1)
+		auto_import_current_day = GLOB.dayspassed
+		auto_import_daily_spent = 0
+		auto_import_today_lines = list()
+
 	dirty_auto_import_view()
-	var/list/today_lines = list()
 
 	for(var/good_id in AUTO_IMPORT_ESSENTIALS)
 		if(auto_import_disabled[good_id])
 			continue
-		process_auto_import_for_good(good_id, today_lines)
+		process_auto_import_for_good(good_id, auto_import_today_lines)
 
 	for(var/good_id in auto_import_standing)
 		if(good_id in AUTO_IMPORT_ESSENTIALS)
 			continue
-		process_auto_import_for_good(good_id, today_lines)
+		process_auto_import_for_good(good_id, auto_import_today_lines)
 
-	auto_import_daily_history += list(list(
-		"day" = GLOB.dayspassed,
-		"spent" = auto_import_daily_spent,
-		"lines" = today_lines,
-	))
-	if(length(auto_import_daily_history) > AUTO_IMPORT_HISTORY_DAYS)
-		auto_import_daily_history.Cut(1, length(auto_import_daily_history) - AUTO_IMPORT_HISTORY_DAYS + 1)
 	dirty_auto_import_view()
 
 /datum/controller/subsystem/treasury/proc/process_auto_import_for_good(good_id, list/today_lines)

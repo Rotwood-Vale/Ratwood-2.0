@@ -191,7 +191,8 @@ SUBSYSTEM_DEF(treasury)
 				VB.update_icon()
 
 		auto_export()
-
+		run_auto_import_tick()
+		
 /datum/controller/subsystem/treasury/proc/tick_rural_tax()
 	if(!discretionary_fund)
 		return
