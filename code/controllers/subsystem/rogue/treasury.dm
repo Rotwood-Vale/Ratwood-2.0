@@ -744,10 +744,10 @@ SUBSYSTEM_DEF(treasury)
 		return POLL_TAX_CAT_MERCHANT
 	if((H.job in list("Innkeeper", "Head Physician", "Apothecary", "Bathmaster", "Magicians Associate")) || HAS_TRAIT(H, TRAIT_RESIDENT))
 		return POLL_TAX_CAT_BURGHER
-	if(H.job in GLOB.wanderer_positions)
-		return POLL_TAX_CAT_ADVENTURER
 	if(H.job == "Mercenary")
 		return POLL_TAX_CAT_MERCENARY
+	if(H.job in GLOB.wanderer_positions)
+		return POLL_TAX_CAT_ADVENTURER
 	if((H.job in GLOB.peasant_positions) || (H.job in GLOB.youngfolk_positions))
 		return POLL_TAX_CAT_PEASANT
 	return null

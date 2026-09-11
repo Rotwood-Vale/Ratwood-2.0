@@ -88,7 +88,10 @@
 					record_round_statistic(STATS_MAMMONS_DEPOSITED, P.get_real_price())
 				qdel(P)
 				playsound(src, 'sound/misc/coininsert.ogg', 100, FALSE, -1)
-				SStreasury.clear_poll_tax_debt(H)
+				var/datum/fund/account = SStreasury.get_account(H)
+				var/owed = SStreasury.poll_tax_owed[H] || 0
+				if(account && owed > 0 && account.balance >= owed)
+					SStreasury.clear_poll_tax_debt(H)
 				return
 
 		if(istype(P, /obj/item/coveter))

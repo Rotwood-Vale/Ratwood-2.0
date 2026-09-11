@@ -62,11 +62,17 @@
 		list("good" = TRADE_GOOD_BLACKBERRY, "qty_min" = BULK_QTY_SMALL_MIN, "qty_max" = BULK_QTY_SMALL_MAX, "price_mod" = BULK_PRICE_PREMIUM),
 	)
 	victualling_fresh_pool = list(
-		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/pie, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
-		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/preserved, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_FISH),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/tomatoplate, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_FISH),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/meattomatoplate, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffedcheese, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_FISH),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/ccake, "qty_min" = VICTUALLING_QTY_SMALL_MIN, "qty_max" = VICTUALLING_QTY_SMALL_MAX, "price" = VICTUALLING_PRICE_LUXURY),
 	)
 	victualling_preserved_pool = list(
 		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/crackerscooked, "qty_min" = VICTUALLING_QTY_HUGE_MIN, "qty_max" = VICTUALLING_QTY_HUGE_MAX, "price" = VICTUALLING_PRICE_HARDTACK),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/cheesebun, "qty_min" = VICTUALLING_QTY_LARGE_MIN, "qty_max" = VICTUALLING_QTY_LARGE_MAX, "price" = VICTUALLING_PRICE_SIMPLE),
+		list("typepath" = /obj/item/reagent_containers/food/snacks/rogue/applebread, "qty_min" = VICTUALLING_QTY_MEDIUM_MIN, "qty_max" = VICTUALLING_QTY_MEDIUM_MAX, "price" = VICTUALLING_PRICE_FISH),
 	)
 	victualling_drinks_pool = list(
 		list("recipe" = /datum/brewing_recipe/beer, "keg_mult" = 2),

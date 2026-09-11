@@ -4,6 +4,14 @@
 			return B
 	return null
 
+/datum/controller/subsystem/economy/proc/find_blockade_for_threat_region(threat_region_id)
+	if(!threat_region_id)
+		return null
+	for(var/datum/blockade/B as anything in GLOB.active_blockades)
+		if(B.threat_region_name == threat_region_id)
+			return B
+	return null
+
 /datum/controller/subsystem/economy/proc/pick_blockade_faction_for(datum/threat_region/TR)
 	if(!TR || !length(TR.faction_weights))
 		return null
@@ -29,6 +37,8 @@
 			continue
 		if(ER.day_last_cleared >= 0 && (GLOB.dayspassed - ER.day_last_cleared) < BLOCKADE_RECLEAR_COOLDOWN)
 			continue
+		if(find_blockade_for_threat_region(ER.threat_region_id))
+			continue
 		var/datum/threat_region/TR = SSregionthreat.get_region(ER.threat_region_id)
 		if(!TR)
 			continue
@@ -52,6 +62,8 @@
 	if(!ER)
 		return null
 	if(find_blockade_for_region(region_id))
+		return null
+	if(find_blockade_for_threat_region(ER.threat_region_id))
 		return null
 	if(!SSquestpool.has_landmark_for_region(QUEST_BLOCKADE_DEFENSE, ER.threat_region_id))
 		return null
