@@ -105,7 +105,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\
 
-#define RACES_FIGHTING_CONSTRUCT
+#define RACES_FIGHTING_CONSTRUCT \
 	/datum/species/construct/metal,\
 
 #define RACES_OOZE \
