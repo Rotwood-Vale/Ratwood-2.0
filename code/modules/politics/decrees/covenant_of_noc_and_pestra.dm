@@ -12,14 +12,14 @@
 	/// Jobs covered by the healing half of the covenant (Pestra's mantle).
 	var/static/list/apothecary_jobs = list(
 		"Apothecary",
-		"Court Physician", 
+		"Head Physician", 
 	)
 	var/static/list/wage_floors = list(
 		"Court Magician" = 40,
 		"Archivist" = 20,
 		"Magicians Associate" = 10,
-		"Court Physician" = 80,
-		"Apothecary" = 40,
+		"Head Physician" = 40,
+		"Apothecary" = 15,
 	)
 	flavor_text = {"This Covenant of Noc & Pestra, sworne under the watchful eye of Noc and the merciful hand of Pestra, witnesseth that the scholars of the University and the healers of the Apothecary shall bear no greater levy than the lightest measure upon their heads, and shall be paid from the Crown's purse an honest minimum of their due whilst this Covenant standeth.
 

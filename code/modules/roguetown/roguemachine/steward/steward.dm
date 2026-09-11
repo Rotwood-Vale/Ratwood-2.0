@@ -67,8 +67,8 @@
 	daily_payments["Veteran"] = 20
 	daily_payments["Squire"] = 10
 //courtiers
-	daily_payments["Head Physician"] = 20 //Doctors
-	daily_payments["Apothecary"] = 10 //paid by the keep to heal people, would make sense.
+	daily_payments["Head Physician"] = 40 //Doctors
+	daily_payments["Apothecary"] = 15 //paid by the keep to heal people, would make sense.
 	daily_payments["Court Magician"] = 40 //University
 	if(SSmapping.current_map.map_name == "Desert Town")
 		daily_payments["Palace Chaplain"] = 20
