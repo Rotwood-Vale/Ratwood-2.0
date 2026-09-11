@@ -105,6 +105,9 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\
 
+#define RACES_FIGHTING_CONSTRUCT
+	/datum/species/construct/metal,\
+
 #define RACES_OOZE \
 	/datum/species/ooze,\
 
@@ -114,7 +117,7 @@ Balloon Alert / Floating Text defines
 
 #define RACES_NO_CONSTRUCT list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED)
 
-#define RACES_SHUNNED_UP_PLUS_CONSTRUCT list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)
+#define RACES_SHUNNED_UP_PLUS_CONSTRUCT list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_FIGHTING_CONSTRUCT)
 
 #define RACES_SHUNNED_UP list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED)
 
