@@ -925,7 +925,7 @@
 				to_chat(H, span_warning("That cargo is no longer on offer."))
 				return TRUE
 			var/datum/trade_good/TG = GLOB.trade_goods[good_id]
-			if(!TG || !TG.item_type)
+			if(!TG || (!TG.item_type && !TG.purchase_item_type))
 				to_chat(H, span_warning("That cargo cannot be handled at this pier."))
 				return TRUE
 			qty = min(qty, line["qty_target"] - line["qty_fulfilled"])
@@ -964,10 +964,13 @@
 				record_round_statistic(STATS_TAXES_EVADED, round(tariff_float))
 				tariff_evaded_here += round(tariff_float)
 			var/turf/T = get_turf(src)
+			var/spawn_type = TG.item_type || TG.purchase_item_type
 			for(var/i in 1 to qty)
-				var/obj/item/spawned = new TG.item_type(T)
+				var/obj/item/spawned = new spawn_type(T)
 				if(istype(spawned))
 					spawned.atc_sealed = TRUE
+					if(TG.reagent_type && TG.required_volume && spawned.reagents)
+						spawned.reagents.add_reagent(TG.reagent_type, TG.required_volume)
 			source_ship.favor_earned += gross
 			playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
 			to_chat(H, span_notice("You buy [qty] [TG.name] from [source_ship.ship_name] for [total_cost]m[tariff_active && tariff_float > 0 ? " (incl. [round(tariff_float)]m Crown duty)" : ""][kin_saving > 0 ? " (Kinship saved [kin_saving]m)" : ""]."))

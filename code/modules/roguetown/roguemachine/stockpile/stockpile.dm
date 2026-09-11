@@ -80,6 +80,15 @@
 	data["no_deposit"] = FALSE
 	data["title"] = ""
 	data["subtitle"] = ""
+	data["community_progress"] = 0
+	data["community_target"] = STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD
+	data["community_points"] = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/HU = user
+		var/datum/sleep_adv/SA = HU.mind?.sleep_adv
+		if(SA)
+			data["community_progress"] = SA.community_contribution_count
+			data["community_points"] = SA.community_status_points
 
 	var/list/rows = list()
 	for(var/datum/roguestock/stockpile/R in SStreasury.stockpile_datums)
@@ -261,6 +270,9 @@
 				if(sound == TRUE)
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				R.refresh_auto_price()
+				if(ishuman(H))
+					var/mob/living/carbon/human/HC = H
+					HC.mind?.sleep_adv?.add_community_contribution(bundle_amt)
 				var/amt = R.payout_price * bundle_amt
 				if(HAS_TRAIT(H, TRAIT_ROYAL_SUBSIDY))
 					SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Deposit: [R.name] by [H.real_name]"))
@@ -324,6 +336,9 @@
 				stock_announce("[R.name] has been stockpiled.")
 			if(sound == TRUE)
 				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+			if(ishuman(H))
+				var/mob/living/carbon/human/HC = H
+				HC.mind?.sleep_adv?.add_community_contribution(1)
 			if(amt)
 				if(HAS_TRAIT(H, TRAIT_ROYAL_SUBSIDY))
 					SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Deposit: [R.name] by [H.real_name]"))

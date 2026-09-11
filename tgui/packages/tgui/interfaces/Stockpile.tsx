@@ -67,6 +67,9 @@ type Data = {
   no_deposit: BooleanLike;
   title: string;
   subtitle: string;
+  community_progress: number;
+  community_target: number;
+  community_points: number;
 };
 
 type ActFn = (action: string, params?: Record<string, unknown>) => void;
@@ -98,7 +101,23 @@ const CharterChip = (props: { data: Data }) => {
     </span>
   );
 };
-
+const CommunityChip = (props: { data: Data }) => {
+  const { data } = props;
+  return (
+    <span
+      style={{
+        color: SEAL_GREEN,
+        fontWeight: 'bold',
+        fontSize: FONT_BODY,
+        fontFamily: SERIF,
+      }}
+      title="Every 40 units you deposit earns a point of community status - a bonus to your next dream's sleep points."
+    >
+      COMMUNITY STATUS {data.community_progress}/{data.community_target}
+      {data.community_points > 0 && ` (Status ${data.community_points})`}
+    </span>
+  );
+};
 const StockRowView = (props: {
   row: StockRow;
   data: Data;
@@ -332,6 +351,7 @@ export const Stockpile = () => {
               </span>
             )}
             <CharterChip data={data} />
+            <CommunityChip data={data} />
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px' }}>
               <button
                 type="button"
