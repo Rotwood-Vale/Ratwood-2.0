@@ -98,8 +98,6 @@
 	armor = ARMOR_ASCENDANT
 	icon_state = "zizoplategauntlets_med"
 
-
-
 /obj/item/clothing/gloves/roguetown/plate/medium/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
