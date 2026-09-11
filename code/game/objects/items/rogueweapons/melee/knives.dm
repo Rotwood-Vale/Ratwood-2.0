@@ -414,7 +414,7 @@
 
 // Heretical Knives
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo
+/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo 
 	name = "avantyne dagger"
 	desc = "It is tyme that you finally met your Lord. </br> The very moment of sacrifice; that imperceptable difference between a dagger's edge and a heart's chamber, crystallized into \
 	a scalpel of bleeding darksteel. In the hands of Her trusted disciples, it serves as an unholy countermandate against order and sanity."
@@ -443,17 +443,17 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "DAGGER")
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/matthios
+/obj/item/rogueweapon/huntingknife/idagger/steel/matthios //Master-of-none weapon. Heavier cut, higher WDEF, and a serviceable throwforce. 
 	name = "gilded knife"
 	desc = "Well, well, well; hello there, old sport!"
+	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut/heavy, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch)
 	icon_state = "matthiosknife"
 	sheathe_icon = "matthiosknife"
 	force = 25
+	wdefence = 8
 	max_integrity = 250
 	max_blade_int = 300
-	throwforce = 28
-	armor_penetration = 50
-	icon_state = "throw_knifebs"
+	throwforce = 30 //Aim for something exposed. You don't get AP.
 	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 0)
 	smeltresult = null
 
