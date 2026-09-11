@@ -454,7 +454,7 @@
 	max_integrity = 250
 	max_blade_int = 300
 	throwforce = 30 //Aim for something exposed. You don't get AP.
-	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 0)
+	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 99, "embedded_fall_chance" = 0)
 	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/matthios/Initialize(mapload)
