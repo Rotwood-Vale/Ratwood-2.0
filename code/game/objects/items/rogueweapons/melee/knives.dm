@@ -450,7 +450,7 @@
 	icon_state = "matthiosknife"
 	sheathe_icon = "matthiosknife"
 	force = 25
-	wdefence = 8
+	wdefense = 8
 	max_integrity = 250
 	max_blade_int = 300
 	throwforce = 30 //Aim for something exposed. You don't get AP.
