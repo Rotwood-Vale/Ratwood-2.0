@@ -51,7 +51,7 @@
 			if("Navigator")
 				H.change_stat(STATKEY_PER, 2)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)//No shield skill, since you're buckler reliant.
-				r_hand = /obj/item/rogueweapon/sword/rapier/vaquero //You would've stolen this, probably. It
+				r_hand = /obj/item/rogueweapon/sword/rapier/vaquero //You would've stolen this, probably.
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				backr = /obj/item/rogueweapon/shield/buckler
 				backpack_contents = list(
