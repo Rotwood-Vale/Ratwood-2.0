@@ -1,4 +1,0 @@
-author: "Lezerchil"
-delete-after: True
-changes:
-  - bugfix: "do_dodge should work on simplemobs too.\n:cl:"

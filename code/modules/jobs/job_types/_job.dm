@@ -174,6 +174,9 @@
 	///The social rank of the job, determines the examine text when examining others or being examined
 	var/social_rank = SOCIAL_RANK_DIRT
 
+	///Whether or not a job should grant a player their preference virtues
+	var/no_virtue = FALSE
+
 /datum/job/proc/special_job_check(mob/dead/new_player/player)
 	return TRUE
 
@@ -239,7 +242,10 @@
 
 		if(H.mind)
 			H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
-
+			if (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR))
+				H.mind?.special_items["Metal Scrap (Repair kit)"] = /obj/item/repair_kit/metal/bad
+			else
+				H.mind?.special_items["Fabric Patch (Repair kit)"] = /obj/item/repair_kit/bad
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
 
 	if(HAS_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY))

@@ -399,8 +399,6 @@
 	chargetime = 0
 	penfactor = 10
 	swingdelay = 0
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "blunt"
 	clickcd = SAIGA_ATTACK_SPEED
 

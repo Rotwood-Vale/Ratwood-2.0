@@ -1992,7 +1992,7 @@ generate/load female uniform sprites matching all previously decided variables
 		return "UNINITIALIZED"
 	. = list(dna.species.limbs_id)
 
-	if(dna.species.use_skintones)
+	if(dna.species.use_skintones && !(dna.species.mutant_skin_option && mutant_skin))
 		. += "coloured"
 		. += skin_tone
 	else if(dna.species.fixed_mut_color)
