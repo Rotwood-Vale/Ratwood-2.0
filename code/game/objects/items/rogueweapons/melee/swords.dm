@@ -390,8 +390,8 @@
 	smeltresult = /obj/item/ingot/steel
 	special = /datum/special_intent/side_sweep
 
-/obj/item/rogueweapon/sword/long/Initialize()
-	. = ..()
+/obj/item/rogueweapon/sword/long/Initialize(mapload)
+	. = ..(mapload)
 	AddComponent(/datum/component/skill_blessed, TRAIT_LONGSWORDSMAN, /datum/skill/combat/swords, SKILL_LEVEL_MASTER)
 
 /obj/item/rogueweapon/sword/long/training
@@ -1318,8 +1318,8 @@
 	inhand_y_dimension = 64
 	wbalance = WBALANCE_HEAVY
 
-/obj/item/rogueweapon/sword/sabre/freifechter/Initialize()
-	. = ..()
+/obj/item/rogueweapon/sword/sabre/freifechter/Initialize(mapload)
+	. = ..(mapload)
 	AddComponent(/datum/component/skill_blessed, TRAIT_SABRIST, /datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
 //Unique church sword - slightly better than regular sabre due to falx chop.
