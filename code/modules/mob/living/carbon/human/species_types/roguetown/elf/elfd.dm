@@ -56,6 +56,10 @@
 	use_f = TRUE
 	soundpack_m = /datum/voicepack/male/elf
 	soundpack_f = /datum/voicepack/female/elf
+	use_titles = TRUE
+	race_titles = list(
+	"Surface Drow", "Undercity Drow", "Trow", "Dökkálfr", "Murky Elf", "Black Elf"
+	)
 	offset_features = list(
 		OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1), OFFSET_HANDS = list(0,0), \
 		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), \

@@ -36,6 +36,10 @@
 	use_f = TRUE
 	soundpack_m = /datum/voicepack/male/elf
 	soundpack_f = /datum/voicepack/female/elf
+	use_titles = TRUE
+	race_titles = list(
+	"High Elf", "Wood Elf", "Sun Elf", "Sea Elf", "Alfar", "Sidhe", "Fair Folk", "Painted Elf", "Eladrin", "Grey Elf", "Shadow Elf"
+	)
 	offset_features = list(
 		OFFSET_ID = list(0,2), OFFSET_GLOVES = list(0,0), OFFSET_WRISTS = list(0,1),\
 		OFFSET_CLOAK = list(0,2), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \

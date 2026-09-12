@@ -24,6 +24,11 @@
 	use_f = TRUE
 	clothes_id = "dwarf"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+	use_titles = TRUE
+	race_titles = list(
+	"Bogle", "Mogg", "Gnoblar", "Farfadet", "Hobogoblin", "Scamp", "Imp", "Redcap", "Grot", "Moon Goblin", 
+	"Duende", "Snotling", "Gobbekin", "Greenlet", "Gremlin", "Rake", "Chupacabra"
+	)
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
 		ORGAN_SLOT_HEART = /obj/item/organ/heart,

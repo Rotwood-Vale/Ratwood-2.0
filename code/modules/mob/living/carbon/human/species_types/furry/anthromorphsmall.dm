@@ -19,7 +19,8 @@
 	"Goatvolk", "Rousvolk", "Possumvolk", "Pigvolk", "Boarvolk", "Rabbitvolk", "Cabbitvolk", "Harevolk", "Horsevolk",
 	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk", "Rakunvolk",
 	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
-	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Drakianvolk", "Dragonvolk", "Monstervolk", "Chimeravolk"
+	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Drakianvolk", "Dragonvolk", "Monstervolk", "Chimeravolk",
+	"Verminfolk"
 	)
 
 	species_traits = list(

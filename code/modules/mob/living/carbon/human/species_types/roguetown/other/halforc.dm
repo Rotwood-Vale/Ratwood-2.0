@@ -32,6 +32,10 @@
 	use_m = TRUE
 	soundpack_m = /datum/voicepack/male/elf
 	soundpack_f = /datum/voicepack/female/elf
+	use_titles = TRUE
+	race_titles = list(
+	"Greyskin", "Uruk", "Ogryn", "Half-Troll", "Greenskin", "Ogrim", "Half-Ogre", "Half-Sload", "City-Orc"
+	)
 	offset_features = list(OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
 	OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
 	OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \

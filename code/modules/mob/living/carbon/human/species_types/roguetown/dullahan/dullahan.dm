@@ -28,6 +28,10 @@
 	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
 	soundpack_m = /datum/voicepack/male
 	soundpack_f = /datum/voicepack/female
+	use_titles = TRUE
+	race_titles = list(
+	"Dullahan", "Reborn", "Gan Ceann", "Blemmyes", "Acephali", "Headless", "Psychopomp"
+	)
 	offset_features = list(
 		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
 		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \

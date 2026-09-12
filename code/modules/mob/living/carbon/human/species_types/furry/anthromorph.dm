@@ -29,7 +29,8 @@
 	"Goat-Kin", "Rous-Kin", "Possum-Kin", "Pig-Kin", "Boar-Kin", "Rabbit-Kin", "Cabbit-Kin", "Hare-Kin", "Horse-Kin",
 	"Donkey-Kin", "Hyena-Kin", "Deer-Kin", "Bear-Kin", "Panda-Kin", "Coyote-Kin", "Moose-Kin",
 	"Jackal-Kin", "Panther-Kin", "Lynx-Kin", "Leopard-Kin", "Monkey-Kin", "Bird-Kin", "Seal-Kin", "Frog-Kin",
-	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Drakian-Kin", "Dragon-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera", "Moth-Kin"
+	"Bat-Kin", "Otter-Kin", "Cow-Kin", "Bull-Kin", "Bee-Kin", "Lizard-Kin", "Drakian-Kin", "Dragon-Kin", "Insect-Kin", "Spider-Kin", "Monster-Kin", "Chimera", "Moth-Kin",
+	"Manticore", "Salamander", "Monstrocity", "Abomination", "Beast", "Mutant", "Centaur", "Satyr", "Creecher"
 	)
 
 	default_color = "444"

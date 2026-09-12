@@ -32,6 +32,11 @@ Even though they are of mixed blood and smaller than typical dwarves, most gnome
 	//use_m = TRUE
 	custom_clothes = TRUE
 	clothes_id = "dwarf"
+	use_titles = TRUE
+	race_titles = list(
+	"Hobbit", "Halfling", "Brownie", "Redcap", "Leprechaun", "Hob", "Duende", "Domovoi", "Nisse", "Boggart", "Dobie", "Tomte", 
+	"Kabouter", "Svirfneblin", "Deep Gnome", "Wee-Folk", "Knocker", "Bluecap", "Muki", "Bogg", "Half-man"
+	)
 	offset_features = list(
 		OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,-4), OFFSET_WRISTS = list(0,-4),\
 		OFFSET_CLOAK = list(0,0), OFFSET_FACEMASK = list(0,-5), OFFSET_HEAD = list(0,-5), \
