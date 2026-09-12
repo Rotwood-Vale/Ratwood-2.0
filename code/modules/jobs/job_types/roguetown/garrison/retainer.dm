@@ -21,7 +21,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_subclasses = list(/datum/advclass/baron_retainer/henchman, /datum/advclass/baron_retainer/ronin, /datum/advclass/baron_retainer/greyleaf)
+	job_subclasses = list(/datum/advclass/baron_retainer/henchman, /datum/advclass/baron_retainer/duelist, /datum/advclass/baron_retainer/greyleaf)
 
 /datum/outfit/job/roguetown/baron_retainer
 	job_bitflag = BITFLAG_GARRISON
@@ -34,8 +34,8 @@
 	tutorial = "A brute to back up the baron whenever needed, actions speak louder than words and you are the embodiment of this saying."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(STATKEY_STR = 3, STATKEY_CON = 2, STATKEY_WIL = 3)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
+	subclass_stats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_WIL = 3, STATKEY_PER = 2)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -96,64 +96,85 @@
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 
-/datum/advclass/baron_retainer/ronin
-	name = "Ronin"
-	tutorial = "A blooded member of the infamous Ruma Clan, the baron has offered you an opportunity to prove the loyalty and honor demanded of you by serving him. (This subclass requires the Kazengun origin)"
-	outfit = /datum/outfit/job/roguetown/baron_retainer/ronin
+/datum/advclass/baron_retainer/duelist
+	name = "Retired Duelist"
+	tutorial = "You flicked, you feinted, you pirouetted and striked - a mastery of the blade at a sword's edge. But the age of firearms came, and a crippling musket round to the knee ended your career. The Baron offered you a place in his service - perhaps, in due time, you can relive your glory daes."
+	outfit = /datum/outfit/job/roguetown/baron_retainer/duelist
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_SPD = 4, STATKEY_WIL = 2)
+	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
+	subclass_stats = list(STATKEY_INT = 2, STATKEY_PER = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = -1) //4 speed was the most ridiculous thing anyone's ever added
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //So-called "Grapplebait" by my peer group session. Ok bro
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 	)
 
-// Ronin subclass requires the character to be from Kazengun
-/datum/advclass/baron_retainer/ronin/check_requirements(mob/living/carbon/human/H)
-	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
-		return FALSE
-	return ..()
-
-/datum/outfit/job/roguetown/baron_retainer/ronin/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/baron_retainer/duelist/pre_equip(mob/living/carbon/human/H)
 	..()
 	has_loadout = TRUE
-	head = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
-	cloak = /obj/item/clothing/cloak/eastcloak1
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	gloves = /obj/item/clothing/gloves/roguetown/plate/kote
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
-	r_hand = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
-	beltr = /obj/item/rogueweapon/scabbard/sheath/kazengun
-	backl = /obj/item/rogueweapon/scabbard/sword/kazengun/gold
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
+	shoes = /obj/item/clothing/shoes/roguetown/boots/maille
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
+	gloves = /obj/item/clothing/gloves/roguetown/plate
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel //ANTI-GRAPPLER DAGGER, ACTIVATE!!
+	beltr = /obj/item/rogueweapon/scabbard/sheath/noble
+	backl = /obj/item/rogueweapon/scabbard/sword/noble
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1)
 
-/datum/outfit/job/roguetown/baron_retainer/ronin/choose_loadout(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/baron_retainer/duelist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/masks = list("Full Mask","Half-Mask")
-	var/mask_choice = input(H, "Choose your mask.", "GREET THE SUN?") as anything in masks
-	switch(mask_choice)
-		if("Full Mask")
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full, SLOT_WEAR_MASK, TRUE)
-		if("Half-Mask")
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/kazengun, SLOT_WEAR_MASK, TRUE)
+	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
+	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+	switch(weapon_choice)
+		if("La Bête (Executioner)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/sack, SLOT_WEAR_MASK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/longcoat, SLOT_CLOAK, TRUE)
+			H.change_stat(STATKEY_STR, 2)
+			H.change_stat(STATKEY_SPD, -2)
+		if("The Ferentian (Longsword)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/duelistcape, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/duelisthat, SLOT_HEAD, TRUE)
+		if("El Zorro (Rapier)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/vaquero, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/duelmask, SLOT_WEAR_MASK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/duelistcape, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/duelisthat, SLOT_HEAD, TRUE)
+		if("AAVNIK (Shishka Sabre)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/steppesman, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/shield/buckler, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel/steppesman, SLOT_WEAR_MASK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/papakha, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/raincloak/furcloak, SLOT_CLOAK, TRUE)
+		if("Mubarizun (Shalal)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/marlin, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/cape/red, SLOT_CLOAK, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb, SLOT_HEAD, TRUE)
+		if("Das Schwertkämpfer (Kriegsmesser)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/caplessgrenzelhofthat, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/stabard/grenzelhoft, SLOT_CLOAK, TRUE)
+		if("The Vagabond (Hwando)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/mulyeog, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword/kazengun, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/mentorhat, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/eastcloak2, SLOT_CLOAK, TRUE)
 
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
 	tutorial = "Honorably discharged from the warden corps, you have found new purpose in protecting the baron from the shadows and advising him on matters of Lowtown as someone who has shed blood to protect it."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER, TRAIT_STEELHEARTED)
 	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 3, STATKEY_PER = 4)
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
