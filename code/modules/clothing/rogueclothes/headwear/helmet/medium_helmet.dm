@@ -441,6 +441,24 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak
+	desc = "An elven barbute with a thin gold plating designed for Elven Woodland guardians."
+	color = COLOR_ASSEMBLY_GOLD
+	detail_color = COLOR_ASSEMBLY_GOLD
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/blackoak/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak
+	desc = "A winged version of the elven barbute with a thin gold plating designed for Elven Woodland guardians."
+	color = COLOR_ASSEMBLY_GOLD
+	detail_color = COLOR_ASSEMBLY_GOLD
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/blackoak/Initialize(mapload)
+	. = ..()
+	update_icon()
+
 /obj/item/clothing/head/roguetown/helmet/bascinet
 	name = "bascinet"
 	desc = "A steel bascinet helmet. Though it lacks a visor, it still protects the head and ears."

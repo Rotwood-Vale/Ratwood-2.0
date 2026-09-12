@@ -44,7 +44,7 @@
 	defprob = 35
 	retreat_health = 0.4
 	food = 0
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 	var/teleport_cooldown
 	var/obj/structure/leyline/source

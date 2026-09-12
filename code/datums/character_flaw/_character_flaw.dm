@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Greedy"=/datum/charflaw/greedy,
 	"Marked for Death"=/datum/charflaw/assassintarget,
 	"Marked by Gnolls"=/datum/charflaw/hunted,
+	"Indebted"=/datum/charflaw/indebted,
 	"Isolationist"=/datum/charflaw/isolationist,
 	"Caffiend"=/datum/charflaw/addiction/caffiend,
 	"Junkie"=/datum/charflaw/addiction/junkie,
@@ -951,3 +952,70 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 	to_chat(user, "You are unluckier than most")
 	H.change_stat(STATKEY_LCK, -4)
+
+// bank_accounts here are integer balances keyed by mob (not
+// /datum/fund), so the debt is deducted directly, bypassing give_money_account's fine path on
+// purpose (personal debt to an NPC creditor, not a Crown fine: no fine caps, and the money
+// leaves the realm instead of minting back into the Crown's Purse). Bounty goes through the
+// descriptor-based add_bounty_noface().
+/datum/charflaw/indebted
+	name = "Indebted"
+	desc = "Whether by divorce, gambling debts, or wages due, I must pay a sum from my nervelock every dae. Not doing this will bring about great stress and potentially a bounty."
+	var/minimum = 30
+	var/relative = 0.2
+	var/interval = 30 MINUTES
+	var/next_alimony
+	var/is_active = FALSE
+	var/bounty_added = FALSE
+
+/datum/charflaw/indebted/apply_post_equipment(mob/living/carbon/human/alimony)
+	addtimer(CALLBACK(src, PROC_REF(setup_self), alimony), 5 SECONDS)
+
+/datum/charflaw/indebted/proc/setup_self(mob/living/carbon/human/user)
+	if(!user?.mind)
+		return
+	if(!SStreasury.has_account(user))
+		SStreasury.create_bank_account(user, minimum)
+	is_active = TRUE
+	next_alimony = world.time + interval
+
+/datum/charflaw/indebted/flaw_on_life(mob/user)
+	. = ..()
+	if(!is_active)
+		return
+	if(world.time <= next_alimony)
+		return
+	// Undeath cancels mortal obligations. A vampiric servant has no nervelock account to speak of
+	// and the repeated fine attempts spam error notes every life tick.
+	if(user?.mind?.has_antag_datum(/datum/antagonist/vampire))
+		is_active = FALSE
+		return
+	calculate_childsupport(user)
+
+/datum/charflaw/indebted/proc/calculate_childsupport(mob/deadbeat)
+	// Always reschedule first, regardless of outcome, so a broke debtor doesn't re-enter every
+	// life tick and spam.
+	next_alimony = world.time + interval
+	if(!SStreasury.has_account(deadbeat))
+		return
+	var/bankamt = SStreasury.get_balance(deadbeat)
+	var/alimony = minimum
+	if(bankamt > minimum)
+		if((bankamt * relative) > minimum)
+			alimony = round(bankamt * relative)
+		SStreasury.bank_accounts[deadbeat] -= alimony
+		send_ooc_note("<b>NERVELOCK:</b> [alimony]m was taken in debts owed.", name = deadbeat.real_name)
+	else
+		if(bankamt > 0)
+			SStreasury.bank_accounts[deadbeat] = 0
+			send_ooc_note("<b>NERVELOCK:</b> [bankamt]m was taken in defaulted debts.", name = deadbeat.real_name)
+		deadbeat.add_stress(/datum/stressevent/debt)
+		if(!bounty_added)
+			if(ishuman(deadbeat))
+				var/mob/living/carbon/human/H = deadbeat
+				var/list/d_list = H.get_mob_descriptors()
+				var/height = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
+				var/body = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
+				var/voice = build_coalesce_description_nofluff(d_list, H, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
+				add_bounty_noface(H.real_name, H.dna.species, H.gender, height, body, voice, rand(100, 200), FALSE, "Failure to pay outstanding debts.", "The Justiciary of [SSmapping.map_adjustment.realm_name]")
+			bounty_added = TRUE
