@@ -70,20 +70,6 @@
 	- Forester: Cooking, Athletics, Farming, Fishing, Lumberjacking skills, Trusty Hoe (HOMESTEAD_EXPERT trait)\n\
 	- Feral Appetite: Can safely eat raw, toxic or spoiled food (NASTY_EATER trait)"
 
-// High Society Pack: Nobility + Socialite
-/datum/virtue/pack/highsociety
-	name = "High Society (-12 TRI)"
-	desc = "I was born into privilege and raised in the finest circles. Noble blood runs through my veins, I read the emotions of others with ease, and my charm opens every door. Wealth, beauty, and status are my birthright."
-	triumph_cost = 12
-	granted_virtues = list(
-		/datum/virtue/utility/noble,
-		/datum/virtue/utility/socialite
-	)
-	custom_text = "Grants two virtues for the aristocrat:\n\
-	- Nobility: Noble status, Reading skill, +15 noble income, Heirloom Amulet & Hefty Coinpurse stashed\n\
-	- Socialite: Beautiful, empathic, good lover traits + hand mirror stashed"
-	incompatible_vices = list(/datum/charflaw/lawless, /datum/charflaw/ugly)
-
 // Trusted Housekeeper Pack: Resident + Cunning Provisioner
 /datum/virtue/pack/housekeeper
 	name = "Trusted Housekeeper (-9 TRI)"

@@ -20,6 +20,8 @@
 	var/custom_text
 	/// Mutually exclusive virtues. Virtue packs are automatically considered.
 	var/list/incompatible_virtues = list()
+	/// Mutually exclusive quirks.
+	var/list/incompatible_quirks = list()
 	/// Mutually exclusive vices.
 	var/list/incompatible_vices = list()
 

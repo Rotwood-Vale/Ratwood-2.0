@@ -117,7 +117,8 @@
 		/datum/body_marking/stripes,
 	)
 
-	restricted_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/deathless)
+	restricted_virtues = list(/datum/virtue/utility/deathless)
+	restricted_quirks = list(/datum/quirk/nobility)
 
 /datum/species/construct/metal/check_roundstart_eligible()
 	return TRUE

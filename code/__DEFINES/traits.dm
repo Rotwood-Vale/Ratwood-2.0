@@ -45,10 +45,14 @@
 #define TRAIT_INHUMEN_ANATOMY "Inhumen Anatomy" //can't wear hats and shoes
 #define TRAIT_NASTY_EATER "Inhumen Digestion" //can eat rotten food, organs, poison berries, and drink murky water
 #define TRAIT_WILD_EATER "Beastly Digestion" //can eat raw and rotten food and drink murky water
-#define TRAIT_RAW_EATER "Raw Diet" //can eat raw and uncooked food, not rotten, not organs, not murky water, etcetera
-#define TRAIT_UNDERDARK_CHEF "Underdark Chef" //lets you cook spider meat as if you were a drow
-#define TRAIT_DWARVEN_CHEF "Dwarven Chef" //lets you cut pretzels from butterdough as if you were a dwarf
-#define TRAIT_GOSSIPER "Gossiper" //lets you see noble gossip
+/// can eat raw and uncooked food, not rotten, not organs, not murky water, etcetera
+#define TRAIT_RAW_EATER "Raw Diet"
+/// lets you cook spider meat as if you were a drow
+#define TRAIT_UNDERDARK_CHEF "Underdark Chef"
+/// lets you cut pretzels from butterdough as if you were a dwarf
+#define TRAIT_DWARVEN_CHEF "Dwarven Chef"
+/// lets you see noble gossip
+#define TRAIT_GOSSIPER "Gossiper"
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
@@ -212,7 +216,8 @@
 #define TRAIT_BAD_MOOD "Bad Mood"
 #define TRAIT_NIGHT_OWL "Night Owl"
 #define TRAIT_BEAUTIFUL "Beautiful"
-#define TRAIT_PRETTY "Pretty" //lesser version of beautiful
+/// lesser version of beautiful
+#define TRAIT_PRETTY "Pretty"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"

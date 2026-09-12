@@ -1,25 +1,10 @@
-/datum/virtue/utility/noble
-	name = "Nobility (-7 TRI)"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
-			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	added_traits = list(TRAIT_NOBLE)
-	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
-	triumph_cost = 7
-	incompatible_vices = list(/datum/charflaw/lawless)
-
-/datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
-	SStreasury.noble_incomes[recipient] += 15
-
 /datum/virtue/utility/socialite
 	name = "Socialite"
 	desc = "I thrive in social settings, easily reading the emotions of others and charming those around me. My presence is always felt at any gathering."
-	custom_text = "Incompatible with Ugly vice. Grants empathic insight."
+	custom_text = "Incompatible with Ugly quirk. Grants empathic insight."
 	added_traits = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER, TRAIT_EMPATH)
 	added_stashed_items = list(
 		"Hand Mirror" = /obj/item/handmirror)
-	incompatible_vices = list(/datum/charflaw/ugly)
 
 /datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
 	..()

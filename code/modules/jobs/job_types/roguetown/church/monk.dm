@@ -19,7 +19,7 @@
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/nobility)
 	job_traits = list(TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT)
 	advclass_cat_rolls = list(CTAG_ACOLYTE = 2)
 	job_subclasses = list(

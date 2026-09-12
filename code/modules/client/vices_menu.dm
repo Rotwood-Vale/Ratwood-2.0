@@ -50,6 +50,23 @@
 			return TRUE
 	return FALSE
 
+/datum/preferences/proc/check_pick_quirk_conflict(pick_type, show_message = FALSE, mob/user = null)
+	var/datum/customization_trait/pick = get_customization_pick(pick_type)
+	if(!pick)
+		return FALSE
+	for(var/datum/quirk/Q in quirks)
+		if(!Q || Q.type == pick_type)
+			continue
+		if(length(pick.incompatible_quirks) && (Q.type in pick.incompatible_quirks))
+			if(show_message && user)
+				to_chat(user, span_warning("[pick.name] conflicts with [Q.name]!"))
+			return TRUE
+		if(length(Q.incompatible_quirks) && (pick_type in Q.incompatible_quirks))
+			if(show_message && user)
+				to_chat(user, span_warning("[pick.name] conflicts with [Q.name]!"))
+			return TRUE
+	return FALSE
+
 /datum/preferences/proc/check_vice_pick_conflict(vice_type, show_message = FALSE, mob/user = null)
 	if(!vice_type)
 		return FALSE
@@ -62,7 +79,8 @@
 	for(var/datum/customization_trait/pick in held)
 		if(length(pick.incompatible_vices) && (vice_type in pick.incompatible_vices))
 			if(show_message && user)
-				to_chat(user, span_warning("This vice conflicts with [pick.name]!"))
+				var/datum/charflaw/vice = GLOB.charflaw_singletons[vice_type]
+				to_chat(user, span_warning("[vice?.name || "This vice"] conflicts with [pick.name]!"))
 			return TRUE
 	return FALSE
 
@@ -1681,11 +1699,18 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Skip if already taken
 				if(Q.type in already_selected)
 					continue
+				// Check if restricted by species
+				if(length(pref_species.restricted_quirks))
+					if(Q.type in pref_species.restricted_quirks)
+						continue
 				// Check for conflicting virtues
 				if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
 					continue
 				// Check for conflicting vices
 				if(check_pick_vice_conflict(Q.type, TRUE, usr))
+					continue
+				// Check for conflicting quirks
+				if(check_pick_quirk_conflict(Q.type, TRUE, usr))
 					continue
 				quirks_available[Q.name] = Q
 

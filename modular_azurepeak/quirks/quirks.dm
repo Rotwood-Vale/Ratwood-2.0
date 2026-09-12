@@ -12,7 +12,6 @@
 	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
 	custom_text = "Choosing this quirk while playing a noble role will cause it to do nothing."
 	added_traits = list(TRAIT_DISGRACED_NOBLE)
-	incompatible_virtues = list(/datum/virtue/utility/noble)
 
 /datum/quirk/disgracednoble/handle_traits(mob/living/carbon/human/recipient)
 	if(HAS_TRAIT(recipient, TRAIT_NOBLE))
@@ -44,7 +43,7 @@
 	custom_text = "Lets you view noble gossip. Choosing this quirk while playing a noble role will cause it to do nothing."
 	point_cost = 2
 	added_traits = list(TRAIT_GOSSIPER)
-	incompatible_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/tracker)
+	incompatible_virtues = list(/datum/virtue/utility/tracker)
 
 /datum/quirk/gossiper/handle_traits(mob/living/carbon/human/recipient)
 	if(HAS_TRAIT(recipient, TRAIT_NOBLE))
@@ -60,10 +59,48 @@
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
+/datum/quirk/hunted
+	name = "Marked by Gnolls"
+	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
+	<br>\
+	<span style='color:#f44336; font-size:120%;'>THIS QUIRK ENCOURAGES GNOLLS TO HUNT YOU DOWN!</span><br>\
+	<span style='color:#f44336;'>You may potentially be killed in the process!</span>"
+	point_cost = 0
+
+/datum/quirk/hunted/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.vices += new /datum/charflaw/hunted()
+
+/datum/quirk/assassintarget
+	name = "Marked for Death"
+	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
+	<br>\
+	<span style='color:#f44336; font-size:120%;'>THIS QUIRK ENCOURAGES ASSASSINS TO HUNT YOU DOWN!</span><br>\
+	<span style='color:#f44336;'>You may be PERMANENTLY KILLED WITHOUT ESCALATION in the process!</span>"
+	point_cost = 0
+
+/datum/quirk/assassintarget/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.vices += new /datum/charflaw/assassintarget()
+
 /datum/quirk/nightowl
 	name = "Night Owl"
 	desc = "I've always preferred Noc over his other half."
 	added_traits = list(TRAIT_NIGHT_OWL)
+
+/datum/quirk/nobility
+	name = "Nobility"
+	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	point_cost = 4
+	added_traits = list(TRAIT_NOBLE)
+	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
+	added_stashed_items = list(
+	"Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
+	"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch
+	)
+	incompatible_vices = list(/datum/charflaw/lawless)
+	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
+
+/datum/quirk/nobility/apply_to_human(mob/living/carbon/human/recipient)
+	SStreasury.noble_incomes[recipient] += 15
 
 /datum/quirk/outdoorsy
 	name = "Outdoorsy"
@@ -79,6 +116,7 @@
 	point_cost = 2
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_quirks = list(/datum/quirk/ugly)
 
 /datum/quirk/rawdiet
 	name = "Raw Diet"
@@ -95,6 +133,12 @@
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
 	incompatible_virtues = list(/datum/virtue/utility/mean)
 
+/datum/quirk/scarred
+	name = "Scarred"
+	desc = "My face bears terrible scars that make identification difficult, but not impossible."
+	point_cost = 0
+	added_traits = list(TRAIT_SCARRED)
+
 /datum/quirk/secondvoice
 	name = "Second Voice"
 	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
@@ -104,6 +148,13 @@
 /datum/quirk/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
+
+/datum/quirk/ugly
+	name = "Ugly"
+	desc = "My face is ugly and makes everyone who looks at me miserable."
+	point_cost = 0
+	added_traits = list(TRAIT_UNSEEMLY)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
 
 /datum/quirk/underdarkchef
 	name = "Underdark Chef"

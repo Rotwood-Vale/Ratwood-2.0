@@ -18,8 +18,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Cyclops (R) (+1 Q-Point)"=/datum/charflaw/noeyer,
 	"Devout Follower"=/datum/charflaw/addiction/godfearing,
 	"Greedy"=/datum/charflaw/greedy,
-	"Marked for Death"=/datum/charflaw/assassintarget,
-	"Marked by Gnolls"=/datum/charflaw/hunted,
 	"Isolationist"=/datum/charflaw/isolationist,
 	"Caffiend"=/datum/charflaw/addiction/caffiend,
 	"Junkie"=/datum/charflaw/addiction/junkie,
@@ -38,12 +36,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Paranoid"=/datum/charflaw/paranoid,
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"Sadist"=/datum/charflaw/addiction/sadist,
-	"Scarred"=/datum/charflaw/scarred,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Sleepless (+1 Q-Point)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
 	"Malodorous"=/datum/charflaw/malodorous,
-	"Ugly"=/datum/charflaw/ugly,
 	"Unintelligible (+1 Q-Point)"=/datum/charflaw/unintelligible,
 	"Wood Arm (L) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_r,
@@ -437,23 +433,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/logged = FALSE
 	point_value = 0 // Opt-in encounter hook. Not a flaw.
 
-/datum/charflaw/ugly
-	name = "Ugly"
-	desc = "My face is ugly and makes everyone who looks at me miserable. Incompatible with Beautiful virtue."
-	point_value = 0 // Your ugliness isn't worthy of a quirk point.
-
-/datum/charflaw/ugly/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_UNSEEMLY, TRAIT_GENERIC)
-
-/datum/charflaw/ugly/on_removal(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_UNSEEMLY, TRAIT_GENERIC)
-
 /datum/charflaw/nudist
 	name = "Nudist"
 	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
@@ -584,23 +563,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/carbon/human/H = user
 	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
-/datum/charflaw/scarred
-	name = "Scarred"
-	desc = "My face bears terrible scars that make identification difficult, but not impossible."
-	point_value = 0 // Your scaredness isn't worthy of a quirk point.
-
-/datum/charflaw/scarred/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
-
-/datum/charflaw/scarred/on_removal(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_SCARRED, TRAIT_GENERIC)
-
 /datum/charflaw/hunted/flaw_on_life(mob/user)
 	if(!ishuman(user))
 		return
