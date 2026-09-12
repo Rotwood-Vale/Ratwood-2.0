@@ -200,6 +200,12 @@
 	name = "elder's chaperon hat"
 	color = "#007fff"
 
+/obj/item/clothing/head/roguetown/chaperon/greyscale/shepherd
+	name = "mountaineer's chaperon"
+	desc = "A fashionable citygoer's chaperon worn around an insconspicuous iron skullcap. It has a cute little Mamük brooch on the tip of the hood. Szöréndnížine shepherds spend plenty of time in the city and have taken a liking to the chaperon's exaggerated swagger."
+	armor = ARMOR_LEATHER_STUDDED
+	max_integrity = ARMOR_INT_HELMET_IRON - 25
+
 /obj/item/clothing/head/roguetown/chef
 	name = "chef's hat"
 	desc = "A hat which designates one as well-versed in the arts of cooking."

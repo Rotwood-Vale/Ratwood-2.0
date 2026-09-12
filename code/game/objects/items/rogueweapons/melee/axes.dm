@@ -452,6 +452,51 @@
 	demolition_mod = 2.5
 	walking_stick = TRUE
 
+/obj/item/rogueweapon/stoneaxe/battle/steppesman/chupa
+	name = "Czwarteki ćiupaga"
+	desc = "A steel axe of Czwarteki make that combines a deadly weapon with a walking stick - hence its pointed end. It has a flat head that fits the hand comfortably, and it's usable for chopping and smashing. It can hook an opponent's weapon in a pinch. It carries the colours of Szöréndnížina."
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/cut/battle/lunge, /datum/intent/sword/disarm)
+	gripped_intents = list(/datum/intent/axe/cut/battle ,/datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	force = 22
+	force_wielded = 25
+	icon = 'icons/roguetown/weapons/special/freifechter.dmi'
+	icon_state = "ciupaga"
+	pixel_y = -10
+	pixel_x = 0
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	demolition_mod = 2
+
+/obj/item/rogueweapon/stoneaxe/battle/steppesman/chupa/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 9,"nx" = 9,"ny" = 6,"wx" = -2,"wy" = 7,"ex" = 1,"ey" = 7,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 8,"sy" = -4,"nx" = -8,"ny" = -4,"wx" = -10,"wy" = -5,"ex" = 10,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -45,"sturn" = 45,"wturn" = -45,"eturn" = 45,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/datum/intent/axe/cut/battle/lunge
+	name = "ćiupaga lunge"
+	desc = "Grip your ćiupaga by the tail-end of the handle and swing in a circular motion to reach further ahead. It will deal extra damage if perfectly positioned, otherwise you'll just hit them with the handle."
+	damfactor = 1.75
+	penfactor = 42
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
+	sharpness_penalty = 2
+	blade_class = BCLASS_CHOP
+	reach = 2
+	swingdelay = 2
+	icon_state = "inchop"
+	attack_verb = list("lunges and chops", "lunges and hacks")
+	animname = "chop"
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	clickcd = 14
+	item_d_type = "slash"
+
+
 /datum/intent/axe/cut/battle/greataxe
 	reach = 2
 

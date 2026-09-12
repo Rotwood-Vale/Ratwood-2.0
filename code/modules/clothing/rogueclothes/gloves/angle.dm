@@ -35,6 +35,13 @@
 	heat_protection = HAND_LEFT | HAND_RIGHT
 	max_heat_protection_temperature = 600
 
+/obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter
+	name = "fencing gloves"
+	desc = "A pair of hardened leather gloves used by fencers who aren't exactly convinced of losing a finger to a particularly strong feder cut. The inside is padded for extra durability."
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + 50
+	icon_state = "freigloves"
+	item_state = "freigloves"
+
 /obj/item/clothing/gloves/roguetown/angle/pontifex
 	name = "rune-scrybed wrappings"
 	desc = "Paper and cloth bandages enscrybed with powerful naledian runes. They do an ample job of protecting their user's hands in combat."

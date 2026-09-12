@@ -28,6 +28,29 @@
 /datum/intent/spear/thrust/militia
 	penfactor = 40
 
+/datum/intent/spear/thrust/pike		//EXPERIMENTAL
+	name = "pike thrust"
+	desc = "Thrust your pike forward from its furthest end to reach farther ahead than any spear ever could. Only effective at three paces."
+	damfactor = 1.15
+	reach = 3
+	effective_range = 3
+	clickcd = CLICK_CD_CHARGED + 1
+	swingdelay = 1.5
+
+/datum/intent/spear/thrust/pike/skewer		//EXPERIMENTAL
+	name = "pike lance"
+	desc = "Grab your pike from a closer end and charge forward with your whole body for devastating damage."
+	clickcd = CLICK_CD_HEAVY + 4
+	swingdelay = 6
+	damfactor = 1.5
+	penfactor = 35
+	max_intent_damage = 54
+	reach = 2
+	effective_range = 2
+	icon_state = "inlance"
+	attack_verb = list("lances", "runs through", "skewers")
+
+
 /datum/intent/spear/thrust/blunted
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
@@ -1229,6 +1252,16 @@
 	wdefense = 6
 	force = 14
 	force_wielded = 35
+/obj/item/rogueweapon/greatsword/grenz/flamberge/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = 6,"nx" = 6,"ny" = 7,"wx" = 0,"wy" = 5,"ex" = -1,"ey" = 7,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -50,"sturn" = 40,"wturn" = 50,"eturn" = -50,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/greatsword/zizo
 	name = "avantyne greatsword"
@@ -1416,53 +1449,11 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list(
-					"shrink" = 0.6,
-					"sx" = -6,
-					"sy" = 7,
-					"nx" = 6,
-					"ny" = 8,
-					"wx" = 0,
-					"wy" = 6,
-					"ex" = -1,
-					"ey" = 8,
-					"northabove" = 0,
-					"southabove" = 1,
-					"eastabove" = 1,
-					"westabove" = 0,
-					"nturn" = -50,
-					"sturn" = 40,
-					"wturn" = 50,
-					"eturn" = -50,
-					"nflip" = 0,
-					"sflip" = 8,
-					"wflip" = 8,
-					"eflip" = 0,
-					)
+				return list("shrink" = 0.6, "sx" = -6, "sy" = 7, "nx" = 6, "ny" = 8, "wx" = 0, "wy" = 6, "ex" = -1, "ey" = 8, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -50, "sturn" = 40, "wturn" = 50, "eturn" = -50, "nflip" = 0, "sflip" = 8, "wflip" = 8, "eflip" = 0)
 			if("wielded")
-				return list(
-					"shrink" = 0.6,
-					"sx" = 3,
-					"sy" = 5,
-					"nx" = -3,
-					"ny" = 5,
-					"wx" = -9,
-					"wy" = 4,
-					"ex" = 9,
-					"ey" = 1,
-					"northabove" = 0,
-					"southabove" = 1,
-					"eastabove" = 1,
-					"westabove" = 0,
-					"nturn" = 0,
-					"sturn" = 0,
-					"wturn" = 0,
-					"eturn" = 15,
-					"nflip" = 8,
-					"sflip" = 0,
-					"wflip" = 8,
-					"eflip" = 0,
-					)
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/woodstaff/naledi
 	name = "naledian warstaff"
@@ -1695,9 +1686,26 @@
 	return ..()
 
 /obj/item/rogueweapon/spear/boar/frei
-	name = "Aavnic lándzsa"
+	name = "Czwarteki lándzsa"
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of the Freifechters. These are smithed by the legendary armourers of Vyšvou and given to distinguished lancers upon their graduation."
-	icon_state = "praguespear"
+	icon_state = "cityspear"
+	icon = 'icons/roguetown/weapons/special/freifechter.dmi'
+	max_blade_int = 300	//You're gonna parry a lot. You need it.
+	max_integrity = 235
+
+/obj/item/rogueweapon/spear/boar/frei/pike
+	name = "banner of Szöréndnížina"
+	desc = "A steel pike with a white and red banner made to spend the time flowing proudly in the wind. A city founded by the free. A State made from the disciplined. Snowy peaks surround her strong walls, her gates make any attack a suicide. Fight, Szöréndnížina. Fight to lyve in a world that rejects you."
+	icon_state = "citybanner"
+	force = 18
+	force_wielded = 33
+	possible_item_intents = list(/datum/intent/dagger/sucker_punch, /datum/intent/sword/bash)
+	gripped_intents = list(/datum/intent/spear/thrust/pike, /datum/intent/spear/thrust/pike/skewer)
+
+/obj/item/rogueweapon/spear/boar/frei/pike/reformist
+	name = "banner of Psydonic Reformism"
+	desc = "A steel pike with an altered Psydonic cross representing the order of Primo Reformatio, crossed by a black stripe that symbolizes mourning. Mammukhus sum, qui castellum onere fero. Numquam genua flecto aut gradum amitto."
+	icon_state = "reformistbanner"
 
 /obj/item/rogueweapon/spear/boar/aav
 	name = "Aavnic lándzsa"//I'm creatively bankrupt.

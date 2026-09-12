@@ -653,20 +653,6 @@
 	created_item = /obj/item/rogueweapon/sword/long
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
-/datum/anvil_recipe/weapons/steel/sharpfeder
-	name = "Dueling Longsword, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/frei
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
-/datum/anvil_recipe/weapons/steel/elongsword
-	name = "Basket-Hilted Longsword, Steel (+1 Steel)"
-	req_blade = /obj/item/blade/steel_sword
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/rogueweapon/sword/long/etruscan
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
 /datum/anvil_recipe/weapons/steel/shalal
 	name = "Shalal Saber, Steel (+1 Steel)"
 	req_blade = /obj/item/blade/steel_sword

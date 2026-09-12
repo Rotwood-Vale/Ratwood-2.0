@@ -457,6 +457,10 @@
 	. = ..()
 	update_icon()
 
+/obj/item/clothing/neck/roguetown/fencerguard/generic
+	color = "#FFFFFF"
+	detail_color = "#5E4440"
+
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "vreccale"
 	desc = "Nature knows not of mercy."
@@ -669,7 +673,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/reform
 	name = "reformist psycross"
-	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
 	sellprice = 0
 	icon_state = "psycross_reform"
 
