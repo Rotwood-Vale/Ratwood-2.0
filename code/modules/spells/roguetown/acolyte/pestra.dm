@@ -424,7 +424,7 @@
 		for(var/obj/structure/fluff/psycross/S in oview(5, user))
 			S.AOE_flash(user, range = 8)
 
-		var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
+		var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(target)
 		var/fully_turned = was_zombie?.has_turned //Don't stink up someone who hasn't yet turned
 		if(target.stat == DEAD || fully_turned)	//Checks if the target is a dead rotted corpse.
 			var/datum/component/rot/rot = target.GetComponent(/datum/component/rot)

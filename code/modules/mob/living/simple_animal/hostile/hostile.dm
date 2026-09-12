@@ -135,6 +135,11 @@
 	return 1
 
 /mob/living/simple_animal/hostile/proc/deaggrodel()
+	if(!isturf(loc))
+		return FALSE // Stored in a shapeshift holder or carried, not loose scenery to clean up
+	if(mind || key) // A player owns this body, never despawn it. Checked here to cover every path that can seat a player
+		del_on_deaggro = null
+		return FALSE
 	FindTarget()
 	if(!target)
 		var/escape_path
