@@ -113,6 +113,16 @@
 	cost = 40 // Base sellprice of 20
 	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun)
 
+/datum/supply_pack/rogue/light_armor/import/kazenrobe/t2
+	name = "Kazengunese Decorated Dopo Robe"
+	cost = 40 // Base sellprice of 20
+	contains = list (/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
+
+/datum/supply_pack/rogue/light_armor/import/kazenrobe/t3
+	name = "Kazengunese Fortified Dopo Robe"
+	cost = 60 // Base sellprice of 20, added cost due to the increased integrity
+	contains = list (/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/mastercraft)
+
 /datum/supply_pack/rogue/light_armor/import/grenzhat
 	name = "Grenzelhoftian Plume Hat"
 	cost = 40 // Base sellprice of 20
