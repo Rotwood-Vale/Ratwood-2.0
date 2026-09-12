@@ -83,12 +83,15 @@
 	data["community_progress"] = 0
 	data["community_target"] = STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD
 	data["community_points"] = 0
+	data["community_visible"] = FALSE
 	if(ishuman(user))
-		var/mob/living/carbon/human/HU = user
-		var/datum/sleep_adv/SA = HU.mind?.sleep_adv
-		if(SA)
-			data["community_progress"] = SA.community_contribution_count
-			data["community_points"] = SA.community_status_points
+		var/mob/living/carbon/human/Humanuser = user
+		if(is_community_contribution_eligible(Humanuser))
+			data["community_visible"] = TRUE
+			var/datum/sleep_adv/Sleepadvance = Humanuser.mind?.sleep_adv
+			if(Sleepadvance)
+				data["community_progress"] = Sleepadvance.community_contribution_count
+				data["community_points"] = Sleepadvance.community_status_points
 
 	var/list/rows = list()
 	for(var/datum/roguestock/stockpile/R in SStreasury.stockpile_datums)
@@ -270,7 +273,7 @@
 				if(sound == TRUE)
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				R.refresh_auto_price()
-				if(ishuman(H) && !I.stockpile_withdrawn)
+				if(ishuman(H) && !I.stockpile_withdrawn && is_community_contribution_eligible(H))// Can not withdraw from stockpile for points, can't be a combat role
 					var/mob/living/carbon/human/HC = H
 					HC.mind?.sleep_adv?.add_community_contribution(bundle_amt)
 				var/amt = R.payout_price * bundle_amt
@@ -337,7 +340,7 @@
 				stock_announce("[R.name] has been stockpiled.")
 			if(sound == TRUE)
 				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			if(ishuman(H) && !I.stockpile_withdrawn)
+			if(ishuman(H) && !I.stockpile_withdrawn && is_community_contribution_eligible(H))// Can not withdraw from stockpile for points, can't be a combat role
 				var/mob/living/carbon/human/HC = H
 				HC.mind?.sleep_adv?.add_community_contribution(1)
 			if(amt)

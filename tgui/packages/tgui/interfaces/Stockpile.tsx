@@ -70,6 +70,7 @@ type Data = {
   community_progress: number;
   community_target: number;
   community_points: number;
+  community_visible: BooleanLike;
 };
 
 type ActFn = (action: string, params?: Record<string, unknown>) => void;
@@ -351,7 +352,7 @@ export const Stockpile = () => {
               </span>
             )}
             <CharterChip data={data} />
-            <CommunityChip data={data} />
+            {!!data.community_visible && <CommunityChip data={data} />}
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px' }}>
               <button
                 type="button"
