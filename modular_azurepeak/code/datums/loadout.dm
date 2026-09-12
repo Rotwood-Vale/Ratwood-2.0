@@ -79,6 +79,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Hand Mirror"
 	path = /obj/item/handmirror
 
+/datum/loadout_item/portable_hookah
+	name = "Portable Hookah"
+	path = /obj/item/portable_hookah
+	triumph_cost = 2
+
 //TOOLS
 
 /datum/loadout_item/bauernwehr
