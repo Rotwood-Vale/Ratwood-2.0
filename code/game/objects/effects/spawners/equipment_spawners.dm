@@ -511,7 +511,7 @@
 		/obj/item/clothing/suit/roguetown/armor/plate/baotha = 10,
 		/obj/item/clothing/under/roguetown/platelegs/baotha = 10,
 		/obj/item/clothing/wrists/roguetown/bracers/baotha = 10,
-		/obj/item/rogueweapon/whip/spiderwhip/baotha = 10,
+		/obj/item/rogueweapon/whip/baotha = 10,
 		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha
