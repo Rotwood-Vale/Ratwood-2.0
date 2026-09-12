@@ -51,12 +51,6 @@
 			to_chat(user, span_warning("You cannot enchant this item."))
 			revert_cast()
 			return FALSE  
-		var/datum/component/magic_item/M = I.GetComponent(/datum/component/magic_item)
-		if(M)
-			if(length(M.magical_effects) >= M.enchanting_capacity)
-				to_chat(user, span_warning("This item is already enchanted to its full capacity."))
-				revert_cast()
-				return FALSE
 		var/enchant_type = input(user, "Select the type of enchantment you want to apply:", "Enchant Weapon") as anything in enchant_types
 		if(!enchant_type)
 			return
