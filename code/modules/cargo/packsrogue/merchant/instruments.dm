@@ -89,3 +89,18 @@
 	name = "Psyaltery"
 	cost = 30
 	contains = list(/obj/item/rogue/instrument/psyaltery)
+
+/datum/supply_pack/rogue/instruments/harpsichord
+	name = "Harpsichord"
+	cost = 90
+	contains = list(/obj/item/rogue/instrument/harpsichord)
+
+/datum/supply_pack/rogue/instruments/psyaxophone
+	name = "Psyaxophone"
+	cost = 60
+	contains = list(/obj/item/rogue/instrument/psyaxophone)
+
+/datum/supply_pack/rogue/instruments/xylixaphone
+	name = "Xylixaphone"
+	cost = 30
+	contains = list(/obj/item/rogue/instrument/xylixaphone)

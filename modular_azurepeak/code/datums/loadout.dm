@@ -2486,6 +2486,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/rogue/instrument/harp
 	triumph_cost = 1
 
+/datum/loadout_item/harpsichord
+	name = "Harpsichord"
+	path = /obj/item/rogue/instrument/harpsichord
+	triumph_cost = 1
+
 /datum/loadout_item/hurdygurdy
 	name = "Hurdy-Gurdy"
 	path = /obj/item/rogue/instrument/hurdygurdy
@@ -2504,6 +2509,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/psyaltery
 	name = "Psyaltery"
 	path = /obj/item/rogue/instrument/psyaltery
+	triumph_cost = 1
+
+/datum/loadout_item/psyaxophone
+	name = "Psyaxophone"
+	path = /obj/item/rogue/instrument/psyaxophone
 	triumph_cost = 1
 
 /datum/loadout_item/shamisen
@@ -2525,6 +2535,12 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Vocal Talisman"
 	path = /obj/item/rogue/instrument/vocals
 	triumph_cost = 1
+
+/datum/loadout_item/xylixaphone
+	name = "Xylixaphone"
+	path = /obj/item/rogue/instrument/xylixaphone
+	triumph_cost = 1
+
 
 // Unique stuff that doesn't quite fit anywhere else.
 
