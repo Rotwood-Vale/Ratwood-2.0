@@ -1,0 +1,4 @@
+author: "RadiantFlash7"
+delete-after: True
+changes:
+  - balance: "Only a single enchantment can trigger before a cooldown applies to all other active enchantments that use cooldowns."
