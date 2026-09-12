@@ -71,8 +71,22 @@
 		headshot_link = null
 
 	// Gnolls should not inherit player-authored social metadata from their base slot.
+	headshot_link = null
+	flavortext = null
+	ooc_notes = null
 	rumour = null
 	noble_gossip = null
+	nsfwflavortext = null
+	nsfw_ooc_extra_img = null
+	nsfw_ooc_extra_img_link = null
+	song_artist = null
+	song_title = null
+	erpprefs = null
+	img_gallery = list()
+	nsfw_img_gallery = list()
+	ooc_extra = null
+	ooc_extra_img = null
+	ooc_extra_img_link = null
 
 	if(status_traits)
 		for(var/trait in status_traits.Copy())
@@ -89,7 +103,9 @@
 
 	var/datum/gnoll_prefs/prefs = client.prefs.gnoll_prefs
 
-	// Gnolls are assigned their own subclass statlines later in equip flow; wipe inherited statpack roll during initial setup only.
+	// We will be ignoring the slot's statpack in favor of what's set in our Gnoll Preferences.
+	statpack = prefs.gnoll_statpack
+
 	if(initial_setup)
 		roll_stats()
 	refresh_live_vocal_preferences()
@@ -98,6 +114,8 @@
 
 	if(prefs.gnoll_pronouns)
 		pronouns = prefs.gnoll_pronouns
+
+	voice_color = prefs.gnoll_voice_color
 
 	icon_state = prefs.pelt_type || "firepelt"
 	dna?.species?.custom_base_icon = prefs.pelt_type || "firepelt"
@@ -153,6 +171,25 @@
 	add_mob_descriptor(prefs.descriptor_voice || /datum/mob_descriptor/voice/growly)
 	add_mob_descriptor(prefs.descriptor_muzzle || /datum/mob_descriptor/face/gnoll/long_muzzle)
 	add_mob_descriptor(prefs.descriptor_expression || /datum/mob_descriptor/face_exp/gnoll/alert)
+
+	// Copy gnoll flavortext to gnoll mob
+	headshot_link = prefs.headshot_link
+	flavortext = prefs.flavortext
+	ooc_notes = prefs.ooc_notes
+	rumour = prefs.rumour
+	noble_gossip = prefs.noble_gossip
+	nsfwflavortext = prefs.nsfwflavortext
+	nsfw_ooc_extra_img = prefs.nsfw_ooc_extra_img
+	nsfw_ooc_extra_img_link = prefs.nsfw_ooc_extra_img_link
+	song_artist = prefs.song_artist
+	song_title = prefs.song_title
+	erpprefs = prefs.erpprefs
+	img_gallery = prefs.img_gallery
+	nsfw_img_gallery = prefs.nsfw_img_gallery
+	ooc_extra = prefs.ooc_extra
+	ooc_extra_img = prefs.ooc_extra_img
+	ooc_extra_img_link = prefs.ooc_extra_img_link
+
 	return TRUE
 
 /mob/living/carbon/human/proc/reset_gnoll_sprite_scale()
