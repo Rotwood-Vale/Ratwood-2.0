@@ -313,7 +313,7 @@
 	icon_state = "jackchain"
 	item_state = "jackchain"
 	armor = ARMOR_BRIGANDINE
-	max_integrity = ARMOR_INT_SIDE_LEATHER // Make it slightly worse
+	max_integrity = ARMOR_INT_SIDE_IRON// less expensive than proper brig bracers so less integ
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
