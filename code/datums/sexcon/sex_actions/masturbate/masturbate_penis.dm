@@ -36,6 +36,8 @@
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] [chosen_verb]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.generic_sex_noise()
+		if(user.client.prefs.erp_hearts)
+			do_onomatopoeia(user)
 
 	user.sexcon.perform_sex_action(user, 2, 0, TRUE)
 
