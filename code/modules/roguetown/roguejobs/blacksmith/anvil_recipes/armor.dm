@@ -545,11 +545,6 @@
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/iron
 	display_category = ITEM_CAT_ARMOR_BRACERS
 
-/datum/anvil_recipe/armor/iron/jackchain
-	name = "Jack Chain, Iron"
-	created_item = /obj/item/clothing/wrists/roguetown/bracers/jackchain
-	display_category = ITEM_CAT_ARMOR_BRACERS
-
 /datum/anvil_recipe/armor/iron/boot
 	name = "Light Plated Boots, Iron"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/iron
@@ -776,6 +771,11 @@
 /datum/anvil_recipe/armor/steel/maillebracers
 	name = "Chainsleeves, Steel"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain
+
+/datum/anvil_recipe/armor/steel/jackchain
+	name = "Jack Chain, Steel"
+	created_item = /obj/item/clothing/wrists/roguetown/bracers/jackchain
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/steel/helmetnasal
 	name = "Nasal Helmet, Steel"

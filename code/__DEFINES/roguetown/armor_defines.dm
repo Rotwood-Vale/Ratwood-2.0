@@ -27,8 +27,9 @@
 #define ARMOR_INT_CHEST_PLATE_BLACKSTEEL 600
 #define ARMOR_INT_CHEST_PLATE_BRONZE 300
 #define ARMOR_INT_CHEST_PLATE_STEEL 500
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 400
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER 60 //Deducted from Light AC brigandine parts, added to Heavy AC brigandine parts.
 #define ARMOR_INT_CHEST_PLATE_STEELLIGHT 450
-#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350
 #define ARMOR_INT_CHEST_PLATE_PSYDON 500
 #define ARMOR_INT_CHEST_PLATE_IRON 375
 #define ARMOR_INT_CHEST_PLATE_IRONLIGHT 325
@@ -124,6 +125,9 @@
 #define ARMOR_LEATHER_STUDDED list("blunt" = 80, "slash" = 80, "stab" = 60, "piercing" = 40, "fire" = 0, "acid" = 0) // Pseudo metallic armor therefore worse vs blunt and piercing
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
+
+// BRIGANDINE — All brigandine parts. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!
+#define ARMOR_BRIGANDINE list("blunt" = 70, "slash" = 90, "stab" = 40, "piercing" = 70, "fire" = 0, "acid" = 0)
 
 // BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like.
 #define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 70, "piercing" = 40, "fire" = 50, "acid" = 0)
