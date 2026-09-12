@@ -288,3 +288,28 @@
   - rscadd: Add velvet dress and noble dress crafting recipes.
   - balance: The Tailor now gets the "Efficient Weaver" trait exclusive to the job,
       allowing them to make cloth on a loom from 1 fibers instead of 2.
+2026-09-11:
+  maaacha:
+  - rscadd: Var on jobs for checking if they should have pref virtues
+  - bugfix: Made it so that skeletons no longer get pref virtues
+  wikimody:
+  - rscadd: Visseir stasis now remeber whether you were up or down when spell was
+      cast
+  - balance: 'INCREDIBLE, IMPROPABLE, IMPOSIBLE ABSOLVER UPSCALE: +1 miracle skill'
+  zeroisthebiggay:
+  - bugfix: skeleton voicepacks
+  - bugfix: skeleton vocal barks
+2026-09-12:
+  Gug1234:
+  - bugfix: TRAIT_WEAPONLESS no longer blocks the use of surgical tools. Disciple
+      aboteers can now sign their arrival slips without needing someone else to cut
+      them.
+  MrShibaa:
+  - rscadd: Two new traits, Journey End (gets stronger as they get closer to death
+      aka fully blood depleted) and Blood Resistance (reduces rate of blood loss)
+  - rscadd: Mistwalker a unique Kazen themed Wretch.
+  RadiantFlash7:
+  - balance: Only a single enchantment can trigger before a cooldown applies to all
+      other active enchantments that use cooldowns.
+  SirSwagmeyer:
+  - bugfix: fixed Matthios dagger penetrating all armor
