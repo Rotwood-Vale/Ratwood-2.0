@@ -89,7 +89,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/edelay_type = 1 //if 1, can be moving while equipping (for helmets etc)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
-	var/breakouttime = 0 // str 20 breaks out on this instead of struggling for slipouttime
+	var/breakouttime = 0 // str 15 breaks out on this instead of struggling for slipouttime
 	var/slipouttime = 0
 	var/legcuff_slowdown = 0 //movespeed slowdown while worn as legcuffs, 0 = none
 
