@@ -523,10 +523,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	var/mob/living/carbon/human/victim = remnant.fed_from
 	qdel(remnant)
-	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 1 MINUTE."))
+	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 30 SECONDS."))
 	victim.playsound_local(victim, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
-	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 1 MINUTE TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 1 MINUTES)
+	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 30 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 30 SECONDS)
 
 /proc/sleepcurse(mob/living/user, mob/living/victim)
 	if(QDELETED(victim) || !ishuman(victim))
@@ -755,6 +755,75 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		else
 			target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
+
+/datum/ritual/transmutation/summonfuge
+	name = "Summon Fuge"
+	desc = "Conjure a machine to pull items in from other realms. Requires a dark crystal."
+	center_requirement = /obj/item/necro_relics/necro_crystal
+	center_desc = "a dark crystal"
+	is_cultist_ritual = TRUE
+	research_cost = 5
+
+/datum/ritual/transmutation/summonfuge/invoke(mob/living/user, turf/center)
+	var/datum/effect_system/spark_spread/S = new(center)
+	S.set_up(1, 1, center)
+	S.start()
+	new /obj/structure/fuge(center)
+
+/obj/structure/fuge
+	name = "fuge"
+	desc = ""
+	icon = 'icons/effects/clan.dmi'
+	icon_state = "teleport"
+	density = TRUE
+	anchored = TRUE
+	max_integrity = 300
+	var/busy = FALSE
+	var/list/recipes_made = list()
+	// list(name, typepath, time 2 produce, aspect, & if unrepeatable)
+	var/static/list/recipes = list(
+		list("Steel Ingot", /obj/item/ingot/steel, 20 SECONDS, null, FALSE),
+		list("Snow Scythe (Bite)", /obj/item/rogueweapon/spear/bite, 90 SECONDS, "bite", TRUE),
+		list("Mortal Blade (Rot)", /obj/item/rogueweapon/sword/sabre/rot, 90 SECONDS, "rot", TRUE),
+		list("Forgotten Tool (Toil)", /obj/item/rogueweapon/mace/maul/toil, 90 SECONDS, "toil", TRUE),
+		list("Madman Blade (Noise)", /obj/item/rogueweapon/sword/long/noise, 90 SECONDS, "noise", TRUE),
+		list("Slave Knife (Blood)", /obj/item/rogueweapon/huntingknife/idagger/steel/blood, 90 SECONDS, "blood", TRUE),
+		list("Astrata-Touched Dagger (Pitch)", /obj/item/rogueweapon/huntingknife/idagger/steel/pitch, 90 SECONDS, "pitch", TRUE),
+	)
+
+/obj/structure/fuge/attack_hand(mob/living/user)
+	if(!is_zizo(user))
+		return ..()
+	if(busy)
+		to_chat(user, span_warning("IT'S WORKING!!! WAIT!!!"))
+		return
+	var/list/menu = list()
+	for(var/list/Rtype in recipes)
+		if(Rtype[4] && !(Rtype[4] in GLOB.zizo_bestowed))
+			continue
+		if(Rtype[5] && (Rtype[2] in recipes_made))
+			continue
+		menu["[Rtype[1]] - [Rtype[3] / 10] seconds"] = Rtype
+	if(!length(menu))
+		return
+	var/choice = tgui_input_list(user, "PRODUCE AN ITEM", "FUGE", menu)
+	if(!choice || busy)
+		return
+	var/list/Rtype = menu[choice]
+	busy = TRUE
+	icon_state = "teleport_trigger"
+	visible_message(span_danger("The fuge begins production!"))
+	addtimer(CALLBACK(src, PROC_REF(finish_pull), Rtype[2], Rtype[5]), Rtype[3])
+
+/obj/structure/fuge/proc/finish_pull(spawn_type, unrepeatable)
+	busy = FALSE
+	icon_state = "teleport"
+	if(unrepeatable)
+		recipes_made |= spawn_type
+	var/atom/produced = spawn_type
+	new spawn_type(get_turf(src))
+	visible_message(span_danger("The fuge disgorges [initial(produced.name)]!"))
+	playsound(src, 'sound/magic/blink.ogg', 40, TRUE)
 
 /datum/ritual/transmutation/summonweapon
 	name = "Summon Weapons"
