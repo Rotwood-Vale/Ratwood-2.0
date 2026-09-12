@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Frostbite status no longer drains 5 stamina per tick."
