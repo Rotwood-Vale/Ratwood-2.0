@@ -920,7 +920,7 @@
 	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
 		var/mob/living/M = target
 		M.apply_damage(10, BURN)
-		M.adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder) // weaker then silver version
+		M.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/blessed) // weaker then silver version
 		M.ignite_mob()
 		visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 
@@ -932,13 +932,15 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
-	is_silver = TRUE
 
 /obj/projectile/bullet/reusable/sling_bullet/silver/on_hit(atom/target)
 	. = ..()
 	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
 		var/mob/living/M = target
+		M.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
+		M.ignite_mob()
 		M.apply_damage(20, BURN)
+		visible_message(span_warning("[target] erupts in flames upon being struck by [src]!"))
 
 /obj/projectile/bullet/reusable/sling_bullet/silverblessed
 	name = "blessed silver sling bullet"
@@ -948,14 +950,14 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
-	is_silver = TRUE
+
 
 /obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
 	. = ..()
 	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
 		var/mob/living/M = target
 		M.apply_damage(30, BURN)
-		M.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
+		M.adjust_fire_stacks(4, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 		M.ignite_mob()
 		visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 
