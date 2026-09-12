@@ -42,6 +42,19 @@
 			//passively heal even wounds with no passive healing
 			heal_wounds(3) // Check how many ticks we've passed then heal them based on the amount passed. (1 tick = 1, 2 ticks = 2, etc)
 
+	/// ENDVRE AS HE DOES.
+	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+		handle_wounds()
+		//passively heal wounds, when you're in trouble..
+		if(blood_volume > BLOOD_VOLUME_SURVIVE)
+			for(var/datum/wound/wound as anything in get_wounds())
+				wound.heal_wound(0.6)
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(0.4)
+
+	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
+		handle_passive_blood()
+
 	if(QDELETED(src)) // diseases can qdel the mob via transformations
 		return
 
@@ -81,6 +94,28 @@
 
 	if(stat != DEAD)
 		return 1
+
+/mob/living/proc/handle_passive_blood()
+	#define MAX_PASSIVE_BLOOD_HEAL	10
+	#define MIN_PASSIVE_BLOOD_HEAL	0
+
+	var/passive_regen_rate = MIN_PASSIVE_BLOOD_HEAL
+	if(nutrition <= NUTRITION_LEVEL_HUNGRY)
+		passive_regen_rate -= 5
+	else
+		passive_regen_rate += 5
+
+	if(hydration <= HYDRATION_LEVEL_THIRSTY)
+		passive_regen_rate -= 5
+	else
+		passive_regen_rate += 5
+
+	passive_regen_rate = CLAMP(passive_regen_rate, MIN_PASSIVE_BLOOD_HEAL, MAX_PASSIVE_BLOOD_HEAL)
+
+	blood_volume += passive_regen_rate
+
+	#undef MAX_PASSIVE_BLOOD_HEAL
+	#undef MIN_PASSIVE_BLOOD_HEAL
 
 /mob/living/proc/check_drowning()
 	if(istype(loc, /turf/open/water))
