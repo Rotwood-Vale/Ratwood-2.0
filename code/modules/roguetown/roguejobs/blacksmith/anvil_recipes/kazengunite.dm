@@ -17,28 +17,28 @@
 	name = "Kabuto (+1 Steel, +1 Cured Leather)"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/kabuto
-
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/kazengunite/halfmask
 	name = "Soldier's Half-Mask"
 	created_item = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
-
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/kazengunite/gorget
 	name = "Kazengunite Gorget"
 	created_item = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
-
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/kazengunite/samsibsa
 	name = "Samsibsa Scaleplate (+1 Half-Plate, Steel, +1 Steel, +2 Cured Leather)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate, /obj/item/ingot/steel, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/samsibsa
-
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/kazengunite/kote
 	name = "Jjajeungna Gauntlets"
 	created_item = /obj/item/clothing/gloves/roguetown/plate/kote
-
+	display_category = ITEM_CAT_ARMOR_GLOVES
 
 /datum/anvil_recipe/kazengunite/ssangsudo
 	name = "Ssangsudo"
@@ -46,3 +46,4 @@
 	i_type = "Weapons"
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+	display_category = ITEM_CAT_WEAPONS_SWORDS
