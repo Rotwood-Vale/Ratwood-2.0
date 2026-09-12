@@ -1,0 +1,315 @@
+2026-09-01:
+  kimesik:
+  - balance: Eastern Warrior gets Enduring.
+2026-09-02:
+  zoktiik:
+  - balance: Gnolls now have baseline sneaking and better crafting skills. Gnolls
+      now have an unlocked right back slot, as well as a satchel to go with it. Mind,
+      the right back slot does not allow for larger storage like backpacks.
+  - balance: On SNEAK intent, Gnolls produce a far quieter, more indistinct speech
+      sound when talking.
+  - rscadd: Added a "Remember Your Prey" verb for Gnolls that pulls up their current
+      target's flavortext window, allowing them to view that target's notes before
+      actually finding them in-person.
+2026-09-03:
+  CameronWoof:
+  - balance: Fire Cascade and Firewalker can no longer be learned
+  Lezerchil:
+  - bugfix: 'do_dodge should work on simplemobs too.
+
+      :cl:'
+  MickDick1:
+  - balance: Gave Arbalist Sleuth
+  RadiantFlash7:
+  - bugfix: Dustdevils won't spawn inside the town on DT
+  UntoldTactics:
+  - balance: City watch armor nerfed by 50 points, it now matches brigandine integrity.
+      City Watch helmet now offers full head coverage.
+  - image: New sprites for the City Watch's helmets and armor.
+  Xander3359:
+  - balance: Harpies can now move while taking flight.
+  - balance: Harpies can now move down z levels faster while in flight, and can move
+      while doing so
+  - rscadd: Adds footwraps and a padded/leather version
+  hugmeorelse:
+  - admin: Added a POV Log tab that rebuilds a round from one player's perspective,
+      with actor blocks, highlights, filters and focus mode
+  - admin: Seen logs now record each witness with their distance and how they perceived
+      the event
+  - admin: Deaths, dismemberment, critical wounds, critical knockouts, dodges and
+      parries are now logged
+  - admin: Attacks record the zone that was aimed at
+  - admin: Typing indicator entries record why typing stopped and no longer go into
+      the attack log file (partially works)
+  - bugfix: Fixed shove logs printing their description in the weapon slot
+  - bugfix: sanitized inputs further and addressed some issues involving html encoding
+      with logs
+  - code_imp: Certain log entries are stored as structured dict-like values instead
+      of unstructured strings
+  mushy:
+  - balance: Bards of T2 and above can now play instruments with an occupied offhand.
+  zeroisthebiggay:
+  - spellcheck: renamed 'vial of Reanimation Elixir' to 'bottle of Reanimation Elixir'
+  - rscadd: custom descriptors for everything
+2026-09-04:
+  Coolgat3:
+  - bugfix: corroded dagger sheathed sprite
+  Xander3359:
+  - bugfix: Fixed Harpy flight not properly channeling
+  ophaq:
+  - bugfix: Fixes ponchos worn on arachnid and lamia races.
+  zeroisthebiggay:
+  - rscadd: toggle for halfkins to swap to mutant colors
+2026-09-05:
+  Kroto-Ker:
+  - bugfix: Oathmarked plate armor sleeves.
+  SirSwagmeyer:
+  - rscadd: Ports repair kits to the game.
+2026-09-06:
+  AzuriteEchelons:
+  - balance: rebalanced the marque shop prices
+  IronDragoon:
+  - rscadd: loadout and craftable decorative versions of mentor hat, robe and flowery
+      robe
+  NPC1314:
+  - rscadd: Replaced old way bushes impact mobility to a slowdown lessened by STR
+  - rscadd: Thornbushes got mechanics now, work like above with extra thorns even
+      if walking. LCK helps against getting stung.
+  - rscadd: Weepwine added a weak slowdown lessened by STR
+  - rscadd: Grass and Kneestinger objects layering fixed
+  - code_imp: Integrated Curse of Dendor and Kneestinger immunity better into the
+      gameplay with Thornbushes and Weepwine
+  - sound: slightly less loud grass crossing
+  - sound: spectacles new breaksound. Tiny reduction in glass shatter volume.
+  - image: minor modifications to weeds for QoL
+  - bugfix: mudcrabs and subtypes got correct animal size and density removed so you
+      dont get bodyblocked by a frog
+  - bugfix: one sidetype of bush had crazy 150 integrity (thorn bush got 35 for reference)
+      due to incorrect inheritance, set to 30
+  RadiantFlash7:
+  - balance: Zizo heretics/necromancers can have limited active dark crystals at one
+      time
+  Xander3359:
+  - code_imp: Cleans up and improves a lot of code related to dodging, parrying and
+      weapon intents
+  - bugfix: Fixed almost every NPC being harder to parry than intended
+  Yuckuza:
+  - bugfix: fixed projectiles passing their entire scaled damage when doing any amount
+      of penetrating damage.
+  zeroisthebiggay:
+  - balance: (steel) fluted armor (made of steel) now requires steel instead of iron
+  - rscadd: adds hammer and tongs to blacksmith apprentice stash
+2026-09-07:
+  Arturlang:
+  - bugfix: rebel team datum making constant timers
+  Yuckuza:
+  - rscadd: Added Gronnic Patron list, a subtype of inhumen that also includes Abyssor
+      and Dendor.
+  - rscadd: "Gronnic roles (Atgervi, Fjall J\xE1rnkl\xE6ddur, and Gronn Itinerant)\
+      \ now permit Abyssor and Dendor as valid patrons."
+  - rscadd: Added Gronnic Patron amulets from Azure Peak for all 6 of the Gronnic
+      Patron Spirits.
+  - image: added missing patron cross wrist on mob icons for the majority of patron
+      amulets.
+  - image: added missing bevor down icon_state for the dreamwalker bevor
+  rockliz:
+  - bugfix: Infernal now uses ,z to avoid conflicting with Hammerholdian's ,h shortcut.
+  zeroisthebiggay:
+  - balance: Removed the fifty-fifty when bumping someone on fire to avoid getting
+      lit on fire.
+  - balance: You need more than two firestacks to halve and pass them to another person,
+      making it so you can't infinitely pass firestacks, e.g. (10 / 2 = 5 / 2 = 2.5
+      / 2 = 1.25 / 2 = 0.625 / 2 = 0.31... etc) If you are below two firestacks, they
+      just won't pass when you bump into someone.
+  - balance: If someone is lying down, they can't ignite you by bumping into you.
+      You also step over them if they're on fire and you walk over them, avoiding
+      getting ignited. Sprinting over their body will still ignite you however.
+  - refactor: Swapped around how the examine block is formatted, putting the headshot
+      & supplementary buttons / info at the bottom. You can toggle this in the toggles
+      menu.
+  - balance: Makes medical EXP scale with wound severity and the time spent sewing.
+  - rscadd: the clap once emote
+  - rscadd: the slow clap emote
+  zoktiik:
+  - bugfix: Fixes some material duplication exploits that involve scissors refunding
+      more material than the item cost to make.
+2026-09-08:
+  JustMeTheIInd:
+  - rscadd: Tanto to Ruma-Clan Gun-in's backpack
+  SillyMoff:
+  - qol: Now druids can sanctify trees on DT and dont drops all clothes in wildshape.
+  UntoldTactics:
+  - rscadd: New light-armor chainmail-esque option for Black Oak's Ranger, new steel
+      elven dagger for Black Oak mercenaries. New light armor variant of the woad
+      elven helm.
+  - rscdel: Elven sallet is removed.
+  - balance: Black Oak Pariah has been rebalanced with a more fitting stat distribution.
+      Their vicious mockery spell has been replaced with darkvision. Pariah climbing
+      skill from journeyman -> expert. Pariah sewing skill from none -> apprentice.
+  - balance: Black oak classes have been given the woodwalker trait.
+  - balance: Black oak mercenaries are given a unique padded gambeson & leather bracers.
+  - balance: Unique woad armor items fireproofed + some have had their integrity increased
+      slightly.
+  - balance: Black oak classes have carpentry increased from apprentice -> journeyman
+      to allow for self-repair of their unique woad armor items.
+  - balance: Elven swordspear has had its weapon sharpenss increased from 150 -> 200.
+      It has also been given a superior peel intent (requiring 4 to peel instead of
+      5)
+  - balance: Elven curveblade has had its blade sharpness increased from 300 -> 350.
+  - balance: Elven longsword sharpness increased from 280 -> 330.
+  - balance: Elven shortsword has had its weapon defense changed from 4 -> 9, its
+      integrity changed from 150 -> 200 and its sharpness/blade integrity changed
+      from 200 -> 300
+  - balance: Elven saber has had its weapon defense decreased from 9 -> 7. It is also
+      one of the few elvish weapons to not recieve a sharpness increase.
+  - balance: Elven weapons are more expensive in the merchants silverface, now.
+  - image: New sprite for the steppesman fur robes, old sprite now utilized by Black
+      Oak mercenaries gambeson. New icons for the elven barbutes, including colorable
+      details for the wings and nasal guard!
+  - refactor: Woad armor now uses the ARMOR_BLACKOAK define, rather than lists. Name
+      of unique black oak foreigner-check trait redone.
+  - balance: Iconoclast flail skill increased from expert -> master
+  Yuckuza:
+  - rscadd: Disciple reworked, +9 weighted statspread with 3 distinct loadout options
+      for pure unarmed, unarmed weapons, and quarterstaffs.
+  - rscadd: Disciples now get TRAIT_CICERONE and journeyman cooking, allowing them
+      to pursue the time-honored tradition of monastic beer brewing. Additionally,
+      alcoholic disciples get TRAIT_DRUNK_HEALING.
+  - rscadd: added TRAIT_WEAPONLESS, a less strict version of TRAIT_CHUNKY_FINGERS
+      which allows tool use but prevents the offensive or defensive use of rogueweapon/
+      class items. Additionally, var/is_tool has been added to the rogueweapon/ parent
+      item.
+  - rscdel: Removed katar and knuckleduster as distinct loadout options from disciple.
+      Now part of the pugilist loadout.
+  - balance: Disciple skin armor changed to LEATHER_STUDDED. Layman's terms, it's
+      not just a worse version of the virtue regenerating skin anymore.
+  - rscadd: Ported golden armor from Azure Peak. Armor that protects against everything
+      but with a dreadfully low integrity that is irreparable and unenchantable.
+  - rscadd: Ported the golden mace, sword, and shield from Azure Peak. These weapons
+      have high force and protective values but possess dreadfully low integrity that
+      is irreparable and unenchantable.
+  - rscadd: Ported the decorated axe, decorated silver khadga, and decorated silver
+      mace. These 3 weapons of Naledi origin are functionally identical to their undecorated
+      steel and silver counterparts, save for a higher sell price.
+  - code_imp: Added var/unenchantable, a Boolean item var that prevents enchanting
+      scrolls from being used on items with it set to TRUE.
+  envoyin:
+  - rscadd: "more ears for revenants\n:cl:\n<!-- Both :cl:'s are required for the\
+      \ changelog to work! You can put your name to the right of the first :cl: if\
+      \ you want to overwrite your GitHub username as author ingame. -->\n<!-- You\
+      \ can use multiple of the same prefix (they're only used for the icon ingame)\
+      \ and delete the unneeded ones. Despite some of the tags, changelogs should\
+      \ generally represent how a player might be affected by the changes rather than\
+      \ a summary of the PR's contents. -->\n<!-- By contributing to this codebase,\
+      \ you confirm that any code and sprites you provide are legal to share and will\
+      \ be licensed under the terms specified in README.md \u2014 AGPLv3 for code\
+      \ and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that\
+      \ the project maintainers are under no obligation to remove any materials that\
+      \ do not violate these licenses. -->"
+  hugmeorelse:
+  - rscdel: LOOC no longer works after death. SLOOC still works while your body is
+      on the floor, but ghosts lose both.
+  - admin: LOOC bans and LOOC mutes no longer apply to SLOOC, and SLOOC has its own
+      temp mute on the player panel.
+  - admin: SLOOC lines in chat now carry separate MUTE SLOOC and MUTE LOOC links.
+  - bugfix: Apostrophes and quotes no longer show up as &#39; when sending SLOOC through
+      the @ prefix.
+  - qol: The SLOOC target list no longer offers NPCs or disconnected players.
+  - qol: The SLOOC target window is no longer titled "Subtle Emote".
+  kimesik:
+  - rscadd: 'Added new Migrant Wave: Hammerholdian Reavers.'
+  - balance: Bandit classes skill adjustments (too many to list).
+  - balance: Bandit classes stat rebalance (everyone is weighted +10 now, or +13 if
+      visible bounty).
+  - balance: Iconoclast devotion regen is Minor, down from Major.
+  - balance: Bandit-Sellsword no longer has subclasses. They get Expert in almost
+      every weapon type instead.
+  wikimody:
+  - rscadd: Second wind (abyssors T0) has now emote incantation (so usable when under
+      water)
+  - balance: some mobility reducing  effects are now clensed instead of stoping the
+      cast of second wind
+  - bugfix: You should no longer have to worry about instantly falling down after
+      using the second wind
+2026-09-09:
+  Shadow-Quill:
+  - rscadd: Eoran buds are now valid for Nudism wear.
+  ophaq:
+  - bugfix: Fixes naledi mask looking weird when worn on belt slot. Now it is hidden
+      completely.
+  sippykot:
+  - rscadd: Added Skincrafting Journeyman to sheltered princess, Novice to inbred
+      princess to match their Sewing skills
+  - rscadd: Gives the sheltered princess a needle, scissors and some fibers
+  - rscadd: Gives the sneaky and inbred princess steel daggers and noble sheathes
+  zeroisthebiggay:
+  - bugfix: you can swift intent objects
+  - bugfix: strong intenting objects now drains stamina
+  - bugfix: fixes humans having an unconditional plus fifty to all their parry roles
+  zoktiik:
+  - sound: Added a short sound effect heard when you send or recieve a message in
+      Subtle LOOC.
+  - qol: Did you know that hearts needed you to "squeeze" them (use the heart item
+      in-hand) before you inserted them, or else they wouldn't work again? Now they
+      get restarted from the "stopped" state (where possible) if you surgically insert
+      them back in, or revive your dead-but-rehearted patient through any means.
+2026-09-10:
+  IronDragoon:
+  - rscadd: Added examine text to show how long someone was disconnected, and admin
+      warning at certain times
+  - admin: lets admins permanently set ghost sprite
+  SirSwagmeyer:
+  - rscadd: Added a variety of new daggers into the game, including the kampfmesser,
+      the rondel, kris, and kukri.
+  UntoldTactics:
+  - rscadd: The Silver amulet of the Ten may be purchased from the merchants silverface/goldface.
+  Yuckuza:
+  - rscadd: Added psydonic volfskull and greatplumed psydonic armet
+  - balance: Creed, stigmata, silver war axe, and psydonic war axe all have 25 force
+      wielded or unwielded since they either pair with a shield or are forced one-handed.
+  - balance: Inspector Daybreak whip minstr changed to 11; Inspector Daybreak loadout
+      now +1 STR/+1 PER
+  - rscadd: Ordinator can now take stigmata and covenant, or covenant and a war axe.
+      They also get a new studded leather cuirbolli vest underarmor and psydonic blacksteel
+      chains in their mask slot.
+  - rscadd: Adjudicator can now take either +2 CON/+2 WIL and the psydonic haubrek
+      or +2 INT/+2 PER and the psydonic cuirass. They also get access to the two new
+      psydonic helms.
+  - balance: 'Confessor stats changed to AP values: 3 SPD, 3 WIL, 2 PER, -1 STR'
+  - balance: 'Arbalist stat weight changed from +10 to +9: 3 PER, 2 STR, 2 WIL'
+  - balance: 'Sojourner statweight changed from +1 to +7: 3 INT, 2 WIL, 1 SPD, 1 PER,
+      -1 CON. (Same as Naledi Hiero -1 speed)'
+  zeroisthebiggay:
+  - balance: TRAIT_IGNOREDAMAGESLOWDOWN lets you ignore the slowdown. from damage.
+      specifically when you take damage
+  - rscadd: Remaining duration is now displayed on status effects as a countdown,
+      except things like thirsty / hungry.
+  zoktiik:
+  - rscadd: Add velvet dress and noble dress crafting recipes.
+  - balance: The Tailor now gets the "Efficient Weaver" trait exclusive to the job,
+      allowing them to make cloth on a loom from 1 fibers instead of 2.
+2026-09-11:
+  maaacha:
+  - rscadd: Var on jobs for checking if they should have pref virtues
+  - bugfix: Made it so that skeletons no longer get pref virtues
+  wikimody:
+  - rscadd: Visseir stasis now remeber whether you were up or down when spell was
+      cast
+  - balance: 'INCREDIBLE, IMPROPABLE, IMPOSIBLE ABSOLVER UPSCALE: +1 miracle skill'
+  zeroisthebiggay:
+  - bugfix: skeleton voicepacks
+  - bugfix: skeleton vocal barks
+2026-09-12:
+  Gug1234:
+  - bugfix: TRAIT_WEAPONLESS no longer blocks the use of surgical tools. Disciple
+      aboteers can now sign their arrival slips without needing someone else to cut
+      them.
+  MrShibaa:
+  - rscadd: Two new traits, Journey End (gets stronger as they get closer to death
+      aka fully blood depleted) and Blood Resistance (reduces rate of blood loss)
+  - rscadd: Mistwalker a unique Kazen themed Wretch.
+  RadiantFlash7:
+  - balance: Only a single enchantment can trigger before a cooldown applies to all
+      other active enchantments that use cooldowns.
+  SirSwagmeyer:
+  - bugfix: fixed Matthios dagger penetrating all armor

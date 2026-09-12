@@ -17,7 +17,7 @@
 		revert_cast()
 		return FALSE
 
-	var/message = input(user, "You make a connection. What are you trying to say?")
+	var/message = sanitize(input(user, "You make a connection. What are you trying to say?"))
 	if(!message)
 		revert_cast()
 		return FALSE
@@ -394,7 +394,7 @@
 	illusory_familiar.fully_replace_character_name(null, user.name)
 
 	// Schedule deletion safely with global context
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/delete_illusory_fam, illusory_familiar, user), 200)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delete_illusory_fam), illusory_familiar, user), 200)
 
 	return TRUE
 

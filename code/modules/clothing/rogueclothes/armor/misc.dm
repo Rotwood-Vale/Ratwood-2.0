@@ -59,7 +59,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/workervest/Initialize(mapload)
 	color = pick("#94b4b6", "#ba8f9e", "#bd978c", "#92bd8c", "#c7c981")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/armor/silkcoat
 	name = "silk coat"
@@ -78,7 +78,6 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
 	max_integrity = ARMOR_INT_CHEST_CIVILIAN
-	sellprice = 50
 	armor_class = ARMOR_CLASS_LIGHT
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES

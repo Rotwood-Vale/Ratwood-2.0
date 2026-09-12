@@ -28,7 +28,7 @@
 
 /obj/structure/roguewindow/Initialize(mapload)
 	update_icon()
-	..()
+	return ..()
 
 /obj/structure/roguewindow/can_wallpress()
 	return wallpress && !climbable && density
@@ -138,7 +138,7 @@
 	lockdir = dir
 
 /obj/structure/roguewindow/openclose/Initialize(mapload)
-	..()
+	. = ..()
 	lockdir = dir
 	icon_state = base_state
 
@@ -156,7 +156,7 @@
 	lockdir = dir
 
 /obj/structure/roguewindow/openclose/reinforced/Initialize(mapload)
-	..()
+	. = ..()
 	lockdir = dir
 	icon_state = base_state
 
@@ -171,7 +171,7 @@
 	lockdir = dir
 
 /obj/structure/roguewindow/openclose/reinforced/brick/Initialize(mapload)
-	..()
+	. = ..()
 	lockdir = dir
 	icon_state = base_state
 
@@ -206,7 +206,7 @@
 	lockdir = dir
 	icon_state = base_state
 	GLOB.TodUpdate += src
-	..()
+	return ..()
 
 /obj/structure/roguewindow/openclose/Destroy()
 	GLOB.TodUpdate -= src

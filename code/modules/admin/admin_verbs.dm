@@ -13,6 +13,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/hearglobalLOOC,
 	/client/proc/togglespawnmessages,
 	/client/proc/toggle_aghost_invis,
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,
 	/client/proc/admin_move_oasis,
 	/datum/admins/proc/start_vote,
@@ -81,6 +83,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/toggle_aghost_invis, /* lets us choose whether our in-game mob goes visible when we aghost (off by default) */
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/hearallasghost,
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
@@ -101,6 +105,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
+	/client/proc/cmd_admin_set_ic_date,	/*set/clear the IC calendar date override*/
+	/client/proc/cmd_admin_economic_panel,	/*economy inspector: fiscal snapshot, players, blockades, debug ticks*/
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
@@ -424,6 +430,38 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 	aghost_toggle = !aghost_toggle
 	to_chat(src, aghost_toggle ? "Aghosting will now turn your mob invisible." : "Aghost will no longer turn your mob invisible.")
+
+/client/proc/set_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "set ghost image"
+	if(!holder || !prefs)
+		return
+	var/uploaded_file = input(src, "Choose a 32x32 image or gif to use for your admin ghost.", "Set Ghost Image") as null|file
+	if(!uploaded_file)
+		return
+	var/icon/new_icon = new(uploaded_file)
+	if(new_icon.Width() != 32 || new_icon.Height() != 32)
+		new_icon.Scale(32, 32)
+	prefs.admin_ghost_icon = new_icon
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image saved."))
+
+/client/proc/clear_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "clear ghost"
+	if(!holder || !prefs)
+		return
+	prefs.admin_ghost_icon = null
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image cleared."))
+
+/client/proc/apply_admin_ghost_image()
+	var/mob/dead/observer/admin_ghost = mob
+	if(!istype(admin_ghost))
+		return
+	admin_ghost.apply_admin_ghost_image()
 
 /client/proc/admin_ghost()
 	set category = "-Admin-"
@@ -784,7 +822,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!message)
 		return
 
-	L.say(message)
+	L.say(message, forced = "admin speech")
 	log_admin("[key_name(usr)] forced [key_name(L)] at [AREACOORD(L)] to say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(L)] at [AREACOORD(L)] to say \"[message]\""))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

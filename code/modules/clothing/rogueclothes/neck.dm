@@ -310,6 +310,20 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/items/visor.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK)) // adjustable falling buffe for the bevor
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/neck/roguetown/bevor/zizo
+	name = "avantyne bevor"
+	desc = "An avantyne neckguard cut for the medium rite, still protective without becoming impossible to remove."
+	icon_state = "zizobevor"
+	item_state = "zizobevor"
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+
+
+/obj/item/clothing/neck/roguetown/bevor/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
 /obj/item/clothing/neck/roguetown/bevor/iron
 	name = "iron bevor"
 	desc = "A series of iron plates designed to protect the neck."
@@ -361,6 +375,26 @@
 	max_integrity = ARMOR_INT_SIDE_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/clothing/neck/roguetown/gorget/gold
+	name = "golden gorget"
+	desc = "A series of resplendant golden plates designed to protect the neck, traditionally worn atop a jacket or cuirass. The holy sigil between its buckled halves promises to carry the flame of its wearer, no matter what strike's poised its way."
+	icon_state = "goldgorget"
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	grid_height = 96
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/neck/roguetown/gorget/gold/king
+	name = "royal golden gorget"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	sellprice = 300
+	unenchantable = TRUE
 
 /obj/item/clothing/neck/roguetown/gorget/bronze
 	name = "bronze neckguard"
@@ -727,6 +761,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/neck/roguetown/ornateamulet
+	no_loot_taint = TRUE
 	name = "ornate amulet"
 	desc = "A beautiful amulet made of solid gold."
 	icon_state = "ornateamulet"
@@ -903,7 +938,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,2),rand(127,128),rand(254,255)))
 
 /obj/item/clothing/neck/roguetown/psicross/malum/secret/equipped(mob/living/user, slot)
@@ -946,7 +981,7 @@
 	var/active_item
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/Initialize(mapload)
-	..()
+	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(254,255),rand(1,2),rand(1,2)))
 
 /obj/item/clothing/neck/roguetown/psicross/weeping/equipped(mob/living/user, slot)
@@ -1051,6 +1086,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MOUTH
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
+	fiber_salvage = FALSE
 	color = CLOTHING_BLACK
 	muteinmouth = FALSE
 	spitoutmouth = FALSE
@@ -1140,6 +1176,7 @@
 	..()
 
 /obj/item/clothing/neck/roguetown/carved
+	no_loot_taint = TRUE
 	name = "carved amulet"
 	desc = "You shouldn't be seeing this."
 	icon_state = "psycross_w"
@@ -1256,13 +1293,13 @@
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/ten
-	name = "amulet of Ten"
+	name = "amulet of the Ten"
 	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
 	icon_state = "undivided"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/silver/undivided
-	name = "silver amulet of Ten"
+	name = "silver amulet of the Ten"
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50

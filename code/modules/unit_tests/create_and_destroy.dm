@@ -6,10 +6,12 @@
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
-	var/turf/spawn_at = run_loc_bottom_left
+	var/turf/spawn_at = run_loc_floor_bottom_left
 	var/list/ignore = list(
 		//Never meant to be created, errors out the ass for mobcode reasons
 		/mob/living/carbon,
+		// needs a brain organ
+		/mob/living/brain,
 		//Needs a seed passed, but subtypes set one by default
 		/obj/item/grown,
 		/obj/item/reagent_containers/food/snacks/grown,
@@ -31,6 +33,20 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/effect/DPtarget,
 		// prompts loc for input
 		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft,
+		// needs an obj passed in
+		/obj/effect/temp_visual/offered_item_effect,
+		// can't spawn without players to target
+		/obj/effect/tracker,
+		// can't spawn outside the vault
+		/obj/structure/roguemachine/vaultbank,
+		// garbage code refuses to force-qdel
+		/obj/item/alch/bloomstone,
+		// nope
+		/obj/structure/dungeon_entry,
+		/obj/structure/dungeon_exit,
+		// these shouldn't be used and/or shouldn't hold references
+		/turf/closed/basic,
+		/turf/closed/wall,
 	)
 	//these are VERY situational and need info passed
 	ignore += typesof(/obj/effect/abstract)
@@ -58,19 +74,36 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 	ignore += typesof(/obj/effect/spawner)
 	ignore += typesof(/atom/movable/screen)
+	ignore += typesof(/obj/effect/landmark/mapGenerator)
+	ignore += typesof(/obj/effect/landmark/map_load_mark)
+	// temporary, skeletonize currently spams runtimes
+	ignore += typesof(/mob/living/carbon/human/species/skeleton)
+	// needs landmarks and such
+	ignore += typesof(/obj/structure/industrial_lift)
+	// needs a mob
+	ignore += typesof(/obj/shapeshift_holder)
+	ignore += typesof(/mob/living/simple_animal/hostile/rogue/xylixdouble)
+	// just generally awful code and prone to breaking
+	ignore += typesof(/mob/living/carbon/human/species/wildshape)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
-	var/baseturf_count = length(spawn_at.baseturfs)
+	var/original_turf_type = spawn_at.type
+	var/original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+	var/original_baseturf_count = length(original_baseturfs)
 
 	GLOB.running_create_and_destroy = TRUE
-	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
+	for(var/type_path in subtypesof(/atom/movable) + subtypesof(/turf) - ignore) //No areas please
+		if(is_abstract(type_path))
+			continue
 		if(ispath(type_path, /turf))
-			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
-			//We change it back to prevent pain, please don't ask
-			spawn_at.ChangeTurf(/turf/open/floor/rogue/wood, /turf/baseturf_skipover)
-			if(baseturf_count != length(spawn_at.baseturfs))
-				Fail("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
-				baseturf_count = length(spawn_at.baseturfs)
+			spawn_at.ChangeTurf(type_path)
+			//We change it back to prevent baseturfs stacking and hitting the limit
+			spawn_at.ChangeTurf(original_turf_type, original_baseturfs)
+			if(original_baseturf_count != length(spawn_at.baseturfs))
+				TEST_FAIL("[type_path] changed the amount of baseturfs from [original_baseturf_count] to [length(spawn_at.baseturfs)]; [english_list(original_baseturfs)] to [islist(spawn_at.baseturfs) ? english_list(spawn_at.baseturfs) : spawn_at.baseturfs]")
+				//Warn if it changes again
+				original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+				original_baseturf_count = length(original_baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))

@@ -17,13 +17,14 @@
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
+	is_tool = TRUE
 
 /datum/intent/flailthresh
 	name = "thresh"
 	icon_state = "inthresh"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 
@@ -92,6 +93,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_height = 64
 	grid_width = 32
+	is_tool = TRUE
 
 /obj/item/rogueweapon/sickle/examine(mob/user)
 	. = ..()
@@ -146,6 +148,7 @@
 	smeltresult = /obj/item/ingot/iron
 	var/hoe_damage = null //the durability damage recieved for every work cycle
 	var/work_time = 3 SECONDS // the time it takes to make new soil or till soil
+	is_tool = TRUE
 
 /obj/item/rogueweapon/hoe/decrepit
 	name = "decrepit hoe"
@@ -297,7 +300,7 @@
 	icon_state = "inhoe"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /*
@@ -341,6 +344,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
+	is_tool = TRUE
 
 /obj/item/rogueweapon/pitchfork/examine(mob/user)
 	. = ..()
@@ -364,12 +368,13 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	icon = 'icons/roguetown/weapons/64.dmi'
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	icon_state = "cfork"
+	// these sprites are currently missing
+	// icon = 'icons/roguetown/weapons/64.dmi'
+	// icon_state = "cfork"
+	// pixel_y = -16
+	// pixel_x = -16
+	// inhand_x_dimension = 64
+	// inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/pitchfork/blacksteel
@@ -386,7 +391,7 @@
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 

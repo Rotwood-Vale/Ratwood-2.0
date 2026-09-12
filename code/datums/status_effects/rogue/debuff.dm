@@ -181,6 +181,16 @@
 	duration = -1
 	needs_processing = FALSE
 
+/datum/status_effect/debuff/bleeding/on_apply() //mistwalker shitcode, scaling buff as they bleed out
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.apply_status_effect(/datum/status_effect/buff/journey_ending)
+	return ..()
+
+/datum/status_effect/debuff/bleeding/on_remove()
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.remove_status_effect(/datum/status_effect/buff/journey_ending)
+	return ..()
+
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
 	desc = ""
@@ -193,6 +203,16 @@
 	duration = -1
 	needs_processing = FALSE
 
+/datum/status_effect/debuff/bleedingworse/on_apply()
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.apply_status_effect(/datum/status_effect/buff/journey_end)
+	return ..()
+
+/datum/status_effect/debuff/bleedingworse/on_remove()
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.remove_status_effect(/datum/status_effect/buff/journey_end)
+	return ..()
+
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
 	desc = ""
@@ -204,6 +224,16 @@
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
 	duration = -1
 	needs_processing = FALSE
+
+/datum/status_effect/debuff/bleedingworst/on_apply()
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.apply_status_effect(/datum/status_effect/buff/journey_end_final)
+	return ..()
+
+/datum/status_effect/debuff/bleedingworst/on_remove()
+	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
+		owner.remove_status_effect(/datum/status_effect/buff/journey_end_final)
+	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -870,10 +900,11 @@
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = TRUE
 	init_signals()
+	if(isnull(harpy.buckled_mobs))
+		return
 	var/mob/buckled_rider = harpy.buckled_mobs[1]
-	if(!isnull(buckled_rider))
-		buckled_mob = WEAKREF(buckled_rider)
-		buckled_rider.movement_type |= FLYING
+	buckled_mob = WEAKREF(buckled_rider)
+	buckled_rider.movement_type |= FLYING
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -919,7 +950,7 @@
 		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
-	var/mob/buckled_rider = buckled_mob.resolve()
+	var/mob/buckled_rider = buckled_mob?.resolve()
 	if(!isnull(buckled_rider))
 		buckled_rider.movement_type &= ~FLYING
 	buckled_mob = null
@@ -1267,3 +1298,15 @@
 	name = "Musked"
 	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
 	icon_state = "debuff"
+
+/datum/status_effect/debuff/enchantmenttriggered
+	id = "enchantmenttriggered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	duration = -1 // set explicitly when applied, see below
+
+/atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	name = "Enchantment Dormant"
+	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
+	icon_state = "dazed"
+
+

@@ -38,14 +38,14 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
-	candodge = TRUE
+	mob_can_dodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/bladed/smallslash (1).ogg'
 	attack_verb_continuous = "jabs"
 	attack_verb_simple = "jab"
-	dodgetime = 60
+	dodgetime = 6 SECONDS
 	aggressive = 1
 	var/drug_cd
 

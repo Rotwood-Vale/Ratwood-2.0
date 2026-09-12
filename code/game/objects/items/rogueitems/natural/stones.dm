@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 
 /obj/item/natural/rock/Initialize(mapload)
 	icon_state = "stonebig[rand(1,2)]"
-	..()
+	return ..()
 
 
 /obj/item/natural/rock/Crossed(mob/living/L)
@@ -435,6 +435,9 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			if(has_world_trait(/datum/world_trait/malum_diligence))
 				mineralAmt += rand(1,2)
 			new mineralType(src.loc, mineralAmt)
+		if(prob(15))
+			var/obj/item/Geode = new /obj/item/roguegem/randomgeode(src.loc)
+			playsound(get_turf(src), Geode.drop_sound, 100)
 		for(var/i in 1 to rand(1,4))
 			var/obj/item/S = new /obj/item/natural/stone(src.loc)
 			S.pixel_x = rand(25,-25)
@@ -442,7 +445,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		record_round_statistic(STATS_ROCKS_MINED)
 	qdel(src)
 
-/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir = null, armor_penetration = 0)
 	. = ..()
 	if(.) //damage received
 		if(damage_amount > 10)

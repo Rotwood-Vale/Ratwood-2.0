@@ -497,7 +497,7 @@
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.warden_area))
+	if(!istype(our_area) || !(our_area.warden_area))
 		owner.remove_status_effect(/datum/status_effect/buff/wardenbuff)
 
 /datum/status_effect/buff/wardenbuff/on_apply()
@@ -522,7 +522,7 @@
 /datum/status_effect/buff/barkeepbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.tavern_area))
+	if(!istype(our_area) || !(our_area.tavern_area))
 		owner.remove_status_effect(/datum/status_effect/buff/barkeepbuff)
 
 /atom/movable/screen/alert/status_effect/buff/barkeepbuff
@@ -539,7 +539,7 @@
 /datum/status_effect/buff/guardbuffone/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.town_area))
+	if(!istype(our_area) || !(our_area.town_area))
 		owner.remove_status_effect(/datum/status_effect/buff/guardbuffone)
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
@@ -556,7 +556,7 @@
 /datum/status_effect/buff/dungeoneerbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.cell_area))
+	if(!istype(our_area) || !(our_area.cell_area))
 		owner.remove_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 
 /datum/status_effect/buff/dungeoneerbuff/on_apply()
@@ -581,7 +581,7 @@
 /datum/status_effect/buff/viewingbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.viewing_area))
+	if(!istype(our_area) || !(our_area.viewing_area))
 		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
@@ -606,7 +606,7 @@
 /datum/status_effect/debuff/holy_blessing/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
+	if(!istype(our_area) || !(our_area.holy_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
 
 /atom/movable/screen/alert/status_effect/holy_empowerement
@@ -1593,6 +1593,40 @@
 	playsound(L, pick(sounds), 50, TRUE)
 
 	L.AdjustKnockdown(2)
+
+// escalating buffs applied on bleed out tied to TRAIT_JOURNEYS_END, currently only used by mistwalker
+/atom/movable/screen/alert/status_effect/buff/journey_ending
+	name = "An end in sight..."
+	desc = "Is this to be my story?"
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/journey_end
+	name = "The chapter's closing."
+	desc = "Treading the fine line of lyfe and death."
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/journey_end_final
+	name = "The final act!"
+	desc = "A death worthy of song!"
+	icon_state = "buff"
+
+/datum/status_effect/buff/journey_ending
+	id = "journey_ending"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
+	effectedstats = list(STATKEY_SPD = 3, STATKEY_WIL = 2)
+	duration = -1
+
+/datum/status_effect/buff/journey_end
+	id = "journey_end"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
+	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 5, STATKEY_WIL = 2, STATKEY_CON = 2)
+	duration = -1
+
+/datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
+	id = "journey_end_final"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
+	effectedstats = list(STATKEY_STR = 5, STATKEY_SPD = 8, STATKEY_WIL = 5, STATKEY_CON = 5)
+	duration = -1
 
 /datum/status_effect/buff/stagehands_silence
 	id = "Stagehand"

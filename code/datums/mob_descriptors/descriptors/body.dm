@@ -92,3 +92,14 @@
 
 /datum/mob_descriptor/body/burly
 	name = "Burly"
+
+/datum/mob_descriptor/body/custom
+	name = "Custom Body"
+	custom_index = 8
+
+/datum/mob_descriptor/body/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/body/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text

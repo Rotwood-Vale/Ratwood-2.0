@@ -50,5 +50,5 @@
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/Initialize(mapload)
-	..()
+	. = ..()
 	tamed()

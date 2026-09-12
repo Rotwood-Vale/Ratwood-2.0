@@ -22,7 +22,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_citywatch.ogg'
-	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
+	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH) // No evil shall escape my sight
 	job_subclasses = list(
 		/datum/advclass/watchcaptain/watchcaptain
 	)
@@ -31,13 +31,13 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/outfit/job/roguetown/watchcaptain
-	head = /obj/item/clothing/head/roguetown/helmet/citywatch
+	head = /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	cloak = /obj/item/clothing/cloak/citywatchcaptain
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	belt = /obj/item/storage/belt/rogue/leather
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
+	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -53,9 +53,9 @@
 	category_tags = list(CTAG_SHERIFF)
 	subclass_stats = list(
 		STATKEY_STR = 1,//will people accept a combat roll with less than +2 in strength? Who knows
-		STATKEY_INT = 2,
+		STATKEY_INT = 1,
 		STATKEY_CON = 1,
-		STATKEY_PER = 3, //eye for Crime
+		STATKEY_PER = 2, //eye for Crime
 		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(

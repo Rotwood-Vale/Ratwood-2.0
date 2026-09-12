@@ -16,3 +16,9 @@
 	name = "Z-level baseturf placeholder"
 	desc = ""
 	baseturfs = /turf/baseturf_bottom
+
+// like /turf/baseturf_bottom, but resolves into openspace unless there is no level beneath us, otherwise baseturf
+/turf/baseturf_openspace
+	name = "Openspace baseturf placeholder"
+	desc = ""
+	baseturfs = /turf/baseturf_openspace
