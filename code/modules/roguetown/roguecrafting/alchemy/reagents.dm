@@ -21,7 +21,7 @@
 		M.set_blood_volume(min(M.get_blood_volume()+15, BLOOD_VOLUME_NORMAL))
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
-		M.heal_wounds(3) //at a motabalism of .5 U a tick this translates to 120WHP healing with 20 U Most wounds are unsewn 15-100. This is powerful on single wounds but rapidly weakens at multi wounds.
+		M.heal_wounds(3) //at a metabolism of .5 U a tick this translates to 120WHP healing with 20 U Most wounds are unsewn 15-100. This is powerful on single wounds but rapidly weakens at multi wounds.
 	if(volume > 0.99)
 		M.adjustBruteLoss(-1.75*REM, 0)
 		M.adjustFireLoss(-1.75*REM, 0)
@@ -94,6 +94,8 @@
 	alpha = 173
 
 /datum/reagent/medicine/stampot/on_mob_life(mob/living/carbon/M)
+	if(volume >= 60)
+		M.reagents.remove_reagent(/datum/reagent/medicine/stampot, 2) //No walking around having pre-buffed on it to have infinite stamina for Baothans.
 	if(volume > 0.99)
 		M.stamina_add(-20)
 	..()
@@ -107,6 +109,8 @@
 	metabolization_rate = REAGENTS_METABOLISM
 
 /datum/reagent/medicine/strongstam/on_mob_life(mob/living/carbon/M)
+	if(volume >= 60)
+		M.reagents.remove_reagent(/datum/reagent/medicine/strongstam, 2) //No walking around having pre-buffed on it to have infinite stamina for Baothans.
 	if(volume > 0.99)
 		M.stamina_add(-50)
 	..()
