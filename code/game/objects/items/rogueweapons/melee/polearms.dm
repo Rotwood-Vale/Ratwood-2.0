@@ -600,6 +600,7 @@
 	to drag Grimoria's false idols into the dirt."
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "zizobillhook"
+	unenchantable = TRUE
 	max_blade_int = 300
 	max_integrity = 400
 	force = 30
@@ -966,7 +967,7 @@
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic
 	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
 	force = 25
 	force_wielded = 25
@@ -1051,7 +1052,6 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
-	sellprice = 60
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()
@@ -1137,7 +1137,6 @@
 	icon_state = "polehammer"
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150
-	sellprice = 40
 
 // A worse thrust for weapons specialized in other damage type like cut or blunt
 /datum/intent/spear/thrust/eaglebeak
@@ -1284,6 +1283,7 @@
 	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
 	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
 	icon_state = "zizogsw"
+	unenchantable = TRUE
 	force = 20
 	force_wielded = 40
 	max_blade_int = 500

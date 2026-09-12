@@ -8,6 +8,8 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+	/// Attached proximity monitor, if any (quest parcels/spawn effects use this)
+	var/datum/proximity_monitor/proximity_monitor
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -155,6 +157,11 @@
  * * /turf/Initialize
  * * /turf/open/space/Initialize
  */
+/// Mechanics help lines for the extended examine of machines (ported roguemachines override this).
+/// Not yet surfaced anywhere in Ratwood's examine flow; overrides compile and can be wired later.
+/atom/proc/get_mechanics_examine(mob/user)
+	return list()
+
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -449,8 +456,6 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
-/atom/proc/get_mechanics_examine(mob/user)
-	return list()
 
 //taking in the vanderline update on apperance, name and desc processes
 /atom/proc/vand_update_appearance(updates = ALL)

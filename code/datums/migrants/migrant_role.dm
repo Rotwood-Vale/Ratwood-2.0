@@ -2,6 +2,8 @@
 	abstract_type = /datum/migrant_role
 	/// Name of the role
 	var/name = "MIGRANT ROLE"
+	/// Umbrella category used by systems that group roles (e.g. talkstatue lists every "Adventurer" role together)
+	var/role_category = ""
 	/// Restricts species if the list is not null
 	var/list/allowed_races
 	/// Restricts species on the list
@@ -40,6 +42,7 @@
 /datum/migrant_role/adventurer
 	name = "Adventurer"
 	advclass_cat_rolls = list(CTAG_ADVENTURER = 20)
+	role_category = "Adventurer"
 
 /datum/migrant_role/bandit
 	name = "Bandit"
@@ -49,6 +52,7 @@
 
 /datum/migrant_role/assassin
 	name = "Assassin"
+	role_category = "Adventurer"
 	antag_datum = /datum/antagonist/assassin
 	advclass_cat_rolls = list(CTAG_ASSASSIN = 20)
 
