@@ -353,7 +353,7 @@
 	max_integrity = 150
 	special = /datum/special_intent/shin_swipe
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+/* /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
 	name = "rondel dagger"
 	desc = "This is the traditional sidearm of a knight: a lightweight dagger of solid steel, well-balanced for delivering rapid thrusts that can shuck grapplers like oysters."
 	icon_state = "rondel"
@@ -361,12 +361,13 @@
 	possible_item_intents = list(/datum/intent/dagger/thrust/quick, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
 	wdefense = 4 //Slightly more defense than a regular dagger. Intended to function as a tool for countering grapplers or finishing off armored opponents with broken pieces.
 	smeltresult = /obj/item/ingot/steel
-
+ 
 /datum/intent/dagger/thrust/quick
 	name = "quick thrust"
 	attack_verb = list("thrusts", "shanks")
 	penfactor = 20 //Counts as up to 30-35AP, when factoring in strength-modified damage. 
 	clickcd = 4 //Halved penetration, doubled attack speed. This is either going to be extremely funny, or extremely evil.
+*/
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/kris
 	name = "kris dagger"
