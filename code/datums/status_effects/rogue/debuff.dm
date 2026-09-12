@@ -1257,6 +1257,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
 	duration = -1 // set explicitly when applied, see below
 
+/datum/status_effect/debuff/enchantmenttriggered/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+	
 /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
