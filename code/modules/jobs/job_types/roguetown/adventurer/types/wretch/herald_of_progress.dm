@@ -103,6 +103,9 @@
 	var/datum/weakref/ztratocaster_ref
 
 /obj/effect/proc_holder/spell/self/right_where_it_belongs/cast(list/targets, mob/living/carbon/human/user = usr)
+	if(user.restrained())
+		revert_cast(user)
+		return FALSE
 	var/obj/item/rogue/instrument/ztratocaster/ztratocaster = ztratocaster_ref?.resolve()
 	if(!ztratocaster || QDELETED(ztratocaster))
 		to_chat(user, span_warning("I can no longer feel my [ztratocaster]."))
