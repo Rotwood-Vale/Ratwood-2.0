@@ -79,6 +79,55 @@
 		H.set_blindness(0)
 		wretch_select_bounty(H)
 
+/datum/outfit/job/roguetown/wretch/herald_of_progress/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	var/obj/item/rogue/instrument/ztratocaster/ztratocaster = H.is_holding_item_of_type(/obj/item/rogue/instrument/ztratocaster)
+	if(!ztratocaster)
+		return
+	var/obj/effect/proc_holder/spell/self/right_where_it_belongs/recall_spell = new
+	recall_spell.ztratocaster_ref = WEAKREF(ztratocaster)
+	H.mind.AddSpell(recall_spell)
+
+/obj/effect/proc_holder/spell/self/right_where_it_belongs
+	name = "Right Where It Belongs"
+	desc = "Recall my ztratocaster to an empty hand."
+	recharge_time = 5 MINUTES
+	cooldown_min = 5 MINUTES
+	is_cdr_exempt = TRUE
+	chargetime = 0
+	releasedrain = 0
+	chargedrain = 0
+	antimagic_allowed = TRUE
+	invocation_type = "none"
+	human_req = TRUE
+	var/datum/weakref/ztratocaster_ref
+
+/obj/effect/proc_holder/spell/self/right_where_it_belongs/cast(list/targets, mob/living/carbon/human/user = usr)
+	var/obj/item/rogue/instrument/ztratocaster/ztratocaster = ztratocaster_ref?.resolve()
+	if(!ztratocaster || QDELETED(ztratocaster))
+		to_chat(user, span_warning("I can no longer feel my [ztratocaster]."))
+		revert_cast(user)
+		return FALSE
+	if(user.is_holding(ztratocaster))
+		to_chat(user, span_warning("I'm already holding it."))
+		revert_cast(user)
+		return FALSE
+
+	if(ismob(ztratocaster.loc))
+		var/mob/current_holder = ztratocaster.loc
+		if(!current_holder.transferItemToLoc(ztratocaster, user.drop_location(), TRUE))
+			to_chat(user, span_warning("[ztratocaster] resists my call.")) //this shouldn't really happen
+			revert_cast(user)
+			return FALSE
+	else if(!ztratocaster.remove_item_from_storage(user.drop_location()))
+		ztratocaster.forceMove(user.drop_location())
+
+	if(user.put_in_hands(ztratocaster))
+		ztratocaster.loc.visible_message(span_notice("[ztratocaster] tears through the air into [user]'s waiting hand!"))
+	else
+		ztratocaster.loc.visible_message(span_notice("[ztratocaster] tears through the air and lands at [user]'s feet!"))
+	return TRUE
+
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle
 	associated_skill = /datum/skill/magic/holy
 	miracle = TRUE
@@ -93,6 +142,7 @@
 	devotion_cost = 80
 	zizo_spell = TRUE
 	recharge_time = 200 SECONDS
+	antimagic_allowed = TRUE
 	sound = list('sound/magic/sottovoce.ogg')
 	invocations = list("plays a pulsed, dreadful melodic circuit.")
 	invocation_type = "emote"
@@ -119,6 +169,7 @@
 	associated_skill = /datum/skill/misc/music
 	sound = list('sound/magic/heraldblink.ogg')
 	invocations = list("screeches a short, sharp shock of a chord.")
+	antimagic_allowed = TRUE
 	invocation_type = "emote"
 
 /obj/effect/proc_holder/spell/invoked/blink/staccato/cast(list/targets, mob/living/user = usr)
@@ -138,6 +189,7 @@
 	projectile_type = /obj/projectile/magic/lightning/forzando
 	sound = list('sound/magic/heraldzap.ogg')
 	invocations = list("shreds an electric refrain!")
+	antimagic_allowed = TRUE
 	invocation_type = "emote"
 
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando/cast(list/targets, mob/living/user = usr)
