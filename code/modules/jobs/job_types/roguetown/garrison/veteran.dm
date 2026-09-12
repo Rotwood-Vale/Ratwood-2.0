@@ -463,6 +463,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
 
+	if (H.mind)
+		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
+
 /datum/advclass/veteran/scout
 	name = "Former Scout"
 	tutorial = "You and your unit maneuvered ahead of the main force, ever-watchful for traps and ambushes. You never thought of what would happen should you actually walk into one. You specialize in archery and axes." //Slightly reflavored into a full-on former bogmaster. Dodge-maxxing doesnt work on veteran anyhow.
