@@ -118,7 +118,7 @@
 	..()
 	has_loadout = TRUE
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	shoes = /obj/item/clothing/shoes/roguetown/boots/maille
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
@@ -131,7 +131,7 @@
 
 /datum/outfit/job/roguetown/baron_retainer/duelist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("La Bête (Executioner)", "The Ferentian (Basket-Hilted Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)")
+	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("La Bête (Executioner)")
@@ -140,8 +140,8 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/longcoat, SLOT_CLOAK, TRUE)
 			H.change_stat(STATKEY_STR, 2)
 			H.change_stat(STATKEY_SPD, -2)
-		if("The Ferentian (Basket-Hilted Longsword)")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/etruscan, TRUE)
+		if("The Ferentian (Longsword)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/duelistcape, SLOT_CLOAK, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/duelisthat, SLOT_HEAD, TRUE)
 		if("El Zorro (Rapier)")
@@ -163,6 +163,11 @@
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/caplessgrenzelhofthat, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/stabard/grenzelhoft, SLOT_CLOAK, TRUE)
+		if("The Vagabond (Hwando)")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/mulyeog, TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword/kazengun, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/mentorhat, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/eastcloak2, SLOT_CLOAK, TRUE)
 
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
