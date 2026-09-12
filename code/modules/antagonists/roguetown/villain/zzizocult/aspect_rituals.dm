@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
 	icon_state = "graggardagger"
 	sheathe_icon = "graggardagger"
-	force = 20
+	force = 10
 	max_integrity = 9999
 	max_blade_int = 9999
 	smeltresult = null
