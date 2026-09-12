@@ -1,0 +1,5 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - rscadd: "Two new traits, Journey End (gets stronger as they get closer to death aka fully blood depleted) and Blood Resistance (reduces rate of blood loss)"
+  - rscadd: "Mistwalker a unique Kazen themed Wretch."

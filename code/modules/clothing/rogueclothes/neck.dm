@@ -310,6 +310,20 @@
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/items/visor.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK)) // adjustable falling buffe for the bevor
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/neck/roguetown/bevor/zizo
+	name = "avantyne bevor"
+	desc = "An avantyne neckguard cut for the medium rite, still protective without becoming impossible to remove."
+	icon_state = "zizobevor"
+	item_state = "zizobevor"
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+
+
+/obj/item/clothing/neck/roguetown/bevor/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
 /obj/item/clothing/neck/roguetown/bevor/iron
 	name = "iron bevor"
 	desc = "A series of iron plates designed to protect the neck."
@@ -1277,13 +1291,13 @@
 	smeltresult = null
 
 /obj/item/clothing/neck/roguetown/psicross/ten
-	name = "amulet of Ten"
+	name = "amulet of the Ten"
 	desc = "The Ten eternal, strength in unity. Stalwart for centuries against the darkness."
 	icon_state = "undivided"
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/silver/undivided
-	name = "silver amulet of Ten"
+	name = "silver amulet of the Ten"
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
