@@ -763,10 +763,34 @@
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "iron_sling_bullet"
 
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
+	name = "holy steel sling bullet"
+	desc = "A heavy, durable sphere of steel, blessed with divine energy to strike down undead."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/steelblessed
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "iron_sling_bullet"
+
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
+	name = "silver sling bullet"
+	desc = "A ball of silver, terrible metal for an projectile yet no undead ever enjoyed a ball of their anathema placed inside their chest."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/silver
+	is_silver = TRUE
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bs_sling_bullet"
+
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
+	name = "blessed silver sling bullet"
+	desc = "A round piece of blessed silver, the matherial weakness burned away in divine flames. Let the undead beware, for this is a weapon of the divine."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/silverblessed
+	is_silver = TRUE
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "bs_sling_bullet"
+
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
 	desc = "An elegant sphere of blacksteel. This bullet bores through plate and meat like a comet. Once it's reached terminal velocity, you might want to duck."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/blacksteel
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "bs_sling_bullet"
 
 /obj/projectile/bullet/sling_bullet //not reusable since stones will break on impact. i couldnt figure out how to prevent that
@@ -881,6 +905,59 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+
+/obj/projectile/bullet/reusable/sling_bullet/steelblessed
+	name = "holy steel sling bullet"
+	damage = 30
+	armor_penetration = 45 // extra  50% armour pierce over iron
+	npc_simple_damage_mult = 4 // Ai doesnt need nice things
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "musketball_proj"
+
+/obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
+	. = ..()
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+		var/mob/living/M = target
+		M.apply_damage(10, BURN)
+		M.adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/sunder) // weaker then silver version
+		M.ignite_mob()
+		visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
+
+/obj/projectile/bullet/reusable/sling_bullet/silver
+	name = "silver sling bullet"
+	damage = 25   // 5 less damage and 10 less ap, but extra damage on silver weak
+	armor_penetration = 20
+	npc_simple_damage_mult = 5 // AI doesnt need nice things
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "blacksteelslingbullet_proj"
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/sling_bullet/silver/on_hit(atom/target)
+	. = ..()
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+		var/mob/living/M = target
+		M.apply_damage(20, BURN)
+
+/obj/projectile/bullet/reusable/sling_bullet/silverblessed
+	name = "blessed silver sling bullet"
+	damage = 35   // better then bronze because divine power
+	armor_penetration = 30
+	npc_simple_damage_mult = 6 // AI doesnt need nice things (+ blessed)
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "blacksteelslingbullet_proj"
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
+	. = ..()
+	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+		var/mob/living/M = target
+		M.apply_damage(30, BURN)
+		M.adjust_fire_stacks(2, /datum/status_effect/fire_handler/fire_stacks/sunder)
+		M.ignite_mob()
+		visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 
 /obj/projectile/bullet/reusable/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
