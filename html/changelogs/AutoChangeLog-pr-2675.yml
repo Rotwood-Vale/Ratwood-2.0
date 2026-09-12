@@ -1,0 +1,4 @@
+author: "Gug1234"
+delete-after: True
+changes:
+  - bugfix: "TRAIT_WEAPONLESS no longer blocks the use of surgical tools. Disciple aboteers can now sign their arrival slips without needing someone else to cut them."
