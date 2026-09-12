@@ -166,3 +166,35 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge
+	threat_point = THREAT_ELITE
+	dodgetime = 20
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge/after_creation()
+	..()
+	job = "Drow Scourge"
+	real_name = "[real_name] [pick("the Scourge", "the Lasher", "the Venomed", "the Spiderkin", "the Flenser")]"
+	name = real_name
+	ADD_TRAIT(src, TRAIT_BADTRAINER, TRAIT_GENERIC)
+	equipOutfit(new /datum/outfit/job/roguetown/human/species/elf/dark/drowraider)
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge/death(gibbed, nocutscene = FALSE)
+	. = ..()
+
+/datum/outfit/job/roguetown/human/species/elf/dark/drowraider/scourge/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/iron
+	neck = /obj/item/clothing/neck/roguetown/gorget
+	mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask/delf
+	belt = /obj/item/storage/belt/rogue/leather/black
+	r_hand = /obj/item/rogueweapon/whip/spiderwhip
+	l_hand = null
+	H.STASTR = 13
+	H.STASPD = 13
+	H.STACON = 13
+	H.STAWIL = 11
+	H.STAPER = 12
+	H.STAINT = 10
+	H.STALUC = 10
+	H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
