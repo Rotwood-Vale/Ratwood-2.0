@@ -22,6 +22,8 @@
 
 	var/noble_income = FALSE //Passive income every day from noble estate
 
+	var/pure_heart = FALSE
+
 	/// This class is immune to species-based swapped gender locks
 	var/immune_to_genderswap = FALSE
 
@@ -122,6 +124,9 @@
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank
+
+	if(pure_heart)
+		H.purity = TRUE
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 

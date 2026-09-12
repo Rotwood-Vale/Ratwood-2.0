@@ -10,6 +10,7 @@
 	category_tags = list(CTAG_INQUISITION)
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_DODGEEXPERT,
 		TRAIT_BLACKBAGGER,

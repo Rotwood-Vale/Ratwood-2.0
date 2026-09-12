@@ -39,11 +39,16 @@ GLOBAL_LIST_EMPTY(prayers)
 	/// List of traits associated with rank. Trait = Cleric_Tier
 	var/list/traits_tier = list()
 
+	///verbs applied by set_patron and removed when changed
+	var/list/added_verbs
+
 	var/datum/storyteller/storyteller
 
 /datum/patron/proc/on_gain(mob/living/pious)
 	for(var/trait in mob_traits)
 		ADD_TRAIT(pious, trait, "[type]")
+	for(var/verb in added_verbs)
+		pious.verbs |= verb
 	if(istype(src, /datum/patron/divine/xylix) || istype(src, /datum/patron/inhumen/matthios))
 		pious.grant_language(/datum/language/thievescant, source = "[type]")
 	if(istype(src, /datum/patron/divine/xylix))
@@ -54,6 +59,8 @@ GLOBAL_LIST_EMPTY(prayers)
 /datum/patron/proc/on_loss(mob/living/pious)
 	if (HAS_TRAIT(pious, TRAIT_CABAL))
 		pious.faction -= "cabal"
+	for(var/verb in added_verbs)
+		pious.verbs -= verb
 	if(istype(src, /datum/patron/divine/xylix) || istype(src, /datum/patron/inhumen/matthios))
 		pious.remove_language(/datum/language/thievescant, source = "[type]")
 	if(istype(src, /datum/patron/divine/xylix))

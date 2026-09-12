@@ -69,6 +69,7 @@
 		STATKEY_STR = 2,
 		STATKEY_CON = 2,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,

@@ -7,6 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/puritan/ordinator
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/combat_inqordinator.ogg'
+	pure_heart = TRUE
 
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(

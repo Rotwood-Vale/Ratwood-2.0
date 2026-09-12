@@ -915,6 +915,10 @@
 		else
 			. += "ø ------------ ø"
 
+	if(HAS_TRAIT(src, TRAIT_MONSTROUS))
+		. += span_userdanger("A MONSTER! INHUMEN!")
+		to_chat(user, span_danger("[uppertext(m1)] IS INHUMEN! THE GODS DESPISE THIS HERESY!"))
+
 	if(name in unknown_names)
 		. += span_info("This is <EM>[name]</EM>.")
 		if(HAS_TRAIT(user, TRAIT_HERETIC_SEER))
@@ -1090,6 +1094,11 @@
 			var/mob/living/carbon/human/H = user
 			if(H.marriedto == name)
 				. += span_love("It's my spouse.")
+			if((H.patron.type == /datum/patron/inhumen/zizo) || (H.patron.type == /datum/patron/inhumen/baotha))
+				if(src.purity == TRUE)
+					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
+				if(src.virginity == TRUE)
+					. += span_aiprivradio("VIRGIN!")
 
 		var/gang_message = get_gang_text(user)
 		if (gang_message)
