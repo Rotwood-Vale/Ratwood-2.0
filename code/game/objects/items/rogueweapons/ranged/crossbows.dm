@@ -1,5 +1,6 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	has_item_quality = TRUE
 	name = "crossbow"
 	desc = "A deadly weapon that shoots a bolt with terrific power."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
@@ -196,17 +197,26 @@
 	max_ammo = 1
 	start_empty = TRUE
 
-// crossbow for boners made from gilbranze or something
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+	name = "munition crossbow"
+	desc = "A deadly weapon that shoots a bolt with terrific power. Unlike the common bow, \
+	it uses a sophisticated mechanism to renock - and retain - its half-length bolts; a \
+	matter that relies more on raw strength than dexterity to master. </br>An cruder version of the common crossbow built with wrought iron with steel like property. When smelted, it does not yield good steel ingot but trash steel. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = 80
+	damfactor = 1 // Lower than starting
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/ancient
 	name = "ancient crossbow"
 	desc = "A deadly weapon from another tyme, which shoots a bolt with terrific power. Unlike the common bow, it \
 	uses a sophisticated mechanism to renock - and retain - its half-length bolts; a matter that relies more on raw \
-	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of the ancient \
+	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of Zaelorian's ancient \
 	empire; now, it shudders in the grasp of Zizo's deathless crusade."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "ancientcrossbow0"
 	item_state = "ancientcrossbow"
-
+	max_integrity = 80
+	damfactor = 1 // Lower than starting
+	
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	name = "slurbow"
 	desc = "A lighter weight crossbow with a distinct barrel shroud holding the bolt in place. Light enough to arm by hand. <br>They're popular among among highwaymen and the patrolling lamplighters of Otava."
@@ -279,7 +289,7 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR - 0.45 //Reduces integrity damage modifier to +15%.
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/paalloy
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/ancient
 	name = "ancient siegebow"
 	desc = "A heavier weight crossbow from another tyme - the basis of a mounted ballista, made fit for handheld \
 	usage. Integrated just beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic \
@@ -316,7 +326,7 @@
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20
-	reloadtime = 8 SECONDS//Oh, yes...
+	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
 	hasloadedsprite = TRUE
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
 

@@ -450,7 +450,7 @@
 /obj/item/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
 	name = "sugarcane"
-	desc = "A tall, leafy plant with a thick, fibrous stalk. It can be milled into sugar. Commonly eaten as a snack in part of Lingyue."
+	desc = "A tall, leafy plant with a thick, fibrous stalk. It can be milled into sugar. Commonly eaten as a snack in part of kazengun."
 	icon_state = "sugarcane"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

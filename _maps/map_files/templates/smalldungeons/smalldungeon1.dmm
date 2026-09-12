@@ -245,11 +245,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
-"fg" = (
-/obj/effect/decal/cleanable/blood/old,
-/mob/living/carbon/human/species/skeleton/npc/medium,
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/dungeon1)
 "fl" = (
 /obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
 /turf/open/floor/rogue/blocks,
@@ -412,10 +407,6 @@
 "jZ" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/dungeon1)
-"kp" = (
-/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "ks" = (
@@ -1420,11 +1411,6 @@
 /obj/item/grown/log/tree/stick,
 /obj/item/grown/log/tree/stick,
 /obj/structure/closet/crate/chest/crafted,
-/turf/open/floor/rogue/blocks,
-/area/rogue/under/cave/dungeon1)
-"EW" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/dungeon1)
 "EZ" = (
@@ -7612,7 +7598,7 @@ jt
 of
 WN
 jt
-kp
+of
 RK
 WN
 WN
@@ -7698,7 +7684,7 @@ WN
 RK
 ih
 aG
-kp
+of
 uY
 mo
 WN
@@ -7926,7 +7912,7 @@ RK
 RK
 RK
 RK
-fg
+iz
 WN
 WN
 WN
@@ -8421,7 +8407,7 @@ RK
 WN
 iz
 WN
-kp
+of
 ih
 WN
 WN
@@ -8511,7 +8497,7 @@ RK
 WN
 WN
 uY
-kp
+of
 WN
 RK
 RK
@@ -8763,7 +8749,7 @@ NB
 sY
 WN
 Vk
-EW
+lR
 WN
 WN
 sY

@@ -302,7 +302,7 @@
 	icon_state = "bs_greatflail"
 	wdefense = 7
 	minstr = 12
-	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
 	max_integrity = 500
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -310,6 +310,7 @@
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
+	no_loot_taint = TRUE
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."
 	icon_state = "matthiosflail"
@@ -320,7 +321,8 @@
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
-	wdefense = 5 //+1 compared to the peasant version, the magic golden babysmasher should be better than a shitty threasher.
+	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
+	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
