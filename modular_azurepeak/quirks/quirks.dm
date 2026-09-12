@@ -2,6 +2,12 @@
 // At best they should be very minor conveniences as a reward for leaning into vices.
 // The baseline point_cost is one.
 
+/datum/quirk/annoyingface
+	name = "Annoying Face"
+	desc = "I am cursed with an odd voice and appearance."
+	point_cost = 0
+	added_traits = list(TRAIT_COMICSANS)
+
 /datum/quirk/deadnose
 	name = "Dead Nose"
 	desc = "My nose is numb to the smell of decay."
@@ -58,6 +64,14 @@
 
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
+
+/datum/quirk/malodorous
+	name = "Malodorous"
+	desc = "My body odor is unbearable without regular baths, and others can tell."
+	point_cost = 0
+
+/datum/quirk/malodorous/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.vices += new /datum/charflaw/malodorous()
 
 /datum/quirk/hunted
 	name = "Marked by Gnolls"

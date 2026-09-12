@@ -5,7 +5,6 @@
 	)
 
 #define CHARFLAWS_PHYSICAL_TYPES list(\
-		/datum/charflaw/annoying_face,\
 		/datum/charflaw/noeyel,\
 		/datum/charflaw/noeyer,\
 		/datum/charflaw/leprosy,\

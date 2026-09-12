@@ -6,7 +6,6 @@ GLOBAL_LIST_INIT(charflaw_singletons, init_charflaw_singletons())
 /// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Annoying Face"=/datum/charflaw/annoying_face,
 	"Asundered Mind (+1 Q-Point)"=/datum/charflaw/mind_broken,
 	"Bad Sight (+1 Q-Point)"=/datum/charflaw/badsight,
 	"Blindness (+1 Q-Point)"=/datum/charflaw/noeyeall,
@@ -39,7 +38,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Silver Weakness"=/datum/charflaw/silverweakness,
 	"Sleepless (+1 Q-Point)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Malodorous"=/datum/charflaw/malodorous,
 	"Unintelligible (+1 Q-Point)"=/datum/charflaw/unintelligible,
 	"Wood Arm (L) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_r,
@@ -512,23 +510,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		REMOVE_TRAIT(H, TRAIT_PACIFISM, TRAIT_GENERIC)
-
-/datum/charflaw/annoying_face
-	name = "Annoying Face"
-	desc = "I am cursed with an odd voice and appearance."
-	point_value = 0 // Not really a flaw.
-
-/datum/charflaw/annoying_face/on_mob_creation(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		ADD_TRAIT(H, TRAIT_COMICSANS, TRAIT_GENERIC)
-
-/datum/charflaw/annoying_face/on_removal(mob/user)
-	..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		REMOVE_TRAIT(H, TRAIT_COMICSANS, TRAIT_GENERIC)
 
 /datum/charflaw/nude_sleeper
 	name = "Nude Sleeper"
