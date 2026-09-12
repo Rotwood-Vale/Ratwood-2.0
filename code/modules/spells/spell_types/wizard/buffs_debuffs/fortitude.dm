@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/fortitude
 	name = "Fortitude"
-	desc = "Harden one's humors to the fatigues of the body. (-50% Stamina Usage)"
-	cost = 3 // Halving stamina cost is INSANE so it cost the same as before adjustment to 3x spellpoint basis.
+	desc = "Harden one's humors to the fatigues of the body. (-30% Stamina Usage)"
+	cost = 3 // Reducing stamina cost is INSANE so it cost the same as before adjustment to 3x spellpoint basis.
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1
@@ -43,7 +43,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/fortitude
 	name = "Fortitude"
-	desc = "My humors has been hardened to the fatigues of the body. (-50% Stamina Usage)"
+	desc = "My humors has been hardened to the fatigues of the body. (-30% Stamina Usage)"
 	icon_state = "buff"
 
 #define FORTITUDE_FILTER "fortitude_glow"
