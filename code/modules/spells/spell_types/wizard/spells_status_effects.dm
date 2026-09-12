@@ -42,10 +42,6 @@
 	target.add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
 	target.stamina_add(25)
 
-/datum/status_effect/buff/frostbite/tick()
-	var/mob/living/target = owner
-	target.stamina_add(5)
-
 /datum/status_effect/buff/frostbite/on_remove()
 	var/mob/living/target = owner
 	target.update_vision_cone()
