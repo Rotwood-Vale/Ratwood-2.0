@@ -38,9 +38,6 @@
 	if(!isclothing(I))
 		return
 	var/obj/item/clothing/worn_thing = I
-	spawn(0)
-		if(!(worn_thing.item_flags & IN_INVENTORY))
-			return
 	if(worn_thing.item_flags & IN_STORAGE)
 		return
 	var/list/obj/item/held_list = user.get_held_items()

@@ -1598,9 +1598,11 @@
 	highlight.layer = ABOVE_HUD_LAYER + 0.9 + (slot_index * 0.001)
 	highlight.plane = ABOVE_HUD_PLANE
 	animate(highlight, alpha = 0, time = 20, easing = EASE_IN)
-	spawn(20)
-		if(highlight_tokens[slot_index] == current_token)
-			highlight.color = null
+	addtimer(CALLBACK(src, PROC_REF(clear_stale_highlight), highlight, slot_index, current_token), 20)
+
+/atom/movable/screen/zone_sel/proc/clear_stale_highlight(atom/movable/screen/hud_component/layer/highlight, slot_index, token)
+	if(highlight_tokens && highlight_tokens[slot_index] == token)
+		highlight.color = null
 
 /atom/movable/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'

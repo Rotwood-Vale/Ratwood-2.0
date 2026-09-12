@@ -38,8 +38,9 @@
 				H.Stun(80)
 				H.apply_damage(50, BRUTE, def_zone)
 				H.emote("agony")
-				spawn(5)
-				say("Blueblood for the Freefolk!")
+				// A bodyless spawn(5) sat here. It bound the say below, so the taunt has always
+				// landed half a second after the shock rather than on top of it.
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), "Blueblood for the Freefolk!"), 5)
 				playsound(src, 'sound/vo/mobs/ghost/laugh (5).ogg', 100, TRUE)
 				return
 		// A fully-drilled nervelock can no longer serve customers.
@@ -58,12 +59,14 @@
 				var/already_has_income = (H in SStreasury.noble_incomes)
 				SStreasury.noble_incomes[H] = target_job.noble_income
 				SStreasury.grant_estate_income(H, target_job.noble_income, !already_has_income)
-		spawn(5)
-			say("New account created.")
-			playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+		addtimer(CALLBACK(src, PROC_REF(announce_new_account)), 5)
 		return
 	// Step 16: legacy input() withdrawal menu replaced by the MeisterPanel TGUI (atm_tgui.dm).
 	open_meister_tgui(H)
+
+/obj/structure/roguemachine/atm/proc/announce_new_account()
+	say("New account created.")
+	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 
 /*
 /obj/structure/roguemachine/atm/attack_right(mob/user)
@@ -176,14 +179,16 @@
 			send_ooc_note("A parasite of the Freefolk is draining a Nervelock! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
 		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
-		spawn(100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
-			loc.visible_message(span_warning("The nervelock spills its bounty!"))
-			SStreasury.burn(SStreasury.discretionary_fund, 20, "ATM drill - Freefolk")
-			record_treasury_expense(TREASURY_FLOW_MISC, "ATM Drill", 20)
-			mammonsiphoned += 20
-			budget2change(20, null, "SILVER")
-			playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
-			drill(src)
+		addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
+
+/obj/structure/roguemachine/atm/proc/drill_payout()
+	loc.visible_message(span_warning("The nervelock spills its bounty!"))
+	SStreasury.burn(SStreasury.discretionary_fund, 20, "ATM drill - Freefolk")
+	record_treasury_expense(TREASURY_FLOW_MISC, "ATM Drill", 20)
+	mammonsiphoned += 20
+	budget2change(20, null, "SILVER")
+	playsound(src, 'sound/misc/coindispense.ogg', 70, TRUE)
+	drill(src)
 
 /obj/structure/roguemachine/atm/attack_right(mob/living/carbon/human/user)
 	if(drilling)

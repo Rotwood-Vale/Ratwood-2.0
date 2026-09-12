@@ -415,8 +415,7 @@
 		// Roll again (spawn to avoid proc stack buildup across many re-rolls)
 		var/datum/farkle_game/game_ref = src
 		var/token_snapshot = expected_turn_token
-		spawn(0)
-			game_ref.do_roll(active, token_snapshot)
+		addtimer(CALLBACK(game_ref, TYPE_PROC_REF(/datum/farkle_game, do_roll), active, token_snapshot), 0)
 
 
 // --- Utilities ---

@@ -188,8 +188,11 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 /obj/item/cannonball/canister/detonate(turf/T)
 	..()
 	canister_detonate()
-	spawn(2 SECONDS)//It detonates ABOVE, or something. I 'unno. It's COOL.
-	explosion(T, 0, 0, 1, 4)
+	// Airburst: the canister bursts, then the blast lands 2 seconds later. This was a bodyless
+	// spawn(2 SECONDS), which binds the next single statement, so the delay was always real and
+	// must not be read as dead code. Global callback because the cannonball is qdel'd as soon as
+	// detonate() returns.
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), T, 0, 0, 1, 4), 2 SECONDS)
 
 //A secondary type of 'canister' charge. Small explosions on all turfs in view.
 /obj/item/cannonball/cluster

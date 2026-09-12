@@ -501,8 +501,7 @@
 	switch(effect_type)
 		if("fire")
 			H.adjust_fire_stacks(4)
-			spawn(0)
-				H.ignite_mob()
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, ignite_mob)), 0)
 			target.visible_message(span_warning("[source] ignites [target] with strange flame!"))
 		if("frost")
 			H.apply_status_effect(/datum/status_effect/buff/frostbite)
@@ -527,10 +526,12 @@
 	// Apply some damage or negative effect
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		spawn(0)
-			H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			H.adjust_fire_stacks(2)
-			H.ignite_mob()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamscape_backfire), H), 0)
+
+/proc/dreamscape_backfire(mob/living/carbon/human/H)
+	H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	H.adjust_fire_stacks(2)
+	H.ignite_mob()
 
 /obj/item/rogueweapon/halberd/glaive/dreamscape
 	name = "otherworldly spear"

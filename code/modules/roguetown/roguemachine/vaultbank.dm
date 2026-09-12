@@ -241,17 +241,19 @@
 			has_reported = TRUE
 
 	playsound(src, 'sound/misc/TheDrill.ogg', 50, TRUE)
-	spawn(100)
-		var/datum/fund/F2 = get_linked_fund()
-		if(!F2)
-			return
-		var/taken = min(rand(5, 20), F2.balance)
-		anguish()
-		budget2change(taken, null)
-		SStreasury.burn(F2, taken, "Vaultbank drill tick")
-		visible_message(span_danger("The Crown just drilled [taken] mammon out of [src]!"))
-		drilltime += 3
-		drill()
+	addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100)
+
+/obj/structure/roguemachine/vaultbank/proc/drill_payout()
+	var/datum/fund/F2 = get_linked_fund()
+	if(!F2)
+		return
+	var/taken = min(rand(5, 20), F2.balance)
+	anguish()
+	budget2change(taken, null)
+	SStreasury.burn(F2, taken, "Vaultbank drill tick")
+	visible_message(span_danger("The Crown just drilled [taken] mammon out of [src]!"))
+	drilltime += 3
+	drill()
 
 // ============================================================================
 // ATTACKBY / EXAMINE

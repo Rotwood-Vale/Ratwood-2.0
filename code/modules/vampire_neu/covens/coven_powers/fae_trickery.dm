@@ -222,8 +222,7 @@
 		var/datum/cb = CALLBACK(src, PROC_REF(eat_head))
 		for(var/i in 1 to 10)
 			addtimer(cb, (i - 1) * 1.5 SECONDS)
-		spawn(16 SECONDS)
-			qdel(src)
+		QDEL_IN(src, 16 SECONDS)
 	return TRUE
 
 /obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head()
@@ -278,11 +277,14 @@
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING)
-			spawn(15 SECONDS)
-				for(var/screen_type in L.hud_used?.plane_masters)
-					var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
-					animate(whole_screen, transform = matrix(), time = 0.5 SECONDS, easing = QUAD_EASING)
+			// Global: the trap qdels itself immediately below, the un-spin must outlive it
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fae_reset_plane_spin), L), 15 SECONDS)
 			qdel(src)
+
+/proc/fae_reset_plane_spin(mob/living/L)
+	for(var/screen_type in L.hud_used?.plane_masters)
+		var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
+		animate(whole_screen, transform = matrix(), time = 0.5 SECONDS, easing = QUAD_EASING)
 
 /obj/fae_trickery_trap/drop
 	name = "fae trap"
