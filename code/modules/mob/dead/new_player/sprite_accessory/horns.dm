@@ -230,15 +230,3 @@
 /datum/sprite_accessory/horns/tieflingalt
 	name = "Tiefling Alt"
 	icon_state = "tiebhornsalt"
-
-/datum/sprite_accessory/horns/halforc
-	name = "Orc"
-	icon = 'icons/mob/sprite_accessory/halforc.dmi'
-	icon_state = "orctusk"
-	default_colors = list("#F4F4BE")
-
-/datum/sprite_accessory/horns/longtusk
-	name = "Long"
-	icon = 'icons/mob/sprite_accessory/halforc.dmi'
-	icon_state = "longtusk"
-	default_colors = list("#F4F4BE")

@@ -75,7 +75,7 @@
 		/datum/customizer/organ/snout/anthro/dullahan,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/wings/anthro,
-		/datum/customizer/organ/horns/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		/datum/customizer/organ/soul/fire,
 		/datum/customizer/organ/tail/dullahan,
 		/datum/customizer/organ/ears/dullahan,

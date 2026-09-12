@@ -77,6 +77,7 @@
 
 #define ORGAN_SLOT_FRILLS "frills"
 #define ORGAN_SLOT_HORNS "horns"
+#define ORGAN_SLOT_TUSKS "tusks"
 #define ORGAN_SLOT_ANTENNAS "antennas"
 #define ORGAN_SLOT_NECK_FEATURE "neck_feature"
 #define ORGAN_SLOT_SOUL "soul"
