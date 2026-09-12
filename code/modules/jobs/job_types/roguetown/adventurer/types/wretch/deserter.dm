@@ -185,7 +185,7 @@
 /datum/outfit/job/roguetown/wretch/desertermaa/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		var/weapons = list("Warhammer & Shield","Sabre & Shield","Axe & Shield","Billhook","Greataxe","Halberd","Crossbow",)
+		var/weapons = list("Warhammer & Shield","Sabre & Shield","Axe & Shield","Billhook","Greataxe","Halberd","Munition Crossbow",)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -205,9 +205,9 @@
 			if("Halberd")
 				r_hand = /obj/item/rogueweapon/halberd
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Crossbow")
+			if("Munition Crossbow")
 				beltr = /obj/item/quiver/bolts
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if("Greataxe")
 				r_hand = /obj/item/rogueweapon/greataxe
 				backl = /obj/item/rogueweapon/scabbard/gwstrap

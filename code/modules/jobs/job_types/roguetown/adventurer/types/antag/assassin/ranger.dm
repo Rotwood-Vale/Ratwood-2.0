@@ -61,7 +61,7 @@
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Yew Longbow","Crossbow")
+		var/weapons = list("Yew Longbow","Munition Crossbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -69,9 +69,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltl = /obj/item/quiver/arrows
-			if("Crossbow")
+			if("Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 				beltl = /obj/item/quiver/bolts
 
 	if(!istype(H.patron, /datum/patron/inhumen/graggar))

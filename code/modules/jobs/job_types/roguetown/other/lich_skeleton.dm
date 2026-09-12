@@ -172,7 +172,7 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Recurve Bow","Yew Longbow", "Crossbow", "Sling")
+	var/weapons = list("Recurve Bow","Yew Longbow", "Ancient Crossbow", "Sling")
 	var/weapons_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 	switch(weapons_choice)
 		if("Recurve Bow")
@@ -183,8 +183,8 @@ LICH SKELETONS
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			beltr = /obj/item/quiver/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
-		if("Crossbow")
-			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+		if("Ancient Crossbow")
+			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/aalloy
 			beltr = /obj/item/quiver/boltsancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 		if("Sling")

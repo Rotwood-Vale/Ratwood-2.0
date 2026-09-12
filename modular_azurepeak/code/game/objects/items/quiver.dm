@@ -120,6 +120,83 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/bolt
+	name = "bolt pouch"
+	desc = "A leather canister that can be used to carry bolts. Smaller, sleeker, yet nevertheless spacious enough to pack enough ammunition for a full nite's hunt."
+	icon_state = "boltpouch0"
+	item_state = "boltpouch"
+	max_storage = 16
+	allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt
+
+/obj/item/quiver/bolt/getonmobprop(tag)
+	..()
+	if(tag)
+		switch(tag)
+			if("onback")
+				return list(
+					"shrink" = 0.4,
+					"sx" = 1,
+					"sy" = 4,
+					"nx" = 1,
+					"ny" = 2,
+					"wx" = 3,
+					"wy" = 3,
+					"ex" = 0,
+					"ey" = 2,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 0,
+					"eturn" = 0,
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = 1,
+					"southabove" = 0,
+					"eastabove" = 0,
+					"westabove" = 0
+				)
+			if("onbelt")
+				return list(
+					"shrink" = 0.35,
+					"sx" = -4,
+					"sy" = -6,
+					"nx" = 5,
+					"ny" = -6,
+					"wx" = 0,
+					"wy" = -6,
+					"ex" = -1,
+					"ey" = -6,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = -90,
+					"eturn" = 0,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 1
+				)
+
+/obj/item/quiver/bolt/attack_turf(turf/T, mob/living/user)
+	if(get_current_weight() >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/bolt in T.contents)
+		if(do_after(user, 5))
+			if(!eatarrow(bolt))
+				break
+
+/obj/item/quiver/bolt/update_icon()
+	if(arrows.len)
+		icon_state = "boltpouch1"
+	else
+		icon_state = "boltpouch0"
+
 /obj/item/quiver/bolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
@@ -127,45 +204,111 @@
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bluntbolts/Initialize(mapload)
+/obj/item/quiver/bolt/blunt/Initialize(mapload)
 	. = ..()
 	for(var/i in  1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/blunt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/heavybluntbolts/Initialize(mapload)
+/obj/item/quiver/bolt/heavybluntbolts/Initialize(mapload)
 	. = ..()
 	for(var/i in  1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/holybolts/Initialize(mapload)
+/obj/item/quiver/bolt/holybolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/holy/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/heavybolts/Initialize(mapload)
-	. = ..()
-	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
-		arrows += A
-	update_icon()
-
-/obj/item/quiver/Wbolts/Initialize(mapload)
+/obj/item/quiver/bolt/Wbolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/water/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/pyrobolts/Initialize(mapload)
+/obj/item/quiver/bolt/pyrobolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/pyro/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/boltsancient/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy
+	name = "heavy bolt pouch"
+	desc = "A heavy leather canister that can be used to carry heavier bolts. Casketed inside are the missiles that, whether launched from a mounted ballista or handheld siegebow, will devastate without quarter."
+	icon_state = "boltpouch0"
+	item_state = "boltpouch"
+	max_storage = 8
+	allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+
+/obj/item/quiver/bolt/heavy/attack_turf(turf/T, mob/living/user)
+	if(get_current_weight() >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/heavy_bolt in T.contents)
+		if(do_after(user, 5))
+			if(!eatarrow(heavy_bolt))
+				break
+
+/obj/item/quiver/bolt/heavy/update_icon()
+	if(arrows.len)
+		icon_state = "boltpouch1"
+	else
+		icon_state = "boltpouch0"
+
+/obj/item/quiver/bolt/heavy/standard/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/bronze/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/bronze/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/aalloy/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/aalloy/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/paalloy/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/paalloy/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/blunt/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/silver/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy/A = new()
 		arrows += A
 	update_icon()
 
@@ -186,13 +329,6 @@
 
 /obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
-
-/obj/item/quiver/boltsancient/Initialize(mapload)
-	. = ..()
-	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
-		arrows += A
-	update_icon()
 
 /obj/item/quiver/Warrows/Initialize(mapload)
 	. = ..()

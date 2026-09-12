@@ -75,13 +75,13 @@
 
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink)
 
-	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Crossbow", "Bow", "Sling")
+	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Munition Crossbow", "Bow", "Sling")
 	var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in list("Light Armor", "Medium Armor")
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Crossbow")
+		if("Munition Crossbow")
 			beltr = /obj/item/quiver/bolts
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 		if("Bow")
 			beltr = /obj/item/quiver/bodkin
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve

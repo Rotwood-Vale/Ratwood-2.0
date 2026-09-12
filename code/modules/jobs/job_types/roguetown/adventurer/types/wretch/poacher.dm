@@ -88,17 +88,17 @@
 			if ("Cudgel")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				beltr = /obj/item/rogueweapon/mace/cudgel
-		var/rangedweapons = list("Recurve Bow", "Crossbow", "Sling")
+		var/rangedweapons = list("Recurve Bow", "Munition Crossbow", "Sling")
 		var/rangedweapon_choice = input(H, "Choose your ranged weapon.", "TAKE UP ARMS") as anything in rangedweapons
 		switch(rangedweapon_choice)
 			if("Recurve Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
 				beltl = /obj/item/quiver/arrows
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Crossbow")
+			if("Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				beltl = /obj/item/quiver/bolts
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if ("Sling")
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 5, TRUE)
 				beltl = /obj/item/quiver/sling/iron
