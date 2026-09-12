@@ -628,16 +628,18 @@
 	duration = 10 SECONDS
 	examine_text = "SUBJECTPRONOUN is bathed in a restorative aura!"
 	var/healing_on_tick = 1
-	var/outline_colour = "#c42424"
 	var/tech_healing_modifier = 1
+	/// Color of the outline applied during the heal
+	var/outline_colour = "#c42424"
 
-/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE)
+/datum/status_effect/buff/healing/on_creation(mob/living/new_owner, new_healing_on_tick, is_inhumen = FALSE, datum/patron/patron = /datum/patron/godless)
 	healing_on_tick = new_healing_on_tick
 	tech_healing_modifier = SSchimeric_tech.get_healing_multiplier()
 	if(is_inhumen)
 		// The penalty/benefit of healing tech is halved for inhumen followers
 		tech_healing_modifier = 1 + ((tech_healing_modifier - 1) * 0.5)
 	healing_on_tick *= tech_healing_modifier
+	outline_colour = patron.energy_color
 	return ..()
 
 /datum/status_effect/buff/healing/on_apply()
@@ -649,7 +651,7 @@
 
 /datum/status_effect/buff/healing/tick()
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = "#FF0000"
+	H.color = outline_colour
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
@@ -867,10 +869,12 @@
 	duration = 10 SECONDS // Short duration - continuously refreshed while channeling
 	examine_text = "SUBJECTPRONOUN is suffused with divine energy."
 	var/healing_on_tick = 0.3 // Very weak healing compared to normal miracles
-	var/outline_colour = "#FFD700" // Golden color instead of red
+	/// Color outlining the mob being healed
+	var/outline_colour = "#FFD700"
 
-/datum/status_effect/buff/lay_hands/on_creation(mob/living/new_owner, new_healing_on_tick)
+/datum/status_effect/buff/lay_hands/on_creation(mob/living/new_owner, new_healing_on_tick, datum/patron/patron = /datum/patron/godless)
 	healing_on_tick = new_healing_on_tick
+	outline_colour = patron.energy_color
 	return ..()
 
 /datum/status_effect/buff/lay_hands/on_apply()
@@ -883,7 +887,7 @@
 
 /datum/status_effect/buff/lay_hands/tick()
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = "#FFD700" // Golden healing particles
+	H.color = outline_colour
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
