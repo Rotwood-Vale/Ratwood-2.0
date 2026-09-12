@@ -5,6 +5,13 @@
 /datum/magic_item/proc/do_literally_anything_thanks()
 	return
 
+/datum/magic_item/proc/try_start_cooldown(mob/living/gate_holder, cooldown_time)
+	var/status_id = "[type]"
+	if(gate_holder.has_status_effect(/datum/status_effect/debuff/enchantmenttriggered, status_id))
+		return FALSE
+	gate_holder.apply_status_effect(/datum/status_effect/debuff/enchantmenttriggered, cooldown_time, status_id)
+	return TRUE
+
 /datum/magic_item/proc/on_apply(obj/item/i)
 	RegisterSignal(i, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	RegisterSignal(i, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hit))
