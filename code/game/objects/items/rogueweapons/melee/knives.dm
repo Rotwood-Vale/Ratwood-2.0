@@ -683,7 +683,6 @@
 	sheathe_icon = "sildagger"
 	force = 15
 	wdefense = 6
-	sellprice = 50
 	smeltresult = /obj/item/ingot/silver
 	last_used = 0
 	is_silver = TRUE
@@ -708,7 +707,6 @@
 	throwforce = 20
 	wdefense = 0
 	max_integrity = 50
-	sellprice = 50
 	slot_flags = ITEM_SLOT_HIP
 	smeltresult = /obj/item/rogueore/coal
 	last_used = 0
@@ -756,7 +754,6 @@
 	icon_state = "psydagger"
 	sheathe_icon = "psydagger"
 	smeltresult = /obj/item/ingot/silverblessed
-	sellprice = 70
 	picklvl = 1.1
 	is_tool = TRUE//let disciples use this for utility, TRAIT_WEAPONLESS prevents combat use of "tools" regardless.
 
@@ -870,7 +867,6 @@
 	max_blade_int = 50
 	wdefense = 3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	sellprice = 75
 
 /obj/item/rogueweapon/huntingknife/stoneknife/opalknife
 	name = "opal knife"
@@ -881,7 +877,6 @@
 	max_blade_int = 50
 	wdefense = 3
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	sellprice = 105
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
 	name = "elvish dagger"
@@ -999,7 +994,6 @@
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 25, "embedded_fall_chance" = 10)
 	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/chop)
 	smeltresult = null
-	sellprice = 1
 	thrown_damage_flag = "piercing"		//Checks piercing type like an arrow.
 	picklvl = 0.8
 	is_tool = FALSE
@@ -1029,7 +1023,6 @@
 	armor_penetration = 40
 	icon_state = "throw_knifes"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 30, "embedded_fall_chance" = 5)
-	sellprice = 2
 	picklvl = 0.9
 
 /obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient
@@ -1059,7 +1052,6 @@
 	icon_state = "throw_knifesil"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
 	is_silver = TRUE
-	sellprice = 6
 	picklvl = 0.9
 
 /obj/item/rogueweapon/huntingknife/throwingknife/silver/ComponentInitialize()
@@ -1085,7 +1077,6 @@
 	icon_state = "throw_knifep"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
 	is_silver = TRUE
-	sellprice = 6
 	picklvl = 0.9
 
 /obj/item/rogueweapon/huntingknife/throwingknife/psydon/ComponentInitialize()

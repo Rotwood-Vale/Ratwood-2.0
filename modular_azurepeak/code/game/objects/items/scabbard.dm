@@ -277,7 +277,6 @@
 
 	force = 3
 	max_integrity = 500
-	sellprice = 2
 
 	invalid_blades = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver/stake
@@ -402,7 +401,6 @@
 	sheathe_time = 2 SECONDS
 
 	max_integrity = 0
-	sellprice = 15
 
 /obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
@@ -513,7 +511,7 @@
 
 	force = 7
 	max_integrity = 750
-	sellprice = 3
+
 
 /obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
@@ -535,7 +533,6 @@
 	wdefense = 4
 	max_integrity = 75
 	resistance_flags = null
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/royal
 	name = "gold-decorated scabbard"
@@ -548,7 +545,6 @@
 	wdefense = 6
 	max_integrity = 150
 	resistance_flags = null
-	sellprice = 100
 
 /obj/item/rogueweapon/scabbard/sheath/courtphysician
 	name = "fancy cane"
@@ -556,7 +552,6 @@
 	icon_state = "doccanesheath"
 	item_state = "doccanesheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/courtphysician
-	sellprice = 45
 
 /obj/item/rogueweapon/scabbard/sheath/courtphysician/getonmobprop(tag)
 	. = ..()
@@ -644,7 +639,6 @@
 	item_state = "staffsheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/hand
 	// Is meant to be a wand for mage 2.0, but we don't have that on RW.
-	sellprice = 100
 
 ///////////////////////
 //	KNIFE SCABBARDS  //
@@ -661,7 +655,6 @@
 	wdefense = 2
 	max_integrity = 50
 	resistance_flags = null
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sheath/royal
 	name = "gold-decorated knife sheath"
@@ -674,7 +667,6 @@
 	wdefense = 4
 	max_integrity = 100
 	resistance_flags = null
-	sellprice = 100
 
 /*
 	KAZENGUN
@@ -757,7 +749,6 @@
 		/obj/item/rogueweapon/sword/sabre/hook
 	)
 	max_integrity = 220
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 	name = "plain lacquer scabbard"
