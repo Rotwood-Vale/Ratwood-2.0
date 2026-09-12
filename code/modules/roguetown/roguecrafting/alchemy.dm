@@ -212,29 +212,13 @@
 	reqs = list(/obj/item/natural/stone = 1)
 	craftdiff = 2
 	verbage_simple = "transmute"
-
+	
 /datum/crafting_recipe/roguetown/alchemy/s2coa
 	name = "stone to coal"
 	category = "Transmutation"
 	result = list(/obj/item/rogueore/coal = 1)
 	reqs = list(/obj/item/natural/stone = 4)
 	craftdiff = 4
-	verbage_simple = "transmute"
-
-/datum/crafting_recipe/roguetown/alchemy/c2irn
-	name = "coal to iron"
-	category = "Transmutation"
-	result = list(/obj/item/rogueore/iron = 1)
-	reqs = list(/obj/item/rogueore/coal = 2)
-	craftdiff = 4
-	verbage_simple = "transmute"
-
-/datum/crafting_recipe/roguetown/alchemy/i2gol
-	name = "iron to gold"
-	category = "Transmutation"
-	result = list(/obj/item/rogueore/gold = 1)
-	reqs = list(/obj/item/rogueore/iron = 4)
-	craftdiff = 5
 	verbage_simple = "transmute"
 
 /datum/crafting_recipe/roguetown/alchemy/g2top
