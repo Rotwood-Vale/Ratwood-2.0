@@ -844,7 +844,6 @@
 #include "code\datums\migrants\migrant_waves\czwarteki_noble_wave.dm"
 #include "code\datums\migrants\migrant_waves\fablefield roles.dm"
 #include "code\datums\migrants\migrant_waves\fablefield wave.dm"
-#include "code\datums\migrants\migrant_waves\gnolls.dm"
 #include "code\datums\migrants\migrant_waves\goldcaravan_roles.dm"
 #include "code\datums\migrants\migrant_waves\goldcaravan_wave.dm"
 #include "code\datums\migrants\migrant_waves\grenzel_noble_roles.dm"

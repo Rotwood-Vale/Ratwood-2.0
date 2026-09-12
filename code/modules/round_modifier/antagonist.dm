@@ -14,28 +14,22 @@
 	incompatible = list(/datum/round_modifier/low_bandits)
 	job_slots = list("Bandit" = 7)
 
-/datum/round_modifier/low_gnolls
-	name = "Low Gnolls"
-	desc = "The dregs of a bloodbeast pack."
-	cost = 1
-	weight = 20
-	job_slots = list("Gnoll" = 2)
-
 /datum/round_modifier/medium_gnolls
 	name = "Medium Gnolls"
-	desc = "A pack of bloodbeasts."
+	desc = "Killer creatures prowl the land."
 	cost = 2
 	min_chaos = 1
-	incompatible = list(/datum/round_modifier/low_gnolls)
-	job_slots = list("Gnoll" = 4)
+	weight = 14
+	job_slots = list("Gnoll" = 2) // 4 total.
 
 /datum/round_modifier/high_gnolls
 	name = "High Gnolls"
-	desc = "The bloodbeasts swarm! The GORESTAR laughs!"
+	desc = "The bloodbeasts swarm! The Dark Star laughs!"
 	cost = 4
+	weight = 8
 	min_chaos = 2
-	incompatible = list(/datum/round_modifier/low_gnolls, /datum/round_modifier/medium_gnolls)
-	job_slots = list("Gnoll" = 6)
+	incompatible = list(/datum/round_modifier/medium_gnolls)
+	job_slots = list("Gnoll" = 4) // 6 total. Raises slot cap from 6 to 8 (for midround injection)
 
 /datum/round_modifier/high_wretches
 	name = "High Wretches"
