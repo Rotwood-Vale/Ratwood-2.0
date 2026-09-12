@@ -18,14 +18,33 @@
 		TRAIT_ASSASSIN,
 		TRAIT_NOSTINK,
 		TRAIT_STEELHEARTED,
+		TRAIT_DODGEEXPERT,
+		TRAIT_DECEIVING_MEEKNESS,
+		TRAIT_PERFECT_TRACKER,
+		TRAIT_LONGSTRIDER,
+		TRAIT_MEDIUMARMOR,
+		TRAIT_SLEUTH,
+		TRAIT_LIGHT_STEP,
 	)
 
 /datum/antagonist/assassin/on_gain()
 	owner.current.cmode_music = list('sound/music/cmode/antag/combat_assassin.ogg')
 	for(var/trait in traits_assassin)
 		ADD_TRAIT(owner.current, trait, TRAIT_GENERIC)
-	owner.current.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT)
+	owner.current.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_MASTER)
 	owner.current.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
+	owner.current.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER)
+	owner.current.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER)
+	owner.current.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT)
+	owner.current.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_MASTER)
+	owner.current.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_LEGENDARY)
+	owner.current.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT)
+	owner.current.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_LEGENDARY)
+	owner.current.adjust_skillrank_up_to(/datum/skill/misc/tracking, SKILL_LEVEL_LEGENDARY)
+	owner.current.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_LEGENDARY)
+	owner.current.change_stat(STATKEY_SPD, 3)
+	owner.current.change_stat(STATKEY_LCK, 3)
+	owner.current.change_stat(STATKEY_WIL, 3)
 	owner.current.set_patron(/datum/patron/inhumen/graggar)
 	to_chat(owner.current, "<span class='danger'>I've blended in well up until this point, but it's time for the Hunted of Graggar to perish. Perform the profane rite with a knife and organ to obtain your dagger.</span>")
 	new /datum/antag_setup(owner.current)
