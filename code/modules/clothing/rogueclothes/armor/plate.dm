@@ -335,6 +335,19 @@
 		return
 	qdel(src)
 
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+	name = "avantyne-threaded maille"
+	desc = "Pauldrons lyke that of fire, crested atop a veil of otherworldly maille - impossibly tough, warm to the touch, \
+and crackling with insidious energies."
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
+	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoplatechest_med"
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
 	name = "full-plate corset"
@@ -507,6 +520,34 @@
 
 	body_parts_covered = CHEST | VITALS | LEGS
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL
+
+/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold
+	name = "golden cuirass"
+	icon_state = "goldcuirass"
+	desc = "A resplendant cuirass of pure gold, fitted with tassets for additional coverage. It is dressed atop a besilked arming \
+	jacket to ensure the absolute comfort of its wearer, and the holy sigil has been meticulously formed from its slanted plates."
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile, especially against blunt damage.
+	armor_class = ARMOR_CLASS_HEAVY
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	grid_height = 96
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/heroic
+	name = "golden heroic cuirass"
+	icon_state = "heroiccuirass"
+	desc = "A resplendant cuirass of pure gold, fitted with tassets for additional coverage. It has been meticulously waxed-and-assembled \
+	from dozens of smaller golden plates, in order to replicate the statuesque physique of Psydonia's legendary heroes."
+	unenchantable = TRUE
+
+/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/king
+	name = "golden heroic cuirass"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	sellprice = 400
+	unenchantable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 	name = "psydonic cuirass"

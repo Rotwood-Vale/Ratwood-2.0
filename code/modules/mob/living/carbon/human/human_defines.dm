@@ -11,6 +11,9 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
+	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
+	var/taints_loot = FALSE
 
 	ambushable = 1
 
@@ -89,10 +92,8 @@
 	var/last_fire_update
 	var/account_id
 
-	canparry = TRUE
-	candodge = TRUE
-
-	dodgecd = FALSE
+	mob_can_parry = TRUE
+	mob_can_dodge = TRUE
 	dodgetime = 0
 
 	var/list/possibleclass

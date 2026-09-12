@@ -187,6 +187,7 @@
 	name = "grey bisht"
 	icon_state = "bluethawb"
 	item_state = "bluethawb"
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -232,6 +233,7 @@
 	icon_state = "thawb"
 	item_state = "thawb"
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/dress/thawb/black
 	color = CLOTHING_BLACK
@@ -346,6 +348,7 @@
 	icon_state = "turban"
 	item_state = "turban"
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/head/roguetown/turban/tan
 	color = "#93714b"
@@ -461,6 +464,8 @@
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/pants.dmi'
 	icon_state = "sirwal"
 	item_state = "sirwal"
+	salvage_amount = 1
+	fiber_salvage = FALSE
 
 /obj/item/clothing/under/roguetown/sirwal/beige
 	color = "#edc6a5"
@@ -515,6 +520,8 @@
 	icon_state = "thong"
 	item_state = "thong"
 	body_parts_covered = GROIN
+	salvage_amount = 1
+	fiber_salvage = FALSE
 
 /datum/crafting_recipe/roguetown/sewing/thong
 	name = "thong"
