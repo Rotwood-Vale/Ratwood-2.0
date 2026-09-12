@@ -420,7 +420,8 @@
 	/datum/job/roguetown/pilgrim,\
 	/datum/job/roguetown/adventurer,\
 	/datum/job/roguetown/bandit,\
-	/datum/job/roguetown/wretch
+	/datum/job/roguetown/wretch,\
+	/datum/job/roguetown/migrant
 
 #define GARRISON_ROLES \
 	/datum/job/roguetown/warden,\

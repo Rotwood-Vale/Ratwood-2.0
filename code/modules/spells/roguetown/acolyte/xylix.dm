@@ -42,7 +42,7 @@
 /obj/effect/proc_holder/spell/invoked/ventriloquism/cast(list/targets, mob/user = usr)
 	if(isobj(targets[1]))
 		var/obj/target = targets[1]
-		var/input_message = input(usr, "What shall [target] say?", src) as null|text
+		var/input_message = sanitize(input(usr, "What shall [target] say?", src) as null|text)
 		target.say("[input_message]")
 		return TRUE
 	revert_cast()
@@ -947,9 +947,9 @@
 	if(meister_balance > 0)
 		var/stolen = min(rand(1, 10), meister_balance)
 		SStreasury.bank_accounts[owner] -= stolen
-		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your meister!"))
+		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your nervelock!"))
 	else
-		to_chat(owner, span_notice("Matthios reaches for your meister, but finds it empty. Truly, a poor fool!"))
+		to_chat(owner, span_notice("Matthios reaches for your nervelock, but finds it empty. Truly, a poor fool!"))
 	. = ..()
 
 /datum/status_effect/matthios_favor/on_remove()
@@ -959,7 +959,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/matthios_favor
 	name = "Matthios' Favor"
-	desc = "The Free-God palms coin from your meister with a crooked grin."
+	desc = "The Free-God palms coin from your nervelock with a crooked grin."
 	icon_state = "status"
 
 /atom/movable/screen/alert/status_effect/buff/malum_favor
@@ -1215,7 +1215,7 @@
 			to_chat(user, span_danger("Graggar's fury marks your flesh!"))
 		if(MATTHIOS)
 			user.apply_status_effect(/datum/status_effect/matthios_favor)
-			to_chat(user, span_danger("Matthios steals from your meister as a lesson in greed!"))
+			to_chat(user, span_danger("Matthios steals from your nervelock as a lesson in greed!"))
 	return ..()
 
 #undef NOTHING

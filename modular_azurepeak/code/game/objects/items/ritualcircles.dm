@@ -1398,21 +1398,63 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
-	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
-	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	backr = /obj/item/rogueweapon/sword/long/zizo
-	neck = /obj/item/clothing/neck/roguetown/bevor
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
-	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
+
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
 	switch(helmet_choice)
 		if("BARBUTE - VISORED")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 		if("FROGMOUTH - NECK PROTECTION")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
+		if("BASCINET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
+		if("VOLF-FACE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo
 
+	var/armors = list("HEAVY ARMOR", "MEDIUM ARMOR")
+	var/armors_choice = input(H, "Choose your ARMOR.", "PROTECTION FROM THE LADY") as anything in armors
+	switch(armors_choice)
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/medium/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/medium/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)") // Funny evyl names
+	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
+	switch(weapons_choice)
+		if("Absolutio - (greatsword)")
+			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Vindicatio - (longsword)")
+			r_hand = /obj/item/rogueweapon/sword/long/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Damnatio - (rapier)")
+			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Perditio - (kriegmesser)")
+			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Messis - (billhook)")
+			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			if(HAS_TRAIT(H, TRAIT_RITUALIST))
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+		if("Devotio - (arming sword)")
+			r_hand = /obj/item/rogueweapon/sword/arming/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")

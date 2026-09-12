@@ -19,9 +19,9 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
 	advclass_cat_rolls = list(CTAG_STEWARD = 2)
-	virtue_restrictions = list(/datum/virtue/utility/blacksmith)
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
 
-	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
+	job_traits = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_ROYAL_SUBSIDY)
 	job_subclasses = list(
 		/datum/advclass/steward
 	)
@@ -89,12 +89,39 @@ GLOBAL_VAR_INIT(steward_tax_cooldown, -50000) // Antispam
 	set category = "Stewardry"
 	if(stat)
 		return
-	var/lord = find_lord()
-	if(lord)
-		to_chat(src, span_warning("You cannot adjust taxes while the [SSticker.rulertype] is present in the realm. Ask your liege."))
-		return
 	if(world.time < GLOB.steward_tax_cooldown + 600 SECONDS)
 		to_chat(src, span_warning("You must wait [round((GLOB.steward_tax_cooldown + 600 SECONDS - world.time)/600, 0.1)] minutes before adjusting taxes again! Think of the realm."))
 		return FALSE
 	var/datum/taxsetter/taxsetter = new("The Diligent Steward Intervenes", "The Greedy Steward Imposes")
+	taxsetter.requesting_steward = src
 	taxsetter.ui_interact(src)
+
+/proc/lord_tax_rates_requested(mob/living/steward, mob/living/carbon/human/lord, list/category_rates, good_announcement_text, bad_announcement_text)
+	var/list/lines = list()
+	for(var/entry in category_rates)
+		if(!islist(entry))
+			continue
+		var/pretty = SStreasury.get_tax_category_pretty_name(entry["category"])
+		lines += "[pretty]: [entry["rate"]]%"
+	var/summary = length(lines) ? jointext(lines, "\n") : "No changes specified."
+	var/choice = alert(lord, "The steward requests new levy rates!\n[summary]", "STEWARD TAX REQUEST", "Yes", "No")
+	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
+		if(steward)
+			to_chat(steward, span_warning("The lord has denied the request to adjust levy rates!"))
+		return
+	SStreasury.apply_rate_adjustments(category_rates, steward, good_announcement_text, bad_announcement_text)
+
+/proc/lord_poll_tax_rates_requested(mob/living/steward, mob/living/carbon/human/lord, list/poll_rates, good_announcement_text, bad_announcement_text)
+	var/list/lines = list()
+	for(var/entry in poll_rates)
+		if(!islist(entry))
+			continue
+		var/pretty = SStreasury.get_poll_tax_category_pretty_name(entry["category"])
+		lines += "[pretty]: [entry["rate"]]m/day"
+	var/summary = length(lines) ? jointext(lines, "\n") : "No changes specified."
+	var/choice = alert(lord, "The steward requests new poll tax rates!\n[summary]", "STEWARD POLL TAX REQUEST", "Yes", "No")
+	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
+		if(steward)
+			to_chat(steward, span_warning("The lord has denied the request to adjust poll tax rates!"))
+		return
+	SStreasury.apply_poll_rate_adjustments(poll_rates, steward, good_announcement_text, bad_announcement_text)
