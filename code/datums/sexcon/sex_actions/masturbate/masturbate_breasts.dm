@@ -1,23 +1,9 @@
 /datum/sex_action/masturbate_breasts
 	name = "Rub breasts"
 	category = SEX_CATEGORY_HANDS
+	user_sex_part = SEX_PART_BREASTS
 	subtle_supported = TRUE
-
-/datum/sex_action/masturbate_breasts/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_breasts/can_perform(mob/living/user, mob/living/target)
-	if(user != target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_CHEST, TRUE))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	return TRUE
+	solo = TRUE
 
 /datum/sex_action/masturbate_breasts/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts rubbing [user.p_their()] breasts..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))

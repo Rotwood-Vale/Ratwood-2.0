@@ -1,4 +1,4 @@
-/datum/sex_action/masturbate_other_penis_orison
+/datum/sex_action/holy/masturbate_other_penis_orison
 	name = "Jerk them off with godhand"
 	check_same_tile = FALSE
 	ranged_los_action = TRUE
@@ -6,31 +6,11 @@
 	target_sex_part = SEX_PART_COCK
 	subtle_supported = TRUE
 
-/datum/sex_action/masturbate_other_penis_orison/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/orison))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_other_penis_orison/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/orison))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_other_penis_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/holy/masturbate_other_penis_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] offers a quiet orison, directing the energies toward [target]'s cock..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
-/datum/sex_action/masturbate_other_penis_orison/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/holy/masturbate_other_penis_orison/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/do_subtle = user.sexcon.do_subtle_action
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
@@ -50,10 +30,10 @@
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
-/datum/sex_action/masturbate_other_penis_orison/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/holy/masturbate_other_penis_orison/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] finishes the prayer and stops stroking [target]'s cock."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
-/datum/sex_action/masturbate_other_penis_orison/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/holy/masturbate_other_penis_orison/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())
 		return TRUE
 	return FALSE
