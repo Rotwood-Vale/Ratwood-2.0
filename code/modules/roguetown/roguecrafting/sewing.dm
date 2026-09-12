@@ -45,6 +45,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/burial_shroud
+	display_category = ITEM_CAT_TAILOR_MISC
 	name = "winding sheet"
 	result = list(/obj/item/burial_shroud)
 	reqs = list(/obj/item/natural/cloth = 2)
@@ -63,6 +64,7 @@
 	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/linedanklet
+	display_category = ITEM_CAT_ARMOR_BOOTS
 	name = "cloth lined anklet"
 	result = list(/obj/item/clothing/shoes/roguetown/boots/clothlinedanklets)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -75,10 +77,12 @@
 	reqs = list(/obj/item/clothing/head/roguetown/necrahood = 1,
 				/obj/item/natural/bone = 1)
 	craftdiff = 0
+	display_category = ITEM_CAT_CLOTH_MASK
 
 /* craftdif of 1 */
 
 /datum/crafting_recipe/roguetown/sewing/clothgloves
+	display_category = ITEM_CAT_ARMOR_GLOVES
 	name = "fingerless gloves"
 	result = list(/obj/item/clothing/gloves/roguetown/fingerless)
 	reqs = list(/obj/item/natural/cloth = 1,
@@ -86,6 +90,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/clothbedsheet
+	display_category = ITEM_CAT_TAILOR_MISC
 	name = "bedsheet, cloth"
 	result = list(/obj/item/bedsheet/rogue/cloth)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -93,6 +98,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/fabricbedsheet // cloth bedsheet's fancier looking cousin
+	display_category = ITEM_CAT_TAILOR_MISC
 	name = "bedsheet, fabric"
 	result = list(/obj/item/bedsheet/rogue/fabric)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -101,6 +107,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/doublefabricbedsheet
+	display_category = ITEM_CAT_TAILOR_MISC
 	name = "bedsheet, double fabric"
 	result = list(/obj/item/bedsheet/rogue/fabric_double)
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -130,6 +137,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/noblecoat
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "fancy coat"
 	result = /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -137,6 +145,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/shadowshirt
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "silk shirt"
 	result = /obj/item/clothing/suit/roguetown/shirt/shadowshirt
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -158,6 +167,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/longcoat
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "longcoat"
 	result = list(/obj/item/clothing/suit/roguetown/armor/longcoat)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -165,6 +175,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/workervest
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "striped tunic"
 	result = list(/obj/item/clothing/suit/roguetown/armor/workervest)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -179,6 +190,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/Reyepatch
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "right eye patch"
 	result = list(/obj/item/clothing/mask/rogue/eyepatch)
 	reqs = list(/obj/item/natural/cloth = 1,
@@ -186,6 +198,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/Leyepatch
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "left eye patch"
 	result = list(/obj/item/clothing/mask/rogue/eyepatch/left)
 	reqs = list(/obj/item/natural/cloth = 1,
@@ -206,6 +219,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/sack
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "sack hood"
 	result = list(/obj/item/clothing/head/roguetown/menacing)
 	reqs = list(/obj/item/natural/cloth = 3,)
@@ -227,6 +241,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/lgambeson
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "light gambeson"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/light)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -234,6 +249,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/clothblindfold
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "blindfold"
 	result = list(/obj/item/clothing/mask/rogue/blindfold)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -241,6 +257,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/duelmask
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "duelist's mask"
 	result = list(/obj/item/clothing/mask/rogue/duelmask)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -315,18 +332,21 @@
 /* craftdif of 2+ */
 
 /datum/crafting_recipe/roguetown/sewing/wrappings
+	display_category = ITEM_CAT_ARMOR_BRACERS
 	name = "solar wrappings"
 	result = list(/obj/item/clothing/wrists/roguetown/wrappings)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/nocwrappings
+	display_category = ITEM_CAT_ARMOR_BRACERS
 	name = "moon wrappings"
 	result = list(/obj/item/clothing/wrists/roguetown/nocwrappings)
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/nunveil
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "nun veil"
 	result = list(/obj/item/clothing/head/roguetown/nun)
 	reqs = list(/obj/item/natural/cloth = 1)
@@ -339,6 +359,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/necramask
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "death mask"
 	result = list(/obj/item/clothing/head/roguetown/necramask)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -375,6 +396,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/coif
+	display_category = ITEM_CAT_ARMOR_NECK
 	name = "coif"
 	result = list(/obj/item/clothing/neck/roguetown/coif)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -641,6 +663,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/fancyhat
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "fancy hat"
 	result = list(/obj/item/clothing/head/roguetown/fancyhat)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -649,6 +672,7 @@
 	sellprice = 14
 
 /datum/crafting_recipe/roguetown/sewing/gambeson
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "gambeson"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -658,6 +682,7 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/sewing/armingjacket
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "arming jacket"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -666,6 +691,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/paddedcap
+	display_category = ITEM_CAT_ARMOR_HELMETS
 	name = "padded cap"
 	result = /obj/item/clothing/head/roguetown/paddedcap
 	reqs = list(/obj/item/natural/fibers = 5)
@@ -731,6 +757,7 @@
 	sellprice = 14
 
 /datum/crafting_recipe/roguetown/sewing/hgambeson
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded gambeson"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -759,6 +786,7 @@
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/sewing/hgambeson/fencer
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "fencing shirt"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -774,6 +802,7 @@
 	sellprice = 14
 
 /datum/crafting_recipe/roguetown/sewing/chaperon/noble
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "noble's chaperon"
 	result = list(/obj/item/clothing/head/roguetown/chaperon/noble)
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -795,6 +824,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/armordress
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded dress"
 	result = list(/obj/item/clothing/suit/roguetown/armor/armordress)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -803,6 +833,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/ragmask
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "rag mask"
 	result = list(/obj/item/clothing/mask/rogue/ragmask)
 	reqs = list(/obj/item/natural/cloth = 1)
@@ -915,6 +946,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/royalgown
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "royal gown"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/royal)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -925,6 +957,7 @@
 	sellprice = 45
 
 /datum/crafting_recipe/roguetown/sewing/royaldress
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "pristine dress"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/royal/princess)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -935,6 +968,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/royalshirt
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "gilded dress shirt"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/royal/prince)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -945,6 +979,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/regalrobes
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "regal silks"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/vampire)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -955,6 +990,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/grenzelshirt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "grenzelhoftian hip-shirt"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -964,6 +1000,7 @@
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/sewing/silktunic
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "ornate silk tunic"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/tunic/silktunic)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -974,6 +1011,7 @@
 	sellprice = 25
 
 /datum/crafting_recipe/roguetown/sewing/silkdress
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "ornate silk dress"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -1075,6 +1113,7 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/sewing/winterdress
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "winter dress"
 	result = list(/obj/item/clothing/suit/roguetown/armor/armordress/winterdress)
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -1132,6 +1171,7 @@
 	sellprice = 25
 
 /datum/crafting_recipe/roguetown/sewing/shadowpants
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "silk tights"
 	result = list(/obj/item/clothing/under/roguetown/trou/shadowpants)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -1150,6 +1190,7 @@
 	sellprice = 14
 
 /datum/crafting_recipe/roguetown/sewing/royalsleeves
+	display_category = ITEM_CAT_ARMOR_BRACERS
 	name = "royal sleeves"
 	result = list(/obj/item/clothing/wrists/roguetown/royalsleeves)
 	reqs = list(/obj/item/natural/cloth = 1,
@@ -1207,6 +1248,7 @@
 	sellprice = 14
 
 /datum/crafting_recipe/roguetown/sewing/lordlycloak
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "lordly cloak"
 	result = list(/obj/item/clothing/cloak/lordcloak)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1227,6 +1269,7 @@
 	sellprice = 15
 
 /datum/crafting_recipe/roguetown/sewing/ladycloak
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "ladylike shortcloak"
 	result = list(/obj/item/clothing/cloak/lordcloak/ladycloak)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -1238,6 +1281,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/furovercoat
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "fur overcoat"
 	result = list(/obj/item/clothing/cloak/black_cloak)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1276,6 +1320,7 @@
 	sellprice = 17
 
 /datum/crafting_recipe/roguetown/sewing/halfrobe
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "hierophant's shawl"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -1294,6 +1339,7 @@
 	sellprice = 15
 
 /datum/crafting_recipe/roguetown/sewing/otavangambeson
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "otavan gambeson"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan)
 	reqs = list(/obj/item/natural/cloth = 5,
@@ -1339,6 +1385,7 @@
 	sellprice = 13
 
 /datum/crafting_recipe/roguetown/sewing/weddingdress
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "wedding silk dress"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -1349,6 +1396,7 @@
 	sellprice = 40
 
 /datum/crafting_recipe/roguetown/sewing/silkydress
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "silky dress"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/silkydress
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -1358,6 +1406,7 @@
 	sellprice = 50
 
 /datum/crafting_recipe/roguetown/sewing/weaving/springgown
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "gown (spring)"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/gown
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1366,6 +1415,7 @@
 	sellprice = 85
 
 /datum/crafting_recipe/roguetown/sewing/weaving/summergown
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "gown (summer)"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/gown/summergown
 	reqs = list(/obj/item/natural/fibers = 2,
@@ -1375,6 +1425,7 @@
 	sellprice = 70
 
 /datum/crafting_recipe/roguetown/sewing/weaving/fallgown
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "gown (fall, silk)"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/gown/fallgown
 	reqs = list(/obj/item/natural/fibers = 3,
@@ -1384,6 +1435,7 @@
 	sellprice = 75
 
 /datum/crafting_recipe/roguetown/sewing/weaving/wintergown
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "gown (winter)"
 	result = /obj/item/clothing/suit/roguetown/shirt/dress/gown/wintergown
 	reqs = list(/obj/item/natural/fibers = 3,
@@ -1393,24 +1445,28 @@
 	sellprice = 90
 
 /datum/crafting_recipe/roguetown/sewing/exoticsilkbra
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "exotic silk bra"
 	result = list (/obj/item/clothing/suit/roguetown/shirt/exoticsilkbra)
 	reqs = list(/obj/item/natural/silk = 5)
 	craftdiff = 6
 
 /datum/crafting_recipe/roguetown/sewing/anklets
+	display_category = ITEM_CAT_ARMOR_BOOTS
 	name = "exotic silk anklets"
 	result = list (/obj/item/clothing/shoes/roguetown/anklets)
 	reqs = list(/obj/item/natural/silk = 5)
 	craftdiff = 6
 
 /datum/crafting_recipe/roguetown/sewing/exoticsilkbelt
+	display_category = ITEM_CAT_ARMOR_BELTS
 	name = "exotic silk belt"
 	result = list (/obj/item/storage/belt/rogue/leather/exoticsilkbelt)
 	reqs = list(/obj/item/natural/silk = 5)
 	craftdiff = 6
 
 /datum/crafting_recipe/roguetown/sewing/exoticsilkmask
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "exotic silk mask"
 	result = list (/obj/item/clothing/mask/rogue/exoticsilkmask)
 	reqs = list(/obj/item/natural/silk = 5)
@@ -1479,6 +1535,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/spellsingerrobes
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "spellsinger robes"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -1489,6 +1546,7 @@
 	sellprice = 30
 
 /datum/crafting_recipe/roguetown/sewing/spellsingerhat
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "spellsinger hat"
 	result = list(/obj/item/clothing/head/roguetown/spellcasterhat)
 	reqs = list(/obj/item/natural/cloth = 1,
@@ -1499,6 +1557,7 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/sewing/beekeeper
+	display_category = ITEM_CAT_CLOTH_MASK
 	name = "beekeeper's hood"
 	result = list(/obj/item/clothing/head/roguetown/beekeeper)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1518,6 +1577,7 @@
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/surgicalbag
+	display_category = ITEM_CAT_TAILOR_MISC
 	name = "surgeon's bag"
 	result = list(/obj/item/storage/belt/rogue/surgery_bag/empty)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1526,6 +1586,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/surgcollar
+	display_category = ITEM_CAT_ARMOR_NECK
 	name = "surgeon's collar"
 	result = list(/obj/item/clothing/neck/roguetown/collar/surgcollar)
 	reqs = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1)
@@ -1596,6 +1657,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/formalshirt
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "formal shirt"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/formal)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1620,6 +1682,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/tailcoat
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name =  "tailcoat"
 	result = list(/obj/item/clothing/armor/gambeson/tailcoat)
 	reqs = list(/obj/item/natural/cloth = 3,
@@ -1628,6 +1691,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/formaltrousers
+	display_category = ITEM_CAT_GARMENT_FINE
 	name = "formal trousers"
 	result = list(/obj/item/clothing/under/roguetown/trou/formal)
 	reqs = list(/obj/item/natural/cloth = 3,

@@ -2251,10 +2251,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/mountains)
-"cBZ" = (
-/obj/item/enchantmentscroll/frostveil,
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave)
 "cCt" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -3770,7 +3766,6 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/item/rogueweapon/stoneaxe/battle,
-/obj/item/enchantmentscroll/lifesteal,
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
@@ -8346,7 +8341,6 @@
 /area/rogue/outdoors/beach/byos)
 "jkg" = (
 /obj/item/rogueweapon/sword/rapier,
-/obj/item/enchantmentscroll/returningweapon,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
 "jlc" = (
@@ -12673,6 +12667,16 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/cave/tribeden)
 "nGj" = (
+/mob/living/simple_animal/hostile/retaliate/rogue/mole{
+	STASTR = 24;
+	health = 500;
+	faction = list("undead")
+	},
+/obj/structure/fluff/walldeco/chains,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
 /mob/living/simple_animal/hostile/retaliate/rogue/mole{
 	STAWIL = 13;
 	STASTR = 24;
@@ -18958,7 +18962,6 @@
 	faction = list("infernal", "tribe");
 	wander = 0
 	},
-/obj/item/enchantmentscroll/fireresist,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
 "tLZ" = (
@@ -21313,8 +21316,6 @@
 /obj/structure/closet/crate/chest/gold,
 /obj/item/rogueweapon/whip,
 /obj/item/rogueweapon/sword/decorated,
-/obj/item/enchantmentscroll/fireresist,
-/obj/item/enchantmentscroll/fireresist,
 /obj/item/roguekey{
 	icon_state = "eyekey";
 	lockid = "wrath";
@@ -41805,7 +41806,7 @@ dNc
 dNc
 dNc
 dNc
-oQg
+dNc
 wXy
 wXy
 rRr
@@ -171266,7 +171267,7 @@ eWy
 eWy
 pHP
 pHP
-cBZ
+hJo
 dLa
 pHP
 eWy
