@@ -674,6 +674,12 @@ code\modules\admin\verbs\divinewrath.dm has a variant with all the gods so keep 
 		revert_cast()
 		return FALSE
 
+	if(HAS_TRAIT(target, TRAIT_GODHAND))
+		to_chat(user, span_warning("The Ten refuse to look upon [target]. A horrible chill runs down your spine."))
+		user.Stun(50)
+		revert_cast()
+		return FALSE
+
 	if(alert(target, "[user.real_name] is trying to convert you back to the church. Do you accept?", "Conversion Request", "Yes", "No") != "Yes")
 		to_chat(user, span_warning("[target] refused your offer of conversion."))
 		revert_cast()
