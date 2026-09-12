@@ -204,6 +204,17 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
 			L.balloon_alert(L, "[amt] XP")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
+//Combat roles don't get to use community points,
+/proc/is_community_contribution_eligible(mob/living/carbon/human/Human)
+	if(!Human)
+		return FALSE
+	if(Human.job in GLOB.peasant_positions)
+		return TRUE
+	if(Human.job in GLOB.yeoman_positions)
+		return TRUE
+	if(Human.job in GLOB.youngfolk_positions)
+		return TRUE
+	return FALSE
 
 // Called when a deposit lands in the town stockpile. Accumulates toward the next
 // community status point; may roll over more than once on a large bundle deposit.
