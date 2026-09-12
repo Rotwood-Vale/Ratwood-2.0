@@ -598,14 +598,13 @@
 	else
 		var/lol = 0
 		var/list/used = intentsr
-		var/roguehud_icon = get_roguehud_icon()
 		if(hud.mymob.active_hand_index == 1)
 			used = intentsl
 		for(var/datum/intent/intenty in used)
 			lol++
 			if(lol > length(intent_slots))
 				break
-			set_rogintent_slot(intent_slots[lol], intenty.icon_state, lol, 0.02, roguehud_icon)
+			set_rogintent_slot(intent_slots[lol], intenty.icon_state, lol, 0.02, intenty.icon)
 		var/mob/living/owner = hud?.mymob
 		if(owner)
 			switch_intent(owner.r_index, owner.l_index, oactive)
