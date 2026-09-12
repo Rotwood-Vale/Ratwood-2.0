@@ -104,6 +104,56 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/split
+	name = "split-tone grenzelhoftian paumpers"
+	icon_state = "grenzelpantssplit"
+	item_state = "grenzelpantssplit"
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
+	detail_tag = "_detail"
+	altdetail_tag = "_detailalt"
+	color = "#262927"
+	detail_color = "#FFFFFF"
+	altdetail_color = "#262927"
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/split/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/split/attack_right(mob/user)
+	..()
+	if(!picked)
+		var/choice = input(user, "Choose a color.", "Grenzelhoft colors") as anything in GLOB.colorlist
+		var/playerchoice = GLOB.colorlist[choice]
+		picked = TRUE
+		detail_color = playerchoice
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_pants()
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/split/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
+/datum/crafting_recipe/roguetown/survival/paumperssplit
+	name = "swap paumpers to split-tone"
+	result = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/split)
+	reqs = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants = 1)
+	craftdiff = 0
+	req_table = TRUE
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
 	name = "cut-throat's pants"
 	desc = "Foreign pants, with leather insewns."
