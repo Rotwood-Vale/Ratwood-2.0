@@ -13,63 +13,109 @@ enum Page {
   ImageGallery,
 }
 
+const DEFAULT_WIDTH = 1000;
+const DEFAULT_HEIGHT = 700;
+const COLLAPSED_WIDTH = 450;
+
+const setWindowSize = (width: number, height: number) => {
+  const ratio = window.devicePixelRatio || 1;
+  Byond.winset(Byond.windowId, {
+    size: `${width * ratio}x${height * ratio}`,
+  });
+};
+
 export const ExaminePanel = (props) => {
   const { act, data } = useBackend<ExaminePanelData>();
-  const { is_vet, character_name, is_playing, has_song, img_gallery, nsfw_img_gallery } = data;
+  const {
+    is_vet,
+    character_name,
+    is_playing,
+    has_song,
+    img_gallery,
+    nsfw_img_gallery,
+  } = data;
   const [currentPage, setCurrentPage] = useState(Page.FlavorText);
+  const [collapsed, setCollapsed] = useState(false);
+  const [expandedWidth, setExpandedWidth] = useState(DEFAULT_WIDTH);
 
-  let pageContents;
+  const hasGallery = img_gallery.length > 0 || nsfw_img_gallery.length > 0;
+  const showTabs = hasGallery && !collapsed;
+  const showGallery = !collapsed && currentPage === Page.ImageGallery;
 
-  switch (currentPage) {
-    case Page.FlavorText:
-      pageContents = <FlavorTextPage />;
-      break;
-    case Page.ImageGallery:
-      pageContents = <ImageGalleryPage />;
-      break;
-  }
+  const toggleCollapse = () => {
+    if (!collapsed) {
+      setExpandedWidth(window.innerWidth);
+      setCurrentPage(Page.FlavorText);
+      setWindowSize(COLLAPSED_WIDTH, window.innerHeight);
+    } else {
+      setWindowSize(expandedWidth, window.innerHeight);
+    }
+    setCollapsed(!collapsed);
+  };
 
   return (
-    <Window title={character_name} width={1000} height={700} buttons={
-      <>
-      {!!is_vet}
-      <Button
-      color="green"
-      icon="music"
-      tooltip="Music player"
-      tooltipPosition="bottom-start"
-      onClick={() => act('toggle')}
-      disabled={!has_song}
-      selected={!is_playing}
-      />
-      </>}>
+    <Window
+      title={character_name}
+      width={DEFAULT_WIDTH}
+      height={DEFAULT_HEIGHT}
+      buttons={
+        <>
+          {!!is_vet}
+          <Button
+            icon={collapsed ? 'chevron-right' : 'chevron-left'}
+            tooltip={collapsed ? 'Expand' : 'Collapse'}
+            tooltipPosition="bottom-start"
+            selected={collapsed}
+            onClick={toggleCollapse}
+          />
+          <Button
+            color="green"
+            icon="music"
+            tooltip="Music player"
+            tooltipPosition="bottom-start"
+            onClick={() => act('toggle')}
+            disabled={!has_song}
+            selected={!is_playing}
+          />
+        </>
+      }
+    >
       <Window.Content>
         <Stack vertical fill>
-          {(img_gallery.length > 0 || nsfw_img_gallery.length > 0) && (
-          <Stack>
-            <Stack.Item grow>
-              <PageButton
-              currentPage={currentPage}
-              page={Page.FlavorText}
-              setPage={setCurrentPage}
-              >
-                Flavor Text
-              </PageButton>
-            </Stack.Item>
-            <Stack.Item grow>
-              <PageButton
-              currentPage={currentPage}
-              page={Page.ImageGallery}
-              setPage={setCurrentPage}
-              >
-                Image Gallery
-              </PageButton>
-            </Stack.Item>
-          </Stack>
+          {showTabs && (
+            <Stack>
+              <Stack.Item grow>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.FlavorText}
+                  setPage={setCurrentPage}
+                >
+                  Flavor Text
+                </PageButton>
+              </Stack.Item>
+              <Stack.Item grow>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.ImageGallery}
+                  setPage={setCurrentPage}
+                >
+                  Image Gallery
+                </PageButton>
+              </Stack.Item>
+            </Stack>
           )}
-          {img_gallery.length > 0 && (<Stack.Divider />)}
-          <Stack.Item grow position="relative" overflowX="hidden" overflowY="auto">
-            {pageContents}
+          {showTabs && <Stack.Divider />}
+          <Stack.Item
+            key="examine-content"
+            grow
+            position="relative"
+            overflowX="hidden"
+            overflowY="auto"
+          >
+            <div style={{ display: showGallery ? 'none' : 'contents' }}>
+              <FlavorTextPage collapsed={collapsed} />
+            </div>
+            {showGallery && <ImageGalleryPage />}
           </Stack.Item>
         </Stack>
       </Window.Content>

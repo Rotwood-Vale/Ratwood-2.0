@@ -41,10 +41,9 @@
 				to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
 			return
 		var/mammonsonperson = get_mammons_in_atom(target)
-		var/mammonsinbank = SStreasury.bank_accounts[target] ? SStreasury.bank_accounts[target] : 0
+		var/mammonsinbank = SStreasury.get_balance(target)
 		var/totalvalue = mammonsinbank + mammonsonperson
 		to_chat(user, ("<font color='yellow'>[target] has [mammonsonperson] mammons on them, [mammonsinbank] in their nervelock, for a total of [totalvalue] mammons.</font>"))
-
 // T1 - Take value of item in hand, apply that as healing. Destroys item.
 
 /obj/effect/proc_holder/spell/invoked/transact

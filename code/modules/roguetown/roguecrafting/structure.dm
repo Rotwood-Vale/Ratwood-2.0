@@ -6,6 +6,7 @@
 	craftsound = 'sound/foley/Building-01.ogg'
 	verbage_simple = "construct"
 	verbage = "constructs"
+	display_category = ITEM_CAT_DECORATION
 
 /datum/crafting_recipe/roguetown/structure/TurfCheck(mob/user, turf/T)
 	if(istype(T,/turf/open/transparent/openspace))
@@ -307,7 +308,6 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /obj/item/chair/rogue/crafted
-	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/parkbenchleft
 	name = "park bench (left)"
@@ -335,7 +335,6 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /obj/item/chair/rogue/fancy/crafted
-	sellprice = 12
 
 /datum/crafting_recipe/roguetown/structure/stool
 	name = "wooden stool"
@@ -344,7 +343,6 @@
 	skillcraft = /datum/skill/craft/carpentry
 
 /obj/item/chair/stool/bar/rogue/crafted
-	sellprice = 6
 
 /datum/crafting_recipe/roguetown/structure/anvil
 	name = "anvil"

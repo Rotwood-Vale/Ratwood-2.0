@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - balance: "redid the way integrity damage is calculated when piercing armor. the short of it is that you won't be dealing single digit integrity damage to armor for the crime of doing too much damage and penetrating it. spear and rapier users rejoice"

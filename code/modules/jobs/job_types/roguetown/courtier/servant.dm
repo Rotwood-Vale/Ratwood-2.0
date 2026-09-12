@@ -14,7 +14,7 @@
 
 	outfit = /datum/outfit/job/roguetown/servant
 	advclass_cat_rolls = list(CTAG_SERVANT = 20)
-	job_traits = list(TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_HOMESTEAD_EXPERT,TRAIT_ROYAL_SUBSIDY)
 	display_order = JDO_SERVANT
 	give_bank_account = TRUE
 	min_pq = -10
@@ -34,7 +34,7 @@
 	tutorial = "You are a humdrum servant, dressed the part; lowly and best out of sight. It's practical, however."
 	outfit = /datum/outfit/job/roguetown/servant/servant
 	category_tags = list(CTAG_SERVANT)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 1,
@@ -84,7 +84,7 @@
 		STATKEY_INT = 1,
 		STATKEY_SPD = 1
 	)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
@@ -128,7 +128,7 @@
 		STATKEY_INT = 1,
 		STATKEY_SPD = 1
 	)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,

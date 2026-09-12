@@ -40,11 +40,14 @@
 
 // ripped out of stockpile machine, this deserves a future refactor
 /obj/structure/feedinghole/proc/attemptstockpile(obj/item/I, mob/H, sound = TRUE)
+	if(istype(I, /obj/item/roguecoin))
+		return
 	for(var/datum/roguestock/R in SStreasury.stockpile_datums)
 		if(istype(I, /obj/item/natural/bundle))
 			var/obj/item/natural/bundle/B = I
 			if(B.stacktype == R.item_type)
-				R.held_items[1] += B.amount
+				R.stockpile_amount += B.amount
+				SStreasury.dirty_market_view()
 				qdel(B)
 				if(sound == TRUE)
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
@@ -52,22 +55,9 @@
 		else if(istype(I,R.item_type))
 			if(!R.check_item(I))
 				continue
-			if(!R.mint_item)
-				R.held_items[1] += 1 //stacked logs need to check for multiple
-				qdel(I)
-				if(sound == TRUE)
-					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			else
-				var/area/A = GLOB.areas_by_type[R.mint_item]
-				if(!A)
-					say("Couldn't find where to send the submission.")
-					return
-				var/list/turfs = list()
-				for(var/turf/T in A)
-					turfs += T
-				var/turf/T = pick(turfs)
-				I.forceMove(T)
-				if(sound == TRUE)
-					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+			R.stockpile_amount += 1 //stacked logs need to check for multiple
+			SStreasury.dirty_market_view()
+			qdel(I)
+			if(sound == TRUE)
+				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 			return
