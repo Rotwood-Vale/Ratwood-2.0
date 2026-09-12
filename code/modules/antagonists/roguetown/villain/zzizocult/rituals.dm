@@ -151,10 +151,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	open(user)
 
 /proc/reroll_targets(mob/living/carbon/human/user)
-	GLOB.zizo_targets = list()
 	var/list/weighted = list()
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(!H.mind || !H.client || H.stat == DEAD || is_zizo(H))
+		if(!H.mind || H.stat == DEAD || is_zizo(H))
 			continue
 		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 		if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
@@ -168,6 +167,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			if(H.purity == TRUE)
 				weighted[H] = 5
 	if(is_zizo(user))
+		GLOB.zizo_targets = list()
 		for(var/i in 1 to 7)
 			if(!weighted.len)
 				break
@@ -455,7 +455,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
 		return
 	if(is_zizo(user))
-		prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
+		if(!GLOB.gate_targets.len)
+			prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
+		else
+			var/inputty = input("Do you see targets for the Gate?", "ZIZO", "Regular") as anything in list("Gate", "Regular")
+			if(inputty == "Gate")
+				prey = input("Choose a target.") as null|anything in GLOB.gate_targets
+			else if(inputty == "Regular")
+				prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
 	else
 		if(!H.zizo_targets)
 			to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
@@ -483,7 +490,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/gutted
 	name = "Gutted Fish"
-	desc = "Place a mindless humanoid in the center of the sigil to rip out its organs."
+	desc = "Place a dead and mindless humanoid in the center of the sigil to rip out its organs."
 	center_requirement = /mob/living/carbon/human // One to be gutted.human
 
 /datum/ritual/servantry/gutted/invoke(mob/living/user, turf/center)
@@ -505,7 +512,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/sleepcurse
 	name = "Curse of Sleep"
-	desc = "Curse your target to fall asleep after a minute. They are warned. Requires a leech that fed from your target."
+	desc = "Curse your target to fall asleep after thirty seconds. They are warned. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
 	keep_center = TRUE

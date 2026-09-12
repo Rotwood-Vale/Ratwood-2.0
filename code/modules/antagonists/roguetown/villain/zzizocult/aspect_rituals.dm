@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(zizo_portals)
+GLOBAL_LIST_EMPTY(gate_targets)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
@@ -34,6 +35,50 @@ GLOBAL_LIST_INIT(zizo_goals, list(
 
 GLOBAL_LIST_EMPTY(zizo_bestowed)
 GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
+
+#define TIER_TWO_GATEROLES \
+	/datum/job/roguetown/warden,\
+	/datum/job/roguetown/watchcaptain,\
+	/datum/job/roguetown/wardenmaster,\
+	/datum/job/roguetown/sergeant,\
+	/datum/job/roguetown/veteran,\
+	/datum/job/roguetown/dungeoneer,\
+	/datum/job/roguetown/manorguard,\
+	/datum/job/roguetown/squire,\
+	/datum/job/roguetown/guardsman,\
+	/datum/job/roguetown/janissary,\
+	/datum/job/roguetown/janissarysergeant,\
+	/datum/job/roguetown/azeb,\
+	/datum/job/roguetown/slavemaster,\
+	/datum/job/roguetown/guardsman,\
+	/datum/job/roguetown/jester,\
+	/datum/job/roguetown/clerk,\
+	/datum/job/roguetown/wapprentice,\
+	/datum/job/roguetown/butler,\
+	/datum/job/roguetown/apothecary,\
+	/datum/job/roguetown/chaplain,\
+	/datum/job/roguetown/dtchaplain,\
+	/datum/job/roguetown/churchling,\
+	/datum/job/roguetown/druid,\
+	/datum/job/roguetown/niteman,\
+	/datum/job/roguetown/archivist,\
+	/datum/job/roguetown/monk,\
+	/datum/job/roguetown/templar,\
+	/datum/job/roguetown/orthodoxist
+
+#define TIER_THREE_GATEROLES \
+	/datum/job/roguetown/prince,\
+	/datum/job/roguetown/councillor,\
+	/datum/job/roguetown/physician,\
+	/datum/job/roguetown/marshal,\
+	/datum/job/roguetown/captain,\
+	/datum/job/roguetown/hand,\
+	/datum/job/roguetown/knight,\
+	/datum/job/roguetown/puritan,\
+	/datum/job/roguetown/steward,\
+	/datum/job/roguetown/cataphract,\
+	/datum/job/roguetown/magician,\
+	/datum/job/roguetown/priest
 
 // HELPERS !!!
 
@@ -204,9 +249,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/servantry/aspect
 	name = "Open Gate"
 	desc = "REQUIRED TO UNLOCK ASCENSION. Activate the ritual to learn the locations it must be performed. Requires a dark crystal. It unlocks an Aspect that grants new research for the cult. MUST BE PERFORMED 3 TIMES TO UNLOCK ASCENSION."
-	center_requirement = /mob/living/carbon/human
-	center_desc = "a cultist"
 	n_req = /obj/item/necro_relics/necro_crystal
+	is_cultist_ritual = TRUE
 	var/gate_count
 
 /obj/effect/temp_visual/opengate
@@ -222,13 +266,19 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target)
-		new /obj/item/necro_relics/necro_crystal(center)
-		return
-	if(!is_zizo(target))
-		to_chat(user, span_warning("THEIR MIND IS CLOSED."))
-		new /obj/item/necro_relics/necro_crystal(center)
-		return
+	if(gate_count > 0)
+		if(!target || target == user)
+			to_chat(user, span_warning("A sacrifice must lie in the center. I also need another cultist on the rune with a knife in their hand. The sacrifice must be desired by ZIZO, which can be tracked by heartaches."))
+			return
+		if(is_zizo(target))
+			to_chat(user, span_warning("This is a cultist."))
+			return
+		if(!(target in GLOB.gate_targets))
+			to_chat(user, span_warning("She does not want this one."))
+			return
+		if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+			to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+			return
 	refill_bestow_areas()
 	var/area/here = get_area(center)
 	var/valid_area = FALSE
@@ -248,30 +298,252 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
 	var/poo = new /obj/effect/temp_visual/opengate(center)
-	playsound(target, 'sound/villain/littlescary.ogg', 100, TRUE)
-	if(!do_after(user, 15 SECONDS, target = target))
+	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
+	if(!do_after(user, 15 SECONDS))
 		qdel(poo)
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	GLOB.zizo_bestowed += choice
-	to_chat(target, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
-	target.Jitter(4)
+	to_chat(user, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
+	user.Jitter(4)
 	gate_count++
+
 	if(gate_count > 0)
-		is_cultist_ritual = TRUE
+		center_requirement = /mob/living/carbon/human
+
 	if(gate_count < 3)
-		to_chat(target, span_boldnotice("Gate opened! [3 - gate_count] more to unlock Ascension!"))
+		to_chat(user, span_boldnotice("Gate opened! [3 - gate_count] more to unlock Ascension!"))
 	if(gate_count == 3)
 		GLOB.zizo_researchable |= /datum/ritual/fleshcrafting/ascend
+
+	if(gate_count > 0)
+		var/list/weighted = list()
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(!H.mind || H.stat == DEAD || is_zizo(H))
+				continue
+			var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+			if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
+				continue
+			if(gate_count == 1 && !(J.type in (list(TIER_TWO_GATEROLES))))
+				continue
+			if(gate_count > 1 && !(J.type in (list(TIER_THREE_GATEROLES))))
+				continue
+			weighted[H] = 1
+			if(H.purity == TRUE)
+				weighted[H] = 5
+
+		GLOB.gate_targets = list()
+		for(var/i in 1 to 5)
+			if(!weighted.len)
+				break
+			var/mob/living/carbon/human/chosen = pickweight(weighted)
+			GLOB.gate_targets += chosen
+			weighted -= chosen
+
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
 		if(M.current)
 			zizo_award(M.current, 5)
 	zizo_award(user, 5)
-	playsound(target, 'sound/villain/hall_attack4.ogg', 100, TRUE)
+	playsound(user, 'sound/villain/hall_attack4.ogg', 100, TRUE)
 	new /obj/structure/reality_rend(center)
 	GLOB.zizo_bestow_areas -= here.type
 	refill_bestow_areas()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
+
+// WEAPONS
+/datum/intent/dagger/thrust/cult
+	penfactor = 100
+
+/datum/intent/dagger/cut/cult
+	penfactor = 100
+
+/datum/intent/sword/cut/sabre/cult
+	penfactor = 100
+
+/datum/intent/sword/thrust/sabre/cult
+	penfactor = 100
+
+/obj/item/rogueweapon/sword/long/noise
+	max_blade_int = 220
+	name = "madman blade"
+	desc = ""
+	icon_state = "hagsword"
+	max_integrity = 9999
+	max_blade_int = 9999
+	smeltresult = null
+	sheathe_icon = "hagsword"
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/blood
+	name = "slave knife"
+	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
+	icon_state = "graggardagger"
+	sheathe_icon = "graggardagger"
+	force = 25
+	max_integrity = 9999
+	max_blade_int = 9999
+	smeltresult = null
+	special = /datum/special_intent/ignite_dagger
+	possible_item_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
+
+/obj/item/rogueweapon/huntingknife/idagger/steel/pitch
+	name = "astrata-touched dagger"
+	desc = "This dagger once pierced the Sun Queen's heart."
+	icon_state = "fdagger"
+	sheathe_icon = "fdagger"
+	force = 25
+	max_integrity = 9999
+	max_blade_int = 9999
+	smeltresult = null
+	special = /datum/special_intent/ignite_dagger
+	var/active_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
+	var/inactive_intents = list()
+
+/datum/special_intent/ignite_dagger
+	name = "Ignite Dagger"
+	desc = "Channel the power of Pitch within the dagger to heat it to an incredible degree."
+	cooldown = 120 SECONDS
+	stamcost = 25
+
+/datum/special_intent/ignite_dagger/on_create()
+	. = ..()
+	howner.visible_message(span_warning("[iparent]'s blade begins to glow intensely in [howner]'s grasp!"))
+	var/obj/item/rogueweapon/huntingknife/idagger/steel/pitch/W = iparent
+	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
+	W.damtype = BURN
+	W.icon_state = "fdagger_active"
+	W.inactive_intents = W.possible_item_intents
+	W.possible_item_intents = W.active_intents
+	howner.update_a_intents()
+	howner.regenerate_icons()
+	playsound(W.loc, 'sound/items/firelight.ogg', 100)
+
+/datum/special_intent/ignite_dagger/proc/effect_expire()
+	howner.visible_message(span_warning("[iparent]'s blade cools down!"))
+	var/obj/item/rogueweapon/huntingknife/idagger/steel/pitch/W = iparent
+	W.damtype = BRUTE
+	W.icon_state = "fdagger"
+	W.possible_item_intents = W.inactive_intents
+	howner.update_a_intents()
+	howner.regenerate_icons()
+	playsound(W.loc, 'sound/items/firesnuff.ogg', 100)
+
+/obj/item/rogueweapon/sword/sabre/rot
+	name = "mortal blade"
+	desc = "Once a righteous blade wielded by a fair maiden. No longer."
+	icon_state = "poisonsabre"
+	force = 30
+	max_integrity = 9999
+	max_blade_int = 9999
+	var/active_intents =	list(/datum/intent/sword/cut/sabre/cult, /datum/intent/sword/thrust/sabre/cult)
+	var/inactive_intents = list()
+	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
+	sellprice = 50
+	smeltresult = null
+	special = /datum/special_intent/coat_blade
+
+/datum/special_intent/coat_blade
+	name = "Coat Blade"
+	desc = "Channel the power of Rot within this sabre to render it as toxic as it once was."
+	cooldown = 120 SECONDS
+	stamcost = 25
+
+/datum/special_intent/coat_blade/on_create()
+	. = ..()
+	howner.visible_message(span_warning("[iparent]'s blade forms a solid layer of poison in [howner]'s grasp!"))
+	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
+	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
+	W.damtype = TOX
+	W.force -= 15
+	W.update_force_dynamic()
+	W.possible_item_intents = W.active_intents
+	howner.update_a_intents()
+	W.icon_state = "poisonsabre_active"
+	howner.regenerate_icons()
+	playsound(W.loc, 'sound/misc/lava_death.ogg', 100)
+
+/datum/special_intent/coat_blade/proc/effect_expire()
+	howner.visible_message(span_warning("[iparent]'s coating of toxins falls to the dirt!"))
+	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
+	W.damtype = BRUTE
+	W.force += 15
+	W.possible_item_intents = W.inactive_intents
+	howner.update_a_intents()
+	W.update_force_dynamic()
+	W.icon_state = "poisonsabre"
+	playsound(W.loc, 'sound/magic/bladescrape.ogg', 100)
+
+/obj/item/rogueweapon/mace/maul/toil
+	name = "forgotten tool"
+	desc = "A wrench used by an artificer-thief in the the ancient age of Aeon."
+	icon_state = "bronzewrench"
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	force = 25
+	force_wielded = 40
+	minstr = 8
+	max_integrity = 9999
+	w_class = WEIGHT_CLASS_BULKY
+	swingsound = BLUNTWOOSH_LARGE
+	gripsprite = TRUE
+	wlength = WLENGTH_LONG
+	wbalance = WBALANCE_HEAVY
+	grid_width = null
+	grid_height = null
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	gripsprite = TRUE
+	walking_stick = TRUE
+
+/obj/item/rogueweapon/contraption/linker/mace/big/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6, "sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+
+/datum/intent/spear/cut/scythe
+	reach = 3
+	damfactor = 1
+
+/obj/item/rogueweapon/spear/bite
+	force = 20
+	force_wielded = 35
+	possible_item_intents = list(SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
+	name = "snow scythe"
+	desc = "An oversized scythe used to harvest giant mushrooms. Born to underdark farmers, she explored every nook and cranny of the ancient caverns."
+	icon_state = "silverpeasantscythe"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	gripsprite = TRUE
+	wlength = WLENGTH_GREAT
+	w_class = WEIGHT_CLASS_BULKY
+	minstr = 8
+	max_integrity = 9999
+	max_blade_int = 9999
+	anvilrepair = /datum/skill/craft/carpentry
+	smeltresult = null
+	walking_stick = TRUE
+	wdefense = 6
+	thrown_bclass = BCLASS_BLUNT
+	throwforce = 10
+
+/obj/item/rogueweapon/scythe/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.7,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 // STRAND
 
@@ -372,7 +644,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 // TOIL
 
 /obj/effect/proc_holder/spell/invoked/toil_mend
-	name = "Progress"
+	name = "Mend"
 	desc = "Heals the target and mends their equipment."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -399,7 +671,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return TRUE
 
 /datum/ritual/toil/progress
-	name = "Progress"
+	name = "Mend"
 	desc = "Learn a spell that heals others and repairs their equipment. Does not work on yourself."
 	passive = TRUE
 	research_cost = 3
@@ -976,7 +1248,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "Sigil Expertise"
 	desc = "Draw sigils much faster, and without bloody hands."
 	passive = TRUE
-	research_cost = 3
+	research_cost = 2
 
 /datum/ritual/blood/transfuse/apply_passive(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_BLOODBOUND, TRAIT_GENERIC)
@@ -1038,7 +1310,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/blood/bloodbond
 	name = "Curse of Blood"
-	desc = "Curse two targets to slowly die when apart from eachother. Requires two leeches that fed from seperate targets."
+	desc = "Curse two targets to slowly die when apart from each other. Requires two leeches that fed from separate targets."
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
 
