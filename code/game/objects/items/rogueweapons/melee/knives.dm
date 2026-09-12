@@ -365,8 +365,10 @@
 /datum/intent/dagger/thrust/quick
 	name = "quick thrust"
 	attack_verb = list("thrusts", "shanks")
-	penfactor = 20 //Counts as up to 30-35AP, when factoring in strength-modified damage. 
+	penfactor = 10
+	intent_intdamage_factor = 0.1
 	clickcd = 4 //Halved penetration, doubled attack speed. This is either going to be extremely funny, or extremely evil.
+	misscost = 10
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/kris
 	name = "kris dagger"
