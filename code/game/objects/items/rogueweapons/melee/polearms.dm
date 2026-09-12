@@ -546,6 +546,24 @@
 	throwforce = 15
 	special = null
 
+/obj/item/rogueweapon/spear/billhook/zizo
+	name = "avantyne billhook"
+	desc = "A twisted implement of harvest, its hooked edge festering with crystalline malice. It is a weapon of pure upheaval, designed \
+	to drag Grimoria's false idols into the dirt."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "zizobillhook"
+	max_blade_int = 300
+	max_integrity = 400
+	force = 30
+	force_wielded = 35
+	wdefense = 9
+	throwforce = 35 
+	special = /datum/special_intent/polearm_backstep
+
+/obj/item/rogueweapon/spear/billhook/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "POLEARM")
+
 /obj/item/rogueweapon/spear/improvisedbillhook
 	force = 12
 	force_wielded = 25
@@ -900,7 +918,7 @@
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic
 	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
 	force = 25
 	force_wielded = 25
@@ -985,7 +1003,6 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
-	sellprice = 60
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()
@@ -1071,7 +1088,6 @@
 	icon_state = "polehammer"
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150
-	sellprice = 40
 
 // A worse thrust for weapons specialized in other damage type like cut or blunt
 /datum/intent/spear/thrust/eaglebeak
@@ -1212,6 +1228,20 @@
 	wdefense = 6
 	force = 14
 	force_wielded = 35
+
+/obj/item/rogueweapon/greatsword/zizo
+	name = "avantyne greatsword"
+	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
+	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
+	icon_state = "zizogsw"
+	force = 20
+	force_wielded = 40
+	max_blade_int = 500
+	max_integrity = 500
+
+/obj/item/rogueweapon/greatsword/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "GREATSWORD")
 
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"

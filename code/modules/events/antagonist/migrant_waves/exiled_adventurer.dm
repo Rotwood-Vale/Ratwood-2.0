@@ -22,6 +22,7 @@
 
 /datum/migrant_role/werewolf
 	name = "Adventurer"
+	role_category = "Adventurer"
 	antag_datum = /datum/antagonist/werewolf
 	advclass_cat_rolls = list(CTAG_ADVENTURER = 5)
 
@@ -49,6 +50,7 @@
 
 /datum/migrant_role/vampire
 	name = "Adventurer"
+	role_category = "Adventurer"
 	antag_datum = /datum/antagonist/vampire
 	advclass_cat_rolls = list(CTAG_ADVENTURER = 5)
 
