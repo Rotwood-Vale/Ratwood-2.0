@@ -364,12 +364,13 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	penfactor = 100
 
 /obj/item/rogueweapon/sword/long/noise
-	max_blade_int = 220
 	name = "madman blade"
 	desc = ""
 	icon_state = "hagsword"
 	max_integrity = 9999
 	max_blade_int = 9999
+	force = 25
+	force_wielded = 35
 	smeltresult = null
 	sheathe_icon = "hagsword"
 
@@ -378,7 +379,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
 	icon_state = "graggardagger"
 	sheathe_icon = "graggardagger"
-	force = 25
+	force = 20
 	max_integrity = 9999
 	max_blade_int = 9999
 	smeltresult = null
@@ -390,7 +391,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "This dagger once pierced the Sun Queen's heart."
 	icon_state = "fdagger"
 	sheathe_icon = "fdagger"
-	force = 25
+	force = 20
 	max_integrity = 9999
 	max_blade_int = 9999
 	smeltresult = null
@@ -453,7 +454,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
 	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
 	W.damtype = TOX
-	W.force -= 15
+	W.force -= 20
 	W.update_force_dynamic()
 	W.possible_item_intents = W.active_intents
 	howner.update_a_intents()
@@ -465,7 +466,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	howner.visible_message(span_warning("[iparent]'s coating of toxins falls to the dirt!"))
 	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
 	W.damtype = BRUTE
-	W.force += 15
+	W.force += 20
 	W.possible_item_intents = W.inactive_intents
 	howner.update_a_intents()
 	W.update_force_dynamic()
@@ -478,7 +479,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "bronzewrench"
 	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	force = 25
-	force_wielded = 40
+	force_wielded = 35
 	minstr = 8
 	max_integrity = 9999
 	w_class = WEIGHT_CLASS_BULKY
@@ -511,7 +512,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /obj/item/rogueweapon/spear/bite
 	force = 20
-	force_wielded = 35
+	force_wielded = 30
 	possible_item_intents = list(SPEAR_BASH)
 	gripped_intents = list(/datum/intent/spear/cut/scythe, SPEAR_BASH, MACE_STRIKE)
 	name = "snow scythe"
