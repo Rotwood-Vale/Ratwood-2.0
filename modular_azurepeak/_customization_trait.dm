@@ -84,6 +84,22 @@
 		var/value = added_stats[stat]
 		recipient.change_stat(stat, value)
 
+/datum/customization_trait/proc/pick_stashed_instrument(mob/living/carbon/human/recipient)
+	var/list/instruments = list()
+	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
+		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
+			continue //Skip the donator personal item harp.
+		else if(instrument_type == /obj/item/rogue/instrument/ztratocaster)
+			continue // there can only be one.
+		var/obj/item/rogue/instrument/instr = new instrument_type()
+		instruments[instr.name] = instrument_type
+		qdel(instr)  // Clean up the temporary instance
+
+	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
+	if(chosen_name)
+		var/instrument_type = instruments[chosen_name]
+		recipient.mind?.special_items[chosen_name] = instrument_type
+
 /datum/customization_trait/proc/check_triumphs(mob/living/carbon/human/recipient)
 	if(!triumph_cost)
 		return TRUE

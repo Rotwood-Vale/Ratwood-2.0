@@ -19,6 +19,12 @@
 		return
 	..()
 
+/datum/quirk/dwarvenchef
+	name = "Dwarven Chef"
+	desc = "A dwarf once showed me the trick to cutting a proper pretzel from butterdough."
+	custom_text = "Lets you cut pretzels from butterdough. This quirk does nothing if you are already a Dwarf."
+	added_traits = list(TRAIT_DWARVEN_CHEF)
+
 /datum/quirk/empath
 	name = "Empath"
 	desc = "I can notice when people are in pain."
@@ -30,7 +36,29 @@
 	desc = "It's a lucky thing to share my bed."
 	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
-	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
+
+/datum/quirk/gossiper
+	name = "Gossiper"
+	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
+	custom_text = "Lets you view noble gossip. Choosing this quirk while playing a noble role will cause it to do nothing."
+	point_cost = 2
+	added_traits = list(TRAIT_GOSSIPER)
+	incompatible_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/tracker)
+
+/datum/quirk/gossiper/handle_traits(mob/living/carbon/human/recipient)
+	if(HAS_TRAIT(recipient, TRAIT_NOBLE))
+		return
+	..()
+
+/datum/quirk/hobbyistmusician
+	name = "Hobbyist Musician"
+	desc = "I've dabbled in music over the years, and I've stashed away an instrument of my own."
+	custom_text = "Comes with a stashed instrument of your choice. You choose the instrument after spawning in."
+	added_skills = list(list(/datum/skill/misc/music, 1, 6))
+
+/datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
 /datum/quirk/nightowl
 	name = "Night Owl"
@@ -43,6 +71,22 @@
 	custom_text = "This does not make branches effective beds or allow you to walk on them, simply that you can sleep on them easily."
 	added_traits = list(TRAIT_OUTDOORSMAN)
 	incompatible_virtues = list(/datum/virtue/utility/woodwalker)
+
+/datum/quirk/pretty
+	name = "Pretty"
+	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
+	custom_text = "If you also are beautiful, this quirk does nothing."
+	point_cost = 2
+	added_traits = list(TRAIT_PRETTY)
+	incompatible_virtues = list(/datum/virtue/utility/socialite)
+
+/datum/quirk/rawdiet
+	name = "Raw Diet"
+	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
+	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
+	point_cost = 2
+	added_traits = list(TRAIT_RAW_EATER)
+	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
 
 /datum/quirk/roughlover
 	name = "Rough Lover"
@@ -60,3 +104,9 @@
 /datum/quirk/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
+
+/datum/quirk/underdarkchef
+	name = "Underdark Chef"
+	desc = "I've picked up a few culinary secrets from the Underdark. Spider meat is more versatile than you'd think."
+	custom_text = "Allows you to prepare recipes utilizing spider meat. This quirk does nothing if you are already a Drow."
+	added_traits = list(TRAIT_UNDERDARK_CHEF)

@@ -359,6 +359,7 @@ GLOBAL_LIST_EMPTY(patron_follower_counts)
 #define FEATURED_STATS_VIRTUES	"virtues"
 #define FEATURED_STATS_STATPACKS "statpacks"
 #define FEATURED_STATS_VICES	"vices"
+#define FEATURED_STATS_QUIRKS	"quirks"
 
 // Featured objects stats
 #define FEATURED_STATS_CRAFTED_ITEMS "crafted_items"
@@ -478,6 +479,12 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		"color" = "#791368",
 		"entries" = list(),
 		"object_stat" = TRUE
+	),
+	FEATURED_STATS_QUIRKS = list(
+		"name" = "TOP 10 Quirks",
+		"color" = "#5cb896",
+		"entries" = list(),
+		"object_stat" = TRUE,
 	),))
 
 // Chronicle statistics

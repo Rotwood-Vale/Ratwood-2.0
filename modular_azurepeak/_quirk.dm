@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(quirks, init_subtypes_assoc(/datum/quirk))
 	if(!quirk_type || istype(quirk_type, /datum/quirk/none))
 		return
 	quirk_type.apply_generic_effects(recipient)
+	record_featured_object_stat(FEATURED_STATS_QUIRKS, quirk_type.name)
 
 /datum/quirk/none
 	name = "None"

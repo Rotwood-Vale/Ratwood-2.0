@@ -192,23 +192,7 @@
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-	addtimer(CALLBACK(src, PROC_REF(performer_apply), recipient), 50)
-
-/datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
-	var/list/instruments = list()
-	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
-		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
-			continue //Skip the donator personal item harp.
-		else if(instrument_type == /obj/item/rogue/instrument/ztratocaster)
-			continue // there can only be one.
-		var/obj/item/rogue/instrument/instr = new instrument_type()
-		instruments[instr.name] = instrument_type
-		qdel(instr)  // Clean up the temporary instance
-
-	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
-	if(chosen_name)
-		var/instrument_type = instruments[chosen_name]
-		recipient.mind?.special_items[chosen_name] = instrument_type
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
 /datum/virtue/utility/mean
 	name = "Acquired Tastes"
