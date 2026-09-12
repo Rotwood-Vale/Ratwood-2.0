@@ -353,16 +353,16 @@
 	max_integrity = 150
 	special = /datum/special_intent/shin_swipe
 
-/* /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+/obj/item/rogueweapon/huntingknife/idagger/steel/rondel
 	name = "rondel dagger"
 	desc = "This is the traditional sidearm of a knight: a lightweight dagger of solid steel, well-balanced for delivering rapid thrusts that can shuck grapplers like oysters."
 	icon_state = "rondel"
 	sheathe_icon = "dagger_trainer"
-	possible_item_intents = list(/datum/intent/dagger/thrust/quick, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
+	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
 	wdefense = 4 //Slightly more defense than a regular dagger. Intended to function as a tool for countering grapplers or finishing off armored opponents with broken pieces.
 	smeltresult = /obj/item/ingot/steel
- 
-/datum/intent/dagger/thrust/quick
+
+/* /datum/intent/dagger/thrust/quick
 	name = "quick thrust"
 	attack_verb = list("thrusts", "shanks")
 	penfactor = 20 //Counts as up to 30-35AP, when factoring in strength-modified damage. 
@@ -466,7 +466,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha
 	name = "saccharine misericorde"
 	desc = "Does thou not wish to live deliciously?"
-	possible_item_intents = list(/datum/intent/dagger/thrust/quick, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
+	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/cut)
 	icon_state = "baothamisericorde"
 	sheathe_icon = "baothamisericorde"
 	force = 25
@@ -1073,7 +1073,7 @@
 	throw_speed = 2
 	armor_penetration = 20
 	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 75, "embedded_fall_chance" = 10)
-	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/snip, /datum/intent/dagger/thrust/quick)
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/snip, /datum/intent/dagger/thrust)
 	picklvl = 0.8
 	is_tool = TRUE//has snip for whatever reason so lets let them use it.
 
