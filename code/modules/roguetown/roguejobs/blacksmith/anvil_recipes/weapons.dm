@@ -1551,6 +1551,11 @@
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	display_category = ITEM_CAT_WEAPONS_FLAILS
 
+/datum/anvil_recipe/weapons/psy/urumi
+	name = "Psydonic Urumi (+2 Blessed Silver)"
+	created_item = /obj/item/rogueweapon/whip/urumi/silver/psydonic
+	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)//3 blades so 1 more buillion over non-psydonite silver urumi
+
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK
 //cutting out the duplicate variables so it's more clear what these subtypes actually do
 /datum/anvil_recipe/weapons/psy/axe/inq
@@ -1590,4 +1595,7 @@
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/weapons/psy/whip/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/weapons/psy/urumi/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
