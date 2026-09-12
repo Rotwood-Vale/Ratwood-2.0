@@ -6,6 +6,7 @@
 // 1 decisecond click delay (above and beyond mob/next_move)
 //This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
 /mob/var/next_click	= 0
+/mob/var/keyhole_peeking = FALSE
 
 // THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 /mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
@@ -118,6 +119,11 @@
 		return
 
 	if(notransform)
+		return
+
+	// While peeking through a keyhole, the client is only a remote viewpoint.
+	// Do not allow clicks to manipulate anything at the remote location.
+	if(keyhole_peeking)
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
