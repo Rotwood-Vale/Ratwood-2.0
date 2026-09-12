@@ -294,6 +294,7 @@
 	body_parts_covered = ARMS
 	icon_state = "ironsplintarms"
 	item_state = "ironsplintarms"
+	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_SIDE_IRON
 	smeltresult = /obj/item/ingot/iron
 
