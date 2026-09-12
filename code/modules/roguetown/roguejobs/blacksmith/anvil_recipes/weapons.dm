@@ -1087,6 +1087,12 @@
 	createditem_num = 10
 	i_type = "Ammo"
 
+/datum/anvil_recipe/weapons/steel/slingbullets
+	name = "Sling Bullets, Steel (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
+	createditem_num = 10
+	i_type = "Ammo"
+
 /datum/anvil_recipe/weapons/bronze/slingbullets
 	name = "Sling Bullets, Bronze (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
