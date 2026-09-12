@@ -526,8 +526,8 @@
 	name = "silver-decorated scabbard"
 	desc = "A sword's noble scabbard, enamored with elaborate silver decorations. It carries an aristocrat's sword upon a silver platter, and - just like an actual platter - can suffice at riposting an errant blow."
 	icon_state = "nscabbard"
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 4
@@ -538,8 +538,8 @@
 	name = "gold-decorated scabbard"
 	desc = "A sword's royal scabbard, enamored with exquisite golden decorations. It pampers a champion's sword in a veil of gilded silk, reluctant to let go."
 	icon_state = "rscabbard"
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 6
@@ -648,7 +648,7 @@
 	name = "silver-decorated knife sheath"
 	desc = "A dagger's noble sheath, enamored with elaborate silver decorations. Oft-flaunted upon the faulds of a knight, it dangles and sways whenever its steely reserve is drawn."
 	icon_state = "nsheath"
-	associated_skill = /datum/skill/combat/shields
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	sewrepair = FALSE
@@ -660,7 +660,7 @@
 	name = "gold-decorated knife sheath"
 	desc = "A dagger's royal sheath, enamored with exquisite golden decorations. The hand that draws will spell the fate of many; be it for the kingdom or the world."
 	icon_state = "rsheath"
-	associated_skill = /datum/skill/combat/shields
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	sewrepair = FALSE
@@ -687,8 +687,8 @@
 		/obj/item/rogueweapon/sword/sabre/hook
 	)
 
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	wdefense = 8
 
@@ -726,6 +726,8 @@
 	desc = "A cloud-patterned scabbard with a cloth sash. Used for blocking."
 	icon_state = "kazscab_steel"
 	item_state = "kazscab_steel"
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	// Only accept Kazengun swords
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
@@ -740,6 +742,8 @@
 	desc = "An ornate, wooden scabbard with a sash. Great for parrying."
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	// Only accept Kazengun swords
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
@@ -755,6 +759,8 @@
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
+	associated_skill = /datum/skill/combat/knives
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	// Only accept Kazengun swords (kodachi variant)
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
@@ -774,7 +780,7 @@
 	valid_blades = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
 	)
-	associated_skill = /datum/skill/combat/shields
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	wdefense = 3
