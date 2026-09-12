@@ -264,6 +264,22 @@
 				return list("shrink" = 0.8,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
 
+/obj/item/rogueweapon/shield/tower/metal/zizo
+	name = "avantyne darkshield"
+	desc = "An interloper in causality's ever-so-fragile stream, woven from wafers to ward against those who're not yet ready to comprehend \
+	the gospel of Her disciples. Zizo sought to ward Her children from extinction, but failed, and in the throes of divine mania, She had come \
+	to realize that this world was no longer worth saving."
+	max_integrity = 400
+	force = 25
+	throwforce = 20
+	coverage = 75
+	wdefense = 13
+	icon_state = "zizoshield"
+
+/obj/item/rogueweapon/shield/tower/metal/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SHIELD")
+
 /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	name = "decrepit shield"
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."

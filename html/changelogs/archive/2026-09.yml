@@ -253,3 +253,49 @@
       in-hand) before you inserted them, or else they wouldn't work again? Now they
       get restarted from the "stopped" state (where possible) if you surgically insert
       them back in, or revive your dead-but-rehearted patient through any means.
+2026-09-10:
+  IronDragoon:
+  - rscadd: Added examine text to show how long someone was disconnected, and admin
+      warning at certain times
+  - admin: lets admins permanently set ghost sprite
+  SirSwagmeyer:
+  - rscadd: Added a variety of new daggers into the game, including the kampfmesser,
+      the rondel, kris, and kukri.
+  UntoldTactics:
+  - rscadd: The Silver amulet of the Ten may be purchased from the merchants silverface/goldface.
+  Yuckuza:
+  - rscadd: Added psydonic volfskull and greatplumed psydonic armet
+  - balance: Creed, stigmata, silver war axe, and psydonic war axe all have 25 force
+      wielded or unwielded since they either pair with a shield or are forced one-handed.
+  - balance: Inspector Daybreak whip minstr changed to 11; Inspector Daybreak loadout
+      now +1 STR/+1 PER
+  - rscadd: Ordinator can now take stigmata and covenant, or covenant and a war axe.
+      They also get a new studded leather cuirbolli vest underarmor and psydonic blacksteel
+      chains in their mask slot.
+  - rscadd: Adjudicator can now take either +2 CON/+2 WIL and the psydonic haubrek
+      or +2 INT/+2 PER and the psydonic cuirass. They also get access to the two new
+      psydonic helms.
+  - balance: 'Confessor stats changed to AP values: 3 SPD, 3 WIL, 2 PER, -1 STR'
+  - balance: 'Arbalist stat weight changed from +10 to +9: 3 PER, 2 STR, 2 WIL'
+  - balance: 'Sojourner statweight changed from +1 to +7: 3 INT, 2 WIL, 1 SPD, 1 PER,
+      -1 CON. (Same as Naledi Hiero -1 speed)'
+  zeroisthebiggay:
+  - balance: TRAIT_IGNOREDAMAGESLOWDOWN lets you ignore the slowdown. from damage.
+      specifically when you take damage
+  - rscadd: Remaining duration is now displayed on status effects as a countdown,
+      except things like thirsty / hungry.
+  zoktiik:
+  - rscadd: Add velvet dress and noble dress crafting recipes.
+  - balance: The Tailor now gets the "Efficient Weaver" trait exclusive to the job,
+      allowing them to make cloth on a loom from 1 fibers instead of 2.
+2026-09-11:
+  maaacha:
+  - rscadd: Var on jobs for checking if they should have pref virtues
+  - bugfix: Made it so that skeletons no longer get pref virtues
+  wikimody:
+  - rscadd: Visseir stasis now remeber whether you were up or down when spell was
+      cast
+  - balance: 'INCREDIBLE, IMPROPABLE, IMPOSIBLE ABSOLVER UPSCALE: +1 miracle skill'
+  zeroisthebiggay:
+  - bugfix: skeleton voicepacks
+  - bugfix: skeleton vocal barks
