@@ -42,6 +42,13 @@
 	target.add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
 	target.stamina_add(25)
 
+/datum/status_effect/buff/frostbite/tick()
+	var/mob/living/target = owner
+	target.stamina_add(5)
+	// When stamcrit, removes it to prevent it from chaining too hard
+	if(target.stamina >= target.max_stamina)
+		target.remove_status_effect(/datum/status_effect/buff/frostbite)
+
 /datum/status_effect/buff/frostbite/on_remove()
 	var/mob/living/target = owner
 	target.update_vision_cone()
