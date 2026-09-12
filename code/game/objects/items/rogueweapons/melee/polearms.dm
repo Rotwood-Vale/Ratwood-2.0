@@ -552,6 +552,7 @@
 	to drag Grimoria's false idols into the dirt."
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "zizobillhook"
+	unenchantable = TRUE
 	max_blade_int = 300
 	max_integrity = 400
 	force = 30
@@ -1234,6 +1235,7 @@
 	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
 	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
 	icon_state = "zizogsw"
+	unenchantable = TRUE
 	force = 20
 	force_wielded = 40
 	max_blade_int = 500

@@ -614,6 +614,7 @@
 	desc = "A wicked, unconventional, and otherworldly blade that was created by no swordsmith - a manifestation of hate for the state of this world that follows no design principles but spite and anger."
 	icon_state = "zizolongsword"
 	sheathe_icon = "zizolongsword"
+	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
 	max_blade_int = 400
@@ -631,6 +632,7 @@
 	hand, they shall bend the knee to ambition."
 	icon_state = "zizoarming"
 	sheathe_icon = "zizoarming"
+	unenchantable = TRUE
 	force = 25
 	force_wielded = 30
 	max_blade_int = 300
@@ -647,7 +649,8 @@
 	desc = "Graceful yet grotesque, a spike and weapon forged with Ambition's singular purpose, to render one in Her image: heartless. Slip between where opportunity lies and seize the moment."
 	icon_state = "zizorapier"
 	sheathe_icon = "zizorapier"
-	force = 30
+	unenchantable = TRUE
+	force = 25
 	max_blade_int = 333
 	max_integrity = 333 // stats of unique zizo rapier on ap called "Damnatio"
 
@@ -2007,6 +2010,7 @@
 	desc = "A wicked, cruel and otherworldly blade, it is cast in Her image, to tear away at flesh like She tore the tapestry of divinity for herself  - Carve, aspirant, for hate's unholy name."
 	icon_state = "zizosword"
 	sheathe_icon = "zizosword"
+	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
 	max_blade_int = 300
