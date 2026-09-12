@@ -187,9 +187,9 @@
 			message_admins(death_admin_message)
 			log_admin(death_admin_message)
 
+/// A foreign brain refuses mundane revival in become_alive(), the Fulmenor chair pierces it.
+/// Either way a successful revival of one remakes the flesh for the soul that now owns it
 /mob/living/carbon/human/revive(full_heal, admin_revive, bypass_foreign_brain_check)
-	// A foreign brain refuses mundane revival in become_alive(), the Fulmenor chair pierces it.
-	// Either way a successful revival of one remakes the flesh for the soul that now owns it
 	var/needs_binding = (stat == DEAD) && has_foreign_brain()
 	. = ..()
 	if(!.)

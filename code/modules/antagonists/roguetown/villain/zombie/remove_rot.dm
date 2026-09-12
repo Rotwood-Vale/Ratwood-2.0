@@ -46,8 +46,7 @@
 	return FALSE
 
 
-///Finds the deadite datum for this body even when its mind has moved off, a decapitated deadite
-///keeps its mind in the head's brainmob and a mind lookup on the body would find nothing
+/// Finds the deadite datum for this body even when its mind has moved off into a severed head's brainmob
 /proc/get_deadite_antag_for_body(mob/living/carbon/body)
 	if(!body)
 		return null
@@ -71,7 +70,7 @@
 		target.Jitter(100)
 	else if(was_zombie.has_turned)
 		target.death(nocutscene = TRUE)
-	was_zombie.on_removal() //not remove_antag_datum, that routes through a mind and a decapitated deadite has none
+	was_zombie.on_removal() // Not remove_antag_datum, which needs a mind a decapitated deadite lacks
 
 	if (!HAS_TRAIT(target, TRAIT_IWASUNZOMBIFIED) && user?.ckey)
 		adjust_playerquality(PQ_GAIN_UNZOMBIFY, user.ckey)

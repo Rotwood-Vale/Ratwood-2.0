@@ -1,4 +1,4 @@
-//DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
+// DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
 
 /datum/component/rot
 	var/amount = 0

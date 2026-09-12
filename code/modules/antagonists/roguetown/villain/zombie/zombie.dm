@@ -10,8 +10,8 @@
 	/// SET TO FALSE IF WE DON'T TURN INTO ROTMEN WHEN REMOVED
 	var/become_rotman = FALSE
 	var/zombie_start
-	///The body this datum deadified. The mind can move away, a severed head puts it in a brainmob,
-	///and the restore must reach the flesh. Never qdel it, weakref/Destroy() qdels its target
+	/// The body this datum deadified. The mind can move away, a severed head puts it in a brainmob,
+	/// and the restore must reach the flesh. Never qdel it, weakref/Destroy() qdels its target
 	var/datum/weakref/deadite_body_ref
 	var/revived = FALSE
 
@@ -112,7 +112,7 @@
 */
 /datum/antagonist/zombie/on_gain(admin_granted = FALSE)
 	var/mob/living/carbon/human/zombie = ishuman(owner?.current) ? owner.current : null
-	if(!zombie) //everything below dereferences the body, and a half-built datum restores nulls when removed
+	if(!zombie) // Everything below dereferences the body, and a half-built datum restores nulls when removed
 		qdel(src)
 		return
 	var/obj/item/bodypart/head = zombie.get_bodypart(BODY_ZONE_HEAD)
@@ -151,11 +151,10 @@
 */
 ///Remove zombification - cure rot, surgical rot remove
 /datum/antagonist/zombie/on_removal()
-	// Restore the body we actually deadified. The mind is not always in it, a severed head puts it in a
-	// brainmob, and writing the restore to whatever mob the mind occupies runtimes and strands the flesh
+	// Restore the body we deadified, not whatever mob the mind now occupies
 	var/mob/living/carbon/human/zombie = deadite_body_ref?.resolve()
 	if(!ishuman(zombie))
-		zombie = ishuman(owner?.current) ? owner.current : null //pre-weakref datums, and admin-built ones
+		zombie = ishuman(owner?.current) ? owner.current : null // Pre-weakref datums, and admin-built ones
 	if(zombie)
 
 		zombie.infected = FALSE // Makes sure admins removing deadification removes the infected var if they do it before they turn
@@ -247,7 +246,7 @@
 //Housekeeping's done. Transform into zombie.
 /datum/antagonist/zombie/proc/transform_zombie()
 	var/mob/living/carbon/human/zombie = owner?.current
-	if(!ishuman(zombie)) //a severed head puts the mind in a brainmob, everything below dereferences the body
+	if(!ishuman(zombie)) // A severed head puts the mind in a brainmob, everything below dereferences the body
 		qdel(src)
 		return
 	var/obj/item/bodypart/head = zombie.get_bodypart(BODY_ZONE_HEAD)
@@ -337,7 +336,7 @@
 	if(!head)
 		qdel(src)
 		return
-	if(zombie.has_foreign_brain()) //must precede the healing below, or a refused rise leaves a healed living body
+	if(zombie.has_foreign_brain()) // Must precede the healing below, or a refused rise leaves a healed living body
 		qdel(src)
 		return
 	if(zombie.stat != DEAD && !infected_wake)
@@ -357,13 +356,13 @@
 		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
 		zombie.heal_wounds(INFINITY)
 	if(zombie.stat == DEAD)
-		if(!zombie.become_alive(UNCONSCIOUS)) //the universal DEAD-to-alive chokepoint, backstops the pre-heal foreign gate above
+		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above
 			qdel(src)
 			return
-		if(zombie.stat >= DEAD) //rose but was too broken to stay up, do not fall through to the transform
+		if(zombie.stat >= DEAD) // Rose but was too broken to stay up, do not fall through to the transform
 			qdel(src)
 			return
-	else //infected while still alive, forced under rather than raised, not a death transition
+	else // Infected while still alive, forced under rather than raised, not a death transition
 		zombie.stat = UNCONSCIOUS
 		zombie.updatehealth()
 		zombie.update_mobility()
@@ -378,15 +377,18 @@
 	to_chat(owner.current, span_userdanger("Death is not the end..."))
 	return ..()
 
-///Cancels a pending rise for a corpse that can never turn. The body is left alone and keeps rotting
-///normally, it just stops being a candidate, so rotting.dm never calls back here for it again.
-///qdel and not on_removal, unlike remove_zombie_antag(). A dormant datum never turned, so on_gain wrote
-///nothing to the body worth restoring, while on_removal would regenerate organs and clear rotted on
-///every limb, erasing decay the corpse earned by lying there
+/**
+ * Cancels a pending rise for a corpse that can never turn.
+ *
+ * The body keeps rotting normally, it just stops being a candidate, so rotting.dm never calls back
+ * here for it again. qdel rather than on_removal as in remove_zombie_antag(). A dormant datum never
+ * turned, so on_gain wrote nothing worth restoring, and on_removal would regenerate organs and clear
+ * rotted on every limb, erasing the corpse's decay.
+ */
 /proc/cancel_deadite_rise(mob/living/carbon/zombie)
 	zombie.infected = FALSE
 	var/datum/antagonist/zombie/dormant_antag = zombie.mind?.has_antag_datum(/datum/antagonist/zombie)
-	if(dormant_antag) //mindless NPC deadites have none
+	if(dormant_antag)
 		qdel(dormant_antag)
 
 /*
@@ -432,13 +434,13 @@
 		to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
 
 	if(zombie.stat == DEAD)
-		if(!zombie.become_alive(UNCONSCIOUS)) //the universal DEAD-to-alive chokepoint, backstops the pre-heal foreign gate above. The corpse stays
+		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above. The corpse stays
 			zombie.infected = FALSE
 			return
-		if(zombie.stat >= DEAD) //rose but was too broken to stay up, the corpse stays
+		if(zombie.stat >= DEAD) // Rose but was too broken to stay up, the corpse stays
 			zombie.infected = FALSE
 			return
-	else //converted or infected while still alive, forced under rather than raised, not a death transition
+	else // Converted or infected while still alive, forced under rather than raised, not a death transition
 		zombie.stat = UNCONSCIOUS
 		zombie.updatehealth()
 		zombie.update_mobility()

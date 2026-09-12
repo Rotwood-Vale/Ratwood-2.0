@@ -8,7 +8,7 @@
 	zone = BODY_ZONE_PRECISE_SKULL
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL
-	///Weakref to the body this brain spawned in. Never qdel this, /datum/weakref/Destroy() qdels its target.
+	/// Weakref to the body this brain spawned in. Never qdel this, /datum/weakref/Destroy() qdels its target
 	var/datum/weakref/original_body_ref
 	attack_verb = list("attacked", "slapped", "whacked")
 
@@ -29,8 +29,8 @@
 
 	var/list/datum/brain_trauma/traumas = list()
 
-///Whether this brain belongs to a different body. A destroyed home still counts as foreign,
-///or gibbing the victim's corpse would enable body swapping. Only a brain that never had a home fails open.
+/// Whether this brain belongs to a different body. A destroyed home still counts as foreign,
+/// or gibbing the victim's corpse would enable body swapping. Only a brain that never had a home fails open
 /obj/item/organ/brain/proc/is_foreign_to(mob/living/carbon/body)
 	if(!original_body_ref)
 		return FALSE

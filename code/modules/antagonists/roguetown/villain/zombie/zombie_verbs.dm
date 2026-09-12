@@ -16,7 +16,7 @@
 		if(humie.stat >= DEAD)
 			continue
 		var/total_distance = get_dist(src, humie)
-		if(isnull(closest_dist) || total_distance < closest_dist) //isnull, or someone sharing our tile reads as nothing found
+		if(isnull(closest_dist) || total_distance < closest_dist) // isnull, or someone sharing our tile reads as nothing found
 			closest_dist = total_distance
 			the_dir = get_dir(src, humie)
 	if(isnull(closest_dist))

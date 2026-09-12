@@ -1,11 +1,16 @@
-///The OOC card and identity of a player character, carried on the mind so it follows the player
-///through any body. Captured whenever the mind leaves a human body, the presentation restamped on
-///entering one, and the identity snapshot remakes the flesh when a foreign brain gets force-revived.
-///Fields are grouped IC (the character as the world sees them) versus OOC (player boundaries).
-///Any future mechanic that copies IC presentation between characters (disguises, changelings)
-///must never touch the OOC block.
+/**
+ * The OOC card and identity of a player character.
+ *
+ * Carried on the mind so it follows the player through any body. Captured whenever the mind leaves
+ * a human body, the presentation restamped on entering one, and the identity snapshot remakes the
+ * flesh when a foreign brain gets force-revived.
+ *
+ * Fields are grouped IC (the character as the world sees them) versus OOC (player boundaries).
+ * Any future mechanic that copies IC presentation between characters (disguises, changelings)
+ * must never touch the OOC block.
+ */
 /datum/player_card
-	//IC, the character's presentation
+	// IC, the character's presentation
 	var/flavortext
 	var/nsfwflavortext
 	var/headshot_link
@@ -13,7 +18,8 @@
 	var/noble_gossip
 	var/list/img_gallery
 	var/list/nsfw_img_gallery
-	var/ooc_extra //the character's theme song url, legacy naming
+	/// The character's theme song url, legacy naming
+	var/ooc_extra
 	var/ooc_extra_img
 	var/ooc_extra_img_link
 	var/nsfw_ooc_extra_img
@@ -27,18 +33,23 @@
 	var/vocal_speed
 	var/vocal_pitch
 	var/vocal_pitch_range
-	///Snapshot of the character's dna, including organ_dna, for remaking a claimed body
+	/// Snapshot of the character's dna, including organ_dna, for remaking a claimed body
 	var/datum/dna/stored_dna
-	//appearance that lives outside dna, needed so the remade body is not left with the old owner's coloring.
-	//Hair is deliberately absent, it lives on the head bodypart and the head is already the right person's
+	/**
+	 * Appearance that lives outside dna, so the remade body is not left with the old owner's coloring.
+	 *
+	 * Hair is deliberately absent. It lives on the head bodypart, and the head is already the right person's.
+	 */
 	var/skin_tone
 
-	//OOC, player boundaries
+	// OOC, player boundaries
 	var/ooc_notes
 	var/erpprefs
 
 /datum/player_card/Destroy()
 	QDEL_NULL(stored_dna)
+	img_gallery = null
+	nsfw_img_gallery = null
 	return ..()
 
 /datum/player_card/proc/capture_from(mob/living/carbon/human/H)
@@ -74,10 +85,10 @@
 	if(!stored_dna)
 		stored_dna = new
 	H.dna.copy_dna(stored_dna)
-	stored_dna.organ_dna = H.dna.organ_dna.Copy() //copy_dna leaves this out
+	stored_dna.organ_dna = H.dna.organ_dna.Copy() // copy_dna leaves this out
 	skin_tone = H.skin_tone
 
-///Restamps the card onto a body the mind now inhabits
+/// Restamps the card onto a body the mind now inhabits
 /datum/player_card/proc/apply_card_to(mob/living/carbon/human/H)
 	H.flavortext = flavortext
 	H.nsfwflavortext = nsfwflavortext
@@ -103,14 +114,18 @@
 	H.ooc_notes = ooc_notes
 	H.erpprefs = erpprefs
 
-///Remakes a claimed body into this character: species, features, markings, organs, name.
-///The head is left completely alone, it already belongs to this character and carries their own hair
+/**
+ * Remakes a claimed body into this character: species, features, markings, organs, name.
+ *
+ * The head is left completely alone, it already belongs to this character and carries their own
+ * hair. The species swap inside transfer_identity strips every bodypart feature and only restores
+ * the character's own customization from prefs, which we do not have, so the head's features,
+ * snout and all, are held across the swap.
+ */
 /datum/player_card/proc/apply_identity_to(mob/living/carbon/human/H)
 	if(!stored_dna || !H.dna)
 		return
-	// The species swap inside transfer_identity strips every bodypart feature and only restores the
-	// character's own customization from prefs, which we do not have. The head is already this
-	// character's, snout and all, so hold its features across the swap. Cut() does not qdel them
+	// Held across the swap below, whose Cut() does not qdel them
 	var/obj/item/bodypart/head/old_head = H.get_bodypart(BODY_ZONE_HEAD)
 	var/list/kept_head_features = old_head?.bodypart_features?.Copy()
 	stored_dna.transfer_identity(H)
@@ -118,7 +133,7 @@
 	H.name = H.real_name
 	H.skin_tone = skin_tone
 	if(kept_head_features)
-		var/obj/item/bodypart/head/new_head = H.get_bodypart(BODY_ZONE_HEAD) //refetched, a body plan change can swap the limb
+		var/obj/item/bodypart/head/new_head = H.get_bodypart(BODY_ZONE_HEAD) // Refetched, a body plan change can swap the limb
 		if(new_head)
 			new_head.bodypart_features = kept_head_features
 	H.updateappearance(icon_update = 0)
@@ -132,7 +147,7 @@
 	H.update_body_parts()
 	H.update_damage_overlays()
 
-///Admin content purge, mirrors the VV slot purge categories
+/// Admin content purge, mirrors the VV slot purge categories
 /datum/player_card/proc/vv_purge(choice)
 	if(choice == "Flavor" || choice == "All")
 		flavortext = null

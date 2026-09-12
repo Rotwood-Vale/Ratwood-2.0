@@ -46,9 +46,9 @@
 
 /obj/structure/chair/frankenstein/debug/MiddleClick(mob/user)
 	. = ..()
-	top_up() //so a foreign binding can be run again without brewing a second tank
+	top_up() // So a foreign binding can be run again without brewing a second tank
 
-///Refills the tank and the crank. Every skill, consent and foreign brain gate is deliberately left alone
+/// Refills the tank and the crank. Every skill, consent and foreign brain gate is deliberately left alone
 /obj/structure/chair/frankenstein/debug/proc/top_up()
 	current_brew = max_brew
 	charge = max_charge
@@ -91,7 +91,7 @@
 /obj/structure/chair/frankenstein/attackby(obj/item/I, mob/user)
 	if(!ishuman(user))
 		to_chat(user, span_warning("I have no idea how to operate this."))
-		return //without this a non-human falls through and every H deref below runtimes
+		return // Everything below needs a human
 	var/mob/living/carbon/human/H = user
 	// Handle filling with brew containers
 	if(istype(I, /obj/item/reagent_containers))
@@ -223,7 +223,7 @@
 /obj/structure/chair/frankenstein/attack_right(mob/user)
 	if(!ishuman(user))
 		to_chat(user, span_warning("I have no idea how to operate this."))
-		return //without this a non-human falls through and every H deref below runtimes
+		return // Everything below needs a human
 	var/mob/living/carbon/human/H = user
 
 	if(cranking)
@@ -347,10 +347,10 @@
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/rechecked_occupant = occupant
 		still_foreign = rechecked_occupant.has_foreign_brain()
-	if(still_foreign && !binding_foreign)	//became foreign mid-prompt, the binding gates above never ran
+	if(still_foreign && !binding_foreign)	// Became foreign mid-prompt, the binding gates above never ran
 		to_chat(H, span_warning("The flesh's bond shifted while the spirit deliberated! It must begin anew."))
 		return
-	binding_foreign = still_foreign	//the rightful brain returning mid-prompt downgrades this to an ordinary revival
+	binding_foreign = still_foreign	// The rightful brain returning mid-prompt downgrades this to an ordinary revival
 	if(current_brew < (binding_foreign ? max_brew : brew_required) || charge < max_charge)
 		to_chat(H, span_warning("The chair's reserves dwindled while the spirit deliberated!"))
 		return

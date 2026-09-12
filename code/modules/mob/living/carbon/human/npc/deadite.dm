@@ -146,8 +146,7 @@
 			return
 	mob_timers["deadite_idle"] = world.time
 	emote("idle")
-///Whether this mob is a risen deadite. Two kinds exist, players with a turned antag datum and
-///mindless NPC deadites by type, so a datum-only check exempts NPCs and runtimes on their null mind
+/// Whether this mob is a risen deadite, either a turned antag datum or the NPC deadite type, whose datum turns ~6 s after spawn
 /mob/living/carbon/proc/is_risen_deadite()
 	if(istype(src, /mob/living/carbon/human/species/npc/deadite))
 		return TRUE

@@ -300,10 +300,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
-		// The OOC card rides the mind rather than the body, so it is snapshotted on the way out of one
-		// body and restamped on the way into the next. Shapeshift shells are skipped on both sides:
-		// capturing out of one would overwrite the card with the shell's empty fields, and stamping onto
-		// one would put the player's flavortext, notes and ERP prefs on an animal for anyone to examine
+		// The card rides the mind, captured leaving a body and restamped entering one. Shapeshift shells are
+		// skipped both ways, or the shell's empty fields overwrite it and animals show the player's notes
 		if(ishuman(current))
 			var/mob/living/carbon/human/old_human = current
 			if(!old_human.is_shapeshift_shell())
@@ -337,7 +335,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(curses && curses.len)
 		apply_curses_to_mob(current, src)
 	new_character.mind = src							//and associate our new body with ourself
-	if(ishuman(new_character) && player_card)	// and the card restamps onto whatever body the mind now wears
+	if(ishuman(new_character) && player_card)
 		var/mob/living/carbon/human/new_human = new_character
 		if(!new_human.is_shapeshift_shell())
 			player_card.apply_card_to(new_human)

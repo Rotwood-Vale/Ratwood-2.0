@@ -65,7 +65,7 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-//Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
+// Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
 #define MOB_ORGANIC 	(1 << 0)
 #define MOB_MINERAL		(1 << 1)
 #define MOB_ROBOTIC 	(1 << 2)
@@ -645,6 +645,6 @@
 #define NPC_THINK(message)
 #endif
 
-///Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
-///the ghost lock in observer.dm uses it too
+/// Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
+/// the ghost lock in observer.dm uses it too
 #define DEAD_TO_ZOMBIE_TIME (5 MINUTES)

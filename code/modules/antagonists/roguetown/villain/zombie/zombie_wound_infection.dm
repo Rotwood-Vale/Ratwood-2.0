@@ -4,14 +4,14 @@
 /*
 	ZOMBIFICATION
 */
-///Source is whoever inflicted the wound. Must be passed, not read off usr, this runs from bite
-///handlers and INVOKE_ASYNC where usr is unreliable and the deadite check would answer for the wrong mob
+/// Source is whoever inflicted the wound. Must be passed, not read off usr, this runs from bite
+/// handlers and INVOKE_ASYNC where usr is unreliable and the deadite check would answer for the wrong mob
 /datum/wound/proc/zombie_infect_attempt(mob/living/carbon/human/source)
 	if (QDELETED(src) || QDELETED(owner) || QDELETED(bodypart_owner))
 		return
 	if(!ishuman(source) || !source.is_risen_deadite())
 		return
-	if (werewolf_infection_timer || !ishuman(owner)) //Already turning into something else
+	if (werewolf_infection_timer || !ishuman(owner)) // Already turning into something else
 		return
 	if(!prob(ZOMBIE_INFECTION_PROBABILITY))	//Failed the probability of infection
 		return

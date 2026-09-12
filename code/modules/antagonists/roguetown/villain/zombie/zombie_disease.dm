@@ -37,7 +37,7 @@
 		message_cooldown_time = world.time + message_cooldown_amount
 	if(world.time > transformation_time)
 		var/mob/living/carbon/human/H = owner
-		if(!ishuman(H)) //zombie_check_can_convert is human only, and without the return this fell through and runtimed
+		if(!ishuman(H)) // zombie_check_can_convert is human only
 			owner.remove_status_effect(/datum/status_effect/zombie_infection)
 			return
 
@@ -58,7 +58,7 @@
 	else
 		to_chat(owner, span_danger("[warning_message]"))
 	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H)) //without the return this dereferenced the very owner it just rejected
+	if(!ishuman(H)) // Everything below needs a human
 		owner.remove_status_effect(/datum/status_effect/zombie_infection)
 		return TRUE
 	H.vomit(1, blood = TRUE, stun = FALSE)
@@ -71,7 +71,7 @@
 
 // Updated proc to use status effect
 /mob/living/carbon/human/proc/attempt_zombie_infection(mob/living/carbon/human/source, infection_type, wake_delay = 0)
-	if(!ishuman(source) || !source.is_risen_deadite()) //covers mindless NPC deadites as well as players
+	if(!ishuman(source) || !source.is_risen_deadite()) // Covers NPC deadites as well as players
 		return FALSE
 
 	if(mind?.has_antag_datum(/datum/antagonist/zombie))

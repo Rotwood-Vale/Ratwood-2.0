@@ -11,10 +11,10 @@
 		var/obj/item/bodypart/head/severed = M.severed_head_ref?.resolve()
 		if(!severed)
 			continue
-		if(!severed.loc) //an attached head sits in nullspace, so this one is not loose
+		if(!severed.loc) // An attached head sits in nullspace, so this one is not loose
 			continue
 		found++
-		var/turf/head_turf = get_turf(severed) //ADMIN_VERBOSEJMP expands into src.x, so it needs a var not a proc call
+		var/turf/head_turf = get_turf(severed) // ADMIN_VERBOSEJMP expands into src.x, so it needs a var not a proc call
 		var/list/nesting = list()
 		for(var/atom/container as anything in get_nested_locs(severed))
 			nesting += "[container]"

@@ -686,10 +686,13 @@
 	if (dna && dna.species)
 		. += dna.species.check_species_weakness(weapon, attacker)
 
-///Whether this body is a temporary shell a player is piloting rather than their own, currently the
-///wildshape forms and werewolf. Both roots cover every shell in the game and new forms are subtypes,
-///so they are caught without touching each species. The OOC card must never be captured out of one of
-///these or stamped onto one, see /datum/mind/transfer_to
+/**
+ * Whether this body is a temporary shell a player is piloting rather than their own.
+ *
+ * Currently the wildshape forms and werewolf. Both roots cover every shell and new forms are
+ * subtypes, so they are caught without touching each species. The OOC card must never be captured
+ * out of one or stamped onto one, see [/datum/mind/proc/transfer_to].
+ */
 /mob/living/carbon/human/proc/is_shapeshift_shell()
 	return istype(src, /mob/living/carbon/human/species/wildshape) || istype(src, /mob/living/carbon/human/species/werewolf)
 
