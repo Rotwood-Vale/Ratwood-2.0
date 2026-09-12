@@ -490,6 +490,10 @@
 	name = "Light Plated Boots, Iron"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/iron
 
+/datum/anvil_recipe/armor/iron/mailleboots
+	name = "Maille Boots, Iron"
+	created_item = /obj/item/clothing/shoes/roguetown/boots/maille/iron
+
 /datum/anvil_recipe/armor/iron/skullcap
 	name = "Skullcap, Iron"
 	created_item = /obj/item/clothing/head/roguetown/helmet/skullcap
@@ -780,6 +784,10 @@
 /datum/anvil_recipe/armor/steel/plateboot
 	name = "Plated Boots, Steel"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor
+
+/datum/anvil_recipe/armor/steel/mailleboots
+	name = "Maille Boots, Steel"
+	created_item = /obj/item/clothing/shoes/roguetown/boots/maille
 
 /datum/anvil_recipe/armor/steel/mask
 	name = "Mask, Steel"
