@@ -337,7 +337,7 @@
 	set_is_platform(FALSE)
 	if(momentum >= 12)
 		visible_message(span_warning("[src] comes to a violent halt!"))
-		throw_contents()
+		INVOKE_ASYNC(src, PROC_REF(throw_contents))
 	else
 		visible_message(span_notice("[src] comes to a slow stop."))
 	momentum = 0
@@ -358,6 +358,7 @@
 			set_is_platform(FALSE)
 			momentum = 0
 			return
+
 		check_powered()
 		momentum -= 1
 

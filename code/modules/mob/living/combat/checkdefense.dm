@@ -23,3 +23,8 @@
 			return attempt_parry(intenty, attacker)
 		if(INTENT_DODGE)
 			return attempt_dodge(intenty, attacker)
+
+/mob/living/simple_animal/checkdefense(datum/intent/intenty, mob/living/attacker)
+	if(intenty?.type == INTENT_GRAB && tame)
+		return FALSE
+	return ..()

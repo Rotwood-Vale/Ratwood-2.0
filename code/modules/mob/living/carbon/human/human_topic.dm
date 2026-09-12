@@ -24,6 +24,8 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		return
 
 	if(href_list["task"] == "gnoll_view_tracked")
+		if(!ismob(usr) || usr != src)
+			return
 		gnoll_view_tracked_char()
 
 	if(href_list["inspect_limb"] && (observer_privilege || usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)))

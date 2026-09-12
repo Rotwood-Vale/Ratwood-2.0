@@ -231,3 +231,85 @@
       cast of second wind
   - bugfix: You should no longer have to worry about instantly falling down after
       using the second wind
+2026-09-09:
+  Shadow-Quill:
+  - rscadd: Eoran buds are now valid for Nudism wear.
+  ophaq:
+  - bugfix: Fixes naledi mask looking weird when worn on belt slot. Now it is hidden
+      completely.
+  sippykot:
+  - rscadd: Added Skincrafting Journeyman to sheltered princess, Novice to inbred
+      princess to match their Sewing skills
+  - rscadd: Gives the sheltered princess a needle, scissors and some fibers
+  - rscadd: Gives the sneaky and inbred princess steel daggers and noble sheathes
+  zeroisthebiggay:
+  - bugfix: you can swift intent objects
+  - bugfix: strong intenting objects now drains stamina
+  - bugfix: fixes humans having an unconditional plus fifty to all their parry roles
+  zoktiik:
+  - sound: Added a short sound effect heard when you send or recieve a message in
+      Subtle LOOC.
+  - qol: Did you know that hearts needed you to "squeeze" them (use the heart item
+      in-hand) before you inserted them, or else they wouldn't work again? Now they
+      get restarted from the "stopped" state (where possible) if you surgically insert
+      them back in, or revive your dead-but-rehearted patient through any means.
+2026-09-10:
+  IronDragoon:
+  - rscadd: Added examine text to show how long someone was disconnected, and admin
+      warning at certain times
+  - admin: lets admins permanently set ghost sprite
+  SirSwagmeyer:
+  - rscadd: Added a variety of new daggers into the game, including the kampfmesser,
+      the rondel, kris, and kukri.
+  UntoldTactics:
+  - rscadd: The Silver amulet of the Ten may be purchased from the merchants silverface/goldface.
+  Yuckuza:
+  - rscadd: Added psydonic volfskull and greatplumed psydonic armet
+  - balance: Creed, stigmata, silver war axe, and psydonic war axe all have 25 force
+      wielded or unwielded since they either pair with a shield or are forced one-handed.
+  - balance: Inspector Daybreak whip minstr changed to 11; Inspector Daybreak loadout
+      now +1 STR/+1 PER
+  - rscadd: Ordinator can now take stigmata and covenant, or covenant and a war axe.
+      They also get a new studded leather cuirbolli vest underarmor and psydonic blacksteel
+      chains in their mask slot.
+  - rscadd: Adjudicator can now take either +2 CON/+2 WIL and the psydonic haubrek
+      or +2 INT/+2 PER and the psydonic cuirass. They also get access to the two new
+      psydonic helms.
+  - balance: 'Confessor stats changed to AP values: 3 SPD, 3 WIL, 2 PER, -1 STR'
+  - balance: 'Arbalist stat weight changed from +10 to +9: 3 PER, 2 STR, 2 WIL'
+  - balance: 'Sojourner statweight changed from +1 to +7: 3 INT, 2 WIL, 1 SPD, 1 PER,
+      -1 CON. (Same as Naledi Hiero -1 speed)'
+  zeroisthebiggay:
+  - balance: TRAIT_IGNOREDAMAGESLOWDOWN lets you ignore the slowdown. from damage.
+      specifically when you take damage
+  - rscadd: Remaining duration is now displayed on status effects as a countdown,
+      except things like thirsty / hungry.
+  zoktiik:
+  - rscadd: Add velvet dress and noble dress crafting recipes.
+  - balance: The Tailor now gets the "Efficient Weaver" trait exclusive to the job,
+      allowing them to make cloth on a loom from 1 fibers instead of 2.
+2026-09-11:
+  maaacha:
+  - rscadd: Var on jobs for checking if they should have pref virtues
+  - bugfix: Made it so that skeletons no longer get pref virtues
+  wikimody:
+  - rscadd: Visseir stasis now remeber whether you were up or down when spell was
+      cast
+  - balance: 'INCREDIBLE, IMPROPABLE, IMPOSIBLE ABSOLVER UPSCALE: +1 miracle skill'
+  zeroisthebiggay:
+  - bugfix: skeleton voicepacks
+  - bugfix: skeleton vocal barks
+2026-09-12:
+  Gug1234:
+  - bugfix: TRAIT_WEAPONLESS no longer blocks the use of surgical tools. Disciple
+      aboteers can now sign their arrival slips without needing someone else to cut
+      them.
+  MrShibaa:
+  - rscadd: Two new traits, Journey End (gets stronger as they get closer to death
+      aka fully blood depleted) and Blood Resistance (reduces rate of blood loss)
+  - rscadd: Mistwalker a unique Kazen themed Wretch.
+  RadiantFlash7:
+  - balance: Only a single enchantment can trigger before a cooldown applies to all
+      other active enchantments that use cooldowns.
+  SirSwagmeyer:
+  - bugfix: fixed Matthios dagger penetrating all armor
