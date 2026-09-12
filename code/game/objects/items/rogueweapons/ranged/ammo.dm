@@ -756,6 +756,19 @@
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "iron_sling_bullet"
 
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
+	name = "steel sling bullet"
+	desc = "A heavy, durable sphere of steel, able to punch a hole in most armours."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/steel
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "iron_sling_bullet"
+
+/obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
+	name = "blacksteel sling bullet"
+	desc = "An elegant sphere of blacksteel. This bullet bores through plate and meat like a comet. Once it's reached terminal velocity, you might want to duck."
+	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/blacksteel
+	icon_state = "bs_sling_bullet"
+
 /obj/projectile/bullet/sling_bullet //not reusable since stones will break on impact. i couldnt figure out how to prevent that
 	name = "sling bullet"
 	desc = "If you're reading this: duck."
@@ -861,11 +874,13 @@
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
 
-/obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
-	name = "blacksteel sling bullet"
-	desc = "An elegant sphere of blacksteel. This bullet bores through plate and meat like a comet. Once it's reached terminal velocity, you might want to duck."
-	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/blacksteel
-	icon_state = "bs_sling_bullet"
+/obj/projectile/bullet/reusable/sling_bullet/steel
+	name = "steel sling bullet"
+	damage = 30
+	armor_penetration = 45 // extra  50% armour pierce over iron
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "musketball_proj"
 
 /obj/projectile/bullet/reusable/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
