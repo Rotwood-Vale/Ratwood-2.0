@@ -161,6 +161,7 @@
 			continue
 		if(GLOB.dayspassed < L.due_on_day)
 			continue
+		var/datum/fund/account = get_account(debtor)
 		var/datum/fund/destination = L.source_fund
 		if(!destination)
 			continue
@@ -172,32 +173,29 @@
 			loans -= L
 			qdel(L)
 			continue
-		// ES: player balance is an integer in bank_accounts.
-		var/debtor_balance = bank_accounts[debtor] || 0
-		if(debtor_balance >= outstanding)
-			bank_accounts[debtor] -= outstanding
-			mint(destination, outstanding, L.defaulted ? "Default debt settlement (auto)" : "Loan repayment (maturity)")
-			L.repaid_so_far += outstanding
-			if(L.defaulted)
-				REMOVE_TRAIT(debtor, TRAIT_DEBTOR, TRAIT_GENERIC)
-				REMOVE_TRAIT(debtor, L.get_faction_debtor_trait(), TRAIT_GENERIC)
-				send_ooc_note("<b>NERVELOCK:</b> The stigma of default is lifted. [outstanding]m was drawn from your account to settle the outstanding debt in full.", name = debtor.real_name)
-			else
-				send_ooc_note("<b>NERVELOCK:</b> Your loan of [L.principal]m has been repaid in full ([outstanding]m drawn from your account).", name = debtor.real_name)
-			loans -= L
-			qdel(L)
-			continue
+		if(account && account.balance >= outstanding)
+			if(transfer(account, destination, outstanding, L.defaulted ? "Default debt settlement (auto)" : "Loan repayment (maturity)"))
+				L.repaid_so_far += outstanding
+				if(L.defaulted)
+					REMOVE_TRAIT(debtor, TRAIT_DEBTOR, TRAIT_GENERIC)
+					REMOVE_TRAIT(debtor, L.get_faction_debtor_trait(), TRAIT_GENERIC)
+					send_ooc_note("<b>NERVELOCK:</b> The stigma of default is lifted. [outstanding]m was drawn from your account to settle the outstanding debt in full.", name = debtor.real_name)
+				else
+					send_ooc_note("<b>NERVELOCK:</b> Your loan of [L.principal]m has been repaid in full ([outstanding]m drawn from your account).", name = debtor.real_name)
+				loans -= L
+				qdel(L)
+				continue
 		if(!L.defaulted)
 			L.defaulted = TRUE
-			var/seized = debtor_balance
-			if(seized > 0)
-				bank_accounts[debtor] = 0
-				mint(destination, seized, "Loan default seizure")
-				L.repaid_so_far += seized
+			var/seized = 0
+			if(account && account.balance > 0)
+				seized = account.balance
+				if(transfer(account, destination, seized, "Loan default seizure"))
+					L.repaid_so_far += seized
 			ADD_TRAIT(debtor, TRAIT_DEBTOR, TRAIT_GENERIC)
 			ADD_TRAIT(debtor, L.get_faction_debtor_trait(), TRAIT_GENERIC)
 			var/still_owed = L.get_remaining_due()
-			send_ooc_note("<b>NERVELOCK:</b> Your loan of [L.principal]m has come due and you cannot pay. [seized]m was seized; [still_owed]m remains owed to [destination.name]. You are marked a defaulter until the debt is settled.", name = debtor.real_name)
+			send_ooc_note("<b>MEISTER:</b> Your loan of [L.principal]m has come due and you cannot pay. [seized]m was seized; [still_owed]m remains owed to [destination.name]. You are marked a defaulter until the debt is settled.", name = debtor.real_name)
 			record_round_statistic(STATS_LOANS_DEFAULTED, 1)
 			log_game("LOAN DEFAULT: [L.debtor_name] defaulted on [outstanding]m loan from [destination.name]. [seized]m seized, [still_owed]m remaining.")
 
