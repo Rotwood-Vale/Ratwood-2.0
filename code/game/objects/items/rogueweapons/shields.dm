@@ -262,6 +262,7 @@
 	desc = "An interloper in causality's ever-so-fragile stream, woven from wafers to ward against those who're not yet ready to comprehend \
 	the gospel of Her disciples. Zizo sought to ward Her children from extinction, but failed, and in the throes of divine mania, She had come \
 	to realize that this world was no longer worth saving."
+	unenchantable = TRUE
 	max_integrity = 400
 	force = 25
 	throwforce = 20
