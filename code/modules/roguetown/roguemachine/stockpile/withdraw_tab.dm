@@ -1,3 +1,7 @@
+//Exploit prevention, predominantly. Still able to be got around, technically, but this is a bit more difficult to do so.
+/obj/item
+	var/stockpile_withdrawn = FALSE
+
 /datum/withdraw_tab
 	var/budget = 0
 	var/compact = TRUE
@@ -65,6 +69,10 @@
 		var/actor_suffix = user ? " by [user.real_name]" : ""
 		SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Withdraw: [D.name][actor_suffix]"))
 	var/obj/item/I = new D.item_type(parent_structure.loc)
+	I.stockpile_withdrawn = TRUE
+	if(ishuman(user))
+		var/mob/living/carbon/human/HC = user
+		HC.mind?.sleep_adv?.remove_community_contribution(1)
 	if(food_stipend)
 		to_chat(user, span_info("[parent_structure] chitters and squeaks into the treasury ratlines."))
 	if(!user.put_in_hands(I))

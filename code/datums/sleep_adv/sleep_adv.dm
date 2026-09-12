@@ -218,6 +218,15 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		if(mind?.current)
 			to_chat(mind.current, span_nicegreen("Word of my hard work to the town spreads. I can rest a bit easier with a sense of community."))
 
+// Called when stock is withdrawn from the town stockpile. Reduces progress toward the
+// next community status point; Withdrawing to free up room shouldn't let a subsequent
+// deposit farm credit for stock the town already had. Never revokes status points already
+// banked or a bonus already pending payout only current progress toward the next one.
+/datum/sleep_adv/proc/remove_community_contribution(amount)
+	if(!amount || amount <= 0)
+		return
+	community_contribution_count = max(0, community_contribution_count - amount)
+
 /datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
 	if(!amt || !(primary_skill in GLOB.cross_training_map))
 		return

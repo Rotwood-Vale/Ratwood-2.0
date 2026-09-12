@@ -270,7 +270,7 @@
 				if(sound == TRUE)
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				R.refresh_auto_price()
-				if(ishuman(H))
+				if(ishuman(H) && !I.stockpile_withdrawn)
 					var/mob/living/carbon/human/HC = H
 					HC.mind?.sleep_adv?.add_community_contribution(bundle_amt)
 				var/amt = R.payout_price * bundle_amt
@@ -279,7 +279,8 @@
 					record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, amt)
 					send_ooc_note("<b>NERVELOCK:</b> Subsidy claims [amt]m from the [R.name]. Thank you for your diligent service.", name = H.real_name)
 					return
-				SStreasury.economic_output += amt
+				if(!I.stockpile_withdrawn)
+					SStreasury.economic_output += amt
 				SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty")
 				if(auto_exported && message)
 					say("Crown's [R.name] stockpile is full - shipped regionally on your behalf.")
@@ -336,7 +337,7 @@
 				stock_announce("[R.name] has been stockpiled.")
 			if(sound == TRUE)
 				playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
-			if(ishuman(H))
+			if(ishuman(H) && !I.stockpile_withdrawn)
 				var/mob/living/carbon/human/HC = H
 				HC.mind?.sleep_adv?.add_community_contribution(1)
 			if(amt)
@@ -345,7 +346,8 @@
 					record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, amt)
 					send_ooc_note("<b>NERVELOCk:</b> Subsidy claims [amt]m from the [R.name]. Thank you for your diligent service.", name = H.real_name)
 					return
-				SStreasury.economic_output += true_value
+				if(!I.stockpile_withdrawn)
+					SStreasury.economic_output += true_value
 				var/bounty_msg = "+[amt] from [R.name] bounty"
 				if(crown_delta != 0)
 					var/seller_delta = amt - quality_baseline
