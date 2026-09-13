@@ -260,6 +260,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["no_language_fonts"]	>> no_language_fonts
 	S["no_language_icon"]	>> no_language_icon
 	S["hide_unavailable_emotes"] >> hide_unavailable_emotes
+	S["jiggle_duration"] >> jiggle_duration
+	S["jiggle_endless"] >> jiggle_endless
 	S["hide_tongue_noise_warnings"] >> hide_tongue_noise_warnings
 	S["crt"]				>> crt
 	S["grain"]				>> grain
@@ -370,6 +372,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
+	jiggle_duration = sanitize_integer(jiggle_duration, BREAST_JIGGLE_MIN_DURATION, BREAST_JIGGLE_MAX_DURATION, initial(jiggle_duration))
+	jiggle_endless = sanitize_integer(jiggle_endless, 0, 1, initial(jiggle_endless))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -443,6 +447,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["no_language_fonts"], no_language_fonts)
 	WRITE_FILE(S["no_language_icon"], no_language_icon)
 	WRITE_FILE(S["hide_unavailable_emotes"], hide_unavailable_emotes)
+	WRITE_FILE(S["jiggle_duration"], jiggle_duration)
+	WRITE_FILE(S["jiggle_endless"], jiggle_endless)
 	WRITE_FILE(S["hide_tongue_noise_warnings"], hide_tongue_noise_warnings)
 	WRITE_FILE(S["crt"], crt)
 	WRITE_FILE(S["sexable"], sexable)

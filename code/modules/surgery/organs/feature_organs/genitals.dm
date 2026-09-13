@@ -157,10 +157,77 @@
 	var/milk_stored = 0
 	var/milk_max = 75
 	var/branded_writing = ""
+	var/can_jiggle = TRUE
+	var/is_jiggling = FALSE
+	var/jiggle_endless = FALSE
+	var/jiggle_costs_stamina = FALSE
+	var/jiggle_cycles_left = 0
+	var/jiggle_timerid
 
 /obj/item/organ/breasts/New()
 	..()
 	milk_max = max(75, breast_size * 100)
+
+/obj/item/organ/breasts/Destroy()
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return "[..()]-[breast_size]-[is_jiggling]"
+
+/obj/item/organ/breasts/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/proc/start_jiggle(duration, endless = FALSE, costs_stamina = FALSE)
+	if(is_jiggling || !ishuman(owner))
+		return FALSE
+	is_jiggling = TRUE
+	jiggle_endless = endless
+	jiggle_costs_stamina = costs_stamina
+	jiggle_cycles_left = endless ? 0 : max(1, round(duration / BREAST_JIGGLE_CYCLE, 1))
+	var/mob/living/carbon/human/H = owner
+	H.update_body_parts(TRUE)
+	jiggle_cycle()
+	return TRUE
+
+/obj/item/organ/breasts/proc/jiggle_cycle()
+	jiggle_timerid = null
+	if(!is_jiggling)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(QDELETED(H) || !ishuman(H) || H.stat != CONSCIOUS || !(H.mobility_flags & MOBILITY_STAND))
+		stop_jiggle()
+		return
+	if(jiggle_costs_stamina && !H.jiggle_stamina_is_free())
+		if(!H.stamina_add(BREAST_JIGGLE_STAMINA_PER_SECOND * (BREAST_JIGGLE_CYCLE / (1 SECONDS))))
+			stop_jiggle()
+			return
+	H.do_jiggle_hop()
+	if(!jiggle_endless)
+		jiggle_cycles_left--
+		if(jiggle_cycles_left <= 0)
+			stop_jiggle()
+			return
+	jiggle_timerid = addtimer(CALLBACK(src, PROC_REF(jiggle_cycle)), BREAST_JIGGLE_CYCLE, TIMER_STOPPABLE)
+
+/obj/item/organ/breasts/proc/stop_jiggle()
+	if(jiggle_timerid)
+		deltimer(jiggle_timerid)
+		jiggle_timerid = null
+	if(!is_jiggling)
+		return
+	is_jiggling = FALSE
+	jiggle_endless = FALSE
+	jiggle_costs_stamina = FALSE
+	jiggle_cycles_left = 0
+	var/mob/living/carbon/human/H = owner
+	if(!QDELETED(H) && ishuman(H))
+		H.update_body_parts(TRUE)
 
 /obj/item/organ/testicles
 	name = "testicles"
