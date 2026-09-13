@@ -2671,6 +2671,7 @@
 /obj/item/quiver/bolt/standard,
 /obj/item/quiver/bolt/standard,
 /obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors)
 "Vl" = (

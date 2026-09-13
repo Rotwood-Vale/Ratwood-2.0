@@ -18630,18 +18630,15 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
-/obj/item/quiver/bolts{
-	pixel_y = 32
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/structure/rack/rogue/shelf,
-/obj/item/quiver/bolts{
+/obj/item/quiver/bolt/standard{
 	pixel_y = 32
 	},
-/obj/item/quiver/bolts{
+/obj/item/quiver/bolt/standard{
 	pixel_y = 32
 	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/tile/brownbrick{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -20843,7 +20840,6 @@
 /obj/structure/fluff/walldeco/rpainting/crown{
 	pixel_y = 32
 	},
-/obj/item/quiver/bolts,
 /obj/effect/decal/cobbleedge{
 	dir = 1;
 	icon_state = "borderfall";
@@ -33632,21 +33628,18 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/dungeon/bizbaz)
 "jAS" = (
-/obj/item/quiver/bolts{
-	pixel_y = 32
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/structure/rack/rogue/shelf,
-/obj/item/quiver/bolts{
-	pixel_y = 32
-	},
-/obj/item/quiver/bolts{
-	pixel_y = 32
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
+/obj/item/quiver/bolt/standard{
+	pixel_y = 32
+	},
+/obj/item/quiver/bolt/standard{
+	pixel_y = 32
+	},
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/garrison/desert)
 "jBj" = (
@@ -38580,7 +38573,6 @@
 	icon_state = "tablewood1"
 	},
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/quiver/bolts,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/garrison/desert/cell)
 "kRH" = (
@@ -43854,6 +43846,9 @@
 	pixel_y = 6
 	},
 /obj/structure/rack/rogue/shelf,
+/obj/item/quiver/bolt/standard{
+	pixel_y = 32
+	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison/desert)
 "msk" = (
@@ -72517,8 +72512,10 @@
 /obj/structure/table/wood{
 	icon_state = "longtable"
 	},
-/obj/item/quiver/bolts,
 /obj/structure/rack/rogue/shelf,
+/obj/item/quiver/bolt/standard{
+	pixel_y = 32
+	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/garrison/desert)
 "uqu" = (
