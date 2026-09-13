@@ -2355,6 +2355,52 @@
 
 	emote("eflick", intentional = TRUE)
 
+/mob/living/carbon/human/proc/get_hikeable_garments()
+	var/list/found = list()
+	for(var/obj/item/clothing/worn in get_equipped_items())
+		if(worn.hiked || worn.is_hikeable())
+			found += worn
+	return found
+
+/datum/emote/living/carbon/human/hike
+	key = "hike"
+	key_third_person = "hikes"
+	message = "gathers up their hem in both hands."
+	emote_type = EMOTE_VISIBLE
+	show_runechat = TRUE
+
+/datum/emote/living/carbon/human/hike/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return
+	var/list/garments = H.get_hikeable_garments()
+	if(!length(garments))
+		return
+	var/obj/item/clothing/first = garments[1]
+	if(first.hiked)
+		H.drop_hiked_hem()
+		return
+	if(!first.toggle_hike(H))
+		return
+	for(var/i in 2 to length(garments))
+		var/obj/item/clothing/extra = garments[i]
+		extra.toggle_hike(H, TRUE)
+
+/datum/emote/living/carbon/human/hike/can_run_emote(mob/user, status_check = TRUE , intentional)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	return length(H.get_hikeable_garments())
+
+/mob/living/carbon/human/verb/emote_hike()
+	set name = "Hike Hem"
+	set category = "Emotes"
+
+	emote("hike", intentional = TRUE)
+
 /datum/emote/living/sniff
 	key = "sniff"
 	key_third_person = "sniffs"

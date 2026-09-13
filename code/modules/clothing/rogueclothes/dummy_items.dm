@@ -212,11 +212,16 @@
 	experimental_onhip = FALSE
 	drop_sound = 'sound/blank.ogg'
 	pickup_sound = 'sound/blank.ogg'
-	var/obj/item/clothing/garment
+	var/mob/living/wearer
+
+/obj/item/hem_grip/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(isinhands)
+		return null
+	return ..()
 
 /obj/item/hem_grip/Destroy()
-	var/obj/item/clothing/held = garment
-	garment = null
-	if(held)
-		held.lower_hem()
+	var/mob/living/holder = wearer
+	wearer = null
+	if(!QDELETED(holder))
+		holder.drop_hiked_hem()
 	return ..()
