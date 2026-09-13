@@ -371,7 +371,7 @@
 	H.update_body_parts(TRUE)
 
 /datum/species/proc/can_jiggle_breasts(mob/living/carbon/human/H)
-	if(!H)
+	if(!H || H.cmode)
 		return FALSE
 	var/obj/item/organ/breasts/B = H.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B || B.is_jiggling)

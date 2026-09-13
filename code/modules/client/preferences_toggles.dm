@@ -149,7 +149,7 @@
 		list("id" = "pits", "label" = "Enable Armpit Hair Descriptors", "enabled" = !!owner.prefs.pits, "desc" = "See armpit hair descriptors on examining someone with exposed underarms (if present)."),
 		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
-		list("id" = "jiggle_endless", "label" = "Endless Jiggle", "enabled" = !!owner.prefs.jiggle_endless, "desc" = "Keep the Jiggle emote going until you stop it or run out of stamina. Use the Jiggle verb again to stop."),
+		list("id" = "jiggle_endless", "label" = "Endless Jiggle", "enabled" = !!owner.prefs.jiggle_endless, "desc" = "Keep the Jiggle emote going until you stop it or run out of stamina, draining [BREAST_JIGGLE_ENDLESS_STAMINA_MULT] times faster than a timed one. Use the Jiggle verb again to stop."),
 	)
 
 	var/list/content_numbers = list(

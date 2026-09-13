@@ -191,6 +191,9 @@
 	jiggle_costs_stamina = costs_stamina
 	jiggle_cycles_left = endless ? 0 : max(1, round(duration / BREAST_JIGGLE_CYCLE, 1))
 	var/mob/living/carbon/human/H = owner
+	RegisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED), PROC_REF(on_jiggle_item_attack))
+	RegisterSignal(H, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_jiggle_hand_attack))
+	RegisterSignal(H, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_jiggle_damaged))
 	H.update_body_parts(TRUE)
 	jiggle_cycle()
 	return TRUE
@@ -200,11 +203,14 @@
 	if(!is_jiggling)
 		return
 	var/mob/living/carbon/human/H = owner
-	if(QDELETED(H) || !ishuman(H) || H.stat != CONSCIOUS || !(H.mobility_flags & MOBILITY_STAND))
+	if(QDELETED(H) || !ishuman(H) || H.stat != CONSCIOUS || H.cmode || H.doing || !(H.mobility_flags & MOBILITY_STAND))
 		stop_jiggle()
 		return
 	if(jiggle_costs_stamina && !H.jiggle_stamina_is_free())
-		if(!H.stamina_add(BREAST_JIGGLE_STAMINA_PER_SECOND * (BREAST_JIGGLE_CYCLE / (1 SECONDS))))
+		var/cycle_cost = BREAST_JIGGLE_STAMINA_PER_SECOND * (BREAST_JIGGLE_CYCLE / (1 SECONDS))
+		if(jiggle_endless)
+			cycle_cost *= BREAST_JIGGLE_ENDLESS_STAMINA_MULT
+		if(!H.stamina_add(cycle_cost))
 			stop_jiggle()
 			return
 	H.do_jiggle_hop()
@@ -226,8 +232,28 @@
 	jiggle_costs_stamina = FALSE
 	jiggle_cycles_left = 0
 	var/mob/living/carbon/human/H = owner
-	if(!QDELETED(H) && ishuman(H))
-		H.update_body_parts(TRUE)
+	if(QDELETED(H) || !ishuman(H))
+		return
+	UnregisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND, COMSIG_MOB_APPLY_DAMGE))
+	H.update_body_parts(TRUE)
+
+/obj/item/organ/breasts/proc/on_jiggle_item_attack(datum/source, mob/living/target, mob/living/attacker)
+	SIGNAL_HANDLER
+	if(attacker?.used_intent?.type == INTENT_HELP)
+		return
+	stop_jiggle()
+
+/obj/item/organ/breasts/proc/on_jiggle_hand_attack(datum/source, mob/living/attacker, mob/living/target)
+	SIGNAL_HANDLER
+	if(attacker?.used_intent?.type == INTENT_HELP)
+		return
+	stop_jiggle()
+
+/obj/item/organ/breasts/proc/on_jiggle_damaged(datum/source, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+	if(damage <= 0)
+		return
+	stop_jiggle()
 
 /obj/item/organ/testicles
 	name = "testicles"
