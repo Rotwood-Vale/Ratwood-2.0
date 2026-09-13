@@ -311,6 +311,11 @@
 	cost = 40
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
 
+/datum/supply_pack/rogue/Pioneer/flintgonne
+	name = "Flintgonne"
+	cost = 400
+	contains = list(/obj/item/gun/ballistic/firearm/flintgonne/fusil)
+
 // Standard Ammunition
 
 /datum/supply_pack/rogue/Pioneer/quiver
@@ -327,3 +332,8 @@
 	name = "Quiver of Bolts"
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
+
+/datum/supply_pack/rogue/Pioneer/quivers/bullet
+	name = "Pouch of Lead Bullets"
+	cost = 50
+	contains = list(/obj/item/quiver/bullet)
