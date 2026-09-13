@@ -27,18 +27,18 @@
 	)
 	sewrepair = TRUE
 
+/obj/item/bmbstrap/proc/can_store(obj/item/I)
+	for(var/typepath in storable_types)
+		if(istype(I, typepath))
+			return TRUE
+	return FALSE
+
 /obj/item/bmbstrap/attackby(obj/A, mob/living/carbon/user, params)
 	var/obj/item/I = A
 	if(!I)
 		return ..()
 
-	var/can_store = FALSE
-	for(var/typepath in storable_types)
-		if(istype(I, typepath))
-			can_store = TRUE
-			break
-
-	if(!can_store)
+	if(!can_store(I))
 		return ..()
 
 	if(length(tweps) >= max_storage)
@@ -52,6 +52,16 @@
 		tweps += I
 
 	update_icon()
+	return TRUE
+
+/obj/item/bmbstrap/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(held_item)
+		if(!can_store(held_item))
+			to_chat(user, span_warning("I can't fit [held_item] in [src]!"))
+			return TRUE
+		attackby(held_item, user)
+		return TRUE
+	attack_right(user)
 	return TRUE
 
 /obj/item/bmbstrap/MiddleClick(mob/living/user)
@@ -100,27 +110,27 @@
 /obj/item/bmbstrap/update_icon()
 	switch(tweps.len)
 		if(1)
-			icon_state = "[item_state]1"
+			icon_state = "[item_state]2"
 		if(2)
-			icon_state = "[item_state]1"
+			icon_state = "[item_state]2"
 		if(3)
-			icon_state = "[item_state]2"
+			icon_state = "[item_state]3"
 		if(4)
-			icon_state = "[item_state]2"
+			icon_state = "[item_state]3"
 		if(5)
-			icon_state = "[item_state]3"
+			icon_state = "[item_state]4"
 		if(6)
-			icon_state = "[item_state]3"
+			icon_state = "[item_state]4"
 		if(7)
-			icon_state = "[item_state]4"
+			icon_state = "[item_state]5"
 		if(8)
-			icon_state = "[item_state]4"
+			icon_state = "[item_state]5"
 		if(9)
-			icon_state = "[item_state]5"
+			icon_state = "[item_state]6"
 		if(10)
-			icon_state = "[item_state]5"
+			icon_state = "[item_state]6"
 		else
-			icon_state = "[item_state]0"
+			icon_state = "[item_state]1"
 
 
 /obj/item/bmbstrap/Initialize()
