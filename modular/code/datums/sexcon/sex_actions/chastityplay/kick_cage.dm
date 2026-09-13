@@ -1,31 +1,26 @@
 /datum/sex_action/chastityplay/kick_cage
-	name = "Kick their chastity"
+	name = "Kick their chastity cage"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
+	target_sex_part = SEX_PART_GROIN
+	target_needs_chastity = TRUE
+	user_sex_part = SEX_PART_FOOT
 
 /datum/sex_action/chastityplay/kick_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 		return FALSE
-	if(!target_has_front_chastity(target))
+	if(!(. = ..()))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/chastityplay/kick_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+		return FALSE
+	if(!(. = ..()))
 		return FALSE
 	if(user.resting)
 		return FALSE
-	if(!target_has_front_chastity(target))
-		return FALSE
 	if(!user.Adjacent(target))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 	return TRUE
 

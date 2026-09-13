@@ -8,6 +8,7 @@
 	sellprice = 100
 	icon = 'icons/roguetown/items/misc.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
+	display_category = ITEM_CAT_DECORATION //This painting is pure loot and has no recipe, so it must be labeled seperately
 
 /obj/item/rogue/painting/attack_turf(turf/T, mob/living/user)
 	if(isclosedturf(T))
