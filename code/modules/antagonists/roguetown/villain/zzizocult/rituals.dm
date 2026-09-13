@@ -979,7 +979,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /atom/movable/screen/alert/status_effect/debuff/pylon_drain
 	name = "BEING DRAINED"
-	desc = "Something is leeching away your lux!"
+	desc = "THE ZIZO CULT IS STEALING MY LUX THROUGH THE ETHER!"
 
 /datum/status_effect/debuff/pylon_drain/tick()
 	if(!pylon || QDELETED(pylon))
