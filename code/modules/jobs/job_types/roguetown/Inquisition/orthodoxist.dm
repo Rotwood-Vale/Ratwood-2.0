@@ -30,5 +30,5 @@
 		/datum/advclass/confessor,
 		/datum/advclass/psyaltrist,
 		/datum/advclass/arbalist,
-		/datum/advclass/sojourner
+		/datum/advclass/pontifex
 	)

@@ -50,7 +50,6 @@
 		/datum/advclass/mercenary/rumaclan/sasu,
 		/datum/advclass/mercenary/steppesman,
 		/datum/advclass/mercenary/warscholar,
-		/datum/advclass/mercenary/warscholar/pontifex,
 		/datum/advclass/mercenary/warscholar/vizier,
 		/datum/advclass/mercenary/blackoak,
 		/datum/advclass/mercenary/blackoak/ranger,

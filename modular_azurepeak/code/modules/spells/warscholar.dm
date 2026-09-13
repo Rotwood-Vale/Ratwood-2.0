@@ -7,7 +7,7 @@
 	desc = "The manifestation of the higher concept of a blade itself. Said to be drawn upon from Noc's treasury of wisdom, each casting a poor facsimile of the perfect weapon He once held. This spell requires a Warscholar's mask to be cast."
 	clothes_req = FALSE
 	drawmessage = "I imagine the perfect weapon, forged by arcyne knowledge, its edge flawless. \
-	I feel it in my mind's eye -- but it's just out of reach. I pull away it's shadow, a bad copy, and yet it is one of a great weapon nonetheless... "
+		I feel it in my mind's eye -- but it's just out of reach. I pull away it's shadow, a bad copy, and yet it is one of a great weapon nonetheless... "
 	dropmessage = "Letting go, I watch the blade lose its form, unable to stay stable without my energy rooting it to this world..."
 	overlay_state = "boundkatar"
 	chargedloop = /datum/looping_sound/invokegen
@@ -29,13 +29,30 @@
 	w_class = WEIGHT_CLASS_HUGE
 	parrysound = list('sound/combat/parry/bladed/bladedsmall (1).ogg','sound/combat/parry/bladed/bladedsmall (2).ogg','sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 500
-	max_integrity = 50
+	max_integrity = 100
 	swingsound = list('sound/combat/wooshes/bladed/wooshsmall (1).ogg','sound/combat/wooshes/bladed/wooshsmall (2).ogg','sound/combat/wooshes/bladed/wooshsmall (3).ogg')
 	associated_skill = /datum/skill/combat/unarmed
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
-	wdefense = 0 // Like other katar meant to be used with unarmed parry
+	wdefense = 0
 	wbalance = WBALANCE_SWIFT
 	can_parry = TRUE
+	is_silver = TRUE
+
+/obj/item/melee/touch_attack/rogueweapon/bladeofpsydon/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/melee/touch_attack/rogueweapon/bladeofpsydon/equipped(mob/user, slot)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 
 /obj/item/melee/touch_attack/rogueweapon/attack_self()
 	attached_spell.remove_hand()
