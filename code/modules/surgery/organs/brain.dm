@@ -33,9 +33,9 @@
 	name = "brain"
 
 	if(brainmob)
-//		if(C.key)
-//			testing("UHM BASED?? [C]")
-//			C.ghostize()
+		if(HAS_TRAIT(brainmob, TRAIT_DNR))
+			for(var/dnr_source in brainmob.status_traits[TRAIT_DNR])
+				ADD_TRAIT(C, TRAIT_DNR, dnr_source)
 
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(C)
@@ -78,6 +78,11 @@
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
 	brainmob.suiciding = suicided
+	if(HAS_TRAIT(L, TRAIT_DNR))//prevents cheesing DNR, trait transfers with the brain not the body
+		for(var/dnr_source in L.status_traits[TRAIT_DNR])
+			if(dnr_source == CLOTHING_TRAIT)//prevents weird interactions with weeping psycross DNR
+				continue
+			ADD_TRAIT(brainmob, TRAIT_DNR, dnr_source)
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		if(!brainmob.stored_dna)
