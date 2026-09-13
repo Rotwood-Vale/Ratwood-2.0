@@ -74,7 +74,7 @@
 			if("Whip + Crossbow")
 				beltl = /obj/item/rogueweapon/whip
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/bolts
+				beltr = /obj/item/quiver/bolt/standard
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 
 		switch(armor_choice)

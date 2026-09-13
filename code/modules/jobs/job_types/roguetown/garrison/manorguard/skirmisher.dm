@@ -42,15 +42,15 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Crossbow","Bow","Sling")
+		var/weapons = list("Munition Crossbow","Bow","Sling")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/armor_options = list("Light Armor", "Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
 		H.set_blindness(0)
 		switch(weapon_choice)
-			if("Crossbow")
-				beltr = /obj/item/quiver/bolts
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			if("Munition Crossbow")
+				beltr = /obj/item/quiver/bolt/standard
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if("Bow") // They can head down to the armory to sideshift into one of the other bows.
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve

@@ -103,7 +103,7 @@
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
+		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - +STR/CON, -SPD/PER/INT", "Munition Crossbow - +SPD/PER, -STR/CON")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -127,9 +127,9 @@
 				H.change_stat(STATKEY_SPD, -1)
 				H.change_stat(STATKEY_PER, -1)
 				H.change_stat(STATKEY_INT, -1)
-			if("Crossbow - +SPD/PER, -STR/CON")
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				backl = /obj/item/quiver/heavybluntbolts
+			if("Munition Crossbow - +SPD/PER, -STR/CON")
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				backl = /obj/item/quiver/bolt/heavybluntbolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.change_stat(STATKEY_SPD, 1)

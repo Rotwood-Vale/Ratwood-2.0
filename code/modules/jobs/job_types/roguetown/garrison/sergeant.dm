@@ -117,7 +117,7 @@
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/cudgel
 			if("Sabre & Crossbow")	//Versetile skirmisher class. Considered other swords but sabre felt best without being too strong. (This one gets no cudgel, no space.)
-				beltr = /obj/item/quiver/bolts
+				beltr = /obj/item/quiver/bolt/standard
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				r_hand = /obj/item/rogueweapon/sword/sabre
 				l_hand = /obj/item/rogueweapon/scabbard/sword

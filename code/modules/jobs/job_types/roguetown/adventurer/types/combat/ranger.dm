@@ -54,7 +54,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/weapons = list("Recurve Bow","Crossbow")
+		var/weapons = list("Recurve Bow","Munition Crossbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -62,10 +62,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
-			if("Crossbow")
+			if("Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/quiver/bolts
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				beltl = /obj/item/quiver/bolt/standard
 
 /datum/advclass/ranger/wayfarer
 	name = "Wayfarer"
@@ -108,8 +108,8 @@
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
-	beltr = /obj/item/quiver/bolts
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	beltr = /obj/item/quiver/bolt
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
@@ -210,7 +210,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/weapons = list("Recurve Bow","Billhook","Sling","Crossbow")
+		var/weapons = list("Recurve Bow","Billhook","Sling","Munition Crossbow")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Recurve Bow")
@@ -225,10 +225,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltl = /obj/item/quiver/sling/iron
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-			if("Crossbow") // Hunting crossbows were a thing in these times, shame we don't have an item for it.
+			if("Munition Crossbow") // Hunting crossbows were a thing in these times, shame we don't have an item for it.
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/quiver/bolts
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				beltl = /obj/item/quiver/bolt
 		var/armors = list("Light Armor","Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armors
 		switch(armor_choice)

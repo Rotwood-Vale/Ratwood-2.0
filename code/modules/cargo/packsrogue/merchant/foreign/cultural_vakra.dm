@@ -37,12 +37,12 @@
 	cost = 220
 	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy)
 	ship_qty_min = 1
-	ship_qty_max = 1
+	ship_qty_max = 2
 
 /datum/supply_pack/rogue/vakra/siegebolts
 	name = "Quiver of Heavy Bolts"
 	cost = 60
-	contains = list(/obj/item/quiver/heavybolts)
+	contains = list(/obj/item/quiver/bolt/heavy)
 	ship_qty_min = 1
 	ship_qty_max = 3
 

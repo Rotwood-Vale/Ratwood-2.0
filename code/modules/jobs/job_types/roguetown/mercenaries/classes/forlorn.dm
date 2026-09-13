@@ -76,8 +76,8 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/heater, SLOT_BACK_L)
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT)
 		if("crossbow")
-			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_L)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/heavy/standard, SLOT_BELT_L)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/sword/short/falchion, SLOT_BELT_R)
-			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L)
+			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy, SLOT_BACK_L)
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT)
 

@@ -8,6 +8,7 @@
 //parent of all bolts and arrows ฅ^•ﻌ•^ฅ
 /obj/item/ammo_casing/caseless/rogue/
 	firing_effect_type = null
+	var/ammo_weight = 1 // Weight cost in a quiver. Default 1, heavy ammo costs more.
 
 //bolts ฅ^•ﻌ•^ฅ
 
@@ -45,7 +46,7 @@
 	force = 5
 
 /obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt
-	name = "heavy blunt bolt"
+	name = "blunted bolt"
 	desc = "A crossbow bolt with a fat metal head. Built to break bones."
 	projectile_type = /obj/projectile/bullet/reusable/bolt/heavyblunt
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -74,6 +75,8 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/decrepit
 
 /obj/projectile/bullet/reusable/bolt/ancient
+	damage = 55
+	armor_penetration = 40
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt/ancient
 
 /obj/projectile/bullet/reusable/bolt/blunt
@@ -913,17 +916,26 @@
 	caliber = "heabolt"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "heavy_bolt"//Temp sprite.
+	grid_height = 96 //Effectively as large as a shortsword. Two in a belt, four in a satchel. Unideal for carrying without a purpose-made pouch.
+	grid_width = 32
 	dropshrink = 0.8
-	max_integrity = 10
-	force = 12
+	max_integrity = 15
+	force = 15
+	w_class = WEIGHT_CLASS_NORMAL // bumped from TINY — this is the core lever, everything below scales off it
+	embedding = list("embedded_pain_chance" = 35,	"embedded_pain_multiplier" = 4, "embedded_unsafe_removal_pain_multiplier" = 10,	"embedded_unsafe_removal_time" = 13, "embedded_fall_chance" = 0)
+	equip_delay_self = 2 SECONDS //Girth. Pack a siege bolt pouch if you want to circumvent it.
+	unequip_delay_self = 2 SECONDS
 
-//+10 damage/pen from bolt.
+// //+20 damage/pen from bolt.
 //Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
 /obj/projectile/bullet/reusable/heavy_bolt
 	name = "heavy bolt"
-	damage = 80
+	damage = 90
 	damage_type = BRUTE
 	armor_penetration = 80
+	object_damage_multiplier = 14 //Determines the multiplier that's applied to the bolt's damage value, when striking a structure. By default, it can destroy any wooden defense - a door, barricade, wall - in one shot.
+	wall_impact_break_probability = 100 //Determines the chance that a bolt will destroy itself, when striking a structure. By default, it will always destroy itself after successfully impacting a wall.
+	damages_turf_walls = TRUE //Determines whether the bolt can damage turfs or not. By default, yes.
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "bolt_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
@@ -932,8 +944,77 @@
 	embedchance = 100
 	woundclass = BCLASS_PIERCE
 	flag = "piercing"
-	speed = 0.3
+	speed = 1.2
 	npc_simple_damage_mult = 2
+
+/obj/projectile/bullet/reusable/heavy_bolt/on_hit(target)
+	. = ..()
+	var/mob/living/M = target
+	if(ismob(target))
+		M.visible_message(span_warning("[M] staggers back from the tremendous impact!"))
+		M.apply_status_effect(/datum/status_effect/debuff/staggered, 6 SECONDS)
+		M.apply_status_effect(/datum/status_effect/debuff/exposed, 6 SECONDS) //Done in conjunction with the new Feint testmerge - opens up for a single integrity-destroying attack.
+		M.Slowdown(6)
+		M.OffBalance(1 SECONDS)
+		M.Immobilize(1 SECONDS)
+		return
+
+	var/turf/T = target
+	if(isturf(target))
+		explosion(T, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, smoke = FALSE, soundin = pick('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg'))
+		loud_message("A loud crash echoes", hearing_distance = 14)
+		return
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/blunt
+	name = "blunt heavy bolt"
+	desc = "Ostensibly, these wrought-iron siegebolts are meant for the calibration of a siegebow's ever-particular mechanisms. In practice, besieged artificers have discovered another use for these ten-kilogram battering rams."
+	possible_item_intents = list(/datum/intent/mace/strike)
+	icon_state = "bluntheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/blunt
+
+/obj/projectile/bullet/reusable/heavy_bolt/blunt
+	name = "blunt heavy bolt"
+	armor_penetration = 0
+	embedchance = 0 //'If you're reading this, duck!'
+	woundclass = BCLASS_BLUNT
+	flag = "blunt"
+	icon_state = "heavybolt_proj"
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/decrepit
+	name = "decrepit heavy bolt"
+	desc = "A length of rotted metal, quilled to take flight and tear down the living. \
+	Metal flakes occassionally peel off from its core, mysteriously hovering about - \
+	tolerable by the undying, but unbearibly noxious to the living."
+	icon_state = "ancientheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/decrepit
+	color = "#bb9696"
+
+/obj/projectile/bullet/reusable/heavy_bolt/decrepit
+	name = "decrepit heavy bolt"
+	damage = 60
+	object_damage_multiplier = 20 //Ensures the bolt can still, at a minimum, destroy most wooden barricades and doors in one shot.
+	icon_state = "ancientbolt_proj"
+	poisontype = /datum/reagent/stampoison
+	poisonamount = 1 //You are, in essence, giving them tenantus.
+	slur = 2
+	eyeblur = 2
+	drowsy = 2
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	desc = "A polished length of gilbranze, which chisels away stone-and-spirit alike with each vaulting. It whispers to you; a half-glance to the right, further up to compensate, so that the living's humors may taste utter disruption."
+	icon_state = "ancientheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/ancient
+
+/obj/projectile/bullet/reusable/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	icon_state = "ancientbolt_proj"
+	object_damage_multiplier = 16
+	poisontype = /datum/reagent/stampoison
+	poisonamount = 1 //You are, in essence, giving them tenantus. Roughly 50% stronger than a poisoned iron arrow.
+	slur = 3
+	eyeblur = 3
+	drowsy = 3
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"

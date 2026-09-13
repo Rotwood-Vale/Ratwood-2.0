@@ -2472,7 +2472,6 @@
 "Qr" = (
 /obj/structure/rack/rogue,
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/quiver/bolts,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/dietroyt)
 "Qt" = (
@@ -2668,11 +2667,10 @@
 	dir = 10;
 	icon_state = "tablewood2"
 	},
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors)
 "Vl" = (

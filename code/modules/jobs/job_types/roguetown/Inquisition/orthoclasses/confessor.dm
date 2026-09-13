@@ -67,9 +67,9 @@
 		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 		switch(bolt_choice)
 			if("Bolts - Steel-Tipped")
-				beltl = /obj/item/quiver/bolts
+				beltl = /obj/item/quiver/bolt/standard
 			if("Sunderbolts - Silver-Tipped, Halved Damage")
-				beltl = /obj/item/quiver/holybolts
+				beltl = /obj/item/quiver/bolt/holybolts
 
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor

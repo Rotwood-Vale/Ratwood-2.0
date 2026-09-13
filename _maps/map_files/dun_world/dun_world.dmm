@@ -114065,8 +114065,8 @@
 /area/rogue/indoors/town/manor)
 "xGc" = (
 /obj/structure/rack/rogue,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "xGf" = (

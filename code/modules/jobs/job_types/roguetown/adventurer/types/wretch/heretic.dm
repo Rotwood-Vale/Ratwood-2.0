@@ -293,7 +293,7 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow", "Whip")
+		var/weapons = list("Rapier","Dagger", "Bow", "Munition Crossbow", "Whip")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -309,14 +309,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltl = /obj/item/quiver/arrows
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-			if("Crossbow")
+			if("Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE) //have to specifically go into bows/crossbows unlike outlaw
-				beltr = /obj/item/quiver/bolts
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-			if("Slurbow") //If Knaves can have one, then so can you. Normal crossbow is a more optimal choice for Heretic Spy.
-				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				beltr = /obj/item/quiver/bolts
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
+				beltr = /obj/item/quiver/bolt/standard
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if("Whip") //For baothans.
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/whip

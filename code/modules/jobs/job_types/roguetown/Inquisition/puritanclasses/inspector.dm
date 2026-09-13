@@ -118,6 +118,6 @@
 	var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 	switch(bolt_choice)
 		if("Bolts - Steel-Tipped")
-			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/standard, SLOT_BELT_R, TRUE)
 		if("Sunderbolts - Silver-Tipped, Halved Damage")
-			H.equip_to_slot_or_del(new /obj/item/quiver/holybolts, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/holybolts, SLOT_BELT_R, TRUE)

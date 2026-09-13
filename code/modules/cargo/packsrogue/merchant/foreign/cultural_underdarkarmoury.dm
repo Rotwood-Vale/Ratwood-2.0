@@ -75,9 +75,9 @@
 	contains = list(/obj/item/quiver/arrows)
 
 /datum/supply_pack/rogue/underdark/bolts
-	name = "Quiver of Bolts"
+	name = "Pouch of Bolts"
 	cost = 40
-	contains = list(/obj/item/quiver/bolts)
+	contains = list(/obj/item/quiver/bolt/standard)
 
 /datum/supply_pack/rogue/underdark/chain
 	name = "Iron Chain"

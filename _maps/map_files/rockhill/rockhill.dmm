@@ -8376,9 +8376,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell/warden)
 "bKY" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/structure/rack/rogue,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "bKZ" = (
@@ -61746,13 +61746,9 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/sunken)
 "mMO" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = 3
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = -9
-	},
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
 "mMU" = (
