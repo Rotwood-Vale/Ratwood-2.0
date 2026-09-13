@@ -2331,6 +2331,21 @@
 	effectedstats[STATKEY_SPD] = arguments[2]
 	. = ..()
 
+/datum/status_effect/buff/potence
+	id = "potence"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_STR = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/potence
+	name = "Potence"
+	desc = "I am a force of destruction."
+	icon_state = "buff"
+
+/datum/status_effect/buff/potence/New(list/arguments)
+	effectedstats[STATKEY_STR] = arguments[2]
+	. = ..()
+
 /datum/status_effect/buff/fotv
 	id = "fotv"
 	alert_type = /atom/movable/screen/alert/status_effect/buff
