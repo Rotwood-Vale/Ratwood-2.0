@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_prefs_quirks(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
-	if(!player)
+	if(isnull(player))
 		return
 	if(!player.prefs)
 		return
@@ -131,8 +131,6 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	var/available_points = player.prefs.get_quirk_points_earned()
 	var/triumphs_spent = 0
 	for(var/datum/quirk/Q in player.prefs.quirks)
-		if(!Q || istype(Q, /datum/quirk/none))
-			continue
 		if(job && length(job.quirk_restrictions) && (Q.type in job.quirk_restrictions))
 			to_chat(character, span_warning("My duties as \a [character.job] leave no room for [Q.name]. It will not be applied."))
 			continue
@@ -200,7 +198,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_prefs_special(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
-	if(!player)
+	if(isnull(player))
 		return
 	if(!player.prefs)
 		return
@@ -222,7 +220,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 /proc/apply_random_special_trait(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
-	if(!player)
+	if(isnull(player))
 		return
 	var/special_type = get_random_special_for_char(character, player)
 	if(!special_type) // Ineligible for all of them, somehow

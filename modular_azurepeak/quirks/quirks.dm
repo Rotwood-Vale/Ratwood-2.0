@@ -2,6 +2,12 @@
 // At best they should be very minor conveniences as a reward for leaning into vices.
 // The baseline point_cost is one.
 
+/datum/quirk/acquiredtastes
+	name = "Acquired Tastes"
+	desc = "Despite my unorthodox tastes, I'm always prepared to handle a guest with the toys I keep stashed."
+	custom_text = "This quirk adds a bag containing various sexual instruments including a small vial of emberwine to your stash."
+	added_stashed_items = list("Bag of Fetish Gear" = /obj/item/storage/roguebag/fetish)
+
 /datum/quirk/annoyingface
 	name = "Annoying Face"
 	desc = "I am cursed with an odd voice and appearance."
@@ -145,7 +151,6 @@
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
 	point_cost = 2
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
-	incompatible_virtues = list(/datum/virtue/utility/mean)
 
 /datum/quirk/scarred
 	name = "Scarred"
