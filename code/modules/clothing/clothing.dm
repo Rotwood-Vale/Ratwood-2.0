@@ -238,13 +238,25 @@
 	flags_inv &= ~HIDECROTCH
 	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
 	update_icon()
-	user.rebuild_obscured_flags()
-	user.regenerate_icons()
+	refresh_hem_visuals(user)
 	return TRUE
+
+/obj/item/clothing/proc/refresh_hem_visuals(mob/living/carbon/wearer)
+	if(!iscarbon(wearer) || QDELETED(wearer))
+		return
+	wearer.rebuild_obscured_flags()
+	wearer.update_inv_armor_real()
+	wearer.update_inv_shirt_real()
+	wearer.update_inv_pants_real()
+	wearer.update_inv_cloak_real()
+	wearer.update_body_parts(TRUE)
 
 /obj/item/clothing/proc/lower_hem()
 	if(!hiked)
 		return
+	var/mob/living/carbon/wearer = hem_holder
+	if(!iscarbon(wearer))
+		wearer = loc
 	hiked = FALSE
 	mob_overlay_icon = hem_overlay_restore
 	hem_overlay_restore = null
@@ -261,10 +273,7 @@
 		grip.wearer = null
 		qdel(grip)
 	update_icon()
-	if(isliving(loc))
-		var/mob/living/wearer = loc
-		wearer.rebuild_obscured_flags()
-		wearer.regenerate_icons()
+	refresh_hem_visuals(wearer)
 
 /obj/item/clothing/proc/on_hem_interrupt(datum/source)
 	SIGNAL_HANDLER
