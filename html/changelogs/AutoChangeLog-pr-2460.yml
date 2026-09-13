@@ -1,4 +1,0 @@
-author: "Noelle-Lavenza"
-delete-after: True
-changes:
-  - code_imp: "rewrote sex actions to reduce code duplication"
