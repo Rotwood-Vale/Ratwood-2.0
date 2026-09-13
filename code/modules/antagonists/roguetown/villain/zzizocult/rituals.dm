@@ -985,7 +985,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!pylon || QDELETED(pylon))
 		qdel(src)
 		return
-	if(!prob(4))
+	if(!prob(8))
 		return
 	var/mob/living/carbon/human/H = owner
 	switch(rand(1, 2))
