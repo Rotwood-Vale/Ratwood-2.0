@@ -118,7 +118,7 @@
 	)
 
 	restricted_virtues = list(/datum/virtue/utility/deathless)
-	restricted_quirks = list(/datum/quirk/nobility)
+	restricted_quirks = list(/datum/quirk/noble)
 
 /datum/species/construct/metal/check_roundstart_eligible()
 	return TRUE

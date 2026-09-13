@@ -17,7 +17,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
-	quirk_restrictions = list(/datum/quirk/nobility)//Hmm. I duno, they're PRETTY noble-like.
+	quirk_restrictions = list(/datum/quirk/noble)//Hmm. I duno, they're PRETTY noble-like.
 	job_traits = list(TRAIT_EMPATH, TRAIT_STEELHEARTED, TRAIT_SOUL_EXAMINE)
 	cmode_music = 'sound/music/combat_desert2.ogg'
 	advclass_cat_rolls = list(CTAG_DTCHAPLAIN = 2)

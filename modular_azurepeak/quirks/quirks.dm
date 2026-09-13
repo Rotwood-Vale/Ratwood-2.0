@@ -100,7 +100,7 @@
 	desc = "I've always preferred Noc over his other half."
 	added_traits = list(TRAIT_NIGHT_OWL)
 
-/datum/quirk/nobility
+/datum/quirk/noble
 	name = "Nobility"
 	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	point_cost = 4
@@ -113,7 +113,7 @@
 	incompatible_vices = list(/datum/charflaw/lawless)
 	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
 
-/datum/quirk/nobility/apply_to_human(mob/living/carbon/human/recipient)
+/datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
 
 /datum/quirk/outdoorsy

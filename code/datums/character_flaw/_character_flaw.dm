@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/malodorous
 	name = "Malodorous"
 	desc = "My body odor is unbearable without regular baths, and others can tell."
-	point_value = 0 // Your stinkiness isn't worthy of a quirk point.
+	point_value = 0 // Not really a flaw, and also not pickable.
 	var/last_aura_tick = 0
 	var/aura_tick_delay = 5 SECONDS
 	var/suppressed_until = 0
@@ -423,14 +423,14 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
 	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
 	var/logged = FALSE
-	point_value = 0 // Opt-in encounter hook. Not a flaw.
+	point_value = 0 // Not really a flaw, and also not pickable.
 
 /datum/charflaw/hunted
 	name = "Marked by Gnolls"
 	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
 	<small>This virtue will encourage Gnolls to hunt you down. You may potentially be killed in the process.</small>"
 	var/logged = FALSE
-	point_value = 0 // Opt-in encounter hook. Not a flaw.
+	point_value = 0 // Not really a flaw, and also not pickable.
 
 /datum/charflaw/nudist
 	name = "Nudist"

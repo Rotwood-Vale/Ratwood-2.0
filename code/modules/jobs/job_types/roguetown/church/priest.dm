@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	quirk_restrictions = list(/datum/quirk/nobility)
+	quirk_restrictions = list(/datum/quirk/noble)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,

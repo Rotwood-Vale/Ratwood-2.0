@@ -22,7 +22,7 @@
 	social_rank = SOCIAL_RANK_PEASANT
 
 	//You've given up your life for the Church. Why would you be noble?
-	quirk_restrictions = list(/datum/quirk/nobility)
+	quirk_restrictions = list(/datum/quirk/noble)
 
 	advclass_cat_rolls = list(CTAG_CHURCHLING = 20)
 	job_subclasses = list(

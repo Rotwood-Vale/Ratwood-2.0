@@ -969,7 +969,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1548,7 +1548,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1572,7 +1572,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1596,7 +1596,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1620,7 +1620,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1644,7 +1644,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1672,7 +1672,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -1697,7 +1697,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
@@ -2108,7 +2108,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	if(!P)
 		return FALSE
 	// Check if user has the Nobility quirk
-	if(P.has_quirk(/datum/quirk/nobility))
+	if(P.has_quirk(/datum/quirk/noble))
 		return TRUE
 	// Check if user has high priority for any noble, courtier, or yeoman job
 	for(var/job_title in GLOB.noble_positions)
