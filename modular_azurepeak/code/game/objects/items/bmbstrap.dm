@@ -4,6 +4,7 @@
 	icon_state = "bombdolier1"
 	item_state = "bombdolier"
 	icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/obj/items/bombdolier.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -106,6 +107,11 @@
 		. += "Its current capacity is: ([tweps.len]/[max_storage])"
 		. += "It contains: [counting_english_list(tweps)]"
 
+/obj/item/bmbstrap/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(!isinhands)
+		override_state = "onbomb[min(CEILING(tweps.len / 2, 1), 5)]"
+	return ..()
+
 /obj/item/bmbstrap/update_icon()
 	switch(tweps.len)
 		if(1)
@@ -130,6 +136,9 @@
 			icon_state = "[item_state]6"
 		else
 			icon_state = "[item_state]1"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		wearer.update_inv_back()
 
 
 /obj/item/bmbstrap/Initialize()
