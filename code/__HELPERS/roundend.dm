@@ -147,6 +147,11 @@
 		if(H.stat != DEAD)
 			if(H.get_triumphs() < 0)
 				H.adjust_triumphs(1)
+			if(H.unspent_quirk_points > 0)
+				to_chat(H, "\n<font color='purple'>TRIUMPH[H.unspent_quirk_points > 1 ? "S" : ""] AWARDED for [H.unspent_quirk_points] unspent quirk point[H.unspent_quirk_points > 1 ? "s" : ""].</font>")
+				H.playsound_local(get_turf(H), 'sound/misc/notice (2).ogg', 100, FALSE, pressure_affected = FALSE)
+				H.adjust_triumphs(H.unspent_quirk_points)
+				H.unspent_quirk_points = 0
 		if(GLOB.round_join_times[H.ckey] && H.job && H.allmig_reward)
 			if((GLOB.round_join_times[H.ckey] + 45 MINUTES) < world.time)
 				var/datum/job/job = SSjob.GetJob(H.job)

@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
 	apply_prefs_virtue(character, player)
+	apply_prefs_quirks(character, player)
 	apply_prefs_origin(character, player)
 	apply_prefs_race_bonus(character, player)
 	if(!HAS_TRAIT(character, TRAIT_NO_VOICEPACK_OVERRIDE)) //Only roundstart roles that jobload in, should use this. Prevents prefloaded voicepacks overriding yours.
@@ -116,6 +117,41 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		else
 			to_chat(character, "Incorrect Second Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
 
+// Quirks are paid for with quirk points first, then real TRIUMPH for any shortfall at two per point.
+// Skip a quirk if your untriumphant broke ass still can't afford it. Bank excess points for the roundend rebate.
+/proc/apply_prefs_quirks(mob/living/carbon/human/character, client/player)
+	if(!player)
+		player = character.client
+	if(!player)
+		return
+	if(!player.prefs)
+		return
+
+	var/datum/job/job = SSjob.GetJob(character.job)
+	var/available_points = player.prefs.get_quirk_points_earned()
+	var/triumphs_spent = 0
+	for(var/datum/quirk/Q in player.prefs.quirks)
+		if(!Q || istype(Q, /datum/quirk/none))
+			continue
+		if(job && length(job.quirk_restrictions) && (Q.type in job.quirk_restrictions))
+			to_chat(character, span_warning("My duties as \a [character.job] leave no room for [Q.name]. It will not be applied."))
+			continue
+		if(available_points >= Q.point_cost)
+			available_points -= Q.point_cost
+			apply_quirk(character, Q)
+			continue
+		var/points_short = Q.point_cost - available_points
+		var/triumph_cost = points_short * 2
+		if(character.get_triumphs() < triumphs_spent + triumph_cost)
+			continue
+		triumphs_spent += triumph_cost
+		available_points = 0
+		apply_quirk(character, Q)
+
+	if(triumphs_spent)
+		character.adjust_triumphs(-triumphs_spent, FALSE)
+	character.unspent_quirk_points = available_points
+
 /proc/apply_prefs_race_bonus(mob/living/carbon/human/character, client/player)
 	if (!player)
 		player = character.client
@@ -143,10 +179,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	return FALSE
 
 /proc/apply_charflaw_equipment(mob/living/carbon/human/character, client/player)
-	// Apply multiple vices system (vice1-vice5)
+	// Apply multiple vices system (vice1-vice6)
 	var/applied_new_system = FALSE
 	if(player?.prefs)
-		for(var/i = 1 to 5)
+		for(var/i = 1 to 6)
 			var/datum/charflaw/vice = player.prefs.vars["vice[i]"]
 			if(vice)
 				vice.apply_post_equipment(character)

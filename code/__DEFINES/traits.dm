@@ -47,6 +47,14 @@
 #define TRAIT_INHUMEN_ANATOMY "Inhumen Anatomy" //can't wear hats and shoes
 #define TRAIT_NASTY_EATER "Inhumen Digestion" //can eat rotten food, organs, poison berries, and drink murky water
 #define TRAIT_WILD_EATER "Beastly Digestion" //can eat raw and rotten food and drink murky water
+/// can eat raw and uncooked food, not rotten, not organs, not murky water, etcetera
+#define TRAIT_RAW_EATER "Raw Diet"
+/// lets you cook spider meat as if you were a drow
+#define TRAIT_UNDERDARK_CHEF "Underdark Chef"
+/// lets you cut pretzels from butterdough as if you were a dwarf
+#define TRAIT_DWARVEN_CHEF "Dwarven Chef"
+/// lets you see noble gossip
+#define TRAIT_GOSSIPER "Gossiper"
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
@@ -209,6 +217,8 @@
 #define TRAIT_BAD_MOOD "Bad Mood"
 #define TRAIT_NIGHT_OWL "Night Owl"
 #define TRAIT_BEAUTIFUL "Beautiful"
+/// lesser version of beautiful
+#define TRAIT_PRETTY "Pretty"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
@@ -384,6 +394,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TOLERANT = span_info("I dream of an ideal future, one with peace between all races"),
 	TRAIT_NIGHT_OWL = span_info("I enjoy spending my time in the night."),
 	TRAIT_BEAUTIFUL = span_info("People love looking at my face"),
+	TRAIT_PRETTY = span_info("I'm told I'm rather easy on the eyes."),
 	TRAIT_BEAUTIFUL_UNCANNY = span_info("<i>Some</i> would say my visage is an artwork created by the gods themselves; the others call me an unsettling abomination."),
 	TRAIT_UNSETTLING_BEAUTY = span_warning("My appearance is deeply unsettling to most. There's something profoundly wrong about my features."),
 	TRAIT_SCARRED = span_info("My face bears terrible scars that make identification difficult."),
@@ -434,6 +445,10 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_INHUMEN_ANATOMY = "My anatomy is inhumen, preventing me from wearing hats and shoes.",
 	TRAIT_NASTY_EATER = span_dead("I can eat bad food, and water that would be toxic to humen will not affect me."),
 	TRAIT_WILD_EATER = span_info("I can eat raw food and drink from dirty water."),
+	TRAIT_RAW_EATER = span_info("I can eat raw and uncooked food."),
+	TRAIT_UNDERDARK_CHEF = span_info("I've learned the culinary secrets of the Underdark, and can prepare its delicacies."),
+	TRAIT_DWARVEN_CHEF = span_info("I know the dwarven trick to cutting a proper pretzel."),
+	TRAIT_GOSSIPER = span_info("I have an ear for gossip, even amongst those with blue blood."),
 	TRAIT_NOFALLDAMAGE1 = span_warning("I can easily handle minor falls."),
 	TRAIT_NOFALLDAMAGE2 = span_warning("I can handle a fall from any height."),
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),

@@ -20,7 +20,7 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
-	vice_restrictions = list(/datum/charflaw/assassintarget)
+	quirk_restrictions = list(/datum/quirk/assassintarget)
 	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)

@@ -1,20 +1,7 @@
-/datum/virtue/utility/noble
-	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
-			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	added_traits = list(TRAIT_NOBLE)
-	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
-	triumph_cost = 7
-
-/datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
-	SStreasury.noble_incomes[recipient] += 15
-
 /datum/virtue/utility/socialite
 	name = "Socialite"
 	desc = "I thrive in social settings, easily reading the emotions of others and charming those around me. My presence is always felt at any gathering."
-	custom_text = "Incompatible with Ugly virtue. Grants empathic insight."
+	custom_text = "Incompatible with Ugly quirk. Grants empathic insight."
 	added_traits = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER, TRAIT_EMPATH)
 	added_stashed_items = list(
 		"Hand Mirror" = /obj/item/handmirror)
@@ -173,6 +160,7 @@
 	desc = "I have eyes able to see through cloying darkness. Incompatible with the vice Colorblind."
 	added_traits = list(TRAIT_DARKVISION)
 	custom_text = "Adds a button to toggle colorblindness to aid seeing in the dark. Taking this with the Colorblind vice will permanently colorblind you."
+	incompatible_vices = list(/datum/charflaw/colorblind)
 
 /datum/virtue/utility/night_vision/apply_to_human(mob/living/carbon/human/recipient)
 	if(recipient.charflaw)
@@ -189,23 +177,7 @@
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-	addtimer(CALLBACK(src, PROC_REF(performer_apply), recipient), 50)
-
-/datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
-	var/list/instruments = list()
-	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
-		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
-			continue //Skip the donator personal item harp.
-		else if(instrument_type == /obj/item/rogue/instrument/ztratocaster)
-			continue // there can only be one.
-		var/obj/item/rogue/instrument/instr = new instrument_type()
-		instruments[instr.name] = instrument_type
-		qdel(instr)  // Clean up the temporary instance
-
-	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
-	if(chosen_name)
-		var/instrument_type = instruments[chosen_name]
-		recipient.mind?.special_items[chosen_name] = instrument_type
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
 /datum/virtue/utility/mean
 	name = "Acquired Tastes"
@@ -257,28 +229,6 @@
 						list(/datum/skill/combat/knives, 2, 2)
 	)
 
-/datum/virtue/utility/ugly
-	name = "Ugly"
-	desc = "Be it your family's habits in and out of womb, your own choices or Xylix's cruel roll of fate, you have been left unbearable to look at. Stuck to the unseen pits and crevices of the town, you've grown used to the foul odours of lyfe that often follow you. Corpses do not stink for you, and that is all the company you might find."
-	custom_text = "Incompatible with Beautiful virtue."
-	added_traits = list(TRAIT_UNSEEMLY, TRAIT_NOSTINK)
-
-/datum/virtue/utility/ugly/handle_traits(mob/living/carbon/human/recipient)
-	..()
-	if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
-		to_chat(recipient, "Your repulsiveness is cancelled out! You become normal.")
-		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
-
-/datum/virtue/utility/secondvoice
-	name = "Second Voice"
-	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
-	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
-
-/datum/virtue/utility/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.verbs += /mob/living/carbon/human/proc/changevoice
-	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
-
 /datum/virtue/utility/keenears
 	name = "Keen Ears"
 	desc = "Cowering from authorities, loved ones or by a generous gift of the gods, you've adapted a keen sense of hearing, and can identify the speakers even when they are out of sight, their whispers ringing louder."
@@ -297,6 +247,8 @@
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
 	custom_text = "Replaces your Right arm with a prosthetic Bronze one. Incompatible with Wood Arm (R) vice"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_r)
+	incompatible_virtues = list(/datum/virtue/utility/bronzearm_l)
 
 /datum/virtue/utility/bronzearm_r/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
@@ -316,6 +268,8 @@
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
 	custom_text = "Replaces your Left arm with a prosthetic Bronze one. Incompatible with Wood Arm (L) vice"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_l)
+	incompatible_virtues = list(/datum/virtue/utility/bronzearm_r)
 
 /datum/virtue/utility/bronzearm_l/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()

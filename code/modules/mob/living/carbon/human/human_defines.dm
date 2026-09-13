@@ -179,6 +179,7 @@
 
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
+	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
 
 	// curse list and cooldown
 	var/list/curses = list()

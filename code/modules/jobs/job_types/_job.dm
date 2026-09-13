@@ -154,6 +154,7 @@
 
 	var/list/virtue_restrictions
 	var/list/vice_restrictions
+	var/list/quirk_restrictions
 
 	///The job's stats
 	var/list/job_stats
