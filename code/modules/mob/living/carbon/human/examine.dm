@@ -1007,7 +1007,9 @@
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
+			if(social_rank < SOCIAL_RANK_NOBLE)
+				. += span_notice("A minor noble.")
+			else if((HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE)) && user.social_rank >= SOCIAL_RANK_NOBLE)
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")

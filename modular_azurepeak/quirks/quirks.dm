@@ -106,9 +106,14 @@
 	desc = "I've always preferred Noc over his other half."
 	added_traits = list(TRAIT_NIGHT_OWL)
 
+// Gives minor nobility, but what is a minor noble anyways?
+// If we were being realistic then only the grand duke and baron would be real nobles.
+// I guess we're saying that real nobility is people who are recognized by Astrata??????????
+// Who fucking cares, bro.
 /datum/quirk/noble
 	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
+	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
 	point_cost = 4
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
@@ -121,6 +126,7 @@
 
 /datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
+	recipient.social_rank = max(recipient.social_rank, SOCIAL_RANK_MINOR_NOBLE)
 
 /datum/quirk/outdoorsy
 	name = "Outdoorsy"
