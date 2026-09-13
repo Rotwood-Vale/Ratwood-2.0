@@ -22,6 +22,7 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 	advclass_cat_rolls = list(CTAG_BARON = 20)
 	social_rank = SOCIAL_RANK_NOBLE
+	vice_restrictions = list(/datum/charflaw/hunted)
 	job_traits = list(TRAIT_NOBLE)
 	job_subclasses = list(
 		/datum/advclass/baron/shrewd_nobleman,

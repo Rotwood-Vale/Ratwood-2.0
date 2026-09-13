@@ -22,6 +22,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_citywatch.ogg'
+	vice_restrictions = list(/datum/charflaw/hunted)
 	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH) // No evil shall escape my sight
 	job_subclasses = list(
 		/datum/advclass/watchcaptain/watchcaptain
