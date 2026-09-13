@@ -138,8 +138,8 @@
 	desc = "I have found that not all things can be answered with magic, and that sometimes the unseen hands of the gods are needed. In devoting myself to both paths, i am great for the journey ahead."
 	triumph_cost = 6
 	granted_virtues = list(
-		/datum/virtue/utility/magical_potential,
-		/datum/virtue/utility/devotee
+		/datum/virtue/combat/magical_potential,
+		/datum/virtue/combat/devotee
 	)
 	custom_text = "Grants two virtues for the Arcyne Worshiper:\n\
 	- Magical Potential: Innate ability to wield magic\n\
@@ -178,7 +178,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/brawler
+		/datum/virtue/combat/brawler
 	)
 	custom_text = "Grants two virtues for the Pit Fighter:\n\
 	- Resident: City residency, treasury account, home in the city\n\
@@ -191,7 +191,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/zchurch_keyholder
+		/datum/virtue/heretic/zchurch_keyholder
 	)
 	custom_text = "Grants two virtues for the Volf In Sheep's Clothing:\n\
 	- Resident: City residency, treasury account, home in the city\n\
@@ -204,7 +204,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/duelist
+		/datum/virtue/combat/duelist
 	)
 	custom_text = "Grants two virtues for the Street Fencer:\n\
 	- Resident: City residency, treasury account, home in the city\n\
@@ -217,7 +217,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/executioner
+		/datum/virtue/combat/executioner
 	)
 	custom_text = "Grants two virtues for the Collector:\n\
 	- Resident: City residency, treasury account, home in the city\n\
@@ -230,7 +230,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/crossbowman
+		/datum/virtue/combat/crossbowman
 	)
 	custom_text = "Grants two virtues for the One In The Drawstring:\n\
 	- Resident: City residency, treasury account, home in the city\n\
@@ -295,7 +295,7 @@
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
-		/datum/virtue/utility/militia
+		/datum/virtue/combat/militia
 	)
 	custom_text = "Grants two virtues for the Citizen's Militia:\n\
 	- Resident: City residency, treasury account, home in the city\n\
