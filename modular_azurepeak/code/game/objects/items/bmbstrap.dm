@@ -22,7 +22,6 @@
 	var/list/fill_list = list() //use for custome fill that
 	var/list/storable_types = list(
 		/obj/item/bomb,
-		/obj/item/tntstick,
 		/obj/item/impact_grenade
 	)
 	sewrepair = TRUE
@@ -141,14 +140,14 @@
 		to_chat(user, span_warning("My [src.name] is full!"))
 		return
 	to_chat(user, span_notice("I begin to gather the ammunition..."))
-	for(var/obj/item/bomb in T.contents)
-		if(istype(bomb, /obj/item/bomb) || istype(bomb, /obj/item/tntstick) || istype(bomb, /obj/item/impact_grenade))
+	for(var/obj/item/explosive in T.contents)
+		if(can_store(explosive))
 			if(do_after(user, 5))
-				if(!eatbomb(bomb))
+				if(!eatbomb(explosive))
 					break
 
 /obj/item/bmbstrap/proc/eatbomb(obj/A)
-	if(istype(A, /obj/item/bomb) || istype(A, /obj/item/tntstick) || istype(A, /obj/item/impact_grenade))
+	if(can_store(A))
 		if(tweps.len < max_storage)
 			A.forceMove(src)
 			tweps += A
@@ -163,12 +162,11 @@
 	if (!tweps.len)
 		return
 	to_chat(user, span_warning("I begin to take out the ammunition from [src], one by one..."))
-	for(var/obj/item/bomb in tweps)
-		if(istype(bomb, /obj/item/bomb) || istype(bomb, /obj/item/tntstick) || istype(bomb, /obj/item/impact_grenade))
-			if(!do_after(user, 0.5 SECONDS))
-				return
-			bomb.forceMove(user.loc)
-			tweps -= bomb
+	for(var/obj/item/explosive in tweps)
+		if(!do_after(user, 0.5 SECONDS))
+			return
+		explosive.forceMove(user.loc)
+		tweps -= explosive
 
 	update_icon()
 
@@ -178,8 +176,8 @@
 	/obj/item/bomb,
 	/obj/item/bomb,
 	/obj/item/bomb,
-	/obj/item/tntstick,
-	/obj/item/tntstick,
+	/obj/item/impact_grenade/explosion,
+	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/explosion,
 	/obj/item/impact_grenade/smoke/fire_gas,
