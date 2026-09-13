@@ -25,7 +25,7 @@
 	for(var/mob/living/carbon/human/target in get_hearers_in_view(6, usr))
 		if(!target.mind || target.stat != CONSCIOUS)
 			continue
-		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
+		if(target.is_immune_to_vampire_domination())
 			continue
 		selection += target
 
