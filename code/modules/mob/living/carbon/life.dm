@@ -136,6 +136,8 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_NOPAIN)) // You don't feel shit.
 		return
+	if(HAS_TRAIT(src, TRAIT_NUMBED_LIMBS))
+		return
 	var/survived = HAS_TRAIT(src, TRAIT_NOPAINSTUN) ? TRUE : prob(get_delimb_survival_chance()) // NOPAINSTUN guys simply always succeed the roll.
 	if(!survived)
 		paincrit()
@@ -160,6 +162,8 @@
 	else
 		emote("painscream", forced = TRUE)
 		visible_message(span_danger("[src] staggers back from the shock, but holds fast with fire in their eyes!"), span_reallybig(span_danger("I can still fight!")))
+		if(STAWIL > 14)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 
 /mob/living/carbon/proc/handle_roguebreath()
 	return
