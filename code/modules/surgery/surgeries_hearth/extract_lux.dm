@@ -39,7 +39,7 @@
 	return TRUE
 
 /datum/surgery_step/extract_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
+	if(!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("painscream")
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		display_results(user, target, span_notice("You cannot draw lux from [target]; they have none left to give."),
@@ -55,4 +55,9 @@
 		//record_featured_stat(FEATURED_STATS_CRIMINALS, user)	- This.. isn't normally criminal.
 		record_round_statistic(STATS_LUX_HARVESTED)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(ishuman(user))
+			var/mob/living/carbon/human/doctor = user
+			if(doctor.patron == /datum/patron/divine/pestra)
+				if(doctor.reward_actions(major = TRUE)) // pestra likes lux removals
+					to_chat(doctor, "<font color='purple'>Pestra rewards my work in securing lux!</font>")
 	return TRUE

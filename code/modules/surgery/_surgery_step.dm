@@ -294,6 +294,9 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/doctor = user
 			user.mind.add_sleep_experience(skill_used, doctor.STAINT * (skill_min/2))
+			if(doctor.patron == /datum/patron/divine/pestra)
+				if(doctor.reward_actions())
+					to_chat(doctor, "<font color='purple'>Pestra rewards my efforts!</font>")
 		play_success_sound(user, target, target_zone, tool)
 		if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 			initiate(user, target, target_zone, tool, intent, try_to_fail)

@@ -47,6 +47,8 @@
 	/// Spells we have granted thus far
 	var/list/granted_spells
 	///suppress granting miracles updating from devotion level up
+	var/favorite_action_gain = 5 // devotion given per performing action a god likes
+	var/favorite_action_big_gain = 100 // same but for big impactfull acts
 	var/suppress_grants = FALSE
 
 /datum/devotion/New(mob/living/carbon/human/holder, datum/patron/patron)
@@ -214,6 +216,23 @@
 				var/obj/effect/proc_holder/spell/L = new miracle_menu_path
 				if(L)
 					H.mind.AddSpell(L, H)
+
+/datum/devotion/proc/reward_actions(mob/living/carbon/human/H, multiplier = 1, major = FALSE)
+	if(!H || !H.mind || !patron)
+		return FALSE
+	if(!passive_devotion_gain && !passive_progression_gain)
+		return FALSE
+	var/devotion_gain = major ? favorite_action_big_gain : favorite_action_gain
+	var/devotion_multiplier = 1
+	if(holder?.mind)
+		devotion_multiplier += (holder.get_skill_level(/datum/skill/magic/holy) / SKILL_LEVEL_LEGENDARY)
+	update_devotion((passive_devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
+	return TRUE
+
+/mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE)
+	if(!devotion)
+		return FALSE
+	return devotion.reward_actions(src, multiplier, major)
 
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()
