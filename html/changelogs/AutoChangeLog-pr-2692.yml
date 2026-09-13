@@ -1,0 +1,8 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - balance: "T3 Journey's end buff now grants immunity to grabs."
+  - rscadd: "Flavour texts that appear in your chat at different stages of your \"Journey.\""
+  - balance: "Made it so people with TRAIT_JOURNEYS_END no longer have a 3% chance to fall unconscious when they are drained. (They will still take constant oxy dmg at low blood and will go into crit if their blood gets too low.)"
+  - balance: "readjusted the stats granted by Journey's End buffs to take into account them no longer being debuffed by blood loss"
+  - bugfix: "fixed T3 Journey's End Buff sometimes giving the incorrect stats"
