@@ -985,12 +985,13 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!pylon || QDELETED(pylon))
 		qdel(src)
 		return
-	if(!prob(8))
+	if(!prob(10))
 		return
 	var/mob/living/carbon/human/H = owner
 	switch(rand(1, 2))
 		if(1)
-			to_chat(H, span_danger("...[uppertext(dir2text(get_dir(H, pylon)))]..."))
+			var/list/info = get_locator_info(H, pylon)
+			to_chat(H, span_danger("...I feel a tugging from [uppertext(info["dir"])]...[uppertext(info["proximity"])][uppertext(info["z"])]..."))
 		if(2)
 			var/list/nearby_items = list()
 			for(var/obj/item/I in range(3, pylon))
