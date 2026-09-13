@@ -165,7 +165,6 @@
 	force = 4
 	d_type = "stab"
 	sharpness = IS_SHARP
-	on_use_sound = 'sound/magic/bloodrot.ogg'
 	can_parry = FALSE
 	associated_skill = /datum/skill/magic/blood
 	var/force_per_bloodskill = 4
