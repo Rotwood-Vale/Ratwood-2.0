@@ -44,7 +44,6 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
-	head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	id = /obj/item/scomstone/garrison
 
@@ -84,6 +83,13 @@
 
 /datum/outfit/job/roguetown/sergeant/sergeant/pre_equip(mob/living/carbon/human/H)
 	..()
+	var/visages = list(
+		"Standard"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+		"Snouted"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
+	)
+	var/visage_choice = input(H, "Choose your helm's visage.", "TAKE UP HELMS") as anything in visages
+	head = visages[visage_choice]
+
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/movemovemove)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/takeaim)

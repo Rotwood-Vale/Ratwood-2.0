@@ -1,0 +1,10 @@
+author: "hugmeorelse"
+delete-after: True
+changes:
+  - rscadd: "Added 13 new helmets from Azure Peak"
+  - rscadd: "Snouted helmets are craftable at the anvil"
+  - qol: "Masks and neckwear now toggle their snout fitting with Alt+RMB, the same as helmets."
+  - bugfix: "Open faced helms like the visored sallet, warden skull helms and psydonic sallet no longer hide your snout."
+  - bugfix: "Your snout no longer stays hidden after your helm and mask are removed."
+  - bugfix: "The plain bascinet no longer hides your ears."
+  - code_imp: "Snout support is now derived from whether a snouted sprite variant exists"
