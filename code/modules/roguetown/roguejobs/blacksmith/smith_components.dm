@@ -100,6 +100,8 @@
 	var/moveup = 1
 	var/proab = 0 // Probability to not spoil the bar
 	var/skill_level = user.get_skill_level(current_recipe.appro_skill)
+	if(skill_level > current_recipe.smith_skill_level)
+		current_recipe.smith_skill_level = skill_level
 
 	if(progress >= current_recipe.max_progress && !needed_item)
 		to_chat(user, span_info("It's ready."))
@@ -263,6 +265,32 @@
 		if(istype(I, /obj/item/lockpick))
 			var/obj/item/lockpick/L = I
 			L.picklvl = modifier
+
+		// AP item-quality framework: stamp the tier so the pricing engine and trade goods
+		// value the piece. Name/price/integrity were already applied by the modifier above,
+		// so assign the tier directly rather than calling apply_quality() twice over.
+		if(current_recipe.skip_quality)
+			if(initial(I.has_item_quality) && current_recipe.min_input_quality != null)
+				I.item_quality = current_recipe.min_input_quality
+		else
+			I.has_item_quality = TRUE
+			switch(modifier)
+				if(0.3)
+					I.item_quality = ITEM_QUALITY_RUINED
+				if(0.5)
+					I.item_quality = ITEM_QUALITY_AWFUL
+				if(0.8)
+					I.item_quality = ITEM_QUALITY_CRUDE
+				if(0.9)
+					I.item_quality = ITEM_QUALITY_ROUGH
+				if(1)
+					I.item_quality = ITEM_QUALITY_STANDARD
+				if(1.1)
+					I.item_quality = ITEM_QUALITY_FINE
+				if(1.2)
+					I.item_quality = ITEM_QUALITY_FLAWLESS
+				if(1.3)
+					I.item_quality = ITEM_QUALITY_MASTERWORK
 
 		user?.log_message("forged [I.name] ([current_recipe.type]) (QUALITY: [skill_quality]) (HITS: [numberofhits])", LOG_GAME)
 

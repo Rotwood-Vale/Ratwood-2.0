@@ -48,7 +48,7 @@
 		holdinglockpick = null
 	return ..()
 
-/obj/item/clothing/shoes/roguetown/boots/examine()
+/obj/item/clothing/shoes/roguetown/boots/examine(mob/user)
 	. = ..()
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
@@ -422,6 +422,18 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+	name = "avantyne-threaded sabatons"
+	desc = "Marrow, flesh, ash; the bedrock of a new reality, fated to suffer until the final breath. It is this prognosis that commands Her disciples to \
+	work towards ascensionism - for no sacrifice is too great, in the pursuit of bringing lyfe back to this dying world."
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoboots"
+
+/obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	name = "iron plated boots"
