@@ -108,17 +108,20 @@
 	name = "Barbute, Bronze (+1 Bronze, +1 Cured Leather)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/bronze
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/bronze/murmillo
 	name = "Murmillo-Style Helmet, Bronze (+1 Bronze, +1 Fur)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/fur)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bronzegladiator
+	display_category = ITEM_CAT_ARMOR_HELMETS
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/bronze/illyria
 	name = "Bascinet, Bronze (+1 Cured Leather)"
 	additional_items = list( /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/head/roguetown/helmet/bronze
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/bronze/protector
 	name = "Heart Protector, Bronze (+1 Bronze, +1 Cured Leather)"
@@ -150,81 +153,98 @@
 	name = "Neckguard, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/neck/roguetown/gorget/bronze
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/armor/bronze/bevor
 	name = "Bevor, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/neck/roguetown/bevor/bronze
+	display_category = ITEM_CAT_ARMOR_NECK
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/bronze/bracers
 	name = "Bracers, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/bronze
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/bronze/greaves
 	name = "Greaves, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/bronze
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/anvil_recipe/armor/bronze/skirt
 	name = "Chainskirt, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/bronze/mask
 	name = "Mask, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/mask/rogue/facemask/bronze
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/bronze/duelist
 	name = "Duelist's Goggles, Bronze"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist/bronze
 	createditem_num = 2
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/bronze/maskclassic
 	name = "Mask, Ornate, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/mask/rogue/facemask/bronze/classic
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/bronze/mask
 	name = "Mask, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/mask/rogue/facemask/bronze
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/bronze/chainmail
 	name = "Haubergeon, Bronze"
 	created_item = /obj/item/clothing/suit/roguetown/armor/chainmail/bronze
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/bronze/hauberk
 	name = "Hauberk, Bronze (+1 Bronze)"
 	additional_items = list(/obj/item/ingot/bronze)
 	created_item = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/bronze
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/bronze/maillebracers
 	name = "Chainsleeves, Bronze"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/bronze
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/bronze/maillegloves
 	name = "Chain Gauntlets, Bronze"
 	created_item = /obj/item/clothing/gloves/roguetown/chain/bronze
+	display_category = ITEM_CAT_ARMOR_GLOVES
 
 /datum/anvil_recipe/armor/bronze/maillecoif
 	name = "Chain Coif, Bronze"
 	created_item = /obj/item/clothing/neck/roguetown/chaincoif/bronze
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/armor/bronze/scalemail
 	name = "Lamellar, Bronze (+1 Bronze, +1 Cured Leather)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/natural/hide/cured)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/scale/bronze
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/bronze/mailleskirt
 	name = "Chainmaille Skirt, Bronze"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/bronze/mailleboots
 	name = "Maille Boots, Bronze"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/maille/bronze
+	display_category = ITEM_CAT_ARMOR_BOOTS
 // DECREPIT/ANCIENT ALLOY
 
 /datum/anvil_recipe/armor/ancient/barbute
@@ -362,10 +382,12 @@
 /datum/anvil_recipe/armor/ancient/maillebracers
 	name = "Chainsleeves, Ancient"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/ancient
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/decrepit/maillebracers
 	name = "Chainsleeves, Decrepit"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain/ancient/decrepit
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/ancient/chaingaunts
 	name = "Chain Gauntlets, Ancient"
@@ -533,6 +555,7 @@
 	name = "Duelist Goggles, Iron"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist
 	createditem_num = 2
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/iron/splintarms
 	name = "Splinted Bracers (+1 Leather Bracers)" //you modify the bracers to have splints and cover the arm way more
@@ -553,6 +576,11 @@
 /datum/anvil_recipe/armor/iron/boot
 	name = "Light Plated Boots, Iron"
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+	display_category = ITEM_CAT_ARMOR_BOOTS
+
+/datum/anvil_recipe/armor/iron/mailleboots
+	name = "Maille Boots, Iron"
+	created_item = /obj/item/clothing/shoes/roguetown/boots/maille/iron
 	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/anvil_recipe/armor/iron/skullcap
@@ -776,6 +804,7 @@
 /datum/anvil_recipe/armor/steel/maillebracers
 	name = "Chainsleeves, Steel"
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/chain
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/steel/helmetnasal
 	name = "Nasal Helmet, Steel"
@@ -906,6 +935,11 @@
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor
 	display_category = ITEM_CAT_ARMOR_BOOTS
 
+/datum/anvil_recipe/armor/steel/mailleboots
+	name = "Maille Boots, Steel"
+	created_item = /obj/item/clothing/shoes/roguetown/boots/maille
+	display_category = ITEM_CAT_ARMOR_BOOTS
+
 /datum/anvil_recipe/armor/steel/mask
 	name = "Mask, Steel"
 	created_item = /obj/item/clothing/mask/rogue/facemask/steel
@@ -920,6 +954,7 @@
 	name = "Duelist Goggles, Steel"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist/steel
 	createditem_num = 2
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/anvil_recipe/armor/steel/astratahelm
 	name = "Astratan Helmet (+1 Steel)"
@@ -1194,46 +1229,55 @@
 	name = "Golden Knight's Armet (+1 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/gold/armetcrown
 	name = "Golden Knight's Armet, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold/king
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/gold/helmet
 	name = "Golden Barbute (+1 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/gold/helmetcrown
 	name = "Golden Barbute, Royal (+1 Gold, +2 Silk, +1 Dorpel)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/roguegem/diamond)
 	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold/king
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/gold/gorget
 	name = "Golden Gorget (+1 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/neck/roguetown/gorget/gold
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/anvil_recipe/armor/gold/cuirass
 	name = "Golden Cuirass (+2 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/gold/cuirasshero
 	name = "Golden Cuirass, Heroic (+2 Gold, +2 Silk, +1 Tallow)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk, /obj/item/reagent_containers/food/snacks/tallow)
 	created_item = /obj/item/clothing/suit/roguetown/armor/plate/cuirass/fluted/gold/heroic
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/gold/bracers
 	name = "Golden Bracers (+1 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/wrists/roguetown/bracers/gold
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/anvil_recipe/armor/gold/greaves
 	name = "Golden Greaves (+1 Gold, +2 Silk)"
 	additional_items = list(/obj/item/ingot/gold, /obj/item/natural/silk, /obj/item/natural/silk)
 	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/gold
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 // BLACKSTEEL
 
