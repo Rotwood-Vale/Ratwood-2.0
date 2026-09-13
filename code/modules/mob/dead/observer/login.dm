@@ -20,4 +20,5 @@
 		update_z(T.z)
 
 	update_icon(preferred_form)
+	apply_admin_ghost_image()
 	updateghostimages()

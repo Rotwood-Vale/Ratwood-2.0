@@ -12,7 +12,7 @@
 	icon_state = "snow1"
 
 /obj/item/natural/dirtclod/snow/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = "snow[rand(1,2)]"
 
 /obj/item/natural/dirtclod/sand
@@ -80,7 +80,7 @@
 
 /obj/item/natural/dirtclod/Initialize(mapload)
 	icon_state = "clod[rand(1,2)]"
-	..()
+	return ..()
 
 /obj/structure/fluff/clodpile
 	name = "dirt pile"
@@ -119,7 +119,7 @@
 
 /obj/structure/fluff/clodpile/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
-	..()
+	return ..()
 
 /obj/structure/fluff/sandpile
 	name = "sand pile"
@@ -160,4 +160,4 @@
 
 /obj/structure/fluff/sandpile/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
-	..()
+	return ..()

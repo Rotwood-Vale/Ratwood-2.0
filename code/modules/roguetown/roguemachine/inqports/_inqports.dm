@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(inqsupplies)
+GLOBAL_LIST_INIT(inqsupplies, init_subtypes_assoc(/datum/inqports))
 
 /datum/inqports
 	var/name = null

@@ -76,8 +76,11 @@ At least, it should. Fingers crossed.
 	var/gunpowder = FALSE
 	var/obj/item/ramrod/myrod = null
 
-// Deferred so the smoke trails from where the shooter is facing when each puff appears,
-// matching the old spawn() behavior of evaluating position at fire time.
+/**
+ * Creates an arquebus smoke puff along the shooter's current facing.
+ *
+ * Resolve the direction when the timer fires so turning during the delay moves the smoke trail.
+ */
 /obj/item/gun/ballistic/firearm/proc/spawn_arquebus_smoke(mob/user, dist)
 	if(QDELETED(user))
 		return

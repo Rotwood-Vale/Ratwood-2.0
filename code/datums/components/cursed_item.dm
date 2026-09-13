@@ -23,7 +23,7 @@
 		return
 	var/mob/living/carbon/human/user = I.loc
 	if(!HAS_TRAIT(user, required_trait))
-		// deferred, not INVOKE_ASYNC: nothing in punish_unworthy sleeps, so async would burn
+		// Deferred, not INVOKE_ASYNC: nothing in punish_unworthy sleeps, so async would burn
 		// the mob inline in the middle of the equip signal. The original spawn(0) deferred it.
 		addtimer(CALLBACK(src, PROC_REF(punish_unworthy), user), 0)
 

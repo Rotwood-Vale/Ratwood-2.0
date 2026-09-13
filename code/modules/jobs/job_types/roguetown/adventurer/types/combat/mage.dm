@@ -1,4 +1,5 @@
 /datum/advclass/mage
+	townie_contract_gate_exempt = TRUE
 	name = "Sorcerer"
 	tutorial = "Spellslingers are mages that focus on more potent spells, greater athleticism, and the art of the staff. Arcane Alchemists instead turned their studies to mixing magic and alchemy, the basics of medicine, and rely on creativity instead of arcane might."
 	allowed_sexes = list(MALE, FEMALE)

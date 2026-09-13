@@ -7,8 +7,8 @@
 	blade_dulling = DULLING_BASH
 	anchored = TRUE
 	max_integrity = 999999
-	var/budget = 0
-
+	var/budget
+	
 /datum/bounty
 	var/target
 	var/target_hidden
@@ -59,22 +59,10 @@
 		if("Remove Bounty")
 			remove_bounty(H)
 
-		if("Collect Change")
-			budget2change(budget)
-			budget = 0
-
 /obj/structure/roguemachine/bounty/attackby(obj/item/P, mob/user, params)
 
 	if(!(ishuman(user))) return
 
-	if(istype(P, /obj/item/roguecoin))
-		budget += P.get_real_price()
-		qdel(P)
-		update_icon()
-		playsound(loc, 'sound/misc/gold_misc.ogg', 100, TRUE, -1)
-		say("The amount loaded is now [budget].")
-		return attack_hand(user)
-	..()
 
 ///Shows all active bounties to the user.
 /obj/structure/roguemachine/bounty/proc/consult_bounties(mob/living/carbon/human/user)
@@ -163,9 +151,14 @@
 		say("Insufficient amount. Bounties cannot be more than 500 mammon.")
 		return
 
+	// Has user a bank account?
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
+		return
+
 	// Has user enough money?
-	if(budget < amount)
-		say("Insufficient funds.")
+	if(SStreasury.get_balance(user) < amount)
+		say("Insufficient balance funds.")
 		return
 
 	var/reason = input(user, "For what sins do you summon the hounds of hell?", src) as null|text
@@ -176,15 +169,9 @@
 	var/confirm = input(user, "Do you dare unleash this darkness upon the world? Your name will be known.", src) as null|anything in list("Yes", "No")
 	if(isnull(confirm) || confirm == "No") return
 
-	// Deduct money from user
-	budget -= round(amount)
-
-	//Deduct royal tax from amount
-	var/royal_tax = round(amount * 0.1)
-	SStreasury.treasury_value += royal_tax
-	SStreasury.log_entries += "+[royal_tax] to treasury (bounty tax)"
-
-	amount -= royal_tax
+	var/datum/fund/user_account = SStreasury.get_account(user)
+	amount = round(amount)
+	SStreasury.burn(user_account, amount, "bounty placement - [target.real_name]")
 
 	var/race = target.dna.species
 	var/gender = target.gender
@@ -209,7 +196,7 @@
 	new_bounty.amount = amount
 	new_bounty.target = target_realname
 	new_bounty.bandit = bandit_status
-	new_bounty.reason = reason
+	new_bounty.reason = html_encode(reason)
 	new_bounty.employer = employer_name
 	new_bounty.target_race = race
 	new_bounty.target_height = LOWER_TEXT(descriptor_height)
@@ -351,13 +338,15 @@
 	if(choice != "Yes")
 		return
 
-	if(budget < cost)
-		say("Insufficient funds. [cost] mammons required.")
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
 		return
 
-	budget -= cost
-	SStreasury.treasury_value += cost
-	SStreasury.log_entries += "+[cost] to treasury (bounty scroll fee)"
+	if(SStreasury.get_balance(user) < cost)
+		say("Insufficient funds in account. [cost] mammons required.")
+		return
+
+	SStreasury.transfer(SStreasury.get_account(user), SStreasury.discretionary_fund, cost, "bounty scroll fee")
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()

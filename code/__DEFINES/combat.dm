@@ -432,3 +432,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+
+// Critical Resistance Defines //
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5

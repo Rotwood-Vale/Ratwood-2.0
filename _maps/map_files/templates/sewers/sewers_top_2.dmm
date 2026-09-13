@@ -5,7 +5,7 @@
 /area/rogue/under/town/sewer)
 "b" = (
 /obj/structure/bars/pipe,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
 "e" = (
@@ -60,7 +60,7 @@
 /area/rogue/under/town/sewer)
 "I" = (
 /obj/structure/bars/pipe,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/town/sewer)
 "K" = (
@@ -68,7 +68,7 @@
 /area/rogue/under/town/sewer)
 "L" = (
 /obj/structure/table/wood,
-/obj/item/rogueweapon/hammer/claw,
+/obj/item/rogueweapon/hammer/steel,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/sewer)
 "P" = (

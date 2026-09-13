@@ -209,7 +209,9 @@
 	var/str_change = -8
 	var/perc_change = -8
 
-	if(owner?.head?.type == /obj/item/clothing/head/peaceflower)
+	// Declared carbon, but the tree applies this to any /mob/living. Only carbons have head, so a
+	// simple animal standing in the aura runtimes on the read.
+	if(iscarbon(owner) && owner.head?.type == /obj/item/clothing/head/peaceflower)
 		str_change += 1
 		perc_change += 1
 

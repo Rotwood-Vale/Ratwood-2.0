@@ -162,8 +162,8 @@
 
 	update_icon()
 
-/obj/item/bmbstrap/bomb_and_fire/Initialize()
-	..()
+/obj/item/bmbstrap/bomb_and_fire/Initialize(mapload)
+	. = ..()
 	fill_list = list(/obj/item/bomb,
 	/obj/item/bomb,
 	/obj/item/bomb,
@@ -184,8 +184,8 @@
 		tweps += I
 	update_icon()
 
-/obj/item/bmbstrap/firebomb/Initialize()
-	..()
+/obj/item/bmbstrap/firebomb/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/bomb/I = new(src)
 		I.forceMove(src)

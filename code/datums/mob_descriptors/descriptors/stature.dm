@@ -422,3 +422,14 @@
 
 /datum/mob_descriptor/stature/socialite
 	name = "Socialite"
+
+/datum/mob_descriptor/stature/custom
+	name = "Custom Stature"
+	custom_index = 6
+
+/datum/mob_descriptor/stature/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/stature/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text

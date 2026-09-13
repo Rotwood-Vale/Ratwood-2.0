@@ -546,6 +546,25 @@
 	throwforce = 15
 	special = null
 
+/obj/item/rogueweapon/spear/billhook/zizo
+	name = "avantyne billhook"
+	desc = "A twisted implement of harvest, its hooked edge festering with crystalline malice. It is a weapon of pure upheaval, designed \
+	to drag Grimoria's false idols into the dirt."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "zizobillhook"
+	unenchantable = TRUE
+	max_blade_int = 300
+	max_integrity = 400
+	force = 30
+	force_wielded = 35
+	wdefense = 9
+	throwforce = 35 
+	special = /datum/special_intent/polearm_backstep
+
+/obj/item/rogueweapon/spear/billhook/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "POLEARM")
+
 /obj/item/rogueweapon/spear/improvisedbillhook
 	force = 12
 	force_wielded = 25
@@ -900,8 +919,10 @@
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic
 	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
+	force = 25
+	force_wielded = 25
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
 	AddComponent(\
@@ -918,7 +939,8 @@
 	name = "psydonic halberd"
 	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
 	icon_state = "silverhalberd"
-	force = 10//Use the spear instead if you're going to one-hand this.
+	force = 15
+	force_wielded = 25
 	minstr = 11
 	wdefense = 7
 	is_silver = TRUE
@@ -982,7 +1004,6 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
-	sellprice = 60
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()
@@ -1068,7 +1089,6 @@
 	icon_state = "polehammer"
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150
-	sellprice = 40
 
 // A worse thrust for weapons specialized in other damage type like cut or blunt
 /datum/intent/spear/thrust/eaglebeak
@@ -1210,6 +1230,21 @@
 	force = 14
 	force_wielded = 35
 
+/obj/item/rogueweapon/greatsword/zizo
+	name = "avantyne greatsword"
+	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
+	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
+	icon_state = "zizogsw"
+	unenchantable = TRUE
+	force = 20
+	force_wielded = 40
+	max_blade_int = 500
+	max_integrity = 500
+
+/obj/item/rogueweapon/greatsword/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "GREATSWORD")
+
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"
 	desc = "A blade that invites imagery of hope. Of men clad in shattered plate and bearing blackened pauldrons, \
@@ -1297,6 +1332,8 @@
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
+	force = 25
+	force_wielded = 25
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
@@ -1859,8 +1896,8 @@
 	clickcd = 55
 	recovery = 15
 	item_d_type = "blunt"
-	canparry = FALSE
-	candodge = FALSE
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 
 /datum/intent/sword/flay/dragonslayer
 	name = "flay"
@@ -1917,13 +1954,14 @@
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: It is pretty purely a two-handed weapon. In one hand it's a bit clumsy.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
-	alt_intents = list(null)//can't be alt-gripped. Ought to compensate for that.
+	alt_intents = list(null)//can't be alt-gripped. Sharpness is greater to compensate.
 	name = "elven curveblade"
 	desc = "The Elven Curveblade is a traditional weapon, its practice as much a dance as a method of death. Flowing like the water's current, let its path lead to your enemy's throat."
 	icon_state = "elfcurveblade"
 	wlength = WLENGTH_LONG//less reach than greatsword!
 	minstr = 7//lighter
 	wdefense = 8//better defence than greatsword
+	max_blade_int = 350 // 50 more than greatsword.
 	sellprice = 60
 
 
@@ -1931,4 +1969,6 @@
 	name = "elven swordspear"
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
+	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60

@@ -125,7 +125,6 @@ Firstly, the squire's buffs and boons or whatever.
 	icon_state = "buff"
 
 /datum/status_effect/buff/squire_prox/on_creation()
-	// deferred: the knight/squire mind links aren't set yet when this is created
 	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
 
@@ -170,7 +169,6 @@ Now, the knight's.
 	icon_state = "buff"
 
 /datum/status_effect/buff/knight_prox/on_creation()
-	// deferred: the knight/squire mind links aren't set yet when this is created
 	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
 

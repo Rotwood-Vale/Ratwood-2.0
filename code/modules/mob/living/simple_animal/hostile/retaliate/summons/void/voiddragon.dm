@@ -89,7 +89,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	speed = 5
 	move_to_delay = 5
 	ranged = TRUE
-	canparry = TRUE
+	mob_can_parry = TRUE
 	defprob = 70
 	pixel_x = -32
 	var/swooping = NONE
@@ -129,8 +129,6 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	hitsound = "genslash"
 	penfactor = 60
 	damfactor = 40
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 

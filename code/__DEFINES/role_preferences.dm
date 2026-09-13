@@ -55,6 +55,7 @@
 #define ROLE_CHOSEN				"Chosen"
 #define ROLE_THIEVESGUILD "Thieves Guild"
 #define ROLE_VAMPIRE_SUMMON		"Vampire Summon"
+#define ROLE_NOTORIOUS_BOUNTY	"Notorious Bounty Target"
 
 GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_MANIAC = /datum/antagonist/maniac,

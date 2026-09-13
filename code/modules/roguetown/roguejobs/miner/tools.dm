@@ -17,6 +17,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 64
 	grid_height = 64
+	is_tool = TRUE
 
 /obj/item/rogueweapon/pick/getonmobprop(tag)
 	. = ..()

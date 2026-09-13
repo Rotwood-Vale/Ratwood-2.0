@@ -1,0 +1,6 @@
+author: "UntoldTactics"
+delete-after: True
+changes:
+  - balance: "Watch Captain has had their int reduced from 2 -> 1 & their per from 3 -> 2, they have also been given the perfect_tracker and sleuth trait."
+  - balance: "Warden Master has recieved perfect_Tracker and slueth trait."
+  - balance: "Sergeant has had their constitution buffed from 1 -> 2, sergeant axes & shields skill improved from journeyman -> expert, the Sergeant now spawns with a chain mantle instead of an iron gorget."

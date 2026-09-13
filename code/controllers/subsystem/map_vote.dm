@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(map_vote)
 	sanitize_cache()
 	update_tally_printout()
 
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
 	rustg_file_write(json_encode(player_vote_bonus), MAP_VOTE_CACHE_LOCATION)

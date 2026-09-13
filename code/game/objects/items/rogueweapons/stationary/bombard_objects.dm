@@ -80,6 +80,49 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	force = 5
 	possible_item_intents = list(INTENT_GENERIC)
 
+//craftable bombard
+
+/obj/item/bombard_roughbarrel
+	name = "\improper rough iron barrel"
+	desc = "A rough iron barrel that has yet to be properly treated. <br>\
+	<small> you think you could bring this to an artificer table to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
+/obj/item/bombard_partiallyrefinedbarrel
+	name = "\improper partially refined barrel"
+	desc = "An iron barrel that has gone through partial treatment yet is still rough on the inside and must be sanded down,<br>\
+	<small> you think you could bring it to an anvil to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
+/obj/item/bombard_sandedbarrel
+	name = "\improper sanded bombard barrel"
+	desc = "An iron barrel that has gone through the sanding process yet still has chips on the inside that must be repaired,<br>\
+	<small> you think you could bring it to an anvil to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
+/obj/item/bombard_sandedrepairedbarrel
+	name = "\improper repaired sanded barrel"
+	desc = "An iron barrel that has gone through the sanding process, the inside of it is hollow and smooth,<br>\
+	<small> you think you could bring it to an artificer to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
+
 //And the recipe in which we hold it hostage. It shouldn't be survival, but, whatever.
 /datum/crafting_recipe/roguetown/survival/bombard
 	name = "Portable Bombard (Barrel and Frame)"
@@ -90,5 +133,5 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 		/obj/item/bombard_barrel = 1
 		)
 	skillcraft = /datum/skill/combat/firearms
-	craftdiff = 1
+	craftdiff = 3
 	time = 60

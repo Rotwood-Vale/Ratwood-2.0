@@ -122,6 +122,7 @@
 	desc = ""
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
+	plane = FLOOR_PLANE
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -153,6 +154,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
+	max_integrity = 30
 
 /obj/structure/flora/bush/Initialize(mapload)
 	icon_state = "snowbush[rand(1, 6)]"

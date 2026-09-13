@@ -219,7 +219,7 @@
 				span_danger("[src] tears [headgear] off of [target]'s face!"), \
 				span_userdanger("[src] tears [headgear] off of your face!"))
 		target.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
-		var/datum/cb = CALLBACK(src,/obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head)
+		var/datum/cb = CALLBACK(src, PROC_REF(eat_head))
 		for(var/i in 1 to 10)
 			addtimer(cb, (i - 1) * 1.5 SECONDS)
 		QDEL_IN(src, 16 SECONDS)
@@ -277,7 +277,7 @@
 				var/atom/movable/screen/plane_master/whole_screen = L.hud_used?.plane_masters[screen_type]
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 0.5 SECONDS, easing = QUAD_EASING)
-			// global: the trap qdels itself immediately below, the un-spin must outlive it
+			// Global: the trap qdels itself immediately below, the un-spin must outlive it
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fae_reset_plane_spin), L), 15 SECONDS)
 			qdel(src)
 

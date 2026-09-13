@@ -499,47 +499,36 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
 
+/mob/proc/update_hand_intent(active = TRUE)
+	var/list/intents
+	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
+	if(Masteritem)
+		if(Masteritem.wielded)
+			intents = Masteritem.gripped_intents
+		else if(Masteritem.altgripped)
+			intents = Masteritem.alt_intents
+		else
+			intents = Masteritem.possible_item_intents
+	else
+		// If active = TRUE, index 1 is left and 2 is right. If active == FALSE, index 1 is right and 2 is left.
+		var/do_left = (active_hand_index == 1) ^ active
+		if(do_left)
+			l_index = l_ua_index
+		else
+			r_index = r_ua_index
+		intents = base_intents
+	. = list()
+	for(var/defintent in intents)
+		. += new defintent(src, Masteritem)
+	
 /mob/proc/update_a_intents()
 	stop_attack()
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
-	var/list/intents = list()
-	var/obj/item/Masteritem = get_active_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			r_index = r_ua_index
-		else
-			l_index = l_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_a_intents += new defintent(src, Masteritem)
-		else
-			possible_a_intents += new defintent(src)
-	Masteritem = get_inactive_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			l_index = l_ua_index
-		else
-			r_index = r_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_offhand_intents += new defintent(src, Masteritem)
-		else
-			possible_offhand_intents += new defintent(src)
+	if(QDELETED(src))
+		return
+	possible_a_intents = update_hand_intent(active = TRUE)
+	possible_offhand_intents = update_hand_intent(active = FALSE)
 	if(hud_used?.action_intent)
 		if(active_hand_index == 1)
 			hud_used.action_intent.update_icon(possible_a_intents,possible_offhand_intents,oactive)
@@ -976,8 +965,12 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true.
+/// Values store as dicts: "msg", "time", "color", then whatever metadata the writer put in meta, copied
+/// key for key so readers match fields instead of parsing prose. Adding a field is a writer-side key and
+/// nothing else; no signature anywhere changes. The parent writes disk logs from the raw message argument,
+/// so none of the metadata reaches them.
+/mob/log_message(message, message_type, color=null, log_globally = TRUE, list/meta = null)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
@@ -992,15 +985,22 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/colored_message = message
+	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
+	// would show as literal text
+	var/list/entry_value = list("msg" = message, "time" = world.time)
+	// every writer registers itself, and either party of a fielded line writes a line of their own soon enough.
+	// src.key over the directory, so an SSD party still resolves
+	pov_remember_key(ckey, key)
 	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
+		entry_value["color"] = color
+	// isnull, not truthy: an absent party is a null ckey the writer may still name the key of, while an
+	// empty witness roster is a real answer and must survive the copy
+	for(var/field in meta)
+		if(!isnull(meta[field]))
+			entry_value[field] = meta[field]
 
 	//Removed sorting by message type, now sorts by timestamp regardless of message type
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = entry_value)
 
 	logging[smessage_type] += timestamped_message
 

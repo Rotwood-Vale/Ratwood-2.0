@@ -189,8 +189,9 @@ Additionally, these differ from the concepts, because I wish to see them in prac
 	..()
 	canister_detonate()
 	// Airburst: the canister bursts, then the blast lands 2 seconds later. This was a bodyless
-	// spawn(2 SECONDS), which binds the next single statement, so the delay was always real.
-	// Global callback because the cannonball is qdel'd as soon as detonate() returns.
+	// spawn(2 SECONDS), which binds the next single statement, so the delay was always real and
+	// must not be read as dead code. Global callback because the cannonball is qdel'd as soon as
+	// detonate() returns.
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), T, 0, 0, 1, 4), 2 SECONDS)
 
 //A secondary type of 'canister' charge. Small explosions on all turfs in view.

@@ -41,8 +41,6 @@
 	hitsound = "smallslash"
 	chargetime = 0
 	penfactor = 0
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slash the air"
 	item_d_type = "slash"
 	clickcd = 12

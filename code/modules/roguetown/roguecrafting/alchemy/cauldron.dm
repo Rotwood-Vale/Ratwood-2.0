@@ -38,8 +38,7 @@
 
 /obj/machinery/light/rogue/cauldron/Destroy()
 	chem_splash(loc, 2, list(reagents))
-	qdel(reagents)
-	..()
+	return ..()
 
 /obj/machinery/light/rogue/cauldron/burn_out()
 	brewing = 0

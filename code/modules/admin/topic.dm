@@ -137,7 +137,7 @@
 				current_value = M.getToxLoss()
 			else if(damage_type == "oxy")
 				current_value = M.getOxyLoss()
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -164,7 +164,7 @@
 				current_value = H.getToxLoss()
 			else if(damage_type == "oxy")
 				current_value = H.getOxyLoss()
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -187,7 +187,7 @@
 				current_value = BP.brute_dam
 			else if(damage_type == "burn")
 				current_value = BP.burn_dam
-			
+
 			var/new_value = input(usr, "Set [damage_type] damage for [BP.name]:", "Edit Damage", current_value) as num|null
 			if(new_value != null)
 				new_value = max(0, new_value)
@@ -244,7 +244,7 @@
 				else if(wound_choice == "Dislocation")
 					if(BP.body_zone == BODY_ZONE_HEAD)
 						wound_path = /datum/wound/dislocation/neck
-				
+
 				// Check for wound subtypes (like small/large punctures, small/large slashes, etc.)
 				var/list/wound_subtypes = list()
 				for(var/subtype in subtypesof(wound_path))
@@ -252,7 +252,7 @@
 					var/wound_name = initial(W.name)
 					if(wound_name && wound_name != initial(wound_path:name))
 						wound_subtypes[wound_name] = subtype
-				
+
 				// If there are subtypes, let the user choose
 				if(wound_subtypes.len > 0)
 					var/subtype_choice = input(usr, "Select wound severity:", "Wound Tier") as null|anything in wound_subtypes
@@ -261,7 +261,7 @@
 					else
 						show_heal_panel(M)
 						return
-				
+
 				BP.add_wound(wound_path)
 				var/datum/wound/applied_wound = wound_path
 				var/wound_display_name = initial(applied_wound:name)
@@ -774,38 +774,41 @@
 		if(!M.client)
 			to_chat(usr, span_warning("[M] doesn't seem to have an active client."))
 			return
-		var/target_job = SSrole_class_handler.get_advclass_by_name(M.advjob)
-		var/datum/job/mob_job = SSjob.GetJob(M.mind.assigned_role)
-		if(M.mind)
-			if(mob_job)
-				mob_job.current_positions = max(0, mob_job.current_positions - 1)
-			if(target_job)
-				SSrole_class_handler.adjust_class_amount(target_job, -1)
-			M.mind.unknow_all_people()
-			for(var/datum/mind/MF in get_minds())
-				M.mind.become_unknown_to(MF)
-			for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
-				if(removing_bounty.target == M.real_name)
-					GLOB.head_bounties -= removing_bounty
 		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
-		GLOB.chosen_names -= M.real_name
-		if(!mob_job)
-			LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERER, FALSE)], M.mobid)
-		else
-			LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], M.mobid)
-		LAZYREMOVE(GLOB.roleplay_ads, M.mobid)
-		SSdroning.kill_droning(M.client)
-		SSdroning.kill_loop(M.client)
-		SSdroning.kill_rain(M.client)
-
-		var/mob/dead/new_player/NP = new()
-		NP.ckey = M.ckey
 		if(living)
+			var/mob/living/carbon/human/H = M
+			if(!istype(H))
+				to_chat(usr, span_warning("Only human living mobs can be sent back to the lobby."))
+				return
+			var/delete_character = FALSE
 			if(alert(usr, "Would you like to also delete the living mob [key_name(M)]?", "Message", "Yes", "No") == "Yes")
 				log_admin("[key_name(usr)] has chosen to delete the [M] mob while sending the client to lobby.")
-				qdel(M)
+				delete_character = TRUE
+			H.admin_send_back_to_lobby(usr, delete_character)
 		else
+			SSdroning.kill_droning(M.client)
+			SSdroning.kill_loop(M.client)
+			SSdroning.kill_rain(M.client)
+			var/mob/dead/new_player/NP = new()
+			NP.ckey = M.ckey
 			qdel(M)
+
+	else if(href_list["ssd_sendbacktolobby"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["ssd_sendbacktolobby"])
+		if(!istype(H))
+			to_chat(usr, span_warning("This can only be used on instances of type /mob/living/carbon/human."))
+			return
+		if(H.client || !H.last_logout_time)
+			to_chat(usr, span_warning("[H] is no longer in a deep slumber."))
+			return
+		if(alert(usr, "Fartravel slumbering [key_name(H)] and delete their character?", "Message", "Yes", "No") != "Yes")
+			return
+		log_admin("[key_name(usr)] has fartraveled slumbering [key_name(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber.")
+		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled slumbering [key_name_admin(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber."))
+		H.admin_send_back_to_lobby(usr, TRUE)
 
 	else if(href_list["revive"])
 		if(!check_rights(R_ADMIN))
@@ -1136,18 +1139,18 @@
 		var/patron_type = text2path(href_list["patron"])
 		if(!patron_type)
 			return
-		
+
 		// For divine spellcasters (those with devotion), we need to handle spells specially
 		var/is_divine_caster = FALSE
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.devotion)
 				is_divine_caster = TRUE
-		
+
 		// Remove old patron bonuses/spells
 		if(M.patron)
 			M.patron.on_loss(M)
-			
+
 			// For divine casters, remove devotion spells from old patron
 			if(is_divine_caster && ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -1155,10 +1158,10 @@
 					for(var/spell_type in M.patron.miracles)
 						if(H.mind?.has_spell(spell_type))
 							H.mind.RemoveSpell(spell_type)
-		
+
 		// Set new patron
 		M.set_patron(patron_type)
-		
+
 		// For divine casters, grant new patron's devotion spells
 		if(is_divine_caster && ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1167,7 +1170,7 @@
 				H.devotion.patron = M.patron
 				// Update the level to trigger spell granting
 				H.devotion.try_add_spells(silent = FALSE)
-		
+
 		message_admins(span_danger("Admin [key_name_admin(usr)] changed [key_name_admin(M)]'s patron to [initial(M.patron.name)]"))
 		log_admin("[usr] changed [M]'s patron to [initial(M.patron.name)].")
 		show_player_panel_next(M, "patron")
@@ -1202,7 +1205,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
+		//a highlight toggle pinged from the POV page's javascript, record it and do not re-render
+		if(href_list["povhl"])
+			usr.client.toggle_pov_highlight(M, href_list["log_src"], href_list["pov_mode"], href_list["povhl"])
+			return
+
+		//same for the filter checkboxes, so a page turn keeps what was filtered out
+		if(href_list["povfilter"])
+			usr.client.set_pov_filters(M, href_list["log_src"], href_list["pov_mode"], href_list["povfilter"])
+			return
+
+		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"] || INDIVIDUAL_ATTACK_LOG, text2num(href_list["log_page"]) || 1, href_list["pov_mode"], href_list["pov_paging"], text2num(href_list["page_len"]) || 0, text2num(href_list["pov_tail"]), href_list["pov_focus"], href_list["pov_fresh"], text2num(href_list["pov_at"]))
 	else if(href_list["languagemenu"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1305,6 +1318,15 @@
 		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
 			obj_dir = null
 		var/obj_name = sanitize(href_list["object_name"])
+		var/quality_raw = href_list["object_quality"]
+		var/obj_quality = null
+		var/obj_quality_set = FALSE
+		if(length(quality_raw))
+			obj_quality = text2num(quality_raw)
+			if(!isnull(obj_quality) && obj_quality >= ITEM_QUALITY_RUINED && obj_quality <= ITEM_QUALITY_MASTERWORK)
+				obj_quality_set = TRUE
+			else
+				obj_quality = null
 
 
 		var/atom/target //Where the object will be spawned
@@ -1360,11 +1382,24 @@
 							O.flags_1 |= ADMIN_SPAWNED_1
 							if(obj_dir)
 								O.setDir(obj_dir)
+							if(obj_quality_set && istype(O, /obj/item))
+								var/obj/item/spawned_item = O
+								if(istype(spawned_item, /obj/item/ingot))
+									var/obj/item/ingot/ING = spawned_item
+									ING.apply_smelt_quality(obj_quality)
+								else if(spawned_item.has_item_quality)
+									spawned_item.apply_quality(null, null, obj_quality)
 							if(obj_name)
 								O.name = obj_name
 								if(ismob(O))
 									var/mob/M = O
 									M.real_name = obj_name
+							if(ishuman(O))
+								var/mob/living/carbon/human/spawned_human = O
+								spawned_human.taints_loot = !!href_list["taints_loot"]
+								if(!spawned_human.taints_loot)
+									for(var/obj/item/I in spawned_human.get_equipped_items(TRUE) + spawned_human.held_items)
+										I.unmark_as_looted()
 							if(where == "inhand" && isliving(usr) && isitem(O))
 								var/mob/living/L = usr
 								var/obj/item/I = O

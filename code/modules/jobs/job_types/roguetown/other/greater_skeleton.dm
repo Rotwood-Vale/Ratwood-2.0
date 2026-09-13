@@ -18,6 +18,8 @@
 	give_bank_account = FALSE
 	hidden_job = TRUE
 
+	no_virtue = TRUE
+
 /datum/outfit/job/roguetown/greater_skeleton/pre_equip(mob/living/carbon/human/H)
 	..()
 
@@ -25,6 +27,7 @@
 
 	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SHATTER_WEAKNESS, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_GENERIC)
 
 	var/datum/antagonist/new_antag = new /datum/antagonist/skeleton()
 	H.mind.add_antag_datum(new_antag)

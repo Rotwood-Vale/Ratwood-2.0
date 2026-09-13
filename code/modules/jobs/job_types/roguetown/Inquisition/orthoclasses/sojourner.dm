@@ -19,11 +19,12 @@
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
 	)
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(/// +7, same as naledi hiero -1 spd
 		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1,
-		STATKEY_SPD = -1,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 1,
+		STATKEY_PER = 1,
+		STATKEY_CON = -1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,

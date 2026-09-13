@@ -35,7 +35,7 @@
 	ADD_TRAIT(H, TRAIT_BANDITCAMP, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_COMMIE, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)//No meisters.
+	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
 	to_chat(H, span_alertsyndie("I am a BANDIT!"))
 /*
 	to_chat(H, span_boldwarning("Long ago I did a crime worthy of my bounty being hung on the wall outside of the local inn. \

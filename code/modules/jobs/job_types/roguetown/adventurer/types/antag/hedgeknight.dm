@@ -14,7 +14,6 @@
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
 		STATKEY_INT = 2,
-		STATKEY_SPD = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
@@ -84,3 +83,4 @@
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
 			H.change_stat(STATKEY_CON, 1)
 			H.change_stat(STATKEY_WIL, 1)
+			H.change_stat(STATKEY_PER, 1)

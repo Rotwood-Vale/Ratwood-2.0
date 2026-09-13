@@ -35,7 +35,7 @@
 
 /obj/effect/proc_holder/spell/self/howl/cast(mob/user = usr)
 	..()
-	var/message = input(howl_prompt_text, howl_prompt_title) as text|null
+	var/message = sanitize(input(howl_prompt_text, howl_prompt_title) as text|null)
 	if(!message) return
 
 	var/datum/antagonist/antag_data = user.mind.has_antag_datum(howl_antag_type)

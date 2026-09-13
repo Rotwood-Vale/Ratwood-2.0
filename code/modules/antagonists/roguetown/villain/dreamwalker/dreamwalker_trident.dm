@@ -115,7 +115,7 @@
 /obj/item/rogueweapon/spear/dreamscape_trident/proc/knockup_effect(mob/living/L)
 	// Animation
 	animate(L, pixel_y = L.pixel_y + 16, time = 3, easing = SINE_EASING)
-	// global so the landing still plays if the trident is deleted mid-knockup
+	// Global so the landing still plays if the trident is deleted mid-knockup
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamscape_knockup_land), L), 3)
 
 /proc/dreamscape_knockup_land(mob/living/L)

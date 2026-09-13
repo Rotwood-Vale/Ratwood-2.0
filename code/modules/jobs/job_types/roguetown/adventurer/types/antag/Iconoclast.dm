@@ -13,16 +13,16 @@
 		TRAIT_RITUALIST,
 		)
 	subclass_stats = list(
-		STATKEY_STR = 2,// LETS WRASSLE
-		STATKEY_WIL = 2,// This is our Go Big stat, we want lots of stamina for miracles and WRASSLIN.
-		STATKEY_LCK = 1,//We have a total of +9 in stats. 12+ if we have a bounty.
-		STATKEY_CON = 2	//-LCK +CON
+		STATKEY_STR = 2,
+		STATKEY_WIL = 2,
+		STATKEY_LCK = 2,
+		STATKEY_CON = 2, //We have a total of +10 in stats. +13 if we have a visible bounty.
 	)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT, // Whips/Flails so we can use the Gilded Flail if we want.
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_MASTER, // Gilded flail.
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, // Poles or maces if we're a wimp and don't want to engage with unarmed. Not ideal.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,  // Unarmed if we want to kick ass for the lord(you do, this is what you SHOULD DO!!)
@@ -61,7 +61,7 @@
 	beltr = /obj/item/rogueweapon/katar
 	id = /obj/item/mattcoin
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Starts off maxed out.
 
 /datum/outfit/job/roguetown/bandit/iconoclast/post_equip(mob/living/carbon/human/H)
 	. = ..()

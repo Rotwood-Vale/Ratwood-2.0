@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude)
 	// Get custom clan name
-	custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null
+	custom_clan_name = sanitize(input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null)
 	if(!custom_clan_name)
 		custom_clan_name = "Custom Clan"
 

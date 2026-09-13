@@ -31,6 +31,7 @@
 			mind.current = null
 		testing("BASEDLOL ")
 		ghostize(drawskip=TRUE)		//Ghostize checks for key so nothing else is necessary.
+	QDEL_NULL(stored_dna)
 	return ..()
 
 /mob/living/brain/update_mobility()
