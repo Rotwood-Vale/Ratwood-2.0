@@ -405,10 +405,11 @@
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 
-		if(istype(target, /mob/living/carbon))
-			var/mob/living/carbon/c = target
-			c.reagents.remove_all(10000) // hopefully no 10001u happens
-		target.toxloss = 0
+		if(!priest)
+			if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/c = target
+				c.reagents.remove_all(10000) // hopefully no 10001u happens
+			target.toxloss = 0
 
 		var/obj/item/black_rose/rose = user.get_active_held_item()
 		// Check if the user is holding a black rose and the target follows Pestra.
@@ -446,6 +447,8 @@
 			target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it.
 			if(stinky)
 				target.apply_status_effect(/datum/status_effect/debuff/rotted)	//Perma debuff, needs cure
+			if(priest)
+				target.apply_damage(75, BRUTE, spread_damage = TRUE) // Astra is not a gentle goddes
 			return TRUE
 		else //Attempt failed, no rot
 			target.visible_message(span_warning("The rot fails to leave [target]'s body!"), span_warning("I feel no different..."))
