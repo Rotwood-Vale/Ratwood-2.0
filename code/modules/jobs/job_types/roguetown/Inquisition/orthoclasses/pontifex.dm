@@ -33,6 +33,26 @@
     var/detailcolor
     job_bitflag = BITFLAG_HOLY_WARRIOR
     allowed_patrons = list(/datum/patron/old_god)
+    
+    head = /obj/item/clothing/head/roguetown/roguehood/pontifex
+    gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
+    armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
+    shirt = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
+    pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex
+    mask = /obj/item/clothing/mask/rogue/lordmask/naledi
+    wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
+    belt = /obj/item/storage/belt/rogue/leather/black
+    beltl = /obj/item/flashlight/flare/torch
+    shoes = /obj/item/clothing/shoes/roguetown/sandals
+    backr = /obj/item/storage/backpack/rogue/satchel/black
+    id = /obj/item/clothing/ring/signet/silver
+    
+    backpack_contents = list(
+        /obj/item/lockpick = 1,
+        /obj/item/roguekey/inquisition = 1,
+        /obj/item/paper/inqslip/arrival/ortho = 1,
+        /obj/item/storage/belt/rogue/pouch/coins/mid = 1
+    )
 
 /datum/outfit/job/roguetown/mercenary/warscholar_pontifex/pre_equip(mob/living/carbon/human/H)
     ..()
@@ -96,22 +116,4 @@
                 H.adjust_skillrank_up_to(/datum/skill/misc/swimming, 3, TRUE)
                 H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 
-    head = /obj/item/clothing/head/roguetown/roguehood/pontifex
-    gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
-    armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-    shirt = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
-    pants = /obj/item/clothing/under/roguetown/trou/leather/pontifex
-    mask = /obj/item/clothing/mask/rogue/lordmask/naledi
-    wrists = /obj/item/clothing/neck/roguetown/psicross/naledi
-    belt = /obj/item/storage/belt/rogue/leather/black
-    beltl = /obj/item/flashlight/flare/torch
-    shoes = /obj/item/clothing/shoes/roguetown/sandals
-    backr = /obj/item/storage/backpack/rogue/satchel/black
-	id = /obj/item/clothing/ring/signet/silver
-    backpack_contents = list(
-        /obj/item/lockpick = 1,
-        /obj/item/roguekey/inquisition = 1,
-        /obj/item/paper/inqslip/arrival/ortho = 1,
-        /obj/item/storage/belt/rogue/pouch/coins/mid = 1
-    )
 
