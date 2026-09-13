@@ -158,16 +158,16 @@
 	- Resident: City residency, treasury account, home in the city\n\
 	- Artificer's Apprentice: Skilled in crafting and tinkering with mechanical devices"
 
-// DIY Repairer Pack: Resident + Blacksmith
-/datum/virtue/pack/diyrepairer
-	name = "DIY Repairer (-5 TRI)"
-	desc = "You could go to the blacksmith and pay to have your gear fixed up, but why have someone else do something you're certain you could do on you're own. That's what you were taught anyways."
+// DIY Patchjob Pack: Resident + Blacksmith
+/datum/virtue/pack/patchjob
+	name = "Patchjob (-5 TRI)"
+	desc = "For the true connoisseur of the patchjob. There's nothing some spit and polish can't fix."
 	triumph_cost = 5
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
 		/datum/virtue/utility/blacksmith
 	)
-	custom_text = "Grants two virtues for the DIY Repairer:\n\
+	custom_text = "Grants two virtues for the Patchjob:\n\
 	- Resident: City residency, treasury account, home in the city\n\
 	- Blacksmith's Apprentice: Skilled in crafting and repairing metallic devices"
 
@@ -232,7 +232,7 @@
 		/datum/virtue/utility/resident,
 		/datum/virtue/combat/crossbowman
 	)
-	custom_text = "Grants two virtues for the One In The Drawstring:\n\
+	custom_text = "Grants two virtues for this combo virtue:\n\
 	- Resident: City residency, treasury account, home in the city\n\
 	- Crossbow Levy: Skilled in using crossbows"
 
@@ -245,7 +245,7 @@
 		/datum/virtue/utility/resident,
 		/datum/virtue/utility/failed_squire
 	)
-	custom_text = "Grants two virtues for the Dreaming of a Knight's Tale:\n\
+	custom_text = "Grants two virtues for this combo virtue:\n\
 	- Resident: City residency, treasury account, home in the city\n\
 	- Failed Squire: Squire Knowledge and the tools to use it"
 
