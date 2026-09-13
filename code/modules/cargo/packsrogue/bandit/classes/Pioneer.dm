@@ -318,12 +318,17 @@
 	cost = 5
 	contains = list(/obj/item/quiver)
 
+/datum/supply_pack/rogue/Pioneer/quiverbolt
+	name = "Empty Bolt Pouch"
+	cost = 5
+	contains = list(/obj/item/quiver/bolt)
+
 /datum/supply_pack/rogue/Pioneer/quivers/arrows
 	name = "Quiver of Arrows"
 	cost = 10
 	contains = list(/obj/item/quiver/arrows)
 
 /datum/supply_pack/rogue/Pioneer/quivers/bolts
-	name = "Quiver of Bolts"
+	name = "Pouch of Bolts"
 	cost = 20
-	contains = list(/obj/item/quiver/bolts)
+	contains = list(/obj/item/quiver/bolt/standard)

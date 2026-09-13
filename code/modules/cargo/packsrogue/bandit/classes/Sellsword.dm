@@ -328,9 +328,9 @@
 /////////////////////////////
 
 /datum/supply_pack/rogue/Sellsword/bolts
-	name = "Quiver of Bolts"
+	name = "Pouch of Bolts"
 	cost = 20
-	contains = list(/obj/item/quiver/bolts)
+	contains = list(/obj/item/quiver/bolt/standard)
 
 /datum/supply_pack/rogue/Sellsword/arrows
 	name = "Quiver of Arrows"

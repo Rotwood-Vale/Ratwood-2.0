@@ -3168,11 +3168,9 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
 "aGG" = (
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
 "aGH" = (
@@ -8376,9 +8374,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell/warden)
 "bKY" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/structure/rack/rogue,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "bKZ" = (
@@ -9075,14 +9073,6 @@
 /area/rogue/outdoors/beach/harbor)
 "bRL" = (
 /obj/structure/rack/rogue/shelf,
-/obj/item/quiver/bolts{
-	pixel_x = 7;
-	pixel_y = 33
-	},
-/obj/item/quiver/bolts{
-	pixel_x = -4;
-	pixel_y = 34
-	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/cell/warden)
 "bRO" = (
@@ -17731,7 +17721,6 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/item/rogueweapon/sword/rapier,
 /obj/item/rogueweapon/scabbard,
-/obj/item/quiver/bolts,
 /obj/machinery/light/rogue/candle/l{
 	pixel_x = 0;
 	pixel_y = -32
@@ -52330,6 +52319,7 @@
 	lockid = "walls"
 	},
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/ruinedwood/chevron,
 /area/rogue/indoors/town/manor/rockhill)
 "kTx" = (
@@ -56323,13 +56313,13 @@
 "lLu" = (
 /obj/item/rope/chain,
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/quiver/bolts,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
 	locked = 1;
 	lockid = "sergeant"
 	},
 /obj/machinery/light/rogue/candle/blue,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/garrison)
 "lLx" = (
@@ -61746,13 +61736,9 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/sunken)
 "mMO" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = 3
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = -9
-	},
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/town/basement/keep)
 "mMU" = (
@@ -107893,22 +107879,8 @@
 /obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
-/obj/item/quiver/bolts{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/quiver/bolts{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/quiver/heavybluntbolts{
-	pixel_x = 8;
-	pixel_y = -7
-	},
-/obj/item/quiver/heavybluntbolts{
-	pixel_x = 7;
-	pixel_y = -5
-	},
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "wEK" = (

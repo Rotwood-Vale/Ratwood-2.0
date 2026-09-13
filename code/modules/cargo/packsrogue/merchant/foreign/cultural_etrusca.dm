@@ -19,9 +19,9 @@
 	ship_qty_max = 4
 
 /datum/supply_pack/rogue/etrusca/heavy_bolts
-	name = "Quiver of Bolts"
+	name = "Pouch of Bolts"
 	cost = 35
-	contains = list(/obj/item/quiver/bolts)
+	contains = list(/obj/item/quiver/bolt/standard)
 	ship_qty_min = 2
 	ship_qty_max = 5
 

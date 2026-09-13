@@ -203,11 +203,11 @@
 				mask = /obj/item/clothing/mask/rogue/facemask/steel/hound
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 			
-		var/weapons = list("Crossbow", "Blackhorn Longbow", "Recurve Bow", "Slurbow")
+		var/weapons = list("Munition Crossbow", "Blackhorn Longbow", "Recurve Bow")
 		var/weapon_choice = input(H, "Choose your weapon", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
-			if("Crossbow")
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			if("Munition Crossbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 				beltr = /obj/item/quiver/poisonarrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Blackhorn Longbow")
@@ -218,7 +218,3 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
 				beltr = /obj/item/quiver/poisonarrows
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
-			if("Slurbow")
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
-				beltr = /obj/item/quiver/bolts
-				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)

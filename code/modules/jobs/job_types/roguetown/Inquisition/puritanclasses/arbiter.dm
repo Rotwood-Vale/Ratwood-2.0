@@ -56,7 +56,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
 	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	beltl = /obj/item/quiver/bolts
+	beltl = /obj/item/quiver/bolt/standard
 	mask = /obj/item/clothing/mask/rogue/sack/psy/arbiter
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	id = /obj/item/clothing/ring/signet/silver
