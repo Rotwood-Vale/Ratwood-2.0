@@ -347,7 +347,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	beltr = /obj/item/quiver/bolts
+	beltr = /obj/item/quiver/bolt/standard
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,

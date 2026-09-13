@@ -129,7 +129,7 @@
 				H.change_stat(STATKEY_INT, -1)
 			if("Munition Crossbow - +SPD/PER, -STR/CON")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
-				backl = /obj/item/quiver/heavybluntbolts
+				backl = /obj/item/quiver/bolt/heavybluntbolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.change_stat(STATKEY_SPD, 1)

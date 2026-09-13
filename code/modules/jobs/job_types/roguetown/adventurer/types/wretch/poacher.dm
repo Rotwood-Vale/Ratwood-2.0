@@ -97,7 +97,7 @@
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
-				beltl = /obj/item/quiver/bolts
+				beltl = /obj/item/quiver/bolt/standard
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if ("Sling")
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 5, TRUE)

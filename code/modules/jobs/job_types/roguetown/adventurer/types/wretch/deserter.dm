@@ -206,7 +206,7 @@
 				r_hand = /obj/item/rogueweapon/halberd
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Munition Crossbow")
-				beltr = /obj/item/quiver/bolts
+				beltr = /obj/item/quiver/bolt/standard
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			if("Greataxe")
 				r_hand = /obj/item/rogueweapon/greataxe

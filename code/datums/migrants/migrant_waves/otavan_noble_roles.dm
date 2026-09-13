@@ -196,7 +196,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/quiver/bolts
+	beltr = /obj/item/quiver/bolt/standard
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	l_hand = /obj/item/rogueweapon/sword

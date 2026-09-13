@@ -61,11 +61,11 @@
 			if("Archery")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				beltl = /obj/item/quiver/pyroarrows
+				beltl = /obj/item/quiver/bolt/pyro
 			if("Munition Crossbows")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
-				beltl = /obj/item/quiver/pyrobolts
+				beltl = /obj/item/quiver/bolt/pyro
 			if("LET THERE BE FLAME!!!")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper

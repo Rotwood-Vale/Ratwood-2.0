@@ -127,7 +127,7 @@
 	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've managed to get ahold of a mass produced Munition Crossbow."
 	custom_text = "+1 to Crossbows, Up to Legendary, Minimum Apprentice"
 	added_stashed_items = list("Munition Crossbow" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
-								"Quiver (Bolts)" = /obj/item/quiver/bolts
+								"Quiver (Bolts)" = /obj/item/quiver/bolt/standard
 	)
 
 /datum/virtue/combat/crossbowman/apply_to_human(mob/living/carbon/human/recipient)

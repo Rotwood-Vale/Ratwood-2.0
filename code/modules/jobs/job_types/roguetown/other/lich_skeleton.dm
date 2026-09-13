@@ -185,7 +185,7 @@ LICH SKELETONS
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 		if("Ancient Crossbow")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/aalloy
-			beltr = /obj/item/quiver/boltsancient
+			beltr = /obj/item/quiver/bolt/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 		if("Sling")
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling

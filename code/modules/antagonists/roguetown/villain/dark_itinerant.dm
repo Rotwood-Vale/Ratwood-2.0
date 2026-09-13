@@ -80,7 +80,7 @@
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Munition Crossbow")
-			beltr = /obj/item/quiver/bolts
+			beltr = /obj/item/quiver/bolt/standard
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 		if("Bow")
 			beltr = /obj/item/quiver/bodkin

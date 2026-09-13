@@ -105,7 +105,7 @@
 /datum/supply_pack/rogue/grenzelhoft/fyrebolts
 	name = "Quiver of Pyroclastic Bolts"
 	cost = 60
-	contains = list(/obj/item/quiver/pyrobolts)
+	contains = list(/obj/item/quiver/bolt/pyro)
 	ship_qty_min = 1
 	ship_qty_max = 3
 

@@ -274,7 +274,7 @@
 // 			if("Longsword + Crossbow")
 // 				beltl = /obj/item/rogueweapon/scabbard/sword
 // 				r_hand = /obj/item/rogueweapon/sword/long
-// 				beltr = /obj/item/quiver/bolts
+// 				beltr = /obj/item/quiver/bolt/standard
 // 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 // 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 // 			if("Billhook + Recurve Bow")
@@ -407,7 +407,7 @@
 			if("Whip + Crossbow")
 				beltl = /obj/item/rogueweapon/whip
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/bolts
+				beltr = /obj/item/quiver/bolt/standard
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 
 		switch(armor_choice)

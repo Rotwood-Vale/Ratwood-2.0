@@ -8,6 +8,7 @@
 //parent of all bolts and arrows ฅ^•ﻌ•^ฅ
 /obj/item/ammo_casing/caseless/rogue/
 	firing_effect_type = null
+	var/ammo_weight = 1 // Weight cost in a quiver. Default 1, heavy ammo costs more.
 
 //bolts ฅ^•ﻌ•^ฅ
 
@@ -973,11 +974,47 @@
 
 /obj/projectile/bullet/reusable/heavy_bolt/blunt
 	name = "blunt heavy bolt"
-	armor_penetration = PEN_NONE
+	armor_penetration = 0
 	embedchance = 0 //'If you're reading this, duck!'
 	woundclass = BCLASS_BLUNT
 	flag = "blunt"
 	icon_state = "heavybolt_proj"
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/decrepit
+	name = "decrepit heavy bolt"
+	desc = "A length of rotted metal, quilled to take flight and tear down the living. \
+	Metal flakes occassionally peel off from its core, mysteriously hovering about - \
+	tolerable by the undying, but unbearibly noxious to the living."
+	icon_state = "ancientheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/decrepit
+	color = "#bb9696"
+
+/obj/projectile/bullet/reusable/heavy_bolt/decrepit
+	name = "decrepit heavy bolt"
+	damage = 60
+	object_damage_multiplier = 20 //Ensures the bolt can still, at a minimum, destroy most wooden barricades and doors in one shot.
+	icon_state = "ancientbolt_proj"
+	poisontype = /datum/reagent/stampoison
+	poisonamount = 1 //You are, in essence, giving them tenantus.
+	slur = 2
+	eyeblur = 2
+	drowsy = 2
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	desc = "A polished length of gilbranze, which chisels away stone-and-spirit alike with each vaulting. It whispers to you; a half-glance to the right, further up to compensate, so that the living's humors may taste utter disruption."
+	icon_state = "ancientheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/ancient
+
+/obj/projectile/bullet/reusable/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	icon_state = "ancientbolt_proj"
+	object_damage_multiplier = 16
+	poisontype = /datum/reagent/stampoison
+	poisonamount = 1 //You are, in essence, giving them tenantus. Roughly 50% stronger than a poisoned iron arrow.
+	slur = 3
+	eyeblur = 3
+	drowsy = 3
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"

@@ -123,9 +123,9 @@
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow(src)
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow(src)
 	new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow(src)
-	new /obj/item/quiver/bolts(src)
-	new /obj/item/quiver/bolts(src)
-	new /obj/item/quiver/bolts(src)
+	new /obj/item/quiver/bolt/standard(src)
+	new /obj/item/quiver/bolt/standard(src)
+	new /obj/item/quiver/bolt/standard(src)
 
 /datum/crown_import/saigabuck
 	name = "Saigabuck"
