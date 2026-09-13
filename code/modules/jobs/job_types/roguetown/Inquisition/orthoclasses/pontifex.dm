@@ -1,6 +1,6 @@
 /datum/advclass/pontifex
     name = "Pontifex"
-    tutorial = "You are a Naledi Pontifex, a warrior of a vaunted tradition preceding the Fall of Naledi. Though your order operates independently, you currently serve alongside the Inquisition to bear the will of PSYDON through flesh, fist and arcyne arts. Your hands carry the momentum of magic and pure WILL to endure, each blow building your momentum. You were not trained to stand among mages. You were trained to stand where mages cannot, and make sure the heretic can't get up."
+    tutorial = "You are a Naledi Pontifex, magick, blood and sand is wrapped between your fingertips. Otava's Inquisition admires your faith and Will, even if they don't fully understand you, For your land fell before your order ever did. The time to ENDURE has come to pass, it is time you AVENGE what was done to Him and your Land. Utilize the art of MOMENTUM, motion in every strike, to slowly but surely overwhelm your opponent. The Heretic will seek to lay waste to the legacy of PSYDON and Naledi, but you've known this all your LYFE, so raise your fist and channel your spells, AVENGER, the time of reckoning, is at hand."
     outfit = /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
     subclass_languages = list(/datum/language/celestial, /datum/language/otavan)
     category_tags = list(CTAG_INQUISITION)
