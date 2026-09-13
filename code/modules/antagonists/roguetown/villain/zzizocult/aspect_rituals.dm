@@ -268,11 +268,25 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/effect/temp_visual/opengate/fivesec
 	duration = 5 SECONDS
 
+/proc/print_gate_sacrifice_info(mob/user)
+	refill_bestow_areas()
+	to_chat(user, span_warning("PERFORM THE RITE AT:"))
+	for(var/atype in GLOB.zizo_bestow_areas)
+		var/area/A = atype
+		to_chat(user, span_notice("- [initial(A.name)]"))
+	if(GLOB.gate_targets.len)
+		to_chat(user, span_warning("SHE HUNGERS FOR:"))
+		for(var/mob/living/carbon/human/H in GLOB.gate_targets)
+			to_chat(user, span_notice("- [H.real_name]"))
+	else
+		to_chat(user, span_warning("NO SUITABLE SACRIFICE CAN BE FOUND YET."))
+
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(gate_count > 0)
 		if(!target || target == user)
 			to_chat(user, span_warning("A sacrifice must lie in the center."))
+			print_gate_sacrifice_info(user)
 			new /obj/item/necro_relics/necro_crystal(center)
 			return
 		if(is_zizo(target))
@@ -328,6 +342,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 	if(gate_count > 0)
 		reroll_gate_targets(gate_count)
+
+	if(gate_count == 1)
+		to_chat(user, span_userdanger("SHE DEMANDS A SACRIFICE FOR THE NEXT GATE."))
+		print_gate_sacrifice_info(user)
 
 	if(target && !is_zizo(target))
 		absorb_lux(target, get_turf(target), FALSE)
