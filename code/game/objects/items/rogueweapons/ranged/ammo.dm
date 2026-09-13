@@ -917,7 +917,7 @@
 	icon_state = "musketball_proj"
 	color = "#29241a"
 
-/obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
+/obj/projectile/bullet/reusable/sling_bullet/steelblessed/on_hit(atom/target)
 	. = ..()
 	if(ismob(target) && HAS_TRAIT(target, TRAIT_SILVER_WEAK))
 		var/mob/living/M = target
