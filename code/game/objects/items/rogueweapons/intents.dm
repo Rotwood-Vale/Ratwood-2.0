@@ -432,6 +432,18 @@
 	no_early_release = TRUE
 	blade_class = BCLASS_PICK
 
+/datum/intent/pick/heavy //Slightly faster swing delay AKA easier to use.
+	name = "heavy pick"
+	icon_state = "inpick"
+	attack_verb = list("picks","impales")
+	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
+	penfactor = 80
+	animname = "strike"
+	item_d_type = "stab"
+	blade_class = BCLASS_PICK
+	chargetime = 0
+	swingdelay = 8
+
 /datum/intent/shoot //shooting crossbows or other guns, no parrydrain
 	name = "shoot"
 	icon_state = "inshoot"
