@@ -55,4 +55,4 @@ GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 ))
 
 //Coven Defines
-#define POTENCE_PUNCH_DAMAGE_PER_LEVEL 3
+#define POTENCE_PUNCH_DAMAGE_PER_LEVEL 5
