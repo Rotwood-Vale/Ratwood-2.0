@@ -905,6 +905,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+	color = "#1f1d19"
 
 /obj/projectile/bullet/reusable/sling_bullet/steelblessed
 	name = "holy steel sling bullet"
@@ -914,6 +915,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
+	color = "#29241a"
 
 /obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
 	. = ..()
@@ -932,6 +934,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
+	color = "#c0c0c0"
 
 /obj/projectile/bullet/reusable/sling_bullet/silver/on_hit(atom/target)
 	. = ..()
@@ -950,6 +953,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "blacksteelslingbullet_proj"
+	color = "#eaff76"
 
 /obj/projectile/bullet/reusable/sling_bullet/silverblessed/on_hit(atom/target)
 	. = ..()
