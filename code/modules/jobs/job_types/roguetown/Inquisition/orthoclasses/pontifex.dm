@@ -107,6 +107,7 @@
     beltl = /obj/item/flashlight/flare/torch
     shoes = /obj/item/clothing/shoes/roguetown/sandals
     backr = /obj/item/storage/backpack/rogue/satchel/black
+	id = /obj/item/clothing/ring/signet/silver
     backpack_contents = list(
         /obj/item/lockpick = 1,
         /obj/item/roguekey/inquisition = 1,
