@@ -6,6 +6,8 @@
 	icon_state = "dress"
 	icon = 'modular_rmh/icons/clothing/vladegeg/courtesan.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/courtesan.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/courtesan.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_courtesan.dmi'
 	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/courtesan_sleeves.dmi'
 	flags_inv = HIDECROTCH|HIDEBOOB
 

@@ -65,6 +65,15 @@
 	var/snoutable_for
 	var/snoutable_cached = FALSE
 
+	var/hiked = FALSE
+	var/hiked_overlay_icon
+	var/hiked_base_icon
+	var/hikeable_for
+	var/hikeable_cached = FALSE
+	var/hem_overlay_restore
+	var/mob/hem_holder
+	var/list/hem_grips
+
 /obj/item
 	var/blocking_behavior
 	var/wetness = 0
@@ -106,6 +115,8 @@
 			. += span_notice("It has one torn sleeve.")
 		else
 			. += span_notice("Both its sleeves have been torn!")
+	if(is_hikeable())
+		. += span_notice("Alt+RMB gathers the hem up in both hands.")
 
 ///Remembers that the wearer set these flags_inv bits by hand, so re-equipping doesn't undo it.
 /obj/item/clothing/proc/persist_inv_flags(flag)
@@ -162,6 +173,102 @@
 		snouting = FALSE
 		return
 	icon_state = "[snout_base_state()]_snout"
+
+/obj/item/clothing/proc/is_hikeable()
+	if(hiked)
+		return TRUE
+	if(!hiked_overlay_icon || mob_overlay_icon != hiked_base_icon)
+		return FALSE
+	var/key = "[icon_state]|[hiked_overlay_icon]"
+	if(hikeable_for == key)
+		return hikeable_cached
+	hikeable_for = key
+	var/icon/worn = new(hiked_overlay_icon)
+	hikeable_cached = (icon_state in worn.IconStates())
+	return hikeable_cached
+
+/obj/item/clothing/proc/free_hands_for_hem(mob/living/carbon/user)
+	var/list/free = list()
+	for(var/index in user.get_empty_held_indexes())
+		if(user.has_hand_for_held_index(index))
+			free += index
+	return free
+
+/obj/item/clothing/proc/toggle_hike(mob/living/carbon/user)
+	if(hiked)
+		lower_hem()
+		to_chat(user, span_info("I let \the [src] fall back down."))
+		return TRUE
+	if(!istype(user) || loc != user || user.is_holding(src))
+		return FALSE
+	if(!is_hikeable())
+		return FALSE
+	var/list/free = free_hands_for_hem(user)
+	if(length(free) < 2)
+		to_chat(user, span_warning("I need both hands free to hold up 	he [src]."))
+		return FALSE
+	var/list/grips = list()
+	for(var/i in 1 to 2)
+		var/obj/item/hem_grip/grip = new(user)
+		grip.garment = src
+		if(!user.put_in_hand(grip, free[i]))
+			grip.garment = null
+			qdel(grip)
+			for(var/obj/item/hem_grip/placed in grips)
+				placed.garment = null
+				qdel(placed)
+			return FALSE
+		grips += grip
+	hem_grips = grips
+	hiked = TRUE
+	hem_holder = user
+	hem_overlay_restore = mob_overlay_icon
+	mob_overlay_icon = hiked_overlay_icon
+	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
+	update_icon()
+	user.regenerate_icons()
+	to_chat(user, span_info("I gather up \the [src] in both hands."))
+	return TRUE
+
+/obj/item/clothing/proc/lower_hem()
+	if(!hiked)
+		return
+	hiked = FALSE
+	mob_overlay_icon = hem_overlay_restore
+	hem_overlay_restore = null
+	if(hem_holder)
+		if(!QDELETED(hem_holder))
+			UnregisterSignal(hem_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
+		hem_holder = null
+	var/list/grips = hem_grips
+	hem_grips = null
+	for(var/obj/item/hem_grip/grip in grips)
+		grip.garment = null
+		qdel(grip)
+	update_icon()
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.regenerate_icons()
+
+/obj/item/clothing/proc/on_hem_interrupt(datum/source)
+	SIGNAL_HANDLER
+	lower_hem()
+
+/obj/item/clothing/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	. = ..()
+	if(hiked && loc != OldLoc)
+		lower_hem()
+
+/mob/living/proc/drop_hiked_hem()
+	for(var/obj/item/clothing/worn in get_equipped_items())
+		if(worn.hiked)
+			worn.lower_hem()
+
+/obj/item/clothing/AltRightClick(mob/user)
+	if(iscarbon(user) && loc == user && !user.is_holding(src) && is_hikeable())
+		toggle_hike(user)
+		return
+	return ..()
 
 ///Maps a worn state back onto the plain state its detail overlays are drawn for.
 /obj/item/proc/get_detail_state(base_state)
