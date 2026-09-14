@@ -803,14 +803,14 @@
 	desc = "A heavy, durable sphere of steel, able to punch a hole in most armours."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/steel
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "iron_sling_bullet"
+	icon_state = "steel_sling_bullet"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
 	name = "holy steel sling bullet"
 	desc = "A heavy, durable sphere of steel, blessed with divine energy to strike down undead."
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/steelblessed
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "iron_sling_bullet"
+	icon_state = "steelholy_sling_bullet"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
 	name = "silver sling bullet"
@@ -818,7 +818,7 @@
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/silver
 	is_silver = TRUE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "bs_sling_bullet"
+	icon_state = "silver_sling_bullet"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
 	name = "blessed silver sling bullet"
@@ -826,7 +826,7 @@
 	projectile_type = /obj/projectile/bullet/reusable/sling_bullet/silverblessed
 	is_silver = TRUE
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "bs_sling_bullet"
+	icon_state = "holysilver_sling_bullet"
 
 /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
 	name = "blacksteel sling bullet"
