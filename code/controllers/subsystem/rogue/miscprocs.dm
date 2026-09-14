@@ -232,7 +232,7 @@
 /mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
 	if(!devotion)
 		return FALSE
-	if(patrons && !istype(patron, patrons))
+	if(patrons && !istype(patrons, patron))
 		return FALSE
 	
 	if(devotion.reward_actions(src, multiplier, major))
