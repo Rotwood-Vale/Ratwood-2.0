@@ -10,6 +10,9 @@
 
 	var/mob/viewing
 
+	/// Tells Examine Panel that we're previewing our written prefs, as well as which flavortext to preview (character, gnoll, etc)
+	var/previewing = ""
+
 /datum/examine_panel/New(mob/holder_mob)
 	if(holder_mob)
 		holder = holder_mob
@@ -52,7 +55,7 @@
 	var/is_naked = FALSE
 	var/nsfw_examine_always = FALSE
 
-	if(ishuman(holder))
+	if(!length(previewing) && ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
 		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv) && !(holder_human.underwear))
 			is_naked = TRUE
@@ -75,24 +78,47 @@
 			headshot = "headshot_red.png"
 
 	else if(pref)
-		is_naked = TRUE
-		obscured = FALSE
-		flavor_text = pref.flavortext
-		flavor_text_nsfw = pref.nsfwflavortext
-		nsfw_examine_always = FALSE
-		ooc_notes = pref.ooc_notes
-		ooc_notes_nsfw = pref.erpprefs
-		headshot = pref.headshot_link
-		img_gallery = pref.img_gallery
-		nsfw_img_gallery = pref.nsfw_img_gallery
-		ooc_extra_image = pref.ooc_extra_img
-		nsfw_ooc_extra_image = pref.nsfw_ooc_extra_img
-		char_name = pref.real_name
-		song_url = pref.ooc_extra
-		if(viewing)
-			is_vet = viewing.check_agevet()
-		if(!headshot)
-			headshot = "headshot_red.png"
+		switch(previewing)
+			if("character") // Flavortext for your character slot, nothing else
+				is_naked = TRUE
+				obscured = FALSE
+				flavor_text = pref.flavortext
+				flavor_text_nsfw = pref.nsfwflavortext
+				nsfw_examine_always = FALSE
+				ooc_notes = pref.ooc_notes
+				ooc_notes_nsfw = pref.erpprefs
+				headshot = pref.headshot_link
+				img_gallery = pref.img_gallery
+				nsfw_img_gallery = pref.nsfw_img_gallery
+				ooc_extra_image = pref.ooc_extra_img
+				nsfw_ooc_extra_image = pref.nsfw_ooc_extra_img
+				char_name = pref.real_name
+				song_url = pref.ooc_extra
+				if(viewing)
+					is_vet = viewing.check_agevet()
+				if(!headshot)
+					headshot = "headshot_red.png"
+
+			if("gnoll")
+				var/datum/gnoll_prefs/gnoll = pref.gnoll_prefs // no way this DOESN'T exist here
+				is_naked = TRUE
+				obscured = FALSE
+				flavor_text = gnoll.flavortext
+				flavor_text_nsfw = gnoll.nsfwflavortext
+				nsfw_examine_always = FALSE
+				ooc_notes = gnoll.ooc_notes
+				ooc_notes_nsfw = gnoll.erpprefs
+				headshot = gnoll.headshot_link
+				img_gallery = gnoll.img_gallery
+				nsfw_img_gallery = gnoll.nsfw_img_gallery
+				ooc_extra_image = gnoll.ooc_extra_img
+				nsfw_ooc_extra_image = gnoll.nsfw_ooc_extra_img
+				char_name = gnoll.gnoll_name
+				song_url = gnoll.ooc_extra
+				if(viewing)
+					is_vet = viewing.check_agevet()
+				if(!headshot)
+					headshot = "headshot_red.png"
 
 	if(song_url)
 		has_song = TRUE
@@ -146,17 +172,24 @@
 
 	C = viewing.client
 
-	if(ishuman(holder))
+	if(!length(previewing) && ishuman(holder))
 		web_sound_url = holder.ooc_extra
 		if(holder.song_artist)
 			artist_name = holder.song_artist
 		song_title = holder.song_title
-
 	else if(pref)
-		web_sound_url= pref.ooc_extra
-		if(pref.song_artist)
-			artist_name = pref.song_artist
-		song_title = pref.song_title
+		switch(previewing)
+			if("character")
+				web_sound_url = pref.ooc_extra
+				if(pref.song_artist)
+					artist_name = pref.song_artist
+				song_title = pref.song_title
+			if("gnoll")
+				var/datum/gnoll_prefs/gnoll = pref.gnoll_prefs
+				web_sound_url = gnoll.ooc_extra
+				if(gnoll.song_artist)
+					artist_name = gnoll.song_artist
+				song_title = gnoll.song_title
 
 	if(!C || !web_sound_url)
 		return
