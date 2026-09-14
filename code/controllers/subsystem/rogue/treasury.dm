@@ -1,7 +1,7 @@
 #define RURAL_TAX 100 // Free money. A small safety pool for lowpop mostly
 #define TREASURY_TICK_AMOUNT 6 MINUTES
 #define EXPORT_ANNOUNCE_THRESHOLD 100
-
+#define AUTO_STOCKPILE_ASSUMED_POP 100
 #define TAX_CAT_NOBLE "Nobility"
 #define TAX_CAT_CHURCH "Church"
 #define TAX_CAT_YEOMEN "Yeomanry"
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(treasury)
 	return ..()
 
 /datum/controller/subsystem/treasury/proc/autoset_stockpile_limits()
-	var/effective_pop = (SSeconomy && SSeconomy.simulated_player_scalar > 0) ? SSeconomy.simulated_player_scalar : get_active_player_count()
+	var/effective_pop = (SSeconomy && SSeconomy.simulated_player_scalar > 0) ? SSeconomy.simulated_player_scalar : AUTO_STOCKPILE_ASSUMED_POP
 	var/pop_mult = min(REGION_POP_SCALE_MAX, 1.0 + (effective_pop * REGION_POP_SCALE_PER_PLAYER))
 	for(var/datum/roguestock/D as anything in stockpile_datums)
 		if(!D.automatic_limit)

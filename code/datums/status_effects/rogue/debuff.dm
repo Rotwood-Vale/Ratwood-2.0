@@ -134,16 +134,6 @@
 	duration = -1
 	needs_processing = FALSE
 
-/datum/status_effect/debuff/bleeding/on_apply() //mistwalker shitcode, scaling buff as they bleed out
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.apply_status_effect(/datum/status_effect/buff/journey_ending)
-	return ..()
-
-/datum/status_effect/debuff/bleeding/on_remove()
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.remove_status_effect(/datum/status_effect/buff/journey_ending)
-	return ..()
-
 /atom/movable/screen/alert/status_effect/debuff/bleedingt1
 	name = "Dizzy"
 	desc = ""
@@ -156,16 +146,6 @@
 	duration = -1
 	needs_processing = FALSE
 
-/datum/status_effect/debuff/bleedingworse/on_apply()
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.apply_status_effect(/datum/status_effect/buff/journey_end)
-	return ..()
-
-/datum/status_effect/debuff/bleedingworse/on_remove()
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.remove_status_effect(/datum/status_effect/buff/journey_end)
-	return ..()
-
 /atom/movable/screen/alert/status_effect/debuff/bleedingt2
 	name = "Faint"
 	desc = ""
@@ -177,16 +157,6 @@
 	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -4)
 	duration = -1
 	needs_processing = FALSE
-
-/datum/status_effect/debuff/bleedingworst/on_apply()
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.apply_status_effect(/datum/status_effect/buff/journey_end_final)
-	return ..()
-
-/datum/status_effect/debuff/bleedingworst/on_remove()
-	if (HAS_TRAIT(owner, TRAIT_JOURNEYS_END))
-		owner.remove_status_effect(/datum/status_effect/buff/journey_end_final)
-	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/bleedingt3
 	name = "Drained"
@@ -1257,6 +1227,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
 	duration = -1 // set explicitly when applied, see below
 
+/datum/status_effect/debuff/enchantmenttriggered/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+	
 /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
