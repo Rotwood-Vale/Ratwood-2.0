@@ -109,7 +109,7 @@
 	return consumed
 
 /datum/status_effect/buff/arcyne_momentum/proc/refresh_momentum()
-	owner.balloon_alert(owner, "momentum [stacks]/[max_stacks]")
+	owner.balloon_alert(owner, "M: [stacks]/[max_stacks]")
 	update_visuals()
 	update_alert()
 	update_spell_buttons()
