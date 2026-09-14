@@ -9,7 +9,6 @@
 	slices_num = 0
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/onion_fried
 	cooked_smell = /datum/pollutant/food/fried_onion
-	dropshrink = 0.75
 
 /obj/item/reagent_containers/food/snacks/rogue/veg/cabbage_sliced
 	name = "shredded cabbage"
@@ -18,7 +17,6 @@
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/cabbage_fried
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/cabbage_fried
 	cooked_smell = /datum/pollutant/food/fried_cabbage
-	dropshrink = 0.9
 
 /obj/item/reagent_containers/food/snacks/rogue/veg/potato_sliced
 	name = "potato cuts"
@@ -27,7 +25,6 @@
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/potato_fried
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/potato_fried
 	cooked_smell = /datum/pollutant/food/baked_potato
-	dropshrink = 0.9
 
 /obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced
 	name = "cucumber slice"
@@ -42,9 +39,9 @@
 	icon = 'modular/Neu_Food/icons/raw/raw_veggies.dmi'
 	icon_state = "garlic_clove"
 	faretype = FARE_POOR
-	desc = "A clove of garlick. Don't eat this."
-	tastes = list("pungent umami" = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	desc = "A clove of garlick, fit for stewage. Don't eat this."
+	tastes = list("pungent savoriness" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/water/blessed = 2)
 
 /obj/item/reagent_containers/food/snacks/veg/turnip_sliced
 	name = "cleaned turnip"

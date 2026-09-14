@@ -84,6 +84,8 @@
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
 		/datum/customizer/organ/testicles/anthro,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -104,6 +106,7 @@
 		/datum/body_marking/diagonal_eyes,
 		/datum/body_marking/wide_eyes,
 		/datum/body_marking/stripes,
+		/datum/body_marking/plain,
 	)
 
 /datum/species/construct/metal/porcelain/check_roundstart_eligible()

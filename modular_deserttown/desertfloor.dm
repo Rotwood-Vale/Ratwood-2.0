@@ -9,6 +9,7 @@
 	heavyfootstep = FOOTSTEP_SOFT_BAREFOOT
 	landsound = 'sound/foley/jumpland/dirtland.wav'
 	smooth = SMOOTH_TRUE
+	track_prob = 15
 	canSmoothWith = list(
 						/turf/open/floor/rogue/grass,
 						/turf/open/floor/rogue/desert_grass,
@@ -60,6 +61,7 @@
 	max_integrity = 1000
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
+	track_prob = 10
 
 /turf/open/floor/rogue/sandbrick/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -93,7 +95,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 	abstract_type = /turf/open/floor/rogue/citybrick
-
+	track_prob = 10
 /turf/open/floor/rogue/citybrick/Initialize()
 	. = ..()
 	dir = pick(GLOB.cardinals)
@@ -153,6 +155,7 @@
 	//clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	smooth = SMOOTH_TRUE
+	track_prob = 10
 
 /turf/open/floor/rogue/lightpath/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -173,6 +176,7 @@
 	//clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	smooth = SMOOTH_TRUE
+	track_prob = 10
 
 /turf/open/floor/rogue/darkpath/cardinal_smooth(adjacencies)
 	roguesmooth(adjacencies)
@@ -250,7 +254,7 @@
 
 /turf/open/floor/rogue/dirt/desert
 	icon = 'modular_deserttown/icons/desertfloor.dmi'
-	
+
 /turf/open/floor/rogue/dirt/desert/nospawn
 
 /turf/open/floor/rogue/dirt/road/desert
@@ -276,6 +280,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 	abstract_type = /turf/open/floor/rogue/deserttile
+	track_prob = 20
 
 /turf/open/floor/rogue/naturalstone/sandstone
 	name = "rough sandstone ground"
@@ -285,3 +290,50 @@
 	canSmoothWith = list(/turf/open/floor/rogue,
 						/turf/closed/mineral,
 						/turf/closed/wall/mineral)
+	track_prob = 10
+
+/turf/open/floor/rogue/deserttempletile
+	icon_state = "temple_floor"
+	icon = 'modular_deserttown/icons/temple.dmi'
+	footstep = FOOTSTEP_STONE
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	landsound = 'sound/foley/jumpland/stoneland.wav'
+	smooth = SMOOTH_MORE
+	canSmoothWith = list(/turf/closed/mineral/rogue, /turf/closed/mineral, /turf/closed/wall/mineral/rogue/stonebrick, /turf/closed/wall/mineral/rogue/wood, /turf/closed/wall/mineral/rogue/wooddark, /turf/closed/wall/mineral/rogue/stone, /turf/closed/wall/mineral/rogue/stone/moss, /turf/open/floor/rogue/cobble, /turf/open/floor/rogue/dirt, /turf/open/floor/rogue/grass)
+	damage_deflection = 10
+	max_integrity = 1000
+	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
+	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
+	abstract_type = /turf/open/floor/rogue/deserttempletile
+	track_prob = 10
+
+/turf/open/floor/rogue/deserttempletile/stair
+	icon_state = "temple_stairs"
+
+/turf/open/floor/rogue/deserttempletile/stairinside
+	icon_state = "temple_stairs_inner"
+
+/turf/open/floor/rogue/deserttempletile/stairoutside
+	icon_state = "temple_stairs_outer"
+
+/turf/open/floor/rogue/deserttempletile/stairend
+	icon_state = "temple_stairs_end"
+
+/turf/open/floor/rogue/deserttempletile/stairendflipped
+	icon_state = "temple_stairs_end_flipped"
+
+/turf/open/floor/rogue/deserttempletile/border
+	icon_state = "temple_border"
+
+
+/obj/effect/decal/deserttemplehole
+	icon = 'modular_deserttown/icons/temple.dmi'
+	icon_state = "temp_floor_hole"
+	anchored = TRUE
+
+/obj/effect/decal/deserttempleedge
+	icon = 'modular_deserttown/icons/temple.dmi'
+	icon_state = "temp_floor_edge"
+	anchored = TRUE

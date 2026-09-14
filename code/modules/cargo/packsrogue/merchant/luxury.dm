@@ -18,6 +18,11 @@
 	cost = 120
 	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver)
 
+/datum/supply_pack/rogue/luxury/silvertencross
+	name = "Silver amulet of the Ten"
+	cost = 120
+	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver/undivided)
+
 /datum/supply_pack/rogue/luxury/silverdagger
 	name = "Silver Dagger"
 	cost = 120 //Silver weapons have been made much less powerful but much more common over time
@@ -120,4 +125,11 @@
 	cost = 120
 	contains = list(
 					/obj/item/rogueweapon/scabbard/sheath/royal
+				)
+
+/datum/supply_pack/rogue/luxury/sandstormgoggle
+	name = "Sandstorm Goggles"
+	cost = 60
+	contains = list(
+					/obj/item/clothing/mask/rogue/spectacles/goggles
 				)

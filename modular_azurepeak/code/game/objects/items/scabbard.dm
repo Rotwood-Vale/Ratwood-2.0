@@ -34,6 +34,8 @@
 	/// Specific weapons that are not allowed. Bypassed valid_blade
 	var/list/obj/item/rogueweapon/invalid_blades
 
+
+
 	/// Stores weapon
 	var/obj/item/rogueweapon/sheathed
 
@@ -57,6 +59,9 @@
 /obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
 	if(sheathed)
 		to_chat(user, span_warning("The sheath is occupied!"))
+		return FALSE
+	if(HAS_TRAIT(A, TRAIT_NODROP))
+		to_chat(user, span_warning("I cannot sheath [A] while it is bound."))
 		return FALSE
 	if(valid_blade && !istype(A, valid_blade))
 		to_chat(user, span_warning("[A] won't fit in there."))
@@ -272,7 +277,6 @@
 
 	force = 3
 	max_integrity = 500
-	sellprice = 2
 
 	invalid_blades = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver/stake
@@ -397,7 +401,6 @@
 	sheathe_time = 2 SECONDS
 
 	max_integrity = 0
-	sellprice = 15
 
 /obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
@@ -508,7 +511,7 @@
 
 	force = 7
 	max_integrity = 750
-	sellprice = 3
+
 
 /obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
@@ -523,27 +526,25 @@
 	name = "silver-decorated scabbard"
 	desc = "A sword's noble scabbard, enamored with elaborate silver decorations. It carries an aristocrat's sword upon a silver platter, and - just like an actual platter - can suffice at riposting an errant blow."
 	icon_state = "nscabbard"
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 4
 	max_integrity = 75
 	resistance_flags = null
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/royal
 	name = "gold-decorated scabbard"
 	desc = "A sword's royal scabbard, enamored with exquisite golden decorations. It pampers a champion's sword in a veil of gilded silk, reluctant to let go."
 	icon_state = "rscabbard"
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 6
 	max_integrity = 150
 	resistance_flags = null
-	sellprice = 100
 
 /obj/item/rogueweapon/scabbard/sheath/courtphysician
 	name = "fancy cane"
@@ -551,7 +552,6 @@
 	icon_state = "doccanesheath"
 	item_state = "doccanesheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/courtphysician
-	sellprice = 45
 
 /obj/item/rogueweapon/scabbard/sheath/courtphysician/getonmobprop(tag)
 	. = ..()
@@ -639,7 +639,6 @@
 	item_state = "staffsheath"
 	valid_blade = /obj/item/rogueweapon/sword/rapier/hand
 	// Is meant to be a wand for mage 2.0, but we don't have that on RW.
-	sellprice = 100
 
 ///////////////////////
 //	KNIFE SCABBARDS  //
@@ -649,26 +648,25 @@
 	name = "silver-decorated knife sheath"
 	desc = "A dagger's noble sheath, enamored with elaborate silver decorations. Oft-flaunted upon the faulds of a knight, it dangles and sways whenever its steely reserve is drawn."
 	icon_state = "nsheath"
-	associated_skill = /datum/skill/combat/shields
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 2
 	max_integrity = 50
 	resistance_flags = null
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sheath/royal
 	name = "gold-decorated knife sheath"
 	desc = "A dagger's royal sheath, enamored with exquisite golden decorations. The hand that draws will spell the fate of many; be it for the kingdom or the world."
 	icon_state = "rsheath"
-	associated_skill = /datum/skill/combat/shields
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	sewrepair = FALSE
 	wdefense = 4
+	max_integrity = 100
 	resistance_flags = null
-	sellprice = 100
 
 /*
 	KAZENGUN
@@ -680,10 +678,17 @@
 	desc = "A piece of steel lined with wood. Great for batting away blows."
 	icon_state = "kazscab"
 	item_state = "kazscab"
+	// Only accept Kazengun swords
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook
+	)
 
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog
-	associated_skill = /datum/skill/combat/shields
-	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
 	wdefense = 8
 
@@ -692,18 +697,28 @@
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry
 	name = "ceremonial kazengun scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
-
-	valid_blade = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+	// Accept Kazengun short/sabre swords and longswords
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook,
+		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+	)
 	can_parry = FALSE
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
 	name = "ceremonial scabbard"
 	desc = "A simple wooden scabbard, trimmed with bronze. Unlike its steel cousins, this one cannot parry."
-	valid_blade = /obj/item/rogueweapon/sword
-	invalid_blades = list(
-		/obj/item/rogueweapon/sword/long/exe,
-		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/long/martyr
+	// Accept Kazengun short/sabre swords and longswords
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook,
+		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	)
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/steel
@@ -711,24 +726,49 @@
 	desc = "A cloud-patterned scabbard with a cloth sash. Used for blocking."
 	icon_state = "kazscab_steel"
 	item_state = "kazscab_steel"
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
-
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
+	// Only accept Kazengun swords
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook
+	)
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/gold
 	name = "gold-stained Xinyi scabbard"
 	desc = "An ornate, wooden scabbard with a sash. Great for parrying."
 	icon_state = "kazscab_gold"
 	item_state = "kazscab_gold"
-	valid_blade = /obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
+	// Only accept Kazengun swords
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook
+	)
 	max_integrity = 220
-	sellprice = 50
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 	name = "plain lacquer scabbard"
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
-	valid_blade = /obj/item/rogueweapon/sword/short/kazengun
+	associated_skill = /datum/skill/combat/swords
+	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
+	// Only accept Kazengun swords (kodachi variant)
+	valid_blades = list(
+		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
+		/obj/item/rogueweapon/sword/sabre/hook
+	)
 	wdefense = 4
 
 /obj/item/rogueweapon/scabbard/sheath/kazengun
@@ -736,8 +776,11 @@
 	desc = "A simple lacquered sheath, for shorter eastern-styled blades."
 	icon_state = "kazscabdagger"
 	item_state = "kazscabdagger"
-	valid_blade = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
-	associated_skill = /datum/skill/combat/shields
+	// Only accept Kazengun daggers
+	valid_blades = list(
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	)
+	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
 	wdefense = 3

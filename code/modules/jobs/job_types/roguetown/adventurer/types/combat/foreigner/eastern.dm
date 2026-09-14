@@ -1,13 +1,14 @@
 //Parent of the foreign classes. This is gross, but some genius pathed it all to the ruma slop.
 //I'm another genius and too lazy to work around it.
 /datum/advclass/foreigner
+	townie_contract_gate_exempt = TRUE
 	name = "Eastern Warrior"
 	tutorial = "A warrior hailing from the distant land of Kazengun, far across the eastern sea."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES // Clothing has no dwarf sprites.
 	outfit = /datum/outfit/job/roguetown/adventurer/kazengun
 	class_select_category = CLASS_CAT_NOMAD
-	traits_applied = list(TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_NOPAINSTUN)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
 	subclass_languages = list(/datum/language/kazengunese)
 	cmode_music = 'sound/music/combat_kazengite.ogg'

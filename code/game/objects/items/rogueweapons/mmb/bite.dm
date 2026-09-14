@@ -1,7 +1,5 @@
 /datum/intent/bite
 	name = "bite"
-	candodge = TRUE
-	canparry = TRUE
 	chargedrain = 0
 	chargetime = 0
 	swingdelay = 0
@@ -45,6 +43,7 @@
 			. = ..()
 			return
 	user.changeNext_move(clickcd)
+	user.break_invisibility()
 	target.onbite(user)
 	. = ..()
 	return
@@ -241,6 +240,7 @@
 		return FALSE*/
 
 	user.changeNext_move(CLICK_CD_GRABBING)
+	user.break_invisibility()
 	var/mob/living/carbon/C = grabbed
 	var/armor_block = C.run_armor_check(sublimb_grabbed, d_type, armor_penetration = BLUNT_DEFAULT_PENFACTOR)
 	var/damage = user.get_punch_dmg()
@@ -318,6 +318,8 @@
 	if(!limb_grabbed.get_bleed_rate())
 		to_chat(user, span_warning("Sigh. It's not bleeding."))
 		return
+
+	user.break_invisibility()
 
 	if(HAS_TRAIT(user, TRAIT_VAMPBITE))
 		if(isliving(grabbed))

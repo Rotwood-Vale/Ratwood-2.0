@@ -84,6 +84,8 @@ GLOBAL_LIST_EMPTY(last_words)
 #undef DUST_ANIMATION_TIME
 
 /mob/living/proc/spawn_dust(just_ash = FALSE)
+	if(contract_spawned)
+		return
 	for(var/i in 1 to 3)
 		new /obj/item/ash(loc)
 
@@ -102,7 +104,7 @@ GLOBAL_LIST_EMPTY(last_words)
 //	if(mind)
 //		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
-	if(!gibbed && !was_dead_before)
+	if(!QDELETED(src) && !gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 
 //	stop_all_loops()
@@ -155,12 +157,12 @@ GLOBAL_LIST_EMPTY(last_words)
 	if(!gibbed && !QDELETED(src) && rot_type)
 		LoadComponent(rot_type)
 
-	clear_typing_indicator()
+	clear_typing_indicator("died")
 
 	// AZURE EDIT BEGIN: necra acolyte/priest deathsight trait
 	// this was a player that just died, so do the honors
-	if (client)
-		if (!gibbed)
+	if (client && !contract_spawned)
+		if (!gibbed && !( (src.mind && src.mind.has_antag_datum(/datum/antagonist/zombie)) || (src.mind && src.mind.has_antag_datum(/datum/antagonist/skeleton)))) // because I hate being jumpscared by "OOH SOMEONE DIED IN THE CHURCH" when they're just killing a deadite with burn rot to rez them
 			var/locale = prepare_deathsight_message()
 			for (var/mob/living/player in GLOB.player_list)
 				if (player.stat == DEAD || isbrain(player))

@@ -185,11 +185,25 @@
 	dna.initialize_dna()
 
 /mob/living/carbon/human/Destroy()
+	if(SScity_assembly?.is_alderman(src))
+		var/departing_name = real_name
+		var/departing_job = job
+		SScity_assembly.demote_alderman("Alderman's mob was deleted")
+		SScity_assembly.notify_alderman_lost_ref(departing_name, departing_job, "disconnected")
 	QDEL_NULL(sexcon)
 	STOP_PROCESSING(SShumannpc, src)
 	QDEL_NULL(physiology)
 	QDEL_NULL(sunder_light_obj)
 	GLOB.human_list -= src
+	if(current_fellowship)
+		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
+		current_fellowship = null
+	if(length(incoming_fellowship_invites))
+		for(var/datum/weakref/W as anything in incoming_fellowship_invites)
+			var/datum/fellowship/F = W.resolve()
+			if(F)
+				F.remove_pending_invite(real_name)
+		incoming_fellowship_invites.Cut()
 	return ..()
 
 /mob/living/carbon/human/Stat()
@@ -340,10 +354,10 @@
 	dat += "<tr><td><hr></td></tr>"
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		dat += "<tr><td><BR><B>Legwear:</B> <A href='?src=[REF(src)];legwearsthing=1'>[!legwear_socks ? "Nothing" : "Remove"]</A></td></tr>"
-		var/modular_chastity_row = modular_strippanel_chastity_row()
-		if(modular_chastity_row)
+		var/chastity_row = modular_strippanel_chastity_row()
+		if(chastity_row)
 			dat += "<tr><td><hr></td></tr>"
-			dat += modular_chastity_row
+			dat += chastity_row
 #endif
 
 	dat += {"</table>"}
@@ -567,9 +581,7 @@
 
 
 /mob/living/carbon/human/proc/update_temperature_hud()
-	if(isnull(hud_used))
-		return FALSE
-	if(isnull(hud_used.temperature) || stat == DEAD)
+	if(isnull(hud_used?.temperature) || stat == DEAD)
 		return FALSE
 	if(bodytemperature >= BODYTEMP_NORMAL_MIN && bodytemperature <= BODYTEMP_NORMAL_MAX)
 		hud_used.temperature.icon_state = "tempnormal"
@@ -1177,7 +1189,7 @@
 
 		for(var/datum/wound/W in BP.wounds)
 			if(istype(W, /datum/wound/heatstroke))
-				BP.remove_wound(W)
+				W.remove_from_bodypart()
 				found = TRUE
 
 	if(found)
@@ -1243,7 +1255,7 @@
 		return FALSE
 
 	var/datum/language_holder/language_holder = get_language_holder()
-	var/list/preserved_languages = language_holder ? language_holder.copy_language_cache(language_holder.languages) : null
+	var/list/preserved_languages = language_holder?.languages?.Copy()
 	var/selected_default_language = language_holder?.selected_default_language
 
 	client.prefs.copy_to(src, TRUE, FALSE)
@@ -1251,8 +1263,7 @@
 
 	if(language_holder && length(preserved_languages))
 		for(var/language_type in preserved_languages)
-			for(var/source in preserved_languages[language_type])
-				grant_language(language_type, source = source)
+			grant_language(language_type)
 		language_holder.selected_default_language = selected_default_language
 
 	return TRUE

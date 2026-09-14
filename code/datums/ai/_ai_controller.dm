@@ -92,7 +92,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
 	if(current_movement_target)
-		UnregisterSignal(current_movement_target, list(COMSIG_PARENT_PREQDELETED))
+		UnregisterSignal(current_movement_target, list(COMSIG_PREQDELETED))
 	if(!isnull(target) && !isatom(target))
 		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
 		CancelActions()
@@ -100,7 +100,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	movement_target_source = source
 	current_movement_target = target
 	if(!isnull(current_movement_target))
-		RegisterSignal(current_movement_target, COMSIG_PARENT_PREQDELETED, PROC_REF(on_movement_target_delete))
+		RegisterSignal(current_movement_target, COMSIG_PREQDELETED, PROC_REF(on_movement_target_delete))
 	if(new_movement)
 		change_ai_movement_type(new_movement)
 
@@ -554,7 +554,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	else if(isdatum(tracked_datum)) { \
 		var/datum/_tracked_datum = tracked_datum; \
 		if(!HAS_TRAIT_FROM(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]")) { \
-			RegisterSignal(_tracked_datum, COMSIG_PARENT_QDELETING, PROC_REF(sig_remove_from_blackboard), override = TRUE); \
+			RegisterSignal(_tracked_datum, COMSIG_QDELETING, PROC_REF(sig_remove_from_blackboard), override = TRUE); \
 			ADD_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 		}; \
 	}; \
@@ -571,7 +571,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		var/datum/_tracked_datum = tracked_datum; \
 		REMOVE_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 		if(!HAS_TRAIT(_tracked_datum, TRAIT_AI_TRACKING)) { \
-			UnregisterSignal(_tracked_datum, COMSIG_PARENT_QDELETING); \
+			UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
 		}; \
 	}; \
 } while(FALSE)

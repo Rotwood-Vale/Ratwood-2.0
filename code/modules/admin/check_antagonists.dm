@@ -242,13 +242,8 @@
 	var/selection_mode_description = "Follows gnoll tracking rules: hunted targets are preferred globally, combat roles are only used when no hunted targets are valid."
 	if(length(direct_scent_targets))
 		selection_mode_description += " Active direct-scent targets already being tracked by gnolls are also shown below."
-	var/gnoll_mode_name = "Unavailable"
-	var/gnoll_mode_id = null
-	var/has_pop_growth_scaling = FALSE
-	var/auto_scaling_status = "Unavailable"
 	var/slot_open_display = "Unavailable"
 	var/gnoll_spawn_status = "Enabled"
-	var/pop_remaining_display = "N/A"
 	var/list/subclass_slot_lines = list("Unavailable")
 
 	var/datum/job/gnoll_job = SSjob.GetJob("Gnoll")
@@ -277,37 +272,20 @@
 		if(!length(subclass_slot_lines))
 			subclass_slot_lines += "(none)"
 
-	if(SSgnoll_scaling)
-		var/list/scaling_snapshot = SSgnoll_scaling.get_admin_scaling_snapshot()
-		if(length(scaling_snapshot))
-			gnoll_mode_id = scaling_snapshot["mode_id"]
-			gnoll_mode_name = scaling_snapshot["mode_name"] || gnoll_mode_name
-			has_pop_growth_scaling = scaling_snapshot["has_pop_growth"]
-			auto_scaling_status = scaling_snapshot["auto_scaling_status"] || auto_scaling_status
-			pop_remaining_display = scaling_snapshot["pop_remaining"] || pop_remaining_display
-
-	if(gnoll_mode_id == GNOLL_SCALING_NONE)
-		gnoll_spawn_status = "Disabled by storyteller scaling mode (NONE)"
-		slot_open_display = "0/0 (disabled)"
+	if(gnoll_job && !gnoll_job.total_positions)
+		gnoll_spawn_status = "No slots rolled this round"
 
 	var/subclass_slots_display = subclass_slot_lines.Join("<br>")
 
 	var/list/dat = list("<html><head><title>Gnoll Information</title></head><body><h1><B>Gnoll Information</B></h1>")
 	dat += "<a href='?_src_=holder;[HrefToken()];check_hunted_targets=1'>Refresh</a><br>"
 	dat += "<br><b>Selection mode:</b> [active_source]"
-	dat += "<br><b>Current gnoll scaling mode:</b> "
-	dat += gnoll_mode_name
-	dat += "<br><b>Automated gnoll scaling:</b> "
-	dat += auto_scaling_status
 	dat += "<br><b>Gnoll spawning:</b> "
 	dat += gnoll_spawn_status
 	dat += "<br><b>Gnoll slots open:</b> "
 	dat += slot_open_display
 	dat += "<br><b>Subclass slots (open/total):</b><br>"
 	dat += subclass_slots_display
-	if(SSgnoll_scaling && has_pop_growth_scaling)
-		dat += "<br><b>Pop remaining before slot opens:</b> "
-		dat += pop_remaining_display
 	dat += "<br><i>[selection_mode_description]</i><br><br>"
 
 	if(!length(display_targets))

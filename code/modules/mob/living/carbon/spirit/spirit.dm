@@ -93,7 +93,7 @@
 
 /mob/living/carbon/spirit/Destroy()
 	if(owned_lantern)
-		qdel(owned_lantern)
+		QDEL_NULL(owned_lantern)
 	return ..()
 
 /mob/living/carbon/spirit/updatehealth()

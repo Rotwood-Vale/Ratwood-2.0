@@ -1,6 +1,6 @@
 /obj/item/clothing/neck/roguetown/cursed_collar
 	name = "cursed collar"
-	always_show_examine_link = TRUE
+	always_show_examine_link = FALSE
 	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy. \nLooks like you'd need someone else's help to take it off."
 	// Credit regarding sprites to Necbro
 	// https://github.com/StoneHedgeSS13/StoneHedge/commit/9ddc09d4cb91903beff6d523c91aef75312d5163
@@ -20,12 +20,24 @@
 	/// Round-persistent counter for non-self ejaculation events received by the current wearer.
 	var/received_cum_count = 0
 
+/obj/item/clothing/neck/roguetown/cursed_collar/show_examine_hover_tooltip()
+	return TRUE
+
+/obj/item/clothing/neck/roguetown/cursed_collar/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the collar's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
+
 /obj/item/clothing/neck/roguetown/cursed_collar/examine(mob/user)
 	. = ..()
-	if(received_cum_count == 1)
-		. += span_notice("1 tally mark is etched into the collar's metal surface.")
-	else if(received_cum_count > 1)
-		. += span_notice("[received_cum_count] tally marks are etched into the collar's metal surface.")
+	if(received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		. += span_notice("[tally_text] are etched into the collar's metal surface.")
 
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/record_nonself_ejaculation(mob/living/carbon/human/source, mob/living/carbon/human/wearer)
 	if(!source || !wearer)
@@ -34,9 +46,9 @@
 		return FALSE
 	if(loc != wearer)
 		return FALSE
-	var/added = get_tally_increment_for_source(source)
+	var/added = max(1, get_tally_increment_for_source(source))
 	received_cum_count += added
-	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s collar."
+	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, [added] tally marks suddenly appear on [wearer]'s collar."
 	for(var/mob/M in viewers(1, wearer))
 		to_chat(M, span_notice(tally_msg))
 	return TRUE
@@ -193,7 +205,6 @@
 
 /obj/item/clothing/neck/roguetown/cursed_collar/dropped(mob/living/carbon/human/user)
 	. = ..()
-	reset_received_cum_count()
 	if(!user)
 		return
 	SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)

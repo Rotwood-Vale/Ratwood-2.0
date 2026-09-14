@@ -32,7 +32,9 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 	)
-
+	subclass_stashed_items = list(
+		"Armor Plates" =  /obj/item/repair_kit/metal,
+	)
 	extra_context = "This class is restricted from using the Equestrian virtue."
 
 	virtue_restrictions = list(
@@ -102,8 +104,12 @@
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
 			"Visored Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"Snouted Visored Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
 			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"Snouted Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted,
 			"Hounskull Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
+			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Etruscan Bascinet" 		= /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 			"Slitted Kettle"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
@@ -137,7 +143,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/satchel //gwstraps landing on backr asyncs with backpack_contents
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/combat/messer = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
@@ -325,7 +331,7 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	backr = /obj/item/storage/backpack/rogue/satchel
 	if(H.mind)
-		var/archetype = list("Heavy Infantry", "Light Infantry", "Bogguard/Cavalryman", "Feldsher", "Warcaster", "Veteran")
+		var/archetype = list("Heavy Infantry", "Light Infantry", "Bogguard/Cavalryman", "Feldsher", "Veteran")
 		var/archetype_choice = input (H, "Choose your primary training.", "HOW DO YOU KILL?") as anything in archetype
 		switch(archetype_choice)
 			if("Heavy Infantry") //Classic Deserter. Master Athletics, Expert Swimming and Expert Shields. Otherwise nothing special.
@@ -357,19 +363,6 @@
 				cloak = /obj/item/clothing/suit/roguetown/shirt/robe/feld
 				beltl = /obj/item/storage/belt/rogue/surgery_bag
 				to_chat(H, span_warning("You were a field chirurgeon, a healer rather than a killer. In time, you learned how to murder and became both."))
-			if("Warcaster") //Wretch Spellblade that's not exclusive to racist elfs! T2 Arcyne, Magearmor, Apprentice Arcyne, 12 spell points, but worse stats -- weighted stat total of +5.
-				ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
-				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE)
-				H.change_stat(STATKEY_STR, -1)
-				H.change_stat(STATKEY_CON, -1)
-				H.change_stat(STATKEY_PER, -1)
-				H.mind?.adjust_spellpoints(12)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
-				cloak = /obj/item/clothing/cloak/tabard
-				to_chat(H, span_warning("You trained in the difficult skill of casting magic while clad in burdening armour. Your training paid off, but left little time or energy for physical education."))
 			if("Veteran") //Master in primary weapon skills and Expert in all other weapon skills except Unarmed, but worse stats -- weighted stat total of +5.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)

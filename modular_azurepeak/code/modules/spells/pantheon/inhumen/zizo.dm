@@ -438,7 +438,7 @@
 	desc = "Rip the target's soul out of Necra's grasp and revive them at a cost of a humanoid being's heart. The target's attributes will be temporarily reduced."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "revival"
+	overlay_state = "revivalevil"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50

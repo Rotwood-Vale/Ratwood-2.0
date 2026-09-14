@@ -19,6 +19,9 @@
 	grid_height = 32
 	unarmed_bonus = 1.2
 
+/obj/item/clothing/gloves/roguetown/plate/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/gloves/roguetown/plate/iron
 	name = "iron plate gauntlets"
 	desc = "Plate gauntlets made out of iron. Good all-around protection for the hands. Slightly less durable than its steel counterpart."
@@ -70,7 +73,7 @@
 
 
 /obj/item/clothing/gloves/roguetown/plate/zizo
-	name = "avantyne gauntlets"
+	name = "avantyne plate gauntlets"
 	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
@@ -85,6 +88,19 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/clothing/gloves/roguetown/plate/medium/zizo
+	name = "avantyne gauntlets"
+	desc = "A razor-tipped finger was all it took to splay the divine fillament; now, it is time to bring down the wrath of God's hand in full. </br> Do mind the forearm's guards, however - they \
+	tend to leave a stinging bruise, whenever used to parry an incoming strike."
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoplategauntlets_med"
+
+/obj/item/clothing/gloves/roguetown/plate/medium/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/gloves/roguetown/plate/shadowgauntlets
 	name = "darkplate gauntlets"

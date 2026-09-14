@@ -10,18 +10,21 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/sojourner
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)//You're still Naledi. A learned one, atop that.
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(
 		TRAIT_MAGEARMOR,
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
+		TRAIT_NALEDI,
 	)
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(/// +7, same as naledi hiero -1 spd
 		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1,
-		STATKEY_SPD = -1,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = 1,
+		STATKEY_PER = 1,
+		STATKEY_CON = -1
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,

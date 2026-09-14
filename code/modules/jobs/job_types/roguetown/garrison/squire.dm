@@ -37,6 +37,7 @@
 	id = /obj/item/scomstone/bad/garrison
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	backr = /obj/item/storage/backpack/rogue/satchel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
 
 	job_bitflag = BITFLAG_GARRISON		//Move this role to garrison section later. Shouldn't be under youngroles for transparancy they are garrison.
 
@@ -93,7 +94,9 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
 		)
 
 /datum/advclass/squire/footman
@@ -141,7 +144,9 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
 		)
 
 	H.adjust_blindness(-3)
@@ -206,5 +211,7 @@
 		/obj/item/storage/belt/rogue/pouch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/rogueweapon/hammer/copper
-		)
+		/obj/item/rogueweapon/hammer/copper,
+		/obj/item/repair_kit/metal,
+		/obj/item/repair_kit,
+	)

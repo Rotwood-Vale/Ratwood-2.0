@@ -157,7 +157,7 @@
 	return max(round(hud_bleed_rate, 0.1), 0)
 
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied
-/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon)
+/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon, armor_penetration)
 	RETURN_TYPE(/datum/wound)
 	if(!bclass || !dam || !owner || (owner.status_flags & GODMODE))
 		return null
@@ -170,7 +170,8 @@
 			acheck_dflag = "slash"
 		if(BCLASS_PICK, BCLASS_STAB)
 			acheck_dflag = "stab"
-	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
+		//More AP means the less effective bleed clamping is.
+	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0, armor_penetration = armor_penetration)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		if(human_owner.checkcritarmor(zone_precise, bclass))
@@ -290,8 +291,13 @@
 			attempted_wounds += /datum/wound/artery
 	if(bclass in GLOB.whipping_bclasses)
 		used = round(damage_dividend * 20 + (dam / 3))
-		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
-			dam += 10
+		if(user)
+			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS))
 			attempted_wounds += /datum/wound/artery		//basically does sword-tier wounds.
 		if(prob(used))
@@ -327,6 +333,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -380,6 +388,10 @@
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 				dam += 10
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+				used += 10
+			if(HAS_TRAIT(user, TRAIT_DUNGEONMASTER))
+				used *= 2
 		if(prob(used))
 			if(HAS_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS))
 				attempted_wounds += /datum/wound/artery/chest
@@ -407,6 +419,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -539,6 +553,8 @@
 		if(owner.client)
 			winset(owner.client, "outputwindow.output", "max-lines=1")
 			winset(owner.client, "outputwindow.output", "max-lines=100")
+		if(owner.client || owner.mind)
+			log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 
 
 	for(var/wound_type in shuffle(attempted_wounds))
@@ -546,6 +562,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(owner.client || owner.mind)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 

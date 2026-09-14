@@ -3,8 +3,8 @@
 	flag = BANDIT
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 5	//bare minimum of five on round start, regardless of garrison/holywarrior count
-	spawn_positions = 5
+	total_positions = 0
+	spawn_positions = 0
 	antag_job = TRUE
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "At some point in your lyfe, you'd fallen to the wrong side of the carriage. Whether by butchery or finesse, you're known throughout the land. \
@@ -20,6 +20,7 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
+	vice_restrictions = list(/datum/charflaw/assassintarget)
 	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
@@ -27,7 +28,7 @@
 
 	wanderer_examine = TRUE
 	advjob_examine = TRUE
-	always_show_on_latechoices = TRUE
+	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE //no endless stream of bandits, unless the migration waves deem it so
 	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED)
 	same_job_respawn_delay = 1 MINUTES
@@ -114,22 +115,3 @@
 			if("Speed")
 				H.change_stat(STATKEY_SPD, 1)
 	to_chat(H, span_danger("You are playing an Antagonist role. By choosing to spawn as a Bandit, you are expected to actively create conflict with other players regardless of bounty status. Failing to play this role with the appropriate gravitas may result in punishment for Low Roleplay standards."))
-
-/proc/update_bandit_slots()
-	var/datum/job/bandit_job = SSjob.GetJob("Bandit")
-	if(!bandit_job)
-		return
-
-	var/player_count = length(GLOB.joined_player_list)
-	var/slots = 5
-
-	//Add 1 slot for every 12 players over 30.
-	if(player_count > 42)
-		var/extra = floor((player_count - 42) / 12)
-		slots += extra
-
-	//5 slots minimum, 7 maximum.
-	slots = min(slots, 9)
-
-	bandit_job.total_positions = slots
-	bandit_job.spawn_positions = slots

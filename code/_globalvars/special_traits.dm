@@ -39,7 +39,8 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	apply_prefs_virtue(character, player)
 	apply_prefs_origin(character, player)
 	apply_prefs_race_bonus(character, player)
-	apply_voicepacks(character, player)
+	if(!HAS_TRAIT(character, TRAIT_NO_VOICEPACK_OVERRIDE)) //Only roundstart roles that jobload in, should use this. Prevents prefloaded voicepacks overriding yours.
+		apply_voicepacks(character, player)
 	if(player.prefs.dnr_pref)
 		apply_dnr_trait(character, player)
 	if(player.prefs.loadout)
@@ -89,6 +90,10 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		return
 	if (!player.prefs)
 		return
+	if (character.job)
+		var/datum/job/players_job = SSjob.GetJob(character.job)
+		if(players_job && players_job.no_virtue)
+			return
 
 	var/virtuous = FALSE
 	var/heretic = FALSE
