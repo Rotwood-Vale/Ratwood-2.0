@@ -7,6 +7,7 @@
 /datum/intent
 	var/name = "intent"
 	var/desc = ""
+	var/icon = 'icons/mob/rogueintents.dmi'
 	var/icon_state = "instrike"
 	var/list/attack_verb = list("hits", "strikes")
 	var/obj/item/masteritem
