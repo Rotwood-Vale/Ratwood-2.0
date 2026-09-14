@@ -4,7 +4,7 @@
 	npc_jump_chance = 0
 	rude = FALSE // don't taunt people as a deadite
 	tree_climber = FALSE // or climb trees
-	dodgetime = 8 
+	dodgetime = 0.8 SECONDS
 	flee_in_pain = FALSE
 	ambushable = FALSE
 	wander = TRUE

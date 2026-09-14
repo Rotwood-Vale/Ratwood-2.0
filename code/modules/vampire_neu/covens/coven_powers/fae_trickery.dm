@@ -219,7 +219,7 @@
 				span_danger("[src] tears [headgear] off of [target]'s face!"), \
 				span_userdanger("[src] tears [headgear] off of your face!"))
 		target.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
-		var/datum/cb = CALLBACK(src,/obj/item/clothing/mask/rogue/goblin_mask/proc/eat_head)
+		var/datum/cb = CALLBACK(src, PROC_REF(eat_head))
 		for(var/i in 1 to 10)
 			addtimer(cb, (i - 1) * 1.5 SECONDS)
 		spawn(16 SECONDS)

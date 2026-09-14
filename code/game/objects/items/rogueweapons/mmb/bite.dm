@@ -1,7 +1,5 @@
 /datum/intent/bite
 	name = "bite"
-	candodge = TRUE
-	canparry = TRUE
 	chargedrain = 0
 	chargetime = 0
 	swingdelay = 0

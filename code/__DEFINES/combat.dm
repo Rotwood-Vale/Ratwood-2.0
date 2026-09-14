@@ -64,6 +64,7 @@
 #define CLICK_CD_HEAVY 16
 #define CLICK_CD_CHARGED 14
 #define CLICK_CD_MELEE 12
+#define CLICK_CD_QUICK 10
 #define CLICK_CD_FAST 8
 #define CLICK_CD_INTENTCAP 6
 #define CLICK_CD_RANGE 4
@@ -432,3 +433,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+
+// Critical Resistance Defines //
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5

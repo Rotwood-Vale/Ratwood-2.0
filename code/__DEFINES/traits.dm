@@ -33,6 +33,8 @@
 #define TRAIT_MAGEARMOR "Magic Barrier"
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
+#define TRAIT_JOURNEYS_END "Journey's End"
+#define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
 #define TRAIT_SHATTER_WEAKNESS "Brittle Form"
 #define TRAIT_DNR "Bane of Existence"
@@ -76,6 +78,7 @@
 #define TRAIT_DEATHBARGAIN "Death Bargain" // Used by UNDERMAIDEN'S BARGAIN
 #define TRAIT_RITUALIST "Ritualist"  // Allows use of ritual chalk
 #define TRAIT_INQUISITION "Otavan Adherent"
+#define TRAIT_WEAPONLESS "Abboteer's Vow"//used by disciples to lock pure unarmed combat while allowing tool use.
 #define TRAIT_GOODTRAINER "Good Trainer"
 #define TRAIT_BADTRAINER "Bad Trainer"
 #define TRAIT_OUTDOORSMAN "Outdoorsman"
@@ -108,7 +111,6 @@
 #define TRAIT_SIMPLESPEECH "Simple Speech" // Can only say the 1000 most common English-language words; other words get modified
 #define TRAIT_BLOODPOOL_BORN "Bloodpool Born"
 #define TRAIT_ROYALSERVANT "Household Insight" // Let's you see the keep inhabitants liked/hated food/drink
-#define TRAIT_FOOD_STIPEND "Vomitorium-known" //Allows keep servants to buy ingredients using money from the treasury directly in a vomitorium
 #define TRAIT_WAGES_SUSPENDED "Wages Suspended" //Stops nerve master daily pay for this guy
 #define TRAIT_SCALEARMOR "Weathered Scales"//Mage armor, refluffed to scales.
 #define TRAIT_HEMOPHAGE "Hemophage"//You can drink blood for heals, but normal food and water makes you ill. Shitty vampire.
@@ -217,6 +219,7 @@
 #define TRAIT_IWASUNZOMBIFIED "iwasunzombified" //prevents PQ gain from curing a zombie twice
 #define TRAIT_IWASHAUNTED "iwashaunted" //prevents spawning a haunt from a decapitated body twice
 #define TRAIT_PSYCHOSIS "Psychosis" //replaces all ambience with creepy shit
+#define TRAIT_FRESHSPAWN "freshspawn" //marker on freshly-spawned ambush/quest mobs; set for 60s after spawn, never read - inert marker matching AP
 #define TRAIT_SCREENSHAKE "Tremors" //screen will always be shaking, you cannot stop it
 #define TRAIT_NORUN "Decayed Flesh"
 #define TRAIT_PUNISHMENT_CURSE "PunishmentCurse"
@@ -227,6 +230,17 @@
 #define TRAIT_UNLYCKERABLE "Lycker Immunity"
 #define TRAIT_OUTLANDER "Outlander"
 #define TRAIT_OUTLAW "Outlaw"
+#define TRAIT_ALDERMAN "Alderman of the Assembly"
+#define TRAIT_ALDERMAN_CENSURED "Assembly Censure"
+#define TRAIT_ARREARS "In Arrears" // poll-tax defaulter (POLL_TAX_DEBT_DAYS_TO_DEBTOR+ days owed) — cleared when the debt is paid
+#define TRAIT_DEBTOR "Debtor" // generic loan defaulter — always applied alongside a faction-specific trait
+#define TRAIT_DEBTOR_CROWN "Debtor of the Crown"
+#define TRAIT_DEBTOR_CHURCH "Debtor of the Church"
+#define TRAIT_DEBTOR_MERCHANT "Debtor of the Merchant Guild"
+#define TRAIT_DEBTOR_BATHHOUSE "Debtor of the Bathhouse"
+#define TRAIT_AGENT_MERCHANT "Agent of the Merchant Guild"
+#define TRAIT_AGENT_BATHHOUSE "Agent of the Bathhouse"
+#define TRAIT_AGENT_CHURCH "Ecclesiastical Benefactor"
 #define TRAIT_OWNED_SLAVE "Owned Slave"
 #define TRAIT_KNOWNCRIMINAL "Known Criminal"
 #define TRAIT_BIGGUY "Big Guy"
@@ -291,10 +305,11 @@
 #define TRAIT_OAR "oar"
 #define TRAIT_OAR_PROPELLED "oar_propelled"
 #define TRAIT_ALLOWS_BUCKLED_FACING "allows_buckled_facing"
+#define CONTRACT_SPAWN_TRAIT "contract-spawn"
 
 // ARMOR / CLOTHING GIVEN TRAITS (GIVEN BY WEARING CLOTHES/ARMOR PIECES)
 #define TRAIT_MONK_ROBE	"Holy Vestatures"
-#define TRAIT_RACISMISBAD "Heritage Vision"
+#define TRAIT_BLACKOAK "Heritage Vision"
 #define TRAIT_VENOMOUS "Venomous"
 #define TRAIT_OVERTHERETIC "Overt Heretic"//Applied on someone who has rites buffs. Armour, rituos, etc.
 #define TRAIT_SPELL_DISPERSION "Barrier Dispersion"
@@ -315,6 +330,9 @@
 #define TRAIT_HOMESTEAD_EXPERT "Expert Homesteader" // Farming, Mining, Cooking, Fishing, Butchering, Lumberjacking (All Labor), Pottery. Skincraft + Sewing = Jman.
 #define TRAIT_SELF_SUSTENANCE "Self-Sustenance" // Unlocks all gated crafting skills to Jman. Wretches & Antags only.
 
+// Additional trait given to the Tailor job, allowing it to weave cloth on a loom from 1 fibers instead of 2.
+#define TRAIT_EFFICIENT_WEAVER "Efficient Weaver"
+
 // Weaponry Traits
 // Intended for very powerful, very specific or gimmicky weapon skills.
 // Firearms, as an example, is one of them. We do not let someone get above JMAN without it.
@@ -326,6 +344,7 @@
 //role related traits
 #define TRAIT_MASTER_CARPENTER "Master Carpenter"
 #define TRAIT_MASTER_MASON "Master Masonry"
+#define TRAIT_ROYAL_SUBSIDY "Royal Subsidy"
 
 #define TRAIT_TRIBAL "Island Tribe-member"
 
@@ -335,6 +354,16 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_STEELHEARTED = span_info("I have hardened nerves, and do not waiver from the sight of violence in battle."),
 	TRAIT_OUTLANDER = span_info("Those of the realm see me as not of their land."),
 	TRAIT_OUTLAW = span_info("This land's nervelocks and castificos reject my touch."),
+	TRAIT_ALDERMAN = span_info("Alderman of the Assembly, voice of the respectable citizenry of Rotwood Vale. Upon my charter I may spend the Crown's Purse and commission the realm's defense within the bounds the Commons have set me."),
+	TRAIT_ALDERMAN_CENSURED = span_warning("The Assembly has censured my name. No seat, no warrant shall be mine until the week ends."),
+	TRAIT_DEBTOR = span_warning("I am a defaulter on a debt. My name is known to those I owe."),
+	TRAIT_DEBTOR_CROWN = span_warning("I am indebted to the Crown's coffers."),
+	TRAIT_DEBTOR_CHURCH = span_warning("I am indebted to the Church."),
+	TRAIT_DEBTOR_MERCHANT = span_warning("I am indebted to the Merchant Guild."),
+	TRAIT_DEBTOR_BATHHOUSE = span_warning("I am indebted to the Bathhouse."),
+	TRAIT_AGENT_MERCHANT = span_info("I am a chartered agent of the Merchant Guild. I keep its tally and ledger."),
+	TRAIT_AGENT_BATHHOUSE = span_info("I am an agent of the Bathhouse. I keep its tally and ledger."),
+	TRAIT_AGENT_CHURCH = span_info("I am a Benefactor of the Church. The faithful know my name."),
 	TRAIT_OWNED_SLAVE = span_info("I am a marked slave, previously broken and now owned by a Master."),
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
@@ -345,6 +374,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_RITUALIST = span_info("I am skilled in the holy arts. Using ritual chalk, I can more deftly channel my God's powers via runes."),
 	TRAIT_INSPIRING_MUSICIAN = span_info("The flow of battle dances to my song!"),
 	TRAIT_INQUISITION = span_info("I serve the Holy Otavan Inquisition. From a passing glance, I can recognize all other adherents within the local sect."),
+	TRAIT_WEAPONLESS = span_info("My vows forbid me from using weaponry... but they did not forbid me from using my fists!"),
 	TRAIT_CHOSEN = "Astrata choose you to represent her glory.",
 	TRAIT_WEBWALK = "I can move freely between webs.",
 	TRAIT_NOSTINK = span_dead("My nose is numb to the smell of decay."),
@@ -388,6 +418,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MAGEARMOR = span_info("My magics can protect me from a blow every so often."),
 	TRAIT_DECEIVING_MEEKNESS = span_info("People look at me and think I am a weakling. They are mistaken. I've learned how to hide my vices and true beliefs from others."),
 	TRAIT_CRITICAL_RESISTANCE = span_info("My constitution is iron-clad. My lifeblood flows slowly, I can resist the first few criitical wounds that would fell others, but repeated punishment will overwhelm my defenses."),
+	TRAIT_JOURNEYS_END = span_info ("As the lyfe ebbs from my veins, my resolve hardens to push through. Do not go quietly into that good nite."),
+	TRAIT_BLOOD_RESISTANCE = span_info("My body is taut, and my blood runs slower. I bleed far less than others."),
 	TRAIT_CRITICAL_WEAKNESS = span_danger("I am weak to wounds that others could survive."),
 	TRAIT_SHATTER_WEAKNESS = span_danger("My form is especially brittle and frail. A critical, shattering blow to my chest or spine will kill me instantly."),
 	TRAIT_DNR = span_danger("My lux' vigor is weak. There is no hope for me. This lyfe is all I have."),
@@ -540,8 +572,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
-	TRAIT_RACISMISBAD = span_warning("The Black Oaks can spot ANY Foreigners and Outsiders, no matter how long they've lived in the realm. This is an easy skill to master, as it is simply identifying who isn't an elf."),
+	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
 	TRAIT_GOODWRITER = span_notice("I'm proficient at writing. Any skillbooks made by me will allow the reader to learn the subject more quickly."),
+	TRAIT_ROYAL_SUBSIDY = span_notice("I am recognized under a Crown subsidy. I hold privileged access to the Stockpile without cost, and any goods returned to it are considered service rendered to the realm. My taxes are waived where applicable."),
 	TRAIT_NODEF = span_warning("I expose myself in battle completely."),
 	TRAIT_LEYLINE_HASTE = span_warning("I can fully see and use the threads which bind the world together! Spell casting time and cooldowns are 25% faster now."),
 	TRAIT_PONYGIRL_RIDEABLE = span_notice("Willing or not, I've been trained to carry other people's burdens."),
@@ -562,10 +595,10 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_ASSASSIN = span_warning("My soul has been tainted by foul spirits, through them I honor my pact."),
 	TRAIT_MASTER_CARPENTER = span_warning("I've been trained to make the most of wood"),
 	TRAIT_MASTER_MASON = span_warning("I've been trained to make the most of stone"),
+	TRAIT_EFFICIENT_WEAVER = span_info("I can weave cloth on a loom more efficiently than others can."),
 	TRAIT_EQUESTRIAN = span_warning("I am a capable rider. My mount is an extension of me."),
 	TRAIT_BLOODPOOL_BORN = span_bloody("I emerged from the bloodpool of a Vampire Lord. There is no possibility for redemption for me in this land."),
 	TRAIT_ROYALSERVANT = span_greentext("I've been serving the royal family for long enough to know their exotic tastes."),
-	TRAIT_FOOD_STIPEND = span_notice("The creachers of the vomitorium know my touch, and will pull costs for their products directly from the treasury for me."),
 	TRAIT_SPELL_DISPERSION = span_necrosis("Spells are useless against me, so long as I maintain my arcyne barrier."),
 	TRAIT_CONVICTION = span_suppradio("My connection to the Ten is unwavering. Prayer alone keeps me alive, for I am a conduit of faith."),
 	TRAIT_WAGES_SUSPENDED = span_warning("The Stewardry has halted my daily wages!"),
@@ -774,6 +807,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 #define TRAIT_SANDSTORM_GOGGLES "sandstorm_eyeprotection"
+#define TRAIT_NO_VOICEPACK_OVERRIDE "DisablePrefVoicepacks" //Used for roles that should only be using their voicepacks added. MAKE sure you have a Fem+Masq one.
 
 //bodypart traits
 #define TRAIT_PARALYSIS	"paralysis" //Used for limb-based paralysis and full body paralysis

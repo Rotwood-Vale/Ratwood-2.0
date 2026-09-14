@@ -56,6 +56,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/tgui_theme = "azure_default"
+	var/parchment_skin = "leatherbound"
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/floating_text_toggles = TOGGLES_TEXT_DEFAULT
@@ -66,6 +67,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	var/icon/admin_ghost_icon
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
@@ -97,6 +99,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/mutant_skin = FALSE			//Use mutant color as skin color instead of skin_tone
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
 	var/extra_language_1 = "None" // Additional triumph language slot 1
@@ -105,7 +108,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pitch = 1
 	var/detail_color = "000"
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
-	var/static/datum/species/default_species = new /datum/species/human/northern()
+	var/const/datum/species/default_species = /datum/species/human/northern
 	var/datum/patron/selected_patron
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
@@ -215,6 +218,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
+	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
@@ -289,6 +293,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
+	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
 
 	// PATREON
@@ -416,7 +421,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(!combat_music)
 		combat_music = GLOB.cmode_tracks_by_type[default_cmusic_type]
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C.update_movement_keys()
+	C?.update_movement_keys()
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -512,6 +517,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "Legacy"]</a>"
 			dat += "<br>"
 			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [get_tgui_theme_display_name()]</a>"
+			dat += "<br>"
+			dat += "<a href='?_src_=prefs;preference=parchment_skin'>Parchment: [get_parchment_skin_display_name()]</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
@@ -724,8 +731,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
 
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
-				dat += "<br>"
+				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a><br>"
+				if(pref_species.mutant_skin_option)
+					dat += "<b>Mutant Skintone:</b> <a href='?_src_=prefs;preference=mutant_skin;task=input'>[mutant_skin ? "Yes" : "No"]</a><br>"
 
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
@@ -2523,6 +2531,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("update_mutant_colors")
 					update_mutant_colors = !update_mutant_colors
 
+				if("mutant_skin")
+					if(pref_species.mutant_skin_option)
+						mutant_skin = !mutant_skin
+						try_update_mutant_colors()
+
 				if("dnr")
 					dnr_pref = !dnr_pref
 
@@ -2889,6 +2902,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					tgui_lock = !tgui_lock
 				if("tgui_theme")
 					setTguiStyle()
+				if("parchment_skin")
+					cycle_parchment_skin()
 				if("winflash")
 					windowflashing = !windowflashing
 
@@ -3253,6 +3268,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
+	character.mutant_skin = mutant_skin
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.detail = detail

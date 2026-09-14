@@ -95,6 +95,13 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+	//past the two stage decapitation returns, so a first stage neck sever is not logged as a limb loss;
+	//the casterless branch is player-only or NPC mobs eating a body would spam it
+	if(user)
+		log_combat(user, C, "dismembered", null, "([src.name])", severe = TRUE)
+	else if(C.client || C.mind)
+		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
+
 	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
 		C.emote("painscream")
 	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT

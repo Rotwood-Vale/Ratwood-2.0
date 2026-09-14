@@ -532,7 +532,8 @@ GLOBAL_LIST_EMPTY(saltmineticketmachines)
 	if(!out_of_service && slide_other_end)
 		slide_other_end.slide_other_end = null
 		slide_other_end.out_of_service = TRUE
-	..()
+	slide_other_end = null
+	return ..()
 
 /obj/structure/roguemachine/ticket_master/attack_hand(mob/living/user, menu_name)
 	. = ..()

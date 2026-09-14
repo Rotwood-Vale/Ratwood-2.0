@@ -13,6 +13,7 @@
 		STATKEY_PER = 2,
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
+		STATKEY_CON = 1,
 		STATKEY_LCK = 1,
 	)
 	subclass_skills = list(
@@ -24,7 +25,7 @@
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,//Sadly, for Joe, he has less than stellar athletics.
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
@@ -35,7 +36,7 @@
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,//As above.
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,//Yet again.
 		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 	)
@@ -71,6 +72,7 @@
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
 			H.change_stat(STATKEY_INT, 1)
 			H.change_stat(STATKEY_CON, 1)
+			H.change_stat(STATKEY_WIL, 1)
 
 // Their snowflake mine//
 

@@ -98,6 +98,8 @@
 	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
+		if(istype(src, /mob/living/simple_animal))
+			INVOKE_ASYNC(buckled_mob, TYPE_PROC_REF(/mob, toggle_rogmove_intent), MOVE_INTENT_WALK, TRUE)
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
