@@ -72,7 +72,7 @@
 		wretch_select_bounty(H)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
 
-		var/weapons = list("Elven Swordspear", "Elven Curveblade", "Ranger")
+		var/weapons = list("Elven Swordspear", "Elven Curveblade", "Elven Recurve Bow")
 		var/weapon_choice = input(H, "Choose your loadout.", "THE VISIBLE THREAT") as anything in weapons
 		H.set_blindness(0)
 		if(weapon_choice == "Elven Swordspear" || weapon_choice == "Elven Curveblade") //stuff to be shared on the non ranger variants
@@ -95,6 +95,9 @@
 				backpack_contents[/obj/item/rogueweapon/huntingknife/idagger/steel/elvish] = 1
 
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword", "Elvish Saber", "Elvish Dagger")
+		if(weapon_choice == "Elven Recurve Bow") //nuh uh uh
+			sidearm -= "Elvish Longsword" 
+			sidearm -= "Elvish Shortsword"
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
 		switch(sidearm_choice)
 			if("Elvish Longsword") // It's a sharper longsword.
