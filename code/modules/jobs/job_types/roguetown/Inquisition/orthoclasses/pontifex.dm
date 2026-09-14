@@ -84,7 +84,7 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/blessedbladeofpsydon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spellfist/fist_of_psydon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spellfist/grasp_of_psydon)
