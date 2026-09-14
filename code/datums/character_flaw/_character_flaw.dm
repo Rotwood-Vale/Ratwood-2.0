@@ -6,15 +6,15 @@ GLOBAL_LIST_INIT(charflaw_singletons, init_charflaw_singletons())
 /// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Asundered Mind (+1 Q-Point)"=/datum/charflaw/mind_broken,
-	"Bad Sight (+1 Q-Point)"=/datum/charflaw/badsight,
-	"Blindness (+1 Q-Point)"=/datum/charflaw/noeyeall,
+	"Asundered Mind (+2 Q-Points)"=/datum/charflaw/mind_broken,
+	"Bad Sight (+2 Q-Points)"=/datum/charflaw/badsight,
+	"Blindness (+2 Q-Points)"=/datum/charflaw/noeyeall,
 	"Clingy"=/datum/charflaw/clingy,
-	"Colorblind (+1 Q-Point)"=/datum/charflaw/colorblind,
+	"Colorblind (+2 Q-Points)"=/datum/charflaw/colorblind,
 	"Compliant"=/datum/charflaw/compliant,
-	"Critical Weakness (+1 Q-Point)"=/datum/charflaw/critweakness,
-	"Cyclops (L) (+1 Q-Point)"=/datum/charflaw/noeyel,
-	"Cyclops (R) (+1 Q-Point)"=/datum/charflaw/noeyer,
+	"Critical Weakness (+2 Q-Points)"=/datum/charflaw/critweakness,
+	"Cyclops (L) (+2 Q-Points)"=/datum/charflaw/noeyel,
+	"Cyclops (R) (+2 Q-Points)"=/datum/charflaw/noeyer,
 	"Devout Follower"=/datum/charflaw/addiction/godfearing,
 	"Greedy"=/datum/charflaw/greedy,
 	"Indebted"=/datum/charflaw/indebted,
@@ -23,12 +23,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
 	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
-	"Leper (+1 Q-Point)"=/datum/charflaw/leprosy,
+	"Leper (+2 Q-Points)"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Mute (+1 Q-Point)"=/datum/charflaw/mute,
-	"Narcoleptic (+1 Q-Point)"=/datum/charflaw/narcoleptic,
+	"Mute (+2 Q-Points)"=/datum/charflaw/mute,
+	"Narcoleptic (+2 Q-Points)"=/datum/charflaw/narcoleptic,
 	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
 	"Nudist"=/datum/charflaw/nudist,
 	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
@@ -37,12 +37,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"Sadist"=/datum/charflaw/addiction/sadist,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Sleepless (+1 Q-Point)"=/datum/charflaw/sleepless,
+	"Sleepless (+2 Q-Points)"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Unintelligible (+1 Q-Point)"=/datum/charflaw/unintelligible,
-	"Wood Arm (L) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_l,
-	"Wood Arm (R) (+1 Q-Point)"=/datum/charflaw/limbloss/arm_r,
-	"Hemophage (+1 Q-Point)"=/datum/charflaw/hemophage,
+	"Unintelligible (+2 Q-Points)"=/datum/charflaw/unintelligible,
+	"Wood Arm (L) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_l,
+	"Wood Arm (R) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_r,
+	"Hemophage (+2 Q-Points)"=/datum/charflaw/hemophage,
 	"Feeble-bodied"=/datum/charflaw/weak,
 	"Frail"=/datum/charflaw/frail,
 	"Doddering"=/datum/charflaw/slow,
@@ -418,20 +418,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.compliance = 0
 		H.remove_status_effect(/datum/status_effect/compliance)
 
-/datum/charflaw/assassintarget
-	name = "Marked for Death"
-	desc = "Something in my past has made me a target. I'm always looking over my shoulder.<br>\
-	YOU MAY BE PERMANENTLY REMOVED FROM THE ROUND WITHOUT ESCALATION BY YOUR ASSASSIN!"
-	var/logged = FALSE
-	point_value = 0 // Not really a flaw, and also not pickable.
-
-/datum/charflaw/hunted
-	name = "Marked by Gnolls"
-	desc = "For one reason or another, I have been deemed a target worthy of Graggar's champions. I hear their cackles anywhere I go.<br>\
-	<small>This virtue will encourage Gnolls to hunt you down. You may potentially be killed in the process.</small>"
-	var/logged = FALSE
-	point_value = 0 // Not really a flaw, and also not pickable.
-
 /datum/charflaw/nudist
 	name = "Nudist"
 	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
@@ -545,14 +531,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/carbon/human/H = user
 	REMOVE_TRAIT(H, TRAIT_LOOSE_STRAPS, TRAIT_GENERIC)
-/datum/charflaw/hunted/flaw_on_life(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(logged == FALSE)
-		if(H.name) // If you don't check this, the log entry wont have a name as flaw_on_life is checked at least once before the name is set.
-			log_hunted("[H.ckey] playing as [H.name] had the hunted flaw by vice.")
-			logged = TRUE
 
 /datum/charflaw/unintelligible
 	name = "Unintelligible"

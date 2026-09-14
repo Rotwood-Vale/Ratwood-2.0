@@ -18,6 +18,8 @@
 #define TRAIT_NOBLE "Noble Blooded"
 #define TRAIT_DEFILED_NOBLE "Drained Noble Blood"
 #define TRAIT_DISGRACED_NOBLE "Formerly Noble Blooded"
+#define TRAIT_ASSASSIN_TARGET "Marked for Death"
+#define TRAIT_GNOLL_HUNTED "Marked by Gnolls"
 #define TRAIT_EMPATH "Empath"
 #define TRAIT_EXPLOSIVE_SUPPLY "Explosive Supply"
 #define TRAIT_DRUG_SUPPLY "Drug Supply"
@@ -414,6 +416,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EORAN_CONTENTED = span_info("I feel much at ease."),
 	TRAIT_DEFILED_NOBLE = span_blue("I'm of noble blood but... Something feels off!"),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
+	TRAIT_ASSASSIN_TARGET = span_warning("Something in my past has made me a target. I'm always looking over my shoulder."),
+	TRAIT_GNOLL_HUNTED = span_cultsmall("Graggar's champions hunger for me. I hear their cackles anywhere I go."),
 	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me. I regain energy slowly over time."),
 	TRAIT_ARMOUR_LIKED = span_greentext("I'm wearing something more suited to my style."),

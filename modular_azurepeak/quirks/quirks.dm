@@ -86,9 +86,22 @@
 	<span style='color:#f44336; font-size:120%;'>THIS QUIRK ENCOURAGES GNOLLS TO HUNT YOU DOWN!</span><br>\
 	<span style='color:#f44336;'>You may potentially be killed in the process!</span>"
 	point_cost = 0
+	added_traits = list(TRAIT_GNOLL_HUNTED)
+	var/attempts_left = 10
 
+// I genuinely couldn't tell you why this needs to be a thing, but it existed when hunted was a vice.
+// Therefore, we're keeping the behavior now that it's a quirk.
 /datum/quirk/hunted/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.vices += new /datum/charflaw/hunted()
+	log_hunted_pick(recipient)
+
+/datum/quirk/hunted/proc/log_hunted_pick(mob/living/carbon/human/H)
+	if(!H.name) // The vice version of hunted used Life() for its timing, so deleted mobs would automatically stop timing.
+		if(attempts_left <= 0) // We're not riding off of that anymore, so let's have it give up after ten attemps a la Lawless.
+			return
+		attempts_left--
+		addtimer(CALLBACK(src, PROC_REF(log_hunted_pick), H), 1 SECONDS)
+		return
+	log_hunted("[H.ckey] playing as [H.name] had the hunted trait by quirk.")
 
 /datum/quirk/assassintarget
 	name = "Marked for Death"
@@ -97,9 +110,7 @@
 	<span style='color:#f44336; font-size:120%;'>THIS QUIRK ENCOURAGES ASSASSINS TO HUNT YOU DOWN!</span><br>\
 	<span style='color:#f44336;'>You may be PERMANENTLY KILLED WITHOUT ESCALATION in the process!</span>"
 	point_cost = 0
-
-/datum/quirk/assassintarget/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.vices += new /datum/charflaw/assassintarget()
+	added_traits = list(TRAIT_ASSASSIN_TARGET)
 
 /datum/quirk/nightowl
 	name = "Night Owl"

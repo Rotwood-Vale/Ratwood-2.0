@@ -94,7 +94,7 @@
 	if(user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
 
-	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
+	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.dna?.species?.type == /datum/species/gnoll)
 			. += span_cultsmall("Graggar has marked them!")
@@ -844,7 +844,7 @@
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
+		if(skipface && HAS_TRAIT(user, TRAIT_ASSASSIN_TARGET) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)
