@@ -229,7 +229,7 @@
 	update_devotion((devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
 	return TRUE
 
-/mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
+/mob/living/carbon/human/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
 	if(!devotion)
 		return FALSE
 	if(patrons && !istype(patron, patrons))
