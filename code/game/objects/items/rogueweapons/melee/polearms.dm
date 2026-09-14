@@ -601,6 +601,8 @@
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "zizobillhook"
 	unenchantable = TRUE
+	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
+	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, /datum/intent/spear/cut/bardiche/cleave, /datum/intent/spear/cut/glaive/sweep)
 	max_blade_int = 300
 	max_integrity = 400
 	force = 30
