@@ -30,7 +30,6 @@
 	)
 
 /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
-	var/detailcolor
 	job_bitflag = BITFLAG_HOLY_WARRIOR
 	allowed_patrons = list(/datum/patron/old_god)
 	
