@@ -179,12 +179,14 @@ SUBSYSTEM_DEF(point_ambience)
 	/// service, so deliberately not on the client and not in the cache.
 	var/list/scratch_second = list()
 	var/list/scratch_second_distsq = list()
-	/// The listener a service is for, resolved once per service and read by every send in it:
-	/// their turf, the environment their area gives a sound, their master volume as a factor
-	/// (null when they have no prefs), and whether the slim send may serve them at all. A
-	/// dullahan hears from the head, which the slim send does not model, so they take the full
-	/// playsound_local path. Only while HEADLESS: with the head on, playsound_local resolves the
-	/// listener back to the mob and the two paths agree.
+	/**
+	 * The listener a service is for, resolved once per service and read by every send in it: their
+	 * turf, the environment their area gives a sound, their point ambience volume as a factor (null
+	 * when they have no prefs), and whether the slim send may serve them at all. A dullahan hears
+	 * from the head, which the slim send does not model, so they take the full playsound_local path.
+	 * Only while HEADLESS: with the head on, playsound_local resolves the listener back to the mob
+	 * and the two paths agree
+	 */
 	var/turf/serving_turf
 	var/serving_environment = SOUND_DEFAULT_ENVIRONMENT
 	var/serving_volume_scale
@@ -322,13 +324,15 @@ SUBSYSTEM_DEF(point_ambience)
 	/// world.time this instance was built. An MC restart resets it along with everything above, so a
 	/// reader holding an older snapshot must throw that away rather than subtract from it.
 	var/started_at = 0
-	/// Why a standing-walk service walked instead of taking the shortcut: the listener moved, the
-	/// index changed, or their master volume did. Counted only inside fire()'s walk, so the drain's
-	/// misses, which are all moves, stay out.
+	/**
+	 * Why a standing-walk service walked instead of taking the shortcut: the listener moved, the
+	 * index changed, or their point ambience volume did. Counted only inside fire()'s walk, so the
+	 * drain's misses, which are all moves, stay out
+	 */
 	var/in_standing_walk = FALSE
 	var/walks_turf = 0
 	var/walks_version = 0
-	var/walks_mastervol = 0
+	var/walks_volume = 0
 	/// Source -> its plain loop while in fallback mode.
 	var/list/fallback_loops = list()
 	/// Bumped whenever the index changes in a way a standing listener could hear: a source that
@@ -853,7 +857,7 @@ SUBSYSTEM_DEF(point_ambience)
 	while(length(currentrun))
 		var/client/listener_client = currentrun[currentrun.len]
 		currentrun.len--
-		if(listener_client && !isobserver(listener_client.mob))
+		if(listener_client && !listener_client.point_ambience_silenced && !isobserver(listener_client.mob))
 			// A step served them within the window, so the next one will too; this walk would land
 			// on a tile they are leaving. Stamped by steps only, so a client waiting in the set past
 			// the budget still reads as unserved and is caught here.
@@ -949,12 +953,11 @@ SUBSYSTEM_DEF(point_ambience)
 /datum/controller/subsystem/point_ambience/proc/service_client(client/listener_client)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	// Before anything is counted, since a listener who turned this off is not being served and should
-	// not appear in the rates. What they had playing was silenced when they set it, by
-	// listener_prefs_changed; nothing here can reach them again to do it.
-	var/toggles = listener_client.prefs?.toggles
-	if(toggles & SOUND_DISABLE_POINT_AMBIENCE)
+	// Before the count, so they stay out of the rates. With no move hook and the walk passing them,
+	// only a listener queued just before going silent arrives here
+	if(listener_client.point_ambience_silenced)
 		return
+	var/toggles = listener_client.prefs?.toggles
 	services_total++
 	sends_this_service = 0
 	walked_this_service = FALSE
@@ -973,15 +976,15 @@ SUBSYSTEM_DEF(point_ambience)
 		listener_turf = get_turf(listener)
 	// The mob's own lit torch, served ahead of whatever the walk found for that category.
 	var/atom/self_source = listener_turf ? listener.point_ambience_self_source : null
-	// Same turf, same index version, same master volume: the answer cannot have changed. Everything
-	// else is a full walk.
+	// Same turf, same index version, same point ambience volume: the answer cannot have changed.
+	// Everything else is a full walk
 	var/list/nearest_by_category
 	var/standing = FALSE
 	if(listener_turf)
-		var/mastervol = listener_client.prefs?.mastervol
+		var/ambience_volume = listener_client.prefs?.pointambiencevol
 		if(listener_turf == listener_client.point_ambience_cache_turf \
 			&& static_version == listener_client.point_ambience_cache_version \
-			&& mastervol == listener_client.point_ambience_cache_mastervol)
+			&& ambience_volume == listener_client.point_ambience_cache_volume)
 			standing = TRUE
 			// Every category below would return unchanged, so skip the loop. The torch is checked
 			// separately because lighting one bumps no version. This returns without preparing, so
@@ -1004,12 +1007,12 @@ SUBSYSTEM_DEF(point_ambience)
 				else if(static_version != listener_client.point_ambience_cache_version)
 					walks_version++
 				else
-					walks_mastervol++
+					walks_volume++
 			walked_this_service = TRUE
 			nearest_by_category = nearest_sources(listener_turf, listener_client)
 			listener_client.point_ambience_cache_turf = listener_turf
 			listener_client.point_ambience_cache_version = static_version
-			listener_client.point_ambience_cache_mastervol = mastervol
+			listener_client.point_ambience_cache_volume = ambience_volume
 	if(!listener_turf)
 		listener_client.point_ambience_cache_turf = null
 	listener_client.point_ambience_cache_self = self_source
@@ -1065,15 +1068,17 @@ SUBSYSTEM_DEF(point_ambience)
 		if(!sent)
 			stop_for(listener_client, category, send_null = !!previous)
 
-/// Resolves what every send in one service needs from the listener, once. Whether they can hear at
-/// all (three user procs and an organ walk on a carbon) and whether the slim send may serve them (a
-/// HEADLESS dullahan hears from wherever the head is, which it does not model) are held on the
-/// client for one standing_walk_interval; turf, area environment and master volume are per service,
-/// and a caller that already has the turf passes it. Runs after the standing shortcut, never before
-/// it: a listener standing still pays nothing here, and one who goes deaf while standing keeps what
-/// is playing until a service passes the shortcut after the hearing cache expires. A step, index
-/// change or volume change before expiry can still reuse the old hearing result. Returns FALSE
-/// when there is nothing to serve, leaving the serving_* vars set otherwise.
+/**
+ * Resolves what every send in one service needs from the listener, once. Whether they can hear at
+ * all (three user procs and an organ walk on a carbon) and whether the slim send may serve them (a
+ * HEADLESS dullahan hears from wherever the head is, which it does not model) are held on the
+ * client for one standing_walk_interval. Turf, area environment and point ambience volume are per
+ * service, and a caller that already has the turf passes it. Runs after the standing shortcut,
+ * never before it: a listener standing still pays nothing here, and one who goes deaf while
+ * standing keeps what is playing until a service passes the shortcut after the hearing cache
+ * expires. A step, index change or volume change before expiry can still reuse the old hearing
+ * result. Returns FALSE when there is nothing to serve, leaving the serving_* vars set otherwise
+ */
 /datum/controller/subsystem/point_ambience/proc/prepare_serving(client/listener_client, mob/listener, turf/listener_turf)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(world.time >= listener_client.point_ambience_profile_until)
@@ -1092,7 +1097,7 @@ SUBSYSTEM_DEF(point_ambience)
 		return FALSE
 	// Checked here so nothing below works for a muted listener. ZERO only, never "low", and null is
 	// not zero: no prefs means no scaling rather than silence.
-	var/volume_scale = listener_client.prefs ? listener_client.prefs.mastervol * 0.01 : null
+	var/volume_scale = listener_client.prefs ? listener_client.prefs.pointambiencevol * 0.01 : null
 	if(volume_scale == 0)
 		return FALSE
 	if(!listener_turf)
@@ -1270,7 +1275,7 @@ SUBSYSTEM_DEF(point_ambience)
 	var/vol = category.source_volumes[nearest] || category.volume
 	// Storeys it works out itself; a corner verdict is ours and nothing else would carry it. Passing
 	// TRUE when it already muffled for storeys changes nothing, the multipliers applying once.
-	return listener.playsound_local(source_turf, vol = vol, frequency = slot[POINT_AMBIENCE_SLOT_FREQUENCY], channel = category.channel, S = repeat_sound, max_distance = category.range, muffled = serving_muffle_wall, min_volume = category.min_volume)
+	return listener.playsound_local(source_turf, vol = vol, frequency = slot[POINT_AMBIENCE_SLOT_FREQUENCY], channel = category.channel, S = repeat_sound, max_distance = category.range, muffled = serving_muffle_wall, min_volume = category.min_volume, volume_pref = listener_client.prefs?.pointambiencevol)
 
 /**
  * The ambience send: builds the datum playsound_local would and sends it, without the proc call.
@@ -1470,11 +1475,31 @@ SUBSYSTEM_DEF(point_ambience)
 	if(isobserver(player))
 		stop_all_for(player.client)
 		return
-	RegisterSignal(player, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	if(player.client)
+		update_silenced(player.client)
 
 /**
- * A listener changed their point ambience preferences. Silences their channels and drops their
- * standing cache, so the next service rebuilds whatever they should hear now from nothing.
+ * Recomputes whether a listener hears point ambience at all and attaches or detaches their move
+ * hook to match, so a silenced listener's steps cost nothing, the same as an observer's. Only
+ * called when the answer can change: at login and from the volume menu. Nothing on a per step or
+ * per walk path reads preferences for this
+ */
+/datum/controller/subsystem/point_ambience/proc/update_silenced(client/listener_client)
+	PRIVATE_PROC(TRUE)
+	var/datum/preferences/prefs = listener_client.prefs
+	listener_client.point_ambience_silenced = prefs && ((prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE) || !prefs.pointambiencevol)
+	var/mob/player = listener_client.mob
+	if(!player || isobserver(player))
+		return
+	if(listener_client.point_ambience_silenced)
+		UnregisterSignal(player, COMSIG_MOVABLE_MOVED)
+	else
+		RegisterSignal(player, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+
+/**
+ * A listener changed their point ambience preferences. Silences their channels, drops their
+ * standing cache so the next service rebuilds whatever they should hear now from nothing, and
+ * attaches or detaches their move hook to match.
  *
  * BOTH directions need this, for different reasons. Turning something OFF leaves the sound playing
  * with nothing that will ever service them again to stop it. Turning it back ON leaves their turf
@@ -1483,6 +1508,7 @@ SUBSYSTEM_DEF(point_ambience)
  */
 /datum/controller/subsystem/point_ambience/proc/listener_prefs_changed(client/listener_client)
 	stop_all_for(listener_client)
+	update_silenced(listener_client)
 
 /// Silences every category for one listener and clears their cached walk, so the next service is
 /// fresh. Leaving the cache would let a stationary listener take the shortcut and stay silent.

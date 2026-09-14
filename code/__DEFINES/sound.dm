@@ -245,18 +245,21 @@
 ///Range at which each band takes over. Nearly every call site lands in the short band.
 #define SOUND_RANGE_MEDIUM 10
 #define SOUND_RANGE_LONG 28
-///Volume a sound falls off TO at max range, rather than falling off to silence. Without a
-///floor the curve reaches 0 before the edge and sounds vanish well inside their range.
-///
-///This is the curve's asymptote, applied BEFORE mastervol, so it arrives scaled: 2 here is 1 for a
-///listener at 50 and 0.5 at 25. There is no lift back afterwards, on purpose, so a player who turned
-///the game down hears the edge as quiet as they asked for.
-///
-///THE DEFAULT, NOT THE ONLY ONE. Point ambience passes its category's floor instead, because a
-///sustained loop and a transient are not audible at the same level: ERP at 1 is heard clearly where
-///a fountain at 1 is not, and 3 carries for a clock's ticks while a torch's crackle at 3 does not.
-///Two is what one-shots and ERP audio land on, and raising it lifts the last tile of every footstep
-///and combat sound in the game, so raise a category instead.
+/**
+ * Volume a sound falls off TO at max range, rather than falling off to silence. Without a floor
+ * the curve reaches 0 before the edge and sounds vanish well inside their range.
+ *
+ * This is the curve's asymptote, applied BEFORE mastervol, so it arrives scaled: 2 here is 1 for a
+ * listener at 50 and 0.5 at 25. There is no lift back afterwards, on purpose, so a player who
+ * turned the game down hears the edge as quiet as they asked for. Point ambience floors are scaled
+ * by the point ambience slider instead of mastervol.
+ *
+ * THE DEFAULT, NOT THE ONLY ONE. Point ambience passes its category's floor instead, because a
+ * sustained loop and a transient are not audible at the same level: ERP at 1 is heard clearly
+ * where a fountain at 1 is not, and 3 carries for a clock's ticks while a torch's crackle at 3 does
+ * not. Two is what one-shots and ERP audio land on, and raising it lifts the last tile of every
+ * footstep and combat sound in the game, so raise a category instead
+ */
 #define SOUND_DEFAULT_MIN_VOLUME 2
 
 ///How much front-back depth a sound is given relative to its sideways offset, as a floor.

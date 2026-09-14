@@ -70,12 +70,17 @@
 	/// world.time a step last ran a service for this client. The standing walk passes over anyone
 	/// served within SSpoint_ambience.standing_skip of now; the step that is coming will serve them.
 	var/point_ambience_last_service = 0
-	/// The last full ambience scan, reused while the client stands still and nothing in the index
-	/// changed: the turf, SSpoint_ambience.static_version and master volume it was taken at, and the
-	/// nearest source per category. The walk ranks straight into this list, so it allocates nothing.
+	/// Point ambience off or its volume at zero. Set at login and by the volume menu, never per step
+	var/point_ambience_silenced = FALSE
+	/**
+	 * The last full ambience scan, reused while the client stands still and nothing in the index
+	 * changed: the turf, SSpoint_ambience.static_version and point ambience volume it was taken at,
+	 * and the nearest source per category. The walk ranks straight into this list, so it allocates
+	 * nothing
+	 */
 	var/turf/point_ambience_cache_turf
 	var/point_ambience_cache_version
-	var/point_ambience_cache_mastervol
+	var/point_ambience_cache_volume
 	var/list/point_ambience_cache_static
 	/// Every source the own-floor walk could reach from anywhere in the client's current index
 	/// cell, as the flat x, y, category index, source the buckets already store. A step inside the

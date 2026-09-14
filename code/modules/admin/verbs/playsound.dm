@@ -105,6 +105,13 @@
 			prefs.lobbymusicvol = vol
 			if(isnewplayer(mob))
 				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+		if("point_ambience_volume")
+			var/was_silent = !prefs.pointambiencevol
+			prefs.pointambiencevol = vol
+			// Crossing zero changes whether they are hooked at all, so it takes the call the toggles
+			// use. Any other change reaches their next service without cutting what is playing
+			if(was_silent != !vol)
+				SSpoint_ambience.listener_prefs_changed(src)
 		else
 			return
 
@@ -142,6 +149,7 @@
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
 	// Sent the way round the player thinks about it, since the flags are stored inverted so that an
 	// existing savefile without them reads as on.
+	data["point_ambience_volume"] = isnum(owner.prefs.pointambiencevol) ? owner.prefs.pointambiencevol : initial(owner.prefs.pointambiencevol)
 	data["point_ambience"] = !(owner.prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
 	data["point_ambience_torch"] = !(owner.prefs.toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data

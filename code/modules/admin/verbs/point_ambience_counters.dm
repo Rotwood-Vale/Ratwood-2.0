@@ -20,7 +20,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	var/tick_standing_hits
 	var/walks_turf
 	var/walks_version
-	var/walks_mastervol
+	var/walks_volume
 	var/index_changes
 	var/queue_served
 	var/queue_wait_total
@@ -54,7 +54,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	tick_standing_hits = ambience.tick_standing_hits
 	walks_turf = ambience.walks_turf
 	walks_version = ambience.walks_version
-	walks_mastervol = ambience.walks_mastervol
+	walks_volume = ambience.walks_volume
 	index_changes = ambience.index_changes
 	queue_served = ambience.queue_served
 	queue_wait_total = ambience.queue_wait_total
@@ -153,7 +153,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	var/index_ms = visits ? walk_ms * index_walks / visits : 0
 	if(visits)
 		var/moved_walks = ambience.walks_turf - snapshot.walks_turf
-		var/volume_walks = ambience.walks_mastervol - snapshot.walks_mastervol
+		var/volume_walks = ambience.walks_volume - snapshot.walks_volume
 		var/list/causes = list()
 		for(var/list/cause in list(list("moved", moved_walks), list("index", index_walks), list("volume", volume_walks), list("no turf", walked - moved_walks - index_walks - volume_walks)))
 			if(cause[2] > 0)

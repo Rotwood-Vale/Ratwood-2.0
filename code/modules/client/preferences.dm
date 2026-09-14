@@ -214,6 +214,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
 	var/ambiencevol = 50
+	/// Point ambience only, and never multiplied by mastervol
+	var/pointambiencevol = 50
 	var/mastervol = 50
 
 	var/anonymize = TRUE

@@ -270,8 +270,9 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
  * * muffled - a SOUND_MUFFLE_* level: NONE, SOFT (the profile: heavier falloff, quieter, dead room)
  *   or ENCLOSED (the profile plus the wall collapse). Boolean callers pass TRUE, which is SOFT.
  * * min_volume - the volume the sound falls off to at max_distance, instead of to silence.
+ * * volume_pref, when set, replaces mastervol as the preference the result is scaled by
  */
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent, channel = 0, pressure_affected = FALSE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, muffled = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent, channel = 0, pressure_affected = FALSE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, muffled = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE, volume_pref = null)
 	if(!client || !can_hear())
 		return FALSE
 	GLOB.sound_local_sends++
@@ -452,7 +453,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	// Master volume applies after falloff so the falloff curve is computed on the
 	// caller's numbers, then the whole result is scaled to the player's preference.
 	if(client.prefs)
-		S.volume *= client.prefs.mastervol * 0.01
+		S.volume *= (isnull(volume_pref) ? client.prefs.mastervol : volume_pref) * 0.01
 	S.volume = min(S.volume, 100)
 
 	if(S.volume <= 0)

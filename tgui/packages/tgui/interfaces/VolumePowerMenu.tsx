@@ -8,6 +8,7 @@ type Data = {
   combat: number;
   ambience: number;
   lobby: number;
+  point_ambience_volume: number;
   point_ambience: boolean;
   point_ambience_torch: boolean;
 };
@@ -91,6 +92,7 @@ export const VolumePowerMenu = () => {
     combat,
     ambience,
     lobby,
+    point_ambience_volume,
     point_ambience,
     point_ambience_torch,
   } = data;
@@ -100,11 +102,12 @@ export const VolumePowerMenu = () => {
   const combatValue = combat ?? 50;
   const ambienceValue = ambience ?? 100;
   const lobbyValue = lobby ?? 100;
+  const pointAmbienceValue = point_ambience_volume ?? 50;
   const pointAmbienceOn = point_ambience ?? true;
   const torchAmbienceOn = point_ambience_torch ?? true;
 
   return (
-    <Window width={470} height={560}>
+    <Window width={470} height={640}>
       <Window.Content>
         <Section title="Volume Levels">
           <VolumeRow
@@ -126,10 +129,10 @@ export const VolumePowerMenu = () => {
             description="Combat and combat-adjacent music channels."
           />
           <VolumeRow
-            label="Ambience"
+            label="Area Ambience"
             value={ambienceValue}
             id="ambience"
-            description="Ambient and environmental loop channels."
+            description="The background loop for the area you are in, and rain."
           />
           <VolumeRow
             label="Lobby Music"
@@ -139,6 +142,12 @@ export const VolumePowerMenu = () => {
           />
         </Section>
         <Section title="Point Ambience">
+          <VolumeRow
+            label="Volume"
+            value={pointAmbienceValue}
+            id="point_ambience_volume"
+            description="How loud hearths, fountains, rivers and sconces are. Master does not affect it. Zero turns it off."
+          />
           <ToggleRow
             label="Point Ambience"
             enabled={pointAmbienceOn}
