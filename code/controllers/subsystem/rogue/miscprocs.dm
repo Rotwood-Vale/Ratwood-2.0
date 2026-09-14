@@ -226,7 +226,7 @@
 	var/devotion_multiplier = 1
 	if(holder?.mind)
 		devotion_multiplier += (holder.get_skill_level(/datum/skill/magic/holy) / SKILL_LEVEL_LEGENDARY)
-	update_devotion((passive_devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
+	update_devotion((devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
 	return TRUE
 
 /mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
