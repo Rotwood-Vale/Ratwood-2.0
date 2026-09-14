@@ -120,9 +120,7 @@
 
 /datum/status_effect/debuff/rotfood/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ROT_EATER))
-		if(ishuman(owner))
-			var/mob/living/carbon/human/h = owner
-			h.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra encurages your lack of waistfulness.")
+		owner.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra encurages your lack of waistfulness.")
 		return ..()
 	owner.add_stress(/datum/stressevent/rotfood)
 	if(iscarbon(owner))

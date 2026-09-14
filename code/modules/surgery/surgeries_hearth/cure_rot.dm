@@ -59,9 +59,7 @@
 		display_results(user, target, span_notice("You burn away the rot inside of [target]."),
 		"[user] burns the rot within [target].",
 		"[user] takes a [tool] to [target]'s innards.")
-		if(ishuman(user))
-			var/mob/living/carbon/human/doctor = user
-			doctor.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in fighting the rot!") //reward for removing rot
+		user.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in fighting the rot!") //reward for removing rot
 			
 		return TRUE
 	return TRUE

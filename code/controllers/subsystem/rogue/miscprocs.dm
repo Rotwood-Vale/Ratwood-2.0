@@ -241,6 +241,12 @@
 		return TRUE
 	return FALSE
 
+/mob/proc/reward_actions(multiplier = 1, major = FALSE, patrons = null, success_message = null)
+	if(!ishuman(src))
+		return FALSE
+	var/mob/living/carbon/human/H = src
+	return H.reward_actions(multiplier, major, patrons, success_message)
+
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()
 	set name = "(DEBUG)Change Devotion"

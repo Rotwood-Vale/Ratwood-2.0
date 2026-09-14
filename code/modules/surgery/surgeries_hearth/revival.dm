@@ -98,9 +98,7 @@
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 	target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
 	target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
-	if(ishuman(user))
-		var/mob/living/carbon/human/doctor = user
-		doctor.reward_actions(major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my work in bringing lifes out of necras hold!") // pestra likes lux revives
+	user.reward_actions(major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my work in bringing lifes out of necras hold!") // pestra likes lux revives
 	return TRUE
 
 /datum/surgery_step/infuse_lux/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, success_prob)

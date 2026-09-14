@@ -55,7 +55,5 @@
 		//record_featured_stat(FEATURED_STATS_CRIMINALS, user)	- This.. isn't normally criminal.
 		record_round_statistic(STATS_LUX_HARVESTED)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(ishuman(user))
-			var/mob/living/carbon/human/doctor = user
-			doctor.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my work in securing lux!") // pestra likes lux removals
+		user.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my work in securing lux!") // pestra likes lux removals
 	return TRUE
