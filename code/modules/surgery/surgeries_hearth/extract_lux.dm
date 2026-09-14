@@ -57,7 +57,5 @@
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(ishuman(user))
 			var/mob/living/carbon/human/doctor = user
-			if(doctor.patron == /datum/patron/divine/pestra)
-				if(doctor.reward_actions(major = TRUE)) // pestra likes lux removals
-					to_chat(doctor, "<font color='purple'>Pestra rewards my work in securing lux!</font>")
+			doctor.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my work in securing lux!") // pestra likes lux removals
 	return TRUE

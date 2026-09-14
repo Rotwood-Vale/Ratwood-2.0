@@ -229,10 +229,17 @@
 	update_devotion((passive_devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
 	return TRUE
 
-/mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE)
+/mob/living/carbon/human/proc/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
 	if(!devotion)
 		return FALSE
-	return devotion.reward_actions(src, multiplier, major)
+	if(patrons && !istype(patron, patrons))
+		return FALSE
+	
+	if(devotion.reward_actions(src, multiplier, major))
+		if(success_message)
+			to_chat(src, "<font color='purple'>[success_message]</font>")
+		return TRUE
+	return FALSE
 
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()

@@ -61,8 +61,7 @@
 		"[user] takes a [tool] to [target]'s innards.")
 		if(ishuman(user))
 			var/mob/living/carbon/human/doctor = user
-			if(doctor.patron == /datum/patron/divine/pestra)
-				if(doctor.reward_actions(multiplier = 0.5, major = TRUE)) //reward for removing rot
-					to_chat(doctor, "<font color='purple'>Pestra rewards my efforts in fighting the rot!</font>")
+			doctor.reward_actions(multiplier = 0.5, major = TRUE, patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in fighting the rot!") //reward for removing rot
+			
 		return TRUE
 	return TRUE
