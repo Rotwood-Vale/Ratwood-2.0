@@ -235,6 +235,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 	S["tgui_theme"]			>> tgui_theme
+	S["parchment_skin"]		>> parchment_skin
 	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
 	S["be_special"] 		>> be_special
@@ -246,10 +247,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["top_examine"]		>> top_examine
+	S["show_mouseover_role"] >> show_mouseover_role
 	S["nsfw_examine_always"]>> nsfw_examine_always
 	S["wildshape_name"]		>> wildshape_name
 	S["mute_animal_emotes"]	>> mute_animal_emotes
 	S["autoconsume"]		>> autoconsume
+	S["autowoodcut"]		>> autowoodcut
+	S["autopicking"]		>> autopicking
 	S["no_examine_blocks"]	>> no_examine_blocks
 	S["no_autopunctuate"]	>> no_autopunctuate
 	S["no_language_fonts"]	>> no_language_fonts
@@ -263,7 +268,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
 	S["edging"]				>> edging
+	S["sensitive_brands"] 	>> sensitive_brands
+	S["facial_brands"] 		>> facial_brands
+	S["pubes"]				>> pubes
+	S["pits"]				>> pits
+	S["descriptor_color"]	>> descriptor_color
+	S["cursed_collarable"] 	>> cursed_collarable
 	S["shake"]				>> shake
+	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 	S["runmode"]			>> runmode
@@ -280,6 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_orbit"]		>> ghost_orbit
 	S["ghost_accs"]			>> ghost_accs
 	S["ghost_others"]		>> ghost_others
+	S["admin_ghost_icon"]	>> admin_ghost_icon
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
@@ -318,12 +331,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_on_map		= sanitize_integer(chat_on_map, 0, 1, initial(chat_on_map))
 	showrolls		= sanitize_integer(showrolls, 0, 1, initial(showrolls))
 	chatheadshot	= sanitize_integer(chatheadshot, 0, 1, initial(chatheadshot))
+	show_mouseover_role = sanitize_integer(show_mouseover_role, 0, 1, initial(show_mouseover_role))
 	chastity_hardmode = sanitize_integer(chastity_hardmode, CHASTITY_HARDMODE_DISABLED, CHASTITY_HARDMODE_ENABLED, initial(chastity_hardmode))
 	max_chat_length = sanitize_integer(max_chat_length, 1, CHAT_MESSAGE_MAX_LENGTH, initial(max_chat_length))
 	see_chat_non_mob	= sanitize_integer(see_chat_non_mob, 0, 1, initial(see_chat_non_mob))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	tgui_theme		= sanitize_text(tgui_theme, initial(tgui_theme))
+	parchment_skin	= sanitize_parchment_skin(parchment_skin)
 	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
 	windowflashing	= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
@@ -340,6 +355,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	if(admin_ghost_icon && !isicon(admin_ghost_icon))
+		admin_ghost_icon = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
@@ -413,10 +430,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["top_examine"], top_examine)
+	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
 	WRITE_FILE(S["nsfw_examine_always"], nsfw_examine_always)
 	WRITE_FILE(S["wildshape_name"], wildshape_name)
 	WRITE_FILE(S["mute_animal_emotes"], mute_animal_emotes)
 	WRITE_FILE(S["autoconsume"], autoconsume)
+	WRITE_FILE(S["autowoodcut"], autowoodcut)
+	WRITE_FILE(S["autopicking"], autopicking)
 	WRITE_FILE(S["no_examine_blocks"], no_examine_blocks)
 	WRITE_FILE(S["no_autopunctuate"], no_autopunctuate)
 	WRITE_FILE(S["no_language_fonts"], no_language_fonts)
@@ -429,7 +450,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["edging"], edging)
+	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
+	WRITE_FILE(S["facial_brands"], facial_brands)
+	WRITE_FILE(S["pubes"], pubes)
+	WRITE_FILE(S["pits"], pits)
+	WRITE_FILE(S["descriptor_color"], descriptor_color)
+	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
 	WRITE_FILE(S["shake"], shake)
+	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)
@@ -445,6 +473,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
 	WRITE_FILE(S["tgui_theme"], tgui_theme)
+	WRITE_FILE(S["parchment_skin"], parchment_skin)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
 	WRITE_FILE(S["be_special"], be_special)
@@ -458,6 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ghost_orbit"], ghost_orbit)
 	WRITE_FILE(S["ghost_accs"], ghost_accs)
 	WRITE_FILE(S["ghost_others"], ghost_others)
+	WRITE_FILE(S["admin_ghost_icon"], admin_ghost_icon)
 	WRITE_FILE(S["preferred_map"], preferred_map)
 	WRITE_FILE(S["ignoring"], ignoring)
 	WRITE_FILE(S["ghost_hud"], ghost_hud)
@@ -493,15 +523,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 			if(!spec_check())
-				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species].")
-				pref_species = new default_species.type()
+				testing("spec_check() failed on type [newtype] and name [species_name], defaulting to [default_species::name].")
+				pref_species = new default_species
 			else
 				testing("spec_check() succeeded on type [newtype] and name [species_name].")
 		else
-			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species].")
-			pref_species = new default_species.type()
+			testing("GLOB.species_list failed on name [species_name], defaulting to [default_species::name].")
+			pref_species = new default_species
 	else
-		pref_species = new default_species.type()
+		pref_species = new default_species
 	if(pref_species.custom_selection)
 		S["race_bonus"] >> race_bonus
 
@@ -737,7 +767,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
-	hear_barks = TRUE
+	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
 		bark_id = pick(GLOB.bark_random_list)
@@ -770,6 +800,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!voice_pitch)
 		voice_pitch = 1
 	S["skin_tone"]			>> skin_tone
+	S["mutant_skin"]		>> mutant_skin
 	S["hairstyle_name"]		>> hairstyle
 	S["facial_style_name"]	>> facial_hairstyle
 	S["accessory"]			>> accessory
@@ -1039,6 +1070,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/skin_tone in pref_species.get_skin_list())
 		valid_skin_colors += valid_skin_tones[skin_tone]
 	skin_tone = sanitize_inlist(skin_tone, valid_skin_colors, valid_skin_colors[1])
+	mutant_skin = pref_species.mutant_skin_option && sanitize_integer(mutant_skin, FALSE, TRUE, FALSE)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -1102,6 +1134,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["mutant_skin"]			, mutant_skin)
 	WRITE_FILE(S["hairstyle_name"]		, hairstyle)
 	WRITE_FILE(S["facial_style_name"]	, facial_hairstyle)
 	WRITE_FILE(S["accessory"]			, accessory)

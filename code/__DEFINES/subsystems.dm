@@ -123,7 +123,11 @@
 #define INIT_ORDER_DUNGEON			49
 #define INIT_ORDER_NETWORKS			45
 #define INIT_ORDER_SPATIAL_GRID     43
-#define INIT_ORDER_ECONOMY			40
+// AP runs economy at -2 so roundstart_blockades() fires after SSatoms (30) and SSquestpool
+// (default) have registered the quest landmarks its per-region checks need; the ES port's 40
+// ran it before any landmark existed, so no roundstart blockade could ever roll.
+// SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
+#define INIT_ORDER_ECONOMY			-2
 #define INIT_ORDER_OUTPUTS			35
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_TREES			29
@@ -142,6 +146,9 @@
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_OUTDOOR_EFFECTS  -21
 #define INIT_ORDER_SHUTTLE			-22
+// AP parity: must init AFTER SSmerchant (INIT_ORDER_SHUTTLE, -22) — the day-1 trade ship pool
+// rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
+#define INIT_ORDER_MERCHANT_TRADE	-23
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
@@ -222,3 +229,19 @@
 			}\
 		} \
 	}
+
+// Vote subsystem counting methods
+/// First past the post. One selection per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_SINGLE 1
+/// Approval voting. Any number of selections per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_MULTI 2
+
+/// The choice with the most votes wins. Ties are broken by the first choice to reach that number of votes.
+#define VOTE_WINNER_METHOD_SIMPLE "Simple"
+/// The winning choice is selected randomly based on the number of votes each choice has.
+#define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
+/// There is no winner for this vote.
+#define VOTE_WINNER_METHOD_NONE "None"
+
+/// Returned by [/datum/vote/proc/can_be_initiated] to denote the vote is valid and can be initiated.
+#define VOTE_AVAILABLE "Vote Available"

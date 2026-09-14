@@ -17,7 +17,7 @@
 	race_titles = list(
 	"Catvolk", "Dogvolk", "Volfvolk", "Lionvolk", "Venardvolk", "Tigervolk", "Sheepvolk",
 	"Goatvolk", "Rousvolk", "Possumvolk", "Pigvolk", "Boarvolk", "Rabbitvolk", "Cabbitvolk", "Harevolk", "Horsevolk",
-	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk",
+	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk", "Rakunvolk",
 	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
 	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Drakianvolk", "Dragonvolk", "Monstervolk", "Chimeravolk"
 	)
@@ -97,6 +97,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/anthro,
+		/datum/customizer/bodypart_feature/pubes/furry,
+		/datum/customizer/bodypart_feature/pits/furry,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -104,6 +106,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/small/plain,
 		/datum/body_marking/small/sock,
 		/datum/body_marking/small/socklonger,
@@ -190,4 +195,3 @@
 	returned["mcolor2"] = second_color
 	returned["mcolor3"] = third_color
 	return returned
-

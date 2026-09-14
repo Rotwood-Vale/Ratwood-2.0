@@ -151,10 +151,6 @@
 	volume_layer *= speed // speed is always between 1-5 (SEX_SPEED_MIN-SEX_SPEED_MAX)
 	playsound(target, pick('sound/misc/mat/saliva (1).ogg','sound/misc/mat/saliva (2).ogg','sound/misc/mat/saliva (3).ogg'), volume_layer, TRUE, -2, ignore_walls = FALSE)
 
-/datum/sex_controller/proc/chastitycourse_noise(mob/living/carbon/human/action_target) // for actions that involve moving a chastity device. Chance increases with force and speed.
-	modular_chastitycourse_noise(action_target)
-	return
-
 /datum/sex_controller/proc/try_do_pain_scream(mob/living/carbon/human/action_target, pain_amt) // for spiked chastity and other high-pain actions, try to make the target scream in pain. Chance increases with pain amount and action force.
 	if(!action_target || QDELETED(action_target))
 		return
@@ -223,6 +219,23 @@
 		if(grabstate == null || l_grab.grab_state > grabstate)
 			grabstate = l_grab.grab_state
 	return grabstate
+
+//Used only for the rub ears action currently, changes messaging/arousal if target has nonhuman ears
+/mob/living/carbon/human/proc/has_nonhuman_ears()
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		return TRUE
+
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	if(!ears)
+		return FALSE
+
+	if(!ears.accessory_type)
+		return iself(src) || ishalfelf(src) || isdarkelf(src) || iswoodelf(src) || isgoblinp(src) || istabaxi(src) || iskobold(src) || isvulp(src) || islupian(src)
+
+	if(!ispath(ears.accessory_type, /datum/sprite_accessory/ears))
+		return FALSE
+
+	return TRUE
 
 /datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
 	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container

@@ -1,6 +1,7 @@
 
 
 /obj/item/clothing/ring
+	no_loot_taint = TRUE
 	name = "ring"
 	desc = ""
 	w_class = WEIGHT_CLASS_TINY
@@ -30,6 +31,10 @@
 	icon_state = "ring_a"
 	sellprice = 11
 
+/obj/item/clothing/ring/bronze
+	name = "bronze ring"
+	desc = "A ring of bronzen resiliance."
+	icon_state = "ring_b"
 
 /obj/item/clothing/ring/gold
 	name = "gold ring"
@@ -333,6 +338,10 @@
 	if(world.time > (current_time + 30 SECONDS))
 		return
 
+/obj/item/clothing/ring/band/bronze
+	name = "bronze weddingband"
+	desc = "A resilient weddingband of bronze, ornately decorated with the engravings of a lover's name."
+	icon_state = "b_ring_wedding"
 
 //blacksteel rings
 /obj/item/clothing/ring/emeraldbs

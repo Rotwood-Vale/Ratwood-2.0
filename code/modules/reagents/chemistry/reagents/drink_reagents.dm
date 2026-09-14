@@ -37,8 +37,8 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.adjust_hydration(hydration)
-		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume = min(M.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 	M.energy_add(8)
 	M.dizziness = max(0, M.dizziness - 5)
 	M.drowsyness = max(0, M.drowsyness - 3)
@@ -88,6 +88,6 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.adjust_hydration(10)
-		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume = min(H.blood_volume+10, BLOOD_VOLUME_NORMAL)
+		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			H.set_blood_volume(min(H.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 	..()

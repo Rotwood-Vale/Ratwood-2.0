@@ -14,7 +14,7 @@
 	tutorial = "Odd-jobs, running messages, fixing dents and talking to locals; the Guard can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. \
 				Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. \
 				Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
-	
+
 	outfit = /datum/outfit/job/roguetown/rookie
 	display_order = JDO_SQUIRE
 	give_bank_account = TRUE
@@ -84,10 +84,10 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
 		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/citywatch/janissary
 		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
@@ -156,10 +156,10 @@
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
 		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/citywatch/janissary
 		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
@@ -187,7 +187,7 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			if("Sling")
 				beltr = /obj/item/quiver/sling/iron
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling 
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 
 		switch(armor_choice)
 			if("Light Armor")

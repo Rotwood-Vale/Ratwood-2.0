@@ -72,7 +72,9 @@
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/tomb/cave)
 "D" = (
-/obj/structure/bars/pipe/left,
+/obj/structure/bars/pipe{
+	dir = 9
+	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/tomb/cave)
 "E" = (

@@ -4,7 +4,7 @@
 	icon = 'icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	density = FALSE
-	var/looted = FALSE
+	var/body_looted = FALSE
 	var/list/loot_table
 	var/list/loot_table_lucky
 	var/list/pose_states
@@ -19,7 +19,7 @@
 		icon_state = pick(pose_states)
 
 /obj/structure/deadbody/attack_hand(mob/living/user)
-	if(looted)
+	if(body_looted)
 		to_chat(user, span_warning("There's nothing left worth taking."))
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -29,7 +29,7 @@
 	playsound(src, pick('sound/foley/equip/rummaging-01.ogg', 'sound/foley/equip/rummaging-02.ogg', 'sound/foley/equip/rummaging-03.ogg'), 50, FALSE)
 	if(user.STALUC < 10 && prob(40))
 		to_chat(user, span_warning("You come up empty. Nothing but dust and bad luck."))
-		looted = TRUE
+		body_looted = TRUE
 		user.visible_message(span_notice("[user] finishes searching [src]."), span_notice("You finish searching [src]."))
 		return
 	var/items_found = 1
@@ -47,7 +47,7 @@
 			to_chat(user, span_notice("A lucky find! You pull out [found]."))
 		else
 			to_chat(user, span_notice("You pull out [found]."))
-	looted = TRUE
+	body_looted = TRUE
 	user.visible_message(span_notice("[user] finishes searching [src]."), span_notice("You finish searching [src]."))
 
 // ---- SUBTYPES ----

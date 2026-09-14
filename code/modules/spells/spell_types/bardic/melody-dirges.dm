@@ -74,6 +74,6 @@
 		pulse = 0
 		O.energy_add(-12.5)
 		for (var/mob/living/carbon/human/H in hearers(10, owner))
-			if(O.in_audience(H))
+			if(O.in_audience(H) || H == O)
 				var/buff = buffs_to_apply_by_level?[O.inspiration.level] || buff_to_apply
 				H.apply_status_effect(buff)

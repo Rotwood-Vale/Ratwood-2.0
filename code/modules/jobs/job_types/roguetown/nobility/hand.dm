@@ -11,7 +11,7 @@
 	outfit = /datum/outfit/job/roguetown/hand
 	advclass_cat_rolls = list(CTAG_HAND = 20)
 	display_order = JDO_HAND
-	tutorial = "Whether by outstanding merit or petty favoritism, you are the Archduke’s most trusted representative and advisor. Your authority is second only to the Archduke themselves. The weight of your words can shape policy, stir conflict, or silence dissent. Let none forget whose will you carry, and do not fail your benefactor."
+	tutorial = "Whether by outstanding merit or petty favoritism, you are the Archduke's most trusted representative and advisor. Your authority is second only to the Archduke themselves. The weight of your words can shape policy, stir conflict, or silence dissent. Let none forget whose will you carry, and do not fail your benefactor."
 	whitelist_req = TRUE
 	give_bank_account = 44
 	noble_income = 22
@@ -78,7 +78,7 @@
 
 /datum/outfit/job/roguetown/hand/blademaster/pre_equip(mob/living/carbon/human/H)
 	r_hand = /obj/item/rogueweapon/sword/long/dec //Gets STR so longsword instead of a rapier
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/royal
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
 	pants = /obj/item/clothing/under/roguetown/tights/black
@@ -86,14 +86,14 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		r_hand = /obj/item/rogueweapon/sword/sabre/dec
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
 	)
 	if(H.age == AGE_OLD)
@@ -138,7 +138,7 @@
 /datum/outfit/job/roguetown/hand/spymaster/pre_equip(mob/living/carbon/human/H)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//Just like the wizard, since he can dip the blade.
@@ -159,7 +159,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 6, TRUE)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
@@ -167,7 +167,7 @@
 //Advisor Start
 /datum/advclass/hand/advisor
 	name = "Advisor"
-	tutorial = "You serve as both scholar and advisor to the Noble-Family, wielding knowledge and magicks with potent ability. Let no man forget whose ear you whisper into, your sage advice has saved more lives than any strategist’s orders or spymaster’s schemes could ever claim to."
+	tutorial = "You serve as both scholar and advisor to the Noble-Family, wielding knowledge and magicks with potent ability. Let no man forget whose ear you whisper into, your sage advice has saved more lives than any strategist's orders or spymaster's schemes could ever claim to."
 	outfit = /datum/outfit/job/roguetown/hand/advisor
 
 	category_tags = list(CTAG_HAND)
@@ -199,8 +199,8 @@
 
 //Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.
 /datum/outfit/job/roguetown/hand/advisor/pre_equip(mob/living/carbon/human/H)
-	r_hand = /obj/item/rogueweapon/sword/rapier/dec
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	r_hand = /obj/item/rogueweapon/sword/rapier/hand
+	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
 	pants = /obj/item/clothing/under/roguetown/tights/black
@@ -208,13 +208,13 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		head = /obj/item/clothing/head/roguetown/turban/fancypurple
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!

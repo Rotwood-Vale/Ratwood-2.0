@@ -52,6 +52,12 @@
 	var/mob/living/carbon/last_owner = null
 	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
 	var/should_regenerate = FALSE
+	/// Branded enslavement mark on this organ
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this organ, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this organ, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 32
@@ -328,6 +334,16 @@
 		bodypart_overlays(organ_overlay)
 		return organ_overlay
 
+/obj/item/organ/proc/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return jointext(list(
+		bodypart_icon,
+		bodypart_icon_state,
+		bodypart_layer,
+		color,
+		accessory_type,
+		accessory_colors
+	), "-")
+
 /// Proc to customize the base icon of the organ.
 /obj/item/organ/proc/bodypart_icon(mutable_appearance/standing)
 	return
@@ -345,7 +361,8 @@
 	if(!isnull(colors))
 		accessory_colors = colors
 	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-	accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
+	if(accessory) //a null type is valid, it just means there's no accessory left to colour
+		accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
 	update_accessory_colors()
 
 /obj/item/organ/proc/build_colors_for_accessory(list/source_key_list)

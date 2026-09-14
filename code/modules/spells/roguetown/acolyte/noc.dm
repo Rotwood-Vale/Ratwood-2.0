@@ -26,6 +26,16 @@
 	miracle = TRUE
 	cost = 3
 
+/obj/effect/proc_holder/spell/invoked/blindness/warscholar // Be very careful who this is given out to, Blindness can be surprisingly strong.
+	name = "Arcyne Blindness"
+	desc = "Direct a mote of living darkness to temporarily blind another. This imperfect replica of divine magick requires a Naledian Psycross to function."
+	invocations = list("Visus discede!")
+	devotion_cost = 0
+	recharge_time = 25 SECONDS // +10 because improper Naledi imitation
+	miracle = FALSE
+	req_items = list (/obj/item/clothing/neck/roguetown/psicross/naledi)
+	associated_skill = /datum/skill/magic/arcane
+
 /obj/effect/proc_holder/spell/invoked/blindness/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
@@ -81,7 +91,7 @@
 		animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 		target.mob_timers[MT_INVISIBILITY] = world.time + dur SECONDS
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), dur SECONDS)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] fades back into view."), span_notice("You become visible again.")), 15 SECONDS)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] fades back into view."), span_notice("You become visible again.")), dur SECONDS)
 		return TRUE
 	revert_cast()
 	return FALSE

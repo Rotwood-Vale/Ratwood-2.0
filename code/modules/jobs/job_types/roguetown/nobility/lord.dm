@@ -89,13 +89,13 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak
 		wrists = /obj/item/clothing/wrists/roguetown/royalsleeves
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
-		if(SSmapping.config.map_name == "Rockhill")
+		if(SSmapping.current_map.map_name == "Rockhill")
 			armor = null
 			wrists = null
 			mask = /obj/item/clothing/head/roguetown/duchess_hood
 			cloak = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/duchess
 			gloves = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
-		if(SSmapping.config.map_name == "Desert Town")
+		if(SSmapping.current_map.map_name == "Desert Town")
 			head = /obj/item/clothing/head/roguetown/sultana
 			mask = /obj/item/clothing/head/roguetown/crown/serpcrown
 			// l_hand = /obj/item/rogueweapon/lordscepter //currently aren't working on sultans
@@ -110,10 +110,10 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
 		armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal
 		shoes = /obj/item/clothing/shoes/roguetown/boots
-		if(SSmapping.config.map_name == "Rockhill")
+		if(SSmapping.current_map.map_name == "Rockhill")
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/duke
 			cloak = null
-		if(SSmapping.config.map_name == "Desert Town")
+		if(SSmapping.current_map.map_name == "Desert Town")
 			head = /obj/item/clothing/head/roguetown/sultan
 			mask = /obj/item/clothing/head/roguetown/crown/serpcrown
 			// l_hand = /obj/item/rogueweapon/lordscepter

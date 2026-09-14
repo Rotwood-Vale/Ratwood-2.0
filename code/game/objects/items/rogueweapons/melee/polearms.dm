@@ -134,8 +134,9 @@
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 1.2
-	clickcd = 13
+	damfactor = 1.1
+	clickcd = 15
+	swingdelay = 2
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	blunt_chipping = TRUE
@@ -229,6 +230,8 @@
 	reach = 3 // Yep! 3 tiles
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
 
 /datum/intent/lance/onehand
 	chargetime = 5 SECONDS
@@ -543,6 +546,25 @@
 	throwforce = 15
 	special = null
 
+/obj/item/rogueweapon/spear/billhook/zizo
+	name = "avantyne billhook"
+	desc = "A twisted implement of harvest, its hooked edge festering with crystalline malice. It is a weapon of pure upheaval, designed \
+	to drag Grimoria's false idols into the dirt."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "zizobillhook"
+	unenchantable = TRUE
+	max_blade_int = 300
+	max_integrity = 400
+	force = 30
+	force_wielded = 35
+	wdefense = 9
+	throwforce = 35 
+	special = /datum/special_intent/polearm_backstep
+
+/obj/item/rogueweapon/spear/billhook/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "POLEARM")
+
 /obj/item/rogueweapon/spear/improvisedbillhook
 	force = 12
 	force_wielded = 25
@@ -824,6 +846,69 @@
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
 
+/obj/item/rogueweapon/halberd/blacksteel
+	name = "blacksteel halberd"
+	desc = "A magnificent halberd of blacksteel. It is the finest arm-of-war that a sixteenth-century knight could ask for, especially \
+	when it comes to attracting fair maidens in the highest courts. Wrap a length of cloth around the shaft to bear your heraldry."
+	icon_state = "bs_halberd"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	force_wielded = 35
+	max_blade_int = 400
+	wdefense_wbonus = 3 //+3 over the traditional spear, once wielded.
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/axe_swing,
+		/datum/special_intent/greatsword_swing,
+		)
+
+/obj/item/rogueweapon/halberd/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/halberd/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
+/obj/item/rogueweapon/halberd/blacksteel/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/halberd/blacksteel/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/halberd/blacksteel/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
+
 /obj/item/rogueweapon/halberd/bardiche/scythe
 	name = "summer scythe"
 	desc = "Summer's verdancy runs through the head of this scythe. All the more to sow."
@@ -834,8 +919,10 @@
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic
 	name = "Stigmata"
-	desc = "Christened in the Siege of Lirvas, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
+	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
+	force = 25
+	force_wielded = 25
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
 	AddComponent(\
@@ -852,7 +939,8 @@
 	name = "psydonic halberd"
 	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
 	icon_state = "silverhalberd"
-	force = 10//Use the spear instead if you're going to one-hand this.
+	force = 15
+	force_wielded = 25
 	minstr = 11
 	wdefense = 7
 	is_silver = TRUE
@@ -916,7 +1004,6 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
-	sellprice = 60
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()
@@ -929,6 +1016,70 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/eaglebeak/blacksteel
+	name = "blacksteel polehammer"
+	desc = "A magnificent polehammer of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
+	flared macehead; excellent for piercing and shattering alloys, respectively. Wrap a length of cloth around the shaft to bear your heraldry."
+	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak/oneh)
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
+	icon_state = "bs_eaglebeak"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	force_wielded = 35
+	wdefense_wbonus = 3 //+3 over the traditional spear, once wielded.
+	max_integrity = 350 //Basic idea - blacksteel blunt weapons get more integrity, blacksteel edged weapons get more sharpness. Minimal overlap?
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/flail_sweep,
+		/datum/special_intent/ground_smash
+		)
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/examine(mob/user)
+	. = ..()
+	if(!used)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/eaglebeak/blacksteel/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
 
 /obj/item/rogueweapon/eaglebeak/lucerne
 	name = "lucerne"
@@ -938,7 +1089,6 @@
 	icon_state = "polehammer"
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150
-	sellprice = 40
 
 // A worse thrust for weapons specialized in other damage type like cut or blunt
 /datum/intent/spear/thrust/eaglebeak
@@ -970,12 +1120,89 @@
 	force = 25
 	force_wielded = 28
 	throwforce = 30
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "bronzespear"
 	smeltresult = /obj/item/ingot/bronze
 	armor_penetration = 22 //In-between a spear and javelin.
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
 	max_blade_int = 225
 	max_integrity = 155
+
+/obj/item/rogueweapon/spear/bronze/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/spear/bronze/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/spear/bronze/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
+
+/obj/item/rogueweapon/spear/bronze/winged
+	name = "bronze winged spear"
+	desc = "An antiquital staff, adorned with a winged bronze spearhead. The flared edges catch errant strikes and keep snarling foes from \
+	further impaling themselves in order to maul its wielder. </br>Scholars believe this particular type of polearm was made to counter Vheslynic \
+	seadaemons, during the now-mythologized Syonic era's collapse."
+	icon_state = "bronzewingedspear"
+	item_state = "bronzewingedspear"
+	wdefense = 6 //Functionally the same, but with +1 DEF.
+
+/obj/item/rogueweapon/spear/bronze/winged/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/spear/bronze/winged/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/spear/bronze/winged/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
+
+// these only exist for Thespian because someone at Azure didn't think to let the spear just spawn at our players feet if the hand is full... whatever, no strap is auraful
+/obj/item/rogueweapon/spear/bronze/strapless
+	desc = "An antiquital staff, adorned with a bronze spearhead. Ancient in both design and purpose, its lighter weight once complimented \
+	the towering shields of precivilizational legionnaires. While rarely seen beyond the Deadlands, nowadaes, its lightweight balance makes \
+	it perfect for one-handed thrusts and throws. </br>This particular spear has a thin strap running along its grain, allowing it to be stowed \
+	without the need for a greatweapon strap."
+	slot_flags = ITEM_SLOT_BACK //Option-unique, uncraftable. Ensures the loadout doesn't implode on itself.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
+
+/obj/item/rogueweapon/spear/bronze/winged/strapless
+	desc = "An antiquital staff, adorned with a winged bronze spearhead. The flared edges catch errant strikes and keep snarling foes from further \
+	impaling themselves in order to maul its wielder. </br>Scholars believe this particular type of polearm was made to counter Vheslynic seadaemons, \
+	during the now-mythologized Syonic era's collapse. </br>This particular spear has a thin strap running along its grain, allowing it to be stowed \
+	without the need for a greatweapon strap."
+	slot_flags = ITEM_SLOT_BACK //Ditto.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
 
 /obj/item/rogueweapon/greatsword
 	force = 14
@@ -1080,6 +1307,21 @@
 	force = 14
 	force_wielded = 35
 
+/obj/item/rogueweapon/greatsword/zizo
+	name = "avantyne greatsword"
+	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
+	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
+	icon_state = "zizogsw"
+	unenchantable = TRUE
+	force = 20
+	force_wielded = 40
+	max_blade_int = 500
+	max_integrity = 500
+
+/obj/item/rogueweapon/greatsword/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "GREATSWORD")
+
 /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox
 	name = "Censure"
 	desc = "A blade that invites imagery of hope. Of men clad in shattered plate and bearing blackened pauldrons, \
@@ -1167,6 +1409,8 @@
 	name = "Creed"
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
+	force = 25
+	force_wielded = 25
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
@@ -1382,6 +1626,18 @@
 	icon_state = "quarterstaff_steel"
 	max_integrity = 200
 
+/obj/item/rogueweapon/woodstaff/quarterstaff/blacksteel
+	name = "blacksteel quarterstaff"
+	desc = "A quarterstaff reinforced with blacksteel tips. One might imagine that the elegance of such a design hardly befits the people \
+	who'd traditionally wield such a weapon; then again, who are we to judge?"
+	force = 20
+	force_wielded = 30
+	icon_state = "quarterstaff_blacksteel"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	max_integrity = 350
+	smeltresult = /obj/item/ingot/blacksteel
+	wdefense_wbonus = 7	//12 when wielded.
+
 /obj/item/rogueweapon/woodstaff/quarterstaff/silver
 	name = "silver quarterstaff"
 	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
@@ -1464,6 +1720,17 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/rogueweapon/spear/blacksteel
+	name = "blacksteel spear"
+	desc = "A magnificent winged spear of blacksteel; 'nuff said."
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "blacksteelspear"
+	force_wielded = 35
+	wdefense = 6
+	wdefense_wbonus = 3
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/blacksteel
+
 /obj/item/rogueweapon/spear/otava
 	name = "banner of Otava"
 	desc = "A banner carrying the colors of the Principality of Otava, turned into a formidable steel pike. \
@@ -1529,6 +1796,44 @@
 	gripped_intents = list(/datum/intent/spear/thrust/lance, /datum/intent/lance, SPEAR_BASH)
 	resistance_flags = null
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/spear/lance/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Banner") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds a banner to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "detail"
+		update_icon()
+
+/obj/item/rogueweapon/spear/lance/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/rogueweapon/spear/lance/attack_self(mob/living/user)
+	. = ..()
+	update_icon()
+
+/obj/item/rogueweapon/spear/lance/blacksteel
+	name = "blacksteel lance"
+	desc = "A magnificent lance of blacksteel, designed to be wielded on saigaback in jousting tournaments. Even so, it isn't uncommon to see it \
+	being handled on foot as a pike by Grenzelhoft's blacksteel-armored knights. Wrap a length of cloth around the shaft to bear your heraldry."
+	icon_state = "bs_lance"
+	force = 20
+	force_wielded = 25
+	wdefense_wbonus = 2 //+1 over the traditional spear, once wielded.
+	max_integrity = 300
+	max_blade_int = 300
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(/datum/intent/spear/thrust, /datum/intent/lance/onehand, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/spear/thrust/lance, /datum/intent/lance, SPEAR_BASH)
 
 /obj/item/rogueweapon/spear/naginata
 	name = "naginata"
@@ -1668,8 +1973,8 @@
 	clickcd = 55
 	recovery = 15
 	item_d_type = "blunt"
-	canparry = FALSE
-	candodge = FALSE
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 
 /datum/intent/sword/flay/dragonslayer
 	name = "flay"
@@ -1726,13 +2031,14 @@
 	possible_item_intents = list(/datum/intent/sword/chop,/datum/intent/sword/strike) //bash is for nonlethal takedowns, only targets limbs
 	// Design Intent: It is pretty purely a two-handed weapon. In one hand it's a bit clumsy.
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
-	alt_intents = list(null)//can't be alt-gripped. Ought to compensate for that.
+	alt_intents = list(null)//can't be alt-gripped. Sharpness is greater to compensate.
 	name = "elven curveblade"
 	desc = "The Elven Curveblade is a traditional weapon, its practice as much a dance as a method of death. Flowing like the water's current, let its path lead to your enemy's throat."
 	icon_state = "elfcurveblade"
 	wlength = WLENGTH_LONG//less reach than greatsword!
 	minstr = 7//lighter
 	wdefense = 8//better defence than greatsword
+	max_blade_int = 350 // 50 more than greatsword.
 	sellprice = 60
 
 
@@ -1740,4 +2046,6 @@
 	name = "elven swordspear"
 	desc = "An elven weapon that combines the elegant sweeping blade typical of elven design with a lengthy handle. The true guardian of the forest realm."
 	icon_state = "elfglaive"
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
+	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60

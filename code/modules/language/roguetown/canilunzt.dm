@@ -1,6 +1,6 @@
 /datum/language/canilunzt
 	name = "Canilunzt"
-	desc = "A somewhat simple language consisting of heavily articulate barks, growls, yaps, and combined movements of the tail and ears. It's natively spoken by the Lupian and Venardine. Its parlance has been loosely compared to the Grenzel language group."
+	desc = "(Spoken with ,l) A somewhat simple language consisting of heavily articulate barks, growls, yaps, and combined movements of the tail and ears. It's natively spoken by the Lupian and Venardine. Its parlance has been loosely compared to the Grenzel language group."
 	speech_verb = "rrrfts"
 	ask_verb = "rurs"
 	exclaim_verb = "snaps"

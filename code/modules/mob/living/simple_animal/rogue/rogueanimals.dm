@@ -36,13 +36,12 @@
 	tame_chance = 0
 	retreat_distance = 10
 	minimum_distance = 10
-	dodge_sound = 'sound/combat/dodge.ogg'
 	dodge_prob = 0
 
 	var/deaggroprob = 10
 	var/eat_forever
 	
-	candodge = TRUE
+	mob_can_dodge = TRUE
 
 	var/summon_tier = 0 // Tier of summoning
 	var/summon_primer = null // The message they get when summoned
@@ -65,21 +64,21 @@
 			Immobilize(clamp(damage/2, 1, 30))
 			shake_camera(src, 1, 1)
 		if(damage < 10)
-			flash_fullscreen("redflash1")
+			fullscreen_redflash("redflash1")
 		else if(damage < 20)
-			flash_fullscreen("redflash2")
+			fullscreen_redflash("redflash2")
 		else if(damage >= 20)
-			flash_fullscreen("redflash3")
+			fullscreen_redflash("redflash3")
 	if(damagetype == BURN)
 		if(damage > 10 && prob(damage))
 			emote("pain")
 			shake_camera(src, 1, 1)
 		if(damage < 10)
-			flash_fullscreen("redflash1")
+			fullscreen_redflash("redflash1")
 		else if(damage < 20)
-			flash_fullscreen("redflash2")
+			fullscreen_redflash("redflash2")
 		else if(damage >= 20)
-			flash_fullscreen("redflash3")
+			fullscreen_redflash("redflash3")
 
 /mob/living/simple_animal/hostile/retaliate/rogue/death(gibbed)
 	emote("death")

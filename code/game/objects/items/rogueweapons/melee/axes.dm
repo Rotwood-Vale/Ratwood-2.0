@@ -106,6 +106,17 @@
 	minstr = 9
 	wdefense = 4
 
+/obj/item/rogueweapon/stoneaxe/battle/blacksteel
+	name = "blacksteel axe"
+	desc = "A magnificent battle axe of blacksteel, fitted to counter both unarmored assailants and heavy infantry. The edge might be fluted with nobler alloys, but it is no less wicked when introduced to maille-and-bone."
+	icon_state = "bs_axe"
+	force = 30
+	force_wielded = 35
+	smeltresult = /obj/item/ingot/blacksteel
+	wdefense_wbonus = 2 //Increased defense when wielded.
+	max_blade_int = 500 //Sharper than sharp.
+	resistance_flags = FIRE_PROOF
+
 /obj/item/rogueweapon/stoneaxe/oath
 	force = 30
 	force_wielded = 40
@@ -150,6 +161,7 @@
 	smeltresult = /obj/item/ingot/iron
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop, /datum/intent/sword/peel)
 	wdefense = 2
+	is_tool = TRUE//here instead of on stoneaxe so we dont permit battleaxes to be used as tools.
 
 /obj/item/rogueweapon/stoneaxe/hurlbat
 	name = "hurlbat"
@@ -173,7 +185,6 @@
 	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 50, "embedded_fall_chance" = 30) //high chance at embed, high chance to fall out on its own.
 	possible_item_intents = list(/datum/intent/axe/chop/stone)
 	gripped_intents = null
-	sellprice = 1
 	thrown_damage_flag = "piercing"		//Checks piercing type like an arrow.
 
 /obj/item/rogueweapon/stoneaxe/hurlbat/getonmobprop(tag)
@@ -184,6 +195,19 @@
 				return list("shrink" = 0.5,"sx" = -10,"sy" = -6,"nx" = 11,"ny" = -3,"wx" = -4,"wy" = -3,"ex" = 5,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/rogueweapon/stoneaxe/hurlbat/blacksteel
+	name = "blacksteel hurlbat"
+	desc = "A magnificent throwing axe of blacksteel, weighted to penetrate most cuirasses with a single well-aimed toss."
+	smeltresult = /obj/item/ingot/blacksteel
+	icon_state = "bs_hurlbat"
+	armor_penetration = 60 //this kills the platebeast
+	possible_item_intents = list(/datum/intent/axe/chop)
+	force = 24
+	throwforce = 40
+	max_integrity = 80 //A little less fragile!
+	max_blade_int = 150 //Sharp!
+	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/stoneaxe/battle/abyssoraxe
 	name = "Tidecleaver"
@@ -242,18 +266,50 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_width = 32
 	grid_height = 96
+	is_tool = TRUE//here instead of on stoneaxe so we dont permit battleaxes to be used as tools.
 
 /obj/item/rogueweapon/stoneaxe/woodcut/bronze
 	name = "bronze axe"
-	icon_state = "saxe"
-	desc = "An antiquital handstaff, fitted with a bronze axhead. Such a tool once allowed humenity to carve civilization out of Psydonia's wildernesses; now, it's a rare sight beyond the Deadland's nomadic barbarian-tribes."
-	color = "#f9d690" //Stopgap until unique sprites can be provided. Should be ~98% on point with the current bronze palette.
+	icon_state = "bronzeaxe"
+	desc = "An antiquital handstaff, fitted with a bronze axhead. Such a tool once allowed humenity to carve civilization out of Psydonia's wildernesses; now, it's a rare \
+	sight beyond the Deadland's nomadic barbarian-tribes."
 	force = 23 //Basic balance idea. Damage's between iron and steel, but with a sharper edge than steel. Probably not historically accurate, but we're here to have fun.
 	force_wielded = 27
 	max_blade_int = 550
 	smeltresult = /obj/item/ingot/bronze
 	wdefense = 2
-	armor_penetration = 22 //In-between a hurblat and hatchet. Far harder to reproduce.
+	armor_penetration = 22
+	throwforce = 32
+	throw_speed = 6
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
+
+// on azure this is just a reskin, here it's a bit 
+/obj/item/rogueweapon/stoneaxe/woodcut/bronze/double
+	name = "double-headed bronze axe"
+	desc = "'Give them nothing.. but take from them, EVERYTHING!'"
+	force = 25
+	force_wielded = 28
+	wdefense = 1
+	icon_state = "bronzeaxedouble"
+	swingsound = BLADEWOOSH_HUGE
+	minstr = 11// two axeheads are heavier than one, sire
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 66, "embedded_fall_chance" = 2)// two heads so double embed chance i guess
+
+
+/obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe
+	name = "bronze war axe"
+	icon_state = "bronzebattleaxe"
+	desc = "An antiquital handstaff, fitted with a thrice-wedged bronze axhead. The unique design of its edge, similar to the khopesh, ensures that each \
+	swing properly ferries all of its wielder's strength into its destination regardless of grip."
+	force = 25 // Similar presentation to a battle axe, but same force both one and two handed
+	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, SPEAR_BASH)
+	force_wielded = 25
+	max_blade_int = 500
+	smeltresult = /obj/item/ingot/bronze
+	minstr = 8
+	wdefense = 4
+	armor_penetration = 22
 	throwforce = 32
 	throw_speed = 6
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
@@ -290,6 +346,18 @@
 
 /datum/intent/axe/chop/long
 	reach = 2
+
+/datum/intent/axe/cut/long/bronze
+	damfactor = 1.1
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/decorated
+	name = "decorated axe"
+	icon_state = "nsapo"
+	desc = "Traditionally referred to as a 'nsapo', this beautifully decorated axe traces its roots back to the earliest daes of Psydonian \
+	civilization. Such makes it a favorite amongst the nobility of both Naledi and Zybantine."
+	max_integrity = 300
+	smeltresult = /obj/item/ingot/gold
+	wdefense = 5
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
 	name = "woodcutter's axe"
@@ -345,8 +413,7 @@
 	name = "silver war axe"
 	desc = "A hefty battle axe, fashioned from pure silver. Even with a one-handed grasp, an efforted swing carries enough momentum to cleave through maille-and-flesh alike."
 	icon_state = "silveraxe"
-	force = 20
-	force_wielded = 25
+	force = 25 // Forced to be 1 handed, higher force to compensate
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
 	minstr = 11
 	max_blade_int = 400
@@ -355,6 +422,9 @@
 	wdefense = 5
 	is_silver = TRUE
 	blade_dulling = DULLING_SHAFT_METAL
+	is_tool = FALSE
+	special = /datum/special_intent/axe_swing //Cannot be wielded, otherwise.
+	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/stoneaxe/woodcut/silver/ComponentInitialize()
 	AddComponent(\
@@ -372,12 +442,14 @@
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
 	force = 25
-	force_wielded = 30
+	force_wielded = 25
 	minstr = 11
 	wdefense = 6
 	blade_dulling = DULLING_SHAFT_METAL
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
+	special = /datum/special_intent/axe_swing //Cannot be wielded, otherwise.
+	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/stoneaxe/battle/psyaxe/ComponentInitialize()
 	AddComponent(\
@@ -471,6 +543,37 @@
 	minstr = 11
 	max_blade_int = 250
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/greataxe/blacksteel
+	name = "blacksteel greataxe"
+	desc = "A magnificent greataxe of blacksteel, tipped with spikes to keep the horrors at bay. No one's quite sure as to whether it's meant \
+	to be called a 'poleaxe' or 'greataxe'; at this point, however, the terms might as well be interchangeable amongst the laymen."
+	icon_state = "bs_greataxe"
+	force = 20
+	force_wielded = 40//on par with blacksteel flamberg
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/strike, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/mace/rangedthrust, /datum/intent/spear/bash/poleaxe)
+	max_blade_int = 500
+	wdefense_wbonus = 3 //Increased defense when wielded.
+	resistance_flags = FIRE_PROOF
+
+/obj/item/rogueweapon/greataxe/bronze
+	force = 15
+	force_wielded = 30
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(/datum/intent/axe/cut/long/bronze, /datum/intent/axe/chop/long, SPEAR_BASH)
+	name = "bronze greataxe"
+	desc = "A massive staff with a bronze axhead mantled onto the wood. It splits and carves from afar with lethal force; be it lumber or limbs."
+	icon = 'icons/roguetown/weapons/axes64.dmi'
+	icon_state = "bronzegreataxe"
+	minstr = 11
+	wdefense = 7
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
+	throwforce = 32
+	throw_speed = 3
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 33, "embedded_fall_chance" = 2)
 
 /obj/item/rogueweapon/greataxe/steel/necran
 	name = "Respite"
@@ -609,3 +712,4 @@
 	max_blade_int = 300
 	minstr = 13							//Heavy, but still good.
 	wdefense = 3						//Slightly better than norm, has 6 defense 2 handing it.
+	is_tool = FALSE

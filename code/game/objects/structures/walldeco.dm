@@ -173,7 +173,7 @@
 
 /obj/structure/fluff/walldeco/stone/Initialize(mapload)
 	icon_state = "walldec[rand(1,6)]"
-	..()
+	return ..()
 
 /obj/structure/fluff/walldeco/maidensigil
 	name = "stone sigil"
@@ -221,7 +221,7 @@
 
 /obj/structure/fluff/walldeco/chains/Initialize(mapload)
 	icon_state = "chains[rand(1,8)]"
-	..()
+	. = ..()
 
 /obj/structure/fluff/walldeco/customflag
 	name = "Banner of Rotwood Vale"
@@ -230,12 +230,12 @@
 
 /obj/structure/fluff/walldeco/customflag/Initialize(mapload)
 	. = ..()
-	if(SSmapping.config.map_name == "Rockhill")
+	if(SSmapping.current_map.map_name == "Rockhill")
 		name = "Rockhill flag"
-	else if(SSmapping.config.map_name == "Desert Town")
+	else if(SSmapping.current_map.map_name == "Desert Town")
 		name = "Al-Ashur flag"
 		desc = "A banner flutters in the breeze in the proud heraldic colors of the Sultanate."
-	else if(SSmapping.config.map_name == "Build Your Own Settlement")
+	else if(SSmapping.current_map.map_name == "Build Your Own Settlement")
 		name = "New-Kingsfield flag"
 		desc = "A banner flutters in the breeze in the proud heraldic colors of the Colony."
 	else
@@ -249,6 +249,37 @@
 	return ..()
 
 /obj/structure/fluff/walldeco/customflag/lordcolor(primary,secondary)
+	if(!primary || !secondary)
+		return
+	var/mutable_appearance/M = mutable_appearance(icon, "wallflag_primary", -(layer+0.1))
+	M.color = primary
+	add_overlay(M)
+	M = mutable_appearance(icon, "wallflag_secondary", -(layer+0.1))
+	M.color = secondary
+	add_overlay(M)
+
+/obj/structure/fluff/walldeco/customflag/barony
+	name = "Banner of the Lowtown Barony"
+	desc = "Prominently fluttering in the breeze you see the sturdy banner of the barony, the heraldry of the local baron. Many would be honored to wear these colors in loyal service to lowtown."
+	icon_state = "wallflag"
+
+/obj/structure/fluff/walldeco/customflag/barony/Initialize(mapload)
+	. = ..(mapload)
+	name = "Banner of the Lowtown Barony" //parent's map-based renaming is ducal-specific, override it back
+	desc = "Prominently fluttering in the breeze you see the sturdy banner of the barony, the heraldry of the local baron. Many would be honored to wear these colors in loyal service to lowtown."
+	if(GLOB.baronprimary)
+		baronycolor(GLOB.baronprimary,GLOB.baronsecondary)
+	GLOB.baronycolor += src
+	GLOB.lordcolor -= src //don't respond to the ducal scheme, only the barony one
+
+/obj/structure/fluff/walldeco/customflag/barony/Destroy()
+	GLOB.baronycolor -= src
+	return ..()
+
+/obj/structure/fluff/walldeco/customflag/barony/lordcolor(primary, secondary)
+	return //barony flags ignore the ducal scheme entirely
+
+/obj/structure/fluff/walldeco/customflag/barony/baronycolor(primary,secondary)
 	if(!primary || !secondary)
 		return
 	var/mutable_appearance/M = mutable_appearance(icon, "wallflag_primary", -(layer+0.1))

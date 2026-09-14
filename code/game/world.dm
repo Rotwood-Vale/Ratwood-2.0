@@ -16,6 +16,7 @@ GLOBAL_VAR(restart_counter)
 	#endif
 
 	init_debugger()
+	Master = new
 	//Zirok was here
 
 /**
@@ -43,8 +44,7 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
+	init_pricing_engine()
 	TgsNew(minimum_required_security_level = TGS_SECURITY_TRUSTED)
 
 	GLOB.revdata = new
@@ -91,6 +91,8 @@ GLOBAL_VAR(restart_counter)
 
 	load_bypassage()
 
+	load_calendar_events()
+
 	load_patreons()
 
 //	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -110,8 +112,9 @@ GLOBAL_VAR(restart_counter)
 
 	Master.Initialize(10, FALSE, TRUE)
 
-	if(TEST_RUN_PARAMETER in params)
-		HandleTestRun()
+	#ifdef UNIT_TESTS
+	HandleTestRun()
+	#endif
 
 	update_status()
 
@@ -178,6 +181,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_mem_log = "[GLOB.log_directory]/memory_stats.log"
 	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.character_list_log = "[GLOB.log_directory]/character_list.log"
 	GLOB.hunted_log = "[GLOB.log_directory]/hunted.log"
@@ -194,6 +198,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
 	start_log(GLOB.world_qdel_log)
+	start_log(GLOB.world_mem_log)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)
@@ -297,9 +302,10 @@ GLOBAL_VAR(restart_counter)
 
 	TgsReboot()
 
-	if(TEST_RUN_PARAMETER in params)
-		FinishTestRun()
-		return
+	#ifdef UNIT_TESTS
+	FinishTestRun()
+	return
+	#endif
 
 	if(TgsAvailable())
 		send2chat(new /datum/tgs_message_content("Round ending!"), CONFIG_GET(string/chat_announce_new_game))
@@ -335,16 +341,15 @@ GLOBAL_VAR(restart_counter)
 
 	var/new_status = ""
 	var/hostedby
-	if(config)
+	if(config?.entries_by_type)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> &#8212; "
 		hostedby = CONFIG_GET(string/hostedby)
 
 	new_status += " ("
-	new_status += "<a href=\"[CONFIG_GET(string/discordurl)]\">"
-	new_status += "Discord"
-	new_status += ")\]"
+	new_status += "<a href=\"[CONFIG_GET(string/discordurl)]\">Discord</a>"
+	new_status += ")"
 	new_status += "<br>[CONFIG_GET(string/servertagline)]"
 
 	var/players = GLOB.clients.len
@@ -359,7 +364,6 @@ GLOBAL_VAR(restart_counter)
 	else
 		new_status += "Round Time: <b>NEW ROUND STARTING</b>"
 	new_status += "<br>Player[players == 1 ? "": "s"]: <b>[players]</b>"
-	new_status += "</a>"
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"

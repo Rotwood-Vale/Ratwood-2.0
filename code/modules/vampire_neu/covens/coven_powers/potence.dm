@@ -29,6 +29,8 @@
 
 /datum/coven_power/potence/one/activate()
 	. = ..()
+	if(!.)
+		return
 	owner.dna.species.punch_damage += 8
 	owner.potence_weapon_buff = 1
 
@@ -36,7 +38,6 @@
 	. = ..()
 	owner.dna.species.punch_damage -= 8
 	owner.potence_weapon_buff = 0
-	owner.remove_overlay(POTENCE_LAYER)
 
 //POTENCE 2
 /datum/coven_power/potence/two
@@ -53,6 +54,8 @@
 
 /datum/coven_power/potence/two/activate()
 	. = ..()
+	if(!.)
+		return
 	owner.dna.species.punch_damage += 16
 	owner.potence_weapon_buff = 2
 
@@ -60,7 +63,6 @@
 	. = ..()
 	owner.dna.species.punch_damage -= 16
 	owner.potence_weapon_buff = 0
-	owner.remove_overlay(POTENCE_LAYER)
 
 //POTENCE 3
 /datum/coven_power/potence/three
@@ -76,6 +78,8 @@
 
 /datum/coven_power/potence/three/activate()
 	. = ..()
+	if(!.)
+		return
 	owner.dna.species.punch_damage += 24
 	owner.potence_weapon_buff = 3
 
@@ -84,7 +88,6 @@
 	. = ..()
 	owner.dna.species.punch_damage -= 24
 	owner.potence_weapon_buff = 0
-	owner.remove_overlay(POTENCE_LAYER)
 
 //POTENCE 4
 /datum/coven_power/potence/four
@@ -100,6 +103,8 @@
 
 /datum/coven_power/potence/four/activate()
 	. = ..()
+	if(!.)
+		return
 	owner.dna.species.punch_damage += 32
 	owner.potence_weapon_buff = 4
 
@@ -107,7 +112,6 @@
 	. = ..()
 	owner.dna.species.punch_damage -= 32
 	owner.potence_weapon_buff = 0
-	owner.remove_overlay(POTENCE_LAYER)
 
 
 //POTENCE 5
@@ -124,6 +128,8 @@
 
 /datum/coven_power/potence/five/activate()
 	. = ..()
+	if(!.)
+		return
 	owner.dna.species.punch_damage += 40
 	owner.potence_weapon_buff = 5
 
@@ -131,4 +137,3 @@
 	. = ..()
 	owner.dna.species.punch_damage -= 40
 	owner.potence_weapon_buff = 0
-	owner.remove_overlay(POTENCE_LAYER)

@@ -126,12 +126,10 @@
 	force = 23
 	force_wielded = 29
 	name = "bronze mace"
-	color = "#f9d690"
+	icon_state = "bronzemace"
 	desc = "An antiquital staff, crested with a studded sphere of bronze. Bludgeons were the first implements made for the explicit purpose of killing another; fittingly, this was the second."
-	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = 250
-	wdefense = 2
 
 /obj/item/rogueweapon/mace/church
 	force = 25
@@ -151,6 +149,17 @@
 	icon_state = "smace"
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/steel
+	wdefense = 3
+	smelt_bar_num = 2
+
+/obj/item/rogueweapon/mace/blacksteel
+	force = 30
+	force_wielded = 35
+	max_integrity = 300
+	name = "blacksteel mace"
+	desc = "A magnificent mace of blacksteel. Tied around the handle is crimson silk, which was the style at the tyme."
+	icon_state = "bs_mace"
+	smeltresult = /obj/item/ingot/blacksteel
 	wdefense = 3
 	smelt_bar_num = 2
 
@@ -193,6 +202,46 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/mace/steel/silver/decorated
+	name = "decorated mace"
+	desc = "An ornate mace, inlaid with silver and decorated with golden heraldry. Formally known as a 'gada' amongst the nobility of Naledi, this heftsome scepter \
+	will force anyone to bend the knee; if not through respect, then through a shattered femur."
+	icon_state = "gada"
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	sellprice = 150
+	is_silver = TRUE
+
+/obj/item/rogueweapon/mace/steel/silver/decorated/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/mace/gold
+	name = "golden mace"
+	desc = "A heavenly staff of besilked rosawood, crested with the golden sigil of royalty. Like the plump-bellied aristocrats who've surely commissioned this article's design, it is overbearingly heavy."
+	icon_state = "goldmace"
+	force = 35
+	force_wielded = 40
+	max_integrity = 50
+	anvilrepair = null //Ceremonial. This should break comedically easily, but still have just enough toughness to work with a few strikes.
+	minstr = 11
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/mace/gold/king
+	name = "royal golden mace"
+	desc = "A heavenly staff of besilked rosawood, crested with the golden sigil of royalty and socketed with a dorpel. Like the plump-bellied aristocrats who've surely commissioned this article's design, it is overbearingly heavy."
+	icon_state = "goldmaceking"
+	max_integrity = 75
+	sellprice = 300
 
 /obj/item/rogueweapon/mace/woodclub
 	force = 15
@@ -460,6 +509,7 @@
 	force_wielded = 35
 	minstr = 12
 	smelt_bar_num = 2
+	wdefense_wbonus = 5
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
@@ -517,6 +567,26 @@
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 
+/obj/item/rogueweapon/mace/warhammer/bronze
+	force = 22
+	name = "bronze warclub"
+	desc = "The warhammer's ancestral link, carved from a weightsome log and studded with bronze. Elven natureguards carry it to both honor their forefathers, and as a way to sunder those who'd ravage Dendor's bounties without thought-or-restraint; a toss from afar turns into a sundering hurlbat."
+	icon_state = "bronzeclub"
+	wbalance = WBALANCE_HEAVY
+	throwforce = 30
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 20)//hilarious
+	smeltresult = /obj/item/ingot/bronze
+	wdefense = 3
+	max_integrity = 180
+
+/obj/item/rogueweapon/mace/warhammer/bronze/decorated
+	name = "decorated bronze warclub"
+	desc = "Flowers, silk, and gold caress this carved-and-spiked log; a honored totem who's roots trace back to the daes before Syon's impact. Myths speak of ancient elve-and-humen alike, wielding such bronzen bludgeons against the Archdevil's rampaging hordes."
+	icon_state = "bronzeclubdec"
+	smeltresult = /obj/item/ingot/gold
+	wdefense = 5
+	max_integrity = 250
+
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
@@ -551,6 +621,18 @@
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/rogueweapon/mace/warhammer/blacksteel
+	name = "blacksteel warhammer"
+	desc = "A magnificent warhammer of blacksteel. Ornamental, resplendant, and - above all else - lethal; the ideal sidearm for a knight in the sixteenth century."
+	icon_state = "bs_hammer"
+	force = 30
+	minstr = 10
+	max_integrity = 350
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
+	special = /datum/special_intent/ground_smash
+
 
 /obj/item/rogueweapon/mace/warhammer/steel/silver
 	name = "silver warhammer"
@@ -612,14 +694,14 @@
 	name = "maul"
 	desc = "Who would need something this large? It looks like it was made for tearing down walls, rather than men."
 	icon_state = "sledge"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	wlength = WLENGTH_LONG
 	swingsound = BLUNTWOOSH_HUGE
 	slot_flags = null//No.
 	smelt_bar_num = 2
 	minstr = 14
-	wdefense = 2
-	wdefense_wbonus = 1//3
+	wdefense = 4
+	wdefense_wbonus = 2//6
 	demolition_mod = 1.25//Oh, yes...
 	pixel_y = -16
 	pixel_x = -16
@@ -645,10 +727,10 @@
 	desc = "You could probably crack a man's spine just by tapping them with this. \
 	Only a lunatic would carry something so heavy, however."
 	icon_state = "cross"
-	force_wielded = 34//-1 compared to grand mace.
+	force_wielded = 36//+1 compared to grand mace.
 	smeltresult = /obj/item/ingot/steel
 	minstr = 15
-	wdefense_wbonus = 4//6
+	wdefense_wbonus = 5
 	smelt_bar_num = 3
 	max_integrity = 350
 
@@ -658,6 +740,7 @@
 	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
+	is_silver = TRUE
 	minstr = 8//Handled by the unique interaction below. Inverted to start, since they spawn with it, and funny stuff can happen.
 
 /obj/item/rogueweapon/mace/maul/grand/malum/pickup(mob/living/user)
@@ -668,7 +751,7 @@
 	..()
 
 //This thing is warded. For fluff. And because it's COOL, we give them silver blessings.
-//+1 DEF from it, too. For a total of 7 defence when wielded.
+//+1 DEF from it, too. For a total of 10 defence when wielded.
 /obj/item/rogueweapon/mace/maul/grand/malum/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
@@ -688,7 +771,7 @@
 	icon_state = "dwarfhammer"
 	smeltresult = /obj/item/ingot/steel
 	minstr = 11//+2STR from Grudgebearer Soldier. Should cover this.
-	wdefense_wbonus = 3//5
+	wdefense_wbonus = 3//7
 	smelt_bar_num = 3//You'll break my heart.
 	max_integrity = 340
 
@@ -698,7 +781,7 @@
 	This one has been well balanced, allowing for a weaker wielder to make use of it."
 	icon_state = "spiky"
 	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
-	wdefense_wbonus = 2//4
+	wdefense_wbonus = 3//7
 	minstr = 10//+1STR from Grudgebearer Smith. It should be fine.
 	smelt_bar_num = 3//Please don't...
 	max_integrity = 320
@@ -780,4 +863,3 @@
 	blade_class = BCLASS_PIERCE//TEAR CHUNKS OFF OF THEM. THROW IT ACROSS THE ROOM.
 	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg', 'sound/combat/hits/bladed/genthrust (2).ogg')
 	icon_state = "intear"
-

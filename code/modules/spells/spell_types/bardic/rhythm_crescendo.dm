@@ -97,7 +97,7 @@
 
 /obj/effect/proc_holder/spell/self/rhythm
 	name = "Rhythm"
-	desc = "Attune your weapon to a rhythm. Your next melee hit within 8 seconds triggers its effect."
+	desc = "Attune your weapon to a rhythm. Your next melee hit within 8 seconds triggers its effect. An instrument is required in your off hand, though highly talented bards can make do with their voice, so long as they are able to be heard."
 	action_icon = 'icons/mob/actions/bardsongs.dmi'
 	action_icon_state = "rhythm_resonating"
 	action_background_icon_state = "spell"
@@ -125,11 +125,22 @@
 	if(!user?.inspiration || user.inspiration.level < BARD_T2)
 		to_chat(user, span_warning("I do not know how to hold a battle rhythm."))
 		return FALSE
-	if(!has_instrument(user))
-		to_chat(user, span_warning("I need an instrument in hand to perform!"))
-		return FALSE
+	if(!has_instrument(user)) // T3 inspiration and above can use rhythm without a weapon in hand, but only if otherwise able to speak (mute, mouthgrab stops, etc)
+		if (user.inspiration.level == BARD_T2)
+			to_chat(user, span_warning("I need an instrument in hand to carry a rhythm!"))
+			return FALSE
+		if (!user.can_speak_vocal())
+			to_chat(user, span_warning("I need to be able to sing to keep the rhythm!"))
+			return FALSE
 	prime_rhythm(user)
 	return TRUE
+
+/obj/effect/proc_holder/spell/self/rhythm/playMagSound() // override so herald can play cool metal sounds
+	var/mob/living/carbon/human/H = usr
+	if(istype(H) && H.advjob == "Herald of Progress")
+		playsound(get_turf(H), 'sound/magic/buffrollelectric.ogg', 100, FALSE)
+		return
+	return ..()
 
 /obj/effect/proc_holder/spell/self/rhythm/proc/has_instrument(mob/living/carbon/human/user)
 	for(var/obj/item/held in user.held_items)

@@ -379,10 +379,9 @@
 			/obj/item/ingot/iron,
 			/obj/item/rogueore/coal
 		),
-		"Carpenter Set" = list(
-			/obj/item/rogueweapon/stoneaxe/woodcut/bronze,
-			/obj/item/rogueweapon/handsaw,
-			/obj/item/rogueweapon/hammer/copper,
+		"Craftsman Set" = list(
+			/obj/item/rogueweapon/stoneaxe/handaxe,
+			/obj/item/rogueweapon/hammer/steel,
 			/obj/item/folding_table_stored
 		),
 		"Hunter Set" = list(
@@ -415,14 +414,6 @@
 			/obj/item/paper,
 			/obj/item/paper/scroll,
 			/obj/item/natural/feather
-		),
-		"Mason Set" = list(
-			/obj/item/rogueweapon/chisel,
-			/obj/item/rogueweapon/hammer/copper,
-			/obj/item/natural/stone,
-			/obj/item/natural/stone,
-			/obj/item/natural/stone,
-			/obj/item/folding_table_stored
 		)
 	)
 
@@ -454,6 +445,9 @@
 						var/unique_key = "[item_name] ([profession_set_name] [counter])"
 						H.mind.special_items[unique_key] = item_path
 					counter++
+				if(profession_set_name == "Craftsman Set")
+					ADD_TRAIT(H, TRAIT_MASTER_CARPENTER, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_MASTER_MASON, TRAIT_GENERIC)
 				if(profession_set_name in profession_sets)
 					profession_sets -= profession_set_name
 

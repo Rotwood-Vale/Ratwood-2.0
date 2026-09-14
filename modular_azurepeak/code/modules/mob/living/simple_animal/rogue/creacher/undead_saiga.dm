@@ -10,7 +10,7 @@
 	// Greatly increased health
 	health = SAIGA_HEALTH_UNDEAD
 	maxHealth = SAIGA_HEALTH_UNDEAD
-	dodgetime = 50
+	dodgetime = 5 SECONDS
 
 	var/leg_health = 150
 	var/max_leg_health = 150
@@ -74,7 +74,7 @@
 		stat = CONSCIOUS
 		update_icon()
 		// If you don't kill it, it will become a threat again.
-		addtimer(CALLBACK(src, .proc/reanimation), reinimation_timer)
+		addtimer(CALLBACK(src, PROC_REF(reanimation)), reinimation_timer)
 		return
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead/proc/reanimation()

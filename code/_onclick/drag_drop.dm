@@ -73,9 +73,6 @@
 /atom
 	var/blockscharging = FALSE
 
-/atom/movable/screen
-	blockscharging = TRUE
-
 /client/MouseDown(object, location, control, params)
 	charge_was_blocked_by_cooldown = FALSE
 	var/list/modifiers = params2list(params)
@@ -208,9 +205,11 @@
 	if(mob.curplaying)
 		mob.curplaying.on_mouse_up()
 
-	if(!mob.fixedeye)
+	if(mob.tempfixeye)
 		mob.tempfixeye = FALSE
-		mob.nodirchange = FALSE
+
+		if(!mob.fixedeye)
+			mob.nodirchange = FALSE
 
 	if(mob.hud_used)
 		for(var/atom/movable/screen/eye_intent/eyet in mob.hud_used.static_inventory)

@@ -9,6 +9,7 @@
 	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,

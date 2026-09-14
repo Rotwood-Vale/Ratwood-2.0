@@ -1638,7 +1638,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/vampire_manor)
 "Ca" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/outdoors/woods/vampire_lair)
 "Cg" = (
 /obj/effect/decal/cobbleedge{
@@ -2090,7 +2090,7 @@
 	},
 /area/rogue/indoors/vampire_manor)
 "Jc" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue)
 "Jm" = (
 /obj/machinery/light/rogue/hearth{
@@ -2820,7 +2820,7 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/woods/vampire_lair)
 "UI" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/outdoors/woods/above)
 "UM" = (
 /obj/structure/flora/roguegrass/water,

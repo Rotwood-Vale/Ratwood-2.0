@@ -18,14 +18,14 @@
 
 /datum/status_effect/buff/dendor_vigil/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, "DENDOR_VIGIL")
-	ADD_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, "DENDOR_VIGIL")
+	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_green("The Treefather's vigil embraces me — my steps are swift and the thorns will not bite."))
 
 /datum/status_effect/buff/dendor_vigil/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, "DENDOR_VIGIL")
-	REMOVE_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, "DENDOR_VIGIL")
+	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("The Treefather's vigil fades from me."))
 
 //==============================================================================
@@ -898,7 +898,7 @@
 	to_chat(user, span_green("[BA.name] rises from the ritual — the Treefather has blessed this armor with living power."))
 	// 50% chance: random wood armor piece from elven black oak mercenaries (excluding chest).
 	if(prob(50))
-		var/list/bonus_pool = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic, /obj/item/clothing/gloves/roguetown/elven_gloves/druidic, /obj/item/clothing/shoes/roguetown/boots/leather/elven_boots/druidic, /obj/item/clothing/cloak/forrestercloak/blessed)
+		var/list/bonus_pool = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/druidic, /obj/item/clothing/gloves/roguetown/elven_gloves/druidic, /obj/item/clothing/shoes/roguetown/boots/elven_boots/druidic, /obj/item/clothing/cloak/forrestercloak/blessed)
 		var/bonus_type = pick(bonus_pool)
 		var/obj/item/bonus = new bonus_type(T)
 		to_chat(user, span_green("The roots also yield [bonus.name] — an additional gift."))
@@ -1244,7 +1244,7 @@
 		tree_data.wedding_officiant_ckey = null
 		return
 
-	var/surname = input(user, "Enter a shared surname for the couple:", "Nature's Union") as text|null
+	var/surname = reject_bad_name(input(user, "Enter a shared surname for the couple:", "Nature's Union") as text|null)
 	if(QDELETED(src) || QDELETED(user))
 		return
 	if(!surname || !length(trim(surname)))

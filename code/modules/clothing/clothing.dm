@@ -9,6 +9,7 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
 	dropshrink = 0.85
+	has_item_quality = TRUE
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
@@ -56,11 +57,13 @@
 	var/immune_to_genderswap = FALSE
 	var/armor_class = ARMOR_CLASS_NONE
 
-	sellprice = 1
 	var/naledicolor = FALSE
 
-	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
+	var/adjusted_inv_mask = NONE
+	var/adjusted_inv_value = NONE
+	var/snoutable_for
+	var/snoutable_cached = FALSE
 
 /obj/item
 	var/blocking_behavior
@@ -76,6 +79,9 @@
 	var/ducal_primary = FALSE // Uses duchy primary color for base color
 	var/ducal_detail = FALSE // Uses duchy secondary color for detail_color
 	var/ducal_altdetail = FALSE // Uses duchy secondary color for altdetail_color
+	var/barony_primary = FALSE // Uses barony primary color for base color
+	var/barony_detail = FALSE // Uses barony secondary color for detail_color
+	var/barony_altdetail = FALSE // Uses barony secondary color for altdetail_color
 	var/shoddy_repair = FALSE // if we've been field repaired by an unskilled person, set this to true
 
 /obj/item/clothing/New()
@@ -100,6 +106,66 @@
 			. += span_notice("It has one torn sleeve.")
 		else
 			. += span_notice("Both its sleeves have been torn!")
+
+///Remembers that the wearer set these flags_inv bits by hand, so re-equipping doesn't undo it.
+/obj/item/clothing/proc/persist_inv_flags(flag)
+	adjusted_inv_mask |= flag
+	adjusted_inv_value &= ~flag
+	adjusted_inv_value |= (flags_inv & flag)
+
+///Reapplies any remembered manual toggles on top of a fresh flags_inv value.
+/obj/item/clothing/proc/adjust_inv_flags(base)
+	if(!adjusted_inv_mask)
+		return base
+	return (base & ~adjusted_inv_mask) | (adjusted_inv_value & adjusted_inv_mask)
+
+///The state the _snout suffix hangs off. Override where an item has more than one base look.
+/obj/item/clothing/proc/snout_base_state()
+	return initial(icon_state)
+
+///Runs after the swap, before the wearer is redrawn, so coverage changes land in the same refresh.
+/obj/item/clothing/proc/on_snout_toggled()
+	return
+
+/obj/item/clothing/proc/is_snoutable()
+	var/base = snout_base_state()
+	var/key = "[base]|[mob_overlay_icon]"	//some items swap mob_overlay_icon by slot
+	if(snoutable_for == key)	//building an icon just to read its states is expensive
+		return snoutable_cached
+	snoutable_for = key
+	snoutable_cached = FALSE
+	if(mob_overlay_icon)
+		var/icon/worn = new(mob_overlay_icon)
+		snoutable_cached = ("[base]_snout" in worn.IconStates())
+	return snoutable_cached
+
+/obj/item/clothing/proc/toggle_snout()
+	if(snouting)
+		snouting = FALSE
+		icon_state = snout_base_state()
+	else
+		if(!is_snoutable())
+			return FALSE
+		snouting = TRUE
+		icon_state = "[snout_base_state()]_snout"
+	update_icon()
+	on_snout_toggled()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.rebuild_obscured_flags()
+	return TRUE
+
+/obj/item/clothing/proc/restore_snout()
+	if(!snouting)
+		return
+	if(!is_snoutable())	//base look changed under us and has no snouted cut
+		snouting = FALSE
+		return
+	icon_state = "[snout_base_state()]_snout"
+
+///Maps a worn state back onto the plain state its detail overlays are drawn for.
+/obj/item/proc/get_detail_state(base_state)
+	return base_state
 
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag
@@ -310,6 +376,28 @@
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
+		warn_armor_class(user)
+
+/obj/item/clothing/proc/warn_armor_class(mob/living/carbon/human/user, removed = FALSE)
+	if(armor_class <= ARMOR_CLASS_NONE)
+		return
+	if(!ishuman(user))
+		return
+	// Was this item's armor class actually beyond the user's training?
+	var/dominated = FALSE
+	if(armor_class == ARMOR_CLASS_HEAVY && !HAS_TRAIT(user, TRAIT_HEAVYARMOR))
+		dominated = TRUE
+	else if(armor_class == ARMOR_CLASS_MEDIUM && !HAS_TRAIT(user, TRAIT_HEAVYARMOR) && !HAS_TRAIT(user, TRAIT_MEDIUMARMOR))
+		dominated = TRUE
+	if(!dominated)
+		return
+	if(removed)
+		if(user.check_armor_skill())
+			to_chat(user, span_info("I feel lighter and more agile without that armor weighing me down."))
+		else
+			to_chat(user, span_info("I feel the weight lessens, but another piece of armor is still impairing my movements."))
+		return
+	to_chat(user, span_warning("I'm not trained to wear armor of this weight. My ability to parry, dodge, run and cast spells will be greatly impaired."))
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()
@@ -382,7 +470,7 @@
 	var/mob/living/carbon/human/wearer = loc
 	if(istype(wearer))
 		if(HAS_TRAIT(wearer, TRAIT_LOOSE_STRAPS) && !HAS_TRAIT(src, TRAIT_NODROP))
-			wearer.visible_message(span_danger("[src] gets flung off!"))	
+			wearer.visible_message(span_danger("[src] gets flung off!"))
 			get_flung_off_forced()
 	..()
 
@@ -545,9 +633,6 @@ BLIND     // can't see anything
 			return 1
 	return 0
 
-/obj/item/clothing/proc/step_action() //this was made to rewrite clown shoes squeaking
-	SEND_SIGNAL(src, COMSIG_CLOTHING_STEP_ACTION)
-
 /obj/item/clothing/take_damage(damage_amount, damage_type = BRUTE, damage_flag, sound_effect, attack_dir, armor_penetration)
 	var/newdam = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armor_penetration)
 	var/eff_maxint = max_integrity - (max_integrity * integrity_failure)
@@ -575,7 +660,7 @@ BLIND     // can't see anything
 /obj/item/clothing/generate_tooltip(examine_text, showcrits)
 	if(!armor)	// No armor
 		return examine_text
-	
+
 	// Fake armor
 	if(armor.getRating("slash") == 0 && armor.getRating("stab") == 0 && armor.getRating("blunt") == 0 && armor.getRating("piercing") == 0)
 		return examine_text
@@ -684,7 +769,7 @@ BLIND     // can't see anything
 
 // Handle clicks from chat to show the examine details
 /obj/item/clothing/Topic(href, href_list)
-	if(href_list["show_examine"]) 
+	if(href_list["show_examine"])
 		var/mob/user = usr
 		if(user)
 			to_chat(user, build_examine_detail(user, TRUE))

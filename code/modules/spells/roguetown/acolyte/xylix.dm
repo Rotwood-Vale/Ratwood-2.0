@@ -30,6 +30,7 @@
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "ventril"
+	mute_allowed = TRUE
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -41,7 +42,7 @@
 /obj/effect/proc_holder/spell/invoked/ventriloquism/cast(list/targets, mob/user = usr)
 	if(isobj(targets[1]))
 		var/obj/target = targets[1]
-		var/input_message = input(usr, "What shall [target] say?", src) as null|text
+		var/input_message = sanitize(input(usr, "What shall [target] say?", src) as null|text)
 		target.say("[input_message]")
 		return TRUE
 	revert_cast()
@@ -53,6 +54,7 @@
 	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
 	overlay_state = "disguise"
+	mute_allowed = TRUE
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -95,7 +97,7 @@
 	mob_biotypes = MOB_HUMANOID
 	maxHealth = 20
 	health = 20
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
@@ -772,18 +774,18 @@
 
 /datum/status_effect/astrata_favor/on_apply()
 	effectedstats = list("constitution" = rand(1, 3), "willpower" = rand(1, 3))
-	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, XYLIX_LUCK_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, XYLIX_LUCK_TRAIT)
-	ADD_TRAIT(owner, TRAIT_STEELHEARTED, XYLIX_LUCK_TRAIT)
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, XYLIX_LUCK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_STEELHEARTED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.particles = new /particles/astartian_favor()
 	. = ..()
 
 /datum/status_effect/astrata_favor/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, XYLIX_LUCK_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, XYLIX_LUCK_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_STEELHEARTED, XYLIX_LUCK_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, XYLIX_LUCK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_STEELHEARTED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	qdel(owner.particles)
 	owner.particles = null
 	. = ..()
@@ -945,9 +947,9 @@
 	if(meister_balance > 0)
 		var/stolen = min(rand(1, 10), meister_balance)
 		SStreasury.bank_accounts[owner] -= stolen
-		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your meister!"))
+		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your nervelock!"))
 	else
-		to_chat(owner, span_notice("Matthios reaches for your meister, but finds it empty. Truly, a poor fool!"))
+		to_chat(owner, span_notice("Matthios reaches for your nervelock, but finds it empty. Truly, a poor fool!"))
 	. = ..()
 
 /datum/status_effect/matthios_favor/on_remove()
@@ -957,7 +959,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/matthios_favor
 	name = "Matthios' Favor"
-	desc = "The Free-God palms coin from your meister with a crooked grin."
+	desc = "The Free-God palms coin from your nervelock with a crooked grin."
 	icon_state = "status"
 
 /atom/movable/screen/alert/status_effect/buff/malum_favor
@@ -974,11 +976,11 @@
 
 /datum/status_effect/eora_favor/on_apply()
 	if(!HAS_TRAIT(owner, TRAIT_UNSEEMLY))
-		ADD_TRAIT(owner, TRAIT_BEAUTIFUL, XYLIX_LUCK_TRAIT)
+		ADD_TRAIT(owner, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 	. = ..()
 
 /datum/status_effect/eora_favor/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_BEAUTIFUL, XYLIX_LUCK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 	. = ..()
 	owner?.update_fov_angles()
 	owner?.update_vision_cone()
@@ -1073,12 +1075,12 @@
 /datum/status_effect/dendor_favor/on_apply()
 	owner.electrocute_act(30, owner)
 	owner.emote("painscream")
-	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, XYLIX_LUCK_TRAIT)
+	ADD_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("You're suddenly jolted with a kneestinger's touch as Dendor's power lets you stride freely on uneven terrain for a short time!"))
 	. = ..()
 
 /datum/status_effect/dendor_favor/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, XYLIX_LUCK_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_LONGSTRIDER, TRAIT_STATUS_EFFECT(id))
 	. = ..()
 	owner?.update_fov_angles()
 	owner?.update_vision_cone()
@@ -1213,7 +1215,7 @@
 			to_chat(user, span_danger("Graggar's fury marks your flesh!"))
 		if(MATTHIOS)
 			user.apply_status_effect(/datum/status_effect/matthios_favor)
-			to_chat(user, span_danger("Matthios steals from your meister as a lesson in greed!"))
+			to_chat(user, span_danger("Matthios steals from your nervelock as a lesson in greed!"))
 	return ..()
 
 #undef NOTHING

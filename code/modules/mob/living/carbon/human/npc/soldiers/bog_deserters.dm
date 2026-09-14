@@ -91,6 +91,9 @@
 	aggressive=1
 	rude = TRUE
 	mode = NPC_AI_IDLE
+	//Well trained soldiers.
+	smart_combatant = TRUE
+	special_attacker = TRUE
 	faction = list("viking", "station")
 	ambushable = FALSE
 	cmode = 1

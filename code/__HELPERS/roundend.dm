@@ -130,6 +130,7 @@
 	set waitfor = FALSE
 
 	log_game("The round has ended.")
+	dump_chronicle_stats() // weekly economy-stats disk dump (data/chronicle_stats/)
 
 	to_chat(world, "<BR><BR><BR><span class='reallybig'>So ends this tale on Ratwood Keep.</span>")
 	get_end_reason()
@@ -154,7 +155,7 @@
 					add_roundpoints(job.round_contrib_points, H.ckey)
 	add_roundplayed(key_list)
 	update_god_rankings()
-	
+
 	for(var/mob/M in GLOB.mob_list)
 		M.do_game_over()
 
@@ -210,7 +211,7 @@
 	world.TgsAnnounceRoundEnd()
 
 	sleep(10 SECONDS)
-	SSvote.initiate_vote("map", "Actors")
+	SSvote.initiate_vote("Map", "Actors", null, forced = TRUE)
 	ready_for_reboot = TRUE
 	standard_reboot()
 

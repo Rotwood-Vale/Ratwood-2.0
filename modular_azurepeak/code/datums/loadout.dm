@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(loadout_items)
+GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item
 	var/name = "Parent loadout datum"
@@ -234,6 +234,23 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/kitchen/fork/decrepit
 	triumph_cost = 2
 
+// TENT KITS
+
+/datum/loadout_item/small_tent
+    name = "Small Tent"
+    path = /obj/item/tent_kit
+    triumph_cost = 4
+
+/datum/loadout_item/ger_kit
+    name = "Ger Tent"
+    path = /obj/item/tent_kit/ger
+    triumph_cost = 6
+
+/datum/loadout_item/yurt_tent
+     name = "Yurt Tent"
+     path = /obj/item/tent_kit/yurt
+     triumph_cost = 8
+
 //HATS
 /datum/loadout_item/shalal
 	name = "Keffiyeh"
@@ -287,6 +304,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Fur Hat"
 	path = /obj/item/clothing/head/roguetown/hatfur
 
+/datum/loadout_item/bluehat
+	name = "Blue Hat"
+	path = /obj/item/clothing/head/roguetown/hatblu
+
 /datum/loadout_item/smokingcap
 	name = "Smoking Cap"
 	path = /obj/item/clothing/head/roguetown/smokingcap
@@ -311,6 +332,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Hood"
 	path = /obj/item/clothing/head/roguetown/roguehood
 
+/datum/loadout_item/necromhood
+    name = "Necromancer Hood"
+    path = /obj/item/clothing/head/roguetown/necromhood
+
 /datum/loadout_item/hijab
 	name = "Hijab"
 	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab
@@ -331,14 +356,38 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Rosa Crown"
 	path = /obj/item/flowercrown/rosa
 
+/datum/loadout_item/thorn_rosa_crown
+	name = "Rosa Crown with Thorns"
+	path = /obj/item/flowercrown/rosa/thorns
+
+/datum/loadout_item/dyeable_crown
+	name = "Gray Flower Crown"
+	path = /obj/item/flowercrown/rosa/dyecrown
+
 /datum/loadout_item/salvia_crown
 	name = "Salvia Crown"
 	path = /obj/item/flowercrown/salvia
 
+/datum/loadout_item/matricaria_crown
+	name = "Matricaria Crown"
+	path = /obj/item/flowercrown/matricaria
+
+/datum/loadout_item/calendula_crown
+	name = "Calendula Crown"
+	path = /obj/item/flowercrown/calendula
+
+/datum/loadout_item/manabloom_crown
+	name = "Manabloom Crown"
+	path = /obj/item/flowercrown/manabloom
+
 /datum/loadout_item/tri_grenzelhoft_hat_capless
 	name = "Capless Grenzelhoft Hat"
 	path = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
-	
+
+/datum/loadout_item/loadoutpapakha
+	name = "Soft-sided papakha"
+	path = /obj/item/clothing/head/roguetown/loadoutpapakha
+
 //CLOAKS
 /datum/loadout_item/tabard
 	name = "Tabard"
@@ -533,6 +582,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe
 
+/datum/loadout_item/Necromrobe
+    name = "Necromancer Robes"
+    path = /obj/item/clothing/suit/roguetown/shirt/robe/necromancer
+
 /datum/loadout_item/phys_robe
 	name = "Physicker's Robe"
 	path = /obj/item/clothing/suit/roguetown/shirt/robe/phys
@@ -556,6 +609,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/sailorshirt
 	name = "Striped Shirt"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor
+
+/datum/loadout_item/sailorshirt_colorable
+	name = "Striped Shirt (Colorable)"
+	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/colored
 
 /datum/loadout_item/sailorjacket
 	name = "Leather Jacket"
@@ -758,6 +815,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Suspenders"
 	path = /obj/item/storage/belt/rogue/leather/suspenders/butler
 
+/datum/loadout_item/butlersuspenders_colorable
+	name = "Suspenders (Colorable)"
+	path = /obj/item/storage/belt/rogue/leather/suspenders/butler/colored
+
 /datum/loadout_item/ragmask
 	name = "Rag Mask"
 	path = /obj/item/clothing/mask/rogue/ragmask
@@ -890,6 +951,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Belt with faulds"
 	path = /obj/item/storage/belt/rogue/leather/battleskirt/faulds
 
+/datum/loadout_item/breechskirt
+	name = "Belt with Breechcloth"
+	path = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth
+
 /datum/loadout_item/tri_cloth_belt
 	name = "Cloth Belt"
 	path = /obj/item/storage/belt/rogue/leather/cloth
@@ -1014,6 +1079,30 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/psicross/ten
 	name = "Amulet of Ten"
 	path = /obj/item/clothing/neck/roguetown/psicross/ten
+
+/datum/loadout_item/psicross/gronngraggar
+	name = "Amulet of the Moose"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+
+/datum/loadout_item/psicross/gronnmatthios
+	name = "Amulet of the Bear"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+
+/datum/loadout_item/psicross/gronnzizo
+	name = "Amulet of the Wolf"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+
+/datum/loadout_item/psicross/gronnmbaotha
+	name = "Amulet of the Leopard"
+	path = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+
+/datum/loadout_item/psicross/gronnabyssor
+	name = "Amulet of the Kraken"
+	path = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+
+/datum/loadout_item/psicross/gronndendor
+	name = "Amulet of the Volfskinned Man"
+	path = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
 
 /datum/loadout_item/wedding_band
 	name = "silver wedding band"
@@ -1161,9 +1250,17 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Eastern Flowery Robe"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
 
+/datum/loadout_item/decorative_captain_robe
+	name = "Decorative Flowery Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative
+
 /datum/loadout_item/mentor_suit
 	name = "Eastern Mentor Suit"
 	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
+
+/datum/loadout_item/decorative_mentor_suit
+	name = "Decorative Mentor Robe"
+	path = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
 
 /datum/loadout_item/crafteast
 	name = "Eastern Craft Robe"
@@ -1207,6 +1304,10 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/mentorhat
 	name = "conical mentor hat"
 	path = /obj/item/clothing/head/roguetown/mentorhat
+
+/datum/loadout_item/decorative_mentorhat
+	name = "decorative bamboo hat"
+	path = /obj/item/clothing/head/roguetown/mentorhat/decorative
 
 // ROBES - ASTRATA
 /datum/loadout_item/robe_astrata
@@ -1694,27 +1795,27 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_chausses
-	name = "Gronn Byrine Chausses"
+	name = "Byrine Chausses"
 	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_gloves
-	name = "Gronn Byrine Gloves"
+	name = "Byrine Gloves"
 	path = /obj/item/clothing/gloves/roguetown/chain/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_byrine_hauberk
-	name = "Gronn Byrine"
+	name = "Byrine"
 	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_fur_pants
-	name = "Gronn Fur Pants"
+	name = "Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_bone_gloves
-	name = "Gronn Bone Gloves"
+	name = "Bone Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
 	triumph_cost = 3
 
@@ -1724,7 +1825,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gronn_ravager_mantle
-	name = "Gronn Ravager Mantle"
+	name = "Ravager Mantle"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
 	triumph_cost = 3
 
@@ -2313,6 +2414,26 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/rogueweapon/scabbard/sword
 	triumph_cost = 1
 
+/datum/loadout_item/scabbard/noble
+	name = "Noble Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword/noble
+	triumph_cost = 2
+
+/datum/loadout_item/scabbard/royal
+	name = "Royal Scabbard"
+	path = /obj/item/rogueweapon/scabbard/sword/royal
+	triumph_cost = 3
+
+/datum/loadout_item/scabbard/sheathe/noble
+	name = "Noble Sheathe"
+	path = /obj/item/rogueweapon/scabbard/sheath/noble
+	triumph_cost = 1
+
+/datum/loadout_item/scabbard/sheathe/royal
+	name = "Royal Sheathe"
+	path = /obj/item/rogueweapon/scabbard/sheath/royal
+	triumph_cost = 1
+
 /datum/loadout_item/greatweaponstrap
 	name = "Great Weapon Strap"
 	path = /obj/item/rogueweapon/scabbard/gwstrap
@@ -2400,7 +2521,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	path = /obj/item/rogue/instrument/vocals
 	triumph_cost = 1
 
-
 // Unique stuff that doesn't quite fit anywhere else.
 
 /datum/loadout_item/kazengunite_smithing_manual
@@ -2408,3 +2528,33 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	desc = "A Kazengunite smithing manual. Unlocks kazengunite armor and weapon recipes at the anvil when read — requires knowledge of Kazengunese. "
 	path = /obj/item/book/granter/trait/kazengunite_smith
 	triumph_cost = 3
+
+//CAPARISONS
+
+/datum/loadout_item/caparison
+	name = "Caparison"
+	path = /obj/item/caparison
+
+/datum/loadout_item/caparison/psy
+	name = "Psydonite Caparison"
+	path = /obj/item/caparison/psy
+
+/datum/loadout_item/caparison/astrata
+	name = "Astratan Caparison"
+	path = /obj/item/caparison/astrata
+
+/datum/loadout_item/caparison/eora
+	name = "Eoran Caparison"
+	path = /obj/item/caparison/eora
+
+/datum/loadout_item/caparison/azure
+	name = "Ducal Caparison"
+	path = /obj/item/caparison/azure
+
+/datum/loadout_item/caparison/fogbeast
+	name = "Fogbeast Caparison"
+	path = /obj/item/caparison/fogbeast
+
+/datum/loadout_item/caparison/fogbeast/azure
+	name = "Ducal Caparison (Fogbeast)"
+	path = /obj/item/caparison/fogbeast/azure

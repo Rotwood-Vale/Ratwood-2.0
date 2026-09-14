@@ -31,9 +31,14 @@ Sunlight System
 	/* misc vars */
 	var/state 					 = SKY_VISIBLE	// If we can see the see the sky, are blocked, or we have a blocked neighbour (SKY_BLOCKED/VISIBLE/VISIBLE_BORDER)
 	var/weatherproof			 = FALSE        // If we have a weather overlay
+	var/weather_applied			 = FALSE
+	var/underlays_dirty			 = TRUE
 	var/turf/source_turf
 	var/mutable_appearance/sunlight_overlay
 	var/list/datum/lighting_corner/affecting_corners
+
+/datum/outdoor_info/proc/reset_applied_overlays()
+	underlays_dirty = TRUE
 
 /datum/outdoor_info/Destroy(force, ...)
 	if (!force)
@@ -174,6 +179,8 @@ Sunlight System
 /* check ourselves and neighbours to see what outdoor effects we need */
 /* turf won't initialize an outdoor_effect if sky_blocked*/
 /turf/proc/get_sky_and_weather_states()
+	if(SSmapping.level_trait(z, ZTRAIT_IGNORE_WEATHER_TRAIT))
+		return
 	var/TempState
 
 	var/roofStat = get_ceiling_status()

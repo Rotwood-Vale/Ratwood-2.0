@@ -170,7 +170,7 @@
 /obj/item/magic/fae/core	//T3 mage summon loot
 	name = "heartwood core"
 	icon_state = "heartwood_core"
-	desc = "A piece of enchanted wood imbued with the dryad’s essence. Merely holding it transports one's mind to ancient times."
+	desc = "A piece of enchanted wood imbued with the dryad's essence. Merely holding it transports one's mind to ancient times."
 	sellprice = T3SELLPRICE
 	tier = 3
 

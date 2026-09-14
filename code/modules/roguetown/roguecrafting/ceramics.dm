@@ -2,6 +2,7 @@
 	abstract_type = /datum/crafting_recipe/roguetown/ceramics
 	skillcraft = /datum/skill/craft/ceramics
 	hides_from_crafting_menu = TRUE
+	display_category = ITEM_CAT_POTTERY
 
 /datum/crafting_recipe/roguetown/ceramics/clay
 	structurecraft = /obj/structure/fluff/ceramicswheel
@@ -179,6 +180,13 @@
 	result = list(/obj/item/roguestatue/clay/design5)
 	reqs = list(/obj/item/natural/clay = 3)
 	craftdiff = 0
+	hides_from_books = FALSE
+
+/datum/crafting_recipe/roguetown/ceramics/handbook_clay_pottery/jarhelm
+	name = "rather large jar"
+	result = list(/obj/item/clothing/head/roguetown/helmet/heavy/jar)
+	reqs = list(/obj/item/natural/clay = 3)
+	craftdiff = 5
 	hides_from_books = FALSE
 
 /datum/crafting_recipe/roguetown/ceramics/handbook_porcelain_pottery

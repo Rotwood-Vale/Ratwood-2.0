@@ -1,5 +1,6 @@
 //Base hammer type. (Wood / Iron / Steel)
 /obj/item/rogueweapon/hammer
+	abstract_type = /obj/item/rogueweapon/hammer
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	name = "template hammer"
@@ -16,6 +17,7 @@
 	grid_width = 32
 	grid_height = 64
 	var/quality = 1
+	is_tool = TRUE
 
 /obj/item/rogueweapon/hammer/getonmobprop(tag)
 	. = ..()
@@ -287,13 +289,14 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/hammer/blacksteel
-	force = 25
+	force = 28
 	name = "blacksteel hammer"
 	desc = "A hammer made of blacksteel, to drive even the hardest metals into submission."
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	icon_state = "bs_masterhammer"
 	item_state = "bs_masterhammer"
 	quality = 2
+	max_integrity = 450
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/hammer/blacksteel/getonmobprop(tag)
@@ -354,6 +357,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 32
 	grid_height = 64
+	is_tool = TRUE
 
 /obj/item/rogueweapon/tongs/examine(mob/user)
 	. = ..()
@@ -463,11 +467,13 @@
 
 /obj/item/rogueweapon/tongs/blacksteel
 	name = "blacksteel tongs"
-	desc = "A pair of blacksteel jaws almost certainly used as a sign of prestige."
+	desc = "A pair of blacksteel jaws, almost certainly used as a sign of prestige."
 	icon_state = "bs_tongs"
 	wdefense = 6
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
+	force = 20
+	max_integrity = 450
 
 /obj/item/rogueweapon/tongs/blacksteel/update_icon()
 	. = ..()

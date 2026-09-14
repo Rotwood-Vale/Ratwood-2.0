@@ -11,7 +11,7 @@
 	display_typing_indicator()
 	var/message = input(usr, "", "say") as text|null
 	// If they don't type anything just drop the message.
-	clear_typing_indicator()
+	clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	return say_verb(message)
@@ -26,7 +26,7 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	clear_typing_indicator()		// clear it immediately!
+	clear_typing_indicator("sent")		// clear it immediately!
 
 	say(message)
 
@@ -54,7 +54,7 @@
 	display_typing_indicator()
 	var/message = input(usr, "", "me") as text|null
 	// If they don't type anything just drop the message.
-	clear_typing_indicator()		// clear it immediately!
+	clear_typing_indicator(length(message) ? "sent" : "closed input")		// clear it immediately!
 	if(!length(message))
 		return
 	return me_verb(message)
@@ -68,13 +68,14 @@
 	return
 #endif
 	// If they don't type anything just drop the message.
-	clear_typing_indicator()
+	clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = accent_emote_quotes(message, usr)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return
@@ -88,7 +89,7 @@
 	display_typing_indicator()
 	var/message = input(usr, "", "me") as message|null
 	// If they don't type anything just drop the message.
-	clear_typing_indicator()
+	clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	return me_big_verb(message)
@@ -102,13 +103,16 @@
 	return
 #endif
 	// If they don't type anything just drop the message.
-	clear_typing_indicator()
+	clear_typing_indicator(length(message) ? "sent" : "closed input")
 	if(!length(message))
 		return
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
+
+	message = replacetext(message, regex("\\r", "g"), "")
 	message = trim(copytext_char(html_encode(message), 1, MAX_MESSAGE_BIGME))
+	message = accent_emote_quotes(message, usr)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return
@@ -130,6 +134,7 @@
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = accent_emote_quotes(message, usr)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return
@@ -150,7 +155,9 @@
 	if(GLOB.say_disabled)
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+
+	message = trim(copytext_char(html_encode(message), 1, MAX_MESSAGE_LEN))
+	message = accent_emote_quotes(message, usr)
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	if(check_subtler(message, FALSE))
 		return

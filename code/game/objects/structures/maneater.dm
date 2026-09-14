@@ -52,7 +52,7 @@
 			eaten.forceMove(target)
 			contents.Remove(eaten)
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/structure/flora/roguegrass/maneater/real/Crossed(atom/movable/AM)
 	..()
@@ -104,7 +104,7 @@
 		var/obj/item/bodypart/limb = victim.get_bodypart(zone)
 		if(!limb)
 			begin_eat(victim)
-		victim.flash_fullscreen("redflash3")
+		victim.fullscreen_redflash("redflash3")
 		playsound(loc, list('sound/vo/mobs/plant/attack (1).ogg','sound/vo/mobs/plant/attack (2).ogg','sound/vo/mobs/plant/attack (3).ogg','sound/vo/mobs/plant/attack (4).ogg'), 100, FALSE, -1)
 		if(prob(chew_factor * 15))
 			if(limb.dismember(damage = 20))
@@ -197,7 +197,7 @@
 
 
 /obj/structure/flora/roguegrass/maneater/real/juvenile/Initialize(mapload)
-	..()
+	. = ..()
 	transform = transform.Scale(0.75, 0.75)  // Start larger than an kobold.
 	addtimer(CALLBACK(src, PROC_REF(try_grow)), growth_time)
 

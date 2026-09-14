@@ -81,7 +81,9 @@
 	added_stashed_items = list(
 		"Hammer" = /obj/item/rogueweapon/hammer/iron,
 		"Polishing Cream" = /obj/item/polishing_cream,
-		"Fine Brush" = /obj/item/armor_brush
+		"Fine Brush" = /obj/item/armor_brush,
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		"Sewing Kit" = /obj/item/repair_kit,
 	)
 
 /datum/virtue/utility/failed_squire/apply_to_human(mob/living/carbon/human/recipient)
@@ -103,7 +105,7 @@
 
 /datum/virtue/utility/linguist/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.change_stat(STATKEY_INT, 1)
-	addtimer(CALLBACK(src, .proc/linguist_apply, recipient), 50)
+	addtimer(CALLBACK(src, PROC_REF(linguist_apply), recipient), 50)
 
 /datum/virtue/utility/linguist/proc/linguist_apply(mob/living/carbon/human/recipient)
 	var/static/list/selectable_languages = list(
@@ -119,6 +121,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar
@@ -156,8 +159,8 @@
 
 /datum/virtue/utility/feral_appetite
 	name = "Feral Appetite"
-	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
-	added_traits = list(TRAIT_NASTY_EATER)
+	desc = "I can eat just about ANYTHING, rotten or poisonous food and tainted water, even entrails..."
+	added_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER)
 
 /datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
 	..()
@@ -186,13 +189,15 @@
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-	addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
+	addtimer(CALLBACK(src, PROC_REF(performer_apply), recipient), 50)
 
 /datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
 	var/list/instruments = list()
 	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
 		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
 			continue //Skip the donator personal item harp.
+		else if(instrument_type == /obj/item/rogue/instrument/ztratocaster)
+			continue // there can only be one.
 		var/obj/item/rogue/instrument/instr = new instrument_type()
 		instruments[instr.name] = instrument_type
 		qdel(instr)  // Clean up the temporary instance
@@ -412,4 +417,3 @@
 		list(/datum/skill/craft/cooking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2)
 	)
-

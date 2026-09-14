@@ -217,7 +217,7 @@
 	)
 	
 	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
-		addtimer(CALLBACK(src, .proc/customize_skin, recipient), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(customize_skin), recipient), 1 SECONDS)
 
 /datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
 	var/obj/item/clothing/hide = recipient.wear_shirt
