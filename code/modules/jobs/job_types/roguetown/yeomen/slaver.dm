@@ -20,6 +20,7 @@
 	round_contrib_points = 4
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
+	vice_restrictions = list(/datum/charflaw/hunted)
 
 /datum/job/roguetown/slaver/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	. = ..()

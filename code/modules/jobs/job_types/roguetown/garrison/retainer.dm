@@ -21,6 +21,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
+	vice_restrictions = list(/datum/charflaw/hunted)
 	job_subclasses = list(/datum/advclass/baron_retainer/henchman, /datum/advclass/baron_retainer/ronin, /datum/advclass/baron_retainer/greyleaf)
 
 /datum/outfit/job/roguetown/baron_retainer
