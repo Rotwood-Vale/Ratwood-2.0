@@ -70,7 +70,7 @@
 		SStreasury.log_fund_entry(new /datum/treasury_entry(null, SStreasury.discretionary_fund, SStreasury.discretionary_fund, 0, "Subsidy Withdraw: [D.name][actor_suffix]"))
 	var/obj/item/I = new D.item_type(parent_structure.loc)
 	I.stockpile_withdrawn = TRUE
-	if(ishuman(user))
+	if(ishuman(user) && is_community_contribution_eligible(user))
 		var/mob/living/carbon/human/HC = user
 		HC.mind?.sleep_adv?.remove_community_contribution(1)
 	if(food_stipend)
