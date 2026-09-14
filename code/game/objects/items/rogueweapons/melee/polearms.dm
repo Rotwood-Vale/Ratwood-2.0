@@ -2079,7 +2079,7 @@
 	inv_storage_delay = 1 SECONDS
 	icon_angle_wielded = null
 
-/obj/item/rogueweapon/spear/partizan/baotha/Initialize()
+/obj/item/rogueweapon/spear/partizan/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "SWORDSPEAR")
 
