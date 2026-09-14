@@ -87,16 +87,17 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 			if("Elven Recurve Bow")
+				H.change_stat(STATKEY_PER, 1)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
 				beltl = /obj/item/quiver/arrows
 				backpack_contents[/obj/item/rogueweapon/huntingknife/idagger/steel/elvish] = 1
 
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword", "Elvish Saber", "Elvish Dagger")
 		if(weapon_choice == "Elven Recurve Bow") //nuh uh uh
-			sidearm -= "Elvish Longsword" 
+			sidearm -= "Elvish Longsword"
 			sidearm -= "Elvish Shortsword"
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
 		switch(sidearm_choice)
