@@ -42,7 +42,7 @@
 
 /datum/outfit/job/roguetown/manorguard/cavalry/pre_equip(mob/living/carbon/human/H)
 	..()
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/bevor
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)

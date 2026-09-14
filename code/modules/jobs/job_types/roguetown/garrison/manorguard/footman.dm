@@ -37,7 +37,7 @@
 	..()
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/bevor
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
