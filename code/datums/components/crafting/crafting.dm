@@ -312,12 +312,14 @@
 		return
 	if(isturf(R.result))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
-			return
+			if(TT.craftblock)
+				to_chat(user, span_warning("I can't craft here."))
+				return
 	if(ispath(R.result, /obj/structure) || ispath(R.result, /obj/machinery))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
-			return
+			if(TT.craftblock)
+				to_chat(user, span_warning("I can't craft here."))
+				return
 		for(var/obj/structure/S in T)
 			if(R.buildsame && istype(S, R.result))
 				if(user.dir == S.dir)

@@ -184,17 +184,16 @@
 	picklvl = 0.5
 
 /obj/item/rogueweapon/huntingknife/bronze
-	name = "bronze dagger"
+	name = "bronze knife"
 	desc = "A wide blade of bronze, fitted to a wooden handle. Ancient laborers and priests coveted this tool above all else: both as a means to handle the dae's labors, and to indulge in the rituos of sacrifice."
-	icon_state = "chefsknife"
+	icon_state = "bronzeknife"
+	sheathe_icon = "genknife"
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/bronze, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/bronze)
-	color = "#f9d690"
 	force = 18
 	throwforce = 18
-	max_blade_int = 225
+	max_blade_int = 200
 	max_integrity = 175
 	smeltresult = /obj/item/ingot/bronze
-	picklvl = 0.8
 
 /datum/intent/dagger/thrust/bronze
 	name = "piercing thrust"
@@ -312,6 +311,28 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/huntingknife/combat/bronze
+	name = "sydearmme"
+	desc = "Wedged bronze and whittled rockwood, handfitted into the dagger's most ancient-of-ancestors. It bears marks of flintknapping along its middlewidth; a customary tradition that's purported to atune its edge to the forces of nature."
+	icon_state = "bronzedagger"
+	sheathe_icon = "bronzedagger"
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/bronze, /datum/intent/dagger/sucker_punch, /datum/intent/dagger/thrust/bronze)
+	force = 20 //Sidegrade of the combat knife. Less damage and lower multipliers, but more blade integrity and a reduced pick variable.
+	wdefense = 3
+	throwforce = 20
+	max_blade_int = 250
+	max_integrity = 130 //Less integrity as well.
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/huntingknife/combat/bronze/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.5,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -80,"eturn" = 81,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
 /datum/intent/dagger/thrust/combat
 	name = "wedged thrust"
 	icon_state = "instab"
@@ -365,8 +386,10 @@
 /datum/intent/dagger/thrust/quick
 	name = "quick thrust"
 	attack_verb = list("thrusts", "shanks")
-	penfactor = 20 //Counts as up to 30-35AP, when factoring in strength-modified damage. 
+	penfactor = 10
+	intent_intdamage_factor = 0.1
 	clickcd = 4 //Halved penetration, doubled attack speed. This is either going to be extremely funny, or extremely evil.
+	misscost = 10
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/kris
 	name = "kris dagger"
