@@ -2,7 +2,7 @@
 	name = "Fist of Psydon"
 	desc = "Slam your fist downward, sending arcyne force crashing into a 3x3 target area up to 5 paces away. \
 		Brief telegraph before the strike lands. Deals blunt damage to the aimed bodypart. \
-		At 3+ momentum: consumes 3 to double damage. \
+		Requires 3 Momentum to cast. At 6+ momentum: consumes 6 to double damage. \
 		Can be deflected by Defend stance.\n\n\
 		'Step forward, rotating your fist into the punch. And, as you strike, envision yourself repeating the same strike in your mynd, and open the arcyne conduit of your arms, but close that of your legs, so that all of your body's weight is behind the strike. Then, at the very last moment, close the conduit of your arms as well, and thus arrest the strike before it come out, and you shall strike as if the fist of Psydon Himself were behind the blow.'"
 	overlay_state = "fist_of_psydon"
@@ -19,11 +19,25 @@
 	invocations = list("Idrib!")
 	sound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
 	
-	momentum_cost = 3
+	var/min_momentum_cost = 3
+	momentum_cost = 6
 	var/base_damage = 40
 	var/empowered_mult = 2
 	var/area_of_effect = 1
 	var/telegraph_delay = 0.8 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/spellfist/fist_of_psydon/can_cast(mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	var/datum/status_effect/buff/arcyne_momentum/M = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(!M || M.stacks < min_momentum_cost)
+		to_chat(H, span_warning("Not enough momentum! I need at least [min_momentum_cost] stacks!"))
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/spellfist/fist_of_psydon/cast(list/targets, mob/living/carbon/human/user)
 	. = ..()
@@ -32,7 +46,15 @@
 		revert_cast()
 		return FALSE
 
+	var/datum/status_effect/buff/arcyne_momentum/M = user.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(!M || M.stacks < min_momentum_cost)
+		revert_cast()
+		return FALSE
+
 	var/empowered = try_empower(user)
+	if(!empowered)
+		M.consume_stacks(min_momentum_cost)
+
 	var/damage = empowered ? (base_damage * empowered_mult) : base_damage
 	var/def_zone = user.zone_selected || BODY_ZONE_CHEST
 
@@ -79,5 +101,8 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/spellfist/fist_of_psydon/proc/arcyne_strike(mob/living/user, mob/living/target, weapon, damage, zone, damagetype, spell_name, exact_zone)
-	target.visible_message(span_danger("[user] hits [target] with [spell_name]!"))
+	target.visible_message(
+		span_danger("[user] smashes [target] with [spell_name]!"),
+		span_userdanger("You are struck by [user]'s [spell_name]!")
+	)
 	return psydon_strike(user, target, damage, zone)

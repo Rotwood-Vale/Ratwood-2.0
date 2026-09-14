@@ -1,7 +1,7 @@
 /datum/advclass/pontifex
 	name = "Pontifex"
 	tutorial = "You are a Naledi Pontifex, magick, blood and sand is wrapped between your fingertips. Otava's Inquisition admires your faith and Will, even if they don't fully understand you, For your land fell before your order ever did. The time to ENDURE has come to pass, it is time you AVENGE what was done to Him and your Land. Utilize the art of MOMENTUM, motion in every strike, to slowly but surely overwhelm your opponent. The Heretic will seek to lay waste to the legacy of PSYDON and Naledi, but you've known this all your LYFE, so raise your fist and channel your spells, AVENGER, the time of reckoning, is at hand."
-	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
+	outfit = /datum/outfit/job/roguetown/inquisition/pontifex
 	subclass_languages = list(/datum/language/celestial, /datum/language/otavan)
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE_T1, TRAIT_NALEDI)
@@ -12,7 +12,7 @@
 		STATKEY_CON = -2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, // THEY ARE NOT GRAPPLERS
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -29,7 +29,8 @@
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
 
-/datum/outfit/job/roguetown/mercenary/warscholar_pontifex
+/datum/outfit/job/roguetown/inquisition/pontifex
+	var/detailcolor
 	job_bitflag = BITFLAG_HOLY_WARRIOR
 	allowed_patrons = list(/datum/patron/old_god)
 	
@@ -53,7 +54,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1
 	)
 
-/datum/outfit/job/roguetown/mercenary/warscholar_pontifex/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/inquisition/pontifex/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/devotion_gain = CLERIC_REGEN_WEAK
 	var/devotion_limit = CLERIC_REQ_1
@@ -115,4 +116,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, 3, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 
-
+/datum/outfit/job/roguetown/inquisition/pontifex/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	for(var/obj/item/clothing/V in H.get_equipped_items(FALSE))
+		if(V.naledicolor)
+			V.color = detailcolor
+			V.update_icon()
+	H.regenerate_icons()

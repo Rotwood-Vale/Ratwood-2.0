@@ -108,7 +108,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, // THEY ARE NOT GRAPPLERS
-		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
@@ -153,9 +153,9 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/create_campfire)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 		H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
-		var/weapons = list("Path of War","Path of Shadows","Path of Survival")
-		var/weapon_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons
-		switch(weapon_choice)
+		var/weapons_weak = list("Path of War","Path of Shadows","Path of Survival")
+		var/weapon_weak_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons_weak
+		switch(weapon_weak_choice)
 			if("Path of War")//Weak combat stuff only
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)//longer CD than arcane bolt but more versatile
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
