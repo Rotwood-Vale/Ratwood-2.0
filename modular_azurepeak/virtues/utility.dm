@@ -1,5 +1,5 @@
 /datum/virtue/utility/noble
-	name = "Nobility"
+	name = "Nobility (-1 Triumph)"
 	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. \
 			I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	added_traits = list(TRAIT_NOBLE)
