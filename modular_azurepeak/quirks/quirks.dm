@@ -71,6 +71,18 @@
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
+/datum/quirk/largeframe
+	name = "Large Frame"
+	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
+	custom_text = "This quirk increases your sprite size. Incompatiable with the Giant virtue."
+	point_cost = 3
+	incompatible_virtues = list(/datum/virtue/size/giant)
+
+/datum/quirk/largeframe/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.transform = recipient.transform.Scale(1.25, 1.25)
+	recipient.transform = recipient.transform.Translate(0, (0.25 * 16))
+	recipient.update_transform()
+
 /datum/quirk/malodorous
 	name = "Malodorous"
 	desc = "My body odor is unbearable without regular baths, and others can tell."
