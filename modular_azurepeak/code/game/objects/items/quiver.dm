@@ -11,7 +11,6 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 	resistance_flags = FIRE_PROOF
 	max_integrity = 0
-	sellprice = 2 // Shouldn't have added value lmao
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	alternate_worn_layer = UNDER_CLOAK_LAYER
@@ -128,6 +127,13 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/bolt/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/bronze/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/bluntbolts/Initialize(mapload)
 	. = ..()
 	for(var/i in  1 to max_storage)
@@ -141,7 +147,7 @@
 		var/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt/A = new()
 		arrows += A
 	update_icon()
-	
+
 /obj/item/quiver/holybolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
@@ -216,13 +222,19 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/bronzearrows/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/arrow/bronze/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/javelin
 	name = "javelinbag"
 	desc = ""
 	icon_state = "javelinbag0"
 	item_state = "javelinbag"
 	max_storage = 4
-	sellprice = 10
 	dropshrink = 0.85
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
@@ -288,6 +300,13 @@
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/javelin/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to 4)
+		var/obj/item/ammo_casing/caseless/rogue/javelin/bronze/A = new()
 		arrows += A
 	update_icon()
 
@@ -360,6 +379,13 @@
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/sling/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze/A = new()
 		arrows += A
 	update_icon()
 

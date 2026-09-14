@@ -12,16 +12,17 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
 	locked = FALSE
-	var/budget = 0
+	var/budget
 	var/upgrade_flags
 	var/current_cat = "1"
 	lockid = "nightman"
 	var/list/categories = list(
 		"Alcohols",
+		"Discreet Zads",
 		"Drugs",
 		"Exotic Apparel",
 		"Instruments",
-		"Cosmetics",
+		"Perfumes",
 		"Roguery",
 		"Toys",
 		)
@@ -82,16 +83,25 @@
 			return
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
 		var/cost = PA.cost
-		var/tax_amt=round(SStreasury.tax_value * cost)
+		var/tax_amt = round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * cost)
 		cost=cost+tax_amt
 		if(upgrade_flags & UPGRADE_NOTAX)
 			cost = PA.cost
 		if(budget >= cost)
 			budget -= cost
-			if(!(upgrade_flags & UPGRADE_NOTAX))
-				SStreasury.give_money_treasury(tax_amt, "brassface import tax")
+			// AP tariff routing: under the Ordinance of the Baths the tariff diverts to the
+			// Church as a tithe; broken, it flows to the Crown as standard import duty.
+			if(upgrade_flags & UPGRADE_NOTAX)
+				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+			else if(SStreasury.bathhouse_ordinance_active)
+				var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(PA.cost, BATHHOUSE_BRASSFACE_TITHE_RATE)
+				if(bathhouse_tithe > 0)
+					SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+			else
+				SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
 				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
 				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+				record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
 		else
 			say("Not enough!")
 			return
@@ -168,7 +178,7 @@
 		for(var/datum/supply_pack/PA in sortNames(pax))
 			var/costy = PA.cost
 			if(!(upgrade_flags & UPGRADE_NOTAX))
-				costy=round(costy+(SStreasury.tax_value * costy))
+				costy=round(costy+(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * costy))
 			contents += "[PA.name] [PA.contains.len > 1?"x[PA.contains.len]":""] - ([costy])<a href='?src=[REF(src)];buy=[PA.type]'>BUY</a><BR>"
 
 	if(!canread)
@@ -240,8 +250,18 @@ SUBSYSTEM_DEF(BMtreasury)
 				amt_to_generate += add_to_vault(item)
 
 	amt_to_generate = round(amt_to_generate, 1)
-	brassface.budget += amt_to_generate // goes directly into BRASSFACE rather than into any account.
-	send_ooc_note("Income from smuggling hoard to the BRASSFACE: +[amt_to_generate]", job = "Bathmaster")
+	// AP parity: hoard generation accrues to the Bathhouse Fund rather than the BRASSFACE budget,
+	// less the vault tithe to the Church while the Ordinance of the Baths holds.
+	if(SStreasury?.bathhouse_fund)
+		var/tithe = SStreasury.compute_bathhouse_tithe(amt_to_generate, BATHHOUSE_VAULT_TITHE_RATE)
+		if(tithe > 0 && SStreasury.church_fund)
+			amt_to_generate -= tithe
+			SStreasury.church_fund.balance += tithe
+		SStreasury.bathhouse_fund.balance += amt_to_generate
+		send_ooc_note("Income from smuggling hoard (deposited to Bathhouse Fund): +[amt_to_generate][tithe > 0 ? " (after [tithe]m tithe to the Church)" : ""]", job = "Bathmaster")
+	else
+		brassface.budget += amt_to_generate
+		send_ooc_note("Income from smuggling hoard to the BRASSFACE: +[amt_to_generate]", job = "Bathmaster")
 	record_round_statistic(STATS_BATHMATRON_VAULT_TOTAL_REVENUE, amt_to_generate)
 
 

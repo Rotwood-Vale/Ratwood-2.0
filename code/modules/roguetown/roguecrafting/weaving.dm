@@ -1,4 +1,6 @@
 /datum/crafting_recipe/roguetown/weaving
+	abstract_type = /datum/crafting_recipe/roguetown/weaving
+	display_category = ITEM_CAT_GARMENT_COMMON
 	structurecraft = /obj/machinery/loom
 	skillcraft = /datum/skill/craft/sewing
 	subtype_reqs = TRUE		//For subtypes of fur
@@ -30,14 +32,16 @@
 	result = list(/obj/item/clothing/cloak/cape/puritan)
 	reqs = list(/obj/item/natural/silk = 4)
 	craftdiff = 3
-	sellprice = 15
+	sellprice = 25
+	display_category = ITEM_CAT_GARMENT_FINE
 
 /datum/crafting_recipe/roguetown/weaving/shirt
 	name = "formal silks"
 	result = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/puritan)
 	reqs = list(/obj/item/natural/silk = 5)
 	craftdiff = 3
-	sellprice = 18
+	sellprice = 25
+	display_category = ITEM_CAT_GARMENT_FINE
 
 /datum/crafting_recipe/roguetown/weaving/shepardmask
 	name = "half-mask"
@@ -45,7 +49,8 @@
 	reqs = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/silk = 1)
 	craftdiff = 1
-	sellprice = 9
+	sellprice = 10
+	display_category = ITEM_CAT_CLOTH_MASK
 
 /datum/crafting_recipe/roguetown/weaving/astratarobe
 	name = "astrata robes"
@@ -126,6 +131,7 @@
 				/obj/item/natural/silk = 2)
 	craftdiff = 5
 	sellprice = 27
+	display_category = ITEM_CAT_GARMENT_FINE
 
 /datum/crafting_recipe/roguetown/weaving/silkdress
 	name = "chemise"
@@ -134,6 +140,7 @@
 				/obj/item/natural/silk = 3)
 	craftdiff = 5
 	sellprice = 30
+	display_category = ITEM_CAT_GARMENT_FINE
 
 /datum/crafting_recipe/roguetown/weaving/silkcoat
 	name = "silk coat"
@@ -143,6 +150,7 @@
 				/obj/item/natural/fur = 2)
 	craftdiff = 5
 	sellprice = 60
+	display_category = ITEM_CAT_GARMENT_FINE
 
 //Eora content from Stonekeep
 /datum/crafting_recipe/roguetown/weaving/eoramask
@@ -152,6 +160,7 @@
 				/obj/item/natural/silk = 2)
 	craftdiff = 3
 	sellprice = 20
+	display_category = ITEM_CAT_ARMOR_MASKS
 
 /datum/crafting_recipe/roguetown/weaving/eorarobes
 	name = "eora robes"
