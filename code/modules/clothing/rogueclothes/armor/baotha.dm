@@ -274,7 +274,7 @@
 	color = null
 	smeltresult = null
 
-/obj/item/clothing/neck/roguetown/coif/baotha/Initialize()
+/obj/item/clothing/neck/roguetown/coif/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VEIL")
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/cloth_wipe (1).ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))
@@ -297,7 +297,7 @@
 	body_parts_covered = COVERAGE_FULL
 	smeltresult = null
 
-/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "ARMOR")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -324,7 +324,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 	smeltresult = null
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/Initialize()
+/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VESTMENTS")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -344,7 +344,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	smeltresult = null
 
-/obj/item/clothing/wrists/roguetown/bracers/leather/baotha/Initialize()
+/obj/item/clothing/wrists/roguetown/bracers/leather/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BRACERS")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -366,7 +366,7 @@
 	body_parts_covered = GROIN | LEGS
 	smeltresult = null
 
-/obj/item/clothing/under/roguetown/baotha/skirt/Initialize()
+/obj/item/clothing/under/roguetown/baotha/skirt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "SKIRT")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -386,7 +386,7 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	smeltresult = null
 
-/obj/item/clothing/gloves/roguetown/plate/baotha/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "GLOVES")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -406,12 +406,12 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	smeltresult = null
 
-/obj/item/clothing/shoes/roguetown/boots/armor/baotha/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BOOTS")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
-/obj/item/clothing/shoes/roguetown/boots/armor/baotha/ComponentInitialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/baotha/ComponentInitialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
 	stepnoise_flag = STEPNOISE_HEELS // This will prevent default footstep noise from being made by the heels (sounds odd)
