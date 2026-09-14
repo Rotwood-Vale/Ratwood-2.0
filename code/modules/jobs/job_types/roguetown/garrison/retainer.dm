@@ -131,7 +131,7 @@
 
 /datum/outfit/job/roguetown/baron_retainer/duelist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Das Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
+	var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Der Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	switch(weapon_choice)
 		if("La Bête (Executioner)")
@@ -159,7 +159,7 @@
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/marlin, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/cape/red, SLOT_CLOAK, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb, SLOT_HEAD, TRUE)
-		if("Das Schwertkämpfer (Kriegsmesser)")
+		if("Der Schwertkämpfer (Kriegsmesser)")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/caplessgrenzelhofthat, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/stabard/grenzelhoft, SLOT_CLOAK, TRUE)
