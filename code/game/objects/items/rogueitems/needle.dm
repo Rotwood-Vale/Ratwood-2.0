@@ -262,7 +262,7 @@
 			doctor.mind.add_sleep_experience(skill_used, base_exp * exp_scale)
 		if(ishuman(doctor))
 			var/mob/living/carbon/human/U = doctor
-			U.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in closing wounds!")
+			U.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in closing wounds.")
 					
 		use(1)
 		target_wound.sew_wound()

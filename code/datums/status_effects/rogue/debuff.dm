@@ -120,6 +120,7 @@
 
 /datum/status_effect/debuff/rotfood/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ROT_EATER))
+		doctor.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra ecurages your lack of waistfulness.")
 		return ..()
 	owner.add_stress(/datum/stressevent/rotfood)
 	if(iscarbon(owner))
