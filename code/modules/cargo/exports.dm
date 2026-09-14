@@ -29,6 +29,8 @@
 	var/sellprice = 0 //sanitize this somewhere so it cant be decimals
 	var/static_price = FALSE
 	var/loadout_item = FALSE // TRUE if this item was spawned from the loadout system
+	var/looted = FALSE
+	var/no_loot_taint = FALSE
 
 /atom/movable/proc/randomize_price()
 	if(sellprice)
@@ -38,16 +40,30 @@
 	return sellprice
 
 /atom/movable/proc/get_real_price()
-	var/total_sellprice = 0
-	if(length(src.contents)) // this overrides the objects base price but 90% of usecases will not see someone trying to sell a full satchel.
-		for(var/obj/item/I in src.contents) // runs a loop on anytihng that's got contents under our current inv system
-			if(I) // runs the get_real_price recurisvely. please dont runtime.
-				total_sellprice += I.get_real_price()
-		return total_sellprice + sellprice
-	else // if its not a container, run the original code.
-		if(sellprice == initial(sellprice))
+	if(sellprice == initial(sellprice))
+		randomize_price()
+	if(!sellprice && initial(sellprice) == 0)
+		var/derived = GLOB.derived_sellprices?[type]
+		if(!derived)
+			derived = lookup_derived_subtype_price(type)
+		if(derived)
+			sellprice = derived
 			randomize_price()
-		return sellprice
+	if(looted)
+		return max(1, round(sellprice * LOOTED_SELL_MULT))
+	return sellprice
+
+/proc/lookup_derived_subtype_price(typepath)
+	if(!GLOB.derived_sellprices)
+		return 0
+	var/parent_path = typepath
+	while(parent_path)
+		parent_path = type2parent(parent_path)
+		if(!parent_path)
+			return 0
+		var/parent_price = GLOB.derived_sellprices[parent_path]
+		if(parent_price)
+			return parent_price
 
 // For appraisal purposes only - calculates total value including contents
 // Used by SEEPRICES trait for examining containers
