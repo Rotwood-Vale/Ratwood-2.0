@@ -227,9 +227,8 @@
 /datum/crafting_recipe/roguetown/sewing/clothblindfold
 	name = "blindfold"
 	result = list(/obj/item/clothing/mask/rogue/blindfold)
-	reqs = list(/obj/item/natural/cloth = 2,
-				/obj/item/natural/fibers = 1)
-	craftdiff = 1
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/sewing/duelmask
 	name = "duelist's mask"
