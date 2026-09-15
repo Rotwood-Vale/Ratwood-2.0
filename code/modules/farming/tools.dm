@@ -146,8 +146,8 @@
 	wlength = WLENGTH_NORMAL
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
-	hoe_damage = null //the durability damage recieved for every work cycle
-	work_time = 3 SECONDS // the time it takes to make new soil or till soil
+	hoe_damage = null
+	work_time = 3 SECONDS
 	is_tool = TRUE
 
 /obj/item/rogueweapon/hoe/decrepit
