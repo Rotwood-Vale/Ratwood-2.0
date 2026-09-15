@@ -8,13 +8,17 @@
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T0, //No idea why this was T3.
+					/obj/effect/proc_holder/spell/invoked/lesser_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle 	= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance		= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo			= CLERIC_T2, //A bone. 
+					/obj/effect/proc_holder/spell/invoked/raise_spirit_respite			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/rituos/miracle				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/cascade						= CLERIC_T4,
 	)
 	confess_lines = list(
 		"PRAISE ZIZO THE IMMORTAL!",
