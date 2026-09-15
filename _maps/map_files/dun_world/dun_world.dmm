@@ -24075,25 +24075,11 @@
 /turf/open/floor/rogue/tile/masonic/single,
 /area/rogue/indoors/inq)
 "evY" = (
-/obj/item/roguecoin/silver,
-/obj/item/roguecoin/silver,
-/obj/item/roguecoin/silver,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/structure/closet/crate/chest/gold{
-	lockid = "church";
-	pixel_x = 2;
-	pixel_y = 5
+/obj/item/reagent_containers/glass/cup/golden/psydon{
+	pixel_y = 9
 	},
-/obj/item/roguestatue/gold,
-/obj/item/roguestatue/gold,
-/obj/item/roguestatue/silver,
-/obj/item/roguestatue/silver,
-/obj/item/roguestatue/silver,
 /obj/structure/fluff/walldeco/church/line,
+/obj/structure/table/wood/fancy/blue,
 /obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church/basement)
@@ -24454,23 +24440,8 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/dwarfin)
 "eyL" = (
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/item/roguecoin/gold/pile,
-/obj/structure/closet/crate/chest/gold{
-	lockid = "church";
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/roguestatue/gold,
-/obj/item/roguestatue/gold,
-/obj/item/roguestatue/silver,
-/obj/item/roguestatue/silver,
-/obj/item/roguestatue/silver,
-/obj/structure/fluff/walldeco/church/line,
 /obj/machinery/light/rogue/candle/blue/l,
+/obj/structure/roguemachine/vaultbank/church,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church/basement)
 "eyM" = (
@@ -79986,11 +79957,25 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woods)
 "oDw" = (
-/obj/item/reagent_containers/glass/cup/golden/psydon{
-	pixel_y = 9
+/obj/item/roguecoin/silver,
+/obj/item/roguecoin/silver,
+/obj/item/roguecoin/silver,
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguecoin/gold/pile,
+/obj/item/roguecoin/gold/pile,
+/obj/structure/closet/crate/chest/gold{
+	lockid = "church";
+	pixel_x = 2;
+	pixel_y = 5
 	},
+/obj/item/roguestatue/gold,
+/obj/item/roguestatue/gold,
+/obj/item/roguestatue/silver,
+/obj/item/roguestatue/silver,
+/obj/item/roguestatue/silver,
 /obj/structure/fluff/walldeco/church/line,
-/obj/structure/table/wood/fancy/blue,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church/basement)
 "oDx" = (
