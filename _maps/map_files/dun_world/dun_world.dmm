@@ -11827,12 +11827,6 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/outdoors/mountains)
-"chQ" = (
-/obj/machinery/light/rogue/candle{
-	pixel_y = -32
-	},
-/turf/open/floor/rogue/hexstone,
-/area/rogue/indoors/town/bath)
 "chR" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -13477,6 +13471,9 @@
 	dir = 4;
 	pixel_y = 14;
 	pixel_x = -5
+	},
+/obj/structure/fluff/walldeco/rpainting/forest{
+	pixel_x = -32
 	},
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/town/bath)
@@ -20645,6 +20642,9 @@
 /obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
+/obj/structure/curtain/red{
+	alpha = 200
+	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/bath)
 "dQe" = (
@@ -27275,6 +27275,7 @@
 /obj/structure/chair/bench/couchamagenta/r{
 	pixel_y = 4
 	},
+/obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "faS" = (
@@ -40400,7 +40401,9 @@
 /obj/structure/chair/bench/couchamagenta{
 	pixel_y = 4
 	},
-/obj/machinery/light/rogue/candle,
+/obj/structure/fluff/walldeco/bigpainting{
+	pixel_x = -32
+	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "htc" = (
@@ -57713,6 +57716,9 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/shelter/bog)
 "kDm" = (
+/obj/structure/curtain/red{
+	alpha = 200
+	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/bath)
 "kDo" = (
@@ -80856,6 +80862,9 @@
 	pixel_x = 7;
 	pixel_y = 41
 	},
+/obj/structure/fluff/walldeco/rpainting/crown{
+	pixel_x = -32
+	},
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/town/bath)
 "oLl" = (
@@ -87834,6 +87843,9 @@
 /obj/structure/closet/crate/drawer{
 	pixel_y = 4;
 	pixel_x = 4
+	},
+/obj/structure/curtain/red{
+	alpha = 200
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/bath)
@@ -95179,6 +95191,9 @@
 "rsK" = (
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
+	},
+/obj/structure/curtain/red{
+	alpha = 200
 	},
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/bath)
@@ -205410,7 +205425,7 @@ tyV
 aOw
 cgT
 cgT
-chQ
+cgT
 lXv
 hta
 jRg
