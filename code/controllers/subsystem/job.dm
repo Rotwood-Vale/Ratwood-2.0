@@ -731,34 +731,38 @@ SUBSYSTEM_DEF(job)
 
 		if(!handled_resident_spawn)
 			var/obj/S = null
-			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-				if(sloc.name != spawn_rank)
-					continue
-				if(locate(/mob/living) in sloc.loc)
-					continue
-				S = sloc
-				sloc.used = TRUE
-				break
-			if(!S)
+			var/datum/preferences/p=M.client?.prefs
+			if(p &&istype(p.virtue, /datum/virtue/utility/resident)||istype(p.virtuetwo, /datum/virtue/utility/resident))
+				spawn_resident_in_tavern(H)
+			else
 				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
 					if(sloc.name != spawn_rank)
+						continue
+					if(locate(/mob/living) in sloc.loc)
 						continue
 					S = sloc
 					sloc.used = TRUE
 					break
-			if(!S)//danger will robinson something went wrong
-				log_game("Could not find a landmark for [spawn_rank]!!!!!!")
-				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-					S = sloc
-					sloc.used = TRUE
-					break
-			if(length(GLOB.jobspawn_overrides[spawn_rank]))
-				S = pick(GLOB.jobspawn_overrides[spawn_rank])
-			if(S)
-				S.JoinPlayerHere(H, FALSE)
-			if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-				log_world("Couldn't find a round start spawn point for [spawn_rank]")
-				SendToLateJoin(H)
+				if(!S)
+					for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+						if(sloc.name != spawn_rank)
+							continue
+						S = sloc
+						sloc.used = TRUE
+						break
+				if(!S)//danger will robinson something went wrong
+					log_game("Could not find a landmark for [spawn_rank]!!!!!!")
+					for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+						S = sloc
+						sloc.used = TRUE
+						break
+				if(!S &&length(GLOB.jobspawn_overrides[spawn_rank]))
+					S = pick(GLOB.jobspawn_overrides[spawn_rank])
+				if(S)
+					S.JoinPlayerHere(H, FALSE)
+				if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+					log_world("Couldn't find a round start spawn point for [spawn_rank]")
+					SendToLateJoin(H)
 
 
 	if(H.mind)
@@ -909,9 +913,14 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
+	var/forcetowner=FALSE
+	var/datum/preferences/p=M.client?.prefs
+	if(p)
+		if(istype(p.virtue, /datum/virtue/utility/resident)||istype(p.virtuetwo, /datum/virtue/utility/resident))
+			forcetowner = TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(should_use_towner_spawn(H))
+		if(forcetowner || should_use_towner_spawn(H))
 			if(length(GLOB.jobspawn_overrides["Towner"]))
 				destination = pick(GLOB.jobspawn_overrides["Towner"])
 				destination.JoinPlayerHere(M, FALSE)
