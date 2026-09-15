@@ -1526,7 +1526,24 @@ There are several things that need to be remembered:
 				if(OFFSET_PANTS_F in dna.species.offset_features)
 					pants_overlay.pixel_x += dna.species.offset_features[OFFSET_PANTS_F][1]
 					pants_overlay.pixel_y += dna.species.offset_features[OFFSET_PANTS_F][2]
-			overlays_standing[PANTS_LAYER] = pants_overlay
+			var/obj/item/codpiece/attached_codpiece
+			if(istype(wear_pants, /obj/item/clothing/under/roguetown))
+				var/obj/item/clothing/under/roguetown/rogue_pants = wear_pants
+				attached_codpiece = rogue_pants.attached_codpiece
+			if(attached_codpiece)
+				var/list/pants_appearances = list()
+				if(pants_overlay)
+					pants_appearances += pants_overlay
+				var/mutable_appearance/codpiece_underlay = attached_codpiece.build_worn_codpiece_icon(src, PANTS_LAYER - 0.1, TRUE)
+				if(codpiece_underlay)
+					pants_appearances += codpiece_underlay
+				if(attached_codpiece.draws_above_clothing)
+					var/mutable_appearance/codpiece_overlay = attached_codpiece.build_worn_codpiece_icon(src, ABOVE_BODY_FRONT_LAYER)
+					if(codpiece_overlay)
+						pants_appearances += codpiece_overlay
+				overlays_standing[PANTS_LAYER] = pants_appearances
+			else
+				overlays_standing[PANTS_LAYER] = pants_overlay
 
 			//add sleeve overlays, then offset
 			var/list/sleeves = list()

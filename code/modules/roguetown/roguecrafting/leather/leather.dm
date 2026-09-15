@@ -246,3 +246,19 @@
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/bone = 1)
 	craftdiff = 2
 	display_category = ITEM_CAT_CLOTH_MASK
+
+/datum/crafting_recipe/roguetown/leather/codpiece
+	name = "codpiece"
+	result = /obj/item/codpiece
+	reqs = list(/obj/item/natural/hide/cured = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 2
+	display_category = ITEM_CAT_TAILOR_MISC
+
+/datum/crafting_recipe/roguetown/leather/flapcodpiece
+	name = "flap codpiece"
+	result = list(/obj/item/codpiece/flap)
+	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/fibers = 1)
+	tools = list(/obj/item/needle)
+	craftdiff = 2
+	display_category = ITEM_CAT_TAILOR_MISC
