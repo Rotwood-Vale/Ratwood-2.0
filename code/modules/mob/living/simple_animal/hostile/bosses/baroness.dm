@@ -240,8 +240,6 @@
 	chargetime = 15
 	penfactor = 20
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 
 /mob/living/carbon/human/species/dwarfskeleton/ambush/knight/summoned

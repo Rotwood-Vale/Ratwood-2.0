@@ -482,6 +482,11 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
+	if(length(vis_locs)) // according to tg checking this pre-cut is actually faster
+		// vis_locs doesn't count as a reference to the things in it,
+		// but their vis_contents count as a reference to us, so we cut it
+		vis_locs.Cut()
+
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/AM)

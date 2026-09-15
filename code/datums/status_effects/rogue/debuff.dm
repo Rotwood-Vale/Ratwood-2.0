@@ -823,10 +823,11 @@
 	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = TRUE
 	init_signals()
+	if(isnull(harpy.buckled_mobs))
+		return
 	var/mob/buckled_rider = harpy.buckled_mobs[1]
-	if(!isnull(buckled_rider))
-		buckled_mob = WEAKREF(buckled_rider)
-		buckled_rider.movement_type |= FLYING
+	buckled_mob = WEAKREF(buckled_rider)
+	buckled_rider.movement_type |= FLYING
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -872,7 +873,7 @@
 		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
-	var/mob/buckled_rider = buckled_mob.resolve()
+	var/mob/buckled_rider = buckled_mob?.resolve()
 	if(!isnull(buckled_rider))
 		buckled_rider.movement_type &= ~FLYING
 	buckled_mob = null
@@ -1220,3 +1221,20 @@
 	name = "Musked"
 	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
 	icon_state = "debuff"
+
+/datum/status_effect/debuff/enchantmenttriggered
+	id = "enchantmenttriggered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	duration = -1 // set explicitly when applied, see below
+
+/datum/status_effect/debuff/enchantmenttriggered/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+	
+/atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	name = "Enchantment Dormant"
+	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
+	icon_state = "dazed"
+
+

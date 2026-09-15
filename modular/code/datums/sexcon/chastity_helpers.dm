@@ -49,8 +49,8 @@
 /// Checks both user and action_target for a chastity device — whichever has one produces the sound.
 /// Probability scales with action speed. Volume scales with sex force tier (MID→HIGH→EXTREME).
 /// Returns TRUE always (used as a callback hook, not a gate).
-/datum/sex_controller/proc/modular_chastitycourse_noise(mob/living/carbon/human/action_target)
-	if(!user || QDELETED(user) || !istype(user))
+/datum/sex_controller/proc/chastitycourse_noise(mob/living/carbon/human/action_target)// for actions that involve moving a chastity device. Chance increases with force and speed.
+	if(!istype(user) || QDELING(user))
 		return TRUE
 	if(force < SEX_FORCE_MID)
 		return TRUE
@@ -275,7 +275,7 @@
 	return TRUE
 
 /// Returns TRUE if at least one party (user or action_target) has an active chastity device.
-/// Used by sex action procs to decide whether to call modular_chastitycourse_noise()
+/// Used by sex action procs to decide whether to call chastitycourse_noise()
 /// rather than unconditionally playing a metal-rattle sound for non-chastity participants.
 /datum/sex_controller/proc/modular_should_play_chastitycourse_noise(mob/living/carbon/human/action_target)
 	if(user?.chastity_device || action_target?.chastity_device)

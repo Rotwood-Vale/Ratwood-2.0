@@ -1,7 +1,9 @@
 /mob/living/carbon/human/species/elf
+	abstract_type = /mob/living/carbon/human/species/elf
 	race = /datum/species/elf
 
 /datum/species/elf
+	abstract_type = /datum/species/elf
 	name = "Elfb"
 	id = "elf"
 	max_age = 850

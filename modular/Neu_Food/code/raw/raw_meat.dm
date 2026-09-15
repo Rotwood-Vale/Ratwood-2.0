@@ -44,7 +44,7 @@
 				qdel(src)
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
-	else 
+	else
 		return ..()
 
 /* ............. Generic Steak ................*/
@@ -65,11 +65,11 @@
 
 /* ............. Pork (Fatty Sprite) ................*/
 /obj/item/reagent_containers/food/snacks/rogue/meat/fatty //pork
-	name = "raw pigflesh"
+	name = "raw pork"
 	icon_state = "pork"
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/fatty/roast
-	slices_num = 2
-	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/beef
+	slices_num = 3
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/bacon
 	slice_bclass = BCLASS_CHOP
 	chopping_sound = TRUE
 	cooked_smell = /datum/pollutant/food/fried_meat
@@ -119,7 +119,7 @@
 				qdel(src)
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
-	else 
+	else
 		return ..()
 
 /* ............. Whole Bird ................*/
@@ -491,7 +491,7 @@
 	user.Knockdown(4 SECONDS)
 
 	sleep(7 SECONDS)
-	
+
 	var/mob/C = pick(candidates)
 	var/mob/living/carbon/human/H = new(get_turf(user))
 	H.key = C.key

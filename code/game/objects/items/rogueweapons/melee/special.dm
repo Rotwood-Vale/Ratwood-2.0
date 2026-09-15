@@ -488,6 +488,7 @@
 	thrown_bclass = BCLASS_BLUNT
 	throwforce = 10
 	resistance_flags = FLAMMABLE
+	is_tool = TRUE
 
 /obj/item/rogueweapon/scythe/getonmobprop(tag)
 	. = ..()
@@ -519,6 +520,7 @@
 	wdefense = 2
 	wdefense_wbonus = 4
 	wbalance = WBALANCE_NORMAL
+	is_tool = FALSE//no legendary parry chance for you chudsciple
 
 /obj/item/rogueweapon/pick/militia/steel
 	force = 25
@@ -546,6 +548,21 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
+	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogueweapon/sword/falchion/militia/bronze
+	name = "kopis"
+	desc = "The falchion's ancient predecessor, veiled in bronze - yet no less lethal against an awaiting trunk. The curved grip snuggly fits in the wielder's hand, allowing their will to be imposed upon assailant-and-archdevil alike with terrible force."
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)//no peel but very fun intents. This little chopper rocks
+	icon_state = "kopis"
+	sheathe_icon = "kopis"
+	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
+	force = 20
+	force_wielded = 27 // +2/3ish over the Maciejowski. A proper killing machine.
+	max_integrity = 175
+	max_blade_int = 350
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/bronze
 	wbalance = WBALANCE_HEAVY
 
 /datum/intent/peculate
