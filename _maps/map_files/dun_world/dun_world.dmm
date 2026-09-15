@@ -94333,6 +94333,9 @@
 /obj/effect/falling_sakura,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/eora)
+"rkX" = (
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/under/town/basement)
 "rlb" = (
 /obj/structure/mineral_door/wood{
 	locked = 1;
@@ -206275,7 +206278,7 @@ efz
 ljZ
 ylh
 mMx
-eXr
+rkX
 eXr
 qeQ
 hSR
