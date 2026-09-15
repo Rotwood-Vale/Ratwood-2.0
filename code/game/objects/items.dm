@@ -924,6 +924,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
+/obj/item/proc/quickdraw_interact(mob/living/user, obj/item/held_item)
+	return FALSE
+
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
 
