@@ -10,7 +10,8 @@
 	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable) || has_status_effect(/datum/status_effect/debuff/riposted))
 		return FALSE
 	if(!can_see_cone(attacker))
-		return FALSE
+		if(!get_tempo_bonus(TEMPO_TAG_NOLOS_PARRY))
+			return FALSE
 	if(!COOLDOWN_FINISHED(src, last_parry))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
