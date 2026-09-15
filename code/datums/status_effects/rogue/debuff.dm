@@ -434,6 +434,14 @@
 	desc = "You've been smacked on the head very hard. Which way is left, again?"
 	icon_state = "dazed"
 
+/// wrestler verison of daze////
+/datum/status_effect/debuff/dazed/stunner
+	id = "discombobulated"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed
+	effectedstats = list(STATKEY_CON = -2, STATKEY_INT = -2)
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
 /datum/status_effect/debuff/cold
 	id = "Frostveiled"
 	alert_type =  /atom/movable/screen/alert/status_effect/debuff/cold
