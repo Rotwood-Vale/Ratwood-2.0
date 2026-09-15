@@ -296,6 +296,21 @@
 	desc = ""
 	icon_state = "buff"
 
+/obj/item/book/rogue/bibble/psy/heavy
+	name = "Hefty Tome of Psydon" //Hilarious
+	desc = "'And HE WEEPS. Not for you, not for me, but for it all.' </br>A leatherbound tome, particularly hefty and twice-as-thick with various personal revisions and notes stuffed within. The 'Harlaus Press', a recent invention by Otava's clergymen, has ensured that no corner of Psydonia would remain unlit by His teachings. Inside are three separate testaments, each marked with a velvet strap.. </br>PSALMS - TESTAMENTS OF CLERICAL WISDOM, COMMANDING INTERPRETATION. </br>GENESIS - TESTAMENTS OF PSYDONIA'S CREATION, FOR WHAT ONCE WAS. </br>INVOCATIONS - TESTAMENTS OF WILL, TO EXORCISE AND CHANT."
+	icon_state = "psyble_0"
+	base_icon_state = "psyble"
+	title = "psyble"
+	dat = "gott.json"
+	var/sect = "sect1"
+	wbalance = WBALANCE_HEAVY
+	force = 25
+	possible_item_intents = list(
+		/datum/intent/use,
+		/datum/intent/bless,
+		/datum/intent/mace/smash,
+	)
 
 /obj/item/book/rogue/law
 	name = "Tome of Justice"
