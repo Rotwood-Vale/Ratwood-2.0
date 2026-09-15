@@ -32,25 +32,14 @@
 
 /// Changes your tempo level based on the amount of players attacking you
 /mob/living/carbon/human/proc/manage_tempo()
-	var/newcount
-	newcount = length(tempo_attackers)
-	switch(newcount)
-		if(TEMPO_MAX to TEMPO_CAP)
-			apply_status_effect(/datum/status_effect/buff/tempo_three)
-			remove_status_effect(/datum/status_effect/buff/tempo_two)
-			remove_status_effect(/datum/status_effect/buff/tempo_one)
-		if(TEMPO_TWO)
-			apply_status_effect(/datum/status_effect/buff/tempo_two)
-			remove_status_effect(/datum/status_effect/buff/tempo_three)
-			remove_status_effect(/datum/status_effect/buff/tempo_one)
-		if(TEMPO_ONE)
-			apply_status_effect(/datum/status_effect/buff/tempo_one)
-			remove_status_effect(/datum/status_effect/buff/tempo_three)
-			remove_status_effect(/datum/status_effect/buff/tempo_two)
-		if(0 to (TEMPO_ONE - 1))
-			remove_status_effect(/datum/status_effect/buff/tempo_one)
-			remove_status_effect(/datum/status_effect/buff/tempo_two)
-			remove_status_effect(/datum/status_effect/buff/tempo_three)
+	var/newcount = length(tempo_attackers)
+	var/datum/status_effect/tempo/tempo_status = has_status_effect(/datum/status_effect/tempo)
+	if(isnull(tempo_status))
+		if(newcount >= TEMPO_ONE) // No status effect, but we meet the conditions to apply tempo so lets apply our first buff
+			tempo_status = apply_status_effect(/datum/status_effect/tempo)
+			tempo_status.adjust_count(newcount)
+		return
+	tempo_status.adjust_count(newcount) // Once we have the buff, we can just adjust it (It will delete itself when needed)
 
 /mob/living/carbon/human/proc/clear_tempo_all()
 	if(length(tempo_attackers))
@@ -59,70 +48,81 @@
 		manage_tempo()
 
 /mob/living/proc/get_tempo_bonus(id)
+	var/datum/status_effect/tempo/tempo_status = has_status_effect(/datum/status_effect/tempo)
+	if(!tempo_status)
+		return
 	switch(id)
 		//Bonus CDR for rclicks
 		if(TEMPO_TAG_RCLICK_CD_BONUS)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 2 SECONDS
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 4 SECONDS
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 7 SECONDS
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 2 SECONDS
+				if(2)
+					return 4 SECONDS
+				if(3)
+					return 7 SECONDS
 		//Bonus parry CDR. Note that default is 1.2 SECONDS
 		if(TEMPO_TAG_PARRYCD_BONUS)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 0.2 SECONDS
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 0.4 SECONDS
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 0.6 SECONDS
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 0.2 SECONDS
+				if(2)
+					return 0.4 SECONDS
+				if(3)
+					return 0.6 SECONDS
 		//Modifier for how much integ damage the weapon we parry with takes. Multiplier.
 		if(TEMPO_TAG_DEF_INTEGFACTOR)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 0.75
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 0.66
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 0.62
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 0.75
+				if(2)
+					return 0.66
+				if(3)
+					return 0.62
 		//Modifier for how much LESS sharpness we lose with the weapon we parry. Flat number.
 		if(TEMPO_TAG_DEF_SHARPNESSFACTOR)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 1
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 2
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 3 //No default sharpness lost at max Tempo.
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 1
+				if(2)
+					return 2
+				if(3)
+					return 3 //No default sharpness lost at max Tempo.
 		//Whether we can parry without seeing the enemy
 		if(TEMPO_TAG_NOLOS_PARRY)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return FALSE
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return TRUE
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return TRUE
-			else
-				return FALSE
+			switch(tempo_status.tempo_level)
+				if(1)
+					return FALSE
+				if(2)
+					return TRUE
+				if(3)
+					return TRUE
+				else
+					return FALSE
 		//How much less armor integ we lose on hit. Multiplier. (0 to 1)
 		if(TEMPO_TAG_ARMOR_INTEGFACTOR)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 0.8
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 0.7
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 0.6
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 0.8
+				if(2)
+					return 0.7
+				if(3)
+					return 0.6
 		//How much stamloss we take away from dodging. Flat number.
 		if(TEMPO_TAG_STAMLOSS_DODGE)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 1
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 1
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 2
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 1
+				if(2)
+					return 1
+				if(3)
+					return 2
 		//How much stamloss we take away from parrying. Flat number.
 		if(TEMPO_TAG_STAMLOSS_PARRY)
-			if(has_status_effect(/datum/status_effect/buff/tempo_one))
-				return 1
-			else if(has_status_effect(/datum/status_effect/buff/tempo_two))
-				return 2
-			else if(has_status_effect(/datum/status_effect/buff/tempo_three))
-				return 3
+			switch(tempo_status.tempo_level)
+				if(1)
+					return 1
+				if(2)
+					return 2
+				if(3)
+					return 3
