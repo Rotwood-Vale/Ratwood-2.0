@@ -113,6 +113,23 @@
 	item_d_type = "slash"
 	blunt_chipping = FALSE
 
+/datum/intent/flail/sweep
+	name = "sweeping strike"
+	icon_state = "insweep"
+	blade_class = BCLASS_BLUNT
+	chargetime = 1.2 SECONDS
+	chargedrain = 1
+	chargedloop = /datum/looping_sound/flailswing
+	attack_verb = list("sweeps", "thrashes through")
+	animname = "strike"
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 1.5
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	cleave = /datum/cleave_pattern/horizontal_sweep
+	desc = "A charged sweep that smashes through targets to the front."
+
 /obj/item/rogueweapon/flail/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -248,7 +265,7 @@
 	force = 10
 	force_wielded = 35
 	possible_item_intents = list(/datum/intent/flail/strike)
-	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange)
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)
 	name = "militia thresher"
 	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
 	icon_state = "peasantwarflail"
@@ -319,7 +336,7 @@
 	wdefense = 7
 	minstr = 12
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
-	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	max_integrity = 500
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/blacksteel
@@ -333,7 +350,7 @@
 	sellprice = 250
 	smeltresult = /obj/item/ingot/gold
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
-	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -352,7 +369,7 @@
 	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	icon_state = "drowgreatflail"
 	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/dagger/sucker_punch)//always be punching
-	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop)
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	minstr = 12
@@ -368,7 +385,7 @@
 	nothing quite as potent as these fearsome greatflails."
 	icon_state = "drowgreatflailb"
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage
-	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	minstr = 13// no jaluck twinks allowed!
 	wdefense = 4// not as scary looking so worse defense idk
 	special = /datum/special_intent/greatflail_swing// greatflail special tho!
@@ -386,7 +403,7 @@
 /obj/item/rogueweapon/flail/blacksteel
 	name = "blacksteel flail"
 	icon_state = "bs_flail"
-	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)
 	desc = "An elegant flail of blacksteel. The heftsome weight makes it unmatched for driving back plate-armored opponents, so long as one \
 	has the stamina to swing its alloyed chains around."
 	smeltresult = /obj/item/ingot/blacksteel

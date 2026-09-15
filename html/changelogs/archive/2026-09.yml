@@ -445,3 +445,14 @@
   - code_imp: Snout support is now derived from whether a snouted sprite variant exists
   wikimody:
   - bugfix: Bathouse smuglers entrance no longer stops building
+2026-09-15:
+  SirSwagmeyer:
+  - balance: Removed Ronin Retainer, replaced with a culturally agnostic version -
+      Retired Duelist.
+  wikimody:
+  - bugfix: The dastardly inqusition lost thier axcess to stealth weponry from 24th
+      century (arbalest crosbow no longer goes invisible when loaded, looks a bit
+      off though)
+  zeroisthebiggay:
+  - bugfix: consorts are actually nobles
+  - rscadd: braziers are destructible now
