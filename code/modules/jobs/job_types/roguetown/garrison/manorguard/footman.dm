@@ -37,7 +37,7 @@
 	..()
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/bevor
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
@@ -85,12 +85,13 @@
 				pants = /obj/item/clothing/under/roguetown/chainlegs
 
 		var/helmets = list(
-		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
-		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
-		"Bascinet Helmet"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
-		"Sallet Helmet"		= /obj/item/clothing/head/roguetown/helmet/sallet,
-		"Winged Helmet" 	= /obj/item/clothing/head/roguetown/helmet/winged,
-		"Skull Cap"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
+		"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+		"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+		"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
+		"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+		"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
+		"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
+		"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 		"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets

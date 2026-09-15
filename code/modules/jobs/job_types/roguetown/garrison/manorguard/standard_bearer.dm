@@ -29,9 +29,8 @@
 /datum/outfit/job/roguetown/manorguard/standard_bearer/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	neck = /obj/item/clothing/neck/roguetown/bevor
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
@@ -56,6 +55,19 @@
 				r_hand = /obj/item/rogueweapon/spear/keep_standard
 			if("Poleaxe")
 				r_hand = /obj/item/rogueweapon/spear/keep_standard/poleaxe
+		var/helmets = list(
+		"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
+		"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+		"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
+		"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+		"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
+		"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
+		"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
+		"None"
+		)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
 
 //These are really hacky, but it works.
 //One proc to moodbuff.
