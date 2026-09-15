@@ -163,6 +163,13 @@
 	var/jiggle_costs_stamina = FALSE
 	var/jiggle_cycles_left = 0
 	var/jiggle_timerid
+	var/static/list/jiggle_interrupt_signals = list(
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_ITEM_BEING_ATTACKED,
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ATTACKED_BY_HAND,
+		COMSIG_MOB_APPLY_DAMGE,
+	)
 
 /obj/item/organ/breasts/New()
 	..()
@@ -191,8 +198,9 @@
 	jiggle_costs_stamina = costs_stamina
 	jiggle_cycles_left = endless ? 0 : max(1, round(duration / BREAST_JIGGLE_CYCLE, 1))
 	var/mob/living/carbon/human/H = owner
-	RegisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED), PROC_REF(on_jiggle_item_attack))
-	RegisterSignal(H, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_jiggle_hand_attack))
+	RegisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_HAND), PROC_REF(on_jiggle_attacking))
+	RegisterSignal(H, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(on_jiggle_attacked_with_item))
+	RegisterSignal(H, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(on_jiggle_attacked_by_hand))
 	RegisterSignal(H, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_jiggle_damaged))
 	H.update_body_parts(TRUE)
 	jiggle_cycle()
@@ -234,20 +242,25 @@
 	var/mob/living/carbon/human/H = owner
 	if(QDELETED(H) || !ishuman(H))
 		return
-	UnregisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND, COMSIG_MOB_APPLY_DAMGE))
+	UnregisterSignal(H, jiggle_interrupt_signals)
 	H.update_body_parts(TRUE)
 
-/obj/item/organ/breasts/proc/on_jiggle_item_attack(datum/source, mob/living/target, mob/living/attacker)
-	SIGNAL_HANDLER
+/obj/item/organ/breasts/proc/interrupt_jiggle(mob/living/attacker)
 	if(attacker?.used_intent?.type == INTENT_HELP)
 		return
 	stop_jiggle()
 
-/obj/item/organ/breasts/proc/on_jiggle_hand_attack(datum/source, mob/living/attacker, mob/living/target)
+/obj/item/organ/breasts/proc/on_jiggle_attacking(datum/source)
 	SIGNAL_HANDLER
-	if(attacker?.used_intent?.type == INTENT_HELP)
-		return
-	stop_jiggle()
+	interrupt_jiggle(owner)
+
+/obj/item/organ/breasts/proc/on_jiggle_attacked_with_item(datum/source, mob/living/victim, mob/living/attacker)
+	SIGNAL_HANDLER
+	interrupt_jiggle(attacker)
+
+/obj/item/organ/breasts/proc/on_jiggle_attacked_by_hand(datum/source, mob/living/attacker, mob/living/victim)
+	SIGNAL_HANDLER
+	interrupt_jiggle(attacker)
 
 /obj/item/organ/breasts/proc/on_jiggle_damaged(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
