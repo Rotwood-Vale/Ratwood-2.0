@@ -22,7 +22,7 @@
 	if(!ishuman(I.loc))
 		return
 	var/mob/living/carbon/human/user = I.loc
-	if(!HAS_TRAIT(user, required_trait))
+	if(!HAS_TRAIT(user, required_trait) && !HAS_TRAIT (user, TRAIT_GODHAND))
 		spawn(0)
 			to_chat(user, "<font color='red'>UNWORTHY HANDS TOUCHING THIS [item_type], CEASE OR BE [verbed]!</font>")
 			user.adjust_fire_stacks(5)
