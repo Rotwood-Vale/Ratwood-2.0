@@ -28,6 +28,7 @@
 	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SHATTER_WEAKNESS, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_INFINITE_ENERGY, TRAIT_GENERIC)
 
 	var/datum/antagonist/new_antag = new /datum/antagonist/skeleton()
 	H.mind.add_antag_datum(new_antag)
@@ -95,5 +96,3 @@ NECRO SKELETONS
 
 	shirt = prob(50) ? /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant : /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
 	r_hand = prob(50) ? /obj/item/rogueweapon/sword : /obj/item/rogueweapon/stoneaxe/woodcut
-
-	H.energy = H.max_energy
