@@ -22,6 +22,7 @@
 					/obj/effect/proc_holder/spell/invoked/abscond					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/wound_heal				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_XYLIX
 	traits_tier = list(TRAIT_XYLIX_DEVOTEE = CLERIC_T0) //Requires a minimal holy skill or the 'Devotee' virtue to unlock. Rerolls luck events
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",

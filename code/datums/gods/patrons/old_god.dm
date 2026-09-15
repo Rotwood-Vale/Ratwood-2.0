@@ -12,6 +12,7 @@
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
 	)
+	energy_color = COLOR_PATRON_PSYDON
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(
 		"THERE IS ONLY ONE TRUE GOD!",
