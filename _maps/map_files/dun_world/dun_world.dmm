@@ -102118,6 +102118,12 @@
 	icon_state = "concretefloor1"
 	},
 /area/rogue/under/town/basement)
+"sOR" = (
+/obj/structure/fluff/railing/border/west{
+	dir = 10
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/bath)
 "sOT" = (
 /obj/structure/bars/passage{
 	max_integrity = 9000;
@@ -118720,6 +118726,10 @@
 /obj/machinery/light/rogue/firebowl/church,
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/dragonden)
+"vSL" = (
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/bath)
 "vSM" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/flora/newleaf,
@@ -189764,7 +189774,7 @@ vpe
 vpe
 vpe
 vpe
-rqY
+vpe
 rqY
 eKL
 eKL
@@ -190216,8 +190226,8 @@ vpe
 vpe
 vpe
 vpe
+vpe
 rqY
-dTr
 dTr
 dTr
 dTr
@@ -190665,11 +190675,11 @@ vpe
 vpe
 vpe
 vpe
+vpe
+vpe
+vpe
+vpe
 rqY
-rqY
-rqY
-rqY
-dTr
 hGN
 hGN
 hOZ
@@ -191121,7 +191131,7 @@ rqY
 dTr
 dTr
 dTr
-dTr
+rqY
 jYh
 hGN
 hGN
@@ -191574,10 +191584,10 @@ vkX
 vkX
 vkX
 vkX
-vkX
-vkX
-vkX
-vkX
+sOR
+vSL
+vSL
+vSL
 aTi
 eKL
 eKL
@@ -192022,7 +192032,7 @@ vGU
 vGU
 vGU
 rqY
-dTr
+vkX
 vkX
 vkX
 vkX
@@ -192474,7 +192484,7 @@ lBG
 rKx
 rqY
 rqY
-dTr
+vkX
 vkX
 vkX
 vkX
@@ -192926,7 +192936,7 @@ nRY
 vpe
 haH
 lBG
-dTr
+vkX
 vkX
 vkX
 vkX
@@ -193378,14 +193388,14 @@ rGx
 vpe
 haH
 rqY
-dTr
-dTr
-dTr
-dTr
-dTr
-dTr
-dTr
-dTr
+vkX
+vkX
+vkX
+vkX
+vkX
+vkX
+vkX
+vkX
 aTi
 eKL
 eKL
