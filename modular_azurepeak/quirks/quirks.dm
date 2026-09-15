@@ -17,50 +17,50 @@
 /datum/quirk/deadnose
 	name = "Dead Nose"
 	desc = "My nose is numb to the smell of decay."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that already has a dead nose!</span>"
 	added_traits = list(TRAIT_NOSTINK)
+	incompatible_traits = list(TRAIT_NOSTINK)
 
 /datum/quirk/disgracednoble
 	name = "Disgraced Noble"
 	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
-	custom_text = "Choosing this quirk while playing a noble role will cause it to do nothing."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already noble!</span>"
 	added_traits = list(TRAIT_DISGRACED_NOBLE)
-
-/datum/quirk/disgracednoble/handle_traits(mob/living/carbon/human/recipient)
-	if(HAS_TRAIT(recipient, TRAIT_NOBLE))
-		return
-	..()
+	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/dwarvenchef
 	name = "Dwarven Chef"
 	desc = "A dwarf once showed me the trick to cutting a proper pretzel from butterdough."
-	custom_text = "Lets you cut pretzels from butterdough. This quirk does nothing if you are already a Dwarf."
+	custom_text = "Lets you cut pretzels from butterdough.<br>\
+	<span style='color:#f44336;'>This quirk does nothing if you are already a dwarf!</span>"
 	added_traits = list(TRAIT_DWARVEN_CHEF)
 
 /datum/quirk/empath
 	name = "Empath"
 	desc = "I can notice when people are in pain."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already an empath!</span>"
 	added_traits = list(TRAIT_EMPATH)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
+	incompatible_traits = list(TRAIT_EMPATH)
 
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already a fabled lover!</span>"
 	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
 	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
+	incompatible_traits = list(TRAIT_GOODLOVER)
 
 /datum/quirk/gossiper
 	name = "Gossiper"
 	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
-	custom_text = "Lets you view noble gossip. Choosing this quirk while playing a noble role will cause it to do nothing."
+	custom_text = "Lets you view noble gossip.<br>\
+	<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already noble!</span>"
 	point_cost = 2
 	added_traits = list(TRAIT_GOSSIPER)
 	incompatible_virtues = list(/datum/virtue/utility/tracker)
-
-/datum/quirk/gossiper/handle_traits(mob/living/carbon/human/recipient)
-	if(HAS_TRAIT(recipient, TRAIT_NOBLE))
-		return
-	..()
+	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/hobbyistmusician
 	name = "Hobbyist Musician"
@@ -74,7 +74,7 @@
 /datum/quirk/largeframe
 	name = "Large Frame"
 	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
-	custom_text = "This quirk increases your sprite size. Incompatiable with the Giant virtue."
+	custom_text = "This quirk increases your sprite size. Incompatible with the Giant virtue."
 	point_cost = 3
 	incompatible_virtues = list(/datum/virtue/size/giant)
 
@@ -136,7 +136,8 @@
 /datum/quirk/noble
 	name = "Nobility"
 	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
+	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax.<br>\
+	<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already noble!</span>"
 	point_cost = 4
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
@@ -146,6 +147,7 @@
 	)
 	incompatible_vices = list(/datum/charflaw/lawless)
 	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
+	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
@@ -161,25 +163,30 @@
 /datum/quirk/pretty
 	name = "Pretty"
 	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
-	custom_text = "If you also are beautiful, this quirk does nothing."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already beautiful!</span>"
 	point_cost = 2
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_quirks = list(/datum/quirk/ugly)
+	incompatible_traits = list(TRAIT_BEAUTIFUL)
 
 /datum/quirk/rawdiet
 	name = "Raw Diet"
 	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
-	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
+	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you.<br>\
+	<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that already possesses an unnatural metabolism!</span>"
 	point_cost = 2
 	added_traits = list(TRAIT_RAW_EATER)
 	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
+	incompatible_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER, TRAIT_WILD_EATER)
 
 /datum/quirk/roughlover
 	name = "Rough Lover"
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
+	custom_text = "<span style='color:#f44336;'>This quirk costs nothing and does not apply if you are playing a role that is already a bedbreaker!</span>"
 	point_cost = 2
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
+	incompatible_traits = list(TRAIT_DEATHBYSNUSNU)
 
 /datum/quirk/scarred
 	name = "Scarred"
@@ -207,5 +214,6 @@
 /datum/quirk/underdarkchef
 	name = "Underdark Chef"
 	desc = "I've picked up a few culinary secrets from the Underdark. Spider meat is more versatile than you'd think."
-	custom_text = "Allows you to prepare recipes utilizing spider meat. This quirk does nothing if you are already a Drow."
+	custom_text = "Allows you to prepare recipes utilizing spider meat.<br>\
+	<span style='color:#f44336;'>This quirk does nothing if you are already a drow!</span>"
 	added_traits = list(TRAIT_UNDERDARK_CHEF)

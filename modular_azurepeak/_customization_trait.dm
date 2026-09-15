@@ -24,6 +24,8 @@
 	var/list/incompatible_quirks = list()
 	/// Mutually exclusive vices.
 	var/list/incompatible_vices = list()
+	/// If someone already has traits deemed incompatible, don't apply the quirk at all.
+	var/list/incompatible_traits = list()
 
 /datum/customization_trait/New()
 	. = ..()
@@ -33,14 +35,23 @@
 /datum/customization_trait/proc/apply_to_human(mob/living/carbon/human/recipient)
 	return
 
+/datum/customization_trait/proc/blocked_by_incompatible_traits(mob/living/carbon/human/recipient)
+	for(var/trait in incompatible_traits)
+		if(HAS_TRAIT(recipient, trait))
+			return trait
+	return FALSE
+
 // Shared proc for applying crap.
 /datum/customization_trait/proc/apply_generic_effects(mob/living/carbon/human/recipient)
+	if(blocked_by_incompatible_traits(recipient))
+		return FALSE
 	apply_to_human(recipient)
 	handle_traits(recipient)
 	handle_skills(recipient)
 	handle_stashed_items(recipient)
 	handle_added_languages(recipient)
 	handle_stats(recipient)
+	return TRUE
 
 /datum/customization_trait/proc/handle_traits(mob/living/carbon/human/recipient)
 	if(!LAZYLEN(added_traits))

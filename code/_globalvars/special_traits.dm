@@ -134,16 +134,20 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		if(job && length(job.quirk_restrictions) && (Q.type in job.quirk_restrictions))
 			to_chat(character, span_warning("My duties as \a [character.job] leave no room for [Q.name]. It will not be applied."))
 			continue
+		var/conflicting_trait = Q.blocked_by_incompatible_traits(character)
+		if(conflicting_trait)
+			to_chat(character, span_warning("[Q.name] conflicts with [conflicting_trait], something I already have. It will not be applied."))
+			continue
+
 		if(available_points >= Q.point_cost)
 			available_points -= Q.point_cost
-			apply_quirk(character, Q)
-			continue
-		var/points_short = Q.point_cost - available_points
-		var/triumph_cost = points_short * 2
-		if(character.get_triumphs() < triumphs_spent + triumph_cost)
-			continue
-		triumphs_spent += triumph_cost
-		available_points = 0
+		else
+			var/points_short = Q.point_cost - available_points
+			var/triumph_cost = points_short * 2
+			if(character.get_triumphs() < triumphs_spent + triumph_cost)
+				continue
+			triumphs_spent += triumph_cost
+			available_points = 0
 		apply_quirk(character, Q)
 
 	if(triumphs_spent)
