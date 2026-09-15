@@ -607,7 +607,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!target || !assassin_found)
 		to_chat(user, span_warning("There has been no answer to your call to the Dark Sun. It seems his servants are far from here..."))
 		return
-	target.charflaw = new /datum/charflaw/assassintarget()
 	to_chat(user, span_warning("Your target has been marked, your profane call answered by the Dark Sun. [target.real_name] will surely perish!"))
 	to_chat(target, span_warningbig("My hair stands on end. Has someone just said my name? I should watch my back."))
 	target.playsound_local(target, 'sound/magic/marked.ogg', 100)

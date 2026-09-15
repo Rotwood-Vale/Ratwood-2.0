@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
 	/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 	/datum/ritual/transmutation/summonoutfit, /datum/ritual/servantry/aspect,
-	/datum/ritual/servantry/darksunmark, /datum/ritual/transmutation/allseeingeye,
+	/datum/ritual/transmutation/allseeingeye,
 	/datum/ritual/fleshcrafting/bunnylegs, /datum/ritual/fleshcrafting/fleshmend,
 	/datum/ritual/fleshcrafting/fleshmend/greater, /datum/ritual/fleshcrafting/darkeyes,
 	/datum/ritual/fleshcrafting/nopain, /datum/ritual/fleshcrafting/immortality,
