@@ -102,8 +102,8 @@
 	else if(C.client || C.mind)
 		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
 
-	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
-		C.emote("painscream")
+	if(body_zone != BODY_ZONE_HEAD) // Sorry pal, no protagonist moment if it's your head flying off. Your ride ends here, mutie.
+		C.delimb_pain()
 	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
 		add_mob_blood(C)
 	C.add_stress(/datum/stressevent/dismembered)
@@ -223,8 +223,8 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
-	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
-		C.emote("painscream")
+	if(body_zone != BODY_ZONE_HEAD)
+		C.delimb_pain()
 	if(!(NOBLOOD in C.dna?.species?.species_traits))
 		add_mob_blood(C)
 	C.add_stress(/datum/stressevent/dismembered)
@@ -295,6 +295,7 @@
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	add_wound(/datum/wound/slash/disembowel)
+	C.delimb_pain()
 	return TRUE
 
 //limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
