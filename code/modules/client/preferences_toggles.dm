@@ -149,20 +149,6 @@
 		list("id" = "pits", "label" = "Enable Armpit Hair Descriptors", "enabled" = !!owner.prefs.pits, "desc" = "See armpit hair descriptors on examining someone with exposed underarms (if present)."),
 		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
-		list("id" = "jiggle_endless", "label" = "Endless Jiggle", "enabled" = !!owner.prefs.jiggle_endless, "desc" = "Keep the Jiggle emote going until you stop it or run out of stamina, draining [BREAST_JIGGLE_ENDLESS_STAMINA_MULT] times faster than a timed one. Use the Jiggle verb again to stop."),
-	)
-
-	var/list/content_numbers = list(
-		list(
-			"id" = "jiggle_duration",
-			"label" = "Jiggle Duration",
-			"value" = owner.prefs.jiggle_duration / 10,
-			"minValue" = BREAST_JIGGLE_MIN_DURATION / 10,
-			"maxValue" = BREAST_JIGGLE_MAX_DURATION / 10,
-			"step" = 0.1,
-			"unit" = "s",
-			"desc" = "How long the Jiggle emote runs. Past [BREAST_JIGGLE_FREE_DURATION / 10] seconds it drains stamina. Ignored while Endless Jiggle is on.",
-		),
 	)
 
 	data["categories"] = list(
@@ -171,7 +157,7 @@
 		list("name" = "Visuals", "entries" = visual_entries),
 		list("name" = "Gameplay", "entries" = gameplay_entries),
 		list("name" = "Audio", "entries" = audio_entries),
-		list("name" = "Content", "entries" = content_entries, "numbers" = content_numbers),
+		list("name" = "Content", "entries" = content_entries),
 	)
 	return data
 
@@ -278,22 +264,8 @@
 				owner.toggle_descriptor_color()
 			if("cursed_collars")
 				owner.toggle_cursed_collars()
-			if("jiggle_endless")
-				owner.toggle_jiggle_endless()
 			if("voting_popup")
 				owner.toggle_voting_popup()
-		SStgui.update_uis(src)
-		return TRUE
-
-	if(action == "number")
-		var/number_id = params["id"]
-		switch(number_id)
-			if("jiggle_duration")
-				var/new_duration = text2num(params["value"])
-				if(isnull(new_duration))
-					return FALSE
-				owner.prefs.jiggle_duration = CLAMP(round(new_duration * 10, 1), BREAST_JIGGLE_MIN_DURATION, BREAST_JIGGLE_MAX_DURATION)
-				owner.prefs.save_preferences()
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -437,19 +409,6 @@
 			to_chat(src, "You will now automatically continue mining rock walls.")
 		else
 			to_chat(src, "You will no longer automatically continue mining rock walls.")
-
-/client/verb/toggle_jiggle_endless()
-	set category = "Options"
-	set name = "Toggle Endless Jiggle"
-	set hidden = 1
-	if(!prefs)
-		return
-	prefs.jiggle_endless = !prefs.jiggle_endless
-	prefs.save_preferences()
-	if(prefs.jiggle_endless)
-		to_chat(src, "The Jiggle emote will now keep going until you stop it or run out of stamina.")
-	else
-		to_chat(src, "The Jiggle emote will now stop after its set duration.")
 
 /client/verb/toggle_hide_unavailable_emotes()
 	set category = "Options"

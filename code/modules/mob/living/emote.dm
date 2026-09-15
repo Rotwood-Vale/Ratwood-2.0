@@ -2362,22 +2362,46 @@
 	emote_type = EMOTE_VISIBLE
 	show_runechat = TRUE
 
+/proc/jiggle_duration_label(duration)
+	if(duration > BREAST_JIGGLE_FREE_DURATION)
+		return "[duration / 10] seconds (tiring)"
+	return "[duration / 10] seconds"
+
+/proc/jiggle_duration_choices()
+	var/static/list/choices
+	if(choices)
+		return choices
+	choices = list()
+	for(var/duration = BREAST_JIGGLE_MIN_DURATION; duration < BREAST_JIGGLE_MAX_DURATION; duration += BREAST_JIGGLE_PROMPT_STEP)
+		choices[jiggle_duration_label(duration)] = duration
+	choices[jiggle_duration_label(BREAST_JIGGLE_MAX_DURATION)] = BREAST_JIGGLE_MAX_DURATION
+	choices["Until I stop myself (very tiring)"] = BREAST_JIGGLE_ENDLESS
+	return choices
+
 /datum/emote/living/carbon/human/bjiggle/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
 	var/mob/living/carbon/human/H = user
 	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_jiggle_breasts(H))
+		return
+	var/duration = BREAST_JIGGLE_MIN_DURATION
+	var/endless = FALSE
+	if(intentional && H.client)
+		var/list/choices = jiggle_duration_choices()
+		var/picked = tgui_input_list(H, "How long should I keep it up?", "Jiggle", choices)
+		if(isnull(picked))
+			return
+		if(QDELETED(H) || !H.dna || !H.dna.species || !H.dna.species.can_jiggle_breasts(H))
+			return
+		var/chosen = choices[picked]
+		if(chosen == BREAST_JIGGLE_ENDLESS)
+			endless = TRUE
+		else
+			duration = chosen
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/organ/breasts/B = H.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!B)
 		return
-	var/duration = BREAST_JIGGLE_MIN_DURATION
-	var/endless = FALSE
-	var/datum/preferences/prefs = H.client?.prefs
-	if(prefs)
-		duration = CLAMP(prefs.jiggle_duration, BREAST_JIGGLE_MIN_DURATION, BREAST_JIGGLE_MAX_DURATION)
-		endless = prefs.jiggle_endless
 	var/costs_stamina = endless || (duration > BREAST_JIGGLE_FREE_DURATION)
 	if(costs_stamina && !H.jiggle_stamina_is_free() && H.stamina >= H.max_stamina)
 		to_chat(H, span_warning("I am far too weary to keep this up."))
