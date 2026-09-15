@@ -67,8 +67,8 @@
 				leprosy = 3
 	//heart attack stuff
 	handle_heart()
-	update_energy()
 	update_stamina()
+	update_energy()
 	
 	// Process all vices
 	if(mind && length(vices))
