@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 //Spellcaster in Luxarmour, with Master in swords. Zizo's top skeleton.
 	applies_post_equipment = TRUE
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_OVERTHERETIC, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_OVERTHERETIC, TRAIT_ARCYNE_T2, TRAIT_INFINITE_ENERGY)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_INT = 2,
@@ -70,7 +70,6 @@
 		H.dna.species.soundpack_m = new /datum/voicepack/male/evil() //Normal Skeleton voice is funny rather than menacing.
 		H.dna.species.soundpack_f = new /datum/voicepack/female/haughty()
 	H.set_blindness(0)
-	H.energy = H.max_energy //Just in case.
 	REMOVE_TRAIT(H, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
 	to_chat(H, span_danger("You are an ancient warrior risen from death, not a comedic skeleton. Be menacing and play with gravitas rather than humour."))
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
