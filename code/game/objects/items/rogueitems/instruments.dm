@@ -771,6 +771,18 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Corridors of Time" = 'sound/music/instruments/harb (7).ogg',
 	"Determination" = 'sound/music/instruments/harb (8).ogg')
 
+/obj/item/rogue/instrument/harpsichord
+	name = "harpsichord"
+	desc = "A marvel of artificed instruments. Its compact box of bronze and wood can be cradled in the arms and slung off the shoulders. The heavy turn-key on the back must be cranked to wind up its internal cogs in order to play the many keys."
+	icon_state = "harpsichord"
+	song_list = list("The Resurrected One" = 'sound/music/instruments/harpsichord (1).ogg',
+	"Forever Casted Away" = 'sound/music/instruments/harpsichord (2).ogg',
+	"Dark Pits of Ferentia" = 'sound/music/instruments/harpsichord (3).ogg',
+	"Illuminating Hope" = 'sound/music/instruments/harpsichord (4).ogg',
+	"Our World's Deluge" = 'sound/music/instruments/harpsichord (5).ogg',
+	"Walking Through Ruins" = 'sound/music/instruments/harpsichord (6).ogg',
+	"March of Life" = 'sound/music/instruments/harpsichord (7).ogg')
+
 /obj/item/rogue/instrument/hurdygurdy
 	name = "hurdy-gurdy"
 	desc = "A knob-driven, wooden string instrument that reminds you of the oceans far."
@@ -841,6 +853,18 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Lupian's Lullaby" = 'sound/music/instruments/psyaltery (8).ogg',
 	"White Wine Before Breakfast" = 'sound/music/instruments/psyaltery (9).ogg',
 	"Chevalier de Naledi" = 'sound/music/instruments/psyaltery (10).ogg')
+
+/obj/item/rogue/instrument/psyaxophone
+	name = "psyaxophone"
+	desc = "A long brass tube twisted upwards with a wide flared end. It has many valves across its body. Psyalterists commonly use this instrument to combat evil and inspire allies with SOULFUL music."
+	icon_state = "psyaxophone"
+	song_list = list("The Heretic's Downfall" = 'sound/music/instruments/psyaxophone (1).ogg',
+	"Psy Suite No.1 Courante" = 'sound/music/instruments/psyaxophone (2).ogg',
+	"Otavan Fields" = 'sound/music/instruments/psyaxophone (3).ogg',
+	"Psyman Nous Attend" = 'sound/music/instruments/psyaxophone (4).ogg', //Sorry I had to and it's a beloved song
+	"Le Grand Spectacle" = 'sound/music/instruments/psyaxophone (5).ogg',
+	"Ciel de Felin" = 'sound/music/instruments/psyaxophone (6).ogg',
+	"Chanson des Marionnettes" = 'sound/music/instruments/psyaxophone (7).ogg')
 
 /obj/item/rogue/instrument/shamisen
 	name = "shamisen"
@@ -989,3 +1013,15 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"The Power (Whistling)" = 'sound/music/instruments/vocalsx (2).ogg',
 	"Bard Dance (Whistling)" = 'sound/music/instruments/vocalsx (3).ogg',
 	"Old Time Battles (Whistling)" = 'sound/music/instruments/vocalsx (4).ogg')
+
+/obj/item/rogue/instrument/xylixaphone
+	name = "xylixaphone"
+	desc = "The favored whimsical instrument of Xylixians. It is made of copper and wood with colorfully painted mismatched bars that seem to clang and jingle when struck."
+	icon_state = "xylixaphone"
+	song_list = list("Treble in Paradise" = 'sound/music/instruments/xylixaphone (1).ogg',
+	"Note-orious Deceiver" = 'sound/music/instruments/xylixaphone (2).ogg',
+	"Mallet-icious Compliance" = 'sound/music/instruments/xylixaphone (3).ogg',
+	"Merry Glad to See You" = 'sound/music/instruments/xylixaphone (4).ogg',
+	"Playing the Fool" = 'sound/music/instruments/xylixaphone (5).ogg',
+	"A-Minor Inconvenience" = 'sound/music/instruments/xylixaphone (6).ogg',
+	"Chime Against Humenity" = 'sound/music/instruments/xylixaphone (7).ogg')

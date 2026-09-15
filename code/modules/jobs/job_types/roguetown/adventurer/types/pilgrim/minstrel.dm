@@ -56,7 +56,7 @@
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		belt = /obj/item/storage/belt/rogue/leather/cloth/sash/random
 	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+		var/weapons = list("Accordion","Bagpipe","Drum","Flute","Guitar","Harp","Harpsichord","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Psyaxophone","Shamisen","Trumpet","Viola","Vocal Talisman","Xylixaphone")
 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -72,6 +72,8 @@
 				backr = /obj/item/rogue/instrument/guitar
 			if("Harp")
 				backr = /obj/item/rogue/instrument/harp
+			if("Harpsichord")
+				backr = /obj/item/rogue/instrument/harpsichord
 			if("Hurdy-Gurdy")
 				backr = /obj/item/rogue/instrument/hurdygurdy
 			if("Jaw Harp")
@@ -80,6 +82,8 @@
 				backr = /obj/item/rogue/instrument/lute
 			if("Psyaltery")
 				backr = /obj/item/rogue/instrument/psyaltery
+			if("Psyaxophone")
+				backr = /obj/item/rogue/instrument/psyaxophone
 			if("Shamisen")
 				backr = /obj/item/rogue/instrument/shamisen
 			if("Trumpet")
@@ -88,5 +92,7 @@
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
+			if("Xylixaphone")
+				backr = /obj/item/rogue/instrument/xylixaphone
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/misc/music, 6, TRUE)
