@@ -1619,7 +1619,7 @@ There are several things that need to be remembered:
 	return mutable_appearance(GLOB.female_clothing_icons[t_color], layer = -layer)
 
 /proc/wear_dismembered_version(t_color, icon, layer, sleeveindex, type)
-	var/index = "[t_color][sleeveindex]"
+	var/index = "[t_color][sleeveindex][icon]"
 	var/icon/clothing_icon = GLOB.dismembered_clothing_icons[index]
 	if(!clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_dismembered_clothing(index,t_color,icon,sleeveindex, type)
@@ -1818,7 +1818,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 	if(!isinhands && HAS_BLOOD_DNA(src))
-		var/index = "[t_state][sleeveindex]"
+		var/index = "[t_state][sleeveindex][file2use]"
 		var/static/list/bloody_onmob = list()
 		var/icon/clothing_icon = bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]"]
 		if(!clothing_icon)

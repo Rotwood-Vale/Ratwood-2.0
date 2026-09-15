@@ -919,6 +919,8 @@
 	boobed = TRUE
 	allowed_race = CLOTHED_RACES_TYPES
 	flags_inv = HIDECROTCH|HIDEBOOB
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_cloaks.dmi'
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
