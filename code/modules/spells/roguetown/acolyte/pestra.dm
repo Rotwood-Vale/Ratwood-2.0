@@ -387,21 +387,29 @@
 	antimagic_allowed = TRUE
 	recharge_time = 3 MINUTES
 	miracle = TRUE
-	devotion_cost = 200
+	devotion_cost = 100
 	/// Amount of PQ gained for curing zombos
 	var/unzombification_pq = PQ_GAIN_UNZOMBIFY
 	var/is_lethal = FALSE
+	var/priest = FALSE
 
 /obj/effect/proc_holder/spell/invoked/cure_rot/priest
 	desc = "Burn out the rot by Astratas will."
 	is_lethal = FALSE
 	recharge_time = 2 MINUTES
 	devotion_cost = 30
+	priest = TRUE
 
 /obj/effect/proc_holder/spell/invoked/cure_rot/cast(list/targets, mob/living/user)
 	var/stinky = FALSE
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
+
+		if(!priest)
+			if(istype(target, /mob/living/carbon))
+				var/mob/living/carbon/c = target
+				c.reagents.remove_all(10000) // hopefully no 10001u happens
+			target.toxloss = 0
 
 		var/obj/item/black_rose/rose = user.get_active_held_item()
 		// Check if the user is holding a black rose and the target follows Pestra.
@@ -419,10 +427,11 @@
 				revert_cast()
 				return FALSE
 
-		if(GLOB.tod == "night")
-			to_chat(user, span_warning("Let there be light."))
-		for(var/obj/structure/fluff/psycross/S in oview(5, user))
-			S.AOE_flash(user, range = 8)
+		if(priest) // Pestra with flashbangs asociated is not
+			if(GLOB.tod == "night")
+				to_chat(user, span_warning("Let there be light."))
+			for(var/obj/structure/fluff/psycross/S in oview(5, user))
+				S.AOE_flash(user, range = 8)
 
 		var/datum/antagonist/zombie/was_zombie = target.mind?.has_antag_datum(/datum/antagonist/zombie)
 		var/fully_turned = was_zombie?.has_turned //Don't stink up someone who hasn't yet turned
@@ -438,6 +447,8 @@
 			target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it.
 			if(stinky)
 				target.apply_status_effect(/datum/status_effect/debuff/rotted)	//Perma debuff, needs cure
+			if(priest)
+				target.apply_damage(75, BRUTE, spread_damage = TRUE) // Astra is not a gentle goddes
 			return TRUE
 		else //Attempt failed, no rot
 			target.visible_message(span_warning("The rot fails to leave [target]'s body!"), span_warning("I feel no different..."))
