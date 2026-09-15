@@ -80,3 +80,6 @@
 		H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 6, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 5, TRUE)
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
