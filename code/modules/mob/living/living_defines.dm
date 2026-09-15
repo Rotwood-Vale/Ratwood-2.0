@@ -252,3 +252,5 @@
 	// --- Fellowship (AP Quest 2 port) ---
 	var/datum/fellowship/current_fellowship
 	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
+	/// Cache of client.prefs.chastenable for frequent observer/listener checks.
+	var/chastity_content_enabled = FALSE
