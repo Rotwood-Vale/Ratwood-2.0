@@ -29,11 +29,12 @@
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/magicbrick(user.drop_location())
 	R.AddComponent(/datum/component/conjured_item)
 
-	if(user.STAINT > 10)
-		var/int_scaling = user.STAINT - 10
-		R.force = R.force + int_scaling
-		R.throwforce = R.throwforce + int_scaling * 2 // 2x scaling for throwing. Let's go.
-		R.name = "magician's brick +[int_scaling]"
+	var/int_deviation = abs(user.STAINT - 10)//scales linear in a U curve; both the trog and the archmagos understand hitting someone with a brick hurts a lot
+
+	R.force += int_deviation
+	R.throwforce += int_deviation * 2// 2x scaling for throwing. Let's go.
+	R.name = "magician's brick +[int_deviation]"
+
 	user.put_in_hands(R)
 	src.conjured_brick = R
 	return TRUE
