@@ -1878,6 +1878,12 @@
 	detail_tag = "_detail"
 	detail_color = CLOTHING_WHITE
 
+/obj/item/clothing/cloak/poncho/arbiter
+	name = "arbiter mantle"
+	desc = "A loose garment, draped over one's body - to keep blood off of one's precious vestments."
+	detail_color = CLOTHING_BLACK
+	color = CLOTHING_BLACK
+
 //eastern update
 
 /obj/item/clothing/cloak/eastcloak1
