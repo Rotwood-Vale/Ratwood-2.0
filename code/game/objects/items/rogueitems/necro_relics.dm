@@ -46,6 +46,12 @@
 	if(!user)
 		return FALSE
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!H.mind.necro_crystal_cap())
+			to_chat(user, span_warning("I don't have the knowledge to use this!"))
+			return FALSE
+
 	if(length(active_skeletons) >= max_summons)
 		to_chat(user, span_warning("The crystal emits an ominous thrumming. The power within is too strained to conjure another skeleton right now."))
 		return FALSE
@@ -139,3 +145,47 @@
 			skele.death() // kill rather then delete
 	active_skeletons.Cut()
 	qdel(src)
+
+/obj/item/necro_relics/necro_crystal/cultist
+	name = "seed of zizo"
+	desc = "Horrible things will come of this."
+	icon_state = "necro_crystal_dormant"
+
+/obj/item/necro_relics/necro_crystal/cultist/attack_self(mob/living/user)
+	if(!user)
+		return FALSE
+	var/turf/T = get_step(user, user.dir)
+	if(!isopenturf(T))
+		to_chat(user, span_warning("The targeted location is blocked. My summon fails to come forth."))
+		return FALSE
+	if(!do_after(user, 60, src))
+		to_chat(user, span_warning("You lose your concentration."))
+		return FALSE
+	if(!HAS_TRAIT(user, TRAIT_CABAL))
+		to_chat(user, span_warning("The crystal rejects you! It shatters within your grasp!"))
+		user.fullscreen_redflash("redflash1")
+		new /obj/item/natural/glass_shard(get_turf(src))
+		playsound(src, "glassbreak", 70, TRUE)
+		qdel(src)
+		return FALSE
+	var/necro_name = user.real_name ? user.real_name : user.name
+	var/list/candidates = pollGhostCandidates("The veil splits! A hand reaches forth! Join [necro_name]'s cult as a new Zizoid Cultist?", ROLE_NECRO_SKELETON, null, null, 10 SECONDS, POLL_IGNORE_NECROMANCER_SKELETON)
+	if(!LAZYLEN(candidates))
+		to_chat(user, span_warning("The depths are hollow."))
+		return FALSE
+	var/mob/C = pick(candidates)
+	if(!C || !istype(C, /mob/dead))
+		return FALSE
+	if(istype(C, /mob/dead/new_player))
+		var/mob/dead/new_player/N = C
+		N.close_spawn_windows()
+	var/mob/living/carbon/human/target = new /mob/living/carbon/human/species/human/northern(T)
+	target.key = C.key
+	if(target.mind)
+		target.mind.add_antag_datum(/datum/antagonist/zizocultist)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "NEW CULTIST"), 3 SECONDS)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
+	user.fullscreen_redflash("redflash1")
+	playsound(src, "shatter", 50, TRUE)
+	qdel(src)
+	return TRUE

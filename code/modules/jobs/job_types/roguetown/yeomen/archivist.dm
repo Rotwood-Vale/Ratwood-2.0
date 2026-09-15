@@ -66,6 +66,7 @@
 		STATKEY_CON = -1,
 		STATKEY_STR = -1
 	)
+	pure_heart = TRUE
 	subclass_spellpoints = 12
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,

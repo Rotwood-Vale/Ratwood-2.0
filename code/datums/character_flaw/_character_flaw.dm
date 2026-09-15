@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Doddering"=/datum/charflaw/slow,
 	"Nimrodded"=/datum/charflaw/dull,
 	"Unlucky"=/datum/charflaw/unlucky,
+	"Virgin"=/datum/charflaw/virgin,
 	))
 
 /datum/charflaw
@@ -816,6 +817,44 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/critweakness/on_removal(mob/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
+/datum/charflaw/virgin
+	name = "Virgin"
+	desc = "Dark forces lust after my purity!"
+	var/last_check = 0
+
+/datum/charflaw/virgin/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You're a virgin!")
+	H.virginity = TRUE
+	H.purity = TRUE
+
+/datum/charflaw/virgin/flaw_on_life(mob/user)
+	. = ..()
+	if(world.time < last_check + 1 MINUTES)
+		return
+	if(!user)
+		return
+	var/mob/living/carbon/P = user
+	last_check = world.time
+	var/foid = FALSE
+	for(var/mob/living/carbon/human/L in hearers(7, user))
+		if(L == user)
+			continue
+		if(L.stat == DEAD)
+			continue
+		if(HAS_TRAIT(L, TRAIT_BEAUTIFUL))
+			foid = TRUE
+			break
+	if(foid == TRUE)
+		P.add_stress(/datum/stressevent/foid)
+		to_chat(user, span_notice("I'm surrounded by beautiful people! I feel nervous!"))
+		P.Jitter(2)
+
+/datum/stressevent/foid
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = "<span class='red'>Oh gosh! They're so attractive it makes me nervous!</span>"
 
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"

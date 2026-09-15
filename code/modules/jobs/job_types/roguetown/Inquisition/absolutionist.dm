@@ -41,6 +41,7 @@
 	outfit = /datum/outfit/job/roguetown/absolver/basic
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_ABSOLVER)
+	pure_heart = TRUE
 	subclass_stats = list(
 		STATKEY_CON = 7,
 		STATKEY_WIL = 3,

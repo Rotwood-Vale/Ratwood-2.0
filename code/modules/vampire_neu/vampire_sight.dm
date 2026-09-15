@@ -64,7 +64,9 @@
 
 /mob/living/proc/update_vampire_sight()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	eyes?.update_vampire_sight()
+	if(!istype(eyes))
+		return
+	eyes.update_vampire_sight()
 
 GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
@@ -428,7 +430,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	beast_shake()
 	update_vampire_sight()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
+	if(!istype(eyes))
 		return
 	eyes.vampire_sight?.show_frenzy_tunnel()
 	eyes.vampire_sight?.refresh_pulse()
@@ -436,8 +438,9 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
 /mob/living/proc/beast_release()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	eyes?.vampire_sight?.stop_beat()
-	eyes?.vampire_sight?.refresh_pulse()
+	if(istype(eyes))
+		eyes.vampire_sight?.stop_beat()
+		eyes.vampire_sight?.refresh_pulse()
 	clear_fullscreen("frenzy", 25)
 	update_vampire_sight()
 

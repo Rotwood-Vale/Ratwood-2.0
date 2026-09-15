@@ -43,6 +43,7 @@
 		STATKEY_PER = 2,//eye for intrigue
 		STATKEY_CON = -1,//scrawny pencil-pusher
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,

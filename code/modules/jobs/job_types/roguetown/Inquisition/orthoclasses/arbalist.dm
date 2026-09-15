@@ -13,6 +13,7 @@
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
@@ -66,7 +67,9 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/paper/inqslip/arrival/ortho = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-		/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest = 1//You get ONE.
+		/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest = 1, //You get ONE.
+		/obj/item/inqhound = 1,
+		/obj/item/inqscanner = 1,
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
