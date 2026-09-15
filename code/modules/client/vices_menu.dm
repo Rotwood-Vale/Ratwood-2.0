@@ -923,6 +923,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				font-style: italic;
 				font-size: 0.75em;
 			}
+			.quirk-warning {
+				color: #f44336;
+				font-style: normal;
+				font-size: 0.75em;
+			}
 		</style>
 		<script>
 			function showTab(tabName) {
@@ -1142,6 +1147,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 		if(current_quirk.custom_text)
 			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
+
+		if(current_quirk.warning_text)
+			html += "<div class='quirk-warning' style='margin-top: 4px;'>" + current_quirk.warning_text + "</div>"
 
 		if(LAZYLEN(current_quirk.added_traits))
 			html += "<div class='statpack-stats' style='margin-top: 8px;'><strong>Traits granted:</strong><br>"

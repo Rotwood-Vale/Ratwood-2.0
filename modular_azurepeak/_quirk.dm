@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(quirks, init_subtypes_assoc(/datum/quirk))
 /datum/quirk
 	parent_type = /datum/customization_trait
 	var/point_cost = 1
+	var/warning_text
 
 /datum/quirk/New()
 	. = ..()
