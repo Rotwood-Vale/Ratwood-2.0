@@ -1312,8 +1312,8 @@
 	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
+	force = 24
+	force_wielded = 24
 	minstr = 7
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
