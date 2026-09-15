@@ -299,6 +299,16 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/shoes/roguetown/grenzelhoft/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	name = "fencing boots"
+	desc = "A pair of lightweight snugly fitting boots. They're reinforced along the toes and ankles and offer a measure of protection against missteps and glancing blows during close exchanges, often favoured by duelists and other itinerant swordsmen."
+	icon_state = "freiboots"
+	item_state = "freiboots"
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + 50
+
 /obj/item/clothing/shoes/roguetown/boots/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
