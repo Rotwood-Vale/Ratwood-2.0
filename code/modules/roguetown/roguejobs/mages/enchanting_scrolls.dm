@@ -408,19 +408,19 @@ T1 Enchantments below here*/
 	else
 		to_chat(user, span_notice("Nothing happens. Perhaps you can't enchant [O] with this?"))
 
-/obj/item/enchantmentscroll/greater/archery
-	name = "enchanting scroll of archery"
-	desc = "A scroll imbued with an enchantment of archery. Provides the wearer with better archery skill."
-	component = /datum/magic_item/greater/archery
+/obj/item/enchantmentscroll/greater/sharpshooter
+	name = "enchanting scroll of sharpshooting"
+	desc = "A scroll imbued with an enchantment of sharpshooting. Provides the wearer with better ranged weapon skills."
+	component = /datum/magic_item/greater/sharpshooter
 
-/obj/item/enchantmentscroll/greater/archery/attack_obj(obj/item/O, mob/living/user)
+/obj/item/enchantmentscroll/greater/sharpshooter/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
 	if(istype(O,/obj/item/clothing/ring)|| istype(O,/obj/item/clothing/neck/roguetown/psicross)||istype(O,/obj/item/clothing/gloves)|| istype(O, /obj/item/clothing/wrists/roguetown/bracers))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
-		O.name += " of archery"
+		O.name += " of sharpshooting"
 		O.filters += filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(1,255),rand(1,255),rand(1,255)))
 		qdel(src)
 	else
