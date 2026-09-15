@@ -231,7 +231,7 @@
 
 /mob/living/carbon/human/proc/devotionreport()
 	set name = "Check Devotion"
-	set category = "Cleric"
+	set category = "IC"
 
 	if(!devotion)
 		return FALSE
@@ -241,7 +241,7 @@
 
 /mob/living/carbon/human/proc/clericpray()
 	set name = "Give Prayer"
-	set category = "Cleric"
+	set category = "IC"
 
 	if(!devotion)
 		return FALSE
