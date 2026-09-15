@@ -33,3 +33,12 @@
 	importexport_amt = 3
 	stockpile_limit = 5
 	category = "Alchemy"
+
+/datum/roguestock/stockpile/lumber_essence
+	name = "Essence of Lumber"
+	desc = "Heartwood of the forest"
+	item_type = /obj/item/grown/log/tree/small/essence
+	trade_good_id = TRADE_GOOD_LUMBER_ESSENCE
+	importexport_amt = 3
+	stockpile_limit = 5
+	category = "Alchemy"
