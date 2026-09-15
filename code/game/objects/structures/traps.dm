@@ -473,16 +473,14 @@
 
 	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
 	var/special  = LOWER_TEXT("[H.mind.special_role]")
+	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 
-//We don't care about anyone but the MAAs/Wardens.
+//We don't care about anyone but the garrison.
 	if(retinue_planted)
-		if(assigned == "man at arms")
+		if(J?.department_flag & GARRISON)
 			return TRUE
 
 		if(assigned == "bogguard")
-			return TRUE
-
-		if(assigned == "warden")
 			return TRUE
 //Otherwise...
 	else
@@ -521,12 +519,11 @@
 		return FALSE
 	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
 	var/special  = LOWER_TEXT("[H.mind.special_role]")
+	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 
 //Is this hacky? Yeah. Does it work? I guess.
 	if(retinue_planted)
-		return (assigned == "man at arms" \
-			|| assigned == "bogguard" \
-			|| assigned == "warden" || special == "warden")
+		return (J?.department_flag & GARRISON) || assigned == "bogguard"
 	else
 		return (assigned == "bandit" || special == "bandit" \
 			|| assigned == "bogguard" \
