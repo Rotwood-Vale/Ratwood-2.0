@@ -2436,6 +2436,8 @@
 			var/static/regex/regex = regex(@"[,.!?]", "g")
 			pre_color_msg = regex.Replace(pre_color_msg, "")
 			pre_color_msg = trim(pre_color_msg, MAX_MESSAGE_LEN)
+		// captured before the wrap below. Not pre_color_msg, that one is runechat text with its punctuation stripped
+		var/seen_log_msg = "[emotelocation] [msg]"
 		// Checks to see if we're emoting on the body while we have a head, or if we're emoting on the head.
 		if(human && human.voice_color)
 			msg = "<span style='color:#[human.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[emotelocation]</b></span> " + msg
@@ -2450,7 +2452,7 @@
 		var/runechat_msg_to_use = null
 		if(show_runechat)
 			runechat_msg_to_use = runechat_msg ? runechat_msg : pre_color_msg
-		emotelocation.visible_message(msg, runechat_message = runechat_msg_to_use, log_seen = SEEN_LOG_EMOTE)
+		emotelocation.visible_message(msg, runechat_message = runechat_msg_to_use, log_seen = SEEN_LOG_EMOTE, log_seen_msg = seen_log_msg)
 
 /datum/emote/living/stat_roll/select_message_type(mob/user, msg, intentional)
 	return pick(attempt_message_list)
@@ -2670,6 +2672,8 @@
 	if(!lastmsg)
 		return FALSE
 	L.whisper(lastmsg)
+	// death() is called straight below rather than through the suicide verb, so nothing else records this
+	L.suicide_log("prayed for death")
 	sleep(50)
 	L.death()
 

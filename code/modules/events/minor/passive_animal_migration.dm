@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(animal_migration_points, list())
+GLOBAL_LIST_EMPTY(animal_migration_points)
 
 /obj/effect/landmark/events/animal_migration_point
 	name = "Migration Point"
@@ -7,6 +7,10 @@ GLOBAL_LIST_INIT(animal_migration_points, list())
 	. = ..()
 	GLOB.animal_migration_points += src
 	icon_state = ""
+
+/obj/effect/landmark/events/animal_migration_point/Destroy()
+	GLOB.animal_migration_points -= src
+	return ..()
 
 /datum/round_event_control/passive_animal_migration
 	name = "Passive Animal Migration"

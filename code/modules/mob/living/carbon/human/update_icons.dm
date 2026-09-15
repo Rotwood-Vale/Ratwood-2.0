@@ -61,7 +61,7 @@ There are several things that need to be remembered:
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
 	if(body_overlay_cache_key != new_cache_key)
-		dna.species.handle_body(src)
+		dna?.species?.handle_body(src)
 		body_overlay_cache_key = new_cache_key
 	..() // always do update_body_parts when we call this
 
@@ -267,11 +267,12 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
+	if(!dna?.species)
+		return // Huh??
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
-		if(dna.species)
-			if(dna.species.regenerate_icons(src))
-				return
+		if(dna?.species?.regenerate_icons(src))
+			return
 		update_body()
 		update_hair()
 //		update_inv_w_uniform()
@@ -907,9 +908,9 @@ There are several things that need to be remembered:
 						mbeltoverlaydildo.pixel_y = mbeltoverlay.pixel_y
 						standing_front += mbeltoverlaydildo
 
-	var/mutable_appearance/modular_chastity_overlay = modular_chastity_attached_toy_overlay()
-	if(modular_chastity_overlay)
-		standing_front += modular_chastity_overlay
+	var/mutable_appearance/chastity_overlay = chastity_attached_toy_overlay()
+	if(chastity_overlay)
+		standing_front += chastity_overlay
 
 	overlays_standing[BELT_LAYER] = standing_front
 	overlays_standing[BELT_BEHIND_LAYER] = standing_behind
@@ -975,9 +976,9 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_wear_mask()
 	defer_overlay_vision_updates()
 	..()
+	rebuild_obscured_flags()	//outside the overlay check, or taking the mask off never clears its flags
 	var/mutable_appearance/mask_overlay = overlays_standing[MASK_LAYER]
 	if(mask_overlay)
-		rebuild_obscured_flags()
 		remove_overlay(MASK_LAYER)
 		if(gender == MALE)
 			if(OFFSET_FACEMASK in dna.species.offset_features)
@@ -1787,27 +1788,29 @@ generate/load female uniform sprites matching all previously decided variables
 		var/mutable_appearance/boob_overlay = mutable_appearance(file2use, "[t_state]_boob", -layer2use)
 		standing.overlays.Add(boob_overlay)
 
+	var/detail_state = get_detail_state(t_state)
+
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[t_state][get_detail_tag()]"), -layer2use)
+		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[detail_state][get_detail_tag()]"), -layer2use)
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		standing.overlays.Add(pic)
 		if(!isinhands && boobed_overlay && boobed_detail && boobed)
-			pic = mutable_appearance(icon(file2use, "[t_state]_boob[get_detail_tag()]"), -layer2use)
+			pic = mutable_appearance(icon(file2use, "[detail_state]_boob[get_detail_tag()]"), -layer2use)
 			pic.appearance_flags = RESET_COLOR
 			if(get_detail_color())
 				pic.color = get_detail_color()
 			standing.overlays.Add(pic)
 
 	if(get_altdetail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[t_state][get_altdetail_tag()]"), -layer2use)
+		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[detail_state][get_altdetail_tag()]"), -layer2use)
 		pic.appearance_flags = RESET_COLOR
 		if(get_altdetail_color())
 			pic.color = get_altdetail_color()
 		standing.overlays.Add(pic)
 		if(!isinhands && boobed_overlay && boobed_detail && boobed)
-			pic = mutable_appearance(icon(file2use, "[t_state]_boob[get_altdetail_tag()]"), -layer2use)
+			pic = mutable_appearance(icon(file2use, "[detail_state]_boob[get_altdetail_tag()]"), -layer2use)
 			pic.appearance_flags = RESET_COLOR
 			if(get_altdetail_color())
 				pic.color = get_altdetail_color()
@@ -1987,9 +1990,11 @@ generate/load female uniform sprites matching all previously decided variables
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
+	if(!dna?.species)
+		return "UNINITIALIZED"
 	. = list(dna.species.limbs_id)
 
-	if(dna.species.use_skintones)
+	if(dna.species.use_skintones && !(dna.species.mutant_skin_option && mutant_skin))
 		. += "coloured"
 		. += skin_tone
 	else if(dna.species.fixed_mut_color)
@@ -2007,6 +2012,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.generate_limb_cache_key()
+
+	. += "[obscured_flags]"	//features are drawn through is_visible(), which reads this
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"

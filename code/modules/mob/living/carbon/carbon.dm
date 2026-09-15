@@ -1,5 +1,5 @@
 /mob/living/carbon/Initialize(mapload)
-	..()
+	. = ..()
 
 	pain_threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
 	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
@@ -17,12 +17,19 @@
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
-	QDEL_LIST(hand_bodyparts)
-	QDEL_LIST(internal_organs)
-	QDEL_LIST(bodyparts)
-	QDEL_LIST(implants)
-	QDEL_NULL(dna)
-	QDEL_NULL(underwear)
+	if(hand_bodyparts)
+		QDEL_LIST(hand_bodyparts)
+	if(internal_organs)
+		QDEL_LIST(internal_organs)
+	if(bodyparts)
+		QDEL_LIST(bodyparts)
+	if(implants)
+		QDEL_LIST(implants)
+	if(dna)
+		QDEL_NULL(dna)
+	if(underwear)
+		QDEL_NULL(underwear)
+	last_mind = null
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)

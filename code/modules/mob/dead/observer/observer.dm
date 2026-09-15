@@ -75,6 +75,23 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/admin
 	hud_type = /datum/hud/adminghost
 
+/mob/dead/observer/proc/apply_admin_ghost_image()
+	if(!client?.holder)
+		return
+	if(client?.prefs?.admin_ghost_icon)
+		icon = client.prefs.admin_ghost_icon
+		icon_state = ""
+	else
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+	if(ghostimage_default)
+		ghostimage_default.icon = icon
+		ghostimage_default.icon_state = icon_state
+	if(ghostimage_simple)
+		ghostimage_simple.icon = icon
+		ghostimage_simple.icon_state = icon_state
+	updateghostimages()
+
 /mob/dead/observer/rogue/nodraw
 	draw_icon = FALSE
 	icon = 'icons/roguetown/mob/misc.dmi'

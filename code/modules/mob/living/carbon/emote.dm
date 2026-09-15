@@ -41,6 +41,34 @@
 
 	emote("clap", intentional = TRUE)
 
+/datum/emote/living/carbon/slowclap
+	key = "slowclap"
+	key_third_person = "claps"
+	message = "claps slowly."
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/mob/living/carbon/human/verb/emote_slowclap()
+	set name = "Slow clap"
+	set category = "Noises"
+
+	emote("slowclap", intentional = TRUE)
+
+/datum/emote/living/carbon/clap1
+	key = "clap1"
+	key_third_person = "claps"
+	message = "claps their hands together."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+
+/mob/living/carbon/human/verb/emote_clap1()
+	set name = "Clap once"
+	set category = "Noises"
+
+	emote("clap1", intentional = TRUE)
+
 /datum/emote/living/moan
 	key = "moan"
 	key_third_person = "moans"
@@ -54,33 +82,6 @@
 
 	emote("moan")
 
-/datum/emote/living/carbon/roll
-	key = "roll"
-	key_third_person = "rolls"
-	message = "rolls."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	restraint_check = TRUE
-
-/datum/emote/living/carbon/scratch
-	key = "scratch"
-	key_third_person = "scratches"
-	message = "scratches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	restraint_check = TRUE
-
-/datum/emote/living/carbon/screech
-	key = "screech"
-	key_third_person = "screeches"
-	message = "screeches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-
-/datum/emote/living/carbon/sign
-	key = "sign"
-	key_third_person = "signs"
-	message_param = "signs the number %t."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	restraint_check = TRUE
-
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
 	if(!isnum(text2num(params)))
@@ -92,11 +93,6 @@
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	restraint_check = TRUE
-
-/datum/emote/living/carbon/tail
-	key = "tail"
-	message = "waves their tail."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 
 /datum/emote/living/carbon/wink
 	key = "wink"

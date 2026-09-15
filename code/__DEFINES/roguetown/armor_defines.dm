@@ -27,8 +27,9 @@
 #define ARMOR_INT_CHEST_PLATE_BLACKSTEEL 600
 #define ARMOR_INT_CHEST_PLATE_BRONZE 300
 #define ARMOR_INT_CHEST_PLATE_STEEL 500
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 400
+#define ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER 60 //Deducted from Light AC brigandine parts, added to Heavy AC brigandine parts.
 #define ARMOR_INT_CHEST_PLATE_STEELLIGHT 450
-#define ARMOR_INT_CHEST_PLATE_BRIGANDINE 350
 #define ARMOR_INT_CHEST_PLATE_PSYDON 500
 #define ARMOR_INT_CHEST_PLATE_IRON 375
 #define ARMOR_INT_CHEST_PLATE_IRONLIGHT 325
@@ -125,6 +126,9 @@
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
 
+// BRIGANDINE — All brigandine parts. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!
+#define ARMOR_BRIGANDINE list("blunt" = 70, "slash" = 90, "stab" = 40, "piercing" = 70, "fire" = 0, "acid" = 0)
+
 // BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like.
 #define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 70, "piercing" = 40, "fire" = 50, "acid" = 0)
 
@@ -152,6 +156,7 @@
 #define ARMOR_DRAGONHIDE list("blunt" = 30, "slash" = 30, "stab" = 30, "piercing" = 30, "fire" = 40, "acid" = 0) // snowflake armor for dragonhide, fire resist but lower other values from the ring since more integ
 #define ARMOR_FATEWEAVER list("blunt" = 10, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 0, "acid" = 0)
 #define ARMOR_BARRIER list("blunt" = 20, "slash" = 20, "stab" = 20, "piercing" = 20, "fire" = 30, "acid" = 30)
+#define ARMOR_BLACKOAK list("blunt" = 100, "slash" = 20, "stab" = 120, "piercing" = 40, "fire" = 0, "acid" = 0)
 // Blocks every hit, at least once
 #define ARMOR_GRONN_LIGHT list("blunt" = 80, "slash" = 80, "stab" = 30, "piercing" = 30, "fire" = 0, "acid" = 0)
 #define ARMOR_INDESTRUCTIBLE list("blunt" = 90, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 90) // Magical / indestructible items
