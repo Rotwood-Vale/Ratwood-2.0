@@ -756,6 +756,8 @@ SUBSYSTEM_DEF(treasury)
 /datum/controller/subsystem/treasury/proc/is_poll_tax_charter_exempt(mob/living/H, category)
 	switch(category)
 		if(POLL_TAX_CAT_NOBLE)
+			if(H && (H.social_rank < SOCIAL_RANK_NOBLE || HAS_TRAIT(H, TRAIT_OUTLANDER)))
+				return FALSE
 			var/datum/decree/GW = get_decree(DECREE_GREAT_WRIT)
 			return GW?.active
 		if(POLL_TAX_CAT_CLERGY)
