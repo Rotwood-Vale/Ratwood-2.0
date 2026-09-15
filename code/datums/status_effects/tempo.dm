@@ -48,6 +48,8 @@
 		linked_alert.icon_state = "tempo1"
 
 		to_chat(owner, span_info("Tempo!"))
+		if(tempo_particle)
+			QDEL_NULL(tempo_particle)
 		tempo_particle = new(owner, /particles/tempo/tempo_one, PARTICLE_ATTACH_MOB)
 		REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 		REMOVE_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT(id))
@@ -60,6 +62,8 @@
 		linked_alert.icon_state = "tempo2"
 
 		to_chat(owner, span_notice("Tempo!!"))
+		if(tempo_particle)
+			QDEL_NULL(tempo_particle)
 		tempo_particle = new(owner, /particles/tempo/tempo_two, PARTICLE_ATTACH_MOB)
 		REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 		REMOVE_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT(id))
@@ -72,6 +76,8 @@
 		linked_alert.icon_state = "tempo3"
 
 		to_chat(owner, span_notice("<b>TEMPO!!!</b>"))
+		if(tempo_particle)
+			QDEL_NULL(tempo_particle)
 		tempo_particle = new(owner, /particles/tempo/tempo_three, PARTICLE_ATTACH_MOB)
 		var/filter = owner.get_filter(TEMPO_MAX_FILTER)
 		if (!filter)
