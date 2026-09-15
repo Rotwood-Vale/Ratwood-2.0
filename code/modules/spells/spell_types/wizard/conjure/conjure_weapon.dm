@@ -44,19 +44,26 @@
 	// Trying to keep the list manageable so 1 / 2 iconic thing from each family is fine
 	var/list/steel_weapons = list(
 		"Steel Sabre" = /obj/item/rogueweapon/sword/sabre,
+		"Hook Sword" = /obj/item/rogueweapon/sword/sabre/hook,
 		"Steel Rapier" = /obj/item/rogueweapon/sword/rapier,
+		"Hwando" = /obj/item/rogueweapon/sword/sabre/mulyeog,
 		"Longsword" = /obj/item/rogueweapon/sword/long,
 		"Zweihander" = /obj/item/rogueweapon/greatsword/grenz,
+		"Ssangsudo" = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo,
 		"Battle Axe" = /obj/item/rogueweapon/stoneaxe/battle,
 		"Steel Dagger" = /obj/item/rogueweapon/huntingknife/idagger/steel,
 		"Punch Dagger" = /obj/item/rogueweapon/katar/punchdagger,
+		"Tanto" = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun,
 		"Katar" = /obj/item/rogueweapon/katar,
 		"Halberd" = /obj/item/rogueweapon/halberd,
+		"Naginate" = /obj/item/rogueweapon/spear/naginata,
 		"Steel Warhammer" = /obj/item/rogueweapon/mace/warhammer/steel,
 		"Steel Flail" = /obj/item/rogueweapon/flail/sflail,
 		"Whip" = /obj/item/rogueweapon/whip,
 		"Steel Knuckles" = /obj/item/rogueweapon/knuckles,
 		"Hound Claws" = /obj/item/rogueweapon/handclaw,
+		"Kanabo" = /obj/item/rogueweapon/mace/goden/kanabo,
+		"Kodachi" = /obj/item/rogueweapon/sword/short/kazengun,
 	)
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/cast(list/targets, mob/living/user = usr)
