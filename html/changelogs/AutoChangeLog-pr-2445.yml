@@ -1,4 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - balance: "Brigandine family of armors (coat of plates, light brig, splint arms, etc.) all now use unique armor protection value var: 70 Blunt, 90 Slash, 40 Stab, 70 Pierce. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!"

@@ -1,4 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - bugfix: "Keyimprinter now looks to earth not space for keys (it wanted wrong key type)"

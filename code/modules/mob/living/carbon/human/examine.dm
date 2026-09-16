@@ -15,6 +15,9 @@
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+	else if(HAS_TRAIT(src, TRAIT_PRETTY) && user != src) //Beautiful takes priority if you somehow have both
+		user.add_stress(/datum/stressevent/pretty)
+		to_chat(user, span_info("[p_they(TRUE)] [p_are()] pretty."))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
@@ -91,7 +94,7 @@
 	if(user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
 
-	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
+	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.dna?.species?.type == /datum/species/gnoll)
 			. += span_cultsmall("Graggar has marked them!")
@@ -841,7 +844,7 @@
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
+		if(skipface && HAS_TRAIT(user, TRAIT_ASSASSIN_TARGET) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)
@@ -1004,7 +1007,9 @@
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
+			if(social_rank < SOCIAL_RANK_NOBLE)
+				. += span_notice("A minor noble.")
+			else if((HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE)) && user.social_rank >= SOCIAL_RANK_NOBLE)
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
@@ -1193,6 +1198,14 @@
 					. += span_beautiful_fem("[m1] beautiful!")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[m1] good-looking!")
+		else if (HAS_TRAIT(src, TRAIT_PRETTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_pretty_masc("[m1] pretty handsome.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_pretty_fem("[m1] pretty.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_pretty_nb("[m1] pretty good-looking.")
 
 		if (HAS_TRAIT(src, TRAIT_UNSEEMLY))
 			switch (pronouns)

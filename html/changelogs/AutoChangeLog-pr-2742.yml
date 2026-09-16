@@ -1,4 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - refactor: "removes an error causing code from certain eora tree effect"
