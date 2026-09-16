@@ -1,6 +1,6 @@
 /datum/advclass/foreigner/bronzeclad
 	name = "Thespian-Errant"
-	tutorial = "Gladiators from the arenas of Raneshen and Lirvas, reenactors from the curtain-dazzled courts of Otava and Grenzelhoft, and \
+	tutorial = "Gladiators from the arenas of Zybant and Etrusca, reenactors from the curtain-dazzled courts of Otava and Grenzelhoft, and \
 	shieldbearers from the outermost reaches of Psydonia itself; all are unified in their subconscious pursuit of entertaining something greater \
 	than themselves. You are a skilled combatant from beyond Ferentia, who - for one reason or another - is intimately familiar with fighting in ancient equipment."
 
