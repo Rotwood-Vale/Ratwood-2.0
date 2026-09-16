@@ -7,6 +7,7 @@
 /datum/intent
 	var/name = "intent"
 	var/desc = ""
+	var/icon = 'icons/mob/rogueintents.dmi'
 	var/icon_state = "instrike"
 	var/list/attack_verb = list("hits", "strikes")
 	var/obj/item/masteritem
@@ -102,6 +103,9 @@
 	/// Effectiveness of the blunt chipping
 	var/blunt_chip_strength = null
 
+	/// Cleave pattern for hitting secondary targets on normal attacks. Null = no cleave.
+	var/datum/cleave_pattern/cleave
+
 	var/static/list/bonk_animation_types = list(
 		BCLASS_BLUNT,
 		BCLASS_SMASH,
@@ -126,6 +130,7 @@
 		mastermob.curplaying = null
 	mastermob = null
 	masteritem = null
+	QDEL_NULL(cleave)
 	return ..()
 
 /datum/intent/proc/examine(mob/user)
@@ -163,12 +168,21 @@
 		inspec += "\n<b>Drain On Release:</b> [releasedrain]"
 	if(misscost)
 		inspec += "\n<b>Drain On Miss:</b> [misscost]"
-	if(clickcd != CLICK_CD_MELEE)
-		inspec += "\n<b>Recovery Time:</b> "
-		if(clickcd < CLICK_CD_MELEE)
-			inspec += "Quick"
-		if(clickcd > CLICK_CD_MELEE)
-			inspec += "Slow"
+	inspec += "\n<b>Attack Speed:</b> "
+	if(clickcd <= CLICK_CD_FAST)
+		inspec += "<font color='#4af'>Very Quick</font>"
+	else if(clickcd <= CLICK_CD_QUICK)
+		inspec += "<font color='#8f8'>Quick</font>"
+	else if(clickcd <= CLICK_CD_MELEE)
+		inspec += "Normal"
+	else if(clickcd <= CLICK_CD_CHARGED)
+		inspec += "<font color='#fa4'>Sluggish</font>"
+	else if(clickcd <= CLICK_CD_HEAVY)
+		inspec += "<font color='#f44'>Very Sluggish</font>"
+	else if(clickcd <= CLICK_CD_MASSIVE)
+		inspec += "<font color='#f22'>Extremely Sluggish</font>"
+	else
+		inspec += "<font color='#d11'>Glacial</font>"
 	if(blade_class == BCLASS_PEEL)
 		inspec += "\nThis intent will peel the coverage off of your target's armor in non-key areas after [peel_divisor] consecutive hits.\nSome armor may have higher thresholds."
 	if(!allow_offhand)
@@ -199,6 +213,14 @@
 			if(BLUNT_CHIP_ABSURD)
 				chip_strength = "significant"
 		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
+
+	if(cleave)
+		inspec += "\n<b>Cleave:</b> [cleave.desc]"
+		inspec += "\n	Max additional targets: [cleave.max_targets ? cleave.max_targets : "Unlimited"]"
+		inspec += "\n	Prioritizes living targets over dead."
+		if(cleave.diagonal_desc)
+			inspec += "\n	[cleave.diagonal_desc]"
+		inspec += "\n<tt>[cleave.get_pattern_display()]</tt>"
 	inspec += "<br>----------------------"
 
 	to_chat(user, "[inspec.Join()]")
@@ -272,6 +294,8 @@
 				update_chargeloop()
 	if(Masteritem)
 		masteritem = Masteritem
+	if(ispath(cleave))
+		cleave = new cleave()
 
 /datum/intent/proc/update_chargeloop() //what the fuck is going on here lol
 	if(mastermob)
