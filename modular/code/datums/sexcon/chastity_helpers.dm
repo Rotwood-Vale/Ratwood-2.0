@@ -12,6 +12,37 @@
 /proc/modular_chastity_private_active(mob/wearer)
 	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.private_chastity)
 
+/// Returns TRUE if the given organ slot (penis/vagina) on H is chastity-blocked and watcher is
+/// allowed to know about it — always visible to the wearer, gated by privacy/observer toggle for anyone else.
+/proc/modular_chastity_genital_note_visible(mob/living/carbon/human/H, mob/watcher, organ_slot)
+	if(!istype(H) || !H.chastity_device || !H.sexcon)
+		return FALSE
+	var/blocked = (organ_slot == ORGAN_SLOT_VAGINA) ? H.sexcon.has_chastity_vagina() : H.sexcon.has_chastity_penis()
+	if(!blocked)
+		return FALSE
+	if(watcher == H)
+		return TRUE
+	if(modular_chastity_private_active(H))
+		return FALSE
+	return modular_chastity_observer_on(watcher)
+
+/// Short device name used inline in genital descriptor text (e.g. "secured with a spiked chastity cage").
+/// Uses the actual worn device's name so cages, flat cages, spiked variants, belts/insertables, and cursed devices all read correctly.
+/proc/get_chastity_genital_note_text(mob/living/carbon/human/H)
+	var/obj/item/chastity/device = H.chastity_device
+	if(!device?.name)
+		return "a chastity device"
+	var/first_letter = LOWER_TEXT(copytext(device.name, 1, 2))
+	var/article = (first_letter in list("a", "e", "i", "o", "u")) ? "an" : "a"
+	return "[article] [device.name]"
+
+/// Appends a "secured with a chastity cage" clause to a genital descriptor's text, if visible to watcher.
+/// Colored the same as the rest of the descriptor text it's folded into (handled by the caller's span wrap).
+/proc/append_chastity_genital_note(base_description, mob/living/carbon/human/H, mob/watcher, organ_slot)
+	if(!base_description || !modular_chastity_genital_note_visible(H, watcher, organ_slot))
+		return base_description
+	return "[base_description] and secured with [get_chastity_genital_note_text(H)]"
+
 /mob/proc/update_chastity_content_pref(chastity_pref)
 	var/mob/living/user = src
 	if(!istype(user))

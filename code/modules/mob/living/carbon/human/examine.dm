@@ -325,18 +325,6 @@
 		str += beltl.integrity_check(is_smart)
 		. += str
 
-	// chastity cages go HERE, where they SHOULD'VE FUCKING GONE.
-	var/obj/item/chastity/worn_chastity = chastity_device
-	if(worn_chastity)
-		var/chastity_name = get_examine_item_name_with_hover(user, worn_chastity)
-		var/cage_exposed = get_location_accessible(src, BODY_ZONE_PRECISE_GROIN)
-		var/do_we_know_chat = (user == src)
-		var/hidden_by_privacy = (!do_we_know_chat && modular_chastity_private_active(src))
-		if(!hidden_by_privacy && (cage_exposed || modular_chastity_observer_on(user)))
-			. += "[m1] secured in [chastity_name]. "
-		else if(do_we_know_chat)
-			. += span_italics("[m1] covertly secured in [chastity_name]. ")
-	
 	var/chastity_toy_line = human_chastity_toy_examine_line(user, m2, m3)
 	if(chastity_toy_line)
 		. += chastity_toy_line
@@ -783,6 +771,14 @@
 
 	for(var/line in lines)
 		. += span_info(line)
+
+	// chastity status goes beneath the descriptor lines — gated on the wearer's privacy pref and the viewer's chastity content toggle.
+	if(chastity_device && ((user == src) || (!modular_chastity_private_active(src) && modular_chastity_observer_on(user))))
+		var/chastity_name = get_examine_item_name_with_hover(user, chastity_device)
+		var/chastity_line = "[m1] secured in [chastity_name]."
+		if(!user?.client?.prefs || user.client.prefs.descriptor_color)
+			chastity_line = "<span style='color:#ff66cc'>[chastity_line]</span>"
+		. += span_info(chastity_line)
 
 	// for underwears that don't cover from the rear, genital descriptions are still shown
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && src.underwear)
