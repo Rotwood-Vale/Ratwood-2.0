@@ -989,7 +989,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/xylixaphone
 	name = "xylixaphone"
-	desc = "The favored whimsical instrument of Xylixians. It is made of copper and wood with colorfully painted mismatched bars that seem to clang and jingle when struck."
+	desc = "The favored whimsical instrument of Xylixians. It is made of copper and wood with mismatched bars that seem to clang and jingle when struck."
 	icon_state = "xylixaphone"
 	song_list = list("Treble in Paradise" = 'sound/music/instruments/xylixaphone (1).ogg',
 	"Note-orious Deceiver" = 'sound/music/instruments/xylixaphone (2).ogg',
