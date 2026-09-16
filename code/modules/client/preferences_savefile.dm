@@ -546,12 +546,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		charflaw = new charflaw()
 
 	// Load new vice system
-	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type
+	var/vice1_type, vice2_type, vice3_type, vice4_type, vice5_type, vice6_type
 	S["vice1"] >> vice1_type
 	S["vice2"] >> vice2_type
 	S["vice3"] >> vice3_type
 	S["vice4"] >> vice4_type
 	S["vice5"] >> vice5_type
+	S["vice6"] >> vice6_type
 
 	// Vice1 is required - use charflaw as fallback for old characters, only randomize if both are missing
 	if(vice1_type && ispath(vice1_type))
@@ -570,6 +571,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice3 = (vice3_type && ispath(vice3_type)) ? new vice3_type() : null
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
+	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -606,6 +608,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none
+
+/datum/preferences/proc/_load_quirks(S)
+	var/list/quirk_types
+	S["quirks"] >> quirk_types
+
+	quirks = list()
+	if(!islist(quirk_types))
+		return
+	for(var/quirk_type in quirk_types)
+		if(ispath(quirk_type, /datum/quirk))
+			quirks += new quirk_type()
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -886,6 +899,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_virtue(S)
+	_load_quirks(S)
 	_load_flaw(S)
 
 	_load_culinary_preferences(S)
@@ -1156,6 +1170,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice3"], preferences_typepath_or_null(vice3))
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
+	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1226,6 +1241,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	WRITE_FILE(S["quirks"], get_quirk_typepaths())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

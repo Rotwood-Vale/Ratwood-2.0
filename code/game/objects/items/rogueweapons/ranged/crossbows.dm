@@ -329,7 +329,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
 	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
-	hasloadedsprite = TRUE
 	damfactor = 0.8 //72 damage with 90 damage bolts, with full AP on the bolt.
 
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
