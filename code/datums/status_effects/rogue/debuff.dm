@@ -1204,14 +1204,27 @@
 /datum/status_effect/debuff/stinky_contact
 	id = "stinky_contact"
 	duration = 15 MINUTES
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
 	var/datum/charflaw/malodorous/inherited_flaw
 
 /datum/status_effect/debuff/stinky_contact/on_creation(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
-	inherited_flaw = new
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/refresh(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	if(owner)
+		process_inherited_scent(TRUE)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/proc/set_inherited_scent(inherited_scent_type, inherited_scent)
+	if(!inherited_flaw)
+		inherited_flaw = new
 	inherited_flaw.scent_type = inherited_scent_type
 	inherited_flaw.scent = inherited_scent
-	return ..()
+	inherited_flaw.last_aura_tick = 0
 
 /datum/status_effect/debuff/stinky_contact/on_apply()
 	. = ..()
@@ -1221,29 +1234,35 @@
 		to_chat(owner, span_notice("I stink of someone else now..."))
 	else
 		to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
-	inherited_flaw?.apply_visual_effect(owner)
+	process_inherited_scent(TRUE)
+
+/datum/status_effect/debuff/stinky_contact/tick()
+	process_inherited_scent()
+
+/datum/status_effect/debuff/stinky_contact/proc/process_inherited_scent(force = FALSE)
+	if(!inherited_flaw || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.can_smell())
+		H.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+		return
 	if(inherited_flaw?.scent_type != "Pleasant")
-		owner.apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
-	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
-		switch(inherited_flaw?.scent_type)
-			if("Neutral")
-				owner.add_stress(/datum/stressevent/prominent_scent)
-			if("Pleasant")
-				owner.add_stress(/datum/stressevent/pleasant_scent)
-			else
-				owner.add_stress(/datum/stressevent/stinky_contact)
+		if(!H.has_status_effect(/datum/status_effect/debuff/malodorous_stink))
+			H.apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
+	else if(H.has_status_effect(/datum/status_effect/debuff/malodorous_stink))
+		H.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+	if(!force && world.time < inherited_flaw.last_aura_tick + inherited_flaw.get_aura_tick_delay())
+		return
+	inherited_flaw.last_aura_tick = world.time
+	inherited_flaw.apply_visual_effect(H)
+	inherited_flaw.apply_stink_aura(H)
 
 /datum/status_effect/debuff/stinky_contact/on_remove()
 	to_chat(owner, span_notice("The lingering scent finally fades off me."))
 	if(!owner.has_flaw(/datum/charflaw/malodorous))
 		owner.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
-	switch(inherited_flaw?.scent_type)
-		if("Neutral")
-			owner.remove_stress(/datum/stressevent/prominent_scent)
-		if("Pleasant")
-			owner.remove_stress(/datum/stressevent/pleasant_scent)
-		else
-			owner.remove_stress(/datum/stressevent/stinky_contact)
+	qdel(inherited_flaw)
+	inherited_flaw = null
 	return ..()
 
 /datum/status_effect/debuff/stinky_contact/proc/get_examine_text()
