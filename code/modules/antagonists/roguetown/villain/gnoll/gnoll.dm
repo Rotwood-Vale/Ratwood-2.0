@@ -123,7 +123,7 @@
 /datum/antagonist/gnoll/proc/get_tracked_target_source(mob/living/target)
 	if(!target)
 		return null
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return "Hunted flaw"
 	if(target.job in get_gnoll_tracking_combat_roles())
 		return "Combat fallback"
@@ -132,7 +132,7 @@
 /datum/antagonist/gnoll/proc/is_examine_marked_target(mob/living/target)
 	if(!target)
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return TRUE
 	if(get_tracked_target() != target)
 		return FALSE
