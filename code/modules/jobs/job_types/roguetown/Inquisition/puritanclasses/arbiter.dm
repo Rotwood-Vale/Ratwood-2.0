@@ -9,7 +9,7 @@
 	You have chosen a different path - enrolling as a Bureaucrat of the Otavan Embassy, you intend on seeking out the rot from within, manipulating their turmoil to suit the needs of the Otavan Holy See."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
-	cmode_music = 'sound/music/psydonite.ogg'
+	cmode_music = 'sound/music/combat_arbiter.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -85,7 +85,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	cloak = /obj/item/clothing/cloak/poncho/arbiter
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
-	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter
 	belt = /obj/item/storage/belt/rogue/leather/double
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
@@ -94,7 +94,7 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	mask = /obj/item/clothing/mask/rogue/facemask/psydonmask
 	head = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/arbiter
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
@@ -102,7 +102,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/scomstone = 1,
 		)
 
@@ -135,7 +135,7 @@
 			H.change_stat(STATKEY_STR, -1)
 			H.change_stat(STATKEY_SPD, 2)
 		if("Blessed Psydonic Knuckleduster")
-			H.put_in_hands(new //obj/item/rogueweapon/knuckles/psydon/preblessed(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/knuckles/psydon/preblessed(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
 	//The whole "Sect" shit was stupid and didn't work. Go pick between money or extra virtues.
 	var/sect = list("MIND - Keen Ears & Cicerone", "MATTER - Extra Coinage & Financial Acumen")
