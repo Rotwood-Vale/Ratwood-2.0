@@ -647,3 +647,17 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Sword Hunter"
 	credits = "Metal Gear Rising Revengeance - The Only Thing I Know For Real (Acoustic + Demo)"
 	musicpath = list('sound/music/combat_swordhunter.ogg')
+
+/datum/combat_music/swordsaint
+	name = "Sword Saint"
+	desc = "The blade is the only truth."
+	shortname = "Sword Saint"
+	credits = "Sword Saint | Sekiro™: Shadows Die Twice OST"
+	musicpath = list('sound/music/combat_swordsaint.ogg')
+
+/datum/combat_music/strenghtanddiscipline
+	name = "Strength and Discipline"
+	desc = "The path of the warrior is the path of the mind."
+	shortname = "Strength & Discipline"
+	credits = "Sekiro OST: Strength And Discipline-Yuka Kitamura"
+	musicpath = list('sound/music/combat_owl.ogg')
