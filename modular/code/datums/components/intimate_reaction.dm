@@ -538,6 +538,11 @@
 	if(!device || !is_valid_wearer_source(source))
 		return FALSE
 
+	// Check the wearer's own chastity toggle first — cheapest check, gates everything else below.
+	var/datum/sex_controller/wearer_sexcon = source.sexcon
+	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
+		return FALSE
+
 	device.chastity_move_counter++
 	if(device.chastity_move_counter < device.chastity_move_delay)
 		return FALSE
@@ -552,9 +557,6 @@
 	if(device.chastity_move_sound)
 		playsound_chastity(source, device.chastity_move_sound, device.chastity_move_volume, TRUE)
 
-	var/datum/sex_controller/wearer_sexcon = source.sexcon
-	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
-		return TRUE
 	if(source.stat != CONSCIOUS)
 		return TRUE
 	if(last_movement_message_time + movement_message_cooldown >= world.time)
