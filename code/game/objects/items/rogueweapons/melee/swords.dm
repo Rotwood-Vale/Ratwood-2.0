@@ -996,7 +996,7 @@
 	to march knee-deep through the dead in search of absolution."
 	icon_state = "psyexe"
 	force = 22
-	force_wielded = 25
+	force_wielded = 30
 	minstr_req = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
@@ -1086,7 +1086,7 @@
 	icon_state = "psysword"
 	sheathe_icon = "psysword"
 	force = 20
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 9
 	wdefense = 6
 	dropshrink = 1
@@ -1173,7 +1173,7 @@
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
 	force = 20
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
@@ -1791,8 +1791,8 @@
 	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
-	force_wielded = 20
+	force = 25
+	force_wielded = 25
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
@@ -1827,8 +1827,8 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
+	force = 25
+	force_wielded = 25
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver
