@@ -551,7 +551,7 @@
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/iron/lucerne
-	name = "Lucerne, Iron (+1 Iron, +1 Small Log)"
+	name = "Polehammer, Iron (+1 Iron, +1 Small Log)"
 	req_blade = /obj/item/blade/iron_polearm
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/eaglebeak/lucerne
@@ -901,7 +901,7 @@
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
-	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
+	name = "Polehammer, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/eaglebeak

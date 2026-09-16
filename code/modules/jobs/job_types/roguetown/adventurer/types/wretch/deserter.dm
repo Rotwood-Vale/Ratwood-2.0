@@ -58,7 +58,7 @@
 			"Mace + Shield",
 			"Flail + Shield",
 			"Longsword + Shield",
-			"Lucerne",
+			"Polehammer",
 			"Battle Axe",
 			"Lance + Kite Shield",
 			"Shamshir",		//WHO MISPELLED IT BRO
@@ -83,7 +83,7 @@
 				beltr = /obj/item/rogueweapon/flail/sflail
 				backr = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
-			if("Lucerne")
+			if("Polehammer")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)

@@ -124,14 +124,14 @@
 	..()
 	to_chat(H, span_warning("Faceless and numerous, the mercenary guild is occupied by many of your ilk. Maille and polearms are as easily used by the unskilled as they are effective."))
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Eagle's Beak", "Billhook")
+		var/weapons = list("Halberd", "Partizan", "Polehammer", "Billhook")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
 				r_hand = /obj/item/rogueweapon/halberd
 			if("Partizan")
 				r_hand = /obj/item/rogueweapon/spear/partizan
-			if("Eagle's Beak")
+			if("Polehammer")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 			if("Billhook")
 				r_hand =/obj/item/rogueweapon/spear/billhook

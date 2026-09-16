@@ -283,7 +283,7 @@
 
 /obj/item/rogueweapon/flail/peasantwarflail/steel
 	name = "greatflail"
-	desc = "The lucerne's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
+	desc = "The polehammer's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
 	icon_state = "greatflail"
 	wdefense = 6
 	minstr = 12

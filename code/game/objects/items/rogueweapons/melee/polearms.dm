@@ -44,7 +44,7 @@
 
 // Eaglebeak has a decent bash with range
 /datum/intent/spear/bash/eaglebeak
-	name = "eagle's beak bash"
+	name = "polehammer bash"
 	damfactor = 1
 	reach = 2
 	blunt_chipping = TRUE

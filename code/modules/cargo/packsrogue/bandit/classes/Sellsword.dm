@@ -234,7 +234,7 @@
 	contains = list(/obj/item/rogueweapon/spear/partizan)
 
 /datum/supply_pack/rogue/Sellsword/ebeak
-	name = "Eagle's Beak"
+	name = "Polehammer"
 	cost = 40
 	contains = list(/obj/item/rogueweapon/eaglebeak)
 
