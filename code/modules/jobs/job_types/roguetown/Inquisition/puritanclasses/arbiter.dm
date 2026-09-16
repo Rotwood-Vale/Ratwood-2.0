@@ -1,12 +1,12 @@
 //The Arbiter. The Unassuming Chaplain. The Charming Reverend. The Secretly Jacked Minister.
 //A full set of miracles, but not a fully-blown Absolver. You'll be able to hold your own if one is missing.
 //Meant to appear as an honest bureaucrat, and not a zealous witch-hunter or a platebeast psychopath.
-//Deceiving Meekness and Intellectual. Combat-Capable through technique. Also obscenely rich. 
+//Deceiving Meekness and Intellectual. Combat-Capable, although you truly shine when you "inspire" your orthodoxists. With money. Because you're obscenely rich. 
 /datum/advclass/puritan/arbiter
 	name = "Arbiter"
-	tutorial = "You are a humble, yet venerated warrior-priest, specially trained by the sacred Order of Saint Vicquemare in ENDVRING the harshest of environments. \
-	Some join in missionary efforts, whilst others operate alone in monastic travels. Most Arbiters work alone. \
-	You have chosen a different path - enrolling as a Bureaucrat of the Otavan Embassy, you intend on seeking out the rot from within, and plunging it in righteous silver."
+	tutorial = "You are a humble, yet venerated warrior-priest, specially trained by the sacred Order of Saint Vicquemare in ENDVRING the harshest of environments to spread the word of HIM. \
+	Some join in missionary efforts, whilst others operate alone in monastic travels. Despite their sociability and immense funding from the order, most Arbiters work alone. \
+	You have chosen a different path - enrolling as a Bureaucrat of the Otavan Embassy, you intend on seeking out the rot from within, and manipulating their turmoil to suit the needs of the Otavan Holy See."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
