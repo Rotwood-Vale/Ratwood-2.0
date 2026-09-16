@@ -25,7 +25,7 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN //For if they want to use the scabbard to block, though I am not sure why you would do this.
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN
 	)
 
 /datum/outfit/job/roguetown/wretch/swordhunter/pre_equip(mob/living/carbon/human/H)
