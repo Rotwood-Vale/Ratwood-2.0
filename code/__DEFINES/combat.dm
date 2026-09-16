@@ -61,10 +61,13 @@
 #define CLICK_CD_EXHAUSTED 60
 #define CLICK_CD_TRACKING 30
 #define CLICK_CD_SLEUTH 10
-#define CLICK_CD_HEAVY 16
-#define CLICK_CD_CHARGED 14
-#define CLICK_CD_MELEE 12
-#define CLICK_CD_FAST 8
+#define CLICK_CD_GLACIAL 20	// Tier: Glacial
+#define CLICK_CD_MASSIVE 18	// Tier: Extremely Sluggish
+#define CLICK_CD_HEAVY 16		// Tier: Very Sluggish
+#define CLICK_CD_CHARGED 14	// Tier: Sluggish
+#define CLICK_CD_MELEE 12		// Tier: Normal (baseline)
+#define CLICK_CD_QUICK 10		// Tier: Quick
+#define CLICK_CD_FAST 8		// Tier: Very Quick
 #define CLICK_CD_INTENTCAP 6
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
@@ -432,3 +435,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+
+// Critical Resistance Defines //
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5

@@ -22,6 +22,10 @@
 	var/bar_health = 100 // Current material bar health, reduced by failures. At 0 HP it is deleted.
 	var/numberofhits = 0 // Increased every time you hit the bar, the more you have to hit the bar the less quality of the product.
 	var/numberofbreakthroughs = 0 // How many good hits we got on the metal, advances recipes 50% faster, reduces number of hits total, and restores bar_health
+	var/smith_skill_level = 0 // Highest skill level of any smith who landed a hit on this bar. Used to clamp final tier.
+	var/skip_quality = FALSE
+	var/min_input_quality = null
+	var/datum/parent
 	// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE
 	var/req_trait = null
@@ -29,6 +33,12 @@
 
 /datum/anvil_recipe/New(datum/P, using_blade = FALSE, ...)
 	. = ..()
+
+/datum/anvil_recipe/proc/track_input_quality(obj/item/I)
+	if(!istype(I) || !I.has_item_quality)
+		return
+	if(isnull(min_input_quality) || I.item_quality < min_input_quality)
+		min_input_quality = I.item_quality
 
 /datum/anvil_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=new_recipe;size=500x810")
@@ -70,7 +80,7 @@
 					html += "<b>[capitalize(zonedyn)]</b> | "
 					if(zonedyn in zones)
 						zones.Remove(zonedyn)
-				for(var/zone in zones)			
+				for(var/zone in zones)
 					html += "<b><font color = '#470000'>[capitalize(zone)]</font></b> | "
 			html += "<br>"
 		if(C.body_parts_inherent)
@@ -101,7 +111,7 @@
 		html += "Combat Properties<br>"
 		if(bookweapon.minstr)
 			html += "\n<b>MIN.STR:</b> [bookweapon.minstr]<br>"
-		
+
 		if(bookweapon.force)
 			html += "\n<b>FORCE:</b> [bookweapon.force]<br>"
 		if(bookweapon.gripped_intents && !bookweapon.wielded)
@@ -114,7 +124,7 @@
 				html += "Heavy<br>"
 			if(bookweapon.wbalance == WBALANCE_SWIFT)
 				html += "Swift<br>"
-			
+
 
 		if(bookweapon.wlength != WLENGTH_NORMAL)
 			html += "\n<b>LENGTH:</b> "
@@ -141,11 +151,11 @@
 			html += "\n<b>DEFENSE:</b> [bookweapon.wdefense]<br>"
 		if(bookweapon.associated_skill && bookweapon.associated_skill.name)
 			html += "\n<b>SKILL:</b> [bookweapon.associated_skill.name]<br>"
-		
+
 		if(bookweapon.intdamage_factor != 1 && bookweapon.force >= 5)
 			html += "\n<b>INTEGRITY DAMAGE:</b> [bookweapon.intdamage_factor * 100]%<br>"
 
-	
+
 	if(craftdiff > 0)
 		html += "<h1></h1>For those of [SSskills.level_names_plain[craftdiff]] skills<br>"
 	else

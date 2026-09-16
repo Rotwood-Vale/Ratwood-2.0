@@ -46,7 +46,7 @@
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
@@ -124,7 +124,7 @@
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
@@ -204,7 +204,7 @@
 	id = /obj/item/clothing/neck/roguetown/shalal
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary,
-		/obj/item/rogueweapon/huntingknife/idagger/navaja,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri,
 		/obj/item/rogueweapon/scabbard/sheath,
 		/obj/item/spellbook_unfinished/pre_arcyne,
 		/obj/item/flashlight/flare/torch,
