@@ -1,7 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - rscadd: "Bandit pioneer gets squire knowledge and explosive specialist"
-  - balance: "Bombstrap cannot hold blastpowder sticks any more"
-  - qol: "bombstrap and GW strap work with hotkeys"
-  - bugfix: "made the sprites for bombstrap work (inv was not set up right, and on person was just not used at all"

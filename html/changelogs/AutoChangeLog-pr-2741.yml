@@ -1,4 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - bugfix: "Fixes dolabra till intent not working; it now hoes around properly."
