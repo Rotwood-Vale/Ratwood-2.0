@@ -420,6 +420,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_back = get_item_by_slot(slot_id)
+	if(equipped_back?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_back, slot_id))
 		return
 	if(!equipped_back) // We also let you equip a backpack like this
@@ -456,6 +458,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	if(equipped_belt?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_belt, SLOT_BELT))
 		return
 	if(!equipped_belt) // We also let you equip a belt like this

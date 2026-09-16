@@ -306,7 +306,7 @@ All foods are distributed among various categories. Use common sense.
 					if(human_eater.add_stress(/datum/stressevent/hated_food))
 						to_chat(human_eater, span_red("Yuck! My hated food!"))
 
-		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER))
+		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER) && !HAS_TRAIT(human_eater, TRAIT_WILD_EATER))
 			if (human_eater.is_noble())
 				if (!portable)
 					if(!(locate(/obj/structure/table) in range(1, eater)))

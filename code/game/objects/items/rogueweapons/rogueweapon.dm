@@ -42,6 +42,12 @@
 	// whether this is actually a tool, like hoes and hammers, not a weapon proper. used to allow TRAIT_WEAPONLESS users to conduct repairs and such
 	var/is_tool = FALSE
 
+
+	/// the durability damage recieved for every work cycle
+	var/hoe_damage = null
+	/// the time it takes to make new soil or till soil
+	var/work_time = 3 SECONDS 
+
 	/// Special datum holder
 	var/datum/special_intent/special
 

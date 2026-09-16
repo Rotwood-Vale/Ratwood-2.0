@@ -14,7 +14,7 @@
 	show_in_credits = FALSE
 	min_pq = 30//60>50>30. What a world. Fingers crossed that folks aren't as bad with it now.
 	max_pq = null
-	vice_restrictions = list(/datum/charflaw/assassintarget)
+	quirk_restrictions = list(/datum/quirk/assassintarget)
 
 	obsfuscated_job = TRUE
 	class_categories = TRUE

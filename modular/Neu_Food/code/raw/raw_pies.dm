@@ -181,7 +181,7 @@ And I don't wanna copypaste what Vanderlin has
 
 	// -------------- SPIDER PIE --------------
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider))
-		if(!isdarkelf(user))
+		if(!isdarkelf(user) && !HAS_TRAIT(user, TRAIT_UNDERDARK_CHEF))
 			to_chat(user, span_warning("You lack knowledge of underdark delicacies!"))
 			return
 		if (process_step > 4)
