@@ -757,7 +757,7 @@
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with chocolate!"))
 	if(I.get_sharpness())
-		if(!isdwarf(user))
+		if(!isdwarf(user) && !HAS_TRAIT(user, TRAIT_DWARVEN_CHEF))
 			to_chat(user, span_warning("You lack knowledge of dwarven pastries!"))
 			return
 		else

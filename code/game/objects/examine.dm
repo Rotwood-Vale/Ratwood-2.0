@@ -44,16 +44,38 @@
 
 	. += integrity_check()
 
-	var/real_value = get_real_price()
-	if(real_value > 0)
-		if(HAS_TRAIT(user, TRAIT_SEEPRICES) || simpleton_price)
-			. += span_info("Value: [real_value] mammon")
+	var/derived_cat = get_derived_category(type)
+	var/display_cat = derived_cat
+	if(derived_cat)
+		var/bucket = get_navigator_bucket_for_item(src, derived_cat)
+		if(bucket && bucket != NAVIGATOR_BUCKET_REFUSED_FOOD && bucket != NAVIGATOR_BUCKET_REFUSED_BULK)
+			display_cat = bucket
+	var/cat_tag = display_cat ? "<b>[display_cat]</b>" : ""
 
-		else if(HAS_TRAIT(user, TRAIT_SEEPRICES_SHITTY))
-			//you can get up to 50% of the value if you have shitty see prices
+	// The price traits gate ONLY the mammon value - category and quality are always shown.
+	var/value_line = "Value: Unknown"
+	if(HAS_TRAIT(user, TRAIT_SEEPRICES) || simpleton_price || isobserver(user))
+		var/appraised_value = appraise_price()
+		if(appraised_value > 0)
+			value_line = "Value: [appraised_value] mammon"
+	else if(HAS_TRAIT(user, TRAIT_SEEPRICES_SHITTY))
+		var/real_value = appraise_price()
+		if(real_value > 0)
 			var/static/fumbling_seed = text2num(GLOB.rogue_round_id)
 			var/fumbled_value = max(1, round(real_value + (real_value * clamp(noise_hash(real_value, fumbling_seed) - 0.25, -0.25, 0.25)), 1))
-			. += span_info("Value: [fumbled_value] mammon... <i>I think</i>")
+			value_line = "Value: ~[fumbled_value] mammon (uncertain)"
+	// Category always rides along with the value line.
+	. += span_info("[value_line][cat_tag ? " - [cat_tag]" : ""].")
+	
+	var/list/quality_data = quality_examine_suffix()
+	if(quality_data)
+		switch(quality_data["style"])
+			if("warning")
+				. += span_warning("[quality_data["text"]].")
+			if("green")
+				. += span_green("[quality_data["text"]].")
+			else
+				. += span_info("[quality_data["text"]].")
 
 	if(smeltresult)
 		var/obj/item/smelted = smeltresult
@@ -65,15 +87,6 @@
 		else if(HAS_TRAIT(user, TRAIT_NUDIST))
 			. += span_smallnotice("I can tolerate wearing this.")
 
-	var/list/quality_data = quality_examine_suffix()
-	if(quality_data)
-		switch(quality_data["style"])
-			if("warning")
-				. += span_warning("[quality_data["text"]].")
-			if("green")
-				. += span_green("[quality_data["text"]].")
-			else
-				. += span_info("[quality_data["text"]].")
 
 	var/list/seals = list()
 	if(atc_sealed)

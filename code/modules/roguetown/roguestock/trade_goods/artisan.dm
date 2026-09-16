@@ -7,6 +7,15 @@
 	source_region_id = TRADE_REGION_ROSAWOOD
 	item_type = /obj/item/grown/log/tree/small
 
+/datum/trade_good/lumber_essence
+	id = TRADE_GOOD_LUMBER_ESSENCE
+	name = "Essence of Lumber"
+	category = TRADE_CATEGORY_ARTISAN
+	behavior = TRADE_BEHAVIOR_RAW
+	base_price = SELLPRICE_DENDOR_ESSENCE
+	source_region_id = TRADE_REGION_ROSAWOOD
+	item_type = /obj/item/grown/log/tree/small/essence
+
 /datum/trade_good/dendor_essence
 	id = TRADE_GOOD_DENDOR_ESSENCE
 	name = "Essence of Wilderness"

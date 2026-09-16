@@ -456,3 +456,93 @@
   zeroisthebiggay:
   - bugfix: consorts are actually nobles
   - rscadd: braziers are destructible now
+2026-09-16:
+  IronDragoon:
+  - rscadd: Bandit pioneer gets squire knowledge and explosive specialist
+  - balance: Bombstrap cannot hold blastpowder sticks any more
+  - qol: bombstrap and GW strap work with hotkeys
+  - bugfix: made the sprites for bombstrap work (inv was not set up right, and on
+      person was just not used at all
+  RadiantFlash7:
+  - qol: Sacks no longer sold at the navigator
+  - qol: when a price is provided while shift clicking an item, the navigator sales
+      category is provided as well
+  - balance: most stockpile goods now have an export, import interior trade region
+  - bugfix: containers now show the value of all items inside it+ the container
+  - bugfix: smithed items now are marked as 'crafted' for navigator sales
+  - balance: reverts sojourner statline
+  Yuckuza:
+  - balance: bronze armor protections buffed to a uniform B+ across the board
+  - balance: 'Brigandine family of armors (coat of plates, light brig, splint arms,
+      etc.) all now use unique armor protection value var: 70 Blunt, 90 Slash, 40
+      Stab, 70 Pierce. Better blunt and arrow padding than plate, but sword stabs
+      and above will pen. Best light armor gets for melee. Medium/heavy classes should
+      still wear maille under it!'
+  - balance: Sisseans can now eat organs.
+  - bugfix: Fixes dolabra till intent not working; it now hoes around properly.
+  - rscadd: Ported cleave AOE weapon intents from Azure Peak
+  - balance: Greatsword reworked - Removed Rend & Bash on gripped intents, gains Cleave
+      and Sweep AOE intents
+  - balance: Executioner's Sword gains Cleave and Sweep at 1.2 damfactor. No longer
+      heavy balance.
+  - rscadd: Berserker sword, a MUCH lesser daemonslayer guts sword. In the Executioner
+      sword subtype. Loses peel in exchange for a unique smash intent that does knockback
+      and chop B-class damage.
+  - rscadd: New crafting recipe for Daemonslayer, requires an anointed berserker sword
+      which is crafted from glut harvested from dead gnolls, alongside the other uberrare
+      loot the recipe already needed. Go kill gnoll players!
+  - balance: Greataxe gains frontal arc Sweep at 1.1 damfactor with Massive clickCD
+  - balance: Maul gains frontal arc Sweep with Glacial clickCD, loses Daze
+  - balance: Axes cut damfactor increased to 1.3 (from 1.1), loses penfactor, clickCD
+      increased in general
+  - balance: Greatflail / Matthios Flail gain charged horizontal Sweep at 1.5 damfactor
+  - balance: Bardiche gains Cleave and Sweep, loses gripped Chop. AOE intents are
+      2 tiles reach.
+  - balance: Glaive gains Sweep, thrust moved to bad thrust subtype (penfactor 20,
+      no effective range). AOE intents are 2 tiles reach.
+  - balance: Naginata gains Sweep, loses Peel. AOE intent is 2 tile reach.
+  - code_imp: /obj/item/ingot/component types ported. Used in berserker sword and
+      daemonslayer crafting
+  - qol: Attack Speed display is now color-coded across six granular tiers (including
+      new Extremely Sluggish and Glacial)
+  - qol: Cleave examine shows max additional targets, living priority note, and diagonal
+      pattern info
+  - image: Intent icons split out to dedicated rogueintents.dmi. rather than being
+      lumped into roguehud.dmi
+  - image: draconic ingot and enduring ingot now have unique sprites rather than reusing
+      recolored blacksteel and silver ingot icon states.
+  - bugfix: fixed thespian knowing kazengunese, they know Etruscan instead
+  wikimody:
+  - refactor: removes an error causing code from certain eora tree effect
+  - bugfix: Keyimprinter now looks to earth not space for keys (it wanted wrong key
+      type)
+  zeroisthebiggay:
+  - rscadd: Quirks! Essentially lesser virtues unlocked by having additional vices.
+      They typically provide very little mechanical benefit, but contain some neat
+      ways to give your character some extra flavor.
+  - rscdel: Ugly virtue. It was already a vice, and dead nose has been reworked into
+      a quirk.
+  - rscdel: Second Voice virtue. It's been reworked into a quirk.
+  - rscdel: Nobility virtue. It's been reworked into a quirk.
+  - rscdel: High Society virtue. It's been made redundant and is now dead.
+  - rscdel: Acquired Tastes virtue. It's been atomized into the Acquired Tastes and
+      Rough Lover quirks.
+  - rscdel: Annoying Voice, Malodorous, Marked by Gnolls, Marked for Death Scarred,
+      and Ugly vices. They've all been reworked into quirks. !!!!!If you were using
+      these before MAKE SURE THEY'RE SELECTED!!!!!
+  - balance: Those granted nobility from the noble quirk are considered minor nobles.
+  - balance: Minor nobles and foreign nobles are subjected to the poll tax.
+  - refactor: Redid some backend code on how virtues are handled, enabling proper
+      restrictions for incompatible vices and such.
+  - code_imp: No Vice is no longer selectable as a vice. Now you have to clear all
+      your other vices and then clear your first vice slot in order to have No Vice.
+  - rscadd: expanded character song preview
+  - spellcheck: fixes nonbinary genital verbage
+  - rscadd: psicrosses can be right clicked with an empty hand to toggle their wrist/neck
+      display state
+  zoktiik:
+  - bugfix: The Fortitude spell that is supposed to halve stamina usage was also halving
+      stamina regen. Fixed now. It was possible to cast this spell on someone offensively,
+      for the purposes of debuffing their stamina regen (like during a fight).
+  - balance: To compensate for Fortitude actually working as-written, stamina usage
+      reduction is now -30% down from -50%.
