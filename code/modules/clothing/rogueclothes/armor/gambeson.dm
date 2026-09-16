@@ -344,7 +344,7 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/hand.dmi'
 	color = null
 	detail_tag = "_detail"
-	detail_color = "#6e423a"
+	detail_color = "#404040"
 	shiftable = FALSE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter/Initialize(mapload)

@@ -83,7 +83,6 @@
 	has_loadout = TRUE
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
-	cloak = /obj/item/clothing/cloak/poncho/arbiter
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter
 	belt = /obj/item/storage/belt/rogue/leather/double
@@ -116,7 +115,7 @@
 
 /datum/outfit/job/roguetown/puritan/arbiter/choose_loadout(mob/living/carbon/human/H)
 	. = ..()//All of their weapon choices are easily-concealable.
-	var/weapons = list("Blessed Psydonic Handmace", "Daybreak (Whip)", "Stigmata (Halberd)", "Consecratia (Flail)")
+	var/weapons = list("Blessed Psydonic Handmace", "Blessed Psydonic Shortsword", "Blessed Psydonic Knuckleduster")
 	var/weapon_choice = input(H,"FIND YOUR TRUTHS.", "WIELD THEM IN HIS NAME.") as anything in weapons
 	switch(weapon_choice)
 		if("Blessed Psydonic Handmace")
@@ -145,7 +144,7 @@
 			ADD_TRAIT(H, TRAIT_KEENEARS, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_CICERONE, TRAIT_GENERIC)
 		if("MATTER - Extra Coinage & Financial Acumen")
-			H.put_in_hands(/obj/item/storage/belt/rogue/pouch/coins/veryrich, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/pouch/coins/veryrich, SLOT_BELT_R, TRUE)
 			ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 

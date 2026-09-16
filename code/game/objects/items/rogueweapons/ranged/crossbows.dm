@@ -306,8 +306,8 @@
 	max_integrity = 200
 	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
 	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
-	icon_state = "relicpsyheavycrossbow0"
-	item_state = "relicpsyheavycrossbow"
+	icon_state = "relicpsyheavybow0"
+	item_state = "relicpsyheavybow"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic/marque
 	name = "\"Epistle\""
