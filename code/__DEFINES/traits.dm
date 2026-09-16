@@ -221,6 +221,7 @@
 #define TRAIT_BEAUTIFUL "Beautiful"
 /// lesser version of beautiful
 #define TRAIT_PRETTY "Pretty"
+#define TRAIT_UNSETTLING "Unsettling"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
@@ -398,7 +399,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_BEAUTIFUL = span_info("People love looking at my face"),
 	TRAIT_PRETTY = span_info("I'm told I'm rather easy on the eyes."),
 	TRAIT_BEAUTIFUL_UNCANNY = span_info("<i>Some</i> would say my visage is an artwork created by the gods themselves; the others call me an unsettling abomination."),
-	TRAIT_UNSETTLING_BEAUTY = span_warning("My appearance is deeply unsettling to most. There's something profoundly wrong about my features."),
+	TRAIT_UNSETTLING = span_warning("My appearance is deeply unsettling to most. There's something profoundly wrong about my features."),
 	TRAIT_SCARRED = span_info("My face bears terrible scars that make identification difficult."),
 	TRAIT_BAD_MOOD = span_warning("Everything just seems to piss me off"),
 	TRAIT_LEAPER = "I can leap like a frog, landing where I want.",
