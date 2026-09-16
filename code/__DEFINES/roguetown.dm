@@ -108,7 +108,7 @@ Balloon Alert / Floating Text defines
 #define RACES_OOZE \
 	/datum/species/ooze,\
 
-#define ALL_BUT_OOZE list(\
+#define ALL_BUT_BLOODLESS list(\
 	/datum/species/human/northern,\
 	/datum/species/human/halfelf,\
 	/datum/species/elf/dark,\
@@ -136,7 +136,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/arachnid\
 )
 
-#define ALL_BUT_OOZE_DWARF list(\
+#define ALL_BUT_BLOODLESS_DWARF list(\
 	/datum/species/human/northern,\
 	/datum/species/human/halfelf,\
 	/datum/species/elf/dark,\
