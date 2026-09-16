@@ -214,8 +214,8 @@
 #define SHORT_RANGE_SOUND_EXTRARANGE -3
 ///Percentage of sound's range where no falloff is applied. 0 on purpose: a flat zone near the
 ///source reads as broken rather than loud: you walk several tiles and nothing changes at all.
-///The near-field is kept gentle by SOUND_FALLOFF_EXPONENT being below 1 instead, which degrades
-///from the very first tile but slowly.
+///The curve carries the near-field instead: it degrades from the very first tile, gently at the
+///room-scale exponent and hardest in the short band, where the first tile is meant to cost most.
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 0
 ///Falloff curves, one per range band. The curve is computed against each sound's OWN range, so
 ///its shape is proportional: at half of its range a sound sits at the same volume whether that
@@ -252,8 +252,8 @@
 ///43 at 50, 15 at 110, and the floor at the edge.
 #define SOUND_FALLOFF_EXPONENT_LONG 2
 
-///Range at which each band takes over. Nearly every call site lands in the short band; only point
-///ambience reaches below CLOSE today, since no playsound caller sets a range under 5.
+///Range at which each band takes over. Most call sites land in the short band, and 22 of the 80
+///playsound calls with a literal range ask for less than 5, so they take the short curve too.
 #define SOUND_RANGE_CLOSE 5
 #define SOUND_RANGE_MEDIUM 10
 #define SOUND_RANGE_LONG 28
@@ -360,6 +360,8 @@
 ///the next positional sound BYOND sends, environment being a client-wide setting. Half off is a
 ///cut you can hear. 0.34 if it should read as nearly gone.
 #define SOUND_MUFFLE_WALL_VOLUME_MULT 0.5
+///A wall takes the ordinary muffle curve and differs only in the volume cut above. Steepening it
+///further cut the sound off close enough to the wall to read as a bug rather than as distance
 #define SOUND_MUFFLE_EXPONENT_MULT 1.5
 ///BYOND reverb preset 11, "carpeted hallway": a dead, absorbent room with little reflection.
 #define SOUND_MUFFLE_ENVIRONMENT 11
