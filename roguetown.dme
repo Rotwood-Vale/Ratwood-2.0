@@ -1168,6 +1168,7 @@
 #include "code\game\objects\items\dwarven_dice.dm"
 #include "code\game\objects\items\farkle.dm"
 #include "code\game\objects\items\granters.dm"
+#include "code\game\objects\items\holster_component.dm"
 #include "code\game\objects\items\hourglass.dm"
 #include "code\game\objects\items\liars_dice.dm"
 #include "code\game\objects\items\love_potion.dm"

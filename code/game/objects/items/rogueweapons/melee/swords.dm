@@ -262,6 +262,45 @@
 	max_integrity = 125
 	sheathe_icon = "bronzesword"
 
+/obj/item/rogueweapon/sword/psy
+	name = "psydonic arming sword"
+	desc = "An arming sword, fitted with a blade of pure silver. It is the bane of vampyres, nitebeasts, and deadites throughout all of Psydonia; \
+	cursed flesh erupts into holy fire, and unholy bravado twists into mortal fear."
+	icon_state = "silversword"
+	sheathe_icon = "silversword"
+	force = 20
+	force_wielded = 25
+	minstr = 9
+	wdefense = 5
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silverblessed
+	smelt_bar_num = 2
+	max_blade_int = 230
+	max_integrity = 200
+	smelt_bar_num = 1
+
+/obj/item/rogueweapon/sword/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/sword/falx
 	name = "falx"
 	desc = "An unusual type of curved sword that evolved from the farmer's sickle. It has an inwards edge, making it useful for cutting and chopping."

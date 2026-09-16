@@ -303,7 +303,6 @@
 	base_icon_state = "psyble"
 	title = "psyble"
 	dat = "gott.json"
-	var/sect = "sect1"
 	wbalance = WBALANCE_HEAVY
 	force = 25
 	possible_item_intents = list(

@@ -38,6 +38,14 @@
 						return
 	..()	
 
+/obj/item/rogueweapon/scabbard/sheath/proc/eat_sword(mob/user, obj/item/rogueweapon/huntingknife/K, silent = FALSE)
+	if(!K || sheathed)
+		return FALSE
+	K.forceMove(src)
+	sheathed = TRUE
+	update_icon()
+	return TRUE
+
 /obj/item/storage/belt/rogue/leather
 	name = "belt"
 	desc = "A fine leather strap notched with holes for a buckle to secure itself."
@@ -220,6 +228,13 @@
 	desc = "A made to last leather bag from the Psydonian heart of Otava. It's Otava's finest."
 	icon_state = "osatchel"
 	item_state = "osatchel"
+
+/obj/item/storage/backpack/rogue/satchel/otavan/short
+	name = "otavan short satchel"
+	desc = "A sleek, stylish, and surprisingly sturdy satchel that hails straight from the Sovereignty of Otava. This one is made to clip to a belt or to a pair of pants, freeing the shoulders from any weight."
+	icon_state = "osatchelshort"
+	item_state = "osatchelshort"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
 
 /obj/item/storage/backpack/rogue/satchel/mule/PopulateContents()
 	for(var/i in 1 to 3)

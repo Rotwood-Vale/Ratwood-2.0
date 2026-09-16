@@ -255,7 +255,7 @@
 
 	icon_state = "gws0"
 	item_state = "gwstrap"
-	icon = 'icons/obj/items/gwstrap.dmi'
+	icon = 'modular_azurepeak/icons/obj/items/gwstrap.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	pixel_y = -16
