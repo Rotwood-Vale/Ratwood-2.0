@@ -191,7 +191,6 @@
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
 	custom_text = "Replaces your Right arm with a prosthetic Bronze one. Incompatible with Wood Arm (R) vice"
 	incompatible_vices = list(/datum/charflaw/limbloss/arm_r)
-	incompatible_quirks = list(/datum/quirk/utility/bronzearm_l)
 	point_cost = 0
 
 /datum/quirk/bronzearm_r/apply_to_human(mob/living/carbon/human/recipient)
@@ -213,7 +212,6 @@
 	custom_text = "Replaces your Left arm with a prosthetic Bronze one. Incompatible with Wood Arm (L) vice"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
 	incompatible_vices = list(/datum/charflaw/limbloss/arm_l)
-	incompatible_quirks = list(/datum/quirk/utility/bronzearm_r)
 	point_cost = 0
 
 /datum/quirk/bronzearm_l/apply_to_human(mob/living/carbon/human/recipient)
