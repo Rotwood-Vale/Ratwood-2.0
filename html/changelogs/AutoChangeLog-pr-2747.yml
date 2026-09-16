@@ -1,8 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - qol: "Sacks no longer sold at the navigator"
-  - qol: "when a price is provided while shift clicking an item, the navigator sales category is provided as well"
-  - balance: "most stockpile goods now have an export, import interior trade region"
-  - bugfix: "containers now show the value of all items inside it+ the container"
-  - bugfix: "smithed items now are marked as 'crafted' for navigator sales"

@@ -130,7 +130,7 @@
 #define ARMOR_BRIGANDINE list("blunt" = 70, "slash" = 90, "stab" = 40, "piercing" = 70, "fire" = 0, "acid" = 0)
 
 // BRONZE - All bronze armor. Not particularly good against any specialized AP intent, but uniquely resistant to fire damage from mage spells and the like.
-#define ARMOR_BRONZE list("blunt" = 50, "slash" = 70, "stab" = 70, "piercing" = 40, "fire" = 50, "acid" = 0)
+#define ARMOR_BRONZE list("blunt" = 70, "slash" = 70, "stab" = 70, "piercing" = 70, "fire" = 50, "acid" = 0)
 
 // Medium AC
 #define ARMOR_CUIRASS list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 40, "fire" = 0, "acid" = 0)
