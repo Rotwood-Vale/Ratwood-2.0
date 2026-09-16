@@ -1,5 +1,11 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
+/datum/intent/sword/cut/miaodao
+	reach = 2
+
+/datum/intent/sword/cut/miaodao/fast
+	clickcd = 10
+
 /datum/intent/spear/thrust
 	name = "thrust"
 	blade_class = BCLASS_STAB
@@ -1503,6 +1509,30 @@
 		added_def = 2,\
 	)
 
+/obj/item/rogueweapon/greatsword/miaodao // SWORD HUNTER ONLY do not give it to any other class
+	name = "steel miaodao"
+	icon_state = "odachi"
+	desc = "An unusually long saber of Lingyunese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
+	force = 22
+	force_wielded = 27
+	minstr = 8
+	wdefense = 4
+	wdefense_wbonus = 2 
+	max_blade_int = 150 //Thin blade
+	wbalance = WBALANCE_SWIFT
+	possible_item_intents = list(/datum/intent/sword/cut/miaodao/fast, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/miaodao, /datum/intent/rend/reach, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big)
+	alt_intents = null
+
+/obj/item/rogueweapon/greatsword/miaodao/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen") return list("shrink" = 0.5, "sx" = -14, "sy" = -8, "nx" = 15, "ny" = -7, "wx" = -10, "wy" = -5, "ex" = 7, "ey" = -6, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -13, "sturn" = 110, "wturn" = -60, "eturn" = -30, "nflip" = 1, "sflip" = 1, "wflip" = 8, "eflip" = 1)
+			if("wielded") return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback") return list("shrink" = 0.5, "sx" = -1, "sy" = 2, "nx" = 0, "ny" = 2, "wx" = 2, "wy" = 1, "ex" = 0, "ey" = 1, "nturn" = 0, "sturn" = 0, "wturn" = 70, "eturn" = 15, "nflip" = 1, "sflip" = 1, "wflip" = 1, "eflip" = 1, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
+
+
 /obj/item/rogueweapon/estoc
 	name = "estoc"
 	desc = "A sword possessed of a quite long and tapered blade that is intended to be thrust between the \
@@ -2136,3 +2166,33 @@
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
 	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60
+
+/obj/item/rogueweapon/greatsword/zwei/cleaver
+	name = "Giant Cleaver"
+	desc = "Hammered together from the jagged remnants of fallen armor and blades."
+	icon_state = "ogre_axe"
+	minstr = 15
+	force = 20
+	force_wielded = 35
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/rend, /datum/intent/sword/cut/zwei/cleave, /datum/intent/sword/cut/zwei/sweep)
+	alt_intents = null
+	max_blade_int = 250
+	max_integrity = 260
+	wlength = WLENGTH_GREAT
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+
+/obj/item/rogueweapon/greatsword/zwei/cleaver/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+	else
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)

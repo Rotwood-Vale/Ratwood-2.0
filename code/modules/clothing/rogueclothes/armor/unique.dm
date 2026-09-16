@@ -52,6 +52,9 @@
 //craftable variation of eastsuit, essentially requiring the presence of a tailor with relevant materials
 //still weak against blunt
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast/outlaw
+	color = "#bbbbbb"
+
 /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 	name = "old dopo robe"
 	desc = "The scars on your body were once stories of strength and bravado."

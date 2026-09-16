@@ -629,4 +629,14 @@
 	detail_color = "#FFFFFF"
 	altdetail_color = "#9c2525"
 
-
+/obj/item/clothing/head/roguetown/roguehood/shalal/hijab/kazengunese
+	name = "kazengunese headwrap"
+	desc = "A cloth hood of Kazengunese origin, which fully conceals one's face. Painted black for the wearer to blend into the night."
+	item_state = "hijab"
+	icon_state = "deserthood"
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	max_integrity = 150
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
+	armor = ARMOR_HEAD_SWORDHUNTER
+	color = CLOTHING_BLACK

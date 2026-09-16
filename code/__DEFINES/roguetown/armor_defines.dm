@@ -125,6 +125,8 @@
 #define ARMOR_LEATHER_STUDDED list("blunt" = 80, "slash" = 80, "stab" = 60, "piercing" = 40, "fire" = 0, "acid" = 0) // Pseudo metallic armor therefore worse vs blunt and piercing
 //Reinforced hoods are an odd exception.
 #define ARMOR_REINFORCED_HOOD list("blunt" = 50, "slash" = 30, "stab" = 40, "piercing" = 40, "fire" = 0, "acid" = 0)
+//Yeah sword-hunter is unique
+#define ARMOR_HEAD_SWORDHUNTER list("blunt" = 70, "slash" = 70, "stab" = 50, "piercing" = 30, "fire" = 0, "acid" = 0)
 
 // BRIGANDINE — All brigandine parts. Better blunt and arrow padding than plate, but sword stabs and above will pen. Best light armor gets for melee. Medium/heavy classes should still wear maille under it!
 #define ARMOR_BRIGANDINE list("blunt" = 70, "slash" = 90, "stab" = 40, "piercing" = 70, "fire" = 0, "acid" = 0)
