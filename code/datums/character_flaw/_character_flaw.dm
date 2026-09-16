@@ -219,7 +219,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			return span_greentext("They reek of [scent_text].")
 		if("Pleasant")
 			return "<span style='color:#FFB6C1'>They smell of [scent_text].</span>"
-	return "<span style='color:#FFFFFF'>They smell of [scent_text].</span>"
+	return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
 
 /datum/charflaw/malodorous/proc/apply_visual_effect(mob/living/carbon/human/H)
 	switch(scent_type)
@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 					nearby.add_stress(/datum/stressevent/stinky_aura)
 			if("Neutral")
 				if(!nearby.has_stress_event(/datum/stressevent/prominent_scent))
-					to_chat(nearby, "<span class='warning' style='color:#ffffff'>There's a prominent scent in the air.</span>")
+					to_chat(nearby, "<span class='warning' style='color:#d8cf8a'>There's a prominent scent in the air.</span>")
 					nearby.add_stress(/datum/stressevent/prominent_scent)
 			if("Pleasant")
 				if(!nearby.has_stress_event(/datum/stressevent/pleasant_scent))
