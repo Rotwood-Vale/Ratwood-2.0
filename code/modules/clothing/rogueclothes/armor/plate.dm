@@ -715,7 +715,7 @@ and crackling with insidious energies."
 	icon_state = "bronzeplate"
 	item_state = "bronzeplate"
 	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE + 100
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL//shittier prot but good dura like the helms
 	armor_class = ARMOR_CLASS_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	smelt_bar_num = 3
@@ -744,7 +744,7 @@ and crackling with insidious energies."
 	icon_state = "bronzeplatealt"
 	item_state = "bronzeplatealt"
 	body_parts_covered = CHEST | VITALS | LEGS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
 
 //----------------- Citywatch Armor ---------------------
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
