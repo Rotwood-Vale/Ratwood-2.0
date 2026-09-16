@@ -7,6 +7,11 @@
 		return living_user.chastity_content_enabled
 	return !!(user?.client?.prefs?.chastenable)
 
+/// Returns TRUE if the wearer has "Private Chastity" active — their own device/messages/sounds
+/// should never be exposed to anyone but themselves, regardless of coverage or observer prefs.
+/proc/modular_chastity_private_active(mob/wearer)
+	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.private_chastity)
+
 /mob/proc/update_chastity_content_pref(chastity_pref)
 	var/mob/living/user = src
 	if(!istype(user))
