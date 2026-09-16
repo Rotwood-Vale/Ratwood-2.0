@@ -342,7 +342,7 @@
 			if(!E)
 				continue
 			for(var/obj/I in T)
-				if(I.anchored || !isturf(I.loc) || istype(I, /obj/item/roguecoin)|| istype(I, /obj/structure/handcart))
+				if(I.anchored || !isturf(I.loc) || istype(I, /obj/item/roguecoin)|| istype(I, /obj/structure/handcart)|| istype(I, /obj/item/storage/roguebag))
 					continue
 				if(isitem(I))
 					var/obj/item/IT = I
