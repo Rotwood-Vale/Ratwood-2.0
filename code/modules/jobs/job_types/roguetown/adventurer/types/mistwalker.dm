@@ -8,7 +8,7 @@
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_DODGEEXPERT, TRAIT_OUTLAW) //no armour, literally made to bleed
+	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_DODGEEXPERT, TRAIT_OVERTHERETIC) //no armour, literally made to bleed
 	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
