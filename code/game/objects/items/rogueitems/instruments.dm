@@ -748,9 +748,11 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	name = "harpsichord"
 	desc = "A marvel of artificed instruments. Its compact box of bronze and wood can be cradled in the arms and slung off the shoulders. The heavy turn-key on the back must be cranked to wind up its internal cogs in order to play the many keys."
 	icon_state = "harpsichord"
-	grid_width = 64
-	grid_height = 64
+	grid_width = 96
+	grid_height = 96
 	w_class = WEIGHT_CLASS_BULKY
+	twohands_required = TRUE
+	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_BACK_L
 	song_list = list("The Resurrected One" = 'sound/music/instruments/harpsichord (1).ogg',
 	"Forever Casted Away" = 'sound/music/instruments/harpsichord (2).ogg',
 	"Dark Pits of Ferentia" = 'sound/music/instruments/harpsichord (3).ogg',
@@ -758,6 +760,11 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Our World's Deluge" = 'sound/music/instruments/harpsichord (5).ogg',
 	"Walking Through Ruins" = 'sound/music/instruments/harpsichord (6).ogg',
 	"March of Life" = 'sound/music/instruments/harpsichord (7).ogg')
+
+/obj/item/rogue/instrument/harpsichord/mob_can_equip(mob/living/musician, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(slot == SLOT_BACK_L || slot == SLOT_BACK_R)
+		return musician.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return ..()
 
 /obj/item/rogue/instrument/harpsichord/equipped(mob/living/user, slot)
 	. = ..()

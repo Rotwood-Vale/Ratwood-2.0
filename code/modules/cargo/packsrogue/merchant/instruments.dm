@@ -92,7 +92,7 @@
 
 /datum/supply_pack/rogue/instruments/harpsichord
 	name = "Harpsichord"
-	cost = 90
+	cost = 120
 	contains = list(/obj/item/rogue/instrument/harpsichord)
 
 /datum/supply_pack/rogue/instruments/psyaxophone
