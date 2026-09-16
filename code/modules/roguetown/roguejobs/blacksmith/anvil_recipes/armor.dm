@@ -559,7 +559,6 @@
 /datum/anvil_recipe/armor/iron/duelist
 	name = "Duelist Goggles, Iron"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist
-	display_category = ITEM_CAT_ARMOR_MASKS
 	createditem_num = 2
 	display_category = ITEM_CAT_ARMOR_MASKS
 
@@ -1046,7 +1045,6 @@
 /datum/anvil_recipe/armor/steel/duelist
 	name = "Duelist Goggles, Steel"
 	created_item = /obj/item/clothing/mask/rogue/spectacles/duelist/steel
-	display_category = ITEM_CAT_ARMOR_MASKS
 	createditem_num = 2
 	display_category = ITEM_CAT_ARMOR_MASKS
 
