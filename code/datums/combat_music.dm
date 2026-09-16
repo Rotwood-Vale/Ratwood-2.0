@@ -388,7 +388,12 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Martyr"
 	musicpath = list('sound/music/combat_martyrsafe.ogg')
 
-// The two Martyr Vengeance combat tracks are intentionally left out of this. Look how they're used.
+/datum/combat_music/shadowbringer // Martyr Oath song
+	name = "Shadowbringer"
+	desc = ""
+	shortname = "Shadowbringer"
+	credits = "Shadowbringers · Masayoshi Soken · Michael-Christopher Koji Fox · Masayoshi Soken · Nobuo Uematsu · Masayoshi Soken"
+	musicpath = list('sound/music/combat_martyr.oggg')
 
 /datum/combat_music/magician
 	name = "Magicians, Court"
