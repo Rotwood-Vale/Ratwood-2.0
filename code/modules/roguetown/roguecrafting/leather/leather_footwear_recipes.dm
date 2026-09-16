@@ -1,6 +1,7 @@
 /datum/crafting_recipe/roguetown/leather/footwear
 	abstract_type = /datum/crafting_recipe/roguetown/leather/footwear
 	category = "Footwear"
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/footwear/shoes
 	name = "shoes"

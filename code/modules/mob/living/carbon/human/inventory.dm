@@ -394,7 +394,18 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly)
+	. = O.equip(src, visualsOnly)
+	if(!visualsOnly)
+		if(!client && !mind)
+			taints_loot = TRUE
+		if(taints_loot)
+			flag_worn_as_looted()
+
+/mob/living/carbon/human/proc/flag_worn_as_looted()
+	for(var/obj/item/I in get_equipped_items(TRUE) + held_items)
+		if(I.no_loot_taint)
+			continue
+		I.mark_as_looted()
 
 
 //delete all equipment without dropping anything
@@ -409,6 +420,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_back = get_item_by_slot(slot_id)
+	if(equipped_back?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_back, slot_id))
 		return
 	if(!equipped_back) // We also let you equip a backpack like this
@@ -445,6 +458,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	if(equipped_belt?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_belt, SLOT_BELT))
 		return
 	if(!equipped_belt) // We also let you equip a belt like this

@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/recall_targets(mob/recipient, window=1)
 	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
 	for(var/mob/living/carbon in GLOB.mob_living_list) // Iterate through all mobs in the world
-		if((carbon.real_name != recipient.real_name) && ((carbon.has_flaw(/datum/charflaw/assassintarget)) && (!istype(carbon, /mob/living/carbon/human/dummy))))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
+		if((carbon.real_name != recipient.real_name) && (HAS_TRAIT(carbon, TRAIT_ASSASSIN_TARGET)) && (!istype(carbon, /mob/living/carbon/human/dummy)))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
 			output += "<br>[carbon.real_name]"
 			output += "<br>[carbon.real_name]"
 			if (carbon.job)
@@ -1037,13 +1037,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
 							I.original_name = I.name // Store original name before renaming
-							I.name = custom_name
+							I.name = sanitize(custom_name)
 							// Log to game log
 							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
 						// Apply custom description if set
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
-							I.desc = custom_desc
+							I.desc = html_encode(custom_desc)
 
 						user.put_in_hands(I)
 
