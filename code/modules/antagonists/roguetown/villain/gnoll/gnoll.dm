@@ -209,12 +209,13 @@
 	attack_verb = list("claws", "mauls", "eviscerates")
 	animname = "chop"
 	hitsound = "genslash"
-	penfactor = 40//same as battleaxe chop
+	penfactor = 50//same as militia chop
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
-	damfactor = 1.4
-	swingdelay = 0.8 SECONDS
+	damfactor = 1.5
+	chargetime = 0.5
+	swingdelay = 0
 	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/mace/smash/werewolf/gnoll
@@ -227,13 +228,13 @@
 /datum/intent/simple/gnoll_cut
 	name = "cutting claw"
 	hitsound = "genslash"
-	penfactor = 20// on azure this is PEN_LIGHT. Crazy this had 60 penfactor for so so long
+	penfactor = 30
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "incut"
 	attack_verb = list("cuts", "slashes")
 	animname = "cut"
-	blade_class = BCLASS_CUT
+	blade_class = BCLASS_CHOP
 	item_d_type = "slash"
 
 /datum/intent/mace/strike/gnoll
