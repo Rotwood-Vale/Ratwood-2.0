@@ -139,7 +139,7 @@
 /datum/inqports/supplies/strongredbig
 	name = "3 Bottles of Strong Lifeblood"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/strongredbig
-	marquescost = 12
+	marquescost = 6
 	maximum = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/strongredbig/Initialize(mapload)
@@ -151,7 +151,7 @@
 /datum/inqports/supplies/strongred
 	name = "3 Vials of Strong Lifeblood"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/strongred
-	marquescost = 12
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/strongred/Initialize(mapload)
 	. = ..()
@@ -162,7 +162,7 @@
 /datum/inqports/supplies/lifeblood
 	name = "3 Bottles of Lifeblood"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/lifeblood
-	marquescost = 10
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/lifeblood/Initialize(mapload)
 	. = ..()
@@ -173,7 +173,7 @@
 /datum/inqports/supplies/manna
 	name = "3 Bottles of Manna"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/manna
-	marquescost = 8
+	marquescost = 4
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/manna/Initialize(mapload)
 	. = ..()
@@ -184,12 +184,12 @@
 /datum/inqports/supplies/flint
 	name = "1 Tool of Firestarting"
 	item_type = /obj/item/flint
-	marquescost = 2
+	marquescost = 1
 
 /datum/inqports/supplies/smokes
 	name = "3 Smokebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/smokes
-	marquescost = 4
+	marquescost = 2
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize(mapload)
 	. = ..()
@@ -200,7 +200,7 @@
 /datum/inqports/supplies/bottlebombs
 	name = "3 Bottlebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
-	marquescost = 6
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
 	. = ..()
@@ -211,7 +211,7 @@
 /datum/inqports/supplies/tnt
 	name = "3 Blastpowder Sticks"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/tnt
-	marquescost = 8
+	marquescost = 4
 	maximum = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/tnt/Initialize(mapload)
@@ -223,7 +223,7 @@
 /datum/inqports/supplies/tntsatchel
 	name = "1 Blastpowder Satchel"
 	item_type = /obj/item/satchel_bomb
-	marquescost = 12
+	marquescost = 6
 	maximum = 3
 
 // ✤ ARTICLES ✤ RIGHT HERE! THAT'S RIGHT!

@@ -299,7 +299,7 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic
 	name = "\"Providence\""
-	desc = "In the hands of Saint Augustere, this specially-hewn siegebow felled the traitorous Archbishop of Vespermill; \
+	desc = "In the hands of Saint Eleanor Vicquemare Leclerc, this specially-hewn siegebow felled the traitorous Archbishop of Vespermill; \
 	mere moments before the completion of a terrible ritual. Decades later, it has been called into action once more \
 	to destroy those who'd seek to sacrifice His greatest works. May thy aim be true, childe o' God - and thy judgement, unfettered."
 	minstr = 10 //X STR. Intended for use by the Inquisitor, or as a purchased alternative.

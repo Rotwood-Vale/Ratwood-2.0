@@ -991,6 +991,7 @@
 	name = "stake bolt"
 	damage = 50
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
 	speed = 0.5
 	poisontype = /datum/reagent/water/blessed
@@ -1029,6 +1030,7 @@
 	to load; may it be guidence from a higher power, or your wit upon the verge of breaking? </br>'God, please..'"
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/silver
 	icon_state = "silvheavybolt"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	max_integrity = 30
 	force = 12
 	is_silver = TRUE
@@ -1036,6 +1038,7 @@
 /obj/projectile/bullet/reusable/heavy_bolt/silver
 	name = "heavy silver bolt"
 	damage = 110
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	armor_penetration = 90
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver
 	icon_state = "silvheavybolt_proj"
@@ -1050,6 +1053,7 @@
 	curses from afar. </br>'Vampyres, gargoyles, necromancers, they're all the same - best when cooked well.'"
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/stake
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick)
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "heavystake"
 	max_integrity = 15
 	force = 20
@@ -1059,6 +1063,7 @@
 	damage = 60
 	armor_penetration = 80
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "heavystake_proj"
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	speed = 0.8
@@ -1072,6 +1077,7 @@
 	curses from afar.	</br>'Requiescat in pace..' - '..may thee rest in peace.'"
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/stake_silver
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick)
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "silvheavystake"
 	max_integrity = 15
 	force = 20
@@ -1082,6 +1088,7 @@
 	damage = 70 // In essence, a lesser version of the traditional silver siegebolts.
 	armor_penetration = 90
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake_silver
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "silvheavystake_proj"
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	speed = 0.6

@@ -48,7 +48,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Particularly Hefty Tome of Psydon" = /obj/item/book/rogue/bibble/psy/heavy
+		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble
 	)
 
 /datum/job/roguetown/puritan/arbiter/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
