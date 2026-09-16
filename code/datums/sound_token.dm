@@ -53,7 +53,8 @@
 	var/delete_on_end = FALSE
 	///Do we repeat the sound using sound.repeat?
 	var/repeating = FALSE
-	/// When TRUE, a listener whose SOUND_INSTRUMENTS pref is off hears silence from this token.
+	/// When TRUE, this token is priced by the listener's Instruments slider instead of Sound
+	/// Effects, so a slider at 0 is silence
 	var/respect_instrument_pref = FALSE
 	/// When TRUE, a listener with no line of sight to the source hears the sound muffled, the
 	/// continuous counterpart of playsound()'s SOUND_TRAVEL_CARRYING. Same floor only: cross-floor
@@ -234,9 +235,6 @@
 	// Polled instead of TG's TRAIT_DEAF signals; a deafness change lands on the next
 	// movement or periodic update, which matches how the old loop system behaved.
 	if(!listener_mob.can_hear())
-		should_be_muted = TRUE
-
-	if(respect_instrument_pref && !(listener_mob.client?.prefs?.toggles & SOUND_INSTRUMENTS))
 		should_be_muted = TRUE
 
 	// A non-repeating sound that has already finished must not restart for someone arriving

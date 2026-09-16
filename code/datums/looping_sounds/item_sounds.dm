@@ -56,9 +56,8 @@
 	// plain playsound path the volume would be fixed at the moment each loop started.
 	// Native repeat also closes the 3.2s silent gap the 320 mid_length left over the 288
 	// deciseconds of audio.
-	// Deliberately NOT respect_instrument_pref: the old client-side loop filter only covered
-	// instrument/musloop/dmusloop, and this relic drives stress and status effects, so
-	// silencing it through the music preference would hide a gameplay cue.
+	// Deliberately NOT respect_instrument_pref: this relic drives stress and status effects, so
+	// letting the Instruments slider price it would let a player silence a gameplay cue
 	use_sound_tokens = TRUE
 
 // Wall muffle only. The pref gate stays off, see above; a muffled cue is still a cue.

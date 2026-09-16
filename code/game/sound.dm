@@ -599,30 +599,15 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = prefs.at_overall(prefs.lobbymusicvol), channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
-/client/proc/sync_instrument_audio_toggle()
+/// Re-prices every instrument token this mob hears. Tokens are not channels the volume menu can
+/// re-send, so each one is poked to recompute its own volume for this listener
+/client/proc/sync_instrument_volume()
 	if(!prefs || !mob)
 		return
 
-	// Token-driven music re-checks its pref gate per listener; poking each token this mob
-	// listens to applies the new preference immediately, muted or unmuted.
 	for(var/datum/sound_token/token as anything in mob.sound_tokens)
 		if(token.respect_instrument_pref)
 			token.update_listener(mob)
-
-	// Legacy jukebox path (musician.dm) still plays raw channel sounds; keep filtering those.
-	var/instruments_enabled = !!(prefs.toggles & SOUND_INSTRUMENTS)
-	for(var/sound/S in SoundQuery())
-		if(!S)
-			continue
-
-		var/file_name = "[S.file]"
-		if(!(S.channel == CHANNEL_JUKEBOX || findtext(file_name, "sound/instruments/") || findtext(file_name, "sound/music/jukeboxes/") || findtext(file_name, "data/jukeboxuploads/")))
-			continue
-
-		if(instruments_enabled)
-			mob.unmute_sound(S)
-		else
-			mob.mute_sound(S)
 
 /proc/get_rand_frequency()
 	return rand(43100, 45100) //Frequency stuff only works with 45kbps oggs.

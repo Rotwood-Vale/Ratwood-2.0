@@ -2,11 +2,19 @@ import { useEffect, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { DragSlider } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { Box, Button, Section, Stack, Tabs, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+} from 'tgui-core/components';
 
 type Data = {
   master: number;
   effects: number;
+  instruments: number;
   music: number;
   combat: number;
   ambience: number;
@@ -79,6 +87,15 @@ export const VolumePowerMenu = () => {
   const [content, setContent] = useState<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(420);
   const muted = data.master === 0;
+  const effectivePointVolume =
+    ((data.master ?? 100) * (data.point_ambience_volume ?? 100)) / 100;
+  const lowPointVolume =
+    (data.point_ambience ?? true) && effectivePointVolume < 50;
+  const volumeNotice = muted
+    ? 'You have muted your game. Some loops may continue; use Stop Sounds or wait for them to end.'
+    : lowPointVolume
+      ? 'Effective Point Ambience volume is below 50%. Point ambience may not work as intended at this level.'
+      : null;
   useEffect(() => {
     if (!content) return;
     let cancelled = false;
@@ -104,10 +121,11 @@ export const VolumePowerMenu = () => {
       cancelled = true;
       cancelAnimationFrame(frame);
     };
-  }, [content, config.window.scale, config.window.theme, tab, muted]);
+  }, [content, config.window.scale, config.window.theme, tab, volumeNotice]);
   const {
     master,
     effects,
+    instruments,
     music,
     combat,
     ambience,
@@ -156,6 +174,12 @@ export const VolumePowerMenu = () => {
                   value={effects ?? 50}
                   id="effects"
                   hint="Sounds in the world: combat, footsteps, items, doors."
+                />
+                <VolumeRow
+                  label="Instruments"
+                  value={instruments ?? 50}
+                  id="instruments"
+                  hint="Bards, music boxes, and wax music devices."
                 />
                 <VolumeRow
                   label="Music"
@@ -209,12 +233,9 @@ export const VolumePowerMenu = () => {
               </Box>
             )}
           </Section>
-          {muted && (
+          {volumeNotice && (
             <Box textAlign="center">
-              <Box className="AudioSettings__muteNote">
-                You have muted your game. Some loops may continue; use Stop
-                Sounds or wait for them to end.
-              </Box>
+              <Box className="AudioSettings__muteNote">{volumeNotice}</Box>
             </Box>
           )}
         </div>

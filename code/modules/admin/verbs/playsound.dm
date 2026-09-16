@@ -92,11 +92,7 @@
 			prefs.mastervol = vol
 		if("instruments")
 			prefs.instrumentvol = vol
-			// Tokens are not channels the volume menu can re-send, so each one is poked to re-price
-			// this listener. The same path the Hear Instruments toggle uses
-			for(var/datum/sound_token/token as anything in mob?.sound_tokens)
-				if(token.respect_instrument_pref)
-					token.update_listener(mob)
+			sync_instrument_volume()
 		if("music")
 			prefs.musicvol = vol
 			mob?.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
@@ -161,9 +157,9 @@
 	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
-	// Sent the way round the player thinks about it, since the flags are stored inverted so that an
-	// existing savefile without them reads as on.
 	data["point_ambience_volume"] = isnum(owner.prefs.pointambiencevol) ? owner.prefs.pointambiencevol : initial(owner.prefs.pointambiencevol)
+	// Sent the way round the player thinks about it: these two are stored inverted so that an
+	// existing savefile without them reads as on
 	data["point_ambience"] = !(owner.prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
 	data["point_ambience_torch"] = !(owner.prefs.toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data
@@ -194,7 +190,7 @@
 		owner.prefs.toggles ^= flag
 		owner.prefs.save_preferences()
 		// Either direction, and it has to happen here: nothing else will service them again to stop
-		// what is playing, and a listener standing still would not pick a re-enabled category up.
+		// what is playing, and a listener standing still would not pick a re-enabled category up
 		SSpoint_ambience.listener_prefs_changed(owner)
 		SStgui.update_uis(src)
 		return TRUE
