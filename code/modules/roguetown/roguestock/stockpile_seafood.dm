@@ -19,6 +19,15 @@
 	stockpile_limit = 50
 	category = "Seafood"
 
+/datum/roguestock/stockpile/shellfish
+	name = "Shellfish Meat"
+	desc = "Prepared shellfish meat."
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
+	trade_good_id = TRADE_GOOD_SHELLFISH_MINCE
+	importexport_amt = 10
+	stockpile_limit = 30
+	category = "Seafood"
+
 /datum/roguestock/stockpile/dried_fish
 	name = "Dried Fish Filet"
 	desc = "Salt-cured fish, fit for the fleet's long voyages."

@@ -370,6 +370,15 @@
 /mob/proc/resolveAdjacentClick(atom/A,obj/item/W,params,used_hand)
 	if(!A)
 		return
+	if(isliving(src) && isobj(A))
+		var/obj/AM = A
+		if(!AM.anchored && W && used_intent?.type == INTENT_GRAB)
+			if(try_unarmed_grab_with_item(AM, used_intent.releasedrain))
+				return
+			return
+		if(!AM.anchored && W && used_intent?.type == INTENT_DISARM)
+			if(try_unarmed_push_with_item(AM))
+				return
 	if(W)
 		W.melee_attack_chain(src, A, params)
 		if(isliving(src))
@@ -394,6 +403,12 @@
 	if(invis_timer > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
+
+/mob/proc/try_unarmed_grab_with_item(atom/movable/AM, stamina_cost = 0)
+	return FALSE
+
+/mob/proc/try_unarmed_push_with_item(atom/movable/AM)
+	return FALSE
 
 //Branching path for Ranged clicks with or without items
 //DOES NOT ACTUALLY KNOW IF YOU'RE RANGED, DO NoT CALL ON IT'S OWN

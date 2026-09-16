@@ -113,6 +113,20 @@
 		/datum/crafting_recipe/roguetown/tallow,
 		)
 
+/obj/item/recipe_book/fishing
+	name = "Tides & Tackle: A Fisher's Handbook"
+	desc = "A practical guide to fishing craftwork: baits, hooks, lines, rods, nets, and cages."
+	icon_state = "book8_0"
+	base_icon_state = "book8"
+
+	types = list(
+		/datum/crafting_recipe/roguetown/fishing,
+		/datum/crafting_recipe/roguetown/survival/rod,
+		/datum/crafting_recipe/roguetown/survival/fishingcage,
+		/datum/brewing_recipe/chum,
+		/datum/brewing_recipe/fermentedcrab,
+	)
+
 // TBD - Cauldron Recipes
 /obj/item/recipe_book/alchemy
 	name = "Secrets of Alchemy"

@@ -8,7 +8,26 @@
 	obj_flags = CAN_BE_HIT
 	var/dead = TRUE
 	var/no_rarity_sprite = FALSE // Whether this fish has rarity based sprites. If not, don't change icon states
+	var/list/rarity_icon_states = null
 	var/sinkable = TRUE
+	var/fish_size_tag = "normal"
+	var/fish_size_scale = 1
+	var/fish_normal_size_scale = 1
+	var/default_slice_path = null
+	var/mob/hand_reel_user = null
+	var/turf/hand_reel_turf = null
+	var/hand_reel_until = 0
+	var/hand_reel_loot = null
+	var/static/list/hand_fishing_modlist = list(
+		"commonFishingMod" = 1,
+		"rareFishingMod" = 1,
+		"treasureFishingMod" = 1,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0,
+	)
+	var/static/list/hand_fishing_size_weights = list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1)
 	max_integrity = 50
 	sellprice = 10
 	dropshrink = 0.6
@@ -19,6 +38,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/fish
 	eat_effect = /datum/status_effect/debuff/uncookedfood
+	fishloot = list(/obj/item/reagent_containers/food/snacks/fish/carp = 2)
 	cooked_smell = /datum/pollutant/food/cooked_fish
 	possible_item_intents = list(/datum/intent/food, /datum/intent/mace/slap)
 	force = 8
@@ -40,24 +60,7 @@
 
 /obj/item/reagent_containers/food/snacks/fish/Initialize()
 	. = ..()
-	var/rarity = pickweight(list("gold" = 1, "ultra" = 40, "rare"= 50, "com"= 900))
-	if(!no_rarity_sprite)
-		icon_state = "[initial(icon_state)][rarity]"
-	switch(rarity)
-		if("gold")
-			sellprice = sellprice * 10
-			name = "legendary [initial(name)]"
-			rarity_rank = 3
-		if("ultra")
-			sellprice = sellprice * 4
-			name = "ultra-rare [initial(name)]"
-			rarity_rank = 2
-		if("rare")
-			sellprice = sellprice * 2
-			name = "rare [initial(name)]"
-			rarity_rank = 1
-		if("com")
-			name = "common [initial(name)]"
+	default_slice_path = initial(slice_path)
 	if(!dead)
 		START_PROCESSING(SSobj, src)
 
@@ -70,8 +73,177 @@
 	if(dead)
 		..()
 	else
+		var/fishing_skill = 0
+		var/perception_stat = 1
+		var/speed_stat = 1
+		var/mob/living/living_user = null
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			fishing_skill = H.get_skill_level(/datum/skill/labor/fishing)
+			perception_stat = max(1, H.STAPER)
+			speed_stat = max(1, H.STASPD)
+			living_user = H
+		else if(isliving(user))
+			living_user = user
+
+		if(!living_user)
+			return
+
+		if(!living_user.used_intent || (living_user.used_intent.type != ROD_CAST && living_user.used_intent.type != ROD_AUTO))
+			living_user.hand_fishing_mode = null
+			living_user.hand_fishing_mode_until = 0
+			living_user.hand_fishing_reel_turf = null
+			living_user.hand_fishing_reel_until = 0
+			living_user.hand_fishing_reel_loot = null
+			living_user.hand_fishing_reel_size_tag = null
+			to_chat(user, span_warning("I need cast or auto intent to hand-fish."))
+			return
+
+		if(living_user.used_intent)
+			if(living_user.used_intent.type == ROD_CAST || living_user.used_intent.type == ROD_AUTO)
+				living_user.hand_fishing_mode = living_user.used_intent.type
+
+		if(!living_user.hand_fishing_mode || world.time > living_user.hand_fishing_mode_until)
+			living_user.hand_fishing_mode = null
+			living_user.hand_fishing_mode_until = 0
+			to_chat(user, span_warning("I need to brace my opposite hand first before hand-fishing."))
+			return
+
+		if(living_user.hand_fishing_mode != ROD_CAST && living_user.hand_fishing_mode != ROD_AUTO)
+			living_user.hand_fishing_mode = null
+			living_user.hand_fishing_mode_until = 0
+			to_chat(user, span_warning("I need to enter a hand-fishing stance first."))
+			return
+
+		var/turf/src_turf = get_turf(src)
+		if(!src_turf || user.z != src_turf.z || get_dist(user, src_turf) > 1)
+			to_chat(user, span_warning("It's out of reach. I can only fish by hand in water close to me!"))
+			return
+		if(istype(src_turf, /turf/open/water/bath) || istype(src_turf, /turf/open/water/sewer))
+			to_chat(user, span_warning("I can't fish here..."))
+			return
+
+		if(hand_reel_user && QDELETED(hand_reel_user))
+			hand_reel_user = null
+			hand_reel_turf = null
+			hand_reel_until = 0
+			hand_reel_loot = null
+		if(hand_reel_user == user)
+			if(world.time > hand_reel_until || !hand_reel_turf)
+				hand_reel_user = null
+				hand_reel_turf = null
+				hand_reel_until = 0
+				hand_reel_loot = null
+				to_chat(user, span_warning("I lose the fish's trail."))
+				return
+			if(get_turf(src) != hand_reel_turf)
+				hand_reel_user = null
+				hand_reel_turf = null
+				hand_reel_until = 0
+				hand_reel_loot = null
+				to_chat(user, span_warning("It slips to another tile before I can haul it in!"))
+				return
+			if(user.z != hand_reel_turf.z || get_dist(user, hand_reel_turf) > 1)
+				to_chat(user, span_warning("I lose leverage. I need to stay within close proximity to reel by hand."))
+				hand_reel_user = null
+				hand_reel_turf = null
+				hand_reel_until = 0
+				hand_reel_loot = null
+				return
+			var/reel_time = max(4, 16 - round(fishing_skill * 0.5) - round(speed_stat * 0.25))
+			if(living_user.hand_fishing_mode == ROD_AUTO)
+				reel_time = max(3, reel_time - 2)
+			if(!do_after(user, reel_time, target = src))
+				return
+			var/reel_challenge = get_fishing_path_challenge(hand_reel_loot)
+			switch(src.fish_size_tag)
+				if("normal")
+					reel_challenge += 1
+				if("large")
+					reel_challenge += 2
+				if("huge")
+					reel_challenge += 4
+				if("prize")
+					reel_challenge += 6
+			var/reel_chance = clamp(10 + (fishing_skill * 4) + round(speed_stat * 1.5) - (reel_challenge * 6), 2, 75)
+			if(living_user.hand_fishing_mode == ROD_CAST)
+				reel_chance += 8
+			if(prob(reel_chance))
+				var/catch_path = hand_reel_loot
+				if(!catch_path)
+					catch_path = src.type
+				if(catch_path == src.type)
+					if(istype(src, /obj/item/reagent_containers/food/snacks/fish))
+						var/obj/item/reagent_containers/food/snacks/fish/F = src
+						apply_fishing_quality_to_fish(F, hand_fishing_modlist, hand_fishing_size_weights)
+					if(user.put_in_hands(src))
+						to_chat(user, span_notice("I reel [src] in by hand!"))
+					else
+						src.forceMove(user.drop_location())
+						to_chat(user, span_notice("I catch [src], but it slips to the ground."))
+				else if(catch_path in subtypesof(/mob/living))
+					var/mob/living/target_mob = new catch_path(get_turf(src))
+					target_mob.visible_message(span_danger("[target_mob] bursts out of the water!"), span_warning("You surge up from the dark waters!"))
+					QDEL_NULL(src)
+				else
+					var/obj/item/new_catch = new catch_path(user.drop_location())
+					if(istype(new_catch, /obj/item/reagent_containers/food/snacks/fish))
+						var/obj/item/reagent_containers/food/snacks/fish/F = new_catch
+						apply_fishing_quality_to_fish(F, hand_fishing_modlist, hand_fishing_size_weights)
+					if(user.put_in_hands(new_catch))
+						to_chat(user, span_notice("I reel [new_catch] in by hand!"))
+					else
+						new_catch.forceMove(user.drop_location())
+						to_chat(user, span_notice("I catch [new_catch], but it slips to the ground."))
+					QDEL_NULL(src)
+				if(living_user)
+					var/athletics_skill = max(living_user.get_skill_level(/datum/skill/misc/athletics), 0)
+					var/strength_bonus = max(0, living_user.STASTR - 10)
+					var/effective_percent = max(1, 25 - athletics_skill - strength_bonus)
+					var/stamina_drain = max(1, round((living_user.max_stamina * effective_percent) / 100, 1))
+					living_user.stamina_add(stamina_drain)
+				hand_reel_user = null
+				hand_reel_turf = null
+				hand_reel_until = 0
+				hand_reel_loot = null
+				living_user.hand_fishing_mode = null
+				living_user.hand_fishing_mode_until = 0
+				return
+			hand_reel_user = null
+			hand_reel_turf = null
+			hand_reel_until = 0
+			hand_reel_loot = null
+			living_user.hand_fishing_mode = null
+			living_user.hand_fishing_mode_until = 0
+			if(isturf(user.loc))
+				src.forceMove(user.loc)
+			apply_fishing_bite_injury(living_user, src)
+			to_chat(user, span_warning("Too slippery!"))
+			return
+
+		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
+		var/grab_time = max(6, 22 - fishing_skill - round(perception_stat * 0.5))
+		if(living_user.hand_fishing_mode == ROD_AUTO)
+			grab_time = max(5, grab_time - 2)
+		if(!do_after(user, grab_time, target = src))
+			return
+		var/spot_chance = clamp(4 + (fishing_skill * 5) + round(perception_stat * 1.5), 2, 75)
+		if(living_user.hand_fishing_mode == ROD_CAST)
+			spot_chance += 8
+		if(prob(spot_chance))
+			var/loot_path = getfishingloot(user, hand_fishing_modlist, src_turf)
+			if(!loot_path)
+				loot_path = src.type
+			hand_reel_user = user
+			hand_reel_turf = get_turf(src)
+			hand_reel_until = world.time + max(18, 30 + (fishing_skill * 4) + speed_stat)
+			hand_reel_loot = loot_path
+			to_chat(user, span_notice("I get a grip on [src]! Click the same tile again to reel it in."))
+			return
 		if(isturf(user.loc))
 			src.forceMove(user.loc)
+		living_user.hand_fishing_mode = null
+		living_user.hand_fishing_mode_until = 0
 		to_chat(user, span_warning("Too slippery!"))
 		return
 
@@ -96,6 +268,39 @@
 /obj/item/reagent_containers/food/snacks/fish/after_throw(datum/callback/callback)
 	. = ..()
 	sinkable = TRUE
+	update_transform()
+
+/obj/item/reagent_containers/food/snacks/fish/attackby(obj/item/W, mob/user, params)
+	if(fish_size_tag == "tiny")
+		slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/fish/proc/apply_fishing_size(size_tag)
+	fish_size_tag = size_tag || "normal"
+	fish_size_scale = get_fish_size_scale(fish_size_tag)
+	if(fish_size_tag == "normal")
+		fish_size_scale *= fish_normal_size_scale
+	if(fish_size_tag == "tiny")
+		slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish
+	else
+		slice_path = default_slice_path || initial(slice_path)
+	// Keep fish chop yield aligned with visual tiering.
+	if(fish_size_tag == "tiny" || fish_size_tag == "small")
+		slices_num = 1
+	else if(fish_size_tag == "huge" || fish_size_tag == "prize")
+		slices_num = 4
+	else
+		slices_num = initial(slices_num)
+	update_transform()
+
+/obj/item/reagent_containers/food/snacks/fish/update_transform()
+	..()
+	if(!fish_size_scale || fish_size_scale == 1)
+		transform = null
+		return
+	var/matrix/M = matrix()
+	M.Scale(fish_size_scale, fish_size_scale)
+	transform = M
 
 /obj/item/reagent_containers/food/snacks/fish/salmon
 	name = "salmon"
@@ -151,14 +356,16 @@
 	name = "carp"
 	desc = "A mudraking creacher of the river-depths, barely fit for food."
 	faretype = FARE_IMPOVERISHED
-	icon_state = "carp"
+	icon_state = "carpcom"
+	rarity_icon_states = list("com" = "carpcom", "rare" = "carprare", "ultra" = "carpultra", "gold" = "carpgold")
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 
 /obj/item/reagent_containers/food/snacks/fish/clownfish
 	name = "clownfish"
-	desc = "This fish brings vibrant hues to this dark world."
-	icon_state = "clownfish"
+	desc = "This fish brings vibrant hues to the dark world of the vale."
+	icon_state = "clownfishcom"
+	rarity_icon_states = list("com" = "clownfishcom", "rare" = "clownfishrare", "ultra" = "clownfishultra", "gold" = "clownfishgold")
 	faretype = FARE_NEUTRAL
 	sellprice = 40
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish
@@ -168,7 +375,8 @@
 	name = "anglerfish"
 	desc = "A menacing abyssal predator."
 	faretype = FARE_NEUTRAL
-	icon_state = "angler"
+	icon_state = "anglercom"
+	rarity_icon_states = list("com" = "anglercom", "rare" = "anglerrare", "ultra" = "anglerultra", "gold" = "anglergold")
 	sellprice = 15
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
@@ -176,11 +384,24 @@
 /obj/item/reagent_containers/food/snacks/fish/eel
 	name = "eel"
 	desc = "A sinuous eel that slithers through the dark waters."
-	icon_state = "eel"
+	icon_state = "eelcom"
+	rarity_icon_states = list("com" = "eelcom", "rare" = "eelrare", "ultra" = "eelultra", "gold" = "eelgold")
 	faretype = FARE_NEUTRAL
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/eel
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/eel
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/carp/rare
+	eat_effect = list(/datum/status_effect/buff/mealbuff, /datum/status_effect/buff/blessed)
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/clownfish/rare
+	eat_effect = list(/datum/status_effect/buff/mealbuff, /datum/status_effect/buff/blessed)
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/angler/rare
+	eat_effect = list(/datum/status_effect/buff/mealbuff, /datum/status_effect/buff/blessed)
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/eel/rare
+	eat_effect = list(/datum/status_effect/buff/mealbuff, /datum/status_effect/buff/blessed)
 
 /obj/item/reagent_containers/food/snacks/fish/sole
 	name = "sole"
@@ -224,6 +445,18 @@
 	faretype = FARE_IMPOVERISHED
 	no_rarity_sprite = TRUE
 	dropshrink = 0
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+
+/obj/item/reagent_containers/food/snacks/fish/octopus
+	name = "octopus"
+	desc = "A many-armed deepwater hunter. Its flesh is chewy but rich once cooked."
+	icon_state = "octopuscom"
+	faretype = FARE_NEUTRAL
+	rarity_icon_states = list("com" = "octopuscom", "rare" = "octopusrare", "ultra" = "octopusultra", "gold" = "octopusgold")
+	sellprice = 25
+	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
 
 /obj/item/reagent_containers/food/snacks/fish/creepy_squid/examine(mob/user)
 	. = ..()
@@ -356,6 +589,28 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/zizo_abberation
 	sellprice = 20
 
+/obj/item/reagent_containers/food/snacks/fish/zizo_abberation/attack_hand(mob/living/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	if(H.gloves)
+		return ..()
+	if(H.get_active_held_item() == src)
+		return ..()
+	var/hand_zone = (H.active_hand_index == 1) ? BODY_ZONE_PRECISE_L_HAND : BODY_ZONE_PRECISE_R_HAND
+	var/arm_zone = (hand_zone == BODY_ZONE_PRECISE_L_HAND) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	var/obj/item/bodypart/BP = H.get_bodypart(hand_zone)
+	if(!BP)
+		BP = H.get_bodypart(arm_zone)
+	if(!BP)
+		BP = H.get_bodypart(BODY_ZONE_CHEST)
+	playsound(get_turf(H), pick('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg'), 60, TRUE)
+	H.visible_message(span_danger("[H] recoils as [src] bites into [H.p_their()] hand!"), span_danger("[src] snaps at my hand and bites down!"))
+	H.apply_damage(rand(4, 8), BRUTE, BP)
+	if(prob(60))
+		BP.add_wound(/datum/wound/bite/small)
+	return TRUE
+	
 /obj/item/reagent_containers/food/snacks/fish/sturgeon
 	name = "sturgeon"
 	icon_state = "sturgeon"

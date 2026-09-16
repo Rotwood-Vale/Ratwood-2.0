@@ -1784,6 +1784,24 @@
 	stake = null
 	qdel(src)
 
+/obj/structure/ship_wheel
+	name = "ship's wheel"
+	desc = "A large wooden wheel, traditionally used to steer a ship's rudder."
+	icon = 'icons/obj/wheel.dmi'
+	icon_state = "wheel"
+
+/obj/structure/ship_wheel/north
+	dir = 1
+
+/obj/structure/ship_wheel/south
+	dir = 2
+
+/obj/structure/ship_wheel/east
+	dir = 4
+
+/obj/structure/ship_wheel/west
+	dir = 8
+	
 /obj/structure/fluff/statue/noc
 	name = "noc statue"
 	desc = "This statue is a depiction of Noc the Wise who guides those who seek a greater understanding of the arcane sciences."
