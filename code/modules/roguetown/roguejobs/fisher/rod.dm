@@ -1,6 +1,6 @@
 /obj/item/fishingrod
 	force = 12
-	possible_item_intents = list(ROD_AUTO, ROD_CAST, SPEAR_BASH)
+	possible_item_intents = list(ROD_CAST, ROD_AUTO, SPEAR_BASH)
 	name = "fishing rod"
 	desc = "Made from weathered wood and coarse twine. Use in hand to reel catches in, and right-click in your off-hand to manage rod attachments."
 	icon_state = "rod"
