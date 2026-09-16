@@ -13,14 +13,15 @@
 	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.private_chastity)
 
 /// Returns TRUE if the given organ slot (penis/vagina) on H is chastity-blocked and watcher is
-/// allowed to know about it — always visible to the wearer, gated by privacy/observer toggle for anyone else.
+/// allowed to know about it — always visible to the wearer (or a null watcher, e.g. self-preview
+/// screens), gated by privacy/observer toggle for anyone else.
 /proc/modular_chastity_genital_note_visible(mob/living/carbon/human/H, mob/watcher, organ_slot)
 	if(!istype(H) || !H.chastity_device || !H.sexcon)
 		return FALSE
 	var/blocked = (organ_slot == ORGAN_SLOT_VAGINA) ? H.sexcon.has_chastity_vagina() : H.sexcon.has_chastity_penis()
 	if(!blocked)
 		return FALSE
-	if(watcher == H)
+	if(!watcher || watcher == H)
 		return TRUE
 	if(modular_chastity_private_active(H))
 		return FALSE

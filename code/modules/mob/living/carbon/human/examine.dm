@@ -772,10 +772,11 @@
 	for(var/line in lines)
 		. += span_info(line)
 
-	// chastity status goes beneath the descriptor lines — gated on the wearer's privacy pref and the viewer's chastity content toggle.
-	if(chastity_device && ((user == src) || (!modular_chastity_private_active(src) && modular_chastity_observer_on(user))))
+	// chastity status goes beneath the descriptor lines — only when genitals aren't exposed (the genital descriptor line covers that case instead).
+	// Gated on the wearer's privacy pref and the viewer's chastity content toggle.
+	if(chastity_device && !get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && ((user == src) || (!modular_chastity_private_active(src) && modular_chastity_observer_on(user))))
 		var/chastity_name = get_examine_item_name_with_hover(user, chastity_device)
-		var/chastity_line = "[m1] secured in [chastity_name]."
+		var/chastity_line = "[t_He] [t_is] secured in [chastity_name]."
 		if(!user?.client?.prefs || user.client.prefs.descriptor_color)
 			chastity_line = "<span style='color:#ff66cc'>[chastity_line]</span>"
 		. += span_info(chastity_line)
