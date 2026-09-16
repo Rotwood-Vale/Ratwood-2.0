@@ -1,0 +1,4 @@
+author: "R3N0mon"
+delete-after: True
+changes:
+  - rscadd: "All Virtues that add the 'Resident' Trait will now spawn the player character in town if they would otherwise not do so."
