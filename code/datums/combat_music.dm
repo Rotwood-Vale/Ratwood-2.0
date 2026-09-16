@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	desc = ""
 	shortname = "Shadowbringer"
 	credits = "Shadowbringers · Masayoshi Soken · Michael-Christopher Koji Fox · Masayoshi Soken · Nobuo Uematsu · Masayoshi Soken"
-	musicpath = list('sound/music/combat_martyr.oggg')
+	musicpath = list('sound/music/combat_martyr.ogg')
 
 /datum/combat_music/magician
 	name = "Magicians, Court"
