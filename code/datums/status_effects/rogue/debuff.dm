@@ -163,6 +163,18 @@
 	desc = ""
 	icon_state = "bleed3"
 
+/datum/status_effect/debuff/heavy_instrument
+	id = "heavy_instrument"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/heavy_instrument
+	effectedstats = list(STATKEY_SPD = -2)
+	duration = -1
+	needs_processing = FALSE
+
+/atom/movable/screen/alert/status_effect/debuff/heavy_instrument
+	name = "Heavy Instrument"
+	desc = "This heavy instrument weighs me down as I hold it, making my steps slower."
+	icon_state = "muscles"
+
 /datum/status_effect/debuff/sleepytime
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytime

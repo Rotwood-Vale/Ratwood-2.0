@@ -759,6 +759,19 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Walking Through Ruins" = 'sound/music/instruments/harpsichord (6).ogg',
 	"March of Life" = 'sound/music/instruments/harpsichord (7).ogg')
 
+/obj/item/rogue/instrument/harpsichord/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_HANDS)
+		user.apply_status_effect(/datum/status_effect/debuff/heavy_instrument)
+		return
+	user.remove_status_effect(/datum/status_effect/debuff/heavy_instrument)
+
+/obj/item/rogue/instrument/harpsichord/dropped(mob/living/user, silent)
+	. = ..()
+	if(!user || (src in user.held_items))
+		return
+	user.remove_status_effect(/datum/status_effect/debuff/heavy_instrument)
+
 /obj/item/rogue/instrument/hurdygurdy
 	name = "hurdy-gurdy"
 	desc = "A knob-driven, wooden string instrument that reminds you of the oceans far."
