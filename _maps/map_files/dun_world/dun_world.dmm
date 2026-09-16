@@ -1827,6 +1827,10 @@
 /obj/structure/fluff/alch,
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/scarymaze)
+"aqX" = (
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church)
 "aqY" = (
 /obj/effect/decal/edge_corner{
 	color = "#3f3f3f";
@@ -9482,6 +9486,18 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/mountains)
+"bLl" = (
+/obj/structure/bed/rogue/inn/wool{
+	dir = 1
+	},
+/obj/item/bedsheet/rogue/wool{
+	dir = 1
+	},
+/obj/machinery/light/rogue/torchholder/r{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/church)
 "bLn" = (
 /turf/closed/mineral/random/rogue/high,
 /area/rogue/under/cave/his_vault)
@@ -16326,11 +16342,11 @@
 /turf/closed/wall/mineral/rogue/stone/moss/unbreakable,
 /area/rogue/under/cave/his_vault/three)
 "dbp" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	dir = 1
-	},
 /obj/structure/bars,
 /obj/structure/curtain/red,
+/obj/structure/roguewindow/openclose/reinforced{
+	opacity = 0
+	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church)
 "dbq" = (
@@ -16339,7 +16355,7 @@
 	lockid = "church";
 	name = "privy"
 	},
-/turf/closed/wall/mineral/rogue/decostone/long,
+/turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/church)
 "dby" = (
 /mob/living/carbon/human/species/goblin/npc/cave,
@@ -23106,11 +23122,12 @@
 	},
 /area/rogue/indoors/town/bath)
 "enz" = (
-/obj/structure/winch{
-	dir = 8;
-	name = "inner gate winch";
-	pixel_x = 7;
-	pixel_y = 3;
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/structure/lever{
+	pixel_x = -7;
+	pixel_y = 22;
 	redstone_id = "westgateinner"
 	},
 /turf/open/floor/rogue/cobble,
@@ -28522,6 +28539,11 @@
 /obj/item/clothing/head/roguetown/priesthat,
 /obj/item/clothing/cloak/stole/purple,
 /obj/item/clothing/cloak/stole,
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "priest"
+	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church/chapel)
 "flJ" = (
@@ -57321,6 +57343,10 @@
 	},
 /turf/open/floor/rogue/metal/barograte/open,
 /area/rogue/outdoors/mountains/decap/stepbelow)
+"kzL" = (
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/church,
+/area/rogue/indoors/town/church/chapel)
 "kzQ" = (
 /obj/structure/table/fine,
 /obj/structure/fluff/statue/small{
@@ -62215,13 +62241,6 @@
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/floor/rogue/grassyel,
 /area/rogue/indoors/cave)
-"lve" = (
-/obj/structure/bars/tough,
-/obj/structure/bars/passage/shutter{
-	redstone_id = "deepone_pen"
-	},
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/under/town/sewer)
 "lvh" = (
 /turf/closed/wall/mineral/rogue/tent{
 	dir = 8
@@ -72499,8 +72518,8 @@
 /turf/open/floor/rogue/tile,
 /area/rogue/under/town/sewer)
 "nln" = (
-/obj/structure/winch{
-	name = "East Gate";
+/obj/structure/lever/wall{
+	pixel_x = 14;
 	redstone_id = "eastgate"
 	},
 /turf/open/floor/rogue/cobble,
@@ -76411,6 +76430,12 @@
 /obj/structure/deadbody/greater_skeleton,
 /turf/open/floor/rogue/wood,
 /area/rogue/under/cave/dukecourt)
+"nWg" = (
+/obj/machinery/light/rogue/torchholder/r{
+	dir = 4
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church)
 "nWj" = (
 /obj/structure/ladder,
 /turf/open/floor/rogue/cobble/mossy,
@@ -83256,7 +83281,7 @@
 /obj/structure/bars/passage/shutter{
 	redstone_id = "deepone_pen"
 	},
-/turf/open/floor/rogue/cobble,
+/turf/open/floor/rogue/blocks,
 /area/rogue/under/town/sewer)
 "pja" = (
 /obj/structure/spider/stickyweb,
@@ -86541,6 +86566,15 @@
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/beach)
+"pNM" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/machinery/light/rogue/torchholder/r{
+	dir = 4
+	},
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/church)
 "pNX" = (
 /obj/structure/stairs/stone/cw{
 	dir = 1
@@ -89028,6 +89062,12 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/rtfield/eora)
+"qlX" = (
+/obj/structure/bed/rogue/inn/wool,
+/obj/item/bedsheet/rogue/wool,
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/town/church)
 "qlY" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch{
@@ -89501,6 +89541,13 @@
 	dir = 4
 	},
 /area/rogue/outdoors/mountains/decap/stepbelow)
+"qqf" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/rope/chain,
+/obj/item/rope/chain,
+/obj/machinery/light/rogue/torchholder/r,
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/church)
 "qqr" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cavewet/bogcaves)
@@ -94975,13 +95022,12 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
 "rrF" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	brokenstate = 1;
-	opacity = 0;
-	climbable = 1
-	},
 /obj/structure/bars,
 /obj/structure/curtain/red,
+/obj/structure/roguewindow/openclose/reinforced{
+	dir = 1;
+	opacity = 0
+	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church)
 "rrI" = (
@@ -120297,6 +120343,10 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/indoors)
+"vXr" = (
+/obj/machinery/light/rogue/candle/floorcandle,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/church)
 "vXu" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
@@ -127150,16 +127200,17 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/magician)
 "xks" = (
-/obj/structure/winch{
-	dir = 4;
-	name = "outer gate winch";
-	pixel_x = -8;
-	pixel_y = 3;
-	redstone_id = "westgateouter"
-	},
 /obj/effect/decal/cobbleedge{
 	dir = 10;
 	pixel_y = 6
+	},
+/obj/structure/table/wood{
+	icon_state = "tablewood1"
+	},
+/obj/structure/lever{
+	pixel_x = 7;
+	pixel_y = 22;
+	redstone_id = "westgateouter"
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/garrison)
@@ -197221,7 +197272,7 @@ oxx
 ndP
 ubr
 ylh
-lve
+piY
 jtd
 aMW
 aMW
@@ -197673,7 +197724,7 @@ oxx
 soM
 ylh
 ylh
-lve
+piY
 jtd
 oUt
 bMq
@@ -413850,7 +413901,7 @@ pve
 wpm
 gDA
 pGa
-gDA
+vXr
 bcM
 daW
 trD
@@ -414753,7 +414804,7 @@ xJb
 wnH
 kRS
 cfP
-bcM
+nWg
 gDA
 bcM
 tMt
@@ -415657,7 +415708,7 @@ eQu
 dCv
 eQQ
 cfP
-bcM
+aqX
 gDA
 bcM
 ecw
@@ -416562,7 +416613,7 @@ byj
 nHk
 gDA
 pGa
-gDA
+vXr
 bcM
 daW
 trD
@@ -526821,7 +526872,7 @@ iue
 iue
 iue
 pGa
-mQm
+bLl
 mQm
 bvO
 tWj
@@ -528177,7 +528228,7 @@ iue
 iue
 iue
 pGa
-sPQ
+qlX
 sPQ
 kII
 kke
@@ -529085,7 +529136,7 @@ iue
 iue
 pub
 pLr
-hNH
+bmu
 gzL
 pGa
 nvC
@@ -531797,7 +531848,7 @@ iue
 iue
 pGa
 uJB
-hNH
+hyT
 dLo
 pGa
 rcf
@@ -532698,7 +532749,7 @@ iue
 iue
 rZz
 ord
-fcc
+pNM
 ord
 fcc
 baq
@@ -534054,7 +534105,7 @@ iue
 iue
 rZz
 uUd
-fcc
+qqf
 uUd
 fcc
 baq
@@ -534517,10 +534568,10 @@ fch
 lsL
 chD
 pGa
-iPO
+kzL
 piM
 piM
-iPO
+kzL
 pGa
 lMh
 iiA
