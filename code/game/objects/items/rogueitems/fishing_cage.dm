@@ -269,4 +269,3 @@
 			. += span_notice("Baited with a [bait.name].")
 	else
 		. += span_warning("It has no bait inside.")
-	
