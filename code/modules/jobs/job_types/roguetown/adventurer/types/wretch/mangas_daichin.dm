@@ -63,5 +63,5 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		wretch_select_bounty(H)
 	)
+	wretch_select_bounty(H)

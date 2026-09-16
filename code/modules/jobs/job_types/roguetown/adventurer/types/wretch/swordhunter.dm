@@ -3,18 +3,18 @@
 	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matthios."
 	class_select_category = CLASS_CAT_WARRIOR
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS //TD?
+	allowed_races = NON_DWARVEN_RACE_TYPES
 	outfit = /datum/outfit/job/roguetown/wretch/swordhunter
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 
 	cmode_music = 'sound/music/combat_swordhunter.ogg'
 	subclass_languages = list(/datum/language/kazengunese)
 	traits_applied = list(TRAIT_DODGEEXPERT)
-	//Bad stats for a wretch, may need a buff 
 	subclass_stats = list(
 		STATKEY_SPD = 2,
-		STATKEY_INT = 1,
-		STATKEY_STR = 1
+		STATKEY_INT = 2,
+		STATKEY_STR = 1,
+		STATKEY_WIL = 1
 	)
 
 	subclass_skills = list(
