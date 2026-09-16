@@ -108,6 +108,59 @@ Balloon Alert / Floating Text defines
 #define RACES_OOZE \
 	/datum/species/ooze,\
 
+#define ALL_BUT_OOZE list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/dwarf/mountain,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/anthromorphsmall,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/kobold,\
+	/datum/species/goblinp,\
+	/datum/species/dullahan,\
+	/datum/species/lamia,\
+	/datum/species/dwarf/gnome,\
+	/datum/species/harpy,\
+	/datum/species/arachnid\
+)
+
+#define ALL_BUT_OOZE_DWARF list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/harpy,\
+	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
+	/datum/species/dullahan,\
+	/datum/species/lamia,\
+	/datum/species/arachnid,\
+)
+
 #define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Truely no restrictions
 
 #define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Allows all races except dallahun

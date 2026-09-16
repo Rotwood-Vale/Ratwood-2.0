@@ -5,7 +5,7 @@
 	name = "Eastern Warrior"
 	tutorial = "A warrior hailing from the distant land of Kazengun, far across the eastern sea."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = NON_DWARVEN_RACE_TYPES // Clothing has no dwarf sprites.
+	allowed_races = ALL_BUT_OOZE_DWARF // Clothing has no dwarf sprites.
 	outfit = /datum/outfit/job/roguetown/adventurer/kazengun
 	class_select_category = CLASS_CAT_NOMAD
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_NOPAINSTUN)

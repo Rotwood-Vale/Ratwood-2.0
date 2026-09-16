@@ -2,7 +2,7 @@
 	name = "Mistwalker" //works
 	tutorial = "Hailing from Kazengun you were once a sacred guardian, dedicating your lyfe to protecting your chosen shrine of the gods against brigands and fiends from beyond alike... now? Your sacred home has fallen, claimed by ruinous forces and you are banished to wander the realm. What will you find in your search for purpose?"
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_NO_CONSTRUCT 
+	allowed_races = ALL_BUT_OOZE 
 	allowed_patrons = ALL_PATRONS 
 	outfit = /datum/outfit/job/roguetown/wretch/mistwalker
 	subclass_languages = list(/datum/language/kazengunese)
@@ -14,7 +14,7 @@
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
 		STATKEY_STR = 2, 
-		STATKEY_CON = 1,
+		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
 	)
@@ -23,8 +23,9 @@
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, 
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //I once saw an ooze Mistwalker running rondel dagger and grapplefucking everyone
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
@@ -35,6 +36,8 @@
 	subclass_stashed_items = list(
 		"Sewing Kit" =  /obj/item/repair_kit, //I am sure you'll find a way to repair your bracers
 	)
+	extra_context = "This subclass gains addition stat points from weapon selection, and is race-limited from: Constructs and Ooze."
+	adv_stat_ceiling = list(STAT_STRENGTH = 14, STAT_CONSTITUTION = 15, STAT_WILLPOWER = 15) //stat stacking was being obscenely abused 
 
 /datum/advclass/wretch/mistwalker/check_requirements(mob/living/carbon/human/H)
 	if(!istype(H.client?.prefs?.origin, /datum/origin/kazengun))
