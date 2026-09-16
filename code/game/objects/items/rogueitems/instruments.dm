@@ -748,6 +748,9 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	name = "harpsichord"
 	desc = "A marvel of artificed instruments. Its compact box of bronze and wood can be cradled in the arms and slung off the shoulders. The heavy turn-key on the back must be cranked to wind up its internal cogs in order to play the many keys."
 	icon_state = "harpsichord"
+	grid_width = 64
+	grid_height = 64
+	w_class = WEIGHT_CLASS_BULKY
 	song_list = list("The Resurrected One" = 'sound/music/instruments/harpsichord (1).ogg',
 	"Forever Casted Away" = 'sound/music/instruments/harpsichord (2).ogg',
 	"Dark Pits of Ferentia" = 'sound/music/instruments/harpsichord (3).ogg',
