@@ -73,7 +73,7 @@
 			continue
 		if(human.advsetup || !human.class_equip_finished) // they haven't gotten their true class name yet
 			continue
-		if(human.has_flaw(/datum/charflaw/hunted))
+		if(HAS_TRAIT(human, TRAIT_GNOLL_HUNTED))
 			add_target_to_list(human, hunted_targets, name_counts)
 		else if(human.job in combat_roles)
 			add_target_to_list(human, combat_targets, name_counts)
@@ -217,7 +217,7 @@
 
 	// Determine Channel Time
 	var/channel_time = 15 SECONDS
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		channel_time = 6 SECONDS
 
 	to_chat(user, span_notice("You begin pulling [target] into graggar's plane"))

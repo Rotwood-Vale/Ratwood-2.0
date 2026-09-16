@@ -209,7 +209,7 @@
 		if(istype(L, /mob/living/carbon/human/dummy) || !L.mind)
 			continue
 
-		if(L.has_flaw(/datum/charflaw/hunted))
+		if(HAS_TRAIT(L, TRAIT_GNOLL_HUNTED))
 			hunted_targets += L
 		else if(L.job in combat_roles)
 			combat_targets += L
