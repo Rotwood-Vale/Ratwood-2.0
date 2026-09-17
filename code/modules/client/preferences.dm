@@ -169,18 +169,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			return "wildflowers and clean rain"
 	return "earth and sweat"
 
-/datum/preferences/proc/get_random_major_vice()
-	var/list/major_vices = list()
-	for(var/vice_name in GLOB.character_flaws)
-		var/vice_type = GLOB.character_flaws[vice_name]
-		var/datum/charflaw/vice = GLOB.charflaw_singletons[vice_type]
-		if(vice?.major)
-			major_vices += vice_type
-	if(length(major_vices))
-		var/picked_vice_type = pick(major_vices)
-		return new picked_vice_type()
-	return new /datum/charflaw/randflaw()
-
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
