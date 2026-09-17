@@ -360,6 +360,7 @@
 		add_overlay(pic2)
 
 /datum/crafting_recipe/roguetown/survival/hipshirtsplit
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "swap hipshirt to split-tone"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft/split)
 	reqs = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft = 1)

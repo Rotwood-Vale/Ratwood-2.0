@@ -249,6 +249,7 @@
 
 
 /datum/crafting_recipe/roguetown/sewing/lgambesonskirt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "light gambesoned kilt"
 	result = list(/obj/item/clothing/under/roguetown/skirt/gambeson/light)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -272,6 +273,7 @@
 	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/sewing/paddedcoif
+	display_category = ITEM_CAT_ARMOR_NECK
 	name = "padded coif"
 	result = list(/obj/item/clothing/neck/roguetown/coif/padded)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -339,6 +341,7 @@
 /* craftdif of 2+ */
 
 /datum/crafting_recipe/roguetown/sewing/clothpaddedgloves
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded gloves"
 	result = list(/obj/item/clothing/gloves/roguetown/cloth)
 	reqs = list(/obj/item/natural/cloth = 2,
@@ -696,6 +699,7 @@
 	sellprice = 20
 
 /datum/crafting_recipe/roguetown/sewing/gambesonskirt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "gambesoned kilt"
 	result = /obj/item/clothing/under/roguetown/skirt/gambeson
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -704,6 +708,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/larmingjacket
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "light arming jacket" //its a gambeson without leg cover
 	category = "Gambesons"
 	result = /obj/item/clothing/suit/roguetown/armor/gambeson/lord/light
@@ -796,6 +801,7 @@
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/sewing/hgambesonskirt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded gambesoned kilt"
 	result = list(/obj/item/clothing/under/roguetown/skirt/gambeson/heavy)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -803,6 +809,7 @@
 	craftdiff = 5
 
 /datum/crafting_recipe/roguetown/sewing/harmingjacket
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded arming jacket"
 	result = list(/obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy)
 	reqs = list(/obj/item/natural/cloth = 5,
@@ -824,6 +831,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/paddedchausses
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded chausses"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -832,6 +840,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/paddedchaussesalt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "padded chausses, alternate"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs)
 	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
@@ -841,6 +850,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/heavypaddedchausses
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "heavy padded chausses"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
 	reqs = list(/obj/item/natural/cloth = 6,
@@ -849,6 +859,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/heavypaddedchaussesalt
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "heavy padded chausses, alternate"
 	result = list(/obj/item/clothing/under/roguetown/tights/clothlegs/heavy)
 	reqs = list(/obj/item/clothing/under/roguetown/tights/hose = 1,
@@ -859,6 +870,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/heavypaddedgloves
+	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "heavy padded gloves"
 	result = list(/obj/item/clothing/gloves/roguetown/cloth/heavy)
 	reqs = list(/obj/item/natural/cloth = 4,
@@ -866,6 +878,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/sewing/paddedarmingcap
+	display_category = ITEM_CAT_ARMOR_HELMETS
 	name = "padded arming cap"
 	result = /obj/item/clothing/head/roguetown/paddedcap/heavy
 	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 5)
@@ -873,6 +886,7 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/heavypadded
+	display_category = ITEM_CAT_ARMOR_NECK
 	name = "heavy padded coif"
 	result = list(/obj/item/clothing/neck/roguetown/coif/heavypadding)
 	reqs = list(/obj/item/natural/cloth = 3,
