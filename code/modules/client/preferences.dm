@@ -3359,10 +3359,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
-			if(istype(new_vice, /datum/charflaw/malodorous))
-				var/datum/charflaw/malodorous/malodorous_vice = new_vice
-				malodorous_vice.scent_type = malodorous_type
-				malodorous_vice.scent = malodorous_scent
 			character.vices += new_vice
 			new_vice.on_mob_creation(character)
 			// Set first vice as the legacy charflaw for compatibility

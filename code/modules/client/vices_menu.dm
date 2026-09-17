@@ -1866,8 +1866,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				
 				for(var/vice_name in GLOB.character_flaws)
 					var/datum/charflaw/vice_type = GLOB.character_flaws[vice_name]
-					if(vice_type == /datum/charflaw/malodorous)
-						continue
 					
 					// Skip if already selected in another slot
 					var/datum/charflaw/current_vice = vars[slot_var]
