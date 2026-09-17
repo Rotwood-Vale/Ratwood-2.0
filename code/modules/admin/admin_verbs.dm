@@ -116,6 +116,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/colorasay,
 	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
+	/client/proc/toggledeathalarmsound,
 	/client/proc/respawn_character,
 	/client/proc/discord_id_manipulation, /* No Discord implementation? */
 	/datum/admins/proc/sleep_view,

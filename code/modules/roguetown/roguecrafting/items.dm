@@ -30,6 +30,14 @@
 	verbage = "sews"
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/survival/clothblindfold
+	name = "blindfold"
+	result = list(/obj/item/clothing/mask/rogue/blindfold)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+	verbage_simple = "tie"
+	verbage = "ties"
+
 /datum/crafting_recipe/roguetown/survival/clothbelt
 	name = "cloth belt"
 	result = /obj/item/storage/belt/rogue/leather/cloth
