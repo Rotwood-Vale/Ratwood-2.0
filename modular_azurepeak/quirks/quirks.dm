@@ -86,7 +86,7 @@
 /datum/quirk/redolent
 	name = "Redolent"
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
-	point_cost = 0
+	point_cost = 1
 	added_traits = list(TRAIT_REDOLENT)
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
