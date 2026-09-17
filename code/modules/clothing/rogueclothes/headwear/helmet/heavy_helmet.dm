@@ -15,7 +15,6 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ComponentInitialize()
 	..()
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_HONORBOUND)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bronze
