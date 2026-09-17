@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX	39
+#define SAVEFILE_VERSION_MAX 38
 
 // Safely extract a type path from datums or type values; returns null if unset/invalid.
 /proc/preferences_typepath_or_null(value)
@@ -79,8 +79,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 35)
 		patreon_say_color = "ff7a05"
 		patreon_say_color_enabled = FALSE
-	if(current_version < 39)
-		toggles |= SOUND_DEATH_ALARM
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
