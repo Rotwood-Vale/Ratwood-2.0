@@ -222,6 +222,11 @@
 	color = "#48443B"
 	nudist_approved = TRUE
 
+/obj/item/clothing/wrists/roguetown/bracers/cloth/gladiator
+	name = "padded wrappings"
+	desc = "Sheared burlap and cloth, meticulously fashioned around the forearms. Taut fibers turn weeping gashes into mere tears along the cloth. </br>"
+	color = "#BFB8A9"
+
 //Queensleeves
 /obj/item/clothing/wrists/roguetown/royalsleeves
 	name = "royal sleeves"
@@ -274,6 +279,19 @@
 
 /obj/item/clothing/wrists/roguetown/splintarms/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/wrists/roguetown/bracers/zizo
+	name = "avantyne bracers"
+	desc = "Clasped yet practical, these avantyne wristguards are reinforced for the rite without binding themselves to the wearer forever."
+	icon_state = "zizobracers"
+	item_state = "zizobracers"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	peel_threshold = 5
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
 /obj/item/clothing/wrists/roguetown/splintarms/iron
 	name = "splint bracers"

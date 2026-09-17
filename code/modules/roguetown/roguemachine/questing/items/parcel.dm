@@ -1,16 +1,17 @@
 /obj/item/parcel
 	name = "parcel wrapping paper"
-	desc = "A sturdy piece of paper used to wrap items for secure delivery. The final size of the parcel depends on the size of the original item."
+	desc = "A sturdy piece of paper used to wrap items for secure delivery. The final size of the parcel depends on the size of its contents."
 	icon = 'modular/Neu_Food/icons/cookware/ration.dmi'
 	icon_state = "ration_wrapper"
 	w_class = WEIGHT_CLASS_TINY
 	grid_height = 32
 	grid_width = 32
 	dropshrink = 0.6
-	var/obj/item/contained_item = null
+	/// Items contained in this parcel. Courier quests pack a single item, Recovery quests pack
+	/// 4-6. Released to the turf when an authorized recipient unwraps the seal.
+	var/list/obj/item/contained_items = list()
 	var/list/allowed_jobs = list()
 	var/delivery_area_type
-	var/datum/proximity_monitor/proximity_monitor
 
 /obj/item/parcel/Initialize(mapload)
 	. = ..()
@@ -23,7 +24,7 @@
 			RegisterSignal(courier_quest, COMSIG_QDELETING, PROC_REF(on_quest_component_deleted))
 
 	invisibility = INVISIBILITY_OBSERVER
-	proximity_monitor = new(src, 7)
+	proximity_monitor = new(src, 5)
 
 /obj/item/parcel/HasProximity(mob/nearby)
 	if(!istype(nearby))
@@ -37,8 +38,7 @@
 	if(!istype(quest))
 		return
 
-	var/obj/item/paper/scroll/quest/scroll = quest.quest_scroll_ref?.resolve()
-	if(!scroll || get_turf(scroll) != get_turf(nearby))
+	if(get_dist(get_turf(src), get_turf(quest.quest_scroll_ref?.resolve())) > 5)
 		return
 
 	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = get_turf(src), icon_state = "hidden", layer = 18)
@@ -55,11 +55,12 @@
 	var/static/list/area_jobs = list(
 		/area/rogue/indoors/town/tavern = list("Innkeeper", "Tapster", "Cook"),
 		/area/rogue/indoors/town/bath = list("Bathhouse Attendant", "Bathmaster"),
-		/area/rogue/indoors/town/church = list("Bishop", "Acolyte", "Templar", "Churchling", "Martyr"),
+		/area/rogue/indoors/town/church = list("Bishop", "Acolyte", "Templar", "Mortician", "Martyr"),
 		/area/rogue/indoors/town/dwarfin = list("Guildmaster", "Guildsman"),
 		/area/rogue/indoors/town/shop = list("Merchant", "Shophand"),
-		/area/rogue/indoors/town/manor = list("Councillor", "Seneschal", "Servant", "Hand", "Knight Captain", "Marshal", "Steward", "Clerk", "Grand Duke"),
+		/area/rogue/indoors/town/manor = list("Councillor", "Seneschal", "Servant", "Hand", "Knight", "Prince", "Marshal", "Steward", "Clerk", "Grand Duke"),
 		/area/rogue/indoors/town/magician = list("Court Magician", "Magicians Associate", "Archivist"),
+		/area/rogue/indoors/town/physician = list("Head Physician", "Apothecary"),
 		/area/rogue/indoors/town = list("Guild Handler")
 	)
 	return area_jobs[area_type] || list("Town Crier", "Steward", "Merchant")
@@ -69,13 +70,13 @@
 	return
 
 /obj/item/parcel/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/parcel) || I.w_class > WEIGHT_CLASS_BULKY || contained_item)
+	if(istype(I, /obj/item/parcel) || I.w_class > WEIGHT_CLASS_BULKY || length(contained_items))
 		to_chat(user, span_warning("You can't wrap this in [src]."))
 		return
 
 	if(do_after(user, 2 SECONDS, target = src))
 		user.transferItemToLoc(I, src)
-		contained_item = I
+		contained_items += I
 		name = "parcel ([I.name])"
 		desc = "A securely wrapped parcel containing [I.name]."
 		icon_state = I.w_class >= WEIGHT_CLASS_NORMAL ? "ration_large" : "ration_small"
@@ -85,7 +86,7 @@
 		to_chat(user, span_notice("You wrap [I] in the parcel wrapper."))
 
 /obj/item/parcel/attack_self(mob/user)
-	if(!contained_item)
+	if(!length(contained_items))
 		return
 
 	if(delivery_area_type)
@@ -94,13 +95,28 @@
 			to_chat(user, span_warning("This parcel is sealed for delivery to [initial(quest_area.name)] and can only be opened by: [english_list(allowed_jobs)]!"))
 			return FALSE
 
-	if(do_after(user, 2 SECONDS, target = src))
-		to_chat(user, span_notice("You unwrap [contained_item] from the parcel."))
-		playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-		user.put_in_hands(contained_item)
-		contained_item.update_icon()
-		contained_item = null
-		qdel(src)
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+
+	playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+	var/datum/component/quest_object/courier_component = GetComponent(/datum/component/quest_object/courier)
+	var/datum/quest/quest = courier_component?.quest_ref?.resolve()
+	if(length(contained_items) == 1)
+		var/obj/item/only = contained_items[1]
+		to_chat(user, span_notice("You unwrap [only] from the parcel."))
+		user.put_in_hands(only)
+		only.update_icon()
+	else
+		to_chat(user, span_notice("You unwrap [src] and tip out the contents."))
+		var/turf/drop_loc = get_turf(user)
+		for(var/obj/item/I as anything in contained_items)
+			I.forceMove(drop_loc)
+			I.update_icon()
+	if(quest && !quest.complete)
+		quest.progress_current++
+		quest.on_progress_update()
+	contained_items.Cut()
+	qdel(src)
 
 /obj/item/parcel/examine(mob/user)
 	. = ..()
@@ -115,3 +131,59 @@
 	. += (user.job in allowed_jobs) ? \
 		span_notice("As [user.job], you're authorized to open this.") : \
 		span_warning("It's sealed with an official guild mark - only authorized personnel should open this!")
+
+/obj/item/parcel/towner_caravan
+	var/datum/weakref/unlocked_by_owner_ref
+	var/owner_name = ""
+	var/sealed_noun = "strongbox"
+
+/obj/item/parcel/towner_caravan/Initialize(mapload)
+	. = ..()
+	invisibility = initial(invisibility)
+	QDEL_NULL(proximity_monitor)
+
+/obj/item/parcel/towner_caravan/attack_self(mob/user)
+	if(!length(contained_items))
+		return
+	var/mob/owner = unlocked_by_owner_ref?.resolve()
+	if(!owner)
+		to_chat(user, span_warning("The [sealed_noun]'s owner is no longer with us. It cannot be opened."))
+		return FALSE
+	if(owner != user)
+		to_chat(user, span_warning("This [sealed_noun] is magickally sealed to [owner_name]. Only they can open it."))
+		return FALSE
+	if(owner.stat == DEAD)
+		to_chat(user, span_warning("You cannot open it in this state."))
+		return FALSE
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
+	var/datum/component/quest_object/courier_component = GetComponent(/datum/component/quest_object/courier)
+	var/datum/quest/quest = courier_component?.quest_ref?.resolve()
+	if(length(contained_items) == 1)
+		var/obj/item/only = contained_items[1]
+		to_chat(user, span_notice("You unwrap [only] from the [sealed_noun]."))
+		user.put_in_hands(only)
+		only.update_icon()
+	else
+		to_chat(user, span_notice("You open the [sealed_noun] and tip out the contents."))
+		var/turf/drop_loc = get_turf(user)
+		for(var/obj/item/I as anything in contained_items)
+			I.forceMove(drop_loc)
+			I.update_icon()
+	if(quest && !quest.complete)
+		quest.progress_current++
+		quest.on_progress_update()
+	contained_items.Cut()
+	qdel(src)
+
+/obj/item/parcel/towner_caravan/examine(mob/user)
+	. = ..()
+	var/mob/owner = unlocked_by_owner_ref?.resolve()
+	if(!owner)
+		. += span_warning("The owner is no longer with us. This [sealed_noun] cannot be opened.")
+		return
+	if(owner == user)
+		. += span_notice("It is magickally sealed to you - you can open it yourself.")
+	else
+		. += span_warning("Magickally sealed to [owner_name]. Only they can open it.")

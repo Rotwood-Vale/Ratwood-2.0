@@ -67,6 +67,15 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_PART_ANUS (1<<2)
 #define SEX_PART_JAWS (1<<3)
 #define SEX_PART_SLIT_SHEATH (1<<4)
+#define SEX_PART_BREASTS (1<<5)
+#define SEX_PART_FOOT (1<<6) // any foot
+#define SEX_PART_FEET (1<<7) // BOTH feet
+#define SEX_PART_CHEST (1<<8) // distinct from SEX_PART_BREASTS, which checks for breasts as opposed to just the chest being exposed
+#define SEX_PART_BALLS (1<<9)
+#define SEX_PART_GROIN (1<<10) // requires groin exposed but no particular organ
+#define SEX_PART_TAIL (1<<11) // requires a tail we can use to penetrate with
+
+#define ALL_KNOTTABLE_SEX_PARTS (SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_JAWS | SEX_PART_SLIT_SHEATH)
 
 #define SEX_ACTION_INTIMATE_CHECK_NONE 0
 #define SEX_ACTION_INTIMATE_CHECK_USER (1<<0)
