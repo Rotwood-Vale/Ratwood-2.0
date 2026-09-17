@@ -500,6 +500,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	demolition_mod = 2
+	bigboy = TRUE
 
 /obj/item/rogueweapon/stoneaxe/battle/steppesman/chupa/getonmobprop(tag)
 	. = ..()
@@ -529,7 +530,6 @@
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	clickcd = 14
 	item_d_type = "slash"
-	bigboy = TRUE
 
 /datum/intent/axe/cut/battle/greataxe
 	reach = 2
