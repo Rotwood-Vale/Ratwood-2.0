@@ -1512,7 +1512,7 @@
 /obj/item/rogueweapon/greatsword/miaodao // SWORD HUNTER ONLY do not give it to any other class
 	name = "steel miaodao"
 	icon_state = "odachi"
-	desc = "An unusually long saber of Lingyunese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
+	desc = "An unusually long saber of Xiyinese origin. The lighter blade lends itself to one-handed use better than a zweihander, but maintaining edge alignment is tricky and requires experience."
 	force = 22
 	force_wielded = 27
 	minstr = 8

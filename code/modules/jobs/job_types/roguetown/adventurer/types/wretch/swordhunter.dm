@@ -1,6 +1,6 @@
 /datum/advclass/wretch/swordhunter
 	name = "Sword Hunter"
-	tutorial = "Hailing from Lingyue, yours is an unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matthios."
+	tutorial = "Hailing from Xinyi, yours is a unique art: You seek the swords of worthy foes and add them to your collection, all in worship of Matthios."
 	class_select_category = CLASS_CAT_WARRIOR
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = NON_DWARVEN_RACE_TYPES
