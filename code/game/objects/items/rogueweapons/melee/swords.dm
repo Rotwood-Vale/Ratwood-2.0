@@ -128,7 +128,7 @@
 	icon_state = "instabmaster"
 	desc = "Enter a long guard and thrust forward with your entire upper body while advancing, maximizing the effectiveness of the thrust."
 	attack_verb =  list("skillfully perforates", "artfully punctures", "deftly sticks")
-	damfactor = 1.15
+	damfactor = 1.35
 
 /datum/intent/effect/daze/longsword/clinch
 	name = "clinch & swipe"
@@ -158,7 +158,7 @@
 	penfactor = 80
 	clickcd = 12
 	swingdelay = 16
-	damfactor = 0.86
+	damfactor = 0.9
 	blade_class = BCLASS_HALFSWORD
 
 /datum/intent/sword/thrust/long/halfsword/lesser
@@ -244,7 +244,7 @@
 	damfactor = 1.2
 	clickcd = 10
 
-/datum/intent/sword/chop/sabre//falx chop but better, might slap a charge on this so it's like militia chop
+/datum/intent/sword/chop///falx chop but better, might slap a charge on this so it's like militia chop
 	damfactor = 1.15
 	penfactor = 40
 
@@ -1605,7 +1605,6 @@
 	clickcd = 12
 	recovery = 8
 	swingdelay = 3
-	parriable_intent = FALSE
 	dodgeable_intent = FALSE
 
 /obj/item/rogueweapon/sword/sabre/freifechter
@@ -1622,7 +1621,7 @@
 	max_blade_int = 275		//Similarly statted to the longswords
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	wbalance = WBALANCE_HEAVY
+	wbalance = WBALANCE_NORMAL
 
 /obj/item/rogueweapon/sword/sabre/freifechter/Initialize(mapload)
 	. = ..(mapload)
