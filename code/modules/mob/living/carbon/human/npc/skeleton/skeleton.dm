@@ -17,6 +17,7 @@
 	d_intent = INTENT_PARRY
 	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	cmode_music = 'sound/music/combat_weird.ogg'
+	pronouns = IT_ITS
 
 
 /mob/living/carbon/human/species/skeleton/npc

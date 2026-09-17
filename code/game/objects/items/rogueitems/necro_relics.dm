@@ -59,7 +59,7 @@
 		return FALSE
 
 	// Ask the Necromancer for a task for the skeleton BEFORE the timer
-	var/tasks = list("TOIL","FIGHT","GUARD","SEEK")
+	var/tasks = list("FIGHT","GUARD","HUNT","TOIL")
 	var/tasks_choice = input(user, "WHAT IS THY BIDDING?", "IN HER NAME") as anything in tasks
 	if(!tasks_choice)
 		to_chat(user, span_warning("You must assign a task for your skeleton!"))
@@ -107,10 +107,10 @@
 	active_skeletons += W
 
 	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
+	target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/skeleton_crystalseek)
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "FORTIFIED SKELETON"), 3 SECONDS)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
-	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 	target.faction |= list("[user.mind.current.real_name]_faction")
+	target.pronouns = IT_ITS
 
 	if(current_charges <= 0)
 		to_chat(user, span_notice("The crystal dims, its power spent."))
@@ -139,3 +139,55 @@
 			skele.death() // kill rather then delete
 	active_skeletons.Cut()
 	qdel(src)
+
+// the special spell skeletons summoned with above gets. Lets them locate the nearest necromantic crystal, likely their summoner.
+/obj/effect/proc_holder/spell/invoked/skeleton_crystalseek
+	name = "Seek Crystal"
+	desc = "Locate the nearest necromanctic crystal."
+	overlay_state = "ZIZO"
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	range = 2
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = list('modular_azurepeak/sound/mobs/abyssal/murderbeast.ogg')
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	recharge_time = 10 SECONDS
+	miracle = FALSE
+	devotion_cost = 0
+
+/obj/effect/proc_holder/spell/invoked/skeleton_crystalseek/cast(list/targets, mob/living/user)
+	if(!istype(user, /mob/living/carbon/human/species/skeleton))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/species/skeleton/skeleton = user
+	var/atom/closest_atom
+	var/closest_dist = INFINITY
+	
+	for(var/mob/player_mob in GLOB.player_list)
+		var/datum/mind/M = player_mob.mind
+		if(!M || !M.necro_crystals?.len)
+			continue
+	
+		for(var/datum/weakref/W in M.necro_crystals)
+			var/atom/C = W.resolve()
+			if(!C || QDELETED(C))
+				continue
+	
+			var/dist = get_dist(skeleton, C)
+			if(dist < closest_dist)
+				closest_dist = dist
+				closest_atom = C
+	
+	if(!closest_atom)
+		to_chat(skeleton, span_warning("You cannot sense any necromantic crystals."))
+		return FALSE
+	
+	to_chat(skeleton, span_warning("[closest_dist] meters away, [dir2text(get_dir(skeleton, closest_atom))]..."))
+	return TRUE
+
+
