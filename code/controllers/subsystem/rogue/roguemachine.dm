@@ -10,6 +10,12 @@ PROCESSING_SUBSYSTEM_DEF(roguemachine)
 	var/list/broadcaster_machines = list()
 	var/list/stock_machines = list()
 	var/list/noticeboards = list()
+	/// The primary mercenary talking statue (first one Initialize()d). See talkstatue_mercenary.dm.
+	var/obj/structure/roguemachine/talkstatue/mercenary/mercenary_statue
+	/// All mercenary talking statues, in case more than one is mapped in.
+	var/list/mercenary_statues = list()
+	/// The primary church talking statue (first one Initialize()d). See talkstatue.dm.
+	var/obj/structure/roguemachine/talkstatue/church/church_statue
 	var/hermailermaster
 	var/list/death_queue = list()
 	var/last_death_report

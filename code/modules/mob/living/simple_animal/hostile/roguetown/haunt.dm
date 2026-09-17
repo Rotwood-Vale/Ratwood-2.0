@@ -27,7 +27,6 @@
 	melee_damage_upper = 25
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
-	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_PARRY
 	speak_emote = list("growls")
@@ -39,7 +38,7 @@
 	faction = list("undead")
 	footstep_type = null
 	defprob = 50 //decently skilled
-	canparry = TRUE
+	mob_can_parry = TRUE
 	retreat_health = null
 	var/obj/structure/bonepile/slavepile
 
@@ -157,7 +156,7 @@
 	addtimer(CALLBACK(src, PROC_REF(createhaunt)), 4 SECONDS)
 
 /obj/structure/bonepile/Destroy()
-	soundloop.stop()
+	QDEL_NULL(soundloop)
 	spawning = FALSE
 	for(var/mob/living/simple_animal/hostile/rogue/haunt/ghost in haunts)
 		INVOKE_ASYNC(ghost, TYPE_PROC_REF(/mob/living/simple_animal/hostile/rogue/haunt, death))

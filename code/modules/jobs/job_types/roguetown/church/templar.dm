@@ -21,7 +21,7 @@
 	job_traits = list(TRAIT_RITUALIST, TRAIT_STEELHEARTED, TRAIT_HOLYWARRIOR)
 
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 	job_subclasses = list(
 		/datum/advclass/templar/crusader
 	)
@@ -136,7 +136,7 @@
 			cloak = /obj/item/clothing/cloak/templar/eoran
 		if(/datum/patron/divine/noc)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
+			head = snouthelm_pick(H, /obj/item/clothing/head/roguetown/helmet/heavy/nochelm, /obj/item/clothing/head/roguetown/helmet/heavy/nochelm/snouted)
 			cloak = /obj/item/clothing/cloak/tabard/crusader/noc
 		if(/datum/patron/divine/ravox)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox

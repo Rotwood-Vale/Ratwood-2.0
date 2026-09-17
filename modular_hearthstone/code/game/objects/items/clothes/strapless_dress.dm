@@ -26,7 +26,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/random/Initialize(mapload)
 	color = pick(CLOTHING_BLACK, CLOTHING_BLUE, "#664357", "#6F0000")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/shirt/dress/gen/strapless/alt
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'

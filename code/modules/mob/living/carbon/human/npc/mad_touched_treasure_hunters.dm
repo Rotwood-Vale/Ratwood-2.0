@@ -8,7 +8,7 @@
 	mode = AI_IDLE
 	faction = list("viking", "station")
 	ambushable = FALSE
-	dodgetime = 15
+	dodgetime = 1.5 SECONDS
 	flee_in_pain = FALSE
 	possible_rmb_intents = list()
 

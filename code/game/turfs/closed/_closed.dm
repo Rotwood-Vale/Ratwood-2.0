@@ -1,11 +1,11 @@
 /turf/closed
+	abstract_type = /turf/closed
 	name = ""
 	layer = CLOSED_TURF_LAYER
 	plane = WALL_PLANE
 	opacity = 1
 	density = TRUE
 	blocks_air = TRUE
-	baseturfs = list(/turf/open/floor/rogue/naturalstone, /turf/open/transparent/openspace)
 	plane = WALL_PLANE
 	var/above_floor
 	var/wallpress = TRUE
@@ -399,6 +399,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	baseturfs = /turf/closed/indestructible
 
 /turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
@@ -416,6 +417,7 @@
 	icon_state = ""
 	layer = FLY_LAYER
 	bullet_bounce_sound = null
+	baseturfs = /turf/closed/indestructible/splashscreen
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -437,3 +439,4 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
+	baseturfs = /turf/closed/indestructible/riveted

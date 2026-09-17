@@ -192,16 +192,22 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/heir/aristocrat/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
+	wrists = /obj/item/storage/keyring/heir
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/keyring/heir
+	beltl = /obj/item/rogueweapon/huntingknife/scissors/steel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/ring/signet
+	backpack_contents = list(
+		/obj/item/needle,
+		/obj/item/natural/bundle/fibers,
+	)
 	if(should_wear_masc_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/prince
@@ -251,15 +257,18 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/heir/inbred/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/circlet
+	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
+	wrists = /obj/item/storage/keyring/heir
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/keyring/heir
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
+	beltr = /obj/item/rogueweapon/scabbard/sheath/noble
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/ring/decrepit
 	backpack_contents = list(
@@ -336,6 +345,7 @@
 	head = /obj/item/clothing/head/roguetown/circlet
 	mask = /obj/item/clothing/head/roguetown/roguehood/black
 	neck = /obj/item/storage/keyring/heir
+	wrists = /obj/item/lockpickring/mundane
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/quiver/sling/iron
 	beltr = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
@@ -366,7 +376,9 @@
 			head = /obj/item/clothing/head/roguetown/circlet
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
-		/obj/item/lockpickring/mundane = 1)
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
+	)
 
 
 

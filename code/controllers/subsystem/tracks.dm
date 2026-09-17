@@ -21,6 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(tracks)
 	pool_max_size = 1000
 	tracks_recycled = 0
 	tracks_created = 0 
+	return ..()
 
 /datum/controller/subsystem/processing/tracks/stat_entry()
 	if(processing)

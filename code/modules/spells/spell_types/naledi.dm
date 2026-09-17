@@ -190,6 +190,12 @@
 	var/sunderfirestacks = 0
 	var/blood = 0
 	var/list/datum/wound/snapshot_wounds
+	var/static/list/purged_effects = list(
+	/datum/status_effect/incapacitating/immobilized,
+	/datum/status_effect/incapacitating/paralyzed,
+	/datum/status_effect/incapacitating/stun,
+	/datum/status_effect/incapacitating/knockdown,)
+	var/position = FALSE
 	miracle = TRUE
 	devotion_cost = 70
 
@@ -244,6 +250,7 @@
 		divinefirestacks = divine_status?.stacks
 		// Snapshot current wounds so we can remove new ones on revert
 		snapshot_wounds = target.get_wounds()
+		position = target.resting
 
 		to_chat(target, span_warning("I feel a part of me was left behind..."))
 		play_indicator(target,'icons/mob/overhead_effects.dmi', "timestop", 100, OBJ_LAYER)
@@ -287,6 +294,9 @@
 			wound.bodypart_owner.remove_wound(wound)
 		else
 			target.simple_remove_wound(wound)
+	for(var/effect in purged_effects)
+		target.remove_status_effect(effect)
+	target.set_resting(position, TRUE)
 
 	playsound(target.loc, 'sound/magic/timereverse.ogg', 100, FALSE)
 

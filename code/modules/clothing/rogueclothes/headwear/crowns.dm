@@ -4,11 +4,13 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 
 /obj/item/clothing/head/roguetown/crown/fakecrown
+	no_loot_taint = TRUE
 	name = "fake crown"
 	desc = "You shouldn't be seeing this."
 	icon_state = "serpcrown"
 
 /obj/item/clothing/head/roguetown/crown/surplus
+	no_loot_taint = TRUE
 	name = "crown"
 	icon_state = "serpcrowno"
 	sellprice = 100
@@ -16,6 +18,7 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/byos
+	no_loot_taint = TRUE
 	name = "ancient crown"
 	desc = "ooga chacka..."
 	color = "#ffe6db"
@@ -25,6 +28,7 @@
 	dropshrink = null
 
 /obj/item/clothing/head/roguetown/crown/sparrowcrown
+	no_loot_taint = TRUE
 	name = "champion's circlet"
 	desc = ""
 	icon_state = "sparrowcrown"
@@ -34,6 +38,7 @@
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/nyle
+	no_loot_taint = TRUE
 	name = "jewel of nyle"
 	icon_state = "nile"
 	body_parts_covered = null
@@ -51,6 +56,7 @@
 	sellprice = 100
 
 /obj/item/clothing/head/roguetown/circlet
+	no_loot_taint = TRUE
 	name = "golden circlet"
 	icon_state = "circlet"
 	item_state = "circlet"

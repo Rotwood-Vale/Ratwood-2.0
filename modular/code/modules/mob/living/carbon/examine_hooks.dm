@@ -1,11 +1,17 @@
 /mob/living/carbon/proc/carbon_modular_examine_extension(mob/user, t_He, m1, m2, m3)
 	var/list/lines = list()
+	var/ssd_text = get_ssd_examine_text(m3)
+	if(ssd_text)
+		lines += ssd_text
 	if(sexcon?.has_chastity_cage() && get_location_accessible(src, BODY_ZONE_PRECISE_GROIN))
 		lines += "[t_He] is wearing a chastity device!\n"
 	return lines
 
 /mob/living/carbon/human/proc/human_modular_examine_extension(mob/user, observer_privilege, m1, m2, m3)
 	var/list/lines = list()
+	var/ssd_text = get_ssd_examine_text(m3)
+	if(ssd_text)
+		lines += ssd_text
 	var/user_is_gnoll = FALSE
 	var/user_is_clergy = FALSE
 	var/user_is_inquisition = FALSE
@@ -27,7 +33,7 @@
 
 	return lines
 
-/mob/living/carbon/human/proc/human_modular_chastity_toy_examine_line(mob/user, m2, m3)
+/mob/living/carbon/human/proc/human_chastity_toy_examine_line(mob/user, m2, m3)
 	if(!chastity_device?.attached_toy)
 		return null
 	var/perception_level = 15

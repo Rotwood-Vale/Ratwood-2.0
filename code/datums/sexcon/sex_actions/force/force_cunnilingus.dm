@@ -5,34 +5,6 @@
 	user_sex_part = SEX_PART_CUNT
 	target_sex_part = SEX_PART_JAWS
 
-/datum/sex_action/force_cunnilingus/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		if(isdullahan(user))
-			var/datum/species/dullahan/dullahan = user.dna.species
-			if(dullahan.headless && !user.is_holding(dullahan.my_head))
-				return FALSE
-		else
-			return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/force_cunnilingus/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		if(isdullahan(user))
-			var/datum/species/dullahan/dullahan = user.dna.species
-			if(dullahan.headless && !user.is_holding(dullahan.my_head))
-				return FALSE
-		else
-			return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	return TRUE
-
 /datum/sex_action/force_cunnilingus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] forces [target]'s head against [user.p_their()] cunt!"))
 

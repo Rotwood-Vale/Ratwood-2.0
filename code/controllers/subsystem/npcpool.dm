@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(npcpool)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
 
-		if(!SA || SA.ckey || SA.notransform || SA.stat == DEAD)
+		if(QDELETED(SA) || SA.ckey || SA.notransform || SA.stat == DEAD)
 			continue
 		SA.handle_automated_action()
 		if(SA.stat != DEAD)

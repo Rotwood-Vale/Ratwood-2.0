@@ -36,10 +36,10 @@
 	icon_state = "volticgauntlets"
 	slot_flags = ITEM_SLOT_GLOVES
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
-	var/cdtime = 1.5 MINUTES
+	var/cdtime = 30 SECONDS
 	var/activetime = 5 SECONDS
 	sellprice = 100
-	var/delay = 5 SECONDS
+	var/delay = 3 SECONDS
 	var/sprite_changes = 10
 	var/datum/beam/current_beam = null
 	var/active = FALSE
@@ -103,7 +103,7 @@
 
 	var/list/mob/living/valid_targets = list()
 	// Find targets in range
-	for (var/mob/living/carbon/C in view(2, user))
+	for (var/mob/living/carbon/C in view(4, user))
 		if (C.anti_magic_check())
 			visible_message(span_warning("The lightning fizzles harmlessly against [C]!"))
 			playsound(get_turf(C), 'sound/magic/magic_nulled.ogg', 100)
@@ -132,7 +132,7 @@
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
 			else
-				C.Immobilize(0.5 SECONDS)
+				C.Immobilize(3 SECONDS)
 				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
 				C.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)

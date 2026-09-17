@@ -64,7 +64,6 @@
 	boobed = TRUE
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
-	sellprice = 1
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'

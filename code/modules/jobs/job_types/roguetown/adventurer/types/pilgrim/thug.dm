@@ -1,4 +1,5 @@
 /datum/advclass/thug
+	townie_contract_gate_exempt = TRUE
 	name = "Thug"
 	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers, being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering. You might've had some run-ins with the law for petty crimes here and there, but you're tolerated enough to have a home here."
 	allowed_sexes = list(MALE, FEMALE)

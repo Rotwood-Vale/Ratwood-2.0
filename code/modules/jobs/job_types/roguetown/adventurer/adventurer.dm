@@ -4,6 +4,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration, 40 SECONDS)
 GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 
 /datum/job/roguetown/adventurer
+	townie_contract_gate_exempt = TRUE
 	title = "Adventurer"
 	flag = ADVENTURER
 	department_flag = WANDERERS
@@ -71,6 +72,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 		/datum/advclass/foreigner/aavnik,
 		/datum/advclass/foreigner/bluthund,
 		/datum/advclass/foreigner/underdweller,
+		/datum/advclass/foreigner/bronzeclad,
 	)
 
 /mob/living/carbon/human/proc/adv_hugboxing_start()

@@ -518,9 +518,8 @@
 	var/writers_name
 	var/faction
 
-/obj/item/paper/scroll/sell_price_changes/New(loc, list/prices, faction_name)
+/obj/item/paper/scroll/sell_price_changes/Initialize(mapload, list/prices, faction_name)
 	. = ..()
-
 	faction = faction_name
 	if(!faction)
 		faction = pick("Heartfelt", "Hammerhold", "Grenzelhoft", "Kingsfield")		//add more as time goes, idk
@@ -528,7 +527,7 @@
 	sell_prices = prices
 	if(!length(sell_prices))
 		sell_prices = generated_test_data()
-	writers_name = pick( world.file2list("strings/rt/names/human/humnorm.txt") )
+	writers_name = random_human_name(MALE, TRUE)
 	rebuild_info()
 
 /obj/item/paper/scroll/sell_price_changes/update_icon_state()
@@ -546,7 +545,7 @@
 	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>Purchasing Prices</h2>"
 	info += "<hr/>"
 
-	if(sell_prices.len)
+	if(LAZYLEN(sell_prices))
 		info += "<ul>"
 		for(var/atom/type_path as anything in sell_prices)
 			var/list/prices = sell_prices[type_path]

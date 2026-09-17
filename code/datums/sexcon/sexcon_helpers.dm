@@ -151,10 +151,6 @@
 	volume_layer *= speed // speed is always between 1-5 (SEX_SPEED_MIN-SEX_SPEED_MAX)
 	playsound(target, pick('sound/misc/mat/saliva (1).ogg','sound/misc/mat/saliva (2).ogg','sound/misc/mat/saliva (3).ogg'), volume_layer, TRUE, -2, ignore_walls = FALSE)
 
-/datum/sex_controller/proc/chastitycourse_noise(mob/living/carbon/human/action_target) // for actions that involve moving a chastity device. Chance increases with force and speed.
-	modular_chastitycourse_noise(action_target)
-	return
-
 /datum/sex_controller/proc/try_do_pain_scream(mob/living/carbon/human/action_target, pain_amt) // for spiked chastity and other high-pain actions, try to make the target scream in pain. Chance increases with pain amount and action force.
 	if(!action_target || QDELETED(action_target))
 		return

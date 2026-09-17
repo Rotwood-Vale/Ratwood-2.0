@@ -123,7 +123,11 @@
 #define INIT_ORDER_DUNGEON			49
 #define INIT_ORDER_NETWORKS			45
 #define INIT_ORDER_SPATIAL_GRID     43
-#define INIT_ORDER_ECONOMY			40
+// AP runs economy at -2 so roundstart_blockades() fires after SSatoms (30) and SSquestpool
+// (default) have registered the quest landmarks its per-region checks need; the ES port's 40
+// ran it before any landmark existed, so no roundstart blockade could ever roll.
+// SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
+#define INIT_ORDER_ECONOMY			-2
 #define INIT_ORDER_OUTPUTS			35
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_TREES			29
@@ -142,6 +146,9 @@
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_OUTDOOR_EFFECTS  -21
 #define INIT_ORDER_SHUTTLE			-22
+// AP parity: must init AFTER SSmerchant (INIT_ORDER_SHUTTLE, -22) — the day-1 trade ship pool
+// rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
+#define INIT_ORDER_MERCHANT_TRADE	-23
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60

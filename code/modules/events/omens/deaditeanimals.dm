@@ -16,6 +16,10 @@ GLOBAL_LIST_INIT(deadite_animal_migration_points, list())
 	if(!order)
 		order = 1
 
+/obj/effect/landmark/events/deadite_animal_migration_point/Destroy(mapload)
+	GLOB.deadite_animal_migration_points -= src
+	. = ..()
+
 /proc/cmp_deadite_migration_point_asc(obj/effect/landmark/events/deadite_animal_migration_point/A, obj/effect/landmark/events/deadite_animal_migration_point/B)
 	return A.order - B.order
 

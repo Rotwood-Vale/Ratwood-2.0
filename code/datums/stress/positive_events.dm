@@ -243,6 +243,10 @@
 	desc = span_green("Their face is a work of art!")
 	timer = 2 MINUTES
 
+/datum/stressevent/pretty
+	desc = span_green("Their face is certainly easy on the eyes.")
+	timer = 1 MINUTES
+
 /datum/stressevent/night_owl
 	stressadd = -3
 	desc = span_green("The night is so relaxing and peaceful.")

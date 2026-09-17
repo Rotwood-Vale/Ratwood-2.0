@@ -1,4 +1,5 @@
 /datum/job/roguetown/mercenary
+	townie_contract_gate_exempt = TRUE
 	title = "Mercenary"
 	flag = WANDERERS
 	department_flag = WANDERERS

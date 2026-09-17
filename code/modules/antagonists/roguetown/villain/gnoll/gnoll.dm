@@ -123,7 +123,7 @@
 /datum/antagonist/gnoll/proc/get_tracked_target_source(mob/living/target)
 	if(!target)
 		return null
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return "Hunted flaw"
 	if(target.job in get_gnoll_tracking_combat_roles())
 		return "Combat fallback"
@@ -132,7 +132,7 @@
 /datum/antagonist/gnoll/proc/is_examine_marked_target(mob/living/target)
 	if(!target)
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return TRUE
 	if(get_tracked_target() != target)
 		return FALSE
@@ -209,8 +209,6 @@
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 20
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
@@ -227,8 +225,6 @@
 	name = "cutting claw"
 	hitsound = "genslash"
 	penfactor = 60
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "incut"
@@ -242,3 +238,9 @@
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")
+
+
+/obj/item/storage/backpack/rogue/satchel/gnoll 
+	name = "stained satchel"
+	desc = "A fetid sack fashioned into a storage accessory. Whatever's put there inevitably comes out twice the bloody."
+	mob_overlay_icon = null

@@ -3,7 +3,7 @@
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/indoors/lich_start/lich_lair)
 "ai" = (
-/obj/item/rogueweapon/sickle/aalloy,
+/obj/item/rogueweapon/sickle/decrepit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/lich_start/lich_lair)
 "av" = (
@@ -37,11 +37,11 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/lich_start/lich_lair)
 "cr" = (
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
-/obj/item/clothing/under/roguetown/platelegs/aalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
+/obj/item/clothing/under/roguetown/platelegs/ancient/decrepit,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "cv" = (
@@ -50,7 +50,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "cB" = (
-/obj/item/kitchen/fork/aalloy,
+/obj/item/kitchen/fork/decrepit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "cO" = (
@@ -99,7 +99,7 @@
 	},
 /area/rogue/indoors/lich_start/lich_lair)
 "ex" = (
-/obj/item/kitchen/spoon/aalloy{
+/obj/item/kitchen/spoon/decrepit{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -130,7 +130,7 @@
 	},
 /area/rogue/indoors/lich_start/lich_lair)
 "eX" = (
-/obj/item/kitchen/spoon/aalloy,
+/obj/item/kitchen/spoon/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "fn" = (
@@ -160,9 +160,9 @@
 	dir = 4
 	},
 /obj/structure/closet/crate/chest/gold,
-/obj/item/roguecoin/aalloy/pile,
-/obj/item/roguecoin/aalloy/pile,
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
+/obj/item/roguecoin/gilbranze/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "gp" = (
@@ -176,7 +176,7 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/lich_start/lich_lair)
 "ho" = (
-/obj/item/kitchen/spoon/aalloy,
+/obj/item/kitchen/spoon/decrepit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "it" = (
@@ -258,10 +258,10 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/lich_start/lich_lair)
 "mZ" = (
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
-/obj/item/clothing/under/roguetown/platelegs/aalloy,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
+/obj/item/clothing/under/roguetown/platelegs/ancient/decrepit,
 /obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
@@ -292,7 +292,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/lich_start/lich_lair)
 "pj" = (
-/obj/item/kitchen/fork/aalloy,
+/obj/item/kitchen/fork/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "pC" = (
@@ -323,7 +323,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/lich_start/lich_lair)
 "qa" = (
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/lich_start/lich_lair)
 "qr" = (
@@ -351,7 +351,7 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "rb" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/cooking/platter/aalloy,
+/obj/item/cooking/platter/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "ro" = (
@@ -375,7 +375,7 @@
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 1
 	},
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/lich_start/lich_lair)
 "sd" = (
@@ -414,11 +414,11 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "uk" = (
-/obj/item/clothing/neck/roguetown/gorget/aalloy,
-/obj/item/clothing/head/roguetown/helmet/heavy/guard/aalloy,
-/obj/item/clothing/gloves/roguetown/plate/aalloy,
-/obj/item/clothing/under/roguetown/platelegs/aalloy,
-/obj/item/clothing/suit/roguetown/armor/plate/aalloy,
+/obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit,
+/obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit,
+/obj/item/clothing/gloves/roguetown/plate/ancient/decrepit,
+/obj/item/clothing/under/roguetown/platelegs/ancient/decrepit,
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/lich_start/lich_lair)
 "un" = (
@@ -556,7 +556,7 @@
 /obj/effect/decal/cleanable/dirt/cobweb{
 	dir = 8
 	},
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/lich_start/lich_lair)
 "yI" = (
@@ -645,11 +645,11 @@
 /area/rogue/indoors/lich_start)
 "BB" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/reagent_containers/glass/cup/aalloygob{
+/obj/item/reagent_containers/glass/cup/decrepitgob{
 	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/indoors/lich_start)
 "BF" = (
@@ -746,7 +746,7 @@
 /obj/item/storage/belt/rogue/leather/black,
 /obj/item/storage/belt/rogue/leather/plaquegold,
 /obj/item/storage/belt/rogue/leather,
-/obj/item/clothing/mask/rogue/facemask/steel/paalloy,
+/obj/item/clothing/mask/rogue/facemask/ancient/decrepit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "Ge" = (
@@ -791,8 +791,8 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "Iz" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/cooking/platter/aalloy,
-/obj/item/reagent_containers/glass/cup/aalloymug{
+/obj/item/cooking/platter/decrepit,
+/obj/item/reagent_containers/glass/cup/decrepitmug{
 	pixel_x = 2;
 	pixel_y = 10
 	},
@@ -842,7 +842,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/lich_start/lich_lair)
 "Kq" = (
-/obj/item/cooking/pan/aalloy,
+/obj/item/cooking/pan/decrepit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/lich_start/lich_lair)
 "KA" = (
@@ -874,9 +874,9 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "Lg" = (
 /obj/structure/closet/crate/chest/gold,
-/obj/item/roguecoin/aalloy/pile,
-/obj/item/roguecoin/aalloy/pile,
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
+/obj/item/roguecoin/gilbranze/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "LN" = (
@@ -957,7 +957,7 @@
 /turf/closed/wall/mineral/rogue/stone/red_moss,
 /area/rogue/indoors/lich_start/lich_lair)
 "Pn" = (
-/obj/item/rogueweapon/pick/aalloy,
+/obj/item/rogueweapon/pick/decrepit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/lich_start/lich_lair)
 "Pt" = (
@@ -1006,7 +1006,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "QL" = (
-/obj/item/roguestatue/aalloy,
+/obj/item/roguestatue/decrepit,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "Rh" = (
@@ -1042,7 +1042,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/lich_start/lich_lair)
 "SF" = (
-/obj/item/rogueweapon/shovel/aalloy,
+/obj/item/rogueweapon/shovel/decrepit,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/lich_start)
 "SM" = (
@@ -1114,7 +1114,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "Vz" = (
-/obj/item/kitchen/fork/aalloy{
+/obj/item/kitchen/fork/decrepit{
 	pixel_x = -7;
 	pixel_y = -3
 	},
@@ -1140,7 +1140,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/lich_start/lich_lair)
 "Wg" = (
-/obj/item/clothing/shoes/roguetown/sandals/aalloy,
+/obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
 "Wx" = (
@@ -1162,8 +1162,8 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "WI" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/cooking/platter/aalloy,
-/obj/item/reagent_containers/glass/cup/aalloymug{
+/obj/item/cooking/platter/decrepit,
+/obj/item/reagent_containers/glass/cup/decrepitmug{
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -1245,7 +1245,7 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "YP" = (
 /obj/structure/table/vtable/v2,
-/obj/item/reagent_containers/glass/cup/aalloygob{
+/obj/item/reagent_containers/glass/cup/decrepitgob{
 	pixel_x = -8;
 	pixel_y = 6
 	},
@@ -1283,7 +1283,7 @@
 /area/rogue/indoors/lich_start/lich_lair)
 "ZV" = (
 /obj/structure/table/wood/map/three,
-/obj/item/roguecoin/aalloy/pile,
+/obj/item/roguecoin/gilbranze/pile,
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/lich_start/lich_lair)
 

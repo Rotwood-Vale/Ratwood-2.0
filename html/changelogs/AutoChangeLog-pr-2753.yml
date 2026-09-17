@@ -1,0 +1,6 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Nerfed thespian crit resistance, replacing it with bleed resistance. Gladitor loadout for thespian is now the only loadout that gets crit resistance."
+  - balance: "Bronze heavy armor integ buffed to be on par with steel."
+  - code_imp: "bleed rate math adjusted so that bleed resistance 0.5x reduction takes priority over crit resistance 0.8x."

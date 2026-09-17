@@ -3,6 +3,10 @@
 	stop_automated_movement_when_pulled = TRUE
 	use_lazy_target_scan = FALSE
 
+/mob/living/simple_animal/hostile/retaliate/Destroy()
+	enemies = null
+	return ..()
+	
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.used_intent.type == INTENT_HELP)
@@ -16,15 +20,15 @@
 	var/aggressive = 0
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
-	if(!(AIStatus == NPC_AI_OFF))
-		if(aggressive)
-			return ..()
-		else
-			if(!enemies.len)
-				return list()
-			var/list/see = ..()
-			see &= enemies // Remove all entries that aren't in enemies
-			return see
+	if(AIStatus == NPC_AI_OFF)
+		return list()
+	if(aggressive)
+		return ..()
+	if(!LAZYLEN(enemies))
+		return list()
+	var/list/see = ..()
+	see &= enemies // Remove all entries that aren't in enemies
+	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/DismemberBody(mob/living/L)
 	//Lets keep track of this to see if we start getting wounded while eating.

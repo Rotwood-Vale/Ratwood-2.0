@@ -1,27 +1,8 @@
 /datum/sex_action/tailjob
 	name = "Jerk them off with tail"
 	check_same_tile = FALSE
+	user_sex_part = SEX_PART_TAIL
 	target_sex_part = SEX_PART_COCK
-
-/datum/sex_action/tailjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_TAIL) && !islamia(user))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/tailjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_TAIL) && !islamia(user))
-		return FALSE
-	return TRUE
 
 /datum/sex_action/tailjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] slides their tail around [target]'s cock..."))

@@ -20,6 +20,7 @@
 	nodismemsleeves = TRUE
 	sleevetype = null
 	sleeved = null
+	fiber_salvage = TRUE
 
 /obj/item/clothing/head/roguetown/desert_sorceress
 	name = "desert sorceress hood"

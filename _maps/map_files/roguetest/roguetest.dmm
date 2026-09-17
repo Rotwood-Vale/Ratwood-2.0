@@ -1005,7 +1005,7 @@
 /obj/item/natural/stone,
 /obj/item/natural/stone,
 /obj/item/natural/stone,
-/obj/item/rogueweapon/chisel/assembly/hammer,
+/obj/item/rogueweapon/chisel/assembly,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "BS" = (

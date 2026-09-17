@@ -14,7 +14,6 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy = 1,
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat = 1,
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket = 1,
-		/obj/item/clothing/suit/roguetown/armor/leather/trophyfur = 1,
 		/obj/item/clothing/suit/roguetown/armor/silkcoat = 1,
 		/obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/half/copper = 1,
@@ -326,12 +325,13 @@
 	lootcount = 1
 	loot = list(
 		/obj/item/clothing/suit/roguetown/armor/plate/half/elven = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/elven_plate/light = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/elven_plate = 1,
-		/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots = 1,
+		/obj/item/clothing/shoes/roguetown/boots/elven_boots = 1,
 		/obj/item/clothing/gloves/roguetown/elven_gloves = 1,
 		/obj/item/rogueweapon/sword/sabre/elf = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/elvish = 1,
-		/obj/item/clothing/head/roguetown/helmet/sallet/elven = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light = 1,
 		/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm = 1,
 		/obj/item/clothing/head/roguetown/helmet/elvenbarbute = 1,
 		/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged = 1,
@@ -511,7 +511,7 @@
 		/obj/item/clothing/suit/roguetown/armor/plate/baotha = 10,
 		/obj/item/clothing/under/roguetown/platelegs/baotha = 10,
 		/obj/item/clothing/wrists/roguetown/bracers/baotha = 10,
-		/obj/item/rogueweapon/whip/spiderwhip/baotha = 10,
+		/obj/item/rogueweapon/whip/baotha = 10,
 		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha

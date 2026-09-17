@@ -8,7 +8,7 @@
 	greet_text = "The esteemed EA-Hasir owns your gold company, Promising only the finest quality gold in grimoria\
 	You've been sent with your caravan to sell golden riches and wonders- at a high price."
 
-/datum/advclass/merchant
+/datum/advclass/merchantEA
 	name = "EA Hasir-ian Merchant"
 	tutorial = "You were born into wealth, learning from before you could talk about the basics of mathematics. \
 	Counting coins is a simple pleasure for any person, but you've made it an art form. \

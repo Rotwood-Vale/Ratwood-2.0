@@ -26,7 +26,7 @@
 	always_show_on_latechoices = TRUE
 	job_reopens_slots_on_death = FALSE
 	same_job_respawn_delay = 1 MINUTES
-	virtue_restrictions = list(/datum/virtue/utility/noble) //Are you for real?
+	quirk_restrictions = list(/datum/quirk/noble) //Are you for real?
 	job_subclasses = list(
 		/datum/advclass/gnoll/berserker,
 		/datum/advclass/gnoll/knight,
@@ -43,6 +43,7 @@
 			var/datum/antagonist/new_antag = new /datum/antagonist/gnoll()
 			H.mind.add_antag_datum(new_antag)
 			H.verbs |= /mob/living/carbon/human/proc/gnoll_inspect_skin
+			H.verbs |= /mob/living/carbon/human/proc/gnoll_view_tracked_char
 
 
 /mob/living/carbon/human/proc/apply_gnoll_preferences(initial_setup = TRUE)
@@ -199,3 +200,27 @@
 		return
 	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/GA = skin_armor
 	GA.Topic(null, list("inspect" = "1"), src)
+
+/mob/living/carbon/human/proc/gnoll_view_tracked_char()
+	set name = "Remember Your Prey"
+	set category = "Gnoll"
+	set desc = "View your Track target's flavortext panel."
+	var/datum/antagonist/gnoll/gnoll_antag = mind?.has_antag_datum(/datum/antagonist/gnoll)
+	if(!gnoll_antag)
+		to_chat(src, span_warning(pick("What?", "Huh?", "How?")))
+		return
+	var/datum/weakref/tracked_target_ref = gnoll_antag.tracked_target_ref
+	if(!tracked_target_ref)
+		to_chat(src, span_warning("I can't remember anything. Did I forget to track my prey?"))
+		return
+	var/mob/living/carbon/human/tracked_target = tracked_target_ref.resolve()
+	if(!istype(tracked_target))
+		to_chat(src, span_warning("My prey is gone..."))
+		return
+
+	to_chat(src, span_warning("I recall my mark with blessed foreknowledge..."))
+	var/datum/examine_panel/mob_examine_panel = new(src)
+	mob_examine_panel.holder = tracked_target
+	mob_examine_panel.viewing = src
+	mob_examine_panel.ui_interact(src)
+

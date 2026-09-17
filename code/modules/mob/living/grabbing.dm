@@ -691,8 +691,8 @@
 	unarmed = TRUE
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	no_attack = TRUE
 	misscost = 2
 	releasedrain = 2

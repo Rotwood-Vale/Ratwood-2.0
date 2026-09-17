@@ -19,10 +19,10 @@
 		STATKEY_SPD = -3, //Slow as molasses. Weighted stat total of +8 without "The Path of Might", +17 with it.
 	)
 	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_MASTER, //Master of Avantyne Longsword
+		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //Master if any of the sword options picked
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, // MASTER if billhook picked
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT, //Can side-spec into maces, but not desirable.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -32,7 +32,9 @@
 		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	) //No Swimming because skeletons in water is bad.
-
+	subclass_stashed_items = list(
+		"Armor Plates" =  /obj/item/repair_kit/metal,
+	)
 /datum/outfit/job/roguetown/wretch/ancientchampion
 	has_loadout = TRUE
 
@@ -44,20 +46,11 @@
 		H.set_patron(/datum/patron/inhumen/zizo) //Your entire purpose.
 		H.adjust_blindness(-3)
 		H.mind.add_antag_datum(new /datum/antagonist/skeleton())
-	neck = /obj/item/clothing/neck/roguetown/bevor
 	mask = /obj/item/flowercrown/rosa //Worn by Her champions. Bring death to bring forth new life.
 	cloak = /obj/item/clothing/cloak/half
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy //We don't want to get bodyshot to death by archers
-	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
-	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	belt = /obj/item/storage/belt/rogue/leather/black
 	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
-	backr = /obj/item/rogueweapon/shield/tower/metal
 	backl = /obj/item/storage/backpack/rogue/satchel
-	r_hand = /obj/item/rogueweapon/sword/long/zizo
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
@@ -80,13 +73,66 @@
 	H.energy = H.max_energy //Just in case.
 	REMOVE_TRAIT(H, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
 	to_chat(H, span_danger("You are an ancient warrior risen from death, not a comedic skeleton. Be menacing and play with gravitas rather than humour."))
-	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
 	switch(helmet_choice)
 		if("BARBUTE - VISORED")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 		if("FROGMOUTH - NECK PROTECTION")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
+		if("BASCINET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
+		if("VOLF-FACE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo
+
+	var/armors = list("HEAVY ARMOR", "MEDIUM ARMOR")
+	var/armors_choice = input(H, "Choose your ARMOR.", "PROTECTION FROM THE LADY") as anything in armors
+	switch(armors_choice)
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/medium/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/medium/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)")
+	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
+	switch(weapons_choice)
+		if("Absolutio - (greatsword)")
+			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+		if("Vindicatio - (longsword)")
+			r_hand = /obj/item/rogueweapon/sword/long/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+		if("Damnatio - (rapier)")
+			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+		if("Perditio - (kriegmesser)")
+			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+		if("Messis - (billhook)")
+			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Devotio - (arming sword)")
+			r_hand = /obj/item/rogueweapon/sword/arming/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)	
 
 /datum/outfit/job/roguetown/wretch/ancientchampion/choose_loadout(mob/living/carbon/human/H)
 	if(H.mind)
@@ -116,8 +162,10 @@
 /obj/effect/proc_holder/spell/invoked/bonemend
 	name = "Bone Mend"
 	desc = "Mend the chosen target's bones with a burst of necrotic magick. Requires standing still for a few seconds"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	cost = 3
-	overlay_state = "rituos"
+	overlay_state = "bonemend"
 	releasedrain = 50
 	chargetime = 5 SECONDS // Make in combat usage harder
 	range = 2

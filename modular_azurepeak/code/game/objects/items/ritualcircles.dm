@@ -711,7 +711,7 @@
 
 /obj/structure/active_abyssor_rune/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/spawn_spire), spawn_time)
+	addtimer(CALLBACK(src, PROC_REF(spawn_spire)), spawn_time)
 	src.visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
 
 /obj/structure/active_abyssor_rune/proc/spawn_spire()
@@ -970,7 +970,15 @@
 		return COMPONENT_INCOMPATIBLE
 
 	linked_spire = spire
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(linked_spire, COMSIG_QDELETING, PROC_REF(on_spire_deleted))
+
+/datum/component/spire_fiend/proc/on_spire_deleted()
+	linked_spire = null
+	var/mob/living/living_parent = parent
+	if(!istype(living_parent) || QDELETED(living_parent))
+		return
+	living_parent.dust()
 
 /datum/component/spire_fiend/proc/on_death()
 	SIGNAL_HANDLER
@@ -1302,6 +1310,12 @@
 			spawn(120)
 				icon_state = "zizo_chalky"
 		if("Rite of the Dark Crystal")
+			if(!user.mind)
+				return
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				var/confirm = alert(user, "Your pact with Zizo allows no more relics while your existing ones remain bound. Sever your oldest crystal - and the dead bound to it - to forge a new one?", "Rite of the Dark Crystal", "Sever and Replace", "Cancel")
+				if(confirm != "Sever and Replace")
+					return
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
@@ -1313,12 +1327,16 @@
 			user.say("ZIZO! ZIZO! THE DARK CRYSTAL TO COMMAND THE DEAD!!")
 			if(!do_after(user, 5 SECONDS))
 				return
+			// re-check cap right before committing, in case circumstances changed during the chant
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				user.mind.necro_retire_oldest_crystal()
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			new /obj/item/necro_relics/necro_crystal(loc)
+			var/obj/item/necro_relics/necro_crystal/new_crystal = new /obj/item/necro_relics/necro_crystal(loc)
+			user.mind.necro_register_crystal(new_crystal)
 			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
 			spawn(120)
-				icon_state = "zizo_chalky"
+			icon_state = "zizo_chalky"
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")
@@ -1380,21 +1398,63 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
-	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
-	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	backr = /obj/item/rogueweapon/sword/long/zizo
-	neck = /obj/item/clothing/neck/roguetown/bevor
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
-	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION")
+
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
 	switch(helmet_choice)
 		if("BARBUTE - VISORED")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 		if("FROGMOUTH - NECK PROTECTION")
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
+		if("BASCINET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
+		if("VOLF-FACE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo
 
+	var/armors = list("HEAVY ARMOR", "MEDIUM ARMOR")
+	var/armors_choice = input(H, "Choose your ARMOR.", "PROTECTION FROM THE LADY") as anything in armors
+	switch(armors_choice)
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/medium/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/medium/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)") // Funny evyl names
+	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
+	switch(weapons_choice)
+		if("Absolutio - (greatsword)")
+			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Vindicatio - (longsword)")
+			r_hand = /obj/item/rogueweapon/sword/long/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Damnatio - (rapier)")
+			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Perditio - (kriegmesser)")
+			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Messis - (billhook)")
+			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			if(HAS_TRAIT(H, TRAIT_RITUALIST))
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+		if("Devotio - (arming sword)")
+			r_hand = /obj/item/rogueweapon/sword/arming/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
