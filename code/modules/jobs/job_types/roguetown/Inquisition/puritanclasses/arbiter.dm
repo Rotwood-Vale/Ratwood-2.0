@@ -52,6 +52,23 @@
 		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble
 	)
 
+/datum/advclass/puritan/arbiter/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	var/prev_real_name = H.real_name
+	var/prev_name = H.name
+	var/title = "Reverend"
+	switch(H.pronouns)
+		if(SHE_HER)
+			title = "Vestal"
+		if(SHE_HER_M)
+			title = "Vestal"
+		if(HE_HIM)
+			title = "Monseigneur"
+		if(HE_HIM_F)
+			title = "Monseigneur"
+	H.real_name = "[title] [prev_real_name]"
+	H.name = "[title] [prev_name]"
+
 /datum/job/roguetown/puritan/arbiter/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(ishuman(L))
@@ -59,24 +76,6 @@
 		H.advsetup = 1
 		H.invisibility = INVISIBILITY_MAXIMUM
 		H.become_blind("advsetup")
-//Title stuff. This is super sloppy.
-		var/prev_real_name = H.real_name
-		var/prev_name = H.name
-//Default fallback title.
-		var/title = "Reverend"
-//Actual titles now, based on pronouns.
-		switch(H.pronouns)
-			if(SHE_HER)
-				title = "Vestal"
-			if(SHE_HER_M)
-				title = "Vestal"
-			if(HE_HIM)
-				title = "Monseigneur"
-			if(HE_HIM_F)
-				title = "Monseigneur"
-//Now apply the actual title.
-		H.real_name = "[title] [prev_real_name]"
-		H.name = "[title] [prev_name]"
 
 //Inconspicuous outfit - this is intentional.
 /datum/outfit/job/roguetown/puritan/arbiter/pre_equip(mob/living/carbon/human/H)

@@ -122,7 +122,7 @@
 			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L, TRUE)
 		if("Relic, 'Providence' (Siegebow)")
-			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/heavy/stake_silver, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/heavy/stake_silver, SLOT_BELT_L, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic(H),TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 	var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
