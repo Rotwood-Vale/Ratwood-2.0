@@ -1196,6 +1196,17 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Adminhelp Sound", "[prefs.toggles & SOUND_ADMINHELP ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggledeathalarmsound()
+	set name = "Hear/Silence Death Alarms"
+	set category = "Prefs - Admin"
+	set desc = ""
+	if(!holder)
+		return
+	prefs.toggles ^= SOUND_DEATH_ALARM
+	prefs.save_preferences()
+	to_chat(usr, "You will [(prefs.toggles & SOUND_DEATH_ALARM) ? "now" : "no longer"] hear a sound when deaths appear in the admin log.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Death Alarm Sound", "[prefs.toggles & SOUND_DEATH_ALARM ? "Enabled" : "Disabled"]"))
+
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
 	set category = "Prefs - Admin"
