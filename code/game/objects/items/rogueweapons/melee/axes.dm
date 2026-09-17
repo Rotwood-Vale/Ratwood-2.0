@@ -529,7 +529,7 @@
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	clickcd = 14
 	item_d_type = "slash"
-
+	bigboy = TRUE
 
 /datum/intent/axe/cut/battle/greataxe
 	reach = 2
