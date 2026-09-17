@@ -271,10 +271,10 @@
 	stressadd = 2
 	desc = "<span class='red'>Why is everyone here...? Are they trying to kill me?!</span>"
 
-/datum/stressevent/nopeople
-	timer = 2 MINUTES
-	stressadd = 2
-	desc = "<span class='red'>Where did everyone go? Did something happen?!</span>"
+/datum/stressevent/missing_person
+	timer = 9 HOURS
+	stressadd = 0
+	desc = "<span class='red'>I seem to have lost my person? Did something happen?!</span>"
 
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES

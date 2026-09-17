@@ -314,30 +314,91 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/clingy
 	name = "Clingy"
-	desc = "I like being around people, it's just so lively..."
-	point_value = 0 // Most popular flaw and it's barely considered one. No points for being wholly inconsequential.
-	var/last_check = 0
+	desc = "I am attached to my preferred person. If I am ever too far from them, I get very panicky."
+	point_value = 1
+	/// The person we have marked. If they are ever gone we can establish a new mark
+	var/datum/weakref/special_person
+	/// Grace period, allowing us to spend *some* time away from our person without having a breakdown
+	COOLDOWN_DECLARE(lost_person)
+	/// How long before our stress worsens
+	COOLDOWN_DECLARE(effect_scaling)
 
 /datum/charflaw/clingy/flaw_on_life(mob/user)
 	. = ..()
-	if(world.time < last_check + 10 SECONDS)
+	// So our person is either gone, or not set, so let's start our grace period before we start losing our shit
+	if(isnull(special_person))
+		user.client.verbs |= /client/proc/declare_clingy_person
+		if(!COOLDOWN_STARTED(src, lost_person))
+			COOLDOWN_START(src, lost_person, 10 MINUTES) // Enough time for you to spawn in, grab your shit, mark your person
+			to_chat(user, span_warning("I need to find someone to cling to before I start to panic."))
+		else if(COOLDOWN_FINISHED(src, lost_person))
+			autistic_meltdown(user)
 		return
-	if(!user)
+
+	var/mob/favorite = special_person.resolve()
+	if(!istype(favorite))
+		user.client.verbs |= /client/proc/declare_clingy_person
+		// So we set our mark, but they are gone? They either despawned or shenanigans ensued.
+		if(!COOLDOWN_STARTED(src, lost_person))
+			COOLDOWN_START(src, lost_person, 5 MINUTES) // Enough time for you to realize you need to find a new person to cling to
+			to_chat(user, span_warning("I need to find myself a new person to comfort me before things become worse."))
+		else if(COOLDOWN_FINISHED(src, lost_person))
+			autistic_meltdown(user)
 		return
-	last_check = world.time
-	var/cnt = 0
-	for(var/mob/living/carbon/human/L in hearers(7, user))
-		if(L == user)
+
+	// At this point, we have a mark and we no longer need to check if they exist.
+	if(get_dist(user, favorite) <= 10)
+		COOLDOWN_RESET(src, lost_person)
+		return // All good here, free to chill out
+
+	// Okay, don't panic, we've lost our person. But it's ok because we can find them again quickly... Right?
+	if(!COOLDOWN_STARTED(src, lost_person))
+		COOLDOWN_START(src, lost_person, 3 MINUTES)
+		return
+
+	// Okay we've lost our person... PANIC!!!
+	if(COOLDOWN_FINISHED(src, lost_person))
+		autistic_meltdown(user)
+
+/datum/charflaw/clingy/proc/autistic_meltdown(mob/user)
+	if(!COOLDOWN_FINISHED(src, effect_scaling))
+		return
+	var/datum/stressevent/missing_person/stress_event = user.get_stress_event(/datum/stressevent/missing_person)
+	if(!stress_event)
+		stress_event = user.add_stress(/datum/stressevent/missing_person)
+	stress_event.stressadd += 1
+	user.update_stress()
+	COOLDOWN_START(src, effect_scaling, 1 MINUTES)
+
+/datum/charflaw/clingy/on_mob_creation(mob/user)
+	. = ..()
+	user?.client?.verbs |= /client/proc/declare_clingy_person
+
+/client/proc/declare_clingy_person()
+	set name = "Choose preferred person"
+	set category = "IC"
+
+	var/mob/user = src.mob
+	if(!istype(user))
+		return
+	var/datum/charflaw/clingy/clingy_flaw = user.get_flaw(/datum/charflaw/clingy)
+	if(isnull(clingy_flaw))
+		user.verbs -= src // If you aren't clingy how are you using this??
+		return
+
+	var/list/potential_list = list()
+	for(var/mob/living/carbon/human/person in hearers(7, user))
+		if(person == user)
 			continue
-		if(L.stat)
-			continue
-		if(L.dna.species)
-			cnt++
-		if(cnt > 1)
-			break
-	var/mob/living/carbon/P = user
-	if(cnt < 1)
-		P.add_stress(/datum/stressevent/nopeople)
+		potential_list += person
+	if(!length(potential_list))
+		to_chat(user, span_warning("There's nobody nearby..."))
+		return
+	var/mob/living/selection = tgui_input_list(user, "Choose your preferred person", "CHOOSE PERSON", potential_list)
+	if(!istype(selection))
+		return
+	clingy_flaw.special_person = WEAKREF(selection)
+	to_chat(user, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
 
 /datum/charflaw/noeyer
 	name = "Cyclops (R)"
