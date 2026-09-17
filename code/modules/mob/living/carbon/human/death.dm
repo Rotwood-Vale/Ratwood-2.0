@@ -191,6 +191,9 @@
 		if(client || mind)
 			var/death_admin_message = "[key_name(src)] [loc_name(src)] [ADMIN_FLW(src)] has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])"
 			message_admins(death_admin_message)
+			for(var/client/admin_client in GLOB.admins)
+				if(check_rights_for(admin_client, R_ADMIN) && (admin_client.prefs.toggles & SOUND_DEATH_ALARM))
+					SEND_SOUND(admin_client, sound('sound/misc/death_alarm.ogg'))
 			log_admin(death_admin_message)
 
 /mob/living/carbon/human/revive(full_heal, admin_revive)

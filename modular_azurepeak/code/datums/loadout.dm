@@ -935,8 +935,20 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/chastity/cursed
 	triumph_cost = 4
 
+/datum/loadout_item/wooddildo
+	name = "Wooden Dildo"
+	path = /obj/item/dildo/wood
+
+/datum/loadout_item/irondildo
+	name = "Iron Dildo"
+	path = /obj/item/dildo/iron
+	
+/datum/loadout_item/copperdildo
+	name = "Copper Dildo"
+	path = /obj/item/dildo/copper
+
 /datum/loadout_item/cloth_blindfold
-	name = "Cloth Blindfold"
+	name = "Blindfold"
 	path = /obj/item/clothing/mask/rogue/blindfold
 
 /datum/loadout_item/fake_blindfold
