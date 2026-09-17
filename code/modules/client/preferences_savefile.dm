@@ -556,7 +556,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["vice5"] >> vice5_type
 	S["vice6"] >> vice6_type
 
-	// Vice1 is required and must be major.
+	// Vice1 is required - use charflaw as fallback for old characters, only randomize if both are missing
 	if(vice1_type && ispath(vice1_type))
 		vice1 = new vice1_type()
 	else if(charflaw_type && ispath(charflaw_type))
@@ -564,10 +564,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		vice1 = new charflaw_type()
 	else
 		// Truly new/corrupted save - pick random
-		vice1 = get_random_major_vice()
-
-	if(!vice1.major)
-		vice1 = get_random_major_vice()
+		var/random_vice = pick(GLOB.character_flaws)
+		var/random_vice_path = GLOB.character_flaws[random_vice]
+		vice1 = new random_vice_path()
 
 	// Other vices are optional
 	vice2 = (vice2_type && ispath(vice2_type)) ? new vice2_type() : null

@@ -53,7 +53,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw
 	var/name
 	var/desc
-	var/major = FALSE
 	var/ephemeral = FALSE // This flaw is currently disabled and will not process
 	var/point_value = 1 // Quirk points granted by this vice. Insignificant vices set this to zero.
 
@@ -108,7 +107,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/randflaw
 	name = "Random or None"
 	desc = "A 50% chance to be given a random flaw, or a 50% chance to have NO flaw."
-	major = TRUE
 
 /datum/charflaw/randflaw/apply_post_equipment(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -365,7 +363,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/nudist
 	name = "Nudist"
 	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
-	major = TRUE
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
 	..()
@@ -430,7 +427,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/pacifism
 	name = "Pacifist"
 	desc = "I cannot harm another living being."
-	major = TRUE
 
 /datum/charflaw/pacifism/on_mob_creation(mob/user)
 	..()
@@ -686,7 +682,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"
 	desc = "I'm sensitive to silver — it burns and injures me more than it should."
-	major = TRUE
 
 /datum/charflaw/silverweakness/on_mob_creation(mob/user)
 	ADD_TRAIT(user, TRAIT_SILVER_WEAK, TRAIT_GENERIC)

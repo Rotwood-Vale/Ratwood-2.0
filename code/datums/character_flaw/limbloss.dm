@@ -1,6 +1,5 @@
 
 /datum/charflaw/limbloss
-	major = TRUE
 	var/lost_zone
 
 /datum/charflaw/limbloss/on_mob_creation(mob/user)
