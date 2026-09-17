@@ -522,36 +522,37 @@
 	smeltresult = /obj/item/ingot/bronze
 	component_type = /datum/component/storage/concrete/grid/orestore/bronze
 
-/datum/component/storage/concrete/grid/trophy_rack
-	max_w_class = WEIGHT_CLASS_BULKY
+/datum/component/storage/concrete/grid/swordrack
+	max_w_class = WEIGHT_CLASS_HUGE
+	screen_max_rows = 8
+	screen_max_columns = 8
 
-/datum/component/storage/concrete/grid/trophy_rack/Initialize(mapload)
+/datum/component/storage/concrete/grid/swordrack/Initialize(mapload)
 	. = ..()	
 	set_holdable(list(
-		/obj/item/rogueweapon/greatsword/psygsword/relic,
-		/obj/item/rogueweapon/sword/long/oathkeeper,
-		/obj/item/rogueweapon/sword/long/holysee,
-		/obj/item/rogueweapon/sword/long/exe/berserk,
-		/obj/item/rogueweapon/greatsword/grenz/flamberge/ravox,
-		/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer,
-		/obj/item/rogueweapon/sword/long/judgement/vlord,
-		/obj/item/rogueweapon/sword/rapier/eora,
-		/obj/item/rogueweapon/sword/capsabre,
-		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/rapier/courtphysician,
-		/obj/item/rogueweapon/sword/long/exe/cloth,
-		/obj/item/rogueweapon/sword/sabre/mulyeog,
-		/obj/item/rogueweapon/greatsword/bsword/psy/relic,
-		/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten,
-		/obj/item/rogueweapon/sword/rapier/psy/relic,
-		/obj/item/rogueweapon/sword/long/blacksteel,
-		/obj/item/rogueweapon/sword/short/messer/blacksteel,
+		/obj/item/rogueweapon/greatsword/psygsword/relic, // Apocryphra
+		/obj/item/rogueweapon/sword/long/oathkeeper, // Marshal
+		/obj/item/rogueweapon/sword/long/holysee, // Eclipsium (not sure if it even is used anywhere)
+		/obj/item/rogueweapon/sword/long/exe/berserk, // Guts sword
+		/obj/item/rogueweapon/greatsword/grenz/flamberge/ravox, // Ravox Templar
+		/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer, //The True Guts Sword
+		/obj/item/rogueweapon/sword/long/judgement/vlord, // Vampire Lord
+		/obj/item/rogueweapon/sword/rapier/eora, // Eoran Rapier
+		/obj/item/rogueweapon/sword/capsabre, // KC sabre
+		/obj/item/rogueweapon/sword/long/exe/astrata, // Astratan Templar
+		/obj/item/rogueweapon/sword/rapier/courtphysician, // Cane Sword 
+		/obj/item/rogueweapon/sword/long/exe/cloth, // Termminus Est
+		/obj/item/rogueweapon/sword/sabre/mulyeog, 
+		/obj/item/rogueweapon/greatsword/bsword/psy/relic, // Creed
+		/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten, // Unforgotten Blade
+		/obj/item/rogueweapon/sword/rapier/psy/relic, // Inquisitorial Rapier
+		/obj/item/rogueweapon/sword/long/blacksteel, // Blacksteel swords
+		/obj/item/rogueweapon/sword/short/messer/blacksteel, 
 		/obj/item/rogueweapon/sword/rapier/blacksteel,
 		/obj/item/rogueweapon/sword/blacksteel,
 		/obj/item/rogueweapon/sword/decorated/blacksteel,
 		/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
-		/obj/item/rogueweapon/greatsword/bsword/psy,
-		/obj/item/rogueweapon/sword/rapier/psy/relic,
+		/obj/item/rogueweapon/greatsword/bsword/psy, // Forgotten Blade
 		/obj/item/rogueweapon/halberd/capglaive, // Yes a glaive
 		/obj/item/rogueweapon/greataxe/steel/necran // Yes an axe
 
@@ -566,7 +567,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	bigboy = TRUE
 	max_integrity = 9999 // WE DO NOT WANT IT TO BREAK DO WE?
-	component_type = /datum/component/storage/concrete/grid/trophy_rack
+	component_type = /datum/component/storage/concrete/grid/swordrack
 	
 	var/active_tier = 0
 	var/active_legendary = FALSE

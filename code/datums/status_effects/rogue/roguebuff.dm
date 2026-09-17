@@ -1704,7 +1704,7 @@
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_HARDDISMEMBER, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_warning("A many-faced gaze nods HIS head at YOU—flames course through your veins!"))
+	to_chat(owner, span_warning("A many-faced gaze nods HIS head at YOU-flames course through your veins!"))
 
 /datum/status_effect/buff/trophy_tier3/on_remove()
 	. = ..()
