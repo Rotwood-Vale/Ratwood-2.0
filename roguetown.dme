@@ -1779,6 +1779,7 @@
 #include "code\modules\crafting\recipe_books\recipe_books_list.dm"
 #include "code\modules\crafting\recipe_books\book_entries\book_entry_base.dm"
 #include "code\modules\crafting\recipe_books\book_entries\cooking\book_entry_brewing.dm"
+#include "code\modules\crafting\recipe_books\book_entries\fishing\fisher_basic.dm"
 #include "code\modules\crafting\recipe_books\book_entries\mage\mage_basic.dm"
 #include "code\modules\crafting\recipe_books\book_entries\treasury\economy_guidebook.dm"
 #include "code\modules\crafting\recipe_books\book_entries\treasury\general_chapters.dm"

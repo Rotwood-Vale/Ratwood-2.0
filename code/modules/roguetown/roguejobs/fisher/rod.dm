@@ -252,6 +252,14 @@
 		weight += 2
 	return weight
 
+/obj/item/fishingrod/proc/get_size_rank(sizekey)
+	var/static/list/size_rank = list("tiny" = 1, "small" = 2, "normal" = 3, "large" = 4, "huge" = 5, "prize" = 6)
+	return size_rank[sizekey] || 0
+
+/obj/item/fishingrod/proc/get_rarity_rank(raritykey)
+	var/static/list/rarity_rank = list("com" = 1, "rare" = 2, "ultra" = 3, "gold" = 4)
+	return rarity_rank[raritykey] || 0
+
 /obj/item/fishingrod/proc/get_fish_total_challenge()
 	// Returns 0-9: base score from rarity + size, then offset by tackle difficultymod.
 	// Negative difficultymod (better tackle) lowers the challenge; positive (poor tackle) raises it.
@@ -264,6 +272,8 @@
 		tackle_offset += reel.difficultymod
 	if(istype(hook, /obj/item/fishing) && hook.difficultymod)
 		tackle_offset += hook.difficultymod
+	if(istype(line, /obj/item/fishing) && line.difficultymod)
+		tackle_offset += line.difficultymod
 	return clamp(ri + si + tackle_offset, 0, 9)
 
 /obj/item/fishingrod/proc/try_spawn_deluxe_bonus_fish(mob/user, list/modlist, turf/targeted, primary_path)
@@ -387,8 +397,8 @@
 		var/obj/item/fishing/line_item = line
 		var/line_integrity_before = line_item.obj_integrity
 		if(line_item.adjust_durability(line_damage))
-			apply_rod_damage_from_line_break(line_integrity_before, user)
-			if(QDELETED(src))
+			var/rod_destroyed_rig = apply_rod_damage_from_line_break(line_integrity_before, user)
+			if(QDELETED(src) || rod_destroyed_rig)
 				return
 			to_chat(user, "<span class='warning'>My [line_item.name] gives out!</span>")
 			remove_all_attachments(user)
@@ -409,7 +419,7 @@
 
 /obj/item/fishingrod/proc/apply_rod_damage_from_line_break(line_integrity_lost, mob/user)
 	if(line_integrity_lost <= 0 || max_integrity <= 0)
-		return
+		return FALSE
 	var/rod_damage = max(1, round(line_integrity_lost * 0.25))
 	take_damage(rod_damage, BRUTE, "blunt", FALSE)
 	if(!QDELETED(src) && obj_integrity <= 0)
@@ -419,9 +429,10 @@
 		remove_all_attachments(user)
 		if(!obj_broken)
 			obj_break(BRUTE)
-		return
+		return TRUE
 	if(!QDELETED(src) && user)
 		to_chat(user, "<span class='warning'>The snap over-stresses [src], wearing down the rod's integrity.</span>")
+	return FALSE
 
 /obj/item/fishingrod/proc/apply_line_snap_consequences(mob/user, reason = null)
 	if(!line)
@@ -667,6 +678,8 @@
 					attach_tackle(T)
 					line = T
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
+				else
+					to_chat(user, "<span class='warning'>I should remove the current bobber or sinker first.</span>")
 			if("hook")
 				if(!reel)
 					to_chat(user, "<span class='warning'>I need to add fishing line first.</span>")
@@ -1475,9 +1488,9 @@
 		deepmod += 1
 	else if(istype(targeted, /turf/open/water/ocean/deep))
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 4,
-							/obj/item/reagent_containers/food/snacks/fish/angler = 4,
+							/obj/item/reagent_containers/food/snacks/fish/angler = 2,
 							/obj/item/reagent_containers/food/snacks/fish/plaice = 3,
-							/obj/item/reagent_containers/food/snacks/fish/lobster = 2)
+							/obj/item/reagent_containers/food/snacks/fish/lobster = 3)
 		deepmod += 1
 	else if(istype(targeted, /turf/open/water/ocean))
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 6,
@@ -1618,11 +1631,11 @@
 				safe_fishpicker -= /obj/item/reagent_containers/food/snacks/fish/creepy_shark
 				fishtype = pickweightAllowZero(safe_fishpicker)
 
-			difficulty += sizepicker.Find(fishsize) + raritypicker.Find(fishrarity) - 1
-			hookwindow -= raritypicker.Find(fishrarity) - 1
-			acceleration += clamp(sizepicker.Find(fishsize) - 3, 0, 2) + clamp(raritypicker.Find(fishrarity) - 1, 0, 3)
-			maxvelocity = 3 + clamp(raritypicker.Find(fishrarity) - 1, 0, 3) + clamp(sizepicker.Find(fishsize) - 3, -1, 2)
-			fishhealth =  9 + sizepicker.Find(fishsize)*6 + raritypicker.Find(fishrarity)*6
+			difficulty += get_size_rank(fishsize) + get_rarity_rank(fishrarity) - 1
+			hookwindow -= get_rarity_rank(fishrarity) - 1
+			acceleration += clamp(get_size_rank(fishsize) - 3, 0, 2) + clamp(get_rarity_rank(fishrarity) - 1, 0, 3)
+			maxvelocity = 3 + clamp(get_rarity_rank(fishrarity) - 1, 0, 3) + clamp(get_size_rank(fishsize) - 3, -1, 2)
+			fishhealth =  9 + get_size_rank(fishsize)*6 + get_rarity_rank(fishrarity)*6
 			if(fishsize == "tiny")
 				costmod *= 0.5
 			else if(fishsize == "small")
@@ -2017,7 +2030,7 @@
 						if(world.time < reel_cooldown_until)
 							to_chat(fisher, "<span class='warning'>I need to catch my breath for a second before reeling again.</span>")
 						else if(reel_ready || input_zone == "green")
-							reel_cooldown_until = world.time + (1.5 SECONDS)
+							reel_cooldown_until = world.time + (1 SECONDS)
 							reel_ready = FALSE
 							failed_reel_attempts = 0
 							var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
@@ -2037,7 +2050,7 @@
 								hooked_ticks = 0
 								to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
 						else if(input_zone == "blue")
-							reel_cooldown_until = world.time + (1.5 SECONDS)
+							reel_cooldown_until = world.time + (1 SECONDS)
 							topzone_hold = 0
 							reel_ready = FALSE
 							reel_expire = 0
