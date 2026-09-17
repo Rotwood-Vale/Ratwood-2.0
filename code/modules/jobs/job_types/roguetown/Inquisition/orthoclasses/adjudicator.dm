@@ -53,7 +53,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/black
 	id = /obj/item/clothing/neck/roguetown/psicross/silver
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
-	/obj/item/paper/inqslip/arrival/adju = 1,
+	/obj/item/paper/inqslip/arrival/ortho = 1,
 	/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 	/obj/item/clothing/ring/signet/silver = 1)
 
