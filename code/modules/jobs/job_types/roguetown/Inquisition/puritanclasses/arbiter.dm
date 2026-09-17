@@ -22,7 +22,8 @@
 		TRAIT_RITUALIST, //Mostly fluff, but made to deconvert people.
 		TRAIT_DECEIVING_MEEKNESS, //guarded virtue to prevent others from seeing through your friendly facade
 		TRAIT_INTELLECTUAL, //To assess your foes
-		TRAIT_IGNOREDAMAGESLOWDOWN
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_NOBLE,
 		)//Their faith is their shield. They don't need "armor" or "dodging". 
 	subclass_stats = list(
 		STATKEY_CON = 3,
