@@ -301,12 +301,17 @@
 		switch(weapon_choice)
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/rapier
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					l_hand = /obj/item/rogueweapon/sword/rapier/psy //Fuck you it's aura
+				else
+					l_hand = /obj/item/rogueweapon/sword/rapier
 			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+				else
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 			if("Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltl = /obj/item/quiver/arrows
