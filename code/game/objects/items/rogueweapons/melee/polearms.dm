@@ -1035,7 +1035,7 @@
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh)
 	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak, /datum/intent/mace/warhammer/pick/ranged)
 	name = "steel polehammer"
-	desc = "A polehammer of sturdy steel. Fracture bone and dissent with righteous force. An instrument to sooth the ears of any noble with the sound of a rebel's skull shattering."
+	desc = "A polehammer of sturdy steel. Fracture bone and dissent with righteous force. An instrument to soothe the ears of any noble with the sound of a rebel's skull shattering."
 	icon_state = "eaglebeak"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
