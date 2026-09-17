@@ -85,7 +85,7 @@
 
 /datum/quirk/malodorous
 	name = "Malodorous"
-	desc = "My body odor is unbearable without regular baths, and others can tell."
+	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
 	point_cost = 0
 	added_traits = list(TRAIT_MALODOROUS)
 
