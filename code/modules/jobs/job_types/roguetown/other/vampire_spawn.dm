@@ -73,7 +73,7 @@
 			"Battle Axe",
 			"Greataxe",
 			"Estoc",
-			"Polehammer",
+			"Lucerne",
 			"Partizan",
 		)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -110,7 +110,7 @@
 			if("Estoc")
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Polehammer")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Partizan")

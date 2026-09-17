@@ -184,7 +184,7 @@
 				)
 
 /datum/supply_pack/rogue/steel_weapons/eaglebeak
-	name = "Polehammer"
+	name = "Lucerne"
 	cost = 75 // 2 Steel Ingot, 1 Small Log
 	contains = list(
 					/obj/item/rogueweapon/eaglebeak,

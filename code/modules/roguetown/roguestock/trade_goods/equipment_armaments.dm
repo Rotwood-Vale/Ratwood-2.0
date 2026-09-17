@@ -96,7 +96,7 @@
 
 /datum/trade_good/equipment/crafted/eaglebeak
 	id = TRADE_GOOD_STEEL_EAGLEBEAK
-	name = "polehammer"
+	name = "lucerne"
 	item_type = /obj/item/rogueweapon/eaglebeak
 
 // ============================================================================

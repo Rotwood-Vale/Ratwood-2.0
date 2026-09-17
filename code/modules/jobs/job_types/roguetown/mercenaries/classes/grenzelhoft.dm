@@ -101,14 +101,14 @@
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Polehammer")
+		var/weapons = list("Halberd", "Partizan", "Lucerne")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
 				r_hand = /obj/item/rogueweapon/halberd
 			if("Partizan")
 				r_hand = /obj/item/rogueweapon/spear/partizan
-			if("Polehammer")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers

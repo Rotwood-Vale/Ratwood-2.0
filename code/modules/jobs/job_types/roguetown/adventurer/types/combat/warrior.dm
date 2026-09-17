@@ -371,7 +371,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Greatflail","Polehammer","Greataxe","DEFENSE IS ALL THAT MATTERS")
+		var/weapons = list("Executioner's Sword","Warhammer + Shield","Flail + Shield","Greatflail","Lucerne","Greataxe","DEFENSE IS ALL THAT MATTERS")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Executioner's Sword")
@@ -391,7 +391,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/flail/peasantwarflail
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-			if("Polehammer")
+			if("Lucerne")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -799,14 +799,14 @@
 			backl = /obj/item/storage/backpack/rogue/satchel
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-			var/weapons = list("Great Sword","Polehammer","Battle Axe","MY BARE HANDS!!!")
+			var/weapons = list("Great Sword","Lucerne","Battle Axe","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if("Great Sword")
 					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/greatsword
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
-				if("Polehammer")
+				if("Lucerne")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/eaglebeak
 					backr = /obj/item/rogueweapon/scabbard/gwstrap

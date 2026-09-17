@@ -35,7 +35,7 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Greatsword","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Polehammer","Partizan")
+		var/weapons = list("Greatsword","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne","Partizan")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -61,7 +61,7 @@
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-			if("Polehammer")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)

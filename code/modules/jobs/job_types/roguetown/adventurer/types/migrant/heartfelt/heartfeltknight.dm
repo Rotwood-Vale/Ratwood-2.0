@@ -116,7 +116,7 @@
 	// IT WORKS :TM: still gives them a helm and grandmace, just not the choice
 	
 	H.adjust_blindness(-3)
-	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Polehammer", "Partizan", "Glaive")
+	var/weapons = list("Dec Sword + Shield","Zweihander","Greatsword","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne", "Partizan", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -136,7 +136,7 @@
 			r_hand = /obj/item/rogueweapon/greataxe/steel
 		if("Estoc")
 			r_hand = /obj/item/rogueweapon/estoc
-		if("Polehammer")
+		if("Lucerne")
 			r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 		if("Partizan")
 			r_hand = /obj/item/rogueweapon/spear/partizan
