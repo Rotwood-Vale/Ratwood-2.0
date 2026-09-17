@@ -1652,6 +1652,92 @@
 	duration = 20 MINUTES
 	var/speed_bonus_applied = FALSE
 
+/// TROPHY RACK BUFFS USED BY SWORD HUNTER
+
+/atom/movable/screen/alert/status_effect/buff/trophy_tier1
+	name = "A Hunter's Trophy"
+	desc = "Your claw tightens around your first claim... His gaze is upon you."
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/trophy_tier2
+	name = "A Demon's Stash"
+	desc = "As your claim expands, your eyes gleam with avarice, searchingly... You feel nothing but a YEARNING for more"
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/trophy_tier3
+	name = "A DRAGON'S Hoard"
+	desc = "Your skin grows taut like scales, you feel flames course through your veins... And a many-faced gaze nodding HIS head at YOU."
+	icon_state = "buff"
+
+/datum/status_effect/buff/trophy_tier1
+	id = "trophy_tier1"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/trophy_tier1
+	effectedstats = list(STATKEY_LCK = 1)
+	duration = -1
+
+/datum/status_effect/buff/trophy_tier2
+	id = "trophy_tier2"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/trophy_tier2
+	effectedstats = list(STATKEY_LCK = 2)
+	duration = -1
+
+/datum/status_effect/buff/trophy_tier2/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_notice("You feel nothing but a YEARNING for more as the stash takes hold."))
+
+/datum/status_effect/buff/trophy_tier2/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/buff/trophy_tier3
+	id = "trophy_tier3"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/trophy_tier3
+	effectedstats = list(STATKEY_LCK = 3)
+	duration = -1
+
+/datum/status_effect/buff/trophy_tier3/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_HARDDISMEMBER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_warning("A many-faced gaze nods HIS head at YOU—flames course through your veins!"))
+
+/datum/status_effect/buff/trophy_tier3/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_HARDDISMEMBER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+
+/atom/movable/screen/alert/status_effect/buff/trophy_legendary
+	name = "Surpassing Mortality"
+	desc = "Your claws clutch upon an armament that would surpass MORTALITY... The maddening laughs of a Many-faced horror rings in your ears... FREEING YOU OF YOUR SANITY."
+	icon_state = "buff"
+
+/datum/status_effect/buff/trophy_legendary
+	id = "trophy_legendary"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/trophy_legendary
+	effectedstats = list(STATKEY_STR = 3, STATKEY_WIL = 3)
+	duration = -1
+
+/datum/status_effect/buff/trophy_legendary/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PSYCHOSIS, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_warning("Your claws clutch upon an armament that would surpass MORTALITY... The maddening laughs of a Many-faced horror rings in your ears... FREEING YOU OF YOUR SANITY."))
+
+/datum/status_effect/buff/trophy_legendary/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_PSYCHOSIS, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_STRONGKICK, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_notice("The maddening laughter fades, and the crushing weight of mortality returns."))
+	
 /atom/movable/screen/alert/status_effect/buff/stagehands_silence
 	name = "Stangehand's Silence"
 	desc = "The slow quicken. My footsteps are quiet and I can move faster while sneaking."

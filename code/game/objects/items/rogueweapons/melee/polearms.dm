@@ -4,7 +4,7 @@
 	reach = 2
 
 /datum/intent/sword/cut/miaodao/fast
-	clickcd = 10
+	clickcd = 11
 
 /datum/intent/spear/thrust
 	name = "thrust"
@@ -1521,7 +1521,7 @@
 	max_blade_int = 150 //Thin blade
 	wbalance = WBALANCE_SWIFT
 	possible_item_intents = list(/datum/intent/sword/cut/miaodao/fast, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut/miaodao, /datum/intent/rend/reach, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big)
+	gripped_intents = list(/datum/intent/sword/cut/miaodao, /datum/intent/sword/cut/zwei/sweep, /datum/intent/sword/cut/zwei/cleave, /datum/intent/sword/peel/big)
 	alt_intents = null
 
 /obj/item/rogueweapon/greatsword/miaodao/getonmobprop(tag)

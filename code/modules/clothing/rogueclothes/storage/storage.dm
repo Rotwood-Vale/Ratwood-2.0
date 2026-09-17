@@ -521,3 +521,142 @@
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/bronze
 	component_type = /datum/component/storage/concrete/grid/orestore/bronze
+
+/datum/component/storage/concrete/grid/trophy_rack
+	max_w_class = WEIGHT_CLASS_BULKY
+
+/datum/component/storage/concrete/grid/trophy_rack/Initialize(mapload)
+	. = ..()	
+	set_holdable(list(
+		/obj/item/rogueweapon/greatsword/psygsword/relic,
+		/obj/item/rogueweapon/sword/long/oathkeeper,
+		/obj/item/rogueweapon/sword/long/holysee,
+		/obj/item/rogueweapon/sword/long/exe/berserk,
+		/obj/item/rogueweapon/greatsword/grenz/flamberge/ravox,
+		/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer,
+		/obj/item/rogueweapon/sword/long/judgement/vlord,
+		/obj/item/rogueweapon/sword/rapier/eora,
+		/obj/item/rogueweapon/sword/capsabre,
+		/obj/item/rogueweapon/sword/long/exe/astrata,
+		/obj/item/rogueweapon/sword/rapier/courtphysician,
+		/obj/item/rogueweapon/sword/long/exe/cloth,
+		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/greatsword/bsword/psy/relic,
+		/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten,
+		/obj/item/rogueweapon/sword/rapier/psy/relic,
+		/obj/item/rogueweapon/sword/long/blacksteel,
+		/obj/item/rogueweapon/sword/short/messer/blacksteel,
+		/obj/item/rogueweapon/sword/rapier/blacksteel,
+		/obj/item/rogueweapon/sword/blacksteel,
+		/obj/item/rogueweapon/sword/decorated/blacksteel,
+		/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel,
+		/obj/item/rogueweapon/greatsword/bsword/psy,
+		/obj/item/rogueweapon/sword/rapier/psy/relic,
+		/obj/item/rogueweapon/halberd/capglaive, // Yes a glaive
+		/obj/item/rogueweapon/greataxe/steel/necran // Yes an axe
+
+	))
+
+/obj/item/storage/back/bladerack
+	name = "trophy rack"
+	desc = "A heavy leather strap designed to carry a multitude of stolen blades."
+	icon = 'modular_azurepeak/icons/obj/items/gwstrap.dmi'
+	icon_state = "gws0"  // Placeholder sprite till I get something better
+	item_state = "gwstrap"
+	slot_flags = ITEM_SLOT_BACK
+	bigboy = TRUE
+	max_integrity = 9999 // WE DO NOT WANT IT TO BREAK DO WE?
+	component_type = /datum/component/storage/concrete/grid/trophy_rack
+	
+	var/active_tier = 0
+	var/active_legendary = FALSE
+
+/obj/item/storage/back/bladerack/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "TROPHY RACK")
+
+/obj/item/storage/back/bladerack/proc/get_blade_count()
+	var/count = 0
+	for(var/obj/item/I in contents)
+		if(istype(I, /obj/item/rogueweapon))
+			count++
+	return count
+
+/obj/item/storage/back/bladerack/proc/has_legendary_blade()
+	for(var/obj/item/I in contents)
+		if(istype(I, /obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer) || istype(I, /obj/item/rogueweapon/sword/long/judgement/vlord))
+			return TRUE
+	return FALSE
+
+/obj/item/storage/back/bladerack/examine(mob/user)
+	. = ..()
+	var/count = get_blade_count()
+	to_chat(user, span_notice("It has [count] blade(s) mounted upon it:"))
+	for(var/obj/item/I in contents)
+		if(istype(I, /obj/item/rogueweapon))
+			to_chat(user, span_notice("  [I.name]"))
+
+/obj/item/storage/back/bladerack/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_BACK && istype(user))
+		update_tiers(user)
+
+/obj/item/storage/back/bladerack/dropped(mob/living/user)
+	. = ..()
+	if(istype(user))
+		remove_tiers(user)
+
+/obj/item/storage/back/bladerack/Entered(atom/movable/AM, atom/oldloc)
+	. = ..()
+	if(istype(AM, /obj/item/rogueweapon) && istype(loc, /mob/living))
+		update_tiers(loc)
+
+/obj/item/storage/back/bladerack/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(istype(AM, /obj/item/rogueweapon) && istype(loc, /mob/living))
+		update_tiers(loc)
+
+/obj/item/storage/back/bladerack/proc/update_tiers(mob/living/user)
+	if(!user)
+		return
+
+	var/count = get_blade_count()
+	var/target_tier = 0
+
+	if(count >= 5)
+		target_tier = 3
+	else if(count >= 3)
+		target_tier = 2
+	else if(count >= 1)
+		target_tier = 1
+
+	if(active_tier != target_tier)
+		user.remove_status_effect(/datum/status_effect/buff/trophy_tier1)
+		user.remove_status_effect(/datum/status_effect/buff/trophy_tier2)
+		user.remove_status_effect(/datum/status_effect/buff/trophy_tier3)
+		active_tier = target_tier
+
+		if(active_tier == 3)
+			user.apply_status_effect(/datum/status_effect/buff/trophy_tier3)
+		else if(active_tier == 2)
+			user.apply_status_effect(/datum/status_effect/buff/trophy_tier2)
+		else if(active_tier == 1)
+			user.apply_status_effect(/datum/status_effect/buff/trophy_tier1)
+
+	var/has_legend = has_legendary_blade()
+	if(active_legendary != has_legend)
+		active_legendary = has_legend
+		if(active_legendary)
+			user.apply_status_effect(/datum/status_effect/buff/trophy_legendary)
+		else
+			user.remove_status_effect(/datum/status_effect/buff/trophy_legendary)
+
+/obj/item/storage/back/bladerack/proc/remove_tiers(mob/living/user)
+	if(!user)
+		return
+	user.remove_status_effect(/datum/status_effect/buff/trophy_tier1)
+	user.remove_status_effect(/datum/status_effect/buff/trophy_tier2)
+	user.remove_status_effect(/datum/status_effect/buff/trophy_tier3)
+	user.remove_status_effect(/datum/status_effect/buff/trophy_legendary)
+	active_tier = 0
+	active_legendary = FALSE

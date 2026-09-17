@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/swordhunter
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 
-	cmode_music = 'sound/music/combat_swordhunter.ogg'
+	cmode_music = 'sound/music/combat_swordsaint.ogg'
 	subclass_languages = list(/datum/language/kazengunese)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	subclass_stats = list(
@@ -44,42 +44,13 @@
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/kazengun
 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	backr = /obj/item/storage/back/bladerack
+	l_hand = /obj/item/rogueweapon/greatsword/miaodao
+	r_hand = /obj/item/rogueweapon/scabbard/gwstrap // they will need it
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
-
-	var/weapons = list("Rapier","Shashka", "Liuyedao", "Miaodao", "Shamshir", "Fechtfeders", "Kriegsmesser", "Zweihander", "Dual Gladius")
-	var/weapon_choice = input("Pick your stolen steel.", "TAKE UP ARMS") as anything in weapons
-	H.set_blindness(0)
-	switch(weapon_choice) //A large selection of exotic starter options, as per the class gimmick.
-		if("Rapier")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/rapier
-		if("Shashka")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/sabre/steppesman 
-		if ("Liuyedao")
-			beltl = /obj/item/rogueweapon/scabbard/sword/kazengun
-			l_hand = /obj/item/rogueweapon/sword/sabre/mulyeog
-		if ("Miaodao")
-			l_hand = /obj/item/rogueweapon/greatsword/miaodao
-			r_hand = /obj/item/rogueweapon/scabbard/gwstrap // they will need it
-		if ("Shamshir")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/sabre/shamshir
-		if ("Fechtfeders")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/long/frei
-		if ("Kriegsmesser")
-			beltl = /obj/item/rogueweapon/scabbard/sword
-			l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-		if ("Zweihander")
-			l_hand = /obj/item/rogueweapon/greatsword/zwei
-		if ("Dual Gladius")
-			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-			beltl = /obj/item/rogueweapon/sword/short/gladius
-			l_hand = /obj/item/rogueweapon/sword/short/gladius
 	wretch_select_bounty(H)
