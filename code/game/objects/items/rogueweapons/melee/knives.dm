@@ -446,7 +446,7 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 20, "embedded_pain_multiplier" = 1.2, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo/Initialize(mapload)
 	. = ..()
@@ -460,7 +460,7 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 20, "embedded_pain_multiplier" = 1.2, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 
 /obj/item/rogueweapon/huntingknife/combat/messer/graggar/Initialize(mapload)
 	. = ..()
@@ -478,7 +478,7 @@
 	max_blade_int = 300
 	sellprice = 100
 	throwforce = 30 //Aim for something exposed. You don't get AP.
-	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 99, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 99, "embedded_pain_multiplier" = 5, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/matthios/Initialize(mapload)
@@ -494,7 +494,7 @@
 	force = 25
 	max_integrity = 250
 	max_blade_int = 300
-	embedding = list("embedded_pain_multiplier" = 1.2, "embed_chance" = 20, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 20, "embedded_pain_multiplier" = 1.2, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha/Initialize(mapload)
 	. = ..()
@@ -593,7 +593,7 @@
 	throwforce = 33
 	throw_speed = 3
 	armor_penetration = 50 //Only accounted for when thrown. Plays into the idea of 'divine intervention' - a literal 'hail mary' when facing down a terrible beast.
-	embedding = list("embedded_pain_multiplier" = 1, "embed_chance" = 99, "embedded_fall_chance" = 0) //The 'last resort' for a Bishop. Ensures penetration and embedding, at the cost of the dagger itself.
+	embedding = list("embed_chance" = 99, "embedded_pain_multiplier" = 1, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE) //The 'last resort' for a Bishop. Ensures penetration and embedding, at the cost of the dagger itself.
 	max_integrity = 222
 	max_blade_int = 333
 	icon_state = "gsdagger"
@@ -971,7 +971,7 @@
 	armor_penetration = 30
 	wdefense = 1
 	icon_state = "throw_knifei"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 25, "embedded_fall_chance" = 10)
+	embedding = list("embed_chance" = 25, "embedded_pain_multiplier" = 4, "embedded_fall_chance" = 10, "embedded_ignore_throwspeed_threshold" = TRUE)
 	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/chop)
 	smeltresult = null
 	thrown_damage_flag = "piercing"		//Checks piercing type like an arrow.
@@ -1002,7 +1002,7 @@
 	max_integrity = 100
 	armor_penetration = 40
 	icon_state = "throw_knifes"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 30, "embedded_fall_chance" = 5)
+	embedding = list("embed_chance" = 30, "embedded_pain_multiplier" = 4, "embedded_fall_chance" = 5, "embedded_ignore_throwspeed_threshold" = TRUE)
 	picklvl = 0.9
 
 /obj/item/rogueweapon/huntingknife/throwingknife/steel/ancient
@@ -1030,7 +1030,7 @@
 	max_integrity = 150
 	wdefense = 3
 	icon_state = "throw_knifesil"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 50, "embedded_pain_multiplier" = 4, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 	is_silver = TRUE
 	picklvl = 0.9
 
@@ -1055,7 +1055,7 @@
 	max_integrity = 150
 	wdefense = 3
 	icon_state = "throw_knifep"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
+	embedding = list("embed_chance" = 50, "embedded_pain_multiplier" = 4, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 	is_silver = TRUE
 	picklvl = 0.9
 
@@ -1080,7 +1080,7 @@
 	throwforce = 28
 	armor_penetration = 50
 	icon_state = "throw_knifebs"
-	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 60, "embedded_fall_chance" = 0)//embeds are funny
+	embedding = list("embed_chance" = 60, "embedded_pain_multiplier" = 5, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 	smeltresult = null
 
 /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
@@ -1094,7 +1094,7 @@
 	throwforce = 10
 	throw_speed = 2
 	armor_penetration = 20
-	embedding = list("embedded_pain_multiplier" = 5, "embed_chance" = 75, "embedded_fall_chance" = 10)
+	embedding = list("embed_chance" = 75, "embedded_pain_multiplier" = 5, "embedded_fall_chance" = 10, "embedded_ignore_throwspeed_threshold" = TRUE)
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop/cleaver, /datum/intent/snip, /datum/intent/dagger/thrust/quick)
 	picklvl = 0.8
 	is_tool = TRUE//has snip for whatever reason so lets let them use it.
