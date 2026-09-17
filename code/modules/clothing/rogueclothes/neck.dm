@@ -115,6 +115,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/roguetown/coif/padded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
 	desc = "A heavier padded coif meant to be worn on its own or under a helmet. Layered properly, it can last through even the busiest of daes."
@@ -361,6 +364,9 @@
 	body_parts_covered = NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
+
+/obj/item/clothing/neck/roguetown/gorget/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/gorget/steel
 	name = "steel gorget"
