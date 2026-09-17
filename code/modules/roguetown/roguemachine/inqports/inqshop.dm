@@ -276,7 +276,7 @@
 /datum/inqports/articles/psyarmor
 	name = "Relic - The Platemaille, Everwithstanding"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/psyarmor/
-	marquescost = 16
+	marquescost = 20 //I mean it's on-demand fullplate
 	maximum = 1
 
 /obj/structure/closet/crate/chest/inqreliquary/relic/psyarmor/Initialize(mapload)
