@@ -143,6 +143,7 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
 		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
 		list("id" = "pubes", "label" = "Enable Pubic Hair Descriptors", "enabled" = !!owner.prefs.pubes, "desc" = "See pubic hair descriptors on examining someone with exposed pubic hair (if present)."),
@@ -252,6 +253,8 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("free_use_default")
+				owner.toggle_free_use_default()
 			if("facial_branding")
 				owner.toggle_facial_brands()
 			if("sensitive_branding")
@@ -605,6 +608,18 @@
 			to_chat(src, "You ENDVRE through orgasms.")
 		else
 			to_chat(src, "You will no longer ENDVRE through orgasms.")
+
+/client/verb/toggle_free_use_default()
+	set category = "Options"
+	set name = "Toggle Free Use Default"
+	set hidden = 1
+	if(prefs)
+		prefs.free_use_default = !prefs.free_use_default
+		prefs.save_preferences()
+		if(prefs.free_use_default)
+			to_chat(src, "You will now start with Free Use enabled by default.")
+		else
+			to_chat(src, "You will no longer start with Free Use enabled by default.")
 
 /client/verb/toggle_voting_popup()
 	set category = "Options"
