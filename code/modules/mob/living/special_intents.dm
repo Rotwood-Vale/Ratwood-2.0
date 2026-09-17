@@ -520,7 +520,7 @@ SPECIALS START HERE
 	var/KD_dur = 2 SECONDS
 	var/Offb_dur = 5 SECONDS
 	var/self_immob_dur = 1.1 SECONDS
-	var/dam = 200
+	var/dam = 100
 
 //We play the pre-sfx here because it otherwise it gets played per tile. Sounds funky.
 /datum/special_intent/ground_smash/on_create()
