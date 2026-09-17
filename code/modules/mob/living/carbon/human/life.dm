@@ -79,9 +79,9 @@
 	else if(charflaw && !charflaw.ephemeral && mind)
 		charflaw.flaw_on_life(src)
 
-	// Malodorous quirk scent processing
-	if(mind && HAS_TRAIT(src, TRAIT_MALODOROUS))
-		handle_malodorous_scent()
+	// Redolent quirk scent processing
+	if(mind && HAS_TRAIT(src, TRAIT_REDOLENT))
+		handle_redolent_scent()
 	
 	if(health <= 0)
 		adjustOxyLoss(0.5)

@@ -83,41 +83,41 @@
 	recipient.transform = recipient.transform.Translate(0, (0.25 * 16))
 	recipient.update_transform()
 
-/datum/quirk/malodorous
-	name = "Malodorous"
+/datum/quirk/redolent
+	name = "Redolent"
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
 	point_cost = 0
-	added_traits = list(TRAIT_MALODOROUS)
+	added_traits = list(TRAIT_REDOLENT)
 
-/datum/quirk/malodorous/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.malodorous_scent_type = recipient.client?.prefs?.malodorous_type || "Neutral"
-	recipient.malodorous_scent = recipient.client?.prefs?.malodorous_scent || ""
+/datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
+	recipient.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
 
-// Malodorous scent state and behavior. This is purely quirk-driven now: the quirk applies
-// TRAIT_MALODOROUS, the mob holds the scent state, and life.dm drives handle_malodorous_scent().
+// Redolent scent state and behavior. This is purely quirk-driven now: the quirk applies
+// TRAIT_REDOLENT, the mob holds the scent state, and life.dm drives handle_redolent_scent().
 /mob/living/carbon/human
 	/// How others perceive our scent: "Gross", "Neutral" or "Pleasant".
-	var/malodorous_scent_type = "Neutral"
+	var/redolent_scent_type = "Neutral"
 	/// Player-written description of our scent.
-	var/malodorous_scent = ""
+	var/redolent_scent = ""
 	/// Bathing suppresses our scent until this world.time.
-	var/malodorous_suppressed_until = 0
+	var/redolent_suppressed_until = 0
 	/// The last time our scent aura pulsed.
-	var/malodorous_last_aura_tick = 0
+	var/redolent_last_aura_tick = 0
 
-/mob/living/carbon/human/proc/is_malodorous_reeking()
-	return HAS_TRAIT(src, TRAIT_MALODOROUS) && world.time >= malodorous_suppressed_until
+/mob/living/carbon/human/proc/is_redolent_reeking()
+	return HAS_TRAIT(src, TRAIT_REDOLENT) && world.time >= redolent_suppressed_until
 
-/mob/living/carbon/human/proc/malodorous_on_bath()
-	malodorous_suppressed_until = world.time + 30 MINUTES
-	remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+/mob/living/carbon/human/proc/redolent_on_bath()
+	redolent_suppressed_until = world.time + 30 MINUTES
+	remove_status_effect(/datum/status_effect/debuff/redolent_stink)
 	to_chat(src, span_notice("I scrub the stink away. I should stay fresh for a while."))
 
-/mob/living/carbon/human/proc/malodorous_apply_contact_stink(mob/living/carbon/human/target)
-	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, malodorous_scent_type, malodorous_scent)
+/mob/living/carbon/human/proc/redolent_apply_contact_stink(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, redolent_scent_type, redolent_scent)
 
-/mob/living/carbon/human/proc/handle_malodorous_scent()
-	var/should_reek = is_malodorous_reeking() && can_smell()
+/mob/living/carbon/human/proc/handle_redolent_scent()
+	var/should_reek = is_redolent_reeking() && can_smell()
 
 	if(should_reek && mind?.antag_datums)
 		for(var/datum/antagonist/D in mind.antag_datums)
@@ -125,23 +125,23 @@
 				should_reek = FALSE
 				break
 
-	if(should_reek && malodorous_scent_type != "Pleasant")
-		apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
+	if(should_reek && redolent_scent_type != "Pleasant")
+		apply_status_effect(/datum/status_effect/debuff/redolent_stink)
 	else
-		remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+		remove_status_effect(/datum/status_effect/debuff/redolent_stink)
 
 	if(!should_reek)
 		return
-	if(world.time < malodorous_last_aura_tick + malodorous_aura_tick_delay(malodorous_scent_type))
+	if(world.time < redolent_last_aura_tick + redolent_aura_tick_delay(redolent_scent_type))
 		return
-	malodorous_last_aura_tick = world.time
-	malodorous_visual_effect(src, malodorous_scent_type)
-	malodorous_stink_aura(src, malodorous_scent_type)
+	redolent_last_aura_tick = world.time
+	redolent_visual_effect(src, redolent_scent_type)
+	redolent_stink_aura(src, redolent_scent_type)
 
-/proc/malodorous_aura_tick_delay(scent_type)
+/proc/redolent_aura_tick_delay(scent_type)
 	return scent_type == "Neutral" ? 20 SECONDS : 5 SECONDS
 
-/proc/malodorous_examine_text(scent_type, scent)
+/proc/redolent_examine_text(scent_type, scent)
 	var/scent_text = html_encode(scent || "an unusual scent")
 	switch(scent_type)
 		if("Gross")
@@ -150,14 +150,14 @@
 			return "<span style='color:#FFB6C1'>They smell of [scent_text].</span>"
 	return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
 
-/proc/malodorous_visual_effect(mob/living/carbon/human/H, scent_type)
+/proc/redolent_visual_effect(mob/living/carbon/human/H, scent_type)
 	switch(scent_type)
 		if("Gross")
 			new /obj/effect/temp_visual/flies(get_turf(H))
 		if("Pleasant")
 			new /obj/effect/temp_visual/pleasant_scent(get_turf(H))
 
-/proc/malodorous_stink_aura(mob/living/carbon/human/H, scent_type)
+/proc/redolent_stink_aura(mob/living/carbon/human/H, scent_type)
 	for(var/mob/living/nearby in view(2, H))
 		if(nearby == H)
 			continue

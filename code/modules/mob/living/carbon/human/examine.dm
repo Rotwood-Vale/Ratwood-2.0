@@ -107,7 +107,7 @@
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
 	if(user != src && get_dist(user, src) <= 3)
-		var/reeking_naturally = is_malodorous_reeking()
+		var/reeking_naturally = is_redolent_reeking()
 		if(reeking_naturally || has_status_effect(/datum/status_effect/debuff/stinky_contact))
 			var/can_see_stink = !isliving(user) // adminghost always sees it
 			if(isliving(user))
@@ -115,7 +115,7 @@
 				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
 				if(reeking_naturally)
-					. += malodorous_examine_text(malodorous_scent_type, malodorous_scent)
+					. += redolent_examine_text(redolent_scent_type, redolent_scent)
 				else
 					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
 					if(contact_stink)

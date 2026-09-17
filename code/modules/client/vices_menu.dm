@@ -247,8 +247,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4,
 		"vice5" = vice5,
 		"vice6" = vice6,
-		"malodorous_type" = malodorous_type,
-		"malodorous_scent" = malodorous_scent,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -320,8 +320,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
 	vice6 = snapshot["vice6"]
-	malodorous_type = snapshot["malodorous_type"]
-	malodorous_scent = snapshot["malodorous_scent"]
+	redolent_type = snapshot["redolent_type"]
+	redolent_scent = snapshot["redolent_scent"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -386,8 +386,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
 		"vice6" = vice6?.type,
-		"malodorous_type" = malodorous_type,
-		"malodorous_scent" = malodorous_scent,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -509,8 +509,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice6 = new vice6_type()
 	else
 		vice6 = null
-	malodorous_type = preset["malodorous_type"] || "Neutral"
-	malodorous_scent = preset["malodorous_scent"] || ""
+	redolent_type = preset["redolent_type"] || "Neutral"
+	redolent_scent = preset["redolent_scent"] || ""
 	
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
@@ -1151,9 +1151,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		html += "<div class='statpack-name'>[current_quirk.name]</div>"
 		html += "<div class='statpack-desc'>[current_quirk.desc]</div>"
 
-		if(istype(current_quirk, /datum/quirk/malodorous))
-			var/scent_display = malodorous_scent || get_default_malodorous_scent(malodorous_type)
-			html += "<div class='statpack-stats' style='margin-top: 4px;'><b>[malodorous_type]</b>: [scent_display]</div>"
+		if(istype(current_quirk, /datum/quirk/redolent))
+			var/scent_display = redolent_scent || get_default_redolent_scent(redolent_type)
+			html += "<div class='statpack-stats' style='margin-top: 4px;'><b>[redolent_type]</b>: [scent_display]</div>"
 
 		if(current_quirk.custom_text)
 			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
@@ -1188,8 +1188,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "</div>"
 
 		html += "<div class='actions'>"
-		if(istype(current_quirk, /datum/quirk/malodorous))
-			html += "<a class='btn btn-customize' href='byond://?src=\ref[src];malodorous_action=configure'>Configure Scent</a>"
+		if(istype(current_quirk, /datum/quirk/redolent))
+			html += "<a class='btn btn-customize' href='byond://?src=\ref[src];redolent_action=configure'>Configure Scent</a>"
 		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=remove;index=[i]'>Remove</a>"
 		html += "</div>"
 		html += "</div>"
@@ -1800,10 +1800,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				open_vices_menu(usr)
 			return
 	
-	if(href_list["malodorous_action"])
-		if(href_list["malodorous_action"] != "configure")
+	if(href_list["redolent_action"])
+		if(href_list["redolent_action"] != "configure")
 			return
-		if(!has_quirk(/datum/quirk/malodorous))
+		if(!has_quirk(/datum/quirk/redolent))
 			return
 
 		var/list/scent_types = list(
@@ -1811,28 +1811,28 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			"Neutral" = "Neutral",
 			"Pleasant" = "Pleasant"
 		)
-		var/type_choice = tgui_input_list(usr, "Choose how others perceive your scent:", "Malodorous", scent_types)
+		var/type_choice = tgui_input_list(usr, "Choose how others perceive your scent:", "Redolent", scent_types)
 		if(!type_choice)
 			return
 		var/new_scent_type = scent_types[type_choice]
 		var/list/scent_actions = list("Describe scent", "Use default")
-		var/scent_action = tgui_input_list(usr, "Describe the scent:", "Malodorous", scent_actions)
+		var/scent_action = tgui_input_list(usr, "Describe the scent:", "Redolent", scent_actions)
 		if(!scent_action)
 			return
 		var/new_scent
 		if(scent_action == "Use default")
-			new_scent = get_default_malodorous_scent(new_scent_type)
+			new_scent = get_default_redolent_scent(new_scent_type)
 		else
-			new_scent = tgui_input_text(usr, "Describe the scent:", "Malodorous", malodorous_scent, max_length = 250, multiline = TRUE)
+			new_scent = tgui_input_text(usr, "Describe the scent:", "Redolent", redolent_scent, max_length = 250, multiline = TRUE)
 			if(isnull(new_scent))
 				return
 			if(!length(trim(new_scent)))
-				new_scent = get_default_malodorous_scent(new_scent_type)
+				new_scent = get_default_redolent_scent(new_scent_type)
 
 		save_to_history()
-		malodorous_type = new_scent_type
-		malodorous_scent = new_scent
-		to_chat(usr, span_notice("Set my Malodorous scent to [malodorous_type]."))
+		redolent_type = new_scent_type
+		redolent_scent = new_scent
+		to_chat(usr, span_notice("Set my Redolent scent to [redolent_type]."))
 		open_vices_menu(usr)
 		return
 

@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /datum/preferences/proc/get_base_points()
 	return 10
 
-/datum/preferences/proc/get_default_malodorous_scent(scent_type)
+/datum/preferences/proc/get_default_redolent_scent(scent_type)
 	switch(scent_type)
 		if("Gross")
 			return "rotting meat and sour sweat"
@@ -309,8 +309,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
 	var/datum/charflaw/vice6
-	var/malodorous_type = "Neutral"
-	var/malodorous_scent = ""
+	var/redolent_type = "Neutral"
+	var/redolent_scent = ""
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER

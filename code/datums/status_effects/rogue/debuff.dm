@@ -1192,8 +1192,8 @@
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
 
-/datum/status_effect/debuff/malodorous_stink
-	id = "malodorous_stink"
+/datum/status_effect/debuff/redolent_stink
+	id = "redolent_stink"
 	duration = 999 MINUTES
 	alert_type = null
 
@@ -1244,27 +1244,27 @@
 		return
 	var/mob/living/carbon/human/H = owner
 	if(!H.can_smell())
-		H.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
 		return
 	if(scent_type != "Pleasant")
-		if(!H.has_status_effect(/datum/status_effect/debuff/malodorous_stink))
-			H.apply_status_effect(/datum/status_effect/debuff/malodorous_stink)
-	else if(H.has_status_effect(/datum/status_effect/debuff/malodorous_stink))
-		H.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
-	if(!force && world.time < last_aura_tick + malodorous_aura_tick_delay(scent_type))
+		if(!H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+			H.apply_status_effect(/datum/status_effect/debuff/redolent_stink)
+	else if(H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	if(!force && world.time < last_aura_tick + redolent_aura_tick_delay(scent_type))
 		return
 	last_aura_tick = world.time
-	malodorous_visual_effect(H, scent_type)
-	malodorous_stink_aura(H, scent_type)
+	redolent_visual_effect(H, scent_type)
+	redolent_stink_aura(H, scent_type)
 
 /datum/status_effect/debuff/stinky_contact/on_remove()
 	to_chat(owner, span_notice("The lingering scent finally fades off me."))
-	if(!HAS_TRAIT(owner, TRAIT_MALODOROUS))
-		owner.remove_status_effect(/datum/status_effect/debuff/malodorous_stink)
+	if(!HAS_TRAIT(owner, TRAIT_REDOLENT))
+		owner.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
 	return ..()
 
 /datum/status_effect/debuff/stinky_contact/proc/get_examine_text()
-	return malodorous_examine_text(scent_type, scent)
+	return redolent_examine_text(scent_type, scent)
 
 /atom/movable/screen/alert/status_effect/debuff/stinky_contact
 	name = "Musked"

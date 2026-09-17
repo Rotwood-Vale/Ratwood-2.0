@@ -104,8 +104,8 @@
 			visible_message(span_info("[user] tries their best to scrub [H] with the [src]."))
 			to_chat(H, span_warning("That's a bit nicer, I guess."))
 			H.add_stress(/datum/stressevent/bath)
-		if(HAS_TRAIT(H, TRAIT_MALODOROUS))
-			H.malodorous_on_bath()
+		if(HAS_TRAIT(H, TRAIT_REDOLENT))
+			H.redolent_on_bath()
 		H.remove_status_effect(/datum/status_effect/debuff/stinky_contact)
 		uses -= 1
 		if(uses == 0)
