@@ -256,7 +256,7 @@
 	name = "Relic - The Mirrors, Everseeing"
 	item_type = /obj/structure/closet/crate/chest/inqreliquary/relic/bmirror/
 	marquescost = 8
-	maximum = 2
+	maximum = 5
 
 /obj/structure/closet/crate/chest/inqreliquary/relic/bmirror/Initialize(mapload)
 	. = ..()
