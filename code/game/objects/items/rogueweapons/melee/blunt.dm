@@ -859,6 +859,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	minstr = 8
 	wdefense_wbonus = 8
+	dropshrink = 1
 	is_silver = TRUE
 	max_integrity = 600 // need a lil more cause destroying walls takes a bit of this
 	demolition_mod = 3.5
