@@ -1085,7 +1085,7 @@
 	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike. </br>'Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.'"
 	icon_state = "psysword"
 	sheathe_icon = "psysword"
-	force = 20
+	force = 25
 	force_wielded = 30
 	minstr = 9
 	wdefense = 6
@@ -1172,7 +1172,7 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
-	force = 20
+	force = 25
 	force_wielded = 30
 	minstr = 11
 	wdefense = 6
