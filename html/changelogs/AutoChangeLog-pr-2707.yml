@@ -1,0 +1,4 @@
+author: "Randumb-Phantomb"
+delete-after: True
+changes:
+  - rscadd: "Inquisitors are now mechanically nobility. They were already totally nobles, but now you can shift-click them and it says it, cause like, come on, they were totally nobles before, trust."
