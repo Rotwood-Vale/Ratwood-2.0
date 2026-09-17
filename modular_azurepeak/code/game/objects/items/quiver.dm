@@ -495,28 +495,28 @@
 		icon_state = "boltpouch0"
 
 /obj/item/quiver/bolt/heavy/standard/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bolt/heavy/silver/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bolt/heavy/stake/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake/A = new()
 		arrows += A
 	update_icon()
 
 /obj/item/quiver/bolt/heavy/stake_silver/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake_silver/A = new()
 		arrows += A

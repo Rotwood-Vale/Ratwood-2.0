@@ -284,7 +284,7 @@
 /obj/item/rogueweapon/scabbard/gwstrap/getonmobprop(tag)
 	..()
 	var/datum/component/holster/HC = GetComponent(/datum/component/holster)
-	if(!HC.sheathed)
+	if(!HC || !HC.sheathed)
 		return
 	if(istype(HC.sheathed, /obj/item/rogueweapon/estoc) || istype(HC.sheathed, /obj/item/rogueweapon/greatsword))
 		switch(tag)
