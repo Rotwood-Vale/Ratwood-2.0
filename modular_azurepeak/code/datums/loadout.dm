@@ -947,26 +947,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Copper Dildo"
 	path = /obj/item/dildo/copper
 
-/datum/loadout_item/steeldildo
-	name = "Steel Dildo"
-	path = /obj/item/dildo/steel
-
-/datum/loadout_item/bronzedildo
-	name = "Bronze Dildo"
-	path = /obj/item/dildo/bronze
-
-/datum/loadout_item/silverdildo
-	name = "Silver Dildo"
-	path = /obj/item/dildo/silver
-
-/datum/loadout_item/golddildo
-	name = "Gold Dildo"
-	path = /obj/item/dildo/gold
-
-/datum/loadout_item/blacksteeldildo
-	name = "Blacksteel Dildo"
-	path = /obj/item/dildo/blacksteel
-
 /datum/loadout_item/cloth_blindfold
 	name = "Blindfold"
 	path = /obj/item/clothing/mask/rogue/blindfold
