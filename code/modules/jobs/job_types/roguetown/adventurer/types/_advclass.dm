@@ -91,7 +91,7 @@
 		if(trait in H.dna.species.banned_traits)
 			continue
 		ADD_TRAIT(H, trait, ADVENTURER_TRAIT)
-	if(HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR))
+	if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
 		H.def_intent_change(INTENT_PARRY)
 
 	if(noble_income)

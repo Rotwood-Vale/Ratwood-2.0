@@ -212,7 +212,7 @@
 	if(job_traits)
 		for(var/trait in job_traits)
 			ADD_TRAIT(H, trait, JOB_TRAIT)
-		if(HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR))
+		if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
 			H.def_intent_change(INTENT_PARRY)
 
 	if(!ishuman(H))
