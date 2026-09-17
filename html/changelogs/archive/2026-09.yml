@@ -546,3 +546,41 @@
       for the purposes of debuffing their stamina regen (like during a fight).
   - balance: To compensate for Fortitude actually working as-written, stamina usage
       reduction is now -30% down from -50%.
+2026-09-17:
+  Ephemeralis:
+  - balance: Psyaltrist now has proper devotion regeneration for a T2 miracle class.
+      (250 -> 400 max devotion, 0.1 (weak) -> 0.5 (minor) regen)
+  Randumb-Phantomb:
+  - qol: dildos now take up 1x1 slot in storage.
+  - qol: dildos of all materials, shapes, and sizes, are available in the loadout
+      menu.
+  - qol: blindfolds are now far easier to create, so kidnappers can tie your eyes
+      shut with 0 skill, tools, and just one cloth.
+  - rscadd: Inquisitors are now mechanically nobility. They were already totally nobles,
+      but now you can shift-click them and it says it, cause like, come on, they were
+      totally nobles before, trust.
+  Yuckuza:
+  - balance: Nerfed thespian crit resistance, replacing it with bleed resistance.
+      Gladitor loadout for thespian is now the only loadout that gets crit resistance.
+  - balance: Bronze heavy armor integ buffed to be on par with steel.
+  - code_imp: bleed rate math adjusted so that bleed resistance 0.5x reduction takes
+      priority over crit resistance 0.8x.
+  zeroisthebiggay:
+  - qol: Guard hotkey. Press G to guard, or assign it in the hotkeys menu if it's
+      not already.
+  - rscadd: With Journeyman unarmed, you can guard while barehanded.
+  - balance: Guard expiring no longer has any form of penalty.
+  - balance: Forcefully and intentionally ending a guard via attacking or swapping
+      hands now always incurs a harsh penalty. It previously did so specifically when
+      you tried to shoot a crossbow, but now it applies to everything done by the
+      person guarding. Let your guard expire instead of trying to end it early.
+  - balance: Disrupting a guard with a feint now incurs the stamina penalty of having
+      your guard kicked or an item being thrown at you in addition to making you vulnerable.
+  - balance: You can guard while sprinting.
+  - balance: You can guard with mage armor.
+  - balance: You can no longer guard while exposed. This shouldn't affect being feinted,
+      but being baited will leave you vulnerable and without the ability to counterattack.
+      Don't get baited.
+  zoktiik:
+  - bugfix: Masochists/Sadists will no longer trigger ~3 screams in quick succession
+      during rough+ interactions.
