@@ -852,9 +852,9 @@
 
 //Psydonite reliquary maul. Intended for FUCKING SHIT UP.
 /obj/item/rogueweapon/mace/maul/grand/psy
-	name = "psydonic maul"
+	name = "L'Melisende"
 	gripped_intents = list(/datum/intent/mace/strike/reach, /datum/intent/mace/sweep, /datum/intent/mace/demolish, /datum/intent/effect/hobble)
-	desc = "A rune-forged maul inspired by dwarven rock-hammers. Created as the faithful's answer to heretics hiding behind walls, it provides the impure with a sermon of exceptional concussive clarity. A good hit with this is guaranteed to give even the most peppy of heretics some deserved 'respite', and in best scenarios, send them to confess directly to HIM."
+	desc = "A lovingly-named, rune-forged maul inspired by dwarven rock-hammers. Created as the faithful's answer to heretics hiding behind walls, it provides the impure with a sermon of exceptional concussive clarity. A good hit with this is guaranteed to give even the most peppy of heretics some deserved 'respite', and in best scenarios, send them to confess directly to HIM."
 	icon_state = "psyhammer"
 	smeltresult = /obj/item/ingot/silverblessed
 	minstr = 8
