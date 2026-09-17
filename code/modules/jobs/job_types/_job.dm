@@ -618,66 +618,6 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
-	if(href_list["jobsubclassinfo"])
-		var/list/dat = list()
-		var/list/subclasses_to_show = job_subclasses
-		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
-			subclasses_to_show = list()
-			for(var/ctag in advclass_cat_rolls)
-				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
-					subclasses_to_show += ctag_class.type
-		for(var/adv in subclasses_to_show)
-			var/datum/advclass/advpath = adv
-			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
-			if(subclass.maximum_possible_slots != -1)
-				dat += "[subclass.name] — <b>"
-				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
-					dat += "FULL!"
-				else
-					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
-				dat += "</b><br>"
-		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>[title]</div>", nwidth = 200, nheight = 300)
-		popup.set_content(dat.Join())
-		popup.open(FALSE)
-		if(winexists(usr, "subclassslots"))
-			winset(usr, "subclassslots", "focus=true")
-	if(href_list["jobadvincomp"])
-		if(!usr)
-			return
-		if(!isdead(usr))
-			return
-		var/mob/dead/D = usr
-		var/client/player = D.client
-		var/list/dat = list()
-		for(var/adv in job_subclasses)
-			var/advdat = ""
-			var/datum/advclass/subclasspath = adv
-			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(subclasspath.name))
-			var/found_issue = FALSE
-			if(length(subclass.virtue_limits))
-				for(var/virtuetype in subclass.virtue_limits)
-					if(istype(player.prefs.virtue, virtuetype))
-						advdat += "[player.prefs.virtue.name]<br>"
-						found_issue = TRUE
-					if(istype(player.prefs.virtuetwo, virtuetype))
-						advdat += "[player.prefs.virtuetwo.name]<br>"
-						found_issue = TRUE
-
-			if(length(subclass.vice_limits))
-				for(var/vicetype in subclass.vice_limits)
-					for(var/vice in list(player.prefs.vice1, player.prefs.vice2, player.prefs.vice3, player.prefs.vice4, player.prefs.vice5, player.prefs.charflaw))
-						var/datum/charflaw/cf = vice
-						if(istype(vice, vicetype))
-							advdat += "[cf.name]<br>"
-							found_issue = TRUE
-			if(found_issue)
-				dat += "<font color = '#e4e1e1'><b>[subclass::name]</b></font><br>"
-				dat += advdat
-		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>Subclass Incompatibilities</div>", nwidth = 200, nheight = 300)
-		popup.set_content(dat.Join())
-		popup.open(FALSE)
-		if(winexists(usr, "subclassslots"))
-			winset(usr, "subclassslots", "focus=true")
 	. = ..()
 
 /datum/job/proc/has_limited_subclasses()
@@ -688,24 +628,3 @@
 		if(initial(subclass.maximum_possible_slots) != -1)
 			return TRUE
 	return FALSE
-
-/datum/job/proc/prefs_subclass_compatibility(client/player)
-	if(!player)
-		return FALSE
-	if(!player.prefs)
-		return FALSE
-	if(!length(job_subclasses))
-		return FALSE
-	for(var/adv in job_subclasses)
-		var/datum/advclass/subclasspath = adv
-		var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(subclasspath.name))
-		if(length(subclass.virtue_limits))
-			for(var/virtuetype in subclass.virtue_limits)
-				if(istype(player.prefs.virtue, virtuetype) || istype(player.prefs.virtuetwo, virtuetype))
-					return TRUE
-
-		if(length(subclass.vice_limits))
-			for(var/vicetype in subclass.vice_limits)
-				for(var/vice in list(player.prefs.vice1, player.prefs.vice2, player.prefs.vice3, player.prefs.vice4, player.prefs.vice5, player.prefs.charflaw))
-					if(istype(vice, vicetype))
-						return TRUE

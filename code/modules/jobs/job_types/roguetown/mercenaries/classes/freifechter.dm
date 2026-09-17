@@ -25,7 +25,7 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE
 	)
-	virtue_limits = list(/datum/virtue/combat/dualwielder)
+	virtue_restrictions = list(/datum/virtue/combat/dualwielder)
 	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_SPEED = 12, STAT_CONSTITUTION = 10)
 
 /datum/outfit/job/roguetown/mercenary/freelancer/pre_equip(mob/living/carbon/human/H)
@@ -151,6 +151,7 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE
 	)
+	virtue_restrictions = list(/datum/virtue/combat/dualwielder)
 	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10, STAT_WILLPOWER = 12, STAT_SPEED = 12)
 
 /datum/outfit/job/roguetown/mercenary/freelancer_sabrist/pre_equip(mob/living/carbon/human/H)

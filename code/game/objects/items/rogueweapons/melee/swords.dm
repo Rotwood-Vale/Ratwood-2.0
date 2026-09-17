@@ -121,8 +121,6 @@
 	attack_verb = list("masterfully tears", "artfully slits", "adroitly hacks")
 	damfactor = 1.2
 	penfactor = 50
-	max_intent_damage = 35
-	min_intent_damage = 31
 	swingdelay = 1
 
 /datum/intent/sword/thrust/long/master
@@ -131,7 +129,6 @@
 	desc = "Enter a long guard and thrust forward with your entire upper body while advancing, maximizing the effectiveness of the thrust."
 	attack_verb =  list("skillfully perforates", "artfully punctures", "deftly sticks")
 	damfactor = 1.15
-	max_intent_damage = 40.5
 
 /datum/intent/effect/daze/longsword/clinch
 	name = "clinch & swipe"
@@ -143,7 +140,6 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	damfactor = 0.7
-	max_intent_damage = 22
 	swingdelay = 3
 	clickcd = 10
 	recovery = 6
@@ -164,7 +160,6 @@
 	swingdelay = 16
 	damfactor = 0.86
 	blade_class = BCLASS_HALFSWORD
-	max_intent_damage = 30
 
 /datum/intent/sword/thrust/long/halfsword/lesser
 	name = "halbschwert"
@@ -1598,7 +1593,6 @@
 	clickcd = 7
 	damfactor = 1.25
 	penfactor = 55
-	max_intent_damage = 29.7
 
 /datum/intent/effect/daze/freisabre
 	name = "uszkodzić"

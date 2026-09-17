@@ -44,7 +44,6 @@
 	swingdelay = 6
 	damfactor = 1.5
 	penfactor = 35
-	max_intent_damage = 54
 	reach = 2
 	effective_range = 2
 	icon_state = "inlance"

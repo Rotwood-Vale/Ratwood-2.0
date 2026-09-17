@@ -60,10 +60,6 @@
 	var/penfactor = 0
 	/// Whether the intent itself has integrity damage modifier. Used for rend.
 	var/intent_intdamage_factor = 1
-	/// Minimum damage from the intent.
-	var/min_intent_damage = 0
-	/// Maximum damage from the intent.
-	var/max_intent_damage = 100
 	/// Changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
 	var/item_d_type = "blunt"
 	var/charging_slowdown = 0
