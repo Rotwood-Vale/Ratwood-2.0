@@ -1752,7 +1752,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_file" = 'icons/obj/structures/apiary.dmi',
 		"icon_state" = "beebox-empty"
 	),
-	"stone_wall_deco" = list(
+	"wall_deco_stone" = list(
 		"name" = "Stone Wall Deco",
 		"category" = "Religion & Statues",
 		"layer_type" = "obj",
@@ -2633,7 +2633,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	if(!istype(L)) return
 
 	if(action == "scan_terrain")
-		var/radius = min(params["radius"] || 13, 13)
+		var/radius = min(params["radius"] || MAX_SPELL_RADIUS, MAX_SPELL_RADIUS)
 		var/max_z = clamp(text2num(params["max_floors"]) || 2, 2, 4)
 		var/turf/center = get_turf(L)
 		var/list/scanned = list()
@@ -2674,7 +2674,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 				var/dz = text2num(parts[3])
 				var/ddir = length(parts) >= 4 ? text2num(parts[4]) : 2
 
-				if(abs(dx) > 13 || abs(dy) > 13)
+				if(abs(dx) > MAX_SPELL_RADIUS || abs(dy) > MAX_SPELL_RADIUS)
 					continue
 
 				safe_data += list(list(
@@ -2708,7 +2708,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	sparks_amt = 2
 	invocation_type = "whisper"
 	invocations = list("Struo et Creo...", "Forma Materia...")
-	range = 7
+	range = 1
 	clothes_req = FALSE
 	human_req = FALSE
 
@@ -2726,6 +2726,10 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		to_chat(caller, span_warning("Too far away!"))
 		return TRUE
 
+	if(get_turf(caller) != T && !caller.Adjacent(T))
+		to_chat(caller, span_warning("You cannot reach that area through obstacles!"))
+		return TRUE
+		
 	perform(list(T), user=caller)
 	remove_ranged_ability(span_notice("You release the weave."))
 	return FALSE
