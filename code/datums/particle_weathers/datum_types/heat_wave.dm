@@ -52,9 +52,9 @@
 /datum/particle_weather/heat_wave/weather_act(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.apply_weather_temperature(rand(1.5,5))
+		H.apply_weather_temperature(rand(1.5,4))
 	else
-		L.adjust_bodytemperature(rand(1.5,5))
+		L.adjust_bodytemperature(rand(1.5,4))
 /datum/particle_weather/heat_wave/tick()
 
 	if(!COOLDOWN_FINISHED(src, heat_ripple_spawn))
@@ -120,7 +120,7 @@
 /obj/effect/temp_visual/heat_ripple/proc/start_ripple()
 
 	spawn(rand(0,5))
-		while(src)
+		while(!QDELETED(src))
 
 			var/matrix/M1 = matrix()
 			var/matrix/M2 = matrix()
@@ -131,15 +131,19 @@
 			M2.Scale(0.98, 1.02)
 			M2.Translate(rand(-0.3,0.3), rand(0,0.6))
 
+			var/first_step_time = rand(6, 10)
 			animate(src,
 				transform = M1,
-				time = rand(6,10),
+				time = first_step_time,
 				easing = SINE_EASING)
 
+			var/second_step_time = rand(6, 10)
 			animate(src,
 				transform = M2,
-				time = rand(6,10),
+				time = second_step_time,
 				easing = SINE_EASING)
+			// LET OTHER STUFF ON THE SERVER DO SHIT, PLEASE
+			sleep(first_step_time + second_step_time)
 
 /obj/effect/temp_visual/heat_ripple/proc/fade_in()
 	animate(src, alpha = rand(20,40), time = 5)

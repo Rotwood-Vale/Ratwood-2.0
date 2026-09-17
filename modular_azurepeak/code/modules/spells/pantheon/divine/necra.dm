@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/avert
 	name = "Borrowed Time"
 	desc = "Shield your fellow man from the Undermaiden's gaze, preventing them from slipping into death for as long as your faith and fatigue may muster."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "borrowtime"
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
@@ -44,7 +46,7 @@
 		user.stamina_add(2.5)
 
 		living_target.adjustOxyLoss(-10)
-		living_target.blood_volume = max((BLOOD_VOLUME_SURVIVE * 1.5), living_target.blood_volume)
+		living_target.set_blood_volume(max((BLOOD_VOLUME_SURVIVE * 1.5), living_target.get_blood_volume()))
 
 		if (living_target.health <= 5)
 			if (prob(5))
@@ -63,6 +65,8 @@
 /obj/effect/proc_holder/spell/targeted/abrogation
 	name = "Abrogation"
 	desc = "Debuffs targeted undead as long as they remain near you, slowly getting set on fire if they stay."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 8
 	overlay_state = "necra"
 	releasedrain = 30
@@ -186,6 +190,8 @@
 /obj/effect/proc_holder/spell/invoked/necra_vow
 	name = "Vow to Necra"
 	desc = "Make a vow to Necra. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 1
 	overlay_state = "necra"
 	releasedrain = 30
@@ -254,6 +260,8 @@
 /obj/effect/proc_holder/spell/invoked/necras_sight
 	name = "Necra's Sight"
 	desc = "Mark a psycross or a grave marker, and peer through them."
+	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
+	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	releasedrain = 30
 	chargetime = 0 SECONDS
 	recharge_time = 10 SECONDS
@@ -261,9 +269,7 @@
 	invocation_type = "whisper"
 	invocations = list("Undermaiden guide my gaze...")
 	associated_skill = /datum/skill/magic/holy
-	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	overlay_state = "necraeye"
-	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	action_icon_state = "necraeye"
 	miracle = TRUE
 	devotion_cost = 30
@@ -372,17 +378,21 @@
 
 // Replace logic when at cap
 	if(length(marked_objects) >= holyskill)
-		to_chat(user, span_warning("I'm focusing on too many graves already. One slips from my mind..."))
+		// Build a display list: label -> obj
+		var/list/choices = list()
+		for(var/obj/graves as anything in marked_objects)
+			choices[marked_objects[graves]] = graves
 
-		var/old_obj = marked_objects[last_index]
-		marked_objects -= old_obj
+		var/removing_object = tgui_input_list(user, "I'm focusing on too many graves already. Do I let one slip from my mind..?", "FORGET", choices, marked_objects[1])
 
-		marked_objects[O] = label
+		if(!removing_object)
+			to_chat(user, span_warning("I choose to forget nothing."))
+			revert_cast()
+			return FALSE
 
-		last_index++
-		if(last_index > holyskill)
-			last_index = 1
-		return
+		to_chat(user, span_warning("[removing_object] slips from my mind...")) // show the labled grave first
+		removing_object = choices[removing_object] 	// then get the correct object from the label...
+		marked_objects -= removing_object 			// ...to remove from the marked list.
 
 	to_chat(user, span_info("I whisper a name and mark the grave for later use..."))
 	marked_objects[O] = label

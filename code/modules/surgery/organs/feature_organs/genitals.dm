@@ -53,6 +53,16 @@
 	penis_type = PENIS_TYPE_EQUINE_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
+/obj/item/organ/penis/equine_slit
+	name = "equine penis"
+	penis_type = PENIS_TYPE_EQUINE
+	sheath_type = SHEATH_TYPE_SLIT
+
+/obj/item/organ/penis/equine_knotted_slit
+	name = "equine knotted penis"
+	penis_type = PENIS_TYPE_EQUINE_KNOTTED
+	sheath_type = SHEATH_TYPE_SLIT
+
 /obj/item/organ/penis/tapered_mammal
 	name = "tapered penis"
 	penis_type = PENIS_TYPE_TAPERED
@@ -129,7 +139,7 @@
 	if(pregnant)
 		to_chat(owner, span_love("I feel a surge of warmth in my belly again..."))
 		return FALSE
-	to_chat(owner, span_love("I feel a surge of warmth in my belly, I’m definitely pregnant!"))
+	to_chat(owner, span_love("I feel a surge of warmth in my belly, I'm definitely pregnant!"))
 	pregnant = TRUE
 	//TODO add a way to trigger lactating when pregnancy happens
 	return TRUE

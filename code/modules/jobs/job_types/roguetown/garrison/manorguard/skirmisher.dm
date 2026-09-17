@@ -39,7 +39,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Crossbow","Bow","Sling")
@@ -67,7 +67,7 @@
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 		backpack_contents = list(
-			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/rogueweapon/huntingknife/combat/messer = 1,
 			/obj/item/rope/chain = 1,
 			/obj/item/storage/keyring/guardcastle = 1,
 			/obj/item/rogueweapon/scabbard/sheath = 1,

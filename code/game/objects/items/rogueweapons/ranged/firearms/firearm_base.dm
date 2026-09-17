@@ -275,7 +275,7 @@ At least, it should. Fingers crossed.
 			shake_camera(M, 3, 1)
 
 	if(prob(accident_chance))
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
 		user.visible_message("<span class='danger'>[user] accidentally burnt themselves while firing the [src].</span>")
 		user.emote("painscream")

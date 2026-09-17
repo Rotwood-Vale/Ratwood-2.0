@@ -79,7 +79,7 @@
 							/obj/item/rogueweapon/scabbard/sheath = 1,
 							/obj/item/mini_flagpole/fisher
 							)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/random

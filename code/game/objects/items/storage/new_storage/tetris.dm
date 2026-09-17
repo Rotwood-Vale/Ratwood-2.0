@@ -802,7 +802,7 @@
 	icon_state = "close"
 	var/locked = TRUE
 
-/atom/movable/screen/close/Click(location, control, params)
+/atom/movable/screen/close/handle_click(location, control, params)
 	. = ..()
 	var/datum/component/storage/storage_master = master
 	var/list/modifiers = params2list(params)

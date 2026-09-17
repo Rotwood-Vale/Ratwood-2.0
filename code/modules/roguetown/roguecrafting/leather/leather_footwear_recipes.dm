@@ -1,6 +1,7 @@
 /datum/crafting_recipe/roguetown/leather/footwear
 	abstract_type = /datum/crafting_recipe/roguetown/leather/footwear
 	category = "Footwear"
+	display_category = ITEM_CAT_ARMOR_BOOTS
 
 /datum/crafting_recipe/roguetown/leather/footwear/shoes
 	name = "shoes"
@@ -24,6 +25,13 @@
 /datum/crafting_recipe/roguetown/leather/footwear/boots_heavy_b
 	name = "dress boots"
 	result = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
+	reqs = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fur = 1)
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/leather/footwear/boots_heavy_footwrap
+	name = "hardened leather footwraps"
+	result = /obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
 	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fur = 1)
 	craftdiff = 3
@@ -52,4 +60,11 @@
 	result = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	reqs = list(/obj/item/natural/hide/cured = 3,
 				/obj/item/natural/fur = 1)
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/leather/footwear/boots/thigh
+	name = "thigh boots"
+	result = /obj/item/clothing/shoes/roguetown/boots/hand/thigh
+	reqs = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/cloth = 1) ///Padding for comfort ya know?
 	craftdiff = 4

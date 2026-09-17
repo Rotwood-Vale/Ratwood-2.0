@@ -31,8 +31,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PROCESSING_LOBBY		(1<<11)
 #define PROCESSING_DAMOVERLAYS	(1<<12)
 #define PROCESSING_ICON_UPDATES	(1<<13)
-/// Placed on datums that have a static, constant reference. Primarily only used for turfs.
-#define DF_STATIC_OBJECT (1<<14)
 
 //FLAGS BITMASK
 
@@ -46,18 +44,17 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NODECONSTRUCT_1				(1<<7)
 /// item has priority to check when entering or leaving
 #define ON_BORDER_1					(1<<8)
-/// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1		(1<<9)
-#define HOLOGRAM_1					(1<<10)
+/// is a hologram, not a real object
+#define HOLOGRAM_1					(1<<9)
 /// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-#define TESLA_IGNORE_1				(1<<11)
+#define TESLA_IGNORE_1				(1<<10)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1				(1<<12)
+#define INITIALIZED_1				(1<<11)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1			    (1<<13)
+#define ADMIN_SPAWNED_1			    (1<<12)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<14)
-#define HOARDMASTER_SPAWNED_1		(1<<15)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<13)
+#define HOARDMASTER_SPAWNED_1		(1<<14)
 // figure out if thing came from a hoardmaster
 
 //turf-only flags

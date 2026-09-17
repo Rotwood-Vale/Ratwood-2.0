@@ -95,6 +95,13 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
+	//past the two stage decapitation returns, so a first stage neck sever is not logged as a limb loss;
+	//the casterless branch is player-only or NPC mobs eating a body would spam it
+	if(user)
+		log_combat(user, C, "dismembered", null, "([src.name])", severe = TRUE)
+	else if(C.client || C.mind)
+		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
+
 	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
 		C.emote("painscream")
 	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
@@ -164,9 +171,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	
 	// Admin dismember bypasses all armor and resistance checks
-	
 	if(C.status_flags & GODMODE)
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
@@ -338,6 +343,7 @@
 	if(organ_slowdown)
 		was_owner.remove_movespeed_modifier("[src.type]_slow", update = TRUE)
 	was_owner.bodyparts -= src
+	was_owner.bodyparts_by_zone -= body_zone
 	owner = null
 
 	if(ishuman(was_owner))
@@ -350,7 +356,8 @@
 	was_owner.update_health_hud() //update the healthdoll
 	was_owner.mark_zone_selector_hud_dirty()
 	was_owner.queue_icon_update(PENDING_UPDATE_BODY)
-	was_owner.update_mobility()
+	if(!special)
+		was_owner.update_mobility()
 
 	// drop_location = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 	if(!drop_location)
@@ -458,10 +465,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -476,10 +483,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -492,10 +499,10 @@
 		if(HAS_TRAIT_FROM(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR))
 			REMOVE_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -547,6 +554,9 @@
 	moveToNullspace()
 	owner = C
 	C.bodyparts += src
+	if(C.bodyparts_by_zone[body_zone])
+		CRASH("Mob [C] already has a bodypart [C.bodyparts_by_zone[body_zone]] for zone [body_zone], can't add [src]!")
+	C.bodyparts_by_zone[body_zone] = src
 	if(src.body_zone == BODY_ZONE_TAUR)
 		ADD_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 	if(held_index)
@@ -598,8 +608,9 @@
 		C.add_movespeed_modifier("[src.type]_slow", update=TRUE, priority=100, flags=NONE, override=FALSE, multiplicative_slowdown=organ_slowdown, movetypes=GROUND, blacklisted_movetypes=NONE, conflict=FALSE)
 	C.updatehealth()
 	C.mark_zone_selector_hud_dirty()
-	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)	
-	C.update_mobility()
+	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)
+	if(!special)
+		C.update_mobility()
 	return TRUE
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)

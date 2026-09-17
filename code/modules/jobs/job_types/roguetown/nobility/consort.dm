@@ -21,6 +21,7 @@
 	min_pq = 5
 	max_pq = null
 	round_contrib_points = 3
+	social_rank = SOCIAL_RANK_NOBLE
 	advjob_examine = TRUE
 	job_subclasses = list(
 		/datum/advclass/lady/heartthrob,
@@ -193,6 +194,7 @@
 	spawn_positions = 0
 	display_order = JDO_LADY
 	give_bank_account = TRUE
+	social_rank = SOCIAL_RANK_NOBLE // I mean I guess
 
 /datum/outfit/job/roguetown/lady
 	job_bitflag = BITFLAG_ROYALTY

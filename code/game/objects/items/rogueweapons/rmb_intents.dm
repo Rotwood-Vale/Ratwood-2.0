@@ -122,8 +122,6 @@
 		return
 	if(user.incapacitated())
 		return
-	if(!user.mind)
-		return
 	if(user.has_status_effect(/datum/status_effect/debuff/specialcd))
 		return
 
@@ -161,8 +159,6 @@
 		return
 	if(user.incapacitated())
 		return
-	if(!user.mind)
-		return
 	if(user.has_status_effect(/datum/status_effect/debuff/feintcd))
 		return
 	var/mob/living/L = target
@@ -188,9 +184,9 @@
 	if(I)
 		if(I.associated_skill)
 			ourskill = user.get_skill_level(I.associated_skill)
-		if(L.mind)
+		if(L.skills)
 			I = L.get_active_held_item()
-			if(I?.associated_skill)
+			if(I && I?.associated_skill)
 				theirskill = L.get_skill_level(I.associated_skill)
 	perc += (ourskill - theirskill)*15 	//skill is of the essence
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
@@ -242,8 +238,9 @@
 		if(user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced or immobilized
 			return
 		if(user.m_intent == MOVE_INTENT_RUN)
-			to_chat(user, span_warning("I can't focus on this while running."))
-			return
+			if(!user.get_buckled_animal_mount())
+				to_chat(user, span_warning("I can't focus on this while running."))
+				return
 		if(user.magearmor == FALSE && HAS_TRAIT(user, TRAIT_MAGEARMOR))	//The magearmor is ACTIVE, so we can't Guard. (Yes, it's active while FALSE / 0.)
 			to_chat(user, span_warning("I'm already focusing on my mage armor!"))
 			return

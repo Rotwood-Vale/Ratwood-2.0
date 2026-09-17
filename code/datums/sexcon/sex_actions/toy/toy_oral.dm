@@ -2,19 +2,17 @@
 	name = "Swallow toy"
 	category = SEX_CATEGORY_PENETRATE
 	user_sex_part = SEX_PART_JAWS
-	target_sex_part = SEX_PART_JAWS
+	solo = TRUE
 
 /datum/sex_action/toy_oral/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/toy_oral/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_in_either_hand(user))
 		return FALSE
@@ -26,7 +24,7 @@
 
 /datum/sex_action/toy_oral/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = get_dildo_in_either_hand(user)
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] blows \the [dildo]..."))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] blows \the [dildo]..."))
 	user.sexcon.oralcourse_noise(user)
 
 	if(dildo)

@@ -127,6 +127,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	QDEL_NULL(sleep_adv)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
+	RemoveAllSpells()
 	return ..()
 
 /proc/get_minds(role)
@@ -477,7 +478,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/recall_targets(mob/recipient, window=1)
 	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
 	for(var/mob/living/carbon in GLOB.mob_living_list) // Iterate through all mobs in the world
-		if((carbon.real_name != recipient.real_name) && ((carbon.has_flaw(/datum/charflaw/assassintarget)) && (!istype(carbon, /mob/living/carbon/human/dummy))))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
+		if((carbon.real_name != recipient.real_name) && (HAS_TRAIT(carbon, TRAIT_ASSASSIN_TARGET)) && (!istype(carbon, /mob/living/carbon/human/dummy)))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
 			output += "<br>[carbon.real_name]"
 			output += "<br>[carbon.real_name]"
 			if (carbon.job)
@@ -778,7 +779,6 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	var/success = FALSE
 	if(!spell)
 		return FALSE
 	for(var/X in spell_list)
@@ -786,13 +786,15 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(S.name == spell.name && S.type == spell.type) //match by name and type to avoid issues with multiple instances of the same spell
 			spell_list -= S
 			qdel(S)
-			success = TRUE
 			return TRUE // We're deleting only one spell
-	return success
+	return FALSE
 
 /datum/mind/proc/RemoveAllSpells()
-	for(var/obj/effect/proc_holder/S in spell_list)
-		RemoveSpell(S)
+	. = FALSE
+	for(var/obj/effect/proc_holder/S as anything in spell_list)
+		spell_list -= S
+		qdel(S)
+		. = TRUE
 
 //removes spells that have miracle = true on them
 /datum/mind/proc/RemoveAllMiracles()
@@ -820,7 +822,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
 
-/datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
+/datum/mind/proc/disrupt_spells(delay, list/exceptions = new())
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		for(var/type in exceptions)
@@ -1035,13 +1037,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
 							I.original_name = I.name // Store original name before renaming
-							I.name = custom_name
+							I.name = sanitize(custom_name)
 							// Log to game log
 							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
 						// Apply custom description if set
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
-							I.desc = custom_desc
+							I.desc = html_encode(custom_desc)
 
 						user.put_in_hands(I)
 

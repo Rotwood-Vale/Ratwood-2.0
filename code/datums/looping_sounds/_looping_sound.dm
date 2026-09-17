@@ -313,10 +313,10 @@ GLOBAL_LIST_EMPTY(created_sound_groups)
 
 /datum/looping_sound/proc/set_parent(new_parent)
 	if(parent)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(parent, COMSIG_QDELETING)
 	if(new_parent)
 		parent = new_parent
-		RegisterSignal(new_parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
+		RegisterSignal(new_parent, COMSIG_QDELETING, PROC_REF(handle_parent_del))
 
 /datum/looping_sound/proc/handle_parent_del(datum/source)
 	SIGNAL_HANDLER

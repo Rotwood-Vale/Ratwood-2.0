@@ -793,6 +793,37 @@
 	icon_state = "bosskey"
 	lockid = "tribalchief"
 
+//Rockhill Slaver/Baron and Related Keys
+/obj/item/roguekey/baron
+	name = "Lowtown Manor Key"
+	desc = "A key to the Lowtown Manor, home of the Baron"
+	icon_state = "brownkey"
+	lockid = "BaronManor"
+
+/obj/item/roguekey/baronguest
+	name = "Lowtown Manor Guest Key"
+	desc = "A key to the guest rooms of the Lowtown Manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorGuest"
+
+/obj/item/roguekey/slaverhouse
+	name = "Slaver's Office Key"
+	desc = "A key to the Slaver Office in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaverHome"
+
+/obj/item/roguekey/slaverdungeon
+	name = "Slaver's Dungeon Key"
+	desc = "A key to the Slaver Dungeon in Lowtown"
+	icon_state = "spikekey"
+	lockid = "DTManorCells"
+
+/obj/item/roguekey/slaverpillory
+	name = "Auction Pillory Key"
+	desc = "A key to the Slaver Pillories in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaveAuction"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"
@@ -801,19 +832,19 @@
 
 /obj/item/roguekey/custom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = (input(user, "What would you name this key?", "", "") as text)
+		var/input = stripped_input(user, "What would you name this key?", "", "", MAX_NAME_LEN)
 		if(input)
 			name = input + " key"
 			to_chat(user, span_notice("You rename the key to [name]."))
 
 /obj/item/roguekey/lord/attack(mob/M, mob/user, def_zone) // lord's key opens any chastity device without checks and never breaks, because the lord is merciful like that. Petition the duke to have your cage unlocked unlucky squire! 
-	var/handled = modular_chastity_attack(M, user, def_zone)
+	var/handled = chastity_attack(M, user, def_zone)
 	if(!isnull(handled))
 		return handled
 	return ..()
 
 /obj/item/lockpick/attack(mob/M, mob/user, def_zone) // handles lockpicking code for chastity devices. Yes, this is intentionally separate from the roguekey/chastity attack proc, because it has a chance to fail and break the pick, and lord's key can bypass the checks and never break.
-	var/handled = modular_chastity_attack(M, user, def_zone)
+	var/handled = chastity_attack(M, user, def_zone)
 	if(!isnull(handled))
 		return handled
 	return ..()
@@ -822,7 +853,7 @@
 // If the target has no chastity device (or isn't human), fall through to ..() which triggers the
 // touch_attack dispel logic — so the spell still cancels correctly on non-device targets.
 /obj/item/melee/touch_attack/lesserknock/attack(mob/M, mob/user, def_zone)
-	var/handled = modular_chastity_attack(M, user, def_zone)
+	var/handled = chastity_attack(M, user, def_zone)
 	if(!isnull(handled))
 		return handled
 	return ..()
@@ -913,7 +944,7 @@
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		src.holdname = stripped_input(user, "What would you like to name this?", "", "", MAX_NAME_LEN)
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))
 	else

@@ -6,6 +6,15 @@
 #define SEX_ZONE_MOUTH				(1<<4)
 #define SEX_ZONE_CHEST				(1<<5)
 #define SEX_ZONE_CHEST_GRAB			(1<<6)
+#define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
+
+//Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
+	if(sexcon?.suppress_action_messages)
+		return
+	if(!message)
+		return
+	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
 	/// The user and the owner of the controller
@@ -63,6 +72,10 @@
 	var/suppress_moan = FALSE
 	/// Allow players to decide if they want to subtly do this action or not (only for actions that can be done subtly)
 	var/do_subtle_action = FALSE
+	/// Suppress repeated action messages unless key action state changes.
+	var/suppress_action_messages = FALSE
+	/// Tracks whether the one-time orison indulgence notice has been shown for the current action.
+	var/orison_indulgence_notice_shown = FALSE
 	/// Knot based variables
 	var/do_knot_action = FALSE
 	var/do_knot_action_as_bottom = FALSE
@@ -77,6 +90,10 @@
 	var/mob/living/carbon/knotted_recipient = null // whom took the knot
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
+	/// If TRUE, hide genital visuals only. The organs still function but are now a True/False toggle
+	var/hide_pintle_visuals = FALSE
+	/// Bypasses positioning and exposure checks entirely
+	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
 	var/static/list/stealth_force_adjectives 	= list("subtly", "sneakily", "covertly", "stealthily", "quietly")
 	var/static/list/low_force_adjectives 		= list("gently", "carefully", "tenderly", "gingerly", "delicately", "lazily")
@@ -238,11 +255,30 @@
 
 /datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
+	if(!bodypart)
+		return FALSE
 
 	var/self_target = FALSE
 	var/datum/sex_controller/user_controller = user.sexcon
 	if(user_controller.target == user)
 		self_target = TRUE
+
+	// Freeuse: target has opted to skip positioning/exposure checks entirely.
+	// Adjacency is still enforced so people can't reach across the map.
+	if(target.sexcon.freeuse)
+		if(src.ranged_los_action)
+			if(!(target in view(src.ranged_los_distance, user)))
+				return FALSE
+		else if(!user.sexcon.Adjacent_Or_Closet(target))
+			return FALSE
+
+		if(!isnull(user_controller.current_action) && user_controller.current_action == src.type)
+			target.sexcon.update_current_accessible_body_zones(location, grabs)
+
+		if(user == target && !(bodypart in user_controller.using_zones) && user_controller.current_action == SEX_ACTION(src))
+			user_controller.using_zones += location
+
+		return TRUE
 
 	var/signalargs = list(src, bodypart, self_target)
 	signalargs += args
@@ -256,8 +292,12 @@
 	if(!bodypart)
 		return FALSE
 
-	if(!(sigbitflags & SKIP_ADJACENCY_CHECK) && !user.sexcon.Adjacent_Or_Closet(target))
-		return FALSE
+	if(!(sigbitflags & SKIP_ADJACENCY_CHECK))
+		if(src.ranged_los_action)
+			if(!(target in view(src.ranged_los_distance, user)))
+				return FALSE
+		else if(!user.sexcon.Adjacent_Or_Closet(target))
+			return FALSE
 
 	if(!self_target && !isnull(target.buckled) && istype(target.buckled, /obj/structure/bondage/gloryhole)) // gloryhole buckled mobs ignore tile/grab checks
 		sigbitflags |= (SKIP_GRAB_CHECK|SKIP_TILE_CHECK)
@@ -378,6 +418,8 @@
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
 				external.refresh_cum()
+		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
+			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
@@ -418,6 +460,10 @@
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
+		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
+			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		else if(splashed_user.has_flaw(/datum/charflaw/malodorous) && !user.has_flaw(/datum/charflaw/malodorous))
+			user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -428,7 +474,8 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation(consume_charge)
-	after_intimate_climax(oral, splashed_user)
+	if(consume_charge)
+		after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
@@ -587,6 +634,12 @@
 		var/is_oral_knot = (orifice & SEX_PART_JAWS) != SEX_PART_NULL
 		var/knotted_climax_msg = is_oral_knot ? "[user] climaxes down [knotted_recipient]'s throat!" : "[user] climaxes deep inside [knotted_recipient]!"
 		user.visible_message(span_love(knotted_climax_msg), vision_distance = (suppress_moan ? 1 : DEFAULT_MESSAGE_RANGE))
+		//Rolls impreg on deep climax in relevant scenarios
+		if(!is_oral_knot)
+			if(orifice & SEX_PART_CUNT)
+				user.try_impregnate(knotted_recipient)
+			else if((orifice & SEX_PART_ANUS) && HAS_TRAIT(knotted_recipient, TRAIT_BAOTHA_FERTILITY_BOON) && !knotted_recipient.getorganslot(ORGAN_SLOT_VAGINA))
+				user.try_impregnate(knotted_recipient)
 		cum_into(oral = is_oral_knot, splashed_user = knotted_recipient, orifice = orifice, skip_knot_try = TRUE)
 		return
 	var/climax_msg = "[user] makes a mess!"
@@ -942,13 +995,13 @@
 	if(pain_amt >= PAIN_HIGH_EFFECT)
 		var/pain_msg = pick(list("IT HURTS!!!", "IT NEEDS TO STOP!!!", "I CAN'T TAKE IT ANYMORE!!!"))
 		to_chat(user, span_boldwarning(pain_msg))
-		user.flash_fullscreen("redflash2")
+		user.fullscreen_redflash("redflash2")
 		if(prob(70) && user.stat == CONSCIOUS)
 			user.visible_message(span_warning("[user] shudders in pain!"))
 	else if(pain_amt >= PAIN_MED_EFFECT)
 		var/pain_msg = pick(list("It hurts!", "It pains me!"))
 		to_chat(user, span_boldwarning(pain_msg))
-		user.flash_fullscreen("redflash1")
+		user.fullscreen_redflash("redflash1")
 		if(prob(40) && user.stat == CONSCIOUS)
 			user.visible_message(span_warning("[user] shudders in pain!"))
 	else if(pain_amt >= PAIN_MILD_EFFECT)
@@ -1132,6 +1185,9 @@
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "PUSSY EXPOSED" : "PUSSY CONCEALED"]</a>"
 	else
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
+	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
+		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
 		if(action.subtle_supported)
@@ -1175,8 +1231,6 @@
 		if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
 			continue
 		if(!action.shows_on_menu(user, target))
-			continue
-		if(action_blocked_by_intimate_state(action, TRUE))
 			continue
 		dat += "<td>"
 		var/link = ""
@@ -1230,6 +1284,12 @@
 			else
 				bottom_exposed = !bottom_exposed
 				update_exposure()
+		if("toggle_hide_pintle_visuals")
+			hide_pintle_visuals = !hide_pintle_visuals
+			update_exposure()
+		if("toggle_freeuse")
+			freeuse = !freeuse
+			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
 			if(aphrodisiac > 1 && amount > 0)
@@ -1267,6 +1327,7 @@
 		action.on_finish(user, target)
 	desire_stop = FALSE
 	user.doing = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = null
 	bed = null
 	target_on_bed = FALSE
@@ -1290,6 +1351,7 @@
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
+	orison_indulgence_notice_shown = FALSE
 	current_action = action_type
 	bed = null
 	target_on_bed = FALSE
@@ -1305,14 +1367,19 @@
 	// Do action loop
 	var/performed_action_type = current_action
 	var/datum/sex_action/action = SEX_ACTION(current_action)
+	var/base_speed = -1
+	var/base_force = -1
+	var/base_knot_mode = FALSE
+	var/subtle_message_tick_counter = 0
+	var/was_subtle_mode = action.subtle_supported
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
+	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
 	while(TRUE)
-		if(!isnull(target.client) && target.client.prefs.sexable == FALSE) //Vrell - Needs changed to let me test sex mechanics solo
+		if(!target?.client?.prefs?.sexable) // no prefs/sexability means we should safely stop the loop
 			break
 		if(!user.stamina_add(action.stamina_cost * get_stamina_cost_multiplier()))
 			break
@@ -1326,8 +1393,33 @@
 			break
 		if(desire_stop)
 			break
+		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
+		var/current_knot_mode = FALSE
+		if(action.knot_on_finish)
+			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
+				current_knot_mode = do_knot_action
+			else if((action.target_sex_part & SEX_PART_COCK) && target?.sexcon?.knot_penis_type())
+				current_knot_mode = do_knot_action_as_bottom
+		var/show_action_message = (speed != base_speed || force != base_force)
+		if(current_knot_mode != base_knot_mode)
+			show_action_message = TRUE
+		if(!is_subtle_mode && was_subtle_mode)
+			show_action_message = TRUE
+		if(!show_action_message && is_subtle_mode)
+			subtle_message_tick_counter++
+			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
+				show_action_message = TRUE
+				subtle_message_tick_counter = 0
+		else if(show_action_message)
+			subtle_message_tick_counter = 0
+		was_subtle_mode = is_subtle_mode
+		base_speed = speed
+		base_force = force
+		base_knot_mode = current_knot_mode
+		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
 			break
@@ -1343,35 +1435,11 @@
 		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
-	if(action_blocked_by_intimate_state(action))
-		return FALSE
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
-/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
-/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
-	if(!action || !user)
-		return FALSE
-	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
-		return FALSE
-
-	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
-		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
-		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	return FALSE
 
 /datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
-	var/modular_result = modular_chastity_content_enabled_for(H)
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!H)
 		return FALSE
 	if(!H.client?.prefs)
@@ -1379,10 +1447,6 @@
 	return !!H.client.prefs.chastenable
 
 /datum/sex_controller/proc/chastity_content_enabled_for_pair()
-	var/modular_result = modular_chastity_content_enabled_for_pair()
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!chastity_content_enabled_for(user))
 		return FALSE
 	if(target && target != user && !chastity_content_enabled_for(target))
@@ -1613,7 +1677,7 @@
 			target.apply_status_effect(/datum/status_effect/quivering)
 			target.confused += 25
 			target.OffBalance(30 SECONDS)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
 				if(prob(10))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
@@ -1621,7 +1685,7 @@
 		
 /datum/sex_controller/proc/try_jaw_crush(mob/living/carbon/human/target)
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong) && force > SEX_FORCE_MID)
-		if(user.client.prefs.extreme_erp && target.client.prefs.extreme_erp)
+		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/mouth))
 				if(prob(10))
 					var/obj/item/bodypart/mouth = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_MOUTH))

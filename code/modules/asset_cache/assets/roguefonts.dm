@@ -1,6 +1,11 @@
 /datum/asset/simple/roguefonts
 	keep_local_name = TRUE
 	assets = list(
+		"lora-regular.ttf" = 'interface/fonts/lora-regular.ttf',
+		"lora-italic.ttf" = 'interface/fonts/lora-italic.ttf',
+		"lora-bold.ttf" = 'interface/fonts/lora-bold.ttf',
+		"lora-medium.ttf" = 'interface/fonts/lora-medium.ttf',
+		"medievalsharp.ttf" = 'interface/fonts/medievalsharp.ttf',
 		"pterra.ttf" = 'interface/fonts/pterra.ttf',
 		"newrocker.ttf" = 'interface/fonts/newrocker.ttf',
 		"nosfer.ttf" = 'interface/fonts/nosfer.ttf',
@@ -26,6 +31,7 @@
 		"posh.ttf" = 'interface/fonts/languages/posh.ttf',
 		"etruscan.ttf" = 'interface/fonts/languages/etruscan.ttf',
 		"gronnic.ttf" = 'interface/fonts/languages/gronnic.ttf',
+		"hammerholdian.ttf" = 'interface/fonts/languages/hammeholdian.ttf',
 		"aavnic.ttf" = 'interface/fonts/languages/aavnic.ttf',
 		"merar.ttf" = 'interface/fonts/languages/merar.ttf',
 		"abyssal.ttf" = 'interface/fonts/languages/abyssal.ttf',

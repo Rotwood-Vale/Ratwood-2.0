@@ -7,6 +7,7 @@
 #define MUTE_ADMINHELP	(1<<3)
 #define MUTE_DEADCHAT	(1<<4)
 #define MUTE_LOOC		(1<<5)
+#define MUTE_SLOOC		(1<<6)
 #define MUTE_ALL		(~0)
 
 //Some constants for DB_Ban
@@ -67,8 +68,6 @@
 #define ADMIN_COORDJMP(src) "[src ? "[COORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"
 #define ADMIN_VERBOSEJMP(src) "[src ? "[AREACOORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"
 #define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
-#define ADMIN_LUAVIEW(state) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)]'>VIEW STATE</a>)"
-#define ADMIN_LUAVIEW_CHUNK(state, log_index) "(<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];lua_state=[REF(state)];log_index=[log_index]'>VIEW CODE</a>)"
 #define ADMIN_CRS(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];cursemenu=[REF(user)]'>CRS</a>)"
 
 #define ADMIN_PUNISHMENT_LIGHTNING "Lightning bolt"

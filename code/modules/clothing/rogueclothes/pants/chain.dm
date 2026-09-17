@@ -23,6 +23,7 @@
 /obj/item/clothing/under/roguetown/chainlegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs
 	name = "brigandine chausses"
@@ -30,7 +31,7 @@
 	icon_state = "splintlegs"
 	item_state = "splintlegs"
 	max_integrity = ARMOR_INT_LEG_BRIGANDINE
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = SOFTHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -110,6 +111,18 @@
 	color = "#bb9696"
 	anvilrepair = null
 
+/obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
+	name = "bronze chain kilt"
+	desc = "An ankle-length bronze maille skirt, warding cuts against the thighs without slowing the feet."
+	icon_state = "bchainkilt"
+	item_state = "bchainkilt"
+	sleevetype = "bchainkilt"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE + 25//275, slight big extra cause medium
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
+	alternate_worn_layer = (SHIRT_LAYER)
+	smeltresult = /obj/item/ingot/bronze
+
 /obj/item/clothing/under/roguetown/chainlegs/iron/kilt
 	name = "iron chain kilt"
 	desc = "Interlinked metal rings that drape down all the way to the ankles."
@@ -122,9 +135,12 @@
 
 /obj/item/clothing/under/roguetown/chainlegs/captain
 	name = "captain's chausses"
-	desc = "Cuisses made of plated steel, offering additional protection against blunt force. These are specially fitted for the captain."
+	desc = "Cuisses made of plated steel, offering additional protection against blunt force and projectiles. These are specially fitted for the captain."
 	icon_state = "capplateleg"
 	item_state = "capplateleg"
+	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	max_integrity = ARMOR_INT_LEG_STEEL_PLATE // Integrity of plate chausses.
+	armor_class = ARMOR_CLASS_HEAVY
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	dropshrink = 0.8

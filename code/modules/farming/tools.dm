@@ -17,13 +17,14 @@
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
+	is_tool = TRUE
 
 /datum/intent/flailthresh
 	name = "thresh"
 	icon_state = "inthresh"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 
@@ -65,6 +66,14 @@
 	color = "#bb9696"
 	sellprice = 15
 
+/obj/item/rogueweapon/thresher/blacksteel
+	name = "blacksteel thresher"
+	desc = "Hard work is only 'hard work' if you don't have the right tool for the job."
+	force = 20
+	force_wielded = 25
+	icon_state = "blacksteelthresh"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /obj/item/rogueweapon/sickle
 	force = 10
@@ -84,6 +93,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_height = 64
 	grid_width = 32
+	is_tool = TRUE
 
 /obj/item/rogueweapon/sickle/examine(mob/user)
 	. = ..()
@@ -109,6 +119,15 @@
 	icon_state = "csickle"
 	smeltresult = /obj/item/ingot/copper
 
+/obj/item/rogueweapon/sickle/blacksteel
+	name = "blacksteel sickle"
+	desc = "The burden of a dae's farmstead, accomplished in mere seconds. Why don't they make more of these?"
+	force = 20
+	icon_state = "blacksteelsickle"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 450
+	max_blade_int = 450
+
 /obj/item/rogueweapon/hoe
 	force = 10
 	force_wielded = 15
@@ -127,8 +146,9 @@
 	wlength = WLENGTH_NORMAL
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
-	var/hoe_damage = null //the durability damage recieved for every work cycle
-	var/work_time = 3 SECONDS // the time it takes to make new soil or till soil
+	hoe_damage = null
+	work_time = 3 SECONDS
+	is_tool = TRUE
 
 /obj/item/rogueweapon/hoe/decrepit
 	name = "decrepit hoe"
@@ -142,6 +162,15 @@
 	name = "copper hoe"
 	icon_state = "choe"
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/rogueweapon/hoe/blacksteel
+	force = 20
+	force_wielded = 25
+	name = "blacksteel hoe"
+	desc = "Wasting such valuable alloys on a dirty hoe? Shame, shame, shame! At least it can till the soil like a dagger-through-butter."
+	icon_state = "blacksteelhoe"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /obj/item/rogueweapon/hoe/stone
 	force = 7
@@ -211,7 +240,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/hoe/attack_turf(turf/T, mob/living/user)
+/obj/item/rogueweapon/attack_turf(turf/T, mob/living/user)
 	if(user.used_intent.type == /datum/intent/till)
 		if(user.get_skill_level(/datum/skill/labor/farming) == SKILL_LEVEL_LEGENDARY) //check if the user has legendary farming skill
 			work_time = 0.5 SECONDS //if legendary skill, do_afters take half a second instead of 3
@@ -271,7 +300,7 @@
 	icon_state = "inhoe"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /*
@@ -315,6 +344,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
+	is_tool = TRUE
 
 /obj/item/rogueweapon/pitchfork/examine(mob/user)
 	. = ..()
@@ -338,20 +368,28 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	icon_state = "cfork"
+	icon_state = "cpitchfork"
 	smeltresult = /obj/item/ingot/copper
+
+/obj/item/rogueweapon/pitchfork/blacksteel
+	force = 20
+	force_wielded = 25
+	name = "blacksteel pitchfork"
+	desc = "You're either the richest peasant in all of Psydonia, or the poorest noble."
+	icon_state = "blacksteelpitchfork"
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 500
 
 /datum/intent/pforkdump
 	name = "scoop"
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 

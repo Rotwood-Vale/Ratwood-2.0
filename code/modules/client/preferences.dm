@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 GLOBAL_LIST_EMPTY(chosen_names)
 
+#define MAX_SONG_TITLE_LENGTH 60
+
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -56,6 +58,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/tgui_theme = "azure_default"
+	var/parchment_skin = "leatherbound"
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/floating_text_toggles = TOGGLES_TEXT_DEFAULT
@@ -66,6 +69,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	var/icon/admin_ghost_icon
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
@@ -85,6 +89,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
+	var/list/quirks = list()
 	var/selected_title = "None"
 	var/age = AGE_ADULT						//age of character
 	var/datum/origin/origin
@@ -97,6 +102,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/mutant_skin = FALSE			//Use mutant color as skin color instead of skin_tone
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
 	var/extra_language_1 = "None" // Additional triumph language slot 1
@@ -105,7 +111,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pitch = 1
 	var/detail_color = "000"
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
-	var/static/datum/species/default_species = new /datum/species/human/northern()
+	var/const/datum/species/default_species = /datum/species/human/northern
 	var/datum/patron/selected_patron
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
@@ -113,11 +119,20 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/friendlyGenders = list("male" = "masculine", "female" = "feminine")
 	var/phobia = "spiders"
 	var/shake = TRUE
+	var/no_redflash = FALSE
 	var/sexable = FALSE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/sensitive_brands = FALSE
+	var/facial_brands = FALSE
+	var/pubes = FALSE
+	var/pits = FALSE
+	var/descriptor_color = FALSE
+	/// If a cursed collar can be equipped to them at all
+	var/cursed_collarable = FALSE
+	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
 	var/restricted_species_pref = null
@@ -148,10 +163,49 @@ GLOBAL_LIST_EMPTY(chosen_names)
 // Points gained from selected vices (+1 per selected vice)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		if(vars["vice[i]"])
 			points++
 	return points
+
+// Quirk points gained from selected vices. Your first vice doesn't give any at all.
+/datum/preferences/proc/get_quirk_points_earned()
+	var/points = 0
+	for(var/i = 2 to 6)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice)
+			points += vice.point_value
+	return points
+
+/datum/preferences/proc/get_quirk_points_spent()
+	var/points = 0
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			points += Q.point_cost
+	return points
+
+/datum/preferences/proc/get_quirk_points_remaining()
+	return get_quirk_points_earned() - get_quirk_points_spent()
+
+// For when you don't have enough quirk points, you can pay the collateral with triumphs
+/datum/preferences/proc/get_triumph_collateral()
+	var/remaining = get_quirk_points_remaining()
+	if(remaining >= 0)
+		return 0
+	return -remaining * 2
+
+/datum/preferences/proc/get_quirk_typepaths()
+	var/list/types = list()
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			types += Q.type
+	return types
+
+/datum/preferences/proc/has_quirk(quirk_typepath)
+	for(var/datum/quirk/Q in quirks)
+		if(Q && Q.type == quirk_typepath)
+			return TRUE
+	return FALSE
 
 // Points spent on selected loadout items (uses triumph_cost as point cost)
 /datum/preferences/proc/get_loadout_points_spent()
@@ -206,9 +260,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
+	var/top_examine = FALSE
+	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
+	var/autowoodcut = TRUE
+	var/autopicking = TRUE
 	var/runmode = FALSE
 	var/no_examine_blocks = FALSE
 	var/no_autopunctuate = FALSE
@@ -235,13 +293,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/datum/charflaw/charflaw
-	// Multiple vice selection (up to 5, at least 1 required)
+	// Multiple vice selection (up to 6, slot 1 falls back to No Flaw if cleared)
 	var/datum/charflaw/vice1
 	var/datum/charflaw/vice2
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
-
+	var/datum/charflaw/vice6
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -278,6 +336,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
+	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
 
 	// PATREON
@@ -366,6 +425,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/datum/advclass/preview_subclass
 
+	var/preview_erect_state = ERECT_STATE_NONE//toggle pintle floppy, half-chubbed, or full mast on preview dummy.
+
 	var/tgui_pref = TRUE
 
 	var/race_bonus
@@ -403,7 +464,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(!combat_music)
 		combat_music = GLOB.cmode_tracks_by_type[default_cmusic_type]
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C.update_movement_keys()
+	C?.update_movement_keys()
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -499,6 +560,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "Legacy"]</a>"
 			dat += "<br>"
 			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [get_tgui_theme_display_name()]</a>"
+			dat += "<br>"
+			dat += "<a href='?_src_=prefs;preference=parchment_skin'>Parchment: [get_parchment_skin_display_name()]</a>"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:center'>"
@@ -629,6 +692,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtue = GLOB.virtues[/datum/virtue/none]
 				if(virtuetwo.type in pref_species.restricted_virtues)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
+			if(length(pref_species.restricted_quirks))
+				for(var/datum/quirk/Q in quirks)
+					if(Q.type in pref_species.restricted_quirks)
+						quirks -= Q
 			if(statpack.name != "Virtuous")
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
 			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
@@ -643,7 +710,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 			dat += "<b>Unrevivable:</b> <a href='?_src_=prefs;preference=dnr;task=input'>[dnr_pref ? "Yes" : "No"]</a><BR>"
 
-			dat += "<b>Be a Familiar:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a>"
+			dat += "<b>Be a Familiar:</b><a href='?_src_=prefs;preference=familiar_prefs;task=input'>Familiar Preferences</a><br>"
+
+			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "No Preference"]</a><br>"
 
 			dat += "<br><b>Gnoll Customization:</b><a href='?_src_=prefs;preference=gnoll_prefs;task=input'>Gnoll Preferences</a>"
 
@@ -688,6 +757,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<div style='text-align: center'><br>Subclass Preview:<br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.name]" : "None"]</a></div>"
 			else
 				preview_subclass = null
+			var/arousal_preview_label
+			switch(preview_erect_state)
+				if(ERECT_STATE_PARTIAL)
+					arousal_preview_label = "Partial"
+				if(ERECT_STATE_HARD)
+					arousal_preview_label = "Hard"
+				else
+					arousal_preview_label = "None"
+			dat += "<div style='text-align: center'><br>Arousal Preview:<br> <a href='?_src_=prefs;preference=preview_erect_state'>[arousal_preview_label]</a></div>"
 			// Rightmost column, 40% width
 			dat += "<td width=40% valign='top'>"
 			dat += "<h2>Body</h2>"
@@ -700,8 +778,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 				var/skin_tone_wording = pref_species.skin_tone_wording // Both the skintone names and the word swap here is useless fluff
 
-				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
-				dat += "<br>"
+				dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a><br>"
+				if(pref_species.mutant_skin_option)
+					dat += "<b>Mutant Skintone:</b> <a href='?_src_=prefs;preference=mutant_skin;task=input'>[mutant_skin ? "Yes" : "No"]</a><br>"
 
 			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
@@ -846,7 +925,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 //			dat += "<b>Play Lobby Music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Enabled":"Disabled"]</a><br>"
 
-
+			dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map || "Default"]</a><br>"
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>Special Role Settings</h2>"
@@ -996,6 +1075,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				if(PLAYER_READY_TO_PLAY)
 					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
 					log_game("([user || "NO KEY"]) readied as ([real_name])")
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 		else
 			if(!is_active_migrant())
 				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
@@ -1004,6 +1084,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
 			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
 			dat += " - <a href='?_src_=prefs;preference=observe'>SPECTATE</a>"
+			dat += "<br><a href='byond://?src=[REF(N)];villains=1'><b><font color='red'>VILLAINS</font></b></a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 
@@ -1011,6 +1092,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	dat += "<td width='33%' align='right'>"
 	dat += "<b>Be voice:</b> <a href='?_src_=prefs;preference=schizo_voice'>[(toggles & SCHIZO_VOICE) ? "Enabled":"Disabled"]</a>"
 	dat += "<br><b>Toggle Admin Sounds:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Enabled":"Disabled"]</a>"
+	dat += "<br><a href='?_src_=prefs;preference=close_prefs'><b>CLOSE</b></a>"
 	dat += "</td>"
 	dat += "</tr>"
 	dat += "</table>"
@@ -1101,6 +1183,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		for(var/datum/job/job in sortList(SSjob.occupations, GLOBAL_PROC_REF(cmp_job_display_asc)))
 			if(!job.spawn_positions)
 				continue
+			if(job.title in GLOB.villain_positions)
+				continue
 
 			index += 1
 //			if((index >= limit) || (job.title in splitJobs))
@@ -1153,7 +1237,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						if(name)
 							name += ", "
@@ -1178,7 +1262,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))
@@ -1831,6 +1915,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						family = FAMILY_NONE
 						to_chat(user, "<font color='red'>Classes reset.</font>")
 
+				if("map_preference")
+					var/list/available_maps = list("Default")
+
+					for(var/map_name in config.maplist)
+						available_maps += map_name
+
+					var/new_map = tgui_input_list(user, "Choose your preferred map.", "MAP PREFERENCE", available_maps)
+
+					if(new_map)
+						if(new_map == "Default")
+							preferred_map = null
+						else
+							preferred_map = new_map
+
+						to_chat(user, span_notice("Preferred map set to: [new_map]"))
+
+					return
 				// LETHALSTONE EDIT: add pronouns
 				if ("pronouns")
 					var pronouns_input = tgui_input_list(user, "Choose your character's pronouns", "PRONOUNS", GLOB.pronouns_list)
@@ -1971,6 +2072,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						/datum/language/kazengunese,
 						/datum/language/etruscan,
 						/datum/language/gronnic,
+						/datum/language/hammerholdian,
 						/datum/language/otavan,
 						/datum/language/aavnic,
 						/datum/language/merar
@@ -2364,7 +2466,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					log_game("[user] has set their song artist.")
 
 				if("change_title")
-					var/new_title = tgui_input_text(user, "Input your song's title:", "Song title", song_title,  encode = FALSE)
+					var/new_title = tgui_input_text(user, "Input your song's title (Character limit is [MAX_SONG_TITLE_LENGTH]):", "Song title", song_title,  encode = FALSE, max_length = MAX_SONG_TITLE_LENGTH)
 					if(new_title== null)
 						return
 					if(new_title == "")
@@ -2475,6 +2577,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if("update_mutant_colors")
 					update_mutant_colors = !update_mutant_colors
+
+				if("mutant_skin")
+					if(pref_species.mutant_skin_option)
+						mutant_skin = !mutant_skin
+						try_update_mutant_colors()
 
 				if("dnr")
 					dnr_pref = !dnr_pref
@@ -2639,18 +2746,18 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				if ("preferred_map")
 					var/maplist = list()
-					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.map_name])"
-					for (var/M in config.maplist)
+					var/no_preference = "No Preference"
+					for(var/M in config.maplist)
 						var/datum/map_config/VM = config.maplist[M]
+
 						if(!VM.votable)
 							continue
+
 						var/friendlyname = "[VM.map_name] "
 						if (VM.voteweight <= 0)
 							friendlyname += " (disabled)"
 						maplist[friendlyname] = VM.map_name
-					maplist[default] = null
+					maplist[no_preference] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in sortList(maplist)
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
@@ -2842,6 +2949,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					tgui_lock = !tgui_lock
 				if("tgui_theme")
 					setTguiStyle()
+				if("parchment_skin")
+					cycle_parchment_skin()
 				if("winflash")
 					windowflashing = !windowflashing
 
@@ -2952,6 +3061,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
 
+				if("close_prefs")
+					winshow(user, "preferencess_window", FALSE)
+					user << browse(null, "window=preferences_browser")
+					return
+
 				if("migrants")
 					migrant.show_ui()
 					return
@@ -2982,6 +3096,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences_browser")
 					user << browse(null, "window=lobby_window")
 					return
+
+				if("preview_erect_state")
+					switch(preview_erect_state)
+						if(ERECT_STATE_NONE)
+							preview_erect_state = ERECT_STATE_PARTIAL
+						if(ERECT_STATE_PARTIAL)
+							preview_erect_state = ERECT_STATE_HARD
+						else
+							preview_erect_state = ERECT_STATE_NONE
 
 				if("save")
 					save_preferences()
@@ -3119,11 +3242,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(charflaw)
 		var/obj/item/bodypart/O = character.get_bodypart(BODY_ZONE_R_ARM)
 		if(O)
-			O.drop_limb()
+			O.drop_limb(TRUE)
 			qdel(O)
 		O = character.get_bodypart(BODY_ZONE_L_ARM)
 		if(O)
-			O.drop_limb()
+			O.drop_limb(TRUE)
 			qdel(O)
 		character.regenerate_limb(BODY_ZONE_R_ARM)
 		character.regenerate_limb(BODY_ZONE_L_ARM)
@@ -3192,6 +3315,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
+	character.mutant_skin = mutant_skin
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
 	character.detail = detail
@@ -3208,7 +3332,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	// Apply multiple vices system
 	character.vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
@@ -3290,7 +3414,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.update_hair()
 		character.update_body_parts(redraw = TRUE)
 
-	character.char_accent = char_accent
+	if (character.char_accent in GLOB.character_accents)
+		character.char_accent = char_accent
+	else
+		char_accent = "No accent"
+		character.char_accent = char_accent
 
 	if(culinary_preferences)
 		apply_culinary_preferences(character)
@@ -3420,3 +3548,5 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		dat += "[V.custom_text]"
 		dat += "</font>"
 	return dat
+
+#undef MAX_SONG_TITLE_LENGTH

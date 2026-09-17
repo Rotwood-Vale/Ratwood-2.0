@@ -35,7 +35,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
 
-	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
+	if(!error_last_seen || !error_cooldown) // A runtime is occurring too early in start-up initialization
 		return ..()
 
 	var/erroruid = "[E.file][E.line]"
@@ -99,14 +99,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()
-#ifndef DISABLE_DREAMLUAU
-	var/list/state_stack = GLOB.lua_state_stack
-	var/is_lua_call = length(state_stack)
-	var/list/lua_stacks = list()
-	if(is_lua_call)
-		for(var/level in 1 to state_stack.len)
-			lua_stacks += list(splittext(DREAMLUAU_GET_TRACEBACK(level), "\n"))
-#endif
 	if(LAZYLEN(splitlines) > ERROR_USEFUL_LEN) // If there aren't at least three lines, there's no info
 		for(var/line in splitlines)
 			if(LAZYLEN(line) < 3 || findtext(line, "source file:") || findtext(line, "usr.loc:"))
@@ -123,10 +115,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 				desclines += line
 	if(usrinfo) //If this info isn't null, it hasn't been added yet
 		desclines.Add(usrinfo)
-#ifndef DISABLE_DREAMLUAU
-	if(is_lua_call)
-		SSlua.log_involved_runtime(E, desclines, lua_stacks)
-#endif
 	if(silencing)
 		desclines += "  (This error will now be silenced for [DisplayTimeText(configured_error_silence_time)])"
 	if(GLOB.error_cache)

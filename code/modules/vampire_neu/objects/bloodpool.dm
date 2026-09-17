@@ -45,12 +45,12 @@
 			to_chat(user, span_notice("- [project.display_name]: [project.paid_amount]/[project.total_cost] ([progress_percent]%)"))
 
 /obj/structure/vampire/bloodpool/attack_hand(mob/living/user)
-	var/datum/antagonist/vampire/vampire = user.mind.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/vampire/vampire = user.mind?.has_antag_datum(/datum/antagonist/vampire)
 	if(!vampire)
 		return
 
 	var/lord = FALSE
-	if(user.clan.clan_leader == user)
+	if(user.clan?.clan_leader == user)
 		lord = TRUE
 
 	var/list/available_options_lord = list()
@@ -157,11 +157,16 @@
 		if("View Details")
 			project.show_details(user)
 		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
+			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", "Yes", "No") == "Yes")
 				cancel_project(project_type)
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
 	var/datum/vampire_project/project = active_projects[project_type]
+	if(!project)
+		return
+
+	// Detach before running effects, so a second call can't run them (or a refund) again
+	active_projects.Remove(project_type)
 
 	// Notify all contributors
 	for(var/mob/living/contributor in project.contributors)
@@ -171,15 +176,17 @@
 	// Execute project completion
 	project.on_complete(src)
 
-	active_projects.Remove(project_type)
 	qdel(project)
 
 /obj/structure/vampire/bloodpool/proc/cancel_project(project_type)
 	var/datum/vampire_project/project = active_projects[project_type]
+	if(!project)
+		return
+
+	active_projects.Remove(project_type)
 
 	project.on_cancel()
 
-	active_projects.Remove(project_type)
 	qdel(project)
 
 /datum/vampire_project
@@ -187,6 +194,7 @@
 	var/description = "A mysterious undertaking."
 	var/total_cost = 1000
 	var/paid_amount = 0
+	/// Assoc list of contributor mob -> vitae they personally paid in, so refunds can't mint blood
 	var/list/contributors = list()
 	var/obj/structure/vampire/bloodpool/bloodpool
 	var/mob/living/initiator
@@ -217,29 +225,38 @@
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
 
-/datum/vampire_project/proc/handle_contribution(mob/living/user)
+/datum/vampire_project/proc/get_max_contribution(mob/living/user)
 	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
-	var/max_contribution = min(user.bloodpool, total_cost - paid_amount)
-	if(!lord)
-		if(display_name != "Wicked Plate" || display_name != "World Anchor")
-			max_contribution = min(user.bloodpool, (total_cost - paid_amount) - 100)
+	var/headroom = total_cost - paid_amount
+	if(!lord && (display_name != "Wicked Plate") && (display_name != "World Anchor"))
+		headroom -= 100
+	return min(user.get_bloodpool(), headroom)
+
+/datum/vampire_project/proc/handle_contribution(mob/living/user)
+	var/max_contribution = get_max_contribution(user)
+	if(max_contribution <= 0)
+		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
+		return
 
 	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
 
 	if(!contribution || contribution <= 0)
 		return
 
-	contribution = clamp(contribution, 1, max_contribution)
+	// Revalidate after the blocking prompt - the project may have finished, been cancelled, or been paid down further
+	if(QDELETED(src) || !bloodpool || !(bloodpool.active_projects[type] == src))
+		to_chat(user, span_warning("[display_name] is no longer underway."))
+		return
 
-	if(user.bloodpool < contribution)
+	if(user.get_bloodpool() < contribution)
 		to_chat(user, span_warning("I do not have enough vitae."))
 		return
 
+	contribution = clamp(round(contribution), 1, max_contribution)
+
 	user.adjust_bloodpool(-contribution)
 	paid_amount += contribution
-
-	if(!(user in contributors))
-		contributors += user
+	contributors[user] += contribution
 
 	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
 
@@ -256,14 +273,16 @@
 	return
 
 /datum/vampire_project/proc/on_cancel()
-	// Refund vitae to contributors proportionally
-	var/total_refund = paid_amount
+	// Refund each contributor exactly what they paid in, then zero the ledger so it can't be paid out twice
 	for(var/mob/living/contributor in contributors)
-		// For simplicity, equal refund to all contributors
-		// You could track individual contributions if needed
-		var/refund_amount = total_refund / contributors.len
+		var/refund_amount = contributors[contributor]
+		if(refund_amount <= 0)
+			continue
 		contributor.adjust_bloodpool(refund_amount)
 		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
+
+	contributors.Cut()
+	paid_amount = 0
 
 // Specific project types
 /datum/vampire_project/power_growth
@@ -285,7 +304,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_2
 			break
@@ -305,7 +324,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_2
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_3
 			break
@@ -325,7 +344,7 @@
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_3
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_4
 			break
@@ -344,12 +363,12 @@
 			var/mob/living/carbon/human/lord_body = user
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
-			lord_body.maxbloodpool += 1000
+			lord_body.adjust_maxbloodpool(1000)
 			to_chat(user, span_danger("I AM ANCIENT, I AM THE LAND. EVEN THE SUN BOWS TO ME."))
 			lord.ascended = TRUE
 			var/list/all_subordinates = user.clan_position.get_all_subordinates()
 			for(var/mob/living/carbon/human/subordinate_body  in all_subordinates)
-				subordinate_body.maxbloodpool += 1000
+				subordinate_body.adjust_maxbloodpool(1000)
 				for(var/S in MOBSTATS)
 					subordinate_body.change_stat(S, 2)
 

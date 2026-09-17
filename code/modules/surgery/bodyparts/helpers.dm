@@ -2,43 +2,41 @@
 /mob/living/proc/get_bodypart(zone)
 	return
 
+/mob/living/carbon
+	var/alist/bodyparts_by_zone = alist()
+
 // Proposed change: Use check_zone instead of doing two loops.
+// ^ doing that breaks taurs, but it's still a good way to make it faster
 /mob/living/carbon/get_bodypart(zone)
 	RETURN_TYPE(/obj/item/bodypart)
 	if(!zone)
 		zone = BODY_ZONE_CHEST
+	zone = check_zone(zone)
+	. = bodyparts_by_zone[zone]
+	if(.)
+		return // we found it, return early
+	// taur jank here
+	// this could still break other cases where subtargets and check_zone don't match
+	// but those are edge-cases and should be avoided/rewritten anyway
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
-			return bodypart
 		for(var/subzone in bodypart.subtargets)
 			if(subzone != zone)
 				continue
-			return bodypart
-
-/mob/living/proc/get_bodypart_shallow(zone)
-	return
-
-/mob/living/carbon/get_bodypart_shallow(zone)
-	RETURN_TYPE(/obj/item/bodypart)
-	if(!zone)
-		zone = BODY_ZONE_CHEST
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone == zone)
 			return bodypart
 
 /mob/living/carbon/proc/get_bodypart_complex(list/zones)
 	if(!length(zones))
 		zones = list(BODY_ZONE_CHEST)
 	var/list/targets = list()
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(bodypart.body_zone in zones)
-			targets += bodypart
+	for(var/zone in zones)
+		var/zone_part = bodyparts_by_zone[zone]
+		if(zone_part)
+			targets += zone_part
 		else
-			for(var/subzone in bodypart.subtargets)
-				if(!(subzone in zones))
-					continue
-				targets += bodypart
-				break
+			var/resolved_zone = check_zone(zone)
+			zone_part = bodyparts_by_zone[resolved_zone]
+			if(zone_part)
+				targets += zone_part
 	if(length(targets))
 		return pick(targets)
 
@@ -161,11 +159,7 @@
 	return null
 
 /mob/living/carbon/get_taur_tail()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/affecting = X
-		if(affecting.body_zone == BODY_ZONE_TAUR)
-			return affecting
-	return null
+	return get_bodypart(BODY_ZONE_TAUR)
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by
 /mob/living/carbon/proc/newBodyPart(zone, robotic, fixed_icon)
@@ -225,33 +219,35 @@
 			H.dropItemToGround(H.shoes)
 
 /mob/living/carbon/proc/ensure_not_taur()
-	var/needs_new_legs = FALSE
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/O = X
-		if(O.body_zone == BODY_ZONE_TAUR)
-			O.drop_limb(1)
-			qdel(O)
-			needs_new_legs = TRUE
+	SHOULD_NOT_SLEEP(TRUE)
+	var/obj/item/bodypart/taur_part = get_bodypart(BODY_ZONE_TAUR)
+	if(taur_part)
+		taur_part.drop_limb(TRUE)
+		qdel(taur_part)
 
-	if(needs_new_legs)
-		var/obj/item/bodypart/N
-		N = new /obj/item/bodypart/l_leg
-		N.attach_limb(src)
+		var/obj/item/bodypart/new_bodypart
+		new_bodypart = new /obj/item/bodypart/l_leg
+		new_bodypart.attach_limb(src, TRUE)
 
-		N = new /obj/item/bodypart/r_leg
-		N.attach_limb(src)
+		new_bodypart = new /obj/item/bodypart/r_leg
+		new_bodypart.attach_limb(src, TRUE)
+	
+	update_mobility()
 
 	// make sure we unapply our clipmasks
 	regenerate_icons()
-	set_resting(FALSE)
 
 /mob/living/carbon/proc/Taurize(taur_type = /obj/item/bodypart/taur, color = "#ffffff", markings = "#ffffff", tertiary = "#ffffff")
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/O = X
-		// drop taur tails too
-		if(O.body_part == LEG_LEFT || O.body_part == LEG_RIGHT || O.body_zone == BODY_ZONE_TAUR)
-			O.drop_limb(1)
-			qdel(O)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/obj/item/bodypart/left_leg = get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/bodypart/right_leg = get_bodypart(BODY_ZONE_R_LEG)
+	var/obj/item/bodypart/taur_part = get_bodypart(BODY_ZONE_TAUR)
+	if(left_leg)
+		left_leg.drop_limb(TRUE)
+		qdel(left_leg)
+	if(right_leg)
+		right_leg.drop_limb(TRUE)
+		qdel(right_leg)
 	
 	var/obj/item/bodypart/taur/T = new taur_type()
 	T.taur_color = color
@@ -259,8 +255,9 @@
 		T.taur_markings = markings
 	if(tertiary)
 		T.taur_tertiary = tertiary
-	T.attach_limb(src)
+	T.replace_limb(src, TRUE)
+	if(taur_part)
+		qdel(taur_part)
 
 	// make sure we apply our clipmasks
 	regenerate_icons()
-	set_resting(FALSE)

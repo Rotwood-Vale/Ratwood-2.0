@@ -30,11 +30,12 @@
 			var/datum/component/forging/forging_comp = current_workpiece.GetComponent(/datum/component/forging)
 			if(forging_comp?.needed_item && T.hingot && istype(T.hingot, forging_comp.needed_item))
 				var/obj/item/consumed = T.hingot
+				forging_comp.current_recipe?.track_input_quality(consumed)
 				SEND_SIGNAL(current_workpiece, COMSIG_ITEM_ADDED_TO_FORGING, consumed, user)
 				if(istype(consumed, /obj/item/ingot))
 					var/obj/item/ingot/I = consumed
-					forging_comp.material_quality += I.quality
-					previous_material_quality = I.quality
+					forging_comp.material_quality += I.item_quality
+					previous_material_quality = I.item_quality
 				else
 					forging_comp.material_quality += previous_material_quality
 				forging_comp.current_recipe.num_of_materials += 1
@@ -119,7 +120,7 @@
 				var/total_chance = 7 * user.get_skill_level(forging_comp.current_recipe.appro_skill) * user.STAPER/10 * hammer.quality
 				var/breakthrough = 0
 				if(prob((1 + total_chance)*advance_multiplier))
-					user.flash_fullscreen("whiteflash")
+					user.fullscreen_redflash("whiteflash")
 					var/datum/effect_system/spark_spread/S = new()
 					var/turf/front = get_turf(src)
 					S.set_up(1, 1, front)
@@ -141,11 +142,12 @@
 	if(current_workpiece)
 		var/datum/component/forging/forging_comp = current_workpiece.GetComponent(/datum/component/forging)
 		if(forging_comp?.needed_item && istype(W, forging_comp.needed_item))
+			forging_comp.current_recipe?.track_input_quality(W)
 			SEND_SIGNAL(current_workpiece, COMSIG_ITEM_ADDED_TO_FORGING, W, user)
 			if(istype(W, /obj/item/ingot))
 				var/obj/item/ingot/I = W
-				forging_comp.material_quality += I.quality
-				previous_material_quality = I.quality
+				forging_comp.material_quality += I.item_quality
+				previous_material_quality = I.item_quality
 			else
 				forging_comp.material_quality += previous_material_quality
 			forging_comp.current_recipe.num_of_materials += 1
@@ -256,14 +258,16 @@
 				var/quality_value = 1
 				if(istype(current_workpiece, /obj/item/ingot))
 					var/obj/item/ingot/ingot_ref = current_workpiece
-					quality_value = ingot_ref.quality
+					quality_value = ingot_ref.item_quality
 				else if(istype(current_workpiece, /obj/item/blade))
 					var/obj/item/blade/blade_ref = current_workpiece
 					quality_value = blade_ref.quality
 
 				forging_comp.bar_health = 50 * (quality_value + 1)
 				forging_comp.material_quality += quality_value
+				forging_comp.current_recipe?.track_input_quality(current_workpiece)
 				previous_material_quality = quality_value
+
 
 			ui.close()
 

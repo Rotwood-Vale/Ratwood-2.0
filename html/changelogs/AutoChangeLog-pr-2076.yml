@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - bugfix: "Blood Transfer Miracle will no longer cast and then immediately cancel if the caster is in a do_after. The spell will not be put on cooldown, and you will not be charged 50 devotion."

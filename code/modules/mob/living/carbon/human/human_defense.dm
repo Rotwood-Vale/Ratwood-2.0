@@ -36,10 +36,21 @@
 			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 		var/intdamage = damage
 		var/consume_debuff = TRUE
-		// Penetrative damage deals significantly less to the armor. Tentative.
+		// Penetrative damage splits its total damage between armor and body,
+		// whatever damage armor protected from still lands on the armor and damages it.
+		// AP weapons will break armor slower on average, but not "five intdamage per stab" slower as before.
 		if((damage + armor_penetration) > protection && d_type != "blunt")
 			consume_debuff = FALSE
-			intdamage = (damage + armor_penetration) - protection
+			// WE TAUGHT THIS MONKEY ARMOR PIERCING CODE AND IT KILLED ITSELF IMMEDIATELY.
+			// I'm going to try and explain this to the best of my ability after banging my head against it.
+			// AP effectively strips away armor. Forty five AP hitting fifty armor turns that to effectively five armor.
+			// The remaining armor will reduce the damage of any incoming attack, so fifty damage is dampened to forty five.
+			// Damage that got dampened is what gets dealt to the armor as intdamage.
+			// A fifty damage attack is dampened to forty five, with five being dealt as intdamage.
+			// That's really low, so we generate a number that's forty percent of your total force.
+			intdamage = max(protection - armor_penetration, damage * 0.4) // This number serves as an intdamage floor, we use it instead if your intdamage would've otherwise been lower than it.
+			if(armor_penetration >= protection) // If you get COMPLETELY penetrated, half of the damage will be dealt to the armor as well. Your gear shouldn't stay pristine after being totally cleaved.
+				intdamage = damage / 2
 		if(intdamfactor != 1)
 			intdamage *= intdamfactor
 		if(d_type == "blunt")
@@ -153,6 +164,7 @@
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armor_penetration))
 			P.on_hit(src, 100, def_zone)
+			P.handle_drop()
 			return BULLET_ACT_HIT
 
 	retaliate(P.firer)
@@ -208,7 +220,7 @@
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
 		I = AM
-		throwpower = I.throwforce
+		throwpower = throwingdatum ? throwingdatum.get_effective_throwforce() : I.throwforce
 		if(I.thrownby == src) //No throwing stuff at myself to trigger hit reactions
 			return ..()
 		else
@@ -659,7 +671,18 @@
 		BODY_ZONE_L_LEG,
 		BODY_ZONE_R_LEG,
 	)
-	for(var/body_zone in body_zones)
+	// this is done to avoid showing the taur part twice since there's two legs
+	var/static/list/taur_zones = list(
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_TAUR
+	)
+	var/list/zones_to_check = body_zones
+	if(get_taur_tail())
+		zones_to_check = taur_zones
+	for(var/body_zone in zones_to_check)
 		var/obj/item/bodypart/bodypart = get_bodypart(body_zone)
 		if(!bodypart)
 			examination += span_info("☼ [capitalize(parse_zone(body_zone))]: <span class='deadsay'><b>MISSING</b></span>")
@@ -758,6 +781,10 @@
 			examination += span_biginfo("- Actions take more stamina")
 			examination += span_biginfo("- Stamina recovery takes twice as long")
 			examination += span_danger("- Risk of heatstroke after prolonged exposure")
+
+	var/turf/open/floor/F = loc
+	if(isfloorturf(F) && F.heat)
+		examination += span_biginfo("It is warm here. It refreshes and heals me.")
 
 	examination += "ø ------------ ø</span>"
 

@@ -38,9 +38,9 @@
 /datum/status_effect/buff/song/furtive_fortissimo/on_apply()
 	. = ..()
 	to_chat(owner, span_warning("Tall grass and twigs move out of my way, making my path clear. I feel as if I can roam without being ambushed."))
-	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/song/furtive_fortissimo/on_remove()
 	. = ..()
 	to_chat(owner, span_warning("The playful tune ends. I will have to be careful of ambushes, now."))
-	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))

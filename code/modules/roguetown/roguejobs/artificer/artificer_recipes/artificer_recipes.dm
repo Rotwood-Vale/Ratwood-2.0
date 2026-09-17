@@ -86,6 +86,13 @@
 	hammers_per_item = 10
 	skill_level = 3
 
+/datum/artificer_recipe/wood/bulk
+	name = "Bulk Wooden Cogs 3x (+2 Planks)"
+	created_item = list(/obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/basic)
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
+	hammers_per_item = 10
+	skill_level = 2
+
 /datum/artificer_recipe/bronze
 	name = "Bronze Cog 2x"
 	required_item = /obj/item/ingot/bronze
@@ -93,6 +100,13 @@
 	hammers_per_item = 10
 	skill_level = 1
 	i_type = "General"
+
+/datum/artificer_recipe/bronze/bulk
+	name = "Bulk Bronze Cogs 6x (+2 Bronze Bars)"
+	created_item = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze)
+	hammers_per_item = 10
+	skill_level = 2
 
 /datum/artificer_recipe/iron
 	i_type = "General"
@@ -148,6 +162,13 @@
 	skill_level = 0
 	hammers_per_item = 5
 
+/datum/artificer_recipe/bronze/tools/skillcore
+	name = "Golem Skill Exhibitor (+2 Cog)"
+	created_item = /obj/item/construct_skill_core
+	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	hammers_per_item = 10
+	skill_level = 3
+
 /datum/artificer_recipe/bronze/tools/headhook
 	name = "Headhook (+2 Fibers)"
 	created_item = /obj/item/storage/hip/headhook/bronze
@@ -180,9 +201,9 @@
 	skill_level = 5
 
 /datum/artificer_recipe/contraptions/houndstone
-	name = "Houndstone (+1 cog, +1 Topar)"
+	name = "Houndstone (+1 cog, +1 Topar, +1 Houndstone Gem)"
 	required_item = /obj/item/ingot/steel
-	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegem/yellow, /obj/item/roguegem/houndgem)
 	created_item = /obj/item/scomstone/bad/garrison
 	skill_level = 5
 
@@ -319,6 +340,39 @@
 	created_item = /obj/item/clothing/neck/roguetown/cursed_collar
 	hammers_per_item = 14
 	skill_level = 5
+
+/datum/artificer_recipe/contraptions/bombardframe
+	name = "Bombard Frame (+1 Steel Ingot, +2 Bronze Cog, +3 Wooden Plank)"
+	required_item = /obj/item/ingot/steel
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/ingot/steel)
+	created_item = /obj/item/bombard_frame
+	hammers_per_item = 8
+	skill_level = 3
+
+/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
+	name = "Partially refined barrel (5 iron ingot + rough iron barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
+	created_item = /obj/item/bombard_partiallyrefinedbarrel
+	hammers_per_item = 10
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/bombardbarrel
+	name = "Bombard Barrel (+5 iron ingot + repaired sanded barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = /obj/item/bombard_barrel
+	hammers_per_item = 8
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/dwarven_music_box
+	name = "Dwarven Music Box (+2 Bronze) (+2 Bronze Cog) (+1 Amethyst)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/roguegem/amethyst)
+	created_item = /obj/item/dmusicbox
+	hammers_per_item = 6
+	skill_level = 6
+
 // --------- WEAPON -----------
 
 /datum/artificer_recipe/wood/weapons //Again, a bit silly, but is important
@@ -419,6 +473,24 @@
 	hammers_per_item = 6
 	skill_level = 2
 
+/datum/artificer_recipe/ammunition/bsbolts//faster way to craft blacksteel ammo, not a cheaper craft
+	name = "Blacksteel Bolts 10x (+1 plank, +1 Silk, +2 Blacksteel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/silk, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/bolt/blacksteel
+					)
+	hammers_per_item = 6
+	skill_level = 5
+
 /datum/artificer_recipe/ammunition/arrows
 	name = "Arrows 20x (+2 Planks, +1 Iron)"
 	required_item = /obj/item/natural/wood/plank
@@ -446,6 +518,52 @@
 					)
 	hammers_per_item = 6
 	skill_level = 2
+
+/datum/artificer_recipe/ammunition/bodkinarrows
+	name = "Bodkin Arrows 20x (+2 Planks, +1 Steel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank,  /obj/item/ingot/steel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel
+					)
+	hammers_per_item = 6
+	skill_level = 3
+
+/datum/artificer_recipe/ammunition/bsarrows//faster way to craft blacksteel ammo, not a cheaper craft
+	name = "Blacksteel Arrows 10x (+1 Planks, +1 Silk, +2 Blacksteel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/silk,  /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/blacksteel
+					)
+	hammers_per_item = 6
+	skill_level = 5
 
 /datum/artificer_recipe/ammunition/pyrobolt_five
 	name = "pyroclastic bolt x5 (+1 iron) (+1 fyritius)"
@@ -596,7 +714,7 @@
 
 
 /datum/artificer_recipe/general/tntbomb
-	name = "Gun powder sticks"
+	name = "Gun powder sticks (x5)"
 	required_item = /obj/item/rogueore/coal
 	additional_items = list(/obj/item/paper/scroll,
 							/obj/item/alch/coaldust,
@@ -605,7 +723,7 @@
 							/obj/item/alch/airdust,
 							/obj/item/alch/firedust,
 							/obj/item/alch/firedust)
-	created_item = /obj/item/tntstick
+	created_item = list(/obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick)
 	hammers_per_item = 5
 	skill_level = 4
 

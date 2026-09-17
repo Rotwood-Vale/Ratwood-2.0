@@ -27,7 +27,7 @@
 	if(!nuser)
 		return
 	user = nuser
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(user_deleted))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	window_id = nwindow_id
 	if(!no_close_movement)
 		if(ismob(nuser))
@@ -44,7 +44,7 @@
 		height = nheight
 	if (nref)
 		ref = nref
-		RegisterSignal(ref, COMSIG_PARENT_QDELETING, PROC_REF(ref_deleted))
+		RegisterSignal(ref, COMSIG_QDELETING, PROC_REF(ref_deleted))
 
 /datum/browser/proc/user_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -167,7 +167,7 @@
 	else
 		WARNING("Browser [title] tried to close with a null ID")
 
-/datum/browser/modal/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
+/datum/browser/modal/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000,Width=350,Height=150)
 	if (!User)
 		return
 
@@ -183,7 +183,7 @@
 
 	output += {"</div>"}
 
-	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src, StealFocus, Timeout)
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, Width, Height, src, StealFocus, Timeout)
 	set_content(output)
 
 /datum/browser/modal/alert/Topic(href,href_list)
@@ -210,14 +210,14 @@
 			return Button3
 
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000, Width = 350, Height = 150)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	var/datum/browser/modal/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout, Width, Height)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
