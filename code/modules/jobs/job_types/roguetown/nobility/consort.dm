@@ -92,15 +92,15 @@
 		STATKEY_LCK = 3,
 	)
 	subclass_skills = list(
-	    /datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
-	    /datum/skill/misc/sneaking = SKILL_LEVEL_LEGENDARY,
-	    /datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-	    /datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-	    /datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
-	    /datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-	    /datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-	    /datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-	    /datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 	)
 
 /datum/outfit/job/roguetown/lady/trophy/pre_equip(mob/living/carbon/human/H) //tbd - though this might just be fine as is, considering it's base consort
@@ -113,7 +113,7 @@
 	id = /obj/item/scomstone/garrison
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	backr = /obj/item/storage/backpack/rogue/satchel
-	handr = /obj/item/rogueweapon/huntingknife/idagger/steel
+	r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/armor/armordress/winterdress/monarch
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
