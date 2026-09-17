@@ -57,6 +57,10 @@
 	damfactor = 1.1
 	penfactor = 30
 
+/datum/intent/sword/chop/sabre//falx chop but better, might slap a charge on this so it's like militia chop
+	damfactor = 1.15
+	penfactor = 40
+
 /datum/intent/sword/thrust/arming
 	clickcd = 10 // Less than rapier
 	penfactor = 35 // 22 + 35 = 57. Beats light leather slightly more than rapier per strike, but less strike
