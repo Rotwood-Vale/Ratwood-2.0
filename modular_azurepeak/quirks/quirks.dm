@@ -219,7 +219,7 @@
 /datum/quirk/unsettling
 	name = "Unsettling"
 	desc = "My appearance is deeply unsettling to most. There's something profoundly wrong about my features."
-	point_cost = 0
+	point_cost = 1
 	added_traits = list(TRAIT_UNSETTLING)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_quirks = list(/datum/quirk/ugly, /datum/quirk/pretty)
