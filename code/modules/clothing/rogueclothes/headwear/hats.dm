@@ -162,7 +162,7 @@
 /obj/item/clothing/head/roguetown/chaperon/noble/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -195,7 +195,7 @@
 	icon_state = "chap_alt"
 	item_state = "chap_alt"
 	color = "#7dcea0"
-
+	
 /obj/item/clothing/head/roguetown/chaperon/greyscale/elder
 	name = "elder's chaperon hat"
 	color = "#007fff"
@@ -558,7 +558,7 @@
 /obj/item/clothing/head/roguetown/veiled/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()

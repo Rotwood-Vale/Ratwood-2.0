@@ -280,9 +280,6 @@ GLOBAL_LIST_EMPTY(accused)
 GLOBAL_LIST_EMPTY(confessors)
 
 GLOBAL_LIST_EMPTY(head_bounties)
-GLOBAL_LIST_EMPTY(board_viewers)
-GLOBAL_LIST_EMPTY(noticeboard_posts)
-GLOBAL_LIST_EMPTY(premium_noticeboardposts)
 GLOBAL_LIST_EMPTY(job_respawn_delays)
 GLOBAL_LIST_EMPTY(round_join_times)
 
@@ -354,7 +351,8 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
 #define CTAG_RETAINER		"CAT_RETAINER"		// Retainer class - Handles Retainer class selector
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
-#define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
+#define CTAG_CONSORT		"CAT_CONSORT"		// Consort subclasses.
+#define CTAG_SUITOR			"CAT_SUITOR"		// Suitor subclasses. Unmerged from CTAG_CONSORT
 #define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercenary class - Handles Mercenary class selector
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector

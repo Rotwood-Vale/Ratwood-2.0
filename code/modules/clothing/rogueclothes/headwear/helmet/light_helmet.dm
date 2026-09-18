@@ -42,6 +42,7 @@
 	name = "Chapeau a Naled"
 	desc = "A leather cap, armored with layers of especially crafted armored coins each baring wards against supernatural forces. The heavy closeable, face-obscuring flaps are both practical, to protect from sand and dust and frigid nights--and to ensure the Otavan aids were not violating Naledi customs with their uncovered faces.</br>They are heavily associated with the Poet-Historian Aalis Petit and her writings and songs about the campaign into Naledi and through her, adventurous bards of Otava. "
 	icon_state = "chapnaled"
+	armor = ARMOR_LEATHER_STUDDED//description refrences armored coins, sounds like studded armor to me
 	var/open_wear = TRUE
 	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|HAIR|EARS
@@ -66,24 +67,16 @@
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
 
+//only the open cut has a snouted sprite, so the suffix hangs off the current look
+/obj/item/clothing/head/roguetown/helmet/leather/chapeau/snout_base_state()
+	return replacetext(icon_state, "_snout", "")
+
 /obj/item/clothing/head/roguetown/helmet/leather/chapeau/AltRightClick(mob/user)
 	if(!istype(loc, /mob/living/carbon))
 		return
 	var/mob/living/carbon/H = user
-	if(icon_state == "[initial(icon_state)]_snout")
-		icon_state = initial(icon_state)
+	if(toggle_snout())
 		H.update_inv_head()
-		update_icon()
-		return
-
-	var/icon/J = new('icons/roguetown/clothing/onmob/head.dmi')
-	var/list/istates = J.IconStates()
-	for(var/icon_s in istates)
-		if(findtext(icon_s, "[icon_state]_snout"))
-			icon_state += "_snout"
-			H.update_inv_head()
-			update_icon()
-			return
 
 
 /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
@@ -182,14 +175,14 @@
 /obj/item/clothing/head/roguetown/grenzelhofthat/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
 	if(get_altdetail_tag())
-		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][altdetail_tag]"))
 		pic2.appearance_flags = RESET_COLOR
 		if(get_altdetail_color())
 			pic2.color = get_altdetail_color()
@@ -206,7 +199,6 @@
 	to_chat(user, span_warning ("The thorns prick me."))
 	user.adjustBruteLoss(4)
 
-//kazengite update
 /obj/item/clothing/head/roguetown/mentorhat
 	name = "worn bamboo hat"
 	desc = "A reinforced bamboo hat."

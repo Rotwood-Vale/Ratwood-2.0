@@ -105,10 +105,49 @@
 	var/mob/mob_viewer //the mob viewing this alert
 	var/alert_group = ALERT_STATUS //decides where on the screen the alert shows up, if it's a debuff, status effect, or buff
 	nomouseover = FALSE
+	var/atom/movable/screen/maptext_holder/maptext_holder
+	var/last_countdown_text //Cached countdown string so we don't rewrite maptext every fast-process tick
 
 // Alerts track their owner via mob_viewer rather than hud; an observer seeing someone else's alert can't act on it.
 /atom/movable/screen/alert/allow_click_from(mob/user)
 	return !(mob_viewer && mob_viewer != user)
+
+//At or above this, the countdown shows whole minutes ("27m"); below it, M:SS or Ns
+#define ALERT_COUNTDOWN_CUTOFF (3 MINUTES)
+
+/atom/movable/screen/alert/proc/update_countdown(remaining_deciseconds)
+	if(remaining_deciseconds <= 0)
+		if(istype(maptext_holder))
+			maptext_holder.maptext = null
+		last_countdown_text = null
+		return
+
+	var/countdown_text
+	if(remaining_deciseconds >= ALERT_COUNTDOWN_CUTOFF)
+		var/mins_left = max(round(remaining_deciseconds / (1 MINUTES), 1), 1)
+		countdown_text = "[mins_left]m"
+	else
+		var/seconds_left = round(remaining_deciseconds / (1 SECONDS), 0.1)
+		if(seconds_left >= 60)
+			var/mins = round(seconds_left / 60)
+			var/secs = round(seconds_left) % 60
+			countdown_text = "[mins]:[secs < 10 ? "0[secs]" : "[secs]"]"
+		else
+			countdown_text = "[seconds_left]s"
+
+	if(countdown_text == last_countdown_text)
+		return
+	last_countdown_text = countdown_text
+
+	if(!istype(maptext_holder))
+		maptext_holder = new(src)
+		maptext_holder.x = 4
+		maptext_holder.y = 0
+		maptext_holder.color = "#800000"
+		vis_contents.Add(maptext_holder)
+	maptext_holder.maptext = MAPTEXT(countdown_text)
+
+#undef ALERT_COUNTDOWN_CUTOFF
 
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
@@ -490,6 +529,7 @@
 	return 1
 
 /atom/movable/screen/alert/Destroy()
+	QDEL_NULL(maptext_holder)
 	severity = 0
 	master = null
 	mob_viewer = null
