@@ -1824,9 +1824,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			new_scent = get_default_redolent_scent(new_scent_type)
 		else
 			var/scent_leadin = redolent_scent_leadin(new_scent_type)
-			var/current_scent = length(redolent_scent) ? redolent_scent : "..."
-			var/scent_prompt = "Describe the scent (no leading text needed - it is added for you).\n\nOthers will see:\n[scent_leadin] [current_scent]"
-			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 250, multiline = TRUE)
+			var/scent_prompt = "Describe the scent - no leading text needed, it is added for you. A preview of the full line is shown below as you type."
+			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 250, multiline = TRUE, preview_leadin = scent_leadin)
 			if(isnull(new_scent))
 				return
 			if(!length(trim(new_scent)))
