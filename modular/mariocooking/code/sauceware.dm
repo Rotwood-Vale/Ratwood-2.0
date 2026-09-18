@@ -23,7 +23,6 @@
 	// The ordinary pot's single-ingredient stew instructions do not apply here.
 	. = list()
 	. += span_info("Add whole ingredient items, then use the saucepan in hand to begin a batch. Place it on a lit hearth to simmer. Fanning the hearth speeds cooking. Use the pan in hand again to cancel and recover its ingredients.")
-	. += span_info("Tomato sauce: one tomato, one salt, one sugar. Garlick butter: one butter slice, one garlick clove, one salt. Gravy: one mince, one flour, one salt, and exactly 10 units of water. Extra or missing ingredients ruin a batch.")
 	. += span_info("Finished sauce can be poured into a sauceboat using the ordinary feed/fill intents. Empty the saucepan before preparing another batch.")
 
 /obj/item/reagent_containers/glass/bucket/pot/saucepan/attackby(obj/item/I, mob/user, params)
