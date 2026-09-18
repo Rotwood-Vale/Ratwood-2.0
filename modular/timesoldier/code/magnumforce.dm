@@ -19,6 +19,7 @@
 	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, INTENT_GENERIC)
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
+	recoil = 4
 
 /obj/item/ammo_box/magazine/internal/heavysniper
 	name = "KZ-41 internal magazine"
@@ -160,3 +161,29 @@
 					"wflip" = 0,
 					"eflip" = 0
 				)
+
+
+// looking at how temperance 13 does it.
+/obj/item/gun/ballistic/heavysniper/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	..()
+	for(var/mob/living/M in range(60, user))
+		if(!M.client)
+			continue
+
+		var/dist = get_dist(M, user)
+
+		if(dist >= 8 && dist <= 60)
+			var/distant_volume = 60
+
+			if(dist <= 30)
+				distant_volume = 100
+
+			M.playsound_local(
+				get_turf(M),
+				'modular/timesoldier/sounds/distant1.ogg',
+				distant_volume,
+				FALSE
+			)
+
+
+

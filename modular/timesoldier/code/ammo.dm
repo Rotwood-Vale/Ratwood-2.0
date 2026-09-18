@@ -10,6 +10,9 @@
 /obj/projectile/bullet/firearm/brutal_round
 	name = "zizite killer round"
 	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/tracer/aiming
+	color = "#FFD45A"
+	dismemberment = 20
 	damage = 200
 	armor_penetration = 95
 	range = 60
@@ -23,3 +26,22 @@
 	else
 		icon_state = initial(icon_state)
 		name = initial(name)
+
+
+// yummy brain mush
+/obj/projectile/bullet/firearm/brutal_round/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if (!ishuman(target))
+		return
+	
+	var/mob/living/carbon/human/H = target
+
+	if(blocked >= 100)
+		return
+	
+	if(check_zone(def_zone) != BODY_ZONE_HEAD)
+		return
+
+	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
+	head?.add_wound(/datum/wound/fracture/head/brain, FALSE, TRUE)
+	H.death()
