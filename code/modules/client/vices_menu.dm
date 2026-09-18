@@ -1824,7 +1824,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			new_scent = get_default_redolent_scent(new_scent_type)
 		else
 			var/scent_leadin = redolent_scent_leadin(new_scent_type)
-			var/scent_prompt = "Describe the scent - no leading text needed, it is added for you. A preview of the full line is shown below as you type."
+			var/scent_prompt = "Describe the scent - a preview of the output in game is shown below:"
 			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 250, multiline = TRUE, preview_leadin = scent_leadin)
 			if(isnull(new_scent))
 				return
