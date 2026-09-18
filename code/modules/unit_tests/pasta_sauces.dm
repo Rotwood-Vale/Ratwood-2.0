@@ -82,7 +82,7 @@
 	TEST_ASSERT_EQUAL(pot.reagents.get_reagent_amount(/datum/reagent/water), 0, "Boiling consumes 10 water.")
 
 /datum/unit_test/sauce_serving/Run()
-	var/mob/living/carbon/human/eater = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/consistent/eater = allocate(/mob/living/carbon/human/consistent)
 	var/datum/intent/pour/pour = new
 	allocated += pour
 	eater.used_intent = pour
