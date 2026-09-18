@@ -341,7 +341,9 @@
 	name = "smalldough"
 	icon = 'modular/Neu_Food/icons/raw/raw_dough.dmi'
 	icon_state = "doughslice"
-	slices_num = 0
+	slices_num = 1
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/pasta
+	slice_sound = TRUE
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/bun
 	cooked_smell = /datum/pollutant/food/bun
 	w_class = WEIGHT_CLASS_NORMAL

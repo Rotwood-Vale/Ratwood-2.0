@@ -16,6 +16,7 @@
 	throwforce = 10
 	dropshrink = 1 // Override for bucket
 	volume = 240
+	var/obj/item/reagent_containers/food/snacks/boiling_food
 
 /obj/item/reagent_containers/glass/bucket/get_mechanics_examine(mob/user)
 	. = ..()
@@ -28,6 +29,12 @@
 	. += span_info("Once boiling, left-clicking the hearthbound pot with an ingredient will drop it inside. The larger a pot is, the more ingredients can be dropped in at any given time.")
 	. += span_info("After the first ingredient is placed in, the pot will begin turning it - and any other subsequent ingredients - into a brew, over the course of a minute.")
 	. += span_info("Specific ingredients can create specific brews; dried rosa petals for a refreshing tea, coffee beans for a revitalizing drink, and more..")
+	. += span_info("Raw pasta boils as solid food: add it to a hot pot with at least 10 units of water. The cooked food is placed beside the hearth. Use a removed pot in hand to retrieve unfinished food.")
+
+/obj/item/reagent_containers/glass/bucket/pot/examine(mob/user)
+	. = ..()
+	if(!QDELETED(boiling_food))
+		. += span_notice("[boiling_food] is cooking inside.")
 
 /obj/item/reagent_containers/glass/bucket/pot/update_icon()
 	cut_overlays()
@@ -46,12 +53,49 @@
 
 
 /obj/item/reagent_containers/glass/bucket/pot/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/food = I
+		if(food.boiled_type)
+			if(boiling_food || reagents.chem_temp < MIN_STEW_TEMPERATURE || !reagents.has_reagent(/datum/reagent/water, 10))
+				to_chat(user, span_warning("The pot must be free and boiling with at least 10 units of water."))
+				return TRUE
+			if(user.transferItemToLoc(food, src))
+				boiling_food = food
+				to_chat(user, span_notice("You put [food] in [src] to boil."))
+			return TRUE
 	if(istype(I, /obj/item/reagent_containers/glass/bowl))
 		to_chat(user, "<span class='notice'>Filling the bowl...</span>")
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 70, FALSE)
 		if(do_after(user,2 SECONDS, target = src))
 			reagents.trans_to(I, reagents.total_volume)
 	return TRUE
+
+/obj/item/reagent_containers/glass/bucket/pot/cooking(input)
+	if(QDELETED(boiling_food) || boiling_food.loc != src)
+		boiling_food = null
+		return
+	if(reagents.chem_temp < MIN_STEW_TEMPERATURE || !reagents.has_reagent(/datum/reagent/water, 10))
+		return
+	var/obj/item/result = boiling_food.cooking(input, 0, src)
+	if(result)
+		reagents.remove_reagent(/datum/reagent/water, 10)
+		result.forceMove(get_turf(src))
+		QDEL_NULL(boiling_food)
+		playsound(src, "bubbles", 30, TRUE)
+
+/obj/item/reagent_containers/glass/bucket/pot/attack_self(mob/user)
+	if(!QDELETED(boiling_food))
+		boiling_food.forceMove(get_turf(user))
+		user.put_in_hands(boiling_food)
+		boiling_food = null
+		return
+	return ..()
+
+/obj/item/reagent_containers/glass/bucket/pot/Destroy()
+	if(!QDELETED(boiling_food))
+		boiling_food.forceMove(get_turf(src))
+	boiling_food = null
+	return ..()
 
 /obj/item/reagent_containers/glass/bucket/pot/decrepit
 	name = "decrepit pot"

@@ -52,6 +52,8 @@ All foods are distributed among various categories. Use common sense.
 	var/dunkable = FALSE // for dunkable food, make true
 	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for overn cooking
+	/// Solid food produced by cooking in a boiling pot of water.
+	var/boiled_type = null
 	/// How palatable is this food for a given social class? Also influences food quality
 	var/faretype = FARE_IMPOVERISHED
 	/// If false, this will inflict mood debuffs on nobles who eat it without being near a table.
@@ -113,7 +115,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/Initialize(mapload)
 	if(rotprocess)
 		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(begin_rotting)))
-	if((cooked_type || fried_type) && !cooktime)
+	if((cooked_type || fried_type || boiled_type) && !cooktime)
 		cooktime = 30 SECONDS
 	return ..()
 
@@ -195,7 +197,7 @@ All foods are distributed among various categories. Use common sense.
 	if(cooktime)
 		var/added_input = input
 		// Pick flat burninput instead of skill-scaled input so high cooking skill doesn't make food burn faster
-		if(!cooked_type && !fried_type)
+		if(!cooked_type && !fried_type && !boiled_type)
 			added_input = burninput
 		if(cooking < cooktime)
 			cooking = cooking + added_input
@@ -206,6 +208,13 @@ All foods are distributed among various categories. Use common sense.
 	burning(burninput)
 
 /obj/item/reagent_containers/food/snacks/heating_act(atom/A)
+	if(istype(A, /obj/item/reagent_containers/glass/bucket/pot) && boiled_type)
+		var/obj/item/reagent_containers/food/snacks/result = new boiled_type(A)
+		result.reagents.clear_reagents()
+		initialize_cooked_food(result)
+		for(var/datum/reagent/consumable/nutriment/nutriment in result.reagents.reagent_list)
+			nutriment.on_new(result.tastes)
+		return result
 	if(istype(A,/obj/machinery/light/rogue/oven))
 		var/obj/item/result
 		if(cooked_type)

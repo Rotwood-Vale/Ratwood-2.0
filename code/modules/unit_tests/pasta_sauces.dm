@@ -1,0 +1,103 @@
+/datum/unit_test/sauce_recipes/Run()
+	TEST_ASSERT_EQUAL(length(SScooking.sauce_recipes), 4, "Expected the three basic sauces and Secret Sauce.")
+	for(var/datum/recipe/sauce/recipe in SScooking.sauce_recipes)
+		var/obj/item/reagent_containers/glass/bucket/pot/saucepan/pan = allocate(/obj/item/reagent_containers/glass/bucket/pot/saucepan)
+		// Reverse order deliberately: ingredient order must not matter.
+		for(var/i = length(recipe.items), i >= 1, i--)
+			allocate(recipe.items[i], pan)
+		for(var/reagent in recipe.reagents_list)
+			pan.reagents.add_reagent(reagent, recipe.reagents_list[reagent])
+		TEST_ASSERT_EQUAL(select_recipe(SScooking.sauce_recipes, pan), recipe, "Exact ingredients must match [recipe.type].")
+		pan.simmering = TRUE
+		pan.cooking(recipe.time)
+		TEST_ASSERT_EQUAL(pan.cook_progress, 0, "A cold saucepan must not cook.")
+		pan.reagents.chem_temp = MIN_STEW_TEMPERATURE
+		pan.cooking(recipe.time)
+		TEST_ASSERT_EQUAL(pan.reagents.get_reagent_amount(recipe.result), recipe.output_amount, "Sauce output must replace its ingredients.")
+		TEST_ASSERT_EQUAL(length(pan.contents), 0, "Cooked ingredients must be consumed.")
+
+	var/datum/recipe/sauce/secret/secret = locate() in SScooking.sauce_recipes
+	TEST_ASSERT_NOTNULL(secret, "Secret Sauce must be initialized.")
+	var/list/round_recipe = secret.items.Copy()
+	TEST_ASSERT_EQUAL(length(round_recipe), 3, "Secret Sauce uses three ingredients.")
+	TEST_ASSERT_EQUAL(length(round_recipe | round_recipe), 3, "Secret ingredients must be unique.")
+	SScooking.init_sauce_recipes()
+	TEST_ASSERT_EQUAL(locate(/datum/recipe/sauce/secret) in SScooking.sauce_recipes, secret, "Reinitializing must not reroll Secret Sauce.")
+	for(var/i in 1 to 3)
+		TEST_ASSERT_EQUAL(secret.items[i], round_recipe[i], "The recipe must remain stable.")
+
+/datum/unit_test/ruined_sauce/Run()
+	var/datum/recipe/sauce/tomato/recipe = new
+	allocated += recipe
+	for(var/scenario in list("missing", "extra", "wrong", "extra liquid"))
+		var/obj/item/reagent_containers/glass/bucket/pot/saucepan/pan = allocate(/obj/item/reagent_containers/glass/bucket/pot/saucepan)
+		for(var/path in recipe.items)
+			if(path == /obj/item/reagent_containers/powder/salt)
+				if(scenario == "missing")
+					continue
+				if(scenario == "wrong")
+					// Flour's reagent is identical to salt's, but it is not salt.
+					allocate(/obj/item/reagent_containers/powder/flour, pan)
+					continue
+			allocate(path, pan)
+		if(scenario == "extra")
+			allocate(/obj/item/reagent_containers/food/snacks/sugar, pan)
+		if(scenario == "extra liquid")
+			pan.reagents.add_reagent(/datum/reagent/water, 10)
+		TEST_ASSERT_NULL(select_recipe(SScooking.sauce_recipes, pan), "[scenario] ingredients must not match.")
+		pan.simmering = TRUE
+		pan.reagents.chem_temp = MIN_STEW_TEMPERATURE
+		pan.cooking(recipe.time)
+		TEST_ASSERT_EQUAL(pan.reagents.get_reagent_amount(/datum/reagent/consumable/sauce/ruined), 60, "Bad batches must become Ruined Sauce.")
+
+/datum/unit_test/pasta_boiling/Run()
+	var/obj/item/reagent_containers/food/snacks/rogue/doughslice/dough = allocate(/obj/item/reagent_containers/food/snacks/rogue/doughslice)
+	TEST_ASSERT_EQUAL(dough.slices_num, 1, "One small dough yields one pasta portion.")
+	TEST_ASSERT_EQUAL(dough.slice_path, /obj/item/reagent_containers/food/snacks/rogue/pasta, "Slicing must produce raw pasta.")
+	var/obj/item/reagent_containers/glass/bucket/pot/pot = allocate(/obj/item/reagent_containers/glass/bucket/pot)
+	var/obj/item/reagent_containers/food/snacks/rogue/pasta/raw = allocate(dough.slice_path, pot)
+	var/starting_volume = raw.reagents.total_volume
+	pot.boiling_food = raw
+	pot.reagents.add_reagent(/datum/reagent/water, 10)
+	pot.cooking(raw.cooktime)
+	TEST_ASSERT_EQUAL(raw.cooking, 0, "Cold water must not cook pasta.")
+	pot.reagents.chem_temp = MIN_STEW_TEMPERATURE
+	pot.cooking(raw.cooktime)
+	var/obj/item/reagent_containers/food/snacks/rogue/pasta/cooked/result = locate() in get_turf(pot)
+	TEST_ASSERT_NOTNULL(result, "Boiling must produce cooked pasta.")
+	TEST_ASSERT_EQUAL(result.reagents.total_volume, starting_volume, "Boiling must preserve, not duplicate, food reagents.")
+	TEST_ASSERT_NULL(pot.boiling_food, "The pot must release its food.")
+	TEST_ASSERT_EQUAL(pot.reagents.get_reagent_amount(/datum/reagent/water), 0, "Boiling consumes 10 water.")
+
+/datum/unit_test/sauce_serving/Run()
+	var/mob/living/carbon/human/eater = allocate(/mob/living/carbon/human)
+	var/datum/intent/pour/pour = new
+	allocated += pour
+	eater.used_intent = pour
+	var/obj/item/reagent_containers/glass/sauceboat/boat = allocate(/obj/item/reagent_containers/glass/sauceboat)
+	var/obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried/steak = allocate(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried)
+	boat.reagents.add_reagent(/datum/reagent/consumable/sauce/tomato, 20)
+	var/old_name = steak.name
+	TEST_ASSERT(boat.pre_attack(steak, eater), "Food serving must intercept the normal click chain.")
+	TEST_ASSERT_EQUAL(steak.name, old_name, "Ordinary food must retain its identity.")
+	TEST_ASSERT_EQUAL(steak.reagents.get_reagent_amount(/datum/reagent/consumable/sauce/tomato), 5, "Food receives one serving.")
+	TEST_ASSERT_EQUAL(boat.reagents.total_volume, 15, "Serving conserves sauce.")
+	var/obj/item/nonfood = allocate(/obj/item)
+	nonfood.create_reagents(50)
+	boat.attack_obj(nonfood, eater)
+	TEST_ASSERT_EQUAL(nonfood.reagents.total_volume, 0, "Nonfood objects must not receive sauce.")
+	var/obj/item/reagent_containers/food/snacks/rogue/pasta/cooked/pasta = allocate(/obj/item/reagent_containers/food/snacks/rogue/pasta/cooked)
+	boat.pre_attack(pasta, eater)
+	TEST_ASSERT_EQUAL(pasta.name, "Tomato Pasta", "Sauce defines the name.")
+	TEST_ASSERT_EQUAL(pasta.color, initial(pasta.color), "Sauce must not tint the noodles.")
+	TEST_ASSERT_EQUAL(pasta.icon_state, "pasta_cooked", "The noodle sprite remains intact.")
+	pasta.reagents.add_reagent(/datum/reagent/consumable/sauce/gravy, 10)
+	TEST_ASSERT_EQUAL(pasta.name, "Gravy Pasta", "The largest sauce quantity must define pasta.")
+	pasta.reagents.remove_reagent(/datum/reagent/consumable/sauce/gravy, 10)
+	TEST_ASSERT_EQUAL(pasta.name, "Tomato Pasta", "Removing gravy restores the tomato name.")
+	pasta.reagents.clear_reagents()
+	TEST_ASSERT_EQUAL(pasta.name, "pasta", "Removing sauce restores plain pasta.")
+	pasta.reagents.add_reagent(/datum/reagent/consumable/sauce/secret, 5)
+	TEST_ASSERT_EQUAL(pasta.name, "Secret Sauce Pasta", "New sauces use the same naming logic.")
+	pasta.reagents.trans_to(eater, 1, method = INGEST)
+	TEST_ASSERT(eater.has_stress_event(/datum/stressevent/secret_sauce), "Eating Secret Sauce must grant its mood benefit.")

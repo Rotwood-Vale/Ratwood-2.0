@@ -1,4 +1,3 @@
-#define MIN_STEW_TEMPERATURE 374 // For cooking
 #define VOLUME_PER_STEW_COOK 29 // Volume to cook per ingredient
 #define VOLUME_PER_STEW_COOK_AFTER 1 // Volume to deduct after the sleep is over
 #define DEEP_FRY_TIME 5 SECONDS // Default deep fry time
@@ -620,8 +619,14 @@
 // Stew + Deep Frying code - refactored!!
 		else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			var/obj/item/reagent_containers/glass/bucket/pot = attachment
+			if(istype(pot, /obj/item/reagent_containers/glass/bucket/pot/saucepan))
+				pot.attackby(W, user, params)
+				return
 			if(istype(W, /obj/item/reagent_containers/food/snacks))
 				var/obj/item/reagent_containers/food/snacks/S = W
+				if(S.boiled_type)
+					pot.attackby(W, user, params)
+					return
 				if(S.fat_yield)
 					if(pot.reagents.has_reagent(/datum/reagent/water))
 						to_chat(user, span_warning("You can't render fat in a pot with water!"))
@@ -751,6 +756,8 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
+				if(on)
+					attachment.cooking(20 * cooktime_divisor)
 				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
 					boilloop.start()
 				else
@@ -1000,7 +1007,6 @@
 /obj/machinery/light/rogue/campfire/longlived
 	fueluse = 180 MINUTES
 
-#undef MIN_STEW_TEMPERATURE
 #undef VOLUME_PER_STEW_COOK
 #undef VOLUME_PER_STEW_COOK_AFTER
 
