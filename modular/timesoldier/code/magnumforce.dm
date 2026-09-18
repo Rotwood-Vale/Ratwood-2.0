@@ -7,11 +7,17 @@
 	desc = "<span class='yellow'><i>I can still remember when this weapon was given to us. We were fighting on the borders of Grenzelhoft with the Otavans, and this beauty came in a shipment alongside others, and some ammo.<br>We were...stunned at how effective it was. It killed deadites in a singular shot to the head, and tore through lyfeblood armor like it was hot butter. It wouldn't take long for it to be made a war-crime to use it on your fellow man.<br> KZ-41 - it stood for an obvious name.<br>KILL ZIZITES.</i></span>"
 	icon = 'modular/timesoldier/sprites/gun.dmi'
 	icon_state = "heavysniper"
+	experimental_inhand = TRUE
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = true
 	mag_type = /obj/item/ammo_box/magazine/internal/heavysniper
 	internal_magazine = TRUE
 	semi_auto = FALSE // this is slightly misleading. process_chamber() starts with if !semi_auto return. without it, firing would let the normal ballistic code process the chamber immediately afterwards.
 	load_sound = 'modular/timesoldier/sounds/kzload.ogg'
 	fire_sound = 'modular/timesoldier/sounds/kzfire.ogg'
+	possible_item_intents = list(/datum/intent/mace/strike/wood)
+	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, INTENT_GENERIC)
 
 /obj/item/ammo_box/magazine/internal/heavysniper
 	name = "KZ-41 internal magazine"
@@ -24,20 +30,10 @@
 
 
 /obj/item/gun/ballistic/heavysniper/attack_self(mob/living/user)
-	if(!bolt_open)
-		playsound(src, 'modular/timesoldier/sounds/kzopen.ogg', 50)
-		bolt_open = TRUE
-		if(chambered)
-			chambered.forceMove(drop_location())
-			chambered.bounce_away(TRUE)
-			chambered = null
-		update_icon()
-
-	else
-		playsound(src, 'modular/timesoldier/sounds/kzclose.ogg', 50)
-		bolt_open = FALSE
-		chamber_round()
-		update_icon()
+	if(wielded)
+		ungrip(user)
+		return
+	wield(user)
 
 
 /obj/item/gun/ballistic/heavysniper/attackby(obj/item/A, mob/user, params)
@@ -67,3 +63,79 @@
 		playsound(src, 'modular/timesoldier/sounds/gun_empty.ogg', 100)
 		return
 	return ..()
+
+
+/obj/item/gun/ballistic/heavysniper/attack_right(mob/user)
+	if(user.get_active_held_item()) // shout out to you carl for allowing me to blatantly paste your code from the other guns. i will forever love you.
+		return
+	if(!bolt_open)
+		playsound(src, 'modular/timesoldier/sounds/kzopen.ogg', 50)
+		bolt_open = TRUE
+		if(chambered)
+			chambered.forceMove(drop_location())
+			chambered.bounce_away(TRUE)
+			chambered = null
+		update_icon()
+
+	else
+		playsound(src, 'modular/timesoldier/sounds/kzclose.ogg', 50)
+		bolt_open = FALSE
+		chamber_round()
+		update_icon()
+
+/obj/item/gun/ballistic/heavysniper/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user.client)
+		if(user.client.chargedprog >=100)
+			spread = 0
+		else
+			spread = 150 - (150 * (user.client.chargedprog / 100))
+	else
+		spread = 0
+
+	return ..()
+
+
+/obj/item/gun/ballistic/heavysniper/getonmobprop(tag) // im just copying the arguebus values. if it works, it works i hope!
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.6,
+					"sx" = -7, "sy" = 6,
+					"nx" = 7,  "ny" = 6,
+					"wx" = -2, "wy" = 3,
+					"ex" = 1,  "ey" = 3,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+					"nturn" = -43,
+					"sturn" = 43,
+					"wturn" = 30,
+					"eturn" = -30,
+					"nflip" = 0,
+					"sflip" = 8,
+					"wflip" = 8,
+					"eflip" = 0
+				)
+			if("wielded")
+				return list(
+					"shrink" = 0.6,
+					"sx" = 5,  "sy" = -2,
+					"nx" = -5, "ny" = -1,
+					"wx" = -8, "wy" = 2,
+					"ex" = 8,  "ey" = 2,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 1,
+					"nturn" = -45,
+					"sturn" = 45,
+					"wturn" = 0,
+					"eturn" = 0,
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 8,
+					"eflip" = 0
+				)
