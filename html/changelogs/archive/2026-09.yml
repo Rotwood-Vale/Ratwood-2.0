@@ -584,3 +584,22 @@
   zoktiik:
   - bugfix: Masochists/Sadists will no longer trigger ~3 screams in quick succession
       during rough+ interactions.
+2026-09-18:
+  MarioTheShiba:
+  - rscadd: Death Alarms for Admins.
+  MrShibaa:
+  - rscadd: Unsettling Quirk
+  Shadow-Quill:
+  - qol: Added the Self Aware trait to Absolver and Stigmata, letting them examine
+      themselves for full damage numbers, as they could do with others.
+  annikaRU:
+  - bugfix: Having caught the person who had been selling fake rosestones for two
+      years they were promptly shot out of a cannon into mount decapitation
+  trueroguan:
+  - rscadd: New "Jiggle" emote - shake your chest and bounce on the spot.
+  - rscadd: Jiggle Duration and Endless Jiggle settings in the Toggles menu. Long
+      or endless jiggling drains stamina.
+  - rscadd: Bathhouse Attendants don't tire from jiggling inside the bathhouse.
+  - image: Jiggle animation frames for every breast size and type.
+  - bugfix: Characters with different breast sizes no longer risk sharing each other's
+      cached body sprites.
