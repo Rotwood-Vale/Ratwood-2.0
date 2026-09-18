@@ -122,8 +122,16 @@
 		if(target.reagents.holder_full())
 			to_chat(user, span_warning("[target] cannot hold any more sauce."))
 			return
+		var/transfer_amount = min(amount_per_transfer_from_this, reagents.total_volume, target.reagents.maximum_volume - target.reagents.total_volume)
+		var/transfer_fraction = transfer_amount / reagents.total_volume
+		var/list/applied_sauces = list()
+		for(var/datum/reagent/consumable/sauce/sauce in reagents.reagent_list)
+			applied_sauces[sauce.type] = sauce.volume * transfer_fraction
 		// Transfer the mixture, including any additives, through normal food ingestion.
 		if(reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user))
+			for(var/sauce_type in applied_sauces)
+				var/datum/reagent/consumable/sauce/sauce_definition = GLOB.chemical_reagents_list[sauce_type]
+				sauce_definition.add_taste_to_food(target, applied_sauces[sauce_type])
 			to_chat(user, span_notice("[food_application_message] [target]."))
 		return
 	// Only refill/drain real vessels. Do not coat arbitrary reagent-bearing objects.
