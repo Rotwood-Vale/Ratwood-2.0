@@ -119,11 +119,6 @@
 	B.alpha = 100
 	B.update_icon()
 
-/obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed/proc/_is_town_blocked(turf/T)
-	if(!T) return TRUE
-	var/area/A = get_area(T)
-	return istype(A, /area/rogue/outdoors/town)
-
 /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed/cast(list/targets, mob/living/user = usr)
 	. = ..()
 	if(!isliving(user))
