@@ -23,6 +23,16 @@
 	color = "#E8C96B"
 	pasta_name = "Garlick Butter Pasta"
 
+/datum/reagent/consumable/sauce/cajun
+	name = "Coastal Sauce"
+	taste_description = "salty, lemony, tangy and seafoody"
+	color = "#ffc272"
+
+/datum/reagent/consumable/sauce/cajun_spicy
+	name = "Spicy Coastal Sauce"
+	taste_description = "salty, lemony, tangy and seafoody with a spicy kick"
+	color = "#ff9c72"
+
 /datum/reagent/consumable/sauce/gravy
 	name = "Gravy"
 	taste_description = "rich, savory meat gravy"
