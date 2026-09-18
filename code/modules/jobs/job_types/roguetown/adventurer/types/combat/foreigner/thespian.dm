@@ -130,7 +130,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted/caestus
-				belt1 = /obj/item/quiver/javelin/bronze
+				beltl = /obj/item/quiver/javelin/bronze
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, 1)

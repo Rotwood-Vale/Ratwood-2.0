@@ -59,7 +59,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)//dreamwalkers HATE the aquatic punch monk.
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/abotteer//lets you sunder
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/abboteer//lets you sunder
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)

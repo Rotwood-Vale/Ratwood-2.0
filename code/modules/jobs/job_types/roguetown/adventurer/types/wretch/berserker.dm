@@ -46,7 +46,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	backr = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/hip/headhook //Standard iron version. More-so for style than substance.
 	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/combat = 1, //Steel variant of the hunting knife. Pseudoantagonist-tier, plus an avenue to hack limbs with.
@@ -82,7 +81,7 @@
 						beltr = /obj/item/rogueweapon/katar
 					if("Knuckledusters")
 						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
-						gloves = /obj/item/clothing/gloves/roguetown/knuckles
+						beltr = /obj/item/rogueweapon/knuckles/ancient
 					if("Punch Dagger")
 						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/katar/punchdagger
@@ -92,7 +91,7 @@
 						ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 						ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 						H.change_stat(STATKEY_INT, 2)//no stat malus for pure unarmed
-						H.change_stats(STATKEY_WIL, 1)//nice little bonus for our fist only chuds
+						H.change_stat(STATKEY_WIL, 1)//nice little bonus for our fist only chuds
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights- only expert
 				var/list/martial_options = list("Greatsword", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "Berserker's Sword, 14 STR MIN")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
@@ -115,15 +114,19 @@
 					if("Berserker's Sword, 14 STR MIN") //Swapped out the falx for this, it's a primary weapon afterall
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk
-				var/list/sidearm_options = list("Iron Arming Sword", "Iron Axe", "Mace")
+				var/list/sidearm_options = list("An Arming Sword", "An Axe", "Mace")
 				var/sidearm_choice = input(H, "Choose your secondary WEAPON!", "SPILL THEIR ENTRAILS.") as anything in sidearm_options
 				switch(sidearm_choice)
-					if("Iron Arming Sword")
+					if("An Arming Sword")
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 						beltl = /obj/item/rogueweapon/sword/iron
-					if("Iron Axe")
+					if("An Axe")
 						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-						beltl = /obj/item/rogueweapon/stoneaxe/woodcut
+						if(weapon_choice == "Battle Axe")
+							ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+							beltl = /obj/item/rogueweapon/stoneaxe/battle
+						else
+							beltl = /obj/item/rogueweapon/stoneaxe/woodcut
 					if("Mace")
 						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 						beltl = /obj/item/rogueweapon/mace

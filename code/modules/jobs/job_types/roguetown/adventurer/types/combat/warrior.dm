@@ -237,13 +237,13 @@
 /datum/outfit/job/roguetown/adventurer/barbarian/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
 	to_chat(H, span_warning("You are a brutal warrior, who has foregone armor in favor of pure strength. Crush your enemies, see them driven before you, and hear the lamentations of their women! Oh, and you can specialize in unarmed combat and wrestling."))
-	H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/warrior]
+	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
 	if(!H.mind)
 		return
 
-	var/weapons = list("Bronze Pata","Bronze Sword","Bronze Axe","Bronze Mace","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+2 PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder")
+	var/weapons = list("Bronze Pata","Bronze Sword","Bronze Axe","Bronze Mace","Bronze Warclub","Bronze Spear","Bronze Flail","Discipline - Whiphunter (+2 PER / -I SPD)","Discipline - Unarmed","Discipline - Bodybuilder")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Bronze Pata")
@@ -266,6 +266,11 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			r_hand = /obj/item/rogueweapon/mace/bronze
+			gloves = /obj/item/clothing/gloves/roguetown/bandages
+		if("Bronze Warclub")
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
+			r_hand = /obj/item/rogueweapon/mace/warhammer/bronze
 			gloves = /obj/item/clothing/gloves/roguetown/bandages
 		if("Bronze Spear")
 			// Boar huntah
@@ -292,8 +297,8 @@
 			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-			armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/barbarian
-			shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian
+			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
+			shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
 		if ("Discipline - Bodybuilder")
 			H.adjust_skillrank_up_to(/datum/skill.combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
@@ -304,7 +309,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
-		H.dna.species.soundpack_m = GLOB.voice_packs[/datum/voicepack/male/warrior]
+		H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	if(should_wear_femme_clothes(H))
 		if(weapon_choice != "Discipline - Unarmed" && weapon_choice != "Discipline - Bodybuilder")//tits out
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
