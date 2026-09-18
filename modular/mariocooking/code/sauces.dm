@@ -19,7 +19,10 @@
 		return
 	// Food flavor is stored on nutriment. Weight the sauce by its normal reagent taste strength.
 	var/effective_volume = amount * taste_mult / max(nutriment.taste_mult, 1)
-	nutriment.on_merge(list(taste_description = 1), effective_volume)
+	var/list/sauce_taste = list()
+	sauce_taste[taste_description] = 1
+	nutriment.on_merge(sauce_taste, effective_volume)
+
 
 /datum/reagent/consumable/sauce/tomato
 	name = "Tomato Sauce"
