@@ -28,85 +28,117 @@
 		target.apply_status_effect(/datum/status_effect/debuff/call_to_slaughter)	//Debuffs non-inhumens/psydonians
 	return TRUE
 
-//Unholy Grasp - Throws disappearing net made of viscera at enemy. Creates blood on impact.
-/obj/effect/proc_holder/spell/invoked/projectile/blood_net
+//Unholy Grasp - Turns the viscera in your hand into a net made of gore.
+/obj/effect/proc_holder/spell/self/blood_net
 	name = "Unholy Grasp"
-	desc = "Toss forth an unholy snare of blood and guts a short distance, summoned from your leftover trophies sacrificed to Graggar. Like a net, may it snare your target!"
+	desc = "Twist the viscera in your hand into a writhing, unholy net. Cast again to unmake it back into gore. Throw it to snare a foe's legs."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "unholy_grasp"
 	clothes_req = FALSE
-	range = 3													//It's a net, so low range.
-	req_inhand = /obj/item/alch/viscera							//Need to have viscera inhand to cast this.
 	associated_skill = /datum/skill/magic/holy
-	projectile_type = /obj/projectile/magic/unholy_grasp
-	chargedloop = /datum/looping_sound/invokeholy
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 15
 	recharge_time = 10 SECONDS
 	miracle = TRUE
 
-/obj/effect/proc_holder/spell/invoked/projectile/blood_net/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/self/blood_net/cast(list/targets, mob/living/user = usr)
 	var/obj/item/held_item = user.get_active_held_item()
-	if(!istype(held_item, req_inhand))
-		to_chat(user, span_warning("I'm missing viscera in my hand to cast this."))
+
+	if(istype(held_item, /obj/item/net/unholy_grasp))
+		var/obj/item/net/unholy_grasp/net = held_item
+		net.revert_to_viscera(user, TRUE)
+		revert_cast(user) // Unmaking the net doesn't invoke the cooldown.
 		return FALSE
-	. = ..()
-	if(. && held_item)
-		qdel(held_item)
 
-/obj/projectile/magic/unholy_grasp
-	name = "viceral organ net"
-	icon_state = "tentacle_end"
-	nodamage = TRUE
-	knockdown = 3 SECONDS
+	if(!istype(held_item, /obj/item/alch/viscera))
+		to_chat(user, span_warning("I'm missing viscera to twist into a net."))
+		revert_cast(user)
+		return FALSE
 
-/obj/projectile/magic/unholy_grasp/on_hit(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(. == BULLET_ACT_MISS || . == BULLET_ACT_BLOCK || !iscarbon(hit_atom))
-		return
-
-	ensnare(hit_atom)
-
-/obj/projectile/magic/unholy_grasp/proc/ensnare(mob/living/carbon/carbon)
-	if(carbon.legcuffed || carbon.get_num_legs(FALSE) < 2)
-		return
-
-	var/obj/item/net/unholy_grasp/net = new(get_turf(carbon))
-	net.slipouttime = max(2 SECONDS, 13 SECONDS - max(0, carbon.STASTR - 10) * 0.5 SECONDS)
-	visible_message(span_danger("\The [src] ensnares [carbon] in vicera!"))
-	to_chat(carbon, span_danger("\The [src] ensnares you!"))
-	net.forceMove(carbon)
-	carbon.set_legcuffed(net, firer)
-	carbon.Knockdown(knockdown)
-	carbon.apply_status_effect(/datum/status_effect/debuff/netted)
-	playsound(src, 'sound/combat/caught.ogg', 50, TRUE)
+	qdel(held_item)
+	var/obj/item/net/unholy_grasp/net = new(get_turf(user))
+	user.put_in_hands(net)
+	user.visible_message(span_danger("The viscera in [user]'s hand twists into a writhing net of gore!"), span_danger("The viscera in my hand twists into a writhing net of gore!"))
+	return TRUE
 
 /obj/item/net/unholy_grasp
 	name = "visceral net"
-	desc = "A disgusting mass of viscera binding the victim's legs."
+	desc = "A writhing snare woven from blood and guts. It won't hold its shape for long outside a caster's grip. Throw it, or it'll collapse back into what it was."
 	color = "#80182e"
+	w_class = WEIGHT_CLASS_BULKY // No storing these things.
+	slot_flags = NONE
+	knockdown = 0
+	var/about_to_be_thrown = FALSE
+	var/was_ensnaring = FALSE
+	var/being_destroyed = FALSE
+
+/obj/item/net/unholy_grasp/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_THROW, PROC_REF(on_holder_throw))
+
+/obj/item/net/unholy_grasp/proc/on_holder_throw(mob/thrower, atom/target)
+	SIGNAL_HANDLER
+	about_to_be_thrown = TRUE
+
+/obj/item/net/unholy_grasp/on_drop()
+	return
+
+/obj/item/net/unholy_grasp/dropped(mob/user, silent = FALSE)
+	if(user)
+		UnregisterSignal(user, COMSIG_MOB_THROW)
+	if(was_ensnaring)
+		remove_effect()
+		return
+	if(!about_to_be_thrown)
+		revert_to_viscera(user)
+		return
+	about_to_be_thrown = FALSE
+	return ..()
+
+/obj/item/net/unholy_grasp/proc/revert_to_viscera(mob/user, to_hand = FALSE)
+	if(being_destroyed)
+		return
+	being_destroyed = TRUE
+	var/turf/T = get_turf(src)
+	if(!QDELING(src))
+		qdel(src)
+	if(!T)
+		return
+	var/obj/item/alch/viscera/gore = new(T)
+	if(to_hand && user)
+		user.put_in_hands(gore)
+	if(user)
+		to_chat(user, span_danger("The unholy net collapses back into a mess of viscera!"))
+
+/obj/item/net/unholy_grasp/ensnare(mob/living/carbon/C, mob/user)
+	slipouttime = max(2 SECONDS, 10 SECONDS - max(0, C.STASTR - 10) * 0.5 SECONDS))
+	. = ..()
+	if(C.legcuffed == src)
+		was_ensnaring = TRUE
+
+/obj/item/net/unholy_grasp/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(was_ensnaring)
+		return
+	remove_effect()
 
 /obj/item/net/unholy_grasp/remove_effect()
-	if(iscarbon(loc))
-		var/mob/living/carbon/mob_target = loc
-		if(mob_target.legcuffed == src)
-			mob_target.set_legcuffed(null)
-			if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
-				mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
-		var/turf/T = get_turf(mob_target)
-		if(T)
-			forceMove(T)
-
-/obj/item/net/unholy_grasp/Destroy() //we avoud forceMove() my manna caused by destroy as its not good to put it together
+	if(being_destroyed)
+		return
+	being_destroyed = TRUE
 	if(iscarbon(loc))
 		var/mob/living/carbon/mob_target = loc
 		if(mob_target.legcuffed == src)
 			mob_target.set_legcuffed(null)
 		if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
 			mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
-	return ..()
+	var/turf/T = get_turf(src)
+	if(T)
+		new /obj/effect/decal/cleanable/blood(T)
+		playsound(T, pick('sound/combat/gib (1).ogg', 'sound/combat/gib (2).ogg'), 50, TRUE)
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/effect/proc_holder/spell/invoked/revel_in_slaughter
 	name = "Revel in Slaughter"

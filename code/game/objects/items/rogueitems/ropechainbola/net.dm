@@ -31,9 +31,8 @@
 		forceMove(M.loc)
 
 /obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
-	if(!..())
-		return
-	playsound(src.loc,'sound/blank.ogg', 75, TRUE)
+	playsound(src.loc,'sound/combat/bolathrow.ogg', 75, TRUE)
+	return ..()
 
 /obj/item/net/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -41,7 +40,14 @@
 	ensnare(hit_atom, throwingdatum?.thrower)
 	// Nets always fall off after 10 seconds resist or not, so that the advantage it brings you is limited
 	// Being hit by a net and instalossing isn't fun for anyone because removing can be interrupted
-	addtimer(CALLBACK(src, PROC_REF(remove_effect)), 10 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(auto_release)), 10 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+/obj/item/net/proc/auto_release()
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		if(C.legcuffed == src)
+			visible_message(span_warning("[C] slips free of \the [src]!"), span_notice("I slip free of \the [src]!"))
+	remove_effect()
 
 /obj/item/net/proc/ensnare(mob/living/carbon/C, mob/user)
 	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
@@ -52,7 +58,7 @@
 		to_chat(C, "<span class='danger'>\The [src] entraps you!</span>")
 		C.Knockdown(knockdown)
 		C.apply_status_effect(/datum/status_effect/debuff/netted)
-		playsound(src, 'sound/blank.ogg', 50, TRUE)
+		playsound(src, 'sound/combat/bolasnap.ogg', 50, TRUE)
 
 // Failsafe in case the item somehow ends up being destroyed
 /obj/item/net/Destroy()
