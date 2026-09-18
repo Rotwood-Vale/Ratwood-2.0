@@ -10,7 +10,6 @@
 	experimental_inhand = TRUE
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	bigboy = true
 	mag_type = /obj/item/ammo_box/magazine/internal/heavysniper
 	internal_magazine = TRUE
 	semi_auto = FALSE // this is slightly misleading. process_chamber() starts with if !semi_auto return. without it, firing would let the normal ballistic code process the chamber immediately afterwards.
@@ -18,6 +17,8 @@
 	fire_sound = 'modular/timesoldier/sounds/kzfire.ogg'
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, INTENT_GENERIC)
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/ammo_box/magazine/internal/heavysniper
 	name = "KZ-41 internal magazine"
@@ -55,7 +56,7 @@
 /obj/item/gun/ballistic/heavysniper/can_shoot()
 	if(bolt_open)
 		return FALSE
-	return ..()
+	return !!chambered?.BB // is the bolt closed, and is there actually a b ullet inside the chambered casing?
 
 /obj/item/gun/ballistic/heavysniper/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	if(bolt_open)
@@ -95,13 +96,13 @@
 	return ..()
 
 
-/obj/item/gun/ballistic/heavysniper/getonmobprop(tag) // im just copying the arguebus values. if it works, it works i hope!
+/obj/item/gun/ballistic/heavysniper/getonmobprop(tag) // im just copying the arguebus values. if it works, it works i hope! edit: it worked great.
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
 				return list(
-					"shrink" = 0.6,
+					"shrink" = 0.9,
 					"sx" = -7, "sy" = 6,
 					"nx" = 7,  "ny" = 6,
 					"wx" = -2, "wy" = 3,
@@ -121,7 +122,7 @@
 				)
 			if("wielded")
 				return list(
-					"shrink" = 0.6,
+					"shrink" = 0.9,
 					"sx" = 5,  "sy" = -2,
 					"nx" = -5, "ny" = -1,
 					"wx" = -8, "wy" = 2,
@@ -137,5 +138,25 @@
 					"nflip" = 8,
 					"sflip" = 0,
 					"wflip" = 8,
+					"eflip" = 0
+				)
+			if("onback")
+				return list(
+					"shrink" = 0.8,
+					"sx" = -1, "sy" = 0,
+					"nx" = 1,  "ny" = 0,
+					"wx" = 0,  "wy" = 0,
+					"ex" = 0,  "ey" = 0,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 90,
+					"eturn" = -90,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
 					"eflip" = 0
 				)

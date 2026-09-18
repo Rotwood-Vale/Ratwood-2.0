@@ -9,6 +9,7 @@
 
 /obj/projectile/bullet/firearm/brutal_round
 	name = "zizite killer round"
+	hitscan = TRUE
 	damage = 200
 	armor_penetration = 95
 	range = 60
