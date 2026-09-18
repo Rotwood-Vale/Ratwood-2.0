@@ -28,7 +28,7 @@
 	name = "cooked crab leg"
 	desc = "A cooked crab leg, ready to crack and eat."
 	icon_state = "crab_leg_cooked"
-	taste_description = "sweet crab meat"
+	tastes = list("sweet crab meat" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/crab_claw
 	parent_type = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/limb
@@ -44,7 +44,7 @@
 	name = "cooked crab claw"
 	desc = "A cooked crab claw with tender meat inside."
 	icon_state = "crab_claw_cooked"
-	taste_description = "sweet crab meat"
+	tastes = list("sweet crab meat" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/lobster_leg
 	parent_type = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/limb
@@ -60,7 +60,7 @@
 	name = "cooked lobster leg"
 	desc = "A cooked lobster leg with delicate meat inside."
 	icon_state = "lobster_leg_cooked"
-	taste_description = "rich lobster meat"
+	tastes = list("rich lobster meat" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/lobster_claw
 	parent_type = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/limb
@@ -76,4 +76,4 @@
 	name = "cooked lobster claw"
 	desc = "A cooked lobster claw packed with rich meat."
 	icon_state = "lobster_claw_cooked"
-	taste_description = "rich lobster meat"
+	tastes = list("rich lobster meat" = 1)
