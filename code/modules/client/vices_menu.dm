@@ -1825,7 +1825,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		else
 			var/scent_leadin = redolent_scent_leadin(new_scent_type)
 			var/scent_prompt = "Describe the scent - a preview of the output in game is shown below:"
-			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 250, multiline = TRUE, preview_leadin = scent_leadin)
+			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 100, multiline = TRUE, preview_leadin = scent_leadin)
 			if(isnull(new_scent))
 				return
 			if(!length(trim(new_scent)))
