@@ -289,8 +289,14 @@
 						tariff_collected_here += tax_amt
 					say("[deposit]m to your account, Master. The Crown keeps [tax_amt]m.")
 				if("direct")
-					budget2change(floor(secret_budget), usr)
+					// The cut leaves as untraced coin, so the Crown's duty is dodged entirely.
+					var/cut = floor(secret_budget)
+					var/dodged_amt = FLOOR(cut * SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF), 1)
+					budget2change(cut, usr)
 					secret_budget = 0
+					if(dodged_amt > 0)
+						record_round_statistic(STATS_TAXES_EVADED, dodged_amt)
+						tariff_evaded_here += dodged_amt
 				else
 					return TRUE
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)

@@ -117,10 +117,10 @@ const SecretsCard = (props: {
           type="button"
           style={inkButtonStyle({ disabled: noCut })}
           disabled={noCut}
-          title="Withdraw your cut directly as coin"
+          title={`Withdraw the full ${data.secret_budget}m as coin - no duty paid, counted as tax evaded`}
           onClick={() => act('withdraw_cut', { mode: 'direct' })}
         >
-          Direct
+          Direct (Untaxed)
         </button>
         <button
           type="button"
