@@ -86,6 +86,17 @@
 	body_parts_covered = LEGS
 	armor_class = ARMOR_CLASS_LIGHT
 
+/obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
+	name = "bronze chain skirt"
+	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
+	icon_state = "chain_skirt"
+	item_state = "chain_skirt"
+	color = "#f9d690"
+	blocksound = CHAINHIT
+	smeltresult = /obj/item/ingot/bronze
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE
+
 /obj/item/clothing/under/roguetown/chainlegs/kilt
 	name = "steel chain kilt"
 	desc = "Interlinked metal rings that drape down all the way to the ankles."
