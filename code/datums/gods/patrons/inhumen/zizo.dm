@@ -37,8 +37,8 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// Allows prayer near EEEVIL psycross
-	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
+	// SHOULD allow prayer near wooden or stone inverted crosses
+	for(var/obj/structure/fluff/psycross/zizocross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
 			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
 			return FALSE
