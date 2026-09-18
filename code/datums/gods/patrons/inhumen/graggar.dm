@@ -67,7 +67,7 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// Allows prayer near any unholy cross, but interrupts it near holy ones.
+	// Allows prayer at any heretical cross, but interrupts it when near holy ones.
 	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
 			to_chat(follower, span_danger("That accursed cross interupts my prayers!"))
