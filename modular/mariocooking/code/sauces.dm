@@ -11,6 +11,16 @@
 	if(ishuman(eater))
 		return ..()
 
+/datum/reagent/consumable/sauce/proc/add_taste_to_food(obj/item/reagent_containers/food/snacks/food, amount)
+	if(!food?.reagents || !taste_description || amount <= 0)
+		return
+	var/datum/reagent/consumable/nutriment/nutriment = locate() in food.reagents.reagent_list
+	if(!nutriment)
+		return
+	// Food flavor is stored on nutriment. Weight the sauce by its normal reagent taste strength.
+	var/effective_volume = amount * taste_mult / max(nutriment.taste_mult, 1)
+	nutriment.on_merge(list(taste_description = 1), effective_volume)
+
 /datum/reagent/consumable/sauce/tomato
 	name = "Tomato Sauce"
 	taste_description = "sweet, salted tomatoes"

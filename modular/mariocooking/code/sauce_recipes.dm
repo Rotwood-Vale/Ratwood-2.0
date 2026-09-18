@@ -5,6 +5,15 @@
 	time = 30 SECONDS
 	var/output_amount = 60
 
+/datum/recipe/sauce/check_reagents(datum/reagents/available_reagents)
+	for(var/reagent_type in reagents_list)
+		if(available_reagents.get_reagent_amount(reagent_type) < reagents_list[reagent_type])
+			return 0
+	// Required liquids may be overfilled, but unlisted reagents still ruin the batch.
+	if(length(reagents_list) < length(available_reagents.reagent_list))
+		return -1
+	return 1
+
 /datum/recipe/sauce/tomato
 	items = list(
 		/obj/item/reagent_containers/food/snacks/grown/fruit/tomato,
