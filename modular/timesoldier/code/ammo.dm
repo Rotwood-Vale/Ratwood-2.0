@@ -18,6 +18,19 @@
 	range = 60
 	ammo_type = /obj/item/ammo_casing/brutal_round
 
+/obj/item/quiver/bullet/brutals
+	name = "BRUTALITY round box"
+	desc = "<span class='yellow'><i>A box meant to dispense BRUTALITY towards Zizites, also known as BRUTAL rounds, or Zizite Killers.<br>When that crazy Dwarf from Kingsfield invented this kind of projectile that surpassed the lead sphere, the entire war on Zizo changed.<br>The Zizites barely adapted the blackpowder to their undead troops, but we adapted and overcame them.</i></span>"
+	max_storage = 20 // this might be overkill. oh well!!! :wilted_rose:
+
+/obj/item/quiver/bullet/brutals/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/brutal_round/B = new()
+		arrows += B
+	update_icon()
+
+
 /obj/item/ammo_casing/brutal_round/update_icon()
 	..()
 	if(!BB)
