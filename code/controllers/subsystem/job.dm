@@ -756,7 +756,7 @@ SUBSYSTEM_DEF(job)
 						S = sloc
 						sloc.used = TRUE
 						break
-				if(!S &&length(GLOB.jobspawn_overrides[spawn_rank]))
+				if(length(GLOB.jobspawn_overrides[spawn_rank]))
 					S = pick(GLOB.jobspawn_overrides[spawn_rank])
 				if(S)
 					S.JoinPlayerHere(H, FALSE)
