@@ -89,3 +89,29 @@
 		if(is_abstract(path))
 			continue
 		sauce_recipes += new path()
+
+// Admin-spawn only: this type has no map, crafting, merchant, loot, or loadout entry.
+/obj/item/paper/secret_sauce_recipe
+	name = "secret sauce recipe"
+	desc = "A stained parchment bearing a closely guarded culinary secret."
+
+/obj/item/paper/secret_sauce_recipe/Initialize(mapload)
+	. = ..()
+	rebuild_info()
+
+/obj/item/paper/secret_sauce_recipe/read(mob/user)
+	rebuild_info()
+	return ..()
+
+/obj/item/paper/secret_sauce_recipe/proc/rebuild_info()
+	var/datum/recipe/sauce/secret/round_recipe = locate() in SScooking.sauce_recipes
+	info = "<center><h2>Secret Sauce</h2></center><hr>"
+	if(!round_recipe)
+		info += "The recipe has not yet been chosen."
+	else
+		info += "<p>Use one of each:</p><ul>"
+		for(var/ingredient_path in round_recipe.items)
+			info += "<li>[capitalize(initial(ingredient_path:name))]</li>"
+		info += "</ul>"
+	updateinfolinks()
+	update_icon_state()

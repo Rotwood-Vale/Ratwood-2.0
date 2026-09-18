@@ -38,6 +38,11 @@
 	for(var/i in 1 to 3)
 		TEST_ASSERT_EQUAL(secret.items[i], round_recipe[i], "The recipe must remain stable.")
 
+	var/obj/item/paper/secret_sauce_recipe/note = allocate(/obj/item/paper/secret_sauce_recipe)
+	for(var/ingredient_path in secret.items)
+		var/ingredient_name = initial(ingredient_path:name)
+		TEST_ASSERT(findtext(note.info, ingredient_name), "The note must list the current round's [ingredient_name].")
+
 /datum/unit_test/ruined_sauce/Run()
 	var/datum/recipe/sauce/tomato/recipe = new
 	allocated += recipe
