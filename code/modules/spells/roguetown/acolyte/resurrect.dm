@@ -25,7 +25,7 @@
 	var/structure_range = 1
 	var/harms_undead = TRUE
 	priest_excluded = TRUE
-	pestrian_freaks = FALSE
+	var/pestrian_freaks = FALSE
 	
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
