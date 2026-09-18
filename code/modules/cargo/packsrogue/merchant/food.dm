@@ -181,6 +181,11 @@
 	cost = 30
 	contains = list(/obj/item/reagent_containers/peppermill)
 
+/datum/supply_pack/rogue/food/coastal_seasoning
+	name = "Spicy Coastal Seasoning"
+	cost = 35
+	contains = list(/obj/item/reagent_containers/glass/sauceboat/coastal_seasoning)
+
 /datum/supply_pack/rogue/food/butter
 	name = "Butter"
 	cost = 35

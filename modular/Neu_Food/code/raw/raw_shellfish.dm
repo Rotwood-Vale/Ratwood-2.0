@@ -7,7 +7,12 @@
 	sellprice = 10
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
-	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/crab
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/crab_leg
+	slice_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/crab_leg = 4,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/crab_claw = 2,
+	)
+	slices_num = 6
 	cooked_smell = /datum/pollutant/food/fried_crab
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/crab/attackby(obj/item/I, mob/living/user, params)
@@ -48,7 +53,12 @@
 	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster
-	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/lobster_leg
+	slice_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/lobster_leg = 6,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/lobster_claw = 2,
+	)
+	slices_num = 8
 	cooked_smell = /datum/pollutant/food/fried_shellfish
 
 /obj/item/reagent_containers/food/snacks/fish/shrimp

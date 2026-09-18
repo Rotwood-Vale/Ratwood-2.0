@@ -42,6 +42,8 @@ All foods are distributed among various categories. Use common sense.
 	var/bitecount = 0
 	var/trash = null
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
+	/// Optional associative list of type paths to amounts for batch slicing mixed results.
+	var/list/slice_results
 	var/slice_bclass = BCLASS_CUT
 	var/slices_num
 	var/slice_name
@@ -679,9 +681,15 @@ All foods are distributed among various categories. Use common sense.
 					user.blur_eyes(4)
 					if (prob(50))
 						user.emote("cry",forced=TRUE)
-		for(var/i in 1 to slices_num)
-			var/obj/item/reagent_containers/food/snacks/slice = new slice_path(loc)
-			initialize_slice(slice, reagents_per_slice)
+		if(length(slice_results))
+			for(var/result_type in slice_results)
+				for(var/i in 1 to slice_results[result_type])
+					var/obj/item/reagent_containers/food/snacks/slice = new result_type(loc)
+					initialize_slice(slice, reagents_per_slice)
+		else
+			for(var/i in 1 to slices_num)
+				var/obj/item/reagent_containers/food/snacks/slice = new slice_path(loc)
+				initialize_slice(slice, reagents_per_slice)
 		qdel(src)
 	else
 		var/reagents_per_slice = reagents.total_volume/slices_num

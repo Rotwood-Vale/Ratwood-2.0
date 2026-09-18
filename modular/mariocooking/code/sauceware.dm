@@ -94,6 +94,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5)
 	possible_item_intents = list(INTENT_POUR, INTENT_FILL, INTENT_GENERIC)
+	var/food_application_message = "You spoon some sauce over"
 
 /obj/item/reagent_containers/glass/sauceboat/pre_attack(atom/target, mob/living/user, params)
 	if(..())
@@ -123,7 +124,7 @@
 			return
 		// Transfer the mixture, including any additives, through normal food ingestion.
 		if(reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user))
-			to_chat(user, span_notice("You spoon some sauce over [target]."))
+			to_chat(user, span_notice("[food_application_message] [target]."))
 		return
 	// Only refill/drain real vessels. Do not coat arbitrary reagent-bearing objects.
 	if(istype(target, /obj/item/reagent_containers/glass) || user.used_intent.type == INTENT_GENERIC)

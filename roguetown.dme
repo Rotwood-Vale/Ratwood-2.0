@@ -3397,6 +3397,8 @@
 #include "modular\mariocooking\code\sauce_recipes.dm"
 #include "modular\mariocooking\code\sauces.dm"
 #include "modular\mariocooking\code\sauceware.dm"
+#include "modular\mariocooking\code\shellfish_limbs.dm"
+#include "modular\mariocooking\code\coastal_seasoning.dm"
 #include "modular\origins\origins.dm"
 #include "modular_azurepeak\_statpacks.dm"
 #include "modular_azurepeak\_virtue.dm"

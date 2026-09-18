@@ -84,6 +84,7 @@
 		/datum/supply_pack/rogue/gems/turq,
 		/datum/supply_pack/rogue/gems/amethyst,
 		/datum/supply_pack/rogue/food/pepper,
+		/datum/supply_pack/rogue/food/coastal_seasoning,
 		/datum/supply_pack/rogue/merc_weapons/shamshir,
 		/datum/supply_pack/rogue/merc_weapons/naledistaff,
 		/datum/supply_pack/rogue/steel_weapons/katar,
