@@ -3397,8 +3397,13 @@
 #include "modular\Neu_Food\code\recipes\stew_recipes.dm"
 #include "modular\Neu_Food\code\recipes\veggies_recipes.dm"
 #include "modular\origins\origins.dm"
+<<<<<<< Updated upstream
 #include "modular_azurepeak\_customization_trait.dm"
 #include "modular_azurepeak\_quirk.dm"
+=======
+#include "modular\ze_genesis_call\genesis_call.dm"
+#include "modular\timesoldier\code\ammo.dm"
+>>>>>>> Stashed changes
 #include "modular_azurepeak\_statpacks.dm"
 #include "modular_azurepeak\_virtue.dm"
 #include "modular_azurepeak\code\datums\autopunctuation.dm"
