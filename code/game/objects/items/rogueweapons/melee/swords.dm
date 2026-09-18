@@ -12,9 +12,12 @@
 	damfactor = 1.1
 	item_d_type = "slash"
 
+/datum/intent/sword/cut/long
+	clickcd = CLICK_CD_QUICK // Longsword 2H cut — faster than default, no extra damage
+
 /datum/intent/sword/cut/arming
 	damfactor = 1.2
-	clickcd = 10 // Versatile, this create 26 EDPS instead of 20. But still easily beaten by the Sabre
+	clickcd = CLICK_CD_QUICK // Versatile, this create 26 EDPS instead of 20. But still easily beaten by the Sabre
 
 /datum/intent/sword/cut/militia
 	penfactor = 30
@@ -86,46 +89,44 @@
 /datum/intent/sword/thrust/long/deep
 	name = "deep lunge"
 	icon_state = "inlunge"
-	penfactor = 50
+	penfactor = 20
 	damfactor = 1.2
-	swingdelay = 0.6 SECONDS
+	swingdelay = 1.4 SECONDS
+	misscost = 10
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/sword/thrust/krieg
 	damfactor = 0.9
 
-/datum/intent/sword/thrust/blunt
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	attack_verb = list("prods", "pokes")
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-
-/datum/intent/sword/strike
-	name = "pommel strike"
-	icon_state = "instrike"
-	attack_verb = list("bashes", "clubs")
-	animname = "strike"
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	swingdelay = 0
-	damfactor = NONBLUNT_BLUNT_DAMFACTOR
-	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
-
 // Freifechter Longsword intents //
+
+// The stock longsword fighting kit. A TRAIT_LONGSWORDSMAN only replaces these with the master intents
+// below, so any /sword/long subtype that redefines these won't work for a frei. Kept as defines so the
+// type below and uses_stock_longsword_kit() don't drift apart.
+#define LONGSWORD_STOCK_INTENTS list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, SWORD_STRIKE)
+#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/thrust/long/deep)
+
 /datum/intent/sword/cut/master
-	name = "fendente"
+	name = "mandritto"
 	icon_state = "incutmaster"
-	desc = "Strike the opponent from above with the true edge of the sword and penetrate light armour."
-	attack_verb = list("masterfully tears", "artfully slits", "adroitly hacks")
+	desc = "Strike the opponent with the true edge of the sword and penetrate the lightest armors. Poor at damaging armor."
+	attack_verb = list("masterfully cuts", "artfully slits", "adroitly slashes")
+	// You do more damage to exposed areas than stabbing, but your damage to armor is slightly less effective than a normal longsword.
+	// This effectively means you do 1.2x damage to flesh, but 0.9x damage to armor.
 	damfactor = 1.2
 	penfactor = 50
-	swingdelay = 1
+	intent_intdamage_factor = 0.75
+
+/datum/intent/sword/chop/long/master
+	name = "fendente"
+	icon_state = "inchop"
+	desc = "Swing your sword in a wide arc, striking them with the true edge of the blade but exposing yourself. Damages shields more and penetrates even hardened leather."
+	attack_verb = list("furiously chops", "powerfully cleaves", "fiercely hacks")
+	// This is almost x2 slower than a regular longsword's chop, giving the opponent more time to riposte you.
+	// This however will penetrate all Light AC armor except for brigandine parts. Also does x2 damage to shields.
+	penfactor = 40
+	swingdelay = 0.8 SECONDS
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/sword/thrust/long/master
 	name = "stoccato"
@@ -134,17 +135,30 @@
 	attack_verb =  list("skillfully perforates", "artfully punctures", "deftly sticks")
 	damfactor = 1.35
 
+/datum/intent/sword/thrust/long/deep/master
+	name = "stoccato profondo"
+	icon_state = "inlunge"
+	desc = "A precise thrust over the opponent's weapon aimed for the gaps in one's armor instead of damaging the armor. Leaves you exposed during the swing."
+	attack_verb = list("carefully pierces", "precisely thrusts", "accurately impales")
+	// Stab someone directly. 50% damage to armor.
+	// Best used like an estoc.
+	penfactor = 50
+	damfactor = 1.1
+	swingdelay = 0.6 SECONDS
+	intent_intdamage_factor = 0.5
+	clickcd = CLICK_CD_MELEE
+	misscost = 0
+
 /datum/intent/effect/daze/longsword/clinch
 	name = "clinch & swipe"
 	desc = "Get up in your opponent's face and force them into a clinch, then swipe their face with the crossguard while they're distracted. Good against baited or exhausted opponents."
 	icon_state = "inpunish"
 	attack_verb = list("forcibly clinches and swipes")
 	animname = "strike"
-	target_parts = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL)
+	target_parts = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_R_EYE)
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	damfactor = 0.7
-	swingdelay = 3
 	clickcd = 10
 	recovery = 6
 	item_d_type = "blunt"
@@ -163,7 +177,7 @@
 	clickcd = 12
 	swingdelay = 16
 	damfactor = 0.9
-	blade_class = BCLASS_HALFSWORD
+	blade_class = BCLASS_PICK
 
 /datum/intent/sword/thrust/long/halfsword/lesser
 	name = "halbschwert"
@@ -188,7 +202,31 @@
 	blade_class = BCLASS_STAB
 	damfactor = 1 //they're stabbing you and it's going to hurt a little
 	clickcd = 20
-	swingdelay = 1.3 SECONDS
+	swingdelay = 1 SECONDS
+
+/datum/intent/sword/thrust/blunt
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	attack_verb = list("prods", "pokes")
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+
+/datum/intent/sword/strike
+	name = "pommel strike"
+	icon_state = "instrike"
+	attack_verb = list("bashes", "clubs")
+	animname = "strike"
+	blade_class = BCLASS_BLUNT
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	chargetime = 0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	swingdelay = 0
+	damfactor = NONBLUNT_BLUNT_DAMFACTOR
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	blunt_chipping = TRUE
+	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
 
 // A weaker strike for sword with high damage so that it don't end up becoming better than mace
 
@@ -236,7 +274,7 @@
 	damfactor = 0.9
 
 /datum/intent/sword/chop/long
-	reach = 2
+	damfactor = 1.2
 
 /datum/intent/sword/cut/falx
 	penfactor = 20
@@ -398,9 +436,9 @@
 		It has great cultural significance in the empires of Grenzelhoft and Etrusca, where legendary swordsmen have created and perfected many fighting techniques of todae."
 	force = 25
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/peel)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/peel, /datum/intent/sword/chop)
-	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
+	possible_item_intents = LONGSWORD_STOCK_INTENTS
+	gripped_intents = LONGSWORD_STOCK_GRIPPED_INTENTS
+	alt_intents = list(/datum/intent/sword/strike, /datum/intent/sword/bash, /datum/intent/effect/daze)
 	icon_state = "longsword"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	item_state = "longsword"
@@ -423,10 +461,62 @@
 	wdefense_wbonus = 4
 	smeltresult = /obj/item/ingot/steel
 	special = /datum/special_intent/side_sweep
+	/// One-handed intents a TRAIT_LONGSWORDSMAN fights with.
+	var/list/master_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/effect/daze/longsword/clinch, /datum/intent/effect/daze/longsword)
+	/// Two-handed intents a TRAIT_LONGSWORDSMAN fights with.
+	var/list/master_gripped_intents = list(/datum/intent/sword/cut/master, /datum/intent/sword/thrust/long/master, /datum/intent/sword/chop/long/master, /datum/intent/sword/thrust/long/deep/master)
+	/// Alt grips a TRAIT_LONGSWORDSMAN gets.
+	/// Whether this sword is valid for TRAIT_LONGSWORDSMAN
+	var/master_trainable = FALSE
+	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_LONGSWORDSMAN.
+	var/master_training_active = FALSE
+
 
 /obj/item/rogueweapon/sword/long/Initialize(mapload)
 	. = ..(mapload)
-	AddComponent(/datum/component/skill_blessed, TRAIT_LONGSWORDSMAN, /datum/skill/combat/swords, SKILL_LEVEL_MASTER)
+	master_trainable = uses_stock_longsword_kit()
+	// The master's skill and the master's intents go together. No master skill unless using master intents.
+	if(master_trainable)
+		AddComponent(/datum/component/skill_blessed, TRAIT_LONGSWORDSMAN, /datum/skill/combat/swords, SKILL_LEVEL_MASTER)
+
+/// Whether this sword is still a plain longsword. Special swords like the greatkopesh don't count.
+/obj/item/rogueweapon/sword/long/proc/uses_stock_longsword_kit()
+	if(!length(master_item_intents) || !length(master_gripped_intents))
+		return FALSE
+	if(!compare_list(possible_item_intents, LONGSWORD_STOCK_INTENTS))
+		return FALSE
+	if(!compare_list(gripped_intents, LONGSWORD_STOCK_GRIPPED_INTENTS))
+		return FALSE
+	return TRUE
+
+/obj/item/rogueweapon/sword/long/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	update_master_training(user, slot == ITEM_SLOT_HANDS)
+
+/obj/item/rogueweapon/sword/long/dropped(mob/user, silent = FALSE)
+	. = ..()
+	if(QDELETED(src))
+		return
+	update_master_training(user, FALSE)
+
+/// Swaps the master kit in while a TRAIT_LONGSWORDSMAN has the sword in hand, and back out the moment
+/// it leaves their hands - the sword is not special in any way, the fencer is.
+/obj/item/rogueweapon/sword/long/proc/update_master_training(mob/user, held)
+	if(!master_trainable)
+		return
+	var/should_train = (held && user && HAS_TRAIT(user, TRAIT_LONGSWORDSMAN)) ? TRUE : FALSE
+	if(should_train == master_training_active)
+		return
+	if(altgripped || wielded)
+		ungrip(iscarbon(user) ? user : null, FALSE)
+	if(should_train)
+		possible_item_intents = master_item_intents.Copy()
+		gripped_intents = master_gripped_intents.Copy()
+	else
+		// master_trainable is only ever set on a sword still carrying the stock kit so we give it the stock back.
+		possible_item_intents = LONGSWORD_STOCK_INTENTS
+		gripped_intents = LONGSWORD_STOCK_GRIPPED_INTENTS
+	master_training_active = should_train
 
 /obj/item/rogueweapon/sword/long/broadsword
 	name = "broadsword"
@@ -761,9 +851,6 @@
 	icon_state = "elongsword"
 	sheathe_icon = "elongsword"
 	icon = 'icons/roguetown/weapons/special/freifechter.dmi'
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/effect/daze/longsword/clinch, /datum/intent/effect/daze/longsword)
-	gripped_intents = list(/datum/intent/sword/cut/master, /datum/intent/sword/thrust/long/master, /datum/intent/sword/thrust/long/halfsword, /datum/intent/effect/daze/longsword2h)
-	alt_intents = list(/datum/intent/sword/strike, /datum/intent/sword/bash, /datum/intent/effect/daze)
 	max_blade_int = 300
 	max_integrity = 225
 
@@ -2735,7 +2822,7 @@
 
 /obj/item/rogueweapon/sword/decorated/blacksteel
 	name = "decorated blacksteel arming sword"
-	desc = "A broad blade of blacksteel, mounted atop a golden sabreguard that's been meticulously engraved with its commissoner's heraldry. It is \
+	desc = "A broad blade of blacksteel, mounted atop a golden sabreguard that's been meticulously engraved with its comfoner's heraldry. It is \
 	a masterwork of unmatched opulance and lethality, and is - perhaps - the finest arming sword your eyes'll ever lay upon."
 	icon_state = "bs_swordregal"
 	sheathe_icon = "bs_swordregal"
@@ -2823,3 +2910,6 @@
 	max_blade_int = 330
 	sellprice = 50
 	sheathe_icon = "elfsword"
+
+#undef LONGSWORD_STOCK_INTENTS
+#undef LONGSWORD_STOCK_GRIPPED_INTENTS
