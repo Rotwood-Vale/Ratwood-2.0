@@ -265,7 +265,7 @@
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 9
+	chargetime = 5 SECONDS
 	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
@@ -308,7 +308,7 @@
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 9
+	chargetime = 3 SECONDS
 	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
@@ -336,7 +336,7 @@
 		span_warning("[user] calls down a ward around [target]!"),
 		span_warning("A nullifying force settles over me!")
 	)
-	var/dur = max((9 * (user.get_skill_level(associated_skill, 5))))
+	var/dur = max((5 * (user.get_skill_level(associated_skill, 5))))
 	addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
 	return TRUE
 /obj/effect/proc_holder/spell/invoked/magicshield/proc/remove_buff(mob/living/carbon/target)
