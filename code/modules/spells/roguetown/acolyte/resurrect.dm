@@ -86,7 +86,7 @@
 			qdel(underworld_spirit)
 			ghost.mind.transfer_to(target, TRUE)
 		target.grab_ghost(force = TRUE)
-		if(!target.check_revive(user))
+		if(!target.check_revive(user, bypass_foreign_brain_check = pestrian_freaks))
 			revert_cast()
 			return FALSE
 		if(target.mob_biotypes & MOB_UNDEAD && harms_undead) //positive energy harms the undead
