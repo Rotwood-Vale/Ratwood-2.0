@@ -35,8 +35,9 @@
 
 /datum/recipe/sauce/secret/New()
 	. = ..()
-	// Ten ingredients, three unique picks, at least one strange (100 combinations).
+	// Ten ingredients, three unique picks, at least one strange (100+ combinations).
 	// No recipe-book registration: the round's selection is deliberately hidden.
+	// Originally, I actually wanted to include droopings here, but I am pretty sure that will pref-break people. 
 	var/list/pool = list(
 		/obj/item/reagent_containers/food/snacks/pepper,
 		/obj/item/reagent_containers/food/snacks/allspice,
