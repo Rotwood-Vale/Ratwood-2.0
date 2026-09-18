@@ -11,10 +11,14 @@
 	name = "zizite killer round"
 	damage = 200
 	armor_penetration = 95
-	range = 30
+	range = 60
 	ammo_type = /obj/item/ammo_casing/brutal_round
 
 /obj/item/ammo_casing/brutal_round/update_icon()
 	..()
 	if(!BB)
 		icon_state = "lcasing-spent"
+		name = "spent zizite killer round"
+	else
+		icon_state = initial(icon_state)
+		name = initial(name)

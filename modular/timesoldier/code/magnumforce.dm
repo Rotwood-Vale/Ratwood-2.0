@@ -10,6 +10,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/heavysniper
 	internal_magazine = TRUE
 	semi_auto = FALSE // this is slightly misleading. process_chamber() starts with if !semi_auto return. without it, firing would let the normal ballistic code process the chamber immediately afterwards.
+	load_sound = 'modular/timesoldier/sounds/kzload.ogg'
+	fire_sound = 'modular/timesoldier/sounds/kzfire.ogg'
 
 /obj/item/ammo_box/magazine/internal/heavysniper
 	name = "KZ-41 internal magazine"
@@ -23,6 +25,7 @@
 
 /obj/item/gun/ballistic/heavysniper/attack_self(mob/living/user)
 	if(!bolt_open)
+		playsound(src, 'modular/timesoldier/sounds/kzopen.ogg', 50)
 		bolt_open = TRUE
 		if(chambered)
 			chambered.forceMove(drop_location())
@@ -31,6 +34,7 @@
 		update_icon()
 
 	else
+		playsound(src, 'modular/timesoldier/sounds/kzclose.ogg', 50)
 		bolt_open = FALSE
 		chamber_round()
 		update_icon()
@@ -50,3 +54,16 @@
 		icon_state = "heavysniper-open"
 	else
 		icon_state = "heavysniper"
+
+
+/obj/item/gun/ballistic/heavysniper/can_shoot()
+	if(bolt_open)
+		return FALSE
+	return ..()
+
+/obj/item/gun/ballistic/heavysniper/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	if(bolt_open)
+		to_chat(user, "<span class='red'>The bolt is open. You can't fire the weapon.</span>")
+		playsound(src, 'modular/timesoldier/sounds/gun_empty.ogg', 100)
+		return
+	return ..()
