@@ -9,7 +9,7 @@
 
 /obj/projectile/bullet/firearm/brutal_round
 	name = "zizite killer round"
-	damage = 150
+	damage = 200
 	armor_penetration = 95
 	range = 30
 	ammo_type = /obj/item/ammo_casing/brutal_round
