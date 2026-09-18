@@ -154,6 +154,7 @@
 
 	var/list/virtue_restrictions
 	var/list/vice_restrictions
+	var/list/quirk_restrictions
 
 	///The job's stats
 	var/list/job_stats
@@ -211,6 +212,8 @@
 	if(job_traits)
 		for(var/trait in job_traits)
 			ADD_TRAIT(H, trait, JOB_TRAIT)
+		if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
+			H.def_intent_change(INTENT_PARRY)
 
 	if(!ishuman(H))
 		return

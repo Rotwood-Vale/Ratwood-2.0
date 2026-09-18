@@ -1297,7 +1297,7 @@
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/proc/check_revive(mob/living/user)
+/mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
@@ -1331,35 +1331,66 @@
 
 	return TRUE
 
+/// Whether this body holds a brain that belongs to a different body, see is_foreign_to()
+/mob/living/carbon/proc/has_foreign_brain()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	return B?.is_foreign_to(src)
+
+/mob/living/carbon/human/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+		return FALSE
+
+/// The single DEAD-to-alive transition, every revival and rise routes through it.
+/// Returns whether the flip happened, NOT whether they stayed alive, updatehealth re-kills if the caller skipped a health floor
+/mob/living/proc/become_alive(new_stat = CONSCIOUS, bypass_foreign_brain_check = FALSE)
+	if(stat != DEAD)
+		return FALSE
+	if(!bypass_foreign_brain_check && iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.has_foreign_brain())
+			return FALSE
+	GLOB.dead_mob_list -= src
+	GLOB.alive_mob_list += src
+	stat = new_stat
+	updatehealth() //then we check if the mob should wake up.
+	update_mobility()
+	update_sight()
+	reload_fullscreen()
+	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
+
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
-		GLOB.alive_mob_list += src
+		if(!become_alive(CONSCIOUS, admin_revive || bypass_foreign_brain_check)) // Refused, nothing flipped, nothing to tidy
+			return
+		// Runs even if become_alive's updatehealth re-killed us, or the corpse keeps its
+		// rot, its dormant deadite datum and the monochrome death filter
 		set_suicide(FALSE)
-		stat = CONSCIOUS
-		updatehealth() //then we check if the mob should wake up.
-		update_mobility()
-		update_sight()
 		clear_alert("not_enough_oxy")
-		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
-		// Add message about struggling to recall death circumstances
-		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
-		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
-		. = TRUE
-		var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-		if(heart)
-			heart.Restart()
+		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
+		if(.)
+			// Add message about struggling to recall death circumstances
+			to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
+			to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+			if(heart)
+				heart.Restart()
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
 			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
 				spell.updateButtonIcon()
-		qdel(GetComponent(/datum/component/rot))
+		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
+			qdel(GetComponent(/datum/component/rot))
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
@@ -2611,6 +2642,9 @@
 				found_ping(get_turf(O), client, "trap")
 			if(istype(O, /obj/structure/quicksand))
 				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/item/bodypart/head)) // Bodies ping as mobs already, a loose head is an item and would be invisible otherwise
+				if(isturf(O.loc)) // Only one lying loose, not one in a bag or held
+					found_ping(get_turf(O), client, "hidden")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
 			if(!can_see(src, potential_track, 10))

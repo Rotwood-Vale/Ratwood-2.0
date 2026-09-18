@@ -111,19 +111,19 @@
 		if("Absolutio - (greatsword)")
 			r_hand = /obj/item/rogueweapon/greatsword/zizo
 			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Vindicatio - (longsword)")
 			r_hand = /obj/item/rogueweapon/sword/long/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Damnatio - (rapier)")
 			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Perditio - (kriegmesser)")
 			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Messis - (billhook)")
 			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
@@ -132,7 +132,7 @@
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
-			H.adjust_skillrank_down_to(/datum/skill/combat/swords, 5, TRUE)	
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)	
 
 /datum/outfit/job/roguetown/wretch/ancientchampion/choose_loadout(mob/living/carbon/human/H)
 	if(H.mind)
