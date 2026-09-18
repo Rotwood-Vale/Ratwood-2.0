@@ -169,6 +169,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			return "wildflowers and clean rain"
 	return "earth and sweat"
 
+/// The leading text shown on examine before the custom scent, matching redolent_examine_text().
+/datum/preferences/proc/redolent_scent_leadin(scent_type)
+	return scent_type == "Gross" ? "They reek of" : "They smell of"
+
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
