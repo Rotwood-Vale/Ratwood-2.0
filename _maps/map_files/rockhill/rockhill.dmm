@@ -69494,7 +69494,6 @@
 /area/rogue/outdoors/beach/harbor)
 "ovq" = (
 /obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/sakura,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ovs" = (
@@ -108430,10 +108429,6 @@
 /obj/machinery/light/rogue/oven/west,
 /turf/open/floor/rogue/tile/brick,
 /area/rogue/outdoors/town/church)
-"wHL" = (
-/obj/structure/flora/sakura,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "wHS" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -415210,7 +415205,7 @@ iWm
 tyZ
 tyZ
 tyZ
-gMo
+cXr
 qqj
 qqj
 sco
@@ -419097,7 +419092,7 @@ tyZ
 tyZ
 tyZ
 tyZ
-gMo
+cXr
 xrX
 qqj
 qqj
@@ -419529,7 +419524,7 @@ qBK
 iSq
 jeU
 fsP
-gMo
+cXr
 cOs
 qqj
 qqj
@@ -528820,7 +528815,7 @@ aaT
 ctb
 spU
 evo
-wHL
+tZG
 pxU
 aXH
 txy

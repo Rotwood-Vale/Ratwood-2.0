@@ -460,7 +460,31 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
 
+// maple tree
 
+/obj/structure/flora/maple
+	name = "maple tree"
+	desc = "In the monastery's shadowed courtyards, such trees are seen as both a sign of fleeting beauty and a reminder of inevitable decay."
+	icon = 'icons/obj/structures/maple_tree.dmi'
+	icon_state = null
+	obj_flags = CAN_BE_HIT | IGNORE_SINK
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER
+
+	bound_height = 128
+	bound_width  = 128
+
+/obj/structure/flora/maple/a
+	icon_state = "maple1"
+
+/obj/structure/flora/maple/b
+	icon_state = "maple2"
+
+/obj/structure/flora/maple/c
+	icon_state = "maple3"
+
+/obj/structure/flora/maple/d
+	icon_state = "maple4"
 
 
 
