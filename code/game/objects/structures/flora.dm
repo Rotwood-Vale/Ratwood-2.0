@@ -464,7 +464,7 @@
 
 /obj/structure/flora/maple
 	name = "maple tree"
-	desc = "In the monastery's shadowed courtyards, such trees are seen as both a sign of fleeting beauty and a reminder of inevitable decay."
+	desc = "A maple tree, trees with brillant orange, red and yellow leaves, a common imported tree from Grenzelhoft."
 	icon = 'icons/obj/structures/maple_tree.dmi'
 	icon_state = null
 	obj_flags = CAN_BE_HIT | IGNORE_SINK
