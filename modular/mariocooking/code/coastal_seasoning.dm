@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/glass/sauceboat/coastal_seasoning
 	name = "spicy coastal seasoning"
-	desc = "A weathered tin of imported seasoning blended to complement seafood. Its warm, piquant aroma suits most savory food."
+	desc = "A weathered tin of imported seasoning. It smells salty, spicy, and faintly of citrus."
 	icon = 'modular/mariocooking/sprites/seafood_seasoning_tin.dmi'
 	icon_state = "seafood_seasoning_tin"
 	volume = 30
@@ -15,4 +15,4 @@
 
 /obj/item/reagent_containers/glass/sauceboat/coastal_seasoning/get_mechanics_examine(mob/user)
 	. = ..()
-	. += span_info("Use the feed intent on edible food to season it. The tin cannot be refilled.")
+	. += span_info("Use the feed intent on food to season it. The tin cannot be refilled.")

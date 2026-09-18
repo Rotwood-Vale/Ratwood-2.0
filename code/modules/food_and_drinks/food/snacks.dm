@@ -42,7 +42,6 @@ All foods are distributed among various categories. Use common sense.
 	var/bitecount = 0
 	var/trash = null
 	var/slice_path    // for sliceable food. path of the item resulting from the slicing
-	/// Optional associative list of type paths to amounts for batch slicing mixed results.
 	var/list/slice_results
 	var/slice_bclass = BCLASS_CUT
 	var/slices_num
@@ -54,7 +53,6 @@ All foods are distributed among various categories. Use common sense.
 	var/dunkable = FALSE // for dunkable food, make true
 	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for overn cooking
-	/// Solid food produced by cooking in a boiling pot of water.
 	var/boiled_type = null
 	/// How palatable is this food for a given social class? Also influences food quality
 	var/faretype = FARE_IMPOVERISHED

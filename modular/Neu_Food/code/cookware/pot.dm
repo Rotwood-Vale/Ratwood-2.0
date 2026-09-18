@@ -29,7 +29,7 @@
 	. += span_info("Once boiling, left-clicking the hearthbound pot with an ingredient will drop it inside. The larger a pot is, the more ingredients can be dropped in at any given time.")
 	. += span_info("After the first ingredient is placed in, the pot will begin turning it - and any other subsequent ingredients - into a brew, over the course of a minute.")
 	. += span_info("Specific ingredients can create specific brews; dried rosa petals for a refreshing tea, coffee beans for a revitalizing drink, and more..")
-	. += span_info("Raw pasta boils as solid food: add it to a hot pot with at least 10 units of water. The cooked food is placed beside the hearth. Use a removed pot in hand to retrieve unfinished food.")
+	. += span_info("Raw pasta can be added to a boiling pot with at least 10 units of water.")
 
 /obj/item/reagent_containers/glass/bucket/pot/examine(mob/user)
 	. = ..()

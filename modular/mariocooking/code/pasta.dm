@@ -10,7 +10,6 @@
 	rotprocess = SHELFLIFE_DECENT
 	w_class = WEIGHT_CLASS_NORMAL
 
-// Pasta has no filling icon; ordinary slicing/cooking calls this hook.
 /obj/item/reagent_containers/food/snacks/rogue/pasta/update_snack_overlays(obj/item/reagent_containers/food/snacks/source)
 	update_icon()
 
@@ -34,7 +33,6 @@
 	for(var/datum/reagent/consumable/sauce/sauce in reagents?.reagent_list)
 		if(!sauce.pasta_name)
 			continue
-		// Equal quantities keep the first sauce in the holder's stable order.
 		if(!dominant || sauce.volume > dominant.volume)
 			dominant = sauce
 	name = dominant ? dominant.pasta_name : initial(name)

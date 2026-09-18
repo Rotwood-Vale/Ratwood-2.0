@@ -8,9 +8,8 @@
 	var/simmering = FALSE
 	var/cook_progress = 0
 
-/obj/item/reagent_containers/glass/bucket/pot/saucepan/update_icon()
-	// The supplied vessel sprite is shared by every sauce; no pot filling states.
-	return
+/obj/item/reagent_containers/glass/bucket/pot/saucepan/update_icon(dont_fill = FALSE)
+	return FALSE
 
 /obj/item/reagent_containers/glass/bucket/pot/saucepan/examine(mob/user)
 	. = ..()
@@ -20,10 +19,9 @@
 		. += span_notice("This batch is ready to simmer on a lit hearth.")
 
 /obj/item/reagent_containers/glass/bucket/pot/saucepan/get_mechanics_examine(mob/user)
-	// The ordinary pot's single-ingredient stew instructions do not apply here.
 	. = list()
-	. += span_info("Add whole ingredient items, then use the saucepan in hand to begin a batch. Place it on a lit hearth to simmer. Fanning the hearth speeds cooking. Use the pan in hand again to cancel and recover its ingredients.")
-	. += span_info("Finished sauce can be poured into a sauceboat using the ordinary feed/fill intents. Empty the saucepan before preparing another batch.")
+	. += span_info("Add ingredients and use the saucepan in hand to start a batch. Place it on a lit hearth to simmer.")
+	. += span_info("Use it in hand again to cancel the batch, or pour the finished sauce into a sauceboat.")
 
 /obj/item/reagent_containers/glass/bucket/pot/saucepan/attackby(obj/item/I, mob/user, params)
 	if(simmering)
@@ -69,7 +67,6 @@
 		return
 	var/output = recipe ? recipe.result : /datum/reagent/consumable/sauce/ruined
 	var/amount = recipe ? recipe.output_amount : 60
-	// Like stews, ingredients are converted into the result, not extra chemicals.
 	for(var/obj/item/ingredient in contents)
 		qdel(ingredient)
 	reagents.clear_reagents()
@@ -99,7 +96,6 @@
 /obj/item/reagent_containers/glass/sauceboat/pre_attack(atom/target, mob/living/user, params)
 	if(..())
 		return TRUE
-	// Snacks generally lack CAN_BE_HIT, and many have their own recipe attackby.
 	if(user.used_intent.type == INTENT_POUR && istype(target, /obj/item/reagent_containers/food/snacks))
 		attack_obj(target, user)
 		return TRUE
@@ -107,34 +103,21 @@
 
 /obj/item/reagent_containers/glass/sauceboat/attack_obj(obj/target, mob/living/user)
 	if(user.used_intent.type == INTENT_POUR && istype(target, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/food = target
 		if(!is_drainable())
 			return
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
 			return
-		var/has_sauce = FALSE
-		for(var/datum/reagent/consumable/sauce/sauce in reagents.reagent_list)
-			has_sauce = TRUE
-			break
-		if(!has_sauce)
+		if(!(locate(/datum/reagent/consumable/sauce) in reagents.reagent_list))
 			to_chat(user, span_warning("There is no prepared sauce in [src]."))
 			return
-		if(target.reagents.holder_full())
-			to_chat(user, span_warning("[target] cannot hold any more sauce."))
+		if(food.reagents.holder_full())
+			to_chat(user, span_warning("[food] cannot hold any more sauce."))
 			return
-		var/transfer_amount = min(amount_per_transfer_from_this, reagents.total_volume, target.reagents.maximum_volume - target.reagents.total_volume)
-		var/transfer_fraction = transfer_amount / reagents.total_volume
-		var/list/applied_sauces = list()
-		for(var/datum/reagent/consumable/sauce/sauce in reagents.reagent_list)
-			applied_sauces[sauce.type] = sauce.volume * transfer_fraction
-		// Transfer the mixture, including any additives, through normal food ingestion.
-		if(reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user))
-			for(var/sauce_type in applied_sauces)
-				var/datum/reagent/consumable/sauce/sauce_definition = GLOB.chemical_reagents_list[sauce_type]
-				sauce_definition.add_taste_to_food(target, applied_sauces[sauce_type])
-			to_chat(user, span_notice("[food_application_message] [target]."))
+		if(reagents.trans_to(food, amount_per_transfer_from_this, transfered_by = user, method = TOUCH))
+			to_chat(user, span_notice("[food_application_message] [food]."))
 		return
-	// Only refill/drain real vessels. Do not coat arbitrary reagent-bearing objects.
 	if(istype(target, /obj/item/reagent_containers/glass) || user.used_intent.type == INTENT_GENERIC)
 		return ..()
 

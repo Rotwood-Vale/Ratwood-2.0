@@ -3,26 +3,23 @@
 	description = "A prepared condiment for food."
 	nutriment_factor = 0
 	taste_mult = 8
-	/// Optional display name when this is the predominant sauce on pasta.
 	var/pasta_name
 
 /datum/reagent/consumable/sauce/reaction_mob(mob/living/eater, method = TOUCH, reac_volume)
-	// The consumable preference handler accesses human-only variables.
 	if(ishuman(eater))
 		return ..()
 
-/datum/reagent/consumable/sauce/proc/add_taste_to_food(obj/item/reagent_containers/food/snacks/food, amount)
-	if(!food?.reagents || !taste_description || amount <= 0)
+/datum/reagent/consumable/sauce/on_transfer(atom/A, method = TOUCH, trans_volume)
+	. = ..()
+	if(!istype(A, /obj/item/reagent_containers/food/snacks))
 		return
-	var/datum/reagent/consumable/nutriment/nutriment = locate() in food.reagents.reagent_list
-	if(!nutriment)
+	var/obj/item/reagent_containers/food/snacks/food = A
+	var/datum/reagent/consumable/nutriment/N = locate() in food.reagents.reagent_list
+	if(!N)
 		return
-	// Food flavor is stored on nutriment. Weight the sauce by its normal reagent taste strength.
-	var/effective_volume = amount * taste_mult / max(nutriment.taste_mult, 1)
-	var/list/sauce_taste = list()
-	sauce_taste[taste_description] = 1
-	nutriment.on_merge(sauce_taste, effective_volume)
-
+	var/list/new_taste = list()
+	new_taste[taste_description] = 1
+	N.on_merge(new_taste, trans_volume * taste_mult / N.taste_mult)
 
 /datum/reagent/consumable/sauce/tomato
 	name = "Tomato Sauce"

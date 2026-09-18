@@ -8,5 +8,4 @@
 #define FOOD_CAT_DRYING "Drying Rack"
 #define FOOD_CAT_STEW "Stews"
 
-// Shared by hearth stews, solid-food boiling, and sauce preparation.
 #define MIN_STEW_TEMPERATURE 374
