@@ -1,5 +1,5 @@
 /datum/unit_test/sauce_recipes/Run()
-	TEST_ASSERT_EQUAL(length(SScooking.sauce_recipes), 4, "Expected the three basic sauces and Secret Sauce.")
+	TEST_ASSERT_EQUAL(length(SScooking.sauce_recipes), 5, "Expected the three basic sauces and Secret Sauce.")
 	for(var/datum/recipe/sauce/recipe in SScooking.sauce_recipes)
 		var/obj/item/reagent_containers/glass/bucket/pot/saucepan/pan = allocate(/obj/item/reagent_containers/glass/bucket/pot/saucepan)
 		// Reverse order deliberately: ingredient order must not matter.
