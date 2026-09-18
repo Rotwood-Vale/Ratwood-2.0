@@ -31,7 +31,7 @@
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
 	// Allows prayer near EEEVIL psycross
-	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
+	for(var/obj/structure/fluff/psycross/matthios in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
 			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
 			return FALSE
