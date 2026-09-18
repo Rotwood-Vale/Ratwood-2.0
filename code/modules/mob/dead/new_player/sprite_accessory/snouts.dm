@@ -190,6 +190,12 @@
 	name = "Mammal, Thick ALT"
 	icon_state = "wolfalt"
 
+/datum/sprite_accessory/snout/orca
+	name = "Orca"
+	icon_state = "m_snout_orca"
+	color_keys = 2
+	color_key_names = list("Snout", "Inner")
+
 /datum/sprite_accessory/snout/otie
 	name = "Otie"
 	icon_state = "otie"
