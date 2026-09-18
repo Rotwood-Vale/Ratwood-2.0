@@ -33,7 +33,7 @@
 	..()
 	to_chat(H, span_warning("The curtains part, the shieldline rallies, and the eyes of a thousand shadows fall upon you. Snarling gladiator, enthralled shieldbearer, vestumed actor; ready yourself for another bout."))
 	if(H.mind)
-		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -1 INT")
+		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -1 INT", "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
 		var/bronzeweapon_choice = input(H, "Choose your WEAPONS.", "PUT ON A SHOW FOR THE CROWD.") as anything in bronzeweapon
 		switch(bronzeweapon_choice)
 			if("Spatha & +1 Unarmed")
@@ -126,39 +126,49 @@
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_WIL, 1)
 				H.change_stat(STATKEY_INT, -1)
-
-		var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Gladius & Skills In Dual-Wielding", "Another Makhaira & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
-		var/bronzesidearm_choice = input(H, "Choose your ACCOUTREMENTS.", "PREPARE YOUR OPENING ACT.") as anything in bronzesidearm
-		switch(bronzesidearm_choice)
-			if("A Javelin's Bag")
-				beltl = /obj/item/quiver/javelin/bronze
-			if("A Sling With Bronze Pellets")
-				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-				beltl = /obj/item/quiver/sling/bronze
-			if("A Bow With Bronze Arrows")
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/classic
-				beltl = /obj/item/quiver/bronzearrows
-			if("Another Gladius & Skills In Dual-Wielding")
-				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-				l_hand = /obj/item/rogueweapon/sword/short/gladius
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Another Makhaira & Skills In Dual-Wielding")//these names may confuse people, but its soulful to display their actual titles rather than "messer"
-				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-				l_hand = /obj/item/rogueweapon/sword/short/messer/bronze
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Another Khopesh & Skills In Dual-Wielding")
-				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-				l_hand = /obj/item/rogueweapon/sword/sabre/bronzekhopesh
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-			if("Another Axe & Skills In Dual-Wielding")
-				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_APPRENTICE, TRUE)
-				l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe//i hate this objs naming path, just terrible
+			if("Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted/caestus
+				belt1 = /obj/item/quiver/javelin/bronze
+				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 1)
+				H.change_stat(STATKEY_WIL, 1)
+				H.change_stat(STATKEY_INT, -1)
+		if(bronzeweapon_choice != "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")//if we are pure unarmed only, skip the sidearm menu and just give them javelins
+			var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Gladius & Skills In Dual-Wielding", "Another Makhaira & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
+			var/bronzesidearm_choice = input(H, "Choose your ACCOUTREMENTS.", "PREPARE YOUR OPENING ACT.") as anything in bronzesidearm
+			switch(bronzesidearm_choice)
+				if("A Javelin's Bag")
+					beltl = /obj/item/quiver/javelin/bronze
+				if("A Sling With Bronze Pellets")
+					H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
+					beltl = /obj/item/quiver/sling/bronze
+				if("A Bow With Bronze Arrows")
+					H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/classic
+					beltl = /obj/item/quiver/bronzearrows
+				if("Another Gladius & Skills In Dual-Wielding")
+					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+					l_hand = /obj/item/rogueweapon/sword/short/gladius
+					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
+					beltl = /obj/item/rogueweapon/scabbard/sword
+				if("Another Makhaira & Skills In Dual-Wielding")//these names may confuse people, but its soulful to display their actual titles rather than "messer"
+					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+					l_hand = /obj/item/rogueweapon/sword/short/messer/bronze
+					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
+					beltl = /obj/item/rogueweapon/scabbard/sword
+				if("Another Khopesh & Skills In Dual-Wielding")
+					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+					l_hand = /obj/item/rogueweapon/sword/sabre/bronzekhopesh
+					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_APPRENTICE, TRUE)
+					beltl = /obj/item/rogueweapon/scabbard/sword
+				if("Another Axe & Skills In Dual-Wielding")
+					ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_APPRENTICE, TRUE)
+					l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe//i hate this objs naming path, just terrible
 		var/bronzediscipline = list("Thespian - Dodge Expert, -I CON/STR & +III SPD","Gladiator - Skin-Armored & Immunity To Pain","Shieldbearer - Well-Armored & Maille Training","Bulwark - Fully-Armored & Plate Training")
 		var/bronzediscipline_choice = input(H, "Choose your DISCIPLINE.", "EMBRACE GLORY AND DEATH.") as anything in bronzediscipline
 		switch(bronzediscipline_choice)
@@ -184,6 +194,10 @@
 				pants = /obj/item/clothing/under/roguetown/loincloth/brown
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
 				//shirt = /obj/item/clothing/suit/roguetown/shirt/tribalrag/gladiator //no empty hands to put this in, and cannot seem to 'pre-load' the cosmetic slot of a skin armor. Can hang in limbo untill someone figures out how to grant it.
+				if(bronzeweapon_choice == "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
+					ADD_TRAIT(H, TRAIT_RAGE, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
 			if("Shieldbearer - Well-Armored & Maille Training")
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				head = /obj/item/clothing/head/roguetown/helmet/heavy/bronze

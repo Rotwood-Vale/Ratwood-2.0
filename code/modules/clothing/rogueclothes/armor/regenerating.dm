@@ -130,6 +130,7 @@
 	blocksound = SOFTHIT
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 20 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
 	name = "pit-hardened skin"
@@ -138,6 +139,59 @@
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 20 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
+	name = "unstoppable skin"
+	desc = "I've endured enough. The onslaught has lost its meaning."
+	armor = ARMOR_BRIGANDINE//scary as hell, but longer repair time
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
+	name = "unstoppable chest"
+	desc = "The callouses could stop arrows! But only so many."
+	armor = ARMOR_MAILLE//covers stabs
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
+	name = "hardened skin"
+	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 20 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
+	name = "hardened chest"
+	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = SOFTHIT
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 20 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder//dedicated gachi-muchi armor
+	name = "strongman's pride"
+	desc = "Toughened from rigorous routine and mettle. A physique that could hold up the sky."
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_LEATHER_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
+	repair_time = 30 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
+	name = "strongman's pecs"
+	desc = "Akin to marble hewn by the old Etruscan masters. The skin is pulled taut revealing intricate vascularity beneath."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
+	armor = ARMOR_LEATHER_STUDDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 30 SECONDS
 
 #undef COMBAT_TAG_DURATION
 

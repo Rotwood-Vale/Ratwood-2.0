@@ -73,3 +73,13 @@
 	name = "pugilistic bandages"
 	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with alloyed knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
 	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else.
+
+/obj/item/clothing/gloves/roguetown/bandages/weighted/caestus
+	name = "caestus"
+	desc = "An antique fighting glove fashioned from hard leather straps wrapped tightly around the hand. This pair was customized with gruesome-looking bronze spikes along the knuckles. Modifications like this are common among thespian performers; after all, a bloodless fight makes for lacking spectacle."
+	icon_state = "caestus"
+	item_state = "caestus"
+	unarmed_bonus = 1.3
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_SIDE_BRONZE
+	salvage_result = /obj/item/natural/hide/cured

@@ -2997,6 +2997,7 @@
 #include "code\modules\spells\spell_types\bardic\rejuvenation_song.dm"
 #include "code\modules\spells\spell_types\bardic\resolute_refrain.dm"
 #include "code\modules\spells\spell_types\bardic\rhythm_crescendo.dm"
+#include "code\modules\spells\spell_types\classunique\berserker\berserkrage.dm"
 #include "code\modules\spells\spell_types\divine\projectiles_single\divine_blast.dm"
 #include "code\modules\spells\spell_types\divine\projectiles_single\unholy_blast.dm"
 #include "code\modules\spells\spell_types\skills\invoked_aoe\fire_cascade.dm"
