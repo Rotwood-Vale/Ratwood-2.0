@@ -68,15 +68,25 @@
 	switch (classchoice)
 		if("Old Magick")
 			// the original witch: arcyne t2 (buffed from t1) with 6 spellpoints
-			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
-			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			if(H.age == AGE_OLD)
+				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+			else
+				ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+				H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(9) // twelve if you pick arcyne potential
+			if(H.age == AGE_OLD)
+				H.mind?.adjust_spellpoints(6) // old spellcasters get more
 			neck = null
 		if("Godsblood")
 			//miracle witch: capped at t2 miracles. cannot pray to regain devo, but has high innate regen because of it (2 instead of 1 from major)
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
-			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
-			D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_2)
+			if(H.age == AGE_OLD)
+				H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+				D.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_3)
+			else
+				H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+				D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WITCH, devotion_limit = CLERIC_REQ_2)
 			D.max_devotion *= 0.5
 			switch(H.patron?.type)
 				if(/datum/patron/divine/astrata)
@@ -104,12 +114,21 @@
 		if("Mystagogue")
 			// hybrid arcane/holy witch with t1 arcane and t1 miracles, but less spellpoints, lower max devotion and less regen (0.5). Still can't pray.
 			var/datum/devotion/D = new /datum/devotion/(H, H.patron)
-			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
-			D.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
-			D.max_devotion *= 0.5
-			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			if(H.age == AGE_OLD)
+				H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+				D.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+				D.max_devotion *= 0.5
+				ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
+				H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+			else
+				H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+				D.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1)
+				D.max_devotion *= 0.5
+				ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
+				H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.mind?.adjust_spellpoints(6) // twelve if you pick arcyne potential
+			if(H.age == AGE_OLD)
+				H.mind?.adjust_spellpoints(6) // old spellcasters get more
 			switch(H.patron?.type)
 				if(/datum/patron/divine/astrata)
 					neck = /obj/item/clothing/neck/roguetown/psicross/astrata
