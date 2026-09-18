@@ -10,12 +10,19 @@
 	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
-	var/list/held_items = list()
 	locked = FALSE
-	var/budget
+	var/budget = 0
 	var/upgrade_flags
-	var/current_cat = "1"
+	var/current_cat = ""
+	var/search_query = ""
+	var/static/search_result_cap = 30
 	lockid = "nightman"
+	/// Motto displayed at the top of the TGUI interface.
+	var/motto = "BRASSFACE - Sweet Dreams for Cheap"
+	/// Running tally of Crown import tariff actually collected via this machine.
+	var/tariff_collected_here = 0
+	/// Running tally of tariff dodged via UPGRADE_NOTAX, for the Bathmaster's audit.
+	var/tariff_evaded_here = 0
 	var/list/categories = list(
 		"Alcohols",
 		"Discreet Zads",
@@ -48,6 +55,9 @@
 			locked = !locked
 			playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
 			update_icon()
+			if(locked)
+				SStgui.close_uis(src)
+				return
 			return attack_hand(user)
 		else
 			to_chat(user, span_warning("Wrong key."))
@@ -59,6 +69,9 @@
 				locked = !locked
 				playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
 				update_icon()
+				if(locked)
+					SStgui.close_uis(src)
+					return
 				return attack_hand(user)
 	if(istype(P, /obj/item/roguecoin))
 		budget += P.get_real_price()
@@ -68,74 +81,25 @@
 		return attack_hand(user)
 	..()
 
-/obj/structure/roguemachine/bathvend/Topic(href, href_list)
-	. = ..()
-	if(!ishuman(usr))
+/obj/structure/roguemachine/bathvend/ui_state(mob/user)
+	return GLOB.human_adjacent_state
+
+/obj/structure/roguemachine/bathvend/ui_status(mob/user, datum/ui_state/state)
+	if(!isliving(user) || user.stat == DEAD)
+		return UI_CLOSE
+	return ..()
+
+/obj/structure/roguemachine/bathvend/ui_interact(mob/user, datum/tgui/ui)
+	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/human_mob = usr
-	if(!usr.canUseTopic(src, BE_CLOSE) || locked)
+	if(locked)
+		to_chat(user, span_warning("It's locked. Of course."))
 		return
-	if(href_list["buy"])
-		var/mob/M = usr
-		var/path = text2path(href_list["buy"])
-		if(!ispath(path, /datum/supply_pack))
-			message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE BRASSFACE")
-			return
-		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
-		var/cost = PA.cost
-		var/tax_amt = round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * cost)
-		cost=cost+tax_amt
-		if(upgrade_flags & UPGRADE_NOTAX)
-			cost = PA.cost
-		if(budget >= cost)
-			budget -= cost
-			// AP tariff routing: under the Ordinance of the Baths the tariff diverts to the
-			// Church as a tithe; broken, it flows to the Crown as standard import duty.
-			if(upgrade_flags & UPGRADE_NOTAX)
-				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
-			else if(SStreasury.bathhouse_ordinance_active)
-				var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(PA.cost, BATHHOUSE_BRASSFACE_TITHE_RATE)
-				if(bathhouse_tithe > 0)
-					SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
-			else
-				SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
-				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
-				record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
-		else
-			say("Not enough!")
-			return
-		var/shoplength = PA.contains.len
-		var/l
-		for(l=1,l<=shoplength,l++)
-			var/pathi = pick(PA.contains)
-			new pathi(get_turf(M))
-	if(href_list["change"])
-		if(budget > 0)
-			budget2change(budget, usr)
-			budget = 0
-	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
-	if(href_list["secrets"])
-		var/list/options = list()
-		if(upgrade_flags & UPGRADE_NOTAX)
-			options += "Enable Paying Taxes"
-		else
-			options += "Stop Paying Taxes"
-		var/select = input(usr, "Please select an option.", "", null) as null|anything in options
-		if(!select)
-			return
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		switch(select)
-			if("Enable Paying Taxes")
-				upgrade_flags &= ~UPGRADE_NOTAX
-				playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
-			if("Stop Paying Taxes")
-				upgrade_flags |= UPGRADE_NOTAX
-				playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
-				playsound(loc, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
-	return attack_hand(usr)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		playsound(loc, 'sound/misc/gold_menu.ogg', 100, FALSE, -1)
+		ui = new(user, src, "Brassface", name)
+		ui.open()
 
 /obj/structure/roguemachine/bathvend/attack_hand(mob/living/user)
 	. = ..()
@@ -143,50 +107,157 @@
 		return
 	if(!ishuman(user))
 		return
-	if(locked)
-		to_chat(user, span_warning("It's locked. Of course."))
-		return
 	user.changeNext_move(CLICK_CD_FAST)
-	playsound(loc, 'sound/misc/gold_menu.ogg', 100, FALSE, -1)
-	var/canread = user.can_read(src, TRUE)
-	var/contents
-	contents = "<center>BRASSFACE - Sweet Dreams for Cheap<BR>"
-	contents += "<a href='?src=[REF(src)];change=1'>MAMMON LOADED:</a> [budget]<BR>"
+	ui_interact(user)
 
+/obj/structure/roguemachine/bathvend/proc/serialize_pack(datum/supply_pack/PA, tariff_active)
+	var/base = PA.cost
+	var/tariff = tariff_active ? round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * PA.cost) : 0
+	return list(
+		"ref" = "[PA.type]",
+		"name" = PA.name,
+		"category" = PA.group,
+		"qty" = PA.contains.len,
+		"price_base" = base,
+		"price_tariff" = tariff,
+		"price" = base + tariff,
+	)
+
+/obj/structure/roguemachine/bathvend/ui_data(mob/user)
+	var/list/data = list()
 	var/mob/living/carbon/human/H = user
-	if(H.job in list("Bathmaster","Bathhouse Attendant"))
-		if(canread)
-			contents += "<a href='?src=[REF(src)];secrets=1'>Secrets</a>"
-		else
-			contents += "<a href='?src=[REF(src)];secrets=1'>[stars("Secrets")]</a>"
-
-	contents += "</center><BR>"
-
-	if(current_cat == "1")
-		contents += "<center>"
-		for(var/X in categories)
-			contents += "<a href='?src=[REF(src)];changecat=[X]'>[X]</a><BR>"
-		contents += "</center>"
-	else
-		contents += "<center>[current_cat]<BR></center>"
-		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
+	var/can_read = istype(H) ? H.can_read(src, TRUE) : FALSE
+	var/is_proprietor = istype(H) && (H.job in list("Bathmaster","Bathhouse Attendant"))
+	var/dodging = (upgrade_flags & UPGRADE_NOTAX) ? TRUE : FALSE
+	data["motto"] = motto
+	data["budget"] = budget
+	data["locked"] = locked ? TRUE : FALSE
+	data["can_read"] = can_read
+	data["is_proprietor"] = is_proprietor
+	data["dodging"] = dodging
+	data["tariff_rate_pct"] = round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * 100)
+	data["tariff_paid"] = tariff_collected_here
+	data["tariff_evaded"] = tariff_evaded_here
+	var/list/all_cats = list()
+	for(var/c in categories)
+		all_cats += c
+	data["categories"] = all_cats
+	data["current_category"] = current_cat
+	data["search"] = search_query
+	data["search_mode"] = (search_query != "") ? TRUE : FALSE
+	data["result_cap"] = search_result_cap
+	var/tariff_active = !(upgrade_flags & UPGRADE_NOTAX)
+	var/list/packs_data = list()
+	var/total_matches = 0
+	if(search_query != "")
+		var/needle = LOWER_TEXT(search_query)
+		var/list/matches = list()
+		for(var/pack in SSmerchant.supply_packs)
+			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
+			if(!(PA.group in categories))
+				continue
+			if(findtext(LOWER_TEXT(PA.name), needle) || findtext(LOWER_TEXT(PA.group), needle))
+				matches += PA
+		total_matches = length(matches)
+		var/shown = 0
+		for(var/datum/supply_pack/PA in sortNames(matches))
+			if(shown >= search_result_cap)
+				break
+			shown++
+			packs_data += list(serialize_pack(PA, tariff_active))
+	else if(current_cat)
 		var/list/pax = list()
 		for(var/pack in SSmerchant.supply_packs)
 			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]
 			if(PA.group == current_cat)
 				pax += PA
+		total_matches = length(pax)
 		for(var/datum/supply_pack/PA in sortNames(pax))
-			var/costy = PA.cost
+			packs_data += list(serialize_pack(PA, tariff_active))
+	data["packs"] = packs_data
+	data["total_matches"] = total_matches
+	return data
+
+/obj/structure/roguemachine/bathvend/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(usr))
+		return
+	if(locked)
+		return
+	var/mob/living/carbon/human/H = usr
+	switch(action)
+		if("changecat")
+			var/cat = "[params["category"]]"
+			if(cat == "")
+				current_cat = ""
+			else if(cat in categories)
+				current_cat = cat
+				search_query = ""
+			return TRUE
+		if("set_search")
+			search_query = "[params["search"]]"
+			return TRUE
+		if("clear_search")
+			search_query = ""
+			return TRUE
+		if("change")
+			if(budget > 0)
+				budget2change(budget, usr)
+				budget = 0
+			return TRUE
+		if("toggle_tax")
+			if(!(H.job in list("Bathmaster","Bathhouse Attendant")))
+				return TRUE
+			if(upgrade_flags & UPGRADE_NOTAX)
+				upgrade_flags &= ~UPGRADE_NOTAX
+				playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
+			else
+				upgrade_flags |= UPGRADE_NOTAX
+				playsound(loc, 'sound/misc/gold_misc.ogg', 100, FALSE, -1)
+				playsound(loc, 'sound/misc/gold_license.ogg', 100, FALSE, -1)
+			return TRUE
+		if("buy")
+			var/path = text2path(params["ref"])
+			if(!ispath(path, /datum/supply_pack))
+				message_admins("silly MOTHERFUCKER [usr.key] IS TRYING TO BUY A [path] WITH THE BRASSFACE")
+				return TRUE
+			var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
+			if(!PA)
+				return TRUE
+			if(!(PA.group in categories))
+				return TRUE
+			var/tax_amt = round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * PA.cost)
+			var/cost = PA.cost
 			if(!(upgrade_flags & UPGRADE_NOTAX))
-				costy=round(costy+(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * costy))
-			contents += "[PA.name] [PA.contains.len > 1?"x[PA.contains.len]":""] - ([costy])<a href='?src=[REF(src)];buy=[PA.type]'>BUY</a><BR>"
-
-	if(!canread)
-		contents = stars(contents)
-
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 600)
-	popup.set_content(contents)
-	popup.open()
+				cost += tax_amt
+			if(budget < cost)
+				say("Not enough!")
+				return TRUE
+			budget -= cost
+			playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
+			// AP tariff routing: under the Ordinance of the Baths the tariff diverts to the
+			// Church as a tithe; broken, it flows to the Crown as standard import duty.
+			if(upgrade_flags & UPGRADE_NOTAX)
+				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+				tariff_evaded_here += tax_amt
+			else if(SStreasury.bathhouse_ordinance_active)
+				var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(PA.cost, BATHHOUSE_BRASSFACE_TITHE_RATE)
+				if(bathhouse_tithe > 0)
+					SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+				tariff_collected_here += tax_amt
+			else
+				SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
+				record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, tax_amt)
+				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+				record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
+				tariff_collected_here += tax_amt
+			var/shoplength = PA.contains.len
+			for(var/l in 1 to shoplength)
+				var/pathi = pick(PA.contains)
+				new pathi(get_turf(H))
+			return TRUE
 
 /obj/structure/roguemachine/bathvend/obj_break(damage_flag)
 	..()
