@@ -48,6 +48,13 @@
 	sellprice = 10
 	resistance_flags = FIRE_PROOF
 	dropshrink = 0.8
+	force = 10
+	associated_skill = /datum/skill/combat/whipsflails
+	sewrepair = TRUE
+	wbalance = WBALANCE_SWIFT
+	wdefense = 0
+	swingsound = WHIPWOOSH
+	possible_item_intents = list(/datum/intent/whip/punish)
 
 /obj/item/storage/belt/rogue/leather/plaquegold
 	name = "plaque belt"
