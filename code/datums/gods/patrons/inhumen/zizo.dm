@@ -37,10 +37,10 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// SHOULD allow prayer near wooden or stone inverted crosses
-	for(var/obj/structure/fluff/psycross/zizocross in view(4, get_turf(follower)))
+	// Allows prayer at any heretical cross, but interrupts it when near holy ones.
+	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("That accursed cross interupts my prayers!"))
 			return FALSE
 		return TRUE
 	// Allows prayer near a grave.
@@ -52,7 +52,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/zizo in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Zizo to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, atop a drawn Zizite symbol, or while the sun is blotted from the sky!"))
+	to_chat(follower, span_danger("For Zizo to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, near a dirt grave, atop a drawn Zizite symbol, or pray while the sun is blotted from the sky!"))
 	return FALSE
 
 /datum/patron/inhumen/zizo/on_lesser_heal(
