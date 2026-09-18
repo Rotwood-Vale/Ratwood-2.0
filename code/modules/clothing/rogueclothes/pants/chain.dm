@@ -83,7 +83,6 @@
 	desc = "A knee-length maille skirt, warding cuts against the thighs without slowing the feet."
 	icon_state = "chain_skirt"
 	item_state = "chain_skirt"
-	body_parts_covered = GROIN
 	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt
@@ -113,7 +112,7 @@
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
 	name = "bronze chain kilt"
-	desc = "An ankle-length bronze maille skirt, warding cuts against the thighs without slowing the feet."
+	desc = "Interlinked bronze rings that drape down all the way to the ankles."
 	icon_state = "bchainkilt"
 	item_state = "bchainkilt"
 	sleevetype = "bchainkilt"
