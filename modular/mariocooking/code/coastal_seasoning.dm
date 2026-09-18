@@ -4,6 +4,7 @@
 	icon = 'modular/mariocooking/sprites/seafood_seasoning_tin.dmi'
 	icon_state = "seafood_seasoning_tin"
 	volume = 30
+	dropshrink = 0.5
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1)
 	list_reagents = list(/datum/reagent/consumable/sauce/cajun = 30)

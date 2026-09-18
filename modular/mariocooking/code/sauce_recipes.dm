@@ -39,6 +39,17 @@
 	reagents_list = list(/datum/reagent/water = 10)
 	result = /datum/reagent/consumable/sauce/gravy
 
+/datum/recipe/sauce/cajun_spicy
+	items = list(
+		/obj/item/reagent_containers/food/snacks/grown/fruit/lemon,
+		/obj/item/reagent_containers/food/snacks/butterslice,
+		/obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove,
+		/obj/item/reagent_containers/powder/salt,
+		/obj/item/reagent_containers/food/snacks/pepper,
+	)
+	reagents_list = list(/datum/reagent/consumable/sauce/cajun = 5)
+	result = /datum/reagent/consumable/sauce/cajun_spicy
+
 /datum/recipe/sauce/secret
 	result = /datum/reagent/consumable/sauce/secret
 
