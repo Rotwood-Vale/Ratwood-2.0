@@ -322,6 +322,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	COOLDOWN_DECLARE(lost_person)
 	/// How long before our stress worsens
 	COOLDOWN_DECLARE(effect_scaling)
+	/// List of people that have denied us clinging to them, prevents us from trying to cling onto them again
+	var/list/denied_cling = list()
 
 /datum/charflaw/clingy/flaw_on_life(mob/user)
 	. = ..()
@@ -374,31 +376,91 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	. = ..()
 	user?.client?.verbs |= /client/proc/declare_clingy_person
 
+/datum/charflaw/clingy/Topic(href, href_list)
+	. = ..()
+	if(href_list["deny_cling"])
+		dont_cling(href_list["deny_cling"], href_list["clingy_person"])
+
+/// Takes 2 REFs. A user, and a clingy person. Blacklists the clingy person from being able to cling to the user and handles the vice
+/datum/charflaw/clingy/proc/dont_cling(mob/user, mob/clingy_person)
+	// This handles REFs because we pass the user and person via an HREF
+	user = locate(user)
+	clingy_person = locate(clingy_person)
+	if(!istype(user) || !istype(clingy_person))
+		CRASH("dont_cling() was called when either user or clingy_person was not a REF. Or possibly an HREF exploit")
+	if(locate(user.ckey) in denied_cling)
+		return
+	denied_cling |= user.ckey
+	special_person = null
+	log_admin("[key_name(clingy_person)] no longer clings on to [key_name(user)]. This means they were either denied right away, or removed later.")
+	to_chat(user, span_notice("[clingy_person.real_name], will no longer cling to me"))
+	to_chat(clingy_person, span_danger("[user.real_name] has rejected me! I will need to find someone else to cling to."))
+
 /client/proc/declare_clingy_person()
 	set name = "Choose preferred person"
 	set category = "IC"
 
-	var/mob/user = src.mob
-	if(!istype(user))
+	var/mob/clingy_person = src.mob
+	if(!istype(clingy_person))
 		return
-	var/datum/charflaw/clingy/clingy_flaw = user.get_flaw(/datum/charflaw/clingy)
+	var/datum/charflaw/clingy/clingy_flaw = clingy_person.get_flaw(/datum/charflaw/clingy)
 	if(isnull(clingy_flaw))
-		user.verbs -= src // If you aren't clingy how are you using this??
+		verbs -= /client/proc/declare_clingy_person // If you aren't clingy how are you using this??
 		return
 
 	var/list/potential_list = list()
-	for(var/mob/living/carbon/human/person in hearers(7, user))
-		if(person == user)
+	for(var/mob/living/carbon/human/person in hearers(7, clingy_person))
+		if(person.ckey in clingy_flaw.denied_cling) // If we have been denied from clinging to someone we can't re-add them
+			continue
+		if(person == clingy_person)
 			continue
 		potential_list += person
 	if(!length(potential_list))
-		to_chat(user, span_warning("There's nobody nearby..."))
+		to_chat(clingy_person, span_warning("There's nobody nearby..."))
 		return
-	var/mob/living/selection = tgui_input_list(user, "Choose your preferred person", "CHOOSE PERSON", potential_list)
+	var/mob/living/carbon/human/selection = tgui_input_list(clingy_person, "Choose your preferred person", "CHOOSE PERSON", potential_list)
 	if(!istype(selection))
 		return
 	clingy_flaw.special_person = WEAKREF(selection)
-	to_chat(user, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
+	selection.client.verbs |= /client/proc/reject_clingy_people
+	to_chat(clingy_person, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
+	to_chat(selection, span_big(span_warn("[clingy_person] has selected me as the person they cling to <a href='byond://?src=[REF(clingy_flaw)];deny_cling=[REF(selection)];clingy_person=[REF(clingy_person)]'>REJECT?</a>")))
+	LAZYADD(selection.list_of_people_who_are_clinging_onto_me, WEAKREF(clingy_person))
+	verbs -= /client/proc/declare_clingy_person
+
+/client/proc/reject_clingy_people()
+	set name = "Reject clingy people"
+	set category = "IC"
+
+	var/mob/living/carbon/human/user = src.mob
+	if(!istype(user))
+		return
+	list_clear_nulls(user.list_of_people_who_are_clinging_onto_me)
+	if(!LAZYLEN(user.list_of_people_who_are_clinging_onto_me))
+		verbs -= /client/proc/reject_clingy_people
+		to_chat(user, span_notice("Nobody is clinging onto me..."))
+		return
+	var/list/clinging_people = list()
+	for(var/datum/weakref/clingy_ref in user.list_of_people_who_are_clinging_onto_me)
+		var/mob/living/carbon/human/clingy_human = clingy_ref.resolve()
+		if(!istype(clingy_human))
+			user.list_of_people_who_are_clinging_onto_me -= clingy_ref
+			continue
+		clinging_people += clingy_human
+		clinging_people[clingy_human] += clingy_ref
+	var/mob/living/carbon/human/selection = tgui_input_list(user, "Choose anyone you wish to reject", "CHOOSE PERSON", clinging_people)
+	if(!istype(selection))
+		return
+	// At this point, we've chosen someone to remove from our list.
+	user.list_of_people_who_are_clinging_onto_me -= clinging_people[selection]
+	if(!LAZYLEN(user.list_of_people_who_are_clinging_onto_me))
+		verbs -= /client/proc/reject_clingy_people
+
+	// Now we handle their vice
+	var/datum/charflaw/clingy/clingy_flaw = selection.get_flaw(/datum/charflaw/clingy)
+	if(!istype(clingy_flaw))
+		return
+	clingy_flaw.dont_cling(REF(user), REF(selection))
 
 /datum/charflaw/noeyer
 	name = "Cyclops (R)"
