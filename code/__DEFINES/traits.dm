@@ -137,6 +137,7 @@
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
 #define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
+#define TRAIT_SELF_AWARE "Self Aware" //Absolver/Stigmata trait that allows them to self-diagnose and get full damage numbers.
 
 //travel zone traits
 #define TRAIT_BANDITCAMP "banditcamp"
@@ -644,7 +645,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean.")
 ))
 
 // trait accessor defines
@@ -859,7 +861,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FAN_CLOWN			"fan_clown"
 #define TRAIT_FAN_MIME			"fan_mime"
 #define TRAIT_VORACIOUS			"voracious"
-#define TRAIT_SELF_AWARE		"self_aware"
 #define TRAIT_FREERUNNING		"freerunning"
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
