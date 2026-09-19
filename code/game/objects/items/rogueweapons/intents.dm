@@ -31,8 +31,10 @@
 	/// extra drain from missing only, ALSO APPLIED IF ENEMY DODGES
 	var/misscost = 1
 	var/tranged = 0
-	/// turns off auto aiming, also turns off the 'swooshes'
+	/// Turns of auto-aim as well as the attack anim.
 	var/noaa = FALSE
+	/// Restores turf-click auto-aim on a noaa intent silently (so without the attack anim).
+	var/force_autoaim = FALSE
 	var/warnie = ""
 	var/pointer = 'icons/effects/mousemice/human_attack.dmi'
 	/// Simple unique charge icon
@@ -584,6 +586,7 @@
 	attack_verb = list("shoves", "pushes")
 	chargetime = 0
 	noaa = TRUE
+	force_autoaim = TRUE
 	rmb_ranged = TRUE
 	misscost = 5
 	item_d_type = "blunt"
@@ -610,6 +613,7 @@
 	attack_verb = list("grabs")
 	chargetime = 0
 	noaa = TRUE
+	force_autoaim = TRUE
 	rmb_ranged = TRUE
 	releasedrain = 10
 	misscost = 8
