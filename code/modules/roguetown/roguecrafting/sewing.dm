@@ -801,6 +801,13 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 4
 
+/datum/crafting_recipe/roguetown/sewing/foppishcodpiece
+	name = "foppish codpiece"
+	result = /obj/item/codpiece/foppish
+	reqs = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 1)
+	craftdiff = 3
+	display_category = ITEM_CAT_TAILOR_MISC
+
 /datum/crafting_recipe/roguetown/sewing/jupon
 	name = "jupon"
 	result = list(/obj/item/clothing/cloak/stabard/surcoat)
