@@ -64,20 +64,14 @@
 			if("The Brigand (Axes, Maces & Whips/Flails)") //Battle axe & whip.
 				beltl = /obj/item/rogueweapon/whip/nagaika
 				beltr = /obj/item/rogueweapon/stoneaxe/battle
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("Common Soldiery (Polearms & Swords)") //Steel arming sword & shield.
 				backl= /obj/item/rogueweapon/shield/iron
 				beltr = /obj/item/rogueweapon/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if("The Nefarious Dusthead (Knives, Climbing & Athletics)") //Dagger, athletics, and OK lockpicking. You will never be a Knave. This is mostly a for-fun class, where else have you seen a knife strength build?
-				beltr = /obj/item/rogueweapon/huntingknife/idagger/steel
+				beltr = /obj/item/rogueweapon/huntingknife/combat/messer
 				backl = /obj/item/rogueweapon/whip
 				beltl = /obj/item/lockpickring/mundane
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
