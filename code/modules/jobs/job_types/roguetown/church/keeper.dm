@@ -137,7 +137,7 @@
 	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	to_chat(H, span_notice("I remain on the old path of Pestra's devotion."))
 
@@ -152,7 +152,7 @@
 	H.church_favor += 1500
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/learnmiracle))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnmiracle, H)
