@@ -488,7 +488,7 @@ and crackling with insidious energies."
 	icon_state = "fencercuirass"
 	item_state = "fencercuirass"
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/ComponentInitialize()
+/obj/item/clothing/suit/roguetown/armor/plate/half/fencer/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
