@@ -959,7 +959,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	return FALSE
 
 /mob/living/try_special_attack(atom/A, list/modifiers)
-	if(!rmb_intent || !cmode || isobj(A))
+	if(!rmb_intent || !cmode || A.loc == src || istype(A, /obj/item/clothing) || istype(A, /obj/item/quiver) || istype(A, /obj/item/storage) || istype(A, /obj/item/rogueweapon/scabbard))
 		return FALSE
 
 	if(next_move > world.time && !rmb_intent?.bypasses_click_cd)
@@ -968,7 +968,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	if(rmb_intent?.adjacency && !Adjacent(A))
 		return FALSE
 
-	rmb_intent.special_attack(src, ismob(A) ? A : get_foe_from_turf(get_turf(A)))
+	rmb_intent.special_attack(src, ismob(A) ? A : rmb_intent.prioritize_turfs ? get_turf(A) : get_foe_from_turf(get_turf(A)))
 	return TRUE
 
 /// Used for "directional" style rmb attacks on a turf, prioritizing standing targets
