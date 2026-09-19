@@ -139,5 +139,18 @@
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berserker
+	name = "unstoppable skin"
+	desc = "I've endured enough. The onslaught has lost its meaning."
+	armor = ARMOR_LEATHER_STUDDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker
+	name = "unstoppable chest"
+	desc = "The callouses could stop arrows! But only so many."
+	blocksound = SOFTHIT //must differ from the body/berserker's blocksound or the shirt slot check will reject it while armor is worn
+	armor = ARMOR_MAILLE
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
+
 #undef COMBAT_TAG_DURATION
 

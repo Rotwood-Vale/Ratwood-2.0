@@ -10,9 +10,10 @@
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
 	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
 	subclass_stats = list(
-		STATKEY_INT = 4,
+		STATKEY_INT = 2,
 		STATKEY_PER = 3,
-		STATKEY_CON = 2
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2
 	)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -21,38 +22,39 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN, //Build your gooncave 
+		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN, //Build your gooncave
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY, //Disgraced medicine man. 
+		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY, //Disgraced medicine man.
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY, // This is literally their whole thing
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN, // Farm ingredients so you have something to do that isn't grinding skills
 	)
 	subclass_stashed_items = list(
-		"Sewing Kit" = /obj/item/repair_kit,
+		"Sewing Kit" =	/obj/item/repair_kit,
+		"Poison Arrows Quiver" = /obj/item/quiver/poisonarrows,
 	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/physician
-	mask = /obj/item/clothing/mask/rogue/physician
-	neck = /obj/item/clothing/neck/roguetown/chaincoif 
-	pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
+	mask = /obj/item/clothing/mask/rogue/physician/plaguebearer
+	neck = /obj/item/clothing/neck/roguetown/chaincoif
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	cloak = /obj/item/clothing/suit/roguetown/shirt/robe/physician
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
-	r_hand = /obj/item/storage/belt/rogue/surgery_bag/full/physician
+	l_hand = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	belt = /obj/item/storage/belt/rogue/leather/black
 	gloves = /obj/item/clothing/gloves/roguetown/angle
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
-		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1, // You get one epic poison. As a treat because you're valid. Don't waste it. 
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/stampoison = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/strongpoison = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
 		/obj/item/natural/worms/leech/cheele = 1,
 		)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
@@ -83,3 +85,12 @@
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/rapier
 		wretch_select_bounty(H)
+
+/obj/item/clothing/mask/rogue/physician/plaguebearer
+	desc = "What better laboratory than the blood-soaked battlefield? This one seems to be uniquely armored."
+	armor = ARMOR_PLATE
+	// Less than an actual steel mask.
+	max_integrity = 160
+	// Consistency with other masks.
+	body_parts_covered = FACE
+	blocksound = PLATEHIT
