@@ -648,7 +648,6 @@
 /// Louder than the water category's 35, which fountains use, because a river's voice sits
 /// mid-water and spends part of its falloff getting to the bank: at 55 over range 8 a listener
 /// three or four tiles off the water hears about 45, still above a fountain's peak.
-#define RIVER_VOLUME 55
 
 /turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
@@ -660,7 +659,7 @@
 		return
 	// Unregistered from the Destroy in rivers.dm, which this type already has. No file of its own:
 	// the category carries the clip set and each listener advances through it independently.
-	if(SSpoint_ambience.register_spread_source(src, /datum/point_ambience_category/river, RIVER_SPREAD, volume_override = RIVER_VOLUME))
+	if(SSpoint_ambience.register_spread_source(src, /datum/point_ambience_category/river, RIVER_SPREAD))
 		ambience_source = TRUE
 
 /// This turf is one of the river's voices and is going away, leaving a hole a spread wide. Claiming
@@ -680,12 +679,11 @@
 		var/area/their_area = neighbour.loc
 		if(their_area && !their_area.river_ambience)
 			continue
-		if(SSpoint_ambience.register_spread_source(neighbour, /datum/point_ambience_category/river, RIVER_SPREAD, volume_override = RIVER_VOLUME))
+		if(SSpoint_ambience.register_spread_source(neighbour, /datum/point_ambience_category/river, RIVER_SPREAD))
 			neighbour.ambience_source = TRUE
 			return
 
 #undef RIVER_SPREAD
-#undef RIVER_VOLUME
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
