@@ -488,16 +488,6 @@
 	else
 		if(assigned == "bandit" || special == "bandit")
 			return TRUE
-
-		if(assigned == "wretch")
-			return TRUE
-
-		if(special == "lich" || special == "vampire lord")
-			return TRUE
-
-		if(assigned == "bogguard")
-			return TRUE
-
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/has_required_trigger_trait(mob/living/H)
@@ -506,6 +496,7 @@
 	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
 	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE
 	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_MAGEARMOR)) return TRUE // all mages are dangerus
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/is_trap_exception(mob/living/H)
@@ -528,9 +519,7 @@
 			|| assigned == "bogguard" \
 			|| assigned == "warden" || special == "warden")
 	else
-		return (assigned == "bandit" || special == "bandit" \
-			|| assigned == "bogguard" \
-			|| assigned == "warden" || special == "warden")
+		return (assigned == "bandit" || special == "bandit")
 
 /obj/structure/trap/bogtrap/proc/show_personal_reveal(mob/user)
 	if(!user || !user.client)
