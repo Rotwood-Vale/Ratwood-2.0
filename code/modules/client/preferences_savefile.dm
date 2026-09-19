@@ -268,6 +268,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chastity_hardmode"]	>> chastity_hardmode
 	S["extreme_erp"]		>> extreme_erp
 	S["edging"]				>> edging
+	S["free_use_default"]	>> free_use_default
 	S["sensitive_brands"] 	>> sensitive_brands
 	S["facial_brands"] 		>> facial_brands
 	S["pubes"]				>> pubes
@@ -450,6 +451,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["chastity_hardmode"], chastity_hardmode)
 	WRITE_FILE(S["extreme_erp"], extreme_erp)
 	WRITE_FILE(S["edging"], edging)
+	WRITE_FILE(S["free_use_default"], free_use_default)
 	WRITE_FILE(S["sensitive_brands"], sensitive_brands)
 	WRITE_FILE(S["facial_brands"], facial_brands)
 	WRITE_FILE(S["pubes"], pubes)
