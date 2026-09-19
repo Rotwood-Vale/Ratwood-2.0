@@ -15,6 +15,7 @@
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_GRAGGAR
 	confess_lines = list(
 		"GRAGGAR IS THE BEAST I WORSHIP!",
 		"THROUGH VIOLENCE, DIVINITY!",

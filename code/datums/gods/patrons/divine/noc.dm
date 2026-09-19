@@ -16,6 +16,7 @@
 					/obj/effect/proc_holder/spell/self/noc_spell_bundle				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_NOC
 	confess_lines = list(
 		"NOC IS NIGHT!",
 		"NOC SEES ALL!",
