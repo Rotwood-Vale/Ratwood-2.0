@@ -1,4 +1,4 @@
-//SHARED BETWEEN TEMPERANCE AND INTERWARFARE
+// TEMPERANCE
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/timesoldier/shared/uniform // ts just a padded gamby 🥀
 	name = "soldier's uniform"
@@ -9,7 +9,7 @@
 	item_state = "uniform"
 	shiftable = FALSE
 
-// TEMPERANCE
+
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor // hauberk reskin, except stronger since it's light.
 	name = "fabricated armor"
@@ -65,3 +65,71 @@
 	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
 	icon_state = "EB_boots_wrapped"
 	item_state = "EB_boots_wrapped"
+
+// INTERWARFARE. A loving love letter to Sparrow, and Matt. Thank you for making such an amazing project.
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/timesoldier/interwar/armorvest
+	name = "armor vest"
+	desc = "<span class='yellow'><i>Steel plates in a canvas carrier. It was never comfortable, but it caught shrapnel.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprite/warfare_onmob.dmi'
+	icon_state = "armorvest_world"
+	item_state = "armorvest_world"
+	color = null
+
+/obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper
+	name = "sniper's cloak"
+	desc = "<span class='yellow'><i>Dark cloth breaks up my outline and keeps the mud off my back.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
+	icon_state = "sniperworld1"
+	item_state = "sniperworld1"
+	color = null
+	sleeved = null
+	sleevetype = null
+	hoodtype = /obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
+
+/obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
+	name = "sniper's hood"
+	desc = "<span class='yellow'><i>You know, I always hated rain.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
+	icon_state = "sniperworld2"
+	item_state = "sniperworld2"
+	color = null
+
+/obj/item/clothing/mask/rogue/physician/timesoldier/interwar/sniper
+	name = "sniper's mask"
+	desc = "<span class='yellow'><i>It keeps the worst of the smoke and rot out.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
+	icon_state = "snipermaskworld"
+	item_state = "snipermaskworld"
+	color = null
+
+/obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar
+	name = "soldier's boots"
+	desc = "<span class='yellow'><i>Mud has worked into every seam.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
+	icon_state = "redbootsworld"
+	item_state = "redbootsworld"
+	color = null
+
+/obj/item/storage/belt/rogue/leather/timesoldier/interwar/medical
+	name = "medical belt"
+	desc = "<span class='yellow'><i>Bandages, tinctures, whatever still fits.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
+	icon_state = "redmedicalbelt"
+	item_state = "redmedicalbelt"
+	color = null
+
+/obj/item/clothing/gloves/roguetown/leather/timesoldier/interwar
+	name = "soldier's gloves"
+	desc = "<span class='yellow'><i>Thin enough for the trigger, thick enough for the cold.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
+	icon_state = "redglovesworld"
+	item_state = "redglovesworld"
+	color = null
