@@ -399,6 +399,13 @@
 	i_type = "Tools"
 	display_category = ITEM_CAT_TOOLS_SUNDRIES
 
+/datum/anvil_recipe/tools/iron/fishingrod
+	name = "Fishing Rod, Iron (+1 Iron)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/fishingrod/decrepit/iron
+	i_type = "Tools"
+
 /datum/anvil_recipe/tools/iron/scissors
 	name = "Scissors"
 	created_item = /obj/item/rogueweapon/huntingknife/scissors

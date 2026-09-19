@@ -17,6 +17,12 @@
 	base_price = SELLPRICE_FISH_MINCE
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish
 
+/datum/trade_good/seafood/shellfish_mince
+	id = TRADE_GOOD_SHELLFISH_MINCE
+	name = "Shellfish Meat"
+	base_price = SELLPRICE_FISH_MINCE
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
+
 /datum/trade_good/seafood/salmon
 	id = TRADE_GOOD_SALMON
 	name = "Salmon"

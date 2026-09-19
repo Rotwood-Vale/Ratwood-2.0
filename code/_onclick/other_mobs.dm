@@ -281,6 +281,31 @@
 				return
 	A.attack_animal(src)
 
+/// Handles item-in-hand grab intent on objects for living mobs.
+/mob/living/try_unarmed_grab_with_item(atom/movable/AM, stamina_cost = 0)
+	if(!AM || AM.anchored)
+		return FALSE
+	if(pulling && pulling != AM)
+		stop_pulling()
+	if(start_pulling(AM))
+		if(stamina_cost)
+			stamina_add(stamina_cost)
+		return TRUE
+	return FALSE
+
+/// Handles item-in-hand shove intent on objects for living mobs.
+/mob/living/try_unarmed_push_with_item(atom/movable/AM)
+	if(!AM || AM.anchored)
+		return FALSE
+	var/jadded = max(100-(STASTR*10),5)
+	if(stamina_add(jadded))
+		visible_message(span_info("[src] pushes [AM]."))
+		PushAM(AM, MOVE_FORCE_STRONG)
+	else
+		visible_message(span_warning("[src] pushes [AM]."))
+	changeNext_move(CLICK_CD_MELEE)
+	return TRUE
+
 /atom/proc/attack_animal(mob/user)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
