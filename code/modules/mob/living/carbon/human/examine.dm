@@ -1238,7 +1238,7 @@
 			if (user == src)
 				unsettling_text = "I appear deeply uncanny."
 			else if (user.has_stress_event(/datum/stressevent/uncanny))
-				unsettling_text = "[p_their(TRUE)] appearance is deeply unsettling!"
+				unsettling_text = "[capitalize(m2)] appearance is deeply unsettling!"
 			else
 				unsettling_text = "Something about [p_them()] looks off..."
 			switch (pronouns)
