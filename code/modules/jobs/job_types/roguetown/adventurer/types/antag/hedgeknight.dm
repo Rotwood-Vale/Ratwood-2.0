@@ -14,7 +14,7 @@
 		STATKEY_STR = 2,
 		STATKEY_WIL = 3,
 		STATKEY_LCK = 2,
-		STATKEY_INT = 2,
+		STATKEY_SPD = -2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
