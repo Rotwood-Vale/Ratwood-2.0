@@ -79,21 +79,6 @@
 	item_state = "armorvest"
 	color = null
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/timesoldier/interwar/armorvest/Initialize(mapload)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/timesoldier/interwar/armorvest/update_icon_state()
-	. = ..()
-	icon_state = isturf(loc) ? "armorvest_world" : "armorvest"
-
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/timesoldier/interwar/armorvest/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/timesoldier/interwar/armorvest/attack_right(mob/user)
-	return
-
 
 /obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper
 	name = "sniper's cloak"
@@ -106,19 +91,6 @@
 	sleeved = null
 	sleevetype = null
 	hoodtype = /obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
-
-/obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper/Initialize(mapload)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper/update_icon_state()
-	. = ..()
-	icon_state = isturf(loc) ? "sniperworld1" : "sniper_hood"
-
-/obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	update_icon()
-
 
 /obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
 	name = "sniper's hood"
@@ -139,19 +111,6 @@
 	item_state = "snipermask"
 	color = null
 
-/obj/item/clothing/mask/rogue/physician/timesoldier/interwar/sniper/Initialize(mapload)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/mask/rogue/physician/timesoldier/interwar/sniper/update_icon_state()
-	. = ..()
-	icon_state = isturf(loc) ? "snipermaskworld" : "snipermask"
-
-/obj/item/clothing/mask/rogue/physician/timesoldier/interwar/sniper/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	update_icon()
-
-
 /obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar
 	name = "soldier's boots"
 	desc = "<span class='yellow'><i>Mud has worked into every seam.</i></span>"
@@ -160,18 +119,6 @@
 	icon_state = "redboots"
 	item_state = "redboots"
 	color = null
-
-/obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar/Initialize(mapload)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar/update_icon_state()
-	. = ..()
-	icon_state = isturf(loc) ? "redbootsworld" : "redboots"
-
-/obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	update_icon()
 
 
 /obj/item/storage/belt/rogue/leather/timesoldier/interwar/medical
@@ -192,15 +139,3 @@
 	icon_state = "redgloves"
 	item_state = "redgloves"
 	color = null
-
-/obj/item/clothing/gloves/roguetown/leather/timesoldier/interwar/Initialize(mapload)
-	. = ..()
-	update_icon()
-
-/obj/item/clothing/gloves/roguetown/leather/timesoldier/interwar/update_icon_state()
-	. = ..()
-	icon_state = isturf(loc) ? "redglovesworld" : "redgloves"
-
-/obj/item/clothing/gloves/roguetown/leather/timesoldier/interwar/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	update_icon()
