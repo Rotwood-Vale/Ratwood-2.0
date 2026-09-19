@@ -1,6 +1,6 @@
-#define FUTURE_VOICE_MALE_GENERIC "Male Generic"
-#define FUTURE_VOICE_FEMALE "Female"
-#define FUTURE_VOICE_MALE "Male"
+#define FUTURE_VOICE_MALE_GENERIC "Male Generic" // regular guy.
+#define FUTURE_VOICE_FEMALE "Female" // girlboss.
+#define FUTURE_VOICE_MALE "Male" // the guy that likes yelling.
 
 
 /obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow
@@ -62,38 +62,115 @@
 	icon_state = "radio_off"
 	var/broadcasting = FALSE
 	var/datum/looping_sound/timesoldier_radio/radio_loop
+	var/voice_template = FUTURE_VOICE_MALE_GENERIC
+	var/radio_noise_timer
+	verb_say = "coldly states"
+	verb_ask = "coldly states"
+	verb_exclaim = "coldly states"
+	verb_yell = "coldly states"
+
+/obj/item/timesoldier/radio/GetVoice()
+	return "<span style='font-size: 115%;'><b>UNKNOWN</b></span>"
 
 /datum/looping_sound/timesoldier_radio
 	mid_sounds = 'modular/timesoldier/sounds/comms/lsloop.ogg'
 	mid_length = 10
-	volume = 35
+	volume = 100
 	extra_range = 9
 	persistent_loop = TRUE
 
 /obj/item/timesoldier/radio/Destroy() // so if we qdel it - which we will, we don't accidentally leave the looping sound hanging in the air.
+	if(radio_noise_timer)
+		deltimer(radio_noise_timer)
+		radio_noise_timer = null
+
+		
 	QDEL_NULL(radio_loop)
 	return ..()
 
 
-/obj/item/timesoldier/radio/proc/start_broadcast()
+/obj/item/timesoldier/radio/proc/start_broadcast(selected_voice)
 	if(broadcasting)
 		return
 	
 	broadcasting = TRUE
 	icon_state = "radio_on"
+	voice_template = selected_voice
 
-	playsound(src, pick(
-		'modular/timesoldier/sounds/comms/broadcast_start1.ogg',
-		'modular/timesoldier/sounds/comms/broadcast_start2.ogg'
-	), 45, TRUE)
+	playsound(src, pick('modular/timesoldier/sounds/comms/broadcast_start1.ogg', 'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
 
+	QDEL_NULL(radio_loop) // just in case we somehow have it already from before.
 	radio_loop = new(src, TRUE)
+
+	schedule_radio_noise()
+
+/obj/item/timesoldier/radio/proc/message_is_yelling(message)
+	if(!message)
+		return FALSE
+	
+	for(var/i = length(message), i >= 1, i--)
+		var/character = copytext(message, i, i + 1)
+
+		if(character == "!")
+			return TRUE
+		
+		if(character in list (" ", "\t", ".", "?", "\"", "'", ")", "]"))
+			continue
+		return FALSE
+	return FALSE
+
 
 /obj/item/timesoldier/radio/proc/receive_broadcast(message)
 	if(!broadcasting)
 		return
 	
+	playsound(src, 'modular/timesoldier/sounds/comms/startspeak.ogg', 55, FALSE)
+	addtimer(CALLBACK(src, PROC_REF(deliver_broadcast), message), 4)
+
+/obj/item/timesoldier/radio/proc/deliver_broadcast(message)
+	if(!broadcasting)
+		return
+
+	var/sound_to_play
+
+	switch(voice_template)
+		if(FUTURE_VOICE_MALE_GENERIC)
+			sound_to_play = pick('modular/timesoldier/sounds/comms/male_generic/generic1.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic2.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic3.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic4.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic5.ogg')
+
+		if(FUTURE_VOICE_FEMALE)
+			sound_to_play = pick('modular/timesoldier/sounds/comms/female/female1.ogg', 'modular/timesoldier/sounds/comms/female/female2.ogg', 'modular/timesoldier/sounds/comms/female/female3.ogg', 'modular/timesoldier/sounds/comms/female/female4.ogg', 'modular/timesoldier/sounds/comms/female/female5.ogg')
+
+		if(FUTURE_VOICE_MALE)
+			if(message_is_yelling(message))
+				sound_to_play = pick('modular/timesoldier/sounds/comms/male_important/maley1.ogg', 'modular/timesoldier/sounds/comms/male_important/maley2.ogg', 'modular/timesoldier/sounds/comms/male_important/maley3.ogg')
+			else
+				sound_to_play = pick('modular/timesoldier/sounds/comms/male_important/male1.ogg', 'modular/timesoldier/sounds/comms/male_important/male2.ogg', 'modular/timesoldier/sounds/comms/male_important/male3.ogg')
+		
+	if(sound_to_play)
+		playsound(src, sound_to_play, 55, FALSE)
 	say(message)
+
+/obj/item/timesoldier/radio/proc/schedule_radio_noise()
+	if(!broadcasting)
+		return
+	
+	if(radio_noise_timer)
+		deltimer(radio_noise_timer)
+
+	radio_noise_timer = addtimer(
+		CALLBACK(src, PROC_REF(play_radio_noise)),
+		rand(15 SECONDS, 40 SECONDS),
+		TIMER_STOPPABLE
+	)
+
+/obj/item/timesoldier/radio/proc/play_radio_noise()
+	radio_noise_timer = null
+
+	if(!broadcasting)
+		return
+	
+	playsound(src, 'modular/timesoldier/sounds/comms/lsnoise.ogg', 50, FALSE)
+	schedule_radio_noise()
 
 /obj/item/timesoldier/radio/proc/end_broadcast()
 	if(!broadcasting)
@@ -101,5 +178,9 @@
 	
 	broadcasting = FALSE
 	QDEL_NULL(radio_loop)
-	playsound(src, 'modular/timesoldier/sounds/comms/broadcast_end1.ogg', 45, TRUE)
+	playsound(src, 'modular/timesoldier/sounds/comms/broadcast_end1.ogg', 45, FALSE)
 	icon_state = "radio_off"
+
+	if(radio_noise_timer)
+		deltimer(radio_noise_timer)
+		radio_noise_timer = null
