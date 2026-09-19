@@ -25,6 +25,8 @@
 	var/structure_range = 1
 	var/harms_undead = TRUE
 	priest_excluded = TRUE
+	var/pestrian_freaks = FALSE
+	
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
 	var/old_recharge = recharge_time
@@ -84,7 +86,7 @@
 			qdel(underworld_spirit)
 			ghost.mind.transfer_to(target, TRUE)
 		target.grab_ghost(force = TRUE)
-		if(!target.check_revive(user))
+		if(!target.check_revive(user, bypass_foreign_brain_check = pestrian_freaks))
 			revert_cast()
 			return FALSE
 		if(target.mob_biotypes & MOB_UNDEAD && harms_undead) //positive energy harms the undead
@@ -95,7 +97,7 @@
 			target.gib()
 			return TRUE
 		target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
-		if(!target.revive(full_heal = FALSE))
+		if(!target.revive(full_heal = FALSE, bypass_foreign_brain_check = pestrian_freaks)) // Pestrians get to revive people with foreign brains, flesh abominations are their thing
 			to_chat(user, span_warning("Nothing happens."))
 			revert_cast()
 			return FALSE
@@ -284,6 +286,8 @@
 	alt_required_items = list(
 		/obj/item/heart_blood_vial/filled = 2
 	)
+	pestrian_freaks = TRUE
+	harms_undead = FALSE   // cough, cough, there is a reson pestrians are looked at with suspicion
 
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
 	//Does heartfelt even exist?

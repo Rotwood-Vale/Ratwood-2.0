@@ -26,6 +26,7 @@
 		"MY AFFLICTION IS MY TESTAMENT!",
 	)
 	storyteller = /datum/storyteller/pestra
+	undead_hater = FALSE // cough, cough, there is a reson pestrians are looked at with suspicion
 
 // Near a well, cross, within the physicians, or within the church
 /datum/patron/divine/pesta/can_pray(mob/living/follower)

@@ -1340,8 +1340,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
-		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians to now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
 		return FALSE
 
 /// The single DEAD-to-alive transition, every revival and rise routes through it.
@@ -1363,7 +1363,7 @@
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians to now, go forth flesh abominations!)
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
