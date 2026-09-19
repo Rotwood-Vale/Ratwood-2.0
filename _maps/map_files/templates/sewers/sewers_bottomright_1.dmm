@@ -173,10 +173,6 @@
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
-"R" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/rogue/cobble,
-/area/rogue/under/town/sewer)
 "S" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 5
@@ -401,7 +397,7 @@ W
 H
 t
 Y
-R
+c
 a
 H
 "}

@@ -31,7 +31,7 @@
 	)
 
 	//You're part of a Pestran sect. Not nobility.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 
 	advclass_cat_rolls = list(CTAG_KEEPER = 2)
 	job_subclasses = list(

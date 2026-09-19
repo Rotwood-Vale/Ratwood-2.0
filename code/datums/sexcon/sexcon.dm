@@ -474,7 +474,8 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation(consume_charge)
-	after_intimate_climax(oral, splashed_user)
+	if(consume_charge)
+		after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
@@ -1231,8 +1232,6 @@
 			continue
 		if(!action.shows_on_menu(user, target))
 			continue
-		if(action_blocked_by_intimate_state(action, TRUE))
-			continue
 		dat += "<td>"
 		var/link = ""
 		if(!can_perform_action(action_type, user_is_incapacitated))
@@ -1436,35 +1435,11 @@
 		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
-	if(action_blocked_by_intimate_state(action))
-		return FALSE
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
-/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
-/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
-	if(!action || !user)
-		return FALSE
-	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
-		return FALSE
-
-	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
-		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
-		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	return FALSE
 
 /datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
-	var/modular_result = modular_chastity_content_enabled_for(H)
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!H)
 		return FALSE
 	if(!H.client?.prefs)
@@ -1472,10 +1447,6 @@
 	return !!H.client.prefs.chastenable
 
 /datum/sex_controller/proc/chastity_content_enabled_for_pair()
-	var/modular_result = modular_chastity_content_enabled_for_pair()
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!chastity_content_enabled_for(user))
 		return FALSE
 	if(target && target != user && !chastity_content_enabled_for(target))

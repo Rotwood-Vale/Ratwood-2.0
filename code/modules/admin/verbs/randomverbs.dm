@@ -238,6 +238,9 @@
 		if(MUTE_LOOC)
 			mute_string = "LOOC"
 			feedback_string = "LOOC"
+		if(MUTE_SLOOC)
+			mute_string = "SLOOC"
+			feedback_string = "SLOOC"
 		if(MUTE_PRAY)
 			mute_string = "pray"
 			feedback_string = "Pray"
