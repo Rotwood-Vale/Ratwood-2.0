@@ -10,7 +10,7 @@
 
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // same as new hedgeknight music
 	class_select_category = CLASS_CAT_WARRIOR
-	// Deserter are the knight-equivalence. They get a balanced, straightforward 2 2 3 statspread to endure and overcome.
+	// Deserter are the knight-equivalence. They get a balanced, straightforward 11 weighted balance to endure and overcome.
 	subclass_stats = list(
 		STATKEY_WIL = 3,
 		STATKEY_CON = 2,
