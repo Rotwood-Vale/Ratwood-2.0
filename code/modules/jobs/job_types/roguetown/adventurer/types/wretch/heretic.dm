@@ -158,7 +158,6 @@
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/combat/messer/graggar, SLOT_IN_BACKPACK, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.change_stat(STATKEY_STR, 2)
-			H.change_stat(STATKEY_WIL, 1)
 		if(/datum/patron/divine/astrata)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/cloak/templar/astratan, SLOT_CLOAK, TRUE)
