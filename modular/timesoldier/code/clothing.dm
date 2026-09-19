@@ -67,7 +67,7 @@
 	icon_state = "EB_boots_wrapped"
 	item_state = "EB_boots_wrapped"
 
-// INTERWARFARE. A loving love letter to Sparrow, and Matt. Thank you for making such an amazing project.
+// INTERWARFARE. A loving love letter to Sparrow, and Matt. Thank you for making such an amazing project. also holy shit this kit has so much aura.
 
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor/interwar
@@ -98,6 +98,7 @@
 	icon_state = "snipermask"
 	item_state = "snipermask"
 	color = null
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 
 /obj/item/clothing/shoes/roguetown/boots/timesoldier/interwar
 	name = "soldier's boots"
@@ -136,3 +137,4 @@
 	icon_state = "redsniperhelmet"
 	item_state = "redsniperhelmet"
 	color = null
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
