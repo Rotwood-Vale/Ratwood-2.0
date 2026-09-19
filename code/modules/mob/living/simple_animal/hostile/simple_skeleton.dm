@@ -5,7 +5,7 @@
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton_dead"
-	gender = MALE
+	gender = NEUTER
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	robust_searching = 1
 	turns_per_move = 1

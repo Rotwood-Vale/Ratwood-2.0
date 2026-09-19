@@ -52,8 +52,9 @@
 	target.copy_known_languages_from(user, TRUE)
 	target.visible_message(span_warning("[target]'s eyes light up with an eerie glow!"))
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "FORTIFIED SKELETON"), 3 SECONDS)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
 	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
+	target.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/skeleton_lichseek)
+	target.pronouns = IT_ITS
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/raise_undead/proc/backup_summon(turf/T)
@@ -64,4 +65,53 @@
 			new /mob/living/carbon/human/species/skeleton/npc/medium(T)
 		if(3) // 33% chance
 			new /mob/living/carbon/human/species/skeleton/npc/hard(T)
+	return TRUE
+
+// the special spell skeletons summoned with above gets. Lets them locate the nearest Lich.
+/obj/effect/proc_holder/spell/invoked/skeleton_lichseek
+	name = "Seek Master"
+	desc = "Locate the nearest Lich."
+	overlay_state = "ZIZO"
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	range = 2
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = list('modular_azurepeak/sound/mobs/abyssal/murderbeast.ogg')
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	recharge_time = 10 SECONDS
+	miracle = FALSE
+	devotion_cost = 0
+
+/obj/effect/proc_holder/spell/invoked/skeleton_lichseek/cast(list/targets, mob/living/user)
+	if(!istype(user, /mob/living/carbon/human/species/skeleton))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/species/skeleton/skeleton = user
+	var/mob/living/closest_lich
+	var/closest_dist = INFINITY
+
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(!istype(A, /datum/antagonist/lich))
+			continue
+
+		var/datum/antagonist/lich/lich = A
+		var/mob/living/lich_mob = lich.owner?.current
+		if(!lich_mob || QDELETED(lich_mob))
+			continue
+
+		var/dist = get_dist(skeleton, lich_mob)
+		if(dist < closest_dist)
+			closest_dist = dist
+			closest_lich = lich_mob
+
+	if(!closest_lich)
+		to_chat(skeleton, span_warning("You cannot sense your Master."))
+		return FALSE
+
+	to_chat(skeleton, span_warning("[closest_dist] meters away, [dir2text(get_dir(skeleton, closest_lich))]..."))
 	return TRUE

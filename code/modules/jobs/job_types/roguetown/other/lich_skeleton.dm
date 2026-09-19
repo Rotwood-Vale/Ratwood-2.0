@@ -158,13 +158,9 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/kettle/ancient
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
 	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
-
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
 
 	backpack_contents = list(
@@ -191,25 +187,32 @@ LICH SKELETONS
 			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			beltr = /obj/item/quiver/sling/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
-	var/neckwear = list("Coif", "Gorget")
+	var/neckwear = list("Kettlehat", "Nasal")
 	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
-			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("Kettlehat")
+			head = /obj/item/clothing/head/roguetown/helmet/kettle/ancient
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/ancient
+			shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+		if("Nasal")
+			head = /obj/item/clothing/head/roguetown/helmet/ancient
+			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/ancient
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient
+
+	var/cloaks = list("Shawl", "Cloak", "Jupon", "Tabard" )
 	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
+		if("Shawl")
+			cloak = /obj/item/clothing/cloak/thief_cloak/lich
+		if("Cloak")
+			cloak = /obj/item/clothing/cloak/half/lich
 		if("Jupon")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
 		if("Tabard")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
-			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
-			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
 	H.energy = H.max_energy
 
@@ -383,14 +386,7 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 6, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
-	mask = /obj/item/clothing/mask/rogue/spectacles/golden
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket/lich
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer/lich
-	pants = /obj/item/clothing/under/roguetown/trou/artipants/lich
-	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
 	gloves = /obj/item/clothing/gloves/roguetown/angle
-
 	backl = /obj/item/storage/backpack/rogue/backpack
 
 	backpack_contents = list(
@@ -405,25 +401,38 @@ LICH SKELETONS
 	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
 	beltl = /obj/item/rogueweapon/pick
 	H.adjust_blindness(-3)
-	var/neckwear = list("Coif", "Gorget")
+	var/neckwear = list("Engineer", "Worker")
 	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
 	switch(neckwear_choice)
-		if("Coif")
-			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
+		if("Engineer")
+			head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
+			mask = /obj/item/clothing/mask/rogue/spectacles/golden
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
+			armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket/lich
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer/lich
+			pants = /obj/item/clothing/under/roguetown/trou/artipants/lich
+			shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+		if("Worker")
+			head = /obj/item/clothing/head/roguetown/helmet/leather/advanced
+			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/bronze/light
+			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/ancient
+
+	var/cloaks = list("Shawl", "Cloak", "Jupon", "Tabard")
 	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
+		if("Shawl")
+			cloak = /obj/item/clothing/cloak/thief_cloak/lich
+		if("Cloak")
+			cloak = /obj/item/clothing/cloak/half/lich
 		if("Jupon")
 			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
 		if("Tabard")
 			cloak = /obj/item/clothing/cloak/tabard/lich
-		if("Cloak")
-			cloak = /obj/item/clothing/cloak/half/lich
-		if("Shawl")
-			cloak = /obj/item/clothing/cloak/thief_cloak/lich
+
 
 	H.energy = H.max_energy
 
@@ -438,6 +447,7 @@ LICH SKELETONS
 	tutorial = "Swerve, parry, riposte. The wetness along your mortal wound has dried centuries ago, yet your wit remains unsullied in the slightest. Bring your master's chivalry to the battlefield, through both plate-and-blade."
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/deathknight
 	maximum_possible_slots = 1 //Limited, but powerful. Could serve as either champions or commanders for their necromancer's army.
+	examine_name = "DEATH KNIGHT"	// doesn´t actually work
 
 	category_tags = list(CTAG_LSKELETON)
 
@@ -470,8 +480,8 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
 
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient
 	mask = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/lich
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/ancient
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	pants = /obj/item/clothing/under/roguetown/platelegs/ancient
@@ -484,7 +494,14 @@ LICH SKELETONS
 	)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Greatsword", "Flail + Greatshield")
+	var/helmet = list("Death Knight", "Ancient Bascinet")
+	var/helmet_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in helmet
+	switch(helmet_choice)
+		if("Death Knight")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/deathknight
+		if("Ancient Bascinet")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient
+	var/weapons = list("Greatsword", "Flail + Greatshield", "Dual Axes")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "RAGE AGAINST THE LYVING.") as anything in weapons
 	switch(weapon_choice)
 		if("Greatsword")
@@ -496,25 +513,79 @@ LICH SKELETONS
 			r_hand = /obj/item/rogueweapon/shield/gilbranze/great
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
-	var/neckwear = list("Coif", "Gorget")
-	var/neckwear_choice = input(H, "Choose your PROTECTION.", "PROTECT THE SACRED LEYLINE.") as anything in neckwear
-	switch(neckwear_choice)
-		if("Coif")
-			neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
-		if("Gorget")
-			neck = /obj/item/clothing/neck/roguetown/gorget/steel/ancient
-	var/cloaks = list("Jupon", "Tabard", "Cloak", "Shawl")
+		if("Dual Axes")
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+			l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
+			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+
+	var/cloaks = list("Tabard", "Jupon", "Cloak", "Shawl")
 	var/cloaks_choice = input(H, "Choose your CLOAK.", "BARE YOUR MASTER'S HERALDRY.") as anything in cloaks
 	H.set_blindness(0)
 	switch(cloaks_choice)
-		if("Jupon")
-			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
 		if("Tabard")
 			cloak = /obj/item/clothing/cloak/tabard/lich
+		if("Jupon")
+			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
 		if("Cloak")
 			cloak = /obj/item/clothing/cloak/half/lich
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
+	if(H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/deathrally)
+
+
+/obj/effect/proc_holder/spell/targeted/deathrally
+	name = "Death Knight Call"
+	desc = "Fortifies the nearby undead briefly."
+	range = 8
+	overlay_state = "raiseskele"
+	chargetime = 0
+	chargedrain = 0
+	releasedrain = 20
+	recharge_time = 2 MINUTES
+	max_targets = 6
+	cast_without_targets = TRUE
+	associated_skill = /datum/skill/misc/athletics
+	invocations = list("HEAR THE DEATH KNIGHTS CALL!!")
+	invocation_type = "shout"
+	miracle = FALSE
+	devotion_cost = 0
+
+/obj/effect/proc_holder/spell/targeted/deathrally/cast(list/targets,mob/living/user = usr)
+	user.emote("scream")
+	for(var/mob/living/L in targets)
+		if(L.stat == DEAD)
+			continue
+		if((L.mob_biotypes & MOB_UNDEAD))
+			L.apply_status_effect(/datum/status_effect/buff/order/rally_zizo)
+	..()
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/order/rally_zizo
+	name = "Rally!"
+	desc = "Temporary 2 CON boost to nearby undead!"
+	overlay_state = "raiseskele"
+	chargedrain = 0
+	chargetime = 0
+	sound = 'modular_azurepeak/sound/mobs/abyssal/murderbeast.ogg'
+
+/datum/status_effect/buff/order/rally_zizo
+	id = "deathrally"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/order/rally_zizo
+	effectedstats = list(STATKEY_CON = 2)
+	duration = 1 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/order/rally_zizo
+	name = "Rally!"
+	desc = "A death knight is calling to me!"
+	icon_state = "ZIZO"
+
+/datum/status_effect/buff/order/rally_zizo/on_apply()
+	. = ..()
+	to_chat(owner, span_blue("A death knight calls me to rally!"))
+
+
 
 //////////////////
 // UNIQUE ITEMS //
@@ -635,3 +706,39 @@ LICH SKELETONS
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/clothing/head/roguetown/helmet/ancient
+	name = "ancient helmet"
+	desc = "Rusty headprotection with a nasal guard."
+	color = "#bb9696"
+	smeltresult = /obj/item/ingot/aaslag
+
+/obj/item/clothing/suit/roguetown/armor/leather/ancient
+	name = "moldy leather"
+	desc = "Old but serviceable armor."
+	color = "#bb9696"
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/ancient
+	name = "moldy studded leather"
+	desc = "Old but serviceable armor."
+	color = "#bb9696"
+
+
+/obj/item/clothing/head/roguetown/helmet/heavy/deathknight
+	name = "death knight helmet"
+	desc = "An ancient greathelm of polished gilbranze."
+	icon_state = "deathknight"
+	item_state = "deathknight"
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	block2add = FOV_BEHIND
+	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	armor_class = ARMOR_CLASS_MEDIUM
+	peel_threshold = 5
+
+/obj/item/clothing/head/roguetown/helmet/heavy/deathknight/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
