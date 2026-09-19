@@ -58,3 +58,5 @@
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	head?.add_wound(/datum/wound/fracture/head/brain, FALSE, TRUE)
 	H.death()
+	// a reference to simo hayha from record of ragnarok killing a god with a sniper bullet to the head.
+	// the bullet is so fucking powerful, it bypasses godmode.
