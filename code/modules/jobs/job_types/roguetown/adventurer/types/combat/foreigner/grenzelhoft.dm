@@ -50,7 +50,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Messer)", "Eagle's Beak")
+		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Messer)", "Lucerne")
 		var/weapon_choice = input(H, "Choose your ALLY", "WOE THE CONTRACT") as anything in grenzel_purpose
 		switch(weapon_choice)
 			if("Zweihander")
@@ -69,6 +69,6 @@
 				beltr = /obj/item/rogueweapon/scabbard
 				H.change_stat(STATKEY_STR, -1)
 				H.change_stat(STATKEY_PER, 2) // so the boy can aim his crossbow and see further, maintain +7 stats total.
-			if("Eagle's Beak")
+			if("Lucerne")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/eaglebeak
