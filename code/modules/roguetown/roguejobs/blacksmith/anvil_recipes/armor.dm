@@ -177,7 +177,7 @@
 /datum/anvil_recipe/armor/bronze/skirt
 	name = "Chainskirt, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
-	created_item = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/bronze/mask
@@ -237,7 +237,7 @@
 	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/bronze/mailleskirt
-	name = "Chainmaille Skirt, Bronze"
+	name = "Chainmaille Kilt, Bronze"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
 	display_category = ITEM_CAT_ARMOR_LEGS
 
