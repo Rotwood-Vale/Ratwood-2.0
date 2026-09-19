@@ -497,7 +497,7 @@
 /datum/status_effect/buff/wardenbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.warden_area))
+	if(!istype(our_area) || !(our_area.warden_area))
 		owner.remove_status_effect(/datum/status_effect/buff/wardenbuff)
 
 /datum/status_effect/buff/wardenbuff/on_apply()
@@ -522,7 +522,7 @@
 /datum/status_effect/buff/barkeepbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.tavern_area))
+	if(!istype(our_area) || !(our_area.tavern_area))
 		owner.remove_status_effect(/datum/status_effect/buff/barkeepbuff)
 
 /atom/movable/screen/alert/status_effect/buff/barkeepbuff
@@ -539,7 +539,7 @@
 /datum/status_effect/buff/guardbuffone/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.town_area))
+	if(!istype(our_area) || !(our_area.town_area))
 		owner.remove_status_effect(/datum/status_effect/buff/guardbuffone)
 
 /atom/movable/screen/alert/status_effect/buff/guardbuffone
@@ -556,7 +556,7 @@
 /datum/status_effect/buff/dungeoneerbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.cell_area))
+	if(!istype(our_area) || !(our_area.cell_area))
 		owner.remove_status_effect(/datum/status_effect/buff/dungeoneerbuff)
 
 /datum/status_effect/buff/dungeoneerbuff/on_apply()
@@ -581,7 +581,7 @@
 /datum/status_effect/buff/viewingbuff/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.viewing_area))
+	if(!istype(our_area) || !(our_area.viewing_area))
 		owner.remove_status_effect(/datum/status_effect/buff/viewingbuff)
 
 /atom/movable/screen/alert/status_effect/buff/viewingbuff
@@ -606,7 +606,7 @@
 /datum/status_effect/debuff/holy_blessing/process()
 	. = ..()
 	var/area/rogue/our_area = get_area(owner)
-	if(!(our_area.holy_area))
+	if(!istype(our_area) || !(our_area.holy_area))
 		owner.remove_status_effect(/datum/status_effect/debuff/holy_blessing)
 
 /atom/movable/screen/alert/status_effect/holy_empowerement
@@ -672,6 +672,77 @@
 		owner.adjustCloneLoss(-healing_on_tick, 0)
 		owner.updatehealth()
 // Lesser miracle effect end
+
+#define REWIND_AURA "originhealing"
+
+/datum/status_effect/buff/originhealing // not affected by the heartbeast, since this is not really "healing", you're restoring someone in time. It will also only heal one limb at a time, to differ from other heals that are more uniform.
+	id = "originhealing"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
+	duration = 10 SECONDS
+	examine_text = "<font color='#ffae00'>SUBJECTPRONOUN is slowly being rewound in time!</font>"
+	var/healing_on_tick = 2.5
+	var/outline_colour = "#ffc558"
+	var/increment
+
+/datum/status_effect/buff/originhealing/on_creation(mob/living/new_owner, new_healing_on_tick)
+	if(!isnull(new_healing_on_tick))
+		healing_on_tick = new_healing_on_tick
+	return ..()
+
+/datum/status_effect/buff/originhealing/on_apply()
+	var/filter = owner.get_filter(REWIND_AURA)
+	if (!filter)
+		owner.add_filter(REWIND_AURA, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
+	if(owner.has_status_effect(/datum/status_effect/buff/convergence))
+		duration = 20 SECONDS
+	return TRUE
+
+/datum/status_effect/buff/originhealing/on_remove()
+	. = ..()
+	owner.remove_filter(REWIND_AURA)
+
+/datum/status_effect/buff/originhealing/tick()
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
+	H.color = "#ffda95"
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
+
+	// Rewind the most damaged limb.
+	if(ishuman(owner))
+		var/mob/living/carbon/human/HM = owner
+		var/obj/item/bodypart/most_damaged
+		for(var/obj/item/bodypart/BP in HM.bodyparts)
+			if(QDELETED(BP))
+				continue
+			if(!most_damaged || (BP.brute_dam + BP.burn_dam) > (most_damaged.brute_dam + most_damaged.burn_dam))
+				most_damaged = BP
+
+		if(most_damaged)
+			var/total_damage = most_damaged.brute_dam + most_damaged.burn_dam
+			if(total_damage > 0)
+				//Vizier Time magic. SCALED HEALING. 36 healing over 10 seconds(Worse then over half acolyte heals with condition met, and basic keeper research)
+				//with convergence extra duration, scales to 120 over 20 seconds. Worse then Eora and ravox, but better then others.
+				increment++
+				healing_on_tick = round((3 + (1/3)) * (2.71828 ** (0.08986 * increment)))
+				most_damaged.heal_damage(healing_on_tick, healing_on_tick)
+				HM.update_damage_overlays()
+
+	var/list/wCount = owner.get_wounds()
+
+	if(length(wCount))
+		owner.heal_wounds(healing_on_tick * 2)
+		owner.update_damage_overlays()
+
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
+
+	owner.stamina_add(-6)
+	owner.energy_add(9)
+
+#undef REWIND_AURA
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"
@@ -1149,10 +1220,24 @@
 	duration = 15 MINUTES
 	effectedstats = list(STATKEY_WIL = 1, STATKEY_CON = 1)
 
-/datum/status_effect/buff/convergence //Increases all healing while it lasts.
+#define CONVERGENCE_FILTER "convergence_glow"
+/datum/status_effect/buff/convergence //Increases  duration of Naledi buffs
 	id = "convergence"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/convergence
 	duration = 1 MINUTES
+	var/outline_colour = "#90D5FF"
+
+/datum/status_effect/buff/convergence/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(CONVERGENCE_FILTER)
+	if (!filter)
+		owner.add_filter(CONVERGENCE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+
+/datum/status_effect/buff/convergence/on_remove()
+	. = ..()
+	owner.remove_filter(CONVERGENCE_FILTER)
+
+#undef CONVERGENCE_FILTER
 
 /datum/status_effect/buff/stasis //Increases all healing while it lasts.
 	id = "stasis"
@@ -1509,6 +1594,58 @@
 
 	L.AdjustKnockdown(2)
 
+// escalating buffs applied on bleed out tied to TRAIT_JOURNEYS_END, currently only used by mistwalker
+/atom/movable/screen/alert/status_effect/buff/journey_ending
+	name = "An end in sight..."
+	desc = "Is this to be my story?"
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/journey_end
+	name = "The chapter's closing."
+	desc = "Treading the fine line of lyfe and death."
+	icon_state = "buff"
+
+/atom/movable/screen/alert/status_effect/buff/journey_end_final
+	name = "The final act!"
+	desc = "A death worthy of song!"
+	icon_state = "buff"
+
+/datum/status_effect/buff/journey_ending
+	id = "journey_ending"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
+	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2)
+	duration = -1
+
+/datum/status_effect/buff/journey_end
+	id = "journey_end"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
+	effectedstats = list(STATKEY_STR = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = 2)
+	duration = -1
+
+/datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
+	id = "journey_end_final"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
+	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 4, STATKEY_WIL = 4, STATKEY_CON = 4)
+	duration = -1
+
+/datum/status_effect/buff/journey_end_final/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_warning("You feel a wave of calming tides throughout your body... Are you truly free?"))
+
+/datum/status_effect/buff/journey_end_final/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_warning("The tides of your failures were too strong.. It seems your freedom will have to wait another dae.."))
+
+/datum/status_effect/buff/journey_end/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("You feel the raging currents coursing through your veins.."))
+
+/datum/status_effect/buff/journey_ending/on_apply()
+	. = ..()
+	to_chat(owner, span_warning("You feel the lake of guilt swallowing you whole."))
+
 /datum/status_effect/buff/stagehands_silence
 	id = "Stagehand"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/stagehands_silence
@@ -1654,7 +1791,7 @@
 /datum/status_effect/buff/clash
 	id = "clash"
 	duration = 4 SECONDS
-	var/dur
+	var/expired_naturally = FALSE
 	var/sfx_on_apply = 'sound/combat/clash_initiate.ogg'
 	var/swingdelay_mod = 5
 	alert_type = /atom/movable/screen/alert/status_effect/buff/clash
@@ -1676,8 +1813,8 @@
 	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_disrupted))
 	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_disrupted))
 	RegisterSignal(new_owner, COMSIG_LIVING_ONJUMP, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_ITEM_GUN_PROCESS_FIRE, PROC_REF(guard_disrupted_cheesy))
+	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_cancelled))
+	RegisterSignal(new_owner, COMSIG_ITEM_GUN_PROCESS_FIRE, PROC_REF(guard_cancelled))
 	RegisterSignal(new_owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(guard_struck_by_projectile))
 	RegisterSignal(new_owner, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(guard_struck_by_projectile))
 	RegisterSignal(new_owner, COMSIG_LIVING_SWINGDELAY_MOD, PROC_REF(guard_swingdelay_mod))	//I dunno if a signal is better here rather than theoretically cycling through _all_ status effects to apply a var'd swingdelay mod.
@@ -1706,31 +1843,30 @@
 		HM.process_clash(user, IM, IU)
 		return COMPONENT_NO_ATTACK
 	if(bad_guard)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.bad_guard(span_suicide("I tried to strike while focused on defense whole! It drains me!"), cheesy = TRUE)
+		guard_cancelled()
 
 //Mostly here so the child (limbguard) can have special behaviour.
 /datum/status_effect/buff/clash/proc/guard_struck_by_projectile()
 	guard_disrupted()
 
-//Our guard was disrupted by normal means.
+//Our guard was disrupted by normal means. Big red balloon alert to exemplify that this was due to combatant intervention.
 /datum/status_effect/buff/clash/proc/guard_disrupted()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
+		owner.balloon_alert_to_viewers("<font color = '#bb2b2b'><b>Guard DISRUPTED!</b></font>")
 		H.bad_guard("My focus was disrupted!")
 
-//We tried to cheese it. Generally reserved for egregious things, like attacking / casting while its active.
-/datum/status_effect/buff/clash/proc/guard_disrupted_cheesy()
+//We cancelled guard ourselves (swapping hands, attacking, etc) instead of it expiring or another player disrupting it. More punishing since it's deliberate.
+/datum/status_effect/buff/clash/proc/guard_cancelled()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.bad_guard("My focus was <b>heavily</b> disrupted!")
+		owner.balloon_alert_to_viewers("<font color = '#bb2b2b'><b>Guard CANCELLED!</b></font>")
+		H.bad_guard(span_warning("I carelessly dropped my focus!"), cheesy = TRUE)
 
 /datum/status_effect/buff/clash/on_apply()
 	. = ..()
 	if(!ishuman(owner))
 		return
-	dur = world.time
 	var/mob/living/carbon/human/H = owner
 	if(sfx_on_apply)
 		playsound(H, sfx_on_apply, 100, TRUE)
@@ -1740,13 +1876,16 @@
 		var/mob/living/carbon/human/H = owner
 		H.bad_guard()
 
+/datum/status_effect/buff/clash/process(wait)
+	if(duration != -1 && duration < world.time)
+		expired_naturally = TRUE
+	return ..()
+
 /datum/status_effect/buff/clash/on_remove()
 	. = ..()
 	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
-	var/newdur = world.time - dur
-	var/mob/living/carbon/human/H = owner
-	if(newdur > (initial(duration) - 0.2 SECONDS))	//Not checking exact duration to account for lag and any other tick / timing inconsistencies.
-		H.bad_guard(span_warning("I held my focus for too long. It's left me drained."))
+	if(expired_naturally)
+		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
@@ -1861,6 +2000,43 @@
 
 #undef EORANAURA_FILTER
 
+#define INVIGORATION_FILTER "invigoration_filter"
+
+/atom/movable/screen/alert/status_effect/buff/invigoration
+	name = "Invigoration"
+	desc = "My energy is being replenished."
+	icon_state = "buff"
+
+/datum/status_effect/buff/invigoration
+	id = "invigoration"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/invigoration
+	duration = 10 SECONDS
+	var/outline_colour = "#3a86ff"
+	var/energy_per_tick = 12
+
+/datum/status_effect/buff/invigoration/on_creation(mob/living/new_owner, set_duration = 10 SECONDS)
+	if(set_duration)
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/buff/invigoration/on_apply()
+	owner.add_filter(INVIGORATION_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 80, "size" = 1))
+	to_chat(owner, span_notice("A surge of energy begins to circulate through my body!"))
+	return TRUE
+
+/datum/status_effect/buff/invigoration/tick()
+	if(!owner || owner.stat == DEAD)
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	H.color = outline_colour
+	owner.energy_add(energy_per_tick)
+
+/datum/status_effect/buff/invigoration/on_remove()
+	owner.remove_filter(INVIGORATION_FILTER)
+	return ..()
+
+#undef INVIGORATION_FILTER
+
 /atom/movable/screen/alert/status_effect/buff/recuperation
 	name = "Recuperation"
 	desc = "A brief respite for my ailments."
@@ -1944,17 +2120,14 @@
 	var/blood_restore = 30
 
 /datum/status_effect/buff/adrenaline_rush/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.dna?.species?.type == /datum/species/gnoll)
-			return FALSE
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ADRENALINE_RUSH, TRAIT_STATUS_EFFECT(id))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.playsound_local(get_turf(H), 'sound/misc/adrenaline_rush.ogg', 100, TRUE)
-		H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 		H.stamina -= max((H.stamina - (H.max_stamina / 2)), 0)
+		if(H.dna?.species?.type != /datum/species/gnoll)
+			H.set_blood_volume(min((H.get_blood_volume() + blood_restore), BLOOD_VOLUME_NORMAL))
 
 /datum/status_effect/buff/adrenaline_rush/on_remove()
 	. = ..()

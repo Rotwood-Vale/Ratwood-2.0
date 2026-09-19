@@ -113,6 +113,12 @@
 
 	/// Branded writing on body part
 	var/branded_writing = ""
+	/// Branded enslavement mark
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this part, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this part, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 64
@@ -183,6 +189,7 @@
 		owner.bodyparts -= src
 		owner.bodyparts_by_zone -= body_zone
 		owner = null
+	original_owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
 	for(var/datum/wound/wound as anything in wounds)
@@ -563,7 +570,7 @@
 	body_gender = H.gender
 	should_draw_gender = S.sexes
 
-	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
+	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits) || (S.mutant_skin_option && H.mutant_skin))
 		if(S.fixed_mut_color)
 			species_color = S.fixed_mut_color
 		else

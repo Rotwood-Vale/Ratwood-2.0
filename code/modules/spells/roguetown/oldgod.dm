@@ -48,22 +48,25 @@
 			revert_cast()
 			return FALSE
 
-		//Transfer wounds from each bodypart.
+		playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
+		C_caster.visible_message(span_warning("A thread of silvery lux spools out from [C_caster] and attaches to [C_target], softly aglow..."), span_warning("You begin twining your lux together with [C_target], drawing forth their wounds unto yourself..."))
+		var/static/list/disallowed_wounds = typecacheof(list(/datum/wound/dismemberment, /datum/wound/facial, /datum/wound/fracture/head, /datum/wound/fracture/neck, /datum/wound/cbt/permanent, /datum/wound/grievous/pre_decapitation, /datum/wound/grievous/pre_skullshatter))
 		for(var/datum/wound/targetwound in tw_List)
-			if (istype(targetwound, /datum/wound/dismemberment))
+			if (disallowed_wounds[targetwound.type])
 				continue
-			if (istype(targetwound, /datum/wound/facial))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/head))
-				continue
-			if (istype(targetwound, /datum/wound/fracture/neck))
-				continue
-			if (istype(targetwound, /datum/wound/cbt/permanent))
-				continue
-			var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
-			c_BP.add_wound(targetwound.type)
-			var/obj/item/bodypart/t_BP = C_target.get_bodypart(targetwound.bodypart_owner.body_zone)
-			t_BP.remove_wound(targetwound.type)
+			if (move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
+				if (!targetwound) // it's possible they might've healed on or advanced
+					continue
+				var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
+				// instead of recreating a new wound of the same type as the victims, we can just transfer theirs (includes any existing healing/clotting) over to us
+				var/pre_bleeding = targetwound.bleed_rate
+				targetwound.apply_to_bodypart(c_BP, silent = TRUE, crit_message = FALSE)
+				targetwound.set_bleed_rate(pre_bleeding) // but we have to manually force a bleed_rate reset for it to cache properly
+				if (targetwound.severity >= WOUND_SEVERITY_SEVERE)
+					C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
+				new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
+				new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
+				C_target.Beam(C_caster, icon_state="heal_psycross", icon='modular_azurepeak/icons/effects/miracle-healing.dmi', time = 5)
 
 	// Transfer blood
 	var/blood_transfer = 0
@@ -71,19 +74,10 @@
 		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
 		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		user.adjust_blood_volume(-(blood_transfer))
-		to_chat(user, span_warning("You feel your blood drain into [H]!"))
 		to_chat(H, span_notice("You feel your blood replenish!"))
-
-	// Visual effects
-	user.visible_message(span_danger("[user] purifies [H]'s wounds!"))
-	playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
-
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
-	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
+		user.visible_message(span_warning("A sudden pallor overtakes [user] as [user.p_their()] lyfeblood flees [user.p_their()] pores and into [H]!"), span_warning("You feel your blood drain into [H]!"))
+		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
+		new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))

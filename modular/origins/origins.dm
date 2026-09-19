@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/naledi
 	name = "Naledi"
-	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) for centuries. Their homeland was almost \
-	utterly destroyed with the Ascension of Baotha. It is said that the first magics were born here."
+	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) on their island for centuries. Their homeland \
+	was sundered by Zizo and all but finished off by the Ascension of Baotha about 100 yils ago. It is said that the first magics were born here."
 	origin_title = "Naledi"
 	origin_language = /datum/language/celestial
 	map_x = 514

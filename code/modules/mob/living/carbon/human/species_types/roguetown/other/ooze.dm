@@ -43,7 +43,6 @@
 	inherent_traits = list(
 						TRAIT_NOBREATH,
 						TRAIT_ZOMBIE_IMMUNE,
-						TRAIT_BLOODLOSS_IMMUNE,
 						TRAIT_EASYDISMEMBER,
 						TRAIT_REGROW_LIMBS,
 						TRAIT_NASTY_EATER,
@@ -73,6 +72,8 @@
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
 		/datum/customizer/organ/testicles/anthro,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
 		/datum/customizer/organ/tail/anthro,
 		/datum/customizer/organ/tail_feature/anthro,
 		/datum/customizer/organ/snout/anthro,

@@ -4,7 +4,7 @@
 	npc_jump_chance = 0
 	rude = FALSE // don't taunt people as a deadite
 	tree_climber = FALSE // or climb trees
-	dodgetime = 8 
+	dodgetime = 0.8 SECONDS
 	flee_in_pain = FALSE
 	ambushable = FALSE
 	wander = TRUE
@@ -146,6 +146,13 @@
 			return
 	mob_timers["deadite_idle"] = world.time
 	emote("idle")
+/// Whether this mob is a risen deadite, either a turned antag datum or the NPC deadite type, whose datum turns ~6 s after spawn
+/mob/living/carbon/proc/is_risen_deadite()
+	if(istype(src, /mob/living/carbon/human/species/npc/deadite))
+		return TRUE
+	var/datum/antagonist/zombie/zombie_antag = mind?.has_antag_datum(/datum/antagonist/zombie)
+	return zombie_antag?.has_turned
+
 /// Use this to attempt to add the zombie antag datum to a human
 /mob/living/carbon/human/proc/zombie_check()
 	if(!mind)

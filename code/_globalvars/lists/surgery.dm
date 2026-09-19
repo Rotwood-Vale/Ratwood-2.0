@@ -1,4 +1,4 @@
 /// List of all surgery datums
-GLOBAL_LIST_EMPTY(surgeries_list)
+GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
 /// List of all surgery step datums
-GLOBAL_LIST_EMPTY(surgery_steps)
+GLOBAL_LIST_INIT(surgery_steps, init_surgery_steps())

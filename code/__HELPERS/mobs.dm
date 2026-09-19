@@ -142,7 +142,6 @@ GLOBAL_LIST_INIT(oldhc, sortList(list(
 		if("decay grey")
 			. = "#6a6a6a"
 
-
 GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)

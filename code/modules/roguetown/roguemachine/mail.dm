@@ -63,6 +63,49 @@
 			H.remove_status_effect(/datum/status_effect/ugotmail)
 	if(!ishuman(user))
 		return
+	if (user.mind?.has_bomb) //for TRAIT_EXPLOSIVE_SUPPLY. One bomb per one day.
+		var/mob/living/carbon/human/H = user
+		H.mind?.has_bomb = FALSE
+		var/bomb_type
+		var/static/list/bomb_type_list = list(/obj/item/tntstick,
+		/obj/item/impact_grenade/explosion,
+		/obj/item/impact_grenade/smoke/poison_gas,
+		/obj/item/impact_grenade/smoke/fire_gas,
+		/obj/item/impact_grenade/smoke/healing_gas,
+		)
+		var/bonus = 0
+		if(H.STALUC > 10)
+			bonus = 10 * (H.STALUC - 10)
+		if(prob(90 - bonus))
+			bomb_type = /obj/item/bomb
+		else
+			bomb_type = pick(bomb_type_list)
+		var/obj/item/S = new bomb_type(get_turf(H))
+		H.put_in_hands(S)
+		if(HAS_TRAIT(H, TRAIT_BOMBER_EXPERT))	//additional random second bomb.
+			bomb_type_list |= /obj/item/bomb
+			bomb_type = pick(bomb_type_list)
+			var/obj/item/B = new bomb_type(get_turf(H))
+			H.put_in_hands(B)
+	if(user.mind?.has_drug_delivery) //for TRAIT_DRUG_SUPPLY. One delivery per day.
+		var/mob/living/carbon/human/H = user
+		H.mind.has_drug_delivery = FALSE
+		var/static/list/common_drug_list = list(
+			/obj/item/reagent_containers/powder/spice,
+			/obj/item/reagent_containers/powder/moondust,
+			/obj/item/reagent_containers/powder/starsugar
+		)
+		var/static/list/rare_drug_list = list(
+			/obj/item/reagent_containers/powder/moondust_purest,
+			/obj/item/reagent_containers/powder/herozium
+		)
+		var/drug_type
+		if(prob(20))
+			drug_type = pick(rare_drug_list)
+		else
+			drug_type = pick(common_drug_list)
+		var/obj/item/D = new drug_type(get_turf(H))
+		H.put_in_hands(D)
 	if(HAS_TRAIT(user, TRAIT_INQUISITION))
 		if(!coin_loaded && !inqcoins)
 			to_chat(user, span_notice("It needs a Marque."))
@@ -91,10 +134,10 @@
 	if(inqcoins)
 		to_chat(user, span_warning("The machine doesn't respond."))
 		return
-	var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+	var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
 	if(!send2place)
 		return
-	var/sentfrom = input(user, "Who is this letter from?", "ROGUETOWN", null)
+	var/sentfrom = sanitize(input(user, "Who is this letter from?", "ROGUETOWN", null))
 	if(!sentfrom)
 		sentfrom = "Anonymous"
 	var/sender_ckey = user.ckey
@@ -135,7 +178,6 @@
 		if(found)
 			visible_message(span_warning("[user] sends something."))
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-			SStreasury.give_money_treasury(coin_loaded, "Mail Income")
 			coin_loaded = FALSE
 			update_icon()
 			return
@@ -170,7 +212,6 @@
 			return
 		visible_message(span_warning("[user] sends something."))
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
-		SStreasury.give_money_treasury(coin_loaded, "Mail")
 		coin_loaded = FALSE
 		update_icon()
 
@@ -505,8 +546,8 @@
 			to_chat(user, span_warning("The machine doesn't respond."))
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
-			var/send2place = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
-			var/sentfrom = input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null)
+			var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
+			var/sentfrom = sanitize(input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null))
 			if(!sentfrom)
 				sentfrom = "Anonymous"
 			var/sender_ckey = user.ckey
@@ -653,15 +694,6 @@
 	. = ..()
 	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag]"
 
-/obj/structure/roguemachine/mail/Topic(href, href_list)
-	..()
-
-	if(!usr)
-		return
-
-	if(href_list["directory"])
-		view_directory(usr)
-
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
 	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
@@ -735,6 +767,8 @@
 
 /obj/item/roguemachine/mastermail/Destroy()
 	set_light(0)
+	if(SSroguemachine.hermailermaster == src)
+		SSroguemachine.hermailermaster = null
 	SSroguemachine.hermailers -= src
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
@@ -820,6 +854,9 @@
 /obj/structure/roguemachine/mail/Topic(href, href_list)
 	..()
 	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+	if(href_list["directory"])
+		view_directory(usr)
 		return
 	if(href_list["eject"])
 		if(inqcoins <= 0)

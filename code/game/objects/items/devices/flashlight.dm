@@ -457,7 +457,6 @@
 	light_outer_range = 6
 	light_color ="#4ac77e"
 	on = FALSE
-	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/flashlight/flare/torch/lantern/bronzelamptern/malums_lamptern //unqiue item as a dungeon reward. Functionally a kite shield and a bronze lamptern combined into one
 	name = "ancient lamptern"

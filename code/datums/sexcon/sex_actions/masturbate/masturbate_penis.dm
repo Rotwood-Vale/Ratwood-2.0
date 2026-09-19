@@ -1,27 +1,9 @@
 /datum/sex_action/masturbate_penis
 	name = "Jerk off"
 	category = SEX_CATEGORY_HANDS
-	user_sex_part = SEX_PART_COCK
-	target_sex_part = SEX_PART_COCK
+	user_sex_part = SEX_PART_COCK // only user part to avoid self-targeting restrictions
 	subtle_supported = TRUE
-
-/datum/sex_action/masturbate_penis/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_penis/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user != target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!user.sexcon.can_use_penis())
-		return FALSE
-	return TRUE
+	solo = TRUE
 
 /datum/sex_action/masturbate_penis/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts jerking off..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))

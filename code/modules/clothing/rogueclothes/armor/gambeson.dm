@@ -21,6 +21,9 @@
 	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 	color = "#646464"
 
@@ -29,7 +32,7 @@
 	icon_state = "dgamb"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	allowed_sex = list(MALE, FEMALE)
-	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT 
+	cold_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
@@ -45,7 +48,6 @@
 	armor = ARMOR_PADDED_BAD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
 	prevent_crits = null // It won't help, like, at all.
-	sellprice = 10
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	name = "padded gambeson"
@@ -54,7 +56,6 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	sellprice = 25
 	color = "#b49679"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -97,7 +98,6 @@
 	icon_state = "royalgamb"
 	color = "#FFFFFF"
 	allowed_race = NON_DWARVEN_RACE_TYPES
-	sellprice = 50
 	boobed = TRUE
 	nodismemsleeves = TRUE
 	sleeved_detail = TRUE
@@ -112,6 +112,10 @@
 	if(GLOB.lordprimary)
 		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
 	GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/Destroy()
+	. = ..()
+	GLOB.lordcolor -= src
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/royal/update_icon()
 	cut_overlays()
@@ -139,7 +143,6 @@
 	detail_color = "#e98738"
 	detail_tag = "_detail"
 	shiftable = FALSE
-	sellprice = 30
 	dropshrink = 0.9
 	var/picked = FALSE
 
@@ -225,6 +228,14 @@
 	boobed = TRUE
 	shiftable = FALSE
 
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hatanga
+	name = "beast-hide coat"
+	desc = "Layered robes reinforced with quilted padding and stitched hides from formidable beasts."
+	icon_state = "hatanga"
+	color = "#ffffff"
+	boobed = TRUE
+	shiftable = FALSE
+
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	name = "grenzelhoftian hip-shirt"
@@ -240,7 +251,6 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	color = "#1d1d22"
 	detail_color = "#FFFFFF"
-	sellprice = 40
 	shiftable = FALSE
 	var/picked = FALSE
 
@@ -288,6 +298,7 @@
 	icon_state = "desertrobe"
 	item_state = "desertrobe"
 	desc = "A thick robe intervowen with spell-laced fabrics. Thick and protective while remaining light and breezy; the perfect gear for protecting one from the threats of the sun, the desert and the daemons, yet still allowing one to cast spells aptly."
+	color = null
 	naledicolor = TRUE
 	shiftable = FALSE
 	cold_protection = null

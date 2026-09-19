@@ -142,7 +142,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
@@ -216,7 +216,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
@@ -430,7 +430,7 @@
 	cloak = /obj/item/clothing/cloak/catcloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
