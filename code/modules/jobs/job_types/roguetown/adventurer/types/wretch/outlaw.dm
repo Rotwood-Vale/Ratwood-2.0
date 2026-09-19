@@ -61,7 +61,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 	)
 	if(H.mind)
-		var/weapons = list("Rapier","Parrying Dagger", "Whip")
+		var/weapons = list("Rapier","Sabre","Parrying Dagger","Whip")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/rangedweapons = list("Slurbow", "Crossbow")
 		var/rangedweapon_choice = input(H,"Choose your BOW.", "TAKE AIM.") as anything in rangedweapons
@@ -73,10 +73,14 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sword
 				l_hand = /obj/item/rogueweapon/sword/rapier
+			if("Sabre")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				l_hand = /obj/item/rogueweapon/sword/sabre
 			if("Parrying Dagger")
 				beltl = /obj/item/rogueweapon/scabbard/sheath
 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying
-			if ("Whip")
+			if("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/whip
 		switch(rangedweapon_choice)
