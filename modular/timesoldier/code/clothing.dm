@@ -128,7 +128,7 @@
 	item_state = "redgloves"
 	color = null
 
-/obj/item/clothing/head/roguetown/helmet/heavy/timesoldier/sniper
+/obj/item/clothing/head/roguetown/helmet/heavy/timesoldier/interwar/sniper
 	name = "marksman helmet"
 	desc = "<span class='yellow'><i>The lenses on this thing used to work properly, but now they're foggy. Made with tempered steel, this was the first thing I received from my instructor.</i></span>"
 	icon = 'modular/timesoldier/sprites/warfare.dmi'
