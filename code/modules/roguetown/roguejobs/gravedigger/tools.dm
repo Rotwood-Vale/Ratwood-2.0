@@ -592,7 +592,7 @@
 	force = 12//It has a gripped state. USE IT!!!!!
 	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
 	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
-	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/pick)
 	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = 100
