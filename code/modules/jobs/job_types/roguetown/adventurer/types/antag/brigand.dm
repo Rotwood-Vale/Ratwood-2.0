@@ -14,7 +14,7 @@
 		STATKEY_CON = 2,
 		STATKEY_SPD = 1,
 		STATKEY_LCK = 1,
-		STATKEY_INT = -1
+		STATKEY_INT = -4
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
