@@ -23,6 +23,7 @@
 	social_rank = SOCIAL_RANK_ROYAL
 	cmode_music = 'sound/music/combat_noble.ogg'
 	job_traits = list(TRAIT_NOBLE)
+	quirk_restrictions = list(/datum/quirk/hunted)
 	job_subclasses = list(
 		/datum/advclass/heir/daring,
 		/datum/advclass/heir/bookworm,
