@@ -112,7 +112,7 @@
 		to_chat(user, span_danger("The unholy net collapses back into a mess of viscera!"))
 
 /obj/item/net/unholy_grasp/ensnare(mob/living/carbon/C, mob/user)
-	slipouttime = max(2 SECONDS, 10 SECONDS - max(0, C.STASTR - 10) * 0.5 SECONDS))
+	slipouttime = max(2 SECONDS, 10 SECONDS - max(0, C.STASTR - 10) * 0.5 SECONDS)
 	. = ..()
 	if(C.legcuffed == src)
 		was_ensnaring = TRUE

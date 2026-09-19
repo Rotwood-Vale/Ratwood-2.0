@@ -46,7 +46,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		if(C.legcuffed == src)
-			visible_message(span_warning("[C] slips free of \the [src]!"), span_notice("I slip free of \the [src]!"))
+			C.visible_message(span_warning("[C] slips free of \the [src]!"), span_notice("I slip free of \the [src]!"))
 	remove_effect()
 
 /obj/item/net/proc/ensnare(mob/living/carbon/C, mob/user)
