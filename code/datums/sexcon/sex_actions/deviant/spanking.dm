@@ -6,13 +6,8 @@
 	stamina_cost = 0
 	category = SEX_CATEGORY_HANDS
 
-/datum/sex_action/spanking/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	return TRUE
-
 /datum/sex_action/spanking/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
 	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE

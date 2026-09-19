@@ -31,6 +31,8 @@
 	if(ranged_ability)
 		ranged_ability.deactivate()
 	
+	last_logout_time = 0
+	cancel_disconnected_admin_alert()
 	set_ssd_indicator(FALSE)
 
 /mob/living/proc/login_fade()

@@ -1,35 +1,21 @@
-/datum/sex_action/masturbate_other_breasts_prestidigitation
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation
 	name = "Rub their breasts with magehand"
 	check_same_tile = FALSE
 	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
+	target_sex_part = SEX_PART_BREASTS
 	subtle_supported = TRUE
 
-/datum/sex_action/masturbate_other_breasts_prestidigitation/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/masturbate_other_breasts_prestidigitation/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))
 		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
-		return FALSE
-	if(!user.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
-		return FALSE
 	return TRUE
 
-/datum/sex_action/masturbate_other_breasts_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts teasing [target]'s breasts with conjured arcyne hands..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
-/datum/sex_action/masturbate_other_breasts_prestidigitation/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/do_subtle = user.sexcon.do_subtle_action
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
@@ -42,10 +28,10 @@
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
-/datum/sex_action/masturbate_other_breasts_prestidigitation/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] lowers [user.p_their()] hands as the prestidigitation fades."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
-/datum/sex_action/masturbate_other_breasts_prestidigitation/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/magic/masturbate_other_breasts_prestidigitation/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())
 		return TRUE
 	return FALSE

@@ -12,7 +12,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/manacrystal = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/woodcut)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/woodcut)
 
 /datum/runeritual/enchanting/mining
 	name = "Mining"
@@ -20,7 +20,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/artifact = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/mining)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/mining)
 
 /datum/runeritual/enchanting/xylix
 	name = "Xylix's Grace"
@@ -28,7 +28,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/leyline = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/xylix)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/xylix)
 
 /datum/runeritual/enchanting/light
 	name = "Unyielding Light"
@@ -36,7 +36,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/mote = 2)
-	result_atoms = list(/obj/item/enchantmentscroll/light)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/light)
 
 /datum/runeritual/enchanting/holding
 	name = "Compact Storing"
@@ -44,7 +44,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/ash = 2, /obj/item/magic/fae/dust = 2)
-	result_atoms = list(/obj/item/enchantmentscroll/holding)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/holding)
 
 /datum/runeritual/enchanting/revealing
 	name = "Revealing Light"
@@ -52,7 +52,7 @@
 	blacklisted = FALSE
 	tier = 1
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/fae/dust = 2)
-	result_atoms = list(/obj/item/enchantmentscroll/revealing)
+	result_atoms = list(/obj/item/enchantmentscroll/basic/revealing)
 
 //T2 Below here
 
@@ -63,7 +63,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/scale = 1, /obj/item/magic/manacrystal = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/nightvision)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/nightvision)
 
 /datum/runeritual/enchanting/unbreaking
 	name = "Unbreaking"
@@ -71,7 +71,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/artifact = 1, /obj/item/magic/elemental/shard = 1, /obj/item/magic/manacrystal = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/unbreaking)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/unbreaking)
 
 /datum/runeritual/enchanting/featherstep
 	name = "Feather Step"
@@ -79,7 +79,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/scale = 1, /obj/item/magic/fae/dust = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/featherstep)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/featherstep)
 
 /datum/runeritual/enchanting/fireresist
 	name = "Fire Resistance"
@@ -87,7 +87,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/fang = 1, /obj/item/magic/infernal/ash = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/fireresist)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/fireresist)
 
 /datum/runeritual/enchanting/climbing
 	name = "Spider movements"
@@ -95,7 +95,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/shard = 1, /obj/item/magic/infernal/ash = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/climbing)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/climbing)
 
 /datum/runeritual/enchanting/thievery
 	name = "Thievery"
@@ -103,7 +103,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/fang = 1, /obj/item/magic/obsidian = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/thievery)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/thievery)
 
 /datum/runeritual/enchanting/trekk
 	name = "Longstriding"
@@ -111,7 +111,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/shard = 1, /obj/item/magic/artifact = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/trekk)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/trekk)
 
 /datum/runeritual/enchanting/smithing
 	name = "Smithing"
@@ -119,7 +119,7 @@
 	blacklisted = FALSE
 	tier = 2
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/shard = 1, /obj/item/magic/elemental/mote = 1, /obj/item/magic/melded/t1 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/smithing)
+	result_atoms = list(/obj/item/enchantmentscroll/superior/smithing)
 
 //T3 below here
 
@@ -129,7 +129,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/core = 1, /obj/item/magic/infernal/fang = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/lifesteal)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/lifesteal)
 
 /datum/runeritual/enchanting/lightning
 	name = "Lightning"
@@ -137,7 +137,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/core = 1, /obj/item/magic/leyline = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/lightning)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/lightning)
 
 /datum/runeritual/enchanting/voidtouched
 	name = "voidtouched"
@@ -145,7 +145,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1, /obj/item/magic/fae/core = 1, /obj/item/magic/voidstone = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/voidtouched)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/voidtouched)
 
 /datum/runeritual/enchanting/frostveil	//armor enchantment
 	name = "Frostveil"
@@ -153,7 +153,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/fragment = 1, /obj/item/magic/elemental/shard = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/frostveil)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/frostveil)
 
 /datum/runeritual/enchanting/phoenixguard	//armor enchantment
 	name = "Phoenixguard"
@@ -161,7 +161,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/core = 1, /obj/item/magic/infernal/fang = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/phoenixguard)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/phoenixguard)
 
 /datum/runeritual/enchanting/returningweapon
 	name = "Returning Weapon"
@@ -169,7 +169,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/fragment = 1, /obj/item/magic/fae/dust = 2, /obj/item/magic/elemental/mote = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/returningweapon)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/returningweapon)
 
 /datum/runeritual/enchanting/woundclosing
 	name = "WoundClosing"
@@ -177,7 +177,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/core = 1, /obj/item/magic/fae/scale = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/woundclosing)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/woundclosing)
 
 /datum/runeritual/enchanting/archery
 	name = "Archery"
@@ -185,7 +185,7 @@
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/fang = 2, /obj/item/magic/leyline = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/archery)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/archery)
 
 
 //T4 Below here
@@ -197,7 +197,7 @@
 	blacklisted = FALSE
 	tier = 4
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/essence = 1, /obj/item/magic/fae/core = 2, /obj/item/magic/melded/t3 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/briars)
+	result_atoms = list(/obj/item/enchantmentscroll/mythic/briars)
 
 /datum/runeritual/enchanting/infernalflame	//weapon enchantment
 	name = "Infernal Flame"
@@ -205,7 +205,7 @@
 	blacklisted = FALSE
 	tier = 4
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/flame = 1, /obj/item/magic/obsidian = 4, /obj/item/magic/melded/t3 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/infernalflame)
+	result_atoms = list(/obj/item/enchantmentscroll/mythic/infernalflame)
 
 
 /datum/runeritual/enchanting/freeze	//weapon enchantment
@@ -214,7 +214,7 @@
 	blacklisted = FALSE
 	tier = 4
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/essence = 1, /obj/item/magic/infernal/core = 2, /obj/item/magic/melded/t3 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/freeze)
+	result_atoms = list(/obj/item/enchantmentscroll/mythic/freeze)
 
 
 /datum/runeritual/enchanting/rewind
@@ -223,7 +223,7 @@
 	blacklisted = FALSE
 	tier = 4
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/elemental/relic = 1, /obj/item/magic/fae/core = 2,  /obj/item/magic/melded/t3 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/rewind)
+	result_atoms = list(/obj/item/enchantmentscroll/mythic/rewind)
 
 /datum/runeritual/enchanting/chaosstorm
 	name = "Chaos Storm"
@@ -231,4 +231,4 @@
 	blacklisted = FALSE
 	tier = 4
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/obsidian = 1, /obj/item/magic/manacrystal = 1,  /obj/item/magic/melded/t4 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/chaos_storm)
+	result_atoms = list(/obj/item/enchantmentscroll/mythic/chaos_storm)

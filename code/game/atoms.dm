@@ -8,6 +8,8 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 	var/level = 2
+	/// Attached proximity monitor, if any (quest parcels/spawn effects use this)
+	var/datum/proximity_monitor/proximity_monitor
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -155,6 +157,11 @@
  * * /turf/Initialize
  * * /turf/open/space/Initialize
  */
+/// Mechanics help lines for the extended examine of machines (ported roguemachines override this).
+/// Not yet surfaced anywhere in Ratwood's examine flow; overrides compile and can be wired later.
+/atom/proc/get_mechanics_examine(mob/user)
+	return list()
+
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -449,8 +456,6 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
-/atom/proc/get_mechanics_examine(mob/user)
-	return list()
 
 //taking in the vanderline update on apperance, name and desc processes
 /atom/proc/vand_update_appearance(updates = ALL)
@@ -1083,7 +1088,7 @@
  * 5 is any additional text, which will be appended to the rest of the log line
  * severe marks crits, dismemberment and death so they are colour coded in the individual log panel
  */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, severe = FALSE)
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_seen = TRUE, zone=null, intent=null, damtype=null, severe = FALSE)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -1096,8 +1101,11 @@
 	var/saddition = ""
 	if(addition)
 		saddition = " [addition]"
+	var/sintent = intent ? " (INTENT: [uppertext(intent)])" : ""
+	var/sdamtype = damtype ? " (DAMTYPE: [uppertext(damtype)])" : ""
+	var/szone = zone ? " (ZONE: [uppertext(zone)])" : ""
 
-	var/postfix = "[sobject][saddition][hp]"
+	var/postfix = "[sobject][saddition][sintent][sdamtype][szone][hp]"
 
 	var/message = "has [what_done] [starget][postfix]"
 	// one id shared by all three writes below, so the panels can tell three renderings of one hit from three hits.
