@@ -82,7 +82,7 @@
 
 /datum/inqports/supplies/blessedbolts
 	name = "1 Quiver of Holy Water Bolts"
-	item_type = /obj/item/quiver/holybolts
+	item_type = /obj/item/quiver/bolt/holybolts
 	marquescost = 2
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/chains/Initialize(mapload)

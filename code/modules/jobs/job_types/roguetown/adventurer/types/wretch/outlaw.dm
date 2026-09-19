@@ -44,7 +44,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather
 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -52,7 +52,7 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	mask = /obj/item/clothing/mask/rogue/ragmask/black
-	beltr = /obj/item/quiver/bolts
+	beltr = /obj/item/quiver/bolt/standard
 	r_hand = /obj/item/rogueweapon/mace/cudgel //From thief PR
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -140,7 +140,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Just A Heater Shield","Dagger + Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield", "Militia War-Axe", "Militia Goedendag", "Flail + Heater Shield")
+		var/weapons = list("Just A Heater Shield","Dagger + Munition Crossbow", "Militia Warpick + Heater Shield", "Militia Spear + Heater Shield", "Militia War-Axe", "Militia Goedendag", "Flail + Heater Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -148,12 +148,12 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backr = /obj/item/rogueweapon/shield/iron
-			if("Dagger + Crossbow")
+			if("Dagger + Munition Crossbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/bolts
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				beltr = /obj/item/quiver/bolt
 			if ("Militia Warpick + Heater Shield")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/pick/militia/steel		//this one has axe skill. Other one had MINING.

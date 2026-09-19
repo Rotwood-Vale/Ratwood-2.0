@@ -3167,14 +3167,6 @@
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/church/chapel)
-"aGG" = (
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
-/obj/structure/rack/rogue/shelf/biggest,
-/turf/open/floor/rogue/concrete,
-/area/rogue/under/town/basement/keep)
 "aGH" = (
 /obj/effect/landmark/start/wapprentice,
 /obj/structure/bed/rogue/inn/wool{
@@ -8375,12 +8367,6 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/cell/warden)
-"bKY" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/structure/rack/rogue,
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/town/garrison)
 "bKZ" = (
 /turf/open/floor/rogue/rooftop/green/corner1{
 	dir = 6
@@ -9073,18 +9059,6 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/beach/harbor)
-"bRL" = (
-/obj/structure/rack/rogue/shelf,
-/obj/item/quiver/bolts{
-	pixel_x = 7;
-	pixel_y = 33
-	},
-/obj/item/quiver/bolts{
-	pixel_x = -4;
-	pixel_y = 34
-	},
-/turf/open/floor/rogue/greenstone,
-/area/rogue/indoors/town/cell/warden)
 "bRO" = (
 /obj/structure/stairs{
 	dir = 8
@@ -17717,28 +17691,6 @@
 "dGr" = (
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church/chapel)
-"dGw" = (
-/obj/item/reagent_containers/powder/spice{
-	pixel_y = 14
-	},
-/obj/structure/closet/crate/roguecloset/dark{
-	keylock = 1;
-	locked = 1;
-	lockid = "merchant";
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/rogueweapon/sword/rapier,
-/obj/item/rogueweapon/scabbard,
-/obj/item/quiver/bolts,
-/obj/machinery/light/rogue/candle/l{
-	pixel_x = 0;
-	pixel_y = -32
-	},
-/obj/item/quiver/bullet/lead,
-/turf/open/floor/carpet/inn,
-/area/rogue/indoors/town/shop)
 "dGz" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
@@ -42462,6 +42414,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/rockhill)
+"iPz" = (
+/obj/structure/rack/rogue,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/town/garrison)
 "iPC" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /mob/living/simple_animal/hostile/rogue/haunt,
@@ -42744,6 +42702,15 @@
 /obj/structure/roguerock,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
+"iTh" = (
+/obj/structure/closet/crate/chest{
+	locked = 1;
+	lockid = "walls"
+	},
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/quiver/bolt/standard,
+/turf/open/floor/rogue/ruinedwood/chevron,
+/area/rogue/indoors/town/manor/rockhill)
 "iTk" = (
 /obj/structure/bondage/torture_table/lever,
 /turf/open/floor/rogue/tile/bath{
@@ -52324,14 +52291,6 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/bogsafe)
-"kTt" = (
-/obj/structure/closet/crate/chest{
-	locked = 1;
-	lockid = "walls"
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/turf/open/floor/rogue/ruinedwood/chevron,
-/area/rogue/indoors/town/manor/rockhill)
 "kTx" = (
 /obj/item/grown/log/tree/small{
 	name = "driftwood"
@@ -56320,18 +56279,6 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/dungeon/oldgoblincamp)
-"lLu" = (
-/obj/item/rope/chain,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/quiver/bolts,
-/obj/structure/closet/crate/roguecloset/dark{
-	keylock = 1;
-	locked = 1;
-	lockid = "sergeant"
-	},
-/obj/machinery/light/rogue/candle/blue,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/garrison)
 "lLx" = (
 /obj/effect/decal/carpet{
 	pixel_x = 16;
@@ -60908,20 +60855,6 @@
 "mDW" = (
 /turf/closed/wall/mineral/rogue/decostone/fluffstone,
 /area/rogue/indoors/town/academy)
-"mDY" = (
-/obj/structure/curtain/black{
-	alpha = 200
-	},
-/obj/structure/fluff/walldeco/church/line{
-	layer = 2.2
-	},
-/obj/structure/mineral_door/wood/window{
-	name = "Upper Apothecary";
-	locked = 1;
-	lockid = "physician"
-	},
-/turf/open/floor/rogue/tile/harem1,
-/area/rogue/indoors/town/physician)
 "mEa" = (
 /obj/item/roguecoin/silver,
 /turf/open/water/cleanshallow,
@@ -61750,16 +61683,6 @@
 /obj/effect/wisp,
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/sunken)
-"mMO" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = 3
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow{
-	pixel_x = -9
-	},
-/obj/structure/rack/rogue/shelf/biggest,
-/turf/open/floor/rogue/concrete,
-/area/rogue/under/town/basement/keep)
 "mMU" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -82845,6 +82768,20 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/magician/rockhill)
+"rnJ" = (
+/obj/structure/curtain/black{
+	alpha = 200
+	},
+/obj/structure/fluff/walldeco/church/line{
+	layer = 2.2
+	},
+/obj/structure/mineral_door/wood/window{
+	name = "Upper Apothecary";
+	locked = 1;
+	lockid = "physician"
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/physician)
 "rnR" = (
 /obj/structure/fermentation_keg/beer,
 /turf/open/floor/rogue/concrete,
@@ -93988,6 +93925,27 @@
 "tHz" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/under/cavewet)
+"tHE" = (
+/obj/item/reagent_containers/powder/spice{
+	pixel_y = 14
+	},
+/obj/structure/closet/crate/roguecloset/dark{
+	keylock = 1;
+	locked = 1;
+	lockid = "merchant";
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/rogueweapon/sword/rapier,
+/obj/item/rogueweapon/scabbard,
+/obj/machinery/light/rogue/candle/l{
+	pixel_x = 0;
+	pixel_y = -32
+	},
+/obj/item/quiver/bullet/lead,
+/turf/open/floor/carpet/inn,
+/area/rogue/indoors/town/shop)
 "tHO" = (
 /obj/item/natural/stone{
 	pixel_x = -11
@@ -101689,6 +101647,15 @@
 /obj/item/satchel_bomb,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
+"vop" = (
+/obj/structure/rack/rogue,
+/obj/structure/fluff/walldeco/customflag{
+	pixel_y = 32
+	},
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
+/turf/open/floor/rogue/herringbone,
+/area/rogue/indoors/town/garrison)
 "vov" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/sakura,
@@ -106409,6 +106376,12 @@
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/woodsrat/south)
+"woA" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/town/basement/keep)
 "woB" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/magician/rockhill)
@@ -106885,6 +106858,12 @@
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
+"wuz" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/turf/open/floor/rogue/concrete,
+/area/rogue/under/town/basement/keep)
 "wuA" = (
 /obj/structure/fluff/railing/fence{
 	dir = 1;
@@ -107340,6 +107319,10 @@
 	dir = 8
 	},
 /area/rogue/outdoors/town/roofs/church)
+"wyC" = (
+/obj/structure/rack/rogue/shelf,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/indoors/town/cell/warden)
 "wyE" = (
 /mob/living/carbon/human/species/skeleton/npc/cultist,
 /turf/open/floor/rogue/blocks/green,
@@ -107893,29 +107876,6 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/bath)
-"wEJ" = (
-/obj/structure/rack/rogue,
-/obj/structure/fluff/walldeco/customflag{
-	pixel_y = 32
-	},
-/obj/item/quiver/bolts{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/quiver/bolts{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/quiver/heavybluntbolts{
-	pixel_x = 8;
-	pixel_y = -7
-	},
-/obj/item/quiver/heavybluntbolts{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/turf/open/floor/rogue/herringbone,
-/area/rogue/indoors/town/garrison)
 "wEK" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -114087,6 +114047,18 @@
 "xQO" = (
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/dungeon/sunkenchurch)
+"xQP" = (
+/obj/item/rope/chain,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/structure/closet/crate/roguecloset/dark{
+	keylock = 1;
+	locked = 1;
+	lockid = "sergeant"
+	},
+/obj/machinery/light/rogue/candle/blue,
+/obj/item/quiver/bolt/standard,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/garrison)
 "xQQ" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/rogue/cobble/mossy,
@@ -177976,7 +177948,7 @@ whb
 whb
 dIs
 dIs
-bRL
+wyC
 sTf
 eia
 awI
@@ -297453,7 +297425,7 @@ wYS
 vse
 tHU
 vse
-aGG
+woA
 vqG
 djx
 fbA
@@ -297885,7 +297857,7 @@ daI
 vse
 tnK
 vse
-mMO
+wuz
 vqG
 xDP
 vpX
@@ -301049,7 +301021,7 @@ qvR
 fdq
 cjt
 jxO
-mDY
+rnJ
 qRm
 hNi
 nob
@@ -301481,7 +301453,7 @@ xvN
 fdq
 cjt
 jxO
-mDY
+rnJ
 fSU
 hNi
 fdq
@@ -516513,7 +516485,7 @@ mRr
 mRr
 wtF
 mVw
-kTt
+iTh
 wtF
 eBJ
 jRC
@@ -519581,7 +519553,7 @@ hsy
 nyo
 wGq
 nqi
-dGw
+tHE
 wuB
 jqs
 fZJ
@@ -529059,7 +529031,7 @@ lBT
 xKx
 akC
 tNj
-lLu
+xQP
 hYL
 mqe
 tyu
@@ -533801,8 +533773,8 @@ fZJ
 fZJ
 tNj
 tNj
-wEJ
-bKY
+vop
+iPz
 tNj
 tNj
 tNj

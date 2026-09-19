@@ -19445,7 +19445,6 @@
 /area/rogue/indoors/town/dwarfin)
 "ebT" = (
 /obj/structure/table/wood/crafted,
-/obj/item/quiver/bolts,
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
@@ -23214,7 +23213,6 @@
 /obj/structure/fluff/railing/border,
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/quiver/bluntarrows,
-/obj/item/quiver/bluntbolts,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/exposed/town/keep)
 "eRb" = (
@@ -65660,6 +65658,7 @@
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/rope/chain,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "nGz" = (
@@ -68331,8 +68330,8 @@
 /area/rogue/outdoors/exposed/town/keep)
 "oii" = (
 /obj/structure/rack/rogue,
-/obj/item/quiver/bolts,
-/obj/item/quiver/bolts,
+/obj/item/quiver/bolt/standard,
+/obj/item/quiver/bolt/standard,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "oin" = (
@@ -74308,7 +74307,6 @@
 /area/rogue/under/cave/his_vault)
 "pui" = (
 /obj/structure/closet/crate/roguecloset/inn,
-/obj/item/quiver/bolts,
 /obj/item/flashlight/flare/torch/lantern,
 /obj/item/rope/chain,
 /obj/item/rogueweapon/mace/cudgel,
@@ -114065,8 +114063,8 @@
 /area/rogue/indoors/town/manor)
 "xGc" = (
 /obj/structure/rack/rogue,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron,
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/garrison)
 "xGf" = (
