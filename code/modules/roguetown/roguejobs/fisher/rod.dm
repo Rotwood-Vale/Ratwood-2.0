@@ -2242,6 +2242,17 @@
 	rod_difficultymod = 1
 	rod_raritymod = list("com" = -1, "rare" = 1)
 
+/obj/item/fishingrod/decrepit/fisher
+
+/obj/item/fishingrod/decrepit/fisher/Initialize(mapload)
+	. = ..()
+	reel = new /obj/item/fishing/reel/silk(src)
+	reel.alpha = 0
+	hook = new /obj/item/fishing/hook/iron(src)
+	hook.alpha = 0
+	line = new /obj/item/fishing/line/bobber(src)
+	line.alpha = 0
+	
 /obj/item/fishingrod/decrepit/iron
 	name = "iron fishing rod"
 	desc = "A fishing rod base off an old decrepit design. Hefty yet sturdy, and made for fishing professionals."
