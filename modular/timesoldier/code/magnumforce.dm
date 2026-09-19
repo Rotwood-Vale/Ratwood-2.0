@@ -103,7 +103,7 @@
 		switch(tag)
 			if("gen")
 				return list(
-					"shrink" = 0.9,
+					"shrink" = 0.8,
 					"sx" = -7, "sy" = 6,
 					"nx" = 7,  "ny" = 6,
 					"wx" = -2, "wy" = 3,
@@ -123,7 +123,7 @@
 				)
 			if("wielded")
 				return list(
-					"shrink" = 0.9,
+					"shrink" = 0.8,
 					"sx" = 5,  "sy" = -2,
 					"nx" = -5, "ny" = -1,
 					"wx" = -8, "wy" = 2,

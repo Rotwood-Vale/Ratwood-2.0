@@ -22,6 +22,8 @@
 	name = "BRUTALITY round box"
 	desc = "<span class='yellow'><i>A box meant to dispense BRUTALITY towards Zizites, also known as BRUTAL rounds, or Zizite Killers.<br>When that crazy Dwarf from Kingsfield invented this kind of projectile that surpassed the lead sphere, the entire war on Zizo changed.<br>The Zizites barely adapted the blackpowder to their undead troops, but we adapted and overcame them.</i></span>"
 	max_storage = 20 // this might be overkill. oh well!!! :wilted_rose:
+	icon = 'modular/timesoldier/sprites/gun.dmi'
+	icon_state = "ptsdbox"
 
 /obj/item/quiver/bullet/brutals/Initialize(mapload)
 	. = ..()
