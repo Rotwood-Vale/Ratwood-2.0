@@ -1102,6 +1102,8 @@
 		target.visible_message(span_danger("[target] is unmade by divine magic! The Toll is accepted, and [target] is dragged to ever-death!"), span_userdanger("I'm unmade by divine magic!"))
 		target.gib()
 		return
+	if(!target.check_revive(user))//prevent revives that ignore DNR
+		return
 	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		to_chat(user, span_warning("Nothing happens."))
