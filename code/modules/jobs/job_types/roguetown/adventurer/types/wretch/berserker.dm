@@ -7,7 +7,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
+	traits_applied = list(TRAIT_STRONGBITE, TRAIT_BLOOD_RESISTANCE, TRAIT_NOPAINSTUN)
 	maximum_possible_slots = 2 //Obligatory people-pleasing slot limitation. Master skills is scawwy. 
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -80,12 +80,12 @@
 					if("Punch Dagger")
 						beltr = /obj/item/rogueweapon/katar/punchdagger
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights.
-				var/list/martial_options = list("Greatsword", "Battle Axe", "Grand Mace", "Broadsword")
+				var/list/martial_options = list("HUNK OF IRON", "Battle Axe", "Grand Mace", "Broadsword")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
 				switch(weapon_choice)
-					if("Greatsword") //Actually not a meme anymore
+					if("HUNK OF IRON") //Actually not a meme anymore
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-						r_hand = /obj/item/rogueweapon/greatsword/ancient
+						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
 					if("Battle Axe")
 						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
