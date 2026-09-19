@@ -199,10 +199,10 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 	name = "munition crossbow"
-	desc = "A deadly weapon that shoots a bolt with terrific power. Unlike the common bow, \
-	it uses a sophisticated mechanism to renock - and retain - its half-length bolts; a \
-	matter that relies more on raw strength than dexterity to master. </br>An cruder version of the common crossbow built with wrought iron with steel like property. When smelted, it does not yield good steel ingot but iron. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
+	desc = "An cruder version of the common crossbow built with wrought iron with steel-like property. When smelted, it does not yield good steel ingot but iron. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
 	smeltresult = /obj/item/ingot/iron
+	icon_state = "crossbowshort0"
+	item_state = "crossbowshort"
 	reloadtime = 60
 	max_integrity = 80
 	damfactor = 0.9 // Lower than starting
@@ -308,8 +308,8 @@
 	max_integrity = 200
 	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
 	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
-	icon_state = "relicpsyheavycrossbow0"
-	item_state = "relicpsyheavycrossbow"
+	icon_state = "relicpsyheavybow0"
+	item_state = "relicpsyheavybow"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic/marque
 	name = "\"Epistle\""
