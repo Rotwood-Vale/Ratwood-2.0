@@ -265,8 +265,8 @@
 	// Negative difficultymod (better tackle) lowers the challenge; positive (poor tackle) raises it.
 	var/list/rarity_score = list("com" = 0, "rare" = 1, "ultra" = 3, "gold" = 5)
 	var/list/size_score = list("tiny" = 0, "small" = 0, "normal" = 1, "large" = 2, "huge" = 4, "prize" = 6)
-	var/ri = rarity_score[fishrarity] || 0
-	var/si = size_score[fishsize] || 0
+	var/rarity_points = rarity_score[fishrarity] || 0
+	var/size_points = size_score[fishsize] || 0
 	var/tackle_offset = rod_difficultymod
 	if(istype(reel, /obj/item/fishing) && reel.difficultymod)
 		tackle_offset += reel.difficultymod
@@ -274,7 +274,7 @@
 		tackle_offset += hook.difficultymod
 	if(istype(line, /obj/item/fishing) && line.difficultymod)
 		tackle_offset += line.difficultymod
-	return clamp(ri + si + tackle_offset, 0, 9)
+	return clamp(rarity_points + size_points + tackle_offset, 0, 9)
 
 /obj/item/fishingrod/proc/try_spawn_deluxe_bonus_fish(mob/user, list/modlist, turf/targeted, primary_path)
 	if(!user || !targeted)
@@ -286,7 +286,7 @@
 	if(!prob(50))
 		return FALSE
 	var/bonus_path = null
-	for(var/i in 1 to 6)
+	for(var/attempt in 1 to 6)
 		var/rolled_path = getfishingloot(user, modlist, targeted)
 		if(is_shellfish_catch_path(rolled_path))
 			rolled_path = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
@@ -393,11 +393,11 @@
 	return TRUE
 /// Deciseconds the player has to react to a bite. Flat 20 through apprentice,
 /// then +10 per skill level above apprentice, plus tackle bite modifiers.
-/obj/item/fishingrod/proc/get_bite_reaction_window(sl)
-	var/window = 20 + max(0, sl - SKILL_LEVEL_APPRENTICE) * 10
+/obj/item/fishingrod/proc/get_bite_reaction_window(fishing_skill_level)
+	var/window = 20 + max(0, fishing_skill_level - SKILL_LEVEL_APPRENTICE) * 10
 	var/tackle_bonus = 0
-	for(var/obj/item/fishing/F in list(reel, hook, line))
-		tackle_bonus += F.hookmod
+	for(var/obj/item/fishing/tackle_piece in list(reel, hook, line))
+		tackle_bonus += tackle_piece.hookmod
 	window += tackle_bonus * 10
 	return max(10, window)
 
@@ -528,15 +528,15 @@
 		reset_auto_pending_catch()
 		return TRUE
 
-	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/fishing_skill_level = user.get_skill_level(/datum/skill/labor/fishing)
 	var/str_score = 10
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		str_score = H.STASTR
+		var/mob/living/carbon/human/human_user = user
+		str_score = human_user.STASTR
 	var/catch_weight = get_auto_catch_weight(auto_pending_catch)
 	var/fish_challenge = get_fish_total_challenge()
 	var/effective_weight = catch_weight + fish_challenge
-	var/base_speed = get_skill_delay(sl, 1, slowest = 7)
+	var/base_speed = get_skill_delay(fishing_skill_level, 1, slowest = 7)
 	var/reel_speed = max(1, (base_speed + (effective_weight * 0.7) - max(0, str_score - 10) * 0.2) * get_reel_time_multiplier())
 	var/turf/reel_anchor = auto_pending_target
 
@@ -561,7 +561,7 @@
 	var/auto_pull_stamina_drain = get_fishing_stamina_drain(user, 37.5)
 	if(auto_pull_stamina_drain && !user.stamina_add(auto_pull_stamina_drain))
 		to_chat(user, "<span class='warning'>I'm too exhausted to keep reeling.</span>")
-		if(baited && getbaitlife(sl, baited))
+		if(baited && getbaitlife(fishing_skill_level, baited))
 			to_chat(user, span_userdanger("DAMN! It ate my bait."))
 			qdel(baited)
 			baited = null
@@ -575,10 +575,10 @@
 		if(auto_pending_target)
 			auto_pending_target.balloon_alert_to_viewers("Tug!")
 		playsound(user.loc, 'sound/items/fishing_plouf.ogg', 90, TRUE)
-		auto_reel_deadline = world.time + clamp(25 + (sl * 8) - (effective_weight * 4), 18, 80)
+		auto_reel_deadline = world.time + clamp(25 + (fishing_skill_level * 8) - (effective_weight * 4), 18, 80)
 		return TRUE
 
-	var/reel_roll = rand(1, 20) + str_score + (sl * 2)
+	var/reel_roll = rand(1, 20) + str_score + (fishing_skill_level * 2)
 	var/reel_target = 12 + (effective_weight * 4)
 	if(reel_roll < reel_target)
 		if(prob(8))
@@ -593,7 +593,7 @@
 			if(!auto_retry_used && prob(45))
 				auto_retry_used = TRUE
 				auto_reel_successes = max(1, auto_reel_successes - 1)
-				auto_reel_deadline = world.time + clamp(20 + (sl * 7) - (effective_weight * 3), 14, 60)
+				auto_reel_deadline = world.time + clamp(20 + (fishing_skill_level * 7) - (effective_weight * 3), 14, 60)
 				to_chat(user, span_userdanger("I LOSE LINE! But I can still reel once more!"))
 				if(auto_pending_target)
 					auto_pending_target.balloon_alert_to_viewers("Tug!")
@@ -601,7 +601,7 @@
 				apply_tackle_wear(user, 1, 1, 1)
 				return TRUE
 			to_chat(user, "<span class='warning'>I lose the fish after the final pull.</span>")
-			if(baited && getbaitlife(sl, baited))
+			if(baited && getbaitlife(fishing_skill_level, baited))
 				to_chat(user, span_userdanger("DAMN! It ate my bait."))
 				qdel(baited)
 				baited = null
@@ -612,9 +612,9 @@
 		return TRUE
 
 	if(auto_pending_catch in subtypesof(/mob/living))
-		var/mob/M = auto_pending_catch
-		new M(auto_pending_target || get_turf(user))
-		if(!(M.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
+		var/mob/caught_mob_path = auto_pending_catch
+		new caught_mob_path(auto_pending_target || get_turf(user))
+		if(!(caught_mob_path.type == /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab))
 			user.playsound_local(src, pick('sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
 	else
 		var/turf/safe_drop_turf = get_safe_catch_drop_turf(user, auto_pending_target)
@@ -631,15 +631,15 @@
 		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 10, FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, user)
 		record_round_statistic(STATS_FISH_CAUGHT)
-	if(baited && getbaitlife(sl, baited))
+	if(baited && getbaitlife(fishing_skill_level, baited))
 		to_chat(user, span_userdanger("DAMN! It ate my bait."))
 		qdel(baited)
 		baited = null
 		update_icon()
 	reset_auto_pending_catch()
 	return TRUE
-/obj/item/fishingrod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/rogueweapon/hammer))
+/obj/item/fishingrod/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/rogueweapon/hammer))
 		if(max_integrity <= 0 || obj_integrity >= max_integrity)
 			to_chat(user, "<span class='warning'>This rod doesn't need repairs.</span>")
 			return
@@ -651,7 +651,7 @@
 			else
 				to_chat(user, "<span class='warning'>I don't know how to repair this rod.</span>")
 			return
-		user.visible_message("<span class='notice'>[user] begins repairing [src] with [I]...</span>", "<span class='notice'>I begin repairing [src] with [I]...</span>")
+		user.visible_message("<span class='notice'>[user] begins repairing [src] with [attacking_item]...</span>", "<span class='notice'>I begin repairing [src] with [attacking_item]...</span>")
 		var/repair_time = max(2 SECONDS, (6 SECONDS) - (skill_level * 1 SECONDS))
 		if(!do_after(user, repair_time, target = src))
 			return
@@ -666,14 +666,14 @@
 	if(baited && reel && hook && line)
 		return  ..()
 
-	if(istype(I, /obj/item/fishing/bait) || istype(I, /obj/item/natural/worms) || istype(I, /obj/item/natural/bundle/worms) || istype(I, /obj/item/reagent_containers/food/snacks))
-		try_attach_bait_item(I, user)
+	if(istype(attacking_item, /obj/item/fishing/bait) || istype(attacking_item, /obj/item/natural/worms) || istype(attacking_item, /obj/item/natural/bundle/worms) || istype(attacking_item, /obj/item/reagent_containers/food/snacks))
+		try_attach_bait_item(attacking_item, user)
 
-	else if(istype(I, /obj/item/fishing)) //bait has a null attachtype and is accounted for in the previous check so i don't have to worry about it
-		var/obj/item/fishing/T = I
-		switch(T.attachtype)
+	else if(istype(attacking_item, /obj/item/fishing)) //bait has a null attachtype and is accounted for in the previous check so i don't have to worry about it
+		var/obj/item/fishing/tackle = attacking_item
+		switch(tackle.attachtype)
 			if("line")
-				if(T.type == /obj/item/fishing/line)
+				if(tackle.type == /obj/item/fishing/line)
 					to_chat(user, "<span class='warning'>This tackle piece is deprecated. Use a bobber or sinker.</span>")
 				else if(istype(baited, /obj/item/fishing/bait/fly))
 					to_chat(user, "<span class='warning'>Fly bait only works without a bobber or sinker.</span>")
@@ -684,9 +684,9 @@
 				else if(baited)
 					to_chat(user, "<span class='warning'>I should remove the bait first.</span>")
 				else if(!line)
-					attach_tackle(T)
-					line = T
-					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
+					attach_tackle(tackle)
+					line = tackle
+					to_chat(user, "<span class='notice'>I add [attacking_item] to [src]...</span>")
 				else
 					to_chat(user, "<span class='warning'>I should remove the current bobber or sinker first.</span>")
 			if("hook")
@@ -695,23 +695,23 @@
 				else if(baited)
 					to_chat(user, "<span class='warning'>I should remove the bait first.</span>")
 				else if(!hook)
-					attach_tackle(T)
-					hook = T
-					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
+					attach_tackle(tackle)
+					hook = tackle
+					to_chat(user, "<span class='notice'>I add [attacking_item] to [src]...</span>")
 			if("reel")
 				if(hook || line || baited)
 					to_chat(user, "<span class='warning'>The line should go on. Remove the rest of the rig first.</span>")
 				else if(!reel)
-					attach_tackle(T)
-					reel = T
-					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
+					attach_tackle(tackle)
+					reel = tackle
+					to_chat(user, "<span class='notice'>I add [attacking_item] to [src]...</span>")
 	update_icon()
 	return
 
-/obj/item/fishingrod/proc/try_attach_bait_item(obj/item/I, mob/user)
-	if(!I || !user || baited)
+/obj/item/fishingrod/proc/try_attach_bait_item(obj/item/bait_item, mob/user)
+	if(!bait_item || !user || baited)
 		return FALSE
-	if(I.anchored)
+	if(bait_item.anchored)
 		return FALSE
 	if(!reel)
 		to_chat(user, "<span class='warning'>I need to add fishing line first.</span>")
@@ -719,69 +719,69 @@
 	if(!hook)
 		to_chat(user, "<span class='warning'>I need a hook before I can bait the rod.</span>")
 		return FALSE
-	if(istype(I, /obj/item/fishing/bait/fly) && line)
+	if(istype(bait_item, /obj/item/fishing/bait/fly) && line)
 		to_chat(user, "<span class='warning'>I need to remove the bobber or sinker first before using fly bait.</span>")
 		return FALSE
 
-	if(istype(I, /obj/item/fishing/bait) || istype(I, /obj/item/natural/worms))
-		I.forceMove(src)
-		baited = I
-		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
+	if(istype(bait_item, /obj/item/fishing/bait) || istype(bait_item, /obj/item/natural/worms))
+		bait_item.forceMove(src)
+		baited = bait_item
+		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [bait_item] to my line.</span>")
 		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 		update_icon()
 		return TRUE
 
-	if(istype(I, /obj/item/natural/bundle/worms))
-		var/obj/item/natural/bundle/worms/W = I
-		if(W.amount <= 0)
+	if(istype(bait_item, /obj/item/natural/bundle/worms))
+		var/obj/item/natural/bundle/worms/worm_bundle = bait_item
+		if(worm_bundle.amount <= 0)
 			to_chat(user, "<span class='warning'>There are no worms left in that bundle.</span>")
 			return FALSE
-		var/obj/item/new_bait = new W.stacktype(src)
+		var/obj/item/new_bait = new worm_bundle.stacktype(src)
 		baited = new_bait
 		var/worm_name = "worm"
-		W.amount = max(0, W.amount - 1)
-		if(W.amount <= 0)
-			qdel(W)
-		else if(W.amount == 1)
-			var/turf/drop_turf = get_turf(W)
-			if(user.is_holding(W))
-				user.doUnEquip(W, TRUE, drop_turf, silent = TRUE)
-			qdel(W)
+		worm_bundle.amount = max(0, worm_bundle.amount - 1)
+		if(worm_bundle.amount <= 0)
+			qdel(worm_bundle)
+		else if(worm_bundle.amount == 1)
+			var/turf/drop_turf = get_turf(worm_bundle)
+			if(user.is_holding(worm_bundle))
+				user.doUnEquip(worm_bundle, TRUE, drop_turf, silent = TRUE)
+			qdel(worm_bundle)
 			var/obj/item/single_worm = new new_bait.type(drop_turf)
 			if(drop_turf == get_turf(user))
 				user.put_in_hands(single_worm)
 		else
-			W.update_bundle()
+			worm_bundle.update_bundle()
 		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [worm_name] to my line.</span>")
 		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 		update_icon()
 		return TRUE
 
-	if(istype(I, /obj/item/reagent_containers/food/snacks))
-		var/list/snack_fishloot = I.vars["fishloot"]
+	if(istype(bait_item, /obj/item/reagent_containers/food/snacks))
+		var/list/snack_fishloot = bait_item.vars["fishloot"]
 		if(!snack_fishloot)
 			return FALSE
-		I.forceMove(src)
-		baited = I
-		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [I] to my line.</span>")
+		bait_item.forceMove(src)
+		baited = bait_item
+		user.visible_message("<span class='notice'>[user] hooks something to the line.</span>", "<span class='notice'>I hook [bait_item] to my line.</span>")
 		playsound(src.loc, 'sound/foley/pierce.ogg', 50, FALSE)
 		update_icon()
 		return TRUE
 
 	return FALSE
 
-/obj/item/fishingrod/proc/attach_tackle(obj/item/fishing/I)
-	I.forceMove(src)
+/obj/item/fishingrod/proc/attach_tackle(obj/item/fishing/tackle)
+	tackle.forceMove(src)
 	// Keep tackle hidden while attached so only rod visuals are shown.
-	I.alpha = 0
+	tackle.alpha = 0
 
-/obj/item/fishingrod/proc/drop_attachment(obj/item/I, mob/user)
-	if(!I)
+/obj/item/fishingrod/proc/drop_attachment(obj/item/attachment, mob/user)
+	if(!attachment)
 		return
-	I.alpha = initial(I.alpha)
+	attachment.alpha = initial(attachment.alpha)
 	var/turf/drop_turf = get_turf(user ? user : src)
 	if(drop_turf)
-		I.forceMove(drop_turf)
+		attachment.forceMove(drop_turf)
 
 /obj/item/fishingrod/proc/remove_rig(mob/user)
 	if(baited)
@@ -870,26 +870,26 @@
 	var/total_deepweight = 0
 	var/list/combined_raritymod = islist(rod_raritymod) ? rod_raritymod.Copy() : list()
 	var/list/combined_sizemod = list()
-	for(var/obj/item/A in list(reel, hook, line))
-		if(!A || !istype(A, /obj/item/fishing))
+	for(var/obj/item/tackle_item in list(reel, hook, line))
+		if(!tackle_item || !istype(tackle_item, /obj/item/fishing))
 			continue
-		var/obj/item/fishing/F = A
-		total_linehealth += F.linehealth
-		total_hookmod += F.hookmod
-		total_difficultymod += F.difficultymod
-		total_deepweight += F.deepfishingweight
-		if(islist(F.raritymod))
-			for(var/key in F.raritymod)
+		var/obj/item/fishing/tackle_piece = tackle_item
+		total_linehealth += tackle_piece.linehealth
+		total_hookmod += tackle_piece.hookmod
+		total_difficultymod += tackle_piece.difficultymod
+		total_deepweight += tackle_piece.deepfishingweight
+		if(islist(tackle_piece.raritymod))
+			for(var/key in tackle_piece.raritymod)
 				if(key in combined_raritymod)
-					combined_raritymod[key] += F.raritymod[key]
+					combined_raritymod[key] += tackle_piece.raritymod[key]
 				else
-					combined_raritymod[key] = F.raritymod[key]
-		if(islist(F.sizemod))
-			for(var/key in F.sizemod)
+					combined_raritymod[key] = tackle_piece.raritymod[key]
+		if(islist(tackle_piece.sizemod))
+			for(var/key in tackle_piece.sizemod)
 				if(key in combined_sizemod)
-					combined_sizemod[key] += F.sizemod[key]
+					combined_sizemod[key] += tackle_piece.sizemod[key]
 				else
-					combined_sizemod[key] = F.sizemod[key]
+					combined_sizemod[key] = tackle_piece.sizemod[key]
 	if(total_linehealth || total_hookmod || total_difficultymod || total_deepweight || length(combined_raritymod) || length(combined_sizemod))
 		. += span_info("--- Rig Stats ---")
 		if(total_linehealth)
@@ -931,8 +931,8 @@
 		bait_overlay.pixel_y = bait_overlay_y
 		add_overlay(bait_overlay)
 	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+		var/mob/holder_mob = loc
+		holder_mob.update_inv_hands()
 
 #define FISHRARITYWEIGHTS = list("com" = 140, "rare" = 40, "ultra" = 18, "gold" = 1)
 #define FISHSIZEWEIGHTS = list("tiny" = 4, "small" = 5, "normal" = 4, "large" = 3, "huge" = 2, "prize" = 1)
@@ -954,14 +954,14 @@
 /obj/item/fishingrod/proc/get_fishing_base_icon_state(mob/living/user)
 	if(!user)
 		return "fishingbaseexpert"
-	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
-	if(sl <= SKILL_LEVEL_APPRENTICE)
+	var/fishing_skill_level = user.get_skill_level(/datum/skill/labor/fishing)
+	if(fishing_skill_level <= SKILL_LEVEL_APPRENTICE)
 		return "fishingbasenoviceapprentice"
-	if(sl == SKILL_LEVEL_JOURNEYMAN)
+	if(fishing_skill_level == SKILL_LEVEL_JOURNEYMAN)
 		return "fishingbasejman"
-	if(sl == SKILL_LEVEL_MASTER)
+	if(fishing_skill_level == SKILL_LEVEL_MASTER)
 		return "fishingbasemaster"
-	if(sl >= SKILL_LEVEL_LEGENDARY)
+	if(fishing_skill_level >= SKILL_LEVEL_LEGENDARY)
 		return "fishingbaselegendary"
 	return "fishingbaseexpert"
 
@@ -1035,7 +1035,7 @@
 
 	// Derive fish stats from the path challenge + skill (no tackle bonuses for hand-fishing).
 	fishtype = catch_path
-	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
+	var/fishing_skill_level = user.get_skill_level(/datum/skill/labor/fishing)
 	var/speed_mod = clamp(user.get_stat(STATKEY_SPD), 1, 20)
 	var/path_challenge = get_fishing_path_challenge(catch_path)
 	var/shore_distance = water_turf ? get_fishing_excluded_turf_distance(water_turf, 6) : 7
@@ -1048,7 +1048,7 @@
 		near_shore_penalty = max(near_shore_penalty, 3)
 
 	// Base this cast minigame on auto-style hand formula, then handicap it as "worst gear".
-	var/auto_style_reel = clamp(30 + (sl * 8) + (speed_mod * 3) - (path_challenge * 8), 5, 98)
+	var/auto_style_reel = clamp(30 + (fishing_skill_level * 8) + (speed_mod * 3) - (path_challenge * 8), 5, 98)
 	auto_style_reel = clamp(auto_style_reel - 12 - (near_shore_penalty * 8) - (shore_distance <= 3 ? 10 : 0), 5, 98)
 	var/worst_gear_penalty = 20
 	var/expected_reel = clamp(auto_style_reel - worst_gear_penalty, 2, 95)
@@ -1067,16 +1067,16 @@
 		fishsize = "normal"
 		fishrarity = "com"
 
-	difficulty = clamp(2 + path_challenge + round(failure_pressure / 2) - max(0, sl - 1), 1, 6)
-	linehealth = max(4, sl + 2 - round(failure_pressure / 2))
-	hookwindow = clamp(sl * 2 + 4 - round(failure_pressure / 2), (1 SECONDS), 4 SECONDS)
+	difficulty = clamp(2 + path_challenge + round(failure_pressure / 2) - max(0, fishing_skill_level - 1), 1, 6)
+	linehealth = max(4, fishing_skill_level + 2 - round(failure_pressure / 2))
+	hookwindow = clamp(fishing_skill_level * 2 + 4 - round(failure_pressure / 2), (1 SECONDS), 4 SECONDS)
 	acceleration = max(2, 1 + round(path_challenge / 2.0) + round(failure_pressure / 3.0))
 	maxvelocity = max(2, 2 + round(path_challenge / 2.0) + round(failure_pressure / 3.0))
 	fishhealth = 18 + path_challenge * 6 + failure_pressure * 2
 
 	var/initialline = linehealth
 	var/fish_challenge_mg = get_fish_total_challenge()
-	var/skillmod = sl
+	var/skillmod = fishing_skill_level
 	var/challenge_load = max(0, fish_challenge_mg - max(0, skillmod - 4))
 	// Harder fish move faster and take longer to tire out; skill level only widens the green zone.
 	acceleration += round(challenge_load / 3.0)
@@ -1108,8 +1108,8 @@
 		user.hand_fishing_reel_size_tag = null
 		var/obj/item/npc_catch = new catch_path(user.drop_location())
 		if(istype(npc_catch, /obj/item/reagent_containers/food/snacks/fish))
-			var/obj/item/reagent_containers/food/snacks/fish/FC = npc_catch
-			apply_fishing_quality_to_fish(FC, list("commonFishingMod" = 1, "rareFishingMod" = 1, "treasureFishingMod" = 1, "trashFishingMod" = 1, "dangerFishingMod" = 1, "ceruleanFishingMod" = 0, "cheeseFishingMod" = 0), list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1))
+			var/obj/item/reagent_containers/food/snacks/fish/npc_fish = npc_catch
+			apply_fishing_quality_to_fish(npc_fish, list("commonFishingMod" = 1, "rareFishingMod" = 1, "treasureFishingMod" = 1, "trashFishingMod" = 1, "dangerFishingMod" = 1, "ceruleanFishingMod" = 0, "cheeseFishingMod" = 0), list("tiny" = 40, "small" = 40, "normal" = 40, "large" = 20, "huge" = 5, "prize" = 1))
 		qdel(src)
 		return
 
@@ -1146,14 +1146,14 @@
 
 		currentmouse = clamp(backdrop.pointdir, 90, 270);
 		reelstate.transform = 0
-		var/matrix/M = matrix()
-		M.Turn(currentmouse)
-		reelstate.transform = M
+		var/matrix/reel_matrix = matrix()
+		reel_matrix.Turn(currentmouse)
+		reelstate.transform = reel_matrix
 
 		fishstate.transform = 0
-		var/matrix/F = matrix()
-		F.Turn(targetdif)
-		fishstate.transform = F
+		var/matrix/fish_matrix = matrix()
+		fish_matrix.Turn(targetdif)
+		fishstate.transform = fish_matrix
 
 		face.icon_state = "stress[facestate]"
 
@@ -1195,13 +1195,13 @@
 		facestate = clamp(facestate, 1, 5)
 
 		var/gz_min
-		if(sl >= SKILL_LEVEL_LEGENDARY)
+		if(fishing_skill_level >= SKILL_LEVEL_LEGENDARY)
 			gz_min = 42
-		else if(sl == SKILL_LEVEL_MASTER)
+		else if(fishing_skill_level == SKILL_LEVEL_MASTER)
 			gz_min = 32
-		else if(sl == SKILL_LEVEL_EXPERT)
+		else if(fishing_skill_level == SKILL_LEVEL_EXPERT)
 			gz_min = 24
-		else if(sl == SKILL_LEVEL_JOURNEYMAN)
+		else if(fishing_skill_level == SKILL_LEVEL_JOURNEYMAN)
 			gz_min = 13
 		else
 			gz_min = 11
@@ -1316,20 +1316,20 @@
 	else
 		var/obj/item/new_catch = new catch_path(drop_turf)
 		if(istype(new_catch, /obj/item/reagent_containers/food/snacks/fish))
-			var/obj/item/reagent_containers/food/snacks/fish/FQ = new_catch
-			apply_fishing_quality_to_fish(FQ, hand_quality_mods, hand_size_weights)
+			var/obj/item/reagent_containers/food/snacks/fish/hand_caught_fish = new_catch
+			apply_fishing_quality_to_fish(hand_caught_fish, hand_quality_mods, hand_size_weights)
 	qdel(src)
 
 /obj/item/fishingrod/proc/get_targeted_water_turf(atom/target)
-	var/turf/T = get_turf(target)
-	if(!T)
+	var/turf/target_turf = get_turf(target)
+	if(!target_turf)
 		return null
-	if(istype(T, /turf/open/water))
-		return T
-	if(!istype(T, /turf/open/transparent/openspace))
+	if(istype(target_turf, /turf/open/water))
+		return target_turf
+	if(!istype(target_turf, /turf/open/transparent/openspace))
 		return null
-	var/turf/downcheck = T
-	for(var/i in 1 to 12)
+	var/turf/downcheck = target_turf
+	for(var/attempt in 1 to 12)
 		downcheck = get_step_multiz(downcheck, DOWN)
 		if(!downcheck)
 			return null
@@ -1339,11 +1339,11 @@
 			return null
 	return null
 
-/obj/item/fishingrod/proc/get_shore_distance(turf/open/water/W, max_scan = 6)
-	return get_fishing_excluded_turf_distance(W, max_scan)
+/obj/item/fishingrod/proc/get_shore_distance(turf/open/water/water_turf, max_scan = 6)
+	return get_fishing_excluded_turf_distance(water_turf, max_scan)
 
-/obj/item/fishingrod/proc/is_shoreline_fishing_turf(turf/T)
-	return is_excluded_fishing_border_turf(T)
+/obj/item/fishingrod/proc/is_shoreline_fishing_turf(turf/shoreline_turf)
+	return is_excluded_fishing_border_turf(shoreline_turf)
 
 /obj/item/fishingrod/afterattack(atom/target, mob/user, proximity, params)
 	if(!check_allowed_items(target,target_self=1) \
@@ -1379,11 +1379,11 @@
 		if(istype(target, /obj/item))
 			if(try_attach_bait_item(target, user))
 				return
-		var/turf/T = get_turf(target)
-		if(!T)
+		var/turf/bait_turf = get_turf(target)
+		if(!bait_turf)
 			return
-		for(var/obj/item/I in T)
-			if(try_attach_bait_item(I, user))
+		for(var/obj/item/nearby_item in bait_turf)
+			if(try_attach_bait_item(nearby_item, user))
 				return
 		to_chat(user, "<span class='warning'>I can't find usable bait there.</span>")
 		return
@@ -1445,7 +1445,7 @@
 	if(islist(rod_raritymod))
 		raritypicker = pickweightmerge(raritypicker, rod_raritymod)
 	var/list/sizepicker = rod_size_weights.Copy()
-	var/obj/item/fishing/bait/B = null
+	var/obj/item/fishing/bait/bait_tackle = null
 	fisher = user
 	var/specialcatchprob = 0
 	var/costmod = 1
@@ -1463,18 +1463,18 @@
 	linehealth = skillmod + 6
 	hookwindow = skillmod*3 + 5 + average_ping
 
-	for(var/obj/item/A in attacheditems)
-		if(!istype(A, /obj/item/fishing))
+	for(var/obj/item/tackle_item in attacheditems)
+		if(!istype(tackle_item, /obj/item/fishing))
 			continue
-		var/obj/item/fishing/F = A
-		deepmod += F.deepfishingweight
-		linehealth += F.linehealth
-		hookwindow += F.hookmod
-		difficulty += F.difficultymod
-		if(F.raritymod)
-			pickweightmerge(raritypicker, F.raritymod)
-		if(F.sizemod)
-			pickweightmerge(sizepicker, F.sizemod)
+		var/obj/item/fishing/tackle_piece = tackle_item
+		deepmod += tackle_piece.deepfishingweight
+		linehealth += tackle_piece.linehealth
+		hookwindow += tackle_piece.hookmod
+		difficulty += tackle_piece.difficultymod
+		if(tackle_piece.raritymod)
+			pickweightmerge(raritypicker, tackle_piece.raritymod)
+		if(tackle_piece.sizemod)
+			pickweightmerge(sizepicker, tackle_piece.sizemod)
 
 
 	if(!targeted.can_see_sky())
@@ -1531,13 +1531,13 @@
 							/obj/item/reagent_containers/food/snacks/fish/mackerel = 4)
 
 	if(istype(baited, /obj/item/fishing/bait))
-		B = baited
-		fishpicker = pickweightmerge(fishpicker, B.fishinglist)
-		if(B.deeplist)
-			deepfishlist = B.deeplist
-		if(B.specialchance)
-			specialcatchprob = B.specialchance
-		if(istype(B, /obj/item/fishing/bait/meat) && hook && (istype(hook, /obj/item/fishing/hook/iron) || istype(hook, /obj/item/fishing/hook/steel) || istype(hook, /obj/item/fishing/hook/deluxe)))
+		bait_tackle = baited
+		fishpicker = pickweightmerge(fishpicker, bait_tackle.fishinglist)
+		if(bait_tackle.deeplist)
+			deepfishlist = bait_tackle.deeplist
+		if(bait_tackle.specialchance)
+			specialcatchprob = bait_tackle.specialchance
+		if(istype(bait_tackle, /obj/item/fishing/bait/meat) && hook && (istype(hook, /obj/item/fishing/hook/iron) || istype(hook, /obj/item/fishing/hook/steel) || istype(hook, /obj/item/fishing/hook/deluxe)))
 			fishpicker = pickweightmerge(fishpicker, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 20))
 			deepfishlist = pickweightmerge(deepfishlist, list(/obj/item/reagent_containers/food/snacks/fish/octopus = 12))
 	else if(istype(baited, /obj/item/natural/worms))
@@ -1547,16 +1547,16 @@
 		if(worm_fishloot)
 			fishpicker = pickweightmerge(fishpicker, worm_fishloot)
 	else if(istype(baited, /obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/S = baited
+		var/obj/item/reagent_containers/food/snacks/snack_bait = baited
 		var/list/snack_fishloot = null
-		if("fishloot" in S.vars)
-			snack_fishloot = S.vars["fishloot"]
+		if("fishloot" in snack_bait.vars)
+			snack_fishloot = snack_bait.vars["fishloot"]
 		if(snack_fishloot)
 			fishpicker = pickweightmerge(fishpicker, snack_fishloot)
-		if(S.sizemod)
-			sizepicker = pickweightmerge(sizepicker, S.sizemod)
-		if(S.raritymod)
-			raritypicker = pickweightmerge(raritypicker, S.raritymod)
+		if(snack_bait.sizemod)
+			sizepicker = pickweightmerge(sizepicker, snack_bait.sizemod)
+		if(snack_bait.raritymod)
+			raritypicker = pickweightmerge(raritypicker, snack_bait.raritymod)
 
 	if(is_cheese_bait(baited))
 		fishpicker = pickweightmerge(fishpicker, list(
@@ -1566,15 +1566,15 @@
 
 	if(cast_depth_bonus)
 		deepmod += cast_depth_bonus
-		for(var/i in 1 to cast_depth_bonus)
+		for(var/depth_step in 1 to cast_depth_bonus)
 			raritypicker = pickweightmerge(raritypicker, list("com" = -1, "rare" = 1))
-			if(i >= 2)
+			if(depth_step >= 2)
 				raritypicker = pickweightmerge(raritypicker, list("ultra" = 1))
 			sizepicker = pickweightmerge(sizepicker, list("tiny" = -1, "small" = -1, "large" = 1, "huge" = 1, "prize" = 1))
 
 	if(near_shore_penalty)
 		deepmod = max(0, deepmod - near_shore_penalty)
-		for(var/i in 1 to near_shore_penalty)
+		for(var/shore_step in 1 to near_shore_penalty)
 			raritypicker = pickweightmerge(raritypicker, list("com" = 2, "rare" = -1, "ultra" = -1, "gold" = -1))
 			sizepicker = pickweightmerge(sizepicker, list("tiny" = 2, "small" = 1, "large" = -1, "huge" = -2, "prize" = -3))
 
@@ -1591,7 +1591,7 @@
 		fishpicker = pickweightmerge(fishpicker, deepfishlist)
 		deepmod--
 	// Rare deep species only grow every third pass instead of every pass.
-	for(var/i in 1 to round(deep_passes / 3))
+	for(var/rare_pass in 1 to round(deep_passes / 3))
 		fishpicker = pickweightmerge(fishpicker, deeprarelist)
 
 	// Filter out species that don't belong in this water body, regardless of how they got merged in.
@@ -1609,40 +1609,40 @@
 	var/trashfishing = FALSE
 	if(prob(specialcatchprob))
 		specialcatching = TRUE
-		if(B.specialsize)
+		if(bait_tackle.specialsize)
 			specialsize = TRUE
-			difficulty += B.specialsize["diffmod"]
-			acceleration += B.specialsize["accmod"]
-			fishhealth += B.specialsize["health"]
-			hookwindow += B.specialsize["hookmod"]
-			fishsize = B.specialsize["type"]
-			costmod *= B.specialsize["costmod"]
-		if(B.specialrarity)
+			difficulty += bait_tackle.specialsize["diffmod"]
+			acceleration += bait_tackle.specialsize["accmod"]
+			fishhealth += bait_tackle.specialsize["health"]
+			hookwindow += bait_tackle.specialsize["hookmod"]
+			fishsize = bait_tackle.specialsize["type"]
+			costmod *= bait_tackle.specialsize["costmod"]
+		if(bait_tackle.specialrarity)
 			specialrarity = TRUE
-			difficulty += B.specialrarity["diffmod"]
-			acceleration += B.specialrarity["accmod"]
-			fishhealth += B.specialrarity["health"]
-			hookwindow += B.specialrarity["hookmod"]
-			fishrarity = B.specialrarity["type"]
-			costmod *= B.specialrarity["costmod"]
-		if(B.specialfishtype)
+			difficulty += bait_tackle.specialrarity["diffmod"]
+			acceleration += bait_tackle.specialrarity["accmod"]
+			fishhealth += bait_tackle.specialrarity["health"]
+			hookwindow += bait_tackle.specialrarity["hookmod"]
+			fishrarity = bait_tackle.specialrarity["type"]
+			costmod *= bait_tackle.specialrarity["costmod"]
+		if(bait_tackle.specialfishtype)
 			specialfish = TRUE
-			difficulty += B.specialfishtype["diffmod"]
-			acceleration += B.specialfishtype["accmod"]
-			fishhealth += B.specialfishtype["health"]
-			hookwindow += B.specialfishtype["hookmod"]
-			fishtype = B.specialfishtype["type"]
-			costmod *= B.specialfishtype["costmod"]
-		if(B.specialturfcatch)
+			difficulty += bait_tackle.specialfishtype["diffmod"]
+			acceleration += bait_tackle.specialfishtype["accmod"]
+			fishhealth += bait_tackle.specialfishtype["health"]
+			hookwindow += bait_tackle.specialfishtype["hookmod"]
+			fishtype = bait_tackle.specialfishtype["type"]
+			costmod *= bait_tackle.specialfishtype["costmod"]
+		if(bait_tackle.specialturfcatch)
 			turfcatch = TRUE
 	else
 		if(fisher.STALUC > 10)
 			var/luckboost = fisher.STALUC - 10
 			// Every point over 10 boosts rare and cuts common.
 			// Every 2 points over 10 also boosts ultra and gold.
-			for(var/lki in 1 to luckboost)
+			for(var/luck_point in 1 to luckboost)
 				raritypicker = pickweightmerge(raritypicker, list("com" = -1, "rare" = 1))
-				if(!(lki % 2))
+				if(!(luck_point % 2))
 					raritypicker = pickweightmerge(raritypicker, list("ultra" = 1, "gold" = 1))
 
 		if(prob(16 - skillmod - fisher.STALUC)) //you will always have a chance at this, legendary fishers got a 10% chance - their luck stat
@@ -1710,10 +1710,10 @@
 	difficulty = clamp(difficulty, 1, 6)
 	hookwindow = clamp(hookwindow, (1.5 SECONDS), 5 SECONDS)
 	acceleration = max(acceleration, 1)
-	var/sl = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
+	var/fishing_skill_level = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
 	var/luck_stat = clamp(fisher.STALUC, 1, 20)
-	var/ft = 120 //Time to get a catch, in ticks
-	var/fpp =  100 - (40 + (sl * 10)) // Fishing power penalty based on fishing skill level
+	var/cast_time = 120 //Time to get a catch, in ticks
+	var/low_skill_penalty =  100 - (40 + (fishing_skill_level * 10)) // Fishing power penalty based on fishing skill level
 	var/caught = FALSE
 	var/line_snapped = FALSE
 	var/list/modlist
@@ -1728,12 +1728,12 @@
 			user.visible_message("<span class='warning'>[user] casts a line!</span>", \
 								"<span class='notice'>I cast a line.</span>")
 			playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-			ft = max(48, ((1 SECONDS) - sl) * 8)
-			ft = round(ft * get_cast_time_multiplier())
-			if(do_after(user,ft, target = user))
+			cast_time = max(48, ((1 SECONDS) - fishing_skill_level) * 8)
+			cast_time = round(cast_time * get_cast_time_multiplier())
+			if(do_after(user,cast_time, target = user))
 				var/bite_bonus = baited ? get_bite_chance_bonus(targeted, shore_distance) : 0
 				var/bite_mult = baited ? get_bite_chance_multiplier(shore_distance) : 1
-				var/bp = baited ? baited.baitpenalty : 35 // No bait is intentionally punishing.
+				var/bait_penalty = baited ? baited.baitpenalty : 35 // No bait is intentionally punishing.
 				var/fishchance = 100 // Total fishing chance, deductions applied below
 				fishchance -= (difficulty * 15) ///based on the fishes difficulty means better fishing rods can be given to shit fishers
 				fishchance += cast_depth_bonus * 8
@@ -1748,11 +1748,11 @@
 				if(has_world_trait(/datum/world_trait/fishing_increase))
 					fishchance += 40
 				if(user.mind)
-					if(!sl) // If we have zero fishing skill...
+					if(!fishing_skill_level) // If we have zero fishing skill...
 						fishchance -= 50 // 50% chance to fish base
 					else
-						fishchance -= bp // Deduct penalties from bait quality, if any
-						fishchance -= fpp // Deduct a penalty the lower our fishing level is (-0 at legendary)
+						fishchance -= bait_penalty // Deduct penalties from bait quality, if any
+						fishchance -= low_skill_penalty // Deduct a penalty the lower our fishing level is (-0 at legendary)
 				if(no_bait_fishing)
 					var/luck_bite_bonus = max(0, luck_stat - 10) * 5
 					fishchance -= max(10, 70 - luck_bite_bonus)
@@ -1776,26 +1776,26 @@
 					modlist["force_common_rarity"] = TRUE
 					modlist["force_nonprize_size"] = TRUE
 				if(prob(fishchance)) // Finally, roll the dice to see if we fish.
-					var/A = getfishingloot(user, modlist, targeted)
+					var/loot_path = getfishingloot(user, modlist, targeted)
 					if(no_bait_fishing && prob(max(50, 90 - max(0, luck_stat - 10) * 5)))
-						A = get_cast_junk_reward_path()
+						loot_path = get_cast_junk_reward_path()
 					if(shallow_excluded_junk_zone && prob(96))
-						A = get_cast_junk_reward_path()
-					if(is_shellfish_catch_path(A))
-						A = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
-					if(A)
-						var/ow = get_bite_reaction_window(sl) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
+						loot_path = get_cast_junk_reward_path()
+					if(is_shellfish_catch_path(loot_path))
+						loot_path = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
+					if(loot_path)
+						var/reaction_window = get_bite_reaction_window(fishing_skill_level) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
 						to_chat(user, "<span class='notice'>Something tugs the line! Use [src] in hand to reel it in!</span>")
 						targeted.balloon_alert_to_viewers("Tug!")
 						playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 						auto_reel_ready = TRUE
 						START_PROCESSING(SSobj, src)
-						auto_pending_catch = A
+						auto_pending_catch = loot_path
 						auto_pending_modlist = islist(modlist) ? modlist.Copy() : null
 						auto_pending_target = targeted
 						auto_pending_size = fishsize
 						auto_pending_rarity = fishrarity
-						auto_reel_deadline = world.time + ow
+						auto_reel_deadline = world.time + reaction_window
 						apply_tackle_wear(user, 1, 1, 1)
 				else
 					if(no_bait_fishing)
@@ -1811,12 +1811,12 @@
 		user.visible_message("<span class='warning'>[user] casts a line!</span>", \
 							"<span class='notice'>I cast a line.</span>")
 		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-		var/ft_cast = max(9, ((1 SECONDS) - sl) * 4)
+		var/ft_cast = max(9, ((1 SECONDS) - fishing_skill_level) * 4)
 		ft_cast = round(ft_cast * get_cast_time_multiplier())
 		if(!do_after(user, ft_cast, target = user))
 			to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 			return
-		var/cast_bite_chance = 70 + (cast_depth_bonus * 10) - (near_shore_penalty * 20) + (sl * 3) + get_bite_chance_bonus(targeted, shore_distance) + (chummed_spot ? 20 : 0)
+		var/cast_bite_chance = 70 + (cast_depth_bonus * 10) - (near_shore_penalty * 20) + (fishing_skill_level * 3) + get_bite_chance_bonus(targeted, shore_distance) + (chummed_spot ? 20 : 0)
 		if(no_bait_fishing)
 			var/luck_bite_bonus = max(0, luck_stat - 10) * 5
 			cast_bite_chance -= max(10, 70 - luck_bite_bonus)
@@ -1835,7 +1835,7 @@
 		// Got a bite. Wait for the player to use the rod in-hand to start reeling (like auto intent).
 		cast_reel_pending = TRUE
 		START_PROCESSING(SSobj, src)
-		cast_reel_pending_deadline = world.time + get_bite_reaction_window(sl)
+		cast_reel_pending_deadline = world.time + get_bite_reaction_window(fishing_skill_level)
 		targeted.balloon_alert_to_viewers("Tug!")
 		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 		to_chat(user, "<span class='notice'>There's a bite! Use [src] in hand to start reeling!</span>")
@@ -1850,7 +1850,7 @@
 		// Player triggered - refresh starting position and begin the initial reel pull.
 		startingturf = fisher.loc
 		startingdir = fisher.dir
-		var/initial_reel_time = max(1, round(get_skill_delay(sl, 1, slowest = 7) * get_reel_time_multiplier() * 0.5))
+		var/initial_reel_time = max(1, round(get_skill_delay(fishing_skill_level, 1, slowest = 7) * get_reel_time_multiplier() * 0.5))
 		playsound(src.loc, 'sound/misc/reeling.ogg', 70, FALSE)
 		to_chat(user, "<span class='notice'>I start reeling against the bite...</span>")
 		to_chat(user, "<span class='notice'>[get_fishing_size_feel_text(fishsize, fishtype)]</span>")
@@ -1869,7 +1869,7 @@
 			if(ishuman(fisher))
 				var/mob/living/carbon/human/H_hook = fisher
 				str_hook = H_hook.STASTR
-			var/hook_roll = rand(1, 10) + str_hook + sl
+			var/hook_roll = rand(1, 10) + str_hook + fishing_skill_level
 			var/hook_target = 4 + fish_challenge_hook * 3
 			if(hook_roll < hook_target)
 				to_chat(user, "<span class='warning'>I get a nibble - but the fish tears free before I can secure the line!</span>")
@@ -1926,14 +1926,14 @@
 				average_ping = user.client.avgping * 0.01
 			currentmouse = clamp(backdrop.pointdir, 90, 270);
 			reelstate.transform = 0
-			var/matrix/M = matrix()
-			M.Turn(currentmouse)
-			reelstate.transform = M
+			var/matrix/reel_matrix = matrix()
+			reel_matrix.Turn(currentmouse)
+			reelstate.transform = reel_matrix
 
 			fishstate.transform = 0
-			var/matrix/F = matrix()
-			F.Turn(targetdif)
-			fishstate.transform = F
+			var/matrix/fish_matrix = matrix()
+			fish_matrix.Turn(targetdif)
+			fishstate.transform = fish_matrix
 
 			face.icon_state = "stress[facestate]"
 
@@ -2016,13 +2016,13 @@
 
 					// Zone margins: green zone width is fixed per skill tier.
 					var/gz_min
-					if(sl >= SKILL_LEVEL_LEGENDARY)
+					if(fishing_skill_level >= SKILL_LEVEL_LEGENDARY)
 						gz_min = 42
-					else if(sl == SKILL_LEVEL_MASTER)
+					else if(fishing_skill_level == SKILL_LEVEL_MASTER)
 						gz_min = 32
-					else if(sl == SKILL_LEVEL_EXPERT)
+					else if(fishing_skill_level == SKILL_LEVEL_EXPERT)
 						gz_min = 24
-					else if(sl == SKILL_LEVEL_JOURNEYMAN)
+					else if(fishing_skill_level == SKILL_LEVEL_JOURNEYMAN)
 						gz_min = 13
 					else
 						gz_min = 11
@@ -2145,9 +2145,9 @@
 							raritydesc = "common"
 				// Only apply rarity suffix if the fish type has the property and doesn't set no_rarity_sprite
 				if(istype(caughtfish, /obj/item/reagent_containers/food/snacks/fish))
-					var/obj/item/reagent_containers/food/snacks/fish/F = caughtfish
-					if(!initial(F.no_rarity_sprite) && islist(F.rarity_icon_states) && F.rarity_icon_states[fishrarity])
-						caughtfish.icon_state = F.rarity_icon_states[fishrarity]
+					var/obj/item/reagent_containers/food/snacks/fish/typed_caughtfish = caughtfish
+					if(!initial(typed_caughtfish.no_rarity_sprite) && islist(typed_caughtfish.rarity_icon_states) && typed_caughtfish.rarity_icon_states[fishrarity])
+						caughtfish.icon_state = typed_caughtfish.rarity_icon_states[fishrarity]
 					if(fishrarity != "com")
 						switch(fishtype)
 							if(/obj/item/reagent_containers/food/snacks/fish/carp)
@@ -2175,8 +2175,8 @@
 						if("large")
 							caughtfish.vars["fishloot"] = null//can't use fish larger than normal size as bait
 				if(istype(caughtfish, /obj/item/reagent_containers/food/snacks/fish))
-					var/obj/item/reagent_containers/food/snacks/fish/F = caughtfish
-					F.apply_fishing_size(fishsize)
+					var/obj/item/reagent_containers/food/snacks/fish/typed_caughtfish = caughtfish
+					typed_caughtfish.apply_fishing_size(fishsize)
 				sizedesc = fishsize
 				if(specialcatching)
 					var/obj/item/fishing/bait/specialmaker = baited
@@ -2210,7 +2210,7 @@
 			apply_tackle_wear(user, 2, 1, 1)
 	else
 		apply_tackle_wear(user, 3, 2, 2)
-		if(baited && getbaitlife(sl, baited))
+		if(baited && getbaitlife(fishing_skill_level, baited))
 			to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
 			qdel(baited)
 			baited = null
