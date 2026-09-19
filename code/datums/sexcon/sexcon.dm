@@ -431,8 +431,9 @@
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
 	var/mob/living/carbon/human/effective_target = splashed_user || target
 	log_combat(user, effective_target, "Came inside the target")
-	werewolf_sex_infect_attempt(user, effective_target)
-	deadite_sex_infect_attempt(user, effective_target)
+	if(consume_charge)
+		werewolf_sex_infect_attempt(user, effective_target)
+		deadite_sex_infect_attempt(user, effective_target)
 	if(oral)
 		playsound(user, pick(list('sound/misc/mat/mouthend (1).ogg','sound/misc/mat/mouthend (2).ogg')), 100, FALSE, ignore_walls = FALSE)
 	else
@@ -1706,9 +1707,22 @@
 	desc = "I can barely walk..."
 	icon_state = "quivering"
 
-/datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
+/proc/sex_infect_pair_still_valid(mob/living/carbon/human/top, mob/living/carbon/human/btm)
+	if(!istype(top) || !istype(btm) || QDELETED(top) || QDELETED(btm))
+		return FALSE
+	if(!top.mind || !btm.mind)
+		return FALSE
+	if(!top.client?.prefs?.sexable || !btm.client?.prefs?.sexable)
+		return FALSE
+	if(!top.client.prefs.extreme_erp || !btm.client.prefs.extreme_erp)
+		return FALSE
+	if((top.sexcon?.knotted_recipient == btm) || (btm.sexcon?.knotted_recipient == top))
+		return TRUE
+	return top.sexcon?.Adjacent_Or_Closet(btm)
 
-	if(!top || !bottom || !top.mind || !bottom.mind)
+/datum/proc/werewolf_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
+	set waitfor = FALSE
+	if(!sex_infect_pair_still_valid(top, bottom))
 		return
 
 	var/datum/antagonist/werewolf/WWtop
@@ -1725,26 +1739,29 @@
 
 	if(WWtop && WWtop.transformed && !WWbottom)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
+			var/answer = tgui_alert(top, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"), 200)
+			if(answer != "Yae")
 				return
-			if(answer == "Yae")
-				bottom.werewolf_infect_attempt()
+			if(!sex_infect_pair_still_valid(top, bottom))
+				to_chat(top, span_warning("It won't take effect."))
+				return
+			bottom.werewolf_infect_attempt()
 		return
-
 
 	if(WWbottom && WWbottom.transformed && !WWtop)
 		if(prob(infection_probability))
-			var/answer = tgui_alert(bottom, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
+			var/answer = tgui_alert(bottom, "Infect your mate?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"), 200)
+			if(answer != "Yae")
 				return
-			if(answer == "Yae")
-				top.werewolf_infect_attempt()
+			if(!sex_infect_pair_still_valid(top, bottom))
+				to_chat(bottom, span_warning("It won't take effect."))
+				return
+			top.werewolf_infect_attempt()
 		return
 
 /datum/proc/deadite_sex_infect_attempt(mob/living/carbon/human/top, mob/living/carbon/human/bottom)
-
-	if(!top || !bottom || !top.mind || !bottom.mind)
+	set waitfor = FALSE
+	if(!sex_infect_pair_still_valid(top, bottom))
 		return
 	var/datum/antagonist/zombie/ZMtop
 	var/datum/antagonist/zombie/ZMbottom
@@ -1761,20 +1778,25 @@
 	if(ZMtop && ZMtop.has_turned && !ZMbottom)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(top, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
+			if(answer != "Yae")
 				return
-			if(answer == "Yae")
-				bottom.zaids_check()
+			if(!sex_infect_pair_still_valid(top, bottom))
+				return
+			to_chat(top, span_warning("It won't take effect."))
+			bottom.zaids_check()
 		return
 
 	if(ZMbottom && ZMbottom.has_turned && !ZMtop)
 		if(prob(infection_probability))
 			var/answer = tgui_alert(bottom, "Spread HER gift?", "Please answer in [DisplayTimeText(200)]!", list("Yae","Nae"),200)
-			if(!answer || answer == "Nae")
+			if(answer != "Yae")
 				return
-			if(answer == "Yae")
-				top.zaids_check()
+			if(!sex_infect_pair_still_valid(top, bottom))
+				to_chat(bottom, span_warning("It won't take effect."))
+				return
+			top.zaids_check()
 		return
+
 ///Making sure there're not any other antag or immune, then applies zombie infection
 /mob/living/carbon/human/proc/zaids_check()
 	if(!mind)
