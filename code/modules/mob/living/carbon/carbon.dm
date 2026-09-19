@@ -464,13 +464,13 @@
 	//min() so this can never be slower than struggling out, nets slip faster than they strip
 	var/untying = (I == legcuffed && !handcuffed && has_active_hand())
 	breakouttime = untying ? min(I.strip_delay, I.slipouttime) : I.slipouttime
-	//0.1 per point above 10, so the scale runs the full way to 20 rather than bottoming out at 15
+	//0.2 per point above 10, so the scale runs the full way to 15
 	if((STASTR > 10))
-		var/time_mod = breakouttime * (STASTR - 10) * 0.1
+		var/time_mod = breakouttime * (STASTR - 10) * 0.2
 		breakouttime = max(0, breakouttime - time_mod)
 	if(!untying && mind && mind.has_antag_datum(/datum/antagonist/zombie))
 		breakouttime = 10 SECONDS
-	if(STASTR >= 20 && !untying)
+	if(STASTR >= 15 && !untying)
 		cuff_break = INSTANT_CUFFBREAK
 		breakouttime = I.breakouttime
 	if(!cuff_break)
