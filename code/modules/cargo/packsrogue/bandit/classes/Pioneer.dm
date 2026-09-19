@@ -361,7 +361,7 @@
 /datum/supply_pack/rogue/Pioneer/rocks
 	name = "A bunch of rocks"
 	cost = 10
-	contains = list(/obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock
+	contains = list(/obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock,
 	/obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock, /obj/item/natural/rock)
 
 /datum/supply_pack/rogue/Pioneer/logs
