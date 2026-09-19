@@ -220,7 +220,7 @@
 
 /obj/item/rogueweapon/shield/tower/metal
 	name = "kite shield"
-	desc = "A kite-shaped iron shield. Reliable and sturdy."
+	desc = "A kite-shaped steel shield. Reliable and sturdy."
 	icon_state = "kitesh"
 	force = 20
 	throwforce = 10
