@@ -374,7 +374,18 @@
 	cost = 10
 	contains = list(/obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full)
 
+/datum/supply_pack/rogue/Pioneer/coal
+	name = "A bunch of coal"
+	cost = 10
+	contains = list(/obj/item/rogueore/coal, /obj/item/rogueore/coal, /obj/item/rogueore/coal, /obj/item/rogueore/coal)
+
 /datum/supply_pack/rogue/Pioneer/cart
 	name = "A cart to carry all that"
 	cost = 15
 	contains = list(/obj/structure/handcart)
+
+
+/datum/supply_pack/rogue/Pioneer/riddle_steel // if they somhow get this much, they deserve it
+	name = "Riddle of steel"
+	cost = 2000
+	contains = list(/obj/item/riddleofsteel)
