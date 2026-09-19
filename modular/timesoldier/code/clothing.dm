@@ -1,6 +1,6 @@
 // TEMPERANCE
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/timesoldier/shared/uniform // ts just a padded gamby 🥀
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/timesoldier/temperance/uniform // ts just a padded gamby 🥀
 	name = "soldier's uniform"
 	desc = "<span class='yellow'><i>I still remember when I first put this old tattered thing on. It has been with me for about fifteen yils now. Back then, it was slightly too big for me, but now it fits me just right.</i></span>"
 	icon = 'modular/timesoldier/sprites/gear.dmi'
@@ -138,3 +138,12 @@
 	item_state = "redsniperhelmet"
 	color = null
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/timesoldier/interwar/uniform
+	name = "soldier's uniform"
+	desc = "<span class='yellow'><i>I still remember when I first put this old tattered thing on. It has been with me for about fifteen yils now. Back then, it was slightly too big for me, but now it fits me just right.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
+	icon_state = "redgrunt"
+	item_state = "redgrunt"
+	shiftable = FALSE
