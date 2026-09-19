@@ -32,16 +32,14 @@
 	)
 	subclass_stashed_items = list(
 		"Sewing Kit" =	/obj/item/repair_kit,
-		"Poison Arrows Quiver" = /obj/item/quiver/poisonarrows,
 	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/physician
 	mask = /obj/item/clothing/mask/rogue/physician/plaguebearer
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	cloak = /obj/item/clothing/suit/roguetown/shirt/robe/physician
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician/plaguebearer
 	backl = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/storage/belt/rogue/surgery_bag/full/physician
 	belt = /obj/item/storage/belt/rogue/leather/black
@@ -49,6 +47,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	backpack_contents = list(
+		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1, // You get one epic poison. As a treat because you're valid. Don't waste it. 
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/stampoison = 1,
 		/obj/item/recipe_book/alchemy = 1,
