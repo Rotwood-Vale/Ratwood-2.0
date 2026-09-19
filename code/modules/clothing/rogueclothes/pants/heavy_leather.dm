@@ -143,19 +143,3 @@
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
-/obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
-	name = "bronze chain skirt"
-	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
-	icon_state = "chain_skirt"
-	item_state = "chain_skirt"
-	color = "#f9d690"
-	blocksound = CHAINHIT
-	resistance_flags = FIRE_PROOF
-	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/bronze
-	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_LEG_BRONZE
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	dropshrink = null
