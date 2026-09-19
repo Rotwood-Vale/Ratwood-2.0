@@ -119,25 +119,25 @@
 		qdel(L)
 	return amount
 
-/// Repay up to `amount` toward the caller's personal loan. ES: reads integer bank_accounts.
+
 /datum/controller/subsystem/treasury/proc/repay_loan(mob/living/carbon/human/debtor, amount)
 	if(!debtor || amount <= 0)
 		return 0
 	var/datum/loan/L = get_loan_for(debtor)
 	if(!L)
 		return 0
-	var/debtor_balance = bank_accounts[debtor]
-	if(isnull(debtor_balance))
+	var/datum/fund/account = get_account(debtor)
+	if(!account)
 		return 0
 	var/datum/fund/destination = L.source_fund
 	if(!destination)
 		return 0
 	var/outstanding = L.get_remaining_due()
-	amount = min(amount, outstanding, debtor_balance)
+	amount = min(amount, outstanding, account.balance)
 	if(amount <= 0)
 		return 0
-	bank_accounts[debtor] -= amount
-	mint(destination, amount, L.defaulted ? "Default debt settlement" : "Loan repayment")
+	if(!transfer(account, destination, amount, L.defaulted ? "Default debt settlement" : "Loan repayment"))
+		return 0
 	L.repaid_so_far += amount
 	if(L.get_remaining_due() <= 0)
 		if(L.defaulted)

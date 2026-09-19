@@ -598,14 +598,13 @@
 	else
 		var/lol = 0
 		var/list/used = intentsr
-		var/roguehud_icon = get_roguehud_icon()
 		if(hud.mymob.active_hand_index == 1)
 			used = intentsl
 		for(var/datum/intent/intenty in used)
 			lol++
 			if(lol > length(intent_slots))
 				break
-			set_rogintent_slot(intent_slots[lol], intenty.icon_state, lol, 0.02, roguehud_icon)
+			set_rogintent_slot(intent_slots[lol], intenty.icon_state, lol, 0.02, intenty.icon)
 		var/mob/living/owner = hud?.mymob
 		if(owner)
 			switch_intent(owner.r_index, owner.l_index, oactive)
@@ -1598,9 +1597,11 @@
 	highlight.layer = ABOVE_HUD_LAYER + 0.9 + (slot_index * 0.001)
 	highlight.plane = ABOVE_HUD_PLANE
 	animate(highlight, alpha = 0, time = 20, easing = EASE_IN)
-	spawn(20)
-		if(highlight_tokens[slot_index] == current_token)
-			highlight.color = null
+	addtimer(CALLBACK(src, PROC_REF(clear_stale_highlight), highlight, slot_index, current_token), 20)
+
+/atom/movable/screen/zone_sel/proc/clear_stale_highlight(atom/movable/screen/hud_component/layer/highlight, slot_index, token)
+	if(highlight_tokens && highlight_tokens[slot_index] == token)
+		highlight.color = null
 
 /atom/movable/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'

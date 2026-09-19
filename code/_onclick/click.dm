@@ -248,12 +248,15 @@
 
 	if(W)
 		if(ismob(A))
-			if(CanReach(A,W))
+			if(CanReach(A, W))
 				var/turf/target_turf = get_turf(A)
 				if(get_dist(my_turf, target_turf) <= used_intent.reach)
 					if(!used_intent.noaa)
-						do_attack_animation(target_turf, used_intent.animname, W, used_intent = src.used_intent)
-				resolveAdjacentClick(A,W,params)
+						if(used_intent.cleave)
+							used_intent.cleave.show_cleave_visuals(src, target_turf)
+						else
+							do_attack_animation(target_turf, used_intent.animname, W, used_intent = src.used_intent)
+				resolveAdjacentClick(A, W, params)
 				return
 
 	if(!loc.AllowClick()) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
@@ -310,17 +313,32 @@
 						break
 					if(target)
 						if(target.Adjacent(src) || (CanReach(target, W) && used_intent.effective_range_type))
-							do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
+							if(!used_intent.noaa)
+								if(used_intent.cleave)
+									used_intent.cleave.show_cleave_visuals(src, T)
+								else
+									do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
 							resolveAdjacentClick(target,W,params,used_hand)
 							atkswinging = null
 							//update_warning()
 							return
+					if(used_intent.noaa) //force_autoaim intent with nothing to aim at, hit the turf like it always did
+						resolveAdjacentClick(A,W,params,used_hand)
+						atkswinging = null
+						return
 					if(cmode)
 						resolveAdjacentClick(T,W,params,used_hand) //hit the turf
 					if(!used_intent.noaa)
-						changeNext_move(CLICK_CD_RAPID)
 						if(get_dist(my_turf, T) <= used_intent.reach)
-							do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
+							if(used_intent.cleave)
+								used_intent.cleave.show_cleave_visuals(src, T)
+							else
+								do_attack_animation(T, used_intent.animname, used_intent.masteritem, used_intent = src.used_intent)
+						var/adf = used_intent.clickcd
+						if(istype(rmb_intent, /datum/rmb_intent/aimed))
+							adf = round(adf * CLICK_CD_MOD_AIMED)
+						if(istype(rmb_intent, /datum/rmb_intent/swift))
+							adf = max(round(adf * CLICK_CD_MOD_SWIFT), CLICK_CD_INTENTCAP)
 						changeNext_move(get_rmb_clickcd(used_intent.clickcd))
 						if(W)
 							playsound(my_turf, pick(W.swingsound), 100, FALSE)
@@ -941,7 +959,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	return FALSE
 
 /mob/living/try_special_attack(atom/A, list/modifiers)
-	if(!rmb_intent || !cmode || isobj(A))
+	if(!rmb_intent || !cmode || A.loc == src || istype(A, /obj/item/clothing) || istype(A, /obj/item/quiver) || istype(A, /obj/item/storage) || istype(A, /obj/item/rogueweapon/scabbard))
 		return FALSE
 
 	if(next_move > world.time && !rmb_intent?.bypasses_click_cd)
@@ -950,7 +968,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	if(rmb_intent?.adjacency && !Adjacent(A))
 		return FALSE
 
-	rmb_intent.special_attack(src, ismob(A) ? A : get_foe_from_turf(get_turf(A)))
+	rmb_intent.special_attack(src, ismob(A) ? A : rmb_intent.prioritize_turfs ? get_turf(A) : get_foe_from_turf(get_turf(A)))
 	return TRUE
 
 /// Used for "directional" style rmb attacks on a turf, prioritizing standing targets
