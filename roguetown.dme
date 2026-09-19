@@ -3400,6 +3400,7 @@
 #include "modular\timesoldier\code\ammo.dm"
 #include "modular\timesoldier\code\magnumforce.dm"
 #include "modular\timesoldier\code\clothing.dm"
+#include "modular\timesoldier\code\stuff.dm"
 #include "modular_azurepeak\_customization_trait.dm"
 #include "modular_azurepeak\_quirk.dm"
 #include "modular_azurepeak\_statpacks.dm"

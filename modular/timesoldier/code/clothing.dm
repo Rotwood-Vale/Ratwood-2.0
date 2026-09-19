@@ -67,6 +67,7 @@
 	item_state = "EB_boots_wrapped"
 
 // INTERWARFARE. A loving love letter to Sparrow, and Matt. Thank you for making such an amazing project. also holy shit this kit has so much aura.
+// soon to be unused content, as i don't want to be disrespectful and use Matt's comm'd art. This will very likely be discontinued/removed soon in exchange for newer sprites.
 
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor/interwar
