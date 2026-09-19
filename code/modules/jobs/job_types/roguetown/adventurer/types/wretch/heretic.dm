@@ -11,7 +11,7 @@
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
-		STATKEY_CON = 2,
+		STATKEY_CON = 1,
 		STATKEY_WIL = 3
 	)
 	subclass_skills = list(
