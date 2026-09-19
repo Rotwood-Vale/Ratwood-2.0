@@ -152,6 +152,7 @@
 	blocksound = SOFTHIT //must differ from the body/berserker's blocksound or the shirt slot check will reject it while armor is worn
 	armor = ARMOR_MAILLE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
+	repair_time = 30 SECONDS
 
 #undef COMBAT_TAG_DURATION
 
