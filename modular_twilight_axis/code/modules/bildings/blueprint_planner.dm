@@ -1,6 +1,9 @@
+#define BLUEPRINT_LIBRARY_FILE "data/blueprint_library.json"
+var/global/list/blueprint_library_cache = load_blueprint_library()
 GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
+
 /proc/init_blueprint_buildable_types()
-	return list(
+	var/list/temp_types = list(
 	"wood_floor" = list(
 		"name" = "Wooden Floor",
 		"category" = "Floors & Pathways",
@@ -635,7 +638,8 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"name" = "Wooden Stairs (Up)",
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
-		"build_order" = 2,
+		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/stairs,
 		"reqs" = list(/obj/item/grown/log/tree/small = 2),
 		"icon_file" = 'icons/obj/stairs.dmi',
@@ -645,7 +649,8 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"name" = "Wooden Stairs (Down)",
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
-		"build_order" = 2,
+		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/stairs/d,
 		"reqs" = /datum/crafting_recipe/roguetown/structure/stairsd,
 		"icon_file" = 'icons/obj/stairs.dmi',
@@ -655,7 +660,8 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"name" = "Stone Stairs (Up)",
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
-		"build_order" = 2,
+		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/stairs/stone,
 		"reqs" = list(/obj/item/natural/stone = 2),
 		"icon_file" = 'icons/obj/stairs.dmi',
@@ -665,7 +671,8 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"name" = "Stone Stairs (Down)",
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
-		"build_order" = 2,
+		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/stairs/stone/d,
 		"reqs" = /datum/crafting_recipe/roguetown/structure/stonestairsd,
 		"icon_file" = 'icons/obj/stairs.dmi',
@@ -675,7 +682,8 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"name" = "Ladder",
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
-		"build_order" = 2,
+		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/ladder,
 		"reqs" = list(/obj/item/grown/log/tree/small = 2),
 		"icon_file" = 'icons/roguetown/misc/structure.dmi',
@@ -686,6 +694,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"category" = "Doors & Stairs",
 		"layer_type" = "obj",
 		"build_order" = 3,
+		"requires_floor" = TRUE,
 		"path" = /obj/structure/wallladder,
 		"reqs" = /datum/crafting_recipe/roguetown/structure/wallladder,
 		"icon_file" = 'icons/roguetown/misc/structure.dmi',
@@ -901,6 +910,16 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_file" = 'icons/roguetown/misc/tables.dmi',
 		"icon_state" = "longtable"
 	),
+	"table_long_mid" = list(
+		"name" = "Long Table mid",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/table/wood/long_table/mid,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/longtable,
+		"icon_file" = 'icons/roguetown/misc/tables.dmi',
+		"icon_state" = "longtable_mid"
+	),
 	"table_large" = list(
 		"name" = "Large Table",
 		"category" = "Furniture",
@@ -982,17 +1001,37 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_state" = "thronechair"
 	),
 	"bench_park" = list(
-		"name" = "Park Bench",
+		"name" = "Park Bench middle",
 		"category" = "Furniture",
 		"layer_type" = "obj",
 		"build_order" = 3,
 		"path" = /obj/structure/chair/hotspring_bench,
 		"reqs" = /datum/crafting_recipe/roguetown/structure/parkbenchmiddle,
-		"icon_file" = 'icons/roguetown/misc/structure.dmi',
-		"icon_state" = "bench"
+		"icon_file" = 'icons/obj/structures/hotspring.dmi',
+		"icon_state" = "parkbench_sofamiddle"
+	),
+	"bench_park_L" = list(
+		"name" = "Park Bench Left",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/chair/hotspring_bench/left,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/parkbenchmiddle,
+		"icon_file" = 'icons/obj/structures/hotspring.dmi',
+		"icon_state" = "parkbench_sofaend_left"
+	),
+	"bench_park_R" = list(
+		"name" = "Park Bench Right",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/chair/hotspring_bench/right,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/parkbenchmiddle,
+		"icon_file" = 'icons/obj/structures/hotspring.dmi',
+		"icon_state" = "parkbench_sofaend_right"
 	),
 	"couch_red" = list(
-		"name" = "Red Couch",
+		"name" = "Red Couch left",
 		"category" = "Furniture",
 		"layer_type" = "obj",
 		"build_order" = 3,
@@ -1001,8 +1040,18 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_file" = 'icons/roguetown/misc/structure.dmi',
 		"icon_state" = "redcouch"
 	),
+	"couch_red_r" = list(
+		"name" = "Red Couch right",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/chair/bench/coucha/r,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/couchleft,
+		"icon_file" = 'icons/roguetown/misc/structure.dmi',
+		"icon_state" = "couchablackaright"
+	),
 	"couch_black" = list(
-		"name" = "Black Couch",
+		"name" = "Black Couch left",
 		"category" = "Furniture",
 		"layer_type" = "obj",
 		"build_order" = 3,
@@ -1011,15 +1060,35 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_file" = 'icons/roguetown/misc/structure.dmi',
 		"icon_state" = "couchablackaleft"
 	),
+	"couch_black_r" = list(
+		"name" = "Black Couch right",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/chair/bench/couchablack/r,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/blackcouchleft,
+		"icon_file" = 'icons/roguetown/misc/structure.dmi',
+		"icon_state" = "couchablackaright"
+	),
 	"couch_ultima" = list(
-		"name" = "Ultima Couch",
+		"name" = "Ultima Couch left",
 		"category" = "Furniture",
 		"layer_type" = "obj",
 		"build_order" = 3,
 		"path" = /obj/structure/chair/bench/ultimacouch,
 		"reqs" = /datum/crafting_recipe/roguetown/structure/ultimacouchleft,
 		"icon_file" = 'icons/roguetown/misc/structure.dmi',
-		"icon_state" = "redcouch"
+		"icon_state" = "ultimacouchleft"
+	),
+	"couch_ultima_r" = list(
+		"name" = "Ultima Couch right",
+		"category" = "Furniture",
+		"layer_type" = "obj",
+		"build_order" = 3,
+		"path" = /obj/structure/chair/bench/ultimacouch/r,
+		"reqs" = /datum/crafting_recipe/roguetown/structure/ultimacouchleft,
+		"icon_file" = 'icons/roguetown/misc/structure.dmi',
+		"icon_state" = "ultimacouchright"
 	),
 	"bed_straw" = list(
 		"name" = "Straw Bed",
@@ -2093,27 +2162,25 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		"icon_state" = "shock_trap_plate"
 	)
 )
+	for(var/key in temp_types)
+		var/list/info = temp_types[key]
+		if(ispath(info["reqs"], /datum/crafting_recipe))
+			var/craft_path = info["reqs"]
+			var/datum/crafting_recipe/dummy = new craft_path()
+			var/list/actual_reqs = list()
+			for(var/req_key in dummy.reqs)
+				actual_reqs[req_key] = dummy.reqs[req_key]
+			info["reqs"] = actual_reqs
+			qdel(dummy)
 
+	return temp_types
 
-#define MAX_PLANNER_RADIUS 6
-#define MAX_SPELL_RADIUS 13
+/proc/get_blueprint_reqs(list/info)
+	if(islist(info["reqs"]))
+		return info["reqs"]
+	return list()
 
-/proc/init_blueprint_icons()
-	for(var/key in GLOB.blueprint_buildable_types)
-		var/list/info = GLOB.blueprint_buildable_types[key]
-		if(info["image"]) continue
-
-		var/atom/build_path = info["path"]
-		var/i_file = info["icon_file"] || initial(build_path.icon)
-		var/i_state = info["icon_state"] || initial(build_path.icon_state)
-
-		var/icon/I = icon(i_file, i_state, SOUTH, 1)
-		info["image"] = icon2base64(I)
-
-		CHECK_TICK
-
-
-/proc/get_blueprint_tgui_data()
+/proc/get_blueprint_static_tgui_data()
 	var/list/data = list()
 	var/list/types_data = list()
 
@@ -2147,16 +2214,150 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	data["buildable_types"] = types_data
 	return data
 
+#define MAX_SPELL_RADIUS 10
 
-/obj/item/blueprint_planner
-	name = "architectural blueprint"
-	desc = "Allows designing a building with furniture and constructing it with a hammer."
-	icon_state = "skub"
-	w_class = WEIGHT_CLASS_SMALL
-	var/list/design_data = list()
-	var/is_designed = FALSE
-	var/max_floors = 2
-	var/list/scanned_grid = list()
+/proc/load_blueprint_library()
+	if(!fexists(BLUEPRINT_LIBRARY_FILE))
+		return list()
+	var/json = file2text(BLUEPRINT_LIBRARY_FILE)
+	if(!json)
+		return list()
+	return json_decode(json) || list()
+
+/proc/save_blueprint_library()
+	var/json = json_encode(blueprint_library_cache)
+	var/temp_file = "[BLUEPRINT_LIBRARY_FILE].tmp"
+
+	fdel(temp_file)
+	text2file(json, temp_file)
+
+	if(fexists(temp_file))
+		fdel(BLUEPRINT_LIBRARY_FILE)
+		fcopy(temp_file, BLUEPRINT_LIBRARY_FILE)
+		fdel(temp_file)
+
+/proc/calculate_blueprint_reqs_text(list/design_data)
+	var/list/totals = list()
+	for(var/entry in design_data)
+		var/b_type = entry["type"]
+		var/list/info = GLOB.blueprint_buildable_types[b_type]
+		if(!info) continue
+		var/list/reqs = get_blueprint_reqs(info)
+		for(var/r_path in reqs)
+			totals[r_path] += reqs[r_path]
+
+	var/reqs_text = ""
+	for(var/r_path in totals)
+		var/obj/item/temp = r_path
+		reqs_text += "[initial(temp.name)] x[totals[r_path]], "
+	if(length(reqs_text) > 2)
+		reqs_text = copytext(reqs_text, 1, length(reqs_text) - 1)
+	return reqs_text ? reqs_text : "No resources"
+
+/proc/handle_blueprint_library_act(action, params, mob/user, datum/tgui/ui)
+	if(action == "save_to_library")
+		var/bp_name = trim(params["name"])
+		if(!bp_name || length(bp_name) > 32)
+			to_chat(user, span_warning("Invalid blueprint name (1-32 chars)."))
+			return TRUE
+
+		var/list/packed_data = params["packed_data"]
+		var/max_floors = clamp(text2num(params["max_floors"]) || 2, 2, 4)
+		var/list/safe_data = list()
+
+		for(var/b_type in packed_data)
+			var/list/coords = packed_data[b_type]
+			for(var/coord_str in coords)
+				var/list/parts = splittext(coord_str, ",")
+				if(length(parts) < 3) continue
+				
+				var/dx = text2num(parts[1])
+				var/dy = text2num(parts[2])
+				var/dz = text2num(parts[3])
+				var/ddir = length(parts) >= 4 ? text2num(parts[4]) : 2
+
+				if(!isnum(dx) || !isnum(dy) || !isnum(dz) || !isnum(ddir))
+					continue
+
+				if(abs(dx) > MAX_SPELL_RADIUS || abs(dy) > MAX_SPELL_RADIUS)
+					continue
+
+				safe_data += list(list(
+					"x" = dx,
+					"y" = dy,
+					"z" = dz,
+					"type" = b_type,
+					"dir" = ddir
+				))
+
+		if(!length(safe_data))
+			to_chat(user, span_warning("Cannot save an empty blueprint to the library!"))
+			return TRUE
+
+		var/user_count = 0
+		for(var/entry in blueprint_library_cache)
+			if(entry["author_ckey"] == user.ckey)
+				user_count++
+
+		if(user_count >= 3)
+			to_chat(user, span_warning("You cannot save more than 3 blueprints in the library! Delete an old one first."))
+			return TRUE
+
+		var/list/new_bp = list(
+			"id" = "[user.ckey]_[world.realtime]_[rand(1,1000)]",
+			"name" = sanitize(bp_name),
+			"author_name" = user.real_name ? "[user.real_name] ([user.key])" : user.key,
+			"author_ckey" = user.ckey,
+			"max_floors" = max_floors,
+			"reqs_summary" = calculate_blueprint_reqs_text(safe_data),
+			"grid" = safe_data
+		)
+
+		blueprint_library_cache += list(new_bp)
+		save_blueprint_library()
+		
+		to_chat(user, span_notice("Blueprint '[bp_name]' saved to the library!"))
+		if(ui) ui.send_full_update()
+		return TRUE
+
+	if(action == "delete_library_blueprint")
+		var/bp_id = params["id"]
+		var/list/found_entry = null
+		for(var/entry in blueprint_library_cache)
+			if(entry["id"] == bp_id)
+				found_entry = entry
+				break
+
+		if(!found_entry)
+			return TRUE
+
+		if(found_entry["author_ckey"] != user.ckey)
+			to_chat(user, span_warning("You can only delete your own blueprints!"))
+			return TRUE
+
+		blueprint_library_cache -= list(found_entry)
+		save_blueprint_library()
+		
+		to_chat(user, span_notice("Blueprint deleted from the library."))
+		if(ui) ui.send_full_update()
+		return TRUE
+
+	return FALSE
+
+
+/proc/init_blueprint_icons()
+	for(var/key in GLOB.blueprint_buildable_types)
+		var/list/info = GLOB.blueprint_buildable_types[key]
+		if(info["image"]) continue
+
+		var/atom/build_path = info["path"]
+		var/i_file = info["icon_file"] || initial(build_path.icon)
+		var/i_state = info["icon_state"] || initial(build_path.icon_state)
+
+		var/icon/I = icon(i_file, i_state, SOUTH, 1)
+		info["image"] = icon2base64(I)
+
+		CHECK_TICK
 
 /proc/get_blueprint_target_turf(turf/origin, dx, dy, dz)
 	if(!origin) return null
@@ -2177,120 +2378,67 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 
 	return target_turf
 
-/obj/item/blueprint_planner/attack_self(mob/user)
-	ui_interact(user)
+/proc/check_blueprint_placement_valid(turf/origin_turf, mob/user, list/design_data, max_floors)
+	if(!origin_turf || !length(design_data))
+		return FALSE
 
-/obj/item/blueprint_planner/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "BlueprintPlanner", name)
-		ui.open()
+	var/list/future_grid = list()
+	var/list/future_types = list()
 
-/obj/item/blueprint_planner/ui_static_data(mob/user)
-	return get_blueprint_static_tgui_data()
+	for(var/entry in design_data)
+		var/dx = isnum(entry["x"]) ? entry["x"] : text2num(entry["x"])
+		var/dy = isnum(entry["y"]) ? entry["y"] : text2num(entry["y"])
+		var/dz = isnum(entry["z"]) ? entry["z"] : (text2num(entry["z"]) || 0)
+		if(dz >= max_floors) continue
 
+		var/b_type = entry["type"]
+		var/list/info = GLOB.blueprint_buildable_types[b_type]
+		if(!info) continue
 
-/obj/item/blueprint_planner/ui_data(mob/user)
-	var/list/data = list()
-	data["saved_grid"] = design_data
-	data["saved_floors"] = max_floors
-	data["scanned_grid"] = scanned_grid
-	return data
+		var/key = "[dx]_[dy]_[dz]"
+		if(!future_grid[key])
+			future_grid[key] = list()
+			future_types[key] = list()
+		future_grid[key] += info["layer_type"]
+		future_types[key] += b_type
 
+	for(var/entry in design_data)
+		var/dx = isnum(entry["x"]) ? entry["x"] : text2num(entry["x"])
+		var/dy = isnum(entry["y"]) ? entry["y"] : text2num(entry["y"])
+		var/dz = isnum(entry["z"]) ? entry["z"] : (text2num(entry["z"]) || 0)
+		if(dz >= max_floors) continue
 
-/obj/item/blueprint_planner/ui_act(action, params)
-	. = ..()
-	if(.) return
+		var/b_type = entry["type"]
+		var/list/info = GLOB.blueprint_buildable_types[b_type]
+		if(!info) continue
 
-	if(action == "scan_terrain")
-		var/radius = min(params["radius"] || 6, MAX_PLANNER_RADIUS)
-		var/max_z = clamp(text2num(params["max_floors"]) || 2, 2, 4)
-		var/turf/center = get_turf(src)
-		var/list/scanned = list()
-		for(var/dx in -radius to radius)
-			for(var/dy in -radius to radius)
-				for(var/dz in 0 to max_z - 1)
-					var/turf/T = get_blueprint_target_turf(center, dx, dy, dz)
-					if(!T) continue
+		var/turf/target_turf = get_blueprint_target_turf(origin_turf, dx, dy, dz)
+		if(!target_turf)
+			to_chat(user, span_warning("Not enough space: blueprint extends beyond world boundaries!"))
+			return FALSE
 
-					var/is_blocked = FALSE
-					if(isclosedturf(T))
-						is_blocked = TRUE
-					else
-						for(var/obj/O in T)
-							if(O.density && (istype(O, /obj/structure) || istype(O, /obj/machinery)))
-								is_blocked = TRUE
-								break
+		if(info["requires_floor"])
+			var/key = "[dx]_[dy]_[dz]"
+			var/has_planned_floor = ("floor" in future_grid[key])
+			var/has_real_floor = isfloorturf(target_turf) && !istype(target_turf, /turf/open/transparent/openspace) && !istype(target_turf, /turf/open/water)
+			if(!has_planned_floor && !has_real_floor)
+				to_chat(user, span_warning("[info["name"]] at ([target_turf.x], [target_turf.y]) requires a solid floor underneath!"))
+				return FALSE
 
-					if(is_blocked)
-						scanned += list(list("x"=dx, "y"=dy, "z"=dz, "layer"="wall"))
-					else if(!istype(T, /turf/open/transparent/openspace) && !istype(T, /turf/open/water))
-						scanned += list(list("x"=dx, "y"=dy, "z"=dz, "layer"="floor"))
+		if(isclosedturf(target_turf))
+			to_chat(user, span_warning("Cannot build: there is already a wall ([target_turf.name]) at ([target_turf.x], [target_turf.y])!"))
+			return FALSE
 
-		scanned_grid = scanned
-		return TRUE
+		for(var/obj/structure/S in target_turf)
+			if(S.density || istype(S, /obj/structure/mineral_door) || istype(S, /obj/structure/stairs) || istype(S, /obj/structure/blueprint_site))
+				to_chat(user, span_warning("Not enough space: obstacle ([S.name]) at ([target_turf.x], [target_turf.y])!"))
+				return FALSE
 
-	if(action == "save_design")
-		var/list/packed_data = params["packed_data"]
-		var/list/safe_data = list()
+		for(var/obj/machinery/M in target_turf)
+			if(M.density)
+				to_chat(user, span_warning("Not enough space: machinery ([M.name]) in the way!"))
+				return FALSE
 
-		for(var/b_type in packed_data)
-			var/list/coords = packed_data[b_type]
-			for(var/coord_str in coords)
-				var/list/parts = splittext(coord_str, ",")
-				if(length(parts) < 3) continue
-
-				var/dx = text2num(parts[1])
-				var/dy = text2num(parts[2])
-				var/dz = text2num(parts[3])
-				var/ddir = length(parts) >= 4 ? text2num(parts[4]) : 2
-
-				if(abs(dx) > MAX_PLANNER_RADIUS || abs(dy) > MAX_PLANNER_RADIUS)
-					continue
-
-				safe_data += list(list(
-					"x" = dx,
-					"y" = dy,
-					"z" = dz,
-					"type" = b_type,
-					"dir" = ddir
-				))
-
-		design_data = safe_data
-		max_floors = clamp(text2num(params["max_floors"]) || 2, 2, 4)
-		if(length(design_data))
-			is_designed = TRUE
-			to_chat(usr, span_notice("Blueprint for [max_floors] fl. saved! Click on the ground to place the construction site."))
-			SStgui.close_uis(src)
-		else
-			is_designed = FALSE
-			to_chat(usr, span_warning("The blueprint is empty."))
-		return TRUE
-
-	if(action == "clear_design")
-		design_data = list()
-		is_designed = FALSE
-		to_chat(usr, span_notice("The blueprint has been cleared."))
-		return TRUE
-
-/obj/item/blueprint_planner/proc/can_place_blueprint(turf/origin_turf, mob/user)
-	return check_blueprint_placement_valid(origin_turf, user, design_data, max_floors)
-
-
-/obj/item/blueprint_planner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag || !is_designed) return
-
-	var/turf/T = get_turf(target)
-	if(!isturf(T)) return
-
-	if(!can_place_blueprint(T, user))
-		return
-
-	var/obj/structure/blueprint_site/site = new(T)
-	site.max_floors = src.max_floors
-	site.setup_design(design_data, user)
-	to_chat(user, span_notice("You placed a construction site for [max_floors] fl.! Place required resources nearby and strike with a hammer."))
-	qdel(src)
 	return TRUE
 
 /obj/effect/blueprint_ghost
@@ -2379,6 +2527,11 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	var/incoming_dir = entry && isnum(entry["dir"]) ? entry["dir"] : (text2num(entry?["dir"]) || 2)
 	var/is_border_build = (info && info["layer_type"] == "border")
 
+	if(info && info["requires_floor"])
+		if(!isfloorturf(target_turf) || istype(target_turf, /turf/open/transparent/openspace) || istype(target_turf, /turf/open/water))
+			to_chat(user, span_warning("[info["name"]] cannot be erected without a solid floor underneath!"))
+			return FALSE
+
 	for(var/mob/living/M in target_turf)
 		to_chat(user, span_warning("A creature ([M.name]) at ([target_turf.x], [target_turf.y]) is obstructing construction! Ask it to move."))
 		return FALSE
@@ -2421,7 +2574,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 			playsound(src, 'sound/items/bsmithfail.ogg', 50, 1)
 			return TRUE
 
-		var/batch_size = 1
+		var/batch_size = 3
 
 		if(length(active_ghosts))
 			for(var/i in 1 to batch_size)
@@ -2558,7 +2711,6 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 					qdel(B)
 				else
 					B.update_bundle()
-
 		else
 			for(var/res_path in required_resources)
 				if(required_resources[res_path] > 0 && istype(I, res_path))
@@ -2571,12 +2723,6 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	playsound(src, 'sound/foley/Building-01.ogg', 100, 1)
 	qdel(src)
 
-/obj/structure/blueprint_site/Destroy()
-	for(var/obj/effect/blueprint_ghost/G in active_ghosts)
-		qdel(G)
-	active_ghosts.Cut()
-	unbuilt_entries.Cut()
-	return ..()
 
 /mob
 	var/list/arcyne_blueprint_data = list()
@@ -2615,7 +2761,10 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		ui.open()
 
 /obj/effect/proc_holder/spell/self/architect_plan/ui_static_data(mob/user)
-	return get_blueprint_static_tgui_data()
+	var/list/data = get_blueprint_static_tgui_data()
+	data["max_radius"] = MAX_SPELL_RADIUS
+	data["library_blueprints"] = blueprint_library_cache
+	return data
 
 /obj/effect/proc_holder/spell/self/architect_plan/ui_data(mob/user)
 	var/list/data = list()
@@ -2623,14 +2772,18 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 		data["saved_grid"] = user.arcyne_blueprint_data
 		data["saved_floors"] = user.arcyne_blueprint_floors
 		data["scanned_grid"] = scanned_grid
+		data["user_ckey"] = user.ckey
 	return data
 
-/obj/effect/proc_holder/spell/self/architect_plan/ui_act(action, params)
+/obj/effect/proc_holder/spell/self/architect_plan/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.) return
 
 	var/mob/living/L = usr
 	if(!istype(L)) return
+
+	if(handle_blueprint_library_act(action, params, L, ui))
+		return TRUE
 
 	if(action == "scan_terrain")
 		var/radius = min(params["radius"] || MAX_SPELL_RADIUS, MAX_SPELL_RADIUS)
@@ -2673,6 +2826,9 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 				var/dy = text2num(parts[2])
 				var/dz = text2num(parts[3])
 				var/ddir = length(parts) >= 4 ? text2num(parts[4]) : 2
+
+				if(!isnum(dx) || !isnum(dy) || !isnum(dz) || !isnum(ddir))
+					continue
 
 				if(abs(dx) > MAX_SPELL_RADIUS || abs(dy) > MAX_SPELL_RADIUS)
 					continue
@@ -2760,113 +2916,4 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	)
 	return TRUE
 
-
-/proc/check_blueprint_placement_valid(turf/origin_turf, mob/user, list/design_data, max_floors)
-	if(!origin_turf || !length(design_data))
-		return FALSE
-
-	var/list/future_grid = list()
-	var/list/future_types = list()
-
-	for(var/entry in design_data)
-		var/dx = isnum(entry["x"]) ? entry["x"] : text2num(entry["x"])
-		var/dy = isnum(entry["y"]) ? entry["y"] : text2num(entry["y"])
-		var/dz = isnum(entry["z"]) ? entry["z"] : (text2num(entry["z"]) || 0)
-		if(dz >= max_floors) continue
-
-		var/b_type = entry["type"]
-		var/list/info = GLOB.blueprint_buildable_types[b_type]
-		if(!info) continue
-
-		var/key = "[dx]_[dy]_[dz]"
-		if(!future_grid[key])
-			future_grid[key] = list()
-			future_types[key] = list()
-		future_grid[key] += info["layer_type"]
-		future_types[key] += b_type
-
-	for(var/entry in design_data)
-		var/dx = isnum(entry["x"]) ? entry["x"] : text2num(entry["x"])
-		var/dy = isnum(entry["y"]) ? entry["y"] : text2num(entry["y"])
-		var/dz = isnum(entry["z"]) ? entry["z"] : (text2num(entry["z"]) || 0)
-		if(dz >= max_floors) continue
-
-		var/b_type = entry["type"]
-		var/list/info = GLOB.blueprint_buildable_types[b_type]
-		if(!info) continue
-
-		var/turf/target_turf = get_blueprint_target_turf(origin_turf, dx, dy, dz)
-		if(!target_turf)
-			to_chat(user, span_warning("Not enough space: blueprint extends beyond world boundaries!"))
-			return FALSE
-
-		if(isclosedturf(target_turf))
-			to_chat(user, span_warning("Cannot build: there is already a wall ([target_turf.name]) at ([target_turf.x], [target_turf.y])!"))
-			return FALSE
-
-		for(var/obj/structure/S in target_turf)
-			if(S.density || istype(S, /obj/structure/mineral_door) || istype(S, /obj/structure/stairs) || istype(S, /obj/structure/blueprint_site))
-				to_chat(user, span_warning("Not enough space: obstacle ([S.name]) at ([target_turf.x], [target_turf.y])!"))
-				return FALSE
-
-		for(var/obj/machinery/M in target_turf)
-			if(M.density)
-				to_chat(user, span_warning("Not enough space: machinery ([M.name]) in the way!"))
-				return FALSE
-
-	return TRUE
-
-/proc/get_blueprint_static_tgui_data()
-	var/list/data = list()
-	var/list/types_data = list()
-
-	for(var/key in GLOB.blueprint_buildable_types)
-		var/list/info = GLOB.blueprint_buildable_types[key]
-		var/atom/build_path = info["path"]
-
-		var/i_file = info["icon_file"] || initial(build_path.icon)
-		var/i_state = info["icon_state"] || initial(build_path.icon_state)
-
-		if(!info["image"])
-			var/icon/I = icon(i_file, i_state, SOUTH, 1)
-			info["image"] = icon2base64(I)
-
-		var/list/reqs_list = get_blueprint_reqs(info)
-		var/reqs_text = ""
-		for(var/r_path in reqs_list)
-			var/obj/item/temp = r_path
-			reqs_text += "[initial(temp.name)] x[reqs_list[r_path]], "
-		if(length(reqs_text) > 2)
-			reqs_text = copytext(reqs_text, 1, length(reqs_text) - 1)
-
-		types_data[key] = list(
-			"name" = info["name"],
-			"category" = info["category"],
-			"layer_type" = info["layer_type"],
-			"reqs_text" = reqs_text,
-			"image" = info["image"]
-		)
-
-	data["buildable_types"] = types_data
-	return data
-
-/proc/get_blueprint_reqs(list/info)
-	if(islist(info["reqs"]))
-		return info["reqs"]
-
-	if(ispath(info["reqs"], /datum/crafting_recipe))
-		var/craft_path = info["reqs"]
-		var/datum/crafting_recipe/dummy = new craft_path()
-		var/list/actual_reqs = list()
-		for(var/req_key in dummy.reqs)
-			actual_reqs[req_key] = dummy.reqs[req_key]
-
-		info["reqs"] = actual_reqs
-		qdel(dummy)
-
-		return actual_reqs
-
-	return list()
-
-#undef MAX_PLANNER_RADIUS
 #undef MAX_SPELL_RADIUS
