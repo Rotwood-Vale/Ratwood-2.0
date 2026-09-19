@@ -578,8 +578,7 @@
 
 /datum/status_effect/debuff/divergence/proc/remove_slow()
 	slow_timer = null
-	if(owner)
-		owner.remove_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, TRUE)
+	owner?.remove_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, TRUE)
 
 /datum/status_effect/debuff/divergence/on_remove()
 	. = ..()
