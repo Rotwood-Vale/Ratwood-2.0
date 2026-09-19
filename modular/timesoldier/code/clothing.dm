@@ -70,7 +70,7 @@
 // INTERWARFARE. A loving love letter to Sparrow, and Matt. Thank you for making such an amazing project.
 
 
-/obj/item/clothing/suit/roguetown/armor/brigandine/light/timesoldier/interwar/armorvest
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor/interwar
 	name = "armor vest"
 	desc = "<span class='yellow'><i>Steel plates in a canvas carrier. It was never comfortable, but it caught shrapnel.</i></span>"
 	icon = 'modular/timesoldier/sprites/warfare.dmi'
@@ -80,7 +80,7 @@
 	color = null
 
 
-/obj/item/clothing/cloak/raincloak/timesoldier/interwar/sniper
+/obj/item/clothing/cloak/poncho/timesoldier/interwar/sniper
 	name = "sniper's cloak"
 	desc = "<span class='yellow'><i>Dark cloth breaks up my outline and keeps the mud off my back.</i></span>"
 	icon = 'modular/timesoldier/sprites/warfare.dmi'
@@ -88,22 +88,10 @@
 	icon_state = "sniper_hood"
 	item_state = "sniper_hood"
 	color = null
-	sleeved = null
-	sleevetype = null
-	hoodtype = /obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
-
-/obj/item/clothing/head/hooded/rainhood/timesoldier/interwar/sniper
-	name = "sniper's hood"
-	desc = "<span class='yellow'><i>You know, I always hated rain.</i></span>"
-	icon = 'modular/timesoldier/sprites/warfare.dmi'
-	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
-	icon_state = "sniperhood"
-	item_state = "sniperhood"
-	color = null
 
 
-/obj/item/clothing/mask/rogue/physician/timesoldier/interwar/sniper
-	name = "sniper's mask"
+/obj/item/clothing/mask/rogue/facemask/steel/confessor/timesoldier/interwar/sniper
+	name = "marksman gas mask"
 	desc = "<span class='yellow'><i>It keeps the worst of the smoke and rot out.</i></span>"
 	icon = 'modular/timesoldier/sprites/warfare.dmi'
 	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
@@ -138,4 +126,13 @@
 	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
 	icon_state = "redgloves"
 	item_state = "redgloves"
+	color = null
+
+/obj/item/clothing/head/roguetown/helmet/heavy/timesoldier/sniper
+	name = "marksman helmet"
+	desc = "<span class='yellow'><i>The lenses on this thing used to work properly, but now they're foggy. Made with tempered steel, this was the first thing I received from my instructor.</i></span>"
+	icon = 'modular/timesoldier/sprites/warfare.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/warfare_onmob.dmi'
+	icon_state = "redsniperhelmet"
+	item_state = "redsniperhelmet"
 	color = null
