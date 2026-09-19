@@ -63,6 +63,7 @@
 	R.smeltresult = null
 	R.salvage_result = null
 	R.fiber_salvage = FALSE
+	R.sellprice = 0
 	user.put_in_hands(R)
 	src.conjured_tool = R
 	return TRUE
