@@ -550,7 +550,10 @@
 		return FALSE
 
 	if(device.chastity_move_sound)
-		playsound(source, device.chastity_move_sound, device.chastity_move_volume, TRUE)
+		if(modular_chastity_private_active(source))
+			source.playsound_local(get_turf(source), device.chastity_move_sound, device.chastity_move_volume, TRUE)
+		else
+			playsound_chastity(source, device.chastity_move_sound, device.chastity_move_volume, TRUE)
 
 	var/datum/sex_controller/wearer_sexcon = source.sexcon
 	if(!wearer_sexcon || !wearer_sexcon.chastity_content_enabled_for(source))
@@ -569,12 +572,19 @@
 	// All jingle banks (visible and all covered variants) produce messages beginning with "'s",
 	// so they are concatenated directly onto the name without a separating space.
 	// Pain and struggle messages begin with a verb and need the leading space.
+	var/final_message
 	if(string_key == "chastity_movement_pain")
-		source.visible_message(span_warning("[source] [message]"), vision_distance = 2)
+		final_message = span_warning("[source] [message]")
 	else if(copytext(string_key, 1, 17) == "chastity_jingle_")
-		source.visible_message(span_smallnotice("[source][message]"), vision_distance = 2)
+		final_message = span_smallnotice("[source][message]")
 	else
-		source.visible_message(span_smallnotice("[source] [message]"), vision_distance = 2)
+		final_message = span_smallnotice("[source] [message]")
+
+	// Private chastity keeps the flavor message for yourself only, never broadcasting it.
+	if(modular_chastity_private_active(source))
+		to_chat(source, final_message)
+	else
+		source.visible_message(final_message, vision_distance = 2)
 	return TRUE
 
 /datum/component/intimate_reaction/chastity_receive_flavor/try_handle_wearer_sex_action_received(mob/living/carbon/human/source, mob/living/carbon/human/acting_mob, datum/sex_controller/acting_sexcon, datum/sex_action/action, receiver_part, giving, arousal_amt, pain_amt, applied_force, applied_speed)

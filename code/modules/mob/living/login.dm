@@ -5,6 +5,7 @@
 		client.update_ooc_verb_visibility()
 		if(client.prefs)
 			update_redflash_pref(client.prefs.no_redflash, update_hud = FALSE)
+			update_chastity_content_pref(client.prefs.chastenable)
 	//Mind updates
 	sync_mind()
 	mind.show_memory(src, 0)

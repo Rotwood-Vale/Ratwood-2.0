@@ -140,6 +140,7 @@
 		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
+		list("id" = "private_chastity", "label" = "Private Chastity", "enabled" = !!owner.prefs.private_chastity, "disabled" = !owner.prefs.chastenable, "desc" = "Requires Enabled Chastity Content. Hides your own chastity notifications, sounds, and device visibility from everyone but yourself."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
@@ -246,6 +247,8 @@
 				owner.toggle_ERP()
 			if("chastity")
 				owner.toggle_Chastity()
+			if("private_chastity")
+				owner.toggle_Private_Chastity()
 			if("permanent_binding")
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
@@ -443,13 +446,32 @@
 	set hidden = 1
 	if(prefs)
 		prefs.chastenable = !prefs.chastenable
+		if(!prefs.chastenable)
+			prefs.private_chastity = FALSE
 		prefs.save_preferences()
+		mob.update_chastity_content_pref(prefs.chastenable)
 		if(prefs.chastenable)
 			to_chat(src, "Chastity content enabled.")
 		else
 			if(hascall(src, "modular_handle_chastity_toggle_disable"))
 				call(src, "modular_handle_chastity_toggle_disable")()
 			to_chat(src, "Chastity content disabled.")
+
+/client/verb/toggle_Private_Chastity() // Requires chastenable — hides your own chastity notifications/sounds/visibility from everyone but yourself while still allowing you to wear devices and use them in ERP actions.
+	set category = "Options"
+	set name = "Toggle Private Chastity"
+	set hidden = 1
+	if(!prefs)
+		return
+	if(!prefs.chastenable)
+		to_chat(src, span_warning("I must enable chastity content before I can make it private."))
+		return
+	prefs.private_chastity = !prefs.private_chastity
+	prefs.save_preferences()
+	if(prefs.private_chastity)
+		to_chat(src, "Private chastity enabled. Your chastity notifications and device will no longer be visible to others.")
+	else
+		to_chat(src, "Private chastity disabled.")
 
 /client/verb/toggle_Chastity_Hardmode()
 	set category = "Options"

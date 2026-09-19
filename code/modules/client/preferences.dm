@@ -123,6 +123,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/sexable = FALSE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
+	/// Requires chastenable — hides your own chastity notifications/visibility from everyone but yourself.
+	var/private_chastity = FALSE
 	var/extreme_erp = FALSE
 	var/edging = FALSE
 	var/sensitive_brands = FALSE

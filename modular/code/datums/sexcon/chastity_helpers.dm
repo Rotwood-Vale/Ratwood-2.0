@@ -1,3 +1,87 @@
+/// Returns TRUE if the observing mob has the "Enable Chastity Content" preference toggle on.
+/// Gates whether an observer can always see/hear someone else's chastity device regardless of clothing coverage.
+/// Mobs with no client (NPCs, etc.) never bypass the coverage check via this proc.
+/proc/modular_chastity_observer_on(mob/user)
+	var/mob/living/living_user = user
+	if(istype(living_user))
+		return living_user.chastity_content_enabled
+	return !!(user?.client?.prefs?.chastenable)
+
+/// Returns TRUE if the wearer has "Private Chastity" active — their own device/messages/sounds
+/// should never be exposed to anyone but themselves, regardless of coverage or observer prefs.
+/proc/modular_chastity_private_active(mob/wearer)
+	return !!(wearer?.client?.prefs?.chastenable && wearer.client.prefs.private_chastity)
+
+/// Returns TRUE if the given organ slot (penis/vagina) on H is chastity-blocked and watcher is
+/// allowed to know about it — always visible to the wearer (or a null watcher, e.g. self-preview
+/// screens), gated by privacy/observer toggle for anyone else.
+/proc/modular_chastity_genital_note_visible(mob/living/carbon/human/H, mob/watcher, organ_slot)
+	if(!istype(H) || !H.chastity_device || !H.sexcon)
+		return FALSE
+	var/blocked = (organ_slot == ORGAN_SLOT_VAGINA) ? H.sexcon.has_chastity_vagina() : H.sexcon.has_chastity_penis()
+	if(!blocked)
+		return FALSE
+	if(!watcher || watcher == H)
+		return TRUE
+	if(modular_chastity_private_active(H))
+		return FALSE
+	return modular_chastity_observer_on(watcher)
+
+/// Short device name used inline in genital descriptor text (e.g. "secured with a spiked chastity cage").
+/// Uses the actual worn device's name so cages, flat cages, spiked variants, belts/insertables, and cursed devices all read correctly.
+/proc/get_chastity_genital_note_text(mob/living/carbon/human/H)
+	var/obj/item/chastity/device = H.chastity_device
+	if(!device?.name)
+		return "a chastity device"
+	var/first_letter = LOWER_TEXT(copytext(device.name, 1, 2))
+	var/article = (first_letter in list("a", "e", "i", "o", "u")) ? "an" : "a"
+	return "[article] [device.name]"
+
+/// Appends a "secured with a chastity cage" clause to a genital descriptor's text, if visible to watcher.
+/// Colored the same as the rest of the descriptor text it's folded into (handled by the caller's span wrap).
+/proc/append_chastity_genital_note(base_description, mob/living/carbon/human/H, mob/watcher, organ_slot)
+	if(!base_description || !modular_chastity_genital_note_visible(H, watcher, organ_slot))
+		return base_description
+	return "[base_description] and secured with [get_chastity_genital_note_text(H)]"
+
+/mob/proc/update_chastity_content_pref(chastity_pref)
+	var/mob/living/user = src
+	if(!istype(user))
+		return
+	user.chastity_content_enabled = !!chastity_pref
+
+/proc/playsound_chastity(atom/source, soundin, vol as num, vary, frequency = null, falloff, channel, pressure_affected = FALSE, repeat)
+	if(isarea(source))
+		CRASH("playsound_chastity(): source is an area")
+
+	var/turf/turf_source = get_turf(source)
+	if(!turf_source)
+		return
+
+	channel = channel || SSsounds.random_available_channel()
+
+	var/sound/S = soundin
+	if(!istype(S))
+		S = sound(get_sfx(soundin))
+
+	. = list()
+	for(var/mob/listener as anything in get_hearers_in_view(CHASTITY_MOVE_SOUND_RANGE, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS))
+		var/mob/living/living_listener = listener
+		if(istype(living_listener))
+			if(!living_listener.chastity_content_enabled)
+				continue
+		else if(!listener.client?.prefs?.chastenable)
+			continue
+
+		if(isdullahan(listener))
+			var/mob/living/carbon/human/human = listener
+			var/datum/species/dullahan/dullahan = human.dna.species
+			if(dullahan.headless && get_dist(dullahan.my_head, turf_source) > CHASTITY_MOVE_SOUND_RANGE)
+				continue
+
+		if(listener.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
+			. += listener
+
 /// Plays a chastity movement sound (jingle, rattle, etc.) when a sex action involves a wearer.
 /// Checks both user and action_target for a chastity device — whichever has one produces the sound.
 /// Probability scales with action speed. Volume scales with sex force tier (MID→HIGH→EXTREME).
@@ -32,7 +116,7 @@
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			chastity_volume = 50
 
-	playsound(sound_target, chastity_item.chastity_move_sound ? chastity_item.chastity_move_sound : SFX_JINGLE_BELLS, chastity_volume, TRUE, -2, ignore_walls = FALSE)
+	playsound_chastity(sound_target, chastity_item.chastity_move_sound ? chastity_item.chastity_move_sound : SFX_JINGLE_BELLS, chastity_volume, TRUE)
 	return TRUE
 
 /// Returns TRUE if the sexcon's user is wearing spiked chastity AND has the masochist flaw.
@@ -41,6 +125,24 @@
 	if(!HAS_TRAIT(user, TRAIT_CHASTITY_SPIKED))
 		return FALSE
 	if(!user.has_flaw(/datum/charflaw/addiction/masochist))
+		return FALSE
+	return TRUE
+
+/// Returns TRUE if chastity content (flavor text, noise, arousal messages) is enabled for mob H.
+/// Offline/NPC mobs (no client/prefs) default to TRUE so automated procs don't silently break.
+/datum/sex_controller/proc/modular_chastity_content_enabled_for(mob/living/carbon/human/H)
+	if(!H)
+		return FALSE
+	if(!H.client?.prefs)
+		return TRUE
+	return H.chastity_content_enabled
+
+/// Returns TRUE if chastity content is enabled for BOTH user and target in this sex controller.
+/// Short-circuits on first failure — call before any chastity flavor dispatch that involves both parties.
+/datum/sex_controller/proc/modular_chastity_content_enabled_for_pair()
+	if(!modular_chastity_content_enabled_for(user))
+		return FALSE
+	if(target && target != user && !modular_chastity_content_enabled_for(target))
 		return FALSE
 	return TRUE
 
