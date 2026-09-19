@@ -3,11 +3,11 @@
 // But I am not nuking it from Acolyte yet so it will be unavailable to mage.
 // I repathed it to avoid it becoming available to mages again.
 /obj/effect/proc_holder/spell/invoked/blindness
-	name = "Blindness"
-	desc = "Direct a mote of living darkness to temporarily blind another."
+	name = "Shroud of Noc"
+	desc = "Direct a mote of living darkness to temporarily blind another, restricting their combative skills relative to your faith."
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
-	overlay_state = "blindness"
+	overlay_state = "nocshroud"
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
@@ -286,7 +286,7 @@
 /obj/effect/proc_holder/spell/invoked/silence/miracle
 	name = "Silence"
 	desc = "Shutter voices and empty the air of sound - naught mage-nor-man shall utter a word, be it invocation or insult."
-	overlay_state = "silence"
+	overlay_state = "silencenoc"
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
@@ -329,7 +329,7 @@
 	desc = "Wrap a target in a ward of anti-magic."
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
-	overlay_state = "noc"
+	overlay_state = "antimagenoc"
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
