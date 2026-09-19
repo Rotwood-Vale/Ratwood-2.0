@@ -67,7 +67,7 @@
 		var/category_choice = input(H, "Choose your MEANS OF VIOLENCE.", "SMASH OR SLASH!!") as anything in main_choices
 		switch(category_choice)
 			if("Unarmed Master") //still incredibly strong btw, apply punch to skull
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted // apperantly normal barb gets em so for consistency sake
 				var/list/unarmed_options = list("Katar", "Knuckledusters", "Punch Dagger")
@@ -79,7 +79,7 @@
 						gloves = /obj/item/rogueweapon/knuckles
 					if("Punch Dagger")
 						beltr = /obj/item/rogueweapon/katar/punchdagger
-			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights- only expert
+			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights.
 				var/list/martial_options = list("Greatsword", "Battle Axe", "Grand Mace", "Broadsword")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
 				switch(weapon_choice)
