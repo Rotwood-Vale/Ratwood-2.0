@@ -10,6 +10,7 @@
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
+	pure_heart = TRUE
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
