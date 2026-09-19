@@ -1124,10 +1124,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 						new_delay = max(new_delay, base_delay * backpedal_delay_mult)
 			riding_datum.vehicle_move_delay = max(1, new_delay)
 			if(loc != oldloc)
-				for(var/mob/living/carbon/human/rider in buckled_mobs)
-					rider.vars["last_mount_move_time"] = world.time
-					rider.update_action_buttons_icon()
-					addtimer(CALLBACK(rider, TYPE_PROC_REF(/mob, update_action_buttons_icon)), 2 SECONDS)
 				var/obj/structure/mineral_door/MD = locate() in loc
 				if(MD && !MD.ridethrough)
 					if(!HAS_TRAIT(user, TRAIT_EQUESTRIAN))
