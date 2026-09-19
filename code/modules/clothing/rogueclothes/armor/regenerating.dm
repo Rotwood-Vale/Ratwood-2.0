@@ -144,6 +144,7 @@
 	desc = "I've endured enough. The onslaught has lost its meaning."
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
+	repair_time = 20 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker
 	name = "unstoppable chest"
