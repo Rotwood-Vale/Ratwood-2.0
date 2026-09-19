@@ -391,6 +391,15 @@
 	if(!hook || !reel)
 		return FALSE
 	return TRUE
+/// Deciseconds the player has to react to a bite. Flat 20 through apprentice,
+/// then +10 per skill level above apprentice, plus tackle bite modifiers.
+/obj/item/fishingrod/proc/get_bite_reaction_window(sl)
+	var/window = 20 + max(0, sl - SKILL_LEVEL_APPRENTICE) * 10
+	var/tackle_bonus = 0
+	for(var/obj/item/fishing/F in list(reel, hook, line))
+		tackle_bonus += F.hookmod
+	window += tackle_bonus * 10
+	return max(10, window)
 
 /obj/item/fishingrod/proc/apply_tackle_wear(mob/user, line_damage = 0, hook_damage = 0, reel_damage = 0)
 	if(line && istype(line, /obj/item/fishing))
@@ -1410,14 +1419,15 @@
 	var/chummed_spot = is_chummed_fishing_turf(targeted)
 	var/shallow_excluded_junk_zone = FALSE
 	var/sinker_shore_override = istype(line, /obj/item/fishing/line/sinker)
+	var/flyfish_shore_override = istype(baited, /obj/item/fishing/bait/fly)
+	var/shore_gear_override = sinker_shore_override || flyfish_shore_override
 	if(istype(targeted, /turf/open/water/cleanshallow))
 		near_shore_penalty = max(near_shore_penalty, 1)
-		if(shore_distance <= 3)
+		if(shore_distance <= 3 && !flyfish_shore_override)
 			shallow_excluded_junk_zone = TRUE
-	if(shore_distance <= 3 && !sinker_shore_override)
+	if(shore_distance <= 3 && !shore_gear_override)
 		shallow_excluded_junk_zone = TRUE
 		near_shore_penalty = max(near_shore_penalty, 3)
-
 	if(!has_complete_fishing_rig())
 		to_chat(user, "<span class='warning'>I'm missing something...</span>")
 		return
@@ -1471,25 +1481,46 @@
 		deepmod += 1
 
 	var/list/fishpicker = list()
-	var/list/deepfishlist = list(/obj/item/reagent_containers/food/snacks/fish/angler = 1)
+	var/list/deepfishlist = list(
+		/obj/item/reagent_containers/food/snacks/fish/angler = 1,
+		/obj/item/reagent_containers/food/snacks/fish/lobster = 1,
+		/obj/item/reagent_containers/food/snacks/fish/beaksnapper = 1,
+		/obj/item/reagent_containers/food/snacks/fish/sturgeon = 1,
+	)
+	var/list/deeprarelist = list(
+		/obj/item/reagent_containers/food/snacks/fish/creepy_squid = 1,
+		/obj/item/reagent_containers/food/snacks/fish/creepy_shark = 1,
+		/obj/item/reagent_containers/food/snacks/fish/creepy_eel = 1,
+)
 	if(istype(targeted, /turf/open/water/swamp))
-		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 6,
-							/obj/item/reagent_containers/food/snacks/fish/carp = 2)
-	else if(istype(targeted, /turf/open/water/swamp/deep))
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 5,
+							/obj/item/reagent_containers/food/snacks/fish/mudskipper = 5,
+							/obj/item/reagent_containers/food/snacks/fish/swamp_shrimp = 4,
+							/obj/item/reagent_containers/food/snacks/fish/swamp_mother = 2,
+							/obj/item/reagent_containers/food/snacks/fish/carp = 3)
+	else if(istype(targeted, /turf/open/water/swamp/deep))
+		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 3,
+							/obj/item/reagent_containers/food/snacks/fish/mudskipper = 3,
+							/obj/item/reagent_containers/food/snacks/fish/swamp_shrimp = 5,
+							/obj/item/reagent_containers/food/snacks/fish/swamp_mother = 3,
+							/obj/item/reagent_containers/food/snacks/fish/zizo_abberation = 2,
+							/obj/item/reagent_containers/food/snacks/fish/crawfish = 2,
 							/obj/item/reagent_containers/food/snacks/fish/carp = 3)
 		deepmod += 1
 	else if(istype(targeted, /turf/open/water/cleanshallow))
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 3,
-							/obj/item/reagent_containers/food/snacks/fish/carp = 5)
+							/obj/item/reagent_containers/food/snacks/fish/sunny = 5,
+							/obj/item/reagent_containers/food/snacks/fish/carp = 4)
 	else if(istype(targeted, /turf/open/water/river))
 		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/eel = 2,
-							/obj/item/reagent_containers/food/snacks/fish/carp = 6)
+							/obj/item/reagent_containers/food/snacks/fish/sunny = 3,
+							/obj/item/reagent_containers/food/snacks/fish/sturgeon = 1,
+							/obj/item/reagent_containers/food/snacks/fish/carp = 4)
 		deepmod += 1
 	else if(istype(targeted, /turf/open/water/ocean/deep))
-		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 4,
-							/obj/item/reagent_containers/food/snacks/fish/angler = 2,
-							/obj/item/reagent_containers/food/snacks/fish/plaice = 3,
+		fishpicker = list(/obj/item/reagent_containers/food/snacks/fish/cod = 3,
+							/obj/item/reagent_containers/food/snacks/fish/angler = 1,
+							/obj/item/reagent_containers/food/snacks/fish/plaice = 4,
 							/obj/item/reagent_containers/food/snacks/fish/lobster = 3)
 		deepmod += 1
 	else if(istype(targeted, /turf/open/water/ocean))
@@ -1555,10 +1586,20 @@
 		deepmod += 1
 		raritypicker = pickweightmerge(raritypicker, list("com" = -2, "rare" = 2, "ultra" = 1, "gold" = 1))
 
+	var/deep_passes = deepmod
 	while(deepmod > 0)
 		fishpicker = pickweightmerge(fishpicker, deepfishlist)
 		deepmod--
+	// Rare deep species only grow every third pass instead of every pass.
+	for(var/i in 1 to round(deep_passes / 3))
+		fishpicker = pickweightmerge(fishpicker, deeprarelist)
 
+	// Filter out species that don't belong in this water body, regardless of how they got merged in.
+	var/water_habitat = (istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep)) ? "salt" : "fresh"
+	for(var/fish_path in fishpicker)
+		var/habitat = get_fish_habitat(fish_path)
+		if(habitat != "any" && habitat != water_habitat)
+			fishpicker -= fish_path
 	//initialize fish modifiers
 	var/specialcatching = FALSE
 	var/specialfish = FALSE
@@ -1625,7 +1666,7 @@
 			fishsize = pickweightAllowZero(sizepicker)
 			fishrarity = pickweightAllowZero(raritypicker)
 			fishtype = pickweightAllowZero(fishpicker)
-			if(!is_abyssor_fisher && (fishtype == /obj/item/reagent_containers/food/snacks/fish/creepy_squid || fishtype == /obj/item/reagent_containers/food/snacks/fish/creepy_shark))
+			if(!is_abyssor_fisher && (fishtype == /obj/item/reagent_containers/food/snacks/fish/creepy_squid || fishtype == /obj/item/reagent_containers/food/snacks/fish/creepy_shark) && prob(75))
 				var/list/safe_fishpicker = fishpicker.Copy()
 				safe_fishpicker -= /obj/item/reagent_containers/food/snacks/fish/creepy_squid
 				safe_fishpicker -= /obj/item/reagent_containers/food/snacks/fish/creepy_shark
@@ -1743,7 +1784,7 @@
 					if(is_shellfish_catch_path(A))
 						A = istype(targeted, /turf/open/water/ocean) || istype(targeted, /turf/open/water/ocean/deep) ? /obj/item/reagent_containers/food/snacks/fish/cod : /obj/item/reagent_containers/food/snacks/fish/carp
 					if(A)
-						var/ow = 30 + (sl * 10) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
+						var/ow = get_bite_reaction_window(sl) // Opportunity window, in ticks. Longer means you get more time to cancel your bait
 						to_chat(user, "<span class='notice'>Something tugs the line! Use [src] in hand to reel it in!</span>")
 						targeted.balloon_alert_to_viewers("Tug!")
 						playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
@@ -1794,7 +1835,7 @@
 		// Got a bite. Wait for the player to use the rod in-hand to start reeling (like auto intent).
 		cast_reel_pending = TRUE
 		START_PROCESSING(SSobj, src)
-		cast_reel_pending_deadline = world.time + 30 + (sl * 10)
+		cast_reel_pending_deadline = world.time + get_bite_reaction_window(sl)
 		targeted.balloon_alert_to_viewers("Tug!")
 		playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 		to_chat(user, "<span class='notice'>There's a bite! Use [src] in hand to start reeling!</span>")
@@ -1821,6 +1862,7 @@
 		if(user.mind)
 			user.mind.add_sleep_experience(/datum/skill/labor/fishing, 1, FALSE)
 		// Strength + fishing level check: harder fish can tear free before the hook sets.
+		//challenge level is heavily impacted by fishing rod and tackle
 		var/fish_challenge_hook = get_fish_total_challenge()
 		if(fish_challenge_hook > 0)
 			var/str_hook = 10
@@ -1828,7 +1870,7 @@
 				var/mob/living/carbon/human/H_hook = fisher
 				str_hook = H_hook.STASTR
 			var/hook_roll = rand(1, 10) + str_hook + sl
-			var/hook_target = 8 + fish_challenge_hook * 4
+			var/hook_target = 4 + fish_challenge_hook * 3
 			if(hook_roll < hook_target)
 				to_chat(user, "<span class='warning'>I get a nibble - but the fish tears free before I can secure the line!</span>")
 				apply_tackle_wear(user, 1, 1, 1)
@@ -2214,6 +2256,6 @@
 	desc = "G'morning! Nice dae for fishin', ain't it? Hu-hah!"
 	icon_state = "blacksteelrod"
 	max_integrity = 500
-	rod_difficultymod = 1
-	rod_raritymod = list("com" = -1, "rare" = 1)
+	rod_difficultymod = -2
+	rod_raritymod = list("com" = -1, "rare" = 1, "ultra" = 1)
 

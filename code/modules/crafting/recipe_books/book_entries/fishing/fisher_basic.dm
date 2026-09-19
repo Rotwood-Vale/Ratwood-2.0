@@ -89,10 +89,10 @@
 		<li>Biases toward smaller fish - easier, shorter fights as a result.</li>
 		<li>Strong bite bonus close to shore, but loses its edge in open water.</li>
 		<li>Slower to cast and slower to reel in.</li>
-		<li>Crucially: a sinker is the only thing that lets you fish close to shore without the water turning up almost nothing but junk.</li>
+		<li>Lets you fish close to shore without the water turning up almost nothing but junk.</li>
 	</ul>
 	<p>
-		The sinker is the near-shore specialist - it's what makes fishing close to the bank worthwhile at all. The bobber is the generalist that keeps performing the farther out you go.
+		The sinker is the near-shore specialist - it's what makes fishing close to the bank worthwhile at all. The bobber is the generalist that keeps performing the farther out you go. The only other way to fish the shallows properly is fly bait, which cannot be used with either piece.
 	</p>
 	</div>
 	"}
@@ -112,12 +112,20 @@
 		<tr><td>Dough</td><td>Neutral</td><td>Neutral</td><td>Slight common bump</td></tr>
 		<tr><td>Gray Bait</td><td>Bonus</td><td>Neutral</td><td>Common up, Danger down</td></tr>
 		<tr><td>Meat/Chum</td><td>Neutral</td><td>Slight normal/large bump</td><td>Common & Danger up, Rare & Treasure down</td></tr>
-		<tr><td>Fly Bait</td><td>Best bonus (no bobber/sinker allowed)</td><td>Favors tiny/small</td><td>Rare up</td></tr>
+		<tr><td>Fly Bait</td><td>Best bonus (no bobber/sinker allowed)</td><td>Favors small/normal, then tiny</td><td>Rare up, Common/Treasure/Junk down. Draws in salmon, black bass, sturgeon, mackerel and bass</td></tr>
 		<tr><td>Speckled</td><td>Neutral</td><td>Favors huge/prize</td><td>Rare & Treasure up, pulls in deep-water species</td></tr>
 		<tr><td>Enchanted</td><td>Bonus</td><td>Favors large/huge/prize</td><td>Rare & Treasure up, chance of a guaranteed special catch</td></tr>
 	</table>
+	<h3>Fly Bait</h3>
 	<p>
-		Fly bait cannot be used alongside a bobber or sinker - it demands the hook be fished bare of any other line attachment, in exchange for the best raw bite chance available.
+		Fly bait is the angler's bait. It demands the hook be fished bare of any bobber or sinker, and in exchange gives the best raw bite chance available and lets you fish close to shore without the water turning to junk. It favors smaller, livelier fish over trophies.
+	</p>
+	<ul>
+		<li><b>Rivers and fresh water:</b> Salmon, black bass, and now and then a sturgeon.</li>
+		<li><b>The sea:</b> Mackerel, black-headed salmon, and seabass. The freshwater fish will not bite in salt water.</li>
+	</ul>
+	<p>
+		Whatever it draws in is added to what the water already holds, so it nudges your odds rather than replacing them. Salmon are best hunted in fresh water, where fly bait makes them a real share of your catches.
 	</p>
 	<p>
 		Enchanted bait carries a rare but real chance, on any given bite, to force something extraordinary onto the hook outright - a prize-sized catch, a rarity beyond gold, or a specific coveted fish - bypassing the usual odds entirely. Expect a much harder fight when it happens.
@@ -156,22 +164,28 @@
 	return {"
 	<div>
 	<h2>Where the Fish Are:</h2>
-	What you catch depends first on the water itself, then on your bait and how far you've cast from shore.
+	What you catch depends first on the water itself, then on your bait and how far you've cast from shore. Fish are listed most common first.
 	<table border='1' cellpadding='4' cellspacing='0'>
-		<tr><th>Water</th><th>Common Catches</th></tr>
-		<tr><td>Swamp</td><td>Eel, Carp</td></tr>
-		<tr><td>Deep Swamp</td><td>Eel, Carp</td></tr>
-		<tr><td>Clean Shallows</td><td>Carp, Eel (mostly junk regardless of gear)</td></tr>
-		<tr><td>River</td><td>Carp, Eel</td></tr>
-		<tr><td>Ocean</td><td>Cod, Sole, Bass, Flounder, Mackerel</td></tr>
-		<tr><td>Deep Ocean</td><td>Cod, Angler, Plaice, Lobster</td></tr>
+		<tr><th>Water</th><th>Common Catches</th><th>Less Common</th></tr>
+		<tr><td>Swamp</td><td>Eel, Mudskipper, Swamp Shrimp, Carp</td><td>Swamp Mother</td></tr>
+		<tr><td>Deep Swamp</td><td>Swamp Shrimp, Eel, Mudskipper, Carp, Swamp Mother</td><td>Crawfish, Zizo Aberration</td></tr>
+		<tr><td>Clean Shallows</td><td>Sunny, Carp, Eel (mostly junk regardless of gear)</td><td>-</td></tr>
+		<tr><td>River</td><td>Carp, Sunny, Eel</td><td>Sturgeon</td></tr>
+		<tr><td>Ocean</td><td>Cod, Sole, Bass, Flounder, Mackerel</td><td>-</td></tr>
+		<tr><td>Deep Ocean</td><td>Plaice, Cod, Lobster, Angler</td><td>Things that should stay below (see below)</td></tr>
 	</table>
+	<p>
+		Salmon, black bass and sturgeon-in-quantity are not on the table above because the water rarely offers them on its own. They come from bait, and fly bait in particular.
+	</p>
 	<h3>How far out for the big ones?</h3>
 	<p>
-		Casting closer than a few paces from the shoreline works against you - expect junk and the smallest, most common fish, unless you're fishing with a sinker.
+		Casting closer than a few paces from the shoreline works against you - expect junk and the smallest, most common fish, unless you're fishing with a sinker or fly bait.
 	</p>
 	<p>
-		Push out several meters from shore, over water that runs genuinely deep, and without open sky blotting things out, and the odds swing hard the other way - bigger, rarer catches become common, and deep-dwelling species like Angler (and, with the right bait, rarer prizes still) start showing up in earnest.
+		Push out several meters from shore, over water that runs genuinely deep, and without open sky blotting things out, and the odds swing hard the other way - bigger, rarer catches become common. In the sea, this pulls up deep-dwelling species: Angler, Lobster and Beaksnapper, and, for those favored by Abyssor, the horrors of the deep, Abyssal creatures.
+	</p>
+	<p>
+		Deep pull only pays off in salt water. In rivers, shallows and swamps, reaching for depth mostly improves the size and rarity of what you catch.
 	</p>
 	<p>
 		Chummed waters shift things further still toward the deep and away from the mundane. Tackle and bait that reach for depth all stack together, so gear with a poor depth pull will need correspondingly more distance from shore before deep fish begin to bite.
@@ -231,7 +245,8 @@
 	<h2>A Fisherman's Summary:</h2>
 	<ul>
 		<li><b>Learning the ropes:</b> Iron rod, silk or deluxe line, iron or steel hook, bobber, plain bait.</li>
-		<li><b>Fishing close to shore:</b> A sinker is not optional here - without one you will pull up almost nothing but junk.</li>
+		<li><b>Fishing close to shore:</b> Use a sinker or fly bait. Without either you will pull up almost nothing but junk.</li>
+		<li><b>Hunting salmon and black bass:</b> Fly bait on a bare hook, cast at a river or clean shallows.</li>
 		<li><b>Hunting big, rare fish:</b> A sturdier rod, the finest line and hook you can find, a bobber, and bait suited to depth - cast well out over genuinely deep water.</li>
 		<li><b>Chasing a guaranteed prize:</b> Enchanted bait, and the patience to weather the harder fight when your luck turns.</li>
 		<li><b>Filling the stores with minimal fuss:</b> A chummed net, checked and hauled before it overflows.</li>

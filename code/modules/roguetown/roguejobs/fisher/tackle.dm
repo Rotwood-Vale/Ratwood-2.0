@@ -141,7 +141,7 @@
 	name = "deluxe wooden lure hook"
 	desc = "A small wooden lure, painted to look like a small fish. It functions as a hook and tends to scare off smaller fish. It has two hooks, giving it a chance to hook in another fish."
 	icon_state = "deluxehook"
-	difficultymod = 2
+	hookmod = -5
 	raritymod = list("gold" = 1, "ultra" = 1, "rare"= 1, "com"= -3)
 	sizemod = list("tiny" = -4, "small" = -3, "normal" = -2, "large" = 2, "huge" = 3, "prize" = 4)
 	max_durability = 150
@@ -160,6 +160,7 @@
 	icon_state = "bobber"
 	hookmod = 4
 	deepfishingweight = -2
+	difficultymod = 2
 	bobber = TRUE
 	max_durability = 100
 	durability = 100
@@ -173,6 +174,7 @@
 	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
 	max_durability = 100
 	durability = 100
+
 /obj/item/fishing/bait
 	isbait = TRUE
 	baitpenalty = 0
@@ -268,7 +270,7 @@
 
 /obj/item/fishing/bait/fly
 	name = "fly bait"
-	desc = "A feathered lure for fly fishing. Attracts smaller, aggressive and rarer freshwater fish."
+	desc = "A feathered lure for fly fishing. Attracts smaller, aggressive and rarer fish."
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "feather"
 	baitpenalty = -3
@@ -284,17 +286,20 @@
 		"cheeseFishingMod" = 0
 	)
 	sizemod = list(
-		"tiny" = 2,
+		"tiny" = 1,
 		"small" = 2,
-		"normal" = 1,
+		"normal" = 2,
 		"large" = -2,
 		"huge" = -2,
 		"prize" = -1
 	)
 	fishinglist = list(
-		/obj/item/reagent_containers/food/snacks/fish/salmon = 3,
-		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed = 2,
-		/obj/item/reagent_containers/food/snacks/fish/bass = 3,
+		/obj/item/reagent_containers/food/snacks/fish/mackerel = 3,//ocean fly fishing
+		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed = 3,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 4,
+		/obj/item/reagent_containers/food/snacks/fish/black_bass = 4,//freshwater fly fishing
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 4,
+		/obj/item/reagent_containers/food/snacks/fish/sturgeon = 1,
 	)
 
 /obj/item/fishing/bait/dough
@@ -414,22 +419,13 @@
 		"type" = /obj/item/reagent_containers/food/snacks/fish/clownfish,
 	)
 
-/proc/pickweightmerge(list/List, list/add)//i need a way to merge multiple lists for my shenanigannery to work. remove this if fishing ever stops needing this
+/proc/pickweightmerge(list/List, list/add)
 	var/list/returner = List
-	var/addlength = length(add)
-	while(addlength > 0)
-		var/returnerlength = length(returner)
-		var/find = FALSE
-		while(returnerlength > 0)
-			if(add[addlength] == returner[returnerlength])
-				find = TRUE
-				returner[returner[addlength]] += add[add[addlength]]
-				break
-			returnerlength--
-		if(!find)
-			returner += add[addlength]
-			returner[add[addlength]] = add[add[addlength]]
-		addlength--
+	for(var/key in add)
+		if(key in returner)
+			returner[key] += add[key]
+		else
+			returner[key] = add[key]
 	return returner
 
 /proc/format_fishing_signed_value(value)

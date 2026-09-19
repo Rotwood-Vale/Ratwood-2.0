@@ -8,6 +8,32 @@
 	/// Temp fishingrod used for the cast hand-fishing minigame UI. Null when not in minigame.
 	var/obj/item/fishingrod/hand_fishing_cast_rod = null
 
+/proc/get_fish_habitat(fish_path)
+	var/static/list/freshwater_only = list(
+		/obj/item/reagent_containers/food/snacks/fish/eel,
+		/obj/item/reagent_containers/food/snacks/fish/carp,
+		/obj/item/reagent_containers/food/snacks/fish/salmon,
+		/obj/item/reagent_containers/food/snacks/fish/black_bass,
+		/obj/item/reagent_containers/food/snacks/fish/sturgeon,
+	)
+	var/static/list/saltwater_only = list(
+		/obj/item/reagent_containers/food/snacks/fish/cod,
+		/obj/item/reagent_containers/food/snacks/fish/sole,
+		/obj/item/reagent_containers/food/snacks/fish/bass,
+		/obj/item/reagent_containers/food/snacks/fish/salmon/black_headed,
+		/obj/item/reagent_containers/food/snacks/fish/flounder,
+		/obj/item/reagent_containers/food/snacks/fish/mackerel,
+		/obj/item/reagent_containers/food/snacks/fish/plaice,
+		/obj/item/reagent_containers/food/snacks/fish/lobster,
+		/obj/item/reagent_containers/food/snacks/fish/angler,
+		/obj/item/reagent_containers/food/snacks/fish/beaksnapper,
+		/obj/item/reagent_containers/food/snacks/fish/octopus,
+	)
+	if(fish_path in freshwater_only)
+		return "fresh"
+	if(fish_path in saltwater_only)
+		return "salt"
+	return "any" // junk, mobs, etc — treated as habitat-agnostic
 
 /proc/getfishingloot(mob/living/carbon/human/fisherman, list/modlist, turf/target, skill_power = 1)
 	if(!istype(target, /turf/open/water))

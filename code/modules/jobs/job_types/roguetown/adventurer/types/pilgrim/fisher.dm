@@ -9,10 +9,9 @@
 	traits_applied = list(TRAIT_CAUTIOUS_FISHER, TRAIT_HOMESTEAD_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 2
+		STATKEY_STR = 2,//strength checks for handling fish
+		STATKEY_WIL = 2,//will for larger stamina during minigame
+		STATKEY_LCK = 2//luck for rng chance
 	)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,

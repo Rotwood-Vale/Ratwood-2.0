@@ -138,16 +138,15 @@ GLOBAL_LIST_INIT(chummed_fishing_tiles, list())
 	if(!T)
 		return
 	var/world_time_expiry = world.time + duration
-	var/orig_color = T.color
-	var/orig_name = T.name
-	
-	// Store expiry and original properties
-	GLOB.chummed_fishing_tiles[T] = list(world_time_expiry, orig_color, orig_name)
+	var/list/existing = GLOB.chummed_fishing_tiles[T]
+	if(existing)
+		// Already chummed: extend the timer, keep the true originals.
+		existing[1] = max(existing[1], world_time_expiry)
+	else
+		GLOB.chummed_fishing_tiles[T] = list(world_time_expiry, T.color, T.name)
+		T.color = "#8B0000"
+		T.name = "[T.name] (chummed)"
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(expire_chum_turf), T), duration)
-	
-	// Visual effect: turn water red/bloody
-	T.color = "#8B0000"  // Dark red/blood color
-	T.name = "[T.name] (chummed)"
 
 /proc/expire_chum_turf(turf/T)
 	if(!T)
