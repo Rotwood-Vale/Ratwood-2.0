@@ -383,6 +383,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				stats += get_fatigue_breakdown(user)
 		else
 			stats += span_info("Stamina cost: [base_fd]")
+	if(devotion_cost)
+		stats += span_info("Devotion cost: [devotion_cost]")
 	return stats
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
