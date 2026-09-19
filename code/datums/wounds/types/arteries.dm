@@ -29,7 +29,7 @@
 
 /datum/wound/artery/on_mob_gain(mob/living/affected)
 	. = ..()
-	affected.emote("paincrit", TRUE)
+	affected.emote("paincrit", forced = TRUE)
 	affected.Slowdown(20)
 	shake_camera(affected, 2, 2)
 
