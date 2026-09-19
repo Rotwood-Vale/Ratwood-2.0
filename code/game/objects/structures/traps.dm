@@ -496,6 +496,7 @@
 	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
 	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE
 	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_MAGEARMOR)) return TRUE // all mages are dangerus
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/is_trap_exception(mob/living/H)
