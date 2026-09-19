@@ -9,7 +9,7 @@
 //	This also works with decimals.
 #define SAVEFILE_VERSION_MAX	38
 
-// Safely extract a type path from datums or type values; returns null if unset/invalid.
+// Safely extract a type path from datums or type values. Returns null if unset/invalid
 /proc/preferences_typepath_or_null(value)
 	if(isnull(value))
 		return null
@@ -245,6 +245,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
 	S["pointambiencevol"]	>> pointambiencevol
+	S["pointambience_independent"] >> pointambience_independent
 	S["overallvol"]		>> overallvol
 	S["instrumentvol"]	>> instrumentvol
 	S["layout_map"]		>> layout_map
@@ -374,6 +375,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
+	pointambience_independent = sanitize_integer(pointambience_independent, 0, 1, initial(pointambience_independent))
 	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
 	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	// Null stays null: it means the layout was never set, which is different from a bad value
@@ -442,6 +444,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
+	WRITE_FILE(S["pointambience_independent"], pointambience_independent)
 	WRITE_FILE(S["overallvol"], overallvol)
 	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["layout_map"], layout_map)

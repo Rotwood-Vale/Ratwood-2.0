@@ -82,8 +82,8 @@
 		return
 
 	var/vol = clamp(round(volume_value), 0, 100)
-	// Point ambience is unhooked while it is silent, and either of two sliders can silence it
-	var/point_ambience_was_silent = !prefs.pointambiencevol || !prefs.overallvol
+	// Point ambience is unhooked while its effective volume is zero
+	var/point_ambience_was_silent = !prefs.point_ambience_volume()
 	switch(setting_id)
 		if("master")
 			prefs.overallvol = vol
@@ -121,7 +121,7 @@
 
 	// Crossing zero changes whether they are hooked at all, so it takes the call the toggles use.
 	// Any other change reaches their next service without cutting what is playing
-	if(point_ambience_was_silent != (!prefs.pointambiencevol || !prefs.overallvol))
+	if(point_ambience_was_silent != !prefs.point_ambience_volume())
 		SSpoint_ambience.listener_prefs_changed(src)
 	prefs.save_preferences()
 
@@ -158,6 +158,7 @@
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
 	data["point_ambience_volume"] = isnum(owner.prefs.pointambiencevol) ? owner.prefs.pointambiencevol : initial(owner.prefs.pointambiencevol)
+	data["point_ambience_independent"] = owner.prefs.pointambience_independent
 	// Sent the way round the player thinks about it: these two are stored inverted so that an
 	// existing savefile without them reads as on
 	data["point_ambience"] = !(owner.prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
@@ -179,6 +180,12 @@
 		return TRUE
 
 	if(action == "toggle")
+		if(params["id"] == "point_ambience_independent")
+			owner.prefs.pointambience_independent = !owner.prefs.pointambience_independent
+			owner.prefs.save_preferences()
+			SSpoint_ambience.listener_prefs_changed(owner)
+			SStgui.update_uis(src)
+			return TRUE
 		var/flag
 		switch(params["id"])
 			if("point_ambience")

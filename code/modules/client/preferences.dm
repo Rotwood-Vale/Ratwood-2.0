@@ -214,8 +214,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
 	var/ambiencevol = 50
-	/// Point ambience only, scaled by overallvol and never by mastervol
+	/// Point ambience only, optionally scaled by overallvol and never by mastervol
 	var/pointambiencevol = 100
+	/// Keeps point ambience on its own slider instead of scaling it by overallvol
+	var/pointambience_independent = TRUE
 	/// Instruments, the music box and the wax music device: what the Hear Instruments toggle covers
 	var/instrumentvol = 50
 	/// The Sound Effects slider: everything sent through playsound_local but point ambience. It keeps
@@ -3186,7 +3188,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
 		character.set_species(/datum/species/gnoll, icon_update = FALSE)
-		// Set gender to MALE as a neutral default; gnoll pronouns override the displayed pronoun.
+		// Set gender to MALE as a neutral default. Gnoll pronouns override the displayed pronoun
 		character.gender = MALE
 		if(gnoll_prefs?.gnoll_pronouns)
 			character.pronouns = gnoll_prefs.gnoll_pronouns

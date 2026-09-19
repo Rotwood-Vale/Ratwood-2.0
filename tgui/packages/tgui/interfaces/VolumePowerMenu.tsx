@@ -20,6 +20,7 @@ type Data = {
   ambience: number;
   lobby: number;
   point_ambience_volume: number;
+  point_ambience_independent: boolean;
   point_ambience: boolean;
   point_ambience_torch: boolean;
 };
@@ -87,12 +88,18 @@ export const VolumePowerMenu = () => {
   const [content, setContent] = useState<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(420);
   const muted = data.master === 0;
+  const pointAmbienceIndependent = data.point_ambience_independent ?? true;
   const effectivePointVolume =
-    ((data.master ?? 100) * (data.point_ambience_volume ?? 100)) / 100;
+    (pointAmbienceIndependent ? 1 : (data.master ?? 100) / 100) *
+    (data.point_ambience_volume ?? 100);
   const lowPointVolume =
     (data.point_ambience ?? true) && effectivePointVolume < 50;
   const volumeNotice = muted
-    ? 'You have muted your game. Some loops may continue; use Stop Sounds or wait for them to end.'
+    ? pointAmbienceIndependent &&
+      (data.point_ambience ?? true) &&
+      (data.point_ambience_volume ?? 100) > 0
+      ? 'Master Volume is muted, but independent Point Ambience remains active. Use Stop Sounds for any other continuing loops.'
+      : 'You have muted your game. Some loops may continue; use Stop Sounds or wait for them to end.'
     : lowPointVolume
       ? 'Effective Point Ambience volume is below 50%. Point ambience may not work as intended at this level.'
       : null;
@@ -131,6 +138,7 @@ export const VolumePowerMenu = () => {
     ambience,
     lobby,
     point_ambience_volume,
+    point_ambience_independent,
     point_ambience,
     point_ambience_torch,
   } = data;
@@ -141,10 +149,10 @@ export const VolumePowerMenu = () => {
         <div ref={setContent} className="AudioSettings">
           <Section title="Master Volume" className="AudioSettings__panel">
             <VolumeRow
-              label="All Sounds"
+              label="Master"
               value={master ?? 100}
               id="master"
-              hint="Scales the volume on both tabs."
+              hint="Scales all sounds except independent Point Ambience."
             />
             <Box fontSize="0.85em">
               Adminhelp and admin PM alerts still play at 0%.
@@ -216,7 +224,13 @@ export const VolumePowerMenu = () => {
                   label="Volume"
                   value={point_ambience_volume ?? 100}
                   id="point_ambience_volume"
-                  hint="Under Master. Zero turns it off."
+                  hint="Nearby ambient sounds."
+                />
+                <ToggleRow
+                  label="Independent Volume"
+                  enabled={point_ambience_independent ?? true}
+                  id="point_ambience_independent"
+                  hint="Keeps Point Ambience at its chosen volume when Master Volume changes. Recommended for the intended ambience balance."
                 />
                 <ToggleRow
                   label="Point Ambience"
