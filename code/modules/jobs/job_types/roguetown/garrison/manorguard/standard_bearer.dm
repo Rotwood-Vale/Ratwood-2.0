@@ -23,30 +23,22 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	)
 	maximum_possible_slots = 1//Haha... no... unless...?
 
 /datum/outfit/job/roguetown/manorguard/standard_bearer/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.adjust_blindness(-3)
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
-	head = /obj/item/clothing/head/roguetown/helmet/kettle
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	wrists = /obj/item/clothing/wrists/roguetown/splintarms
-	pants = /obj/item/clothing/under/roguetown/splintlegs
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
-	beltl = /obj/item/rogueweapon/mace/cudgel
-	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rope/chain = 1,
-		/obj/item/storage/keyring/guardcastle = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		)
-	H.verbs |= /mob/proc/haltyell
 
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light/retinue
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/lord
+	pants = /obj/item/clothing/under/roguetown/splintlegs
+	neck = /obj/item/clothing/neck/roguetown/gorget
+	wrists = /obj/item/clothing/wrists/roguetown/splintarms
+	gloves = /obj/item/clothing/gloves/roguetown/chain
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	beltr = /obj/item/rogueweapon/mace/cudgel
+	H.adjust_blindness(-3)
 	if(H.mind)
 		var/weapons = list("Pike","Poleaxe")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
@@ -56,6 +48,28 @@
 				r_hand = /obj/item/rogueweapon/spear/keep_standard
 			if("Poleaxe")
 				r_hand = /obj/item/rogueweapon/spear/keep_standard/poleaxe
+	
+		backpack_contents = list(
+			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/rope/chain = 1,
+			/obj/item/storage/keyring/guardcastle = 1,
+			/obj/item/rogueweapon/scabbard/sheath = 1,
+			/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+			)
+		H.verbs |= /mob/proc/haltyell
+
+		var/helmets = list(
+		"Simple Helmet" 	= /obj/item/clothing/head/roguetown/helmet,
+		"Kettle Helmet" 	= /obj/item/clothing/head/roguetown/helmet/kettle,
+		"Bascinet Helmet"		= /obj/item/clothing/head/roguetown/helmet/bascinet,
+		"Sallet Helmet"		= /obj/item/clothing/head/roguetown/helmet/sallet,
+		"Winged Helmet" 	= /obj/item/clothing/head/roguetown/helmet/winged,
+		"Skull Cap"			= /obj/item/clothing/head/roguetown/helmet/skullcap,
+		"None"
+		)
+		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
 
 //These are really hacky, but it works.
 //One proc to moodbuff.
