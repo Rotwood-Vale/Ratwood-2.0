@@ -68,7 +68,6 @@
 	color = "#80182e"
 	w_class = WEIGHT_CLASS_BULKY // No storing these things.
 	slot_flags = NONE
-	knockdown = 0
 	var/about_to_be_thrown = FALSE
 	var/was_ensnaring = FALSE
 	var/being_destroyed = FALSE
@@ -80,6 +79,7 @@
 /obj/item/net/unholy_grasp/proc/on_holder_throw(mob/thrower, atom/target)
 	SIGNAL_HANDLER
 	about_to_be_thrown = TRUE
+	addtimer(VARSET_CALLBACK(src, about_to_be_thrown, FALSE), 1)
 
 /obj/item/net/unholy_grasp/on_drop()
 	return
