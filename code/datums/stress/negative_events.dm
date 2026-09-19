@@ -54,6 +54,11 @@
 	stressadd = 2
 	desc = span_red("Something nearby reeks.")
 
+/datum/stressevent/prominent_scent
+	timer = 20 SECONDS
+	stressadd = 1
+	desc = span_red("There's a prominent scent in the air.")
+
 /datum/stressevent/herald_progress_music
 	timer = 2 MINUTES
 	stressadd = 5
