@@ -9,8 +9,6 @@
 	item_state = "uniform"
 	shiftable = FALSE
 
-
-
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor // hauberk reskin, except stronger since it's light.
 	name = "fabricated armor"
 	desc = "<span class='yellow'><i>Once the Engineers of the Guild of Craft finally figured out how to make cheap, easily made armor in their autosmithy, this became the norm for most of us.</i></span>"
@@ -19,6 +17,7 @@
 	icon_state = "EB_armor"
 	item_state = "EB_armor"
 	armor_class = ARMOR_CLASS_LIGHT
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor/Initialize(mapload)
 	. = ..()
@@ -56,7 +55,7 @@
 	icon = 'modular/timesoldier/sprites/gear.dmi'
 	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
 	icon_state = "poncho_s"
-	item_state = "poncho_s"
+	item_state = "poncho"
 	color = null
 
 /obj/item/clothing/shoes/roguetown/boots/footwraps/padded/timesoldier/temperance/boots //reskinned padded footwraps
@@ -78,6 +77,7 @@
 	icon_state = "armorvest"
 	item_state = "armorvest"
 	color = null
+	body_parts_covered = CHEST|GROIN
 
 
 /obj/item/clothing/cloak/poncho/timesoldier/interwar/sniper
