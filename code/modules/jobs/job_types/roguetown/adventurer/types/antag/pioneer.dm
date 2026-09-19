@@ -6,7 +6,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/bandit/pioneer
 	category_tags = list(CTAG_BANDIT)
-	maximum_possible_slots = 1//They're limited because these guys can LEVEL THE TOWN. RAAAAAAAAAA!!!!!!
+	maximum_possible_slots = 2//They're limited because these guys can LEVEL THE TOWN. but only litle with how inefective bombars are
 	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_SMITHING_EXPERT) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
 	subclass_stats = list(
 		STATKEY_INT = 2,
