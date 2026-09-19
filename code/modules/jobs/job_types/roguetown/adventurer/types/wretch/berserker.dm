@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
-	// Literally same stat spread as Atgervi Shaman
+	maximum_possible_slots = 2 //Obligatory people-pleasing slot limitation. Master skills is scawwy. 
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_CON = 2,
