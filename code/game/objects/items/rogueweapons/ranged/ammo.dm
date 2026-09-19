@@ -8,6 +8,7 @@
 //parent of all bolts and arrows ฅ^•ﻌ•^ฅ
 /obj/item/ammo_casing/caseless/rogue/
 	firing_effect_type = null
+	var/ammo_weight = 1 // Weight cost in a quiver. Default 1, heavy ammo costs more.
 
 //bolts ฅ^•ﻌ•^ฅ
 
@@ -990,6 +991,7 @@
 	name = "stake bolt"
 	damage = 50
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
+	icon = 'icons/roguetown/weapons/ammo.dmi'
 	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
 	speed = 0.5
 	poisontype = /datum/reagent/water/blessed
@@ -1021,6 +1023,77 @@
 		var/mob/living/M = target
 		M.apply_status_effect(/datum/status_effect/debuff/exposed)
 		M.blind_eyes(6)
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver
+	name = "heavy silver bolt"
+	desc = "A silvered lance, poised to impale the unimaginable. You feel the hands of another guiding your own, as you prepare \
+	to load; may it be guidence from a higher power, or your wit upon the verge of breaking? </br>'God, please..'"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/silver
+	icon_state = "silvheavybolt"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	max_integrity = 30
+	force = 12
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/heavy_bolt/silver
+	name = "heavy silver bolt"
+	damage = 110
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	armor_penetration = 90
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver
+	icon_state = "silvheavybolt_proj"
+	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
+	speed = 0.8 //Same speed as a crossbow bolt.
+
+// STAKE AMMO
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake
+	name = "siegestake"
+	desc = "A large branch that has been broken off of a boswellia tree, sharpened to a fine point. Though its prodigious \
+	size - comparable to a fencepost in length and width - makes it cumbersome for hand-to-hand stakings, siegestakes like these are perfect for disrupting \
+	curses from afar. </br>'Vampyres, gargoyles, necromancers, they're all the same - best when cooked well.'"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/stake
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick)
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "heavystake"
+	max_integrity = 15
+	force = 20
+
+/obj/projectile/bullet/reusable/heavy_bolt/stake
+	name = "siegestake"
+	damage = 60
+	armor_penetration = 80
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "heavystake_proj"
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	speed = 0.8
+	poisontype = /datum/reagent/water/blessed
+	poisonamount = 6 //Deals 60 BRUTE and 30 BURN, on top of some mild afterburn.
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake_silver
+	name = "silver-tipped siegestake"
+	desc = "A large branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. Though its prodigious \
+	size - comparable to a fencepost in length and width - makes it cumbersome for hand-to-hand stakings, siegestakes like these are perfect for disrupting \
+	curses from afar.	</br>'Requiescat in pace..' - '..may thee rest in peace.'"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/stake_silver
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick)
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "silvheavystake"
+	max_integrity = 15
+	force = 20
+	is_silver = TRUE
+
+/obj/projectile/bullet/reusable/heavy_bolt/stake_silver
+	name = "silver-tipped siegestake"
+	damage = 70 // In essence, a lesser version of the traditional silver siegebolts.
+	armor_penetration = 90
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake_silver
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "silvheavystake_proj"
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	speed = 0.6
+	poisontype = /datum/reagent/water/blessed
+	poisonamount = 4 //Deals 70 BRUTE and 40 BURN, on top of some mild afterburn.
 
 #undef ARROW_DAMAGE
 #undef BOLT_DAMAGE

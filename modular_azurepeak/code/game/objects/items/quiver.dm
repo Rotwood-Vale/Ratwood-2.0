@@ -17,6 +17,7 @@
 	strip_delay = 20
 	var/max_storage = 20
 	var/list/arrows = list()
+	var/allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow
 	sewrepair = TRUE
 	dropshrink = 0.9
 
@@ -446,5 +447,77 @@
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/clothing/mask/cigarette/rollie/cannabis/A = new()
+		arrows += A
+	update_icon()
+
+///////////
+/obj/item/quiver/proc/get_current_weight()
+	. = 0
+	for(var/obj/item/ammo_casing/caseless/rogue/A in arrows)
+		. += A.ammo_weight
+
+/obj/item/quiver/proc/get_ammo_types()
+	var/list/types = list()
+	for(var/obj/item/ammo_casing/caseless/rogue/A in arrows)
+		if(!(A.type in types))
+			types[A.type] = list("name" = A.name, "count" = 1, "ref" = A)
+		else
+			types[A.type]["count"]++
+	return types
+
+
+/////////////
+// BOLT, H.//
+/////////////
+
+/obj/item/quiver/bolt/heavy
+	name = "heavy bolt pouch"
+	desc = "A heavy leather canister that can be used to carry heavier bolts. Casketed inside are the missiles that, whether launched from a mounted ballista or handheld siegebow, will devastate without quarter."
+	icon_state = "boltpouch0"
+	item_state = "boltpouch"
+	max_storage = 8
+	allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
+
+/obj/item/quiver/bolt/heavy/attack_turf(turf/T, mob/living/user)
+	if(get_current_weight() >= max_storage)
+		to_chat(user, span_warning("My [src.name] is full!"))
+		return
+	to_chat(user, span_notice("I begin to gather the ammunition..."))
+	for(var/obj/item/ammo_casing/caseless/rogue/heavy_bolt in T.contents)
+		if(do_after(user, 5))
+			if(!eatarrow(heavy_bolt))
+				break
+
+/obj/item/quiver/bolt/heavy/update_icon()
+	if(arrows.len)
+		icon_state = "boltpouch1"
+	else
+		icon_state = "boltpouch0"
+
+/obj/item/quiver/bolt/heavy/standard/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/silver/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/silver/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/stake/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bolt/heavy/stake_silver/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/stake_silver/A = new()
 		arrows += A
 	update_icon()

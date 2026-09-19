@@ -296,6 +296,49 @@
 	desc = ""
 	icon_state = "buff"
 
+/obj/item/rogueweapon/mace/cudgel/psyble
+	name = "Hefty Tome of Psydon" //Hilarious
+	desc = "'And HE WEEPS. Not for you, not for me, but for it all.' </br>A leatherbound tome, particularly hefty and twice-as-thick with various personal revisions and notes stuffed within. The 'Harlaus Press', a recent invention by Otava's clergymen, has ensured that no corner of Psydonia would remain unlit by His teachings. Inside are three separate testaments, each marked with a velvet strap.. </br>PSALMS - TESTAMENTS OF CLERICAL WISDOM, COMMANDING INTERPRETATION. </br>GENESIS - TESTAMENTS OF PSYDONIA'S CREATION, FOR WHAT ONCE WAS. </br>INVOCATIONS - TESTAMENTS OF WILL, TO EXORCISE AND CHANT."
+	icon = 'icons/roguetown/items/books.dmi'
+	gripped_intents = null //One-handed. Pseudo-sidegrade between the Mace and Warhammer. Exchanges smashing for dislocation.
+	icon_state = "psyble_0"
+	wbalance = WBALANCE_HEAVY
+	force = 25
+	possible_item_intents = list(
+		/datum/intent/bless,
+		/datum/intent/mace/smash,
+	)
+
+/obj/item/rogueweapon/mace/cudgel/psyble/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.4,
+	"sx" = -2,
+	"sy" = -3,
+	"nx" = 10,
+	"ny" = -2,
+	"wx" = 1,
+	"wy" = -3,
+	"ex" = 5,
+	"ey" = -3,
+	"northabove" = 0,
+	"southabove" = 1,
+	"eastabove" = 1,
+	"westabove" = 0,
+	"nturn" = 0,
+	"sturn" = 0,
+	"wturn" = 0,
+	"eturn" = 0,
+	"nflip" = 0,
+	"sflip" = 0,
+	"wflip" = 0,
+	"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+
 
 /obj/item/book/rogue/law
 	name = "Tome of Justice"

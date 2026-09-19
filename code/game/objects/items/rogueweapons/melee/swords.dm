@@ -262,6 +262,45 @@
 	max_integrity = 125
 	sheathe_icon = "bronzesword"
 
+/obj/item/rogueweapon/sword/psy
+	name = "psydonic arming sword"
+	desc = "An arming sword, fitted with a blade of pure silver. It is the bane of vampyres, nitebeasts, and deadites throughout all of Psydonia; \
+	cursed flesh erupts into holy fire, and unholy bravado twists into mortal fear."
+	icon_state = "silversword"
+	sheathe_icon = "silversword"
+	force = 20
+	force_wielded = 25
+	minstr = 9
+	wdefense = 5
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silverblessed
+	smelt_bar_num = 2
+	max_blade_int = 230
+	max_integrity = 200
+	smelt_bar_num = 1
+
+/obj/item/rogueweapon/sword/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
 /obj/item/rogueweapon/sword/falx
 	name = "falx"
 	desc = "An unusual type of curved sword that evolved from the farmer's sickle. It has an inwards edge, making it useful for cutting and chopping."
@@ -957,7 +996,7 @@
 	to march knee-deep through the dead in search of absolution."
 	icon_state = "psyexe"
 	force = 22
-	force_wielded = 25
+	force_wielded = 30
 	minstr_req = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
@@ -1046,8 +1085,8 @@
 	desc = "A finely made longsword, plated in a ceremonial veneer of ornate silver - made for felling men and monsters alike. </br>'Psydon will deliver those who were mindful of Him to their place of ultimate triumph. No evil will touch them, nor will they grieve.'"
 	icon_state = "psysword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
+	force = 25
+	force_wielded = 30
 	minstr = 9
 	wdefense = 6
 	dropshrink = 1
@@ -1133,8 +1172,8 @@
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "silverbroadsword"
 	sheathe_icon = "psysword"
-	force = 20
-	force_wielded = 25
+	force = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
@@ -1312,8 +1351,8 @@
 	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
-	force = 20
-	force_wielded = 20
+	force = 24
+	force_wielded = 24
 	minstr = 7
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
@@ -1752,8 +1791,8 @@
 	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
-	force_wielded = 20
+	force = 25
+	force_wielded = 25
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
@@ -1788,8 +1827,8 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
+	force = 25
+	force_wielded = 25
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver

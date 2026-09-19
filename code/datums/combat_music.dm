@@ -313,6 +313,20 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Ordinator"
 	musicpath = list('sound/music/combat_inqordinator.ogg')
 
+/datum/combat_music/inquis_inspector
+	name = "Inquisitor - Inspector"
+	desc = ""
+	shortname = "Inspector"
+	credits = "Studio EIM - Canto VII Boss 4 Battle Theme"
+	musicpath = list('sound/music/combat_inspector.ogg')
+
+/datum/combat_music/inquis_arbiter
+	name = "Inquisitor - Arbiter"
+	desc = ""
+	credits = "Studio EIM - Canto VII Boss 3 Battle Theme"
+	shortname = "Arbiter"
+	musicpath = list('sound/music/combat_arbiter.ogg')
+
 /datum/combat_music/jester
 	name = "Jester"
 	desc = ""

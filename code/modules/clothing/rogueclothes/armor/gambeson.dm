@@ -334,3 +334,28 @@
 	icon_state = "shadowrobe"
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + 30 //280
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter
+	name = "arbiter vestments"
+	desc = "Sturdy leather, fine silks and ornaments of gold. Opulent and imperial, for any one who must say <i>\"I am in charge.\"</i> holds no power at all."
+	icon = 'icons/roguetown/clothing/special/hand.dmi'
+	icon_state = "handgambeson"
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/hand.dmi'
+	color = null
+	detail_tag = "_detail"
+	detail_color = "#404040"
+	shiftable = FALSE
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
