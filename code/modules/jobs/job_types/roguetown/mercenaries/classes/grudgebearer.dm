@@ -27,10 +27,14 @@
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN, //potential to be a backliner
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT, //they should be able to mine
 	)
 
 //Because the armor is race-exclusive for repairs, these guys *should* be able to repair their own guys armor layers. A Dwarf smith isn't guaranteed, after all.
@@ -48,6 +52,8 @@
 		pants = /obj/item/clothing/under/roguetown/trou/leather
 		armor = /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven/smith
 		head = /obj/item/clothing/head/roguetown/helmet/heavy/dwarven/smith
+		neck = /obj/item/clothing/neck/roguetown/gorget
+		mask = /obj/item/clothing/head/roguetown/paddedcap
 		backpack_contents = list(
 			/obj/item/roguekey/mercenary,
 			/obj/item/storage/belt/rogue/pouch/coins/poor,
@@ -79,15 +85,17 @@
 		STATKEY_SPD = -2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own weapon integrity
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 /datum/outfit/job/roguetown/mercenary/grudgebearer_soldier/pre_equip(mob/living/carbon/human/H)
@@ -103,6 +111,8 @@
 		pants = /obj/item/clothing/under/roguetown/trou/leather
 		armor = /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven
 		head = /obj/item/clothing/head/roguetown/helmet/heavy/dwarven
+		neck = /obj/item/clothing/neck/roguetown/gorget
+		mask = /obj/item/clothing/head/roguetown/paddedcap
 		backpack_contents = list(
 			/obj/item/roguekey/mercenary,
 			/obj/item/storage/belt/rogue/pouch/coins/poor,
@@ -111,17 +121,25 @@
 			/obj/item/natural/feather,
 			)
 		if(H.mind)
-			var/weapons = list("Axe", "Grand Mace", "Maul")
+			var/weapons = list("Battle Axe + Dwarven Shield", "Warpick + Dwarven Shield", "Grand Mace", "Maul")
 			var/wepchoice = input(H, "Choose your weapon", "Available weapons") as anything in weapons
 			switch(wepchoice)
-				if("Axe")
-					backr = /obj/item/rogueweapon/stoneaxe/battle
+				if("Battle Axe + Dwarven Shield")
+					r_hand = /obj/item/rogueweapon/stoneaxe/battle
+					l_hand = /obj/item/rogueweapon/shield/tower/metal/dwarf
+					H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+				if("Warpick + Dwarven Shield")
+					r_hand = /obj/item/rogueweapon/pick/heavy/steel/dwarf
+					l_hand = /obj/item/rogueweapon/shield/tower/metal/dwarf
+					H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 				if("Grand Mace")
 					r_hand = /obj/item/rogueweapon/mace/goden/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
+					H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				if("Maul")
 					r_hand = /obj/item/rogueweapon/mace/maul/steel
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
+					H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 		H.merctype = 8
 
 
@@ -160,7 +178,8 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/dwarven
 	name = "grudgebearer dwarven helm"
 	desc = "A hardy, layered helmet. It lets one's dwarvenly beard to poke out."
-	body_parts_covered = (HEAD | MOUTH | NOSE | EYES | EARS | NECK)	//This specifically omits hair so you could hang your beard out of the helm
+	body_parts_covered = (FULL_HEAD | NECK)
+	flags_inv = HIDEHAIR
 	armor = ARMOR_GRUDGEBEARER
 	prevent_crits = list(BCLASS_TWIST)
 	allowed_race = list(/datum/species/dwarf, /datum/species/dwarf/mountain)
@@ -262,7 +281,7 @@
 		"10"	= 50,
 	)
 
-	repair_items = list(/obj/machinery/anvil)
+	//repair_items = list(/obj/machinery/anvil)
 
 	repair_skills = list(
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
