@@ -8,7 +8,7 @@
 
 /obj/structure/roguemachine/headeater/treasureseeker/examine_extra(mob/user)
 	. = list()
-	. += span_info("Left-click with an item to consign it to the Nightmistress's vault. Right-click to consign every item on the tile before it.")
+	. += span_info("Left-click with an item to consign it to the Nightmistress's vault. Right-click to consign every item on the tile beneath its maw.")
 	. += span_smallnotice("Each consignment is entered into the BRASSFACE's Hoard ledger, and the hoard pays interest on the vault's treasures.")
 	. += span_smallnotice("Dross is refused - it swallows only what the hoard can turn a profit on, leaving worthless trinkets, loose coin and containers behind.")
 
@@ -71,7 +71,9 @@
 	return TRUE
 
 /obj/structure/roguemachine/headeater/treasureseeker/attack_right(mob/user)
-	var/turf/front = get_step(src, dir)
+	// The sprite is pixel-shifted over its base turf (as the headeater's is), so the
+	// parent sweeps get_turf(src) - do the same rather than stepping off by dir.
+	var/turf/front = get_turf(src)
 	if(!front)
 		return
 	var/list/to_ship = list()
