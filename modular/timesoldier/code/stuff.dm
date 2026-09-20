@@ -33,7 +33,7 @@
 	if(opened)
 		return ..()
 
-	if(W.wlength == WLENGTH_SHORT && user.used_intent?.blade_class in list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB))
+	if(W.wlength == WLENGTH_SHORT && (user.used_intent?.blade_class in list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB)))
 		user.visible_message(
 			span_notice("[user] pries open [src] with [W]."),
 			span_notice("I pry open [src] with [W].")
@@ -84,7 +84,7 @@
 		deltimer(radio_noise_timer)
 		radio_noise_timer = null
 
-		
+
 	QDEL_NULL(radio_loop)
 	return ..()
 
