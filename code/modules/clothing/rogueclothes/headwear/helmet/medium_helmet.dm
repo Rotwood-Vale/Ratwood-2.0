@@ -801,7 +801,6 @@
 	item_state = "citywatch_helmet"
 	armor_class = ARMOR_CLASS_MEDIUM
 	body_parts_covered = FULL_HEAD
-	max_integrity = ARMOR_INT_HELMET_IRON
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	block2add = FOV_BEHIND
@@ -814,4 +813,3 @@
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
 	icon_state = "sheriff_helm"
 	item_state = "sheriff_helm"
-	max_integrity = ARMOR_INT_HELMET_STEEL

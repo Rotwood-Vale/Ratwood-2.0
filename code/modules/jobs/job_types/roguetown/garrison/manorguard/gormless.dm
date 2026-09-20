@@ -1,14 +1,12 @@
 //A subtype of the melee goon. You're given the stunmace, which allows access off of Rockhill.
 //Additionally, one of the rarer weapon types, the maul, as a choice.
 //Expert unarmed to top it off. Make sah proud.
-//In exchange, you're slower. Much slower. Both in matters of speed or otherwise.
 /datum/advclass/manorguard/gormless
 	name = "Catchpole"
 	tutorial = "You're a catchpole, the big muscled brute sent out when intimidating some whiny shopkeep is needed, heads need crushing, or legs need breaking, the big plated juggernaut with the big weapons. Of course, it's expensive wrapping a form like yours in steel, and all that fancy shite goes to the knights, so you've been cheaped out, but you do more with less than most of your colleagues. May your lord feel safe and sound by your metal clad form."
 	outfit = /datum/outfit/job/roguetown/manorguard/gormless
-	//Imagine the ironclad adventurer, or the sellknight merc, but spiffed up in service of the duke.
 	category_tags = list(CTAG_MENATARMS)
-	traits_applied = list(TRAIT_HEAVYARMOR) //I know the risk of this, they get iron half-plate at the start, and they're usually too poor to get their hands on steel full-plate. Give players the benefit of the doubt that they won't powergame this. 
+	traits_applied = list(TRAIT_MEDIUMARMOR) 
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_STR = 3,
@@ -20,7 +18,6 @@
 	// 7 without buff, and an extra 6 from the buff, compared to the old statweight of... 3, which was unimpressive given that this is a man-at-arms.
 	// 3 STR by default because this is THE big motherfucker subclass for MAA, regardless of weaponchoice.
 	// Preparing for minmaxxing, assuming a struggler in the manor with the guard buff, they'll have 15STR 15CON 15WIL 9SPD 8FOR 7PER 6INT which is fine.
-	maximum_possible_slots = 2 // We don't want our whole manor guard being catchpoles, for balance purposes, both balance as in "I don't wanna get beaten to death by four plateclad brutes" and "I want the manor guard force to be versatile, not just dipstick heavy melee fighters"
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
@@ -43,7 +40,7 @@
 /datum/outfit/job/roguetown/manorguard/gormless/pre_equip(mob/living/carbon/human/H)
 	..()
 	//Bit of a warning, a bunch of steel stuff is in the armory that will be grabbed nearly immediately. This is a concern I took into account doing balance.
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/iron
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron 
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
