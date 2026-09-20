@@ -1,5 +1,4 @@
 /datum/roguestock/stockpile/fishmince
-	generation_price = 2 // Ratwood passive import
 	name = "Fish Mince"
 	desc = "Descaled and ground fish meat."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/mince/fish
@@ -9,8 +8,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/fishfilet
-	passive_generation = 1 // Ratwood passive import
-	generation_price = 4 // Ratwood passive import
 	name = "Fish Filet"
 	desc = "Descaled fish meat."
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/fish
@@ -38,7 +35,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/salmon
-	generation_price = 4 // Ratwood passive import
 	name = "Salmon"
 	desc = "Whole slab of salmon."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/salmon
@@ -48,7 +44,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/bass
-	generation_price = 4 // Ratwood passive import
 	name = "Seabass"
 	desc = "Whole slab of bass."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/bass
@@ -58,7 +53,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/carp
-	generation_price = 4 // Ratwood passive import
 	name = "Carp"
 	desc = "Whole slab of carp."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/carp
@@ -68,7 +62,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/sole
-	generation_price = 4 // Ratwood passive import
 	name = "Sole"
 	desc = "Whole slab of sole."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/sole
@@ -78,7 +71,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/cod
-	generation_price = 4 // Ratwood passive import
 	name = "Cod"
 	desc = "Whole slab of cod."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/cod
@@ -88,7 +80,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/crab
-	generation_price = 4 // Ratwood passive import
 	name = "Crab"
 	desc = "Whole slab of crab."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/crab
@@ -98,7 +89,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/clam
-	generation_price = 4 // Ratwood passive import
 	name = "Clam"
 	desc = "Whole slab of clam."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/clam
@@ -108,7 +98,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/lobster
-	generation_price = 4 // Ratwood passive import
 	name = "Lobster"
 	desc = "Whole slab of lobster."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/lobster
@@ -118,7 +107,6 @@
 	category = "Seafood"
 
 /datum/roguestock/stockpile/shrimp
-	generation_price = 4 // Ratwood passive import
 	name = "Shrimp"
 	desc = "Whole slab of shrimp."
 	item_type = /obj/item/reagent_containers/food/snacks/fish/shrimp

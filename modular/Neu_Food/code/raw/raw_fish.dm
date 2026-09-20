@@ -619,7 +619,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sturgeon
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sturgeon
-	sellprice = 5
+	sellprice = 15
 
 /obj/item/reagent_containers/food/snacks/fish/mackerel
 	name = "mackerel"
@@ -629,7 +629,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/mackerel
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/mackerel
-	sellprice = 5
+	sellprice = 15
 
 /obj/item/reagent_containers/food/snacks/fish/beaksnapper
 	name = "beaksnapper"
