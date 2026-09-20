@@ -26,7 +26,7 @@
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,//Sadly, for Joe, he has less than stellar athletics.
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,//Contraptions, explosives, etc.
