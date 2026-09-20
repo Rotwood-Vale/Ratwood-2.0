@@ -266,6 +266,22 @@
 	desc = "A steel 'sallet'-styled helmet with an adjustable visor, its bevor drawn forward into a muzzle. Favored by those with snouts. Away with you, vile beggar!"
 	icon_state = "sallet_visor_s"
 
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted
+	name = "iron snouted visored sallet"
+	desc = "An iron 'sallet'-styled helmet with an adjustable visor, its bevor drawn forward into a muzzle. Favored by those with snouts. Out for a stroll, now, are we?"
+	icon_state = "isallet_visor_s"
+
+/// The raised visor hides part of the plume, so these keep their own raised visor overlays
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted/get_detail_state(base_state)
+	if(base_state == "[initial(icon_state)]_t")
+		return base_state
+	return ..()
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted/get_detail_state(base_state)
+	if(base_state == "[initial(icon_state)]_t")
+		return base_state
+	return ..()
+
 /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
 	icon_state = "bascinet_novisor"
@@ -613,6 +629,20 @@
 	desc = "A bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
 	icon_state = "roundface_s"
 	item_state = "roundface_s"
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron
+	name = "iron roundface bascinet"
+	desc = "An iron bascinet with a conical visor, favored by those without snouts and whiskers. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "iroundface"
+	item_state = "iroundface"
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = ARMOR_INT_HELMET_IRON
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted
+	name = "iron snouted roundface bascinet"
+	desc = "An iron bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "iroundface_s"
+	item_state = "iroundface_s"
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	name = "\improper Etruscan bascinet"

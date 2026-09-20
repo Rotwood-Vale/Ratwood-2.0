@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Gronn mercs and items reflavored to use Mongol Khanate-inspired, rather than Norse-inspired, wording and naming conventions."
+  - bugfix: "Former Atgervi, now Ba'atur, has their miracles once more following an accidental regression."
