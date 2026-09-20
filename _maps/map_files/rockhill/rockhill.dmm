@@ -6975,6 +6975,16 @@
 /obj/structure/fluff/wallclock,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"buR" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/carpet,
+/area/rogue/indoors/town/bath)
 "buV" = (
 /turf/closed/mineral/rogue,
 /area/rogue/outdoors/woodsrat/south)
@@ -28994,6 +29004,17 @@
 /mob/living/simple_animal/hostile/rogue/deepone,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
+"fVW" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/indoors/town/bath)
 "fVX" = (
 /obj/structure/stairs/dark{
 	dir = 4
@@ -34296,6 +34317,17 @@
 	dir = 1
 	},
 /area/rogue/indoors/town/church/chapel)
+"hcC" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "hcE" = (
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/wood,
@@ -50103,6 +50135,13 @@
 	},
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/woodsrat/south)
+"ktR" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/rogue/cobble,
+/area/rogue/indoors/town/bath)
 "ktV" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/snowrough,
@@ -71390,6 +71429,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/garrison)
+"oSO" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/carpet/inn,
+/area/rogue/indoors/town/bath)
 "oSP" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -84068,7 +84113,11 @@
 /obj/structure/fluff/railing/border{
 	dir = 5
 	},
-/obj/machinery/light/rogue/candle/blue/l,
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32;
+	layer = 5
+	},
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/under/town/basement)
 "rAK" = (
@@ -85040,6 +85089,13 @@
 	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church)
+"rLW" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/carpet/purple,
+/area/rogue/indoors/town/bath)
 "rMd" = (
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/shop)
@@ -176125,7 +176181,7 @@ xCt
 myt
 asP
 enR
-asP
+rLW
 asP
 asP
 bzy
@@ -179144,7 +179200,7 @@ sWm
 vXL
 idl
 vXL
-idl
+ktR
 cWN
 fBN
 eAm
@@ -183026,7 +183082,7 @@ yjd
 lUL
 sAY
 lmJ
-bhu
+buR
 tag
 tag
 tag
@@ -184759,7 +184815,7 @@ uSL
 uSL
 uSL
 uSL
-uSL
+fVW
 uSL
 siB
 nXp
@@ -286711,7 +286767,7 @@ ccW
 tcZ
 eNa
 vTB
-eLd
+hcC
 sPI
 qyx
 scK
@@ -291886,7 +291942,7 @@ oyJ
 xAO
 cQX
 wTZ
-nXp
+oSO
 eFJ
 eDw
 eqj
