@@ -2457,6 +2457,13 @@
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/church)
+"ayx" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/rockhill)
 "ayE" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newleaf,
@@ -6975,16 +6982,6 @@
 /obj/structure/fluff/wallclock,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
-"buR" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/roguemachine/rosewall{
-	pixel_y = 0;
-	pixel_x = -32
-	},
-/turf/open/floor/rogue/carpet,
-/area/rogue/indoors/town/bath)
 "buV" = (
 /turf/closed/mineral/rogue,
 /area/rogue/outdoors/woodsrat/south)
@@ -34492,10 +34489,13 @@
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/church)
 "hez" = (
-/obj/machinery/light/rogue/candle/blue/r,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
 	pixel_x = 2
+	},
+/obj/structure/roguemachine/headeater/treasureseeker{
+	pixel_y = 0;
+	pixel_x = 32
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
@@ -71429,12 +71429,6 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/garrison)
-"oSO" = (
-/obj/structure/roguemachine/rosewall{
-	pixel_y = -32
-	},
-/turf/open/floor/carpet/inn,
-/area/rogue/indoors/town/bath)
 "oSP" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -86613,15 +86607,6 @@
 "sdL" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/beach/harbor)
-"sdQ" = (
-/obj/effect/decal/herringbone{
-	dir = 8
-	},
-/obj/structure/roguemachine/headeater/treasureseeker{
-	pixel_y = -32
-	},
-/turf/open/floor/rogue/tile/harem,
-/area/rogue/indoors/town/bath)
 "sdT" = (
 /obj/structure/fluff/railing/border/west{
 	layer = 4.3
@@ -97955,7 +97940,6 @@
 	dir = 4;
 	pixel_x = 2
 	},
-/obj/machinery/light/rogue/candle/blue/l,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
@@ -109985,6 +109969,15 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/dungeon/oldgoblincamp)
+"wZc" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "wZm" = (
 /obj/structure/roguemachine/headeater{
 	pixel_x = 32;
@@ -114678,6 +114671,13 @@
 	icon_state = "wooden_floor2"
 	},
 /area/rogue/outdoors/beach/harbor)
+"xXd" = (
+/obj/structure/stairs/stone{
+	dir = 1
+	},
+/obj/machinery/light/rogue/candle/blue/r,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/bath)
 "xXe" = (
 /obj/structure/bars/cemetery,
 /turf/open/floor/rogue/cobble/mossy,
@@ -182661,7 +182661,7 @@ jfX
 cGQ
 wTZ
 sAY
-lmJ
+wZc
 eFJ
 iey
 hDM
@@ -183094,7 +183094,7 @@ yjd
 lUL
 sAY
 lmJ
-buR
+bhu
 tag
 tag
 tag
@@ -287208,7 +287208,7 @@ qbV
 jrd
 osV
 osV
-sdQ
+osV
 eFJ
 lfT
 pwW
@@ -288505,7 +288505,7 @@ qbE
 xrC
 hkx
 hez
-rvT
+xXd
 njY
 scK
 sjc
@@ -291954,7 +291954,7 @@ oyJ
 xAO
 cQX
 wTZ
-oSO
+wTZ
 eFJ
 eDw
 eqj
@@ -405578,7 +405578,7 @@ uMa
 xAt
 tWY
 xez
-aOv
+ayx
 wbg
 wbg
 wbg
