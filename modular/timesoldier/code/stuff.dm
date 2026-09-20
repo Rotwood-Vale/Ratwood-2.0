@@ -148,7 +148,7 @@
 		
 	if(sound_to_play)
 		playsound(src, sound_to_play, 55, FALSE)
-	say(message)
+	say_new_imperial(message)
 
 /obj/item/timesoldier/radio/proc/schedule_radio_noise()
 	if(!broadcasting)
@@ -157,9 +157,10 @@
 	if(radio_noise_timer)
 		deltimer(radio_noise_timer)
 
+	var/noise_delay = rand(15 SECONDS, 40 SECONDS) // i cant believe the compiler choked on this.
 	radio_noise_timer = addtimer(
 		CALLBACK(src, PROC_REF(play_radio_noise)),
-		rand(15 SECONDS, 40 SECONDS),
+		noise_delay,
 		TIMER_STOPPABLE
 	)
 
