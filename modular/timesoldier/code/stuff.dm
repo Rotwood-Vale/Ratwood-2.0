@@ -159,7 +159,7 @@
 
 	var/noise_delay = rand(15 SECONDS, 40 SECONDS) // i cant believe the compiler choked on this.
 	var/datum/callback/noise_callback = CALLBACK(src, PROC_REF(play_radio_noise))
-	radom_noise_timer = addtimer(noise_callback, noise_delay, TIMER_STOPPABLE) // this should hopefully properly fix it.
+	radio_noise_timer = addtimer(noise_callback, noise_delay, TIMER_STOPPABLE) // this should hopefully properly fix it.
 
 /obj/item/timesoldier/radio/proc/play_radio_noise()
 	radio_noise_timer = null
