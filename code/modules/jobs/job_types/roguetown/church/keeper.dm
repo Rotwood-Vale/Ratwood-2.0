@@ -86,9 +86,7 @@
 
 	var/mob/living/carbon/human/H = L
 
-	spawn(50)
-		if(H && H.client)
-			_delayed_path_choice(H)
+	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/job/roguetown/keeper/proc/_delayed_path_choice(mob/living/carbon/human/H)
 	if(!H || !H.client || !H.mind)
@@ -137,7 +135,7 @@
 	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	to_chat(H, span_notice("I remain on the old path of Pestra's devotion."))
 
@@ -152,7 +150,7 @@
 	H.church_favor += 1500
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/learnmiracle))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnmiracle, H)

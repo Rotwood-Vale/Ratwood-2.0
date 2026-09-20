@@ -138,7 +138,7 @@
 	var/datum/skill/S = GetSkillRef(skill)
 	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
 	var/proper_amt = current_level - amt
-	if(proper_amt >= 0)
+	if(proper_amt <= 0)
 		return
 	adjust_skillrank(skill, -proper_amt, silent)
 
