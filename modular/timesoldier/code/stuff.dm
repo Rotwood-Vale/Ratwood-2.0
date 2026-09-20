@@ -74,9 +74,35 @@
 	verb_yell = "coldly states"
 	grid_width = 32
 	grid_height = 32 // smol
+	voicecolor_override = "#97cefd"
+	var/tmp/language_icon_html = ""
+
 
 /obj/item/timesoldier/radio/GetVoice()
-	return "<span style='font-size: 115%;'><b>UNKNOWN</b></span>"
+	return "[language_icon_html]<span style='font-size: 115%;'><b>UNKNOWN</b></span>"
+
+/obj/item/timesoldier/radio/proc/get_language_icon_for(atom/movable/hearer, datum/language/language) // blatantly stolen from our language stuff.
+	if(!language)
+		return ""
+
+	if(!ismob(hearer))
+		return ""
+
+	var/mob/M = hearer
+
+	if(!M.client)
+		return ""
+
+	if(!M.show_language_icon())
+		return ""
+
+	if(!language.display_icon(M))
+		return ""
+
+	var/language_name = url_encode(language.name)
+	var/language_desc = url_encode(language.desc)
+
+	return "<a href='byond://?src=\ref[M.client];lang_name=[language_name];lang_desc=[language_desc]'><span style=\"position: relative; bottom: 4px;\">[language.get_icon()]</span></a>"
 
 /datum/looping_sound/timesoldier_radio
 	mid_sounds = 'modular/timesoldier/sounds/comms/lsloop.ogg'
@@ -246,9 +272,10 @@
 			var/mob/living/living_hearer = hearer
 			heard_message = new_imperial.translate_for(living_hearer, message)
 
-
-		// so at this point the message has already been translate *specifically* for this listener. we pass imperial here so normal language scrambling
-		// doesn't scramble it a second time - or so i hope.
+		// we manually add the real New Imperial icon because the actual
+		// speech is deliberately rendered as Common to prevent it being
+		// scrambled a second time.
+		language_icon_html = get_language_icon_for(hearer, new_imperial)
 
 		var/rendered_message = compose_message(
 			src,
@@ -258,6 +285,8 @@
 			spans,
 			null
 		)
+
+		language_icon_html = ""
 
 		hearer.Hear(
 			rendered_message,
