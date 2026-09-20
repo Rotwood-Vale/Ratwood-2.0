@@ -81,6 +81,9 @@
 
 	H.taints_loot = FALSE // taints loot in testing. this should fix.
 
+	for(var/obj/item/I in H.get_equipped_items(TRUE) + H.held_items)
+		I.unmark_as_looted() // had to add this as well.
+
 /proc/apply_timesoldier_temperance_skills(mob/living/carbon/human/H)
 	if(!H)
 		return
