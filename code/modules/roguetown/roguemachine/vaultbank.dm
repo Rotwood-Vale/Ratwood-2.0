@@ -754,8 +754,131 @@
 		return FALSE
 	return user.job == "Bathmaster"
 
+/// Agents of the Bathhouse (bathhouse writ holders) may view the coffers and withdraw up
+/// to a daily cap set by the Bathmaster. The Bathmaster retains full authority.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/is_bathhouse_agent(mob/living/carbon/human/user)
+	return istype(user) && HAS_TRAIT(user, TRAIT_AGENT_BATHHOUSE)
+
+/// Bathhouse workers (the Bathmaster and their attendants) hold coffers access by virtue of
+/// their employment alone - they are never marked as agents for it.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/is_bathhouse_worker(mob/user)
+	if(!user)
+		return FALSE
+	return user.job in GLOB.bathhouse_positions
+
+/// Everyone besides the Bathmaster who may draw from the fund at all - workers and agents
+/// alike, each bound by their own group's daily cap and suspension.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/has_capped_access(mob/user)
+	return is_bathhouse_worker(user) || is_bathhouse_agent(user)
+
+/// The daily withdrawal cap governing this user - workers and agents have separate caps,
+/// both set by the Bathmaster. The worker cap takes precedence if someone is somehow both.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/get_daily_cap_for(mob/user)
+	if(is_bathhouse_worker(user))
+		return SStreasury.bathhouse_worker_daily_withdraw_limit
+	return SStreasury.bathhouse_agent_daily_withdraw_limit
+
+/// Whether the Bathmaster has suspended payments to this user's group (worker or agent).
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/are_withdrawals_suspended_for(mob/user)
+	if(is_bathhouse_worker(user))
+		return SStreasury.bathhouse_worker_withdrawals_suspended
+	return SStreasury.bathhouse_agent_withdrawals_suspended
+
+/// How much more this user may still draw today under their group's cap.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/get_withdraw_remaining(mob/user)
+	return SStreasury.get_bathhouse_withdraw_remaining(user, get_daily_cap_for(user))
+
+/obj/structure/roguemachine/vaultbank/bathhouse/can_view(mob/user)
+	if(!user)
+		return FALSE
+	return can_issue_loan(user) || has_capped_access(user)
+
+/obj/structure/roguemachine/vaultbank/bathhouse/can_withdraw(mob/user, amount)
+	if(!user)
+		return FALSE
+	if(can_issue_loan(user))
+		return TRUE // The Bathmaster is subject to neither cap nor suspension.
+	if(!has_capped_access(user))
+		return FALSE
+	if(are_withdrawals_suspended_for(user))
+		return FALSE
+	if(isnull(amount))
+		return get_withdraw_remaining(user) > 0
+	return amount <= get_withdraw_remaining(user)
+
+/obj/structure/roguemachine/vaultbank/bathhouse/get_withdraw_rule_text()
+	var/text = "Workers of the Bathhouse may draw up to [SStreasury.bathhouse_worker_daily_withdraw_limit]m per dae from these coffers; its agents up to [SStreasury.bathhouse_agent_daily_withdraw_limit]m. The Bathmaster's hand is unbound."
+	if(SStreasury.bathhouse_worker_withdrawals_suspended)
+		text += " Payments to workers stand suspended."
+	if(SStreasury.bathhouse_agent_withdrawals_suspended)
+		text += " Payments to agents stand suspended."
+	return text
+
 /obj/structure/roguemachine/vaultbank/bathhouse/get_authority_label()
 	return "the Bathmaster"
+
+/// Records agent withdrawals against the daily cap before disbursing.
+/obj/structure/roguemachine/vaultbank/bathhouse/disburse(mob/living/carbon/human/user, list/params)
+	if(!istype(user))
+		return
+	var/datum/fund/F = get_linked_fund()
+	if(!F)
+		to_chat(user, span_warning("[src] sits inert - its coffers are unbound. Notify staff."))
+		return
+	var/amount = round(text2num("[params["amount"]]"))
+	if(isnull(amount) || amount <= 0)
+		to_chat(user, span_warning("Name a positive sum."))
+		return
+	if(!can_withdraw(user, amount))
+		if(are_withdrawals_suspended_for(user))
+			to_chat(user, span_warning("[F.name] sits quiet - the Bathmaster has suspended payments to [is_bathhouse_worker(user) ? "her workers" : "her agents"] for now."))
+		else
+			to_chat(user, span_warning("[F.name] withholds that sum - I may draw only [get_withdraw_remaining(user)]m more this dae."))
+		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+		return
+	if(F.balance < amount)
+		to_chat(user, span_warning("[F.name] cannot honor a withdrawal of [amount]m."))
+		return
+	if(!SStreasury.burn(F, amount, "NERVELOCK withdrawal by [user.real_name]"))
+		return
+	// Only count it against the cap once the coin has actually moved, and never for the
+	// Bathmaster - workers and agents each draw against their own group's cap.
+	if(!can_issue_loan(user))
+		SStreasury.record_bathhouse_withdrawal(user, amount)
+	budget2change(amount, user)
+	playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
+	say("[amount]m drawn by [user.real_name].")
+	log_admin("WITHDRAW: [key_name(user)] drew [amount]m from [F.name].")
+
+/// Lets the Bathmaster and agents move coin from their personal nervelock account into the
+/// bathhouse fund. The daily cap governs withdrawals only, never deposits.
+/obj/structure/roguemachine/vaultbank/bathhouse/proc/deposit_to_fund(mob/living/carbon/human/user, list/params)
+	if(!istype(user))
+		return
+	if(!can_view(user))
+		to_chat(user, span_warning("You are not employed by the Bathhouse."))
+		return
+	var/datum/fund/F = get_linked_fund()
+	if(!F)
+		to_chat(user, span_warning("[src] sits inert - its coffers are unbound. Notify staff."))
+		return
+	var/amount = round(text2num("[params["amount"]]"))
+	if(isnull(amount) || amount <= 0)
+		to_chat(user, span_warning("Name a positive sum."))
+		return
+	var/datum/fund/account = SStreasury.get_account(user)
+	if(!account)
+		to_chat(user, span_warning("You have no Nervelock account to draw from."))
+		return
+	if(account.balance < amount)
+		to_chat(user, span_warning("Your account cannot cover a deposit of [amount]m."))
+		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+		return
+	if(!SStreasury.transfer(account, F, amount, "Bathhouse deposit by [user.real_name]"))
+		return
+	playsound(src, 'sound/misc/coininsert.ogg', 60, FALSE, -1)
+	say("[amount]m rendered unto the Bathhouse by [user.real_name].")
+	log_admin("DEPOSIT: [key_name(user)] deposited [amount]m into [F.name].")
 
 /obj/structure/roguemachine/vaultbank/bathhouse/get_patronage_writ_path()
 	return /obj/item/patronage_writ/token
