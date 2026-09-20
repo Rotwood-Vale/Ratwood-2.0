@@ -271,7 +271,7 @@
 	if(!new_imperial)
 		return
 
-	var/list/hearers = get_hearers_in_view(7, src) // this should be ok range wise
+	var/list/hearers = get_hearers_in_view(7, src)
 	var/list/spans = list()
 	spans |= speech_span
 
@@ -280,31 +280,40 @@
 			continue
 
 		var/heard_message = "\[The speech is completely unintelligible..\]"
+		var/datum/language/delivery_language = /datum/language/common
 
 		if(isliving(hearer))
 			var/mob/living/living_hearer = hearer
 			heard_message = new_imperial.translate_for(living_hearer, message)
 
-		// we manually add the real New Imperial icon because the actual
-		// speech is deliberately rendered as Common to prevent it being
-		// scrambled a second time.
-		language_icon_html = get_language_icon_for(hearer, new_imperial)
+			// native New Imperial speakers should receive ACTUAL New Imperial. because this is literally a hack and its actually old imperial.
+			if(living_hearer.has_language(/datum/language/new_imperial))
+				delivery_language = /datum/language/new_imperial
+
+		// if we're delivering actual New Imperial, Ratwood will render
+		// the language icon natively.
+		//
+		// Otherwise we're using old imperial internally only as a carrier for
+		// our manually translated partial-comprehension text, so manually
+		// show the New Imperial icon.
+		if(delivery_language == /datum/language/new_imperial)
+			language_icon_html = ""
+		else
+			language_icon_html = get_language_icon_for(hearer, new_imperial)
 
 		var/rendered_message = compose_message(
 			src,
-			/datum/language/common,
+			delivery_language,
 			heard_message,
 			null,
 			spans,
 			null
 		)
 
-		
-
 		hearer.Hear(
 			rendered_message,
 			src,
-			/datum/language/common,
+			delivery_language,
 			heard_message,
 			null,
 			spans,
