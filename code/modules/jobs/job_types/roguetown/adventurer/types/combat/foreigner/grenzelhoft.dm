@@ -72,3 +72,67 @@
 			if("Eagle's Beak")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/eaglebeak
+/datum/advclass/foreigner/fencerguy
+	name = "Foreign Fencer"
+	tutorial = "You're an itinerant weapons expert that was trained in a Grenzelhoftian fencing school, carrying with you your weapon, your skillset, your pride... And not much else, frankly."
+	extra_context = "This is a freeform class that's meant to evoke a similar feeling to playing a Freifechter, your equipment and skillset is limited compared to other classes - this is by design - but you start with cool weapons."
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = RACES_ALL_KINDS
+	outfit = /datum/outfit/job/roguetown/adventurer/fencerguy
+	subclass_languages = list(/datum/language/grenzelhoftian)
+	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
+	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_FENCERDEXTERITY)
+	subclass_stats = list(
+		STATKEY_INT = 2,
+		STATKEY_PER = 3,
+	)
+	subclass_skills = list(
+		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE
+	)
+
+/datum/outfit/job/roguetown/adventurer/fencerguy/pre_equip(mob/living/carbon/human/H)
+	..()
+	to_chat(H, span_warning("You're an itinerant weapons expert that was trained in a Grenzelhoftian fencing school, carrying with you your weapon, your skillset, and your pride."))
+	H.set_blindness(0)
+	if(H.mind)
+		var/weapons = list("Balanced Longsword","Spear & Punch Dagger","Sabre")
+		var/weapon_choice = input(H, "Choose your expertise.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Balanced Longsword")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/sword/long/fencerguy
+				r_hand = /obj/item/rogueweapon/huntingknife/combat
+				backr = /obj/item/rogueweapon/scabbard/sword
+			if("Spear & Punch Dagger")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				l_hand = /obj/item/rogueweapon/spear/boar
+				r_hand = /obj/item/rogueweapon/katar/punchdagger
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
+			if("Sabre")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				l_hand = /obj/item/rogueweapon/sword/sabre
+				r_hand = /obj/item/rogueweapon/huntingknife/idagger
+				beltr = /obj/item/rogueweapon/scabbard/sword
+	armor = /obj/item/clothing/suit/roguetown/armor/leather
+	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
+	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
+	neck = /obj/item/clothing/neck/roguetown/fencerguard/generic
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
+	backl = /obj/item/storage/backpack/rogue/satchel
+	belt = /obj/item/storage/belt/rogue/leather
+	backpack_contents = list(
+		/obj/item/flashlight/flare/torch = 1,
+		/obj/item/recipe_book/survival = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/natural/bundle/cloth/bandage/full = 1,
+		)

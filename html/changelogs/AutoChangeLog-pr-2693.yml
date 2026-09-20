@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Werewolf skin and gnoll hide are now affected by blessed silver intdamage multiplier."
