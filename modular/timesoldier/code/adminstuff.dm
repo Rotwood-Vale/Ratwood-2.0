@@ -353,6 +353,9 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 	// hand control over only after the body is completely prepared.
 	H.key = player_key
 
+	H.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL) // you know what would be really really funny...
+	H.grant_language(/datum/language/new_imperial) // has to placed here otherwise we can't speak new imperial!
+
 	return H
 
 
@@ -360,7 +363,7 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 	if(!H)
 		return
 
-	H.grant_language(/datum/language/new_imperial)
+
 
 	switch(soldier_type)
 		if(TIMESOLDIER_TEMPERANCE)
