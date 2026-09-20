@@ -6,7 +6,6 @@
 
 
 /datum/language/common/new_imperial/proc/translate_for(mob/living/hearer, message)
-	return scramble(message)
 	if(!isliving(hearer))
 		return "\[The speech is completely unintelligible.\]"
 
@@ -21,7 +20,7 @@
 	var/mob/living/carbon/human/H = hearer
 
 	if(H.STAINT <= 10)
-		return "[The words are completely unfamiliar.]" // dumbass.
+		return "\[The words are completely unfamiliar.\]" // dumbass.
 
 	if(H.STAINT < 14)
 		return partial_comprehension(message, prob(35) ? 2: 1) // sometimes you can tell one word out. sometimes two.
@@ -35,7 +34,7 @@
 	var/list/words = splittext(message, " ")
 
 	if(!length(words))
-		return "[The words sound vaguely familiar..]"
+		return "\[The words sound vaguely familiar..\]"
 
 	var/list/discerned = list()
 

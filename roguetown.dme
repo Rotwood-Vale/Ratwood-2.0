@@ -3402,6 +3402,7 @@
 #include "modular\timesoldier\code\clothing.dm"
 #include "modular\timesoldier\code\stuff.dm"
 #include "modular\timesoldier\code\adminstuff.dm"
+#include "modular\timesoldier\code\language.dm"
 #include "modular_azurepeak\_customization_trait.dm"
 #include "modular_azurepeak\_quirk.dm"
 #include "modular_azurepeak\_statpacks.dm"
