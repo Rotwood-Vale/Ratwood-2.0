@@ -474,6 +474,7 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			O.update_grabbed_spell_hud()
 			if(BP)
 				C.update_hud_hand_slot(BP.held_index)
 				C.mark_zone_selector_hud_dirty()
