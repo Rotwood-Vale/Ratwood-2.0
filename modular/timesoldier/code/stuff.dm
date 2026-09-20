@@ -2,6 +2,9 @@
 #define FUTURE_VOICE_FEMALE "Female" // girlboss.
 #define FUTURE_VOICE_MALE "Male" // the guy that likes yelling.
 
+#define FUTURE_LANGUAGE_IMPERIAL "Imperial"
+#define FUTURE_LANGUAGE_NEW_IMPERIAL "New Imperial"
+
 
 /obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow
 	name = "Ferentian Ration Can"
@@ -63,6 +66,7 @@
 	var/broadcasting = FALSE
 	var/datum/looping_sound/timesoldier_radio/radio_loop
 	var/voice_template = FUTURE_VOICE_MALE_GENERIC
+	var/broadcast_language = FUTURE_LANGUAGE_NEW_IMPERIAL
 	var/radio_noise_timer
 	verb_say = "coldly states"
 	verb_ask = "coldly states"
@@ -89,13 +93,14 @@
 	return ..()
 
 
-/obj/item/timesoldier/radio/proc/start_broadcast(selected_voice)
+/obj/item/timesoldier/radio/proc/start_broadcast(selected_voice, selected_language)
 	if(broadcasting)
 		return
 	
 	broadcasting = TRUE
 	icon_state = "radio_on"
 	voice_template = selected_voice
+	broadcast_language = selected_language
 
 	playsound(src, pick('modular/timesoldier/sounds/comms/broadcast_start1.ogg', 'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
 
@@ -148,7 +153,12 @@
 		
 	if(sound_to_play)
 		playsound(src, sound_to_play, 55, FALSE)
-	say_new_imperial(message)
+
+	switch(broadcast_language)
+		if(FUTURE_LANGUAGE_IMPERIAL)
+			say_imperial(message)
+		if(FUTURE_LANGUAGE_NEW_IMPERIAL)
+			say_new_imperial(message)
 
 /obj/item/timesoldier/radio/proc/schedule_radio_noise()
 	if(!broadcasting)
@@ -185,6 +195,35 @@
 
 
 // RADIO TRANSLATION STUFF.
+
+/obj/item/timesoldier/radio/proc/say_imperial(message)
+	var/list/hearers = get_hearers_in_view(7, src)
+	var/list/spans = list()
+	spans |= speech_span
+
+	var/rendered_message = compose_message(
+		src,
+		/datum/language/common,
+		message,
+		null,
+		spans,
+		null
+	)
+
+	for(var/atom/movable/hearer as anything in hearers)
+		if(!hearer)
+			continue
+
+		hearer.Hear(
+			rendered_message,
+			src,
+			/datum/language/common,
+			message,
+			null,
+			spans,
+			null
+		)
+
 
 /obj/item/timesoldier/radio/proc/say_new_imperial(message)
 	var/datum/language/new_imperial/new_imperial = GLOB.language_datum_instances[/datum/language/new_imperial]

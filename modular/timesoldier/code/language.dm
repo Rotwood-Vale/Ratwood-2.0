@@ -4,11 +4,33 @@
 	key = "?"
 	default_priority = 0
 	icon_state = "galcom"
+
 	speech_verb = "says"
 	whisper_verb = "whispers"
 	exclaim_verb = "yells"
 	ask_verb = "asks"
 
+
+	// originally i wanted to give new imperial a discerning effect like the radio has, but i found out, that's just too much effort for me.
+	// im still intermediate at coding, so ill just make the native speakers just speak imperial but evolved.
+
+	syllables = list(
+		// remnants of old Imperial
+		"im", "per", "pra", "pro", "ter", "ver",
+		"cor", "con", "dom", "est", "eri", "val",
+		"qua", "re", "ri", "ta", "te", "us",
+		"um", "or", "ar", "en",
+
+		// contracted / evolved Imperial
+		"ven", "var", "ren", "tor", "tra", "vor",
+		"kar", "dar", "mar", "ser", "vel", "lan",
+		"tal", "ran", "den", "sen", "kan", "kor",
+
+		// loan sounds absorbed over time
+		"ka", "ko", "ve", "va", "na", "no",
+		"za", "ra", "da", "ya", "shi", "ki",
+		"gra", "dra", "ska", "vos", "kir", "mor"
+	)
 
 /datum/language/new_imperial/proc/translate_for(mob/living/hearer, message)
 	if(!isliving(hearer))

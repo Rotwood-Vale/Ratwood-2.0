@@ -12,6 +12,15 @@
 		FUTURE_VOICE_FEMALE
 	)
 
+	var/list/language_options = list(
+		FUTURE_LANGUAGE_IMPERIAL,
+		FUTURE_LANGUAGE_NEW_IMPERIAL
+	)
+
+	var/selected_language = input(usr, "Select the Broadcast Language", "WHAT ARE WE SAYING?") as null|anything in language_options
+	if(!selected_language)
+		return
+
 	var/selected_voice = input(usr, "Select The Voice Type.", "GIVE ME A VOICE") as null|anything in voice_options
 	if(!selected_voice)
 		return
@@ -19,15 +28,15 @@
 	var/radios_found = 0
 
 	for(var/obj/item/timesoldier/radio/R in world)
-		R.start_broadcast(selected_voice)
+		R.start_broadcast(selected_voice, selected_language)
 		radios_found++
 	
 	if(!radios_found)
 		to_chat(usr, span_warning("There are no field transceivers in the world! Cancelling..."))
 		return
 	
-	log_admin("[key_name(usr)] begun a Future Broadcast using the [selected_voice] voice.")
-	message_admins(span_adminnotice("[key_name_admin(usr)] started a Future Broadcast using the [selected_voice] voice."))
+	log_admin("[key_name(usr)] begun a Future Broadcast using the [selected_voice] voice in [selected_language].")
+	message_admins(span_adminnotice("[key_name_admin(usr)] started a Future Broadcast using the [selected_voice] voice in [selected_language]."))
 
 
 /client/proc/timesoldier_broadcast_message()
