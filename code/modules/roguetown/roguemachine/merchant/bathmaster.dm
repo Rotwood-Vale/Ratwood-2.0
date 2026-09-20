@@ -258,6 +258,10 @@
 				var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(PA.cost, BATHHOUSE_BRASSFACE_TITHE_RATE)
 				if(bathhouse_tithe > 0)
 					SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+				// While the Ordinance holds the Crown has no claim upon the Baths, so the
+				// tariff charged on the sale is diverted to the Church rather than the Crown.
+				if(tax_amt > 0)
+					SStreasury.mint(SStreasury.church_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] diverted to the Church ([src.name])")
 				tariff_collected_here += tax_amt
 			else
 				SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")

@@ -21296,7 +21296,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "etf" = (
 /obj/structure/fluff/walldeco/painting/seraphina{
 	pixel_y = 32
@@ -27957,7 +27957,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "fLZ" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle{
 	dir = 1
@@ -30067,7 +30067,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "gjs" = (
 /obj/structure/fluff/railing/border/east{
 	pixel_x = -16
@@ -47858,7 +47858,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "jVp" = (
 /obj/item/roguecoin/gold/pile,
 /obj/item/roguecoin/gold/pile,
@@ -56596,7 +56596,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "lNQ" = (
 /obj/structure/stairs{
 	dir = 1
@@ -56939,7 +56939,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "lSo" = (
 /obj/item/candle/candlestick/silver/lit,
 /obj/structure/table/wood/long_table/north_east,
@@ -57532,7 +57532,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "lXp" = (
 /obj/structure/table/church{
 	icon_state = "churchtable_mid"
@@ -68003,7 +68003,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "ofC" = (
 /obj/structure/flora/newleaf,
 /obj/structure/flora/newbranch/connector{
@@ -70853,7 +70853,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "oMy" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/herringbone,
@@ -73474,7 +73474,7 @@
 /turf/open/floor/rogue/churchbrick{
 	icon_state = "concretefloor1"
 	},
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "pnA" = (
 /obj/effect/decal/cleanable/debris/woody,
 /obj/structure/fluff/walldeco/church/line{
@@ -78285,7 +78285,7 @@
 	pixel_y = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "qoy" = (
 /obj/structure/rack/rogue,
 /obj/item/rope,
@@ -86613,6 +86613,15 @@
 "sdL" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/outdoors/beach/harbor)
+"sdQ" = (
+/obj/effect/decal/herringbone{
+	dir = 8
+	},
+/obj/structure/roguemachine/headeater/treasureseeker{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors/town/bath)
 "sdT" = (
 /obj/structure/fluff/railing/border/west{
 	layer = 4.3
@@ -101061,7 +101070,7 @@
 "vhJ" = (
 /obj/structure/roguemachine/bathvend,
 /turf/closed/wall/mineral/rogue/stonebrick,
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "vhN" = (
 /obj/structure/closet/crate/drawer{
 	keylock = 1;
@@ -106486,6 +106495,9 @@
 "woJ" = (
 /turf/open/water/ocean,
 /area/rogue/under/cavewet)
+"woK" = (
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/outdoors/exposed/bath/vault)
 "woM" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -110924,7 +110936,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
+/area/rogue/outdoors/exposed/bath/vault)
 "xke" = (
 /obj/structure/chair/wood/rogue/fancy{
 	dir = 8
@@ -172712,7 +172724,7 @@ xeg
 scK
 lXl
 xkd
-jfX
+woK
 ofB
 scK
 eCL
@@ -173144,7 +173156,7 @@ xeg
 scK
 vhJ
 qoq
-jfX
+woK
 fLW
 abI
 kLo
@@ -173576,7 +173588,7 @@ xeg
 scK
 jVo
 gjr
-jfX
+woK
 ete
 scK
 eCL
@@ -287196,7 +287208,7 @@ qbV
 jrd
 osV
 osV
-osV
+sdQ
 eFJ
 lfT
 pwW

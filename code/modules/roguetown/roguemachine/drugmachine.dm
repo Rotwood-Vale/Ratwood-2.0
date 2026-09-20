@@ -209,6 +209,10 @@
 					var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(base, BATHHOUSE_BRASSFACE_TITHE_RATE)
 					if(bathhouse_tithe > 0)
 						SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+					// While the Ordinance holds the Crown has no claim upon the Baths - the
+					// tariff charged on the sale is diverted to the Church instead.
+					if(tax_amt > 0)
+						SStreasury.mint(SStreasury.church_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] diverted to the Church ([src.name])")
 					tariff_collected_here += tax_amt
 				else
 					SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
@@ -281,13 +285,19 @@
 							var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(cut, BATHHOUSE_BRASSFACE_TITHE_RATE)
 							if(bathhouse_tithe > 0)
 								SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+							// The Crown's duty on the banked cut is diverted to the Church
+							// while the Ordinance of the Baths is in force.
+							SStreasury.mint(SStreasury.church_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] diverted to the Church ([src.name])")
 						else
 							SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
 							record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, tax_amt)
 							record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
 							record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
 						tariff_collected_here += tax_amt
-					say("[deposit]m to your account, Master. The Crown keeps [tax_amt]m.")
+					if(SStreasury.bathhouse_ordinance_active)
+						say("[deposit]m to your account, Master. The Church keeps [tax_amt]m.")
+					else
+						say("[deposit]m to your account, Master. The Crown keeps [tax_amt]m.")
 				if("direct")
 					// The cut leaves as untraced coin, so the Crown's duty is dodged entirely.
 					var/cut = floor(secret_budget)
