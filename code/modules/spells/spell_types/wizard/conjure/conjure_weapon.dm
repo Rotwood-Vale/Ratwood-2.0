@@ -72,6 +72,7 @@
 
 	var/obj/item/rogueweapon/R = new weapon_choice(user.drop_location())
 	R.blade_dulling = DULLING_SHAFT_CONJURED
+	R.sellprice = 0
 	if(!QDELETED(R))
 		R.AddComponent(/datum/component/conjured_item, GLOW_COLOR_ARCANE)
 	user.put_in_hands(R)
