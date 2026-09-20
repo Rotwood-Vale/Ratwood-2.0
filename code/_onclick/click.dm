@@ -301,7 +301,7 @@
 		if(CanReach(A) || CanReach(A, W))
 			if(isopenturf(A))
 				var/turf/T = A
-				if(used_intent.noaa)
+				if(used_intent.noaa && !used_intent.force_autoaim)
 					resolveAdjacentClick(A,W,params,used_hand)
 					return
 				if(T)
@@ -312,7 +312,8 @@
 						target = M
 						break
 					if(target)
-						if(target.Adjacent(src) || (CanReach(target, W) && used_intent.effective_range_type))
+						//CanReach already honours used_intent.reach, so this covers reach 2+ intents
+						if(target.Adjacent(src) || CanReach(target, W))
 							if(!used_intent.noaa)
 								if(used_intent.cleave)
 									used_intent.cleave.show_cleave_visuals(src, T)
