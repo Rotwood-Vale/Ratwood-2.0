@@ -3,18 +3,55 @@
 /datum/species/human/void
 	name = "Voidborn"
 	id = "void"
+	limbs_id = "human"
 	desc = "Ancient beings of pure void and starlight. They are not of this world — faster, stronger, and more resilient than any mortal race. Time itself seems to bend around them."
 	expanded_desc = "Voidborn are remnants of a long-dead stellar civilization. Their bodies are denser than lead yet lighter than air, their minds process reality at impossible speeds, and their flesh knits itself back together almost as fast as it is wounded. Looking at one for too long leaves afterimages that refuse to fade. When they die, space itself cracks."
 
-	limbs_id = "humen"
+	default_color = "#1a1a2e"
+	/// Void hues come from get_skin_list(), so the greyscale bodies are tinted by skin tone.
+	use_skintones = 1
+	mutant_skin_option = TRUE
+
+	skin_tone_wording = "Void Hue"
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'
 	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
 	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
-
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
+	enflamed_icon = "widefire"
 	default_features = MANDATORY_FEATURE_LIST
-
+	offset_features = list(
+		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
+		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
+		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
+		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
+		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
+		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
+		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
+		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
+		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
+		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
+		)
+	bodypart_features = list(
+		/datum/bodypart_feature/hair/head,
+		/datum/bodypart_feature/hair/facial,
+	)
+	customizers = list(
+		/datum/customizer/organ/eyes/humanoid,
+		/datum/customizer/bodypart_feature/hair/head/humanoid,
+		/datum/customizer/bodypart_feature/hair/facial/humanoid,
+		/datum/customizer/bodypart_feature/accessory,
+		/datum/customizer/bodypart_feature/face_detail,
+		/datum/customizer/bodypart_feature/underwear,
+		/datum/customizer/bodypart_feature/legwear,
+		/datum/customizer/organ/testicles/anthro,
+		/datum/customizer/organ/penis/anthro,
+		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/vagina/human_anthro,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
+	)
 
 	// Combat
 	armor = 45
@@ -71,7 +108,7 @@
 		/datum/skill/labor/mining = 4
 	)
 
-	species_traits = list(NO_UNDERWEAR, NOEYESPRITES, NOBLOOD)
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY, NO_UNDERWEAR, NOBLOOD)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHEAT,
@@ -143,7 +180,12 @@ var/list/void_speech_fx_times = list()
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		H.dna?.species?.limbs_id = "human"
+		// Race swaps keep the old tone, which isn't in the void palette. Rebuild the overlay stack after.
+		var/list/hues = get_skin_list()
+		var/list/valid_hues = list()
+		for(var/hue in hues)
+			valid_hues += hues[hue]
+		H.skin_tone = sanitize_inlist(H.skin_tone, valid_hues, hues["starlight"])
 		H.update_body()
 		H.update_hair()
 		H.update_body_parts()
