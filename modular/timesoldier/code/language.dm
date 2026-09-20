@@ -89,3 +89,41 @@
 		return "\[Something about... [discerned[1]]... and [discerned[2]]?\]"
 
 	return "\[Something about... [discerned[1]]... [discerned[2]]... and [discerned[3]]?\]"
+
+
+/proc/setup_timesoldier_languages(mob/living/carbon/human/H)
+	if(!H)
+		return
+
+	if(!H.mind)
+		return
+
+	// languages a player actually knows live on the mind holder.
+	var/datum/language_holder/L = H.mind.get_language_holder()
+
+	// we shouldn't know old imperial. we're a soldier, not an archivist.
+	L.remove_language(
+		/datum/language/common,
+		source = LANGUAGE_SOURCE_ALL
+	)
+
+	// we know new imperial, for obvious raisins.
+	L.grant_language(
+		/datum/language/new_imperial,
+		source = LANGUAGE_SOURCE_GENERIC
+	)
+
+	// make it their default immediately to avoid the bug where you can't select it.
+	L.selected_default_language = /datum/language/new_imperial
+
+	// normal human tongues have a whitelist of languages they can physically speak.
+	// give THIS tongue New Imperial without modifying the global/static whitelist.
+	var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+
+	if(T)
+		if(T.languages_possible)
+			T.languages_possible = T.languages_possible.Copy()
+		else
+			T.languages_possible = list()
+
+		T.languages_possible[/datum/language/new_imperial] = TRUE

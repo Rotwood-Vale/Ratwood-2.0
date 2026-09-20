@@ -353,8 +353,7 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 	// hand control over only after the body is completely prepared.
 	H.key = player_key
 
-	H.remove_language(/datum/language/common, source = LANGUAGE_SOURCE_ALL) // you know what would be really really funny...
-	H.grant_language(/datum/language/new_imperial) // has to placed here otherwise we can't speak new imperial!
+	setup_timesoldier_languages(H) // use the helper from language.dm
 
 	return H
 
