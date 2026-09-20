@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - rscdel: "A number of \"important\" roles have been forbidden from taking Marked by Gnolls, due to gnolls' high potential for disappearing targets from the round."

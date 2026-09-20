@@ -780,7 +780,7 @@
 /datum/crafting_recipe/roguetown/sewing/hgambeson/fencer
 	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "fencing shirt"
-	result = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+	result = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/silk = 2)
 	craftdiff = 5
