@@ -144,7 +144,7 @@
 	 * rate the front takes around four seconds and the ripple, which is timed
 	 * in deciseconds rather than ticks, around eight.
 	 */
-	var/speed = max(2, round(radius / 100))
+	var/speed = 50
 
 	message_admins("Void ship crash shockwave: z[landing_z], radius [radius], speed [speed], visual only, every player on every level [epicenter.x],[epicenter.y] [ADMIN_JMP(epicenter)]")
 

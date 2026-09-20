@@ -128,21 +128,6 @@
 		TRAIT_CRITICAL_RESISTANCE
 	)
 
-	offset_features = list(
-		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
-		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
-		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
-		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
-		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
-		OFFSET_BREASTS = list(0,1), \
-		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
-		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
-		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
-		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
-		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
-		OFFSET_BREASTS_F = list(0,-1), \
-		)
-
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	inherent_factions = list("void")
 
@@ -160,7 +145,9 @@
 		/obj/effect/proc_holder/spell/invoked/void_fold,
 		/obj/effect/proc_holder/spell/invoked/projectile/void_lance,
 		/obj/effect/proc_holder/spell/invoked/void_repulse,
-		/obj/effect/proc_holder/spell/invoked/void_null_pulse
+		/obj/effect/proc_holder/spell/invoked/void_null_pulse,
+		/obj/effect/proc_holder/spell/invoked/void_beckon,
+		/obj/effect/proc_holder/spell/invoked/void_mandate
 	)
 
 var/list/void_speech_fx_times = list()
@@ -176,6 +163,7 @@ var/list/void_speech_fx_times = list()
 	C.alpha = 255
 	C.color = null
 	C.transform = matrix()
+	C.AddComponent(/datum/component/alien_examine)
 	animate(C, alpha = 255, color = null, transform = matrix(), time = 0)
 
 	if(ishuman(C))
@@ -207,6 +195,7 @@ var/list/void_speech_fx_times = list()
 	C.alpha = 255
 	C.color = null
 	C.transform = matrix()
+	qdel(C.GetComponent(/datum/component/alien_examine))
 	animate(C, alpha = 255, color = null, transform = matrix(), time = 0)
 
 	clear_void_spells(C)
@@ -967,6 +956,332 @@ var/list/void_speech_fx_times = list()
 
 
 
+/*
+ * Void Beckon — call all nearby void-faction mobs to the caster and order them to follow
+ */
+/obj/effect/proc_holder/spell/invoked/void_beckon
+	name = "Void Beckon"
+	desc = "Fold space and call every void-kin nearby. They will come and follow."
+	action_icon = 'icons/mob/actions/roguespells.dmi'
+	overlay_state = "shadowstep"
+
+	range = 1
+	recharge_time = 18 SECONDS
+	chargetime = 0
+	releasedrain = 35
+	chargedrain = 0
+	chargedloop = null
+	movement_interrupt = FALSE
+	sound = 'modular_fenysha_events/sound/fractal_glitch1.ogg'
+	invocation_type = "none"
+	antimagic_allowed = TRUE
+
+	var/beckon_radius = 15
+
+/obj/effect/proc_holder/spell/invoked/void_beckon/cast(list/targets, mob/user = usr)
+	. = ..()
+	if(!isliving(user))
+		return FALSE
+	INVOKE_ASYNC(src, PROC_REF(do_beckon), user)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/void_beckon/proc/do_beckon(mob/living/user)
+	if(QDELETED(user))
+		return
+
+	var/turf/center = get_turf(user)
+	if(!center)
+		return
+
+	user.visible_message(span_fractal_echo("[user] folds space inward. Something answers from the dark..."))
+	playsound(user, sound, 85, TRUE)
+
+	// Visual pulse
+	user.add_filter("void_beckon", 2, list("type" = "wave", "size" = 2, "x" = 8, "y" = 8, "offset" = 0))
+	var/f = user.get_filter("void_beckon")
+	if(f)
+		animate(f, size = 14, offset = 80, time = 12, flags = ANIMATION_PARALLEL)
+
+	for(var/ring in 0 to 3)
+		for(var/turf/T in range(ring, center))
+			if(get_dist(T, center) != ring)
+				continue
+			if(prob(55))
+				new /obj/effect/temp_visual/fractal_crack(T)
+			if(prob(25))
+				new /obj/effect/temp_visual/void_spark(T)
+		sleep(1)
+
+	var/count = 0
+	for(var/mob/living/M in range(beckon_radius, user))
+		if(M == user)
+			continue
+		if(M.client)
+			continue
+		if(M.stat == DEAD)
+			continue
+		if(!M.faction || !("void" in M.faction))
+			continue
+
+		// --- Skeleton commanded type ---
+		if(istype(M, /mob/living/carbon/human/species/skeleton/npc/summoned))
+			var/mob/living/carbon/human/species/skeleton/npc/summoned/skel = M
+			skel.set_command("follow", user)
+			count++
+			continue
+
+		// --- Modern AI controller ---
+		if(M.ai_controller)
+			var/datum/ai_controller/ai = M.ai_controller
+			ai.CancelActions()
+			ai.clear_blackboard_key(BB_FOLLOW_TARGET)
+			ai.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			ai.clear_blackboard_key(BB_TRAVEL_DESTINATION)
+			ai.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+			ai.set_blackboard_key(BB_FOLLOW_TARGET, user)
+			if(ai.ai_status == AI_STATUS_OFF)
+				ai.set_ai_status(AI_STATUS_ON)
+			ai.PauseAi(0)
+			count++
+			continue
+
+		// --- Simple animals ---
+		if(istype(M, /mob/living/simple_animal))
+			var/mob/living/simple_animal/S = M
+			walk(S, 0)
+			var/delay = 2
+			if(istype(S, /mob/living/simple_animal/hostile) && S:move_to_delay)
+				delay = S:move_to_delay
+			if(get_dist(S, user) > 2)
+				walk_towards(S, user, 0, delay)
+			count++
+			continue
+
+		// --- Old NPC AI (humanoids with mode) ---
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!isnull(H.mode))
+				H.target = null
+				H.enemies = list()
+				H.aggressive = 0
+				H.wander = FALSE
+				H.friends |= user
+				if(get_dist(H, user) > 2)
+					walk_towards(H, user, 0, 2)
+				H.mode = NPC_AI_IDLE
+				H.handle_ai()
+				count++
+			else
+				// Fallback for non-AI humans of void faction
+				walk(H, 0)
+				if(get_dist(H, user) > 2)
+					walk_towards(H, user, 0, 2)
+				count++
+
+	if(count > 0)
+		to_chat(user, span_fractal_growth("[count] void-kin answer the call and begin to follow."))
+	else
+		to_chat(user, span_fractal_whisper("The void is silent. No kin nearby."))
+
+	sleep(8)
+	if(!QDELETED(user))
+		user.remove_filter("void_beckon")
+
+
+/*
+ * Void Mandate — command all nearby void-faction mobs to attack a target
+ */
+/obj/effect/proc_holder/spell/invoked/void_mandate
+	name = "Void Mandate"
+	desc = "Issue a single command through the void. All nearby void-kin will attack the chosen target."
+	action_icon = 'icons/mob/actions/roguespells.dmi'
+	overlay_state = "force_dart"
+
+	range = 8
+	recharge_time = 16 SECONDS
+	chargetime = 0
+	releasedrain = 40
+	chargedrain = 0
+	chargedloop = null
+	movement_interrupt = FALSE
+	sound = 'modular_fenysha_events/sound/fractal_glitch1.ogg'
+	invocation_type = "none"
+	antimagic_allowed = TRUE
+
+	var/command_radius = 15
+
+/obj/effect/proc_holder/spell/invoked/void_mandate/cast(list/targets, mob/user = usr)
+	. = ..()
+	if(!length(targets))
+		return FALSE
+	var/atom/target = targets[1]
+	if(!target || QDELETED(target))
+		return FALSE
+	if(target == user)
+		to_chat(user, span_fractal_whisper("The void does not turn against itself."))
+		return FALSE
+
+	INVOKE_ASYNC(src, PROC_REF(do_mandate), user, target)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/void_mandate/proc/do_mandate(mob/living/user, atom/target)
+	if(QDELETED(user) || QDELETED(target))
+		return
+
+	var/turf/center = get_turf(user)
+	if(!center)
+		return
+
+	user.visible_message(span_fractal_depth("[user] speaks a single word that does not exist. Space itself delivers the order."))
+	playsound(user, sound, 90, TRUE)
+
+	// Visual
+	user.add_filter("void_mandate", 2, list("type" = "wave", "size" = 3, "x" = 10, "y" = 10, "offset" = 0))
+	var/f = user.get_filter("void_mandate")
+	if(f)
+		animate(f, size = 16, offset = 90, time = 10, flags = ANIMATION_PARALLEL)
+
+	for(var/turf/T in range(2, center))
+		if(prob(60))
+			new /obj/effect/temp_visual/fractal_crack(T)
+		if(prob(30))
+			new /obj/effect/temp_visual/void_spark(T)
+
+	var/count = 0
+	for(var/mob/living/M in range(command_radius, user))
+		if(M == user)
+			continue
+		if(M.client)
+			continue
+		if(M.stat == DEAD)
+			continue
+		if(M == target)
+			continue
+		if(!M.faction || !("void" in M.faction))
+			continue
+
+		// --- Skeleton commanded type ---
+		if(istype(M, /mob/living/carbon/human/species/skeleton/npc/summoned))
+			var/mob/living/carbon/human/species/skeleton/npc/summoned/skel = M
+			skel.set_command("attack", target)
+			count++
+			continue
+
+		// --- Modern AI controller ---
+		if(M.ai_controller)
+			var/datum/ai_controller/ai = M.ai_controller
+			ai.CancelActions()
+			ai.clear_blackboard_key(BB_FOLLOW_TARGET)
+			ai.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			ai.clear_blackboard_key(BB_TRAVEL_DESTINATION)
+			ai.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
+
+			if(ismob(target))
+				ai.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+			else
+				// Object target
+				ai.set_blackboard_key(BB_TRAVEL_DESTINATION, get_turf(target))
+				// For non-simplemob AI we can optionally start a light attack assist
+				if(!istype(M, /mob/living/simple_animal))
+					INVOKE_ASYNC(src, PROC_REF(assist_object_attack), M, target)
+			if(ai.ai_status == AI_STATUS_OFF)
+				ai.set_ai_status(AI_STATUS_ON)
+			ai.PauseAi(0)
+			count++
+			continue
+
+		// --- Simple animals ---
+		if(istype(M, /mob/living/simple_animal))
+			var/mob/living/simple_animal/S = M
+			walk(S, 0)
+			if(ismob(target))
+				// Try to make them aggressive toward the target
+				if(istype(S, /mob/living/simple_animal/hostile))
+					var/mob/living/simple_animal/hostile/H = S
+					H.GiveTarget(target)
+				else
+					walk_towards(S, target, 0, 2)
+			else
+				walk_to(S, get_turf(target), 0, 2)
+			count++
+			continue
+
+		// --- Old NPC AI ---
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!isnull(H.mode))
+				H.aggressive = 1
+				H.wander = TRUE
+				H.friends = list()
+				if(ismob(target))
+					H.enemies[target] = TRUE
+					H.retaliate(target)
+				else
+					H.target = target
+					H.mode = NPC_AI_HUNT
+					INVOKE_ASYNC(src, PROC_REF(assist_old_npc_object_attack), H, target)
+				H.handle_ai()
+				count++
+			else
+				// Basic fallback
+				walk(H, 0)
+				if(get_dist(H, target) > 1)
+					walk_towards(H, target, 0, 2)
+				count++
+
+	if(count > 0)
+		to_chat(user, span_fractal_growth("[count] void-kin receive the mandate and move to destroy [target]."))
+	else
+		to_chat(user, span_fractal_whisper("No void-kin hear the command."))
+
+	sleep(6)
+	if(!QDELETED(user))
+		user.remove_filter("void_mandate")
+
+// Light assist routines (simplified from mass_direct, no persistent tracking needed for player spells)
+
+/obj/effect/proc_holder/spell/invoked/void_mandate/proc/assist_object_attack(mob/living/attacker, atom/target)
+	set waitfor = FALSE
+	if(!attacker || QDELETED(attacker) || !target || QDELETED(target))
+		return
+	var/attempts = 0
+	while(attempts < 40 && attacker && !QDELETED(attacker) && target && !QDELETED(target))
+		if(get_dist(attacker, target) <= 1)
+			if(isliving(target))
+				attacker.UnarmedAttack(target)
+			else
+				var/obj/item/weapon = attacker.get_active_held_item()
+				if(weapon)
+					attacker.UnarmedAttack(target)
+				else
+					target.attack_animal(attacker)
+			sleep(1 SECONDS)
+		else
+			if(attacker.ai_controller)
+				attacker.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, get_turf(target))
+			sleep(0.6 SECONDS)
+		attempts++
+
+/obj/effect/proc_holder/spell/invoked/void_mandate/proc/assist_old_npc_object_attack(mob/living/carbon/human/attacker, atom/target)
+	set waitfor = FALSE
+	if(!attacker || QDELETED(attacker) || !target || QDELETED(target))
+		return
+	var/attempts = 0
+	while(attempts < 40 && attacker && !QDELETED(attacker) && target && !QDELETED(target))
+		if(get_dist(attacker, target) <= 1)
+			var/obj/item/weapon = attacker.get_active_held_item()
+			if(weapon)
+				attacker.UnarmedAttack(target)
+			else
+				target.attack_animal(attacker)
+			sleep(1 SECONDS)
+		else
+			attacker.start_pathing_to(get_turf(target))
+			sleep(0.6 SECONDS)
+		attempts++
+
+
+
 /mob/living/carbon/human/species/void
 	race = /datum/species/human/void
 
@@ -1007,13 +1322,12 @@ var/list/void_speech_fx_times = list()
 
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/black
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/voidarmor
-	head = /obj/item/clothing/head/roguetown/roguehood/shalal/nomad
+	head = /obj/item/clothing/head/roguetown/helmet/bascinet/void
 	
-	//wrist Gear
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
-	//Lower Gear
+
 	belt = /obj/item/storage/belt/rogue/leather/suspenders/butler
 	pants = /obj/item/clothing/under/roguetown/platelegs/blk/death
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 
-
+	r_hand = /obj/item/gun/energy_beam/laser/hitscan

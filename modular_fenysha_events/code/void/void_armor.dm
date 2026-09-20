@@ -25,6 +25,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/voidarmor/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 	setup_voidarmor_visuals(src)
 
 /obj/item/clothing/suit/roguetown/armor/plate/voidarmor/Destroy()
@@ -136,4 +137,189 @@
 	animate(target, transform = matrix(), time = 0)
 
 
-/mob/living/carbon/human/species/human/northern/dunewell_raider
+
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void
+	name = "Modular combat spacesuit helmet"
+	desc = "A super-durable combat helmet made from adaptive materials. Violium fibers and energy fabric allow it to absorb kinetic energy. Ultratech technology. The plates never quite hold still. Once sealed, it does not open again."
+	body_parts_covered = FULL_HEAD
+	mob_overlay_icon = 'modular_fenysha_events/icons/mob/onmob_armor.dmi'
+	armor = ARMOR_VOIDCOMBAT
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PUNCH, BCLASS_BURN, BCLASS_PUNISH, BCLASS_SUNDER)
+	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF|FREEZE_PROOF
+	max_integrity = 999999
+	allowed_sex = list(MALE, FEMALE)
+	// Match plate suit feel if the parent does not already set these
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	equip_delay_self = 3 SECONDS
+	unequip_delay_self = 3 SECONDS
+
+	var/datum/weakref/void_wearer
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/mob_can_equip(mob/M, mob/equipper, slot, disable_warning)
+	return length(M.faction) && ("void" in M.faction)
+
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+	setup_voidhelm_visuals(src)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/Destroy()
+	var/mob/living/carbon/human/H = void_wearer?.resolve()
+	if(H)
+		clear_voidhelm_visuals(H)
+	void_wearer = null
+	clear_voidhelm_visuals(src)
+	return ..()
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/equipped(mob/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	// Head slot only — not held in hand
+	if(slot != SLOT_HEAD && slot != ITEM_SLOT_HEAD)
+		return
+
+	var/mob/living/carbon/human/H = user
+	void_wearer = WEAKREF(H)
+	setup_voidhelm_visuals(H)
+	to_chat(H, span_fractal_whisper("The helm seals. The world outside the visor folds at the edges."))
+
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/dropped(mob/user)
+	. = ..()
+
+	var/mob/living/carbon/human/H = void_wearer?.resolve()
+	if(!H)
+		H = ishuman(user) ? user : null
+	if(H)
+		clear_voidhelm_visuals(H)
+	void_wearer = null
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/mob_can_equip(mob/M, mob/equipper, slot, disable_warning)
+	if(!length(M.faction) || !("void" in M.faction))
+		if(!disable_warning)
+			to_chat(M, span_fractal_whisper("The helm refuses your shape."))
+		return FALSE
+	return ..()
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/attack_hand(mob/user)
+	if(loc == user && (user.get_item_by_slot(SLOT_HEAD) == src || user.get_item_by_slot(ITEM_SLOT_HEAD) == src))
+		to_chat(user, span_fractal_whisper("The seals do not answer. The helm is part of you now."))
+		return
+	return ..()
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/MouseDrop(atom/over_object)
+	var/mob/M = usr
+	if(ishuman(M) && (M.get_item_by_slot(SLOT_HEAD) == src || M.get_item_by_slot(ITEM_SLOT_HEAD) == src))
+		to_chat(M, span_fractal_whisper("The seals do not answer."))
+		return
+	return ..()
+
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/proc/setup_voidhelm_visuals(atom/movable/target)
+	if(!target || QDELETED(target))
+		return
+
+	target.remove_filter("voidhelm_wave")
+	target.remove_filter("voidhelm_ripple")
+	target.remove_filter("voidhelm_outline")
+
+	target.add_filter("voidhelm_wave", 1, list(
+		"type" = "wave",
+		"size" = 1.0,
+		"x" = 6,
+		"y" = 6,
+		"offset" = 0
+	))
+	var/wave = target.get_filter("voidhelm_wave")
+	if(wave)
+		animate(wave, offset = 70, time = 35, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(offset = 8, time = 35)
+
+	target.add_filter("voidhelm_ripple", 2, list(
+		"type" = "wave",
+		"size" = 0.5,
+		"x" = 2,
+		"y" = 8,
+		"offset" = 12
+	))
+	var/ripple = target.get_filter("voidhelm_ripple")
+	if(ripple)
+		animate(ripple, offset = 45, time = 50, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(offset = 4, time = 50)
+
+	target.add_filter("voidhelm_outline", 3, list(
+		"type" = "outline",
+		"color" = "#6b3fa066",
+		"size" = 1
+	))
+
+	start_voidhelm_pulse(target)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/proc/start_voidhelm_pulse(atom/movable/target)
+	if(!target || QDELETED(target))
+		return
+
+	animate(target, transform = matrix(), time = 0)
+
+	var/matrix/M1 = matrix()
+	M1.Scale(1.025, 0.975)
+	var/matrix/M2 = matrix()
+	M2.Scale(0.975, 1.025)
+	var/matrix/M_reset = matrix()
+
+	animate(target, transform = M1, time = 5, loop = -1, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(transform = M2, time = 5, easing = SINE_EASING)
+	animate(transform = M_reset, time = 8)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/void/proc/clear_voidhelm_visuals(atom/movable/target)
+	if(!target || QDELETED(target))
+		return
+	target.remove_filter("voidhelm_wave")
+	target.remove_filter("voidhelm_ripple")
+	target.remove_filter("voidhelm_outline")
+	animate(target, transform = matrix(), time = 0)
+
+
+/obj/effect/projectile/tracer/void_laser 
+	icon_state = "u_laser"
+
+/obj/effect/projectile/muzzle/void_laser
+	icon_state = "muzzle_u_laser"
+
+/obj/effect/projectile/impact/void_laser
+	icon_state = "impact_u_laser"
+
+/obj/projectile/beam/laser/void_blaster
+	name = "Void laser"
+	icon_state = null
+
+	hitscan = TRUE
+	nondirectional_sprite = TRUE
+
+	damage = 60
+	tracer_type = /obj/effect/projectile/tracer/void_laser
+	muzzle_type = /obj/effect/projectile/muzzle/void_laser
+	impact_type = /obj/effect/projectile/impact/void_laser
+
+/obj/item/ammo_casing/void_beam
+	name = "beam lens"
+	desc = ""
+	icon_state = "s-casing"
+	caliber = "beam"
+	projectile_type = /obj/projectile/beam/laser/void_blaster
+	heavy_metal = FALSE
+
+
+
+/obj/item/gun/energy_beam/laser/hitscan
+	name = "Fractal blaster"
+	recharge_time = 3 SECONDS	
+	icon_state = "retro"
+	empty_state = "retro_empty"
+
+	casing_type = /obj/item/gun/energy_beam/laser/hitscan
