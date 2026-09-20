@@ -1330,4 +1330,4 @@ var/list/void_speech_fx_times = list()
 	pants = /obj/item/clothing/under/roguetown/platelegs/blk/death
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 
-	r_hand = /obj/item/gun/energy_beam/laser/hitscan
+	r_hand = /obj/item/gun/energy_beam/pulse

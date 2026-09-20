@@ -323,3 +323,14 @@
 	empty_state = "retro_empty"
 
 	casing_type = /obj/item/gun/energy_beam/laser/hitscan
+
+/obj/item/gun/energy_beam/pulse
+	name = "Fractal blaster"
+
+	righthand_file = 'modular_fenysha_events/icons/mob/inhands_right64.dmi'
+	lefthand_file = 'modular_fenysha_events/icons/mob/inhands_left64.dmi'
+	icon = 'modular_fenysha_events/icons/obj/items64x64.dmi'
+	
+	icon_state = "void_blaster"
+	empty_state = "void_blaster"
+	item_state = "void_blaster"
