@@ -90,7 +90,7 @@
 	if(!ishuman(C))
 		return
 
-	if(HAS_TRAIT(C, TRAIT_FILTERED_BREATH))
+	if(HAS_TRAIT(C, TRAIT_FILTERED_BREATH) && !prob(20))
 		return
 
 	var/mob/living/carbon/human/H = C
