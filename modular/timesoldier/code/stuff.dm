@@ -72,7 +72,7 @@
 	verb_ask = "coldly states"
 	verb_exclaim = "coldly states"
 	verb_yell = "coldly states"
-    grid_width = 32
+	grid_width = 32
 	grid_height = 32 // smol
 
 /obj/item/timesoldier/radio/GetVoice()
@@ -98,7 +98,7 @@
 /obj/item/timesoldier/radio/proc/start_broadcast(selected_voice, selected_language)
 	if(broadcasting)
 		return
-	
+
 	broadcasting = TRUE
 	icon_state = "radio_on"
 	voice_template = selected_voice
@@ -114,13 +114,13 @@
 /obj/item/timesoldier/radio/proc/message_is_yelling(message)
 	if(!message)
 		return FALSE
-	
+
 	for(var/i = length(message), i >= 1, i--)
 		var/character = copytext(message, i, i + 1)
 
 		if(character == "!")
 			return TRUE
-		
+
 		if(character in list (" ", "\t", ".", "?", "\"", "'", ")", "]"))
 			continue
 		return FALSE
@@ -130,7 +130,7 @@
 /obj/item/timesoldier/radio/proc/receive_broadcast(message)
 	if(!broadcasting)
 		return
-	
+
 	playsound(src, 'modular/timesoldier/sounds/comms/startspeak.ogg', 55, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(deliver_broadcast), message), 4)
 
@@ -165,7 +165,7 @@
 /obj/item/timesoldier/radio/proc/schedule_radio_noise()
 	if(!broadcasting)
 		return
-	
+
 	if(radio_noise_timer)
 		deltimer(radio_noise_timer)
 
@@ -178,14 +178,14 @@
 
 	if(!broadcasting)
 		return
-	
+
 	playsound(src, 'modular/timesoldier/sounds/comms/lsnoise.ogg', 50, FALSE)
 	schedule_radio_noise()
 
 /obj/item/timesoldier/radio/proc/end_broadcast()
 	if(!broadcasting)
 		return
-	
+
 	broadcasting = FALSE
 	QDEL_NULL(radio_loop)
 	playsound(src, 'modular/timesoldier/sounds/comms/broadcast_end1.ogg', 45, FALSE)
@@ -239,7 +239,7 @@
 	for(var/atom/movable/hearer as anything in hearers)
 		if(!hearer)
 			continue
-	
+
 		var/heard_message = "\[The speech is completely unintelligible..\]"
 
 		if(isliving(hearer))
