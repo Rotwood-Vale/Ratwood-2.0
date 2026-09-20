@@ -211,6 +211,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/languages = list(/datum/language/common)
 
 	var/list/restricted_virtues
+	var/list/restricted_quirks
 
 	var/list/custom_selection
 
@@ -438,6 +439,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(slot == ORGAN_SLOT_BRAIN)
 				var/obj/item/organ/brain/brain = oldorgan
 				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
+					if(istype(neworgan, /obj/item/organ/brain))
+						var/obj/item/organ/brain/new_brain = neworgan
+						new_brain.original_body_ref = brain.original_body_ref // Keeps the transplant history, or a species change would launder a stolen body
 					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
 					QDEL_NULL(brain)
 					oldorgan = null //now deleted

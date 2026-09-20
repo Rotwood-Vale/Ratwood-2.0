@@ -1,5 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - bugfix: "The Fortitude spell that is supposed to halve stamina usage was also halving stamina regen. Fixed now. It was possible to cast this spell on someone offensively, for the purposes of debuffing their stamina regen (like during a fight)."
-  - balance: "To compensate for Fortitude actually working as-written, stamina usage reduction is now -30% down from -50%."

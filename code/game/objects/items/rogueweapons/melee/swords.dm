@@ -1411,7 +1411,7 @@
 /obj/item/rogueweapon/sword/short/messer/bronze//this thing is boring, I ought give it some other intents but eh
 	name = "makhaira"
 	desc = "A heavy shortsword of similar design to the Kopis, fit for cleaving through both foliage and flesh. </br>Infamous for its \
-	presence amongst the gladitorial arenas of Lirvas and Raneshen, where gashes provide the kind of crimson spectacle that liqour-addled \
+	presence amongst the gladitorial arenas of Etrusca and Zybantine, where gashes provide the kind of crimson spectacle that liqour-addled \
 	crowds adore the most."
 	icon_state = "makhaira"
 	minstr = 6

@@ -360,7 +360,7 @@
 
 /obj/item/rogueweapon/handclaw/gronn
 	name = "Gronn Beast Claws"
-	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Iskarn shamans of the Northern Empty. \
+	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Zayran shamans of the Northern Empty. \
 			Their unique design aids them in slipping between the plates in armor and their light weight supports rapid aggressive slashes. \
 			'To see the claws of the four, Is to see the true danger of the north. Not man, Not land but beast. We are all prey in their eyes.'"
 	icon_state = "gronnclaws"
