@@ -18,6 +18,7 @@
 	name = "chum bait"
 	result = list(/obj/item/fishing/bait/meat)
 	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince = 2)
+	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/fishing/bait/dough
 	name = "doughy bait"
