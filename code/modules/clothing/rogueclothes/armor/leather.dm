@@ -102,6 +102,7 @@
 	name = "forester's brigandine"
 	desc = "A hardened leather harness with a large pauldron worn over a tasseted brigandine, imbued with Dendor's essence."
 	icon_state = "forestbrig"
+	armor = ARMOR_BRIGANDINE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
@@ -132,7 +133,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	nodismemsleeves = TRUE
 	body_parts_covered = COVERAGE_TORSO
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL//-25 compared to light brig
 	smeltresult = /obj/item/ingot/iron
 	armor_class = ARMOR_CLASS_LIGHT
 
@@ -144,6 +145,7 @@
 	desc = "Treated, water-boiled and composite-layered leather armor of fine Otavan make."
 	icon_state = "cuirbouilli"
 	item_state = "cuirbouilli"
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 25
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	name = "hardened leather armor"
@@ -336,11 +338,13 @@
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"
 	boobed = TRUE
+	resistance_flags = FIRE_PROOF
 
 	slot_flags = ITEM_SLOT_ARMOR
 	armor = ARMOR_LEATHER_GOOD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST, BCLASS_STAB)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 	detail_tag = "_detail"
 	detail_color = "#FFFFFF"

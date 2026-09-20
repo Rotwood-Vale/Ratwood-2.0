@@ -159,24 +159,26 @@
 		to_chat(src, span_danger("I am tipped over by [M]!"))
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = "[initial(icon_state)]_tip"
-		spawn(rand(20,50))
-			if(!stat && M)
-				icon_state = icon_living
-				var/external
-				var/internal
-				switch(pick(1,2,3,4))
-					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
-							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
-					if(4)
-						external = "[src] seems resigned to its fate."
-						internal = "You resign myself to your fate."
-				visible_message(span_notice("[external]"),
-					span_revennotice("[internal]"))
+		addtimer(CALLBACK(src, PROC_REF(untip_check), M), rand(20,50))
 	else
 		..()
+
+/mob/living/simple_animal/cow/proc/untip_check(mob/living/carbon/M)
+	if(!stat && M)
+		icon_state = icon_living
+		var/external
+		var/internal
+		switch(pick(1,2,3,4))
+			if(1,2,3)
+				var/text = pick("imploringly.", "pleadingly.",
+					"with a resigned expression.")
+				external = "[src] looks at [M] [text]"
+				internal = "You look at [M] [text]"
+			if(4)
+				external = "[src] seems resigned to its fate."
+				internal = "You resign myself to your fate."
+		visible_message(span_notice("[external]"),
+			span_revennotice("[internal]"))
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
