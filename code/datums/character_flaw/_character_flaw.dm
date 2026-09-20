@@ -351,6 +351,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	// At this point, we have a mark and we no longer need to check if they exist.
 	if(get_dist(user, favorite) <= 10)
 		COOLDOWN_RESET(src, lost_person)
+		soothe_meltdown(user)
 		return // All good here, free to chill out
 
 	// Okay, don't panic, we've lost our person. But it's ok because we can find them again quickly... Right?
@@ -365,12 +366,17 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/clingy/proc/autistic_meltdown(mob/user)
 	if(!COOLDOWN_FINISHED(src, effect_scaling))
 		return
+	user.remove_stress(/datum/stressevent/comfort_person_neaby)
 	var/datum/stressevent/missing_person/stress_event = user.get_stress_event(/datum/stressevent/missing_person)
 	if(!stress_event)
 		stress_event = user.add_stress(/datum/stressevent/missing_person)
 	stress_event.stressadd += 1
 	user.update_stress()
 	COOLDOWN_START(src, effect_scaling, 1 MINUTES)
+
+/datum/charflaw/clingy/proc/soothe_meltdown(mob/user)
+	user.remove_stress(/datum/stressevent/missing_person)
+	user.add_stress(/datum/stressevent/comfort_person_neaby)
 
 /datum/charflaw/clingy/on_mob_creation(mob/user)
 	. = ..()
@@ -422,6 +428,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(!istype(selection))
 		return
 	clingy_flaw.special_person = WEAKREF(selection)
+	clingy_flaw.soothe_meltdown(clingy_person)
 	selection.client.verbs |= /client/proc/reject_clingy_people
 	to_chat(clingy_person, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
 	to_chat(selection, span_big(span_warn("[clingy_person] has selected me as the person they cling to <a href='byond://?src=[REF(clingy_flaw)];deny_cling=[REF(selection)];clingy_person=[REF(clingy_person)]'>REJECT?</a>")))

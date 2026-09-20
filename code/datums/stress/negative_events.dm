@@ -271,10 +271,16 @@
 	stressadd = 2
 	desc = "<span class='red'>Why is everyone here...? Are they trying to kill me?!</span>"
 
+//---- Clingy events
 /datum/stressevent/missing_person
 	timer = 9 HOURS
 	stressadd = 0
-	desc = "<span class='red'>I seem to have lost my person? Did something happen?!</span>"
+	desc = span_red("I seem to have lost my person? Did something happen?!")
+
+/datum/stressevent/comfort_person_neaby
+	timer = 10 SECONDS
+	stressadd = -1
+	desc = span_green("I'm around my favorite person, maybe things aren't so bleak after all.")
 
 /datum/stressevent/jesterphobia
 	timer = 4 MINUTES
