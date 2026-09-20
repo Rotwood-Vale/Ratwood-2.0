@@ -70,8 +70,6 @@
 	var/show_progress = 1
 	/// When TRUE, try_do_moan does nothing (used for actions that can be done subtly)
 	var/suppress_moan = FALSE
-	/// Allow players to decide if they want to subtly do this action or not (only for actions that can be done subtly)
-	var/do_subtle_action = FALSE
 	/// Suppress repeated action messages unless key action state changes.
 	var/suppress_action_messages = FALSE
 	/// Tracks whether the one-time orison indulgence notice has been shown for the current action.
@@ -1190,11 +1188,6 @@
 	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
-		if(action.subtle_supported)
-			if(do_subtle_action)
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
-			else
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
 				if(do_knot_action)
@@ -1305,8 +1298,6 @@
 			action_category = SEX_CATEGORY_HANDS
 		if("category_penetrate")
 			action_category = SEX_CATEGORY_PENETRATE
-		if("toggle_subtle")
-			do_subtle_action = !do_subtle_action
 		if("toggle_knot")
 			do_knot_action = !do_knot_action
 		if("toggle_knot_bottom")
@@ -1371,13 +1362,13 @@
 	var/base_force = -1
 	var/base_knot_mode = FALSE
 	var/subtle_message_tick_counter = 0
-	var/was_subtle_mode = action.subtle_supported
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
+	var/do_subtle_action = user.m_intent == MOVE_INTENT_SNEAK ? TRUE : FALSE
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
+	var/was_done_subtly = do_subtle_action
 	while(TRUE)
 		if(!target?.client?.prefs?.sexable) // no prefs/sexability means we should safely stop the loop
 			break
@@ -1393,7 +1384,6 @@
 			break
 		if(desire_stop)
 			break
-		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
 		var/current_knot_mode = FALSE
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
@@ -1403,16 +1393,16 @@
 		var/show_action_message = (speed != base_speed || force != base_force)
 		if(current_knot_mode != base_knot_mode)
 			show_action_message = TRUE
-		if(!is_subtle_mode && was_subtle_mode)
+		if(!do_subtle_action && was_done_subtly)
 			show_action_message = TRUE
-		if(!show_action_message && is_subtle_mode)
+		if(!show_action_message && do_subtle_action)
 			subtle_message_tick_counter++
 			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
 				show_action_message = TRUE
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
 			subtle_message_tick_counter = 0
-		was_subtle_mode = is_subtle_mode
+		was_done_subtly = do_subtle_action
 		base_speed = speed
 		base_force = force
 		base_knot_mode = current_knot_mode

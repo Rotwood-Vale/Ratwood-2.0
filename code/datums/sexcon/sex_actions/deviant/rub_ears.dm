@@ -2,7 +2,6 @@
 	name = "Rub their ears"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
-	subtle_supported = TRUE
 
 /datum/sex_action/rub_ears/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)
@@ -17,12 +16,12 @@
 	return TRUE
 
 /datum/sex_action/rub_ears/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] places [user.p_their()] hands on [target] ears..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] places [user.p_their()] hands on [target] ears..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/rub_ears/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 
-	var/do_subtle = user.sexcon.do_subtle_action
+	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
 	var/has_sensitive_ears = target.has_nonhuman_ears()
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
@@ -44,7 +43,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/rub_ears/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops rubbing [target]'s ears ..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] stops rubbing [target]'s ears ..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/rub_ears/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())
