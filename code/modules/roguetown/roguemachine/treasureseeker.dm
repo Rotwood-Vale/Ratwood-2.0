@@ -28,6 +28,27 @@
 	SSBMtreasury.add_hoard_log("deposit", I.name, value, user.real_name)
 	return value
 
+/// Records a bulk consignment of same-type items as a single ledger line - count and
+/// combined value, so a pile doesn't spam the ledger with one row per item.
+/obj/structure/roguemachine/headeater/treasureseeker/proc/log_bulk_consignment(item_name, count, total_value, mob/user)
+	if(count <= 0)
+		return
+	SSBMtreasury.add_hoard_log("deposit", "[item_name] x[count]", total_value, user.real_name)
+
+/// Announces an item's arrival in the vault to anyone sharing its room.
+/obj/structure/roguemachine/headeater/treasureseeker/proc/announce_arrival(obj/item/I, turf/destination)
+	if(!destination)
+		return
+	for(var/mob/M in hearers(7, destination))
+		to_chat(M, span_notice("[I] suddenly appears in a golden flash upon the ground of the vault."))
+
+/// Summarises a bulk arrival in the vault - individual names stay in the BRASSFACE ledger.
+/obj/structure/roguemachine/headeater/treasureseeker/proc/announce_bulk_arrival(turf/destination, count)
+	if(!destination || count <= 0)
+		return
+	for(var/mob/M in hearers(7, destination))
+		to_chat(M, span_notice("[count] items of treasure suddenly appear in a golden flash upon the ground of the vault."))
+
 /obj/structure/roguemachine/headeater/treasureseeker/attackby(obj/item/I, mob/user, params)
 	var/mob/living/L = user
 	if(istype(L) && L.used_intent && L.used_intent.type == INTENT_HARM)
@@ -39,10 +60,12 @@
 	if(!length(turfs))
 		to_chat(user, span_warning("[src] rattles hollowly - the Nightmistress's vault cannot be reached."))
 		return TRUE
-	if(!user.transferItemToLoc(I, pick(turfs)))
+	var/turf/destination = pick(turfs)
+	if(!user.transferItemToLoc(I, destination))
 		to_chat(user, span_warning("[I] is stuck to your hand!"))
 		return TRUE
 	log_consignment(I, user)
+	announce_arrival(I, destination)
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 	to_chat(user, span_danger("[src] gulps down [I], whisking it away to the Nightmistress's vault."))
 	return TRUE
@@ -71,12 +94,31 @@
 		to_chat(user, span_warning("[src] rattles hollowly - the Nightmistress's vault cannot be reached."))
 		return
 	var/shipped = 0
+	var/turf/last_destination
+	var/obj/item/last_item
+	var/list/bulk_counts = list() // item name -> count
+	var/list/bulk_values = list() // item name -> combined value
 	for(var/obj/item/I in to_ship)
 		if(I.loc != front) // Something else grabbed it mid-gulp.
 			continue
-		I.forceMove(pick(turfs))
-		log_consignment(I, user)
-		shipped++
+		last_destination = pick(turfs)
+		I.forceMove(last_destination)
+		var/value = I.get_real_price() || 0
+		bulk_counts[I.name] = (bulk_counts[I.name] || 0) + 1
+		bulk_values[I.name] = (bulk_values[I.name] || 0) + value
+		last_item = I
+		shipped++	// Itemise one treasure; group a haul into one ledger line per type.
+	if(shipped == 1)
+		log_consignment(last_item, user)
+	else
+		for(var/item_name in bulk_counts)
+			log_bulk_consignment(item_name, bulk_counts[item_name], bulk_values[item_name], user)
+	// A single treasure is named; a haul is summarised - the itemised record
+	// lives in the BRASSFACE Hoard ledger.
+	if(shipped == 1)
+		announce_arrival(last_item, last_destination)
+	else if(shipped > 1)
+		announce_bulk_arrival(last_destination, shipped)
 	if(shipped)
 		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		to_chat(user, span_danger("[src] gulps down [shipped] treasure[shipped > 1 ? "s" : ""], whisking them away to the Nightmistress's vault."))
