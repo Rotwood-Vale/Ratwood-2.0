@@ -7,7 +7,7 @@
 	cmode_music = 'sound/music/combatmaniac.ogg'
 	class_select_category = CLASS_CAT_ROGUE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_PERFECT_TRACKER)
+	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_PERFECT_TRACKER, TRAIT_BLOOD_RESISTANCE)
 	maximum_possible_slots = 1 // There can only be one.
 	extra_context = "This class is best experienced without preparation."
 	subclass_skills = list(
