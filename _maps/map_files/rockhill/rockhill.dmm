@@ -16161,6 +16161,10 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/bograt/above)
+"dof" = (
+/obj/structure/expedition_gate/departure,
+/turf/open/floor/rogue/blocks,
+/area/rogue/outdoors/bogsafe)
 "dop" = (
 /obj/effect/decal/carpet/kover_darkred{
 	pixel_x = 16;
@@ -560499,7 +560503,7 @@ aad
 aad
 drm
 lfz
-rGU
+dof
 rGU
 cIu
 rGU

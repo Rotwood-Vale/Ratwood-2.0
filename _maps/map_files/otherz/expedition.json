@@ -1,0 +1,11 @@
+{
+	"map_name": "Expedition Base",
+	"map_path": "expedition",
+	"map_file": "expedition_base.dmm",
+	"no_z_sharing": true,
+	"traits": [
+		{ "Name": "expedition_base", "Up": true, "NoDayorWeather": true },
+		{ "Up": true, "Down": true, "NoDayorWeather": true },
+		{ "Down": true, "NoDayorWeather": true }
+	]
+}

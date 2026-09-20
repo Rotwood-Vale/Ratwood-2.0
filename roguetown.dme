@@ -214,6 +214,7 @@
 #include "code\__DEFINES\roguetown\armor_defines.dm"
 #include "code\__DEFINES\roguetown\chastity.dm"
 #include "code\__DEFINES\roguetown\combat.dm"
+#include "code\__DEFINES\roguetown\expedition.dm"
 #include "code\__DEFINES\roguetown\rebel.dm"
 #include "code\__DEFINES\roguetown\scomm.dm"
 #include "code\__DEFINES\roguetown\werewolf.dm"
@@ -3521,4 +3522,10 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_area.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_boss.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_core.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_gates.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_templates.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_utilities.dm"
 // END_INCLUDE

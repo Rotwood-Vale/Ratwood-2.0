@@ -96814,6 +96814,10 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/church,
 /area/rogue/under/cave/scarymaze)
+"ucI" = (
+/obj/structure/expedition_gate/departure,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/mountains)
 "ucK" = (
 /obj/structure/table/wood/crafted,
 /obj/structure/bars/passage/shutter{
@@ -470607,7 +470611,7 @@ aBB
 aBB
 aBB
 rnW
-lZK
+ucI
 lZK
 lZK
 hkF
