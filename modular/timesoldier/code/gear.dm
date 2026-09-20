@@ -126,6 +126,6 @@
 
 	volume = 225
 	list_reagents = list(
-		/datum/reagent/water = 200
+		/datum/reagent/water = 200,
 		/datum/reagent/consumable/ethanol/gin = 25
 	)

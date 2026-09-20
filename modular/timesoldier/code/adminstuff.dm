@@ -1,3 +1,12 @@
+#define TIMESOLDIER_TEMPERANCE "Temperance"
+#define TIMESOLDIER_INTERWAR "Interwar" // to be removed
+
+#define TIMESOLDIER_SPAWN_CKEY "Ckey"
+#define TIMESOLDIER_SPAWN_GHOST "Ghost"
+#define TIMESOLDIER_SPAWN_SELF "Self"
+#define TIMESOLDIER_SPAWN_OFFER "Offer to Ghosts"
+#define TIMESOLDIER_SPAWN_CANCEL "Cancel"
+
 /client/proc/timesoldier_start_broadcast()
 	set category = "-GameMaster-"
 	set name = "Future Broadcast - Start"
@@ -108,6 +117,8 @@
 
 // i dont want to edit the core admin modules to register the verbs from here and want to keep it modular, so i'll just do it here
 
+// REGISTRAR ====  === = == == =
+
 /datum/timesoldier_admin_verb_registrar
 
 /datum/timesoldier_admin_verb_registrar/New()
@@ -116,7 +127,176 @@
 	GLOB.admin_verbs_fun += list(
 		/client/proc/timesoldier_start_broadcast,
 		/client/proc/timesoldier_broadcast_message,
-		/client/proc/timesoldier_end_broadcast
+		/client/proc/timesoldier_end_broadcast,
+		/client/proc/timesoldier_spawn
 	)
 
 GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_verb_registrar, new)
+
+
+// TIME SOLDIER SPAWNING ===========
+
+
+/client/proc/timesoldier_spawn()
+	set category = "-GameMaster-"
+	set name = "Spawn Time Soldier"
+	set desc = "Spawn a Time Soldier beneath your admin ghost."
+
+	if(!check_rights(R_FUN))
+		return
+
+	if(!isobserver(mob))
+		to_chat(src, span_warning("I need to be an admin ghost to use this.")) // sorry bud no bussing.
+		return
+
+	var/turf/spawn_turf = get_turf(mob)
+
+	if(!spawn_turf)
+		to_chat(src, span_warning("I couldn't find a valid turf beneath myself.")) // somehow.
+		return
+
+
+	// what flavor we feelin
+	var/list/soldier_types = list(
+		TIMESOLDIER_TEMPERANCE,
+		TIMESOLDIER_INTERWAR
+	)
+
+	var/selected_type = input(
+		src,
+		"What kind of Time Soldier should be spawned?",
+		"TIME SOLDIER"
+	) as null|anything in soldier_types
+
+	if(!selected_type)
+		return
+
+
+	// How are we giving control of them?
+	var/list/spawn_options = list(
+		TIMESOLDIER_SPAWN_CKEY,
+		TIMESOLDIER_SPAWN_GHOST,
+		TIMESOLDIER_SPAWN_SELF,
+		TIMESOLDIER_SPAWN_OFFER,
+		TIMESOLDIER_SPAWN_CANCEL
+	)
+
+	var/spawn_method = input(
+		src,
+		"How should the [selected_type] Time Soldier be controlled?",
+		"TIME SOLDIER"
+	) as null|anything in spawn_options
+
+	if(!spawn_method || spawn_method == TIMESOLDIER_SPAWN_CANCEL)
+		return
+
+
+	var/client/target_client
+
+
+	switch(spawn_method)
+
+		// SPECIFIC CKEY
+
+
+		if(TIMESOLDIER_SPAWN_CKEY)
+
+			var/target_ckey = ckey(input(
+				src,
+				"Enter the ckey of the player who should control the Time Soldier.",
+				"TIME SOLDIER"
+			) as text|null)
+
+			if(!target_ckey)
+				return
+
+			target_client = GLOB.directory[target_ckey]
+
+			if(!target_client)
+				to_chat(src, span_warning("I couldn't find an online client with the ckey '[target_ckey]'."))
+				return
+
+
+		// PICK FROM CURRENT GHOSTS
+
+		if(TIMESOLDIER_SPAWN_GHOST)
+
+			var/list/ghost_options = list()
+
+			for(var/mob/dead/observer/G in GLOB.player_list)
+				if(!G.client || !G.ckey)
+					continue
+
+				ghost_options["[G.ckey]"] = G.client
+
+			if(!length(ghost_options))
+				to_chat(src, span_warning("There are no ghosts available."))
+				return
+
+			var/selected_ghost = input(
+				src,
+				"Which ghost should control the Time Soldier?",
+				"TIME SOLDIER"
+			) as null|anything in ghost_options
+
+			if(!selected_ghost)
+				return
+
+			target_client = ghost_options[selected_ghost]
+
+
+		// ADMIN THEMSELF
+
+		if(TIMESOLDIER_SPAWN_SELF)
+
+			target_client = src
+
+
+		// OFFER TO ALL GHOSTS
+
+		if(TIMESOLDIER_SPAWN_OFFER)
+
+			var/list/mob/dead/observer/candidates = pollGhostCandidates(
+				"Time and space raptures. A Naledi Timelord has opened the way. Will you come back from the future, to embark on a mission?",
+				null,
+				null,
+				FALSE,
+				100
+			)
+
+			if(!length(candidates))
+				to_chat(src, span_warning("Nobody volunteered to play the Time Soldier."))
+				return
+
+			var/mob/dead/observer/chosen_ghost = pick(candidates)
+
+			if(!chosen_ghost?.client)
+				to_chat(src, span_warning("The selected volunteer is no longer available."))
+				return
+
+			target_client = chosen_ghost.client
+
+
+	if(!target_client)
+		return
+
+
+	// make sure they didn't disconnect while we were clicking through menus.
+	if(QDELETED(target_client))
+		to_chat(src, span_warning("That client is no longer available."))
+		return
+
+
+	var/mob/living/carbon/human/H = create_time_soldier(
+		target_client,
+		spawn_turf,
+		selected_type
+	)
+
+	if(!H)
+		to_chat(src, span_warning("Failed to create the Time Soldier."))
+		return
+
+
+	log_admin("[key_name(src)] spawned [key_name(H)] as a [selected_type] Time Soldier at [AREACOORD(H)].")
+	message_admins(span_adminnotice("[key_name_admin(src)] spawned [ADMIN_LOOKUPFLW(H)] as a [selected_type] Time Soldier at [ADMIN_VERBOSEJMP(H)]."))
