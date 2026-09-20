@@ -328,9 +328,14 @@
 		var/helmets = list(
 			"Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/iron,
 			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron,
+			"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted,
+			"Roundface Bascinet"		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron,
+			"Snouted Roundface Bascinet"		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted,
 			"Kettle Helmet"		= /obj/item/clothing/head/roguetown/helmet/kettle/iron,
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+			"Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron,
+			"Snouted Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"None"
 			)

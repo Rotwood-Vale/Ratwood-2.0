@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	quirk_restrictions = list(/datum/quirk/noble)
+	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,
@@ -67,9 +67,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
-		spawn(50)
-			if(H && H.client)
-				_delayed_path_choice(H)
+		addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/advclass/bishop
 	name = "Bishop"
