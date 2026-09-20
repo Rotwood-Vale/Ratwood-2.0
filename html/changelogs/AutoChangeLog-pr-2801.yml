@@ -1,4 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - rscdel: "Removed the experimental jousting mechanic from the game, due to balance issues."
