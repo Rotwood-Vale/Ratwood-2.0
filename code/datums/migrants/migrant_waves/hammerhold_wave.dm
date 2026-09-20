@@ -14,4 +14,3 @@
 	)
 	min_optional_fills = 0
 	greet_text = "You're a scouting party from Hammerhold, sworn to your jarl and the Ringbearer. Establish a foothold in this foreign land for raids to come and, perhaps, acquire some riches, converts and slaves before anyone else."
-	
