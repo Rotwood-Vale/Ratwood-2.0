@@ -747,6 +747,7 @@ and crackling with insidious energies."
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
 
 //----------------- Citywatch Armor ---------------------
+// Credits to Twilight Axis (https://github.com/Twilight-Fortress-SS13/Twilight-Axis) for the sprites!
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "citywatch armor"
