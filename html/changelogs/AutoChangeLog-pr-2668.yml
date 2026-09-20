@@ -1,7 +1,0 @@
-author: "hugmeorelse"
-delete-after: True
-changes:
-  - code_imp: "Ported TG's modern timer subsystem and converted compatible delayed work to timer callbacks."
-  - bugfix: "Client-time timers now remain valid across midnight and timer subsystem recovery."
-  - admin: "Added Check Timer Sources for identifying which call sites created live timers."
-  - bugfix: "Fixed several lifecycle errors exposed by the stricter timer and integration tests."

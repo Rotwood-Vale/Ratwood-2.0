@@ -1,0 +1,6 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - rscadd: "FREIFECHTER REWORK - added master strikes, reworked Freifechters in general, and more."
+  - rscadd: "Added two new foreigner adventurers, some new, banger ass combat music, and more."
+  - bugfix: "Unfucked Flamberge's onmob sprite."
