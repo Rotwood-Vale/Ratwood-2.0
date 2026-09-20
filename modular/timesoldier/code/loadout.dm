@@ -79,6 +79,7 @@
 	H.change_stat(STATKEY_WIL, 2)
 	H.change_stat(STATKEY_SPD, 3)
 
+	H.taints_loot = FALSE // taints loot in testing. this should fix.
 
 /proc/apply_timesoldier_temperance_skills(mob/living/carbon/human/H)
 	if(!H)

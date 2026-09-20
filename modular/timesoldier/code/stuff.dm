@@ -74,8 +74,13 @@
 	verb_yell = "coldly states"
 	grid_width = 32
 	grid_height = 32 // smol
-	voicecolor_override = "#97cefd"
+	voicecolor_override = "97cefd"
 	var/tmp/language_icon_html = ""
+
+
+/obj/item/timesoldier/radio/say_quote(input, list/spans = list(speech_span), message_mode)
+	var/rendered = ..()
+	return "<span style='color:#97cefd;'>[rendered]</span>"
 
 
 /obj/item/timesoldier/radio/GetVoice()
@@ -294,7 +299,7 @@
 			null
 		)
 
-		language_icon_html = ""
+		
 
 		hearer.Hear(
 			rendered_message,
@@ -305,3 +310,5 @@
 			spans,
 			null
 		)
+
+		language_icon_html = "" // gotta be after hear otherwise hear recomposes the message so only clear this after we...uh...hear.
