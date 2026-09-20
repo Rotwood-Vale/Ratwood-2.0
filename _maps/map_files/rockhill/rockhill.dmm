@@ -28864,15 +28864,11 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/rtfield/rockhill)
 "fTC" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
+/obj/structure/roguemachine/escrow,
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 4;
+	icon_state = "iron_line"
 	},
-/obj/structure/roguemachine/atm{
-	location_tag = "Guild Engineer's Workshop";
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fTE" = (
 /obj/structure/fluff/railing/wood{
@@ -34671,6 +34667,12 @@
 /mob/living/carbon/human/species/skeleton/npc/rockhill,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/shelter/woods)
+"hgR" = (
+/obj/structure/roguemachine/goldface/public/smith,
+/turf/closed/wall/mineral/rogue/pipe{
+	icon_state = "iron_corner"
+	},
+/area/rogue/indoors/town/dwarfin/rockhill)
 "hgS" = (
 /obj/structure/chair/bench{
 	dir = 8;
@@ -37312,7 +37314,9 @@
 /area/rogue/outdoors/bograt/north)
 "hJR" = (
 /obj/structure/fluff/railing/border,
-/obj/machinery/light/roguestreet/walllamp,
+/obj/structure/roguemachine/atm{
+	location_tag = "Guild Engineer's Workshop"
+	},
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hJV" = (
@@ -50240,6 +50244,9 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/bath)
+"kug" = (
+/turf/closed/wall/mineral/rogue/pipe/joint,
+/area/rogue/under/cavewet)
 "kuh" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -72892,6 +72899,10 @@
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"pgq" = (
+/obj/structure/roguemachine/escrow,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "pgs" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/dungeon/wizarddungeon)
@@ -107541,6 +107552,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/garrison)
+"wxh" = (
+/obj/structure/roguemachine/scrapper/smith,
+/turf/closed/wall/mineral/rogue/pipe{
+	icon_state = "iron_line"
+	},
+/area/rogue/indoors/town/dwarfin/rockhill)
 "wxn" = (
 /obj/structure/curtain/magenta{
 	color = "#a1254a";
@@ -115668,6 +115685,12 @@
 /obj/machinery/light/rogue/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/rogue/blocks,
+/area/rogue/under/cavewet)
+"yeu" = (
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 1;
+	icon_state = "iron_corner"
+	},
 /area/rogue/under/cavewet)
 "yev" = (
 /turf/open/floor/rogue/church{
@@ -193357,10 +193380,10 @@ whb
 whb
 rqt
 rqt
-whb
-whb
-whb
-wvi
+yeu
+kug
+kug
+fpK
 fpK
 tjt
 tjt
@@ -193789,10 +193812,10 @@ tjt
 tjt
 tjt
 tjt
-fpK
-fpK
-fpK
 wmF
+byo
+byo
+aCH
 juR
 vPr
 vPr
@@ -198541,7 +198564,7 @@ tjt
 tjt
 tjt
 gRj
-tjt
+wxh
 cJN
 jSn
 hQf
@@ -198973,7 +198996,7 @@ boa
 boa
 boa
 hjA
-fTC
+fDk
 mmH
 mmH
 nIQ
@@ -200273,7 +200296,7 @@ qNs
 sgw
 tGr
 tGr
-hjA
+fTC
 eOD
 eOD
 gRj
@@ -201134,10 +201157,10 @@ sdv
 pxv
 uJZ
 mXD
-qNs
+hgR
 tGr
 tGr
-aCH
+hjA
 nuh
 nuh
 nuh
@@ -415838,7 +415861,7 @@ kqC
 aOv
 aOv
 sco
-sco
+eGI
 sco
 pes
 pes
@@ -416707,7 +416730,7 @@ hBW
 fIw
 fIw
 cap
-eGI
+pgq
 qqj
 qqj
 vbD
