@@ -4,13 +4,23 @@
 // contents via the BMtreasury subsystem.
 /obj/structure/roguemachine/headeater/treasureseeker
 	name = "TREASURE SEEKER"
-	desc = "A kin of the HEADEATER, its brass gullet re-tuned by the Bathhouse for gentler appetites. Feed it any trinket and the prize is whisked away to the Nightmistress's vault - where the hoard remembers its worth."
+	desc = "A kin of the HEADEATER, its brass gullet re-tuned by the Bathhouse for gentler appetites. Feed it any trinket and the prize is whisked away to the Nightmistress's vault - where the hoard remembers its worth. Its jaws open only for the Bathhouse's own."
 
 /obj/structure/roguemachine/headeater/treasureseeker/examine_extra(mob/user)
 	. = list()
 	. += span_info("Left-click with an item to consign it to the Nightmistress's vault. Right-click to consign every item on the tile beneath its maw.")
+	. += span_smallnotice("Its jaws open only for the Bathhouse - the Nightmistress, her workers and her sworn agents.")
 	. += span_smallnotice("Each consignment is entered into the BRASSFACE's Hoard ledger, and the hoard pays interest on the vault's treasures.")
 	. += span_smallnotice("Dross is refused - it swallows only what the hoard can turn a profit on, leaving worthless trinkets, loose coin and containers behind.")
+
+/// Only the Bathhouse's own may consign to the hoard: the Nightmistress and her
+/// bathworkers by employment, and sworn agents by their patronage writ.
+/obj/structure/roguemachine/headeater/treasureseeker/proc/is_bathhouse_consignor(mob/user)
+	if(!user)
+		return FALSE
+	if(user.job in GLOB.bathhouse_positions) // Bathmaster/Nightmistress and Bathhouse Attendants.
+		return TRUE
+	return HAS_TRAIT(user, TRAIT_AGENT_BATHHOUSE)
 
 /// Collects the open floor turfs of the Nightmistress's vault area.
 /obj/structure/roguemachine/headeater/treasureseeker/proc/get_vault_turfs()
@@ -53,6 +63,9 @@
 	var/mob/living/L = user
 	if(istype(L) && L.used_intent && L.used_intent.type == INTENT_HARM)
 		return // Harm intent bashes the machine; heads and dross alike are refused.
+	if(!is_bathhouse_consignor(user))
+		to_chat(user, span_warning("[src] stays shut, its brass jaws sealed - the hoard answers only to the Bathhouse."))
+		return TRUE
 	if(!SSBMtreasury.generates_profit(I))
 		to_chat(user, span_warning("[src] sniffs at [I] and turns its brass nose up - the hoard has no taste for such dross."))
 		return TRUE
@@ -73,6 +86,9 @@
 /obj/structure/roguemachine/headeater/treasureseeker/attack_right(mob/user)
 	// The sprite is pixel-shifted over its base turf (as the headeater's is), so the
 	// parent sweeps get_turf(src) - do the same rather than stepping off by dir.
+	if(!is_bathhouse_consignor(user))
+		to_chat(user, span_warning("[src] stays shut, its brass jaws sealed - the hoard answers only to the Bathhouse."))
+		return
 	var/turf/front = get_turf(src)
 	if(!front)
 		return
