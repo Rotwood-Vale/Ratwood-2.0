@@ -36,11 +36,16 @@ export const BathhouseFundSection = ({ data, act }: TabProps) => {
     <>
       <div style={sectionHeaderStyle}>Employment Terms</div>
       <div style={{ color: INK_FAINT, marginBottom: 8, fontSize: FONT_BODY }}>
-        Workers of the Bathhouse may draw up to{' '}
-        {data.bathhouse_worker_withdraw_limit}m per dae
-        {!!data.bathhouse_worker_suspended && ' (payments suspended)'}. Agents
-        of the Bathhouse may draw up to {data.bathhouse_agent_withdraw_limit}m
-        per dae{!!data.bathhouse_agent_suspended && ' (payments suspended)'}.
+        <div>
+          Workers of the Bathhouse may draw up to{' '}
+          {data.bathhouse_worker_withdraw_limit}m per dae
+          {!!data.bathhouse_worker_suspended && ' (payments suspended)'}.
+        </div>
+        <div>
+          Agents of the Bathhouse may draw up to{' '}
+          {data.bathhouse_agent_withdraw_limit}m per dae
+          {!!data.bathhouse_agent_suspended && ' (payments suspended)'}.
+        </div>
       </div>
       {!data.is_bathmaster && (
         <div style={{ color: INK_FAINT, marginBottom: 8, fontSize: FONT_BODY }}>

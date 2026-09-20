@@ -1,3 +1,4 @@
+import { Dropdown } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -152,17 +153,14 @@ const OwnControls = (props: {
           </div>
         )}
       </div>
-      <select
-        value={myEntry?.status || statusOptions[0]}
-        onChange={(e) => act('set_status', { status: e.target.value })}
-        style={{ ...inkButtonStyle(), fontFamily: SERIF }}
-      >
-        {statusOptions.map((s) => (
-          <option key={s} value={s}>
-            {s}
-          </option>
-        ))}
-      </select>
+      <Dropdown
+        width="150px"
+        menuWidth="150px"
+        selected={myEntry?.status || statusOptions[0]}
+        options={statusOptions}
+        onSelected={(value) => act('set_status', { status: value })}
+        style={{ margin: 0 }}
+      />
       <button
         type="button"
         style={inkButtonStyle()}
