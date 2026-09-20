@@ -29,6 +29,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded/timesoldier/temperance/boots
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	belt = /obj/item/storage/belt/rogue/leather
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+	gloves = /obj/item/clothing/gloves/roguetown/angle
 
 	// main stuff
 	backl = /obj/item/storage/backpack/rogue/backpack/timesoldier
