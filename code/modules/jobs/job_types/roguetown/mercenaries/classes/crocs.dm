@@ -118,7 +118,8 @@
 		var/ridingchoice = input(H, "Choose your faith", "FAITH") as anything in riding
 		switch(ridingchoice)
 			if("I'm a spider-rider")
-				l_hand = /obj/item/bait/spider
+				ADD_TRAIT(H, TRAIT_SPIDERBORN, TRAIT_GENERIC)
+				H.AddSpell(new /obj/effect/proc_holder/spell/self/call_spider_mount)
 			if("I'm a foot-soldier")
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 		var/helmets = list("Full Chain Coif + Mantle", "Smiling Bascinet", "Winged Armet")
@@ -276,7 +277,8 @@
 		var/ridingchoice = input(H, "Choose your faith", "FAITH") as anything in riding
 		switch(ridingchoice)
 			if("I'm a spider-rider")
-				l_hand = /obj/item/bait/spider
+				ADD_TRAIT(H, TRAIT_SPIDERBORN, TRAIT_GENERIC)
+				H.AddSpell(new /obj/effect/proc_holder/spell/self/call_spider_mount)
 			if("I'm a foot-soldier")
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 		var/helmets = list("Full Chain Coif + Mantle", "Smiling Bascinet")

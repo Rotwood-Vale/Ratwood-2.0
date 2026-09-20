@@ -260,7 +260,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		. += "This animal is saddled: [ssaddle.name]."
 	if(ccaparison)
 		. += "This animal is wearing a caparison: [ccaparison.name]."
-	if(bbarding)
+	if(bbarding && !bbarding.natural_armor)
 		. += "This animal is wearing a bard: [bbarding.name]."
 
 /mob/living/simple_animal/attack_right(mob/user, params)
@@ -276,7 +276,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		user.put_in_hands(C)
 		update_icon()
 		return
-	else if(bbarding)
+	else if(bbarding && !bbarding.natural_armor)
 		user.visible_message(span_notice("[user] is removing the bard from [src]..."), span_notice("I start removing the bard from [src]..."))
 		if(!do_after(user, 10 SECONDS, TRUE, src))
 			return
@@ -337,7 +337,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				detail_above_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR
 				add_overlay(detail_above_overlay)
 
-		if(bbarding)
+		if(bbarding && !bbarding.natural_armor)
 			var/barding_overlay = bbarding.female_barding_state && gender == FEMALE ? bbarding.female_barding_state : bbarding.barding_state
 			var/mutable_appearance/barding_base_overlay = mutable_appearance(bbarding.barding_icon, barding_overlay, barding_layer)
 			barding_base_overlay.color = null
