@@ -645,3 +645,48 @@
   - bugfix: Tongue surgery looks for tongue wounds instead of ear wounds.
   - bugfix: Improvised scalpels work for plastic surgery again.
   - admin: List Severed Heads tool for admins
+2026-09-20:
+  RadiantFlash7:
+  - bugfix: conjured items no longer have a sell value.
+  Shadow-Quill:
+  - qol: Absolver's WEEP can now be used on someone who needs blood, but has no wounds.
+  SirSwagmeyer:
+  - rscdel: Removed the experimental jousting mechanic from the game, due to balance
+      issues.
+  chemistrymain3:
+  - balance: Assassin can spawn as more roles, and is a stronger antagonist now. This
+      does not increase spawn frequency. It is just stronger and can kill people now.
+  envoyin:
+  - balance: duelist coat is now on par with the hardened leather coat
+  hugmeorelse:
+  - code_imp: Ported TG's modern timer subsystem and converted compatible delayed
+      work to timer callbacks.
+  - bugfix: Client-time timers now remain valid across midnight and timer subsystem
+      recovery.
+  - admin: Added Check Timer Sources for identifying which call sites created live
+      timers.
+  - bugfix: Fixed several lifecycle errors exposed by the stricter timer and integration
+      tests.
+  mushy:
+  - rscadd: Black Oak Pariah now has a ranged variant.
+  - balance: Black Oak Pariah now has two slots.
+  zeroisthebiggay:
+  - bugfix: fixed whip special only being usable on mobs
+  zoktiik:
+  - rscadd: Gnolls can now set their own flavortext & rumours in Gnoll Preferences.
+      They have access to all the relevant features, as well as a fully-working preview.
+      Headshot in Chat has NOT been enabled to show on gnolls at this time.
+  - rscadd: Gnolls can now also set overrides for their statpack and name color in
+      Gnoll Preferences. No more having to switch things around! By default, it is
+      set to Fated (random +2/-2 all stats).
+  - bugfix: Preview Examine now works how you'd expect it to. Before, using it while
+      you were spawned-in ignored what you currently had set in your preferences,
+      because the "human" mob took precedence. Now the Examine Panel is told explicitly
+      that it is previewing something, and displays what you have set in your prefs.
+  - code_imp: Conveniently, this "previewing" variable is also used to distinguish
+      whether we are previewing prefs for the character slot, or for the gnoll.
+  - code_imp: Familiar Prefs and Gnoll Prefs now have their saving delegated to local
+      procs, instead of at preferences_savefile.dm. In theory this speeds up save/load,
+      since we're not sanity checking for each saved item.
+  - code_imp: 'Tiny change: if a statpack can''t load, it now just sets you to Fated
+      instead of randoming.'
