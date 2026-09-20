@@ -1,6 +1,5 @@
 /datum/crafting_recipe/roguetown/leather
 	abstract_type = /datum/crafting_recipe/roguetown/leather
-	display_category = ITEM_CAT_ARMOR_LIGHT
 	tools = list(/obj/item/needle)
 	structurecraft = /obj/machinery/tanningrack
 	skillcraft = /datum/skill/craft/tanning
