@@ -184,3 +184,48 @@
 	if(radio_noise_timer)
 		deltimer(radio_noise_timer)
 		radio_noise_timer = null
+
+
+// RADIO TRANSLATION STUFF.
+
+/obj/item/timesoldier/radio/proc/say_new_imperial(message)
+	var/datum/language/common/new_imperial/new_imperial = GLOB.language_datum_instances[/datum/language/common/newimperial]
+	if(!new_imperial)
+		return
+
+	var/list/hearers = get_hearers_in_view(7, src) // this should be ok range wise
+	var/list/spans = list()
+	spans |= speech_span
+
+	for(var/atom/movable/hearer as anything in hearers)
+		if(!hearer)
+			continue
+	
+		var/heard_message = "\[The speech is completely unintelligible..\]"
+
+		if(isliving(hearer))
+			var/mob/living/living_hearer = hearer
+			heard_message = new_imperial.translate_for(living_hearer, message)
+
+
+		// so at this point the message has already been translate *specifically* for this listener. we pass imperial here so normal language scrambling
+		// doesn't scramble it a second time - or so i hope.
+
+		ver/rendered_message = compose_message(
+			src,
+			/datum/language/common,
+			heard_message,
+			null,
+			spans,
+			null
+		)
+
+		hearer.Hear(
+			rendered_message,
+			src,
+			/datum/language/common,
+			heard_message,
+			null,
+			spans,
+			null
+		)
