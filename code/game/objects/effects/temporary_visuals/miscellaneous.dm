@@ -438,11 +438,11 @@
 /obj/effect/temp_visual/pleasant_scent
 	name = "pleasant scent"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "mech_toxin"
+	icon_state = "mob_smell"
 	duration = 15
 	plane = GAME_PLANE_UPPER
 	layer = ABOVE_ALL_MOB_LAYER
-	color = list(0,0,0,0, 1.0, 0.4, 0.7, 0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(0,0,0,0, 1.0, 0.6, 0.8, 0, 0,0,0,0, 0,0,0,1, 0,0,0,0) // faint pastel pink tint
 
 /obj/effect/temp_visual/pleasant_scent/Initialize(mapload)
 	. = ..()
