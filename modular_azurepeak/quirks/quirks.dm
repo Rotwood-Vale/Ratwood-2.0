@@ -139,7 +139,7 @@
 	redolent_stink_aura(src, redolent_scent_type)
 
 /proc/redolent_aura_tick_delay(scent_type)
-	return scent_type == "Neutral" ? 20 SECONDS : 5 SECONDS
+	return 30 SECONDS
 
 /proc/redolent_examine_text(scent_type, scent)
 	var/scent_text = html_encode(scent || "an unusual scent")

@@ -4,7 +4,7 @@
 	desc = span_green("The Gods smile upon me.")
 
 /datum/stressevent/pleasant_scent
-	timer = 20 SECONDS
+	timer = 1 MINUTES
 	stressadd = -1
 	desc = span_green("A pleasant scent lifts my mood.")
 
