@@ -45,7 +45,7 @@
 	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt
 	beltl = /obj/item/rogueweapon/whip
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,

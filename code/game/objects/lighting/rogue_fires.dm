@@ -21,6 +21,9 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	max_integrity = 200
+	can_damage = TRUE
+	flags_1 = NONE
 	heat_level = 4
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
@@ -67,11 +70,13 @@
 	icon_state = "stumpfire1"
 	base_state = "stumpfire"
 	desc = "Somewhat crude, but it lights the long winding paths throughout the land."
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church
 	desc = "A wide metal bowl mounted on a stand for a healthy roaring flame."
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church/off
 	icon_state = "churchfire0"
@@ -89,6 +94,7 @@
 	cookonme = FALSE
 	crossfire = FALSE
 	density = FALSE
+	max_integrity = 100
 	heat_level = 3
 
 
