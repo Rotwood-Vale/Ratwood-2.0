@@ -216,9 +216,8 @@
 			var/list/roster_data = list()
 			var/list/roster = V.get_patron_roster()
 			if(islist(roster))
+				V.prune_patron_roster(roster)
 				for(var/mob/living/carbon/human/HP in roster)
-					if(QDELETED(HP))
-						continue
 					roster_data += list(list("ref" = REF(HP), "name" = HP.real_name, "job" = HP.job || ""))
 			patron_rosters[fid] = list(
 				"patrons" = roster_data,

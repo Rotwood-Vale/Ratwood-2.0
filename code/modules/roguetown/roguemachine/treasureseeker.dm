@@ -31,7 +31,7 @@
 /obj/structure/roguemachine/headeater/treasureseeker/attackby(obj/item/I, mob/user, params)
 	var/mob/living/L = user
 	if(istype(L) && L.used_intent && L.used_intent.type == INTENT_HARM)
-		return ..() // Harm intent still bashes the machine rather than feeding it.
+		return // Harm intent bashes the machine; heads and dross alike are refused.
 	if(!SSBMtreasury.generates_profit(I))
 		to_chat(user, span_warning("[src] sniffs at [I] and turns its brass nose up - the hoard has no taste for such dross."))
 		return TRUE

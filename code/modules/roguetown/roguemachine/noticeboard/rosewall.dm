@@ -88,8 +88,18 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 		ui = new(user, src, "Rosewall", name)
 		ui.open()
 
-/// Drops advert entries whose worker mob is gone. Returns TRUE if anything was pruned.
+/// Prunes stale entries from the static lists: adverts whose worker is gone or
+/// disconnected, offer responses past their timeout (whose expiry timer may have
+/// died with a destroyed board), and offer cooldowns that have already elapsed.
+/// Returns TRUE if any adverts were pruned.
 /obj/structure/roguemachine/rosewall/proc/prune_stale_adverts()
+	for(var/response_id in pending_offer_responses)
+		var/list/response_data = pending_offer_responses[response_id]
+		if(!response_data["expires"] || world.time > response_data["expires"])
+			pending_offer_responses -= response_id
+	for(var/cooldown_key in sender_cooldowns)
+		if(sender_cooldowns[cooldown_key] + offer_cooldown < world.time)
+			sender_cooldowns -= cooldown_key
 	var/list/stale_keys = list()
 	for(var/advert_key in rosewall_adverts)
 		var/list/advert_data = rosewall_adverts[advert_key]
@@ -251,8 +261,9 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 	response_id_counter++
 	var/response_id = "rosewall_[worker.real_name]_[world.time]_[response_id_counter]"
 	if(!QDELETED(worker) && !QDELETED(sender))
-		pending_offer_responses[response_id] = list("responder" = worker, "sender" = sender)
-		addtimer(CALLBACK(src, PROC_REF(expire_offer_response), response_id), response_timeout)
+		// Tracked by expiry time rather than an addtimer bound to this board, so the
+		// entry cannot leak (holding refs to both mobs) if this board is destroyed.
+		pending_offer_responses[response_id] = list("responder" = worker, "sender" = sender, "expires" = world.time + response_timeout)
 	to_chat(worker, span_boldnotice("A perfumed slip finds its way to me from the Rosewall: <i>[message]</i> - [sender.real_name]<br><a href='?src=[REF(src)];offer_response=yae;response_id=[response_id]'>\[YAE\]</a> | <a href='?src=[REF(src)];offer_response=nae;response_id=[response_id]'>\[NAE\]</a>"))
 	to_chat(sender, span_notice("My offer has been sent to [worker.real_name]."))
 	playsound(worker.loc, 'sound/misc/notice (2).ogg', 100, FALSE, -1)
@@ -273,6 +284,10 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 			return
 
 		var/list/response_data = pending_offer_responses[response_id]
+		if(world.time > response_data["expires"])
+			pending_offer_responses -= response_id
+			to_chat(responder, span_warning("That response link has expired or already been used."))
+			return
 		var/mob/living/carbon/human/stored_responder = response_data["responder"]
 		var/mob/living/carbon/human/sender = response_data["sender"]
 
@@ -299,10 +314,6 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 
 		responder.log_talk("offer response: [response_type]", LOG_SAY, tag="rosewall offer response (to [key_name(sender)])")
 		return
-
-/obj/structure/roguemachine/rosewall/proc/expire_offer_response(response_id)
-	if(pending_offer_responses[response_id])
-		pending_offer_responses -= response_id
 
 #undef ROSEWALL_STATUS_AVAILABLE
 #undef ROSEWALL_STATUS_HIRED

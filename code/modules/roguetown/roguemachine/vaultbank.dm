@@ -562,11 +562,11 @@
 	var/list/roster = get_patron_roster()
 	if(isnull(roster))
 		return
-	var/obj/item/patronage_writ/W = new writ_path(get_turf(user))
-	if(length(roster) >= W.roster_cap)
+	prune_patron_roster(roster)
+	if(length(roster) >= get_patron_cap())
 		to_chat(user, span_warning("[get_patron_label()]'s roll is full - strike a name first."))
-		qdel(W)
 		return
+	var/obj/item/patronage_writ/W = new writ_path(get_turf(user))
 	W.issuer_name = user.real_name
 	W.issuer_year = CALENDAR_EPOCH_YEAR
 	QDEL_IN(W, 2 MINUTES)
@@ -590,13 +590,7 @@
 		to_chat(user, span_warning("That name is no longer on the roll."))
 		return
 	roster -= target
-	var/granted_trait
-	if(istype(src, /obj/structure/roguemachine/vaultbank/merchant))
-		granted_trait = TRAIT_AGENT_MERCHANT
-	else if(istype(src, /obj/structure/roguemachine/vaultbank/bathhouse))
-		granted_trait = TRAIT_AGENT_BATHHOUSE
-	else if(istype(src, /obj/structure/roguemachine/vaultbank/church))
-		granted_trait = TRAIT_AGENT_CHURCH
+	var/granted_trait = get_patron_trait()
 	if(granted_trait && !QDELETED(target))
 		REMOVE_TRAIT(target, granted_trait, TRAIT_GENERIC)
 		if(granted_trait == TRAIT_AGENT_MERCHANT)
@@ -609,6 +603,24 @@
 	return ""
 
 /obj/structure/roguemachine/vaultbank/proc/get_patronage_writ_path()
+	return null
+
+/// Drops roster entries whose patron is gone or no longer bears the granted trait,
+/// so dead names cannot wedge the roll or block the mob's GC.
+/obj/structure/roguemachine/vaultbank/proc/prune_patron_roster(list/roster)
+	var/granted_trait = get_patron_trait()
+	for(var/mob/living/carbon/human/H in roster.Copy())
+		if(QDELETED(H) || (granted_trait && !HAS_TRAIT(H, granted_trait)))
+			roster -= H
+
+/// The trait this jawbank's writs confer, mirrored on revoke.
+/obj/structure/roguemachine/vaultbank/proc/get_patron_trait()
+	if(istype(src, /obj/structure/roguemachine/vaultbank/merchant))
+		return TRAIT_AGENT_MERCHANT
+	if(istype(src, /obj/structure/roguemachine/vaultbank/bathhouse))
+		return TRAIT_AGENT_BATHHOUSE
+	if(istype(src, /obj/structure/roguemachine/vaultbank/church))
+		return TRAIT_AGENT_CHURCH
 	return null
 
 /obj/structure/roguemachine/vaultbank/proc/get_patron_roster()
