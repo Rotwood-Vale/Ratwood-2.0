@@ -22,8 +22,7 @@
 	bottle_desc = "A barrel of chum slurry. Best splashed on water to stir fish into a frenzy."
 	reagent_to_brew = /datum/reagent/chum
 	needed_reagents = list(/datum/reagent/water = 198)
-	needed_items = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince = 10,
-		/obj/item/alch/viscera = 1,)
-	brewed_amount = 6
+	needed_items = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince = 10)
+	brewed_amount = 10
 	brew_time = 2 MINUTES
 	sell_value = 30

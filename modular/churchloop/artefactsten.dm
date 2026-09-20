@@ -1341,90 +1341,16 @@ Necra's Censer (by ARefrigerator)
 
 /************************
 /obj/item/artifact/fishingrod/abyssoid
- * Дроп только рыбы + не нужен bait.
  **************************************************/
 
 /obj/item/fishingrod/abyssoid
-    name = "Abyssor's rod"
-    desc = "A rod blessed by Abyssor. It needs no bait."
-    icon = 'icons/roguetown/items/artefactsten.dmi'
-    icon_state = "abyssorartefact"
-
-    var/static/list/_abyssor_loot = list(
-        /obj/item/reagent_containers/food/snacks/fish/cod       = 230,
-        /obj/item/reagent_containers/food/snacks/fish/plaice    = 180,
-        /obj/item/reagent_containers/food/snacks/fish/sole      = 250,
-        /obj/item/reagent_containers/food/snacks/fish/angler    = 170,
-        /obj/item/reagent_containers/food/snacks/fish/lobster   = 180,
-        /obj/item/reagent_containers/food/snacks/fish/bass      = 230,
-        /obj/item/reagent_containers/food/snacks/fish/clam      = 50,
-        /obj/item/reagent_containers/food/snacks/fish/clownfish = 40,
-    )
-
-/obj/item/fishingrod/abyssoid/attackby(obj/item/I, mob/user, params)
-    to_chat(user, span_notice("This rod needs no bait."))
-    return
-
-/obj/item/fishingrod/abyssoid/afterattack(obj/target, mob/user, proximity)
-	if(user?.used_intent?.type == SPEAR_BASH)
-		return ..()
-
-	if(!check_allowed_items(target, target_self = 1))
-		return ..()
-
-	if(!proximity || !(target in range(user, 5)))
-		return
-
-	if(user.used_intent.type != ROD_CAST)
-		return
-
-	if(user.doing)
-		to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
-		return
-
-	var/sl = user.get_skill_level(/datum/skill/labor/fishing)
-	var/ft = 120
-	ft -= (sl * 20)
-	ft = max(20, ft)
-
-	user.visible_message("<span class='warning'>[user] casts a line!</span>",
-	                     "<span class='notice'>I cast a line.</span>")
-	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-
-	if(!do_after(user, ft, target = target))
-		to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
-		update_icon()
-		return
-
-	var/mob/living/fisherman = user
-	var/A = pickweight(_abyssor_loot)
-
-	var/ow = 30 + (sl * 10)
-	to_chat(user, "<span class='notice'>Something tugs the line!</span>")
-	playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
-
-	do_after(user, ow, target = target)
-
-	if(ismob(A))
-		var/mob/M = A
-		if(M.type in subtypesof(/mob/living/simple_animal/hostile))
-			new M(target)
-		else
-			new M(user.loc)
-		if(user?.mind)
-			user.mind.add_sleep_experience(/datum/skill/labor/fishing, fisherman.STAINT*2)
-	else
-		new A(user.loc)
-		to_chat(user, "<span class='notice'>Reel 'em in!</span>")
-		if(user?.mind)
-			user.mind.add_sleep_experience(/datum/skill/labor/fishing, round(fisherman.STAINT, 2), FALSE)
-		record_featured_stat(FEATURED_STATS_FISHERS, fisherman)
-
-	playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	update_icon()
-	return
+	name = "Abyssor's rod"
+	desc = "A rod blessed by Abyssor. It needs no bait."
+	icon = 'icons/roguetown/items/artefactsten.dmi'
+	icon_state = "abyssorartefact"
+	max_integrity = 800
+	rod_difficultymod = -5
+	rod_raritymod = list("com" = -1, "rare" = 3, "ultra" = 2, "gold" = 1)
 
 /*******************************************
  * XYLIXSOID STUFF

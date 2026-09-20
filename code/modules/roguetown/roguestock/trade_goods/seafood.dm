@@ -76,3 +76,63 @@
 	name = "Shrimp"
 	base_price = SELLPRICE_SHRIMP
 	item_type = /obj/item/reagent_containers/food/snacks/fish/shrimp
+
+/datum/trade_good/seafood/plaice
+	id = TRADE_GOOD_PLAICE
+	name = "Plaice"
+	base_price = SELLPRICE_PLAICE
+	item_type = /obj/item/reagent_containers/food/snacks/fish/plaice
+
+/datum/trade_good/seafood/angler
+	id = TRADE_GOOD_ANGLER
+	name = "Angler"
+	base_price = SELLPRICE_ANGLER
+	item_type = /obj/item/reagent_containers/food/snacks/fish/angler
+
+/datum/trade_good/seafood/eel
+	id = TRADE_GOOD_EEL
+	name = "Eel"
+	base_price = SELLPRICE_EEL
+	item_type = /obj/item/reagent_containers/food/snacks/fish/eel
+
+/datum/trade_good/seafood/octopus
+	id = TRADE_GOOD_OCTOPUS
+	name = "Octopus"
+	base_price = SELLPRICE_OCTOPUS
+	item_type = /obj/item/reagent_containers/food/snacks/fish/octopus
+
+/datum/trade_good/seafood/black_salmon
+	id = TRADE_GOOD_BLACK_SALMON
+	name = "Black Salmon"
+	base_price = SELLPRICE_BLACK_SALMON
+	item_type = /obj/item/reagent_containers/food/snacks/fish/salmon/black_headed
+
+/datum/trade_good/seafood/flounder
+	id = TRADE_GOOD_FLOUNDER
+	name = "Flounder"
+	base_price = SELLPRICE_FLOUNDER
+	item_type = /obj/item/reagent_containers/food/snacks/fish/flounder
+
+/datum/trade_good/seafood/black_bass
+	id = TRADE_GOOD_BLACK_BASS
+	name = "Black Bass"
+	base_price = SELLPRICE_BLACK_BASS
+	item_type = /obj/item/reagent_containers/food/snacks/fish/black_bass
+
+/datum/trade_good/seafood/sturgeon
+	id = TRADE_GOOD_STURGEON
+	name = "Sturgeon"
+	base_price = SELLPRICE_STURGEON
+	item_type = /obj/item/reagent_containers/food/snacks/fish/sturgeon
+
+/datum/trade_good/seafood/mackerel
+	id = TRADE_GOOD_MACKEREL
+	name = "Mackerel"
+	base_price = SELLPRICE_MACKEREL
+	item_type = /obj/item/reagent_containers/food/snacks/fish/mackerel
+
+/datum/trade_good/seafood/beak_snapper
+	id = TRADE_GOOD_BEAK_SNAPPER
+	name = "Beak Snapper"
+	base_price = SELLPRICE_BEAK_SNAPPER
+	item_type = /obj/item/reagent_containers/food/snacks/fish/beaksnapper

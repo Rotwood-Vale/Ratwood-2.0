@@ -141,22 +141,39 @@
 		..()
 
 /obj/item/fishingcage/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/grown/log/tree/stick))
+	var/obj/item/natural/bundle/stick/stick_bundle
+	if(istype(I, /obj/item/natural/bundle/stick))
+		stick_bundle = I
+	if(stick_bundle || istype(I, /obj/item/grown/log/tree/stick))
 		if(durability >= max_durability)
 			to_chat(user, span_warning("The fishing cage doesn't need repairs."))
 			return
 		if(user.get_skill_level(/datum/skill/craft/crafting) <= 0)
 			to_chat(user, span_warning("I don't know how to repair this cage."))
 			return
+		if(stick_bundle && stick_bundle.amount <= 0)
+			to_chat(user, span_warning("There are no sticks left in that bundle."))
+			return
 		user.visible_message(span_notice("[user] begins repairing [src] with [I]..."), span_notice("I begin repairing [src] with [I]..."))
 		var/repair_time = max(2 SECONDS, (6 SECONDS) - (user.get_skill_level(/datum/skill/craft/crafting) * 1 SECONDS))
 		if(!do_after(user, repair_time, target = src))
 			return
-		var/repair_amount = min(30, max_durability - durability)
-		if(repair_durability(repair_amount))
-			playsound(src.loc, 'sound/items/bsmith3.ogg', 70, FALSE)
-			if(user.mind)
-				user.mind.add_sleep_experience(/datum/skill/craft/crafting, max(1, repair_amount / 5), FALSE)
+		if(QDELETED(I) || (stick_bundle && stick_bundle.amount <= 0))
+			return
+		var/repair_amount = max_durability - durability
+		if(!repair_durability(repair_amount))
+			return
+		playsound(src.loc, 'sound/items/bsmith3.ogg', 70, FALSE)
+		if(user.mind)
+			user.mind.add_sleep_experience(/datum/skill/craft/crafting, max(1, repair_amount / 5), FALSE)
+		if(stick_bundle)
+			stick_bundle.amount--
+			if(stick_bundle.amount <= 0)
+				qdel(stick_bundle)
+			else
+				stick_bundle.update_bundle()
+		else
+			qdel(I)
 		return
 
 	if(bait)
@@ -200,6 +217,8 @@
 /obj/item/fishingcage/process()
 	if(!(deployed && bait))
 		return PROCESS_KILL
+	if(caught)
+		return PROCESS_KILL // fish already waiting; don't roll again or burn more bait
 	if(world.time > check_counter + time2catch)
 		check_counter = world.time
 		var/list/fishingmodlist
@@ -255,6 +274,8 @@
 /obj/item/fishingcage/examine(mob/user)
 	. = ..()
 	. += span_notice("Durability: [get_durability_percent()]%")
+	if(durability < max_durability)
+		. += span_notice("It can be repaired with a wooden stick.")
 	if(icon_state == "fishingcage_caught")
 		. += span_warning("Something seems to be inside...")
 	if(bait)

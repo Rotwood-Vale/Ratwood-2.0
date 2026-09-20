@@ -69,7 +69,7 @@
 		mouth = /obj/item/rogueweapon/huntingknife
 		backl = /obj/item/storage/backpack/rogue/satchel
 		belt = /obj/item/storage/belt/rogue/leather
-		backr = /obj/item/fishingrod
+		backr = /obj/item/fishingrod/fisher
 		beltr = /obj/item/cooking/pan
 		backpack_contents = list(
 							/obj/item/natural/worms = 2,

@@ -22,6 +22,7 @@
 #define TG_SUPPLY_FISH_BULK         8
 #define TG_SUPPLY_FISH_MINCE        6
 #define TG_SUPPLY_FISH_SPECIALTY    6
+#define TG_SUPPLY_FISH_RARE         6
 #define TG_SUPPLY_REFINED_INGOTS    6
 
 // Demand rates
@@ -43,5 +44,6 @@
 #define TG_DEMAND_COMMON_VEG        4
 #define TG_DEMAND_FISH_BULK         8
 #define TG_DEMAND_FISH_SPECIALTY    6
+#define TG_DEMAND_FISH_RARE         4
 #define TG_DEMAND_GEM               4
 #define TG_DEMAND_REFINED_INGOTS    5

@@ -547,7 +547,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/flounder
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/flounder
-	sellprice = 5
+	sellprice = 10
 
 /obj/item/reagent_containers/food/snacks/fish/swamp_shrimp
 	name = "swamp shrimp"
@@ -577,7 +577,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/black_bass
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/black_bass
-	sellprice = 7
+	sellprice = 10
 
 /obj/item/reagent_containers/food/snacks/fish/zizo_abberation
 	name = "zizo abberation"

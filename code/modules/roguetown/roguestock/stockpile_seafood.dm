@@ -114,3 +114,93 @@
 	importexport_amt = 10
 	stockpile_limit = 10
 	category = "Seafood"
+
+/datum/roguestock/stockpile/plaice
+	name = "Plaice"
+	desc = "Whole slab of plaice."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/plaice
+	trade_good_id = TRADE_GOOD_PLAICE
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/angler
+	name = "Angler"
+	desc = "Whole slab of angler fish."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/angler
+	trade_good_id = TRADE_GOOD_ANGLER
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/eel
+	name = "Eel"
+	desc = "Whole slab of eel."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/eel
+	trade_good_id = TRADE_GOOD_EEL
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/octopus
+	name = "Octopus"
+	desc = "Whole slab of octopus."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/octopus
+	trade_good_id = TRADE_GOOD_OCTOPUS
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/black_salmon
+	name = "Black Salmon"
+	desc = "Whole slab of black salmon."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/salmon/black_headed
+	trade_good_id = TRADE_GOOD_BLACK_SALMON
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/flounder
+	name = "Flounder"
+	desc = "Whole slab of flounder."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/flounder
+	trade_good_id = TRADE_GOOD_FLOUNDER
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/black_bass
+	name = "Black Bass"
+	desc = "Whole slab of Black Bass."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/black_bass
+	trade_good_id = TRADE_GOOD_BLACK_BASS
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/sturgeon
+	name = "Sturgeon"
+	desc = "Whole slab of black sturgeon."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/sturgeon
+	trade_good_id = TRADE_GOOD_STURGEON
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/mackerel
+	name = "Mackerel"
+	desc = "Whole slab of mackerel."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/mackerel
+	trade_good_id = TRADE_GOOD_MACKEREL
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"
+
+/datum/roguestock/stockpile/beak_snapper
+	name = "Beak Snapper"
+	desc = "Whole slab of beak snapper."
+	item_type = /obj/item/reagent_containers/food/snacks/fish/beaksnapper
+	trade_good_id = TRADE_GOOD_BEAK_SNAPPER
+	importexport_amt = 10
+	stockpile_limit = 10
+	category = "Seafood"

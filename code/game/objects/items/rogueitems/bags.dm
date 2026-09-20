@@ -98,7 +98,7 @@
 	/obj/item/reagent_containers/food/snacks/rogue/bread,
 	/obj/item/reagent_containers/food/snacks/grown/apple,
 	/obj/item/reagent_containers/glass/bottle/waterskin/milk,
-	/obj/item/fishingrod,
+	/obj/item/fishingrod/fisher,
 	/obj/item/natural/worms/grubs,
 	/obj/item/natural/worms/grubs,
 	/obj/item/natural/worms/grubs,
