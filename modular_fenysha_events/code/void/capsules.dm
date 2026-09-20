@@ -85,7 +85,7 @@
 
 /obj/effect/particle_effect/smoke/fractal/smoke_mob(mob/living/carbon/C)
 	. = ..()
-	if(!.)
+	if(!. && !prob(20))
 		return
 	if(!ishuman(C))
 		return
