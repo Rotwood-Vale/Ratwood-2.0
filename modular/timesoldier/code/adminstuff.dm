@@ -1,5 +1,5 @@
 #define TIMESOLDIER_TEMPERANCE "Temperance"
-#define TIMESOLDIER_INTERWAR "Interwar" // to be removed
+#define TIMESOLDIER_INTERWAR "awuff button" // to be removed
 
 #define TIMESOLDIER_SPAWN_CKEY "Ckey"
 #define TIMESOLDIER_SPAWN_GHOST "Ghost"
@@ -162,15 +162,34 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 		TIMESOLDIER_INTERWAR
 	)
 
-	var/selected_type = input(
-		src,
-		"What kind of Time Soldier should be spawned?",
-		"TIME SOLDIER"
-	) as null|anything in soldier_types
+	var/selected_type
 
-	if(!selected_type)
-		return
+	while(TRUE)
+		selected_type = input(
+			src,
+			"What kind of Time Soldier should be spawned?",
+			"TIME SOLDIER"
+		) as null|anything in soldier_types
 
+		// Cancelled the window.
+		if(!selected_type)
+			return
+
+		// the illusion of choice.
+		if(selected_type == TIMESOLDIER_INTERWAR)
+			switch(rand(1, 3))
+				if(1)
+					src << sound('sound/vo/mobs/vw/awuff.ogg')
+				if(2)
+					src << sound('sound/vo/mobs/vw/awuff2.ogg')
+				if(3)
+					src << sound('sound/vo/mobs/vw/awuff3.ogg')
+
+			continue
+
+		// Temperance selected.
+		if(selected_type == TIMESOLDIER_TEMPERANCE)
+			break
 
 	// How are we giving control of them?
 	var/list/spawn_options = list(
@@ -347,6 +366,3 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 		if(TIMESOLDIER_TEMPERANCE)
 			apply_timesoldier_temperance(H)
 
-		//if(TIMESOLDIER_INTERWAR)
-			//apply_timesoldier_interwar(H)
-			// i might as well avoid it for now.

@@ -130,6 +130,10 @@
 	voice_template = selected_voice
 	broadcast_language = selected_language
 
+	visible_message(
+	span_notice("[src]'s Naledi time-crystal gently clinks against the COMET shard, its strange internals sending it to lyfe with a low, steady hum.")
+	)
+
 	playsound(src, pick('modular/timesoldier/sounds/comms/broadcast_start1.ogg', 'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
 
 	QDEL_NULL(radio_loop) // just in case we somehow have it already from before.
@@ -215,6 +219,10 @@
 	broadcasting = FALSE
 	QDEL_NULL(radio_loop)
 	playsound(src, 'modular/timesoldier/sounds/comms/broadcast_end1.ogg', 45, FALSE)
+
+	visible_message(
+	span_notice("[src]'s internal hum winds down before falling completely silent, the Naledi time-crystal pushing away from the COMET shard.")
+	)
 	icon_state = "radio_off"
 
 	if(radio_noise_timer)
