@@ -4,7 +4,9 @@
 /obj/effect/proc_holder/spell/self/divine_strike
 	name = "Divine Strike"
 	desc = "Bless your next strike to do extra damage and slow the target."
-	overlay = "createlight"
+	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	overlay_state = "divine_strike"
 	recharge_time = 1 MINUTES
 	movement_interrupt = FALSE
 	chargedrain = 0
@@ -80,6 +82,8 @@
 /obj/effect/proc_holder/spell/self/call_to_arms
 	name = "Call to Arms"
 	desc = "Grants you and all allies nearby a buff to their strength, willpower, and constitution."
+	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "call_to_arms"
 	recharge_time = 5 MINUTES
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
@@ -109,7 +113,9 @@
 /obj/effect/proc_holder/spell/invoked/persistence
 	name = "Persistence"
 	desc = "Harms Undead and encourages the livings wounds to close faster."
-	overlay_state = "astrata"
+	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	overlay_state = "persistence"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -173,6 +179,8 @@
 /obj/effect/proc_holder/spell/invoked/tug_of_war
 	name = "Tug of War"
 	desc = "Casts out a chain that tries to pull the target closer."
+	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "ravox_tug"
 	recharge_time = 1 MINUTES
 	movement_interrupt = TRUE
@@ -239,8 +247,8 @@
 	name = "Challenge"
 	desc = "Bring an opponent with you to Ravoxian Trial. Engage in 3 minute combat."
 	overlay_icon = 'icons/mob/actions/ravoxmiracles.dmi'
+	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	overlay_state = "ravoxchallenge"
-	action_icon_state = "ravoxchallenge"
 	action_icon = 'icons/mob/actions/ravoxmiracles.dmi'
 	recharge_time = 10 MINUTES
 	movement_interrupt = FALSE

@@ -86,6 +86,7 @@
 
 // BEGIN_INCLUDE
 #include "anchored_mobs.dm"
+#include "baseturfs.dm"
 #include "colorblind_hud_palette.dm"
 #include "component_tests.dm"
 #include "create_and_destroy.dm"
@@ -96,11 +97,12 @@
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"
 #include "timer_sanity.dm"
+#include "timers.dm"
 #include "unit_test.dm"
 // END_INCLUDE
-#ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
-#include "find_reference_sanity.dm"
-#endif
+// #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
+// #include "find_reference_sanity.dm"
+// #endif
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

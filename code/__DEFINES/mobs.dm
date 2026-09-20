@@ -65,16 +65,17 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+// Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -93,8 +94,6 @@
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
-#define MONKEY_BODYPART "monkey"
-#define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines for carbon mobs
@@ -290,14 +289,6 @@
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
 
-//Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED		(1<<0)
-#define JUDGE_IDCHECK		(1<<1)
-#define JUDGE_WEAPONCHECK	(1<<2)
-#define JUDGE_RECORDCHECK	(1<<3)
-//ED209's ignore monkeys
-#define JUDGE_IGNOREMONKEYS	(1<<4)
-
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
@@ -435,6 +426,8 @@
 #define SKIN_COLOR_IRON "d9a284"
 #define SKIN_COLOR_MALACHITE "c69b83"
 #define SKIN_COLOR_OBSIDIAN "3b2e27"
+#define SKIN_COLOR_TUSCAN "7e4e4a"
+#define SKIN_COLOR_SMOKY_QUARTZ "452516"
 #define SKIN_COLOR_BRIMSTONE "271f1a"
 #define SKIN_COLOR_JADE "d6bea9"
 #define SKIN_COLOR_CERAGYRITE "4c4a4f"
@@ -651,3 +644,7 @@
 #else
 #define NPC_THINK(message)
 #endif
+
+/// Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
+/// the ghost lock in observer.dm uses it too
+#define DEAD_TO_ZOMBIE_TIME (5 MINUTES)

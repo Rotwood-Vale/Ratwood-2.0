@@ -30,7 +30,7 @@
 	exp_light = 0
 	exp_flash = 0
 	exp_fire = 1
-	damage = 60
+	damage = 50
 	damage_type = BURN
 	npc_simple_damage_mult = 2 // HAHAHA
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor

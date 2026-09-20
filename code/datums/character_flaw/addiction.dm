@@ -181,6 +181,14 @@
 	desc = "I need a smoke. Gotta take the edge off."
 	icon_state = "smoker"
 
+/// CAFFIEND
+
+/datum/charflaw/addiction/caffiend
+	name = "Caffiend"
+	desc = "I can't start my day without a cup of tea or coffee."
+	time = 40 MINUTES
+	needsate_text = "I need a hot brew."
+
 /// GOD-FEARING
 
 /datum/charflaw/addiction/godfearing

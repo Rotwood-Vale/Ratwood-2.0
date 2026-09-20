@@ -1,6 +1,6 @@
 /datum/language/etruscan
 	name = "Etrusco"
-	desc = "The language of the inhabitants of the Isles of Etrusca. Fast-paced, for those unused to its emotiveness."
+	desc = "(Spoken with ,u) The language of the inhabitants of the Isles of Etrusca. Fast-paced, for those unused to its emotiveness."
 	speech_verb = "remarks"
 	ask_verb = "inquires"
 	exclaim_verb = "asserts"

@@ -1,4 +1,5 @@
 /datum/advclass/mage
+	townie_contract_gate_exempt = TRUE
 	name = "Sorcerer"
 	tutorial = "Spellslingers are mages that focus on more potent spells, greater athleticism, and the art of the staff. Arcane Alchemists instead turned their studies to mixing magic and alchemy, the basics of medicine, and rely on creativity instead of arcane might."
 	allowed_sexes = list(MALE, FEMALE)
@@ -63,7 +64,6 @@
 		var/weapon_choice = input(H, "Choose your path.", "WHO ARE YOU?") as anything in weapons
 		switch(weapon_choice)
 			if("Arcane Alchemist")
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/aerosolize)
 				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)

@@ -4,7 +4,7 @@
 	Your fellow soldiers know to rally around you, should you keep it safe."
 	outfit = /datum/outfit/job/roguetown/janissary/flagbearer
 	category_tags = list(CTAG_JANISSARY)
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER, TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER)
 	subclass_stats = list(
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,

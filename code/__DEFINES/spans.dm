@@ -78,6 +78,7 @@
 #define span_icon(str) ("<span class='icon'>" + str + "</span>")
 #define span_infection(str) ("<span class='infection'>" + str + "</span>")
 #define span_info(str) ("<span class='info'>" + str + "</span>")
+#define span_infoplain(str) ("<span class='infoplain'>" + str + "</span>")
 #define span_interface(str) ("<span class='interface'>" + str + "</span>")
 #define span_italics(str) ("<span class='italics'>" + str + "</span>")
 #define span_linkoff(str) ("<span class='linkOff'>" + str + "</span>")
@@ -163,6 +164,9 @@
 #define span_beautiful_masc(str) ("<span class='beautifulmasc'>" + str + "</span>")
 #define span_beautiful_fem(str) ("<span class='beautifulfem'>" + str + "</span>")
 #define span_beautiful_nb(str) ("<span class='beautifulnb'>" + str + "</span>")
+#define span_pretty_masc(str) ("<span class='prettymasc'>" + str + "</span>")
+#define span_pretty_fem(str) ("<span class='prettyfem'>" + str + "</span>")
+#define span_pretty_nb(str) ("<span class='prettynb'>" + str + "</span>")
 #define span_orator(str) ("<span class='orator'>" + str + "</span>")
 
 /// Displays a tooltip. Tooltip is text-only, and HTML will be ignored.

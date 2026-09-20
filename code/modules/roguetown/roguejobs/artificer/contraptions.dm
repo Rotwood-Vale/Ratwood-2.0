@@ -208,7 +208,7 @@
 		remove_buffer(src.buffer)
 	src.buffer = buffer
 	if(!QDELETED(buffer))
-		RegisterSignal(buffer, COMSIG_PARENT_QDELETING, PROC_REF(remove_buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(remove_buffer))
 
 /**
  * Called when the buffer's stored object is deleted
@@ -219,7 +219,7 @@
 /obj/item/contraption/linker/proc/remove_buffer(datum/source)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(src, COMSIG_MULTITOOL_REMOVE_BUFFER, source)
-	UnregisterSignal(buffer, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(buffer, COMSIG_QDELETING)
 	buffer = null
 
 
@@ -231,7 +231,6 @@
 	on_icon = "metalizer_flick"
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_BULKY
-	misfire_chance = 15
 	charge_per_source = 5
 
 /obj
@@ -300,7 +299,7 @@
 	off_icon = "smelter_off"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
-	misfire_chance = 10
+	misfire_chance = 0
 	charge_per_source = 6
 
 /obj/item/contraption/smelter/misfire_result()
@@ -480,8 +479,8 @@
 
 /obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/key))
-		var/obj/item/key/the_key = I
+	if(istype(I, /obj/item/roguekey))
+		var/obj/item/roguekey/the_key = I
 		user.changeNext_move(CLICK_CD_FAST)
 		flick(off_icon, src)
 		playsound(user, 'sound/foley/doors/unlock.ogg', 100, TRUE)

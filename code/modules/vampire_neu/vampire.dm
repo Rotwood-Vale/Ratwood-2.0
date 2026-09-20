@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		"CHILD OF KAIN!",
 	)
 	rogue_enabled = TRUE
+	typecache_datum_blacklist = list(/datum/antagonist/zombie) //the rot cannot claim what the Curse already holds
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE // Base vampire shouldn't be directly selectable - use Vampire Lord or specific subtypes
 	var/datum/clan/default_clan = /datum/clan/nosferatu
@@ -24,6 +25,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/datum/clan/forcing_clan
 	var/generation
 	var/research_points = 10
+	var/list/pre_embrace_state
 
 /datum/antagonist/vampire/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation)
 	. = ..()
@@ -68,6 +70,9 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		return span_boldnotice("Another deadite.")
 
 /datum/antagonist/vampire/on_gain()
+	// the Curse takes precedence over the rot - covers dying to it partway through being sired
+	owner?.remove_antag_datum(/datum/antagonist/zombie)
+	owner?.current?.remove_status_effect(/datum/status_effect/zombie_infection)
 	SSmapping.retainer.vampires |= owner
 	//move_to_spawnpoint()
 	owner.special_role = name
@@ -129,7 +134,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude)
 	// Get custom clan name
-	custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null
+	custom_clan_name = sanitize(input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null)
 	if(!custom_clan_name)
 		custom_clan_name = "Custom Clan"
 
@@ -146,7 +151,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	to_chat(vampdude, span_notice("You are now a member of the [custom_clan_name] clan with [length(selected_covens)] coven(s)."))
 
 /datum/antagonist/vampire/proc/after_gain()
-	owner.current.set_bloodpool(owner.current.maxbloodpool / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
+	owner.current.set_bloodpool(owner.current.get_maxbloodpool() / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/vampire/on_removal()

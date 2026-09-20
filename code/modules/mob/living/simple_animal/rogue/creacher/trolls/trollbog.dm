@@ -17,7 +17,7 @@
 	STAWIL = 15
 
 	defprob = 30
-	dodgetime = 15
+	dodgetime = 1.5 SECONDS
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/Initialize(mapload)
 	. = ..()

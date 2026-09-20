@@ -6,7 +6,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplatehelm"
 	item_state = "bplatehelm"
-	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor = ARMOR_PLATE_BSTEEL
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
@@ -68,3 +68,18 @@
 	else
 		user.visible_message(span_warning("[user] stops reshaping [src]."))
 		return
+
+/obj/item/clothing/head/roguetown/helmet/blacksteel/psychains
+	name = "length of psydonian chains"
+	desc = "Chains fashioned from blacksteel, ritualistically worn atop helmets to testify one's unshatterable bond to Him."
+	icon_state = "psychains"
+	armor = ARMOR_PLATE_BSTEEL
+	body_parts_covered = HAIR
+	max_integrity = ARMOR_INT_SIDE_COVERAGE_BONUS //Translates into 50INT. Tremendously weaker - intended for aesthetics above all else.
+	alternate_worn_layer	= 8.9 //On top of helmet
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	armor_class = ARMOR_CLASS_NONE
+	block2add = FOV_DEFAULT
+	flags_cover = null
+	flags_inv = null
+	smeltresult = /obj/item/ingot/steel//no cheesing free blacksteel for you!

@@ -1,14 +1,18 @@
+#define PHOENIX_GUARD_COOLDOWN 60 SECONDS
+#define FROSTVEIL_COOLDOWN 20 SECONDS
+#define LIGHTNING_COOLDOWN 40 SECONDS
+#define LIFESTEAL_COOLDOWN 10 SECONDS
+#define VOIDTOUCHED_COOLDOWN 10 SECONDS
 ///T3 Enchantmentsdatum
 /datum/magic_item/greater/lifesteal
 	name = "life steal"
 	description = "It seems bloodthirsty."
-	var/last_used
-	var/flat_heal = 10
+	var/flat_heal = 25
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 	var/warned = FALSE
 
 /datum/magic_item/greater/lifesteal/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
-	if(world.time < src.last_used + 100)
+	if(!try_start_cooldown(firer, LIFESTEAL_COOLDOWN))
 		to_chat(firer, span_notice("[fired_from] is not yet hungry for more life!"))
 		return
 	if(isliving(firer) && isliving(target))
@@ -17,10 +21,9 @@
 		if(damaging.stat != DEAD)
 			healing.heal_ordered_damage(flat_heal, damage_heal_order)
 			firer.visible_message(span_danger("[fired_from] drains life from [target]!"))
-			src.last_used = world.time
 
 /datum/magic_item/greater/lifesteal/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 100)
+	if(!try_start_cooldown(user, LIFESTEAL_COOLDOWN))
 		if(!warned)
 			to_chat(user, span_notice("[source] is not yet hungry for more life!"))
 			warned = TRUE
@@ -32,15 +35,13 @@
 			healing.heal_ordered_damage(flat_heal, damage_heal_order)
 			user.visible_message(span_danger("[source] drains life from [target]!"))
 			warned = FALSE
-			src.last_used = world.time
 
 /datum/magic_item/greater/lightning
 	name = "lightning"
 	description = "It has small arcs of electricity dance across it"
-	var/list/last_used = list()
 
 /datum/magic_item/greater/lightning/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + (40 SECONDS)))
+	if(!try_start_cooldown(user, LIGHTNING_COOLDOWN))
 		return
 
 	if(isliving(target))
@@ -59,29 +60,25 @@
 				nearby.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 				nearby.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
 				new /obj/effect/temp_visual/lightning(get_turf(target), get_turf(nearby))
-	last_used[source] = world.time
 
 /datum/magic_item/greater/frostveil
 	name = "frostveil"
 	description = "It feels rather cold."
-	var/last_used
 
 /datum/magic_item/greater/frostveil/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(!try_start_cooldown(user, FROSTVEIL_COOLDOWN))
 		return
 	if(isliving(target))
 		var/mob/living/targeted = target
 		targeted.apply_status_effect(/datum/status_effect/debuff/cold)
 		targeted.visible_message(span_danger("[source] chills [targeted]!"))
-		src.last_used = world.time
 
 /datum/magic_item/greater/frostveil/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(!try_start_cooldown(owner, FROSTVEIL_COOLDOWN))
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.apply_status_effect(/datum/status_effect/debuff/cold)
 		attacker.visible_message(span_danger("[I] chills [attacker]!"))
-		src.last_used = world.time
 
 /datum/magic_item/greater/phoenixguard
 	name = "phoenixguard"
@@ -89,13 +86,12 @@
 	var/last_used
 
 /datum/magic_item/greater/phoenixguard/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
-	if(world.time < src.last_used + 20 SECONDS)
+	if(!try_start_cooldown(owner, PHOENIX_GUARD_COOLDOWN))
 		return
 	if(isliving(attacker) && attacker != owner)
 		attacker.adjust_fire_stacks(5)
 		attacker.ignite_mob()
 		attacker.visible_message(span_danger("[I] sets [attacker] on fire!"))
-		src.last_used = world.time
 
 /datum/magic_item/greater/woundclosing
 	name = "wound closing"
@@ -228,7 +224,7 @@
 	var/list/last_used = list()
 
 /datum/magic_item/greater/void/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	if(world.time < (src.last_used[source] + 10 SECONDS))
+	if(!try_start_cooldown(user, VOIDTOUCHED_COOLDOWN))
 		return
 
 	if(isliving(target) && target != user) //self teleporting might be scary actually
@@ -241,4 +237,9 @@
 			possible_turfs += T
 		if(possible_turfs.len)
 			L.forceMove(pick(possible_turfs))
-		last_used[source] = world.time
+
+#undef PHOENIX_GUARD_COOLDOWN
+#undef FROSTVEIL_COOLDOWN
+#undef LIGHTNING_COOLDOWN
+#undef LIFESTEAL_COOLDOWN
+#undef VOIDTOUCHED_COOLDOWN

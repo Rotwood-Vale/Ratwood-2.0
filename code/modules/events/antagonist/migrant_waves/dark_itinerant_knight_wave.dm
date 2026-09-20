@@ -26,12 +26,14 @@
 
 /datum/migrant_role/dark_itinerant_knight
 	name = "Zizite Knight"
+	role_category = "Adventurer"
 	greet_text = "You are an evil itinerant Knight, you have embarked alongside your squire on a voyage to engulf chaos within these lands."
 	antag_datum = /datum/antagonist/zizo_knight
 	grant_lit_torch = TRUE
 
 /datum/migrant_role/dark_itinerant_squire
 	name = "Underling Squire"
+	role_category = "Adventurer"
 	greet_text = "You are the squire of an evil knight, they have taken you under their custody as you were the only one who didn't object to their dubious ethics."
 	antag_datum = /datum/antagonist/zizo_knight/squire
 	grant_lit_torch = TRUE

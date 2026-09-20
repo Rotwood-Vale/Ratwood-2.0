@@ -418,13 +418,13 @@
 			active_players++
 	return active_players
 
-/proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
+/proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE, poll_width = 350, poll_height = 150)
 	set waitfor = 0
 
 //	SEND_SOUND(M, 'sound/misc/roundstart.ogg') //Alerting them to their consideration
 	if(flashwindow)
 		window_flash(M.client)
-	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time))
+	switch(ignore_category ? askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time, Width=poll_width, Height=poll_height) : askuser(M,Question,"Please answer in [DisplayTimeText(poll_time)]!","Yes","No", StealFocus=0, Timeout=poll_time, Width=poll_width, Height=poll_height))
 		if(1)
 			to_chat(M, span_notice("Choice registered: Yes."))
 			if(time_passed + poll_time <= world.time)
@@ -446,7 +446,7 @@
 		else
 			candidates -= M
 
-/proc/pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
+/proc/pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, poll_width = 350, poll_height = 150)
 	var/list/candidates = list()
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
@@ -458,9 +458,9 @@
 	for(var/mob/dead/new_player/lobby_nerd in GLOB.player_list)
 		candidates += lobby_nerd
 
-	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates, poll_width, poll_height)
 
-/proc/pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+/proc/pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null, poll_width = 350, poll_height = 150)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
@@ -478,7 +478,8 @@
 			if(is_banned_from(M.ckey, list(jobbanType, ROLE_SYNDICATE)) || QDELETED(M))
 				continue
 
-		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
+		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow, poll_width, poll_height)
+		SEND_SOUND(M, 'sound/misc/updatebook.ogg')
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
@@ -607,25 +608,3 @@
 	if(!ckey || !istext(ckey))
 		return "some invalid"
 	return ckey
-
-/// Shows a sensory effect (IE: footstep, attack) to all mobs in range who are unconscious or blind.
-/proc/show_sensory_effect(atom/source, duration = 5, icon_state = "footstep", dir = null, ignore_self = FALSE)
-	var/turf/T = get_turf(source)
-	if (!isturf(T))
-		return FALSE
-
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_sensory_effect), source, T, duration, icon_state, dir, ignore_self), 0.5 SECONDS)
-
-/proc/display_sensory_effect(atom/source, turf/T, duration, icon_state, dir, ignore_self)
-	for(var/mob/M in range(7, T))
-		if(!M || (ignore_self && (M == source)))
-			continue
-
-		if(!M.stat && !is_blind(M)) // If the mob is not unconscious and not blind, we don't show the effect.
-			continue
-
-		var/image/I = image('icons/effects/fov/fov_effects.dmi', T, icon_state, SENSORY_LAYER)
-		I.plane = SENSORY_PLANE
-		if(dir)
-			I.dir = dir
-		flick_overlay(I, list(M.client), duration)

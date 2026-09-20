@@ -1,8 +1,11 @@
 /datum/charflaw/lawless
 	name = "Lawless"
 	desc = "I've always felt the rules were a bit more like guidelines than actual rules, and have accrued enough notoriety to have a bounty out on my head. (Taking this vice when on a class that already has a roundstart bounty will randomize your flaw instead.)"
+	var/attempts_left = 2
 
 /datum/charflaw/lawless/on_mob_creation(mob/H)
+	if(istype(H, /mob/living/carbon/human/dummy)) // DON'T TRY TO APPLY THIS FUCKING FLAW TO PREVIEW DUMMIES HOLY SHIT
+		return
 	addtimer(CALLBACK(src, PROC_REF(set_up), H), 30 SECONDS)
 
 /datum/charflaw/lawless/proc/set_up(mob/living/carbon/human/H)
@@ -16,6 +19,13 @@
 		to_chat(H, span_warning("The thrill of lawlessness is not enough anymore... fate renders my flaw to be: <b>[H.charflaw.name]</b>."))
 		return
 
+	// if our mob has no client, input will runtime
+	if(!H.client) // if our player somehow disconnected, give them another shot
+		if(attempts_left <= 0)
+			return // give up
+		attempts_left--
+		addtimer(CALLBACK(src, PROC_REF(set_up), H), 30 SECONDS)
+		return
 	var/face_known = input(H, "Is your face known to the authorities?", "Visbility Status") as anything in list ("They know my face", "They know only my features")
 	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See", "The Otavan Orthodoxy")
 	var/bounty_severity = input(H, "How severe are your crimes?", "Bounty Amount") as anything in list("Misdeed", "Harm towards lyfe", "Horrific atrocities")

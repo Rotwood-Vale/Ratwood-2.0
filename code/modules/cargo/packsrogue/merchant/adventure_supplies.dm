@@ -134,7 +134,7 @@
 					/obj/item/ration,
 				)
 
-/datum/supply_pack/rogue/adventure_supplies/rationpaper
+/datum/supply_pack/rogue/adventure_supplies/rollofbandages
 	name = "Roll of bandages"
 	cost = 25
 	contains = list(/obj/item/natural/bundle/cloth/bandage/full)
@@ -153,3 +153,13 @@
 	name = "Yurt Kit"
 	cost = 200
 	contains = list(/obj/item/tent_kit/yurt)
+
+/datum/supply_pack/rogue/adventure_supplies/sewingkit
+	name = "Sewing Kit"
+	cost = 40
+	contains = list(/obj/item/repair_kit)
+
+/datum/supply_pack/rogue/adventure_supplies/metalkit
+	name = "Armor Plate"
+	cost = 50
+	contains = list(/obj/item/repair_kit/metal)

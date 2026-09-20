@@ -1168,7 +1168,7 @@
 	icon_state = "borderfall";
 	pixel_y = 8
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/structure/roguemachine/scomm/r,
@@ -1591,7 +1591,7 @@
 	dir = 3;
 	pixel_x = 10
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /turf/open/floor/rogue/blocks/stonered,
@@ -6782,7 +6782,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/beach/forest/hamlet)
 "bAs" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/underdark)
 "bAu" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf,
@@ -9259,7 +9259,7 @@
 	locked = 1;
 	dir = 4
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town)
 "ccD" = (
 /obj/effect/decal/cobble/mossy,
@@ -12254,7 +12254,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_x = 32
 	},
 /obj/structure/fluff/railing/border{
@@ -12810,7 +12810,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "cRi" = (
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -15769,7 +15769,7 @@
 	endTurfX = 255;
 	endTurfY = 450
 	},
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "dzt" = (
 /obj/effect/decal/cleanable/blood{
@@ -16450,7 +16450,7 @@
 	endTurfX = 255;
 	endTurfY = 450
 	},
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "dHw" = (
 /obj/structure/roguewindow/openclose/reinforced{
@@ -16512,7 +16512,7 @@
 /obj/effect/landmark/mapGenerator/rogue/forest{
 	endTurfY = 450
 	},
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "dHW" = (
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
@@ -17692,7 +17692,7 @@
 /area/rogue/outdoors/town/grove)
 "dVu" = (
 /obj/structure/roguewindow/harem3,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/underdark)
 "dVy" = (
 /turf/open/floor/carpet/purple,
@@ -19585,7 +19585,7 @@
 /turf/open/water/bloody,
 /area/rogue/indoors/shelter/mountains/decap)
 "erd" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "ere" = (
 /obj/structure/table/wood/large_table/middle_west,
@@ -20369,7 +20369,7 @@
 /area/rogue/indoors/shelter)
 "ezf" = (
 /obj/effect/landmark/mapGenerator/rogue/underdark,
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "ezm" = (
 /obj/structure/fluff/railing/corner,
@@ -20601,7 +20601,7 @@
 	pixel_x = -11;
 	pixel_y = 14
 	},
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -22043,7 +22043,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/indoors/town/physician)
 "eSu" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -23734,7 +23734,7 @@
 	lockid = "tower";
 	name = "Tutoring Room"
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town/magician)
 "flj" = (
 /turf/open/floor/rogue/churchrough,
@@ -28364,7 +28364,7 @@
 /turf/open/floor/rogue/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "gtd" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "gtf" = (
 /obj/item/roguebin/water/gross,
@@ -29881,7 +29881,7 @@
 	pixel_x = 0;
 	pixel_y = 8
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town/physician)
 "gLt" = (
 /obj/structure/rack/rogue/shelf,
@@ -30211,7 +30211,7 @@
 "gPs" = (
 /obj/structure/spider/stickyweb,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "gPt" = (
 /obj/structure/table/wood/long_table/right,
@@ -34436,7 +34436,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/cave/scarymaze)
 "hKH" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32
 	},
 /obj/effect/decal/cobbleedge{
@@ -34833,7 +34833,7 @@
 /obj/structure/bars/passage/shutter{
 	redstone_id = "golgothaone"
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "hPA" = (
 /obj/structure/bed/rogue/shit,
@@ -39579,7 +39579,7 @@
 	endTurfX = 255;
 	endTurfY = 450
 	},
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "iSu" = (
 /obj/effect/decal/cobbleedge{
@@ -41316,7 +41316,7 @@
 /area/rogue/under/cave)
 "jmT" = (
 /obj/effect/spawner/roguemap/stump,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/woods/northeast)
 "jmV" = (
 /obj/structure/roguewindow/harem3{
@@ -43085,7 +43085,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cavewet/bogcaves/west)
 "jGm" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -46082,7 +46082,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
 "kmN" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/woods/north)
 "kmO" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -48573,7 +48573,7 @@
 /obj/machinery/light/small/broken{
 	dir = 4
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "kQR" = (
 /obj/machinery/light/rogue/torchholder{
@@ -49209,13 +49209,12 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/mountains)
 "kYG" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker4";
-	name = "locker IV"
+	name = "locker 4";
+	redstone_id = "bathlocker4"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "kYJ" = (
@@ -52461,7 +52460,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/town/basement/tavern)
 "lJN" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = 32;
 	name = "mercenary's guild"
 	},
@@ -53070,13 +53069,12 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town)
 "lQu" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker2";
-	name = "locker II"
+	name = "locker I";
+	redstone_id = "bathlocker2"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "lQG" = (
@@ -53515,7 +53513,7 @@
 /area/rogue/outdoors/rtfield/abandonedhotsprings)
 "lVY" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/gethsmane,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "lWa" = (
 /obj/effect/landmark/start/knight,
@@ -55952,7 +55950,7 @@
 /area/rogue/under/underdark/north)
 "mwH" = (
 /obj/structure/flora/roguegrass/water,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/woods/north)
 "mwL" = (
 /turf/closed/wall/mineral/rogue/wood,
@@ -57499,13 +57497,12 @@
 /turf/open/floor/rogue/AzureSand,
 /area/rogue/outdoors/rtfield)
 "mOr" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker3";
-	name = "locker III"
+	name = "locker 3";
+	redstone_id = "bathlocker3"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "mOv" = (
@@ -58070,13 +58067,12 @@
 /turf/closed/mineral/random/rogue/med,
 /area/rogue/indoors/cave/west)
 "mVr" = (
+/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
-	locked = 1;
-	lockid = "locker1";
-	name = "locker I"
+	name = "locker 2";
+	redstone_id = "bathlocker1"
 	},
-/obj/item/clothing/suit/roguetown/shirt/tunic/white,
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "mVw" = (
@@ -63544,27 +63540,11 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "ofz" = (
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker1";
-	name = "locker I key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker2";
-	name = "locker II key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker3";
-	name = "locker III key"
-	},
-/obj/item/roguekey{
-	icon_state = "brownkey";
-	lockid = "locker4";
-	name = "locker IV key"
-	},
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/roguekey/locker1,
+/obj/item/roguekey/locker2,
+/obj/item/roguekey/locker3,
+/obj/item/roguekey/locker4,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "ofA" = (
@@ -65972,7 +65952,7 @@
 /obj/effect/decal/cleanable/sigil/N,
 /obj/structure/fluff/statue/femalestatue/zizo{
 	pixel_y = 21;
-	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Progress guide us forth, out of this ever rotting world.' ";
+	desc = "A intrepetation of Zizo in statue form. The base reads 'Let the Lady of Ambition guide us forth, out of this ever rotting world.' ";
 	name = "Statue of Zizo"
 	},
 /turf/open/floor/rogue/hexstone,
@@ -66167,7 +66147,7 @@
 /obj/structure/roguewindow/harem3{
 	name = "Frosted Glass Window"
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/indoors/town/tavern)
 "oHW" = (
 /obj/structure/bars,
@@ -66891,7 +66871,7 @@
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 8
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/beach/forest/south)
 "oPr" = (
 /obj/effect/decal/cleanable/blood,
@@ -70577,7 +70557,7 @@
 /area/rogue/indoors/shelter)
 "pFk" = (
 /obj/structure/fluff/railing/corner/north_east,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/woods/north)
 "pFl" = (
 /obj/structure/bars/steel,
@@ -74803,7 +74783,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
 "qDJ" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/cave)
 "qDP" = (
 /obj/effect/decal/wood/herringbone{
@@ -78116,7 +78096,7 @@
 /area/rogue/under/cave/dukecourt)
 "rqe" = (
 /obj/structure/fluff/railing/corner/south_east,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/woods/north)
 "rqo" = (
 /obj/structure/vine,
@@ -80465,7 +80445,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/skeletoncrypt)
 "rQR" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/mountains)
 "rQU" = (
 /obj/structure/table/wood/poor,
@@ -80677,7 +80657,7 @@
 /area/rogue/under/cavewet/bogcaves/west)
 "rSP" = (
 /obj/structure/spider/stickyweb,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "rSR" = (
 /obj/structure/bed/rogue,
@@ -86075,7 +86055,7 @@
 	},
 /area/rogue/indoors/town/physician)
 "sZr" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue/under/underdark/north)
 "sZv" = (
 /obj/structure/fluff/railing/wood/north{
@@ -86424,7 +86404,7 @@
 "tdC" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/gethsmane,
 /obj/structure/spider/stickyweb,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "tdF" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -86751,7 +86731,7 @@
 /area/rogue/indoors/town)
 "thw" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/gethsmane,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "thy" = (
 /obj/structure/fermentation_keg/zagul,
@@ -88026,7 +88006,7 @@
 /area/rogue/under/underdark/north)
 "twL" = (
 /obj/structure/spider/stickyweb,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane)
 "twX" = (
 /obj/structure/flora/roguegrass/water/reeds,
@@ -88172,7 +88152,7 @@
 	layer = 2.81
 	},
 /obj/structure/table/wood/poor,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave)
 "tym" = (
 /obj/structure/spider/stickyweb,
@@ -90172,7 +90152,7 @@
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/outdoors/town/roofs)
 "tWm" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
 "tWq" = (
 /mob/living/simple_animal/hostile/rogue/deepone,
@@ -96450,7 +96430,7 @@
 /obj/item/roguebin/water{
 	pixel_y = 7
 	},
-/obj/structure/fluff/walldeco/customflag/rockhill{
+/obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -96935,7 +96915,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/outskirts)
 "vvV" = (
-/obj/structure/fluff/walldeco/sparrowflag{
+/obj/structure/fluff/walldeco/mercenaryflag{
 	pixel_y = -32
 	},
 /turf/open/floor/rogue/tile,
@@ -99738,7 +99718,7 @@
 /obj/machinery/light/small/broken{
 	dir = 4
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "weS" = (
 /obj/structure/bed/rogue/shit{
@@ -100357,7 +100337,7 @@
 /area/rogue/indoors/town)
 "wmP" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "wmQ" = (
 /obj/structure/bars/grille,
@@ -103633,7 +103613,7 @@
 	density = 0;
 	icon_state = "passage1"
 	},
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "wZp" = (
 /obj/structure/roguewindow/openclose/reinforced{
@@ -104569,7 +104549,7 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town)
 "xkb" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue)
 "xkc" = (
 /obj/effect/decal/remains/wolf,
@@ -330712,7 +330692,7 @@ pbm
 sDv
 eWt
 dmQ
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331014,7 +330994,7 @@ wkH
 sDv
 kcM
 biN
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331316,7 +331296,7 @@ ljJ
 sDv
 gnk
 biN
-hPO
+fZA
 fZA
 fZA
 fZA
@@ -331618,7 +331598,7 @@ eKr
 sDv
 gnk
 biN
-hPO
+fZA
 fZA
 fZA
 fZA

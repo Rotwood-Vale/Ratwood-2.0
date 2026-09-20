@@ -30,6 +30,13 @@
 	clotting_rate = 0.60		// Normally it's only 0.02, this is huge compared to that.
 	bypass_bloody_wound_check = TRUE	//We bypass this proc-checkfor fractures.
 
+//Ooze stuff start
+/datum/wound/fracture/can_apply_to_bodypart(obj/item/bodypart/affected)
+	if(isooze(affected.owner))
+		return FALSE
+	return ..()
+//Ooze stuff end
+
 /datum/wound/fracture/get_visible_name(mob/user)
 	. = ..()
 	if(passive_healing)
@@ -312,3 +319,6 @@
 	if(iscarbon(affected))
 		var/mob/living/carbon/carbon_affected = affected
 		carbon_affected.update_disabled_bodyparts()
+
+/datum/wound/fracture/no_bleed
+	bleed_rate = 0

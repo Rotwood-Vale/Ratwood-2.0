@@ -104,12 +104,9 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define istabaxi(A) (is_species(A, /datum/species/tabaxi))
 #define isvulp(A) (is_species(A, /datum/species/vulpkanin))
+#define isooze(A) (is_species(A, /datum/species/ooze)) //OV ADD
 #define isharpy(A) (is_species(A, /datum/species/harpy))
 #define isarachnid(A) (is_species(A, /datum/species/arachnid))
-
-
-//more carbon mobs
-#define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
@@ -199,3 +196,4 @@ GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are
 #define isimage(thing) (istype(thing, /image))
 #define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
 #define isappearance_or_image(thing) (isimage(thing) || (!ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing)))
+#define is_ooze_wound(A) (istype(A, /datum/wound/fracture) || istype(A, /datum/wound/slash) || istype(A, /datum/wound/puncture) || istype(A, /datum/wound/artery)) //Defines what kinds of wounds cause ooze limbs to melt.

@@ -292,15 +292,6 @@
 	icon_state ="scrolldarkred"
 	remarks = list("Ventos adversos..", "Terra sibilat..", "Lapides vetusti..")
 
-
-/obj/item/book/granter/spell/blackstone/aerosolize
-	name = "Scroll of Aerosolize"
-	spell = /obj/effect/proc_holder/spell/invoked/aerosolize
-	spellname = "Aerosolize"
-	icon_state ="scrolldarkred"
-	remarks = list("Lapides corrodunt..", "Spuma venenosa..", "Guttae flavescentes..")
-
-
 /obj/item/book/granter/spell/blackstone/guidance
 	name = "Scroll of Guidance"
 	spell = /obj/effect/proc_holder/spell/invoked/guidance

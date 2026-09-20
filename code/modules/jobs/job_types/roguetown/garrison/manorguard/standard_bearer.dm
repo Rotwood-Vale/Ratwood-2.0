@@ -37,6 +37,7 @@
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/splintlegs
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	beltl = /obj/item/rogueweapon/mace/cudgel
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
@@ -190,9 +191,9 @@
 
 /datum/status_effect/buff/standard_steady/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	ADD_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/buff/standard_steady/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, id)
+	REMOVE_TRAIT(owner, TRAIT_LIGHT_STEP, TRAIT_STATUS_EFFECT(id))
 

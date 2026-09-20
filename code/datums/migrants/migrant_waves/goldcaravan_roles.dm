@@ -8,7 +8,7 @@
 	greet_text = "The esteemed EA-Hasir owns your gold company, Promising only the finest quality gold in grimoria\
 	You've been sent with your caravan to sell golden riches and wonders- at a high price."
 
-/datum/advclass/merchant
+/datum/advclass/merchantEA
 	name = "EA Hasir-ian Merchant"
 	tutorial = "You were born into wealth, learning from before you could talk about the basics of mathematics. \
 	Counting coins is a simple pleasure for any person, but you've made it an art form. \
@@ -108,7 +108,7 @@
 	backr = /obj/item/rogueweapon/shield/wood
 	belt = /obj/item/storage/belt/rogue/leather
 	r_hand = /obj/item/rogueweapon/sword/falchion
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots

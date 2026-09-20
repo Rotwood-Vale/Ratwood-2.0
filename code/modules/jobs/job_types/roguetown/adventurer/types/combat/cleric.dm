@@ -1,4 +1,5 @@
 /datum/advclass/cleric
+	townie_contract_gate_exempt = TRUE
 	name = "Monk"
 	tutorial = "You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."
 	allowed_sexes = list(MALE, FEMALE)
@@ -10,8 +11,8 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	subclass_stats = list(
-		STATKEY_WIL = 3,
-		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -51,7 +52,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	pants = /obj/item/clothing/under/roguetown/tights/black
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	backl = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	belt = /obj/item/storage/belt/rogue/leather/rope
@@ -62,7 +63,7 @@
 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
 		)
-	
+
 	// Ascendant symbols go into the backpack, so you don't get insta-found out.
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -71,7 +72,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -149,8 +150,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -246,14 +245,14 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			cloak = /obj/item/clothing/cloak/psydontabard
 			if(H.mind)
-				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm")
+				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm","Volfskulle Bascinet")
 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
 				switch(helmet_choice)
 					if("Barbute")
@@ -264,9 +263,20 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 					if("Buckethelm")
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
+					if("Volfskulle Bascinet")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
+			if(H.mind)
+				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
+				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
+				switch(helmet_choice)
+					if("Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
+					if("Visored Barbute")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+					if("Buckethelm")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
 			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/noc)
 			cloak = /obj/item/clothing/cloak/templar/noc
@@ -320,7 +330,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
 				if("Crusader - Silver Weapon")
-					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Spear", "Silver Axe", "Silver Whip")
+					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Greatflail, 13 STR MIN", "Silver Spear", "Silver Axe", "Silver Whip")
 					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
 					switch(crusaderweapon_choice)
 						if("Silver Longsword")
@@ -333,6 +343,9 @@
 						if("Silver Flail")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							beltl = /obj/item/rogueweapon/flail/sflail/silver
+						if("Silver Greatflail, 13 STR MIN")
+							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/flail/peasantwarflail/silver
 						if("Silver Spear")
 							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							l_hand = /obj/item/rogueweapon/spear/silver
@@ -393,8 +406,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			wrists = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -489,7 +500,7 @@
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
 		if(/datum/patron/inhumen/graggar)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)	
+		if(/datum/patron/inhumen/baotha)
 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
@@ -563,8 +574,6 @@
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/undivided)
-			neck = /obj/item/clothing/neck/roguetown/psicross/undivided
 		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
@@ -690,6 +699,9 @@
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
 			mask = /obj/item/clothing/mask/rogue/xylixmask
+			if(HAS_TRAIT(H, TRAIT_PERMAMUTE))
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
+				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair)
 		if(/datum/patron/inhumen/zizo)
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe
 			head = /obj/item/clothing/head/roguetown/roguehood
@@ -773,7 +785,8 @@
 		TRAIT_PACIFISM,
 		TRAIT_EMPATH,
 		TRAIT_CRITICAL_RESISTANCE,
-		TRAIT_STEELHEARTED
+		TRAIT_STEELHEARTED,
+		TRAIT_SELF_AWARE
 	)
 	subclass_stats = list(
 		STATKEY_CON = 5,

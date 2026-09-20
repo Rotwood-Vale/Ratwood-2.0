@@ -149,6 +149,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .posh					{font-family: "Parisish", "Pterra"; font-size: 130%;}
 .etruscan				{font-family: "Feronia", "Pterra"; font-size: 100%;}
 .gronnic				{font-family: "Jorvik Informal", "Pterra"; font-size: 100%;}
+.hammerholdian			{font-family: "Hammerholdian", "Pterra"; font-size: 100%;}
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
 .felid					{font-family: "Rasyideen", Pterra; font-size: 120%;}
 .abyssal				{font-family: "Achilles", "Pterra"; font-size: 110%;}

@@ -61,6 +61,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dwarf/gnome,\
 	/datum/species/harpy,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 
 #define RACES_RESPECTED \
@@ -88,12 +89,14 @@ Balloon Alert / Floating Text defines
 	/datum/species/anthromorphsmall,\
 	/datum/species/kobold,\
 	/datum/species/tieberian,\
+	/datum/species/ooze\
 
 #define RACES_SHUNNED \
 	/datum/species/dullahan,\
 	/datum/species/halforc,\
 	/datum/species/goblinp,\
 	/datum/species/harpy,\
+	/datum/species/ooze\
 
 #define RACES_DESPISED \
 	/datum/species/dullahan,\
@@ -102,9 +105,12 @@ Balloon Alert / Floating Text defines
 	/datum/species/construct/metal,\
 	/datum/species/construct/metal/porcelain,\
 
-#define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)	//Truely no restrictions
+#define RACES_OOZE \
+	/datum/species/ooze,\
 
-#define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT)	//Allows all races except dallahun
+#define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Truely no restrictions
+
+#define ACCEPTED_RACES list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Allows all races except dallahun
 
 #define RACES_NO_CONSTRUCT list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED)
 
@@ -165,6 +171,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/lamia,\
 	/datum/species/dwarf/gnome,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 // Non-dwarf non-kobold non-goblin mostly
 #define NON_DWARVEN_RACE_TYPES list(\
@@ -190,6 +197,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 // Non-elf non-dwarf non-kobold non-goblin mostly
 #define HUMANLIKE_RACE_TYPES list(\
@@ -211,6 +219,7 @@ Balloon Alert / Floating Text defines
 	/datum/species/dullahan,\
 	/datum/species/lamia,\
 	/datum/species/arachnid,\
+	/datum/species/ooze\
 )
 #define ALL_CLERIC_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/malum, /datum/patron/divine/eora) // Currently unused.
 
@@ -219,6 +228,8 @@ Balloon Alert / Floating Text defines
 #define ALL_ACOLYTE_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/pestra, /datum/patron/divine/ravox, /datum/patron/divine/eora, /datum/patron/divine/xylix, /datum/patron/divine/necra, /datum/patron/divine/abyssor, /datum/patron/divine/malum) // Currently unused.
 
 #define ALL_DIVINE_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+
+#define ALL_GRONNIC_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha, /datum/patron/divine/abyssor, /datum/patron/divine/dendor)
 
 #define ALL_INHUMEN_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
 
@@ -232,6 +243,10 @@ Balloon Alert / Floating Text defines
 #define SOFTUNDERHIT "softunder" // This is just for the soft underarmors like gambesons and arming jackets so they can be worn with light armors that use the same sound like studded leather
 
 /proc/get_armor_sound(blocksound, blade_dulling)
+	if(islist(blocksound))
+		return pick(blocksound)
+	if(isfile(blocksound))
+		return blocksound
 	switch(blocksound)
 		if(PLATEHIT)
 			if(blade_dulling == BCLASS_CUT||blade_dulling == BCLASS_CHOP)
@@ -265,9 +280,6 @@ GLOBAL_LIST_EMPTY(accused)
 GLOBAL_LIST_EMPTY(confessors)
 
 GLOBAL_LIST_EMPTY(head_bounties)
-GLOBAL_LIST_EMPTY(board_viewers)
-GLOBAL_LIST_EMPTY(noticeboard_posts)
-GLOBAL_LIST_EMPTY(premium_noticeboardposts)
 GLOBAL_LIST_EMPTY(job_respawn_delays)
 GLOBAL_LIST_EMPTY(round_join_times)
 
@@ -337,13 +349,16 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BOGMASTER		"CAT_BOGMASTER"		// BOGMASTER class - Handles BOGMASTER class selector (weapons selection)
 #define CTAG_SHERIFF		"CAT_SHERIFF"		// SHERIFF class - Handles SHERIFF class selector (weapons selection)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
+#define CTAG_RETAINER		"CAT_RETAINER"		// Retainer class - Handles Retainer class selector
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
-#define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
+#define CTAG_CONSORT		"CAT_CONSORT"		// Consort subclasses.
+#define CTAG_SUITOR			"CAT_SUITOR"		// Suitor subclasses. Unmerged from CTAG_CONSORT
 #define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercenary class - Handles Mercenary class selector
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector
 #define CTAG_HEIR			"CAT_HEIR"			// Prince(cess) class - Handles Heir class selector
 #define CTAG_LORD			"CAT_LORD"			// Lord class - Handles Lord class selector
+#define CTAG_BARON			"CAT_BARON"			// Baron class - Handles Baron class selector
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
 #define CTAG_ROOKIE			"CAT_ROOKIE"		// Rookie class - Handles Rookie class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
@@ -354,6 +369,7 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_WASSOCIATE		"CTAG_WASSOCIATE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
 #define CTAG_GUILDSMASTER 	"CAT_GUILDSMASTER"	// Guildsmaster class - Handles Guildsmaster class selector
 #define CTAG_GUILDSMEN 		"CAT_GUILDSMEN"		// Guildsmen class - Handles Guildsmen class selector
+#define CTAG_GUILDAPPRENTICE "CAT_GUILDAPPRENTICE"	// Guild apprentice class - baby guildsmen, meant to support them.
 #define CTAG_NIGHTMAIDEN	"CAT_NIGHTMAIDEN"	// Bathhouse Attendant's aesthetic choices.
 #define CTAG_PRISONER 		"CAT_PRISONER"
 
@@ -401,6 +417,10 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BATHMOM		"CAT_BATHMOM"
 #define CTAG_TAPSTER		"CAT_TAPSTER"
 #define CTAG_LUNATIC		"CAT_LUNATIC"
+
+#define CTAG_SLAVER			"CAT_SLAVER"
+#define CTAG_SLAVE			"CAT_SLAVE"
+
 /*
 	Defines for the triumph buy datum categories
 */

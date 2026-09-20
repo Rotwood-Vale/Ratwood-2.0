@@ -203,7 +203,7 @@
 	if(!fexists("data/player_saves/[copytext(theykey,1,2)]/[theykey]/preferences.sav"))
 		to_chat(src, span_boldwarning("User does not exist."))
 		return
-	var/amt2change = input("How much to modify the PQ by? (20 to -20, or 0 to just add a note)") as null|num
+	var/amt2change = input("How much to modify the PQ by? ([!check_rights(R_ADMIN,0) ? "-20 to 20, or " : ""]0 to just add a note)") as null|num
 	if(!check_rights(R_ADMIN,0))
 		amt2change = CLAMP(amt2change, -20, 20)
 	var/raisin = stripped_input("State a short reason for this change", "Game Master", "", null)

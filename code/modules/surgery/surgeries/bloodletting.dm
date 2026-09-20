@@ -12,7 +12,7 @@
 		BODY_ZONE_R_LEG,
 		BODY_ZONE_L_LEG,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 
 
 /datum/surgery_step/cutvein
@@ -27,7 +27,7 @@
 		BODY_ZONE_R_LEG,
 		BODY_ZONE_L_LEG,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 5 SECONDS
 	surgery_flags = SURGERY_CLAMPED
 	surgery_flags_blocked = SURGERY_CONSTRUCT
@@ -62,7 +62,7 @@
 		BODY_ZONE_R_LEG,
 		BODY_ZONE_L_LEG,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 6.4 SECONDS
 	surgery_flags = SURGERY_CUTVEIN
 	surgery_flags_blocked = SURGERY_CONSTRUCT
@@ -82,5 +82,5 @@
 		span_notice("[user] forces blood out [target]'s vein in [parse_zone(target_zone)]!"),
 		span_notice("[user] forces blood out [target]'s vein in [parse_zone(target_zone)]!"))
 	target.adjustToxLoss (-25, 0)
-	target.blood_volume -=50
+	target.adjust_blood_volume(-(50))
 	return TRUE

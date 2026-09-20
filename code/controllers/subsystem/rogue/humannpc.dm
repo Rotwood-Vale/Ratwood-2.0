@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(humannpc)
 	name = "humannpc"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
-	priority = 50
+	priority = FIRE_PRIORITY_NPC_ACTIONS
 	var/list/processing = list()
 	var/list/currentrun = list()
 	processing_flag = PROCESSING_HUMANNPC

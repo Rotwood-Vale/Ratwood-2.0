@@ -492,7 +492,7 @@
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/indoors)
 "sK" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/tomb/cave/wet)
 "sN" = (
@@ -553,7 +553,7 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/tomb/cave/wet)
 "tT" = (
-/obj/structure/fluff/walldeco/sparrowflag,
+/obj/structure/fluff/walldeco/mercenaryflag,
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/tomb/indoors)
 "ue" = (
@@ -1166,7 +1166,7 @@
 "Mu" = (
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/item/rogueweapon/tongs,
-/obj/item/rogueweapon/hammer,
+/obj/item/rogueweapon/hammer/iron,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/tomb/cave/spider)
 "MS" = (

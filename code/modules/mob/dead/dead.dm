@@ -47,8 +47,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	loc = destination
 	Moved(oldloc, NONE, TRUE)
 
-
-/mob/dead/new_player/proc/lobby_refresh()
+/mob/dead/new_player/proc/lobby_refresh(actor_list)
 	set waitfor = 0
 	if(!client)
 		return
@@ -63,11 +62,15 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(!winexists(client, "lobby_window"))
 		open_lobby()  // creates window + browser control
 		sleep(0)
+		if(!client) // client vanished while we slept
+			return
 	var/lobby_visible = winget(client, "lobby_window", "is-visible")
 	if(lobby_visible == "false") // winget returns a string...
 		client << browse(null, "window=lobby_window")
 		open_lobby()
 		sleep(0)
+		if(!client) // client vanished while we slept
+			return
 
 	// UPDATE TIMER -- Script in html\lobby\lobby.html / .js
 	var/timer_text
@@ -93,61 +96,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	else
 		bonus_html = span_highlight("No bonus! Ready up!")
 	client << output(bonus_html, "lobby_window.browser:update_ready_bonus")
-	var/list/dat = list()
-	var/list/ready_players_by_job = list()
-	var/list/wanderer_jobs = list(
-		"Adventurer",
-		"Wretch",
-		"Court Agent"
-	)
-	dat += "<center><b>Classes:</b></center><hr>"
-	for (var/mob/dead/new_player/player in GLOB.player_list)
-		if (player.client?.ckey in GLOB.hiderole)
-			continue
-		var/job_choice = player.client?.prefs?.job_preferences
-		if (job_choice)
-			for (var/job_name in job_choice)
-				if (job_choice[job_name] == JP_HIGH)
-					if (job_name in wanderer_jobs)
-						job_name = "Wanderer"
-					if (player.ready == PLAYER_READY_TO_PLAY)
-						if (!ready_players_by_job[job_name])
-							ready_players_by_job[job_name] = list()
-						ready_players_by_job[job_name] += player.client.prefs.real_name
-						break
-
-	var/list/job_list_by_department = list( // Oorah Key value pair
-		"Noblemen" = list(), // High nobility
-		"Courtiers" = list(), // Low Nobility
-		"Garrison" = list(), // Retinue
-		"Church" = list(), // Clergy
-		"Inquisition" = list(), // Inq
-		"Yeomen" = list(), // Workers
-		"Guildsmen" = list(), // Guildsmen
-		"Peasants" = list(), // Pheasants (the birb)
-		"Sidefolk" = list(), // Side strugglers
-		"Wanderers" = list(), // Nobodies.
-		"Tribe" = list(), // Nobodies.
-	)
-	for(var/job_name in ready_players_by_job)
-		var/datum/job/J = SSjob.GetJob(job_name)
-		var/key
-		if(!J)
-			key = SSjob.bitflag_to_department(WANDERER, TRUE)
-		else
-			key = SSjob.bitflag_to_department(J.department_flag)
-
-		var/list/job_players = ready_players_by_job[job_name]
-		job_list_by_department[key] += "<B>[job_name]</B> ([job_players.len]) - [job_players.Join(", ")]<br>"
-
-	for(var/department in job_list_by_department)
-		var/list/jobs_under_department = job_list_by_department[department]
-		if(jobs_under_department.len)
-			sortTim(jobs_under_department, cmp = GLOBAL_PROC_REF(cmp_text_asc))
-			dat += "<h3><center><font color='[JCOLOR_BY_DEPARTMENT[department]]'>----- [department] -----</font></center></h3>"
-			dat += jobs_under_department
-
-	client << output(dat.Join(), "lobby_window.browser:update_jobs")
+	client << output(actor_list, "lobby_window.browser:update_jobs")
 
 /mob/dead/new_player/proc/open_lobby()
 	if (!client)

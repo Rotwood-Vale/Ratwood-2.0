@@ -68,9 +68,9 @@
 	reqs = list(/obj/item/natural/stone = 4, /obj/item/ingot/gold)
 	craftdiff = 5
 
-/datum/crafting_recipe/roguetown/structure/statue/grand/zizo
-	name = "statue (grand, Zizo)"
-	result = /obj/structure/fluff/statue/zizo
+/datum/crafting_recipe/roguetown/structure/statue/grand/valmora
+	name = "statue (grand, Valmora)"
+	result = /obj/structure/fluff/statue/valmora
 
 /datum/crafting_recipe/roguetown/structure/statue/grand/astrata
 	name = "statue (grand, Astrata)"

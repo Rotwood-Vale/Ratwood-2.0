@@ -210,3 +210,104 @@
 2026-06-13:
   Xander3359:
   - rscadd: Calling out for yielding will now put up a prompt to nearby people.
+2026-06-17:
+  SneakySlinky:
+  - code_imp: adds one line to jobs.dm that makes assassin able to be picked in latejoin
+      (provided there is slots)
+2026-06-18:
+  Jamdrawers:
+  - bugfix: fixes wretches showing as Heretics when they should be Outlaws
+  Yuckuza:
+  - bugfix: Fixed Drider simplemobs being untameable and unable to be food healed.
+      Feed your new best friend some meat and truffles.
+  envoyin:
+  - balance: Pioneer given +1 STR, -1 LCK, and -1 CON compared to its original stats
+  - balance: Pioneer given bow and crossbow skills alongside stuff to buy in the shop
+  - balance: Pioneer given apprentice smelting
+  - balance: Pioneer given a steel gorget in its shop
+  - balance: "Certain pioneer items made cheaper\n:cl:\n<!-- Both :cl:'s are required\
+      \ for the changelog to work! You can put your name to the right of the first\
+      \ :cl: if you want to overwrite your GitHub username as author ingame. -->\n\
+      <!-- You can use multiple of the same prefix (they're only used for the icon\
+      \ ingame) and delete the unneeded ones. Despite some of the tags, changelogs\
+      \ should generally represent how a player might be affected by the changes rather\
+      \ than a summary of the PR's contents. -->\n<!-- By contributing to this codebase,\
+      \ you confirm that any code and sprites you provide are legal to share and will\
+      \ be licensed under the terms specified in README.md \u2014 AGPLv3 for code\
+      \ and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that\
+      \ the project maintainers are under no obligation to remove any materials that\
+      \ do not violate these licenses. -->"
+2026-06-20:
+  Rayforx:
+  - balance: Juvenile size increases to 0.75 the size of a normal man eater.
+  Skyglazer:
+  - rscadd: Gives the Estoc a special attack, in line with other weapons.
+  The-Sun-In-Splendour:
+  - balance: reworked rituos so that it more progressively makes the user a stronger
+      spellcaster over time
+  WolfOrion:
+  - bugfix: I forgot that scissoring was a thing, now bedbreaker applies to it.
+  vitoras228322-ai:
+  - rscadd: Added oozes, aka a new race of amorphous goop-people. Kind of WIP still.
+2026-06-21:
+  Lokaka21:
+  - rscadd: Added the Loose Straps vice! It makes your armor fall off if it breaks!
+  ophaq:
+  - rscadd: Rebrands Valleygirl Accent to 'Gallant Accent' and reworks it. We're lyke,
+      so back.
+  - bugfix: Fixes Xylix slip miracles not actually slipping properly.
+  - balance: Shortens slip time on Xylix miracles so it does not stun you for a long
+      time on the floor like soap did.
+2026-06-22:
+  AllCorruptingWyrm:
+  - rscadd: Deadbolt doors to the Church balcony
+  - rscadd: Items hid behind locked pieces of furniture
+  - rscadd: A hearth too in the infirmary to make healing less miserable
+  Jamdrawers:
+  - bugfix: fixed missing deserttown spawnpoints
+  - spellcheck: translates some parts of the map that was ported from a russian speaking
+      server
+  SneakySlinky:
+  - balance: Removed the target.death() from 1001+ value churn wealthy
+  ophaq:
+  - bugfix: Fixes Gallant Accent not working.
+2026-06-23:
+  Jamdrawers:
+  - bugfix: bathhouse lockers keys fixed
+  - bugfix: 'deserttown: fixes a missing wall and a missing hatch. Also fixes a missing
+      texture and adds some grass'
+2026-06-24:
+  567Turtle:
+  - bugfix: Tiger Markings are now drawn correctly on Feminine bodies.
+  EvenInDeathIStillServe:
+  - rscadd: You can export your preferences/characters using the "Export Preferences"
+      verb in the "OOC" panel. It will be saved as a file on your computer.
+  RadiantFlash7:
+  - code_imp: Admin debug message removed
+2026-06-25:
+  567Turtle:
+  - bugfix: Fixes stripes/tiger stripes markings for real this time.
+  Jamdrawers:
+  - bugfix: fixes keycontrol for the tavern key vendor
+2026-06-26:
+  Xander3359:
+  - rscadd: Refugees can pick minstrel
+2026-06-27:
+  The-Sun-In-Splendour:
+  - spellcheck: ancient alloy warhammer -> ancient warhammer
+2026-06-28:
+  567Turtle:
+  - bugfix: Stripes. . . For the third time !
+  The-Sun-In-Splendour:
+  - bugfix: lacrima's "is dead" check
+2026-06-29:
+  John-Dang:
+  - rscadd: Added new descriptions to the statues! Little bits of flavor! Find them
+      in-game!
+  Xaytan:
+  - refactor: refactored heart on_life
+  - code_imp: added early exit to sleep stamina healing.
+2026-06-30:
+  Xander3359:
+  - balance: Rontz rings no longer show up on examine
+  - qol: Bandit rings now mention in the description that they can be disguised

@@ -64,7 +64,6 @@
 	boobed = TRUE
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
-	sellprice = 1
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -81,6 +80,9 @@
 	. = ..()
 	if(attachment_component)
 		AddComponent(attachment_component)
+
+/obj/item/clothing/suit/roguetown/armor/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/get_examine_name(mob/user)
 	var/default_examine_name = ..()

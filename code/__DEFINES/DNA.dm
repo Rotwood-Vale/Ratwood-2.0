@@ -112,6 +112,7 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
+#define INVISBLOOD		8
 /// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9
@@ -191,4 +192,14 @@
 #define MIN_BREASTS_SIZE 0
 #define MAX_BREASTS_SIZE 12
 #define DEFAULT_BREASTS_SIZE 3
+#define MIN_JIGGLE_BREASTS_SIZE 1
+#define BREAST_JIGGLE_CYCLE (0.8 SECONDS)
+#define BREAST_JIGGLE_MIN_DURATION 8
+#define BREAST_JIGGLE_MAX_DURATION 100
+#define BREAST_JIGGLE_FREE_DURATION 50
+#define BREAST_JIGGLE_STAMINA_PER_SECOND 0.83
+#define BREAST_JIGGLE_ENDLESS_STAMINA_MULT 3
+#define BREAST_JIGGLE_HOP_HEIGHT 4
+#define BREAST_JIGGLE_ENDLESS 0
+#define BREAST_JIGGLE_PROMPT_STEP (BREAST_JIGGLE_CYCLE * 2)
 

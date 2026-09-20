@@ -133,8 +133,7 @@
 	var/atom/drop_location = gutted.drop_location()
 	var/list/spilled_organs = list()
 	for(var/obj/item/organ/organ as anything in gutted.internal_organs)
-		var/org_zone = check_zone(organ.zone)
-		if(org_zone != BODY_ZONE_CHEST)
+		if(organ.zone_checked != BODY_ZONE_CHEST)
 			continue
 		if(!(organ.slot in affected_organs))
 			continue

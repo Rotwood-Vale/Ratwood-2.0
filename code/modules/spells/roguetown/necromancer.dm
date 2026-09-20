@@ -2,7 +2,9 @@
 	name = "Bone Chill"
 	desc = "Chill the target with necrotic energy. Severely reduces speed and weakens physical prowess."
 	cost = 3
-	overlay_state = "profane"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "bone_chill"
 	releasedrain = 30
 	chargetime = 5
 	range = 7
@@ -43,7 +45,9 @@
 
 /obj/effect/proc_holder/spell/invoked/eyebite
 	name = "Eyebite"
-	overlay_state = "raiseskele"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "eye_bite"
 	releasedrain = 30
 	chargetime = 15
 	range = 7
@@ -69,11 +73,87 @@
 	target.blur_eyes(10)
 	return TRUE
 
+
+/obj/effect/proc_holder/spell/invoked/raise_undead_guard
+	name = "Conjure Undead"
+	desc = "Raises an undead guard in your servitude."
+	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "skeleton"
+	range = 7
+	sound = list('sound/magic/magnet.ogg')
+	releasedrain = 40
+	chargetime = 3 SECONDS
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokegen
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/arcane
+	recharge_time = 30 SECONDS
+	hide_charge_effect = TRUE
+	var/cabal_affine = FALSE
+	var/is_summoned = FALSE
+
+/obj/effect/proc_holder/spell/invoked/raise_undead_guard/cast(list/targets, mob/living/user)
+	..()
+
+	var/turf/T = get_turf(targets[1])
+	if(!isopenturf(T))
+		to_chat(user, span_warning("The targeted location is blocked. The summon fails to come forth."))
+		return FALSE
+
+	// Find bones or bone bundle in user's hands
+	var/obj/item/sacrifice
+	for(var/obj/item/I in user.held_items)
+		if(istype(I, /obj/item/natural/bundle/bone) || istype(I, /obj/item/natural/bone))
+			sacrifice = I
+			break
+
+	if(!sacrifice)
+		to_chat(user, span_warning("I require some bones in a free hand."))
+		revert_cast()
+		return FALSE
+
+	// Handle bone bundles (stacked bones)
+	if(istype(sacrifice, /obj/item/natural/bundle/bone))
+		var/obj/item/natural/bundle/bone/B = sacrifice
+		if(B.amount < 4)
+			to_chat(user, span_warning("You need at least 4 bones to raise a skeleton."))
+			revert_cast()
+			return FALSE
+
+		B.amount -= 4
+		if(B.amount <= 0)
+			qdel(B)
+
+	// Handle single loose bones
+	else if(istype(sacrifice, /obj/item/natural/bone))
+		to_chat(user, span_warning("A single bone isn't enough to raise a skeleton! You need a bundle of at least four."))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/species/skeleton/npc/summoned/S = new /mob/living/carbon/human/species/skeleton/npc/summoned(T)
+
+	qdel(sacrifice)
+	S.caster = user
+	if(user.faction)
+		S.faction |= list("[user.mind.current.real_name]_faction")
+	S.set_command("follow", user)
+
+	T.visible_message(span_notice("<b>[user]</b> raises a skeleton from the ground!"))
+	S.receive_command_text("rises and bows to its master.")
+	return TRUE
+
+
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation
 	name = "Raise Lesser Undead Formation"
 	desc = "Raises a formation of simple minded undead skeletons. Inferior shamblers. Husks in everything but zeal."
 	clothes_req = FALSE
-	overlay_state = "animate"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "skeleton_formation"
 	range = 7
 	sound = list('sound/magic/magnet.ogg')
 	releasedrain = 40
@@ -140,82 +220,13 @@
 	to_spawn = 3
 
 
-/obj/effect/proc_holder/spell/invoked/raise_undead_guard
-	name = "Conjure Undead"
-	desc = "Raises an undead guard in your servitude."
-	clothes_req = FALSE
-	overlay_state = "animate"
-	range = 7
-	sound = list('sound/magic/magnet.ogg')
-	releasedrain = 40
-	chargetime = 3 SECONDS
-	warnie = "spellwarning"
-	no_early_release = TRUE
-	charging_slowdown = 1
-	chargedloop = /datum/looping_sound/invokegen
-	gesture_required = TRUE
-	associated_skill = /datum/skill/magic/arcane
-	recharge_time = 30 SECONDS
-	hide_charge_effect = TRUE
-	var/cabal_affine = FALSE
-	var/is_summoned = FALSE
-
-/obj/effect/proc_holder/spell/invoked/raise_undead_guard/cast(list/targets, mob/living/user)
-	..()
-
-	var/turf/T = get_turf(targets[1])
-	if(!isopenturf(T))
-		to_chat(user, span_warning("The targeted location is blocked. The summon fails to come forth."))
-		return FALSE
-
-	// Find bones or bone bundle in user's hands
-	var/obj/item/sacrifice
-	for(var/obj/item/I in user.held_items)
-		if(istype(I, /obj/item/natural/bundle/bone) || istype(I, /obj/item/natural/bone))
-			sacrifice = I
-			break
-
-	if(!sacrifice)
-		to_chat(user, span_warning("I require some bones in a free hand."))
-		revert_cast()
-		return FALSE
-
-	// Handle bone bundles (stacked bones)
-	if(istype(sacrifice, /obj/item/natural/bundle/bone))
-		var/obj/item/natural/bundle/bone/B = sacrifice
-		if(B.amount < 4)
-			to_chat(user, span_warning("You need at least 4 bones to raise a skeleton."))
-			revert_cast()
-			return FALSE
-
-		B.amount -= 4
-		if(B.amount <= 0)
-			qdel(B)
-
-	// Handle single loose bones
-	else if(istype(sacrifice, /obj/item/natural/bone))
-		to_chat(user, span_warning("A single bone isn’t enough to raise a skeleton! You need a bundle of at least four."))
-		revert_cast()
-		return FALSE
-
-	var/mob/living/carbon/human/species/skeleton/npc/summoned/S = new /mob/living/carbon/human/species/skeleton/npc/summoned(T)
-
-	qdel(sacrifice)
-	S.caster = user
-	if(user.faction)
-		S.faction |= list("[user.mind.current.real_name]_faction")
-	S.set_command("follow", user)
-
-	T.visible_message(span_notice("<b>[user]</b> raises a skeleton from the ground!"))
-	S.receive_command_text("rises and bows to its master.")
-	return TRUE
-
-
 /obj/effect/proc_holder/spell/invoked/tame_undead
-	name = "Tame Undead"
+	name = "Tame Deadite"
 	desc = "Oftentymes, husks and shamblers walk aimlessly - uncertain of their future. Befriends the undead \
 	Requires the target to be within four tiles. Works on undead animals, too, and they will heed your command."
-	overlay_state = "wolf_head_undead"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "tame_deadite"
 	range = 4
 	warnie = "sydwarning"
 	recharge_time = 60 SECONDS
@@ -277,6 +288,8 @@
 /obj/effect/proc_holder/spell/invoked/gravemark
 	name = "Gravemark"
 	desc = "Adds or removes a target from the list of allies exempt from your undead's aggression."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "gravemark"
 	range = 7
 	warnie = "sydwarning"
@@ -314,8 +327,10 @@
 	return FALSE
 
 /obj/effect/proc_holder/spell/invoked/command_undead
-	name = "Command Undead"
+	name = "Command Deadite"
 	desc = "Commands skeletons. Cast on turf to head in that direction ignoring all else. Cast on self to command it to follow, cast on target to attack them, Cast on a lesser skeleton to set to idle-aggressive,"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "ZIZO"
 	warnie = "sydwarning"
 	range = 8

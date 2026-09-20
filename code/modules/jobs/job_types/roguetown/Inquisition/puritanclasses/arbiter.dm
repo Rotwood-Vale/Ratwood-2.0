@@ -9,6 +9,7 @@
 	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -17,7 +18,8 @@
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
-		TRAIT_OUTLANDER
+		TRAIT_OUTLANDER,
+		TRAIT_NOBLE
 		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
 	subclass_stats = list(
 		STATKEY_CON = 3,

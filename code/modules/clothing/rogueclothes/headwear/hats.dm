@@ -84,6 +84,17 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = 50
 
+/obj/item/clothing/head/roguetown/loadoutpapakha
+	name = "Soft-sided papakha"
+	icon_state = "papakha"
+	item_state = "papakha"
+	resistance_flags = FIRE_PROOF //doesnt spawn, only a cosmetic loadout item. Keep the swag.
+	nudist_approved = TRUE
+	salvage_result = /obj/item/natural/fur
+	salvage_amount = 1
+	cold_protection = HEAD
+	min_cold_protection_temperature = 50
+
 /obj/item/clothing/head/roguetown/hatblu
 	name = "fur hat"
 	desc = "A blue hat lined with fur."
@@ -151,7 +162,7 @@
 /obj/item/clothing/head/roguetown/chaperon/noble/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -184,7 +195,7 @@
 	icon_state = "chap_alt"
 	item_state = "chap_alt"
 	color = "#7dcea0"
-
+	
 /obj/item/clothing/head/roguetown/chaperon/greyscale/elder
 	name = "elder's chaperon hat"
 	color = "#007fff"
@@ -203,7 +214,8 @@
 	item_state = "armingcap"
 	flags_inv = HIDEEARS
 	nudist_approved = TRUE
-	salvage_result = /obj/item/natural/hide/cured
+	salvage_result = /obj/item/natural/cloth
+	fiber_salvage = FALSE
 	//dropshrink = 0.75
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -229,6 +241,7 @@
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
 	nudist_approved = TRUE
+	fiber_salvage = FALSE
 
 /obj/item/clothing/head/roguetown/headband/bloodied
 	name = "bloodied headband"
@@ -264,6 +277,7 @@
 	icon_state = "headband"
 	color = "#bfb8a9"
 	resistance_flags = FIRE_PROOF
+	fiber_salvage = TRUE
 	armor = ARMOR_SPELLSINGER //Highest preset protection value for head armor, without leaving people unable to sleep with the headband on. Should be appropriate for the Monk's role.
 	body_parts_covered = HEAD|HAIR|EARS
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity.
@@ -344,6 +358,7 @@
 	sellprice = 5
 	nudist_approved = TRUE
 	dropshrink = null
+	fiber_salvage = FALSE
 
 /obj/item/clothing/head/roguetown/hennin
 	name = "hennin"
@@ -430,6 +445,7 @@
 	desc = "Keeps the hair in check, and looks proper."
 	icon_state = "shawl"
 	nudist_approved = TRUE
+	fiber_salvage = FALSE
 
 /obj/item/clothing/head/roguetown/articap
 	name = "artificer's cap"
@@ -447,7 +463,7 @@
 
 /obj/item/clothing/head/roguetown/wizhat/random/Initialize(mapload)
 	icon_state = pick("wizardhatred", "wizardhatyellow", "wizardhatgreen", "wizardhat")
-	..()
+	return ..()
 
 /obj/item/clothing/head/roguetown/witchhat
 	name = "witch hat"
@@ -495,6 +511,7 @@
 	nudist_approved = TRUE // this gets an exception for being ARMOR_CLOTHING but why does it prevent crits???
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
+	sewrepair = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"
@@ -541,7 +558,7 @@
 /obj/item/clothing/head/roguetown/veiled/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -611,4 +628,5 @@
 	color = "#262927"
 	detail_color = "#FFFFFF"
 	altdetail_color = "#9c2525"
-	
+
+

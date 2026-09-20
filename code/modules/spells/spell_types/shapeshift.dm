@@ -62,8 +62,7 @@
 			Restore(M)
 		else if(shapeshift_type)
 			if(shapeshift_type == /mob/living/simple_animal/hostile/retaliate/gaseousform)
-				spawn(100)
-					Restore(M)
+				addtimer(CALLBACK(src, PROC_REF(Restore), M), 100)
 			Shapeshift(M)
 			return TRUE
 	return
@@ -101,6 +100,11 @@
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
+
+	if(istype(H.shape, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
+		to_chat(H.shape, span_warning("You have no strength to manipulate your form."))
+		return
+
 
 	H.restore()
 

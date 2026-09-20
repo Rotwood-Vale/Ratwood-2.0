@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/naledi
 	name = "Naledi"
-	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) for centuries. Their homeland was almost \
-	utterly destroyed with the Ascension of Baotha. It is said that the first magics were born here."
+	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) on their island for centuries. Their homeland \
+	was sundered by Zizo and all but finished off by the Ascension of Baotha about 100 yils ago. It is said that the first magics were born here."
 	origin_title = "Naledi"
 	origin_language = /datum/language/celestial
 	map_x = 514
@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	once made up the see of seasons. Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
 	petty kingdoms, or Jarldoms, all loosely agreeing to the will of the Ringbearer, Lord of the Witan."
 	origin_title = "Hammerhold"
-	origin_language = /datum/language/dwarvish
+	origin_language = /datum/language/hammerholdian
 	map_x = 90
 	map_y = 132
 

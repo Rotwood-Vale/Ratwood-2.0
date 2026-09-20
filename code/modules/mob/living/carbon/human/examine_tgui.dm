@@ -30,6 +30,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ExaminePanel")
+		ui.set_autoupdate(FALSE) // this would not really ever need to autoupdate aside from maybe obscured stuff, but just re-examine at that point
 		ui.open()
 
 /datum/examine_panel/ui_data(mob/user)
@@ -46,6 +47,8 @@
 	var/nsfw_ooc_extra_image = ""
 	var/char_name
 	var/song_url
+	var/song_title
+	var/song_artist
 	var/has_song = FALSE
 	var/is_vet = FALSE
 	var/is_naked = FALSE
@@ -63,6 +66,8 @@
 		ooc_notes_nsfw += holder.erpprefs
 		char_name = holder.name
 		song_url = holder.ooc_extra
+		song_title = holder_human.song_title
+		song_artist = holder_human.song_artist
 		is_vet = holder.check_agevet()
 		if(!obscured)
 			headshot += holder.headshot_link
@@ -88,6 +93,8 @@
 		nsfw_ooc_extra_image = pref.nsfw_ooc_extra_img
 		char_name = pref.real_name
 		song_url = pref.ooc_extra
+		song_title = pref.song_title
+		song_artist = pref.song_artist
 		if(viewing)
 			is_vet = viewing.check_agevet()
 		if(!headshot)
@@ -125,6 +132,8 @@
 		"is_vet" = is_vet,
 		"is_naked" = is_naked,
 		"nsfw_examine_always" = nsfw_examine_always,
+		"song_title" = has_song ? song_title : null,
+		"song_artist" = has_song ? song_artist : null,
 	)
 	return data
 

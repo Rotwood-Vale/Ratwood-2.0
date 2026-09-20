@@ -78,6 +78,8 @@
 /obj/effect/proc_holder/spell/self/abyssor_wind
 	name = "Second Wind"
 	desc = "Rise if fallen, and regain some of your stamina."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssor_wind"
 	releasedrain = 10
 	chargedrain = 0
@@ -85,8 +87,8 @@
 	sound = 'sound/magic/abyssor_splash.ogg'
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	invocations = list("What is drowned shall rise anew!")
-	invocation_type = "shout"
+	invocations = list("is lifted up by spectral waves!")
+	invocation_type = "emote"
 	recharge_time = 120 SECONDS
 	devotion_cost = 30
 	miracle = TRUE
@@ -97,10 +99,13 @@
 		revert_cast()
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.IsStun() || H.IsImmobilized() || H.IsOffBalanced())
+	if(H.IsStun()||H.IsParalyzed())
 		to_chat(user, span_warning("I am too incapacitated!"))
 		revert_cast()
 		return FALSE
+	H.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
+	H.remove_status_effect(/datum/status_effect/incapacitating/off_balanced)
+	H.remove_status_effect(/datum/status_effect/incapacitating/immobilized)
 	var/msg = span_warning("[user] ")
 	if(H.resting)
 		H.set_resting(FALSE, FALSE)
@@ -116,6 +121,8 @@
 /obj/effect/proc_holder/spell/invoked/aquatic_compulsion
 	name = "Aquatic Compulsion"
 	desc = "Compel a fish to leap out from targeted water tile and towards you."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "aqua"
 	releasedrain = 15
 	chargedrain = 0
@@ -303,6 +310,8 @@
 /obj/effect/proc_holder/spell/invoked/call_dreamfiend
 	name = "Summon Dreamfiend"
 	desc = "Summons a Dreamfiend to hound your target."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "dreamfiend"
 	range = 7
 	no_early_release = TRUE
@@ -386,6 +395,8 @@
 /obj/effect/proc_holder/spell/invoked/abyssal_infusion
 	name = "Abyssal Infusion"
 	desc = "Consumes an anglerfish to bless target with ability to call upon Abyssal Strength."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssal_infusion"
 	range = 7
 	no_early_release = TRUE
@@ -404,11 +415,6 @@
 
 	if(!istype(target, /mob/living/carbon/human) || target.mind == null)
 		to_chat(user, span_warning("This spell only works on creatures capable of dreaming!"))
-		revert_cast()
-		return FALSE
-
-	if(target == user)
-		to_chat(user, span_warning("You must maintain the connection to the dreamfiend from a safe spiritual distance or risk being consumed yourself!"))
 		revert_cast()
 		return FALSE
 
@@ -442,6 +448,8 @@
 /obj/effect/proc_holder/spell/invoked/abyssal_strength
 	name = "Abyssal Strength"
 	desc = "Buffs all your stats besides fortune, and lowers your perception."
+	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
+	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "abyssal_strength1"
 	range = 7
 	no_early_release = TRUE

@@ -47,6 +47,7 @@
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, //same tier as other yeomen
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN, //to properly wield a caneblade
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -76,9 +77,9 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	beltr = /obj/item/storage/keyring/physician
+	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician
 	id = /obj/item/scomstone/bad
-	r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/
+	r_hand = /obj/item/rogueweapon/sword/rapier/courtphysician
 	backl = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
@@ -86,6 +87,7 @@
 		/obj/item/reagent_containers/glass/bottle/waterskin = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/mini_flagpole/apothecary = 1,
+		/obj/item/storage/keyring/physician = 1,
 	)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

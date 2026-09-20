@@ -106,6 +106,11 @@
 /datum/intent/mace/smash/shield/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 
+/datum/intent/mace/smash/shield/metal/great
+	chargetime = 8
+	chargedrain = 2
+	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
+
 /obj/item/rogueweapon/shield/wood
 	name = "wooden shield"
 	desc = "A sturdy wooden shield. Will block anything you can imagine."
@@ -189,7 +194,6 @@
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 330
-	sellprice = 30
 	smeltresult = /obj/item/ingot/steelholy
 
 /obj/item/rogueweapon/shield/tower/holysee/MiddleClick(mob/user, params)
@@ -231,7 +235,6 @@
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 300
-	sellprice = 30
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
 
@@ -246,7 +249,7 @@
 
 /obj/item/rogueweapon/shield/tower/metal/ancient
 	name = "ancient shield"
-	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her progress cannot be stopped."
+	desc = "A venerable scutum, plated with polished gilbranze. An undying legionnaire's closest friend; that which rebukes arrow-and-bolt alike with unphasing prejudice. It is a reminder - one of many - that Her ambition cannot be stopped."
 	icon_state = "ancientsh"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -259,6 +262,23 @@
 				return list("shrink" = 0.8,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
 
+/obj/item/rogueweapon/shield/tower/metal/zizo
+	name = "avantyne darkshield"
+	desc = "An interloper in causality's ever-so-fragile stream, woven from wafers to ward against those who're not yet ready to comprehend \
+	the gospel of Her disciples. Zizo sought to ward Her children from extinction, but failed, and in the throes of divine mania, She had come \
+	to realize that this world was no longer worth saving."
+	unenchantable = TRUE
+	max_integrity = 400
+	force = 25
+	throwforce = 20
+	coverage = 75
+	wdefense = 13
+	icon_state = "zizoshield"
+
+/obj/item/rogueweapon/shield/tower/metal/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SHIELD")
+
 /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	name = "decrepit shield"
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
@@ -267,6 +287,35 @@
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/rogueweapon/shield/tower/metal/gold
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshield"
+	force = 25
+	throwforce = 35
+	throw_speed = 1
+	throw_range = 3
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL)
+	wlength = WLENGTH_NORMAL
+	resistance_flags = null
+	flags_1 = CONDUCT_1
+	wdefense = 14
+	coverage = 90
+	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	max_integrity = 50
+	smeltresult = /obj/item/ingot/gold
+	unenchantable = TRUE
+
+/obj/item/rogueweapon/shield/tower/metal/gold/king
+	name = "golden shield"
+	desc = "A resplendant kite shield, assembled from six golden plates that've been hooked together by a glimmering holy sigil socketed with a dorpel. Nobility may be fragile, \
+	but - so long as its grip remains steadfast - none could ever hope to sever its weakest link."
+	icon_state = "goldshieldking"
+	max_integrity = 75
+	sellprice = 300
 
 /obj/item/rogueweapon/shield/tower/metal/psy
 	name = "Covenant"
@@ -358,21 +407,16 @@
 	. = ..()
 	. += "Buckler uses the skill of your active weapon to parry. Otherwise it uses your shields skill."
 
-/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/user)
-	if(!ishuman(user))
+/// Returns the associated skill to be used to parry with. Changes based on the associated_skill of the main hand so long as it's a combat skill
+/obj/item/rogueweapon/shield/buckler/proc/bucklerskill(mob/living/blocker)
+	if(!ishuman(blocker))
 		return
-	var/mob/living/carbon/bucklerer = user
-	var/obj/item/mainhand = bucklerer.get_active_held_item()
-	var/weapon_parry = FALSE
-	if(mainhand)
-		if(mainhand.can_parry)
-			weapon_parry = TRUE
-	if(istype(mainhand, /obj/item/rogueweapon/shield/buckler))
-		associated_skill = /datum/skill/combat/shields
-	if(weapon_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
+	associated_skill = /datum/skill/combat/shields
+	var/obj/item/mainhand = blocker.get_active_held_item()
+	if(!isitem(mainhand) || istype(mainhand, /obj/item/rogueweapon/shield/buckler))
+		return
+	if(mainhand.can_parry && mainhand.associated_skill && ispath(mainhand.associated_skill, /datum/skill/combat))
 		associated_skill = mainhand.associated_skill
-	else
-		associated_skill = /datum/skill/combat/shields
 
 /obj/item/rogueweapon/shield/buckler/getonmobprop(tag)
 	. = ..()
@@ -522,6 +566,57 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
+/obj/item/rogueweapon/shield/bronze
+	name = "hoplon shield"
+	desc = "The finest companion to a javelin, gladius, and warclub; a thick-yet-sturdy shield of bronze."
+	icon_state = "bronzeshield"
+	force = 25
+	throwforce = 30 // DO NOT GIVE ANYTHING; BUT TAKE FROM THEM.. EVERYTHING!
+	dropshrink = 0.8 // Free free to add actual designs to this shield, too, if-or-whenever.
+	coverage = 50//for dealing with persian archers
+	resistance_flags = null
+	flags_1 = CONDUCT_1
+	minstr = 11 //Particularly heavy to use as a melee weapon.
+	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
+	possible_item_intents = list(/datum/intent/shield/block, /datum/intent/mace/smash/shield/metal, /datum/intent/effect/daze) // No SHIELD_BASH. Able to inflict Daze due to its weight.
+	max_integrity = 260
+	anvilrepair = /datum/skill/craft/weaponsmithing
+
+/obj/item/rogueweapon/shield/bronze/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -5,"sy" = -1,"nx" = 6,"ny" = -1,"wx" = 0,"wy" = -2,"ex" = 0,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = -3,"ey" = 3,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+
+/obj/item/rogueweapon/shield/bronze/great
+	name = "hoplon greatshield"
+	desc = "A heavy shield, taller and thicker than most of their contemporaries. It has survived the Calamity, endured the Apotheosis, and blunted the Sundering; \
+	and for one final time, it shall ward this dying world from a crueler fate."
+	icon_state = "bronzegreatshield"
+	item_state = "bronzegreatshield"
+	max_integrity = 360 //Highest integrity and passive projectile-blocking chance of most non-unique shields.
+	possible_item_intents = list(/datum/intent/shield/block, /datum/intent/mace/smash/shield/metal/great, /datum/intent/effect/daze) // No SHIELD_BASH. Able to inflict Daze due to its weight.
+	force = 28
+	coverage = 75//for dealing with MANY persian archers
+	wdefense = 10
+	minstr = 12 //Requires a natural +STR modifier or statpack to double as a melee weapon, for its given class. Note that it has a heavier charge time and active stamina drain, too, as.. well, it's quite heavy.
+
+/obj/item/rogueweapon/shield/tower/metal/blacksteel
+	name = "blacksteel shield"
+	desc = "A magnificent kite shield of blacksteel. Be it knight-or-knave, those who have the strength to lift it shall yet stand against perdition."
+	icon_state = "blacksteelsh"
+	max_integrity = 400
+	force = 25
+	throwforce = 30 // Funny. in a perfect world I would set this to 50
+	coverage = 85//i raised this so it beats out the bronze greatshield
+	smeltresult = /obj/item/ingot/blacksteel
+	possible_item_intents = list(SHIELD_BASH_METAL, SHIELD_BLOCK, SHIELD_SMASH_METAL, /datum/intent/effect/daze)
+	minstr = 11
+	wdefense = 14
 
 /obj/item/rogueweapon/shield/steam
 	name = "steam shield"

@@ -162,6 +162,11 @@
 	cost =	20
 	contains = list(/obj/item/clothing/neck/roguetown/collar/leather)
 
+/datum/supply_pack/rogue/Supplies/cursedcollar
+	name = "Cursed Collar"
+	cost =	25
+	contains = list(/obj/item/clothing/neck/roguetown/cursed_collar)
+
 /datum/supply_pack/rogue/Supplies/chainleash
 	name = "Chain Leash"
 	cost =	20

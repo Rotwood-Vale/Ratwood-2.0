@@ -6,6 +6,8 @@
 	dream_cost_per_level = 1
 	color = "#ec994b"
 	max_skillbook_level = 3
+	max_untraited_level = SKILL_LEVEL_EXPERT
+	trait_uncap = list(TRAIT_MARTIAL_PROWESS = SKILL_LEVEL_LEGENDARY) //if the veteran trains you and then you find a vampire knight with legendary i guess
 
 /datum/skill/combat/knives
 	name = "Knife-fighting"
@@ -79,6 +81,7 @@
 	"...it takes half a minute for an experienced arbalist to cock and load a crossbow. You could kill five men with three arrows in half that time..."
 	)
 	expert_name = "Bower"
+	max_untraited_level = SKILL_LEVEL_LEGENDARY
 
 /datum/skill/combat/crossbows
 	name = "Crossbows"
@@ -88,6 +91,7 @@
 	"...the crossbow is a deadly marvel of engineering, waiting for your guidance. You steady your breath, finger poised on the trigger. The world narrows as you take aim, the perfect shot soon to come..."
 	)
 	expert_name = "Crossbower"
+	max_untraited_level = SKILL_LEVEL_LEGENDARY
 
 /datum/skill/combat/wrestling
 	name = "Wrestling"
@@ -125,6 +129,7 @@
 	"...your arm tires from the toils of practice. Swinging rapidly has left your arm numb. With weary eyes, you glance aside to witness a hunter practice their craft with a brief overhand toss. Absorbing the technique, you mimic it, and effortlessly cast a powerful stone square onto the target..."
 	)
 	expert_name = "Slinger"
+	max_untraited_level = SKILL_LEVEL_LEGENDARY
 
 /datum/skill/combat/firearms
 	name = "Firearms"

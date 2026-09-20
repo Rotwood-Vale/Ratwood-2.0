@@ -1,5 +1,5 @@
 /obj/item/black_rose
-	icon = 'icons/mob/actions/pestraspells.dmi'
+	icon = 'icons/mob/actions/pestramiracles.dmi'
 	icon_state = "rot"
 	name = "black rose"
 	desc = "A sickly-sweet scented rose. Like honeyed rotten meat. It's dim petals seem laced with a black ooze that retreats away from your fingers."

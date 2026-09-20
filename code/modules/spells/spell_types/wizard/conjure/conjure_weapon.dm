@@ -49,10 +49,14 @@
 		"Zweihander" = /obj/item/rogueweapon/greatsword/grenz,
 		"Battle Axe" = /obj/item/rogueweapon/stoneaxe/battle,
 		"Steel Dagger" = /obj/item/rogueweapon/huntingknife/idagger/steel,
+		"Punch Dagger" = /obj/item/rogueweapon/katar/punchdagger,
+		"Katar" = /obj/item/rogueweapon/katar,
 		"Halberd" = /obj/item/rogueweapon/halberd,
 		"Steel Warhammer" = /obj/item/rogueweapon/mace/warhammer/steel,
 		"Steel Flail" = /obj/item/rogueweapon/flail/sflail,
 		"Whip" = /obj/item/rogueweapon/whip,
+		"Steel Knuckles" = /obj/item/rogueweapon/knuckles,
+		"Hound Claws" = /obj/item/rogueweapon/handclaw,
 	)
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/cast(list/targets, mob/living/user = usr)
@@ -68,6 +72,7 @@
 
 	var/obj/item/rogueweapon/R = new weapon_choice(user.drop_location())
 	R.blade_dulling = DULLING_SHAFT_CONJURED
+	R.sellprice = 0
 	if(!QDELETED(R))
 		R.AddComponent(/datum/component/conjured_item, GLOW_COLOR_ARCANE)
 	user.put_in_hands(R)

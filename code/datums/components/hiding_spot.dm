@@ -36,15 +36,16 @@
 
 /datum/component/hiding_spot/UnregisterFromParent()
 	// Just in case, let's double check
-	if(!QDELETED(hider))
-		escape_hidingspot(hider.resolve())
+	var/mob/living/real_hider = hider?.resolve()
+	if(real_hider)
+		escape_hidingspot(real_hider)
 
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_ATOM_RELAYMOVE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_LOOK_AROUND_SPOTTED))
 
 /// Kicks out the occupant if the thing we are hiding inside is ever deleted
 /datum/component/hiding_spot/proc/on_parent_delete()
 	SIGNAL_HANDLER
-	var/mob/living/hiding_mob = hider.resolve()
+	var/mob/living/hiding_mob = hider?.resolve()
 	if(!hiding_mob)
 		return
 	escape_hidingspot(hiding_mob)
@@ -66,7 +67,7 @@
 		to_chat(potential_hider, span_warning("This hiding spot is blocked!"))
 		return
 
-	if(!QDELETED(hider))
+	if(hider?.resolve())
 		to_chat(potential_hider, span_warning(occupied_message))
 		return
 
@@ -93,7 +94,7 @@
 /// If the hider moves while inside the hiding spot, let them out
 /datum/component/hiding_spot/proc/hider_moved(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(user != hider.resolve())
+	if(user != hider?.resolve())
 		return
 	escape_hidingspot(user)
 	return COMSIG_BLOCK_RELAYMOVE
@@ -107,22 +108,24 @@
 	if(!in_range(user, parent))
 		return
 
-	if(QDELETED(hider))
+	var/mob/living/found_mob = hider?.resolve()
+	if(!found_mob)
 		examine_list += span_notice(\
 			"Some structures can be used as hiding places. \
 			Toggle the 'SNEAK' button on your HUD, then click the structure to hide in it. \
 			You can stop hiding by clicking the structure again, or by moving out of it.")
 		return
 
-	var/mob/living/found_mob = hider.resolve()
 	escape_hidingspot(found_mob)
 
 /// Reveals that this spot is being used to hide in when someone nearby looks around
 /datum/component/hiding_spot/proc/on_spotted(datum/source, mob/living/looker)
 	SIGNAL_HANDLER
-	if(QDELETED(hider) || !isliving(looker))
+	if(!isliving(looker))
 		return
-	var/mob/living/hiding_mob = hider.resolve()
+	var/mob/living/hiding_mob = hider?.resolve()
+	if(!hiding_mob)
+		return
 	var/sneak_amount = 8 + (hiding_mob.get_skill_level(/datum/skill/misc/sneaking) * 2)
 	if(looker.STAPER >= sneak_amount) // skewed towards the hiding player because there's already a separate, guaranteed way to find hiders.
 		found_ping(get_turf(parent), looker.client, "hidden")

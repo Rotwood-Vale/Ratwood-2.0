@@ -1,6 +1,10 @@
 /datum/supply_pack
 	var/name = "Crate"
 	var/group = ""
+	/// Foreign trade cultural stock: units per ship manifest roll (trade_ship.dm's
+	/// roll_cultural_stock reads these off packs listed in a realm's cultural_stock_pool).
+	var/ship_qty_min = 0
+	var/ship_qty_max = 0
 	var/hidden = FALSE
 	var/contraband = FALSE
 	var/cost = 700 // Minimum cost, or infinite points are possible.
@@ -28,14 +32,9 @@
 	if(cost < 1)
 		cost = 1
 
-/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
-	var/obj/structure/closet/crate/C
-	if(paying_account)
-		C = new /obj/structure/closet/crate(A)
-		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
-	else
-		C = new crate_type(A)
-		C.name = crate_name
+/datum/supply_pack/proc/generate(atom/A)
+	var/obj/structure/closet/crate/C = new crate_type(A)
+	C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)

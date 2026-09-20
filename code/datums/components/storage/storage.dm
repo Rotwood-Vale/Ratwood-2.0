@@ -104,7 +104,6 @@
 	if(intercept_parent_attack)
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_hand))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(preattack_intercept))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(attack_self))
 
@@ -305,13 +304,17 @@
 		to_chat(user, "<span class='warning'>Something in the way.</span>")
 		return
 
+	var/list/dumped = list()
 	for(var/obj/item/I in things) // If the above aren't true, dump the sack onto the tile in front of us
 		things -= I
 //		if(I.loc != real_location)
 //			continue
+		dumped += "[I]"
 		remove_from_storage(I, T)
 		I.pixel_x = initial(I.pixel_x) + rand(-10,10)
 		I.pixel_y = initial(I.pixel_y) + rand(-10,10)
+	if(length(dumped))
+		user.log_message("emptied [A] onto [T] [COORD(T)], spilling: [english_list(dumped)]", LOG_GAME)
 //		if(trigger_on_found && I.on_found())
 //			return FALSE
 
@@ -521,8 +524,14 @@
 		if(locked)
 //			to_chat(M, span_warning("[parent] seems to be locked!"))
 			return FALSE
+		var/list/dumped = list()
+		for(var/obj/item/I in contents())
+			dumped += "[I]"
+		var/turf/dump_turf = get_turf(dump_destination)
 		if(dump_destination.storage_contents_dump_act(src, M))
 			playsound(A, "rustle", 50, TRUE, -5)
+			if(length(dumped))
+				M.log_message("dumped out [A] into [dump_destination] [COORD(dump_turf)] (CONTENTS: [english_list(dumped)])", LOG_GAME)
 			return TRUE
 	update_icon()
 	return FALSE

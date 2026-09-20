@@ -5,6 +5,8 @@
 /obj/effect/proc_holder/spell/invoked/blindness
 	name = "Blindness"
 	desc = "Direct a mote of living darkness to temporarily blind another."
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "blindness"
 	clothes_req = FALSE
 	releasedrain = 30
@@ -24,6 +26,16 @@
 	miracle = TRUE
 	cost = 3
 
+/obj/effect/proc_holder/spell/invoked/blindness/warscholar // Be very careful who this is given out to, Blindness can be surprisingly strong.
+	name = "Arcyne Blindness"
+	desc = "Direct a mote of living darkness to temporarily blind another. This imperfect replica of divine magick requires a Naledian Psycross to function."
+	invocations = list("Visus discede!")
+	devotion_cost = 0
+	recharge_time = 25 SECONDS // +10 because improper Naledi imitation
+	miracle = FALSE
+	req_items = list (/obj/item/clothing/neck/roguetown/psicross/naledi)
+	associated_skill = /datum/skill/magic/arcane
+
 /obj/effect/proc_holder/spell/invoked/blindness/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
@@ -38,6 +50,8 @@
 
 /obj/effect/proc_holder/spell/invoked/invisibility
 	name = "Invisibility"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "invisibility"
 	desc = "Make another (or yourself) invisible for some time. Duration scales with the arcyne skill. Casting, attacking or being attacked will cancel the duration."
 	releasedrain = 30
@@ -77,13 +91,16 @@
 		animate(target, alpha = 0, time = 1 SECONDS, easing = EASE_IN)
 		target.mob_timers[MT_INVISIBILITY] = world.time + dur SECONDS
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, update_sneak_invis), TRUE), dur SECONDS)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] fades back into view."), span_notice("You become visible again.")), 15 SECONDS)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, visible_message), span_warning("[target] fades back into view."), span_notice("You become visible again.")), dur SECONDS)
 		return TRUE
 	revert_cast()
 	return FALSE
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle
 	name = "Arcyne Affinity"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
+	overlay_state = "arcyne_affinity"
 	desc = "Allows you to learn a spell or two of a certain type once every cycle."
 	miracle = TRUE
 	devotion_cost = 250
@@ -193,6 +210,8 @@
 //15 PER peer-ahead.
 /obj/effect/proc_holder/spell/invoked/noc_sight
 	name = "Noc's Gaze"
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
 	overlay_state = "noc_sight"
 	desc = "Peer ahead."
 	chargetime = 0

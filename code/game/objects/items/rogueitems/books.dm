@@ -175,7 +175,7 @@
 	title = "The Verses and Acts of the Ten"
 	dat = "gott.json"
 	possible_item_intents = list(
-		/datum/intent/use, 
+		/datum/intent/use,
 		/datum/intent/bless,
 	)
 
@@ -487,14 +487,14 @@
 	var/is_in_round_player_generated
 	var/list/book_icons = list(
 	"Sickly green with embossed bronze" = "book8",
-	"White with embossed obsidian" = "book7",
-	"Black with embossed quartz" = "book6",
-	"Blue with embossed ruby" = "book5",
-	"Green with embossed amethyst" = "book4",
-	"Purple with embossed emerald" = "book3",
-	"Red with embossed sapphire" = "book2",
-	"Brown with embossed gold" = "book1",
-	"Brown without embossed material" = "basic_book")
+	"Red with embossed toper" = "book7",
+	"Purple with embossed obsidian" = "book6",
+	"Brown with embossed obsidian" = "book5",
+	"Yellow without embossed material" = "book4",
+	"Blue without embossed material" = "book3",
+	"Red without embossed material" = "book2",
+	"Black without embossed material" = "book",
+	"Green without embossed material" = "basic_book")
 	name = "unknown title"
 	desc = "Penned by an unknown author."
 	icon_state = "basic_book_0"
@@ -726,7 +726,7 @@
 
 /obj/item/book/rogue/bibble/zizo
 	name = "Lexicon of Her Truth"
-	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Progress - or at least the version recounted by the cultists of her 'Salvation'."
+	desc = "By learning Her teachings, we will one day walk in Her footsteps. A volume forbidden to be read by the Holy See, containing a retelling of the mortal lyfe and ascension of ZIZO, the Lady of Ambition - or at least the version recounted by the cultists of her 'Salvation'."
 	icon = 'icons/roguetown/items/bookszizo.dmi'
 	icon_state = "zizoble_0"
 	base_icon_state = "zizoble"
