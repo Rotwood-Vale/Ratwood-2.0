@@ -10,7 +10,7 @@
 	// Greatly increased health
 	health = SAIGA_HEALTH_UNDEAD
 	maxHealth = SAIGA_HEALTH_UNDEAD
-	dodgetime = 50
+	dodgetime = 5 SECONDS
 
 	var/leg_health = 150
 	var/max_leg_health = 150

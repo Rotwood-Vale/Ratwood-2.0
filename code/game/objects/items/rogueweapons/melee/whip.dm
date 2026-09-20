@@ -96,6 +96,13 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
+/datum/intent/flail/smash/ranged/psywhip
+	name = "Meteor Strike"
+	desc = "Swing the weight of your whip around your body, using the angular momentum to deliver a devastating strike, propelling your enemy back and savaging them at the same time."
+	chargedrain = 0 //The charge time is indicative of a warmup, not a hold.
+	chargedloop = /datum/looping_sound/flailswing
+	keep_looping = FALSE
+
 /obj/item/rogueweapon/whip/nagaika
 	name = "nagaika whip"
 	desc = "A short but heavy leather whip, sporting a blunt reinforced tip and a longer handle."
@@ -133,8 +140,8 @@
 	icon_state = "psywhip"
 	is_silver = TRUE
 	force = 25
-	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/flail/smash/ranged/psywhip)
+	minstr = 11
 	wdefense = 0
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver

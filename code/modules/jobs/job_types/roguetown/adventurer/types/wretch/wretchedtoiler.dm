@@ -19,7 +19,9 @@
 		STATKEY_PER = 1, //i like looking into the distance
 		STATKEY_WIL = 1, //i want this to be lower because i like hearing the stamout sfx but i will allow you ONE point of END
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 	subclass_skills = list(
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT, //You shall TOIL. You can TOIL most skills quite well.
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,

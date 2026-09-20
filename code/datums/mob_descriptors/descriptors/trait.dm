@@ -1,252 +1,252 @@
 /datum/mob_descriptor/trait
 	abstract_type = /datum/mob_descriptor/trait
 	slot = MOB_DESCRIPTOR_SLOT_TRAIT
+	verbage = "%ARE%"
 
 /datum/mob_descriptor/trait/moderate
 	name = "Moderate"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/mundane
 	name = "Mundane"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/middling
 	name = "Middling"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/tall
 	name = "Tall"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/short
 	name = "Short"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/dainty
 	name = "Dainty"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/towering
 	name = "Towering"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/giant
 	name = "Giant"
-	prefix = "is a"
+	prefix = "a"
 
 /datum/mob_descriptor/trait/tiny
 	name = "Tiny"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/stout
 	name = "Stout"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/cadaverous
 	name = "Cadaverous"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/lanky
 	name = "Lanky"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/wide
 	name = "Wide"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/thin
 	name = "Thin"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/zardish
 	name = "Zardish"
-	prefix = "is very"
+	prefix = "very"
 
 
 /datum/mob_descriptor/trait/lupian
 	name = "Lupian"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/venardic
 	name = "Venardic"
-	prefix = "is very"
+	prefix = "very"
 
 
 /datum/mob_descriptor/trait/feline
 	name = "Feline"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/elven
 	name = "Elven"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/rousley
 	name = "Rousley"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/pale
 	name = "Pale"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/tanned
 	name = "Tanned"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/dusky
 	name = "Dusky"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/blessed
 	name = "Blessed"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/accursed
 	name = "Accursed"
-	prefix = "is a"
+	prefix = "a"
 
 /datum/mob_descriptor/trait/aquatic
 	name = "Aquatic"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/volfish
 	name = "Volfish"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/graceful
 	name = "Graceful"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/lapine
 	name = "Lapine"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/scrappy
 	name = "Scrappy"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/curious
 	name = "Curious"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/craven
 	name = "Craven"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/grinning
 	name = "Grinning"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/crestfallen
 	name = "Crestfallen"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/dour
 	name = "Dour"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/cheery
 	name = "Cheery"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/simian
 	name = "Simian"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/bovine
 	name = "Bovine"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/cervine
 	name = "Cervine"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/ursine
 	name = "Ursine"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/stern
 	name = "Stern"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/jaunty
 	name = "Jaunty"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/meek
 	name = "Meek"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/sly
 	name = "Sly"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/fervent
 	name = "Fervent"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/coy
 	name = "Coy"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/harrowed
 	name = "Harrowed"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/horned
 	name = "Horned"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/snoutly
 	name = "Snoutly"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/tailed
 	name = "Tailed"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/fanged
 	name = "Fanged"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/tusked
 	name = "Tusked"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/clawed
 	name = "Clawed"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/furred
 	name = "Furred"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/feathered
 	name = "Feathered"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/scaly
 	name = "Scaly"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/crimson
 	name = "Crimson"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/cerulean
 	name = "Cerulean"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/emerald
 	name = "Emerald"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/amber
 	name = "Amber"
-	prefix = "is very"
+	prefix = "very"
 
 /datum/mob_descriptor/trait/custom
 	name = "Custom Trait"
-	prefix = "is"
 	custom_index = 5
 
 /datum/mob_descriptor/trait/custom/can_describe(mob/living/described)

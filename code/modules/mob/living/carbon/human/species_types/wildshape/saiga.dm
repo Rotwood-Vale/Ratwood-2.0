@@ -112,8 +112,6 @@
 	animname = "strike"
 	hitsound = "punch_hard"
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "kicks the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "blunt"

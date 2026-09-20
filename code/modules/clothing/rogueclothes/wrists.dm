@@ -67,6 +67,28 @@
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_SIDE_BRONZE
 
+/obj/item/clothing/wrists/roguetown/bracers/gold
+	name = "golden bracers"
+	desc = "A resplendant pair of golden vambraces, further padded with besilked sleeves. Each halve is marked with a holy sigil, sloped upwards to help catch-and-reflect sunlight into the eyes of unsuspecting assailants."
+	icon_state = "goldbracers"
+	item_state = "goldbracers"
+	body_parts_covered = ARMS | HANDS //Experimental, but should compliment the cost. Let all handhitters fear your presence.. for exactly five strikes.
+	armor_class = ARMOR_CLASS_HEAVY //Ceremonial. Heavy is the head that bears the burden.
+	armor = ARMOR_INDESTRUCTIBLE //Renders its wearer completely invulnerable to damage. The caveat is, however..
+	max_integrity = ARMOR_INT_SIDE_GOLD // ..is that it's extraordinarily fragile. To note, this is lower than even Decrepit-tier armor.
+	anvilrepair = null
+	smeltresult = /obj/item/ingot/gold
+	smelt_bar_num = 1
+	grid_height = 96
+	grid_width = 96
+	unenchantable = TRUE
+
+/obj/item/clothing/wrists/roguetown/bracers/gold/king
+	name = "royal golden bracers"
+	max_integrity = ARMOR_INT_SIDE_GOLDPLUS // Doubled integrity.
+	sellprice = 300
+	unenchantable = TRUE
+
 /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	name = "psydonic thorns"
 	desc = "Thorns fashioned from pliable yet durable blacksteel - woven and interlinked, fashioned to be wrapped around the wrists."
@@ -200,6 +222,11 @@
 	color = "#48443B"
 	nudist_approved = TRUE
 
+/obj/item/clothing/wrists/roguetown/bracers/cloth/gladiator
+	name = "padded wrappings"
+	desc = "Sheared burlap and cloth, meticulously fashioned around the forearms. Taut fibers turn weeping gashes into mere tears along the cloth. </br>"
+	color = "#BFB8A9"
+
 //Queensleeves
 /obj/item/clothing/wrists/roguetown/royalsleeves
 	name = "royal sleeves"
@@ -240,10 +267,10 @@
 	body_parts_covered = ARMS
 	icon_state = "splintarms"
 	item_state = "splintarms"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = SOFTHIT
-	max_integrity = ARMOR_INT_SIDE_IRON
+	max_integrity = ARMOR_INT_SIDE_STEEL
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	w_class = WEIGHT_CLASS_NORMAL
@@ -253,14 +280,27 @@
 /obj/item/clothing/wrists/roguetown/splintarms/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/wrists/roguetown/bracers/zizo
+	name = "avantyne bracers"
+	desc = "Clasped yet practical, these avantyne wristguards are reinforced for the rite without binding themselves to the wearer forever."
+	icon_state = "zizobracers"
+	item_state = "zizobracers"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	peel_threshold = 5
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
+
 /obj/item/clothing/wrists/roguetown/splintarms/iron
 	name = "splint bracers"
 	desc = "A pair of leather sleeves backed with iron splints, couters, and shoulderpieces that protect your arms and remain decently light."
 	body_parts_covered = ARMS
 	icon_state = "ironsplintarms"
 	item_state = "ironsplintarms"
-	armor = ARMOR_LEATHER_STUDDED //not plate armor, is leather + iron bits
-	max_integrity = ARMOR_INT_SIDE_LEATHER
+	armor = ARMOR_LEATHER_STUDDED
+	max_integrity = ARMOR_INT_SIDE_IRON
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/wrists/roguetown/bracers/iron
@@ -277,8 +317,8 @@
 	desc = "Thin strips of steel attached to small shoulder and elbow plates, worn on the outside of the arms to protect against slashes."
 	icon_state = "jackchain"
 	item_state = "jackchain"
-	armor = ARMOR_LEATHER_STUDDED // Please help me make this make sense this has the same stab protection vro.
-	max_integrity = ARMOR_INT_SIDE_LEATHER // Make it slightly worse
+	armor = ARMOR_BRIGANDINE
+	max_integrity = ARMOR_INT_SIDE_IRON// less expensive than proper brig bracers so less integ
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'

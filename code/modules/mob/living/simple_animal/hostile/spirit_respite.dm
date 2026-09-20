@@ -27,7 +27,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	defprob = 30
 	speak_emote = list("rattles")
 	del_on_death = TRUE

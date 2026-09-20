@@ -96,6 +96,7 @@
 
 	var/list/character_entries = list(
 		list("id" = "masked_examine", "label" = "Masked Examine", "enabled" = !!owner.prefs.masked_examine, "desc" = "Allow your character info to be seen while masked."),
+		list("id" = "top_examine", "label" = "Examine Info At Top", "enabled" = !!owner.prefs.top_examine, "desc" = "Show the headshot, name, and other main examine info at the top of the examine block instead of the bottom."),
 		list("id" = "wildshape_name", "label" = "Show Wildshape Name", "enabled" = !!owner.prefs.wildshape_name, "desc" = "Show your character name while in wildshape."),
 		list("id" = "nsfw_examine", "label" = "Always Show NSFW Examine", "enabled" = !!owner.prefs.nsfw_examine_always, "desc" = "Always display NSFW examine info, even when clothed."),
 	)
@@ -186,6 +187,8 @@
 				owner.set_picinchat()
 			if("masked_examine")
 				owner.masked_examine()
+			if("top_examine")
+				owner.toggle_topexamine()
 			if("mouseover_role")
 				owner.toggle_mouseover_role()
 			if("nsfw_examine")
@@ -325,6 +328,15 @@
 			to_chat(src, "Your character information will be viewable when masked.")
 		else
 			to_chat(src, "Your character information will no longer be viewable when masked.")
+
+/client/verb/toggle_topexamine()
+	set category = "Options"
+	set name = "Toggle Top Examine"
+	set hidden = 1
+	if(prefs)
+		prefs.top_examine = !prefs.top_examine
+		prefs.save_preferences()
+		to_chat(src, "Main examine text will now be shown at the [prefs.top_examine ? "top" : "bottom"] of the examine block.")
 
 /client/verb/toggle_mouseover_role()
 	set category = "Options"
@@ -1183,6 +1195,17 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(usr, "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Adminhelp Sound", "[prefs.toggles & SOUND_ADMINHELP ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/toggledeathalarmsound()
+	set name = "Hear/Silence Death Alarms"
+	set category = "Prefs - Admin"
+	set desc = ""
+	if(!holder)
+		return
+	prefs.toggles ^= SOUND_DEATH_ALARM
+	prefs.save_preferences()
+	to_chat(usr, "You will [(prefs.toggles & SOUND_DEATH_ALARM) ? "now" : "no longer"] hear a sound when deaths appear in the admin log.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Death Alarm Sound", "[prefs.toggles & SOUND_DEATH_ALARM ? "Enabled" : "Disabled"]"))
 
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"

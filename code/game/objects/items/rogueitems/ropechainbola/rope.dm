@@ -26,8 +26,8 @@
 	name = "tie"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	misscost = 0
 
 /obj/item/rope/Destroy()

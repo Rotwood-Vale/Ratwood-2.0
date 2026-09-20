@@ -305,6 +305,7 @@
 		/datum/sprite_accessory/ears/rabbit,
 		/datum/sprite_accessory/ears/bunny,
 		/datum/sprite_accessory/ears/bunny_perky,
+		/datum/sprite_accessory/ears/bunny_long,
 		/datum/sprite_accessory/ears/big/rabbit_large,
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,
@@ -343,6 +344,11 @@
 		/datum/sprite_accessory/ears/big/acrador_short,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
+		/datum/sprite_accessory/ears/four_ears,
+		/datum/sprite_accessory/ears/dendorite,
+		/datum/sprite_accessory/ears/eoran,
+		/datum/sprite_accessory/ears/pestran,
+		/datum/sprite_accessory/ears/zorzor
 		)
 
 /datum/customizer/organ/ears/harpy

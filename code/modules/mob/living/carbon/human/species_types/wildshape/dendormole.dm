@@ -120,8 +120,6 @@
 	animname = "cut"
 	hitsound = "genslash"
 	penfactor = 15
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "slash"
@@ -137,8 +135,6 @@
 	animname = "cut"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "smashes the air!"
 	miss_sound = "bluntswoosh"
 	item_d_type = "blunt"
