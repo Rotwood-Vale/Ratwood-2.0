@@ -3,18 +3,18 @@
 /datum/species/human/void
 	name = "Voidborn"
 	id = "void"
-	limbs_id = "agent"
 	desc = "Ancient beings of pure void and starlight. They are not of this world — faster, stronger, and more resilient than any mortal race. Time itself seems to bend around them."
 	expanded_desc = "Voidborn are remnants of a long-dead stellar civilization. Their bodies are denser than lead yet lighter than air, their minds process reality at impossible speeds, and their flesh knits itself back together almost as fast as it is wounded. Looking at one for too long leaves afterimages that refuse to fade. When they die, space itself cracks."
 
-	default_color = "#1a1a2e"
-	use_skintones = FALSE
-	mutant_skin_option = TRUE
+	limbs_id = "humen"
+	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi'
+	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'
+	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
+	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
 
-	skin_tone_wording = "Void Hue"
-	icon_override_m = 'icons/mob/human_parts.dmi'
-	icon_override_f = 'icons/mob/human_parts.dmi'
-	icon_override = 'icons/mob/human_parts.dmi'
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
+	default_features = MANDATORY_FEATURE_LIST
+
 
 	// Combat
 	armor = 45
@@ -91,18 +91,32 @@
 		TRAIT_CRITICAL_RESISTANCE
 	)
 
+	offset_features = list(
+		OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
+		OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
+		OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
+		OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,0), \
+		OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
+		OFFSET_BREASTS = list(0,1), \
+		OFFSET_ID_F = list(0,-1), OFFSET_GLOVES_F = list(0,0), OFFSET_WRISTS_F = list(0,0), OFFSET_HANDS_F = list(0,0), \
+		OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-1), OFFSET_HEAD_F = list(0,-1), \
+		OFFSET_FACE_F = list(0,-1), OFFSET_BELT_F = list(0,0), OFFSET_BACK_F = list(0,-1), \
+		OFFSET_NECK_F = list(0,-1), OFFSET_MOUTH_F = list(0,-1), OFFSET_PANTS_F = list(0,0), \
+		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
+		OFFSET_BREASTS_F = list(0,-1), \
+		)
+
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	inherent_factions = list("void")
 
 	languages = list(/datum/language/common)
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
-	damage_overlay_type = "human"
 	deathsound = 'modular_fenysha_events/sound/fractal_scream3.ogg'
 	exotic_blood = ""
 	meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 
-	possible_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	possible_ages = list(AGE_IMMORTAL)
 	max_age = 9999
 
 	var/list/void_spell_paths = list(
@@ -112,12 +126,15 @@
 		/obj/effect/proc_holder/spell/invoked/void_null_pulse
 	)
 
+var/list/void_speech_fx_times = list()
+
 /datum/species/human/void/on_species_gain(mob/living/carbon/C, datum/species/old_species, datum/preferences/pref_load)
 	. = ..()
 	RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(on_void_moved))
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(on_void_death))
+	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_void_speech))
 
-	// Hard-visible baseline. No filters here — filters after icon build only.
+	// Hard-visible baseline before any filters
 	C.invisibility = 0
 	C.alpha = 255
 	C.color = null
@@ -126,26 +143,24 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		// Force human limb icons + rebuild overlay stack
 		H.dna?.species?.limbs_id = "human"
 		H.update_body()
 		H.update_hair()
 		H.update_body_parts()
 
 	grant_void_spells(C)
-
-	// Soft ambient filter only after the sprite exists
 	addtimer(CALLBACK(src, PROC_REF(setup_void_visuals), C), 2)
 
 	to_chat(C, span_fractal_growth("The void within you awakens. Space folds politely around your presence."))
 
 /datum/species/human/void/on_species_loss(mob/living/carbon/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
+	UnregisterSignal(C, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_MOB_SAY))
 
 	for(var/fname in list("void_wave", "void_glow", "void_fold", "void_collapse", "lance_charge", "repulse_wave", "null_pulse"))
 		C.remove_filter(fname)
 
+	C.faction -= "void"
 	C.invisibility = 0
 	C.alpha = 255
 	C.color = null
@@ -176,7 +191,7 @@
 		C.RemoveSpell(found)
 
 // ---------------------------------------------------------------------------
-// Visuals — optional, non-destructive
+// Visuals
 // ---------------------------------------------------------------------------
 
 /datum/species/human/void/proc/setup_void_visuals(mob/living/carbon/human/H)
@@ -188,7 +203,6 @@
 		H.alpha = 255
 		animate(H, alpha = 255, time = 0)
 
-	// Very light wave only. No outline (outline has caused blank sprites on some clients).
 	H.remove_filter("void_wave")
 	H.add_filter("void_wave", 1, list("type" = "wave", "size" = 0.6, "x" = 3, "y" = 3, "offset" = 0))
 	var/filter = H.get_filter("void_wave")
@@ -205,6 +219,144 @@
 		new /obj/effect/temp_visual/decoy/fading/halfsecond(get_turf(H), H)
 	if(prob(12))
 		new /obj/effect/temp_visual/fractal_crack(get_turf(H))
+
+// ---------------------------------------------------------------------------
+// Speech — fractal spans + listener FX
+// ---------------------------------------------------------------------------
+
+/**
+ * COMSIG_MOB_SAY argslist:
+ *   SPEECH_MESSAGE 1
+ *   SPEECH_SPANS   3
+ *   SPEECH_LANGUAGE 5
+ *   SPEECH_MODE     8
+ */
+/datum/species/human/void/proc/handle_void_speech(mob/living/carbon/speaker, list/speech_args)
+	SIGNAL_HANDLER
+	if(!islist(speech_args))
+		return
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message)
+		return
+
+	speech_args[SPEECH_MESSAGE] = void_degrade_words(message)
+
+	var/list/spans = speech_args[SPEECH_SPANS]
+	if(!islist(spans))
+		spans = list()
+	spans |= void_pick_speech_span()
+	speech_args[SPEECH_SPANS] = spans
+
+	INVOKE_ASYNC(src, PROC_REF(void_speech_affect_hearers), speaker)
+
+/datum/species/human/void/proc/void_pick_speech_span()
+	var/list/treatments = list(
+		"fractal_echo" = 35,
+		"fractal_whisper" = 20,
+		"fractal_growth" = 15,
+		"fractal_depth" = 10,
+		"fractal_faint_echo" = 10,
+		"fractal_glyph" = 5,
+		"fractal_squeeze" = 3,
+		"fractal_far" = 2,
+	)
+	return pickweight(treatments)
+
+/datum/species/human/void/proc/void_degrade_words(message)
+	var/list/words = splittext(message, " ")
+	if(!length(words))
+		return message
+
+	var/to_corrupt = rand(0, 2)
+	for(var/i in 1 to to_corrupt)
+		var/index = rand(1, length(words))
+		var/word = words[index]
+		if(!length(word) || findtext(word, "<"))
+			continue
+		words[index] = "<span class='fractal_glyph'>[word]</span>"
+
+	return jointext(words, " ")
+
+#define VOID_SPEECH_EFFECT_CD (4 SECONDS)
+
+/datum/species/human/void/proc/void_speech_affect_hearers(mob/living/carbon/speaker)
+	if(!speaker || QDELETED(speaker))
+		return
+
+	for(var/mob/living/L in get_hearers_in_view(7, speaker))
+		if(L == speaker)
+			continue
+		if(!L.client)
+			continue
+		if(L.stat == DEAD)
+			continue
+		if("void" in L.faction)
+			continue
+		if("fractal" in L.faction)
+			continue
+		void_apply_speech_effect(L, speaker)
+
+/datum/species/human/void/proc/void_apply_speech_effect(mob/living/listener, mob/living/carbon/speaker)
+	if(!listener?.client)
+		return
+
+	var/ref_id = REF(listener)
+	var/last = void_speech_fx_times[ref_id] || 0
+	if(world.time - last < VOID_SPEECH_EFFECT_CD)
+		return
+	void_speech_fx_times[ref_id] = world.time
+
+	SEND_SOUND(listener, pick('modular_fenysha_events/sound/fractal_glitch1.ogg', 'modular_fenysha_events/sound/fractal_glitch2.ogg'))
+	if(prob(55))
+		shake_camera(listener, rand(1, 3), 1)
+	if(prob(40))
+		listener.blur_eyes(rand(1, 3))
+
+	if(prob(35))
+		to_chat(listener, span_fractal_whisper(pick(list(
+			"The voice does not come from a mouth.",
+			"You hear the words from more than one direction.",
+			"The sentence continues after it has ended.",
+			"Something in the voice is counting you.",
+			"You are not sure those were words.",
+			"The sound folds behind your eyes."
+		))))
+
+	if(prob(15))
+		to_chat(listener, span_fractal_faint_echo(pick(list(
+			"Look again.",
+			"There is no center.",
+			"It continues.",
+			"You have already heard this."
+		))))
+
+	void_speech_screen(listener)
+	void_speech_maptext(listener)
+
+/datum/species/human/void/proc/void_speech_screen(mob/living/listener)
+	if(!listener?.client)
+		return
+	var/datum/status_effect/fractal_screen/screen = listener.has_status_effect(/datum/status_effect/fractal_screen)
+	if(!screen)
+		screen = listener.apply_status_effect(/datum/status_effect/fractal_screen)
+	if(!screen)
+		return
+	screen.infection_stage = rand(1, 3)
+	screen.play_effect()
+
+/datum/species/human/void/proc/void_speech_maptext(mob/living/listener)
+	if(!listener?.client)
+		return
+	var/datum/status_effect/fractal_maptext/effect = listener.has_status_effect(/datum/status_effect/fractal_maptext)
+	if(!effect)
+		effect = listener.apply_status_effect(/datum/status_effect/fractal_maptext)
+	if(!effect)
+		return
+	effect.intensity = rand(1, 2)
+	effect.duration = max(effect.duration, 6 SECONDS)
+
+#undef VOID_SPEECH_EFFECT_CD
 
 // ---------------------------------------------------------------------------
 // Life & combat
@@ -334,7 +486,7 @@
 
 	// Stage 4
 	H.visible_message(span_fractal_noise("The point unfolds. Space tears open!"))
-	to_chat(world, span_fractal_glyph(span_fractal_noise("[H] has folded out of reality.")))
+	to_chat(world, span_fractal_noise("[H] has folded out of reality."))
 	playsound(center, 'modular_fenysha_events/sound/fractal_glitch1.ogg', 130, TRUE)
 	playsound(center, 'modular_fenysha_events/sound/fractal_scream3.ogg', 80, TRUE)
 
@@ -463,7 +615,7 @@
 	animate(src, alpha = 0, pixel_y = pixel_y + rand(8, 18), time = duration, easing = SINE_EASING)
 
 //============================================================================
-// SPELLS
+// SPELLS (invoked — same pattern as fractal infection abilities)
 //============================================================================
 
 /obj/effect/proc_holder/spell/invoked/void_fold
@@ -563,8 +715,7 @@
 	animate(user, alpha = return_alpha, color = null, time = 0)
 
 /*
- * Stellar Lance — matches fractal_lance pattern exactly.
- * Do NOT override cast(); parent invoked/projectile handles aim + fire.
+ * Stellar Lance — no cast() override; parent invoked/projectile fires it.
  */
 
 /obj/projectile/beam/laser/hitscan/void_lance
@@ -619,8 +770,6 @@
 	sound = 'modular_fenysha_events/sound/fractal_glitch1.ogg'
 	invocation_type = "none"
 	antimagic_allowed = TRUE
-
-// No cast() override — parent fires the projectile. Charge VFX is optional fluff only.
 
 /*
  * Void Repulse
@@ -774,5 +923,55 @@
 	if(prob(25))
 		new /obj/effect/decal/fractal_scar(center)
 
+
+
 /mob/living/carbon/human/species/void
 	race = /datum/species/human/void
+
+/mob/living/carbon/human/species/void/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
+	
+/mob/living/carbon/human/species/void/after_creation()
+	. = ..()
+	job = "Void Collective"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	equipOutfit(new /datum/outfit/job/roguetown/human/species/void)
+
+/datum/outfit/job/roguetown/human/species/void/pre_equip(mob/living/carbon/human/H)
+	..()
+	//Body Stuff
+	H.eye_color = "27becc"
+	H.hair_color = "61310f"
+	H.facial_hair_color = H.hair_color
+	if(H.gender == FEMALE)
+		H.hairstyle =  "Messy (Rogue)"
+	else
+		H.hairstyle = "Messy"
+		H.facial_hairstyle = "Beard (Manly)"
+
+	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+	H.STASTR = rand(15,20)
+	H.STASPD = 11
+	H.STACON = rand(14,20)
+	H.STAWIL = 15
+	H.STAPER = 15
+	H.STAINT = 15
+
+	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/black
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/voidarmor
+	head = /obj/item/clothing/head/roguetown/roguehood/shalal/nomad
+	
+	//wrist Gear
+	gloves = /obj/item/clothing/gloves/roguetown/leather/black
+	//Lower Gear
+	belt = /obj/item/storage/belt/rogue/leather/suspenders/butler
+	pants = /obj/item/clothing/under/roguetown/platelegs/blk/death
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
+
+
