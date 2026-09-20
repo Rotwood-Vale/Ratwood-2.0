@@ -187,7 +187,7 @@
 // RADIO TRANSLATION STUFF.
 
 /obj/item/timesoldier/radio/proc/say_new_imperial(message)
-	var/datum/language/common/new_imperial/new_imperial = GLOB.language_datum_instances[/datum/language/common/new_imperial]
+	var/datum/language/new_imperial/new_imperial = GLOB.language_datum_instances[/datum/language/new_imperial]
 	if(!new_imperial)
 		return
 

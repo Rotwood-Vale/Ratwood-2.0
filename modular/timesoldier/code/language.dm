@@ -1,17 +1,22 @@
-/datum/language/common/new_imperial
+/datum/language/new_imperial
 	name = "New Imperial"
-	desc = "After decades of Imperial being spoken freely with many, many people, it has evolved to comprehend a lot of common words from other languages. Old Imperial speakers can discern it, if they try hard enough."
+	desc = "After decades of Imperial being spoken freely with many, many people, it has evolved to incorporate a lot of common words from other languages. Old Imperial speakers can discern it, if they try hard enough."
 	key = "?"
 	default_priority = 0
+	icon_state = "galcom"
+	speech_verb = "says"
+	whisper_verb = "whispers"
+	exclaim_verb = "yells"
+	ask_verb = "asks"
 
 
-/datum/language/common/new_imperial/proc/translate_for(mob/living/hearer, message)
+/datum/language/new_imperial/proc/translate_for(mob/living/hearer, message)
 	if(!isliving(hearer))
 		return "\[The speech is completely unintelligible.\]"
 
 	var/mob/living/L = hearer
 	// if we know new imperial, then we obviously understand it. duh.
-	if(L.has_language(/datum/language/common/new_imperial))
+	if(L.has_language(/datum/language/new_imperial))
 		return message
 
 	if(!ishuman(L))
@@ -30,7 +35,7 @@
 
 	return message // if we're super smart (17+ int), we understand it all.
 
-/datum/language/common/new_imperial/proc/partial_comprehension(message, word_count)
+/datum/language/new_imperial/proc/partial_comprehension(message, word_count)
 	var/list/words = splittext(message, " ")
 
 	if(!length(words))
