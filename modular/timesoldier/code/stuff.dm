@@ -72,6 +72,8 @@
 	verb_ask = "coldly states"
 	verb_exclaim = "coldly states"
 	verb_yell = "coldly states"
+    grid_width = 32
+	grid_height = 32 // smol
 
 /obj/item/timesoldier/radio/GetVoice()
 	return "<span style='font-size: 115%;'><b>UNKNOWN</b></span>"

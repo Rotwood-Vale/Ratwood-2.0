@@ -300,3 +300,53 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 
 	log_admin("[key_name(src)] spawned [key_name(H)] as a [selected_type] Time Soldier at [AREACOORD(H)].")
 	message_admins(span_adminnotice("[key_name_admin(src)] spawned [ADMIN_LOOKUPFLW(H)] as a [selected_type] Time Soldier at [ADMIN_VERBOSEJMP(H)]."))
+
+
+/proc/create_time_soldier(
+	client/player,
+	turf/spawn_turf,
+	soldier_type
+)
+	if(!player)
+		return
+
+	if(!player.key)
+		return
+
+	if(!player.prefs)
+		return
+
+	if(!spawn_turf)
+		return
+
+	var/player_key = player.key
+
+	// completely ordinary human.
+	var/mob/living/carbon/human/H = new(spawn_turf)
+
+	// build the human from this client's currently selected character.
+	player.prefs.copy_to(H)
+	H.dna.update_dna_identity()
+
+	// equipment, stats, skills, languages, etc.
+	apply_time_soldier_setup(H, soldier_type)
+
+	// hand control over only after the body is completely prepared.
+	H.key = player_key
+
+	return H
+
+
+/proc/apply_time_soldier_setup(mob/living/carbon/human/H, soldier_type)
+	if(!H)
+		return
+
+	H.grant_language(/datum/language/new_imperial)
+
+	switch(soldier_type)
+		if(TIMESOLDIER_TEMPERANCE)
+			apply_timesoldier_temperance(H)
+
+		//if(TIMESOLDIER_INTERWAR)
+			//apply_timesoldier_interwar(H)
+			// i might as well avoid it for now.
