@@ -1,0 +1,9 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - rscadd: "Gnolls can now set their own flavortext & rumours in Gnoll Preferences. They have access to all the relevant features, as well as a fully-working preview. Headshot in Chat has NOT been enabled to show on gnolls at this time."
+  - rscadd: "Gnolls can now also set overrides for their statpack and name color in Gnoll Preferences. No more having to switch things around! By default, it is set to Fated (random +2/-2 all stats)."
+  - bugfix: "Preview Examine now works how you'd expect it to. Before, using it while you were spawned-in ignored what you currently had set in your preferences, because the \"human\" mob took precedence. Now the Examine Panel is told explicitly that it is previewing something, and displays what you have set in your prefs."
+  - code_imp: "Conveniently, this \"previewing\" variable is also used to distinguish whether we are previewing prefs for the character slot, or for the gnoll."
+  - code_imp: "Familiar Prefs and Gnoll Prefs now have their saving delegated to local procs, instead of at preferences_savefile.dm. In theory this speeds up save/load, since we're not sanity checking for each saved item."
+  - code_imp: "Tiny change: if a statpack can't load, it now just sets you to Fated instead of randoming."
