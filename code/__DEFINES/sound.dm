@@ -621,13 +621,16 @@
 
 /// The river point ambience category's own copies of the two sets above, normalised with the other
 /// point ambience clips. The area beds keep the originals
-/// Plain running water. A clip with birdsong or frogs on it is recognisable, so hearing one every
-/// third boundary reads as a loop rather than as a river; those live in the RARE sets below and are
-/// rolled for instead of taking an equal share
-#define POINT_AMBIENCE_RIVER_DAY list('sound/ambience/point/river_day_1.ogg',\
-						'sound/ambience/point/river_day_2.ogg')
+/// Plain running water, the same set at any hour. Every day take carries bird or frog calls, and
+/// they were recorded over water that sits 5 dB thinner and an octave brighter than these, so one
+/// of them arriving reads as a different river rather than as this one with something singing over
+/// it. Calls want a take recorded over THIS water, which is why the rare set is empty rather than
+/// holding the day clips
+#define POINT_AMBIENCE_RIVER_DAY list('sound/ambience/point/river_night_1.ogg',\
+						'sound/ambience/point/river_night_2.ogg',\
+						'sound/ambience/point/river_night_3.ogg')
 
-#define POINT_AMBIENCE_RIVER_DAY_RARE list('sound/ambience/point/river_day_3.ogg')
+#define POINT_AMBIENCE_RIVER_DAY_RARE null
 
 #define POINT_AMBIENCE_RIVER_NIGHT list('sound/ambience/point/river_night_1.ogg',\
 						'sound/ambience/point/river_night_2.ogg',\
