@@ -1258,6 +1258,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Jinbaori"
 	path = /obj/item/clothing/cloak/kazengun
 
+/datum/loadout_item/paper_duster
+	name = "Paper Duster"
+	path = /obj/item/clothing/suit/roguetown/shirt/paper_duster
+
 // SHOES
 /datum/loadout_item/sandals
 	name = "Sandals"

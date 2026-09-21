@@ -161,6 +161,16 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 
+/obj/item/clothing/suit/roguetown/shirt/paper_duster
+	name = "paper duster"
+	desc = "A simple duster made from pages of books inscribed with knowledge."
+	icon = 'icons/roguetown/clothing/cloaks.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	icon_state = "duster"
+	item_state = "duster"
+	slot_flags = ITEM_SLOT_CLOAK
+	body_parts_covered = CHEST|ARMS
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
 	name = "tinker suit"
 	desc = "Typical fashion of the best engineers."
