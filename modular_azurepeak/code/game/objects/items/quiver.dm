@@ -292,7 +292,7 @@
 	update_icon()
 
 /obj/item/quiver/javelin/stone/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/stone/A = new()
 		arrows += A
