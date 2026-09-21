@@ -1,3 +1,6 @@
+/// Minimum deciseconds between fishing balloon alerts, so they don't stack on top of each other.
+#define FISHING_ALERT_GAP 12
+
 /obj/item/fishingrod
 	force = 12
 	possible_item_intents = list(ROD_CAST, ROD_AUTO, SPEAR_BASH)
@@ -92,6 +95,8 @@
 	var/reel_successes = 0
 	var/failed_reel_attempts = 0
 	var/current_fish_zone = "none"  // "green", "blue", or "red"
+	/// world.time before which the next fishing balloon alert has to wait. See fishing_alert().
+	var/next_balloon_time = 0
 
 /obj/item/fishingrod/Initialize(mapload)
 	. = ..()
@@ -391,6 +396,38 @@
 	if(!hook || !reel)
 		return FALSE
 	return TRUE
+
+/// How many red-zone strain hits the line takes before it fails. Based on tackle Line Toughness only
+/// (reel + hook + line), not skill. Twine 1, leather 2, silk 2, deluxe 3 with a typical hook.
+/obj/item/fishingrod/proc/get_strain_hits_allowed()
+	var/tackle_toughness = 0
+	for(var/obj/item/fishing/tackle_piece in list(reel, hook, line))
+		tackle_toughness += tackle_piece.linehealth
+	if(tackle_toughness >= 14)
+		return 3
+	if(tackle_toughness >= 8)
+		return 2
+	return 1
+
+/// Shows a balloon alert over the fisher without letting alerts overlap.
+/// priority 1 = hint (dropped if another alert is still on screen),
+/// priority 2+ = important (queued to show right after the current alert clears).
+/obj/item/fishingrod/proc/fishing_alert(mob/viewer, text, priority = 1)
+	if(!viewer || QDELETED(viewer))
+		return
+	var/wait = max(0, next_balloon_time - world.time)
+	if(wait > 0 && priority <= 1)
+		return
+	next_balloon_time = world.time + wait + FISHING_ALERT_GAP
+	if(wait <= 0)
+		viewer.balloon_alert(viewer, text)
+	else
+		// Global proc callback so a queued alert still shows if the rod is deleted first (hand fishing).
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(show_fishing_balloon), viewer, text), wait)
+
+/proc/show_fishing_balloon(mob/viewer, text)
+	if(viewer && !QDELETED(viewer))
+		viewer.balloon_alert(viewer, text)
 /// Deciseconds the player has to react to a bite. Flat 20 through apprentice,
 /// then +10 per skill level above apprentice, plus tackle bite modifiers.
 /obj/item/fishingrod/proc/get_bite_reaction_window(fishing_skill_level)
@@ -1075,6 +1112,8 @@
 	fishhealth = 18 + path_challenge * 6 + failure_pressure * 2
 
 	var/initialline = linehealth
+	// Hand fishing has no tackle, so it always takes 2 strain hits to fail.
+	var/strain_chunk = round(initialline / 2) + 1
 	var/fish_challenge_mg = get_fish_total_challenge()
 	var/skillmod = fishing_skill_level
 	var/challenge_load = max(0, fish_challenge_mg - max(0, skillmod - 4))
@@ -1130,16 +1169,19 @@
 			break
 		if(is_far_from_cast_anchor(fisher))
 			to_chat(fisher, span_warning("I stray too far and the fish slips free!"))
+			fishing_alert(fisher, "Too far!", 3)
 			currentlyfishing = FALSE
 			break
 		if(world.time >= next_stamina_tick)
 			var/stamina_drain = get_fishing_stamina_drain(fisher, 18.75)
 			if(stamina_drain && !fisher.stamina_add(stamina_drain))
 				to_chat(fisher, span_warning("I'm too exhausted to keep fighting the fish."))
+				fishing_alert(fisher, "Exhausted!", 3)
 				currentlyfishing = FALSE
 			next_stamina_tick = world.time + (5 SECONDS)
 		if(user.IsStun() || user.IsParalyzed())
 			to_chat(fisher, span_warning("I lose my grip!"))
+			fishing_alert(fisher, "Lost grip!", 3)
 			currentlyfishing = FALSE
 		if(user.client)
 			average_ping = user.client.avgping * 0.01
@@ -1158,8 +1200,6 @@
 		face.icon_state = "stress[facestate]"
 
 		hooked_ticks++
-		if(linehealth <= 0)
-			currentlyfishing = FALSE
 
 		if(fishtarget > 90 && directionstate == 1)
 			if(prob(fishtarget - 90))
@@ -1169,30 +1209,14 @@
 				directionstate = 1
 
 		targetdif = clamp((-currentmouse + fishtarget + 90) * difficulty, -90, 90)
-		if(targetdif >= 90 || targetdif <= -90)
-			if(COOLDOWN_FINISHED(src, ping_delay))
-				linehealth--
-				COOLDOWN_START(src, ping_delay, average_ping)
-
 		var/fatigue_step = min(round(hooked_ticks / (8 SECONDS)), 3)
 		var/effective_acceleration = max(1, acceleration - fatigue_step)
 		var/effective_maxvelocity = max(1, maxvelocity - fatigue_step)
 		velocity = clamp(velocity + ((effective_acceleration * directionstate) / 5), -effective_maxvelocity, effective_maxvelocity)
 		fishtarget = clamp(fishtarget + velocity, 0, 180)
 
-		switch(linehealth / initialline)
-			if(0.81 to 1)
-				facestate = 1
-			if(0.61 to 0.8)
-				facestate = 2
-			if(0.41 to 0.6)
-				facestate = 3
-			if(0.21 to 0.4)
-				facestate = 4
-			else
-				facestate = 5
-
-		facestate = clamp(facestate, 1, 5)
+		var/line_ratio = clamp(linehealth / initialline, 0, 1)
+		facestate = clamp(1 + round((1 - line_ratio) * 4), 1, 5)
 
 		var/gz_min
 		if(fishing_skill_level >= SKILL_LEVEL_LEGENDARY)
@@ -1210,11 +1234,12 @@
 		var/abs_tdf = abs(targetdif + 3)
 		if(abs_tdf <= green_zone_margin)
 			current_fish_zone = "green"
-			if(!reel_ready)
+			if(!reel_ready && world.time >= reel_cooldown_until && world.time >= next_balloon_time)
 				failed_reel_attempts = 0
 				reel_ready = TRUE
 				reel_expire = world.time + (2 SECONDS)
 				to_chat(fisher, span_notice("The fish is tiring! Strike the water once more to haul it in!"))
+				fishing_alert(fisher, "Reel now!", 1)
 		else if(abs_tdf <= blue_zone_margin)
 			current_fish_zone = "blue"
 			topzone_hold = 0
@@ -1225,13 +1250,22 @@
 			topzone_hold = 0
 			reel_ready = FALSE
 			reel_expire = 0
-			to_chat(fisher, span_warning("I lose the fish in the water!"))
-			currentlyfishing = FALSE
+			// Each strain hit takes a chunk of line, then a 1s cooldown. Still in red when it expires = another hit.
+			if(COOLDOWN_FINISHED(src, ping_delay))
+				linehealth -= strain_chunk
+				COOLDOWN_START(src, ping_delay, max(10, average_ping))
+				playsound(fisher.loc, 'sound/items/pickbreak.ogg', 40, FALSE)
+				fishing_alert(fisher, "Line strain!", 2)
+			if(linehealth <= 0)
+				to_chat(fisher, span_warning("I lose the fish in the water!"))
+				fishing_alert(fisher, "Fish lost!", 3)
+				currentlyfishing = FALSE
 
 		if(reel_ready && world.time > reel_expire)
 			reel_ready = FALSE
 			topzone_hold = 0
 			to_chat(fisher, span_userdanger("THE FISH PULLS BACK! Keep my hand centered to tire it again!"))
+			fishing_alert(fisher, "It pulls back!", 1)
 
 		if(reel_input && currentlyfishing)
 			var/input_zone = reel_input_zone || current_fish_zone
@@ -1239,6 +1273,7 @@
 			reel_input_zone = null
 			if(world.time < reel_cooldown_until)
 				to_chat(fisher, span_warning("I need to catch my breath for a second before reeling again!"))
+				fishing_alert(fisher, "Catch breath!", 1)
 			else if(reel_ready || input_zone == "green")
 				reel_cooldown_until = world.time + (1 SECONDS)
 				reel_ready = FALSE
@@ -1246,6 +1281,7 @@
 				var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
 				if(reel_stamina_drain && !fisher.stamina_add(reel_stamina_drain))
 					to_chat(fisher, span_warning("I'm too exhausted to haul against the fish."))
+					fishing_alert(fisher, "Exhausted!", 3)
 					currentlyfishing = FALSE
 					sleep(1)
 					continue
@@ -1254,11 +1290,13 @@
 				reel_successes++
 				if(reel_successes >= 2)
 					to_chat(fisher, span_notice("I haul back hard and pull it in!"))
+					fishing_alert(fisher, "Landed!", 3)
 					caught = TRUE
 					currentlyfishing = FALSE
 				else
 					hooked_ticks = 0
 					to_chat(fisher, span_userdanger("I GAIN GROUND! But the fish surges back. One more strong pull!"))
+					fishing_alert(fisher, "Gained line!", 2)
 			else if(input_zone == "blue")
 				reel_cooldown_until = world.time + (1 SECONDS)
 				topzone_hold = 0
@@ -1271,6 +1309,7 @@
 				maxvelocity = min(maxvelocity + 1, 12)
 				hooked_ticks = 0
 				to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
+				fishing_alert(fisher, "Bad timing!", 2)
 
 		sleep(1)
 
@@ -1890,8 +1929,10 @@
 		var/targetdif = 0
 		var/velocity
 		var/initialwait = waittime
-		var/initialline = linehealth //these last two are for the face
-		var/initialfish = fishhealth
+		var/initialline = linehealth //for the face
+		// Strain hits to fail come from tackle toughness; the chunk is sized so exactly that many hits empty the line.
+		var/strain_hits_allowed = get_strain_hits_allowed()
+		var/strain_chunk = round(initialline / strain_hits_allowed) + 1
 		var/facestate = 1
 		var/hooked_ticks = 0
 		var/next_stamina_tick = world.time + (5 SECONDS)
@@ -1920,6 +1961,7 @@
 				var/stamina_drain = get_fishing_stamina_drain(fisher, 18.75)
 				if(stamina_drain && !fisher.stamina_add(stamina_drain))
 					to_chat(fisher, "<span class='warning'>I'm too exhausted to keep fighting the fish.</span>")
+					fishing_alert(fisher, "Exhausted!", 3)
 					currentlyfishing = FALSE
 				next_stamina_tick = world.time + (5 SECONDS)
 			if(user.client)
@@ -1969,8 +2011,6 @@
 
 					// Keep fish pressure and visuals, but prevent passive auto-catch.
 					fishhealth = max(1, fishhealth)
-					if(linehealth <= 0)
-						currentlyfishing = FALSE
 
 					if(fishtarget > 90 && directionstate == 1)
 						if(prob(fishtarget - 90))
@@ -1980,39 +2020,15 @@
 							directionstate = 1
 
 					targetdif = clamp((-currentmouse + fishtarget + 90) * difficulty, -90, 90)
-					if(targetdif >= 90 || targetdif <= -90)
-						if(COOLDOWN_FINISHED(src, ping_delay))
-							linehealth--
-							COOLDOWN_START(src, ping_delay, average_ping) ///this gives users the average ping free time between damages incase of lag spikes you don't instantly lose
+
 					var/fatigue_step = min(round(hooked_ticks / (8 SECONDS)), 3)
 					var/effective_acceleration = max(1, acceleration - fatigue_step)
 					var/effective_maxvelocity = max(1, maxvelocity - fatigue_step)
 					velocity = clamp(velocity + ((effective_acceleration*directionstate)/5), -effective_maxvelocity, effective_maxvelocity)
 					fishtarget = clamp(fishtarget + velocity, 0, 180)
 
-					switch(linehealth / initialline)
-						if(0.81 to 1)
-							facestate = 1
-						if(0.61 to 0.8)
-							facestate = 2
-						if(0.41 to 0.6)
-							facestate = 3
-						if(0.21 to 0.4)
-							facestate = 4
-						else
-							facestate = 5
-
-					switch(fishhealth / initialfish)
-						if(0.61 to 0.8)
-							facestate -= 1
-						if(0.41 to 0.6)
-							facestate -= 2
-						if(0.21 to 0.4)
-							facestate -= 3
-						if(0 to 0.2)
-							facestate -= 4
-
-					facestate = clamp(facestate, 1, 5)
+					var/line_ratio = clamp(linehealth / initialline, 0, 1)
+					facestate = clamp(1 + round((1 - line_ratio) * 4), 1, 5)
 
 					// Zone margins: green zone width is fixed per skill tier.
 					var/gz_min
@@ -2032,11 +2048,12 @@
 					if(abs_tdf <= green_zone_margin)
 						current_fish_zone = "green"
 						topzone_hold++
-						if(topzone_hold >= 1 && !reel_ready)
+						if(topzone_hold >= 1 && !reel_ready && world.time >= reel_cooldown_until && world.time >= next_balloon_time)
 							failed_reel_attempts = 0
 							reel_ready = TRUE
 							reel_expire = world.time + (2 SECONDS)
 							to_chat(fisher, "<span class='notice'>The fish is tiring! Use the rod to reel it in!</span>")
+							fishing_alert(fisher, "Reel now!", 1)
 					else if(abs_tdf <= blue_zone_margin)
 						current_fish_zone = "blue"
 						topzone_hold = 0
@@ -2047,23 +2064,33 @@
 						topzone_hold = 0
 						reel_ready = FALSE
 						reel_expire = 0
-						if(line && (prob(30) || !baited))
-							playsound(fisher.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
-							apply_line_snap_consequences(fisher, "The fish surges and breaks it!")
-							line_snapped = TRUE
-						else if(baited)
-							playsound(fisher.loc, 'sound/items/fishing_plouf.ogg', 90, TRUE)
-							to_chat(fisher, span_userdanger("THE BAIT IS GONE! The fish rips the bait free from my hook and vanishes!"))
-							QDEL_NULL(baited)
-							baited = null
-							update_icon()
-						to_chat(fisher, "<span class='warning'>I lose the fish in the water!</span>")
-						currentlyfishing = FALSE
+						// Each strain hit takes a chunk of line (see strain_chunk), then a 1s cooldown. Still in red when it expires = another hit.
+						if(COOLDOWN_FINISHED(src, ping_delay))
+							linehealth -= strain_chunk
+							COOLDOWN_START(src, ping_delay, max(10, average_ping))
+							playsound(fisher.loc, 'sound/items/pickbreak.ogg', 40, FALSE)
+							fishing_alert(fisher, "Line strain!", 2)
+						if(linehealth <= 0)
+							if(line && (prob(30) || !baited))
+								playsound(fisher.loc, 'sound/items/pickbreak.ogg', 80, FALSE)
+								apply_line_snap_consequences(fisher, "The fish surges and breaks it!")
+								fishing_alert(fisher, "Line snapped!", 3)
+								line_snapped = TRUE
+							else if(baited)
+								playsound(fisher.loc, 'sound/items/fishing_plouf.ogg', 90, TRUE)
+								to_chat(fisher, span_userdanger("THE BAIT IS GONE! The fish rips the bait free from my hook and vanishes!"))
+								fishing_alert(fisher, "Bait lost!", 3)
+								QDEL_NULL(baited)
+								baited = null
+								update_icon()
+							to_chat(fisher, "<span class='warning'>I lose the fish in the water!</span>")
+							currentlyfishing = FALSE
 
 					if(reel_ready && world.time > reel_expire)
 						reel_ready = FALSE
 						topzone_hold = 0
 						to_chat(fisher, span_userdanger("THE FISH PULLS BACK! Keep the rod steady in front of you to tire it again!"))
+						fishing_alert(fisher, "It pulls back!", 1)
 
 					if(reel_input && currentlyfishing)
 						var/input_zone = reel_input_zone || current_fish_zone
@@ -2071,6 +2098,7 @@
 						reel_input_zone = null
 						if(world.time < reel_cooldown_until)
 							to_chat(fisher, "<span class='warning'>I need to catch my breath for a second before reeling again.</span>")
+							fishing_alert(fisher, "Catch breath!", 1)
 						else if(reel_ready || input_zone == "green")
 							reel_cooldown_until = world.time + (1 SECONDS)
 							reel_ready = FALSE
@@ -2078,6 +2106,7 @@
 							var/reel_stamina_drain = get_fishing_stamina_drain(fisher, 37.5)
 							if(reel_stamina_drain && !fisher.stamina_add(reel_stamina_drain))
 								to_chat(fisher, "<span class='warning'>I'm too exhausted to fight against the fish.</span>")
+								fishing_alert(fisher, "Exhausted!", 3)
 								currentlyfishing = FALSE
 								continue
 							reel_expire = 0
@@ -2085,12 +2114,14 @@
 							reel_successes++
 							if(reel_successes >= 2)
 								to_chat(fisher, "<span class='notice'>I tug back hard and reel it in!</span>")
+								fishing_alert(fisher, "Landed!", 3)
 								caught = TRUE
 								currentlyfishing = FALSE
 							else
 								// After each successful reel, the fish surges back to full speed.
 								hooked_ticks = 0
 								to_chat(fisher, span_userdanger("I GAIN LINE! But the fish surges back. One more strong reel should do it!"))
+								fishing_alert(fisher, "Gained line!", 2)
 						else if(input_zone == "blue")
 							reel_cooldown_until = world.time + (1 SECONDS)
 							topzone_hold = 0
@@ -2103,6 +2134,7 @@
 							maxvelocity = min(maxvelocity + 1, 12)
 							hooked_ticks = 0
 							to_chat(fisher, span_userdanger("BAD TIMING! The fish pulls back and surges with renewed energy!"))
+							fishing_alert(fisher, "Bad timing!", 2)
 
 			lastmouse = currentmouse
 			sleep(1)

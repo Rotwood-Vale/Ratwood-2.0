@@ -727,6 +727,13 @@
 	i_type = "Tools"
 	display_category = ITEM_CAT_TOOLS_FIELD
 
+/datum/anvil_recipe/tools/blacksteel/fishing
+	name = "Fishing Rod, Blacksteel (+1 Sticks)"
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/fishingrod/blacksteel
+	i_type = "Tools"
+	display_category = ITEM_CAT_TOOLS_FIELD
+
 // --------- HEARTBEAST TOOLS -----------
 /datum/anvil_recipe/tools/heartbeast_vials
 	name = "Blood vials"
