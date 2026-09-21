@@ -1103,7 +1103,6 @@
 	pass_flags = 1;
 	pixel_y = -32
 	},
-/obj/structure/fluff/walldeco/stone,
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/indoors/town/bath)
 "alM" = (
@@ -21088,6 +21087,14 @@
 	dir = 4
 	},
 /area/rogue/outdoors/beach/harbor)
+"eqr" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32;
+	layer = 5
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/town/basement/tavern)
 "eqy" = (
 /mob/living/carbon/human/species/skeleton/npc/miner,
 /turf/open/floor/rogue/twig,
@@ -22783,6 +22790,14 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
+"eHz" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/fluff/walldeco/church/line,
+/obj/structure/table/wood/fancy,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "eHB" = (
 /obj/effect/decal/herringbone,
 /turf/open/floor/rogue/blocks,
@@ -67752,6 +67767,15 @@
 	icon_state = "rockwd"
 	},
 /area/rogue/under/cavewet/river)
+"odH" = (
+/obj/effect/decal/cobbleedge{
+	dir = 4;
+	icon_state = "borderfall";
+	pixel_x = 8
+	},
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/churchrough,
+/area/rogue/indoors/town/bath)
 "odL" = (
 /obj/structure/closet/crate/chest{
 	lockid = "church"
@@ -71957,6 +71981,7 @@
 	icon_state = "borderfall";
 	pixel_x = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
 "oXU" = (
@@ -82001,6 +82026,14 @@
 /obj/item/roguebin/water,
 /turf/open/floor/rogue/greenstone/runed,
 /area/rogue/indoors/town/magician/rockhill)
+"rer" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "res" = (
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/rogue/concrete,
@@ -82622,6 +82655,14 @@
 /obj/structure/glowshroom,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/grove)
+"rll" = (
+/obj/structure/fluff/statue/small{
+	pass_flags = 1;
+	pixel_y = -2
+	},
+/obj/structure/roguewindow/harem2,
+/turf/closed/wall/mineral/rogue/decostone,
+/area/rogue/indoors/town/bath)
 "rln" = (
 /obj/structure/roguemachine/scomm/l{
 	scom_tag = "Manor - Royal Hall"
@@ -83520,6 +83561,13 @@
 	dir = 4
 	},
 /area/rogue/outdoors/bograt/above)
+"ruM" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "ruQ" = (
 /obj/structure/chair/bench/church{
 	dir = 4
@@ -100692,6 +100740,18 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"vey" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy,
+/obj/effect/decal/carpet/kover_purple{
+	dir = 1;
+	pixel_x = 18;
+	pixel_y = -21
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "veF" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/grassyel,
@@ -104635,6 +104695,14 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/inq/basement)
+"vUR" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/table/wood/fancy,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/bath)
 "vUU" = (
 /obj/item/burial_shroud,
 /obj/item/burial_shroud,
@@ -109024,6 +109092,15 @@
 	pixel_y = -9
 	},
 /turf/open/floor/carpet/royalblack,
+/area/rogue/indoors)
+"wQm" = (
+/obj/structure/chair/stool/rogue,
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32;
+	layer = 5
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors)
 "wQq" = (
 /obj/structure/chair/stool/rogue{
@@ -114543,6 +114620,15 @@
 	dir = 4
 	},
 /turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/bath)
+"xWN" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4;
+	pixel_x = 2
+	},
+/obj/structure/fluff/walldeco/church/line,
+/obj/structure/chair/stool/rogue,
+/turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/bath)
 "xWR" = (
 /obj/machinery/light/rogue/candle{
@@ -200287,7 +200373,7 @@ lmM
 rHd
 hXj
 utj
-bTH
+eqr
 pYc
 tCN
 btm
@@ -291978,7 +292064,7 @@ eMv
 ooJ
 cDK
 xou
-cox
+wQm
 aJX
 cox
 ryI
@@ -292286,9 +292372,9 @@ dbq
 sXU
 oyJ
 oyJ
-oyJ
-oyJ
-oyJ
+ruM
+vey
+eHz
 jnW
 scK
 iYW
@@ -292718,9 +292804,9 @@ dbq
 dxX
 eLd
 eLd
-eLd
-eLd
-eLd
+rer
+vUR
+xWN
 oxB
 scK
 iWT
@@ -293150,7 +293236,7 @@ eFJ
 bgi
 weq
 ryB
-nSr
+odH
 oXT
 nSr
 uFw
@@ -293585,7 +293671,7 @@ soz
 eFJ
 soz
 eZt
-eFJ
+rll
 scK
 iWT
 iTw
