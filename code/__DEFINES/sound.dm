@@ -432,35 +432,32 @@
 
 /**
  * The per-category send state SSpoint_ambience keeps on a client (client.point_ambience_slots),
- * one positional list per category: what the source decided when it last changed, the volume
- * last sent, and the timer that advances a set of clips.
+ * one positional list per category: source turf and playback state, the volume last sent, fade
+ * state, and the timer that advances a set of clips.
  *
  * A list PER CATEGORY, not one flat list with an offset: flattening was measured and moved nothing,
  * and an offset a caller carries can read the neighbouring category's fields where a sublist cannot
  */
 #define POINT_AMBIENCE_SLOT_TURF 1
-#define POINT_AMBIENCE_SLOT_VOLUME 2
-#define POINT_AMBIENCE_SLOT_CONTINUOUS 3
-#define POINT_AMBIENCE_SLOT_FREQUENCY 4
-#define POINT_AMBIENCE_SLOT_LAST_VOLUME 5
-#define POINT_AMBIENCE_SLOT_FILE 6
-#define POINT_AMBIENCE_SLOT_TIMER 7
-/// The static_version the slot's turf and volume were last refreshed at, so a send can tell that
-/// what it holds predates an index change and refuse to serve from it
-#define POINT_AMBIENCE_SLOT_VERSION 8
+#define POINT_AMBIENCE_SLOT_FREQUENCY 2
+#define POINT_AMBIENCE_SLOT_LAST_VOLUME 3
+#define POINT_AMBIENCE_SLOT_FILE 4
+#define POINT_AMBIENCE_SLOT_TIMER 5
 /// The source the last walk ranked second for this category, which the send leans the stereo
 /// direction toward as the two trade places
-#define POINT_AMBIENCE_SLOT_RUNNER_UP 9
+#define POINT_AMBIENCE_SLOT_RUNNER_UP 6
 /// The area environment of the last send. A carried torch is skipped only while this and the
 /// volume both still match
-#define POINT_AMBIENCE_SLOT_ENVIRONMENT 10
+#define POINT_AMBIENCE_SLOT_ENVIRONMENT 7
 /// A fade in progress: the world.time its next step is due. Null when the category is not fading
-#define POINT_AMBIENCE_SLOT_FADE_NEXT 11
+#define POINT_AMBIENCE_SLOT_FADE_NEXT 8
 /// The volume a fade in is climbing to. Null on a fade out, which is how the two are told apart
-#define POINT_AMBIENCE_SLOT_FADE_TARGET 12
+#define POINT_AMBIENCE_SLOT_FADE_TARGET 9
 /// Steps the fade may still send
-#define POINT_AMBIENCE_SLOT_FADE_LEFT 13
-#define POINT_AMBIENCE_SLOT_FIELDS 13
+#define POINT_AMBIENCE_SLOT_FADE_LEFT 10
+/// A clip-set timer expired and the next service must choose another clip for this category
+#define POINT_AMBIENCE_SLOT_CLIP_DUE 11
+#define POINT_AMBIENCE_SLOT_FIELDS 11
 
 /// Deciseconds between the steps of a point ambience fade
 #define POINT_AMBIENCE_FADE_STEP 1

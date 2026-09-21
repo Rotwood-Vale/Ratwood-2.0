@@ -13,18 +13,26 @@
 	var/crossfire = TRUE
 	var/can_damage = FALSE
 	var/heat_level = 0
-	/// Category typepath: while lit, this light sits in SSpoint_ambience's index for that
-	/// category and sounds to nearby clients. Replaces the per-fire fireloop; the light owns
-	/// no loop, timer or channel of its own. Null means silent.
+	/**
+	 * Category typepath: while lit, this light sits in SSpoint_ambience's index for that
+	 * category and sounds to nearby clients. Replaces the per-fire fireloop. The light owns
+	 * no loop, timer or channel of its own. Null means silent
+	 */
 	var/point_ambience_category
+	/**
+	 * A MULTIPLE of the fire category's volume, where a kind of fire is not the size of the
+	 * default. Null or 1 takes the category's. A multiple rather than a number, so the offset
+	 * survives the category being retuned and the floor stays a share of what this resolves to
+	 */
+	var/point_ambience_volume_scale
 
 /// Membership in SSpoint_ambience's index tracks (on && a category && on a turf). Called
-/// from every site that changes one of those; safe to call redundantly.
+/// from every site that changes one of those. Safe to call redundantly
 /obj/machinery/light/rogue/proc/update_point_ambience()
 	if(!point_ambience_category)
 		return
 	if(on && !QDELETED(src) && isturf(loc))
-		SSpoint_ambience.register_source(src, point_ambience_category)
+		SSpoint_ambience.register_source(src, point_ambience_category, volume_scale = point_ambience_volume_scale)
 	else
 		SSpoint_ambience.unregister_source(src, point_ambience_category)
 
@@ -100,9 +108,8 @@
 		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
 	..()
 	update_icon()
-	// The base burn_out() flips on without ever reaching update(), so the index needs its
-	// own poke here, where the old explicit soundloop.stop() lived. Covers fuel running
-	// out, rain and every extinguish() path.
+	// The base burn_out() flips on without ever reaching update(), so the index needs its own poke
+	// here. Covers fuel running out, rain and every extinguish() path
 	update_point_ambience()
 
 /obj/machinery/light/rogue/update_icon()
@@ -236,7 +243,7 @@
 				set_light(0)
 				update_icon()
 				update_turf_heat()
-				// This path snuffs without going through update(), so the index needs its own poke.
+				// This path snuffs without going through update(), so the index needs its own poke
 				update_point_ambience()
 				if(soundloop)
 					soundloop.stop()

@@ -23,8 +23,10 @@
 	no_refuel = TRUE
 	heat_level = 4
 	// A real fire: it cooks, it spreads, and it burns at heat level 4, so it belongs on the hearth's
-	// category and channel, where a brazier beside a campfire is one crackle rather than two.
+	// category and channel, where a brazier beside a campfire is one crackle rather than two
 	point_ambience_category = /datum/point_ambience_category/fire
+	/// A smaller fire than a hearth's firebox: 1 dB under the category, by ear
+	point_ambience_volume_scale = 0.9
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -94,8 +96,8 @@
 	density = FALSE
 	heat_level = 3
 	// The TORCH sound, 30 over four tiles with a rolled pitch, rather than the hearth's 60 over six:
-	// this is a candle on a stand, it does not cook, does not spread, and burns a level cooler than
-	// the brazier it inherits from. Chosen on sound alone; cost between the two is a wash.
+	// This is a candle on a stand, it does not cook, does not spread, and burns a level cooler than
+	// the brazier it inherits from. Chosen on sound alone. Cost between the two is a wash
 	point_ambience_category = /datum/point_ambience_category/torch
 
 
@@ -428,7 +430,7 @@
 		on = FALSE
 		set_light(0)
 		update_icon()
-		// Torch removal skips update(), so the index needs its own poke.
+		// Torch removal skips update(), so the index needs its own poke
 		update_point_ambience()
 		playsound(src.loc, 'sound/foley/torchfixturetake.ogg', 70)
 
@@ -791,7 +793,7 @@
 	no_refuel = TRUE
 	status = LIGHT_BURNED
 	crossfire = FALSE
-	point_ambience_category = null // silent, as it was when it opted out of the old fireloop
+	point_ambience_category = null // Silent, as it was when it opted out of the old fireloop
 
 /obj/machinery/light/rogue/hearth/mobilestove/MiddleClick(mob/user, params)
 	. = ..()
@@ -886,6 +888,8 @@
 	cookonme = TRUE
 	max_integrity = 30
 	point_ambience_category = /datum/point_ambience_category/fire
+	/// A smaller fire than a hearth's firebox: 1 dB under the category, by ear
+	point_ambience_volume_scale = 0.9
 	heat_level = 5
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)

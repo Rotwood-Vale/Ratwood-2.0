@@ -139,10 +139,10 @@
 	flags_1 = null
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
 	slot_flags = ITEM_SLOT_HIP
-	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them.
+	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them
 	var/mob/last_carrier
 	/// Heard by whoever holds it and never indexed at all, not even lying on a turf. Lanterns: they
-	/// never burn out and can be worn, so far more of them are about at once than torches.
+	/// never burn out and can be worn, so far more of them are about at once than torches
 	var/ambience_wearer_only = FALSE
 	//added for torch burnout
 	var/should_self_destruct = TRUE
@@ -166,21 +166,22 @@
 	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
 	. = ..()
 
-/// A lit torch in a hand is heard by its carrier alone, through the mob's self source, and never
-/// enters the index. Lying on the ground it is an ordinary static source everyone nearby hears.
-/// Inside a sconce the sconce is the source, not this.
+/**
+ * A lit torch in a hand is heard by its carrier alone, through the mob's self source, and never
+ * enters the index. Lying on the ground it is an ordinary static source everyone nearby hears.
+ * Inside a sconce the sconce is the source, not this
+ */
 /obj/item/flashlight/flare/torch/proc/update_point_ambience()
 	var/lit = on && !QDELETED(src)
 	var/mob/carrier = (lit && ismob(loc)) ? loc : null
 	if(last_carrier && last_carrier != carrier)
-		SSpoint_ambience.clear_self_source(last_carrier, src)
+		SSpoint_ambience.clear_self_source(last_carrier, src, lit)
 	last_carrier = carrier
 	if(carrier)
 		SSpoint_ambience.set_self_source(carrier, src)
-	if(lit && !ambience_wearer_only && isturf(loc))
-		SSpoint_ambience.register_source(src, /datum/point_ambience_category/torch)
-	else
-		SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
+	// Never indexed on the ground, a sconce holding one being the source others hear. Registering
+	// a loose torch cost a map-wide cache invalidation on every drop, pick-up and throw
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
 
 /obj/item/flashlight/flare/torch/Moved(atom/OldLoc, Dir)
 	. = ..()

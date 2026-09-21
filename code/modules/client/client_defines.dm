@@ -46,18 +46,22 @@
 	/// Single-instance Layout TGUI menu
 	var/datum/layout_menu/layout_menu = null
 	/// Nearest ambient source this client hears per category (category datum -> atom), driven
-	/// by SSpoint_ambience. Always a list, so the hot path indexes it without a null check.
+	/// by SSpoint_ambience. Always a list, so the hot path indexes it without a null check
 	var/list/point_ambience_sources = list()
-	/// Per category, indexed by category.index: what the send resolved from the source when it
-	/// last changed (turf, base volume, continuous, pitch, clip), the volume last sent and the clip
-	/// timer. Filled on a fresh send and read on every update, so an update looks nothing up.
-	/// The slots are POINT_AMBIENCE_SLOT_* in sound.dm.
+	/**
+	 * Per category, indexed by category.index: what the send resolved from the source when it
+	 * last changed (turf, base volume, continuous, pitch, clip), the volume last sent and the clip
+	 * timer. Filled on a fresh send and read on every update, so an update looks nothing up.
+	 * The slots are POINT_AMBIENCE_SLOT_* in sound.dm
+	 */
 	var/list/point_ambience_slots = list()
+	/// At least one category slot has an expired clip for the next point ambience service to advance
+	var/point_ambience_clip_due = FALSE
 	/// One /sound datum per category, indexed by category.index, reused for every send to this
-	/// client. The fields the source decides are written when it changes, the rest per send.
+	/// client. The fields the source decides are written when it changes, the rest per send
 	var/list/point_ambience_sounds = list()
 	/// The self source the last category loop was served with, so a standing listener whose
-	/// torch state changed still gets the loop.
+	/// torch state changed still gets the loop
 	var/atom/point_ambience_cache_self
 	/**
 	 * Whether the mob can hear, held until point_ambience_profile_until: can_hear() is three user
@@ -75,17 +79,18 @@
 	var/datum/point_ambience_head_watch/point_ambience_head_watch
 	var/point_ambience_profile_until = 0
 	/// world.time before which the move hook will not service this client again, when
-	/// SSpoint_ambience.move_service_interval is set.
+	/// SSpoint_ambience.move_service_interval is set
 	var/point_ambience_next_service = 0
 	/// world.time a step last ran a service for this client. The standing walk passes over anyone
-	/// served within SSpoint_ambience.standing_skip of now; the step that is coming will serve them.
+	/// served within SSpoint_ambience.standing_skip of now. The step that is coming will serve them
 	var/point_ambience_last_service = 0
-	/// Point ambience off, or its slider or Master at zero. Set at login and by the volume menu,
+	var/point_ambience_last_move
+	/// Point ambience off, or its effective volume at zero. Set at login and by the volume menu,
 	/// never per step
 	var/point_ambience_silenced = FALSE
 	/**
 	 * The last full ambience scan, reused while the client stands still and nothing in the index
-	 * changed: the turf, SSpoint_ambience.static_version and point ambience volume under Master it was
+	 * changed: the turf, SSpoint_ambience.static_version and effective point ambience volume it was
 	 * taken at, and the nearest source per category. The walk ranks straight into this list, so it
 	 * allocates nothing
 	 */
@@ -93,13 +98,15 @@
 	var/point_ambience_cache_version
 	var/point_ambience_cache_volume
 	var/list/point_ambience_cache_static
-	/// Every source the own-floor walk could reach from anywhere in the client's current index
-	/// cell, as the flat x, y, category index, source the buckets already store. A step inside the
-	/// same cell ranks this instead of probing nine buckets, and a probe measured 0.7 us. Rebuilt
-	/// on a cell change or a static_version change, which is one step in eight at walking pace.
+	/**
+	 * Every source the own-floor walk could reach from anywhere in the client's current index
+	 * cell, as the flat x, y, category index, source the buckets already store. A step inside the
+	 * same cell ranks this instead of probing nine buckets, and a probe measured 0.7 us. Rebuilt
+	 * on a cell change or a static_version change, which is one step in eight at walking pace
+	 */
 	var/list/point_ambience_cell_candidates
 	/// The same for the floors above and below, built only if a storey pass actually runs for this
-	/// cell. Null means not built yet, an empty list means built and there was nothing there.
+	/// cell. Null means not built yet, an empty list means built and there was nothing there
 	var/list/point_ambience_cell_above
 	var/list/point_ambience_cell_below
 	var/point_ambience_cell_index
