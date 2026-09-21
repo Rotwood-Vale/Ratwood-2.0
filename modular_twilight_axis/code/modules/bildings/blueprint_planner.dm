@@ -2678,8 +2678,9 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 
 		if(ispath(build_path, /turf))
 			if(!(ispath(build_path, /turf/closed) && isclosedturf(target_turf)))
-				target_turf.ChangeTurf(build_path, flags = CHANGETURF_INHERIT_AIR)
-				target_turf.setDir(chosen_dir)
+				var/turf/new_turf = target_turf.PlaceOnTop(build_path, flags = CHANGETURF_INHERIT_AIR)
+				if(new_turf)
+					new_turf.setDir(chosen_dir)
 		else if(ispath(build_path, /atom/movable))
 			var/atom/movable/AM = new build_path(target_turf)
 			AM.setDir(chosen_dir)
@@ -2734,10 +2735,7 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	action_icon = 'icons/mob/actions/roguespells.dmi'
 	action_icon_state = "spell0"
 	panel = "Spells"
-	charge_type = "recharge"
 	recharge_time = 0
-	clothes_req = FALSE
-	human_req = FALSE
 	var/list/scanned_grid = list()
 
 /obj/effect/proc_holder/spell/self/architect_plan/ui_state(mob/user)
@@ -2858,15 +2856,12 @@ GLOBAL_LIST_INIT(blueprint_buildable_types, init_blueprint_buildable_types())
 	action_icon = 'icons/mob/actions/roguespells.dmi'
 	action_icon_state = "shieldsparkles"
 	panel = "Spells"
-	charge_type = "recharge"
 	recharge_time = 300
 	releasedrain = 10
 	sparks_amt = 2
 	invocation_type = "whisper"
 	invocations = list("Struo et Creo...", "Forma Materia...")
 	range = 1
-	clothes_req = FALSE
-	human_req = FALSE
 
 /obj/effect/proc_holder/spell/targeted/architect_conjure/choose_targets(mob/user = usr)
 	to_chat(user, span_notice("You prepare to materialize the matrix. <b>Middle-click</b> on the targeted ground to cast."))

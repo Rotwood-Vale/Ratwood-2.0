@@ -68,6 +68,44 @@ const NEXT_DIR: Record<number, number> = {
   8: 1,
 };
 
+const exportBlueprintToString = (data: { max_floors: number; grid: GridCell[] }): string => {
+  const json = JSON.stringify(data);
+  const utf8Bytes = encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+    String.fromCharCode(parseInt(p1, 16))
+  );
+  return `BP:${btoa(utf8Bytes)}`;
+};
+
+const importBlueprintFromString = (str: string): { max_floors?: number; grid?: GridCell[] } | null => {
+  try {
+    const cleanStr = str.trim();
+    const rawBase64 = cleanStr.startsWith('BP:') ? cleanStr.slice(3) : cleanStr;
+    const utf8Bytes = atob(rawBase64);
+    const json = decodeURIComponent(
+      utf8Bytes.split('').map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join('')
+    );
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+};
+
+const copyTextToClipboard = (text: string) => {
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  }
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+  } catch (e) {}
+  document.body.removeChild(textarea);
+};
+
 const BlueprintPreview = ({
   grid,
   buildableTypes,
@@ -201,6 +239,10 @@ export const BlueprintPlanner = () => {
   const [confirmClear, setConfirmClear] = useState<boolean>(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState<boolean>(false);
   const [publishName, setPublishName] = useState<string>('');
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState<boolean>(false);
+  const [importString, setImportString] = useState<string>('');
+  const [importError, setImportError] = useState<string>('');
 
   const initialized = useRef(false);
 
@@ -341,6 +383,58 @@ export const BlueprintPlanner = () => {
     act('delete_library_blueprint', { id });
   };
 
+  const handleCopyBlueprintString = () => {
+    if (grid.length === 0) return;
+    const exportString = exportBlueprintToString({
+      max_floors: totalFloors,
+      grid,
+    });
+    copyTextToClipboard(exportString);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  const handleImportBlueprintString = () => {
+    if (!importString.trim()) return;
+    const parsed = importBlueprintFromString(importString);
+    if (!parsed || !Array.isArray(parsed.grid) || parsed.grid.length === 0) {
+      setImportError('Invalid blueprint string or empty design!');
+      return;
+    }
+
+    const safeGrid: GridCell[] = parsed.grid.filter((c) => {
+      return (
+        typeof c.x === 'number' &&
+        typeof c.y === 'number' &&
+        typeof c.z === 'number' &&
+        typeof c.type === 'string' &&
+        Math.abs(c.x) <= maxRadiusAllowed &&
+        Math.abs(c.y) <= maxRadiusAllowed &&
+        c.z >= 0 &&
+        c.z < 4
+      );
+    });
+
+    if (safeGrid.length === 0) {
+      setImportError('No valid tiles found in blueprint!');
+      return;
+    }
+
+    let maxDist = 3;
+    safeGrid.forEach((c) => {
+      maxDist = Math.max(maxDist, Math.abs(c.x), Math.abs(c.y));
+    });
+    setGridRadius(Math.min(maxRadiusAllowed, maxDist));
+
+    const importedFloors = Math.max(2, Math.min(4, Number(parsed.max_floors) || 2));
+    setGrid(safeGrid);
+    setTotalFloors(importedFloors);
+    setActiveZ(0);
+    setIsImportModalOpen(false);
+    setImportString('');
+    setImportError('');
+  };
+
   const cells = useMemo(() => {
     const result: { x: number; y: number }[] = [];
     for (let y = gridRadius; y >= -gridRadius; y--) {
@@ -441,6 +535,58 @@ export const BlueprintPlanner = () => {
         </Modal>
       )}
 
+      {isImportModalOpen && (
+        <Modal>
+          <Section title="Paste Blueprint String">
+            <Stack vertical>
+              <Stack.Item mb={1}>
+                Paste your blueprint string (starts with <b>BP:...</b>) to import it directly into your editor:
+              </Stack.Item>
+              <Stack.Item mb={1.5}>
+                <Input
+                  key="modal_import_input"
+                  fluid
+                  autoFocus
+                  placeholder="Paste BP:... code here"
+                  value={importString}
+                  onChange={(val: string) => {
+                    setImportString(val);
+                    setImportError('');
+                  }}
+                  onEnter={handleImportBlueprintString}
+                />
+                {importError && (
+                  <Box color="#e74c3c" fontSize="0.85em" mt={0.5}>
+                    {importError}
+                  </Box>
+                )}
+              </Stack.Item>
+              <Stack.Item>
+                <Stack justify="flex-end">
+                  <Button
+                    mr={1}
+                    onClick={() => {
+                      setIsImportModalOpen(false);
+                      setImportString('');
+                      setImportError('');
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    color="good"
+                    disabled={!importString.trim()}
+                    onClick={handleImportBlueprintString}
+                  >
+                    Load into Editor
+                  </Button>
+                </Stack>
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Modal>
+      )}
+
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item mb={1}>
@@ -466,6 +612,27 @@ export const BlueprintPlanner = () => {
               {activeView === 'editor' && (
                 <Stack.Item>
                   <Stack align="center">
+                    <Button
+                      color={isCopied ? 'good' : 'blue'}
+                      icon={isCopied ? 'check' : 'copy'}
+                      disabled={grid.length === 0}
+                      onClick={handleCopyBlueprintString}
+                    >
+                      {isCopied ? 'Copied!' : 'Copy Blueprint'}
+                    </Button>
+
+                    <Button
+                      color="teal"
+                      icon="paste"
+                      onClick={() => {
+                        setImportString('');
+                        setImportError('');
+                        setIsImportModalOpen(true);
+                      }}
+                    >
+                      Paste Blueprint
+                    </Button>
+
                     <Button
                       color="purple"
                       icon="cloud-upload-alt"
