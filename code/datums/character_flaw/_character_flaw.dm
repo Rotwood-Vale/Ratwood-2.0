@@ -814,7 +814,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/hemophage
 	name = "Hemophage"
- 	desc = "By an unknown zizonic curse, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
+	desc = "By an unknown zizonic curse, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
 	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
 	point_value = 2
 
