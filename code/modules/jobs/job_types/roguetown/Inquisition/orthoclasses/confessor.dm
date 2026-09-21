@@ -18,10 +18,9 @@
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
 	subclass_stats = list(//+9
-		STATKEY_SPD = 3,
-		STATKEY_WIL = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1
+		STATKEY_PER = 3,
+		STATKEY_SPD = 2,
+		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //Should rely on the seizing garrote to properly subdue foes.
