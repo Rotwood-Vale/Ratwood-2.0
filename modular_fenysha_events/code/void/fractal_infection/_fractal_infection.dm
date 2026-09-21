@@ -392,6 +392,7 @@
 /datum/status_effect/fractal_infection/tick()
 	. = ..()
 
+	prune_lost_bodyparts()
 	update_stage()
 
 	if(COOLDOWN_FINISHED(src, next_fractal_message) && can_do_fractal_message())
@@ -746,6 +747,9 @@
 
 	/// Icon state on fractal_mutation.dmi, one per body zone.
 	var/mutation_icon_state
+	/// The limb this is attached to. Weak, or the limb and the feature would
+	/// hold each other and neither would ever be collected.
+	var/datum/weakref/host_ref
 
 /**
  * Whether the growth is drawn on this body at all.
@@ -815,6 +819,8 @@
 		qdel(mutation)
 		return FALSE
 
+	mutation.host_ref = WEAKREF(part)
+
 	/*
 	 * Store mutation state.
 	 */
@@ -874,6 +880,41 @@
 	/// "SUBJECTPRONOUN is" must stay contiguous - status_effect_examines() fixes verb agreement by matching that pair.
 	examine_text = span_boldwarning("<span class='fractal_growth'>SUBJECTPRONOUN is covered in <span class='fractal_glyph'>warped, endlessly repeating</span> growths across the [english_list(part_names)].</span>")
 
+
+
+/**
+ * Drops zones the owner no longer has, and cleans the limb that left with them.
+ *
+ * Polled rather than hooked on COMSIG_MOB_DISMEMBER, which is sent on the
+ * bodypart rather than the mob - registering for it would mean re-registering
+ * every time a limb changed, and it misses drop_limb and surgery besides. At
+ * six zones this costs nothing.
+ *
+ * The growth is taken off the severed limb before the datum goes, because a
+ * qdeleted feature left in bodypart_features runtimes the next time that limb
+ * draws itself.
+ */
+/datum/status_effect/fractal_infection/proc/prune_lost_bodyparts()
+	if(!length(mutated_bodyparts))
+		return
+
+	var/lost = FALSE
+	for(var/zone in mutated_bodyparts.Copy())
+		if(owner?.get_bodypart(zone))
+			continue
+
+		var/datum/bodypart_feature/fractal_mutation/mutation = body_effects[zone]
+		if(mutation)
+			var/obj/item/bodypart/severed = mutation.host_ref?.resolve()
+			severed?.remove_bodypart_feature(mutation)
+			qdel(mutation)
+
+		body_effects -= zone
+		mutated_bodyparts -= zone
+		lost = TRUE
+
+	if(lost)
+		update_examine_text()
 
 
 /datum/status_effect/fractal_infection/proc/remove_all_bodypart_mutations()

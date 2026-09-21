@@ -78,6 +78,10 @@ GLOBAL_LIST_INIT(shockwave_visuals, shockwave_visual_defaults())
 		// Applied as a floor rather than a sum, so blasts refresh it instead of
 		// stacking into minutes.
 		"deaf ticks" = 5,
+		// Skips void and fractal things entirely - no shake, no knockdown, no
+		// damage, no ringing. Off by default: a blast is a blast, and only the
+		// void's own abilities have a side to spare.
+		"spare kin" = 0,
 		// Off by default: throwing every loose item is a big, messy change to
 		// what a blast does, so it is opted into rather than assumed.
 		"throw objects" = 0,
@@ -226,6 +230,8 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	var/ear_damage
 	/// Deafness floor in organ life ticks, before strength scaling.
 	var/deaf_ticks
+	/// Whether void and fractal mobs are passed over.
+	var/spare_kin
 	var/throw_objects
 	var/throw_range
 	var/throw_speed
@@ -310,6 +316,7 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	ringing_time = tune["ringing time ds"]
 	ear_damage = tune["ear damage"]
 	deaf_ticks = tune["deaf ticks"]
+	spare_kin = tune["spare kin"]
 	throw_objects = tune["throw objects"]
 	throw_range = tune["throw range"]
 	throw_speed = tune["throw speed"]
@@ -623,6 +630,9 @@ GLOBAL_LIST_INIT(shockwave_distorted_planes, list(
 	thing.throw_at(destination, distance, throw_speed, spin = TRUE)
 
 /datum/shockwave/proc/stagger(mob/viewer, strength, ring)
+	if(spare_kin && is_void_kin(viewer))
+		return
+
 	if(viewer.client != unshaken)
 		shake_camera(viewer, 3 + round(5 * strength), strength)
 

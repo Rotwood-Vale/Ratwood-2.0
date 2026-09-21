@@ -60,6 +60,8 @@
 		"min duration ds" = 6,
 	), list(
 		"deaf ticks" = 0,
+		// Nor does it touch the void's own.
+		"spare kin" = 1,
 	))
 
 /// The projectile subtype already aims and fires; only the projectile is ours.
@@ -139,6 +141,8 @@
 		"amplitude gain" = 70,
 	), list(
 		"deaf ticks" = 0,
+		// Nor does it touch the void's own.
+		"spare kin" = 1,
 	))
 	return TRUE
 

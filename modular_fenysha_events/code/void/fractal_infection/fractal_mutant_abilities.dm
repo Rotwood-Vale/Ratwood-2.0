@@ -20,8 +20,11 @@
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
-	button_icon = 'icons/obj/magic.dmi'
-	button_icon_state = "3"
+	// button_icon is the BACKGROUND sheet and is left at its default;
+	// the art itself comes from icon_icon.
+	icon_icon = 'icons/mob/actions/roguespells.dmi'
+	button_icon_state = "jump"
+	player_targeted = TRUE
 
 	var/max_range = 10
 	var/charge_sound = 'modular_fenysha_events/sound/fractal_scream1.ogg'
@@ -60,6 +63,9 @@
 	for(var/mob/living/living_target in range(1, owner))
 		if(living_target == owner)
 			continue
+		// The void does not batter its own.
+		if(is_void_kin(living_target))
+			continue
 		var/damage = rand(20, 30)
 		living_target.take_bodypart_damage(damage)
 		living_target.Knockdown(10)
@@ -69,14 +75,22 @@
 
 
 /datum/action/cooldown/mob_cooldown/fractal_fatality
+	/// Victim whose appearance the sequence bent, and what it was beforehand.
+	var/mob/living/bent_victim
+	var/matrix/bent_transform
+	var/bent_pixel_y
+
 	name = "Fractal Fatality"
 	desc = "Charge towards a nearby victim, seize them, and tear them apart."
 	cooldown_time = 2 MINUTES
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
-	button_icon = 'icons/obj/magic.dmi'
-	button_icon_state = "2"
+	// button_icon is the BACKGROUND sheet and is left at its default;
+	// the art itself comes from icon_icon.
+	icon_icon = 'icons/mob/actions/roguespells.dmi'
+	button_icon_state = "claws"
+	player_targeted = TRUE
 
 	var/fatality_range = 2
 	var/charge_range = 5
@@ -152,6 +166,13 @@
 		end_fatality()
 		return
 
+	// Kept so end_fatality can put them back. The sequence turns the victim
+	// upside down and stretches them, and nothing was undoing it - a body
+	// revived afterwards stayed inverted for the rest of the round.
+	bent_victim = victim
+	bent_transform = matrix(victim.transform)
+	bent_pixel_y = victim.pixel_y
+
 	var/dist = get_dist(owner, victim) - 1
 
 	if(dist > 0)
@@ -162,6 +183,9 @@
 		if(charge_delay)
 			if(!do_after(owner, charge_delay))
 				owner.balloon_alert(owner, "Interrupted!")
+				// Was a bare return, which left the planner locked out by
+				// BB_FRACTAL_FATALITY_ACTIVE and the victim held here forever.
+				end_fatality()
 				return
 
 		if(charge_sound)
@@ -416,6 +440,14 @@
 	if(controller)
 		controller.clear_blackboard_key(BB_FRACTAL_FATALITY_ACTIVE)
 
+	// Through animate() rather than a plain write: after an animation has run,
+	// assigning the var leaves the client showing the animated value until
+	// something else refreshes the appearance.
+	if(bent_victim && !QDELETED(bent_victim))
+		animate(bent_victim, transform = bent_transform, pixel_y = bent_pixel_y, time = 0)
+	bent_victim = null
+	bent_transform = null
+
 
 
 
@@ -428,8 +460,11 @@
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
-	button_icon = 'icons/obj/magic.dmi'
-	button_icon_state = "2"
+	// button_icon is the BACKGROUND sheet and is left at its default;
+	// the art itself comes from icon_icon.
+	icon_icon = 'icons/mob/actions/roguespells.dmi'
+	button_icon_state = "katar_evil"
+	player_targeted = TRUE
 
 	var/finish_range = 1
 	var/finish_delay = 1
@@ -580,8 +615,10 @@
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
-	button_icon = 'icons/obj/magic.dmi'
-	button_icon_state = "4"
+	// button_icon is the BACKGROUND sheet and is left at its default;
+	// the art itself comes from icon_icon.
+	icon_icon = 'icons/mob/actions/roguespells.dmi'
+	button_icon_state = "howl"
 
 	var/range = 2
 	var/knockdown_time = 15
@@ -641,6 +678,10 @@
 		if(victim == owner)
 			continue
 
+		// The void does not batter its own.
+		if(is_void_kin(victim))
+			continue
+
 		if(victim.stat == DEAD)
 			continue
 
@@ -656,8 +697,10 @@
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 
-	button_icon = 'icons/obj/magic.dmi'
-	button_icon_state = "1"
+	// button_icon is the BACKGROUND sheet and is left at its default;
+	// the art itself comes from icon_icon.
+	icon_icon = 'icons/mob/actions/roguespells.dmi'
+	button_icon_state = "repulse"
 
 	var/range = 2
 	var/throw_distance = 3
@@ -710,6 +753,10 @@
 
 	for(var/mob/living/victim in range(range, origin))
 		if(victim == owner)
+			continue
+
+		// The void does not batter its own.
+		if(is_void_kin(victim))
 			continue
 
 		if(victim.stat == DEAD)

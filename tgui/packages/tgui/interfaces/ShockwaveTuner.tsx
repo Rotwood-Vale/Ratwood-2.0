@@ -65,6 +65,7 @@ const LIMITS: Record<string, Limit> = {
   // Organ life ticks, roughly two seconds each. Applied as a floor, so this is
   // the longest one blast can deafen for, not an amount added on.
   'deaf ticks': { min: 0, max: 200, step: 1 },
+  'spare kin': { min: 0, max: 1, step: 1 },
   'throw objects': { min: 0, max: 1, step: 1 },
   // Off means the wave never touches the map: no registry pass, no wall scan,
   // and only the player effects below it are left.
