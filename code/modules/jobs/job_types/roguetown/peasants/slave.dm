@@ -95,7 +95,7 @@
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
 	)
@@ -137,8 +137,7 @@
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/rockhillslave/slave_sentry/pre_equip(mob/living/carbon/human/H)

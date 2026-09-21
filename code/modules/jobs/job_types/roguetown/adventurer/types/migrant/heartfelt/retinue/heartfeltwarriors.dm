@@ -258,8 +258,7 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/heartfelt/retinue/squire/pre_equip(mob/living/carbon/human/H)

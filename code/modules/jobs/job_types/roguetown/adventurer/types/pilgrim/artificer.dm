@@ -24,11 +24,10 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN, // They won't be the best from the start. Got practice for that, buddies.
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Can repair stuff, but it is not a blacksmith. Same as the guildsman variant.
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, // Keeping this as it is, they got climb stuff to build. And fall eventually as they get a moment of 'fog'. Hah.
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN, // Once more, if they wish to be as good as the ones we have, got practice.
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN, // Same as above. Do I need to repeat it? Eh.
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	// I.. really won't even touch this, change it at all. Rarely anyone does pottery. Even normal artificers.
 	)

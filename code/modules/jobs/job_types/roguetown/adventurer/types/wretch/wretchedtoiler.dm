@@ -24,9 +24,7 @@
 	)
 	subclass_skills = list(
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT, //You shall TOIL. You can TOIL most skills quite well.
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,

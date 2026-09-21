@@ -50,9 +50,7 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy to insist you're worse at smelting than smithing
+		/datum/skill/craft/metalworking = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE, // 2 engineering as most engineering crafts were increased in skill
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 	)
@@ -126,9 +124,8 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // can fill in for a blacksmith but can now actually repair equipment if needed
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
@@ -136,7 +133,6 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making

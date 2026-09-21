@@ -22,10 +22,8 @@
 	)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -86,8 +84,7 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
+		/datum/skill/craft/metalworking = SKILL_LEVEL_JOURNEYMAN,	//Only here so they'd be able to repair their own armor integrity
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 	)
 /datum/outfit/job/roguetown/mercenary/grudgebearer_soldier/pre_equip(mob/living/carbon/human/H)
@@ -265,7 +262,7 @@
 	repair_items = list(/obj/machinery/anvil)
 
 	repair_skills = list(
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_APPRENTICE,
 	)
 
 	race_repair = list(

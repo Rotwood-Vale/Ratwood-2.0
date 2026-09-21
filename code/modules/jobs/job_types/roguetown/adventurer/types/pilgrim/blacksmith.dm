@@ -31,9 +31,7 @@
 		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/adventurer/blacksmith/pre_equip(mob/living/carbon/human/H)
