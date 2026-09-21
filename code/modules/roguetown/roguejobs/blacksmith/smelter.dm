@@ -72,7 +72,7 @@
 			if(user.mind && isliving(user) && tongs.hingot?.smeltresult) // Prevents an exploit with coal and runtimes with everything else
 				if(!istype(tongs.hingot, /obj/item/rogueore) && tongs.hingot?.smelted) // Burning items to ash won't level smelting.
 					var/mob/living/L = user
-					user.mind.add_sleep_experience(/datum/skill/craft/smelting, L.STAINT * 2, FALSE)// Smelting is already a timesink, this is justified to accelerate levelling
+					user.mind.add_sleep_experience(/datum/skill/craft/blacksmithing, L.STAINT * 2, FALSE)// Smelting is already a timesink, this is justified to accelerate levelling
 			user.visible_message(span_info("[user] retrieves \the [item_to_remove] from \the [src]."), span_info("You retrieve \the [item_to_remove] from \the [src]."))
 			if(on)
 				var/tyme = world.time
@@ -137,7 +137,7 @@
 	if(!isliving(user) || !user.mind)
 		contained_items[smelting_item] = SMELTERY_LEVEL_SPOIL
 	else
-		var/smelter_exp = user.get_skill_level(/datum/skill/craft/smelting) // 0 to 6
+		var/smelter_exp = user.get_skill_level(/datum/skill/craft/blacksmithing) // 0 to 6
 		if(smelter_exp < 6)
 			contained_items[smelting_item] = min(6, floor(rand(smelter_exp*15 + 10, max(30, smelter_exp*25))/25)+1) // Math explained below
 		else

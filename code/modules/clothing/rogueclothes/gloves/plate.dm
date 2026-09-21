@@ -12,7 +12,7 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	sewrepair = FALSE
 	grid_width = 64

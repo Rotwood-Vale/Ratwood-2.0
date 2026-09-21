@@ -10,7 +10,7 @@
 	dynamic_hair_suffix = null
 	sellprice = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	visual_replacement = /obj/item/clothing/head/roguetown/crown/fakecrown
 	var/listening = TRUE
 	var/speaking = TRUE

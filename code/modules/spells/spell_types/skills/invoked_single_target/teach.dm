@@ -19,8 +19,7 @@
 	//skills alphabetically... this will be sloppy based on the descriptive name but easier for devs
 	/datum/skill/craft/alchemy,
 	/datum/skill/magic/arcane,
-	/datum/skill/craft/armorsmithing,
-
+	/datum/skill/craft/metalworking,
 	/datum/skill/craft/blacksmithing,
 	/datum/skill/labor/butchering,
 
@@ -43,10 +42,7 @@
 	/datum/skill/misc/music,
 	/datum/skill/misc/medicine,
 
-
-
 	/datum/skill/craft/sewing,
-	/datum/skill/craft/smelting,
 	/datum/skill/misc/sneaking,
 	/datum/skill/misc/stealing,
 	/datum/skill/misc/swimming,
@@ -56,8 +52,6 @@
 
 	/datum/skill/misc/reading,
 	/datum/skill/misc/riding,
-
-	/datum/skill/craft/weaponsmithing,
 
 	//Languages
 	/datum/language/aavnic,

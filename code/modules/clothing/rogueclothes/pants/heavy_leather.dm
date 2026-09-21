@@ -158,7 +158,7 @@
 	blocksound = CHAINHIT
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/bronze
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_LEG_BRONZE

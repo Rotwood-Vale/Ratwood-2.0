@@ -13,7 +13,7 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_LEG_BLACKSTEEL
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
 	dropshrink = 0.7
@@ -32,7 +32,7 @@
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_LEG_BLACKSTEEL
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
 	dropshrink = null

@@ -646,10 +646,8 @@
 			"Alchemy" = /datum/skill/craft/alchemy,
 			"Tanning" = /datum/skill/craft/tanning,
 			"Cooking" = /datum/skill/craft/cooking,
-			"Weaponsmithing" = /datum/skill/craft/weaponsmithing,
-			"Armorsmithing" = /datum/skill/craft/armorsmithing,
+			"Metalworking" = /datum/skill/craft/metalworking,
 			"Blacksmithing" = /datum/skill/craft/blacksmithing,
-			"Smelting" = /datum/skill/craft/smelting
 		)
 		var/combat_skills = list(
 			"Axes" = /datum/skill/combat/axes,

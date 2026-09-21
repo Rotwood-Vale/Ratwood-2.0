@@ -132,10 +132,8 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 
 	H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE) //probably enough to crank out some cheap iron armour, maybe we'll want to boost it
-	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/metalworking, 2, TRUE) //probably enough to crank out some cheap iron armour, maybe we'll want to boost it
 	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 3, TRUE) //less than a dedicated miner
 
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)

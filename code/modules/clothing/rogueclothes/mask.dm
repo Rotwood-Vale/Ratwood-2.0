@@ -45,7 +45,7 @@
 	body_parts_covered = EYES
 	nudist_approved = TRUE
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	sewrepair = FALSE
 //	block2add = FOV_BEHIND
 
@@ -58,7 +58,7 @@
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	var/lensmoved = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
@@ -108,7 +108,7 @@
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	adjustable = CAN_CADJUST
 	var/active_item = FALSE
 
@@ -160,7 +160,7 @@
 	integrity_failure = 0.5
 	resistance_flags = FIRE_PROOF
 	body_parts_covered = EYES
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/clothing/mask/rogue/spectacles/goggles/equipped(mob/user, slot)
 	..()
@@ -195,7 +195,7 @@
 	desc = "Half of your face turned gold."
 	icon_state = "lmask"
 	sellprice = 50
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
 
@@ -314,7 +314,7 @@
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
 
@@ -333,7 +333,7 @@
 	block2add = FOV_BEHIND
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	experimental_onhip = TRUE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = FALSE
 
@@ -758,7 +758,7 @@
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
-	anvilrepair = /datum/skill/craft/armorsmithing //Maybe these shouldn't be repairable, someone else can do that if they want.
+	anvilrepair = /datum/skill/craft/metalworking //Maybe these shouldn't be repairable, someone else can do that if they want.
 	clothing_flags = CANT_SLEEP_IN
 	sellprice = 70
 	smeltresult = null
@@ -942,7 +942,7 @@
 	armor = ARMOR_PLATE
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ash
 
 /obj/item/clothing/mask/rogue/spectacles/duelist/ComponentInitialize()

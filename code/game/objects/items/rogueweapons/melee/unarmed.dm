@@ -110,7 +110,7 @@
 	wdefense = 0	//Meant to be used with bracers
 	wbalance = WBALANCE_NORMAL
 	thrown_bclass = BCLASS_CUT
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	grid_height = 64
 	grid_width = 32
@@ -252,7 +252,7 @@
 	throwforce = 12
 	wdefense = 4
 	wbalance = WBALANCE_SWIFT
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	grid_width = 64
 	grid_height = 32
@@ -285,7 +285,7 @@
 	associated_skill = /datum/skill/combat/unarmed
 	throwforce = 12
 	wdefense = 6
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/rogueweapon/knuckles/ancient
@@ -341,7 +341,7 @@
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
 	throwforce = 12
 	thrown_bclass = BCLASS_CUT
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	grid_height = 96
 	grid_width = 32

@@ -102,9 +102,7 @@
 	. = ..()
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/metalworking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE) // Worse than the real tailor, so can't steal their job right away
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 

@@ -117,7 +117,7 @@
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
 	thrown_bclass = BCLASS_CUT
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	picklvl = 1
 

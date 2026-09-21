@@ -174,7 +174,7 @@
 	coverage = 40
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 300
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/shield/tower/holysee
@@ -235,7 +235,7 @@
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 300
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/shield/tower/metal/getonmobprop(tag)
@@ -394,7 +394,7 @@
 	associated_skill = /datum/skill/combat/shields
 	grid_width = 32
 	grid_height = 64
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/shield/buckler/equipped(mob/user, slot, initial)
@@ -477,7 +477,7 @@
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	possible_item_intents = list(SHIELD_SMASH_METAL, SHIELD_BLOCK) // No SHIELD_BASH. Too heavy to swing quickly, or something.
 	max_integrity = 220
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/rogueweapon/shield/iron/getonmobprop(tag)
@@ -581,7 +581,7 @@
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	possible_item_intents = list(/datum/intent/shield/block, /datum/intent/mace/smash/shield/metal, /datum/intent/effect/daze) // No SHIELD_BASH. Able to inflict Daze due to its weight.
 	max_integrity = 260
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/rogueweapon/shield/bronze/getonmobprop(tag)
 	. = ..()

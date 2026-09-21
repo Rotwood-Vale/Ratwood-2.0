@@ -143,7 +143,7 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dropshrink = null
 
@@ -192,7 +192,7 @@
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	allowed_sex = list(MALE, FEMALE)
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 40
 	armor_class = ARMOR_CLASS_HEAVY

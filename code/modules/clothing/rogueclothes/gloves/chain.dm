@@ -13,7 +13,7 @@
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/alch/irondust
 	unarmed_bonus = 1.15
 
@@ -67,7 +67,7 @@
 	name = "iron chain gauntlets"
 	icon_state = "icgloves"
 	desc = "Gauntlets made of interlinked iron rings. They offer decent protection against common weaponries, except for arrows."
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/alch/irondust
 	max_integrity = ARMOR_INT_SIDE_IRON
 
@@ -76,7 +76,7 @@
 	name = "bronze maille gauntlets"
 	desc = "Armored mittens, woven together from a series of interlinked bronze rings. It can comfortably accomadate the needs of a warrior in \
 	almost any action, be it stringing a longbow or wielding a sword."
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = ARMOR_INT_SIDE_BRONZE
 	armor = ARMOR_BRONZE

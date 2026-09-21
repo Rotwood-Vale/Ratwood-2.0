@@ -382,9 +382,7 @@
 		H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
 	if(H.patron?.type == /datum/patron/divine/malum)
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/metalworking, 1, TRUE)
 		ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/ravox)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)

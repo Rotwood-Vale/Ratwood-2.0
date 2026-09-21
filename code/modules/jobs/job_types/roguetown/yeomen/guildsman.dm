@@ -65,9 +65,7 @@
 		head = /obj/item/clothing/head/roguetown/hatblu
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/metalworking, 1, TRUE)
 	if(should_wear_femme_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/trou
 		armor = /obj/item/clothing/suit/roguetown/shirt/dress/gen/random

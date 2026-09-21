@@ -143,7 +143,7 @@
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/flail/smash/ranged/psywhip)
 	minstr = 11
 	wdefense = 0
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/silver
 	wbalance = WBALANCE_HEAVY
 
@@ -314,7 +314,7 @@
 	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
 	max_integrity = 100
 	max_blade_int = 100//actually have to worry about sharpening them
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	sewrepair = FALSE//cant sew a metal coil dumbdumb
 	smeltresult = /obj/item/ingot/steel
 

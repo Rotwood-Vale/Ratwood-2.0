@@ -54,7 +54,7 @@
 	icon_state = "goldplaque"
 	sellprice = 50
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/storage/belt/rogue/leather/shalal
 	name = "shalal belt"
@@ -84,7 +84,7 @@
 	icon_state = "silverplaque"
 	sellprice = 30
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	is_silver = TRUE
 
 /obj/item/storage/belt/rogue/leather/battleskirt
@@ -138,7 +138,7 @@
 	icon_state = "steelplaque"
 	sellprice = 30
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/storage/belt/rogue/leather/steel/tasset
 	name = "tasseted belt"

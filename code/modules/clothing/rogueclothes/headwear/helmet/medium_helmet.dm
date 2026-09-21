@@ -15,7 +15,7 @@
 	dynamic_hair_suffix = "+generic"
 	bloody_icon_state = "helmetblood"
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	sewrepair = FALSE
 	blocksound = PLATEHIT

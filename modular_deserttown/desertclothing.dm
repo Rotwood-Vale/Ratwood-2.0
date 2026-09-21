@@ -29,7 +29,7 @@
 	sleeved = null
 	sleevetype = null
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
-	// anvilrepair = /datum/skill/craft/armorsmithing
+	// anvilrepair = /datum/skill/craft/metalworking
 	// smeltresult = /obj/item/ingot/steel
 	// armor_class = ARMOR_CLASS_HEAVY
 	equip_delay_self = 4 SECONDS
