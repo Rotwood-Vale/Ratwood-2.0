@@ -45,14 +45,14 @@
 		return
 	SSBMtreasury.add_hoard_log("deposit", "[item_name] x[count]", total_value, user.real_name)
 
-/// Announces an item's arrival in the vault to anyone sharing its room.
+/// Message for stuff appearing in the room so that it is not just out of nowhere
 /obj/structure/roguemachine/headeater/treasureseeker/proc/announce_arrival(obj/item/I, turf/destination)
 	if(!destination)
 		return
 	for(var/mob/M in hearers(7, destination))
 		to_chat(M, span_notice("[I] suddenly appears in a golden flash upon the ground of the vault."))
 
-/// Summarises a bulk arrival in the vault - individual names stay in the BRASSFACE ledger.
+/// Same as above but for multiple items at once to stop message spam
 /obj/structure/roguemachine/headeater/treasureseeker/proc/announce_bulk_arrival(turf/destination, count)
 	if(!destination || count <= 0)
 		return
