@@ -1049,7 +1049,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-    		hunger_rate *= 0.7 // QOL for hemophages, from number of complaints.
+			hunger_rate *= 0.7 // QOL for hemophages, from number of complaints.
 		if (H.bodytemperature < BODYTEMP_NORMAL_MIN)	//Hunger increased by 50% when cold
 			hunger_rate *= 1.5
 /*		if(H.satiety > MAX_SATIETY)
@@ -1084,7 +1084,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if (H.bodytemperature > BODYTEMP_NORMAL_MAX)	//thirst increased by 50% when hot
 			hunger_rate *= 1.5
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-    		hunger_rate *= 0.8
+			hunger_rate *= 0.8
 //		hunger_rate *= H.physiology.hunger_mod
 		H.adjust_hydration(-hunger_rate)
 
