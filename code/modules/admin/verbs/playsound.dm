@@ -34,7 +34,7 @@
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			// Set for every player, since the one sound is shared and a skipped assignment would carry
 			// the previous player's volume over
-			admin_sound.volume = vol * M.client.prefs.at_overall(M.client.prefs.musicvol) * 0.01
+			admin_sound.volume = vol * M.client.prefs.at_overall(M.client.prefs.adminmusicvol) * 0.01
 			SEND_SOUND(M, admin_sound)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -63,7 +63,7 @@
 		prefs.save_preferences()
 
 		mob.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
-		mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
+		mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.adminmusicvol))
 
 /client/verb/volume_power_menu()
 	set category = "Options"
@@ -96,7 +96,12 @@
 		if("music")
 			prefs.musicvol = vol
 			mob?.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
-			mob?.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
+		if("adminmusic")
+			prefs.adminmusicvol = vol
+			mob?.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.adminmusicvol))
+		if("streamedmusic")
+			prefs.streamedmusicvol = vol
+			tgui_panel?.set_streamed_volume()
 		if("combat")
 			prefs.combatmusicvol = vol
 			if(mob?.cmode)
@@ -123,7 +128,10 @@
 	// Any other change reaches their next service without cutting what is playing
 	if(point_ambience_was_silent != !prefs.point_ambience_volume())
 		SSpoint_ambience.listener_prefs_changed(src)
-	prefs.save_preferences()
+	// The setting is already live above. Only the file write waits, so a run of changes collapses
+	// into one, whether that is a held arrow key or a client sending the action in a loop. The menu
+	// also writes when it closes, for a client that leaves inside the window
+	addtimer(CALLBACK(prefs, TYPE_PROC_REF(/datum/preferences, save_preferences)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/volume_power_menu
 	var/client/owner
@@ -136,6 +144,12 @@
 	if(owner?.volume_power_menu == src)
 		owner.volume_power_menu = null
 	owner = null
+	return ..()
+
+/datum/volume_power_menu/ui_close(mob/user)
+	// The write is deferred while the menu is open, so a close that beats the timer would otherwise
+	// lose the last change
+	owner?.prefs?.save_preferences()
 	return ..()
 
 /datum/volume_power_menu/ui_interact(mob/user, datum/tgui/ui)
@@ -154,6 +168,8 @@
 	data["effects"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
 	data["instruments"] = isnum(owner.prefs.instrumentvol) ? owner.prefs.instrumentvol : initial(owner.prefs.instrumentvol)
 	data["music"] = isnum(owner.prefs.musicvol) ? owner.prefs.musicvol : initial(owner.prefs.musicvol)
+	data["adminmusic"] = isnum(owner.prefs.adminmusicvol) ? owner.prefs.adminmusicvol : initial(owner.prefs.adminmusicvol)
+	data["streamedmusic"] = isnum(owner.prefs.streamedmusicvol) ? owner.prefs.streamedmusicvol : initial(owner.prefs.streamedmusicvol)
 	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)

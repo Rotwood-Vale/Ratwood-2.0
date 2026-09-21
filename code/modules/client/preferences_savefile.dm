@@ -241,6 +241,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
+	S["adminmusicvol"]		>> adminmusicvol
+	S["streamedmusicvol"]	>> streamedmusicvol
 	S["combatmusicvol"]		>> combatmusicvol
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
@@ -369,6 +371,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
+	// Carried off the shared slider the first time it is read, or a player who had music turned
+	// down would meet admin tracks at the default instead of where they left them
+	if(!isnum(adminmusicvol))
+		adminmusicvol = musicvol
+	adminmusicvol = sanitize_integer(adminmusicvol, 0, 100, initial(adminmusicvol))
+	streamedmusicvol = sanitize_integer(streamedmusicvol, 0, 100, initial(streamedmusicvol))
 	if(!isnum(combatmusicvol))
 		combatmusicvol = musicvol
 	combatmusicvol = sanitize_integer(combatmusicvol, 0, 100, initial(combatmusicvol))
@@ -440,6 +448,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
+	WRITE_FILE(S["adminmusicvol"], adminmusicvol)
+	WRITE_FILE(S["streamedmusicvol"], streamedmusicvol)
 	WRITE_FILE(S["combatmusicvol"], combatmusicvol)
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)

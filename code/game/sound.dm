@@ -561,7 +561,10 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	if(!mob || !prefs)
 		return
 	mob.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
-	mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
+	mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.adminmusicvol))
+	// The browser player is a separate audio system and holds its own copy, so Master reaches it
+	// only by being pushed
+	tgui_panel?.set_streamed_volume()
 	if(mob.cmode)
 		var/combat_volume = prefs.at_overall(prefs.combatmusicvol)
 		mob.update_music_volume(CHANNEL_BUZZ, combat_volume)

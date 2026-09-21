@@ -5,16 +5,13 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
-import { toFixed } from 'tgui-core/math';
+import { Button, Collapsible, Flex, Section } from 'tgui-core/components';
 
-import { useSettings } from '../settings';
 import { selectAudio } from './selectors';
 
 export const NowPlayingWidget = (props) => {
   const audio = useSelector(selectAudio),
     dispatch = useDispatch(),
-    settings = useSettings(),
     title = audio.meta?.title,
     URL = audio.meta?.link,
     Artist = audio.meta?.artist || 'Unknown Artist',
@@ -93,18 +90,11 @@ export const NowPlayingWidget = (props) => {
         </Flex.Item>
       )}
       <Flex.Item mx={0.5} fontSize="0.9em">
-        <Knob
-          minValue={0}
-          maxValue={1}
-          value={settings.adminMusicVolume}
-          step={0.0025}
-          stepPixelSize={1}
-          format={(value) => `${toFixed(value * 100)}%`}
-          onChange={(e, value) =>
-            settings.update({
-              adminMusicVolume: value,
-            })
-          }
+        <Button
+          color="transparent"
+          tooltip="Volume"
+          icon="sliders-h"
+          onClick={() => Byond.sendMessage('audio/openSettings')}
         />
       </Flex.Item>
     </Flex>

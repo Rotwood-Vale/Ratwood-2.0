@@ -16,6 +16,8 @@ type Data = {
   effects: number;
   instruments: number;
   music: number;
+  adminmusic: number;
+  streamedmusic: number;
   combat: number;
   ambience: number;
   lobby: number;
@@ -134,6 +136,8 @@ export const VolumePowerMenu = () => {
     effects,
     instruments,
     music,
+    adminmusic,
+    streamedmusic,
     combat,
     ambience,
     lobby,
@@ -193,7 +197,19 @@ export const VolumePowerMenu = () => {
                   label="Music"
                   value={music ?? 100}
                   id="music"
-                  hint="Music, including what admins play."
+                  hint="The world's own music."
+                />
+                <VolumeRow
+                  label="Admin Sounds"
+                  value={adminmusic ?? 50}
+                  id="adminmusic"
+                  hint="Sound files admins play through the game."
+                />
+                <VolumeRow
+                  label="Streamed Music"
+                  value={streamedmusic ?? 50}
+                  id="streamedmusic"
+                  hint="Music streamed into your chat panel."
                 />
                 <VolumeRow
                   label="Combat Music"
