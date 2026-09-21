@@ -2803,7 +2803,6 @@
 #include "code\modules\roguetown\roguemachine\noticeboard\noticeboard.dm"
 #include "code\modules\roguetown\roguemachine\noticeboard\posting.dm"
 #include "code\modules\roguetown\roguemachine\noticeboard\rosewall.dm"
-#include "code\modules\roguetown\roguemachine\noticeboard\rosewall.dm"
 #include "code\modules\roguetown\roguemachine\questing\quest_hooks.dm"
 #include "code\modules\roguetown\roguemachine\questing\questing_components.dm"
 #include "code\modules\roguetown\roguemachine\questing\questing_decals.dm"
