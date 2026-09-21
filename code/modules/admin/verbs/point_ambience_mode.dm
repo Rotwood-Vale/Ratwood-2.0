@@ -40,13 +40,13 @@
 	// setting here, since they take hold the moment live resumes.
 	var/effective_mode = SSpoint_ambience.mode
 	var/inert = (effective_mode == POINT_AMBIENCE_LIVE) ? "" : "\n\nThe current mode does not read this. It takes effect when you switch back to Live."
-	var/interval = input(src, "Minimum deciseconds between move-hook services of one client. 0 serves on every step; 5 caps a walker at two a second and removes about half their services.[inert]", "Move Service Interval", SSpoint_ambience.move_service_interval) as null|num
+	var/interval = input(src, "Minimum deciseconds between move-hook services of one client. 0 serves on every step; 7 caps one listener at roughly 1.4 services a second.[inert]", "Move Service Interval", SSpoint_ambience.move_service_interval) as null|num
 	if(!isnull(interval))
 		SSpoint_ambience.move_service_interval = max(0, interval)
-	var/running = input(src, "Replaces the interval above for a client who is RUNNING, who covers more ground between services. At speed 15 an interval of 5 puts one service every four tiles, a whole sconce's range in one jump; 3 keeps it to two tiles. 0 means NO OVERRIDE, so runners use the value above — it does not mean runners are uncapped.[inert]", "Move Service Interval, Running", SSpoint_ambience.move_service_interval_running_override) as null|num
+	var/running = input(src, "Replaces the interval above for a client who is RUNNING, who covers more ground between services. At speed 15 an interval of 5 puts one service every four tiles, a whole sconce's range in one jump; 3 keeps it to two tiles. 0 means NO OVERRIDE, so runners use the value above. It does not mean runners are uncapped.[inert]", "Move Service Interval, Running", SSpoint_ambience.move_service_interval_running_override) as null|num
 	if(!isnull(running))
 		SSpoint_ambience.move_service_interval_running_override = max(0, running)
-	var/cap = input(src, "Ceiling on move-hook services in one tick, across every client. 0 disables the count cap and the inline tick-usage gate. In a model assuming 150 in-round players at 20 TPS, a third walking every 0.3 seconds and served every other step, 8 is about twice the mean demand. This is a projection, not a populated-server test. Excess requests stay queued with the queue on, or are refused with it off; the periodic client walk also catches missed moves. These are not fixed latency guarantees. See POINT_AMBIENCE_MAX_SERVICES_PER_TICK in config.txt.[inert]", "Move Services Per Tick", SSpoint_ambience.max_services_per_tick) as null|num
+	var/cap = input(src, "Ceiling on move-hook services in one tick, across every client. 0 disables the count cap and the inline tick-usage gate. In a model assuming 150 in-round players at 20 TPS, a third walking every 0.3 seconds and served every third step, 8 is almost three times the mean demand. This is a projection, not a populated-server test. Excess requests stay queued with the queue on, or are refused with it off; the periodic client walk also catches missed moves. These are not fixed latency guarantees. See POINT_AMBIENCE_MAX_SERVICES_PER_TICK in config.txt.[inert]", "Move Services Per Tick", SSpoint_ambience.max_services_per_tick) as null|num
 	if(!isnull(cap))
 		SSpoint_ambience.max_services_per_tick = max(0, cap)
 	// Turning it off strands nobody: fire() drains whatever is still marked whether or not the queue
@@ -57,7 +57,7 @@
 		SSpoint_ambience.use_queue = TRUE
 	else if(queue_choice == "Off")
 		SSpoint_ambience.use_queue = FALSE
-	var/skip = input(src, "Deciseconds within which the once-a-second walk passes over a client a step already served. A walker is served every other step and would be walked again every second at a tile they are about to leave. 0 never skips. 5 matches the interval and skips a walker about four times in five; 3 about half. The price is the catch-up after stopping: the worst case becomes this plus one second.[inert]", "Standing Walk Skip", SSpoint_ambience.standing_skip) as null|num
+	var/skip = input(src, "Deciseconds within which the once-a-second walk passes over a client a step already served. A walker served by movement would otherwise be walked again every second at a tile they are about to leave. 0 never skips. 5 skips recent movement services for up to half a second; 3 uses a shorter window. The price is the catch-up after stopping: the worst case becomes this plus one second.[inert]", "Standing Walk Skip", SSpoint_ambience.standing_skip) as null|num
 	if(!isnull(skip))
 		SSpoint_ambience.standing_skip = max(0, skip)
 	var/summary = "set point ambience to [chosen_mode == POINT_AMBIENCE_MODE_UNCHANGED ? "[SSpoint_ambience.mode == POINT_AMBIENCE_FALLBACK ? "Fallback" : "its current mode"] (unchanged)" : choice], move interval [SSpoint_ambience.move_service_interval][SSpoint_ambience.move_service_interval_running_override ? " ([SSpoint_ambience.move_service_interval_running_override] running)" : ""], cap [SSpoint_ambience.max_services_per_tick] a tick, queue [SSpoint_ambience.use_queue ? "on" : "off"], standing skip [SSpoint_ambience.standing_skip]"
