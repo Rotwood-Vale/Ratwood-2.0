@@ -444,6 +444,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(user, span_warning("My body is paralyzed!"))
 			return FALSE
 
+		var/last_mount_move_time = H.vars["last_mount_move_time"]
+		if(!isnum(last_mount_move_time))
+			last_mount_move_time = 0
+		if(H.buckled && issimple(H.buckled) && (world.time < last_mount_move_time + 2 SECONDS))
+			return FALSE
+
 		if(miracle && !H.devotion?.check_devotion(src))
 			to_chat(H, span_warning("I don't have enough devotion!"))
 			return FALSE
@@ -550,8 +556,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	if(action)
-		QDEL_NULL(action)
+	var/mob/owner = action?.owner
+	owner?.mob_spell_list -= src
+	owner?.mind?.spell_list -= src
+	QDEL_NULL(action)
 	return ..()
 
 /obj/effect/proc_holder/spell/Click()
@@ -882,7 +890,29 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
-	if(!charge_check(user))
+	if(user.client && user.buckled)
+		if(!issimple(user.buckled))
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/last_mount_move_time = H.vars["last_mount_move_time"]
+			if(!isnum(last_mount_move_time))
+				last_mount_move_time = 0
+			if(world.time < last_mount_move_time + 2 SECONDS)
+				return FALSE
+
+	if(user.client && user.buckled)
+		if(!issimple(user.buckled))
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/last_mount_move_time = H.vars["last_mount_move_time"]
+			if(!isnum(last_mount_move_time))
+				last_mount_move_time = 0
+			if(world.time < last_mount_move_time + 2 SECONDS)
+				return FALSE
+
+	if(!charge_check(user, TRUE))
 		return FALSE
 
 	if(user.stat && !stat_allowed)

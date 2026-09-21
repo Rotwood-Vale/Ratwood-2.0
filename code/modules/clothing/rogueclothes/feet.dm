@@ -48,7 +48,7 @@
 		holdinglockpick = null
 	return ..()
 
-/obj/item/clothing/shoes/roguetown/boots/examine()
+/obj/item/clothing/shoes/roguetown/boots/examine(mob/user)
 	. = ..()
 	. += span_smallnotice("Knives and lockpicks can be stowed inside.")
 
@@ -299,6 +299,16 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/shoes/roguetown/grenzelhoft/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	name = "fencing boots"
+	desc = "A pair of lightweight snugly fitting boots. They're reinforced along the toes and ankles and offer a measure of protection against missteps and glancing blows during close exchanges, often favoured by duelists and other itinerant swordsmen."
+	icon_state = "freiboots"
+	item_state = "freiboots"
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + 50
+
 /obj/item/clothing/shoes/roguetown/boots/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
@@ -423,6 +433,18 @@
 		return
 	qdel(src)
 
+/obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+	name = "avantyne-threaded sabatons"
+	desc = "Marrow, flesh, ash; the bedrock of a new reality, fated to suffer until the final breath. It is this prognosis that commands Her disciples to \
+	work towards ascensionism - for no sacrifice is too great, in the pursuit of bringing lyfe back to this dying world."
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoboots"
+
+/obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
+
 /obj/item/clothing/shoes/roguetown/boots/armor/iron
 	name = "iron plated boots"
 	desc = "Antiquated sabatons, fitted to leather boots that've been reinforced with layers of iron maille. While it has largely fallen \
@@ -491,6 +513,9 @@
 	smeltresult = /obj/item/ingot/steel
 	cold_protection = FOOT_LEFT | FOOT_RIGHT // These are still mostly leather, also at least ONE reason to wear them compared to their full steel counterparts
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/shoes/roguetown/boots/maille/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/maille/iron
 	name = "iron maille boots"

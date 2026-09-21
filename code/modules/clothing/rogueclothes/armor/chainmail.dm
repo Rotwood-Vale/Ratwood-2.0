@@ -16,6 +16,10 @@
 	smeltresult = /obj/item/ingot/steel
 	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	icon_state = "ihaubergeon"
 	name = "iron haubergeon"
@@ -81,6 +85,20 @@
 	armor = ARMOR_BRONZE
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+	name = "avantyne hauberk"
+	desc = "The rings crackle softly with avantynic power, yet this lighter weave can still be taken off without being lost to the rite."
+	icon_state = "zizohauberk"
+	item_state = "zizohauberk"
+	armor = ARMOR_ASCENDANT
+	armor_class = ARMOR_CLASS_MEDIUM
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"

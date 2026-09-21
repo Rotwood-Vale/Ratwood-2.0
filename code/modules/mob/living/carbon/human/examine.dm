@@ -15,9 +15,14 @@
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+	else if(HAS_TRAIT(src, TRAIT_PRETTY) && user != src) //Beautiful takes priority if you somehow have both
+		user.add_stress(/datum/stressevent/pretty)
+		to_chat(user, span_info("[p_they(TRUE)] [p_are()] pretty."))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING) && user != src)
+		user.add_stress(/datum/stressevent/uncanny)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
 	// Apply Xylix buff when examining someone with the beautiful trait
@@ -91,7 +96,7 @@
 	if(user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
 
-	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
+	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.dna?.species?.type == /datum/species/gnoll)
 			. += span_cultsmall("Graggar has marked them!")
@@ -158,6 +163,34 @@
 						. += shit
 		if(user.mind?.has_antag_datum(/datum/antagonist/vampire) && can_be_blood_drunk())
 			. += span_userdanger("<a href='?src=[REF(src)];task=bloodpoolinfo;'>Vitae: [(mind && !clan) ? (bloodpool * CLIENT_VITAE_MULTIPLIER) : bloodpool]; Blood: [blood_volume]</a>")
+
+		// Loan default brands (AP parity): each creditor faction reads its own debtors;
+		// Crown debtors are known to the realm's authority roles. Ratwood has no
+		// retinue_positions list, so the Crown gate is garrison/courtier/noble.
+		if(HAS_TRAIT(src, TRAIT_DEBTOR))
+			if(ishuman(user))
+				var/mob/living/carbon/human/debt_viewer = user
+				var/saw_specific = FALSE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_CHURCH) && (debt_viewer.job in GLOB.church_positions))
+					. += span_userdanger("DEFAULT DEBTOR OF THE CHURCH!")
+					saw_specific = TRUE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_MERCHANT) && (debt_viewer.job == "Merchant" || debt_viewer.job == "Shophand" || HAS_TRAIT(debt_viewer, TRAIT_AGENT_MERCHANT)))
+					. += span_userdanger("DEFAULT DEBTOR OF THE TRADING COMPANY!")
+					saw_specific = TRUE
+				if(HAS_TRAIT(src, TRAIT_DEBTOR_BATHHOUSE) && (debt_viewer.job == "Bathmaster" || debt_viewer.job == "Bathhouse Attendant" || HAS_TRAIT(debt_viewer, TRAIT_AGENT_BATHHOUSE)))
+					. += span_userdanger("DEFAULT DEBTOR OF THE BATHHOUSE!")
+					saw_specific = TRUE
+				if(!saw_specific && HAS_TRAIT(src, TRAIT_DEBTOR_CROWN))
+					if((debt_viewer.job in GLOB.garrison_positions) || (debt_viewer.job in GLOB.courtier_positions) || (debt_viewer.job in GLOB.noble_positions))
+						. += span_userdanger("DEFAULT DEBTOR OF THE CROWN!")
+
+		if(HAS_TRAIT(src, TRAIT_ARREARS))
+			// Poll-tax arrears: a soft mark. Authority roles can read it off a subject, but
+			// only as a hint - the amount owed lives with the Steward's ledger.
+			if(ishuman(user))
+				var/mob/living/carbon/human/arrears_viewer = user
+				if((arrears_viewer.job in GLOB.garrison_positions) || (arrears_viewer.job in GLOB.courtier_positions) || (arrears_viewer.job in GLOB.noble_positions))
+					. += span_smallred("Destitute..")
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_shirt)]. "
@@ -308,9 +341,9 @@
 		else if(do_we_know_chat)
 			. += span_italics("[m1] covertly secured in [chastity_name]. ")
 	
-	var/modular_chastity_toy_line = human_modular_chastity_toy_examine_line(user, m2, m3)
-	if(modular_chastity_toy_line)
-		. += modular_chastity_toy_line
+	var/chastity_toy_line = human_chastity_toy_examine_line(user, m2, m3)
+	if(chastity_toy_line)
+		. += chastity_toy_line
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
@@ -813,7 +846,7 @@
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
+		if(skipface && HAS_TRAIT(user, TRAIT_ASSASSIN_TARGET) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)
@@ -860,7 +893,7 @@
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
 
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
@@ -976,7 +1009,9 @@
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
+			if(social_rank < SOCIAL_RANK_NOBLE)
+				. += span_notice("A minor noble.")
+			else if((HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE)) && user.social_rank >= SOCIAL_RANK_NOBLE)
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
@@ -1165,6 +1200,14 @@
 					. += span_beautiful_fem("[m1] beautiful!")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[m1] good-looking!")
+		else if (HAS_TRAIT(src, TRAIT_PRETTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_pretty_masc("[m1] pretty handsome.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_pretty_fem("[m1] pretty.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_pretty_nb("[m1] pretty good-looking.")
 
 		if (HAS_TRAIT(src, TRAIT_UNSEEMLY))
 			switch (pronouns)
@@ -1189,6 +1232,22 @@
 					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING))
+			var/unsettling_text
+			if (user == src)
+				unsettling_text = "I appear deeply uncanny."
+			else if (user.has_stress_event(/datum/stressevent/uncanny))
+				unsettling_text = "[capitalize(m2)] appearance is deeply unsettling!"
+			else
+				unsettling_text = "Something about [p_them()] looks off..."
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_beautiful_masc(unsettling_text)
+				if (SHE_HER, HE_HIM_F)
+					. += span_beautiful_fem(unsettling_text)
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_beautiful_nb(unsettling_text)
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)

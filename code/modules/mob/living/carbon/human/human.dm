@@ -185,11 +185,25 @@
 	dna.initialize_dna()
 
 /mob/living/carbon/human/Destroy()
+	if(SScity_assembly?.is_alderman(src))
+		var/departing_name = real_name
+		var/departing_job = job
+		SScity_assembly.demote_alderman("Alderman's mob was deleted")
+		SScity_assembly.notify_alderman_lost_ref(departing_name, departing_job, "disconnected")
 	QDEL_NULL(sexcon)
 	STOP_PROCESSING(SShumannpc, src)
 	QDEL_NULL(physiology)
 	QDEL_NULL(sunder_light_obj)
 	GLOB.human_list -= src
+	if(current_fellowship)
+		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
+		current_fellowship = null
+	if(length(incoming_fellowship_invites))
+		for(var/datum/weakref/W as anything in incoming_fellowship_invites)
+			var/datum/fellowship/F = W.resolve()
+			if(F)
+				F.remove_pending_invite(real_name)
+		incoming_fellowship_invites.Cut()
 	return ..()
 
 /mob/living/carbon/human/Stat()
@@ -340,10 +354,10 @@
 	dat += "<tr><td><hr></td></tr>"
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
 		dat += "<tr><td><BR><B>Legwear:</B> <A href='?src=[REF(src)];legwearsthing=1'>[!legwear_socks ? "Nothing" : "Remove"]</A></td></tr>"
-		var/modular_chastity_row = modular_strippanel_chastity_row()
-		if(modular_chastity_row)
+		var/chastity_row = modular_strippanel_chastity_row()
+		if(chastity_row)
 			dat += "<tr><td><hr></td></tr>"
-			dat += modular_chastity_row
+			dat += chastity_row
 #endif
 
 	dat += {"</table>"}
@@ -686,6 +700,16 @@
 	if (dna && dna.species)
 		. += dna.species.check_species_weakness(weapon, attacker)
 
+/**
+ * Whether this body is a temporary shell a player is piloting rather than their own.
+ *
+ * Currently the wildshape forms and werewolf. Both roots cover every shell and new forms are
+ * subtypes, so they are caught without touching each species. The OOC card must never be captured
+ * out of one or stamped onto one, see [/datum/mind/proc/transfer_to].
+ */
+/mob/living/carbon/human/proc/is_shapeshift_shell()
+	return istype(src, /mob/living/carbon/human/species/wildshape) || istype(src, /mob/living/carbon/human/species/werewolf)
+
 /mob/living/carbon/human/is_literate()
 	if(mind)
 		if(get_skill_level(/datum/skill/misc/reading) > 0)
@@ -726,6 +750,8 @@
 			if(alert(usr,"The next prompt will not have a Nevermind option. Are you sure you want this?","ITS NOT REVERSIBLE","Yes","Nevermind") == "Yes")
 				var/choice = alert(usr,"What would you like to purge?","ITS TOO LATE NOW","Flavor","Notes","Extra")
 				if(choice)
+					var/datum/mind/purge_mind = mind || last_mind
+					purge_mind?.player_card?.vv_purge(choice)
 					switch(choice)
 						if("Flavor")
 							flavortext = null
@@ -766,6 +792,8 @@
 			return
 		if(alert(usr,"This will irreversibly purge this ENTIRE character's slot (OOC, FT, OOC Ex.)","PURGE","PURGE","Nevermind") == "PURGE")
 			if(alert(usr,"This cannot be undone. Are you sure?","DON'T FATFINGER THIS","Yes","No") == "Yes")
+				var/datum/mind/purge_mind = mind || last_mind
+				purge_mind?.player_card?.vv_purge("All")
 				flavortext = null
 				nsfwflavortext = null
 				ooc_extra_img = null

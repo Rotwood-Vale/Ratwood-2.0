@@ -61,10 +61,13 @@
 #define CLICK_CD_EXHAUSTED 60
 #define CLICK_CD_TRACKING 30
 #define CLICK_CD_SLEUTH 10
-#define CLICK_CD_HEAVY 16
-#define CLICK_CD_CHARGED 14
-#define CLICK_CD_MELEE 12
-#define CLICK_CD_FAST 8
+#define CLICK_CD_GLACIAL 20	// Tier: Glacial
+#define CLICK_CD_MASSIVE 18	// Tier: Extremely Sluggish
+#define CLICK_CD_HEAVY 16		// Tier: Very Sluggish
+#define CLICK_CD_CHARGED 14	// Tier: Sluggish
+#define CLICK_CD_MELEE 12		// Tier: Normal (baseline)
+#define CLICK_CD_QUICK 10		// Tier: Quick
+#define CLICK_CD_FAST 8		// Tier: Very Quick
 #define CLICK_CD_INTENTCAP 6
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
@@ -228,6 +231,7 @@
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
 #define BCLASS_SUNDER       "sunder"
+#define BCLASS_HALFSWORD	"stab"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -421,6 +425,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PEEL_BONUS 25
 #define ACC_PICK_BONUS 15
 #define ACC_CUT_BONUS 6
+#define ACC_HALFSWORD_BONUS 20
 #define ACC_BLUNT_PRECISE_PENALTY 10	//Blunt and smash aimed at a precise subzone. A mace can't hit the eyes very well.
 #define ACC_SHORT_WEAPON_BONUS 10		//SHORT weapons, and unarmed, aim better.
 #define ACC_AIMED_BONUS 20				//AIMED stance.
@@ -432,3 +437,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+
+// Critical Resistance Defines //
+#define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
