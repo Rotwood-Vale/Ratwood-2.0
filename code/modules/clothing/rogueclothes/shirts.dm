@@ -170,8 +170,6 @@
 	item_state = "duster"
 	slot_flags = ITEM_SLOT_CLOAK
 	body_parts_covered = CHEST|ARMS
-	//sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
-	//sleevetype = "shirt"
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
 	name = "tinker suit"
