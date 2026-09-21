@@ -466,18 +466,18 @@
 ///Making sure they're not any other antag as well as adding the zombie datum to their mind
 /mob/living/carbon/human/proc/zombie_check_can_convert()
 	if(!mind)
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/zombie))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/gnoll))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
-		return
+		return FALSE
 	return mind.add_antag_datum(/datum/antagonist/zombie)
 
