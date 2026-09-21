@@ -583,11 +583,3 @@
 		)
 	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 4 //Expert
-
-/datum/crafting_recipe/roguetown/survival/paper_duster
-	name = "paper duster"
-	result = /obj/item/clothing/suit/roguetown/shirt/paper_duster
-	reqs = list(
-		/obj/item/paper = 5,
-		)
-
