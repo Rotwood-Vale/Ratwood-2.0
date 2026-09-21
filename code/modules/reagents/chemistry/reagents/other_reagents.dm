@@ -74,8 +74,8 @@
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE)) // this should be ass
-		H.adjust_nutrition(5)
-		H.adjust_hydration(5) 
+		H.adjust_nutrition(2)
+		H.adjust_hydration(2) 
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
