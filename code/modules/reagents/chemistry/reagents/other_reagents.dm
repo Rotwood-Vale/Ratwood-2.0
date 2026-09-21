@@ -59,10 +59,10 @@
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(10)
-		H.adjust_hydration(10)
+		H.adjust_nutrition(20)
+		H.adjust_hydration(30)
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			H.set_blood_volume(min(H.get_blood_volume()+4, BLOOD_VOLUME_NORMAL))//Less effective than just water.
+			H.set_blood_volume(min(H.get_blood_volume()+5, BLOOD_VOLUME_NORMAL)) //water should be toxic to hemophages, increasing it so it becomes a water replacement
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER))
 		return
@@ -74,8 +74,8 @@
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(3)
-		H.adjust_hydration(3)
+		H.adjust_nutrition(8)
+		H.adjust_hydration(12)
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
@@ -134,7 +134,8 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-			M.add_nausea(2)
+			M.adjustToxLoss(5)
+			M.add_nausea(5)
 		else
 			H.adjust_hydration(hydration)
 			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
