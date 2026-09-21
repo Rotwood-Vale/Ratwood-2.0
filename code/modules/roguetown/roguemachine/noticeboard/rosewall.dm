@@ -5,11 +5,11 @@ passerby may peruse the board, examine a worker's headshot, or send them an offe
 
 - Only Bathmasters and Bathhouse Attendants may pin/edit/remove an advert or set a status.
 - Statuses: Available / Hired / Do not Disturb. A worker set to Do not Disturb cannot be
-  sent offers (the button is hidden client-side and enforced server-side).
+	sent offers (the button is hidden client-side and enforced server-side).
 - Offers are delivered as a whisper to the worker with YAE/NAE response hrefs, handled in
-  Topic() below (same pattern as the mercenary statue's direct responses).
+	Topic() below (same pattern as the mercenary statue's direct responses).
 - "Examine Headshot" opens the poster's /datum/examine_panel (the examine closer window),
-  the same datum used by the examine chat link.
+	the same datum used by the examine chat link.
 - Icon state rises with the number of pinned adverts: noticeboardbh0 -> noticeboardbh3.
 */
 
