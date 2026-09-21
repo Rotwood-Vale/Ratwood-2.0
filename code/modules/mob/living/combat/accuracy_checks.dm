@@ -90,6 +90,8 @@
 			bonus += ACC_CUT_BONUS
 		if(used_intent.blade_class == BCLASS_PEEL)
 			bonus += ACC_PEEL_BONUS
+		if(used_intent.blade_class == BCLASS_HALFSWORD)
+			bonus += ACC_HALFSWORD_BONUS
 		if((used_intent.blade_class == BCLASS_BLUNT || used_intent.blade_class == BCLASS_SMASH) && check_zone(zone) != zone)	//A mace can't hit the eyes very well
 			bonus -= ACC_BLUNT_PRECISE_PENALTY
 		if(used_intent.accuracy_modifier)

@@ -30,6 +30,14 @@
 	verbage = "sews"
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/survival/clothblindfold
+	name = "blindfold"
+	result = list(/obj/item/clothing/mask/rogue/blindfold)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+	verbage_simple = "tie"
+	verbage = "ties"
+
 /datum/crafting_recipe/roguetown/survival/clothbelt
 	name = "cloth belt"
 	result = /obj/item/storage/belt/rogue/leather/cloth
@@ -300,7 +308,7 @@
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 3,
 	)
-
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 // DIE
 
 /datum/crafting_recipe/roguetown/survival/d4
@@ -353,6 +361,7 @@
 		/obj/item/natural/fur = 1
 		)
 	craftdiff = 1
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 
 /datum/crafting_recipe/roguetown/survival/whetstone
 	name = "whetstone"

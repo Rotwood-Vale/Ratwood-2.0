@@ -335,6 +335,19 @@
 		return
 	qdel(src)
 
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+	name = "avantyne-threaded maille"
+	desc = "Pauldrons lyke that of fire, crested atop a veil of otherworldly maille - impossibly tough, warm to the touch, \
+and crackling with insidious energies."
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
+	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoplatechest_med"
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
 	name = "full-plate corset"
@@ -475,7 +488,7 @@
 	icon_state = "fencercuirass"
 	item_state = "fencercuirass"
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/ComponentInitialize()
+/obj/item/clothing/suit/roguetown/armor/plate/half/fencer/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
@@ -702,7 +715,7 @@
 	icon_state = "bronzeplate"
 	item_state = "bronzeplate"
 	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE + 100
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL//shittier prot but good dura like the helms
 	armor_class = ARMOR_CLASS_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	smelt_bar_num = 3
@@ -731,9 +744,10 @@
 	icon_state = "bronzeplatealt"
 	item_state = "bronzeplatealt"
 	body_parts_covered = CHEST | VITALS | LEGS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
 
 //----------------- Citywatch Armor ---------------------
+// Credits to Twilight Axis (https://github.com/Twilight-Fortress-SS13/Twilight-Axis) for the sprites!
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "citywatch armor"

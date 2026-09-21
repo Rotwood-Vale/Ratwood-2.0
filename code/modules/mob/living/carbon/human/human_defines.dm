@@ -11,6 +11,9 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
+	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
+	var/taints_loot = FALSE
 
 	ambushable = 1
 
@@ -176,6 +179,7 @@
 
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
+	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
 
 	// curse list and cooldown
 	var/list/curses = list()

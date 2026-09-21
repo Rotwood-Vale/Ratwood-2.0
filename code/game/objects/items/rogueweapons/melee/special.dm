@@ -550,6 +550,21 @@
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY
 
+/obj/item/rogueweapon/sword/falchion/militia/bronze
+	name = "kopis"
+	desc = "The falchion's ancient predecessor, veiled in bronze - yet no less lethal against an awaiting trunk. The curved grip snuggly fits in the wielder's hand, allowing their will to be imposed upon assailant-and-archdevil alike with terrible force."
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)//no peel but very fun intents. This little chopper rocks
+	icon_state = "kopis"
+	sheathe_icon = "kopis"
+	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
+	force = 20
+	force_wielded = 27 // +2/3ish over the Maciejowski. A proper killing machine.
+	max_integrity = 175
+	max_blade_int = 350
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/bronze
+	wbalance = WBALANCE_HEAVY
+
 /datum/intent/peculate
 	name = "peculate"
 	hitsound = null
@@ -582,7 +597,7 @@
 	for(var/mob/living/carbon/human/target in GLOB.human_list)
 		if(target == H || target.stat == DEAD)
 			continue
-		if(target.has_flaw(/datum/charflaw/assassintarget))
+		if(HAS_TRAIT(target, TRAIT_ASSASSIN_TARGET))
 			prey_list += target
 	if(!length(prey_list))
 		to_chat(H, span_warning("Can't find anyone."))
@@ -647,7 +662,7 @@
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user = usr, params)
 	if(!istype(target))
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/assassintarget)) // Check to see if the dagger will do 20 damage or 14
+	if(HAS_TRAIT(target, TRAIT_ASSASSIN_TARGET)) // Check to see if the dagger will do 20 damage or 14
 		force = 20 * 2	//vs trait havers, 2x damage over a steel knife
 	else
 		force = 20 + 4	//vs non-trait havers, 4 more damage over a steel knife
@@ -702,7 +717,7 @@
 
 			return
 
-		if(target.has_flaw(/datum/charflaw/assassintarget)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(HAS_TRAIT(target, TRAIT_ASSASSIN_TARGET)) // The profane dagger only thirsts for those who are hunted, by trait or by zizoid curse.
 			if(target.client == null) //See if the target's soul has left their body
 				to_chat(user, "<span class='danger'>Your target's soul has already escaped its corpse...you try to call it back!</span>")
 				get_profane_ghost(target,user) //Proc to capture a soul that has left the body.

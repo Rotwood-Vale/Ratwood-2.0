@@ -1,23 +1,11 @@
 /obj/item/clothing/mask/rogue/MiddleClick(mob/user)
-	if((user.zone_selected == BODY_ZONE_PRECISE_NOSE) && (cansnout == TRUE))
-		if(snouting == TRUE)
-			snouting = FALSE
-		else
-			snouting = TRUE
-		to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
-		if(snouting)
-			icon_state = "[initial(icon_state)]_snout"
-		else
-			icon_state = "[initial(icon_state)]"
-		user.update_inv_wear_mask()
+	overarmor = !overarmor
+	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
+	if(overarmor)
+		alternate_worn_layer = HOOD_LAYER //Below Hair Layer
 	else
-		overarmor = !overarmor
-		to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
-		if(overarmor)
-			alternate_worn_layer = HOOD_LAYER //Below Hair Layer
-		else
-			alternate_worn_layer = BACK_LAYER //Above Hair Layer
-		user.update_inv_wear_mask()
+		alternate_worn_layer = BACK_LAYER //Above Hair Layer
+	user.update_inv_wear_mask()
 
 /obj/item/clothing/mask/rogue
 	name = ""
@@ -33,23 +21,18 @@
 	if(!istype(loc, /mob/living/carbon))
 		return
 	var/mob/living/carbon/H = user
-	if(icon_state == "[initial(icon_state)]_snout")
-		icon_state = initial(icon_state)
+	if(toggle_snout())
+		to_chat(user, span_info("I [snouting ? "make space for my snout in \the [src]" : "wear \the [src] tighter"]."))
 		H.update_inv_wear_mask()
-		update_icon()
-		return
 
-	var/icon/J = new('icons/roguetown/clothing/onmob/masks.dmi')
-	var/list/istates = J.IconStates()
-	for(var/icon_s in istates)
-		if(findtext(icon_s, "[icon_state]_snout"))
-			icon_state += "_snout"
-			H.update_inv_wear_mask()
-			update_icon()
-			return
-
-/obj/item/clothing/mask/rogue/examine()
+/obj/item/clothing/mask/rogue/equipped(mob/user, slot)
 	. = ..()
+	restore_snout()
+
+/obj/item/clothing/mask/rogue/examine(mob/user)
+	. = ..()
+	if(is_snoutable())
+		. += span_notice("Alt+RMB makes room for a snout.")
 
 /obj/item/clothing/mask/rogue/spectacles
 	name = "spectacles"
@@ -450,7 +433,6 @@
 	body_parts_covered = NONE //So that surgery can be done through the mask.
 	var/active_item
 	var/bounty_amount
-	cansnout = TRUE
 
 /obj/item/clothing/mask/rogue/facemask/prisoner/Initialize(mapload)
 	. = ..()
@@ -635,7 +617,6 @@
 	toggle_icon_state = TRUE
 	experimental_onhip = TRUE
 	sewrepair = TRUE
-	cansnout = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/mask/rogue/ragmask/ComponentInitialize()
@@ -664,15 +645,25 @@
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
 
-/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/user, slot)
+/obj/item/clothing/mask/rogue/lordmask/naledi/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
+	if(default_layer == BELT_LAYER)
+		return
+	return ..()
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/equipped(mob/living/user, slot)
 	..()
 	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD)
 		ADD_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+		flags_inv = initial(flags_inv)
+	else
+		flags_inv = NONE
+	user.rebuild_obscured_flags()
 	user.update_fov_angles()
 
-/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/user)
+/obj/item/clothing/mask/rogue/lordmask/naledi/dropped(mob/living/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_SANDSTORM_GOGGLES, CLOTHING_TRAIT)
+	flags_inv = initial(flags_inv)
 	user.update_fov_angles()
 
 
@@ -772,12 +763,6 @@
 	sellprice = 70
 	smeltresult = null
 	salvage_result = null
-
-/obj/item/clothing/mask/rogue/facemask/carved/jademask
-	name = "jade mask "
-	icon_state = "mask_jade"
-	desc = "A jade mask that both conceals and protects the face."
-	sellprice = 70
 
 /obj/item/clothing/mask/rogue/facemask/carved/jademask
 	name = "jade mask"
@@ -885,6 +870,10 @@
 	if(!choice)
 		return
 	apply_mask_style(choice, user)
+
+//pairs each style with its own snouted state via ShiftRMB, so the generic swap must not touch it
+/obj/item/clothing/mask/rogue/xylixmask/is_snoutable()
+	return FALSE
 
 /obj/item/clothing/mask/rogue/xylixmask/AltRightClick(mob/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
