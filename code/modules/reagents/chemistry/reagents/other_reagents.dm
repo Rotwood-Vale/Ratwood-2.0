@@ -60,7 +60,7 @@
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 		H.adjust_nutrition(20)
-		H.adjust_hydration(30)
+		H.adjust_hydration(20)
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			H.set_blood_volume(min(H.get_blood_volume()+5, BLOOD_VOLUME_NORMAL)) //water should be toxic to hemophages, increasing it so it becomes a water replacement
 		return
