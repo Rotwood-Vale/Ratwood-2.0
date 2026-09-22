@@ -34,7 +34,7 @@
 	return TRUE
 
 /datum/sex_action/knot_grinding/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.sexcon.subtle_toggled
+	var/do_subtle = user.sexcon.do_subtle_action
 	if(user.sexcon.knotted_status == KNOTTED_AS_BTM)
 		user.visible_message(span_warning("[user] starts grinding [target]'s knot deeper inside [user.p_them()]self..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
@@ -42,7 +42,7 @@
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/knot_grinding/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.sexcon.subtle_toggled
+	var/do_subtle = user.sexcon.do_subtle_action
 	var/is_bottom_grinding = user.sexcon.knotted_status == KNOTTED_AS_BTM
 	var/mob/living/carbon/human/recipient = is_bottom_grinding ? user : target
 	var/zone_text
@@ -87,7 +87,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/knot_grinding/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.sexcon.subtle_toggled
+	var/do_subtle = user.sexcon.do_subtle_action
 	if(user.sexcon.knotted_status == KNOTTED_AS_BTM)
 		user.visible_message(span_warning("[user] stops grinding [target]'s knot..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else

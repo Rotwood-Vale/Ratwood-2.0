@@ -25,14 +25,14 @@
 /datum/sex_action/titsmother/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts && breasts.breast_size < 3)
-		user.visible_message(span_warning("[user] presses [target]'s face against [user.p_their()] chest!"), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(span_warning("[user] presses [target]'s face against [user.p_their()] chest!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 		user.sexcon.show_progress = 0
 		return
-	user.visible_message(span_warning("[user] smothers [target]'s head under [user.p_their()] tits!"), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] smothers [target]'s head under [user.p_their()] tits!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/titsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.sexcon.subtle_toggled
+	var/do_subtle = user.sexcon.do_subtle_action
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!breasts)
 		user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
@@ -79,9 +79,9 @@
 /datum/sex_action/titsmother/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/organ/breasts/breasts = user.getorganslot(ORGAN_SLOT_BREASTS)
 	if(breasts && breasts.breast_size < 3)
-		user.visible_message(span_warning("[user] eases [target]'s face away from [user.p_their()] chest."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+		user.visible_message(span_warning("[user] eases [target]'s face away from [user.p_their()] chest."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 		return
-	user.visible_message(span_warning("[user] pulls [target]'s head out from under [user.p_their()] tits."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] pulls [target]'s head out from under [user.p_their()] tits."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/titsmother/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

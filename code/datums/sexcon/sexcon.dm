@@ -66,12 +66,12 @@
 	var/access_zone_bitfield = SEX_ZONE_NULL
 	/// Menu based variables
 	var/action_category = SEX_CATEGORY_MISC
-	/// If subtle is toggled on. TRUE if we're sneaking our actions
-	var/subtle_toggled = FALSE
 	/// Show progress bar
 	var/show_progress = 1
 	/// When TRUE, try_do_moan does nothing (used for actions that can be done subtly)
 	var/suppress_moan = FALSE
+	/// Allow players to decide if they want to subtly do this action or not (only for actions that can be done subtly)
+	var/do_subtle_action = FALSE
 	/// Suppress repeated action messages unless key action state changes.
 	var/suppress_action_messages = FALSE
 	/// Tracks whether the one-time orison indulgence notice has been shown for the current action.
@@ -1201,7 +1201,7 @@
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
 				else
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
-	if(subtle_toggled)
+	if(do_subtle_action)
 		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
 	else
 		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
@@ -1301,7 +1301,7 @@
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("toggle_subtle")
-			subtle_toggled = !subtle_toggled
+			do_subtle_action = !do_subtle_action
 		if("category_hands")
 			action_category = SEX_CATEGORY_HANDS
 		if("category_penetrate")
@@ -1372,7 +1372,7 @@
 	var/subtle_message_tick_counter = 0
 	show_progress = 1
 	suppress_moan = FALSE
-	var/do_subtle_action = subtle_toggled
+	var/do_subtle_action = do_subtle_action
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()

@@ -5,11 +5,11 @@
 	solo = TRUE
 
 /datum/sex_action/holy/masturbate_anus_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] offers a quiet orison and starts fingering [user.p_their()] butt..."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] offers a quiet orison and starts fingering [user.p_their()] butt..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/holy/masturbate_anus_orison/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.sexcon.subtle_toggled
+	var/do_subtle = user.sexcon.do_subtle_action
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
 	modular_try_show_orison_indulgence_notice(user, user, data)
@@ -29,7 +29,7 @@
 	user.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/holy/masturbate_anus_orison/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] finishes the prayer and stops fingering [user.p_their()] butt."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] finishes the prayer and stops fingering [user.p_their()] butt."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/holy/masturbate_anus_orison/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())
