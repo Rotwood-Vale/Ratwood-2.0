@@ -1352,6 +1352,14 @@ Necra's Censer (by ARefrigerator)
 	rod_difficultymod = -5
 	rod_raritymod = list("com" = -1, "rare" = 3, "ultra" = 2, "gold" = 1)
 
+/obj/item/fishingrod/abyssoid/Initialize(mapload)
+	. = ..()
+	reel = new /obj/item/fishing/reel/silk(src)
+	reel.alpha = 0
+	hook = new /obj/item/fishing/hook/steel(src)
+	hook.alpha = 0
+	line = new /obj/item/fishing/line/bobber(src)
+	line.alpha = 0
 /*******************************************
  * XYLIXSOID STUFF
  ***************************************************/

@@ -59,6 +59,7 @@
 							/obj/item/flashlight/flare/torch = 1,
 							/obj/item/flint = 1,
 							/obj/item/recipe_book/fishing = 1,
+							/obj/item/fishing/hook/iron = 1,
 							/obj/item/mini_flagpole/fisher,
 							)
 	else
@@ -77,6 +78,7 @@
 							/obj/item/flashlight/flare/torch = 1,
 							/obj/item/flint = 1,
 							/obj/item/recipe_book/fishing = 1,
+							/obj/item/fishing/hook/iron = 1,
 							/obj/item/mini_flagpole/fisher,
 							)
 	if(SSmapping.current_map.map_name == "Desert Town")

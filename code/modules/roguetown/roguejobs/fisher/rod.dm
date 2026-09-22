@@ -665,7 +665,7 @@
 
 	playsound(user.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 	if(user.mind)
-		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 10, FALSE)
+		user.mind.add_sleep_experience(/datum/skill/labor/fishing, 15, FALSE)
 		record_featured_stat(FEATURED_STATS_FISHERS, user)
 		record_round_statistic(STATS_FISH_CAUGHT)
 	if(baited && getbaitlife(fishing_skill_level, baited))
