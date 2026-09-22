@@ -281,8 +281,9 @@
 
 		var/heard_message = "\[The speech is completely unintelligible..\]"
 		var/datum/language/delivery_language = /datum/language/common
-
-		if(isliving(hearer))
+		if(isobserver(hearer))
+			heard_message = message
+		else if(isliving(hearer))
 			var/mob/living/living_hearer = hearer
 			heard_message = new_imperial.translate_for(living_hearer, message)
 
