@@ -62,7 +62,7 @@
 			if(H.reagents)
 				H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 22)
 			if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-				H.set_blood_volume(min(H.get_blood_volume() + 25, BLOOD_VOLUME_NORMAL))
+				H.set_blood_volume(min(H.get_blood_volume() + 35, BLOOD_VOLUME_NORMAL))
 		return
 
 	if(victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
