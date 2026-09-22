@@ -425,12 +425,10 @@
 	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE) // Zombies don't breathe
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE) // Zombies are immune to poison
-
-	if (infected_wake || converted)
-		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
-		to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
+	zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
+	to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
 
 	if(zombie.stat == DEAD)
 		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above. The corpse stays
