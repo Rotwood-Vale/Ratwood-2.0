@@ -1,8 +1,8 @@
 /obj/item/clothing/gloves/roguetown/contraption
 	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
-	var/charge_per_source = 5
+	var/charge_per_source = 10
 	var/current_charge = 0
-	var/misfire_chance = 15
+	var/misfire_chance = 0
 	var/sneaky_misfire_chance
 	var/misfiring = FALSE
 	var/cog_accept = TRUE
@@ -36,10 +36,10 @@
 	icon_state = "volticgauntlets"
 	slot_flags = ITEM_SLOT_GLOVES
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
-	var/cdtime = 30 SECONDS
+	var/cdtime = 15 SECONDS // more in line with a lightning bolt
 	var/activetime = 5 SECONDS
 	sellprice = 100
-	var/delay = 3 SECONDS
+	var/delay = 2 SECONDS
 	var/sprite_changes = 10
 	var/datum/beam/current_beam = null
 	var/active = FALSE
@@ -103,7 +103,7 @@
 
 	var/list/mob/living/valid_targets = list()
 	// Find targets in range
-	for (var/mob/living/carbon/C in view(4, user))
+	for (var/mob/living/carbon/C in view(5, user))
 		if (C.anti_magic_check())
 			visible_message(span_warning("The lightning fizzles harmlessly against [C]!"))
 			playsound(get_turf(C), 'sound/magic/magic_nulled.ogg', 100)
@@ -128,14 +128,14 @@
 			sleep(delay / sprite_changes)
 
 		var/dist = get_dist(user, C)
-		if (dist <= 2)
+		if (dist <= 5)
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
 			else
-				C.Immobilize(3 SECONDS)
-				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+				C.Immobilize(5 SECONDS)
+				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 10 SECONDS)
 				C.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 10 SECONDS)
 		else
 			playsound(user, 'sound/items/stunmace_toggle (3).ogg', 100)
 			user.visible_message(span_warning("The voltaic link fizzles out!"), span_warning("[C] is too far away!"))

@@ -349,18 +349,27 @@
 	hammers_per_item = 8
 	skill_level = 3
 
-/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
-	name = "Partially refined barrel (5 iron ingot + rough iron barrel)"
-	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
-	created_item = /obj/item/bombard_partiallyrefinedbarrel
-	hammers_per_item = 10
-	skill_level = 5
+/datum/anvil_recipe/engineering/roughbarrel
+	name = "Rough Iron Barrel (+3 iron)"
+	required_items = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = /obj/item/bombard_roughbarrel
+	createditem_num = 1
+	craftdiff = 5
+
+
+/datum/anvil_recipe/engineering/sandedbarrel
+	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Rough Iron Barrel)"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_roughbarrel)
+	created_item = /obj/item/bombard_sandedbarrel
+	createditem_num = 1
+	craftdiff = 5
 
 /datum/artificer_recipe/contraptions/bombardbarrel
-	name = "Bombard Barrel (+5 iron ingot + repaired sanded barrel)"
+	name = "Bombard Barrel (+5 iron ingot + sanded barrel)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/bombard_barrel
 	hammers_per_item = 8
 	skill_level = 5

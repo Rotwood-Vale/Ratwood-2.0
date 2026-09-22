@@ -151,10 +151,19 @@
 /datum/crafting_recipe/roguetown/engineering/slurbow
 	name = "Slurbow"
 	result = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
-	reqs = list(/obj/item/ingot/steel = 2, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 4)
+	reqs = list(/obj/item/ingot/steel = 2, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 2)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/siegebow
+	name = "Siegebow"
+	result = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
+	reqs = list(/obj/item/ingot/steel = 3, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 2)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 6
 	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/twentybolts
@@ -186,6 +195,45 @@
 	craftdiff = 3
 	display_category = ITEM_CAT_ENG_COMBAT
 
+/datum/crafting_recipe/roguetown/engineering/bronzeboltstwenty
+	name = "Bronze Crossbow Bolts 20x"
+	reqs = list(/obj/item/natural/wood/plank = 3, /obj/item/ingot/bronze)
+	result = list(/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
+						/obj/item/ammo_casing/caseless/rogue/bolt/bronze
+					)
+/datum/crafting_recipe/roguetown/engineering/heavyboltsten
+	name = "Heavy Bolts 10x"
+	reqs = listreqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
+	result = list(/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt,
+					/obj/projectile/bullet/reusable/heavy_bolt
+				)
+	
 //pyro arrow crafting, from stonekeep
 /datum/crafting_recipe/roguetown/engineering/pyrobolt
 	name = "pyroclastic bolt"

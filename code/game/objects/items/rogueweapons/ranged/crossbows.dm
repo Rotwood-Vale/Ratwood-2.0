@@ -225,14 +225,13 @@
 	item_state = "slurbow"
 	possible_item_intents = list(/datum/intent/shoot/crossbow/slurbow, /datum/intent/arc/crossbow/slurbow, INTENT_GENERIC)
 	chargingspeed = 20
-	damfactor = 0.6
+	damfactor = 0.8 // 0.4 less than a crossbow
 	accfactor = 1.3
 	reloadtime = 20
 	hasloadedsprite = TRUE
 	movingreload = TRUE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
-	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
-	damage_from_perception = TRUE
+	penfactor = 0.75 // makes it have slightly more pen than before allowing it to at least penetrate some light armor
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
 	name = "siegebow"
@@ -254,6 +253,7 @@
 	chargingspeed = 60 //+20, or a little over +50% the standard charging speed.
 	reloadtime = 160 //Roughly sixteen seconds, or +200% the standard reloading speed.
 	accfactor = 0.5 //Hey, I'd like to see you try to aim a siege weapon while standing up!
+	damfactor = 2.2 // rare weapon but it should massively damage whatever it hits, 100% increase over the crossbow
 	equip_delay_self = 3 SECONDS
 	unequip_delay_self = 3 SECONDS
 	inv_storage_delay = 2 SECONDS
@@ -328,6 +328,7 @@
 	chargingspeed = 60//+20
 	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
+	damfactor = 1.8 // 0.6 more than a standard crossbow, 0.4 less than the siege crossbow
 
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt
