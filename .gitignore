@@ -237,5 +237,5 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_music/sounds/title1.ogg
 /config/title_screens/images/*
 !/config/title_screens/images/exclude
-tools/tgs_test/obj/Tgstation.TgsTest.csproj.nuget.g.props
-tools/tgs_test/obj/Tgstation.TgsTest.csproj.nuget.g.targets
+
+*.test.dme
