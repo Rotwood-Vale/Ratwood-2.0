@@ -37,6 +37,7 @@
 
 /obj/item/organ/penis/knotted
 	name = "knotted penis"
+	icon_state = "penis_knot"
 	penis_type = PENIS_TYPE_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
@@ -45,80 +46,94 @@
 
 /obj/item/organ/penis/equine
 	name = "equine penis"
+	icon_state = "penis_equine"
 	penis_type = PENIS_TYPE_EQUINE
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/equine_knotted
 	name = "equine knotted penis"
+	icon_state = "penis_equine"
 	penis_type = PENIS_TYPE_EQUINE_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/equine_slit
 	name = "equine penis"
+	icon_state = "penis_equine"
 	penis_type = PENIS_TYPE_EQUINE
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/equine_knotted_slit
 	name = "equine knotted penis"
+	icon_state = "penis_equine"
 	penis_type = PENIS_TYPE_EQUINE_KNOTTED
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/tapered_mammal
 	name = "tapered penis"
+	icon_state = "penis_taper"
 	penis_type = PENIS_TYPE_TAPERED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/tapered
 	name = "tapered penis"
+	icon_state = "penis_taper"
 	penis_type = PENIS_TYPE_TAPERED
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/tapered_knotted
 	name = "tapered knotted penis"
+	icon_state = "penis_taper"
 	penis_type = PENIS_TYPE_TAPERED_KNOTTED
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/tapered_knotted_mammal
 	name = "tapered knotted penis"
+	icon_state = "penis_taper"
 	penis_type = PENIS_TYPE_TAPERED_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/tapered_double
 	name = "hemi tapered penis"
+	icon_state = "penis_hemi"
 	penis_type = PENIS_TYPE_TAPERED_DOUBLE
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/tapered_double_mammal
 	name = "hemi tapered penis"
+	icon_state = "penis_hemi"
 	penis_type = PENIS_TYPE_TAPERED_DOUBLE
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/tapered_double_knotted
 	name = "hemi knotted tapered penis"
+	icon_state = "penis_hemi"
 	penis_type = PENIS_TYPE_TAPERED_DOUBLE_KNOTTED
 	sheath_type = SHEATH_TYPE_SLIT
 
 /obj/item/organ/penis/tapered_double_knotted_mammal
 	name = "hemi knotted tapered penis (sheath)"
+	icon_state = "penis_hemi"
 	penis_type = PENIS_TYPE_TAPERED_DOUBLE_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/barbed
 	name = "barbed penis"
+	icon_state = "penis_knot"
 	penis_type = PENIS_TYPE_BARBED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/barbed_knotted
 	name = "barbed knotted penis"
+	icon_state = "penis_knot"
 	penis_type = PENIS_TYPE_BARBED_KNOTTED
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/tentacle
 	name = "tentacle penis"
+	icon_state = "penis_taper"
 	penis_type = PENIS_TYPE_TENTACLE
 	sheath_type = SHEATH_TYPE_NONE
 
-	
 /obj/item/organ/vagina
 	name = "vagina"
 	icon_state = "vagina"
