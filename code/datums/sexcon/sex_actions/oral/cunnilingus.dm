@@ -8,7 +8,7 @@
 	user.sexcon.show_progress = FALSE
 
 /datum/sex_action/cunnilingus/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
+	var/do_subtle = user.sexcon.subtle_toggled
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] sucks [target]'s clit..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))

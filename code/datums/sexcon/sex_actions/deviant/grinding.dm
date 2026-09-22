@@ -16,7 +16,7 @@
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/grind_body/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
+	var/do_subtle = user.sexcon.subtle_toggled
 	var/pleasure_target
 	var/zone_text
 	switch(user.zone_selected)

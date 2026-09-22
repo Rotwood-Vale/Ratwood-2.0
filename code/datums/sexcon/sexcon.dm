@@ -66,6 +66,8 @@
 	var/access_zone_bitfield = SEX_ZONE_NULL
 	/// Menu based variables
 	var/action_category = SEX_CATEGORY_MISC
+	/// If subtle is toggled on. TRUE if we're sneaking our actions
+	var/subtle_toggled = FALSE
 	/// Show progress bar
 	var/show_progress = 1
 	/// When TRUE, try_do_moan does nothing (used for actions that can be done subtly)
@@ -1199,6 +1201,10 @@
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
 				else
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
+	if(subtle_toggled)
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
+	else
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
@@ -1294,6 +1300,8 @@
 				arousal_frozen = !arousal_frozen
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
+		if("toggle_subtle")
+			subtle_toggled = !subtle_toggled
 		if("category_hands")
 			action_category = SEX_CATEGORY_HANDS
 		if("category_penetrate")
@@ -1364,7 +1372,7 @@
 	var/subtle_message_tick_counter = 0
 	show_progress = 1
 	suppress_moan = FALSE
-	var/do_subtle_action = user.m_intent == MOVE_INTENT_SNEAK ? TRUE : FALSE
+	var/do_subtle_action = subtle_toggled
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()

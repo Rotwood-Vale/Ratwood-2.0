@@ -21,7 +21,7 @@
 
 /datum/sex_action/rub_ears/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 
-	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
+	var/do_subtle = user.sexcon.subtle_toggled
 	var/has_sensitive_ears = target.has_nonhuman_ears()
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle

@@ -11,7 +11,7 @@
 	user.sexcon.show_progress = FALSE
 
 /datum/sex_action/blowjob/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
+	var/do_subtle = user.sexcon.subtle_toggled
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 	if(!user.sexcon.do_knot_action_as_bottom)

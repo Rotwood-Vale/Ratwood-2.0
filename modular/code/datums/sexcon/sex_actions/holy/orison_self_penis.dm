@@ -9,7 +9,7 @@
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/holy/masturbate_penis_orison/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/do_subtle = user.m_intent == MOVE_INTENT_SNEAK
+	var/do_subtle = user.sexcon.subtle_toggled
 	var/list/data = modular_get_orison_patron_data(user.patron?.type)
 	var/message_suffix = data["message"]
 	modular_try_show_orison_indulgence_notice(user, user, data)
