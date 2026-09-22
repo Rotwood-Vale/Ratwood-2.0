@@ -135,8 +135,8 @@
 		to_chat(user, span_notice("the warmth of [i] fades away."))
 		active_item = FALSE
 
-/datum/magic_item/greater/archery
-	name = "archery"
+/datum/magic_item/greater/sharpshooter
+	name = "sharpshooting"
 	description = "It has the imprint of a bowstring."
 	var/active_item = FALSE
 	var/masterbow = FALSE
@@ -146,7 +146,7 @@
 	var/mastersling = FALSE
 	var/legendsling = FALSE
 
-/datum/magic_item/greater/archery/on_equip(obj/item/i, mob/living/user, slot)
+/datum/magic_item/greater/sharpshooter/on_equip(obj/item/i, mob/living/user, slot)
 	if(slot == ITEM_SLOT_HANDS)
 		return
 	if(active_item)
@@ -191,7 +191,7 @@
 		to_chat(user, span_notice("I feel more dexterious!"))
 		active_item = TRUE
 
-/datum/magic_item/greater/archery/on_drop(obj/item/i, mob/living/user)
+/datum/magic_item/greater/sharpshooter/on_drop(obj/item/i, mob/living/user)
 	if(active_item)
 		active_item = FALSE
 		user.change_stat(STATKEY_PER, -2)

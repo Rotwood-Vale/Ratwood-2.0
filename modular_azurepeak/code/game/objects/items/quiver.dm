@@ -375,6 +375,13 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/sling/steel/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/steel/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/sling/ancient/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
