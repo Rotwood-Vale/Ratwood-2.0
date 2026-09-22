@@ -357,6 +357,19 @@
 		if(prob(dam * cbt_multiplier))
 			owner.emote("groin", TRUE)
 			owner.Stun(10)
+	if(zone_precise == BODY_ZONE_PRECISE_GROIN)
+		if(bclass in GLOB.geld_classes)
+			var/static/list/genital_wound_types = list(
+				/datum/wound/gelding,
+				/datum/wound/genital_nullification,
+			)
+			var/list/eligible_wounds = list()
+			for(var/wound_type in genital_wound_types)
+				var/datum/wound/candidate = GLOB.primordial_wounds[wound_type]
+				if(candidate.can_apply_to_bodypart(src))
+					eligible_wounds += wound_type
+			if(length(eligible_wounds) && prob(round(dam / 5)))
+				attempted_wounds += pick(eligible_wounds)
 	if((bclass in GLOB.fracture_bclasses) && (zone_precise != BODY_ZONE_PRECISE_STOMACH))
 		used = round(damage_dividend * 20 + (dam / 3))
 		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))

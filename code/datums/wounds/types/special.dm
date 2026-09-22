@@ -276,6 +276,115 @@
 			"The testicles are eviscerated!",
 		)
 
+/datum/wound/gelding
+	name = "gelded"
+	check_name = span_danger("GELDED")
+	crit_message = list(//taken 1:1 from dwarf fortress
+		"The geldables have been torn away",
+		"A gelding strike!",
+		"It is a gelding strike!",
+		"A gelding blow!",
+	)
+	sound_effect = 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'
+	woundpain = 50
+	can_sew = FALSE
+	can_cauterize = FALSE
+	critical = TRUE
+	var/organs_removed = FALSE
+
+/datum/wound/gelding/can_apply_to_bodypart(obj/item/bodypart/affected)
+	if(!..())
+		return FALSE
+	if(affected.body_zone != BODY_ZONE_CHEST || !iscarbon(affected.owner))
+		return FALSE
+	return affected.owner.getorganslot(ORGAN_SLOT_TESTICLES)
+
+/datum/wound/gelding/on_mob_gain(mob/living/affected)
+	. = ..()
+	if(organs_removed || !iscarbon(affected))
+		return
+
+	var/mob/living/carbon/carbon_owner = affected
+	var/obj/item/organ/testicles/testicles = carbon_owner.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testicles)
+		return
+
+	organs_removed = TRUE
+	carbon_owner.Stun(1 SECONDS)
+	testicles.Remove(carbon_owner)
+	testicles.forceMove(carbon_owner.drop_location())
+
+/datum/wound/genital_nullification
+	name = "nullification"
+	check_name = span_danger("NULLIFICATION")
+	severity = WOUND_SEVERITY_SEVERE
+	crit_message = list(
+		"The genitals are severed!",
+		"The genitals are torn away!",
+	)
+	sound_effect = 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'
+	whp = 60
+	woundpain = 50
+	can_sew = FALSE
+	can_cauterize = FALSE
+	critical = TRUE
+	var/organs_removed = FALSE
+	var/static/list/removable_slots = list(
+		ORGAN_SLOT_PENIS,
+		ORGAN_SLOT_VAGINA,
+	)
+
+/datum/wound/genital_nullification/can_apply_to_bodypart(obj/item/bodypart/affected)
+	if(!..())
+		return FALSE
+	if(affected.body_zone != BODY_ZONE_CHEST || !iscarbon(affected.owner))
+		return FALSE
+	for(var/organ_slot in removable_slots)
+		if(affected.owner.getorganslot(organ_slot))
+			return TRUE
+	return FALSE
+
+/datum/wound/genital_nullification/on_mob_gain(mob/living/affected)
+	. = ..()
+	if(organs_removed || !iscarbon(affected))
+		return
+
+	var/mob/living/carbon/carbon_owner = affected
+	var/has_penis = !isnull(carbon_owner.getorganslot(ORGAN_SLOT_PENIS))
+	var/has_vagina = !isnull(carbon_owner.getorganslot(ORGAN_SLOT_VAGINA))
+	if(!has_penis && !has_vagina)
+		return
+	if(has_penis && has_vagina)
+		name = "nullification"
+		check_name = span_danger("NULLIFICATION")
+		sound_effect = list(
+			'modular/sound/masomoans/agony/CBTScreamIntersex1.ogg',
+			'modular/sound/masomoans/agony/CBTScreamIntersex2.ogg',
+		)
+	else if(has_penis)
+		name = "penectomy"
+		check_name = span_danger("PENECTOMY")
+		sound_effect = list(
+			'modular/sound/masomoans/agony/CBTScreamMale1.ogg',
+			'modular/sound/masomoans/agony/CBTScreamMale2.ogg',
+		)
+	else
+		name = "vaginectomy"
+		check_name = span_danger("VAGINECTOMY")
+		sound_effect = list(
+			'modular/sound/masomoans/agony/CBTScreamFemale1.ogg',
+			'modular/sound/masomoans/agony/CBTScreamFemale2.ogg',
+		)
+
+	organs_removed = TRUE
+	carbon_owner.Stun(1 SECONDS)
+	for(var/organ_slot in removable_slots)
+		var/obj/item/organ/genital = carbon_owner.getorganslot(organ_slot)
+		if(!genital)
+			continue
+		genital.Remove(carbon_owner)
+		genital.forceMove(carbon_owner.drop_location())
+
 /datum/wound/scarring
 	name = "permanent scarring"
 	check_name = "<span class='userdanger'><B>SCARRED</B></span>"
@@ -836,4 +945,3 @@
 	// Occasional discomfort message
 	if(!C.stat && prob(5))
 		to_chat(C, span_warning("I can't stop shivering..."))
-
