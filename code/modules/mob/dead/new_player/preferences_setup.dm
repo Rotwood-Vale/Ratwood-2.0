@@ -43,25 +43,13 @@
 		real_name = pref_species.random_name(gender,1)
 	set_new_race(new random_species_type)
 
-#define PREVIEW_UPDATE_COOLDOWN (0.4 SECONDS)
-
 /datum/preferences/proc/update_preview_icon(jobOnly = FALSE)
-	if(!parent || parent.is_new_player())
-		return
-	if(!COOLDOWN_FINISHED(src, preview_update))
-		queued_preview_job_only = jobOnly
-		addtimer(CALLBACK(src, PROC_REF(render_queued_preview_icon)), COOLDOWN_TIMELEFT(src, preview_update) + 1, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT)
-		return
-	render_preview_icon(jobOnly)
-
-/datum/preferences/proc/render_queued_preview_icon()
-	render_preview_icon(queued_preview_job_only)
-
-/datum/preferences/proc/render_preview_icon(jobOnly = FALSE)
 	set waitfor = 0
 	if(!parent)
 		return
-	COOLDOWN_START(src, preview_update, PREVIEW_UPDATE_COOLDOWN)
+	if(parent.is_new_player())
+		return
+//	last_preview_update = world.time
 	// Set up the dummy for its photoshoot
 	var/datum/job/previewJob
 	var/highest_pref = 0
@@ -89,8 +77,6 @@
 	mannequin.rebuild_obscured_flags()
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-
-#undef PREVIEW_UPDATE_COOLDOWN
 
 /datum/preferences/proc/apply_preview_erect_state_to_mannequin(mob/living/carbon/human/mannequin)
 	if(!mannequin)
