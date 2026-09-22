@@ -174,7 +174,9 @@
 	var/any_fish_needed = 10
 	debuff_type = /datum/status_effect/debuff/dreamfiend_curse
 	//This will be Abyssor's statue soon.
+	required_items = list() // fish requirement is handled entirely via any_fish_needed, not the item system
 	required_structure = /turf/open/water/ocean
+	alt_required_items = null // explicitly: no cost-reduction alternate for this revival
 
 /obj/effect/proc_holder/spell/invoked/resurrect/abyssor/proc/get_nearby_fish(atom/center)
 	var/list/fish = list()
