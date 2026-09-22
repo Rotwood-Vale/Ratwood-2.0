@@ -44922,6 +44922,9 @@
 	icon_state = "borderfall";
 	pixel_y = -10
 	},
+/obj/machinery/light/rogue/candle/blue{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
 "jnY" = (
@@ -98485,6 +98488,25 @@
 	icon_state = "borderfall";
 	pixel_x = 8
 	},
+/obj/structure/closet/crate/roguecloset/dark{
+	keylock = 1;
+	locked = 1;
+	lockid = "nightmaiden";
+	name = "Gambling";
+	pixel_y = 4
+	},
+/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice/bakers_dozen,
+/obj/item/storage/pill_bottle/dice/dice_poker,
+/obj/item/storage/pill_bottle/dice/dice_war,
+/obj/item/storage/pill_bottle/dice/dwarven,
+/obj/item/storage/pill_bottle/dice/farkle,
+/obj/item/storage/pill_bottle/dice/hazard,
+/obj/item/storage/pill_bottle/dice/liars_dice,
+/obj/item/storage/pill_bottle/dice/threes_away,
+/obj/item/toy/cards/deck,
+/obj/item/toy/cards/deck,
+/obj/item/toy/cards/deck/tarot,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
 "uFz" = (
@@ -292376,7 +292398,7 @@ ruM
 vey
 eHz
 jnW
-scK
+soz
 iYW
 lqu
 gUu
