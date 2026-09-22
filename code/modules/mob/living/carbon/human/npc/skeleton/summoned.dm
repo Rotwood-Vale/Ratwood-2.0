@@ -8,11 +8,11 @@
 
 /datum/outfit/job/roguetown/npc/skeleton/npc/summoned/pre_equip(mob/living/carbon/human/H)
 	.=..()
-	H.STASTR = 14
-	H.STASPD = 8
-	H.STACON = 6 // Slightly tougher now!
+	H.STASTR = 15 // Empowered by HER
+	H.STASPD = 6 // Slower, but stronger. Run away!
+	H.STACON = 16 // MORE tougher now!
 	H.STAWIL = 15
-	H.STAINT = 1
+	H.STAINT = 13 // Devilishly cunning
 	name = "Skeleton Soldier"
 	cloak = /obj/item/clothing/cloak/stabard/surcoat/guard // Ooo Spooky Old Dead MAA
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit
