@@ -1781,8 +1781,13 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	triumph_cost = 3
 
 /datum/loadout_item/tri_fencing_shirt_shepherd
-	name = "Shepherd Shirt (Padded)"
+	name = "Shepherd's Shirt (Padded)"
 	path = /obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd
+	triumph_cost = 3
+
+/datum/loadout_item/tri_fencing_shirt_shepherd
+	name = "Shepherd's Vest (Padded)"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/shepherd
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gambeson
