@@ -642,7 +642,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 					if(closest_tile in view(source_turf))
 						targets[1] = closest_tile
 						break; // Found furthest tile, do not self-frag
-
+	if((invocation_type == "whisper" || invocation_type == "shout") && HAS_TRAIT(user, TRAIT_GARGLE_SPEECH))
+		invocation(user)
+		to_chat(user, span_warning("My mangled words fail to shape the magic. The spell fizzles!"))
+		if(breaks_invisibility)
+			user.break_invisibility()
+		user.stop_attack()
+		if(user.mmb_intent && user.mmb_intent.mob_light)
+			QDEL_NULL(user.mmb_intent.mob_light)
+		start_recharge()
+		if(action)
+			action.UpdateButtonIcon()
+		return FALSE
 	before_cast(targets, user = user)
 	if(user && user.ckey)
 		user.log_message("cast the spell [name].", LOG_ATTACK, color = "red")
