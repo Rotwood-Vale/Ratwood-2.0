@@ -690,3 +690,57 @@
       since we're not sanity checking for each saved item.
   - code_imp: 'Tiny change: if a statpack can''t load, it now just sets you to Fated
       instead of randoming.'
+2026-09-21:
+  RadiantFlash7:
+  - bugfix: Navigator now actively checks for anything thats 'conjured' rather then
+      worrying about conjured item sellprice
+  - balance: Naledi Complex is no longer optional
+  - balance: Divergence no longer has a 2 second immobilize. It now has a .5 second
+      immobilize and a brief slowdown, like other spells.
+  - bugfix: fixes conjured weapons being sold for value
+  Risraivyn:
+  - rscadd: Added TGUI interface spell pick
+  SirSwagmeyer:
+  - rscadd: FREIFECHTER REWORK - added master strikes, reworked Freifechters in general,
+      and more.
+  - rscadd: Added two new foreigner adventurers, some new, banger ass combat music,
+      and more.
+  - bugfix: Unfucked Flamberge's onmob sprite.
+  UntoldTactics:
+  - code_imp: Twilight Axis appropriately credited for the City Watch armor sprites.
+  Xander3359:
+  - rscadd: Adds Self-Aware as a quirk option. Costs 1 point and lets you see your
+      own damage numbers
+  - bugfix: Knives that have a chance to embed now can actually embed.
+  Yuckuza:
+  - rscadd: Gronn mercs and items reflavored to use Mongol Khanate-inspired, rather
+      than Norse-inspired, wording and naming conventions.
+  - bugfix: Former Atgervi, now Ba'atur, has their miracles once more following an
+      accidental regression.
+  - balance: Werewolf skin and gnoll hide are now affected by blessed silver intdamage
+      multiplier.
+  hugmeorelse:
+  - rscadd: Added iron versions of the armet and roundface bascinet, plus iron snouted
+      armets, iron snouted visored sallets and iron snouted roundface bascinets from
+      AP. They can be forged at the anvil and chosen by the Ironclad. More iron for
+      the iron warriors.
+  - image: The new iron helmets now match the colors of the other iron helmets on
+      RW.
+  - bugfix: Adding a feather or cloth to an iron visored sallet now shows a plume
+      or orle, instead of using up the item and showing nothing.
+  - bugfix: Rainbow orles on armets now show their proper colors and no longer remove
+      an existing plume. Doesn't really fit the setting, but it needed a fix. Not
+      up to me to decide, and I don't really care.
+  - bugfix: Plumes and orles now sit correctly on the iron snouted armet and on snouted
+      visored sallets with the visor raised. The plume now "sits" behind the raised
+      visor.
+  wikimody:
+  - balance: gave keeper major devotion regen instead of minor
+  - bugfix: fixed keepers double devotion bar
+  zeroisthebiggay:
+  - balance: whips are now considered great weapons in length
+  - spellcheck: alters unsettling quirk verbiage
+  - qol: allows turf-click attacks for all melee intents.
+  zoktiik:
+  - rscdel: A number of "important" roles have been forbidden from taking Marked by
+      Gnolls, due to gnolls' high potential for disappearing targets from the round.
