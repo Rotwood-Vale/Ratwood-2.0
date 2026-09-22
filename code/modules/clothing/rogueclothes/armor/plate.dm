@@ -765,12 +765,14 @@ and crackling with insidious energies."
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
 	detail_tag = "_detail"
+	var/ducal_color = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/Initialize(mapload)
 	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	GLOB.lordcolor += src
+	if(ducal_color == TRUE)
+		if(GLOB.lordprimary)
+			lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+		GLOB.lordcolor += src
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/update_icon()
 	cut_overlays()
@@ -795,5 +797,5 @@ and crackling with insidious energies."
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
 	desc = "Heavy, well worn armour featuring simple greys. Justice is impartial. Are you?"
-	icon_state = "sheriffarmor"
-	item_state = "sheriffarmor"
+	ducal_color = FALSE
+	detail_color = "#36454F"

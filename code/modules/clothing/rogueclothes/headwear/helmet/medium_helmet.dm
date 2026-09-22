@@ -858,12 +858,14 @@
 	emote_environment = 3
 	dropshrink = null
 	detail_tag = "_detail"
+	var/ducal_color = TRUE
 
 /obj/item/clothing/head/roguetown/helmet/citywatch/Initialize(mapload)
 	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	GLOB.lordcolor += src
+	if(ducal_color == TRUE)
+		if(GLOB.lordprimary)
+			lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+		GLOB.lordcolor += src
 
 /obj/item/clothing/head/roguetown/helmet/citywatch/update_icon()
 	cut_overlays()
@@ -888,5 +890,5 @@
 /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	name = "watch captain helmet"
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
-	icon_state = "sheriff_helm"
-	item_state = "sheriff_helm"
+	ducal_color = FALSE
+	detail_color = "#36454F"
