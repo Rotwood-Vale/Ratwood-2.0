@@ -64,36 +64,15 @@
 		"category" = poll_category || "",
 		"category_label" = poll_category ? SStreasury.get_poll_tax_category_pretty_name(poll_category) : "",
 	)
-	var/list/funds = list()
+	// Fund metadata (name/label) is static, but nothing here that gates access - the roster
+	// entries carry live can_manage/label/cap in ui_data below.
 	var/list/patron_rosters_static = list()
 	for(var/fid in ALL_FUND_IDS)
 		var/obj/structure/roguemachine/vaultbank/V = SStreasury.find_jawbank_for_fund_id(fid)
-		var/datum/fund/F = SStreasury.resolve_fund_by_id(fid)
-		if(!F)
-			continue
-		funds += list(list(
-			"id" = fid,
-			"label" = SStreasury.indenture_faction_label(F),
-			"name" = F.name,
-			"can_issue" = (V && V.can_issue_loan(user)) ? TRUE : FALSE,
-			"can_withdraw" = (V && V.can_withdraw(user)) ? TRUE : FALSE,
-			"can_view" = (V && V.can_view(user)) ? TRUE : FALSE,
-			"supports_loans" = V ? (V.supports_loans ? TRUE : FALSE) : TRUE,
-			"allow_zero_rate" = (V && (0 in V.allowed_rates())) ? TRUE : FALSE,
-			"authority_label" = V ? V.get_authority_label() : "",
-			"withdraw_rule" = V ? V.get_withdraw_rule_text() : "",
-			"has_patronage" = (V && !isnull(V.get_patronage_writ_path())) ? TRUE : FALSE,
-			"patron_label" = V ? V.get_patron_label() : "",
-			"patron_cap" = V ? V.get_patron_cap() : 0,
-		))
 		if(V && !isnull(V.get_patronage_writ_path()))
 			patron_rosters_static[fid] = list(
-				"label" = V.get_patron_label(),
-				"cap" = V.get_patron_cap(),
-				"can_manage" = V.can_issue_loan(user) ? TRUE : FALSE,
 				"explanation" = V.get_patron_explanation(),
 			)
-	data["funds"] = funds
 	data["patron_rosters_static"] = patron_rosters_static
 	return data
 
@@ -118,6 +97,31 @@
 		)
 	else
 		data["active_loan"] = null
+
+	// Fund access flags are recomputed every poll so a lapsed cap, a revoked writ, or a
+	// suspended group can't leave a stale button the backend will then reject on click.
+	var/list/funds = list()
+	for(var/fid in ALL_FUND_IDS)
+		var/obj/structure/roguemachine/vaultbank/V = SStreasury.find_jawbank_for_fund_id(fid)
+		var/datum/fund/F = SStreasury.resolve_fund_by_id(fid)
+		if(!F)
+			continue
+		funds += list(list(
+			"id" = fid,
+			"label" = SStreasury.indenture_faction_label(F),
+			"name" = F.name,
+			"can_issue" = (V && V.can_issue_loan(user)) ? TRUE : FALSE,
+			"can_withdraw" = (V && V.can_withdraw(user)) ? TRUE : FALSE,
+			"can_view" = (V && V.can_view(user)) ? TRUE : FALSE,
+			"supports_loans" = V ? (V.supports_loans ? TRUE : FALSE) : TRUE,
+			"allow_zero_rate" = (V && (0 in V.allowed_rates())) ? TRUE : FALSE,
+			"authority_label" = V ? V.get_authority_label() : "",
+			"withdraw_rule" = V ? V.get_withdraw_rule_text() : "",
+			"has_patronage" = (V && !isnull(V.get_patronage_writ_path())) ? TRUE : FALSE,
+			"patron_label" = V ? V.get_patron_label() : "",
+			"patron_cap" = V ? V.get_patron_cap() : 0,
+		))
+	data["funds"] = funds
 
 	// Taxation 2 (ported): live poll data for the Poll Tax tab.
 	var/poll_category = SStreasury.get_poll_tax_category(H)
@@ -220,6 +224,9 @@
 				for(var/mob/living/carbon/human/HP in roster)
 					roster_data += list(list("ref" = REF(HP), "name" = HP.real_name, "job" = HP.job || ""))
 			patron_rosters[fid] = list(
+				"label" = V.get_patron_label(),
+				"cap" = V.get_patron_cap(),
+				"can_manage" = V.can_issue_loan(user) ? TRUE : FALSE,
 				"patrons" = roster_data,
 			)
 	data["patron_rosters"] = patron_rosters

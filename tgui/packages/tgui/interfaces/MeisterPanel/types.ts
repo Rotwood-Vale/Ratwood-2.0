@@ -64,13 +64,13 @@ export type Patron = {
 };
 
 export type PatronRosterStatic = {
-  label: string;
-  cap: number;
-  can_manage: boolean;
   explanation: string;
 };
 
 export type PatronRoster = {
+  label: string;
+  cap: number;
+  can_manage: boolean;
   patrons: Patron[];
 };
 

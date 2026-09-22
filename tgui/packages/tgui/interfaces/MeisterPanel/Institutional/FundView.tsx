@@ -57,7 +57,7 @@ export const FundView = ({
       {/* Gated on bathhouse_ordinance_available from atm_tgui.dm; the ordinance system is live. */}
       {!!data.bathhouse_ordinance_available &&
         (fund.id === 'bathhouse' || fund.id === 'church') &&
-        fund.can_issue && <BathhouseOrdinanceSection data={data} act={act} />}
+        !!fund.can_issue && <BathhouseOrdinanceSection data={data} act={act} />}
       {!!view_only && (
         <div style={{ color: INK_FAINT, marginTop: 8 }}>
           {"You may view this institution's coffers, but not act upon them."}
