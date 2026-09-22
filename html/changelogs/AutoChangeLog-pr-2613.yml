@@ -1,0 +1,4 @@
+author: "Kroto-Ker"
+delete-after: True
+changes:
+  - rscadd: "City watch armor reflects duchy colors."

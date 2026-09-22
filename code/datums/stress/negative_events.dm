@@ -421,7 +421,7 @@
 
 /datum/stressevent/uncanny
 	stressadd = 2
-	desc = span_red("Their face is.. wrong!")
+	desc = span_red("Their face is... wrong!")
 	timer = 3 MINUTES
 
 /datum/stressevent/syoncalamity

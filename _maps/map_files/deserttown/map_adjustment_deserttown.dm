@@ -42,8 +42,7 @@
 			Your main focus is to assist the Vizier with their duties, answering only to them and the Sultan.",
 		/datum/job/roguetown/hand = "You are one of the most important men within the realm itself. \
 			You have played spymaster and confidant to the Noble-Family for so long that you are a vault of intrigue, something you exploit with potent conviction.\
-			Let no man ever forget whose ear you whisper into. You've killed more men with those lips than any blademaster could ever claim to.\
-			ALSO (rewrite this) YOU MANAGE FINANCES TOO!!",
+			Let no man ever forget whose ear you whisper into. You've killed more men with those lips than any blademaster could ever claim to.",
 	)
 	/// Jobs that this map won't use
 	blacklist = list(
