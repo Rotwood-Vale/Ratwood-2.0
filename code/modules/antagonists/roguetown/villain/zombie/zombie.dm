@@ -346,8 +346,6 @@
 		qdel(src)
 		return
 
-	
-
 	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE)
@@ -371,6 +369,10 @@
 	if(zombie.stat >= DEAD)
 		//could not revive
 		qdel(src)
+
+	zombie.fullscreen_redflash("redflash3")
+	zombie.emote("scream") // Warning for nearby players
+	zombie.Knockdown(1)
 
 /datum/antagonist/zombie/greet()
 	to_chat(owner.current, span_userdanger("Death is not the end..."))
