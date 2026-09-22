@@ -354,7 +354,7 @@
 	required_items = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/bombard_roughbarrel
-	createditem_num = 1
+	hammers_per_item = 8
 	craftdiff = 5
 
 
@@ -363,7 +363,7 @@
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_roughbarrel)
 	created_item = /obj/item/bombard_sandedbarrel
-	createditem_num = 1
+	hammers_per_item = 8
 	craftdiff = 5
 
 /datum/artificer_recipe/contraptions/bombardbarrel
