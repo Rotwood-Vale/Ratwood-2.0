@@ -221,7 +221,7 @@
 					)
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
 	name = "Heavy Bolts 10x"
-	reqs = (/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
+	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
 	result = list(/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt,
