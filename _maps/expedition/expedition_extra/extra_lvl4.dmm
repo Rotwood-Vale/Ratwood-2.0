@@ -1,0 +1,1317 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/fluff/statue/gargoyle/candles,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"am" = (
+/turf/closed/wall/mineral/rogue/decostone/long/east_west,
+/area/rogue)
+"bi" = (
+/obj/structure/fluff/statue/gargoyle/candles,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"bJ" = (
+/obj/effect/decal/cobbleedge{
+	dir = 1;
+	icon_state = "borderfall"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"bZ" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains6"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"cO" = (
+/turf/closed/wall/mineral/rogue/decostone/center,
+/area/rogue)
+"cX" = (
+/obj/structure/winch{
+	gid = "lichdoor2";
+	redstone_id = "lichdoor2"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"dg" = (
+/obj/effect/oneway/lich{
+	dir = 1;
+	opacity = 1
+	},
+/turf/closed/wall/mineral/rogue/decostone/center,
+/area/rogue)
+"dQ" = (
+/obj/structure/stairs/fancy/c{
+	dir = 1
+	},
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"eb" = (
+/obj/structure/stairs/fancy/l{
+	dir = 1
+	},
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"fq" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5-old"
+	},
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"fG" = (
+/obj/structure/fluff/walldeco/chains,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"fH" = (
+/obj/machinery/light/rogue/firebowl/church,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"gw" = (
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"gC" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel{
+	pixel_x = -10;
+	pixel_y = -11
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/komuchisake{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"gR" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"hL" = (
+/obj/structure/stairs/fancy/r{
+	dir = 1
+	},
+/turf/open/floor/rogue/carpet/lord/right,
+/area/rogue)
+"hX" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains3"
+	},
+/turf/open/floor/rogue/carpet/lord/left,
+/area/rogue)
+"iD" = (
+/obj/structure/fluff/statue/knight/interior/r,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"iX" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/candle/skull/lit{
+	pixel_y = 6
+	},
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"kb" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains8"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"kx" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains5"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"kN" = (
+/turf/open/floor/rogue/church,
+/area/rogue)
+"lj" = (
+/obj/effect/oneway/lich{
+	dir = 1;
+	opacity = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"mj" = (
+/turf/closed/wall/mineral/rogue/decostone/long,
+/area/rogue)
+"mq" = (
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"oY" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/ingot/gold,
+/obj/item/ingot/gold,
+/obj/item/ingot/gold,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"pO" = (
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"qm" = (
+/obj/structure/fluff/statue/knight/interior/r,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"qr" = (
+/obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots,
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/clothing/gloves/roguetown/blacksteel/plategloves,
+/obj/item/clothing/suit/roguetown/armor/plate/blacksteel_full_plate,
+/obj/item/clothing/head/roguetown/helmet/blacksteel/bucket,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"qt" = (
+/obj/structure/stairs/fancy/r{
+	dir = 1
+	},
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"rI" = (
+/turf/closed/wall/mineral/rogue/decostone/long/east_west{
+	max_integrity = 99999
+	},
+/area/rogue)
+"tw" = (
+/turf/closed/wall/mineral/rogue/decostone/cand{
+	max_integrity = 99999
+	},
+/area/rogue)
+"vd" = (
+/obj/machinery/light/rogue/firebowl/church,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"vk" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/ingot/blacksteel,
+/obj/item/ingot/blacksteel,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"vG" = (
+/mob/living/carbon/human/species/skeleton/npc/dungeon/lich,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"vJ" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains3"
+	},
+/turf/open/floor/rogue/church,
+/area/rogue)
+"zl" = (
+/obj/structure/closet/crate/coffin,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"BM" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/storage/belt/rogue/pouch/coins/rich,
+/obj/item/storage/belt/rogue/pouch/coins/rich,
+/obj/item/storage/belt/rogue/pouch/coins/rich,
+/obj/item/storage/belt/rogue/pouch/coins/rich,
+/turf/open/floor/rogue/carpet/lord/left,
+/area/rogue)
+"CP" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains5"
+	},
+/turf/open/floor/rogue/church,
+/area/rogue)
+"CR" = (
+/obj/structure/bars/cemetery,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"DR" = (
+/obj/structure/bars/passage{
+	density = 0;
+	icon_state = "passage1"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"Fz" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"GG" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
+/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
+/obj/item/roguegem/random,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"HT" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor6-old"
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"Iu" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/book/granter/spell/blackstone/skeleton,
+/obj/item/book/granter/spell/blackstone/bonechill,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/turf/open/floor/rogue/carpet/lord/right,
+/area/rogue)
+"ID" = (
+/obj/structure/stairs/fancy/c{
+	dir = 1
+	},
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+"II" = (
+/obj/effect/landmark/teleport_exit,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"Jv" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"KU" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains7"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"LM" = (
+/obj/structure/fluff/statue/knight/interior,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"LP" = (
+/turf/open/floor/rogue/carpet/lord/left,
+/area/rogue)
+"Mm" = (
+/obj/structure/chair/wood/rogue/throne,
+/mob/living/simple_animal/hostile/boss/lich/expedition,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"Nf" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains3"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"NF" = (
+/obj/machinery/light/rogue/firebowl/church,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"OB" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains4"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"OL" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains4"
+	},
+/turf/open/floor/rogue/church,
+/area/rogue)
+"Qx" = (
+/obj/structure/fluff/statue/gargoyle/candles,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"Ra" = (
+/obj/structure/stairs/fancy/l{
+	dir = 1
+	},
+/turf/open/floor/rogue/carpet/lord{
+	icon_state = "carpet_l"
+	},
+/area/rogue)
+"Su" = (
+/obj/effect/oneway/lich{
+	dir = 1;
+	opacity = 1
+	},
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"Sx" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"SO" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4-old"
+	},
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"UG" = (
+/turf/closed/wall/mineral/rogue/decostone/center{
+	max_integrity = 99999
+	},
+/area/rogue)
+"Wh" = (
+/turf/open/floor/rogue/carpet/lord/right,
+/area/rogue)
+"WJ" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"WP" = (
+/obj/structure/fluff/walldeco/chains{
+	icon_state = "chains2"
+	},
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"WW" = (
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"XO" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/structure/fluff/walldeco/bigpainting/lake,
+/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
+/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
+/obj/item/roguegem/random,
+/obj/effect/spawner/lootdrop/expedition,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue)
+"XP" = (
+/obj/effect/oneway/lich{
+	dir = 1;
+	opacity = 1
+	},
+/obj/structure/gate/bars/preopen{
+	gid = "nope";
+	redstone_id = "nope"
+	},
+/turf/open/floor/rogue/carpet/lord/center/no_teleport,
+/area/rogue)
+"XU" = (
+/obj/structure/closet/crate/chest/gold{
+	locked = 1;
+	lockid = "lich"
+	},
+/obj/item/ingot/silver,
+/obj/item/ingot/silver,
+/obj/item/ingot/silver,
+/turf/open/floor/rogue/church,
+/area/rogue)
+"YJ" = (
+/obj/structure/fluff/statue/knight/interior,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue)
+"Za" = (
+/obj/effect/decal/remains/human,
+/turf/closed/mineral/rogue/bedrock,
+/area/rogue)
+
+(1,1,1) = {"
+cO
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+cO
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+"}
+(2,1,1) = {"
+am
+kN
+kN
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+zl
+CR
+zl
+WW
+zl
+WW
+zl
+WW
+CR
+WW
+zl
+WW
+zl
+WW
+zl
+am
+WW
+Sx
+WW
+WW
+WW
+Sx
+WW
+gw
+"}
+(3,1,1) = {"
+am
+kN
+OL
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+WW
+CR
+WW
+WW
+fG
+WW
+WW
+WW
+CR
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(4,1,1) = {"
+am
+kN
+kN
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(5,1,1) = {"
+am
+kN
+kN
+Qx
+kN
+kN
+bJ
+WW
+WW
+WW
+bi
+WW
+WW
+WP
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+kb
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(6,1,1) = {"
+am
+kN
+kN
+cO
+kN
+kN
+bJ
+OB
+WW
+WW
+cO
+WW
+WW
+WW
+WW
+WW
+WW
+cO
+vG
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+Sx
+WW
+WW
+WW
+Sx
+WW
+gw
+"}
+(7,1,1) = {"
+am
+kN
+kN
+Qx
+kN
+kN
+bJ
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(8,1,1) = {"
+am
+oY
+kN
+kN
+vJ
+kN
+bJ
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+fG
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(9,1,1) = {"
+am
+XU
+kN
+vd
+kN
+kN
+bJ
+WW
+WW
+WW
+fH
+CR
+WW
+WW
+WW
+WW
+WW
+fH
+cO
+mj
+DR
+DR
+DR
+DR
+mj
+cO
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(10,1,1) = {"
+am
+kN
+kN
+LM
+kN
+kN
+bJ
+WW
+WW
+WW
+YJ
+CR
+WW
+WW
+Nf
+WW
+WW
+YJ
+rI
+WW
+WW
+WW
+WW
+WW
+cX
+am
+WW
+fH
+WW
+WW
+WW
+fH
+WW
+gw
+"}
+(11,1,1) = {"
+am
+BM
+hX
+LP
+LP
+LP
+Ra
+LP
+LP
+LP
+LP
+LP
+LP
+LP
+LP
+LP
+LP
+LP
+rI
+LP
+LP
+LP
+LP
+LP
+LP
+dg
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+eb
+"}
+(12,1,1) = {"
+am
+GG
+mq
+iX
+mq
+mq
+dQ
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+UG
+aj
+mq
+mq
+mq
+mq
+mq
+XP
+pO
+Jv
+pO
+WJ
+pO
+fq
+pO
+ID
+"}
+(13,1,1) = {"
+am
+XO
+mq
+Mm
+mq
+mq
+dQ
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+tw
+NF
+mq
+mq
+mq
+mq
+Fz
+lj
+gR
+WJ
+SO
+gR
+gR
+II
+gR
+ID
+"}
+(14,1,1) = {"
+am
+GG
+mq
+gC
+mq
+mq
+dQ
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+mq
+UG
+aj
+mq
+mq
+mq
+mq
+mq
+Su
+pO
+pO
+pO
+pO
+HT
+pO
+pO
+ID
+"}
+(15,1,1) = {"
+am
+Iu
+Wh
+Wh
+Wh
+Wh
+hL
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+rI
+Wh
+Wh
+Wh
+Wh
+Wh
+Wh
+dg
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+qt
+"}
+(16,1,1) = {"
+am
+kN
+kN
+qm
+kN
+kN
+bJ
+WW
+WW
+WW
+iD
+CR
+WW
+WW
+WW
+WW
+WW
+iD
+rI
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+fH
+WW
+WW
+WW
+fH
+WW
+gw
+"}
+(17,1,1) = {"
+am
+vk
+kN
+vd
+kN
+kN
+bJ
+WW
+WW
+WW
+fH
+CR
+WW
+WW
+WW
+WW
+WW
+fH
+cO
+mj
+DR
+DR
+DR
+DR
+mj
+cO
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(18,1,1) = {"
+am
+qr
+kN
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+bZ
+WW
+WW
+WW
+WW
+KU
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(19,1,1) = {"
+am
+kN
+kN
+Qx
+kN
+kN
+bJ
+kx
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+bZ
+WW
+am
+WW
+Sx
+WW
+WW
+WW
+Sx
+WW
+Za
+"}
+(20,1,1) = {"
+am
+kN
+kN
+cO
+kN
+kN
+bJ
+WW
+WW
+WW
+cO
+WW
+WW
+WW
+WW
+WW
+WW
+cO
+vG
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(21,1,1) = {"
+am
+kN
+kN
+Qx
+kN
+kN
+bJ
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+WW
+bi
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(22,1,1) = {"
+am
+kN
+kN
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+kx
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(23,1,1) = {"
+am
+kN
+CP
+kN
+kN
+kN
+bJ
+WW
+WW
+KU
+WW
+CR
+WW
+WW
+WW
+WW
+WW
+WW
+CR
+WW
+WW
+WW
+WW
+WW
+WW
+am
+WW
+WW
+WW
+WW
+WW
+WW
+WW
+gw
+"}
+(24,1,1) = {"
+am
+kN
+kN
+kN
+kN
+kN
+bJ
+WW
+WW
+WW
+zl
+CR
+zl
+WW
+zl
+WW
+zl
+WW
+CR
+WW
+zl
+WW
+zl
+WW
+zl
+am
+WW
+Sx
+WW
+WW
+WW
+Sx
+WW
+gw
+"}
+(25,1,1) = {"
+cO
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+mj
+cO
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+"}

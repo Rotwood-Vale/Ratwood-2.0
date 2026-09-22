@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	switch(mode)
 		if(0)
 			if(findtext(message, "secrets of the throat"))
-				say("My commands are: Make Decree, Make Announcement, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Set Laws, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, I Ascend, Nevermind")
+				say("My commands are: Make Decree, Make Announcement, Muster Expedition, Set Taxes, Revise Charter, Declare Outlaw, Summon Crown, Summon Key, Set Laws, Make Law, Remove Law, Purge Laws, Purge Decrees, Become Regent, Change Colors, I Ascend, Nevermind")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
 			if(findtext(message, "make announcement"))
 				if(nocrown)
@@ -295,6 +295,19 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 				playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 				H.lord_color_choice()
 				return
+			if(findtext(message, "muster expedition"))
+				if(notlord || nocrown)
+					say("You are not my master!")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				if(GLOB.expedition_status != EXPEDITION_INACTIVE)
+					say("A crusade has already been decreed this era! The realm cannot decree another.")
+					playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+					return
+				say("What shall the crusade seek? Speak: 'expedition for weapons' or 'expedition for wealth'!")
+				playsound(src, 'sound/misc/machinequestion.ogg', 100, FALSE, -1)
+				mode = 5
+				return
 
 		if(1)
 			make_announcement(H, raw_message)
@@ -309,6 +322,20 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 			if(!SScommunications.can_announce(speaker))
 				return
 			make_law(raw_message)
+			mode = 0
+		if(5)
+			var/chosen_goal = ""
+			if(findtext(raw_message, "expedition for weapons") || findtext(raw_message, "for weapons"))
+				chosen_goal = "Weapons of Legend"
+			else if(findtext(raw_message, "expedition for wealth") || findtext(raw_message, "for wealth"))
+				chosen_goal = "Lost Wealth"
+
+			if(!chosen_goal)
+				say("Invalid purpose! Declare: 'expedition for weapons', 'expedition for wealth', or say 'nevermind'.")
+				playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+				return
+
+			check_and_muster_expedition(H, chosen_goal)
 			mode = 0
 
 /obj/structure/roguemachine/titan/proc/summon_crown()
