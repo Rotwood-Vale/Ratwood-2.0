@@ -9,14 +9,14 @@
 #define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
 //Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
-/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance)
 	if(!sexcon)
 		return
 	if(sexcon.suppress_action_messages)
 		return
 	if(!message)
 		return
-	vision_distance = sexcon.do_subtle_action ? 1 : src.vision_distance
+	vision_distance = sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE
 	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
