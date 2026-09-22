@@ -1,0 +1,5 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Allows the standard shirt to be wearable on the armor slot."
+  - rscadd: "Adds footwraps to the loadout."
