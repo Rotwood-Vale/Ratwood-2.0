@@ -5,7 +5,7 @@
 	not_in_public = TRUE
 
 /datum/supply_pack/rogue/gronn/battleaxe
-	name = "Iskarn Battleaxe"
+	name = "Zayran Battleaxe"
 	cost = 130
 	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
 	ship_qty_min = 1
@@ -46,7 +46,7 @@
 	ship_qty_max = 2
 
 /datum/supply_pack/rogue/gronn/varangian_hauberk
-	name = "Varangian Hauberk"
+	name = "Nöküd Hauberk"
 	cost = 180
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi)
 	ship_qty_min = 1
@@ -95,14 +95,14 @@
 	ship_qty_max = 4
 
 /datum/supply_pack/rogue/gronn/leather_boots
-	name = "Atgervi Leather Boots"
+	name = "Ba'atur Leather Boots"
 	cost = 45
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/atgervi)
 	ship_qty_min = 2
 	ship_qty_max = 4
 
 /datum/supply_pack/rogue/gronn/atgervi_kit
-	name = "Atgervi Varangian Harness"
+	name = "Ba'atur Nöküd Harness"
 	no_name_quantity = TRUE
 	cost = 540
 	contains = list(
@@ -118,7 +118,7 @@
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/gronn/iskarn_kit
-	name = "Iskarn Shaman Kit"
+	name = "Zayran Shaman Kit"
 	no_name_quantity = TRUE
 	cost = 380
 	contains = list(
@@ -154,14 +154,14 @@
 	ship_qty_max = 5
 
 /datum/supply_pack/rogue/gronn/gronnic_norsii_plate
-	name = "Gronn Norsii Iron Plate"
+	name = "Gronn Kheshig Iron Plate"
 	cost = 360
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/iron/gronn)
 	ship_qty_min = 1
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/gronn/gronnic_norsii_helm
-	name = "Gronn Norsii Horned Helm"
+	name = "Gronn Kheshig Horned Helm"
 	cost = 90
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn)
 	ship_qty_min = 1
@@ -175,7 +175,7 @@
 	ship_qty_max = 2
 
 /datum/supply_pack/rogue/gronn/norsii_kit
-	name = "Norsii Heavy Harness"
+	name = "Kheshig Heavy Harness"
 	no_name_quantity = TRUE
 	cost = 620
 	contains = list(

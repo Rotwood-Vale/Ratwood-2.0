@@ -284,10 +284,12 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = -1) //start shaking
 	visible_message(span_warning("[src] begins to glow and shake violently!"))
 
-	spawn(timer)
-		possessor.owner.current.forceMove(get_turf(src))
-		possessor.rise_anew()
-		qdel(src)
+	addtimer(CALLBACK(src, PROC_REF(consume_complete)), timer)
+
+/obj/item/phylactery/proc/consume_complete()
+	possessor.owner.current.forceMove(get_turf(src))
+	possessor.rise_anew()
+	qdel(src)
 
 /obj/effect/proc_holder/spell/self/lich_announce
 	name = "Command Will"
