@@ -68,7 +68,7 @@
 	..()
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/physician
-	mask = /obj/item/clothing/mask/rogue/physician
+	mask = /obj/item/clothing/mask/rogue/physician/head
 	neck = /obj/item/storage/belt/rogue/pouch/coins/mid            //coin to hire mercenaries or adventurers with
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
