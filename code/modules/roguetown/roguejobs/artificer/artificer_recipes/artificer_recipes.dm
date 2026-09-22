@@ -351,16 +351,15 @@
 
 /datum/anvil_recipe/engineering/roughbarrel
 	name = "Rough Iron Barrel (+3 iron)"
-	required_items = /obj/item/ingot/iron
+	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
 	created_item = /obj/item/bombard_roughbarrel
 	hammers_per_item = 8
 	craftdiff = 5
 
-
 /datum/anvil_recipe/engineering/sandedbarrel
 	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Rough Iron Barrel)"
-	req_bar = /obj/item/ingot/iron
+	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_roughbarrel)
 	created_item = /obj/item/bombard_sandedbarrel
 	hammers_per_item = 8
