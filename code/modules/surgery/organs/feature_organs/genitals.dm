@@ -178,6 +178,20 @@
 	..()
 	milk_max = max(75, breast_size * 100)
 
+/obj/item/organ/breasts/update_overlays()/// works the same way irises do for eye organ items
+	. = ..()
+	if(icon_state != "breasts")
+		return .
+
+	var/list/colors = color_string_to_list(accessory_colors)
+	var/mutable_appearance/detail_overlay = mutable_appearance(icon, "breasts_detail")
+	detail_overlay.color = length(colors) ? colors[1] : "#FFFFFF"
+	. += detail_overlay
+
+/obj/item/organ/breasts/update_accessory_colors()
+	. = ..()
+	update_icon()
+
 /obj/item/organ/breasts/Destroy()
 	stop_jiggle()
 	return ..()
