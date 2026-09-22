@@ -6,6 +6,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/preferences
 	var/client/parent
+	/// Rate limit on character preview renders, see update_preview_icon()
+	COOLDOWN_DECLARE(preview_update)
+	/// jobOnly flag carried by a preview render that is waiting on the cooldown
+	var/queued_preview_job_only = FALSE
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
