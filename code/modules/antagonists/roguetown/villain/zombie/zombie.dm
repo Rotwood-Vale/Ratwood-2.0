@@ -373,6 +373,7 @@
 	zombie.fullscreen_redflash("redflash3")
 	zombie.emote("scream") // Warning for nearby players
 	zombie.Knockdown(1)
+	zombie.remove_status_effect(/datum/status_effect/zombie_infection)
 
 /datum/antagonist/zombie/greet()
 	to_chat(owner.current, span_userdanger("Death is not the end..."))
