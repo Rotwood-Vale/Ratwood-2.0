@@ -129,11 +129,30 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	GLOB.personal_objective_minds -= src
 	QDEL_NULL(player_card)
 	QDEL_NULL(sleep_adv)
+	QDEL_NULL(language_holder)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	RemoveAllSpells()
+	if(current)
+		if(current.mind == src)
+			current.mind = null
+		if(iscarbon(current))
+			var/mob/living/carbon/carbon_current = current
+			if(carbon_current.last_mind == src)
+				carbon_current.last_mind = null
+	current = null
+	soulOwner = null
+	martial_art = null
+	champion = null
+	ward = null
+	knight = null
+	squire = null
+	enslaved_to = null
+	special_items.Cut()
+	special_people.Cut()
 	return ..()
 
 /proc/get_minds(role)
@@ -296,6 +315,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
+	if(current?.mind == src)
+		current.mind = null
 	set_current(null)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)

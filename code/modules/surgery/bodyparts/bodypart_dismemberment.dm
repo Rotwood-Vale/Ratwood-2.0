@@ -103,7 +103,7 @@
 		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
 
 	if(body_zone != BODY_ZONE_HEAD) // Sorry pal, no protagonist moment if it's your head flying off. Your ride ends here, mutie.
-		C.delimb_pain()
+		INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, delimb_pain))
 	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
 		add_mob_blood(C)
 	C.add_stress(/datum/stressevent/dismembered)

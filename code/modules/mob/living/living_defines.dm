@@ -1,4 +1,5 @@
 /mob/living
+	var/list/enemies = list()
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 8
