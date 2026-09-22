@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		user.client.verbs |= /client/proc/declare_clingy_person
 		if(!COOLDOWN_STARTED(src, lost_person))
 			COOLDOWN_START(src, lost_person, 10 MINUTES) // Enough time for you to spawn in, grab your shit, mark your person
-			to_chat(user, span_warning("I need to find someone to cling to before I start to panic."))
+			to_chat(user, span_warning("I need to find someone to cling to before I start to panic. (Choose preferred person in IC tab)"))
 		else if(COOLDOWN_FINISHED(src, lost_person))
 			autistic_meltdown(user)
 		return
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		// So we set our mark, but they are gone? They either despawned or shenanigans ensued.
 		if(!COOLDOWN_STARTED(src, lost_person))
 			COOLDOWN_START(src, lost_person, 5 MINUTES) // Enough time for you to realize you need to find a new person to cling to
-			to_chat(user, span_warning("I need to find myself a new person to comfort me before things become worse."))
+			to_chat(user, span_warning("I need to find myself a new person to comfort me before things become worse. (Choose preferred person in IC tab)"))
 		else if(COOLDOWN_FINISHED(src, lost_person))
 			autistic_meltdown(user)
 		return
@@ -370,9 +370,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/datum/stressevent/missing_person/stress_event = user.get_stress_event(/datum/stressevent/missing_person)
 	if(!stress_event)
 		stress_event = user.add_stress(/datum/stressevent/missing_person)
-	stress_event.stressadd += 1
+	stress_event.stressadd = min(5, stress_event.stressadd + 1) // Capped to 5 stress
 	user.update_stress()
-	COOLDOWN_START(src, effect_scaling, 1 MINUTES)
+	COOLDOWN_START(src, effect_scaling, 2 MINUTES)
 
 /datum/charflaw/clingy/proc/soothe_meltdown(mob/user)
 	user.remove_stress(/datum/stressevent/missing_person)
@@ -457,6 +457,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		clinging_people[clingy_human] += clingy_ref
 	var/mob/living/carbon/human/selection = tgui_input_list(user, "Choose anyone you wish to reject", "CHOOSE PERSON", clinging_people)
 	if(!istype(selection))
+		return
+	var/confirm = tgui_alert(user, "Reject [selection.name]? THEY WONT BE ABLE TO CLING TO YOU AGAIN.", "Reject clingy person?", list("Yae", "Nae"))
+	if(confirm != "Yae")
 		return
 	// At this point, we've chosen someone to remove from our list.
 	user.list_of_people_who_are_clinging_onto_me -= clinging_people[selection]
