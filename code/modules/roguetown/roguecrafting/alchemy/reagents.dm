@@ -330,7 +330,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	if(!alredy_zombied)
 		if(H.zombie_check_can_convert())
 			H.infected = TRUE //Is this in use? Just in case it is
-			H.apply_status_effect(/datum/status_effect/zombie_infection, 1 MINUTES, "potion")
+			H.apply_status_effect(/datum/status_effect/zombie_infection, 2 MINUTES, "potion")
 
 	if(H.stat == DEAD || H.InCritical())
 		var/datum/antagonist/zombie/Z = H.mind?.has_antag_datum(/datum/antagonist/zombie)
