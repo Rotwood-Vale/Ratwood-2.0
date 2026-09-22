@@ -232,6 +232,7 @@
 	movingreload = TRUE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
 	penfactor = 0.75 // makes it have slightly more pen than before allowing it to at least penetrate some light armor
+	damage_from_perception = TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
 	name = "siegebow"
