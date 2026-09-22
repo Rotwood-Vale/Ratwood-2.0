@@ -1370,13 +1370,12 @@
 	var/base_force = -1
 	var/base_knot_mode = FALSE
 	var/subtle_message_tick_counter = 0
+	var/was_subtle_mode = do_subtle_action // By default, we set it to the same value as the panel toggle
 	show_progress = 1
 	suppress_moan = FALSE
-	var/do_subtle_action = do_subtle_action
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
-	var/was_done_subtly = do_subtle_action
 	while(TRUE)
 		if(!target?.client?.prefs?.sexable) // no prefs/sexability means we should safely stop the loop
 			break
@@ -1401,7 +1400,7 @@
 		var/show_action_message = (speed != base_speed || force != base_force)
 		if(current_knot_mode != base_knot_mode)
 			show_action_message = TRUE
-		if(!do_subtle_action && was_done_subtly)
+		if(!do_subtle_action && was_subtle_mode)
 			show_action_message = TRUE
 		if(!show_action_message && do_subtle_action)
 			subtle_message_tick_counter++
@@ -1410,7 +1409,7 @@
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
 			subtle_message_tick_counter = 0
-		was_done_subtly = do_subtle_action
+		was_subtle_mode = do_subtle_action
 		base_speed = speed
 		base_force = force
 		base_knot_mode = current_knot_mode
