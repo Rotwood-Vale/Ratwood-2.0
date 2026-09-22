@@ -17,7 +17,7 @@
 
 /datum/supply_pack/rogue/magic/silverdagger
 	name = "Arcyne Silver Dagger"
-	cost = 200 //used in level 3/4 enchantments
+	cost = 130 //used in level 3/4 enchantments
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne)
 
 /datum/supply_pack/rogue/magic/nomag
