@@ -173,29 +173,20 @@
 		return
 	action_target.emote("scream", forced = TRUE)
 	
-/mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife)
+/mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife, orifice = SEX_PART_CUNT)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(!testes)
+	if(!testes || !wife || !is_virile())
+		return
+	if(orifice & SEX_PART_TAIL_MAW)
+		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(wife)
+		if(tail)
+			tail.impregnation_probability = roll_organ_impregnation(tail, tail.fertility, tail.impregnation_probability)
 		return
 	var/obj/item/organ/vagina/vag = wife.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vag && !HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
 		return
-	if(!is_virile())
-		return
 	if(vag)
-		if(!wife.is_fertile())
-			return
-		var/prob_for_impreg = vag.impregnation_probability
-		if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
-			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
-		if(HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
-			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX) //if female has baotha boon increase chances
-		if(prob(prob_for_impreg))
-			if(vag.be_impregnated(src))
-				record_round_statistic(STATS_IMPREGNATIONS)
-			vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
-		else
-			vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+		vag.impregnation_probability = roll_organ_impregnation(vag, wife.is_fertile(SEX_PART_CUNT), vag.impregnation_probability)
 	else
 		var/prob_for_impreg = wife.mpreg_chance
 		if(wife.sexcon.knotted_status)
@@ -209,6 +200,22 @@
 			record_round_statistic(STATS_IMPREGNATIONS)
 		else
 			wife.mpreg_chance = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+
+/// Both reproductive organs use the same math
+/mob/living/carbon/human/proc/roll_organ_impregnation(obj/item/organ/reproductive_organ, fertile, current_probability)
+	if(!fertile || !ishuman(reproductive_organ?.owner))
+		return current_probability
+	var/mob/living/carbon/human/receiver = reproductive_organ.owner
+	var/chance = current_probability
+	if(receiver.sexcon.knotted_status)
+		chance = min(chance * 2, IMPREG_PROB_MAX)
+	if(HAS_TRAIT(receiver, TRAIT_BAOTHA_FERTILITY_BOON))
+		chance = min(chance * 2, IMPREG_PROB_MAX)
+	if(prob(chance))
+		if(reproductive_organ.be_impregnated(src))
+			record_round_statistic(STATS_IMPREGNATIONS)
+		return IMPREG_PROB_DEFAULT
+	return min(chance + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null

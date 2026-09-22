@@ -1,6 +1,6 @@
 /obj/item/organ/penis
 	name = "penis"
-	icon_state = "severedtail" //placeholder
+	icon_state = "penis"
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_PENIS
@@ -121,7 +121,7 @@
 	
 /obj/item/organ/vagina
 	name = "vagina"
-	icon_state = "severedtail" //placeholder
+	icon_state = "vagina"
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_VAGINA
@@ -131,7 +131,10 @@
 	var/impregnation_probability = IMPREG_PROB_DEFAULT
 	var/branded_writing = ""
 
-/obj/item/organ/vagina/proc/be_impregnated(mob/living/carbon/human/father)
+/obj/item/organ/proc/be_impregnated(mob/living/carbon/human/father)
+	return FALSE
+
+/obj/item/organ/vagina/be_impregnated(mob/living/carbon/human/father)
 	if(!owner)
 		return FALSE
 	if(owner.stat == DEAD)
@@ -146,7 +149,7 @@
 
 /obj/item/organ/breasts
 	name = "breasts"
-	icon_state = "severedtail" //placeholder
+	icon_state = "breasts"
 	visible_organ = TRUE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_BREASTS
@@ -270,7 +273,7 @@
 
 /obj/item/organ/testicles
 	name = "testicles"
-	icon_state = "severedtail" //placeholder
+	icon_state = "testicles"
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TESTICLES

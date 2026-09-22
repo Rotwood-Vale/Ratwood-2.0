@@ -78,6 +78,7 @@
 		/datum/customizer/organ/horns/tusks,
 		/datum/customizer/organ/soul/fire,
 		/datum/customizer/organ/tail/dullahan,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/ears/dullahan,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
