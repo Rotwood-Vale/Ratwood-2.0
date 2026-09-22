@@ -744,3 +744,12 @@
   zoktiik:
   - rscdel: A number of "important" roles have been forbidden from taking Marked by
       Gnolls, due to gnolls' high potential for disappearing targets from the round.
+2026-09-22:
+  Yuckuza:
+  - rscadd: Added the psydonic urumi and paladin/psydonite heretic enduring equivalent.
+  - rscadd: 'Added urumi loadout options to the following: Psyalmist, Adjudicator,
+      Duelist, Barbarian, Exorcist, Amazon, Spellblade, Paladin, Zephyr, Cataphract
+      Shieldmaster, Knight Champion, Deserter Fighter, Wretch Outlaw, and Heretic
+      Spy.'
+  zeroisthebiggay:
+  - rscadd: Pyris color for tieflings

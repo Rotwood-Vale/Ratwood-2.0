@@ -797,6 +797,7 @@
 	desc = "This dagger glows a faint purple. Quicksilver runs across its blade."
 	var/is_bled = FALSE
 	picklvl = 1.1
+	smeltresult = null
 
 /obj/item/weapon/knife/dagger/silver/arcyne/Initialize(mapload)
 	. = ..()

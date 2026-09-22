@@ -1392,10 +1392,37 @@
 	i_type = "Ammo"
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
+/datum/anvil_recipe/weapons/steel/slingbullets
+	name = "Sling Bullets, Steel (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steel
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
 /datum/anvil_recipe/weapons/bronze/slingbullets
 	name = "Sling Bullets, Bronze (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze
 	display_category = ITEM_CAT_WEAPONS_AMMO
+	createditem_num = 10
+	i_type = "Ammo"
+
+/datum/anvil_recipe/weapons/silver/slingbullets
+	name = "Sling Bullets, Silver (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silver
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
+/datum/anvil_recipe/weapons/psy/slingbullets
+	name = "Sling Bullets, Blessed silver (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed
+	createditem_num = 10
+	i_type = "Ammo"
+	display_category = ITEM_CAT_WEAPONS_AMMO
+
+/datum/anvil_recipe/weapons/holysteel/slingbullets
+	name = "Sling Bullets, Holy Steel (x10)"
+	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/steelblessed
 	createditem_num = 10
 	i_type = "Ammo"
 	display_category = ITEM_CAT_WEAPONS_AMMO
@@ -1625,9 +1652,9 @@
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
 /datum/anvil_recipe/weapons/blacksteel/slingbullet
-	name = "Sling Bullet, Blacksteel (x5)"
+	name = "Sling Bullet, Blacksteel (x10)"
 	created_item = /obj/item/ammo_casing/caseless/rogue/sling_bullet/blacksteel
-	createditem_num = 5
+	createditem_num = 10
 	display_category = ITEM_CAT_WEAPONS_AMMO
 
 /datum/anvil_recipe/weapons/blacksteel/shield
