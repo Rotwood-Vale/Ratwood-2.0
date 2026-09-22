@@ -349,7 +349,7 @@
 	hammers_per_item = 8
 	skill_level = 3
 
-/datum/anvil_recipe/engineering/roughbarrel
+/datum/artificer_recipe/contraptions/roughironbarrel
 	name = "Rough Iron Barrel (+3 iron)"
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
@@ -357,7 +357,7 @@
 	hammers_per_item = 8
 	craftdiff = 5
 
-/datum/anvil_recipe/engineering/sandedbarrel
+/datum/artificer_recipe/contraptions/sandedbarrel
 	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Rough Iron Barrel)"
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_roughbarrel)
