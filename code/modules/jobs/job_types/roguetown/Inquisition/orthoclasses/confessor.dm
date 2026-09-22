@@ -49,12 +49,12 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	if(H.mind)
-		var/stats = list("I am quick on my feet (+I SPD +I WIL)", "I am stronger than others (+I STR, +I PER)") // Both add up to +9
+		var/stats = list("I am quick on my feet (+I SPD +I WIL)", "I am stronger than others (+I STR +I PER)") // Both add up to +9
 		var/stat_choice = input(H, "What has PSYDON made you?", "THIS IS WHO PSYDON MADE ME.") as anything in stats
 		switch(stat_choice)
 			if("I am quick on my feet (+I SPD +I WIL)")
 			//does nothing. these stats are already given by default
-			if("I am stronger than others (+I STR, +I PER)")
+			if("I am stronger than others (+I STR +I PER)")
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_PER, 1)
 				H.change_stat(STATKEY_WIL, -1)
@@ -74,7 +74,7 @@
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+		var/bolt_choice = input(H,"Choose your MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 		switch(bolt_choice)
 			if("Bolts - Steel-Tipped")
 				beltl = /obj/item/quiver/bolts
