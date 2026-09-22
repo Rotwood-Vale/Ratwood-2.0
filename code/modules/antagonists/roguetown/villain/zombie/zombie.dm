@@ -351,10 +351,9 @@
 	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE)
-	if(!infected_wake)	// if we died, heal all this too
-		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.heal_wounds(INFINITY)
+	zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.heal_wounds(INFINITY)
 	if(zombie.stat == DEAD)
 		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above
 			qdel(src)
