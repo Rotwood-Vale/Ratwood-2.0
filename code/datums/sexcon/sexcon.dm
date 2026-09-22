@@ -10,10 +10,13 @@
 
 //Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
 /mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
-	if(sexcon?.suppress_action_messages)
+	if(!sexcon)
+		return
+	if(sexcon.suppress_action_messages)
 		return
 	if(!message)
 		return
+	vision_distance = sexcon.do_subtle_action ? 1 : src.vision_distance
 	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
@@ -1300,12 +1303,12 @@
 				arousal_frozen = !arousal_frozen
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
-		if("toggle_subtle")
-			do_subtle_action = !do_subtle_action
 		if("category_hands")
 			action_category = SEX_CATEGORY_HANDS
 		if("category_penetrate")
 			action_category = SEX_CATEGORY_PENETRATE
+		if("toggle_subtle")
+			do_subtle_action = !do_subtle_action
 		if("toggle_knot")
 			do_knot_action = !do_knot_action
 		if("toggle_knot_bottom")
