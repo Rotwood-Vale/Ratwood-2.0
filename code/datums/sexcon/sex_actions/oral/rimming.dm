@@ -4,7 +4,7 @@
 	target_sex_part = SEX_PART_ANUS
 
 /datum/sex_action/rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts rimming [target]'s butt..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] starts rimming [target]'s butt..."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = FALSE
 
 /datum/sex_action/rimming/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -23,7 +23,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/rimming/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops rimming [target]'s butt ..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] stops rimming [target]'s butt ..."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/rimming/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

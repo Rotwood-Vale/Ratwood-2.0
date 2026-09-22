@@ -5,7 +5,7 @@
 	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/masturbate_penis_other/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts jerking [target]'s cock..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] starts jerking [target]'s cock..."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/masturbate_penis_other/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -25,7 +25,7 @@
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/masturbate_penis_other/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] stops jerking [target]'s cock."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] stops jerking [target]'s cock."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/masturbate_penis_other/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(target.sexcon.finished_check())

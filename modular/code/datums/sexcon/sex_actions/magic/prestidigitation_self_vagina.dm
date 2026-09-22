@@ -5,7 +5,7 @@
 	solo = TRUE
 
 /datum/sex_action/magic/masturbate_vagina_prestidigitation/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] conjures arcyne hands toward [user.p_their()] cunt..."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] conjures arcyne hands toward [user.p_their()] cunt..."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/magic/masturbate_vagina_prestidigitation/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -24,7 +24,7 @@
 	user.sexcon.suppress_moan = FALSE
 
 /datum/sex_action/magic/masturbate_vagina_prestidigitation/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] lowers [user.p_their()] hands as the prestidigitation fades."), vision_distance = (user.m_intent == MOVE_INTENT_SNEAK ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.visible_message(span_warning("[user] lowers [user.p_their()] hands as the prestidigitation fades."), vision_distance = (user.sexcon.subtle_toggled ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/magic/masturbate_vagina_prestidigitation/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())
