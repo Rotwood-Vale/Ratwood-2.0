@@ -16,6 +16,20 @@
 /obj/item/organ/penis/Initialize(mapload)
 	. = ..()
 
+/obj/item/organ/penis/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!owner || owner != M)
+		return
+	for(var/datum/wound/genital_nullification/wound in owner.get_wounds())
+		wound.restore_organ(slot)
+
+/obj/item/organ/penis/imprint_organ_dna(datum/organ_dna/organ_dna)
+	..()
+	var/datum/organ_dna/penis/penis_dna = organ_dna
+	penis_dna.penis_size = penis_size
+	penis_dna.functional = functional
+	penis_dna.sheath_type = sheath_type
+
 /obj/item/organ/penis/proc/update_erect_state()
 	var/oldstate = erect_state
 	var/new_state = ERECT_STATE_NONE
@@ -140,11 +154,24 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_VAGINA
+	organ_dna_type = /datum/organ_dna/vagina
 	accessory_type = /datum/sprite_accessory/vagina/human
 	var/pregnant = FALSE
 	var/fertility = TRUE
 	var/impregnation_probability = IMPREG_PROB_DEFAULT
 	var/branded_writing = ""
+
+/obj/item/organ/vagina/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!owner || owner != M)
+		return
+	for(var/datum/wound/genital_nullification/wound in owner.get_wounds())
+		wound.restore_organ(slot)
+
+/obj/item/organ/vagina/imprint_organ_dna(datum/organ_dna/organ_dna)
+	..()
+	var/datum/organ_dna/vagina/vagina_dna = organ_dna
+	vagina_dna.fertility = fertility
 
 /obj/item/organ/proc/be_impregnated(mob/living/carbon/human/father)
 	return FALSE
@@ -312,8 +339,20 @@
 	var/virility = TRUE
 	var/branded_writing = ""
 
+/obj/item/organ/testicles/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!owner || owner != M)
+		return
+	for(var/datum/wound/gelding/wound in owner.get_wounds())
+		qdel(wound)
+
+/obj/item/organ/testicles/imprint_organ_dna(datum/organ_dna/organ_dna)
+	..()
+	var/datum/organ_dna/testicles/testicles_dna = organ_dna
+	testicles_dna.ball_size = ball_size
+	testicles_dna.virility = virility
+
 /obj/item/organ/testicles/internal
 	name = "internal testicles"
 	visible_organ = FALSE
 	accessory_type = /datum/sprite_accessory/none
-	

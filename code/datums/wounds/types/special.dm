@@ -286,6 +286,8 @@
 		"A gelding blow!",
 	)
 	sound_effect = 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'
+	whp = null
+	healable_by_miracles = FALSE
 	woundpain = 50
 	can_sew = FALSE
 	can_cauterize = FALSE
@@ -310,6 +312,7 @@
 		return
 
 	organs_removed = TRUE
+	missing_organ_dna = list(ORGAN_SLOT_TESTICLES = testicles.create_organ_dna())
 	carbon_owner.Stun(1 SECONDS)
 	testicles.Remove(carbon_owner)
 	testicles.forceMove(carbon_owner.drop_location())
@@ -323,7 +326,8 @@
 		"The genitals are torn away!",
 	)
 	sound_effect = 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'
-	whp = 60
+	whp = null
+	healable_by_miracles = FALSE
 	woundpain = 50
 	can_sew = FALSE
 	can_cauterize = FALSE
@@ -350,10 +354,38 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = affected
-	var/has_penis = !isnull(carbon_owner.getorganslot(ORGAN_SLOT_PENIS))
-	var/has_vagina = !isnull(carbon_owner.getorganslot(ORGAN_SLOT_VAGINA))
-	if(!has_penis && !has_vagina)
+	missing_organ_dna = list()
+	for(var/organ_slot in removable_slots)
+		var/obj/item/organ/genital = carbon_owner.getorganslot(organ_slot)
+		if(genital)
+			missing_organ_dna[organ_slot] = genital.create_organ_dna()
+	if(!length(missing_organ_dna))
 		return
+	update_loss_description()
+
+	organs_removed = TRUE
+	carbon_owner.Stun(1 SECONDS)
+	for(var/organ_slot in missing_organ_dna)
+		var/obj/item/organ/genital = carbon_owner.getorganslot(organ_slot)
+		genital.Remove(carbon_owner)
+		genital.forceMove(carbon_owner.drop_location())
+
+// Wound can only be cleared if all lost organs are reattached,
+// i.e. if an intersex mob rettaches their penis but not their vagina, 
+// the wound description changes from "NULLIFICATION" to "VAGINECTOMY" and vice versa
+/datum/wound/genital_nullification/proc/restore_organ(organ_slot)
+	if(!(organ_slot in missing_organ_dna))
+		return
+	qdel(missing_organ_dna[organ_slot])
+	missing_organ_dna -= organ_slot
+	if(!length(missing_organ_dna))
+		qdel(src)
+		return
+	update_loss_description()
+
+/datum/wound/genital_nullification/proc/update_loss_description()
+	var/has_penis = (ORGAN_SLOT_PENIS in missing_organ_dna)
+	var/has_vagina = (ORGAN_SLOT_VAGINA in missing_organ_dna)
 	if(has_penis && has_vagina)
 		name = "nullification"
 		check_name = span_danger("NULLIFICATION")
@@ -375,15 +407,6 @@
 			'modular/sound/masomoans/agony/CBTScreamFemale1.ogg',
 			'modular/sound/masomoans/agony/CBTScreamFemale2.ogg',
 		)
-
-	organs_removed = TRUE
-	carbon_owner.Stun(1 SECONDS)
-	for(var/organ_slot in removable_slots)
-		var/obj/item/organ/genital = carbon_owner.getorganslot(organ_slot)
-		if(!genital)
-			continue
-		genital.Remove(carbon_owner)
-		genital.forceMove(carbon_owner.drop_location())
 
 /datum/wound/scarring
 	name = "permanent scarring"
