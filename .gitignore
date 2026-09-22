@@ -237,17 +237,5 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_music/sounds/title1.ogg
 /config/title_screens/images/*
 !/config/title_screens/images/exclude
-
-*.test.dme
-tools/tgs_test/obj/Debug/net8.0/.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.AssemblyInfo.cs
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.AssemblyInfoInputs.cache
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.assets.cache
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.csproj.AssemblyReference.cache
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.GeneratedMSBuildEditorConfig.editorconfig
-tools/tgs_test/obj/Debug/net8.0/Tgstation.TgsTest.GlobalUsings.g.cs
-tools/tgs_test/obj/project.assets.json
-tools/tgs_test/obj/project.nuget.cache
-tools/tgs_test/obj/Tgstation.TgsTest.csproj.nuget.dgspec.json
 tools/tgs_test/obj/Tgstation.TgsTest.csproj.nuget.g.props
 tools/tgs_test/obj/Tgstation.TgsTest.csproj.nuget.g.targets
