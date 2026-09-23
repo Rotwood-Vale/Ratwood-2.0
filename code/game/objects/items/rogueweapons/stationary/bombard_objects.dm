@@ -92,10 +92,30 @@ Firstly, the coordinates device. Eventually, I'll add free aim. But for now...
 	force = 5
 	possible_item_intents = list(INTENT_GENERIC)
 
+/obj/item/bombard_partiallyrefinedbarrel
+	name = "\improper partially refined barrel"
+	desc = "An iron barrel that has gone through partial treatment yet is still rough on the inside and must be sanded down,<br>\
+	<small> you think you could bring it to an artificer table to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
 /obj/item/bombard_sandedbarrel
 	name = "\improper sanded bombard barrel"
 	desc = "An iron barrel that has gone through the sanding process yet still has chips on the inside that must be repaired,<br>\
-	<small> you think you could bring it to an anvil to refine it further.</small>"
+	<small> you think you could bring it to an artificer table to refine it further.</small>"
+	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
+	icon_state = "kit_barrel"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 5
+	possible_item_intents = list(INTENT_GENERIC)
+
+/obj/item/bombard_sandedrepairedbarrel
+	name = "\improper repaired sanded barrel"
+	desc = "An iron barrel that has gone through the sanding process, the inside of it is hollow and smooth,<br>\
+	<small> you think you could bring it to an artificer to refine it further.</small>"
 	icon = 'icons/roguetown/weapons/stationary/bombard.dmi'
 	icon_state = "kit_barrel"
 	w_class = WEIGHT_CLASS_BULKY

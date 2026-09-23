@@ -357,18 +357,34 @@
 	hammers_per_item = 8
 	skill_level = 5
 
-/datum/artificer_recipe/contraptions/sandedbarrel
-	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Rough Iron Barrel)"
+/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
+	name = "Partially refined barrel (3 iron ingot + rough iron barrel)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_roughbarrel)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
+	created_item = /obj/item/bombard_partiallyrefinedbarrel
+	hammers_per_item = 10
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/sandedbarrel
+	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Partially Refined Iron Barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarre)
 	created_item = /obj/item/bombard_sandedbarrel
 	hammers_per_item = 8
 	skill_level = 5
 
-/datum/artificer_recipe/contraptions/bombardbarrel
-	name = "Bombard Barrel (+5 iron ingot + sanded barrel)"
+/datum/anvil_recipe/engineering/repairedsandedbarrel
+	name = "Repair Sanded Barrel (+3 iron, +1 Sanded Iron Barrel)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel)
+	created_item = /obj/item/bombard_sandedrepairedbarrel
+	hammers_per_item = 10
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/bombardbarrel
+	name = "Bombard Barrel (+5 iron ingot + 1 repaired sanded barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel)
 	created_item = /obj/item/bombard_barrel
 	hammers_per_item = 8
 	skill_level = 5

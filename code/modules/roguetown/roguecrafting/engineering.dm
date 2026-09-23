@@ -157,15 +157,6 @@
 	craftdiff = 5
 	display_category = ITEM_CAT_ENG_COMBAT
 
-/datum/crafting_recipe/roguetown/engineering/siegebow
-	name = "Siegebow"
-	result = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy
-	reqs = list(/obj/item/ingot/steel = 3, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 2)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 6
-	display_category = ITEM_CAT_ENG_COMBAT
-
 /datum/crafting_recipe/roguetown/engineering/twentybolts
 	name = "Crossbow Bolts 20x"
 	reqs = list(/obj/item/natural/wood/plank = 3, /obj/item/ingot/iron)
