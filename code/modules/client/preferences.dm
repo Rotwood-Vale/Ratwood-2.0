@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
 	var/pubes = FALSE
@@ -3294,6 +3295,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.cmode_music_override_name = combat_music.name
 	character.highlight_color = highlight_color
 	character.nickname = nickname
+
+	if(character.sexcon && free_use_default)
+		character.sexcon.freeuse = TRUE
 
 	character.eye_color = eye_color
 	var/origin_lang = FALSE
