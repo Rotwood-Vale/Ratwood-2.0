@@ -92,6 +92,7 @@
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:150%;'>[span_boldwarning(brand_text)]</span>"
 	var/base_description = "[used_name][branded]"
+	base_description = append_chastity_genital_note(base_description, H, watcher, ORGAN_SLOT_PENIS)
 	var/obj/item/organ/testicles/testes = H.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(testes && penis.sheath_type != SHEATH_TYPE_SLIT)
 		return base_description
@@ -216,6 +217,7 @@
 	if(length(brand_text))
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	var/base_description = "a [vagina_type][arousal_modifier][branded]"
+	base_description = append_chastity_genital_note(base_description, H, watcher, ORGAN_SLOT_VAGINA)
 	if(H.getorganslot(ORGAN_SLOT_PENIS) || H.getorganslot(ORGAN_SLOT_TESTICLES))
 		return base_description
 	var/datum/mob_descriptor/pubes/pubes_descriptor = MOB_DESCRIPTOR(/datum/mob_descriptor/pubes)

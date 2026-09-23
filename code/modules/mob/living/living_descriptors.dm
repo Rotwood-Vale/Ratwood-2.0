@@ -107,7 +107,8 @@
 	if(fourth_line)
 		lines += fourth_line
 
-	var/fifth = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), "%THEY% %DESC1% and %DESC2%.", watcher)
+	var/fifth_template = (ishuman(described) && modular_chastity_genital_note_visible(described, watcher, ORGAN_SLOT_PENIS)) ? "%THEY% %DESC1%, and %DESC2%." : "%THEY% %DESC1% and %DESC2%."
+	var/fifth = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), fifth_template, watcher)
 	if(fifth)
 		lines += fifth
 
@@ -146,7 +147,8 @@
 	if(fourth_line)
 		lines += fourth_line
 
-	var/fifth = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), "%THEY% %DESC1% and %DESC2%.", watcher)
+	var/fifth_template = (ishuman(described) && modular_chastity_genital_note_visible(described, watcher, ORGAN_SLOT_PENIS)) ? "%THEY% %DESC1%, and %DESC2%." : "%THEY% %DESC1% and %DESC2%."
+	var/fifth = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PENIS, MOB_DESCRIPTOR_SLOT_TESTICLES), fifth_template, watcher)
 	if(fifth)
 		lines += fifth
 

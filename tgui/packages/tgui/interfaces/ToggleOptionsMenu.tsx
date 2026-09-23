@@ -9,6 +9,7 @@ type ToggleEntry = {
   label: string;
   enabled: BooleanLike;
   desc: string;
+  disabled?: BooleanLike;
 };
 
 type SelectOption = {
@@ -77,6 +78,7 @@ const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
         <Tooltip content={entry.desc} position="bottom">
           <Button.Checkbox
             checked={entry.enabled}
+            disabled={!!entry.disabled}
             fluid
             onClick={() => act('toggle', { id: entry.id })}
           >
