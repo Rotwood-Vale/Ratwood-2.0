@@ -177,17 +177,10 @@
 
 	switch(voice_template)
 		if(FUTURE_VOICE_MALE_GENERIC)
-			sound_to_play = pick('modular/timesoldier/sounds/comms/male_generic/generic1.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic2.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic3.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic4.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic5.ogg')
+			sound_to_play = pick('modular/timesoldier/sounds/comms/male_generic/generic1.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic2.ogg', 'modular/timesoldier/sounds/comms/male_generic/generic3.ogg')
 
 		if(FUTURE_VOICE_FEMALE)
-			sound_to_play = pick('modular/timesoldier/sounds/comms/female/female1.ogg', 'modular/timesoldier/sounds/comms/female/female2.ogg', 'modular/timesoldier/sounds/comms/female/female3.ogg', 'modular/timesoldier/sounds/comms/female/female4.ogg', 'modular/timesoldier/sounds/comms/female/female5.ogg')
-
-		if(FUTURE_VOICE_MALE)
-			if(message_is_yelling(message))
-				sound_to_play = pick('modular/timesoldier/sounds/comms/male_important/maley1.ogg', 'modular/timesoldier/sounds/comms/male_important/maley2.ogg', 'modular/timesoldier/sounds/comms/male_important/maley3.ogg')
-			else
-				sound_to_play = pick('modular/timesoldier/sounds/comms/male_important/male1.ogg', 'modular/timesoldier/sounds/comms/male_important/male2.ogg', 'modular/timesoldier/sounds/comms/male_important/male3.ogg')
-		
+			sound_to_play = pick('modular/timesoldier/sounds/comms/female/female1.ogg', 'modular/timesoldier/sounds/comms/female/female2.ogg', 'modular/timesoldier/sounds/comms/female/female3.ogg')
 	if(sound_to_play)
 		playsound(src, sound_to_play, 55, FALSE)
 
