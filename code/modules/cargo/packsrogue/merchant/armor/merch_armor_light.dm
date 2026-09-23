@@ -98,11 +98,6 @@
 	cost = 40 // Base sellprice of 20
 	contains = list (/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
 
-/datum/supply_pack/rogue/light_armor/import/aavnicgambeson
-	name = "Aavnic Fencing Gambeson"
-	cost = 50 // Base sellprice of 30, doesn't cover legs so slightly cheaper
-	contains = list (/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter)
-
 /datum/supply_pack/rogue/light_armor/import/caftan
 	name = "Padded Caftan"
 	cost = 60 // Base sellprice of 30
