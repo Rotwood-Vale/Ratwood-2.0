@@ -152,14 +152,18 @@
 	reach = 2
 
 /datum/intent/sword/cut/zwei/cleave
-	name = "cleaving cut"
+	name = "rending cleave"
 	icon_state = "incleave"
-	desc = "A cleave that cuts through a second target behind the first."
+	desc = "A vicious cut that rends through a second target behind the first."
 	attack_verb = list("cleaves", "carves through")
 	clickcd = CLICK_CD_HEAVY
-	damfactor = 1.0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 2.5
 	reach = 1 // No!!
 	cleave = /datum/cleave_pattern/forward_cleave
+	misscost = 10
+	intent_intdamage_factor = 0.25
+	sharpness_penalty = 2
 
 /datum/intent/sword/cut/zwei/sweep
 	name = "sweeping cut"
